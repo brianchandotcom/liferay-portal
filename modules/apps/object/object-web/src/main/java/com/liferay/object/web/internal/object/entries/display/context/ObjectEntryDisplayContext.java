@@ -1146,6 +1146,23 @@ public class ObjectEntryDisplayContext {
 
 	private boolean _isActive(ObjectField objectField) throws PortalException {
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
+			Map<String, Object> relationshipValueMap =
+				getRelationshipValueMap();
+
+			if (!relationshipValueMap.isEmpty()) {
+				String objectRelationshipERCObjectFieldName =
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+						objectField);
+
+				if (relationshipValueMap.containsKey(
+						objectRelationshipERCObjectFieldName)) {
+
+					return false;
+				}
+			}
+
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
 					fetchObjectRelationshipByObjectFieldId2(

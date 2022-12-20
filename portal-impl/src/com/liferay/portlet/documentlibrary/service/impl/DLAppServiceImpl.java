@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -75,7 +74,6 @@ import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepos
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
-import com.liferay.trash.kernel.service.TrashEntryService;
 
 import java.io.File;
 import java.io.IOException;
@@ -846,18 +844,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Folder folder = repository.getFolder(folderId);
 
-		if (repository.isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = repository.getCapability(
-				TrashCapability.class);
-
-			if (trashCapability.isInTrash(folder)) {
-				_trashEntryService.deleteEntry(
-					DLFolderConstants.getClassName(), folder.getFolderId());
-
-				return;
-			}
-		}
-
 		List<FileEntry> fileEntries = repository.getRepositoryFileEntries(
 			0, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -885,20 +871,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		Repository repository = getRepository(repositoryId);
-
-		Folder folder = repository.getFolder(parentFolderId, name);
-
-		if (repository.isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = repository.getCapability(
-				TrashCapability.class);
-
-			if (trashCapability.isInTrash(folder)) {
-				_trashEntryService.deleteEntry(
-					DLFolderConstants.getClassName(), folder.getFolderId());
-
-				return;
-			}
-		}
 
 		repository.deleteFolder(parentFolderId, name);
 	}
@@ -3404,9 +3376,5 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	@BeanReference(type = RepositoryPersistence.class)
 	private RepositoryPersistence _repositoryPersistence;
-
-	@BeanReference(type = TrashEntryService.class)
-	@SuppressWarnings("deprecation")
-	private TrashEntryService _trashEntryService;
 
 }

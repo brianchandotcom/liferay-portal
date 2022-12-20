@@ -56,6 +56,9 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 				layoutUtilityPageEntryId);
 
 		if (layoutUtilityPageEntry != null) {
+			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
+				layoutUtilityPageEntryId, 0);
+
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
 				layoutUtilityPageEntry.getPreviewFileEntryId());
 
@@ -63,9 +66,6 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 				_portletFileRepository.deletePortletFolder(
 					dlFileEntry.getFolderId());
 			}
-
-			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
-				layoutUtilityPageEntryId, 0);
 		}
 	}
 

@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClassNames from 'classnames';
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
@@ -57,26 +57,32 @@ export default function () {
 		getRenewalsData();
 	}, []);
 
-	const setNewArray = () => {
-		data?.items?.map((item) => {
-			const expirationInTime = new Date(item.closeDate) - currentDate;
+	data?.items?.map((item) => {
+		const expirationInTime = new Date(item.closeDate) - currentDate;
 
-			const expirationInDays =
-				Math.floor(expirationInTime / milisecondsPerDay) + 1;
+		const expirationInDays =
+			Math.floor(expirationInTime / milisecondsPerDay) + 1;
 
-			newArray.push({
-				closeDate: item.closeDate,
-				expirationDays: expirationInDays,
-				opportunityName: item.opportunityName,
-			});
+		newArray.push({
+			closeDate: item.closeDate,
+			expirationDays: expirationInDays,
+			opportunityName: item.opportunityName,
 		});
-	};
-
-	setNewArray();
+	});
 
 	const filteredArray = newArray
 		.filter((item) => item.expirationDays > 0 && item.expirationDays <= 30)
 		.slice(0, 4);
+
+	const getCurrentStatusColor = (item) => {
+		if (item?.expirationDays <= 5) {
+			return status[5];
+		} else if (item?.expirationDays <= 15) {
+			return status[15];
+		} else if (item?.expirationDays <= 30) {
+			return status[30];
+		}
+	};
 
 	return (
 		<Container
@@ -99,20 +105,7 @@ export default function () {
 
 			<div className="align-items-start d-flex flex-column mt-3">
 				{filteredArray?.map((item, index) => {
-					const currentStatusColor = () => {
-						if (item.expirationDays <= 5) {
-							return status[5];
-						}
-						else if (item.expirationDays <= 15) {
-							return status[15];
-						}
-						else if (item.expirationDays <= 30) {
-							return status[30];
-						}
-					};
-
-					// eslint-disable-next-line no-console
-					console.log(item.expirationDays);
+					getCurrentStatusColor(item);
 
 					return (
 						<div
@@ -120,9 +113,9 @@ export default function () {
 							key={index}
 						>
 							<div
-								className={ClassNames(
+								className={classNames(
 									'mr-3 status-bar-vertical',
-									currentStatusColor()
+									getCurrentStatusColor()
 								)}
 							></div>
 

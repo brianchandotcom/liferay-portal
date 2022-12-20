@@ -41,10 +41,12 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
@@ -382,8 +384,39 @@ public class ObjectEntryDisplayContext {
 						).setBackURL(
 							_objectRequestHelper.getCurrentURL()
 						).setParameter(
+							ObjectFieldSettingConstants.
+								NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+							() -> {
+								Map<String, String> relationshipContextParams =
+									getRelationshipContextParams();
+
+								long objectRelationshipId = GetterUtil.getLong(
+									relationshipContextParams.get(
+										"objectRelationshipId"));
+
+								ObjectRelationship objectRelationship =
+									_objectRelationshipLocalService.
+										getObjectRelationship(
+											objectRelationshipId);
+
+								return ObjectFieldSettingUtil.getValue(
+									ObjectFieldSettingConstants.
+										NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+									_objectFieldLocalService.getObjectField(
+										objectRelationship.
+											getObjectFieldId2()));
+							}
+						).setParameter(
 							"objectDefinitionId",
 							objectDefinition2.getObjectDefinitionId()
+						).setParameter(
+							"parentObjectEntryERC",
+							() -> {
+								ObjectEntry objectEntry = getObjectEntry();
+
+								return String.valueOf(
+									objectEntry.getExternalReferenceCode());
+							}
 						).setWindowState(
 							WindowState.MAXIMIZED
 						).buildString());
@@ -488,6 +521,26 @@ public class ObjectEntryDisplayContext {
 		).put(
 			"readOnly", String.valueOf(_readOnly || isDefaultUser())
 		).build();
+	}
+
+	public Map<String, Object> getRelationshipValueMap() {
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		if (Validator.isNotNull(
+				httpServletRequest.getParameter(
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME))) {
+
+			return HashMapBuilder.<String, Object>put(
+				httpServletRequest.getParameter(
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME),
+				httpServletRequest.getParameter("parentObjectEntryERC")
+			).build();
+		}
+
+		return Collections.emptyMap();
 	}
 
 	public boolean isDefaultUser() {

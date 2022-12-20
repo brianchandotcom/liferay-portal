@@ -87,8 +87,6 @@ const Content: React.FC<IContentProps> = ({
 						<ClayTable.Row
 							className={classNames({
 								'table-active': checked,
-								'table-hover-disabled text-muted':
-									disabled || disabledItem,
 							})}
 							data-testid={columns[0].value}
 							key={rowId}
@@ -120,6 +118,10 @@ const Content: React.FC<IContentProps> = ({
 								return (
 									show && (
 										<ClayTable.Cell
+											className={classNames({
+												'text-muted':
+													disabled || disabledItem,
+											})}
 											columnTextAlignment={align}
 											key={id}
 											role={rowId}

@@ -16,17 +16,15 @@ package com.liferay.segments.internal.model.listener;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoColumnTable;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.model.ExpandoTableTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -52,6 +50,7 @@ import com.liferay.segments.internal.odata.entity.OrganizationEntityModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -230,54 +229,41 @@ public class OrganizationExpandoColumnModelListener
 
 		Map<Long, EntityField> organizationEntityFieldsMap = new HashMap<>();
 
-		ActionableDynamicQuery columnActionableDynamicQuery =
-			_expandoColumnLocalService.getActionableDynamicQuery();
+		long organizationClassNameId = _classNameLocalService.getClassNameId(
+			Organization.class.getName());
 
-		columnActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property tableProperty = PropertyFactoryUtil.forName("tableId");
+		List<ExpandoColumn> expandoColumnList =
+			_expandoColumnLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					ExpandoColumnTable.INSTANCE
+				).from(
+					ExpandoColumnTable.INSTANCE
+				).where(
+					ExpandoColumnTable.INSTANCE.tableId.in(
+						DSLQueryFactoryUtil.select(
+							ExpandoTableTable.INSTANCE.tableId
+						).from(
+							ExpandoTableTable.INSTANCE
+						).where(
+							ExpandoTableTable.INSTANCE.classNameId.eq(
+								organizationClassNameId
+							).and(
+								ExpandoTableTable.INSTANCE.name.eq(
+									ExpandoTableConstants.DEFAULT_TABLE_NAME)
+							)
+						))
+				));
 
-				long organizationClassNameId =
-					_classNameLocalService.getClassNameId(
-						Organization.class.getName());
+		for (ExpandoColumn expandoColumn : expandoColumnList) {
+			Optional<EntityField> organizationEntityFieldOptional =
+				_getOrganizationEntityFieldOptional(expandoColumn);
 
-				dynamicQuery.add(
-					tableProperty.in(
-						_getTableDynamicQuery(
-							organizationClassNameId,
-							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
-			});
-		columnActionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>)
-				expandoColumn -> {
-					Optional<EntityField> organizationEntityFieldOptional =
-						_getOrganizationEntityFieldOptional(expandoColumn);
-
-					organizationEntityFieldOptional.ifPresent(
-						entityField -> organizationEntityFieldsMap.put(
-							expandoColumn.getColumnId(), entityField));
-				});
-
-		columnActionableDynamicQuery.performActions();
+			organizationEntityFieldOptional.ifPresent(
+				entityField -> organizationEntityFieldsMap.put(
+					expandoColumn.getColumnId(), entityField));
+		}
 
 		return organizationEntityFieldsMap;
-	}
-
-	private DynamicQuery _getTableDynamicQuery(long classNameId, String name) {
-		DynamicQuery dynamicQuery = _expandoTableLocalService.dynamicQuery();
-
-		Property classNameIdProperty = PropertyFactoryUtil.forName(
-			"classNameId");
-
-		dynamicQuery.add(classNameIdProperty.eq(classNameId));
-
-		Property nameProperty = PropertyFactoryUtil.forName("name");
-
-		dynamicQuery.add(nameProperty.eq(name));
-
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tableId"));
-
-		return dynamicQuery;
 	}
 
 	private boolean _isOrganizationCustomField(ExpandoColumn expandoColumn)

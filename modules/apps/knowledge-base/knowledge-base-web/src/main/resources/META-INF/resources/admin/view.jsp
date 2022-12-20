@@ -243,9 +243,17 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 											</span>
 										</c:if>
 
-										<span class="text-default">
-											<aui:workflow-status helpMessage='<%= kbArticle.isExpired() ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
-										</span>
+									<span class="text-default">
+										<aui:workflow-status helpMessage='<%= kbArticle.isExpired() ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+
+										<c:if test="<%= kbArticleViewDisplayContext.isExpiringSoon(kbArticle) %>">
+											<span class="label label-warning">
+												<span class="label-item label-item-expand"><liferay-ui:message key="expiring-soon" /></span>
+											</span>
+
+											<liferay-ui:icon-help message='<%= kbArticle.getExpirationDate()!= null ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' />
+										</c:if>
+									</span>
 									</liferay-ui:search-container-column-text>
 
 									<liferay-ui:search-container-column-text>

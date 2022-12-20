@@ -89,6 +89,14 @@ public class KBArticleViewDisplayContext {
 			System.currentTimeMillis() - modifiedDate.getTime(), true);
 	}
 
+	public boolean isExpiringSoon(KBArticle kbArticle) {
+		if (kbArticle.isExpired() || (kbArticle.getExpirationDate() == null)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final KBDropdownItemsProvider _kbDropdownItemsProvider;
 	private final RenderResponse _renderResponse;

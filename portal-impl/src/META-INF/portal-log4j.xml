@@ -98,7 +98,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.kernel.portlet.InvokerPortlet" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.portlet.RestrictPortletServletRequest" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet" />
-		<Logger level="INFO" name="com.liferay.portal.kernel.process" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.search.HitsOpenSearchImpl" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.security.auth.CompanyThreadLocal" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.PipingServletResponse" />

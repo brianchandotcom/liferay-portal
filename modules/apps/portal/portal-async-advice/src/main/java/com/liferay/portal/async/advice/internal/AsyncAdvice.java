@@ -136,7 +136,7 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 				Message message = new Message();
 
 				message.setPayload(
-					new AsyncProcessCallable(aopMethodInvocation, arguments));
+					new AsyncCallable(aopMethodInvocation, arguments));
 
 				_messageBus.sendMessage(destinationName, message);
 

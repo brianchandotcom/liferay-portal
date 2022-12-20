@@ -50,5 +50,4 @@
 	<!-- Process executor -->
 
 	<bean class="com.liferay.petra.process.local.LocalProcessExecutor" id="com.liferay.petra.process.local.LocalProcessExecutor" />
-	<bean class="com.liferay.portal.kernel.process.local.LocalProcessExecutor" id="com.liferay.portal.kernel.process.local.LocalProcessExecutor" />
 </beans>

@@ -127,7 +127,7 @@ export default function SelectCategory({
 								selectedCategoryIds
 							)
 						}
-						small
+						size="sm"
 					>
 						{Liferay.Language.get('apply')}
 					</ClayButton>

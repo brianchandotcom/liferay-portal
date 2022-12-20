@@ -172,7 +172,7 @@ const FragmentPreview = ({
 						displayType="secondary"
 						key={previewSize}
 						onClick={() => setCurrentPreviewSize(previewSize)}
-						small={true}
+						size="sm"
 						symbol={previewSize}
 					/>
 				))}

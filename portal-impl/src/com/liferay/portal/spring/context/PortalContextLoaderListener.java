@@ -156,6 +156,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		_cleanUpJDBCDrivers();
 
+		ModuleFrameworkUtil.unregisterContext(_arrayApplicationContext);
+
+		_arrayApplicationContext.close();
+
 		try {
 			ModuleFrameworkUtil.stopFramework(
 				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
@@ -163,10 +167,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-
-		ModuleFrameworkUtil.unregisterContext(_arrayApplicationContext);
-
-		_arrayApplicationContext.close();
 
 		ClassLoaderPool.unregister(_portalServletContextName);
 		ServletContextClassLoaderPool.unregister(_portalServletContextName);

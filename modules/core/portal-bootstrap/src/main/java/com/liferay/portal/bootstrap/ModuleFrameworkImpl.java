@@ -314,8 +314,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			ReflectionUtil.throwException(frameworkEvent.getThrowable());
 		}
 
-		_framework.stop();
-
 		BundleContext bundleContext = _framework.getBundleContext();
 
 		ServiceReference<LogReaderService> serviceReference =
@@ -329,6 +327,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		bundleContext.removeBundleListener(_bundleListener);
+
+		_framework.stop();
 
 		frameworkEvent = _framework.waitForStop(timeout);
 

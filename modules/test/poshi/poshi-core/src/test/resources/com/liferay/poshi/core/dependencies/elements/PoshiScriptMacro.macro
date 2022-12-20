@@ -55,7 +55,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		return "${breadcrumbNameUppercase}";
+		return ${breadcrumbNameUppercase};
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
@@ -54,13 +56,21 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 				layoutUtilityPageEntryId);
 
 		if (layoutUtilityPageEntry != null) {
-			_portletFileRepository.deletePortletFileEntry(
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
 				layoutUtilityPageEntry.getPreviewFileEntryId());
+
+			if (dlFileEntry != null) {
+				_portletFileRepository.deletePortletFolder(
+					dlFileEntry.getFolderId());
+			}
 
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntryId, 0);
 		}
 	}
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;

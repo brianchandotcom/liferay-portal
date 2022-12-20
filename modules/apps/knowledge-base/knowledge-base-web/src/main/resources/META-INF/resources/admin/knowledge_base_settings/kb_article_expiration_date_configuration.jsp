@@ -31,7 +31,7 @@ KBArticleCompanyConfigurationDisplayContext kbArticleCompanyConfigurationDisplay
 		</clay:sheet-header>
 
 		<clay:sheet-section>
-			<aui:input label="check-interval" name="checkInterval" value="<%= kbArticleCompanyConfigurationDisplayContext.getCheckInterval() %>" />
+			<aui:input label="check-interval" min="1" name="checkInterval" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getCheckInterval() %>" />
 		</clay:sheet-section>
 
 		<clay:sheet-section>
@@ -42,7 +42,7 @@ KBArticleCompanyConfigurationDisplayContext kbArticleCompanyConfigurationDisplay
 			</p>
 
 			<div>
-				<aui:input helpMessage="expiration-date-notification-date-weeks-help" label="notification-date-weeks" name="expirationDateNotificationDateWeeks" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getExpirationDateNotificationDateWeeks() %>" />
+				<aui:input helpMessage="expiration-date-notification-date-weeks-help" label="notification-date-weeks" min="0" name="expirationDateNotificationDateWeeks" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getExpirationDateNotificationDateWeeks() %>" />
 			</div>
 		</clay:sheet-section>
 

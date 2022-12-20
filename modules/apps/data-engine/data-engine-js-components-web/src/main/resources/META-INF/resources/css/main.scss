@@ -75,10 +75,6 @@ body .ddm-user-view-content {
 	}
 }
 
-.form-control {
-	@extend %text-ellipsis;
-}
-
 .portlet-forms .ddm-form-basic-info .ddm-form-name {
 	color: #000;
 	font-weight: 500;
@@ -199,10 +195,6 @@ body .ddm-user-view-content {
 
 	.row {
 		min-height: auto;
-
-		.col-ddm {
-			min-width: 25%;
-		}
 	}
 
 	.has-error {

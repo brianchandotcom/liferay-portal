@@ -14,7 +14,6 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -294,9 +293,10 @@ const Select = ({
 }) => {
 	const menuElementRef = useRef(null);
 	const triggerElementRef = useRef(null);
+
 	const [currentValue, setCurrentValue] = useSyncValue(value, false);
 	const [expand, setExpand] = useState(false);
-	const [selectedLabel, setSelectedLabel] = useState('');
+
 	const handleFocus = (event, direction) => {
 		const target = event.target;
 		const focusabledElements = event.currentTarget.querySelectorAll(
@@ -357,139 +357,120 @@ const Select = ({
 		leftRect = rect.left;
 	}
 
-	useEffect(() => {
-		const [selectedValue] = currentValue;
-		const selectedOption = options.find(
-			(option) => option.value === selectedValue
-		);
-
-		if (selectedOption) {
-			return setSelectedLabel(selectedOption.label);
-		}
-
-		setSelectedLabel('');
-	}, [currentValue, options, value]);
-
 	return (
-		<ClayTooltipProvider>
-			<div data-tooltip-align="top" title={selectedLabel}>
-				<Trigger
-					multiple={multiple}
-					onCloseButtonClicked={({event, value}) => {
-						const newValue = removeValue({
-							value: currentValue,
-							valueToBeRemoved: value,
-						});
+		<>
+			<Trigger
+				multiple={multiple}
+				onCloseButtonClicked={({event, value}) => {
+					const newValue = removeValue({
+						value: currentValue,
+						valueToBeRemoved: value,
+					});
 
-						setCurrentValue(newValue);
+					setCurrentValue(newValue);
 
-						onCloseButtonClicked({event, value: newValue});
-					}}
-					onTriggerClicked={(event) => {
-						if (readOnly) {
-							return;
-						}
+					onCloseButtonClicked({event, value: newValue});
+				}}
+				onTriggerClicked={(event) => {
+					if (readOnly) {
+						return;
+					}
+
+					setExpand(!expand);
+					onExpand({event, expand: !expand});
+
+					if (expand) {
+						triggerElementRef.current.firstChild.focus();
+					}
+				}}
+				onTriggerKeyDown={(event) => {
+					if (
+						(event.keyCode === KEYCODES.TAB ||
+							event.keyCode === KEYCODES.ARROW_DOWN) &&
+						!event.shiftKey &&
+						expand
+					) {
+						event.preventDefault();
+						event.stopPropagation();
+
+						const firstElement = menuElementRef.current.querySelector(
+							'button'
+						);
+
+						firstElement.focus();
+					}
+
+					if (
+						event.keyCode === KEYCODES.ENTER ||
+						(event.keyCode === KEYCODES.SPACE && !event.shiftKey)
+					) {
+						event.preventDefault();
+						event.stopPropagation();
 
 						setExpand(!expand);
+
 						onExpand({event, expand: !expand});
 
 						if (expand) {
 							triggerElementRef.current.firstChild.focus();
 						}
-					}}
-					onTriggerKeyDown={(event) => {
-						if (
-							(event.keyCode === KEYCODES.TAB ||
-								event.keyCode === KEYCODES.ARROW_DOWN) &&
-							!event.shiftKey &&
-							expand
-						) {
-							event.preventDefault();
-							event.stopPropagation();
-
-							const firstElement = menuElementRef.current.querySelector(
-								'button'
-							);
-
-							firstElement.focus();
-						}
-
-						if (
-							event.keyCode === KEYCODES.ENTER ||
-							(event.keyCode === KEYCODES.SPACE &&
-								!event.shiftKey)
-						) {
-							event.preventDefault();
-							event.stopPropagation();
-
-							setExpand(!expand);
-
-							onExpand({event, expand: !expand});
-
-							if (expand) {
-								triggerElementRef.current.firstChild.focus();
-							}
-						}
-					}}
-					options={options}
-					predefinedValue={predefinedValue}
-					readOnly={readOnly}
-					ref={triggerElementRef}
-					value={currentValue}
-					{...otherProps}
-				/>
-
-				<ClayDropDown.Menu
-					active={expand}
-					alignElementRef={triggerElementRef}
-					alignmentPosition={0}
-					className="ddm-btn-full ddm-select-dropdown"
-					onKeyDown={(event) => {
-						switch (event.keyCode) {
-							case KEYCODES.ARROW_DOWN:
-								handleFocus(event, false);
-								break;
-							case KEYCODES.ARROW_UP:
-								handleFocus(event, true);
-								break;
-							case KEYCODES.TAB:
-								handleFocus(event, event.shiftKey);
-								break;
-							default:
-								break;
-						}
-					}}
-					onSetActive={setExpand}
-					ref={menuElementRef}
-					style={{
-						left: leftRect,
-						maxWidth: inputTrigger
-							? inputTrigger.offsetWidth
-							: '500px',
-						width: '100%',
-					}}
-				>
-					{options.length > MAX_ITEMS || defaultSearch ? (
-						<DropdownListWithSearch
-							currentValue={currentValue}
-							expand={expand}
-							handleSelect={handleSelect}
-							multiple={multiple}
-							options={options}
-							showEmptyOption={showEmptyOption}
-						/>
-					) : (
-						<DropdownList
-							currentValue={currentValue}
-							expand={expand}
-							handleSelect={handleSelect}
-							multiple={multiple}
-							options={options}
-						/>
-					)}
-				</ClayDropDown.Menu>
-			</div>
-		</ClayTooltipProvider>
+					}
+				}}
+				options={options}
+				predefinedValue={predefinedValue}
+				readOnly={readOnly}
+				ref={triggerElementRef}
+				value={currentValue}
+				{...otherProps}
+			/>
+			<ClayDropDown.Menu
+				active={expand}
+				alignElementRef={triggerElementRef}
+				alignmentPosition={0}
+				className="ddm-btn-full ddm-select-dropdown"
+				onKeyDown={(event) => {
+					switch (event.keyCode) {
+						case KEYCODES.ARROW_DOWN:
+							handleFocus(event, false);
+							break;
+						case KEYCODES.ARROW_UP:
+							handleFocus(event, true);
+							break;
+						case KEYCODES.TAB:
+							handleFocus(event, event.shiftKey);
+							break;
+						default:
+							break;
+					}
+				}}
+				onSetActive={setExpand}
+				ref={menuElementRef}
+				style={{
+					left: leftRect,
+					maxWidth: inputTrigger ? inputTrigger.offsetWidth : '500px',
+					width: '100%',
+				}}
+			>
+				{options.length > MAX_ITEMS || defaultSearch ? (
+					<DropdownListWithSearch
+						currentValue={currentValue}
+						expand={expand}
+						handleSelect={handleSelect}
+						multiple={multiple}
+						options={options}
+						showEmptyOption={showEmptyOption}
+					/>
+				) : (
+					<DropdownList
+						currentValue={currentValue}
+						expand={expand}
+						handleSelect={handleSelect}
+						multiple={multiple}
+						options={options}
+					/>
+				)}
+			</ClayDropDown.Menu>
+		</>
 	);
 };
 

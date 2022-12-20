@@ -216,7 +216,7 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String version = ParamUtil.getString(httpServletRequest, "version");
 
-		if (Validator.isNull(version)) {
+		if (Validator.isNotNull(version)) {
 			infoItemIdentifier.setVersion(version);
 		}
 

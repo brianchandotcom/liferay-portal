@@ -90,6 +90,11 @@
 	<td>xpath=(//tr[@data-testid='${key_propertyName}']//td[@class='table-column-text-end'])[${index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COMMERCE_PROPERTY_TOGGLE</td>
+	<td>//tr[@data-testid='${key_propertyName}']//td[@class='table-column-text-end']//input</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

@@ -190,7 +190,9 @@ definition {
 			var propertyName = "${newPropertyName}";
 		}
 
-		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+		Check.checkToggleSwitch(
+			key_propertyName = "${propertyName}",
+			locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
 
 		ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${propertyName}");
 

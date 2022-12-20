@@ -62,23 +62,13 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		try {
-			LayoutUtilityPageEntryActionDropdownItemsProvider
-				layoutUtilityPageEntryActionDropdownItemsProvider =
-					new LayoutUtilityPageEntryActionDropdownItemsProvider(
-						_layoutUtilityPageEntry, _renderRequest,
-						_renderResponse);
+		LayoutUtilityPageEntryActionDropdownItemsProvider
+			layoutUtilityPageEntryActionDropdownItemsProvider =
+				new LayoutUtilityPageEntryActionDropdownItemsProvider(
+					_layoutUtilityPageEntry, _renderRequest, _renderResponse);
 
-			return layoutUtilityPageEntryActionDropdownItemsProvider.
-				getActionDropdownItems();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
+		return layoutUtilityPageEntryActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	@Override

@@ -26,8 +26,6 @@ import MiniCartContext from './MiniCartContext';
 const CHANNEL_RESOURCE_ENDPOINT =
 	'/o/headless-commerce-delivery-catalog/v1.0/channels';
 
-const formattedProducts = [];
-
 const ProductAutocompleteList = ({onItemClick, sourceItems}) => (
 	<ClayDropDown.ItemList>
 		{sourceItems.map((product) => {
@@ -54,6 +52,7 @@ const ProductAutocompleteList = ({onItemClick, sourceItems}) => (
 export default function CartQuickAdd() {
 	const {cartState, setCartState} = useContext(MiniCartContext);
 
+	const [formattedProducts, setFormattedProducts] = useState([]);
 	const [productsQuery, setProductsQuery] = useState('');
 	const [quickAddToCartError, setQuickAddToCartError] = useState(false);
 	const [selectedProducts, setSelectedProducts] = useState([]);
@@ -65,22 +64,24 @@ export default function CartQuickAdd() {
 
 	useEffect(() => {
 		const productsApiURL = new URL(
-			`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products?nestedFields=skus`,
+			`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products?nestedFields=skus&pageSize=-1`,
 			themeDisplay.getPortalURL()
 		);
 
 		fetch(productsApiURL.toString())
 			.then((response) => response.json())
 			.then((availableProducts) => {
-				availableProducts.items.forEach((product) => {
-					const {name, skus} = product;
+				setFormattedProducts(
+					availableProducts.items.map((product) => {
+						const {name, skus} = product;
 
-					formattedProducts.push({
-						...product,
-						label: name,
-						value: skus[0].sku,
-					});
-				});
+						return {
+							...product,
+							label: name,
+							value: skus[0].sku,
+						};
+					})
+				);
 
 				setProducts(availableProducts.items);
 			});
@@ -91,7 +92,11 @@ export default function CartQuickAdd() {
 		const readyProducts = [];
 
 		products.forEach((product) => {
-			if (itemSKUs.includes(product.skus[0].sku)) {
+			if (
+				product.skus.length &&
+				product.skus[0] &&
+				itemSKUs.includes(product.skus[0].sku)
+			) {
 				const {productConfiguration, skus, urls} = product;
 
 				readyProducts.push({

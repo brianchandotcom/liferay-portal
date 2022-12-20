@@ -87,7 +87,7 @@ const Content: React.FC<IContentProps> = ({
 						<ClayTable.Row
 							className={classNames({
 								'table-active': checked,
-								'text-muted': disabled || disabledItem,
+								'table-hover-disabled text-muted': disabled || disabledItem,
 							})}
 							data-testid={columns[0].value}
 							key={rowId}

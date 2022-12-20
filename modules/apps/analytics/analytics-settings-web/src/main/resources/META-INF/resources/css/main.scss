@@ -73,3 +73,14 @@
 	right: 0;
 	top: 0;
 }
+
+.table-list.table-hover
+	tbody
+	tr.table-hover-disabled:not(.table-active):hover
+	td {
+	background-color: #ffffff;
+}
+
+.table-list.table-hover tbody tr.table-hover-disabled:hover td {
+	color: #a7a9bc;
+}

@@ -309,6 +309,9 @@ public interface DLFileShortcutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileShortcut> getDLFileShortcuts(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileShortcut> getDLFileShortcuts(long groupId, long folderId);
+
 	/**
 	 * Returns all the document library file shortcuts matching the UUID and company.
 	 *

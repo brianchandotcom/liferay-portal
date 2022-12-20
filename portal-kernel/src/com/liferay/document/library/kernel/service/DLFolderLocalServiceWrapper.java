@@ -611,6 +611,14 @@ public class DLFolderLocalServiceWrapper
 
 	@Override
 	public java.util.List<DLFolder> getFolders(
+		long groupId, boolean mountPoint, String treePath, boolean hidden) {
+
+		return _dlFolderLocalService.getFolders(
+			groupId, mountPoint, treePath, hidden);
+	}
+
+	@Override
+	public java.util.List<DLFolder> getFolders(
 		long groupId, long parentFolderId) {
 
 		return _dlFolderLocalService.getFolders(groupId, parentFolderId);
@@ -656,6 +664,13 @@ public class DLFolderLocalServiceWrapper
 
 		return _dlFolderLocalService.getFolders(
 			groupId, parentFolderId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<DLFolder> getFolders(
+		long classNameId, String treePath) {
+
+		return _dlFolderLocalService.getFolders(classNameId, treePath);
 	}
 
 	@Override
@@ -764,6 +779,14 @@ public class DLFolderLocalServiceWrapper
 	@Override
 	public java.util.List<DLFolder> getNoAssetFolders() {
 		return _dlFolderLocalService.getNoAssetFolders();
+	}
+
+	@Override
+	public java.util.List<DLFolder> getNotInTrashFolders(
+		long groupId, boolean mountPoint, String treePath, boolean hidden) {
+
+		return _dlFolderLocalService.getNotInTrashFolders(
+			groupId, mountPoint, treePath, hidden);
 	}
 
 	/**

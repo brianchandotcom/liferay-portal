@@ -528,6 +528,12 @@ public class DLFolderLocalServiceUtil {
 		return getService().getFolderId(companyId, folderId);
 	}
 
+	public static List<DLFolder> getFolders(
+		long groupId, boolean mountPoint, String treePath, boolean hidden) {
+
+		return getService().getFolders(groupId, mountPoint, treePath, hidden);
+	}
+
 	public static List<DLFolder> getFolders(long groupId, long parentFolderId) {
 		return getService().getFolders(groupId, parentFolderId);
 	}
@@ -564,6 +570,10 @@ public class DLFolderLocalServiceUtil {
 
 		return getService().getFolders(
 			groupId, parentFolderId, start, end, orderByComparator);
+	}
+
+	public static List<DLFolder> getFolders(long classNameId, String treePath) {
+		return getService().getFolders(classNameId, treePath);
 	}
 
 	public static List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -655,6 +665,13 @@ public class DLFolderLocalServiceUtil {
 
 	public static List<DLFolder> getNoAssetFolders() {
 		return getService().getNoAssetFolders();
+	}
+
+	public static List<DLFolder> getNotInTrashFolders(
+		long groupId, boolean mountPoint, String treePath, boolean hidden) {
+
+		return getService().getNotInTrashFolders(
+			groupId, mountPoint, treePath, hidden);
 	}
 
 	/**

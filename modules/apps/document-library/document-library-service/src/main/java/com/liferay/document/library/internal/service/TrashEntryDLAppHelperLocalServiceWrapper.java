@@ -29,8 +29,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder;
-import com.liferay.document.library.kernel.service.persistence.DLFolderFinder;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
@@ -536,9 +534,8 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 		if (!dlFileEntry.isInTrash()) {
-			throw new com.liferay.trash.kernel.exception.RestoreEntryException(
-				com.liferay.trash.kernel.exception.RestoreEntryException.
-					INVALID_STATUS);
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
 		}
 
 		if (_trashHelper.isInTrashExplicitly(dlFileEntry)) {
@@ -916,8 +913,9 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 		long dlFileEntryClassNameId = _classNameLocalService.getClassNameId(
 			DLFileEntry.class);
 
-		List<DLFileEntry> dlFileEntries = _dlFileEntryFinder.findByC_T(
-			dlFileEntryClassNameId, dlFolder.getTreePath());
+		List<DLFileEntry> dlFileEntries =
+			_dlFileEntryLocalService.getDLFileEntries(
+				dlFileEntryClassNameId, dlFolder.getTreePath());
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			_assetEntryLocalService.updateVisible(
@@ -928,7 +926,7 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 		long dlFolderClassNameId = _classNameLocalService.getClassNameId(
 			DLFolder.class);
 
-		List<DLFolder> dlFolders = _dlFolderFinder.findF_ByC_T(
+		List<DLFolder> dlFolders = _dlFolderLocalService.getFolders(
 			dlFolderClassNameId, dlFolder.getTreePath());
 
 		for (DLFolder curDLFolder : dlFolders) {
@@ -938,14 +936,14 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 		}
 
 		if (moveToTrash) {
-			dlFolders = _dlFolderPersistence.findByG_M_LikeT_H_NotS(
+			dlFolders = _dlFolderLocalService.getNotInTrashFolders(
 				dlFolder.getGroupId(), false,
 				_customSQL.keywords(
 					dlFolder.getTreePath(), WildcardMode.TRAILING)[0],
-				false, WorkflowConstants.STATUS_IN_TRASH);
+				false);
 		}
 		else {
-			dlFolders = _dlFolderPersistence.findByG_M_LikeT_H(
+			dlFolders = _dlFolderLocalService.getFolders(
 				dlFolder.getGroupId(), false,
 				_customSQL.keywords(
 					dlFolder.getTreePath(), WildcardMode.TRAILING)[0],
@@ -1078,7 +1076,7 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 		}
 
 		List<DLFileShortcut> dlFileShortcuts =
-			_dlFileShortcutPersistence.findByG_F(
+			_dlFileShortcutLocalService.getDLFileShortcuts(
 				childDLFolder.getGroupId(), childDLFolder.getFolderId());
 
 		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
@@ -1215,6 +1213,9 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private CustomSQL _customSQL;
+
+	@Reference
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 	@Reference
@@ -1243,14 +1244,5 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
-
-	@Reference
-	private CustomSQL _customSQL;
-
-	@Reference
-	private DLFolderFinder _dlFolderFinder;
-
-	@Reference
-	private DLFileEntryFinder _dlFileEntryFinder;
 
 }

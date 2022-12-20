@@ -368,6 +368,12 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().getDLFileShortcuts(start, end);
 	}
 
+	public static List<DLFileShortcut> getDLFileShortcuts(
+		long groupId, long folderId) {
+
+		return getService().getDLFileShortcuts(groupId, folderId);
+	}
+
 	/**
 	 * Returns all the document library file shortcuts matching the UUID and company.
 	 *

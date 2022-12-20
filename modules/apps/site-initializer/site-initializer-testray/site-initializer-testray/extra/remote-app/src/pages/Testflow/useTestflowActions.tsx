@@ -55,7 +55,7 @@ const useTestflowActions = () => {
 		},
 		{
 			action: (subtask, mutate) =>
-				testrayTaskImpl.reanalyze(subtask).then(() =>
+				testrayTaskImpl.remove(subtask.id).then(() =>
 					updateItemFromList(
 						mutate,
 						0,
@@ -65,11 +65,12 @@ const useTestflowActions = () => {
 						}
 					)
 				),
-			disabled: true,
+
 			hidden: ({dueStatus}) =>
 				dueStatus?.key === TaskStatuses.IN_ANALYSIS,
 			icon: 'trash',
 			name: i18n.translate('delete'),
+			permission: 'DELETE',
 		},
 	] as Action<TestrayTask>[]);
 

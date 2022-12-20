@@ -159,7 +159,7 @@ const TaskHeaderActions = () => {
 
 									Liferay.Util.openToast({
 										message: i18n.translate(
-											'mark-at-least-one-user-for-assignment'
+											'your-request-completed-successfully'
 										),
 										type: 'success',
 									});

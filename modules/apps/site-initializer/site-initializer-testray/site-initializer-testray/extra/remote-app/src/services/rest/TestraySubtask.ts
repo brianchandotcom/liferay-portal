@@ -275,6 +275,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		}
 
 		await this.update(parentTestraySubtask.id, {
+			dueStatus: parentTestraySubtask.dueStatus.key,
 			score: sumScore,
 		});
 	}
@@ -327,6 +328,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		}
 
 		const updatedSubtask = await this.update(subTaskId, {
+			dueStatus: currentSubtask?.dueStatus.key,
 			score: (currentSubtask as TestraySubTask).score - newSubtaskScore,
 		});
 

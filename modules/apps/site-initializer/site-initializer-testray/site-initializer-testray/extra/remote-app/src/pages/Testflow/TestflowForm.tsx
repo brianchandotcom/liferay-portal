@@ -160,10 +160,10 @@ const TestflowForm = () => {
 				update: (id, data) => testrayTaskImpl.update(id, data),
 			});
 
+			await testrayTaskUsersImpl.assign(response.id, userIds);
+
 			if (form.id) {
 				mutateTask(response);
-
-				await testrayTaskUsersImpl.assign(form.id, userIds);
 
 				revalidateTaskUser();
 			}

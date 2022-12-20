@@ -83,7 +83,7 @@ const TabItem = ({item}) => {
 					className="btn-monospaced sidebar-body__add-panel__tab-item-add"
 					displayType="unstyled"
 					onClick={() => addItem({item, plid, setWidgets, widgets})}
-					small
+					size="sm"
 					title={title}
 				>
 					<ClayIcon symbol="plus" />

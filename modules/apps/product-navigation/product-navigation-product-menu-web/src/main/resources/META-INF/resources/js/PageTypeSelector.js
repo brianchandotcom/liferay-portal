@@ -100,7 +100,7 @@ function PageTypeSelector({
 					<ClayButton
 						className="form-control-select text-left"
 						displayType="secondary"
-						small
+						size="sm"
 						type="button"
 					>
 						{pageTypeSelectedOptionLabel}

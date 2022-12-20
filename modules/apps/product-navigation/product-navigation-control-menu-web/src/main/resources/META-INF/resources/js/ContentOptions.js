@@ -65,7 +65,7 @@ const ContentOptions = ({onChangeSelect}) => {
 				className="btn-monospaced sidebar-body__add-panel__content-options-list"
 				displayType="unstyled"
 				onClick={() => setDisplayGrid(!displayGrid)}
-				small
+				size="sm"
 				title={Liferay.Language.get('display-style')}
 			>
 				<ClayIcon symbol={displayGrid ? 'cards2' : 'list'} />
@@ -87,7 +87,7 @@ const ContentOptions = ({onChangeSelect}) => {
 					<ClayButton
 						className="btn-monospaced sidebar-body__add-panel__content-options-add"
 						displayType="unstyled"
-						small
+						size="sm"
 						title={Liferay.Language.get('add-new')}
 					>
 						<ClayIcon symbol="plus" />

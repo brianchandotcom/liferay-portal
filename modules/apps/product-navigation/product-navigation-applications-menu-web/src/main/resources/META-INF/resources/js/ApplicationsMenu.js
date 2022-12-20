@@ -247,7 +247,7 @@ const AppsPanel = ({
 									<ClayButtonWithIcon
 										displayType="unstyled"
 										onClick={handleCloseButtonClick}
-										small
+										size="sm"
 										symbol="times"
 										title={Liferay.Language.get('close')}
 									/>
@@ -518,7 +518,7 @@ const ApplicationsMenu = ({
 				onFocus={fetchCategories}
 				onMouseOver={fetchCategories}
 				ref={buttonRef}
-				small
+				size="sm"
 				symbol="grid"
 				title={ReactDOMServer.renderToString(buttonTitle)}
 			/>

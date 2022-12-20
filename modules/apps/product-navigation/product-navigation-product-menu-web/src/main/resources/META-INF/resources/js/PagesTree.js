@@ -136,7 +136,7 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 							<ClayButtonWithIcon
 								className="component-action quick-action-item"
 								displayType={null}
-								small
+								size="sm"
 								symbol="ellipsis-v"
 							/>
 						}
@@ -189,7 +189,7 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 										<ClayButtonWithIcon
 											className="component-action quick-action-item"
 											displayType={null}
-											small
+											size="sm"
 											symbol="ellipsis-v"
 										/>
 									}

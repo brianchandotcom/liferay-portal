@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.rest.dto.v1_0.Suggestion;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
@@ -174,7 +175,8 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setAttribute("search.empty.search", Boolean.TRUE);
+		searchContext.setAttribute(
+			SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH, Boolean.TRUE);
 		searchContext.setAttribute(
 			"search.experiences.ip.address",
 			contextHttpServletRequest.getRemoteAddr());

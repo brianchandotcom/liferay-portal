@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -294,6 +295,10 @@ public class SXPBlueprintSuggestionsContributor
 			size
 		).withSearchContext(
 			searchContext2 -> {
+				searchContext2.setAttribute(
+					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH,
+					searchContext1.getAttribute(
+						SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH));
 				searchContext2.setAttribute(
 					"search.experiences.blueprint.id", sxpBlueprintId);
 				searchContext2.setAttribute(

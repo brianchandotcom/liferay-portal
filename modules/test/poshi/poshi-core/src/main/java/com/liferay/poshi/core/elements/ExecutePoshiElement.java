@@ -84,9 +84,12 @@ public class ExecutePoshiElement extends PoshiElement {
 			for (int i = 0; i < methodParameterValues.size(); i++) {
 				String methodParameterValue = methodParameterValues.get(i);
 
-				addAttribute(
-					"argument" + (i + 1),
-					getDoubleQuotedContent(methodParameterValue));
+				if (isQuotedContent(methodParameterValue)) {
+					methodParameterValue = getDoubleQuotedContent(
+						methodParameterValue);
+				}
+
+				addAttribute("argument" + (i + 1), methodParameterValue);
 			}
 
 			return;

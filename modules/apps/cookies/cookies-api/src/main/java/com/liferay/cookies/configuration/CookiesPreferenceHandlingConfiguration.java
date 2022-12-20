@@ -22,8 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Olivér Kecskeméty
  */
 @ExtendedObjectClassDefinition(
-	category = "cookies", scope = ExtendedObjectClassDefinition.Scope.GROUP,
-	visibilityControllerKey = "LPS-142518"
+	category = "cookies", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration",

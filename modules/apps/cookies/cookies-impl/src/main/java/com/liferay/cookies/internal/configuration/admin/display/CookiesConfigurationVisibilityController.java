@@ -20,17 +20,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.Serializable;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,10 +42,6 @@ public class CookiesConfigurationVisibilityController
 	@Override
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
-
-		if (!_featureFlagVisibilityController.isVisible(scope, scopePK)) {
-			return false;
-		}
 
 		try {
 			CookiesPreferenceHandlingConfiguration
@@ -87,38 +76,7 @@ public class CookiesConfigurationVisibilityController
 		return false;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			ConfigurationVisibilityController.class,
-			_featureFlagVisibilityController,
-			HashMapDictionaryBuilder.put(
-				"visibility.controller.key", "LPS-142518"
-			).build());
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
-
-	private static final ConfigurationVisibilityController
-		_featureFlagVisibilityController = (scope, scopePK) -> {
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-142518"))) {
-
-				return true;
-			}
-
-			return false;
-		};
-
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	private ServiceRegistration<ConfigurationVisibilityController>
-		_serviceRegistration;
 
 }

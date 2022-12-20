@@ -24,6 +24,7 @@ String dropdownCssClass = GetterUtil.getString((String)request.getAttribute("lif
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:icon"));
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
+String triggerAriaLabel = (String)request.getAttribute("liferay-ui:icon-menu:triggerAriaLabel");
 boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll"));
 String triggerCssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:triggerCssClass"));
 String triggerLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:triggerLabel"));
@@ -41,7 +42,14 @@ if (Validator.isNull(icon)) {
 				<aui:icon cssClass="inline-item" image="<%= icon %>" markupView="lexicon" />
 
 				<c:if test="<%= Validator.isNotNull(triggerLabel) %>">
-					<span class="btn-section"><%= triggerLabel %></span>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(triggerAriaLabel) %>">
+							<span aria-label="<%= triggerAriaLabel %>" class="btn-section"><%= triggerLabel %></span>
+						</c:when>
+						<c:otherwise>
+							<span class="btn-section"><%= triggerLabel %></span>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</button>
 		</c:when>

@@ -687,6 +687,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Define an aria-label attribute for the menu trigger.</description>
+			<name>triggerAriaLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A CSS class for styling the trigger for the icon menu. The default value is <![CDATA[<code>btn btn-secondary</code>]]>.</description>
 			<name>triggerCssClass</name>
 			<required>false</required>

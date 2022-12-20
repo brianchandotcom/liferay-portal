@@ -63,18 +63,16 @@ export default function () {
 			const expirationInDays =
 				Math.floor(expirationInTime / milisecondsPerDay) + 1;
 
-			newArray.push({
-				closeDate: item.closeDate,
-				expirationDays: expirationInDays,
-				opportunityName: item.opportunityName,
-			});
+			if (expirationInDays > 0 && expirationInDays <= 30) {
+				newArray.push({
+					closeDate: item.closeDate,
+					expirationDays: expirationInDays,
+					opportunityName: item.opportunityName,
+				});
+			}
 		});
 
-		return newArray
-			.filter(
-				(item) => item?.expirationDays > 0 && item?.expirationDays <= 30
-			)
-			.slice(0, 4);
+		return newArray.slice(0, 4);
 	}, [data?.items]);
 
 	const getCurrentStatusColor = (item) => {

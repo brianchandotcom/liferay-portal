@@ -85,6 +85,11 @@ public interface NotificationTemplateLocalService
 	public NotificationTemplate addNotificationTemplate(
 		NotificationTemplate notificationTemplate);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public NotificationTemplate addNotificationTemplate(
+			String externalReferenceCode, String type, long userId)
+		throws PortalException;
+
 	/**
 	 * Creates a new notification template with the primary key. Does not add the notification template to the database.
 	 *

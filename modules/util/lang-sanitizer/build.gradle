@@ -1,9 +1,110 @@
+import com.liferay.gradle.util.FileUtil
+
+task processSanitizerConfiguration(type: Copy)
+
+File sanitizerConfigurationFile = new File("src/main/resources/sanitizer-configuration.xml")
+
 dependencies {
 	compile group: "junit", name: "junit", version: "4.13.1"
 	compile group: "org.owasp.antisamy", name: "antisamy", version: "1.7.1"
 
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+}
+
+processSanitizerConfiguration {
+	from {
+		File antiSamyJarFile = configurations.compile.find {
+			it.name.startsWith "antisamy"
+		}
+
+		zipTree(antiSamyJarFile)
+	} {
+		include "antisamy-ebay.xml"
+	}
+
+	filter {
+		return _filterSanitizer(it)
+	}
+
+	into sanitizerConfigurationFile.parentFile
+
+	onlyIf {
+		!sanitizerConfigurationFile.exists()
+	}
+
+	rename {
+		sanitizerConfigurationFile.name
+	}
+}
+
+processResources {
+	dependsOn processSanitizerConfiguration
+}
+
+private String _filterSanitizer(String line) {
+	if (line.contains('<directive name="formatOutput" value="true" />')) {
+		line = """\
+				|		<directive name="formatOutput" value="false" />
+				|		<directive name="onUnknownTag" value="encode" />""".stripMargin()
+	}
+
+	if (line.contains('<tag name="a" action="validate">')) {
+		line = """\
+				|${line}
+				|			<attribute name="class">
+				|				<literal-list>
+				|					<literal value="{0}" />
+				|				</literal-list>
+				|			</attribute>
+				|			<attribute name="target">
+				|				<literal-list>
+				|					<literal value="_blank" />
+				|				</literal-list>
+				|			</attribute>
+				|			<attribute name="onclick">
+				|				<regexp-list>
+				|					<regexp name="anything" />
+				|				</regexp-list>
+				|			</attribute>""".stripMargin()
+	}
+
+	if (line.contains('<attribute name="href" />')) {
+		line = """\
+				|			<attribute name="href">
+				|				<literal-list>
+				|					<literal value="{0}" />
+				|					<literal value="{1}" />
+				|				</literal-list>
+				|			</attribute>""".stripMargin()
+	}
+
+	if (line.contains('<tag name="span" action="validate" />')) {
+		line = """\
+				|		<tag name="span" action="validate">
+				|			<attribute name="class">
+				|				<literal-list>
+				|					<literal value="{0}" />
+				|					<literal value="lfr-inline-code" />
+				|				</literal-list>
+				|			</attribute>
+				|		</tag>""".stripMargin()
+	}
+
+	if (line.contains('<tag-rules>')) {
+		line = """\
+				|${line}
+				|
+				|		<tag action="validate" name="abbr">
+				|			<attribute name="title">
+				|				<regexp-list>
+				|					<regexp name="anything" />
+				|				</regexp-list>
+				|			</attribute>
+				|		</tag>""".stripMargin()
+	}
+
+	return line
 }
 
 deploy {

@@ -12,12 +12,12 @@
 <tbody>
 	<tr>
 		<td>SELECT_PARAMETER_FORM</td>
-		<td>//select[@class = 'form-control']</td>
+		<td>//label[contains(text(),'Parameter')]/..//div[contains(@aria-controls,'clay-dropdown-menu')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>SELECT_PARAMETER_OPTION</td>
-		<td>//select[@class = 'form-control']//option[contains(text(),'${key_parameterOption}')]</td>
+		<td>//button[@class = 'dropdown-item']//div[contains(text(),'${key_parameterOption}')]</td>
 		<td></td>
 	</tr>
 	<tr>

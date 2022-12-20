@@ -15,8 +15,6 @@ export default function getDateCreatedFilterTerm(
 	initialFilter: string,
 	activityPeriod: typeof INITIAL_FILTER.dateCreated
 ) {
-	initialFilter = initialFilter ? initialFilter : '&filter=';
-
 	const filterDates = [];
 
 	if (activityPeriod.dates.startDate) {

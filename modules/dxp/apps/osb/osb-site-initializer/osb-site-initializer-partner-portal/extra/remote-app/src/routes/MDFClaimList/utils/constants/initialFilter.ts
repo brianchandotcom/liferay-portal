@@ -19,15 +19,15 @@ export const INITIAL_FILTER = {
 	hasValue: false,
 	partner: {
 		name: 'Partner',
-		value: [],
+		value: [] as string[],
 	},
 	searchTerm: '',
 	status: {
 		name: 'Status',
-		value: [],
+		value: [] as string[],
 	},
 	type: {
-		name: 'Partner',
-		value: [],
+		name: 'Type',
+		value: [] as string[],
 	},
 };

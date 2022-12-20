@@ -19,14 +19,7 @@ import getEntriesByListTypeDefinitions from '../../../common/utils/getEntriesByL
 export default function useDynamicFieldEntries() {
 	const {data: userAccount} = useGetMyUserAccount();
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
-		LiferayPicklistName.COUNTRIES,
-		LiferayPicklistName.STATES,
-		LiferayPicklistName.PROJECT_CATEGORIES,
-		LiferayPicklistName.PROJECT_INFORMATIONS,
-		LiferayPicklistName.JOB_ROLES,
-		LiferayPicklistName.DEPARTMENTS,
-		LiferayPicklistName.INDUSTRIES,
-		LiferayPicklistName.STATES,
+		LiferayPicklistName.MDF_CLAIM_STATUS,
 	]);
 
 	const companiesEntries = useMemo(

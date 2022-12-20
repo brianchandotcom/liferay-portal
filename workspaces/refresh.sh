@@ -159,8 +159,10 @@ class DadJoke extends React.Component {
 	}
 }
 
-export default Joke;
+export default DadJoke;
 EOF
+
+	sed -i'.bak' 's/react-scripts test/react-scripts test --passWithNoTests --watchAll=false/' fox-remote-app/package.json
 
 	mv fox-remote-app sample-minimal-workspace/client-extensions
 

@@ -99,7 +99,7 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 				oldFileEntry.getFileEntryId());
 		}
 
-		if (folderId <= 0) {
+		if (folderId == 0) {
 			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
 				fileEntry.getGroupId(), repository.getDlFolderId(),
 				String.valueOf(layoutUtilityPageEntryId));

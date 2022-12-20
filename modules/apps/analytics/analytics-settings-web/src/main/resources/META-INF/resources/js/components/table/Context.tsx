@@ -127,6 +127,10 @@ function reducer(state: TState, action: TAction) {
 			return {
 				...state,
 				keywords: action.payload,
+				pagination: {
+					...state.pagination,
+					page: 1,
+				},
 			};
 		}
 		case Events.FormatData: {

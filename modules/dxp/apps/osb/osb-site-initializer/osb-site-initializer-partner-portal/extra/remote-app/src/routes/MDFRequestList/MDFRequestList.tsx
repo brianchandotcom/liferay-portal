@@ -17,10 +17,12 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
+import CheckboxFilter from '../../common/components/TableHeader/Filter/components/CheckboxFilter';
 import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
 import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
 import Search from '../../common/components/TableHeader/Search/Search';
 import TableHeader from '../../common/components/TableHeader/TableHeader';
+import {LiferayPicklistName} from '../../common/enums/liferayPicklistName';
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
@@ -29,6 +31,7 @@ import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
+import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import {INITIAL_FILTER} from './utils/constants/initialFilter';
@@ -39,7 +42,9 @@ type MDFRequestItem = {
 };
 
 const MDFRequestList = () => {
-	const {filters, filtersTerm, onFilter} = useFilters();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
+
+	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
 
 	const pagination = usePagination();
 	const {data, isValidating} = useGetMDFRequestListData(
@@ -161,6 +166,53 @@ const MDFRequestList = () => {
 									/>
 								),
 								name: 'Activity Period',
+							},
+							{
+								component: (
+									<CheckboxFilter
+										availableItems={fieldEntries[
+											LiferayPicklistName
+												.MDF_REQUEST_STATUS
+										]?.map<string>(
+											(status) => status.label as string
+										)}
+										clearCheckboxes={
+											!filters.status.value?.length
+										}
+										updateFilters={(checkedItems) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												status: {
+													...previousFilters.status,
+													value: checkedItems,
+												},
+											}))
+										}
+									/>
+								),
+								name: 'Status',
+							},
+							{
+								component: (
+									<CheckboxFilter
+										availableItems={companiesEntries?.map<
+											string
+										>((company) => company.label as string)}
+										clearCheckboxes={
+											!filters.partner.value?.length
+										}
+										updateFilters={(checkedItems) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												partner: {
+													...previousFilters.status,
+													value: checkedItems,
+												},
+											}))
+										}
+									/>
+								),
+								name: 'Partner',
 							},
 						])}
 						trigger={

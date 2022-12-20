@@ -15,8 +15,6 @@ export default function getActivityPeriodFilterTerm(
 	initialFilter: string,
 	activityPeriod: typeof INITIAL_FILTER.activityPeriod
 ) {
-	initialFilter = initialFilter ? initialFilter : '&filter=';
-
 	const filterDates = [];
 
 	if (activityPeriod.dates.startDate) {

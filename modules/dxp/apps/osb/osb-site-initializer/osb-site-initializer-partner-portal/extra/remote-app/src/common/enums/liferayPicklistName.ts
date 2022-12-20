@@ -15,6 +15,8 @@ export enum LiferayPicklistName {
 	COUNTRIES = 'Countries',
 	LEAD_FOLLOW_UP_STRATEGIES = 'Lead Follow Up Strategies',
 	LIFERAY_BUSINESS_SALES_GOALS = 'Liferay Business/Sales Goals',
+	MDF_CLAIM_STATUS = 'MDF Claim Status',
+	MDF_REQUEST_STATUS = 'MDF Request Status',
 	PARTNER_LEVELS = 'Partner Levels',
 	REGIONS = 'Regions',
 	TACTIC = 'Tactic',

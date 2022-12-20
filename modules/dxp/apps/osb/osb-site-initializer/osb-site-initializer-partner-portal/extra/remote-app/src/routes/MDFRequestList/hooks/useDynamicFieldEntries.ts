@@ -11,19 +11,15 @@
 
 import {useMemo} from 'react';
 
-import {LiferayPicklistName} from '../../../../../common/enums/liferayPicklistName';
-import useGetListTypeDefinitions from '../../../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
-import useGetMyUserAccount from '../../../../../common/services/liferay/user-account/useGetMyUserAccount';
-import getEntriesByListTypeDefinitions from '../../../../../common/utils/getEntriesByListTypeDefinitions';
+import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
+import useGetListTypeDefinitions from '../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
+import useGetMyUserAccount from '../../../common/services/liferay/user-account/useGetMyUserAccount';
+import getEntriesByListTypeDefinitions from '../../../common/utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries() {
 	const {data: userAccount} = useGetMyUserAccount();
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
-		LiferayPicklistName.ADDITIONAL_OPTIONS,
-		LiferayPicklistName.REGIONS,
-		LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS,
-		LiferayPicklistName.TARGET_AUDIENCE_ROLES,
-		LiferayPicklistName.TARGET_MARKETS,
+		LiferayPicklistName.MDF_REQUEST_STATUS,
 	]);
 
 	const companiesEntries = useMemo(

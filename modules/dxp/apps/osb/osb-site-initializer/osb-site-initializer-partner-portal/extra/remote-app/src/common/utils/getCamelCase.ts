@@ -9,21 +9,8 @@
  * distribution rights of the Software.
  */
 
-export const INITIAL_FILTER = {
-	activityPeriod: {
-		dates: {
-			endDate: '',
-			startDate: '',
-		},
-	},
-	hasValue: false,
-	partner: {
-		name: 'Partner',
-		value: [] as string[],
-	},
-	searchTerm: '',
-	status: {
-		name: 'Status',
-		value: [] as string[],
-	},
-};
+export function getCamelCase(str: string) {
+	return str
+		.toLowerCase()
+		.replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+}

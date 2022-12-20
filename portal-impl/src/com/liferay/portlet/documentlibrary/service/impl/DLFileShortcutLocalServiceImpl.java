@@ -277,6 +277,13 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileShortcut> getDLFileShortcuts(
+		long groupId, long folderId) {
+
+		return dlFileShortcutPersistence.findByG_F(groupId, folderId);
+	}
+
+	@Override
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 

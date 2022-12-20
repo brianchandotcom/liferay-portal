@@ -42,7 +42,7 @@ const DropDownItem = ({
 				disabled={disabled}
 				displayType={null}
 				onClick={handleClick}
-				small
+				size="sm"
 			>
 				<ClayIcon className="mr-3 mt-0" symbol={icon} />
 

@@ -68,7 +68,7 @@ const VariationsNav = ({
 							data-tooltip-align="top"
 							displayType="unstyled"
 							onClick={handleAddVariation}
-							small
+							size="sm"
 							symbol="plus"
 							title={Liferay.Language.get('create-variation')}
 						/>
@@ -89,7 +89,7 @@ const VariationsNav = ({
 						<ClayButton
 							displayType="primary"
 							onClick={handleAddVariation}
-							small
+							size="sm"
 						>
 							{Liferay.Language.get('add-personalized-variation')}
 						</ClayButton>

@@ -245,7 +245,7 @@ function Rule({
 					data-index={index}
 					monospaced
 					onClick={onDeleteRule}
-					small
+					size="sm"
 					title={Liferay.Language.get('delete-condition')}
 				>
 					<ClayIcon symbol="trash" />
@@ -351,7 +351,7 @@ function AssetFilterBuilder({
 						className="form-builder-rule-add-condition form-builder-timeline-add-item"
 						monospaced
 						onClick={handleAddRule}
-						small
+						size="sm"
 					>
 						<ClayIcon symbol="plus" />
 					</ClayButton>

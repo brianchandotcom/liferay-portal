@@ -45,7 +45,7 @@ export function Toolbar() {
 					displayType="unstyled"
 					monospaced
 					onClick={() => setPreviewModalOpen(true)}
-					small
+					size="sm"
 					symbol="view"
 				/>
 			</AppLayout.ToolbarItem>
@@ -56,7 +56,7 @@ export function Toolbar() {
 					displayType="unstyled"
 					monospaced
 					onClick={onSettingsButtonClick}
-					small
+					size="sm"
 					symbol="cog"
 				/>
 			</AppLayout.ToolbarItem>
@@ -64,7 +64,11 @@ export function Toolbar() {
 			<AppLayout.ToolbarItem>
 				<AddItemDropDown
 					trigger={
-						<ClayButtonWithIcon monospaced small symbol="plus" />
+						<ClayButtonWithIcon
+							monospaced
+							size="sm"
+							symbol="plus"
+						/>
 					}
 				/>
 			</AppLayout.ToolbarItem>

@@ -225,7 +225,7 @@ export function MenuItem({item}) {
 												? setDeletionModalVisible(true)
 												: deleteMenuItem()
 										}
-										small
+										size="sm"
 										symbol="times-circle"
 									/>
 								</ClayLayout.ContentCol>

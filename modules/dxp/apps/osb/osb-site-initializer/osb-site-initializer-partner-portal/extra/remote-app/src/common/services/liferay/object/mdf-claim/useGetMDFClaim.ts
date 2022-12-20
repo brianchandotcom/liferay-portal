@@ -24,7 +24,7 @@ export default function useGetMDFClaim(
 ) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/mdfclaims?nestedFields=accountEntry${filtersTerm}&page=${page}&pageSize=${pageSize}`,
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}`,
 			Liferay.authToken,
 		],
 		(url, token) => liferayFetcher<LiferayItems<MDFClaimDTO[]>>(url, token)

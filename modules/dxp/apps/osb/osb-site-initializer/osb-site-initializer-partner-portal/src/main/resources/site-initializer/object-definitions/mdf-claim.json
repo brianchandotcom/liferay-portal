@@ -24,6 +24,18 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "Company Name"
+			},
+			"name": "companyName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "External Reference Code SF"
 			},
 			"name": "externalReferenceCodeSF",
@@ -56,7 +68,6 @@
 		},
 		{
 			"DBType": "Boolean",
-			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

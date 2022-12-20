@@ -36,8 +36,7 @@ export default function useGetListItemsFromMDFRequests(
 					item.maxDateActivity
 				),
 				[MDFColumnKey.STATUS]: item.requestStatus,
-				[MDFColumnKey.PARTNER]:
-					item.r_accountToMDFRequests_accountEntry?.name,
+				[MDFColumnKey.PARTNER]: item.companyName,
 				...getMDFDates(item.dateCreated, item.dateModified),
 				...getMDFBudgetInfos(
 					item.totalCostOfExpense,

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,10 +69,8 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				themeDisplay.getScopeGroupId(),
-				LayoutAdminPortletKeys.GROUP_PAGES);
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			themeDisplay.getScopeGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
 
 		if (repository == null) {
 			ServiceContext serviceContext = new ServiceContext();
@@ -81,7 +78,7 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			repository = PortletFileRepositoryUtil.addPortletRepository(
+			repository = _portletFileRepository.addPortletRepository(
 				themeDisplay.getScopeGroupId(),
 				LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
 		}
@@ -89,16 +86,16 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 		String fileName =
 			layoutUtilityPageEntryId + "_preview." + fileEntry.getExtension();
 
-		FileEntry oldFileEntry =
-			PortletFileRepositoryUtil.fetchPortletFileEntry(
-				themeDisplay.getScopeGroupId(), repository.getDlFolderId(),
-				fileName);
+		FileEntry oldFileEntry = _portletFileRepository.fetchPortletFileEntry(
+			themeDisplay.getScopeGroupId(), repository.getDlFolderId(),
+			fileName);
 
 		long folderId = 0;
 
 		if (oldFileEntry != null) {
 			folderId = oldFileEntry.getFolderId();
-			PortletFileRepositoryUtil.deletePortletFileEntry(
+
+			_portletFileRepository.deletePortletFileEntry(
 				oldFileEntry.getFileEntryId());
 		}
 
@@ -124,7 +121,7 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 			folderId = folder.getFolderId();
 		}
 
-		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		fileEntry = _portletFileRepository.addPortletFileEntry(
 			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			LayoutUtilityPageEntry.class.getName(), layoutUtilityPageEntryId,
 			LayoutAdminPortletKeys.GROUP_PAGES, folderId,

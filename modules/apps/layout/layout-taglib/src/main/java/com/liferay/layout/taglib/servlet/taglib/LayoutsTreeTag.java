@@ -372,7 +372,7 @@ public class LayoutsTreeTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-layout:layouts-tree:layouts",
 				layoutsTree.getLayoutsJSON(
-					httpServletRequest, _groupId, _privateLayout,
+					httpServletRequest, _groupId, false, _privateLayout,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true,
 					_treeId, _layoutSetBranch));
 		}

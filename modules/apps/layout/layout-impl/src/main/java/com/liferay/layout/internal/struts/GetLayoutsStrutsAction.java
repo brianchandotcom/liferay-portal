@@ -54,7 +54,7 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 			ServletResponseUtil.write(
 				httpServletResponse,
 				_layoutsTree.getLayoutsJSON(
-					httpServletRequest, groupId, treeId, null));
+					httpServletRequest, groupId, false, treeId, null));
 		}
 		else if (cmd.equals("getSiblingLayoutsJSON")) {
 			ServletResponseUtil.write(
@@ -77,8 +77,8 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 			httpServletRequest, "incomplete", true);
 
 		return _layoutsTree.getLayoutsJSON(
-			httpServletRequest, groupId, privateLayout, parentLayoutId, null,
-			incomplete, treeId, null);
+			httpServletRequest, groupId, false, privateLayout, parentLayoutId,
+			null, incomplete, treeId, null);
 	}
 
 	protected String getSiblingLayoutsJSON(
@@ -91,7 +91,8 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 		int max = ParamUtil.getInteger(httpServletRequest, "max");
 
 		return _layoutsTree.getLayoutsJSON(
-			httpServletRequest, groupId, privateLayout, layoutId, max, null);
+			httpServletRequest, groupId, false, privateLayout, layoutId, max,
+			null);
 	}
 
 	@Reference

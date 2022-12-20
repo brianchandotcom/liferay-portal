@@ -88,8 +88,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	@Override
 	public String getLayoutsJSON(
 			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long layoutId, int max,
-			LayoutSetBranch layoutSetBranch)
+			boolean includeActions, boolean privateLayout, long layoutId,
+			int max, LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -119,7 +119,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			groupId, privateLayout, parentLayoutId, true, start, end);
 
 		JSONSerializable jsonSerializable = _toJSONSerializable(
-			httpServletRequest, groupId, layouts, total, layoutSetBranch);
+			httpServletRequest, groupId, includeActions, layouts, total,
+			layoutSetBranch);
 
 		List<Layout> ancestorLayouts = _layoutService.getAncestorLayouts(
 			layout.getPlid());
@@ -154,7 +155,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	@Override
 	public String getLayoutsJSON(
 			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId,
+			boolean includeActions, boolean privateLayout, long parentLayoutId,
 			long[] expandedLayoutIds, boolean incomplete, String treeId,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -174,12 +175,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			incomplete, expandedLayoutIds, treeId, false);
 
 		return _toJSON(
-			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
+			httpServletRequest, groupId, includeActions, layoutTreeNodes,
+			layoutSetBranch);
 	}
 
 	@Override
 	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId, String treeId,
+			HttpServletRequest httpServletRequest, long groupId,
+			boolean includeActions, String treeId,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
@@ -204,7 +207,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				false));
 
 		return _toJSON(
-			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
+			httpServletRequest, groupId, includeActions, layoutTreeNodes,
+			layoutSetBranch);
 	}
 
 	private Layout _fetchCurrentLayout(HttpServletRequest httpServletRequest) {
@@ -500,18 +504,21 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private String _toJSON(
 			HttpServletRequest httpServletRequest, long groupId,
-			LayoutTreeNodes layoutTreeNodes, LayoutSetBranch layoutSetBranch)
+			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
+			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
 		JSONSerializable jsonSerializable = _toJSONSerializable(
-			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
+			httpServletRequest, groupId, includeActions, layoutTreeNodes,
+			layoutSetBranch);
 
 		return jsonSerializable.toString();
 	}
 
 	private JSONArray _toJSONArray(
 			HttpServletRequest httpServletRequest, long groupId,
-			LayoutTreeNodes layoutTreeNodes, LayoutSetBranch layoutSetBranch)
+			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
+			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -537,14 +544,15 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				layoutTreeNode.getChildLayoutTreeNodes();
 
 			JSONSerializable childrenJSONSerializable = _toJSONSerializable(
-				httpServletRequest, groupId, childLayoutTreeNodes,
-				layoutSetBranch);
+				httpServletRequest, groupId, includeActions,
+				childLayoutTreeNodes, layoutSetBranch);
 
 			Layout layout = layoutTreeNode.getLayout();
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			if (GetterUtil.getBoolean(
+			if (includeActions &&
+				GetterUtil.getBoolean(
 					httpServletRequest.getAttribute(
 						ProductNavigationProductMenuWebKeys.
 							RETURN_LAYOUTS_AS_ARRAY))) {
@@ -740,7 +748,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONSerializable _toJSONSerializable(
 			HttpServletRequest httpServletRequest, long groupId,
-			LayoutTreeNodes layoutTreeNodes, LayoutSetBranch layoutSetBranch)
+			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
+			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -751,7 +760,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		}
 
 		JSONArray jsonArray = _toJSONArray(
-			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
+			httpServletRequest, groupId, includeActions, layoutTreeNodes,
+			layoutSetBranch);
 
 		if (GetterUtil.getBoolean(
 				httpServletRequest.getAttribute(
@@ -770,7 +780,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONSerializable _toJSONSerializable(
 			HttpServletRequest httpServletRequest, long groupId,
-			List<Layout> layouts, int total, LayoutSetBranch layoutSetBranch)
+			boolean includeActions, List<Layout> layouts, int total,
+			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
 		List<LayoutTreeNode> layoutTreeNodesList = new ArrayList<>();
@@ -785,7 +796,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			layoutTreeNodesList, total);
 
 		return _toJSONSerializable(
-			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
+			httpServletRequest, groupId, includeActions, layoutTreeNodes,
+			layoutSetBranch);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

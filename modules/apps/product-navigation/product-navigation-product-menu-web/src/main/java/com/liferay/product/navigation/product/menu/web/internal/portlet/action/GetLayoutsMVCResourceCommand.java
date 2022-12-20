@@ -106,7 +106,7 @@ public class GetLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 				_jsonFactory.createJSONArray(
 					_layoutsTree.getLayoutsJSON(
 						httpServletRequest, themeDisplay.getScopeGroupId(),
-						privateLayout, parentLayoutId, null, incomplete,
+						true, privateLayout, parentLayoutId, null, incomplete,
 						"productMenuPagesTree", null))
 			));
 	}

@@ -99,7 +99,7 @@ public class LayoutsTreeDisplayContext {
 		LayoutsTree layoutsTree = ServletContextUtil.getLayoutsTree();
 
 		String layoutsJSON = layoutsTree.getLayoutsJSON(
-			_httpServletRequest, _groupId, _privateLayout,
+			_httpServletRequest, _groupId, false, _privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _selectedLayoutIds, true,
 			_treeId, null);
 

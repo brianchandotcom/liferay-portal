@@ -429,9 +429,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.gotoSitePage(
-			pageName = "Form Page",
-			siteName = "Site Name");
+		IFrame.closeFrame();
 
 		FormPortlet.waitFormRenderer(text = "Next");
 

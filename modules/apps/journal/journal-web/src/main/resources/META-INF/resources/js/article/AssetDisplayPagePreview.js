@@ -116,7 +116,7 @@ export default function AssetDisplayPagePreview({
 										url: siteItemSelectorURL,
 									});
 								}}
-								small
+								size="sm"
 								type="button"
 							>
 								{Liferay.Language.get('more')}

@@ -72,7 +72,7 @@ export default function ImageInput({name, portletNamespace, previewURL}) {
 								displayType="secondary"
 								monospaced
 								onClick={() => inputRef.current?.click()}
-								small
+								size="sm"
 								title={sub(
 									fileName
 										? Liferay.Language.get('change-x')

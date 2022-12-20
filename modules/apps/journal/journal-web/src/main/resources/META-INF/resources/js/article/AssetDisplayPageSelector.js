@@ -110,7 +110,7 @@ export default function AssetDisplayPageSelector({
 							displayType="secondary"
 							monospaced
 							onClick={() => openAssetDisplayPageSelector()}
-							small
+							size="sm"
 							title={sub(
 								assetDisplayPageSelected
 									? Liferay.Language.get('change-x')

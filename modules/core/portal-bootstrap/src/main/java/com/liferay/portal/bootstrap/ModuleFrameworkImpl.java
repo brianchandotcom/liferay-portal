@@ -15,6 +15,8 @@
 package com.liferay.portal.bootstrap;
 
 import com.liferay.petra.io.BigEndianCodec;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -1596,16 +1598,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Props props = PropsUtil.getProps();
 
-		ServiceRegistration<Props> serviceRegistration =
-			bundleContext.registerService(
-				Props.class, props,
-				_getProperties(props, Props.class.getName()));
+		bundleContext.registerService(
+			Props.class, props, _getProperties(props, Props.class.getName()));
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Registered required service as " +
-					serviceRegistration.getReference());
-		}
+		bundleContext.registerService(
+			ProcessExecutor.class, new LocalProcessExecutor(), null);
 	}
 
 	private void _startConfigurationBundles(Collection<Bundle> bundles)

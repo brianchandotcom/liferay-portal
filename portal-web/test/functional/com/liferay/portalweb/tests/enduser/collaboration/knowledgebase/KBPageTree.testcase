@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that an article in the folder is displayed in the KB page tree when the folder is expanded."	
+	@description = "This test ensures that an article in the folder is displayed in the KB page tree when the folder is expanded."
 	@priority = "5"
 	test CanViewArticleInFolderThroughPageTreePanel {
 		JSONKnowledgeBase.addkBFolder(
@@ -53,7 +53,7 @@ definition {
 			pageTreePanel = "true");
 	}
 
-	@description = "This test ensures that a child article is displayed in the KB page tree after expanding the parent article."	
+	@description = "This test ensures that a child article is displayed in the KB page tree after expanding the parent article."
 	@priority = "4"
 	test CanViewChildArticleThroughPageTreePanel {
 		JSONKnowledgeBase.addkBArticle(
@@ -81,7 +81,7 @@ definition {
 			pageTreePanel = "true");
 	}
 
-	@description = "This test ensures that a subfolder is displayed in the KB page tree when the parent folder is expanded."	
+	@description = "This test ensures that a subfolder is displayed in the KB page tree when the parent folder is expanded."
 	@priority = "5"
 	test CanViewSubFolderThroughPageTreePanel {
 		JSONKnowledgeBase.addkBFolder(
@@ -110,7 +110,7 @@ definition {
 		KBArticle.viewDefaultCP(featureFlag = "true");
 	}
 
-	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."	
+	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."
 	@priority = "5"
 	test PageTreeIsCollapsedAfterOpeningProductMenu {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

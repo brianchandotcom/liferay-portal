@@ -347,7 +347,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "State");
 	}
 
-	@description = "This is a use case for LPS-53992." 
+	@description = "This is a use case for LPS-53992."
 	@priority = "5"
 	test AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab {
 		property portal.acceptance = "true";
@@ -723,7 +723,7 @@ definition {
 		KaleoDesigner.viewNodeAssignments(nodeAssignmentType = "Role Type");
 	}
 
-	@description = "This is a use case for LPS-71924." 
+	@description = "This is a use case for LPS-71924."
 	@priority = "5"
 	test PublishDefaultWorkflowDefinition {
 		property environment.acceptance = "true";
@@ -1269,7 +1269,7 @@ definition {
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
-	@description = "This is a use case for LPS-48590." 
+	@description = "This is a use case for LPS-48590."
 	@priority = "4"
 	test ViewSourceXMLNotErasedWhenInvalid {
 		property portal.acceptance = "true";

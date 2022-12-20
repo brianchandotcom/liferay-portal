@@ -736,7 +736,7 @@ definition {
 		}
 	}
 
-	@description = "User can edit an existing site template."	
+	@description = "User can edit an existing site template."
 	@priority = "4"
 	test EditSiteTemplate {
 		property portal.acceptance = "true";

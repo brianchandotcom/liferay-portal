@@ -73,7 +73,7 @@ definition {
 			kbTemplateTitle = "Knowledge Base Template Title");
 	}
 
-	@description = "This test ensures that the template can be added by center new button."	
+	@description = "This test ensures that the template can be added by center new button."
 	@e2etest
 	@priority = "5"
 	test CanAddTemplateThroughCenterNewButton {
@@ -291,7 +291,7 @@ definition {
 			viewNoCommentsPanel = "true");
 	}
 
-	@description = "This test ensures that the empty message can be displayed in the pane."	
+	@description = "This test ensures that the empty message can be displayed in the pane."
 	@priority = "3"
 	test CanViewEmptyMessage {
 		property custom.properties = "feature.flag.LPS-156421=true";
@@ -303,7 +303,7 @@ definition {
 		KBTemplate.viewNoTemplates();
 	}
 
-	@description = "This test ensures that the article templates list can be displayed in the pane."	
+	@description = "This test ensures that the article templates list can be displayed in the pane."
 	@priority = "3"
 	test CanViewTemplatesInPane {
 		property custom.properties = "feature.flag.LPS-156421=true";

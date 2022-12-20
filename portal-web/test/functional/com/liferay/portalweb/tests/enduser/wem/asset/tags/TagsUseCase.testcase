@@ -280,7 +280,7 @@ definition {
 		}
 	}
 
-	@description = "The Tag Filter widget could display unused tags."	
+	@description = "The Tag Filter widget could display unused tags."
 	@priority = "3"
 	test DisplayUnusedTags {
 		task ("Add three tags") {

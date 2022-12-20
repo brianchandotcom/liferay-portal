@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLink from '@clayui/link';
 import classnames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -144,14 +145,25 @@ export default function DateEditableFormatInput({
 				<CurrentLanguageFlag />
 			</div>
 			{enableCustomInput && (
-				<TextField
-					field={{
-						label: Liferay.Language.get('custom-format'),
-						name: 'dateFormat',
-					}}
-					onValueSelect={onValueSelectHandler}
-					value={dateFormat ?? DATE_FORMAT_OPTIONS[0].value}
-				/>
+				<>
+					<TextField
+						field={{
+							label: Liferay.Language.get('custom-format'),
+							name: 'dateFormat',
+						}}
+						onValueSelect={onValueSelectHandler}
+						value={dateFormat ?? DATE_FORMAT_OPTIONS[0].value}
+					/>
+
+					<ClayLink
+						className="text-3"
+						href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html"
+					>
+						{Liferay.Language.get(
+							'go-to-documentation-to-learn-more-about-date-formats'
+						)}
+					</ClayLink>
+				</>
 			)}
 		</>
 	);

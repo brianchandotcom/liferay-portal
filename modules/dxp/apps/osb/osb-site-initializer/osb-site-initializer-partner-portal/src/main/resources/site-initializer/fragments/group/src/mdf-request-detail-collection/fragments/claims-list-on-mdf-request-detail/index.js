@@ -64,7 +64,7 @@ const Panel = ({mdfClaims}) => {
 	return (
 		<div>
 			<div className="text-neutral-7 text-paragraph-xs">
-				Type: {mdfClaims.partial === 'true' ? 'Partial' : 'Full'}
+				Type: {mdfClaims.partial ? 'Partial' : 'Full'}
 			</div>
 
 			<div className="mb-1 mt-1 text-neutral-9 text-paragraph-sm">

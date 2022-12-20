@@ -32,9 +32,7 @@ const getMDFClaimSummary = async () => {
 		const paymentReceived = formatCurrency(
 			Liferay.Util.escape(data.paymentReceived)
 		);
-		const type = Liferay.Util.escape(
-			data.partial === 'true' ? 'Partial' : 'Full'
-		);
+		const type = Liferay.Util.escape(data.partial ? 'Partial' : 'Full');
 
 		fragmentElement.querySelector('#mdf-claim-type').innerHTML = type;
 		fragmentElement.querySelector(

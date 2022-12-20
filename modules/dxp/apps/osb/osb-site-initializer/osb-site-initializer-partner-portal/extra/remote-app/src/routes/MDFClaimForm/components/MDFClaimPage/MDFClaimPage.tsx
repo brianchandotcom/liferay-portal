@@ -52,14 +52,16 @@ const MDFClaimPage = ({
 		)
 	);
 
-	const claimsNotDraft = mdfRequest.mdfRequestToMdfClaims?.filter(
+	const claimsFiltered = mdfRequest.mdfRequestToMdfClaims?.filter(
 		(mdfRequestToMdfClaim) => {
-			return !mdfRequestToMdfClaim.claimStatus.includes(Status.DRAFT);
+			const ignoreStatus = [Status.DRAFT, Status.EXPIRED, Status.REJECT];
+
+			return !ignoreStatus.includes(mdfRequestToMdfClaim.claimStatus);
 		}
 	).length;
 
 	const getClaimPage = () => {
-		if (claimsNotDraft && claimsNotDraft >= 2) {
+		if (claimsFiltered && claimsFiltered >= 2) {
 			return (
 				<PRMForm name="New" title="Reimbursement Claim">
 					<div className="d-flex justify-content-center mt-4">

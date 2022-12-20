@@ -147,8 +147,14 @@ export default function () {
 		return <>Loading...</>;
 	}
 
-	const claimsNotDraft = claims?.items.filter((claim) => {
-		return !claim.claimStatus.includes(ClaimStatus.DRAFT);
+	const filteredClaims = claims?.items.filter((claim) => {
+		const ignoreStatus = [
+			ClaimStatus.DRAFT,
+			ClaimStatus.EXPIRED,
+			ClaimStatus.REJECT,
+		];
+
+		return !ignoreStatus.includes(claim.claimStatus);
 	});
 
 	return (
@@ -173,10 +179,10 @@ export default function () {
 								Get Reimbursed
 							</h6>
 
-							{claimsNotDraft.length < 2 ? (
+							{filteredClaims.length < 2 ? (
 								<h6 className="font-weight-normal text-neutral-8">
 									You can submit up to{' '}
-									{2 - claimsNotDraft.length} claim(s).
+									{2 - filteredClaims.length} claim(s).
 								</h6>
 							) : (
 								<h6 className="font-weight-normal text-neutral-8">
@@ -185,7 +191,7 @@ export default function () {
 							)}
 						</div>
 
-						{claimsNotDraft.length < 2 && (
+						{filteredClaims.length < 2 && (
 							<button
 								className="btn btn-primary"
 								onClick={() =>

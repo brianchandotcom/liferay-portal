@@ -164,8 +164,8 @@ definition {
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
 			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
 			portalURL = "${portalURL}",
-			truncatedHtmlTitle = "true",
-			truncatedURL = "true");
+			validateTitleCSSStyle = "true",
+			validateURLCSSStyle = "true");
 
 		Button.clickSave();
 
@@ -176,8 +176,8 @@ definition {
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
 			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
 			portalURL = "${portalURL}",
-			truncatedHtmlTitle = "true",
-			truncatedURL = "true");
+			validateTitleCSSStyle = "true",
+			validateURLCSSStyle = "true");
 	}
 
 	@description = "This test ensures that a user can preview SEO tags with different languages."

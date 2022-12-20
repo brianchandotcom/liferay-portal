@@ -14,9 +14,11 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -83,20 +85,23 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 				LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
 		}
 
-		String fileName =
-			layoutUtilityPageEntryId + "_preview." + fileEntry.getExtension();
-
-		FileEntry oldFileEntry = _portletFileRepository.fetchPortletFileEntry(
-			themeDisplay.getScopeGroupId(), repository.getDlFolderId(),
-			fileName);
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.fetchLayoutUtilityPageEntry(
+				layoutUtilityPageEntryId);
 
 		long folderId = 0;
 
-		if (oldFileEntry != null) {
-			folderId = oldFileEntry.getFolderId();
+		if (layoutUtilityPageEntry.getPreviewFileEntryId() > 0) {
+			DLFileEntry oldDLFileEntry =
+				_dlFileEntryLocalService.fetchDLFileEntry(
+					layoutUtilityPageEntry.getPreviewFileEntryId());
 
-			_portletFileRepository.deletePortletFileEntry(
-				oldFileEntry.getFileEntryId());
+			if (oldDLFileEntry != null) {
+				folderId = oldDLFileEntry.getFolderId();
+
+				_portletFileRepository.deletePortletFileEntry(
+					oldDLFileEntry.getFileEntryId());
+			}
 		}
 
 		if (folderId == 0) {
@@ -121,6 +126,9 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 			folderId = folder.getFolderId();
 		}
 
+		String fileName =
+			layoutUtilityPageEntryId + "_preview." + fileEntry.getExtension();
+
 		fileEntry = _portletFileRepository.addPortletFileEntry(
 			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			LayoutUtilityPageEntry.class.getName(), layoutUtilityPageEntryId,
@@ -138,6 +146,9 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;

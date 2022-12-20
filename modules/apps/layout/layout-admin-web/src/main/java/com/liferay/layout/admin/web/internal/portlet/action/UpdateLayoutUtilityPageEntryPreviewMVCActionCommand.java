@@ -104,10 +104,12 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 			}
 		}
 
+		String folderName = String.valueOf(layoutUtilityPageEntryId);
+
 		if (folderId == 0) {
 			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
 				themeDisplay.getScopeGroupId(), repository.getDlFolderId(),
-				String.valueOf(layoutUtilityPageEntryId));
+				folderName);
 
 			if (dlFolder != null) {
 				folderId = dlFolder.getFolderId();
@@ -120,8 +122,8 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 
 			Folder folder = _portletFileRepository.addPortletFolder(
 				themeDisplay.getUserId(), repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(layoutUtilityPageEntryId), serviceContext);
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
+				serviceContext);
 
 			folderId = folder.getFolderId();
 		}

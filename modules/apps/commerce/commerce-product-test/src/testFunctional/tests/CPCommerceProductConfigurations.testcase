@@ -1,17 +1,157 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp(storeFront = "true");
+		CommerceConfiguration.commerceSetUp(
+			minium = "true",
+			storeFront = "true");
 	}
 
 	tearDown {
 		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-10491. The product can be added to cart until there's stock quantity"
+	@priority = "3"
+	test CanOnlyPlaceOrderWhenStockIsAvailable {
+		property portal.acceptance = "false";
+
+		task ("Given a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the warehouse quantity for the product is set to 4") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.editWarehousesQuantity(
+				italyQuantity = "1",
+				northeastQuantity = "1",
+				productName = "U-Joint",
+				productSku = "MIN55861",
+				southwestQuantity = "2");
+		}
+
+		task ("And product's Allow Back Order is disabled") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given a placed order") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "4");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "4",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When user tries to add a second order") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then the Availability fragment is present with the Unavailable tag") {
+			AssertElementPresent(
+				key_availability = "Unavailable",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10491.  The user can see product is unavailable when stock quantity is zero"
+	@priority = "3"
+	test CanSeeProductUnavailableWhenStockIsZero {
+		property portal.acceptance = "false";
+
+		task ("Given a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the warehouse quantity for the product is set to 0") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.editWarehousesQuantity(
+				italyQuantity = "0",
+				northeastQuantity = "0",
+				productName = "U-Joint",
+				productSku = "MIN55861",
+				southwestQuantity = "0");
+		}
+
+		task ("And product's Allow Back Order is disabled") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("When buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the Availability fragment is present with the Unavailable tag") {
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+
+			AssertElementPresent(
+				key_availability = "Unavailable",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6094. UseConfiguration"
@@ -20,8 +160,6 @@ definition {
 		property portal.acceptance = "true";
 
 		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

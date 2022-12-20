@@ -131,16 +131,12 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_FORM_RENDERER,
 				_configurationFormRendererRetriever.
-					getConfigurationFormRenderer(pid));
+					getConfigurationFormRenderer(
+						configurationModel.getBaseID()));
 
 			List<ConfigurationMenuItem> configurationMenuItems =
-				_configurationMenuItemsServiceTrackerMap.getService(pid);
-
-			if (configurationMenuItems == null) {
-				configurationMenuItems =
-					_configurationMenuItemsServiceTrackerMap.getService(
-						factoryPid);
-			}
+				_configurationMenuItemsServiceTrackerMap.getService(
+					configurationModel.getBaseID());
 
 			if (configurationMenuItems != null) {
 				renderRequest.setAttribute(

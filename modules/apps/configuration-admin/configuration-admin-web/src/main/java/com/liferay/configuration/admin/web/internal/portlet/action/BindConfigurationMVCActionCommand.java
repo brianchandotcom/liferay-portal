@@ -150,7 +150,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		Dictionary<String, Object> properties = null;
 
 		Map<String, Object> requestParameters = _getRequestParameters(
-			actionRequest, pid);
+			actionRequest, configurationModel.getBaseID());
 
 		if (requestParameters != null) {
 			properties = _toDictionary(requestParameters);

@@ -170,7 +170,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		_simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 		_adminUser = TestPropsValues.getUser();
 
@@ -1065,7 +1065,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryOrganizationRelLocalService.
 			deleteAccountEntryOrganizationRel(
 				accountEntry1.getAccountEntryId(),
-				suborganization1.getOrganizationId());
+				organization1.getOrganizationId());
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry1.getAccountEntryId(),
@@ -1074,7 +1074,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryOrganizationRelLocalService.
 			deleteAccountEntryOrganizationRel(
 				accountEntry2.getAccountEntryId(),
-				suborganization2.getOrganizationId());
+				organization2.getOrganizationId());
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry2.getAccountEntryId(),
@@ -1420,7 +1420,10 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Role randomRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_addResourcePermission(ActionKeys.VIEW, randomRole.getRoleId());
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.VIEW);
 
 		_userLocalService.addRoleUser(randomRole.getRoleId(), _user);
 
@@ -2145,7 +2148,7 @@ public class DefaultObjectEntryManagerImplTest {
 		Date date1, Date date2, String fieldName) {
 
 		return StringBundler.concat(
-			"( ", fieldName, " ge (", _simpleDateFormat.format(date1),
+			"(( ", fieldName, " ge ", _simpleDateFormat.format(date1),
 			") and ( ", fieldName, " le ", _simpleDateFormat.format(date2),
 			"))");
 	}

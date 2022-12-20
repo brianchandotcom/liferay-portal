@@ -131,7 +131,7 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 				companyId, objectEntry1, objectEntry2);
 		}
 		else {
-			_log.error("Auto Fill type selected is not available");
+			_log.error("Auto fill type selected is not available");
 		}
 	}
 

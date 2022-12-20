@@ -72,7 +72,7 @@ export default function UndoHistory() {
 						aria-pressed={active}
 						disabled={!undoHistory.length && !redoHistory.length}
 						displayType="secondary"
-						small
+						size="sm"
 						symbol="time"
 						title={Liferay.Language.get('history')}
 					/>

@@ -150,7 +150,7 @@ function FrontendTokenCategories() {
 						<ClayButton
 							className="form-control form-control-select form-control-sm mb-3 text-left"
 							displayType="secondary"
-							small
+							size="sm"
 							type="button"
 						>
 							{selectedCategory.label}

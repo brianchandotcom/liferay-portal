@@ -85,7 +85,7 @@ export function LayoutTypeSelector({layoutType}) {
 				<ClayButton
 					className="form-control-select ml-3 style-book-editor__preview-selector text-left"
 					displayType="secondary"
-					small
+					size="sm"
 					type="button"
 				>
 					<span>
@@ -194,7 +194,7 @@ export function LayoutSelector({layoutType}) {
 				<ClayButton
 					className="form-control-select ml-3 style-book-editor__preview-selector text-left"
 					displayType="secondary"
-					small
+					size="sm"
 					type="button"
 				>
 					<span>{previewLayout?.name}</span>

@@ -63,7 +63,7 @@ export default function PublishButton() {
 							? () => setOpenStyleErrorsModal(true)
 							: () => setOpenPublishModal(true)
 					}
-					small
+					size="sm"
 					type="button"
 				>
 					{Liferay.Language.get('publish')}

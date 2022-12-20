@@ -110,8 +110,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		_sharedIndexInformer = _toSharedIndexInformer(
 			_kubernetesClient, _portalK8sAgentConfiguration);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialized K8s agent");
+		if (_log.isInfoEnabled()) {
+			_log.info("Initialized K8s agent");
 		}
 	}
 
@@ -174,8 +174,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 					configMap
 				);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Deleted " + configMap);
+				if (_log.isInfoEnabled()) {
+					_log.info("Deleted " + configMap);
 				}
 
 				return Result.DELETED;
@@ -193,15 +193,15 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 					configMap
 				);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Updated " + configMap);
+				if (_log.isInfoEnabled()) {
+					_log.info("Updated " + configMap);
 				}
 
 				return Result.UPDATED;
 			}
 			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unchanged " + configMap);
+				if (_log.isInfoEnabled()) {
+					_log.info("Unchanged " + configMap);
 				}
 
 				return Result.UNCHANGED;
@@ -239,8 +239,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 				});
 
 			if (binaryData.isEmpty() && data.isEmpty()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
+				if (_log.isInfoEnabled()) {
+					_log.info(
 						StringBundler.concat(
 							"Config map does not exist and no data was ",
 							"supplied for ", configMapName,
@@ -277,8 +277,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 				configMap
 			);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Created " + configMap);
+			if (_log.isInfoEnabled()) {
+				_log.info("Created " + configMap);
 			}
 
 			return Result.CREATED;
@@ -287,29 +287,29 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deactivating K8s agent");
+		if (_log.isInfoEnabled()) {
+			_log.info("Deactivating K8s agent");
 		}
 
 		_sharedIndexInformer.close();
 
 		_kubernetesClient.close();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deactivated K8s agent");
+		if (_log.isInfoEnabled()) {
+			_log.info("Deactivated K8s agent");
 		}
 	}
 
 	private void _add(ConfigMap configMap) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Adding config map " + configMap.toString());
+		if (_log.isInfoEnabled()) {
+			_log.info("Adding config map " + configMap.toString());
 		}
 
 		Map<String, String> data = configMap.getData();
 
 		if (data == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Data is null for config map " + configMap);
+			if (_log.isInfoEnabled()) {
+				_log.info("Data is null for config map " + configMap);
 			}
 
 			return;
@@ -327,15 +327,15 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 	}
 
 	private void _delete(ConfigMap configMap) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deleting config map " + configMap);
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleting config map " + configMap);
 		}
 
 		Map<String, String> data = configMap.getData();
 
 		if (data == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Data is null for config map " + configMap);
+			if (_log.isInfoEnabled()) {
+				_log.info("Data is null for config map " + configMap);
 			}
 
 			return;
@@ -463,8 +463,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 					properties.get(".k8s.config.resource.version"),
 					objectMeta.getResourceVersion())) {
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
+				if (_log.isInfoEnabled()) {
+					_log.info(
 						"Configuration and Kubernetes resource versions are " +
 							"identical");
 				}
@@ -503,8 +503,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 			".k8s.config.resource.version", objectMeta.getResourceVersion());
 		properties.put(".k8s.config.uid", objectMeta.getUid());
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Processed configuration " + properties);
+		if (_log.isInfoEnabled()) {
+			_log.info("Processed configuration " + properties);
 		}
 
 		try {
@@ -669,8 +669,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 	}
 
 	private void _update(ConfigMap oldConfigMap, ConfigMap newConfigMap) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_log.isInfoEnabled()) {
+			_log.info(
 				StringBundler.concat(
 					"Updating config map ", oldConfigMap, " to ",
 					newConfigMap));

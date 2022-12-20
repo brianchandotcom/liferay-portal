@@ -67,7 +67,7 @@ definition {
 				entryTitle = "Blogs Entry2 Title");
 		}
 
-		var portalInstanceIds = StringUtil.regexReplaceAll("${portalInstanceIds}", "[\[\]\"]", "");
+		var portalInstanceIds = StringUtil.regexReplaceAll(${portalInstanceIds}, "[\[\]\"]", "");
 	}
 
 	@priority = "5"
@@ -96,16 +96,16 @@ definition {
 
 		echo("This is a message.");
 
-		for (var breadcrumbName : list "${breadcrumbListVisible}") {
+		for (var breadcrumbName : list ${breadcrumbListVisible}) {
 			var key_breadcrumbName = ${breadcrumbName};
-			var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
+			var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});
 			var historyVersion = selenium.getText("Staging#HISTORY_VERSION");
 
 			AssertTextEquals(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1 = ${breadcrumbNameUppercase});
 
-			for (var breadcrumbName : list "${breadcrumbListVisible}") {
+			for (var breadcrumbName : list ${breadcrumbListVisible}) {
 				AssertTextEquals(
 					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 					value1 = ${breadcrumbNameUppercase});

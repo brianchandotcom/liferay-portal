@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.layout.prototype;
 
-import com.liferay.layout.page.template.util.LayoutPrototypeHelperUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,11 +23,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -149,9 +150,9 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			layoutPrototypeLocalService.search(
 				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Layout layout = LayoutPrototypeHelperUtil.addLayoutPrototype(
-			layoutPrototypeLocalService, companyId, defaultUserId, nameMap,
-			descriptionMap, layoutTemplateId, layoutPrototypes);
+		Layout layout = _addLayoutPrototype(
+			companyId, defaultUserId, nameMap, descriptionMap, layoutTemplateId,
+			layoutPrototypes);
 
 		if (layout == null) {
 			return;
@@ -200,6 +201,40 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private Layout _addLayoutPrototype(
+			long companyId, long defaultUserId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String layoutTemplateId,
+			List<LayoutPrototype> layoutPrototypes)
+		throws Exception {
+
+		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				_localization.getDefaultLanguageId(layoutPrototype.getName()));
+
+			String name = nameMap.get(defaultLocale);
+
+			if ((name == null) ||
+				name.equals(layoutPrototype.getName(defaultLocale))) {
+
+				return null;
+			}
+		}
+
+		LayoutPrototype layoutPrototype =
+			layoutPrototypeLocalService.addLayoutPrototype(
+				defaultUserId, companyId, nameMap, descriptionMap, true,
+				new ServiceContext());
+
+		Layout layout = layoutPrototype.getLayout();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
+
+		return layout;
+	}
 
 	private Optional<LayoutPrototype> _findSearchLayoutPrototype(
 		long companyId) {

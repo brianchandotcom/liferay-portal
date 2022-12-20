@@ -222,7 +222,7 @@ function Tabs({updateLists}) {
 								updateLists={updateLists}
 							/>
 						) : (
-							<ClayLoadingIndicator small />
+							<ClayLoadingIndicator size="sm" />
 						)}
 					</ClayTabs.TabPane>
 				))}
@@ -350,7 +350,7 @@ function ReorderDropdown({index, item, numberOfItems, onChangeItemPosition}) {
 					aria-label={sub(Liferay.Language.get('move-x'), item.name)}
 					className="text-secondary"
 					displayType="unstyled"
-					small
+					size="sm"
 					symbol="ellipsis-v"
 				/>
 			}

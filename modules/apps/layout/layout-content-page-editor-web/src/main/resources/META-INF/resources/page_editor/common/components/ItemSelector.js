@@ -234,7 +234,7 @@ export default function ItemSelector({
 									<ClayButtonWithIcon
 										aria-label={selectContentButtonLabel}
 										displayType="secondary"
-										small
+										size="sm"
 										symbol={selectContentButtonIcon}
 										title={selectContentButtonLabel}
 									/>
@@ -247,7 +247,7 @@ export default function ItemSelector({
 								aria-label={selectContentButtonLabel}
 								displayType="secondary"
 								onClick={openModal}
-								small
+								size="sm"
 								symbol={selectContentButtonIcon}
 								title={selectContentButtonLabel}
 							/>
@@ -270,7 +270,7 @@ export default function ItemSelector({
 										label
 									)}
 									displayType="secondary"
-									small
+									size="sm"
 									symbol="ellipsis-v"
 									title={sub(
 										Liferay.Language.get('view-x-options'),

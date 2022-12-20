@@ -164,7 +164,7 @@ export default function TabsPanel({
 									/>
 								))
 							) : (
-								<ClayLoadingIndicator small />
+								<ClayLoadingIndicator size="sm" />
 							)}
 						</ClayTabs.TabPane>
 					))}

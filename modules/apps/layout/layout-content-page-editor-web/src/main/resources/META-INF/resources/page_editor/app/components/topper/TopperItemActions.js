@@ -166,7 +166,7 @@ export default function TopperItemActions({item}) {
 					<ClayButton
 						aria-label={Liferay.Language.get('options')}
 						displayType="unstyled"
-						small
+						size="sm"
 						title={Liferay.Language.get('options')}
 					>
 						<ClayIcon

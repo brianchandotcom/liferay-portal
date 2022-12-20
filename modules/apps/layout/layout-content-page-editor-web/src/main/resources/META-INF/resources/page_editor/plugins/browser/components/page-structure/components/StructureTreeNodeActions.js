@@ -83,7 +83,7 @@ export default function StructureTreeNodeActions({
 				displayType="unstyled"
 				onClick={() => updateActive(!active)}
 				ref={alignElementRef}
-				small
+				size="sm"
 				title={Liferay.Language.get('options')}
 			>
 				<ClayIcon symbol="ellipsis-v" />

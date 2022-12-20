@@ -109,7 +109,7 @@ export function LengthField({field, onEnter, onValueSelect, value}) {
 						);
 						onValueSelect(field.name, null);
 					}}
-					small
+					size="sm"
 					symbol="restore"
 					title={resetButtonLabel}
 				/>
@@ -319,7 +319,7 @@ export function LengthInput({
 								disabled={defaultUnit}
 								displayType="secondary"
 								id={triggerId}
-								small
+								size="sm"
 								title={Liferay.Language.get('select-units')}
 							>
 								{defaultUnit ||

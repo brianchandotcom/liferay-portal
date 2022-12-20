@@ -308,7 +308,7 @@ function ToolbarBody({className}) {
 							disabled={!enableDiscard}
 							displayType="secondary"
 							onClick={handleDiscardDraft}
-							small
+							size="sm"
 							type="submit"
 						>
 							{draftButtonLabel}

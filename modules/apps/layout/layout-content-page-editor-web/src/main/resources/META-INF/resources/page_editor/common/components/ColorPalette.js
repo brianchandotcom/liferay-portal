@@ -63,7 +63,7 @@ export default function ColorPalette({
 								)}
 								displayType="unstyled"
 								onClick={() => onColorSelect(color)}
-								small
+								size="sm"
 								title={color.cssClass}
 							/>
 						</li>
@@ -76,7 +76,7 @@ export default function ColorPalette({
 					disabled={!selectedColor}
 					displayType="secondary"
 					onClick={onClear}
-					small
+					size="sm"
 				>
 					{Liferay.Language.get('clear')}
 				</ClayButton>

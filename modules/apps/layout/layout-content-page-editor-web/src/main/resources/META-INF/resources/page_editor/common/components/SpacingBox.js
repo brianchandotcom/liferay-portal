@@ -289,7 +289,7 @@ function SpacingSelectorButton({
 												isReset: true,
 											});
 										}}
-										small
+										size="sm"
 										symbol="restore"
 										title={resetButtonLabel}
 									/>

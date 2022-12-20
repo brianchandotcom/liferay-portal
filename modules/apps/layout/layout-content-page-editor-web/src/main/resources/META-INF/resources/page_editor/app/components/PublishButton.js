@@ -50,7 +50,7 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 							}
 						});
 					}}
-					small
+					size="sm"
 				>
 					{label}
 				</ClayButton>

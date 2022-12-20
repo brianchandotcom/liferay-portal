@@ -190,7 +190,7 @@ export function AdvancedSelectField({
 									: defaultOptionComputedValue,
 							});
 						}}
-						small
+						size="sm"
 						symbol="chain-broken"
 						title={Liferay.Language.get('detach-style')}
 					/>
@@ -213,7 +213,7 @@ export function AdvancedSelectField({
 								className="border-0"
 								displayType="secondary"
 								id={triggerId}
-								small
+								size="sm"
 								symbol="theme"
 								title={Liferay.Language.get(
 									'value-from-stylebook'
@@ -255,7 +255,7 @@ export function AdvancedSelectField({
 					onClick={() =>
 						onSetValue({isTokenValue: true, value: null})
 					}
-					small
+					size="sm"
 					symbol="restore"
 					title={resetButtonLabel}
 				/>

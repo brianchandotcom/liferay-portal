@@ -105,7 +105,7 @@ export default function InlineConfirm({
 					displayType="primary"
 					loading={performingAction}
 					onClick={_handleConfirmButtonClick}
-					small
+					size="sm"
 				>
 					{confirmButtonLabel}
 				</Button>
@@ -114,7 +114,7 @@ export default function InlineConfirm({
 					disabled={performingAction}
 					displayType="secondary"
 					onClick={onCancelButtonClick}
-					small
+					size="sm"
 					type="button"
 				>
 					{cancelButtonLabel}

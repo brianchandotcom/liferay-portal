@@ -122,7 +122,7 @@ export function TargetCollectionsField({
 						aria-label={Liferay.Language.get('select')}
 						className="bg-light font-weight-normal form-control-select text-left w-100"
 						displayType="secondary"
-						small
+						size="sm"
 					>
 						{inputValue ? (
 							<span className="text-dark">{inputValue}</span>

@@ -116,7 +116,7 @@ export function CollectionAppliedFiltersGeneralPanel({item}) {
 	);
 
 	if (loading) {
-		return <ClayLoadingIndicator className="my-0" small />;
+		return <ClayLoadingIndicator className="my-0" size="sm" />;
 	}
 
 	return (

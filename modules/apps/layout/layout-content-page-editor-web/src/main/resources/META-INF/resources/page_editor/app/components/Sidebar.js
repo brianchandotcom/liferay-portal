@@ -443,7 +443,7 @@ export default function Sidebar() {
 									onFocus={prefetch}
 									onMouseEnter={prefetch}
 									role="tab"
-									small={true}
+									size="sm"
 									symbol={icon}
 									tabIndex={
 										sidebarPanelId !== panelId ? '-1' : null
@@ -501,7 +501,7 @@ export default function Sidebar() {
 									);
 									setHasError(false);
 								}}
-								small
+								size="sm"
 							>
 								{Liferay.Language.get('refresh')}
 							</ClayButton>
@@ -516,7 +516,7 @@ export default function Sidebar() {
 								fallback={
 									<ClayLoadingIndicator
 										className="my-4"
-										small
+										size="sm"
 									/>
 								}
 							>

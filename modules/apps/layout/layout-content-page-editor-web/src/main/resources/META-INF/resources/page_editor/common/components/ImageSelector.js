@@ -83,7 +83,7 @@ export function ImageSelector({
 									onImageSelected(image);
 								})
 							}
-							small
+							size="sm"
 							symbol={hasImageTitle ? 'change' : 'plus'}
 							title={selectButtonLabel}
 						/>
@@ -98,7 +98,7 @@ export function ImageSelector({
 									)}
 									displayType="secondary"
 									onClick={onClearButtonPressed}
-									small
+									size="sm"
 									symbol="times-circle"
 									title={Liferay.Language.get(
 										'clear-selection'

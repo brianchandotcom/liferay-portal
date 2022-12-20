@@ -46,7 +46,7 @@ export default function ContentFilter({
 						)}
 						className="form-control form-control-select form-control-sm text-left"
 						displayType="unstyled"
-						small
+						size="sm"
 						type="button"
 					>
 						<span>{selectedType}</span>

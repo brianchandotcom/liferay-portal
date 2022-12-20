@@ -54,7 +54,7 @@ export default function SidebarPanelHeader({
 							)
 							?.focus();
 					}}
-					small
+					size="sm"
 					symbol="times"
 					title={Liferay.Language.get('close')}
 				/>

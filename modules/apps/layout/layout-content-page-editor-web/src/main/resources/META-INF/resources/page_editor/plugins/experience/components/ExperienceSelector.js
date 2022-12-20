@@ -435,7 +435,7 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 					}
 				}}
 				ref={buttonRef}
-				small
+				size="sm"
 				type="button"
 			>
 				<ClayLayout.ContentRow verticalAlign="center">
@@ -545,7 +545,7 @@ const ExperiencesSelectorHeader = ({canCreateExperiences, onNewExperience}) => {
 							aria-label={Liferay.Language.get('new-experience')}
 							displayType="secondary"
 							onClick={onNewExperience}
-							small
+							size="sm"
 						>
 							{Liferay.Language.get('new-experience')}
 						</ClayButton>

@@ -78,7 +78,7 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 						displayType="unstyled"
 						monospaced
 						onClick={() => setEditorModalOpen(true)}
-						small
+						size="sm"
 						symbol="expand"
 						title={Liferay.Language.get('expand')}
 					/>

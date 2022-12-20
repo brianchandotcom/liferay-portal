@@ -168,7 +168,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 												handleThumbnailSelected
 											)
 										}
-										small
+										size="sm"
 										value={Liferay.Language.get(
 											'upload-thumbnail'
 										)}

@@ -25,7 +25,7 @@ const LoadingText = ({children}) => (
 		<span className="d-none d-sm-block m-0 navbar-text page-editor__status-bar text-info">
 			{children}
 		</span>
-		<ClayLoadingIndicator className="my-0" small />
+		<ClayLoadingIndicator className="my-0" size="sm" />
 	</>
 );
 

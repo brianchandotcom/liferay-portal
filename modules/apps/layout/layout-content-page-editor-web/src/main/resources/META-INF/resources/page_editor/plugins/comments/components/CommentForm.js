@@ -56,7 +56,7 @@ export default function CommentForm({
 							displayType="primary"
 							loading={loading}
 							onClick={onSubmitButtonClick}
-							small
+							size="sm"
 						>
 							{submitButtonLabel}
 						</Button>
@@ -64,7 +64,7 @@ export default function CommentForm({
 						<Button
 							displayType="secondary"
 							onClick={onCancelButtonClick}
-							small
+							size="sm"
 							type="button"
 						>
 							{Liferay.Language.get('cancel')}

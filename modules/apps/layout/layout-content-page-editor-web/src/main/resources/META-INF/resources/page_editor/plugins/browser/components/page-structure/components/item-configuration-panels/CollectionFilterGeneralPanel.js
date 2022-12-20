@@ -93,7 +93,7 @@ export function CollectionFilterGeneralPanel({item}) {
 	}, [collections]);
 
 	if (loading) {
-		return <ClayLoadingIndicator className="my-0" small />;
+		return <ClayLoadingIndicator className="my-0" size="sm" />;
 	}
 
 	return (

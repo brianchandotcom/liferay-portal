@@ -258,7 +258,7 @@ export default function FragmentsSidebar() {
 						data-tooltip-align="bottom-right"
 						displayType="secondary"
 						onClick={() => setShowReorderModal(true)}
-						small
+						size="sm"
 						symbol="order-arrow"
 						title={Liferay.Language.get('reorder-sets')}
 					/>
@@ -277,7 +277,7 @@ export default function FragmentsSidebar() {
 									: FRAGMENTS_DISPLAY_STYLES.LIST
 							);
 						}}
-						small
+						size="sm"
 						symbol={
 							displayStyleButtonDisabled ||
 							displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST

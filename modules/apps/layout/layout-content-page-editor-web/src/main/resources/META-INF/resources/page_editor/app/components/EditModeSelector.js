@@ -71,7 +71,7 @@ export default function EditModeSelector() {
 					className="form-control-select page-editor__edit-mode-selector text-left"
 					disabled={!canSwitchEditMode}
 					displayType="secondary"
-					small
+					size="sm"
 					type="button"
 				>
 					<span>{editMode}</span>

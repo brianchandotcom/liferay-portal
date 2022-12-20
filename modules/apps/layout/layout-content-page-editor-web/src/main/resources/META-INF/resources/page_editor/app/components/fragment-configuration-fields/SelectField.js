@@ -182,7 +182,7 @@ const MultiSelect = ({
 						aria-labelledby={labelId}
 						className="form-control-select form-control-sm text-left w-100"
 						displayType="secondary"
-						small
+						size="sm"
 					>
 						{label}
 					</ClayButton>

@@ -280,7 +280,7 @@ function TopperContent({
 										'comments'
 									)}
 									displayType="unstyled"
-									small
+									size="sm"
 									title={Liferay.Language.get('comments')}
 								>
 									<ClayIcon

@@ -32,7 +32,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 					disabled={!undoHistory || !undoHistory.length}
 					displayType="secondary"
 					onClick={onUndo}
-					small
+					size="sm"
 					symbol="undo"
 					title={Liferay.Language.get('undo')}
 				/>
@@ -43,7 +43,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 					disabled={!redoHistory || !redoHistory.length}
 					displayType="secondary"
 					onClick={onRedo}
-					small
+					size="sm"
 					symbol="redo"
 					title={Liferay.Language.get('redo')}
 				/>

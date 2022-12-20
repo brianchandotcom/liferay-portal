@@ -49,7 +49,7 @@ export function ButtonGroupField({field, onValueSelect, value}) {
 					displayType="unstyled"
 					key={validValue.value}
 					onClick={() => updateNextValue(validValue.value)}
-					small
+					size="sm"
 					symbol={validValue.icon}
 					title={validValue.label}
 					value={validValue.value}

@@ -187,7 +187,7 @@ export default function Translation({
 				<ClayButton
 					className="btn-monospaced"
 					displayType="secondary"
-					small
+					size="sm"
 				>
 					<ClayIcon symbol={languageIcon} />
 

@@ -136,7 +136,7 @@ export function DropdownColorPicker({
 					displayType="secondary"
 					onClick={() => onSetActive((active) => !active)}
 					ref={triggerElementRef}
-					small={small}
+					size={small ? 'sm' : null}
 				>
 					<span className="c-inner" tabIndex="-1">
 						<span
@@ -165,7 +165,7 @@ export function DropdownColorPicker({
 					displayType="secondary"
 					onClick={() => onSetActive(!active)}
 					ref={triggerElementRef}
-					small={small}
+					size={small ? 'sm' : null}
 					symbol="theme"
 					title={Liferay.Language.get('value-from-stylebook')}
 				/>

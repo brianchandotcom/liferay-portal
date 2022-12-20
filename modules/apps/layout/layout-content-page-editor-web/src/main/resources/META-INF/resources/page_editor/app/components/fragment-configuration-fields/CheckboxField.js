@@ -98,7 +98,7 @@ export function CheckboxField({
 							onClick={() => {
 								onValueSelect(field.name, null);
 							}}
-							small
+							size="sm"
 							symbol="restore"
 							title={Liferay.Language.get('restore-default')}
 						/>

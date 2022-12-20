@@ -21,7 +21,7 @@ import TabCollection from './TabCollection';
 
 export default function SearchResultsPanel({filteredTabs, loading = false}) {
 	if (loading) {
-		return <ClayLoadingIndicator className="mt-3" small />;
+		return <ClayLoadingIndicator className="mt-3" size="sm" />;
 	}
 
 	return filteredTabs.length ? (

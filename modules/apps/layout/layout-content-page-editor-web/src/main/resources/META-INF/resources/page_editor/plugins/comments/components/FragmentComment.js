@@ -190,7 +190,7 @@ export default function FragmentComment({
 								displayType="secondary"
 								monospaced
 								outline
-								small
+								size="sm"
 							>
 								<ClayIcon symbol="ellipsis-v" />
 							</ClayButton>

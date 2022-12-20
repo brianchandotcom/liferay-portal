@@ -57,7 +57,7 @@ const HTMLEditorModal = ({
 								)}
 								displayType="secondary"
 								onClick={() => setViewType(VIEW_TYPES.columns)}
-								small
+								size="sm"
 								symbol="columns"
 								title={Liferay.Language.get(
 									'display-vertically'
@@ -70,7 +70,7 @@ const HTMLEditorModal = ({
 								)}
 								displayType="secondary"
 								onClick={() => setViewType(VIEW_TYPES.rows)}
-								small
+								size="sm"
 								symbol="cards"
 								title={Liferay.Language.get(
 									'display-horizontally'
@@ -83,7 +83,7 @@ const HTMLEditorModal = ({
 								onClick={() =>
 									setViewType(VIEW_TYPES.fullscreen)
 								}
-								small
+								size="sm"
 								symbol="expand"
 								title={Liferay.Language.get('full-screen')}
 							/>

@@ -61,7 +61,7 @@ const SelectorButton = ({icon, label, onSelect, selectedSize, sizeId}) => {
 					displayType="secondary"
 					key={sizeId}
 					onClick={() => onSelect(sizeId)}
-					small
+					size="sm"
 					symbol={icon}
 				/>
 			}

@@ -334,7 +334,7 @@ export function ColorPicker({
 									onSetValue(defaultTokenValue, null);
 								}
 							}}
-							small
+							size="sm"
 							symbol="chain-broken"
 							title={Liferay.Language.get('detach-style')}
 						/>
@@ -383,7 +383,7 @@ export function ColorPicker({
 								field.defaultValue ? null : defaultTokenValue
 							);
 						}}
-						small
+						size="sm"
 						symbol="restore"
 						title={resetButtonLabel}
 					/>

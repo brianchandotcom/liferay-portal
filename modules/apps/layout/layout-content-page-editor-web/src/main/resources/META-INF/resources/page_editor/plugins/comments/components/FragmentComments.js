@@ -50,7 +50,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 							className="mr-3 p-0"
 							displayType="secondary"
 							onClick={() => selectItem(null)}
-							small
+							size="sm"
 						>
 							<ClayIcon symbol="angle-left" />
 						</ClayButton>

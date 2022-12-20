@@ -41,17 +41,19 @@ export type FormModal = {
 
 export type FormModalComponent = Omit<FormModal, 'forceRefetch'>;
 
-type UseFormModal = {
+type UseFormModal<T> = {
 	isVisible?: boolean;
-	onSave?: (param: any) => void;
+	onBeforeSave?: (state: T, act: () => void) => void;
+	onSave?: (param: T) => void;
 };
 
-const useFormModal = ({
+const useFormModal = <T = any>({
 	isVisible = false,
+	onBeforeSave,
 	onSave: onSaveModal = () => {},
-}: UseFormModal = {}): FormModal => {
+}: UseFormModal<T> = {}): FormModal => {
 	const {form} = useFormActions();
-	const [modalState, setModalState] = useState();
+	const [modalState, setModalState] = useState<T>();
 	const [visible, setVisible] = useState(isVisible);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
@@ -60,23 +62,31 @@ const useFormModal = ({
 	const [forceRefetch, setForceRefetch] = useState(0);
 
 	const onSave = (
-		state?: any,
+		state?: T,
 		options: onSaveOptions = {forceRefetch: true}
 	) => {
-		form.onSuccess();
+		const act = () => {
+			form.onSuccess();
 
-		if (visible) {
-			onClose();
+			if (visible) {
+				onClose();
+			}
+
+			if (options.forceRefetch) {
+				setForceRefetch(new Date().getTime());
+			}
+
+			if (state) {
+				setModalState(state);
+				onSaveModal(state);
+			}
+		};
+
+		if (onBeforeSave) {
+			return onBeforeSave(state as T, act);
 		}
 
-		if (options.forceRefetch) {
-			setForceRefetch(new Date().getTime());
-		}
-
-		if (state) {
-			setModalState(state);
-			onSaveModal(state);
-		}
+		act();
 	};
 
 	return {

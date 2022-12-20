@@ -57,8 +57,20 @@ const TaskHeaderActions = () => {
 		'select-users'
 	);
 	const [userIds, setUsersId] = useState<number[]>([]);
-	const {modal} = useFormModal({
-		onSave: async (newUserIds: number[]) => {
+	const {modal} = useFormModal<number[]>({
+		onBeforeSave: (newUserIds, act) => {
+			if (!newUserIds.length) {
+				return Liferay.Util.openToast({
+					message: i18n.translate(
+						'mark-at-least-one-user-for-assignment'
+					),
+					type: 'danger',
+				});
+			}
+
+			act();
+		},
+		onSave: async (newUserIds) => {
 			await testrayTaskUsersImpl.assign(testrayTask.id, newUserIds);
 
 			revalidateTaskUser();

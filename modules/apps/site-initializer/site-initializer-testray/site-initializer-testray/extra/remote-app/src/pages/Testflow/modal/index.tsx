@@ -19,7 +19,6 @@ import Modal from '../../../components/Modal';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../services/liferay';
 import UserGroups from './TestflowAssignUserGroups';
 import TestflowAssignUsers from './TestflowAssignUsers';
 
@@ -41,16 +40,7 @@ const TestflowAssignUserModal: React.FC<TestflowAssignUserModalProps> = ({
 			last={
 				<Form.Footer
 					onClose={onClose}
-					onSubmit={() =>
-						state.length
-							? onSave(state)
-							: Liferay.Util.openToast({
-									message: i18n.translate(
-										'mark-at-least-one-user-for-assignment'
-									),
-									type: 'danger',
-							  })
-					}
+					onSubmit={() => onSave(state)}
 					primaryButtonProps={{title: type}}
 				/>
 			}

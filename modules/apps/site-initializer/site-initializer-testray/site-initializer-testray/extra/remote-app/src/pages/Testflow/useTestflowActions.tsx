@@ -38,7 +38,7 @@ const useTestflowActions = () => {
 		},
 		{
 			action: (task, mutate) =>
-				testrayTaskImpl.reanalyze(task).then(() => {
+				testrayTaskImpl.reanalyze(task).then(() =>
 					updateItemFromList(
 						mutate,
 						0,
@@ -46,8 +46,8 @@ const useTestflowActions = () => {
 						{
 							revalidate: true,
 						}
-					);
-				}),
+					)
+				),
 			hidden: ({dueStatus}) =>
 				dueStatus?.key === TaskStatuses.IN_ANALYSIS,
 			icon: 'polls',
@@ -55,7 +55,7 @@ const useTestflowActions = () => {
 		},
 		{
 			action: (subtask, mutate) =>
-				testrayTaskImpl.reanalyze(subtask).then(() => {
+				testrayTaskImpl.reanalyze(subtask).then(() =>
 					updateItemFromList(
 						mutate,
 						0,
@@ -63,8 +63,8 @@ const useTestflowActions = () => {
 						{
 							revalidate: true,
 						}
-					);
-				}),
+					)
+				),
 			disabled: true,
 			hidden: ({dueStatus}) =>
 				dueStatus?.key === TaskStatuses.IN_ANALYSIS,

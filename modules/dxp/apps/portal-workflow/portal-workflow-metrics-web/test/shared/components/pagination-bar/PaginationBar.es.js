@@ -48,17 +48,17 @@ describe('The PaginationBar component should', () => {
 
 		expect(pageSizeOptions.length).toBe(6);
 
-		let pageLinks = baseElement.querySelectorAll('button.page-link');
+		let pageLinks = baseElement.querySelectorAll('a.page-link');
 
 		expect(pageLinks.length).toBe(3);
 
-		expect(pageLinks[0]).toHaveAttribute('disabled');
+		expect(pageLinks[0].parentElement).toHaveClass('disabled');
 		expect(pageLinks[1]).toHaveTextContent('1');
-		expect(pageLinks[2]).toHaveAttribute('disabled');
+		expect(pageLinks[2].parentElement).toHaveClass('disabled');
 
 		fireEvent.click(pageSizeOptions[0]);
 
-		pageLinks = baseElement.querySelectorAll('button.page-link');
+		pageLinks = baseElement.querySelectorAll('a.page-link');
 		let pageItems = baseElement.querySelectorAll('.page-item');
 
 		expect(pageLinks.length).toBe(6);
@@ -95,12 +95,12 @@ describe('The PaginationBar component should', () => {
 
 		expect(pageSizeOptions.length).toBe(6);
 
-		let pageLinks = baseElement.querySelectorAll('button.page-link');
+		let pageLinks = baseElement.querySelectorAll('a.page-link');
 		let pageItems = baseElement.querySelectorAll('.page-item');
 
 		expect(pageLinks.length).toBe(5);
 
-		expect(pageLinks[0]).toHaveAttribute('disabled');
+		expect(pageLinks[0].parentElement).toHaveClass('disabled');
 		expect(pageLinks[1]).toHaveTextContent('1');
 		expect(pageLinks[2]).toHaveTextContent('2');
 		expect(pageLinks[3]).toHaveTextContent('3');
@@ -121,14 +121,14 @@ describe('The PaginationBar component should', () => {
 
 		fireEvent.click(pageSizeOptions[4]);
 
-		pageLinks = baseElement.querySelectorAll('button.page-link');
+		pageLinks = baseElement.querySelectorAll('a.page-link');
 		pageItems = baseElement.querySelectorAll('.page-item');
 
 		expect(pageLinks.length).toBe(3);
 
 		expect(pageItems[1].className.includes('active')).toBe(true);
 		expect(pageLinks[1]).toHaveTextContent('1');
-		expect(pageLinks[2]).toHaveAttribute('disabled');
+		expect(pageLinks[2].parentElement).toHaveClass('disabled');
 	});
 
 	test('Render with insufficient total count to pagination', () => {

@@ -5918,6 +5918,11 @@ public class JenkinsResultsParserUtil {
 				else {
 					if (!redactToken.isEmpty()) {
 						_redactTokens.add(redactToken);
+
+						if (redactToken.contains("\\")) {
+							_redactTokens.add(
+								redactToken.replace("\\", "\\\\"));
+						}
 					}
 				}
 			}

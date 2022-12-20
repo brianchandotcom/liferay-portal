@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionSerializer;
 import com.liferay.item.selector.ItemSelectorRendering;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.ItemSelectorViewRendererCustomizer;
@@ -46,8 +45,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,8 +58,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Iván Zaera
@@ -183,7 +178,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 			ItemSelectorCriterionHandler<ItemSelectorCriterion>
 				itemSelectorCriterionHandler =
-					_itemSelectionCriterionHandlers.get(
+					_itemSelectorCriterionHandlerServiceTrackerMap.getService(
 						itemSelectorCriterionClass.getName());
 
 			List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
@@ -265,6 +260,26 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_itemSelectorCriterionHandlerServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<ItemSelectorCriterionHandler<ItemSelectorCriterion>>)
+					(Class<?>)ItemSelectorCriterionHandler.class,
+				null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(itemSelectorCriterionHandler, emitter) -> {
+						Class<ItemSelectorCriterion>
+							itemSelectorCriterionClass =
+								itemSelectorCriterionHandler.
+									getItemSelectorCriterionClass();
+
+						emitter.emit(itemSelectorCriterionClass.getName());
+
+						emitter.emit(
+							ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+								itemSelectorCriterionClass));
+					}));
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ItemSelectorViewRendererCustomizer.class, null,
 			ServiceReferenceMapperFactory.create(
@@ -282,6 +297,8 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Deactivate
 	protected void deactivate() {
+		_itemSelectorCriterionHandlerServiceTrackerMap.close();
+
 		_serviceTrackerMap.close();
 	}
 
@@ -373,43 +390,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		return values[0];
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	@SuppressWarnings("rawtypes")
-	protected
-		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> void
-			setItemSelectionCriterionHandler(
-				ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
-
-		Class<T> itemSelectorCriterionClass =
-			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
-
-		_itemSelectionCriterionHandlers.put(
-			itemSelectorCriterionClass.getName(),
-			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
-		_itemSelectionCriterionHandlers.put(
-			ItemSelectorKeyUtil.getItemSelectorCriterionKey(
-				itemSelectorCriterionClass),
-			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
-	}
-
-	protected
-		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> void
-			unsetItemSelectionCriterionHandler(
-				ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
-
-		Class<T> itemSelectorCriterionClass =
-			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
-
-		_itemSelectionCriterionHandlers.remove(
-			itemSelectorCriterionClass.getName());
-		_itemSelectionCriterionHandlers.remove(
-			ItemSelectorKeyUtil.getItemSelectorCriterionKey(
-				itemSelectorCriterionClass));
-	}
-
 	private ItemSelectorViewRenderer _applyCustomizations(
 		ItemSelectorViewRenderer itemSelectorViewRenderer) {
 
@@ -454,7 +434,7 @@ public class ItemSelectorImpl implements ItemSelector {
 				itemSelectorCriterionClassNames) {
 
 			ItemSelectorCriterionHandler<?> itemSelectorCriterionHandler =
-				_itemSelectionCriterionHandlers.get(
+				_itemSelectorCriterionHandlerServiceTrackerMap.getService(
 					itemSelectorCriterionClassName);
 
 			if (itemSelectorCriterionHandler != null) {
@@ -480,12 +460,12 @@ public class ItemSelectorImpl implements ItemSelector {
 	private static final Pattern _itemSelectorURLPattern = Pattern.compile(
 		".*select\\/([^/]+)\\/([^$?/]+).*");
 
-	private final ConcurrentMap
-		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
-			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
-
 	@Reference
 	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
+
+	private ServiceTrackerMap
+		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
+			_itemSelectorCriterionHandlerServiceTrackerMap;
 
 	@Reference
 	private Portal _portal;

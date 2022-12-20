@@ -77,7 +77,6 @@ body .ddm-user-view-content {
 
 .form-control {
 	@extend %text-ellipsis;
-	white-space: normal;
 }
 
 .portlet-forms .ddm-form-basic-info .ddm-form-name {
@@ -200,6 +199,10 @@ body .ddm-user-view-content {
 
 	.row {
 		min-height: auto;
+
+		.col-ddm {
+			min-width: 25%;
+		}
 	}
 
 	.has-error {

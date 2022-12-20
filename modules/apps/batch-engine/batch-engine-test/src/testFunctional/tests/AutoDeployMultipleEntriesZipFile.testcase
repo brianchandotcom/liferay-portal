@@ -72,7 +72,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a multipleBatchPairs.zip file including blog and object definition") {
-			var filePath = BatchEngine.copyDependenciesDirToFolder(file = "multipleElmentsParis");
+			var filePath = BatchEngine.copyDependenciesDirToFolder(file = "multipleElementsParis");
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
 
@@ -91,13 +91,13 @@ definition {
 			FileUtil.replaceStringInFile("${filePath}/object/objectDefinition/batch-engine.json", "20125", "${staticUserId}");
 
 			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
-				fileNameWithExtension = "multipleElmentsParis.zip",
+				fileNameWithExtension = "multipleElementsParis.zip",
 				sourceFilePath = "${filePath}");
 		}
 
 		task ("When I add it to deploy folder") {
 			BatchEngine.moveFileToDeployFolder(
-				fileName = "multipleElmentsParis.zip",
+				fileName = "multipleElementsParis.zip",
 				sourceFilePath = "${arhivedFilePath}");
 		}
 

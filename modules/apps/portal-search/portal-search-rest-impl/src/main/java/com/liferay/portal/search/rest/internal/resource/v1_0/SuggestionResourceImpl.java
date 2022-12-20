@@ -174,6 +174,7 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 
 		SearchContext searchContext = new SearchContext();
 
+		searchContext.setAttribute("search.empty.search", Boolean.TRUE);
 		searchContext.setAttribute(
 			"search.experiences.ip.address",
 			contextHttpServletRequest.getRemoteAddr());

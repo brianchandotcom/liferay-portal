@@ -10,24 +10,7 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONLayout.deletePublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page");
-		}
-	}
-
-	@description = "Verify if alert contains all attributes: icon, type text, description and close icon"
-	@priority = "5"
-	test CanDisplayAllAttributes {
 		task ("Given Clay Sample Portlet") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -45,9 +28,26 @@ definition {
 
 			Navigator.gotoPage(pageName = "Clay Sample Test Page");
 		}
+	}
 
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		}
+	}
+
+	@description = "Verify alert contains all required attributes: icon, type text, and description"
+	@priority = "5"
+	test CanDisplayAllAttributes {
 		task ("When the alert contains all attributes") {
-			AssertElementPresent(
+			VerifyElementPresent(
 				key_alertType = "success",
 				locator1 = "ClayAlert#ALERT_STATIC");
 		}
@@ -74,34 +74,16 @@ definition {
 		}
 	}
 
-	@description = "Verify if the keyword is semi-bold when alert contains status icon and keyword"
+	@description = "Verify the keyword is semi-bold when alert contains status icon and keyword"
 	@priority = "4"
 	test KeywordCanDisplayInSemibold {
-		task ("Given Clay Sample Portlet") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				layoutTemplate = "1 Column");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				widgetName = "Clay Sample");
-
-			Navigator.gotoPage(pageName = "Clay Sample Test Page");
-		}
-
 		task ("When alert contains status icon and keyword") {
 			AssertTextEquals(
 				key_alertType = "success",
 				locator1 = "ClayAlert#ALERT_STATIC",
 				value1 = "Success:This is a success message.");
 
-			AssertElementPresent(
+			VerifyElementPresent(
 				key_alertType = "success",
 				key_icon = "check-circle-full",
 				locator1 = "ClayAlert#ALERT_STATIC_ICON");

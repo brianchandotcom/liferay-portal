@@ -16,7 +16,6 @@ package com.liferay.portal.async.advice.internal;
 
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.util.MethodHandler;
 
 import java.io.Externalizable;
@@ -25,17 +24,18 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
 
+import java.util.concurrent.Callable;
+
 /**
  * @author Shuyang Zhou
  */
-public class AsyncProcessCallable
-	implements Externalizable, ProcessCallable<Serializable> {
+public class AsyncCallable implements Callable<Serializable>, Externalizable {
 
-	public AsyncProcessCallable() {
+	public AsyncCallable() {
 		this(null, null);
 	}
 
-	public AsyncProcessCallable(
+	public AsyncCallable(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		_aopMethodInvocation = aopMethodInvocation;

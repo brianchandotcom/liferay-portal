@@ -770,14 +770,6 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.portal.kernel.process.ProcessCallable"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.kernel.process.ProcessChannel"
-		},
-		{
-			"genericTypeCount": 1,
 			"name": "com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability.Filter"
 		},
 		{

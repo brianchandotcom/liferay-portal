@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -564,7 +562,7 @@ public class MicroblogsEntryLocalServiceImpl
 				Message message = new Message();
 
 				message.setPayload(
-					new NotificationProcessCallable(
+					new NotificationCallable(
 						receiverUserIds, microblogsEntry,
 						notificationEventJSONObject));
 
@@ -656,10 +654,9 @@ public class MicroblogsEntryLocalServiceImpl
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
-	private class NotificationProcessCallable
-		implements ProcessCallable<Serializable> {
+	private class NotificationCallable implements Callable<Serializable> {
 
-		public NotificationProcessCallable(
+		public NotificationCallable(
 			List<Long> receiverUserIds, MicroblogsEntry microblogsEntry,
 			JSONObject notificationEventJSONObject) {
 
@@ -669,14 +666,14 @@ public class MicroblogsEntryLocalServiceImpl
 		}
 
 		@Override
-		public Serializable call() throws ProcessException {
+		public Serializable call() throws Exception {
 			try {
 				sendUserNotifications(
 					_receiverUserIds, _microblogsEntry,
 					_notificationEventJSONObject);
 			}
 			catch (Exception exception) {
-				throw new ProcessException(exception);
+				throw new Exception(exception);
 			}
 
 			return null;

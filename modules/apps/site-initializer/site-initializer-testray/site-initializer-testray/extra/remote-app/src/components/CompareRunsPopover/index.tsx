@@ -22,34 +22,31 @@ import useRuns from '../../hooks/useRuns';
 import i18n from '../../i18n';
 import Form from '../Form';
 
-type FloatingBoxProps = {
+type CompareRunsPopoverProps = {
 	expanded?: boolean;
 	setVisible: (state: boolean) => void;
 	visible: boolean;
 };
 
-const CompareRunsFloatingBox: React.FC<FloatingBoxProps> = ({
+const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 	expanded = false,
 	setVisible,
 	visible,
 }) => {
 	const {compareRuns, setRunA, setRunB} = useRuns();
-
-	const validateButtonA = !(compareRuns.runId || compareRuns.runA);
-
-	const validateButtonB = !(compareRuns.runId || compareRuns.runB);
-
-	const validateCompareButtons = !(compareRuns.runA && compareRuns.runB);
+	const disableButtonA = !(compareRuns?.runId || compareRuns?.runA);
+	const disableButtonB = !(compareRuns?.runId || compareRuns?.runB);
+	const validateCompareButtons = !(compareRuns?.runA && compareRuns?.runB);
 
 	useEffect(() => {
-		if (compareRuns.runA || compareRuns.runB) {
+		if (compareRuns?.runA || compareRuns?.runB) {
 			setVisible(true);
 		}
 	}, [compareRuns, setVisible]);
 
 	return (
 		<div
-			className={classNames('compare-runs-floating-box ', {
+			className={classNames('compare-runs-popover', {
 				'box-hidden': !visible && !expanded,
 				'box-hidden-expanded': !visible && expanded,
 				'box-visible': visible && !expanded,
@@ -77,16 +74,18 @@ const CompareRunsFloatingBox: React.FC<FloatingBoxProps> = ({
 						<ClayLayout.Col>
 							<ClayButton
 								block
-								disabled={validateButtonA}
+								className="text-uppercase"
+								disabled={disableButtonA}
 								displayType="primary"
-								onClick={() =>
-									compareRuns.runId &&
-									setRunA(compareRuns.runId)
-								}
+								onClick={() => {
+									if (compareRuns?.runId) {
+										setRunA(compareRuns?.runId);
+									}
+								}}
 							>
-								{compareRuns.runA
-									? ` ${i18n.translate('run-a')} : ${
-											compareRuns.runA
+								{compareRuns?.runA
+									? `${i18n.translate('run-a')} : ${
+											compareRuns?.runA
 									  }`
 									: i18n.translate('add-run-a')}
 							</ClayButton>
@@ -95,16 +94,18 @@ const CompareRunsFloatingBox: React.FC<FloatingBoxProps> = ({
 						<ClayLayout.Col>
 							<ClayButton
 								block
-								disabled={validateButtonB}
+								className="text-uppercase"
+								disabled={disableButtonB}
 								displayType="primary"
-								onClick={() =>
-									compareRuns.runId &&
-									setRunB(compareRuns.runId)
-								}
+								onClick={() => {
+									if (compareRuns?.runId) {
+										setRunB(compareRuns?.runId);
+									}
+								}}
 							>
-								{compareRuns.runB
-									? ` ${i18n.translate('run-b')} : ${
-											compareRuns.runB
+								{compareRuns?.runB
+									? `${i18n.translate('run-b')} : ${
+											compareRuns?.runB
 									  }`
 									: i18n.translate('add-run-b')}
 							</ClayButton>
@@ -153,4 +154,4 @@ const CompareRunsFloatingBox: React.FC<FloatingBoxProps> = ({
 	);
 };
 
-export default CompareRunsFloatingBox;
+export default CompareRunsPopover;

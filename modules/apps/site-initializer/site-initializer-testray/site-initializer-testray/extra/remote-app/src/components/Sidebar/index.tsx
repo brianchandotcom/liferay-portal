@@ -20,7 +20,7 @@ import {Link, useLocation} from 'react-router-dom';
 import useStorage from '../../hooks/useStorage';
 import i18n from '../../i18n';
 import {TestrayIcon, TestrayIconBrand} from '../../images';
-import CompareRunsFloatingBox from '../CompareRunsFloatingBox';
+import CompareRunsPopover from '../CompareRunsPopover';
 import TestrayIcons from '../Icons/TestrayIcon';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
@@ -142,7 +142,7 @@ const Sidebar = () => {
 							}
 						)}
 
-						<CompareRunsFloatingBox
+						<CompareRunsPopover
 							expanded={expanded}
 							setVisible={setVisible}
 							visible={visible}

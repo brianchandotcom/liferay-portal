@@ -21,7 +21,7 @@ import useStorage from '../hooks/useStorage';
 import {UserAccount} from '../services/rest';
 import {ActionMap} from '../types';
 
-export type RunId = number | null | undefined;
+export type RunId = number | null;
 
 export type CompareRuns = {
 	runA?: RunId;
@@ -36,9 +36,9 @@ type InitialState = {
 
 const initialState: InitialState = {
 	compareRuns: {
-		runA: undefined,
-		runB: undefined,
-		runId: undefined,
+		runA: null,
+		runB: null,
+		runId: null,
 	},
 	myUserAccount: undefined,
 };
@@ -107,11 +107,11 @@ const TestrayContextProvider: React.FC<{
 }> = ({children}) => {
 	const [storageValue, setStorageValue] = useStorage<{
 		compareRuns: CompareRuns;
-	}>('compareRuns', undefined, sessionStorage);
+	}>('compareRuns', initialState, sessionStorage);
 
 	const [state, dispatch] = useReducer(reducer, {
 		...initialState,
-		compareRuns: storageValue.compareRuns,
+		compareRuns: storageValue?.compareRuns,
 	});
 
 	const {data: myUserAccount, mutate} = useFetch(

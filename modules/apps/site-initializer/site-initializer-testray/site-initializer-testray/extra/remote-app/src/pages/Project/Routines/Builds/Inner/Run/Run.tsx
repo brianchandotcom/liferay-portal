@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import Container from '../../../../../../components/Layout/Container';
 import ListViewRest from '../../../../../../components/ListView';
@@ -27,7 +27,6 @@ import useRunActions from './useRunActions';
 const Runs = () => {
 	const {actions, formModal} = useRunActions();
 	const {buildId} = useParams();
-	const navigate = useNavigate();
 	const {setRunId} = useRuns();
 
 	return (
@@ -53,35 +52,34 @@ const Runs = () => {
 						{
 							clickable: true,
 							key: 'applicationServer',
-							render: (applicationServer, run) => (
-								<div
-									onClick={() => {
-										setRunId(run.id);
-										navigate('..');
-									}}
-								>
-									{applicationServer}
-								</div>
-							),
 							value: i18n.translate('application-server'),
 						},
 						{
+							clickable: true,
 							key: 'browser',
 							value: i18n.translate('browser'),
 						},
 						{
+							clickable: true,
 							key: 'database',
 							value: i18n.translate('database'),
 						},
 						{
+							clickable: true,
 							key: 'javaJDK',
 							value: 'javaJDK',
 						},
 						{
+							clickable: true,
 							key: 'operatingSystem',
 							value: i18n.translate('operating-system'),
 						},
 					],
+					navigateTo: (run) => {
+						setRunId(run.id);
+
+						return '..';
+					},
 				}}
 				transformData={(response) =>
 					testrayRunImpl.transformDataFromList(response)

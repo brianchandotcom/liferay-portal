@@ -1,10 +1,10 @@
-.compare-runs-floating-box {
+.compare-runs-popover {
 	background-color: white;
-	top: 213px;
 	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.04),
 		0 4px 14px 0 rgba(0, 0, 0, 0.1);
 	margin: auto;
 	position: absolute;
+	top: 213px;
 	width: 490px;
 }
 
@@ -20,8 +20,8 @@
 	left: 95px;
 	opacity: 1;
 	transition: all 1s ease;
-	z-index: 99;
 	visibility: visible;
+	z-index: 99;
 }
 
 .box-hidden-expanded {
@@ -36,6 +36,6 @@
 	left: 250px;
 	opacity: 1;
 	transition: all 1s ease;
-	z-index: 99;
 	visibility: visible;
+	z-index: 99;
 }

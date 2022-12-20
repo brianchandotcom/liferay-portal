@@ -22,7 +22,6 @@ import {
 
 import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
-import useRuns from '../../../../hooks/useRuns';
 import i18n from '../../../../i18n';
 import {
 	APIResponse,
@@ -50,7 +49,6 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {buildId, projectId, routineId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
 	const {testrayProject, testrayRoutine}: OutletContext = useOutletContext();
-	const {setRunId} = useRuns();
 
 	const {
 		data: testrayBuild,
@@ -140,10 +138,6 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 			]);
 		}
 	}, [basePath, isCurrentPathIgnored, pathname, setTabs]);
-
-	useEffect(() => {
-		return () => setRunId(null);
-	}, [setRunId]);
 
 	if (testrayBuild) {
 		return (

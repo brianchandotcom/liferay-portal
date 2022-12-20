@@ -47,15 +47,13 @@ definition {
 			groupName = "Child Site Name",
 			parentGroupName = "Site Name");
 
-		Site.addBlankCP(
-			membershipType = "Private",
-			siteName = "Private Site Name");
+		JSONGroup.addGroup(
+			groupName = "Private Site Name",
+			membershipType = "Private");
 
-		Site.openSitesAdmin();
-
-		Site.addBlankCP(
-			membershipType = "Restricted",
-			siteName = "Restricted Site Name");
+		JSONGroup.addGroup(
+			groupName = "Restricted Site Name",
+			membershipType = "Restricted");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

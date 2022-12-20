@@ -148,8 +148,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			});
 		}
 
-		await super.update(caseResultId, {issues: issues.join(',')});
-
 		if (caseResultIssuesResponse?.items) {
 			const caseResultIssuesTransform = testrayCaseResultsIssuesImpl.transformDataFromList(
 				caseResultIssuesResponse

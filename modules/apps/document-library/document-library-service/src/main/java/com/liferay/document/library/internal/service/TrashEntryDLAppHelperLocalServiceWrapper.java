@@ -67,7 +67,7 @@ import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.exception.RestoreEntryException;
-import com.liferay.trash.kernel.exception.TrashEntryException;
+import com.liferay.trash.exception.TrashEntryException;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashEntryLocalService;

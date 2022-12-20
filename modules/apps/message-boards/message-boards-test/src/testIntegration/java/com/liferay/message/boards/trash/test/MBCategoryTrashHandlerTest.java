@@ -19,8 +19,6 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
@@ -99,35 +97,13 @@ public class MBCategoryTrashHandlerTest
 	@Override
 	@Test(expected = TrashEntryException.class)
 	public void testTrashParentAndBaseModel() throws Exception {
-		try {
-			super.testTrashParentAndBaseModel();
-		}
-		catch (com.liferay.trash.kernel.exception.TrashEntryException
-					trashEntryException) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(trashEntryException);
-			}
-
-			throw new TrashEntryException();
-		}
+		super.testTrashParentAndBaseModel();
 	}
 
 	@Override
 	@Test(expected = RestoreEntryException.class)
 	public void testTrashParentAndRestoreParentAndBaseModel() throws Exception {
-		try {
-			super.testTrashParentAndRestoreParentAndBaseModel();
-		}
-		catch (com.liferay.trash.kernel.exception.RestoreEntryException
-					restoreEntryException) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(restoreEntryException);
-			}
-
-			throw new RestoreEntryException();
-		}
+		super.testTrashParentAndRestoreParentAndBaseModel();
 	}
 
 	@Override
@@ -240,9 +216,6 @@ public class MBCategoryTrashHandlerTest
 	}
 
 	private static final String _TITLE = "Title";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MBCategoryTrashHandlerTest.class);
 
 	@Inject
 	private TrashHelper _trashHelper;

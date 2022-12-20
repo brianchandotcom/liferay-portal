@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
-import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;

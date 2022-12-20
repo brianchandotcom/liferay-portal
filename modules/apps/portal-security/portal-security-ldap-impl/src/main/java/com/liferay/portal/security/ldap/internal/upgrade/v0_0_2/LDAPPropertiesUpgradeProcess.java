@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap.internal.verify;
+package com.liferay.portal.security.ldap.internal.upgrade.v0_0_2;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -35,31 +36,47 @@ import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.ldap.constants.LegacyLDAPPropsKeys;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
-import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "verify.process.name=com.liferay.portal.security.ldap",
-	service = VerifyProcess.class
-)
-public class LDAPPropertiesVerifyProcess extends VerifyProcess {
+public class LDAPPropertiesUpgradeProcess extends UpgradeProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
-		_verifyLDAPProperties();
+	public LDAPPropertiesUpgradeProcess(
+		CompanyLocalService companyLocalService,
+		ConfigurationProvider<LDAPAuthConfiguration>
+			ldapAuthConfigurationProvider,
+		ConfigurationProvider<LDAPExportConfiguration>
+			ldapExportConfigurationProvider,
+		ConfigurationProvider<LDAPImportConfiguration>
+			ldapImportConfigurationProvider,
+		ConfigurationProvider<LDAPServerConfiguration>
+			ldapServerConfigurationProvider,
+		LDAPSettings ldapSettings, PrefsProps prefsProps,
+		ConfigurationProvider<SystemLDAPConfiguration>
+			systemLDAPConfigurationProvider) {
+
+		_companyLocalService = companyLocalService;
+		_ldapAuthConfigurationProvider = ldapAuthConfigurationProvider;
+		_ldapExportConfigurationProvider = ldapExportConfigurationProvider;
+		_ldapImportConfigurationProvider = ldapImportConfigurationProvider;
+		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
+		_ldapSettings = ldapSettings;
+		_prefsProps = prefsProps;
+		_systemLDAPConfigurationProvider = systemLDAPConfigurationProvider;
 	}
 
-	private void _verifyLDAPAuthProperties(long companyId) {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_upgradeLDAPProperties();
+	}
+
+	private void _upgradeLDAPAuthProperties(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.AUTH_ENABLED,
@@ -96,7 +113,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		_ldapAuthConfigurationProvider.updateProperties(companyId, dictionary);
 	}
 
-	private void _verifyLDAPExportProperties(long companyId) {
+	private void _upgradeLDAPExportProperties(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.EXPORT_ENABLED,
@@ -120,7 +137,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, dictionary);
 	}
 
-	private void _verifyLDAPImportProperties(long companyId) {
+	private void _upgradeLDAPImportProperties(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.IMPORT_CREATE_ROLE_PER_GROUP,
@@ -192,7 +209,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, dictionary);
 	}
 
-	private void _verifyLDAPProperties() throws Exception {
+	private void _upgradeLDAPProperties() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
@@ -204,10 +221,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 						return;
 					}
 
-					_verifyLDAPAuthProperties(companyId);
-					_verifyLDAPExportProperties(companyId);
-					_verifyLDAPImportProperties(companyId);
-					_verifySystemLDAPConfiguration(companyId);
+					_upgradeLDAPAuthProperties(companyId);
+					_upgradeLDAPExportProperties(companyId);
+					_upgradeLDAPImportProperties(companyId);
+					_upgradeSystemLDAPConfiguration(companyId);
 
 					Set<String> keys = new HashSet<>();
 
@@ -218,7 +235,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 						String postfix = _ldapSettings.getPropertyPostfix(
 							ldapServerId);
 
-						_verifyLDAPServerConfiguration(
+						_upgradeLDAPServerConfiguration(
 							companyId, ldapServerId, postfix);
 
 						for (int i = 0;
@@ -258,7 +275,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	private void _verifyLDAPServerConfiguration(
+	private void _upgradeLDAPServerConfiguration(
 		long companyId, long ldapServerId, String postfix) {
 
 		Dictionary<String, Object> dictionary =
@@ -389,7 +406,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, ldapServerId, dictionary);
 	}
 
-	private void _verifySystemLDAPConfiguration(long companyId) {
+	private void _upgradeSystemLDAPConfiguration(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.ERROR_PASSWORD_AGE_KEYWORDS,
@@ -476,45 +493,20 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LDAPPropertiesVerifyProcess.class);
+		LDAPPropertiesUpgradeProcess.class);
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)"
-	)
-	private ConfigurationProvider<LDAPAuthConfiguration>
+	private final CompanyLocalService _companyLocalService;
+	private final ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration)"
-	)
-	private ConfigurationProvider<LDAPExportConfiguration>
+	private final ConfigurationProvider<LDAPExportConfiguration>
 		_ldapExportConfigurationProvider;
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)"
-	)
-	private ConfigurationProvider<LDAPImportConfiguration>
+	private final ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)"
-	)
-	private ConfigurationProvider<LDAPServerConfiguration>
+	private final ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-
-	@Reference
-	private LDAPSettings _ldapSettings;
-
-	@Reference
-	private PrefsProps _prefsProps;
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration)"
-	)
-	private ConfigurationProvider<SystemLDAPConfiguration>
+	private final LDAPSettings _ldapSettings;
+	private final PrefsProps _prefsProps;
+	private final ConfigurationProvider<SystemLDAPConfiguration>
 		_systemLDAPConfigurationProvider;
 
 }

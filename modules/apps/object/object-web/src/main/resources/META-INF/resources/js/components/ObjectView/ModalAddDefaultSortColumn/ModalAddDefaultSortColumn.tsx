@@ -75,7 +75,9 @@ export function ModalAddDefaultSortColumn({
 				!objectViewColumn.defaultSort &&
 				objectViewColumn.objectFieldBusinessType !== 'Aggregation' &&
 				objectViewColumn.objectFieldBusinessType !== 'Formula' &&
-				objectViewColumn.objectFieldBusinessType !== 'Relationship'
+				objectViewColumn.objectFieldBusinessType !== 'Relationship' &&
+				objectViewColumn.objectFieldBusinessType !== 'Attachment' &&
+				objectViewColumn.objectFieldBusinessType !== 'RichText'
 		);
 
 		setAvailableViewColumns(newAvailableViewColumns);

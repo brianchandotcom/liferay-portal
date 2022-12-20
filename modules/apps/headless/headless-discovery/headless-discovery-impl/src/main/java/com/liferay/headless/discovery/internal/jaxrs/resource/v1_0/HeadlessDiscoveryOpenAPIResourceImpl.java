@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
@@ -50,6 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -91,6 +93,10 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 	@Produces({"application/json", "application/xml"})
 	public Response getGlobalOpenAPI(@PathParam("type") String type)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166216"))) {
+			throw new NotFoundException();
+		}
 
 		Map<OpenAPIContext, Response> responses = new HashMap<>();
 

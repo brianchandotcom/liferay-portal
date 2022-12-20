@@ -21,11 +21,6 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collections;
 import java.util.Map;
@@ -68,54 +63,10 @@ public class DispatchTriggerMetadataProviderImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DispatchTriggerMetadataFactory.class,
-			_KEY_DISPATCH_TASK_EXECUTOR_TYPE,
-			new ServiceTrackerMapListener
-				<String, DispatchTriggerMetadataFactory,
-				 DispatchTriggerMetadataFactory>() {
-
-				@Override
-				public void keyEmitted(
-					ServiceTrackerMap<String, DispatchTriggerMetadataFactory>
-						serviceTrackerMap,
-					String key,
-					DispatchTriggerMetadataFactory
-						serviceDispatchTriggerMetadataFactory,
-					DispatchTriggerMetadataFactory
-						contentDispatchTriggerMetadataFactory) {
-
-					if (serviceTrackerMap.containsKey(key)) {
-						DispatchTriggerMetadataFactory
-							curDispatchTriggerMetadataFactory =
-								serviceTrackerMap.getService(key);
-
-						Class<?> clazz1 =
-							curDispatchTriggerMetadataFactory.getClass();
-
-						Class<?> clazz2 =
-							serviceDispatchTriggerMetadataFactory.getClass();
-
-						_log.error(
-							StringBundler.concat(
-								_KEY_DISPATCH_TASK_EXECUTOR_TYPE,
-								" property must have unique value. The same ",
-								"value is found in ", clazz1.getName(), " and ",
-								clazz2.getName(), StringPool.PERIOD));
-					}
-				}
-
-				@Override
-				public void keyRemoved(
-					ServiceTrackerMap<String, DispatchTriggerMetadataFactory>
-						serviceTrackerMap,
-					String key,
-					DispatchTriggerMetadataFactory
-						serviceDispatchTriggerMetadataFactory,
-					DispatchTriggerMetadataFactory
-						contentDispatchTriggerMetadataFactory) {
-				}
-
-			});
+			bundleContext, DispatchTriggerMetadataFactory.class, null,
+			(serviceReference, emitter) -> emitter.emit(
+				(String)serviceReference.getProperty(
+					_KEY_DISPATCH_TASK_EXECUTOR_TYPE)));
 	}
 
 	@Deactivate
@@ -125,9 +76,6 @@ public class DispatchTriggerMetadataProviderImpl
 
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_TYPE =
 		"dispatch.task.executor.type";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchTriggerMetadataProviderImpl.class);
 
 	private static final DispatchTriggerMetadata
 		_defaultDispatchTriggerMetadata = new DispatchTriggerMetadata() {

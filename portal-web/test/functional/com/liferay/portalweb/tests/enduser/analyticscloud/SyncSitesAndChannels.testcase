@@ -101,4 +101,62 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12576 | Test Summary: Check that it is possible to enable toggle commerce for two different properties"
+	@priority = "5"
+	test CheckIsPossibleEnableToggleCommerceForTwoDifferentProperties {
+		var newPropertyName = "AC Channel Property";
+
+		task ("Create a new channel") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "AC Channel 1",
+				channelType = "site",
+				currencyCode = "USD",
+				externalReferenceCode = "101");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Toggle Commerce On > Assign channels to the property") {
+			ACDXPSettings.syncChannel(
+				channelName = "Minium Demo Portal",
+				propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Assign sites to the property") {
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "Minium Demo");
+		}
+
+		task ("Create new property and Toggle Commerce On > Assign channels to the property") {
+			ACDXPSettings.syncChannel(
+				channelName = "AC Channel 1",
+				newPropertyName = "${newPropertyName}");
+		}
+
+		task ("Assign sites to the new property") {
+			ACDXPSettings.syncSites(
+				propertyName = "${newPropertyName}",
+				siteName = "Site Name");
+		}
+
+		task ("Check that the number of channels and sites matches the selected ones for the last property") {
+			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
+				propertyName = "${newPropertyName}",
+				syncedChannelsNumber = "1",
+				syncedSitesNumber = "1");
+		}
+
+		task ("Check that the number of channels and sites matches the selected ones for the first property") {
+			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
+				propertyName = "${assignedPropertyName}",
+				syncedChannelsNumber = "1",
+				syncedSitesNumber = "1");
+		}
+	}
+
 }

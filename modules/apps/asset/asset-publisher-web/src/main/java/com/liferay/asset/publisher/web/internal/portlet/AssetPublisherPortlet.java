@@ -290,7 +290,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebHelper, infoItemServiceRegistry,
-					itemSelector, resourceRequest, resourceResponse,
+					itemSelector, resourceRequest, portal, resourceResponse,
 					resourceRequest.getPreferences(), requestContextMapper,
 					segmentsEntryRetriever);
 
@@ -390,7 +390,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebHelper, infoItemServiceRegistry,
-					itemSelector, renderRequest, renderResponse,
+					itemSelector, renderRequest, portal, renderResponse,
 					renderRequest.getPreferences(), requestContextMapper,
 					segmentsEntryRetriever);
 

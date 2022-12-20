@@ -89,5 +89,13 @@ export default function useURLParser() {
 				}
 			});
 		}
-	}, [selectFragment, setHighlightedCommentId]);
+
+		if (url.searchParams.has('itemId')) {
+			selectItem(url.searchParams.get('itemId'));
+
+			url.searchParams.delete('itemId');
+
+			history.replaceState(null, document.head.title, url.href);
+		}
+	}, [selectFragment, setHighlightedCommentId, selectItem]);
 }

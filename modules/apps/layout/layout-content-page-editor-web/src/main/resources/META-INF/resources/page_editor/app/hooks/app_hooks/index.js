@@ -25,8 +25,8 @@ export default function AppHooks() {
 	useExtendSession();
 	useLanguageDirection();
 	usePortletConfigurationListener();
-	useProductMenuHandler();
 	usePreviewURL();
+	useProductMenuHandler();
 	useURLParser();
 
 	return null;

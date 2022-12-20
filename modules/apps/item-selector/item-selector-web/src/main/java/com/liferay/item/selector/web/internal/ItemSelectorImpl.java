@@ -280,26 +280,27 @@ public class ItemSelectorImpl implements ItemSelector {
 							ItemSelectorKeyUtil.getItemSelectorCriterionKey(
 								itemSelectorCriterionClass));
 					}));
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ItemSelectorViewRendererCustomizer.class, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(itemSelectorViewRendererCustomizer, emitter) -> {
-					for (Class<? extends ItemSelectorCriterion>
-							itemSelectorCriterionClass :
-								itemSelectorViewRendererCustomizer.
-									getSupportedItemSelectorCriterionClasses()) {
+		_itemSelectorViewRendererCustomizersServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ItemSelectorViewRendererCustomizer.class, null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(itemSelectorViewRendererCustomizer, emitter) -> {
+						for (Class<? extends ItemSelectorCriterion>
+								itemSelectorCriterionClass :
+									itemSelectorViewRendererCustomizer.
+										getSupportedItemSelectorCriterionClasses()) {
 
-						emitter.emit(itemSelectorCriterionClass.getName());
-					}
-				}));
+							emitter.emit(itemSelectorCriterionClass.getName());
+						}
+					}));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_itemSelectorCriterionHandlerServiceTrackerMap.close();
 
-		_serviceTrackerMap.close();
+		_itemSelectorViewRendererCustomizersServiceTrackerMap.close();
 	}
 
 	protected Map<String, String[]> getItemSelectorParameters(
@@ -400,8 +401,9 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriterion.getClass();
 
 		List<ItemSelectorViewRendererCustomizer>
-			itemSelectorViewRendererCustomizers = _serviceTrackerMap.getService(
-				clazz.getName());
+			itemSelectorViewRendererCustomizers =
+				_itemSelectorViewRendererCustomizersServiceTrackerMap.
+					getService(clazz.getName());
 
 		if (itemSelectorViewRendererCustomizers == null) {
 			return itemSelectorViewRenderer;
@@ -466,11 +468,10 @@ public class ItemSelectorImpl implements ItemSelector {
 	private ServiceTrackerMap
 		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
 			_itemSelectorCriterionHandlerServiceTrackerMap;
+	private ServiceTrackerMap<String, List<ItemSelectorViewRendererCustomizer>>
+		_itemSelectorViewRendererCustomizersServiceTrackerMap;
 
 	@Reference
 	private Portal _portal;
-
-	private ServiceTrackerMap<String, List<ItemSelectorViewRendererCustomizer>>
-		_serviceTrackerMap;
 
 }

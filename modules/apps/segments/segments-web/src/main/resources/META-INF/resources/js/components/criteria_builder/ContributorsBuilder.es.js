@@ -76,7 +76,7 @@ class ContributorBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {contributors, groupId, propertyGroups, scopeName} = props;
+		const {contributors, propertyGroups, scopeName} = props;
 
 		const firstContributorNotEmpty = contributors.find(
 			(contributor) => contributor.query !== ''
@@ -88,7 +88,6 @@ class ContributorBuilder extends React.Component {
 
 		this.state = {
 			editingId: propertyKey,
-			groupId,
 			scopeName,
 		};
 	}
@@ -109,9 +108,15 @@ class ContributorBuilder extends React.Component {
 		openSelectionModal({
 			onSelect: (selectedItem) => {
 				this.setState({
-					groupId: selectedItem.groupid,
 					scopeName: selectedItem.groupscopelabel,
 				});
+				const input = document.querySelector(
+					`[name="${this.props.portletNamespace}groupId"]`
+				);
+
+				if (input) {
+					input.value = selectedItem.groupid;
+				}
 			},
 			selectEventName: 'sitesSelectItem',
 			title: Liferay.Language.get('select-site'),
@@ -131,7 +136,6 @@ class ContributorBuilder extends React.Component {
 			onAlertClose,
 			onConjunctionChange,
 			onPreviewMembers,
-			portletNamespace,
 			propertyGroups,
 			renderEmptyValuesErrors,
 			supportedConjunctions,
@@ -139,7 +143,7 @@ class ContributorBuilder extends React.Component {
 			supportedPropertyTypes,
 		} = this.props;
 
-		const {editingId, groupId, scopeName} = this.state;
+		const {editingId, scopeName} = this.state;
 
 		const rootClasses = getCN('contributor-builder-root', {
 			editing,
@@ -209,12 +213,6 @@ class ContributorBuilder extends React.Component {
 												showCollapseIcon
 											>
 												<ClayPanel.Body className="p-4">
-													<input
-														name={`${portletNamespace}groupId`}
-														type="hidden"
-														value={groupId}
-													/>
-
 													{this.props
 														.siteItemSelectorURL && (
 														<div className="align-items-center d-flex justify-content-between mb-3">

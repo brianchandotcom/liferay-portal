@@ -2019,6 +2019,7 @@ public class PoshiValidation {
 	private static final Map<String, String> _deprecatedMethodNames =
 		new Hashtable<String, String>() {
 			{
+				put("antCommand", "\"AntCommands.runCommand\"");
 				put("assertAlert", "\"selenium.assertAlertText\"");
 				put("copyText", "\"selenium.getText\" (stored as a variable)");
 				put(

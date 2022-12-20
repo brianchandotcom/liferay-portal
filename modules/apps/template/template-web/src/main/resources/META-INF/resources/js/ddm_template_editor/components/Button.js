@@ -30,7 +30,7 @@ export function Button({label, onClick = noop, tooltip}) {
 			displayType="unstyled"
 			key={label}
 			onClick={onClick}
-			small
+			size="sm"
 		>
 			{label}
 

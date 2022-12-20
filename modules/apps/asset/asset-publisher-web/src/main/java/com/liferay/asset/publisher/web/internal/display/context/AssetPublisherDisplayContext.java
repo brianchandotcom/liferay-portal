@@ -2275,7 +2275,8 @@ public class AssetPublisherDisplayContext {
 		return _segmentsEntryRetriever.getSegmentsEntryIds(
 			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
 			_requestContextMapper.map(
-				PortalUtil.getHttpServletRequest(_portletRequest)));
+				PortalUtil.getOriginalServletRequest(
+					PortalUtil.getHttpServletRequest(_portletRequest))));
 	}
 
 	private boolean _isShowRelatedAssets() {

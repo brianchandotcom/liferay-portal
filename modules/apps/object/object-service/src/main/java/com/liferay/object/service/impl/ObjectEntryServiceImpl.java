@@ -14,11 +14,17 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -26,12 +32,18 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -66,7 +78,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		_checkPortletResourcePermission(
-			groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
+			groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY,
+			values);
 
 		_validateSubmissionLimit(objectDefinitionId, getUser());
 
@@ -86,7 +99,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		if (objectEntry == null) {
 			_checkPortletResourcePermission(
-				groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
+				groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY,
+				values);
 		}
 		else {
 			_checkModelResourcePermission(
@@ -356,14 +370,58 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	private void _checkPortletResourcePermission(
-			long groupId, long objectDefinitionId, String actionId)
+			long groupId, long objectDefinitionId, String actionId,
+			Map<String, Serializable> values)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
 			_getPortletResourcePermission(objectDefinitionId);
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		portletResourcePermission.check(
-			getPermissionChecker(), groupId, actionId);
+			permissionChecker, groupId, actionId);
+
+		if (permissionChecker.hasPermission(
+			groupId, portletResourcePermission.getResourceName(), 0, actionId)) {
+
+			return;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (!objectDefinition.isAccountEntryRestricted()) {
+			return;
+		}
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getAccountEntryRestrictedObjectFieldId());
+
+		long accountEntryId = MapUtil.getLong(values, objectField.getName());
+
+		if (accountEntryId == 0) {
+			return;
+		}
+
+		long[] accountEntryIds = ListUtil.toLongArray(
+			_accountEntryLocalService.getUserAccountEntries(
+				getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				null,
+				new String[] {
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+				},
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			AccountEntry::getAccountEntryId);
+
+		if (!ArrayUtil.contains(accountEntryIds, accountEntryId)) {
+			throw new ObjectDefinitionAccountEntryRestrictedException(
+				StringBundler.concat(
+					"User ", getUserId(),
+					" has no access to the account entry ", accountEntryId));
+		}
 	}
 
 	private PortletResourcePermission _getPortletResourcePermission(
@@ -400,6 +458,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 	}
 
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	private volatile ServiceTrackerMap
 		<String, ModelResourcePermission<ObjectEntry>>
 			_modelResourcePermissionsServiceTrackerMap;
@@ -407,6 +468,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private volatile ServiceTrackerMap<String, PortletResourcePermission>
 		_portletResourcePermissionsServiceTrackerMap;

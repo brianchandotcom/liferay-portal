@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -98,6 +98,33 @@ public class EasyRestController {
 		return new ResponseEntity<>(json, HttpStatus.CREATED);
 	}
 
+	@PostMapping("/easy-workflow/action/1")
+	public ResponseEntity<String> postEasyWorkflowAction1(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+		}
+
+		try {
+			_easyWorkflowHelper.transitionTheTask(
+				json, jwt.getTokenValue(),
+				(workflowDetails, transitionNames) -> "approve");
+		}
+		catch (Exception exception) {
+			_log.error("JSON: " + json, exception);
+
+			return new ResponseEntity<>(json, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+
 	private static final Log _log = LogFactory.getLog(EasyRestController.class);
+
+	@Autowired
+	private EasyWorkflowHelper _easyWorkflowHelper;
 
 }

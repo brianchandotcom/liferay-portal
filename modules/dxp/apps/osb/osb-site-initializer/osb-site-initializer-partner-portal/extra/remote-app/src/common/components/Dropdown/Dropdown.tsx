@@ -12,11 +12,11 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-
 interface DropdownOption {
 	icon: string;
 	key: string;
 	label: string;
+	onClick: () => void;
 }
 
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
 	options: DropdownOption[];
 }
 
-const DropDown = ({onClick, options}: Props) => (
+const DropDown = ({options}: Props) => (
 	<ClayDropDown
 		trigger={
 			<ClayButton displayType="unstyled">
@@ -35,7 +35,7 @@ const DropDown = ({onClick, options}: Props) => (
 		<ClayDropDown.ItemList>
 			<ClayDropDown.Group>
 				{options.map((item, index) => (
-					<ClayDropDown.Item key={index} onClick={onClick}>
+					<ClayDropDown.Item key={index} onClick={item.onClick}>
 						<ClayIcon symbol={item.icon}></ClayIcon>
 
 						{item.label}

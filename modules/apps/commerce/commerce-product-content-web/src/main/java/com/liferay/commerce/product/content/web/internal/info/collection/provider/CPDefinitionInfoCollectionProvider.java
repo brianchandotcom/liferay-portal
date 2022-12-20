@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,28 +64,18 @@ public class CPDefinitionInfoCollectionProvider
 					getCommerceChannelGroupIdBySiteGroupId(
 						serviceContext.getScopeGroupId());
 
-			String keywords = null;
-
 			Pagination pagination = collectionQuery.getPagination();
 
-			Optional<KeywordsInfoFilter> keywordsInfoFilterOptional =
-				collectionQuery.getInfoFilterOptional(KeywordsInfoFilter.class);
+			KeywordsInfoFilter keywordsInfoFilter =
+				collectionQuery.getInfoFilter(KeywordsInfoFilter.class);
 
-			if (keywordsInfoFilterOptional.isPresent()) {
-				KeywordsInfoFilter keywordsInfoFilter =
-					keywordsInfoFilterOptional.get();
-
-				keywords = keywordsInfoFilter.getKeywords();
-			}
+			String keywords = keywordsInfoFilter.getKeywords();
 
 			Sort sort = null;
 
-			Optional<com.liferay.info.sort.Sort> sortOptional =
-				collectionQuery.getSortOptional();
+			com.liferay.info.sort.Sort infoSort = collectionQuery.getSort();
 
-			if (sortOptional.isPresent()) {
-				com.liferay.info.sort.Sort infoSort = sortOptional.get();
-
+			if (infoSort != null) {
 				sort = new Sort(
 					infoSort.getFieldName(), Sort.LONG_TYPE,
 					infoSort.isReverse());

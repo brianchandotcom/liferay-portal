@@ -47,7 +47,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -189,10 +188,7 @@ public class LayoutListRetrieverTest {
 		public InfoPage<AssetTag> getCollectionInfoPage(
 			CollectionQuery collectionQuery) {
 
-			Optional<Object> relatedItemOptional =
-				collectionQuery.getRelatedItemObjectOptional();
-
-			Object relatedItem = relatedItemOptional.orElse(null);
+			Object relatedItem = collectionQuery.getRelatedItemObject();
 
 			if (!(relatedItem instanceof AssetEntry)) {
 				return InfoPage.of(

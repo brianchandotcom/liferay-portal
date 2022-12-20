@@ -24,12 +24,37 @@ import java.io.File;
 import java.io.InputStreamReader;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Michael Hashimoto
  */
 public class AntCommands implements Callable<Void> {
+
+	public static void runCommand(String fileName, String target)
+		throws Exception {
+
+		AntCommands antCommands = new AntCommands(fileName, target);
+
+		ExecutorService executorService = Executors.newCachedThreadPool();
+
+		Future<Void> future = executorService.submit(antCommands);
+
+		try {
+			future.get(150, TimeUnit.SECONDS);
+		}
+		catch (ExecutionException executionException) {
+			throw executionException;
+		}
+		catch (TimeoutException timeoutException) {
+		}
+	}
 
 	public AntCommands(String fileName, String target) {
 		_fileName = fileName;

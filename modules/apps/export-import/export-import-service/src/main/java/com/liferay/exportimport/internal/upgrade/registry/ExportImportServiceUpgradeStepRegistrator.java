@@ -15,12 +15,14 @@
 package com.liferay.exportimport.internal.upgrade.registry;
 
 import com.liferay.exportimport.internal.upgrade.v1_0_0.PublisherRequestUpgradeProcess;
+import com.liferay.exportimport.internal.upgrade.v1_0_1.SystemEventsUpgradeProcess;
 import com.liferay.exportimport.internal.upgrade.v1_0_2.UpgradeExportImportServiceConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -54,11 +56,11 @@ public class ExportImportServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			new com.liferay.exportimport.internal.upgrade.v1_0_1.
-				UpgradeBackgroundTaskExecutorClassNames());
+			new SystemEventsUpgradeProcess(
+				_groupLocalService, _systemEventLocalService));
 
 		registry.register(
-			"1.0.0", "1.0.2",
+			"1.0.1", "1.0.2",
 			new com.liferay.exportimport.internal.upgrade.v1_0_2.
 				UpgradeBackgroundTaskExecutorClassNames());
 
@@ -88,6 +90,9 @@ public class ExportImportServiceUpgradeStepRegistrator
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private SystemEventLocalService _systemEventLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

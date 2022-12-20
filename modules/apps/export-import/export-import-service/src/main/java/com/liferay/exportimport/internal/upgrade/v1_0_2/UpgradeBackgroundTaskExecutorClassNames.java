@@ -27,6 +27,12 @@ public class UpgradeBackgroundTaskExecutorClassNames
 	protected String[][] getRenameTaskExecutorClassNames() {
 		return new String[][] {
 			{
+				"com.liferay.dynamic.data.mapping.background.task." +
+					"DDMStructureIndexerBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					DDM_STRUCTURE_INDEXER_BACKGROUND_TASK_EXECUTOR
+			},
+			{
 				"com.liferay.exportimport.background.task." +
 					"LayoutExportBackgroundTaskExecutor",
 				BackgroundTaskExecutorNames.

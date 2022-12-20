@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.internal.verify.system.event;
+package com.liferay.exportimport.internal.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -21,28 +21,23 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
-import com.liferay.portal.verify.VerifyProcess;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author     Akos Thurzo
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Alberto Chaparro
  */
-@Component(
-	property = "verify.process.name=com.liferay.systemevent.internal.verify",
-	service = VerifyProcess.class
-)
-@Deprecated
-public class SystemEventVerifyProcess extends VerifyProcess {
+public class SystemEventsUpgradeProcess extends UpgradeProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
-		_deleteInvalidSystemEvents();
+	public SystemEventsUpgradeProcess(
+		GroupLocalService groupLocalService,
+		SystemEventLocalService systemEventLocalService) {
+
+		_groupLocalService = groupLocalService;
+		_systemEventLocalService = systemEventLocalService;
 	}
 
-	private void _deleteInvalidSystemEvents() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_groupLocalService.getActionableDynamicQuery();
 
@@ -74,10 +69,7 @@ public class SystemEventVerifyProcess extends VerifyProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private SystemEventLocalService _systemEventLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final SystemEventLocalService _systemEventLocalService;
 
 }

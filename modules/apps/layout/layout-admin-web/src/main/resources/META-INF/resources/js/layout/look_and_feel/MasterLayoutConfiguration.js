@@ -103,7 +103,7 @@ export default function MasterLayoutConfiguration({
 					<ClayButton
 						displayType="secondary"
 						onClick={handleChangeMasterButtonClick}
-						small
+						size="sm"
 					>
 						{Liferay.Language.get('change-master')}
 					</ClayButton>
@@ -112,7 +112,7 @@ export default function MasterLayoutConfiguration({
 				<ClayButton
 					displayType="secondary"
 					onClick={handleChangeMasterButtonClick}
-					small
+					size="sm"
 				>
 					{Liferay.Language.get('change-master')}
 				</ClayButton>

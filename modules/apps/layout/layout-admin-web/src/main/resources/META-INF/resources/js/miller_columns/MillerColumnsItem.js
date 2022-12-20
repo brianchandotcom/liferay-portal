@@ -420,7 +420,7 @@ const MillerColumnsItem = ({
 							<ClayButtonWithIcon
 								borderless
 								displayType="secondary"
-								small
+								size="sm"
 								symbol="plus"
 								title={Liferay.Language.get('add-child-page')}
 							/>
@@ -471,7 +471,7 @@ const MillerColumnsItem = ({
 							<ClayButtonWithIcon
 								borderless
 								displayType="secondary"
-								small
+								size="sm"
 								symbol="ellipsis-v"
 								title={Liferay.Language.get(
 									'open-page-options-menu'

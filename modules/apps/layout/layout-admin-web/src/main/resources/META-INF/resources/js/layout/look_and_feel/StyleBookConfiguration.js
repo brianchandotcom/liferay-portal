@@ -74,7 +74,7 @@ export default function StyleBookConfiguration({
 				<ClayButton
 					displayType="secondary"
 					onClick={handleChangeStyleBookClick}
-					small
+					size="sm"
 				>
 					{Liferay.Language.get('change-style-book')}
 				</ClayButton>

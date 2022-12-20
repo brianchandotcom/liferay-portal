@@ -1,8 +1,8 @@
 dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.4"
-	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.4"
+	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
+	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.10"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationCompile group: "org.springframework", name: "spring-test", version: "5.2.22.RELEASE"
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

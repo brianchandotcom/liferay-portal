@@ -3,7 +3,7 @@ dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.4"
+	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
 	testIntegrationCompile project(":apps:account:account-api")
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")

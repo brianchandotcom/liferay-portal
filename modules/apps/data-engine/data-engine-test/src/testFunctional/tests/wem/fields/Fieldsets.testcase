@@ -216,17 +216,17 @@ definition {
 
 		for (var n : list "1,2") {
 			DataEngine.assertFieldRepeated(
-				fieldName = "FieldsGroup",
+				fieldName = "New Fieldset",
 				index = "${n}");
 		}
 
 		AssertElementNotPresent(
-			key_fieldName = "FieldsGroup",
+			key_fieldName = "New Fieldset",
 			key_index = "1",
 			locator1 = "FormFields#FIELD_REMOVE");
 
 		AssertVisible(
-			key_fieldName = "FieldsGroup",
+			key_fieldName = "New Fieldset",
 			key_index = "2",
 			locator1 = "FormFields#FIELD_REMOVE");
 
@@ -236,17 +236,17 @@ definition {
 
 		for (var n : list "1,2") {
 			DataEngine.assertFieldRepeated(
-				fieldName = "FieldsGroup",
+				fieldName = "New Fieldset",
 				index = "${n}");
 		}
 
 		AssertElementNotPresent(
-			key_fieldName = "FieldsGroup",
+			key_fieldName = "New Fieldset",
 			key_index = "1",
 			locator1 = "FormFields#FIELD_REMOVE");
 
 		AssertVisible(
-			key_fieldName = "FieldsGroup",
+			key_fieldName = "New Fieldset",
 			key_index = "2",
 			locator1 = "FormFields#FIELD_REMOVE");
 	}

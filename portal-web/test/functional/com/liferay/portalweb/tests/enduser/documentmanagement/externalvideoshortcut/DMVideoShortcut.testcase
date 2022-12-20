@@ -75,13 +75,10 @@ definition {
 			videoShortcutPreview = "https://player.twitch.tv",
 			videoShortcutTitle = "Test Twitch Twitch live stream");
 
-		Navigator.gotoSitePage(
-			pageName = "Blog Page",
-			siteName = "Guest");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "blog-page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "twitch",
@@ -293,13 +290,10 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			navTab = "URL");
 
-		Navigator.gotoSitePage(
-			pageName = "Blog Page",
-			siteName = "Guest");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "blog-page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "vimeo",

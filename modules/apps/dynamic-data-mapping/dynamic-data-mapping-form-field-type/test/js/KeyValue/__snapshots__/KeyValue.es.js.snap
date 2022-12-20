@@ -14,17 +14,13 @@ exports[`KeyValue has a helptext 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -90,17 +86,13 @@ exports[`KeyValue has a label 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -153,19 +145,14 @@ exports[`KeyValue has a predefined Value 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-        title="Option 1"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          placeholder="Option 1"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        placeholder="Option 1"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -213,18 +200,13 @@ exports[`KeyValue has a value 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-        title="value"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value="value"
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value="value"
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -272,17 +254,13 @@ exports[`KeyValue has an id 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -330,18 +308,14 @@ exports[`KeyValue is not editable 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-      >
-        <input
-          class="form-control ddm-field-text"
-          disabled=""
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        disabled=""
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -389,17 +363,13 @@ exports[`KeyValue is not required 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -452,17 +422,13 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"
@@ -515,17 +481,13 @@ exports[`KeyValue renders component with a key 1`] = `
       data-field-name="keyValueLabelkeyValue"
       tabindex="0"
     >
-      <div
-        data-tooltip-align="top"
-      >
-        <input
-          class="form-control ddm-field-text"
-          id="keyValueLabelkeyValue"
-          name="keyValueLabelkeyValue"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        class="form-control ddm-field-text"
+        id="keyValueLabelkeyValue"
+        name="keyValueLabelkeyValue"
+        type="text"
+        value=""
+      />
       <input
         name="keyValueLabelkeyValue_edited"
         type="hidden"

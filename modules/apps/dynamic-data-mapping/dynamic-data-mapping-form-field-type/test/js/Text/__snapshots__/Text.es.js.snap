@@ -8,17 +8,13 @@ exports[`Field Text has a helptext 1`] = `
     data-field-name="textField"
     tabindex="0"
   >
-    <div
-      data-tooltip-align="top"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="textField"
-        name="textField"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="textField"
+      name="textField"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -55,17 +51,13 @@ exports[`Field Text has a label 1`] = `
     >
       label
     </label>
-    <div
-      data-tooltip-align="top"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="textField"
-        name="textField"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="textField"
+      name="textField"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -89,19 +81,14 @@ exports[`Field Text has a placeholder 1`] = `
     data-field-name="textField"
     tabindex="0"
   >
-    <div
-      data-tooltip-align="top"
-      title="Placeholder"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="textField"
-        name="textField"
-        placeholder="Placeholder"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="textField"
+      name="textField"
+      placeholder="Placeholder"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -120,18 +107,13 @@ exports[`Field Text has a value 1`] = `
     data-field-name="textField"
     tabindex="0"
   >
-    <div
-      data-tooltip-align="top"
-      title="value"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="textField"
-        name="textField"
-        type="text"
-        value="value"
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="textField"
+      name="textField"
+      type="text"
+      value="value"
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -150,17 +132,13 @@ exports[`Field Text has an id 1`] = `
     data-field-name="textField"
     tabindex="0"
   >
-    <div
-      data-tooltip-align="top"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="Id"
-        name="textField"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="Id"
+      name="textField"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -179,17 +157,13 @@ exports[`Field Text is not readOnly 1`] = `
     data-field-name="textField"
     tabindex="0"
   >
-    <div
-      data-tooltip-align="top"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="textField"
-        name="textField"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="textField"
+      name="textField"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -208,17 +182,13 @@ exports[`Field Text is not required 1`] = `
     data-field-name="textField"
     tabindex="0"
   >
-    <div
-      data-tooltip-align="top"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="textField"
-        name="textField"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="textField"
+      name="textField"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -237,18 +207,14 @@ exports[`Field Text is readOnly 1`] = `
     data-field-name="textField"
     tabindex="0"
   >
-    <div
-      data-tooltip-align="top"
-    >
-      <input
-        class="form-control ddm-field-text"
-        disabled=""
-        id="textField"
-        name="textField"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      disabled=""
+      id="textField"
+      name="textField"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"
@@ -272,17 +238,13 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
     >
       text
     </label>
-    <div
-      data-tooltip-align="top"
-    >
-      <input
-        class="form-control ddm-field-text"
-        id="textField"
-        name="textField"
-        type="text"
-        value=""
-      />
-    </div>
+    <input
+      class="form-control ddm-field-text"
+      id="textField"
+      name="textField"
+      type="text"
+      value=""
+    />
     <input
       name="textField_edited"
       type="hidden"

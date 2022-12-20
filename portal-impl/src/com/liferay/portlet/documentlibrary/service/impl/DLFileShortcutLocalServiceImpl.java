@@ -45,8 +45,6 @@ import com.liferay.portal.kernel.trash.helper.TrashHelper;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutLocalServiceBaseImpl;
-import com.liferay.trash.kernel.service.TrashEntryLocalService;
-import com.liferay.trash.kernel.service.TrashVersionLocalService;
 
 import java.util.Date;
 import java.util.List;
@@ -195,19 +193,6 @@ public class DLFileShortcutLocalServiceImpl
 		_assetEntryLocalService.deleteEntry(
 			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId());
-
-		// Trash
-
-		if (_trashHelper.isInTrashExplicitly(fileShortcut)) {
-			_trashEntryLocalService.deleteEntry(
-				DLFileShortcutConstants.getClassName(),
-				fileShortcut.getFileShortcutId());
-		}
-		else {
-			_trashVersionLocalService.deleteTrashVersion(
-				DLFileShortcutConstants.getClassName(),
-				fileShortcut.getFileShortcutId());
-		}
 	}
 
 	@Override
@@ -533,14 +518,6 @@ public class DLFileShortcutLocalServiceImpl
 
 	@BeanReference(type = ResourceLocalService.class)
 	private ResourceLocalService _resourceLocalService;
-
-	@BeanReference(type = TrashEntryLocalService.class)
-	@SuppressWarnings("deprecation")
-	private TrashEntryLocalService _trashEntryLocalService;
-
-	@BeanReference(type = TrashVersionLocalService.class)
-	@SuppressWarnings("deprecation")
-	private TrashVersionLocalService _trashVersionLocalService;
 
 	@BeanReference(type = UserPersistence.class)
 	private UserPersistence _userPersistence;

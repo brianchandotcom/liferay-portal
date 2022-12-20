@@ -34,7 +34,11 @@ import TestflowAssignUserModal, {TestflowAssigUserType} from './modal';
 type OutletContext = {
 	data: {
 		testraySubtasks: APIResponse<TestraySubTask>;
-		testrayTask: TestrayTask;
+		testrayTask: TestrayTask & {
+			actions: {
+				[key: string]: string;
+			};
+		};
 		testrayTaskUser: TestrayTaskUser[];
 	};
 	mutate: {
@@ -133,9 +137,37 @@ const TaskHeaderActions = () => {
 							{i18n.translate('reanalyze')}
 						</ClayButton>
 
-						<ClayButton disabled displayType="secondary">
-							{i18n.translate('delete')}
-						</ClayButton>
+						{testrayTask.actions?.delete && (
+							<ClayButton
+								displayType="secondary"
+								onClick={async () => {
+									if (
+										!confirm(
+											i18n.translate(
+												'are-you-sure-you-want-to-delete-this-item'
+											)
+										)
+									) {
+										return;
+									}
+
+									await testrayTaskImpl.remove(
+										testrayTask.id
+									);
+
+									navigate('/testflow');
+
+									Liferay.Util.openToast({
+										message: i18n.translate(
+											'mark-at-least-one-user-for-assignment'
+										),
+										type: 'success',
+									});
+								}}
+							>
+								{i18n.translate('delete')}
+							</ClayButton>
+						)}
 					</ClayButton.Group>
 				) : (
 					<ClayButton

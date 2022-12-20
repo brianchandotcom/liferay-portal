@@ -43,9 +43,15 @@ export default async function submitForm(
 		Boolean(activity.budgets?.some((budget) => !budget.selected))
 	);
 
-	const dtoMDFClaim = Liferay.FeatureFlags['LPS-164528']
-		? await createMDFClaimProxyAPI(values, mdfRequest)
-		: await createMDFClaim(ResourceName.MDF_CLAIM_DXP, values, mdfRequest);
+	const dtoMDFClaim =
+		Liferay.FeatureFlags['LPS-164528'] &&
+		values.claimStatus !== Status.DRAFT
+			? await createMDFClaimProxyAPI(values, mdfRequest)
+			: await createMDFClaim(
+					ResourceName.MDF_CLAIM_DXP,
+					values,
+					mdfRequest
+			  );
 
 	if (dtoMDFClaim?.id) {
 		const claimFolder = await createDocumentFolder(

@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>LABEL</td>
-	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'${key_fieldLabel}')]</td>
+	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'${key_fieldLabel}')] | //label[contains(@class,'control-label') and contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

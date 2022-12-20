@@ -157,7 +157,7 @@
 						int index = 0;
 
 						for (String curLanguageId : uniqueLanguageIds) {
-							String linkCssClass = "dropdown-item palette-item";
+							String linkCssClass = "dropdown-item palette-item keep-aria-attributes";
 
 							Locale curLocale = LocaleUtil.fromLanguageId(curLanguageId);
 

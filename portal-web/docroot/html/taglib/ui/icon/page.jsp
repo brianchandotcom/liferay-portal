@@ -23,7 +23,7 @@ String listItemAnchorAriaHasPopup = "false";
 String listItemAnchorAriaRole = "menuitem";
 String listItemAriaRole = "presentation";
 
-if (useDialog || (urlIsNotNull && url.startsWith("javascript:"))) {
+if (!linkCssClass.contains("keep-aria-attributes") && (useDialog || (urlIsNotNull && url.startsWith("javascript:")))) {
 	listItemAnchorAriaHasPopup = "dialog";
 	listItemAnchorAriaRole = null;
 	listItemAriaRole = "";

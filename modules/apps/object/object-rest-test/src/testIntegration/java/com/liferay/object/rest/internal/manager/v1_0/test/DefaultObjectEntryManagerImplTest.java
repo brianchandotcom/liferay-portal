@@ -560,6 +560,257 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	@Test
+	public void testDeleteObjectEntryAccountRestriction() throws Exception {
+		_restrictObjectDefinitionByAccount();
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry1.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry objectEntry2 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry2.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		// Account scope
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), _user.getUserId());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), _user.getUserId());
+
+		Role accountAdministratorRole = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+
+		_addResourcePermission(
+			ActionKeys.VIEW, accountAdministratorRole.getRoleId());
+		_addResourcePermission(
+			ActionKeys.DELETE, accountAdministratorRole.getRoleId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
+			accountAdministratorRole.getRoleId());
+
+		Role buyerRole = _roleLocalService.getRole(_companyId, "Buyer");
+
+		_addResourcePermission(ActionKeys.VIEW, buyerRole.getRoleId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry2.getAccountEntryGroupId(),
+			buyerRole.getRoleId());
+
+		_assertObjectEntriesSize(2);
+
+		_objectEntryManager.deleteObjectEntry(
+			_objectDefinition1, objectEntry1.getId());
+
+		_assertObjectEntriesSize(1);
+
+		try {
+			_objectEntryManager.deleteObjectEntry(
+				_objectDefinition1, objectEntry2.getId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				exception.getMessage(),
+				com.liferay.petra.string.StringBundler.concat(
+					"User ", _user.getUserId(), " must have DELETE permission ",
+					"for ", _objectDefinition1.getClassName(), " ",
+					objectEntry2.getId()));
+		}
+
+		_assertObjectEntriesSize(1);
+
+		// Organization scope
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		objectEntry1 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry1.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			organization2.getOrganizationId());
+
+		Role accountManagerRole = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+		Group organizationGroup1 = _groupLocalService.getOrganizationGroup(
+			_companyId, organization1.getOrganizationId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), organizationGroup1.getGroupId(),
+			accountManagerRole.getRoleId());
+
+		_addResourcePermission(ActionKeys.VIEW, accountManagerRole.getRoleId());
+
+		_assertObjectEntriesSize(1);
+
+		try {
+			_objectEntryManager.deleteObjectEntry(
+				_objectDefinition1, objectEntry1.getId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				exception.getMessage(),
+				com.liferay.petra.string.StringBundler.concat(
+					"User ", _user.getUserId(), " must have DELETE permission ",
+					"for ", _objectDefinition1.getClassName(), " ",
+					objectEntry1.getId()));
+		}
+
+		_assertObjectEntriesSize(1);
+
+		_addResourcePermission(
+			ActionKeys.DELETE, accountManagerRole.getRoleId());
+
+		_objectEntryManager.deleteObjectEntry(
+			_objectDefinition1, objectEntry1.getId());
+
+		_assertObjectEntriesSize(0);
+
+		// Sub organization scope
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		objectEntry1 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry1.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization1.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization2.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			suborganization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			suborganization2.getOrganizationId());
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), organizationGroup1.getGroupId(),
+			accountManagerRole.getRoleId());
+
+		_assertObjectEntriesSize(1);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountManagerRole.getRoleId(), ActionKeys.DELETE);
+
+		try {
+			_objectEntryManager.deleteObjectEntry(
+				_objectDefinition1, objectEntry1.getId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				exception.getMessage(),
+				com.liferay.petra.string.StringBundler.concat(
+					"User ", _user.getUserId(), " must have DELETE permission ",
+					"for ", _objectDefinition1.getClassName(), " ",
+					objectEntry1.getId()));
+		}
+
+		_assertObjectEntriesSize(1);
+
+		_addResourcePermission(
+			ActionKeys.DELETE, accountManagerRole.getRoleId());
+
+		_objectEntryManager.deleteObjectEntry(
+			_objectDefinition1, objectEntry1.getId());
+
+		_assertObjectEntriesSize(0);
+	}
+
+	@Test
 	public void testGetObjectEntries() throws Exception {
 		_testGetObjectEntries(Collections.emptyMap());
 
@@ -815,31 +1066,10 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testGetObjectEntriesAccountRestrictions() throws Exception {
+		_restrictObjectDefinitionByAccount();
+
 		AccountEntry accountEntry1 = _addAccountEntry();
 		AccountEntry accountEntry2 = _addAccountEntry();
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				_companyId, "AccountEntry");
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				_adminUser.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
-				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationshipName",
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_objectDefinition1.setAccountEntryRestrictedObjectFieldId(
-			objectRelationship.getObjectFieldId2());
-
-		_objectDefinition1.setAccountEntryRestricted(true);
-
-		_objectDefinition1 =
-			_objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
 
 		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
@@ -874,18 +1104,13 @@ public class DefaultObjectEntryManagerImplTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 
-		PrincipalThreadLocal.setName(_user.getUserId());
-
 		_assertObjectEntriesSize(0);
 
 		// Regular roles permissions should not be restricted by account
 
 		Role randomRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			randomRole.getRoleId(), ActionKeys.VIEW);
+		_addResourcePermission(ActionKeys.VIEW, randomRole.getRoleId());
 
 		_userLocalService.addRoleUser(randomRole.getRoleId(), _user);
 
@@ -919,25 +1144,23 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
 
-		Role accountAdministrator = _roleLocalService.getRole(
+		Role accountAdministratorRole = _roleLocalService.getRole(
 			_companyId,
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			accountAdministrator.getRoleId(), ActionKeys.VIEW);
+		_addResourcePermission(
+			ActionKeys.VIEW, accountAdministratorRole.getRoleId());
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
-			accountAdministrator.getRoleId());
+			accountAdministratorRole.getRoleId());
 
 		_assertObjectEntriesSize(1);
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			_companyId, _objectDefinition1.getClassName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			accountAdministrator.getRoleId(), ActionKeys.VIEW);
+			accountAdministratorRole.getRoleId(), ActionKeys.VIEW);
 
 		_assertObjectEntriesSize(0);
 
@@ -955,10 +1178,7 @@ public class DefaultObjectEntryManagerImplTest {
 			_user.getUserId(), accountEntry2.getAccountEntryGroupId(),
 			accountRole.getRoleId());
 
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			accountRole.getRoleId(), ActionKeys.VIEW);
+		_addResourcePermission(ActionKeys.VIEW, accountRole.getRoleId());
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry2.getAccountEntryId(), _user.getUserId());
@@ -1007,10 +1227,7 @@ public class DefaultObjectEntryManagerImplTest {
 			_user.getUserId(), organizationGroup1.getGroupId(),
 			accountManagerRole.getRoleId());
 
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			accountManagerRole.getRoleId(), ActionKeys.VIEW);
+		_addResourcePermission(ActionKeys.VIEW, accountManagerRole.getRoleId());
 
 		_assertObjectEntriesSize(2);
 
@@ -1064,10 +1281,7 @@ public class DefaultObjectEntryManagerImplTest {
 			_user.getUserId(), organizationGroup1.getGroupId(),
 			accountManagerRole.getRoleId());
 
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			accountManagerRole.getRoleId(), ActionKeys.VIEW);
+		_addResourcePermission(ActionKeys.VIEW, accountManagerRole.getRoleId());
 
 		_assertObjectEntriesSize(1);
 
@@ -1109,6 +1323,215 @@ public class DefaultObjectEntryManagerImplTest {
 			organization2.getOrganizationId());
 
 		_assertObjectEntriesSize(0);
+	}
+
+	@Test
+	public void testUpdateObjectEntryAccountRestriction() throws Exception {
+		_restrictObjectDefinitionByAccount();
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry1.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry objectEntry2 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry2.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		// Account scope
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), _user.getUserId());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), _user.getUserId());
+
+		Role accountAdministratorRole = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+
+		_addResourcePermission(
+			ActionKeys.VIEW, accountAdministratorRole.getRoleId());
+		_addResourcePermission(
+			ActionKeys.UPDATE, accountAdministratorRole.getRoleId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
+			accountAdministratorRole.getRoleId());
+
+		Role buyerRole = _roleLocalService.getRole(_companyId, "Buyer");
+
+		_addResourcePermission(ActionKeys.VIEW, buyerRole.getRoleId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry2.getAccountEntryGroupId(),
+			buyerRole.getRoleId());
+
+		_assertObjectEntriesSize(2);
+
+		_objectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			objectEntry1.getId(), objectEntry1);
+
+		try {
+			_objectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				objectEntry2.getId(), objectEntry2);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				exception.getMessage(),
+				com.liferay.petra.string.StringBundler.concat(
+					"User ", _user.getUserId(), " must have UPDATE permission ",
+					"for ", _objectDefinition1.getClassName(), " ",
+					objectEntry2.getId()));
+		}
+
+		// Organization scope
+
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			organization2.getOrganizationId());
+
+		Role accountManagerRole = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+		Group organizationGroup1 = _groupLocalService.getOrganizationGroup(
+			_companyId, organization1.getOrganizationId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), organizationGroup1.getGroupId(),
+			accountManagerRole.getRoleId());
+
+		_addResourcePermission(ActionKeys.VIEW, accountManagerRole.getRoleId());
+
+		try {
+			_objectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				objectEntry1.getId(), objectEntry1);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				exception.getMessage(),
+				com.liferay.petra.string.StringBundler.concat(
+					"User ", _user.getUserId(), " must have UPDATE permission ",
+					"for ", _objectDefinition1.getClassName(), " ",
+					objectEntry1.getId()));
+		}
+
+		_addResourcePermission(
+			ActionKeys.UPDATE, accountManagerRole.getRoleId());
+
+		_objectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			objectEntry1.getId(), objectEntry1);
+
+		// Sub organization scope
+
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization1.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization2.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			suborganization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			suborganization2.getOrganizationId());
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), organizationGroup1.getGroupId(),
+			accountManagerRole.getRoleId());
+
+		_assertObjectEntriesSize(1);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountManagerRole.getRoleId(), ActionKeys.UPDATE);
+
+		try {
+			_objectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				objectEntry1.getId(), objectEntry1);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				exception.getMessage(),
+				com.liferay.petra.string.StringBundler.concat(
+					"User ", _user.getUserId(), " must have UPDATE permission ",
+					"for ", _objectDefinition1.getClassName(), " ",
+					objectEntry1.getId()));
+		}
+
+		_addResourcePermission(
+			ActionKeys.UPDATE, accountManagerRole.getRoleId());
+
+		_objectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			objectEntry1.getId(), objectEntry1);
 	}
 
 	private AccountEntry _addAccountEntry() throws Exception {
@@ -1178,6 +1601,14 @@ public class DefaultObjectEntryManagerImplTest {
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
 		return listTypeEntry.getKey();
+	}
+
+	private void _addResourcePermission(String actionId, long roleId)
+		throws Exception {
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId, actionId);
 	}
 
 	private void _assertCountAggregationObjectFieldValue(
@@ -1455,6 +1886,31 @@ public class DefaultObjectEntryManagerImplTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return dlFileEntry.getFileEntryId();
+	}
+
+	private void _restrictObjectDefinitionByAccount() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_companyId, "AccountEntry");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				_adminUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oneToManyRelationshipName",
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinition1.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship.getObjectFieldId2());
+
+		_objectDefinition1.setAccountEntryRestricted(true);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
 	}
 
 	private void _setUpDTOConverterContext() {

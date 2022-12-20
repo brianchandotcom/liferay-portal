@@ -19,15 +19,17 @@ export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 		activities: mdfRequest.mdfRequestToActivities?.map((activity) => ({
 			...activity,
 			budgets: activity.activityToBudgets,
-			leadFollowUpStrategies: activity.leadFollowUpStrategies?.split(';'),
+			leadFollowUpStrategies: activity.leadFollowUpStrategies?.split(
+				'; '
+			),
 			mdfRequestId: activity.r_mdfRequestToActivities_c_mdfRequestId,
 		})),
 		additionalOption: mdfRequest.additionalOption,
 		company: mdfRequest.r_accountToMDFRequests_accountEntry,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.split(
-			';'
+			'; '
 		),
-		targetAudienceRoles: mdfRequest.targetAudienceRoles?.split(';'),
-		targetMarkets: mdfRequest.targetMarkets?.split(';'),
+		targetAudienceRoles: mdfRequest.targetAudienceRoles?.split('; '),
+		targetMarkets: mdfRequest.targetMarkets?.split('; '),
 	};
 }

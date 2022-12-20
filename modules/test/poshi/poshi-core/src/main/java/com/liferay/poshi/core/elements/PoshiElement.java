@@ -669,6 +669,10 @@ public abstract class PoshiElement
 				storedIndices.clear();
 			}
 
+			if (trimmedPoshiScriptSnippet.startsWith("return") && (c != ';')) {
+				continue;
+			}
+
 			if (skipBalanceCheck || ((c != '}') && (c != ';'))) {
 				continue;
 			}

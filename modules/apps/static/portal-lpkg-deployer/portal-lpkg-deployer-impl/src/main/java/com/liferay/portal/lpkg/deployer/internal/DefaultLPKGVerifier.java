@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = LPKGVerifier.class)
+@Component(service = LPKGVerifier.class)
 public class DefaultLPKGVerifier implements LPKGVerifier {
 
 	@Override

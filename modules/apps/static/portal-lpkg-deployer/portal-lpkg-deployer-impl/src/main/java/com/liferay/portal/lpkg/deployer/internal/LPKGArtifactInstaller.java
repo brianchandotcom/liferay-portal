@@ -59,7 +59,7 @@ import org.osgi.service.url.URLStreamHandlerService;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = FileInstaller.class)
+@Component(service = FileInstaller.class)
 public class LPKGArtifactInstaller implements FileInstaller {
 
 	@Override

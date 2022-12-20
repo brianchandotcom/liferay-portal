@@ -101,7 +101,7 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 
 		if (folderId == 0) {
 			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
-				fileEntry.getGroupId(), repository.getDlFolderId(),
+				themeDisplay.getScopeGroupId(), repository.getDlFolderId(),
 				String.valueOf(layoutUtilityPageEntryId));
 
 			if (dlFolder != null) {
@@ -114,7 +114,7 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 				JournalFolder.class.getName(), actionRequest);
 
 			Folder folder = _portletFileRepository.addPortletFolder(
-				fileEntry.getUserId(), repository.getRepositoryId(),
+				themeDisplay.getUserId(), repository.getRepositoryId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				String.valueOf(layoutUtilityPageEntryId), serviceContext);
 

@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
-import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.override.OverrideBeanDefinitionRegistryPostProcessor;
 import com.liferay.portal.tools.DBUpgrader;
@@ -411,9 +410,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		configurableApplicationContextConfigurator.configure(
 			configurableWebApplicationContext);
-
-		configurableWebApplicationContext.addBeanFactoryPostProcessor(
-			new CompatBeanDefinitionRegistryPostProcessor());
 
 		Properties properties = PropsUtil.getProperties("spring.bean.", true);
 

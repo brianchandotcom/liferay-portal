@@ -28,11 +28,13 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../app/conf
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../../app/config/index';
+import {useDisplayPagePreviewItem} from '../../../../../../../app/contexts/DisplayPagePreviewItemContext';
 import {
 	useDispatch,
 	useGetState,
 	useSelector,
 } from '../../../../../../../app/contexts/StoreContext';
+import selectSegmentsExperienceId from '../../../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../../../app/services/CollectionService';
 import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
@@ -81,6 +83,7 @@ export function CollectionGeneralPanel({item}) {
 		listStyle === LIST_STYLES.flexColumn ||
 		listStyle === LIST_STYLES.flexRow;
 
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -113,9 +116,53 @@ export function CollectionGeneralPanel({item}) {
 		onClose: onFilterConfigurationClose,
 	} = useModal({onClose: () => setFilterConfigurationVisible(false)});
 
-	const optionsMenuItems = useMemo(
-		() =>
-			collectionConfiguration
+	const editConfigurationURL = useCache({
+		fetcher: () =>
+			CollectionService.getCollectionEditConfigurationUrl({
+				collectionKey: collection?.key,
+				itemId: item.itemId,
+				segmentsExperienceId,
+			}).then(({url}) => url),
+		key: [CACHE_KEYS.collectionConfigurationUrl, collection?.key],
+	});
+
+	const previewItem = useDisplayPagePreviewItem();
+
+	const optionsMenuItems = useMemo(() => {
+		if (Liferay.FeatureFlags['LPS-166275']) {
+			if (!editConfigurationURL) {
+				return [];
+			}
+
+			const url = new URL(editConfigurationURL);
+
+			url.searchParams.set(
+				`${config.portletNamespace}type`,
+				collection.type
+			);
+
+			if (previewItem) {
+				url.searchParams.set(
+					`${config.portletNamespace}classNameId`,
+					previewItem.data.classNameId
+				);
+
+				url.searchParams.set(
+					`${config.portletNamespace}classPK`,
+					previewItem.data.classPK
+				);
+			}
+
+			return [
+				{
+					href: url.href,
+					label: Liferay.Language.get('filter-collection'),
+					symbolLeft: 'filter',
+				},
+			];
+		}
+		else {
+			return collectionConfiguration
 				? [
 						{
 							label: Liferay.Language.get('prefilter-collection'),
@@ -123,9 +170,15 @@ export function CollectionGeneralPanel({item}) {
 							symbolLeft: 'filter',
 						},
 				  ]
-				: [],
-		[collectionConfiguration, setFilterConfigurationVisible]
-	);
+				: [];
+		}
+	}, [
+		collection,
+		collectionConfiguration,
+		editConfigurationURL,
+		previewItem,
+		setFilterConfigurationVisible,
+	]);
 
 	const handleCollectionSelect = (collection = {}) => {
 		dispatch(

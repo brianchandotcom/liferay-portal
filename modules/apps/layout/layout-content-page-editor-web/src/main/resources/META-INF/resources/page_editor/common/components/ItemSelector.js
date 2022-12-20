@@ -309,8 +309,9 @@ ItemSelector.propTypes = {
 	onItemSelect: PropTypes.func.isRequired,
 	optionsMenuItems: PropTypes.arrayOf(
 		PropTypes.shape({
+			href: PropTypes.string,
 			label: PropTypes.string.isRequired,
-			onClick: PropTypes.func.isRequired,
+			onClick: PropTypes.func,
 		})
 	),
 	quickMappedInfoItems: PropTypes.arrayOf(

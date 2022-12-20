@@ -17,12 +17,21 @@ package com.liferay.knowledge.base.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.web.internal.configuration.KBServiceConfigurationProviderUtil;
 import com.liferay.knowledge.base.web.internal.util.KBDropdownItemsProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import java.util.Date;
 import java.util.List;
@@ -89,12 +98,41 @@ public class KBArticleViewDisplayContext {
 			System.currentTimeMillis() - modifiedDate.getTime(), true);
 	}
 
-	public boolean isExpiringSoon(KBArticle kbArticle) {
-		if (kbArticle.isExpired() || (kbArticle.getExpirationDate() == null)) {
+	public boolean isExpiringSoon(KBArticle kbArticle)
+		throws ConfigurationException {
+
+		Date expirationDate = kbArticle.getExpirationDate();
+
+		if (kbArticle.isExpired() || (expirationDate == null)) {
 			return false;
 		}
 
-		return true;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int expirationDateNotificationDateWeeks =
+			KBServiceConfigurationProviderUtil.
+				getExpirationDateNotificationDateWeeks(
+					themeDisplay.getCompanyId());
+
+		Instant instant = expirationDate.toInstant();
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		LocalDateTime expirationDateLocalDateTime =
+			zonedDateTime.toLocalDateTime();
+
+		LocalDateTime now = LocalDateTime.now();
+
+		if (now.isAfter(
+				expirationDateLocalDateTime.minusWeeks(
+					expirationDateNotificationDateWeeks))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

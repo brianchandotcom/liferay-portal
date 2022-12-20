@@ -66,7 +66,7 @@ definition {
 		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED")) {
 			Click(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED");
 
-			AssertElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_EXPANDED");
+			WaitForElementPresent(locator1 = "Publications#PUBLICATION_NAME");
 		}
 	}
 
@@ -74,7 +74,7 @@ definition {
 		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED")) {
 			Click(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED");
 
-			AssertElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_EXPANDED");
+			WaitForElementPresent(locator1 = "PublicationsTemplate#INVITE_USERS_BUTTON");
 		}
 	}
 

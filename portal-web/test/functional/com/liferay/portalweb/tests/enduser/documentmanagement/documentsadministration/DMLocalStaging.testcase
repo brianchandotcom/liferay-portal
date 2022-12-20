@@ -1395,7 +1395,7 @@ definition {
 			staging = "true");
 	}
 
-	@description = "This test covers LPS-154417. It checks that an external video with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site" 
+	@description = "This test covers LPS-154417. It checks that an external video with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site"
 	@priority = "4"
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
 		VideoShortcut.addCP(

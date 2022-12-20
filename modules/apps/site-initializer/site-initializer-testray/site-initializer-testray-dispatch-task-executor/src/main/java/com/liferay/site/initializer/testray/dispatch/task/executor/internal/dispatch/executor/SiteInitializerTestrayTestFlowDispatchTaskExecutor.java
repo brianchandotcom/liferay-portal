@@ -106,13 +106,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			_siteInitializerTestrayDispatchTaskExecutorHelper.
 				loadObjectDefinitions(dispatchTrigger.getCompanyId());
 
-			_updateTestrayTaskStatus(
-				unicodeProperties, _TESTRAY_TASK_STATUS_PROCESSING);
+			_updateTestrayTaskStatus(unicodeProperties, "PROCESSING");
 
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 
-			_updateTestrayTaskStatus(
-				unicodeProperties, _TESTRAY_TASK_STATUS_IN_ANALYSIS);
+			_updateTestrayTaskStatus(unicodeProperties, "INANALYSIS");
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -401,10 +399,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		_siteInitializerTestrayDispatchTaskExecutorHelper.updateObjectEntry(
 			"Task", objectEntry, testrayTaskId);
 	}
-
-	private static final String _TESTRAY_TASK_STATUS_IN_ANALYSIS = "INANALYSIS";
-
-	private static final String _TESTRAY_TASK_STATUS_PROCESSING = "PROCESSING";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayTestFlowDispatchTaskExecutor.class);

@@ -161,28 +161,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_TITLE_ELLIPSES</td>
-	<td>portal/screenshots/page/preview_title_ellipses.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_TITLE_ELLIPSES_OG</td>
-	<td>portal/screenshots/page/preview_title_ellipses_og.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW_URL</td>
 	<td>//div[contains(@class,'preview-seo-url text-truncate')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_URL_ELLIPSES</td>
-	<td>portal/screenshots/page/preview_url_ellipses.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_URL_ELLIPSES_OG</td>
-	<td>portal/screenshots/page/preview_url_ellipses_og.png</td>
 	<td></td>
 </tr>
 

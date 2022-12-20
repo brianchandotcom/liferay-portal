@@ -58,9 +58,7 @@ const ChannelTab: React.FC<IChannelTabProps> = ({
 }) => (
 	<Tab
 		columns={columns.map(({id}) => id) as Array<keyof TRawItem>}
-		description={Liferay.Language.get(
-			'analytics-cloud-assign-commerce-channel-help'
-		)}
+		description={Liferay.Language.get('channels-tab-description')}
 		emptyState={{
 			noResultsTitle: Liferay.Language.get('no-channels-were-found'),
 			title: Liferay.Language.get('there-are-no-channels'),

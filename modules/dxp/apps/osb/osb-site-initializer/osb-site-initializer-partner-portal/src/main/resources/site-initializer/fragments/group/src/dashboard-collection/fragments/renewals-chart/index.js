@@ -12,7 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
 
@@ -29,10 +29,6 @@ const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 
 export default function () {
 	const [data, setData] = useState();
-	const newArray = [];
-
-	const currentDate = new Date();
-	const milisecondsPerDay = 1000 * 3600 * 24;
 
 	useEffect(() => {
 		const getRenewalsData = async () => {
@@ -57,22 +53,29 @@ export default function () {
 		getRenewalsData();
 	}, []);
 
-	data?.items?.map((item) => {
-		const expirationInTime = new Date(item.closeDate) - currentDate;
+	const filteredArray = useMemo(() => {
+		const newArray = [];
+		const currentDate = new Date();
+		const milisecondsPerDay = 1000 * 3600 * 24;
 
-		const expirationInDays =
-			Math.floor(expirationInTime / milisecondsPerDay) + 1;
+		data?.items?.map((item) => {
+			const expirationInTime = new Date(item.closeDate) - currentDate;
+			const expirationInDays =
+				Math.floor(expirationInTime / milisecondsPerDay) + 1;
 
-		newArray.push({
-			closeDate: item.closeDate,
-			expirationDays: expirationInDays,
-			opportunityName: item.opportunityName,
+			newArray.push({
+				closeDate: item.closeDate,
+				expirationDays: expirationInDays,
+				opportunityName: item.opportunityName,
+			});
 		});
-	});
 
-	const filteredArray = newArray
-		.filter((item) => item.expirationDays > 0 && item.expirationDays <= 30)
-		.slice(0, 4);
+		return newArray
+			.filter(
+				(item) => item?.expirationDays > 0 && item?.expirationDays <= 30
+			)
+			.slice(0, 4);
+	}, [data?.items]);
 
 	const getCurrentStatusColor = (item) => {
 		if (item?.expirationDays <= 5) {

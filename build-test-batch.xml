@@ -5877,7 +5877,7 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-mysql57-jdk8_service-builder">
+	<target name="modules-integration-bundle-mysql57-jdk8_spring-extender">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
@@ -6160,7 +6160,7 @@ log.sanitizer.enabled=false</echo>
 		<run-modules-integration-test database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="modules-integration-mysql57-jdk8_service-builder">
+	<target name="modules-integration-mysql57-jdk8_spring-extender">
 		<run-modules-integration-test
 			database.type="mysql"
 			database.version="5.7"

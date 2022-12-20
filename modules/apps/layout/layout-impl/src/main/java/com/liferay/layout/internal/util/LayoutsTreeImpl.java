@@ -88,40 +88,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	@Override
 	public String getLayoutsJSON(
 			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId, boolean incomplete,
-			String treeId)
-		throws Exception {
-
-		return getLayoutsJSON(
-			httpServletRequest, groupId, privateLayout, parentLayoutId,
-			incomplete, treeId, null);
-	}
-
-	@Override
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId, boolean incomplete,
-			String treeId, LayoutSetBranch layoutSetBranch)
-		throws Exception {
-
-		return getLayoutsJSON(
-			httpServletRequest, groupId, privateLayout, parentLayoutId, null,
-			incomplete, treeId, layoutSetBranch);
-	}
-
-	@Override
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long layoutId, int max)
-		throws Exception {
-
-		return getLayoutsJSON(
-			httpServletRequest, groupId, privateLayout, layoutId, max, null);
-	}
-
-	@Override
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
 			boolean privateLayout, long layoutId, int max,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -189,18 +155,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	public String getLayoutsJSON(
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean privateLayout, long parentLayoutId,
-			long[] expandedLayoutIds, boolean incomplete, String treeId)
-		throws Exception {
-
-		return getLayoutsJSON(
-			httpServletRequest, groupId, privateLayout, parentLayoutId,
-			expandedLayoutIds, incomplete, treeId, null);
-	}
-
-	@Override
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId,
 			long[] expandedLayoutIds, boolean incomplete, String treeId,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -221,14 +175,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		return _toJSON(
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
-	}
-
-	@Override
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId, String treeId)
-		throws Exception {
-
-		return getLayoutsJSON(httpServletRequest, groupId, treeId, null);
 	}
 
 	@Override

@@ -25,23 +25,6 @@ public interface LayoutsTree {
 
 	public String getLayoutsJSON(
 			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId, boolean incomplete,
-			String treeId)
-		throws Exception;
-
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId, boolean incomplete,
-			String treeId, LayoutSetBranch layoutSetBranch)
-		throws Exception;
-
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long layoutId, int max)
-		throws Exception;
-
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
 			boolean privateLayout, long layoutId, int max,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception;
@@ -49,18 +32,8 @@ public interface LayoutsTree {
 	public String getLayoutsJSON(
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean privateLayout, long parentLayoutId,
-			long[] expandedLayoutIds, boolean incomplete, String treeId)
-		throws Exception;
-
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId,
 			long[] expandedLayoutIds, boolean incomplete, String treeId,
 			LayoutSetBranch layoutSetBranch)
-		throws Exception;
-
-	public String getLayoutsJSON(
-			HttpServletRequest httpServletRequest, long groupId, String treeId)
 		throws Exception;
 
 	public String getLayoutsJSON(

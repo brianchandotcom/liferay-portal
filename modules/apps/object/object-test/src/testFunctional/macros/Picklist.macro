@@ -97,6 +97,10 @@ definition {
 	macro addPicklistViaUI {
 		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
 
+		WaitForElementPresent(
+			locator1 = "Picklist#ADD_PICKLIST_NAME",
+			value1 = "${picklistName}");
+
 		Type(
 			locator1 = "Picklist#ADD_PICKLIST_NAME",
 			value1 = "${picklistName}");

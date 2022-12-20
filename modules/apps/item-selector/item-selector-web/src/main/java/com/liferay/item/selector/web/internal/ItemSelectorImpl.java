@@ -395,13 +395,6 @@ public class ItemSelectorImpl implements ItemSelector {
 			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelectorCriterionSerializer(
-		ItemSelectorCriterionSerializer itemSelectorCriterionSerializer) {
-
-		_itemSelectionCriterionSerializer = itemSelectorCriterionSerializer;
-	}
-
 	protected
 		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> void
 			unsetItemSelectionCriterionHandler(
@@ -490,6 +483,8 @@ public class ItemSelectorImpl implements ItemSelector {
 	private final ConcurrentMap
 		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
 			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
+
+	@Reference
 	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
 
 	@Reference

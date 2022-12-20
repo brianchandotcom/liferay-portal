@@ -71,10 +71,8 @@ public class ClientExtension {
 				}
 			});
 
-		if ((type.equals("notificationType") ||
-			 type.equals("oAuthApplicationHeadlessServer") ||
-			 type.equals("oAuthApplicationUserAgent") ||
-			 type.equals("workflowAction")) &&
+		if ((type.equals("oAuthApplicationHeadlessServer") ||
+			 type.equals("oAuthApplicationUserAgent")) &&
 			(_typeSettings.get("homePageURL") == null)) {
 
 			_typeSettings.put(

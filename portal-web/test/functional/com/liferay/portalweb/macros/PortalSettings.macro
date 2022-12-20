@@ -372,7 +372,8 @@ definition {
 
 		if (isSet(orgName)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
+				key_fieldLabel = "Organization Sites",
+				locator1 = "SystemSettings#LABEL",
 				value1 = "Organization Sites");
 
 			Type(
@@ -390,7 +391,8 @@ definition {
 
 		if (isSet(roleTitle)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
+				key_fieldLabel = "Roles",
+				locator1 = "SystemSettings#LABEL",
 				value1 = "Roles");
 
 			Type(
@@ -408,7 +410,8 @@ definition {
 
 		if (isSet(userGroupName)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
+				key_fieldLabel = "User Groups",
+				locator1 = "SystemSettings#LABEL",
 				value1 = "User Groups");
 
 			Type(
@@ -426,7 +429,8 @@ definition {
 
 		if (isSet(siteName)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
+				key_fieldLabel = "Organization Sites",
+				locator1 = "SystemSettings#LABEL",
 				value1 = "Organization Sites");
 
 			Type(
@@ -599,7 +603,8 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
+			key_fieldLabel = "Email Addresses",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "Email Addresses");
 
 		Type(
@@ -627,7 +632,8 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
+			key_fieldLabel = "Screen Names",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "Screen Names");
 
 		Type(
@@ -1028,7 +1034,8 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",
+			key_fieldLabel = "Sites",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "Sites");
 
 		AssertTextEquals(
@@ -1037,7 +1044,8 @@ definition {
 			value1 = "");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
+			key_fieldLabel = "Organization Sites",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "Organization Sites");
 
 		AssertTextEquals(
@@ -1046,7 +1054,8 @@ definition {
 			value1 = "");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
+			key_fieldLabel = "Roles",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "Roles");
 
 		Type.clickAtType(
@@ -1055,7 +1064,8 @@ definition {
 			value1 = "Power User\nUser");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
+			key_fieldLabel = "User Groups",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "User Groups");
 
 		AssertTextEquals(
@@ -1176,7 +1186,8 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
+			key_fieldLabel = "Screen Names",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "Screen Names");
 
 		AssertTextEquals(
@@ -1185,7 +1196,8 @@ definition {
 			value1 = "");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
+			key_fieldLabel = "Email Addresses",
+			locator1 = "SystemSettings#LABEL",
 			value1 = "Email Addresses");
 
 		AssertTextEquals(

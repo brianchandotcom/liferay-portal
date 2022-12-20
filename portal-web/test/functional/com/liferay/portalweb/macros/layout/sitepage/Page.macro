@@ -411,34 +411,40 @@ definition {
 				value1 = "${description}");
 		}
 
-		if (isSet(truncatedHtmlTitle)) {
+		if (isSet(validateTitleCSSStyle)) {
 			ProductMenuHelper.closeProductMenu();
 
-			takeScreenshot();
+			AssertCssValue(
+				locator1 = "PagesAdmin#PREVIEW_TITLE",
+				locator2 = "overflow",
+				value1 = "hidden");
 
-			if (isSet(openGraph)) {
-				ScrollWebElementIntoView(locator1 = "Button#SAVE");
+			AssertCssValue(
+				locator1 = "PagesAdmin#PREVIEW_TITLE",
+				locator2 = "text-overflow",
+				value1 = "ellipsis");
 
-				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_TITLE_ELLIPSES_OG");
-			}
-			else {
-				ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
-
-				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_TITLE_ELLIPSES");
-			}
+			AssertCssValue(
+				locator1 = "PagesAdmin#PREVIEW_TITLE",
+				locator2 = "white-space",
+				value1 = "nowrap");
 		}
 
-		if (isSet(truncatedURL)) {
-			if (isSet(openGraph)) {
-				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_URL_ELLIPSES_OG");
-			}
-			else {
-				ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
+		if (isSet(validateURLCSSStyle)) {
+			AssertCssValue(
+				locator1 = "PagesAdmin#PREVIEW_URL",
+				locator2 = "overflow",
+				value1 = "hidden");
 
-				ProductMenuHelper.closeProductMenu();
+			AssertCssValue(
+				locator1 = "PagesAdmin#PREVIEW_URL",
+				locator2 = "text-overflow",
+				value1 = "ellipsis");
 
-				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_URL_ELLIPSES");
-			}
+			AssertCssValue(
+				locator1 = "PagesAdmin#PREVIEW_URL",
+				locator2 = "white-space",
+				value1 = "nowrap");
 		}
 	}
 

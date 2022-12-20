@@ -11,10 +11,12 @@
 
 import {useMemo} from 'react';
 
-export default function useGetMDFRequestIdByHash() {
+export default function useGetMDFRequestIdByHash(position: number = 1) {
 	return useMemo(() => {
 		const hashLocation = window.location.hash;
 
-		return hashLocation.replace('#/', '').split('/').filter(Boolean)[1];
-	}, []);
+		return hashLocation.replace('#/', '').split('/').filter(Boolean)[
+			position
+		];
+	}, [position]);
 }

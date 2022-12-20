@@ -12,35 +12,22 @@
 import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../../interfaces/mdfRequest';
 
-export function getMDFRequestFromDTO(
-	mdfRequest: MDFRequestDTO,
-	externalReferenceCodeSF?: string
-): MDFRequest {
+export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 	return {
-		accountExternalReferenceCodeSF: externalReferenceCodeSF,
+		...mdfRequest,
+		accountExternalReferenceCodeSF: mdfRequest.externalReferenceCodeSF,
 		activities: mdfRequest.mdfRequestToActivities?.map((activity) => ({
 			...activity,
-			budgets: activity.activityToBudgets?.map((budget) => ({
-				cost: budget.cost,
-				expense: budget.expense,
-			})),
+			budgets: activity.activityToBudgets,
 			leadFollowUpStrategies: activity.leadFollowUpStrategies?.split(';'),
 			mdfRequestId: activity.r_mdfRequestToActivities_c_mdfRequestId,
 		})),
 		additionalOption: mdfRequest.additionalOption,
 		company: mdfRequest.r_accountToMDFRequests_accountEntry,
-		country: mdfRequest.country,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.split(
 			';'
 		),
-		maxDateActivity: mdfRequest.maxDateActivity,
-		minDateActivity: mdfRequest.minDateActivity,
-		overallCampaignDescription: mdfRequest.overallCampaignDescription,
-		overallCampaignName: mdfRequest.overallCampaignName,
-		requestStatus: mdfRequest.requestStatus,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles?.split(';'),
 		targetMarkets: mdfRequest.targetMarkets?.split(';'),
-		totalCostOfExpense: mdfRequest.totalCostOfExpense,
-		totalMDFRequestAmount: mdfRequest.totalMDFRequestAmount,
 	};
 }

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FormikHelpers, setNestedObjectValues} from 'formik';
 import {useState} from 'react';
 
@@ -16,9 +17,13 @@ import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
+import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../common/interfaces/mdfRequest';
 import {Liferay} from '../../common/services/liferay';
+import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
+import {getMDFRequestFromDTO} from '../../common/utils/dto/mdf-request/getMDFRequestFromDTO';
 import isObjectEmpty from '../../common/utils/isObjectEmpty';
+import useGetMDFRequestIdByHash from '../MDFClaimForm/hooks/useGetMDFRequestIdByHash';
 import {StepType} from './enums/stepType';
 import Activities from './steps/Activities';
 import activitiesSchema from './steps/Activities/schema/yup';
@@ -44,9 +49,17 @@ type StepComponent = {
 	[key in StepType]?: JSX.Element;
 };
 
+const FIRST_POSITION_AFTER_HASH = 0;
+
 const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);
 	const siteURL = useLiferayNavigate();
+
+	const mdfRequestId = Number(
+		useGetMDFRequestIdByHash(FIRST_POSITION_AFTER_HASH)
+	);
+
+	const {data, isValidating} = useGetMDFRequestById(mdfRequestId);
 
 	const onCancel = () =>
 		Liferay.Util.navigate(
@@ -117,9 +130,17 @@ const MDFRequestForm = () => {
 		),
 	};
 
+	if ((isValidating || !data) && mdfRequestId) {
+		return <ClayLoadingIndicator />;
+	}
+
 	return (
 		<PRMFormik
-			initialValues={initialFormValues}
+			initialValues={
+				mdfRequestId
+					? getMDFRequestFromDTO(data as MDFRequestDTO)
+					: initialFormValues
+			}
 			onSubmit={(values, formikHelpers) =>
 				submitForm(values, formikHelpers, siteURL)
 			}

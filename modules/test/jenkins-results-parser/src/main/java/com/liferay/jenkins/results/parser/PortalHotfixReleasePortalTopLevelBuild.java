@@ -315,6 +315,14 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		String portalBranchUsername = getParameterValue(
 			"TEST_PORTAL_USER_NAME");
 
+		String branchName = getBranchName();
+
+		String portalRepositoryName = "liferay-portal";
+
+		if (!branchName.equals("master")) {
+			portalRepositoryName = "liferay-portal-ee";
+		}
+
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername)) {
 
@@ -349,20 +357,15 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 			portalBranchUsername = "liferay";
 			portalBranchName = sb.toString();
+			portalRepositoryName = "liferay-portal-ee";
 		}
-
-		String branchName = getBranchName();
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://github.com/");
 		sb.append(portalBranchUsername);
-		sb.append("/liferay-portal");
-
-		if (!branchName.equals("master")) {
-			sb.append("-ee");
-		}
-
+		sb.append("/");
+		sb.append(portalRepositoryName);
 		sb.append("/tree/");
 		sb.append(portalBranchName);
 

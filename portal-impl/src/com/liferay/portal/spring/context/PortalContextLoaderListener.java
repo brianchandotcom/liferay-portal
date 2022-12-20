@@ -16,6 +16,8 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -90,6 +92,9 @@ import javax.servlet.ServletContextEvent;
 
 import javax.sql.DataSource;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
@@ -155,6 +160,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		super.contextDestroyed(servletContextEvent);
 
 		_cleanUpJDBCDrivers();
+
+		_serviceRegistration.unregister();
 
 		try {
 			ModuleFrameworkUtil.stopFramework(
@@ -247,6 +254,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			ProcessExecutor.class, new LocalProcessExecutor(), null);
 
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
@@ -514,6 +526,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 	}
 
 	private ArrayApplicationContext _arrayApplicationContext;
+	private ServiceRegistration<?> _serviceRegistration;
 	private ServiceWrapperRegistry _serviceWrapperRegistry;
 
 }

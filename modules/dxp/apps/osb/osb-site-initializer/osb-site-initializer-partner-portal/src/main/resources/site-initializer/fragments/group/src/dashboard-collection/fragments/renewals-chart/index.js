@@ -115,7 +115,7 @@ export default function () {
 							<div
 								className={classNames(
 									'mr-3 status-bar-vertical',
-									getCurrentStatusColor()
+									getCurrentStatusColor(item)
 								)}
 							></div>
 

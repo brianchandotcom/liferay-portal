@@ -227,11 +227,7 @@ $toolbarZIndex: 971;
 		font-weight: 600;
 	}
 
-	.management-bar .nav-item {
-		padding: 0 0.25rem;
-
-		&:last-child {
-			padding-right: 0;
-		}
+	.management-bar .navbar-nav {
+		column-gap: 0.25rem;
 	}
 }

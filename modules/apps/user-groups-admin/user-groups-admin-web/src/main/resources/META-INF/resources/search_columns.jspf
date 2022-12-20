@@ -53,7 +53,7 @@
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-300"
-			href="<%= rowURL %>"
+			href="<%= Validator.isNull(userGroup.getDescription()) ? StringPool.BLANK : rowURL %>"
 			name="description"
 			orderable="<%= true %>"
 			property="description"

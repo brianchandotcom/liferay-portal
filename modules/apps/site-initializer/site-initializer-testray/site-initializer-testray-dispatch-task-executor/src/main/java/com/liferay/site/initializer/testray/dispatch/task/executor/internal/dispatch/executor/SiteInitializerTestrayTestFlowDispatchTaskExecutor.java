@@ -59,9 +59,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"dispatch.task.executor.cluster.mode=single-node",
 		"dispatch.task.executor.feature.flag=LPS-166126",
-		"dispatch.task.executor.name=testray-testflow",
+		"dispatch.task.executor.name=testray-test-flow",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testray-testflow"
+		"dispatch.task.executor.type=testray-test-flow"
 	},
 	service = DispatchTaskExecutor.class
 )
@@ -77,9 +77,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (Validator.isNull(
+		if (Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
+			Validator.isNull(
 				unicodeProperties.getProperty("testrayCaseTypeIds")) ||
-			Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
 			Validator.isNull(unicodeProperties.getProperty("testrayTaskId"))) {
 
 			_log.error("The required properties are not set");
@@ -106,13 +106,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			_siteInitializerTestrayDispatchTaskExecutorHelper.
 				loadObjectDefinitions(dispatchTrigger.getCompanyId());
 
-			_updateTestrayTaskStatus(
-				unicodeProperties, _TESTRAY_TASK_STATUS_PROCESSING);
+			_updateTestrayTaskStatus(unicodeProperties, "PROCESSING");
 
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 
-			_updateTestrayTaskStatus(
-				unicodeProperties, _TESTRAY_TASK_STATUS_IN_ANALYSIS);
+			_updateTestrayTaskStatus(unicodeProperties, "INANALYSIS");
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -124,7 +122,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray-testflow";
+		return "testray-test-flow";
 	}
 
 	private String _getTestrayIssueNames(
@@ -348,12 +346,20 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 							new Sort("nestedFieldArray.value_long#number", true)
 						});
 
+			ObjectEntry firstTestrayCaseResultObjectEntry =
+				testrayCaseResultObjectEntry.get(0);
+
+			Map<String, Object> map =
+				firstTestrayCaseResultObjectEntry.getProperties();
+
 			ObjectEntry testraySubtaskObjectEntry =
 				_siteInitializerTestrayDispatchTaskExecutorHelper.
 					addObjectEntry(
 						"Subtask",
 						HashMapBuilder.<String, Object>put(
 							"dueStatus", "OPEN"
+						).put(
+							"errors", map.get("errors")
 						).put(
 							"name", "ST-" + testraySubtaskNumber
 						).put(
@@ -401,10 +407,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		_siteInitializerTestrayDispatchTaskExecutorHelper.updateObjectEntry(
 			"Task", objectEntry, testrayTaskId);
 	}
-
-	private static final String _TESTRAY_TASK_STATUS_IN_ANALYSIS = "INANALYSIS";
-
-	private static final String _TESTRAY_TASK_STATUS_PROCESSING = "PROCESSING";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayTestFlowDispatchTaskExecutor.class);

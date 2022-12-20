@@ -498,7 +498,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				).put(
 					"dueDate", propertiesMap.get("testray.build.time")
 				).put(
-					"dueStatus", _TESTRAY_BUILD_STATUS_ACTIVE
+					"dueStatus", "ACTIVE"
 				).put(
 					"gitHash", propertiesMap.get("git.id")
 				).put(
@@ -568,25 +568,25 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 						"testray.testcase.status");
 
 				if (testrayTestcaseStatus.equals("blocked")) {
-					return _TESTRAY_CASE_RESULT_STATUS_BLOCKED;
+					return "BLOCKED";
 				}
 				else if (testrayTestcaseStatus.equals("dnr")) {
-					return _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN;
+					return "DIDNOTRUN";
 				}
 				else if (testrayTestcaseStatus.equals("failed")) {
-					return _TESTRAY_CASE_RESULT_STATUS_FAILED;
+					return "FAILED";
 				}
 				else if (testrayTestcaseStatus.equals("in-progress")) {
-					return _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS;
+					return "INPROGRESS";
 				}
 				else if (testrayTestcaseStatus.equals("passed")) {
-					return _TESTRAY_CASE_RESULT_STATUS_PASSED;
+					return "PASSED";
 				}
 				else if (testrayTestcaseStatus.equals("test-fix")) {
-					return _TESTRAY_CASE_RESULT_STATUS_TEST_FIX;
+					return "TESTFIX";
 				}
 
-				return _TESTRAY_CASE_RESULT_STATUS_UNTESTED;
+				return "UNTESTED";
 			}
 		).put(
 			"r_buildToCaseResult_c_buildId", testrayBuildId
@@ -913,8 +913,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				HashMapBuilder.<String, Object>put(
 					"externalReferencePK", propertiesMap.get("testray.run.id")
 				).put(
-					"externalReferenceType",
-					_TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI
+					"externalReferenceType", 1
 				).put(
 					"jenkinsJobKey", propertiesMap.get("jenkins.job.id")
 				).put(
@@ -1311,28 +1310,6 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				"Unable to authenticate with GCP", ioException);
 		}
 	}
-
-	private static final String _TESTRAY_BUILD_STATUS_ACTIVE = "ACTIVE";
-
-	private static final String _TESTRAY_CASE_RESULT_STATUS_BLOCKED = "BLOCKED";
-
-	private static final String _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN =
-		"DIDNOTRUN";
-
-	private static final String _TESTRAY_CASE_RESULT_STATUS_FAILED = "FAILED";
-
-	private static final String _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS =
-		"INPROGRESS";
-
-	private static final String _TESTRAY_CASE_RESULT_STATUS_PASSED = "PASSED";
-
-	private static final String _TESTRAY_CASE_RESULT_STATUS_TEST_FIX =
-		"TESTFIX";
-
-	private static final String _TESTRAY_CASE_RESULT_STATUS_UNTESTED =
-		"UNTESTED";
-
-	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayImportResultsDispatchTaskExecutor.class);

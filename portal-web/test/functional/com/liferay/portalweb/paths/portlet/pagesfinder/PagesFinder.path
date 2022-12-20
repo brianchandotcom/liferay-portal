@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>INPUT_FIELD</td>
-	<td>//div[contains(@id,'layout-finder')]//input</td>
+	<td>//div[contains(@class,'layout-finder')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>VIEW_IN_PAGE_ADMINISTRATION</td>
-	<td>//div[contains(@id,'layout-finder')]//a[contains(.,"View in Page Administration")]</td>
+	<td>//div[contains(@class,'layout-finder')]//a[contains(.,"View in Page Administration")]</td>
 	<td></td>
 </tr>
 </tbody>

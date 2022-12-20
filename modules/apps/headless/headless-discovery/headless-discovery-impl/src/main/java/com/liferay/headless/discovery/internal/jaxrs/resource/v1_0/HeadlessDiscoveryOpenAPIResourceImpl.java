@@ -14,6 +14,7 @@
 
 package com.liferay.headless.discovery.internal.jaxrs.resource.v1_0;
 
+import com.liferay.headless.discovery.internal.jaxrs.application.HeadlessDiscoveryOpenAPIApplication;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -226,6 +227,13 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 		return ArrayUtil.filter(
 			applicationDTOS,
 			applicationDTO -> {
+				if (StringUtil.equals(
+						HeadlessDiscoveryOpenAPIApplication.BASE_PATH,
+						applicationDTO.base)) {
+
+					return false;
+				}
+
 				if (_companyIds.containsKey(applicationDTO.base)) {
 					List<String> companyIds = _companyIds.get(
 						applicationDTO.base);

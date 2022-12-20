@@ -67,45 +67,7 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 	public Map<String, List<String>> openAPI(
 		@HeaderParam("Accept") String accept) {
 
-		Map<String, List<String>> pathsMap = new TreeMap<>();
-
-		String serverURL =
-			_portal.getPortalURL(_httpServletRequest) + _portal.getPathProxy() +
-				Portal.PATH_MODULE;
-
-		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
-
-		for (ApplicationDTO applicationDTO :
-				_getApplicationDTOs(runtimeDTO.applicationDTOs)) {
-
-			List<String> paths = new ArrayList<>();
-
-			String base = applicationDTO.base;
-
-			if (!base.startsWith(StringPool.FORWARD_SLASH)) {
-				base = StringPool.FORWARD_SLASH + base;
-			}
-
-			for (ResourceDTO resourceDTO : applicationDTO.resourceDTOs) {
-				_addPaths(base, paths, resourceDTO.resourceMethods, serverURL);
-			}
-
-			_addPaths(base, paths, applicationDTO.resourceMethods, serverURL);
-
-			if (!paths.isEmpty()) {
-				String baseURL = base;
-
-				if ((accept != null) &&
-					accept.contains(MediaType.APPLICATION_XML)) {
-
-					baseURL = baseURL.substring(1);
-				}
-
-				pathsMap.put(baseURL, paths);
-			}
-		}
-
-		return pathsMap;
+		return _getOpenAPIMap(accept);
 	}
 
 	@Activate
@@ -189,6 +151,48 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 
 				return true;
 			});
+	}
+
+	private Map<String, List<String>> _getOpenAPIMap(String accept) {
+		Map<String, List<String>> pathsMap = new TreeMap<>();
+
+		String serverURL =
+			_portal.getPortalURL(_httpServletRequest) + _portal.getPathProxy() +
+				Portal.PATH_MODULE;
+
+		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
+
+		for (ApplicationDTO applicationDTO :
+				_getApplicationDTOs(runtimeDTO.applicationDTOs)) {
+
+			List<String> paths = new ArrayList<>();
+
+			String base = applicationDTO.base;
+
+			if (!base.startsWith(StringPool.FORWARD_SLASH)) {
+				base = StringPool.FORWARD_SLASH + base;
+			}
+
+			for (ResourceDTO resourceDTO : applicationDTO.resourceDTOs) {
+				_addPaths(base, paths, resourceDTO.resourceMethods, serverURL);
+			}
+
+			_addPaths(base, paths, applicationDTO.resourceMethods, serverURL);
+
+			if (!paths.isEmpty()) {
+				String baseURL = base;
+
+				if ((accept != null) &&
+					accept.contains(MediaType.APPLICATION_XML)) {
+
+					baseURL = baseURL.substring(1);
+				}
+
+				pathsMap.put(baseURL, paths);
+			}
+		}
+
+		return pathsMap;
 	}
 
 	private void _populateCompanyIds(

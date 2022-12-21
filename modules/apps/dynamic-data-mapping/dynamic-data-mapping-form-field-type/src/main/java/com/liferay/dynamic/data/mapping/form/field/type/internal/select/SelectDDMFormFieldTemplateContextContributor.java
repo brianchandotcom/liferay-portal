@@ -20,8 +20,19 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -36,6 +47,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.Collator;
 
@@ -43,6 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -137,6 +150,33 @@ public class SelectDDMFormFieldTemplateContextContributor
 		Locale locale,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.fetchDDMFormInstance(
+				ddmFormFieldRenderingContext.getDDMFormInstanceId());
+
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			if (ddmFormInstance != null) {
+				objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						ddmFormInstance.getObjectDefinitionId());
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if ((objectDefinition != null) &&
+			Validator.isNotNull(ddmFormField.getProperty("objectFieldName"))) {
+
+			return _getOptionsFromObject(
+				objectDefinition.getObjectDefinitionId(),
+				(String)ddmFormField.getProperty("objectFieldName"));
+		}
+
 		List<Map<String, String>> options = new ArrayList<>();
 
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
@@ -223,6 +263,52 @@ public class SelectDDMFormFieldTemplateContextContributor
 	@Reference
 	protected Portal portal;
 
+	private List<Map<String, String>> _getOptionsFromObject(
+		long objectDefinitionId, String objectFieldName) {
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinitionId,
+			objectFieldName.replaceAll("\\[|\\]|\"", StringPool.BLANK));
+
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(
+				objectField.getListTypeDefinitionId());
+
+		if (ListUtil.isEmpty(listTypeEntries)) {
+			return null;
+		}
+
+		List<Map<String, String>> options = new ArrayList<>();
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			Map<Locale, String> nameMap = listTypeEntry.getNameMap();
+
+			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+				if (!Objects.equals(
+						entry.getKey(),
+						LocaleThreadLocal.getThemeDisplayLocale())) {
+
+					continue;
+				}
+
+				if (options == null) {
+					options = new ArrayList<>();
+				}
+
+				options.add(
+					HashMapBuilder.put(
+						"label", entry.getValue()
+					).put(
+						"reference", listTypeEntry.getKey()
+					).put(
+						"value", DDMFormFieldUtil.getDDMFormFieldName("Option")
+					).build());
+			}
+		}
+
+		return options;
+	}
+
 	private Map<String, String> _getStrings(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
@@ -252,6 +338,18 @@ public class SelectDDMFormFieldTemplateContextContributor
 		SelectDDMFormFieldTemplateContextContributor.class);
 
 	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Reference
 	private Language _language;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

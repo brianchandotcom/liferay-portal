@@ -21,10 +21,10 @@ const ACTIONS = {
 		Liferay.fire('convertToPageTemplate');
 	},
 
-	copyLayout: ({copyLayoutURL}, portletNamespace) => {
+	copyLayout: ({copyLayoutURL}) => {
 		openModal({
 			height: '60vh',
-			id: `${portletNamespace}addLayoutDialog`,
+			id: 'addLayoutDialog',
 			size: 'md',
 			title: Liferay.Language.get('copy-page'),
 			url: copyLayoutURL,

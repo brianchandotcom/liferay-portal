@@ -77,7 +77,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 			Liferay.Util.openModal({
 				disableAutoClose: true,
 				height: '60vh',
-				id: '<portlet:namespace />addLayoutDialog',
+				id: 'addLayoutDialog',
 				size: 'md',
 				title: '<liferay-ui:message key="add-collection-page" />',
 				url: event.delegateTarget.dataset.addLayoutUrl,

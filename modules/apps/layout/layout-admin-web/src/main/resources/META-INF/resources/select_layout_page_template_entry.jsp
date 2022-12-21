@@ -175,7 +175,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 			Liferay.Util.openModal({
 				disableAutoClose: true,
 				height: '60vh',
-				id: '<portlet:namespace />addLayoutDialog',
+				id: 'addLayoutDialog',
 				size: 'md',
 				title: '<liferay-ui:message key="add-page" />',
 				url: event.delegateTarget.dataset.addLayoutUrl,

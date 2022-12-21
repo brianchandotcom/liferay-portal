@@ -56,6 +56,9 @@ public class GetLayoutsTreeStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		long groupId = ParamUtil.getLong(
+			httpServletRequest, "groupId", themeDisplay.getScopeGroupId());
+
 		boolean incomplete = ParamUtil.getBoolean(
 			httpServletRequest, "incomplete", true);
 		long parentLayoutId = ParamUtil.getLong(
@@ -95,8 +98,8 @@ public class GetLayoutsTreeStrutsAction implements StrutsAction {
 				"items",
 				_jsonFactory.createJSONArray(
 					_layoutsTree.getLayoutsJSON(
-						httpServletRequest, themeDisplay.getScopeGroupId(),
-						false, privateLayout, parentLayoutId, null, incomplete,
+						httpServletRequest, groupId, false, privateLayout,
+						parentLayoutId, null, incomplete,
 						"productMenuPagesTree", null))
 			).toString());
 

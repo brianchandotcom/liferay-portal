@@ -257,6 +257,10 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	private LocalDateTime _toLocalDateTime(String localDateTimeString) {
+		if (Validator.isNull(localDateTimeString)) {
+			return null;
+		}
+
 		try {
 			return LocalDateTime.parse(
 				localDateTimeString,

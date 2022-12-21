@@ -52,7 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -77,18 +76,17 @@ public class OrganizationExpandoColumnModelListener
 				return;
 			}
 
-			Optional<EntityField> organizationEntityFieldOptional =
-				_getOrganizationEntityFieldOptional(expandoColumn);
+			EntityField organizationEntityField = _getOrganizationEntityField(
+				expandoColumn);
 
-			organizationEntityFieldOptional.ifPresent(
-				entityField -> {
-					_organizationEntityFields.put(
-						expandoColumn.getColumnId(), entityField);
+			if (organizationEntityField != null) {
+				_organizationEntityFields.put(
+					expandoColumn.getColumnId(), organizationEntityField);
 
-					_serviceRegistration = _updateRegistry(
-						_bundleContext, _serviceRegistration,
-						_organizationEntityFields);
-				});
+				_serviceRegistration = _updateRegistry(
+					_bundleContext, _serviceRegistration,
+					_organizationEntityFields);
+			}
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -155,7 +153,7 @@ public class OrganizationExpandoColumnModelListener
 			Normalizer.normalizeIdentifier(expandoColumn.getName()));
 	}
 
-	private Optional<EntityField> _getOrganizationEntityFieldOptional(
+	private EntityField _getOrganizationEntityField(
 		ExpandoColumn expandoColumn) {
 
 		UnicodeProperties unicodeProperties =
@@ -165,7 +163,7 @@ public class OrganizationExpandoColumnModelListener
 			unicodeProperties.get(ExpandoColumnConstants.INDEX_TYPE));
 
 		if (indexType == ExpandoColumnConstants.INDEX_TYPE_NONE) {
-			return Optional.empty();
+			return null;
 		}
 
 		String encodedName = _encodeName(expandoColumn);
@@ -221,7 +219,7 @@ public class OrganizationExpandoColumnModelListener
 				encodedName, locale -> encodedIndexedFieldName);
 		}
 
-		return Optional.of(entityField);
+		return entityField;
 	}
 
 	private Map<Long, EntityField> _getOrganizationEntityFields()
@@ -255,12 +253,13 @@ public class OrganizationExpandoColumnModelListener
 				));
 
 		for (ExpandoColumn expandoColumn : expandoColumnList) {
-			Optional<EntityField> organizationEntityFieldOptional =
-				_getOrganizationEntityFieldOptional(expandoColumn);
+			EntityField organizationEntityField = _getOrganizationEntityField(
+				expandoColumn);
 
-			organizationEntityFieldOptional.ifPresent(
-				entityField -> organizationEntityFieldsMap.put(
-					expandoColumn.getColumnId(), entityField));
+			if (organizationEntityField != null) {
+				organizationEntityFieldsMap.put(
+					expandoColumn.getColumnId(), organizationEntityField);
+			}
 		}
 
 		return organizationEntityFieldsMap;

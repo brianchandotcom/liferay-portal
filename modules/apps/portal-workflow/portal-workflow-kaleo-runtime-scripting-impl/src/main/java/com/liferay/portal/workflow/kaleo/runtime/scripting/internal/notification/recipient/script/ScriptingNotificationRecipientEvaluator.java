@@ -33,16 +33,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = {
-		"scripting.language=beanshell", "scripting.language=groovy",
-		"scripting.language=javascript", "scripting.language=python",
-		"scripting.language=ruby"
-	},
-	service = NotificationRecipientEvaluator.class
-)
+@Component(service = NotificationRecipientEvaluator.class)
 public class ScriptingNotificationRecipientEvaluator
 	implements NotificationRecipientEvaluator {
+
+	@Override
+	public boolean canEvaluate(String scriptingLanguage) {
+		return _supportedScriptingLanguages.contains(scriptingLanguage);
+	}
 
 	@Override
 	public Map<String, ?> evaluate(
@@ -61,6 +59,10 @@ public class ScriptingNotificationRecipientEvaluator
 			ScriptingNotificationRecipientConstants.ROLES_RECIPIENT,
 			ScriptingNotificationRecipientConstants.USER_RECIPIENT,
 			WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
+	private static final Set<String> _supportedScriptingLanguages =
+		new HashSet<>(
+			Arrays.asList(
+				"beanshell", "groovy", "javascript", "python", "ruby"));
 
 	@Reference
 	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;

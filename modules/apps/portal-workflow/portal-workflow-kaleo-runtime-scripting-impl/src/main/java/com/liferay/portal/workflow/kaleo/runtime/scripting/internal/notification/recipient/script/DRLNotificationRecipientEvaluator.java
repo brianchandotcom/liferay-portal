@@ -27,6 +27,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.RulesContextBuilder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,12 +35,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	enabled = false, property = "scripting.language=drl",
-	service = NotificationRecipientEvaluator.class
-)
+@Component(enabled = false, service = NotificationRecipientEvaluator.class)
 public class DRLNotificationRecipientEvaluator
 	implements NotificationRecipientEvaluator {
+
+	@Override
+	public boolean canEvaluate(String scriptingLanguage) {
+		return Objects.equals(scriptingLanguage, "drl");
+	}
 
 	@Override
 	public Map<String, ?> evaluate(

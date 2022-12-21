@@ -281,4 +281,147 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12579 | Test Summary: Can search for channels and sites on assigned property modal"
+	@priority = "4"
+	test CanSearchForChannelsAndSitesOnAssignedPropertyModal {
+		var foundChannelName = "Minium Demo Portal";
+		var notFoundChannelName = "AC Search Channel";
+		var foundSitesName = "Minium Demo";
+		var notFoundSitesName = "Site Name";
+
+		task ("Create a new channel") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "${notFoundChannelName}",
+				channelType = "site",
+				currencyCode = "USD",
+				externalReferenceCode = "101");
+		}
+		
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Toggle Commerce On > Click on the Assign button") {
+			Check.checkToggleSwitch(
+				key_propertyName = "${assignedPropertyName}",
+				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
+
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.switchTab(tabName = "Channel");
+		}
+
+		task ("Search for a channel on channels list") {
+			ACDXPSettings.searchACItem(searchItem = "${foundChannelName}");
+
+			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundChannelName}");
+		}
+
+		task ("Check that unsearched channel names do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundChannelName}");
+		}
+
+		task ("Search by name of a channel that does not exist") {
+			ACDXPSettings.searchACItem(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No channels were found.");
+		}
+
+		task ("Switch to Sites tab") {
+			ACDXPSettings.switchTab(tabName = "Sites");
+		}
+
+		task ("Search for a site on sites list") {
+			ACDXPSettings.searchACItem(searchItem = "${foundSitesName}");
+
+			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundSitesName}");
+		}
+
+		task ("Check that unsearched sites names do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundSitesName}");
+		}
+
+		task ("Search by name of a site that does not exist") {
+			ACDXPSettings.searchACItem(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No sites were found.");
+		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Click on the Assign button") {
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.switchTab(tabName = "Channel");
+		}
+
+		task ("Search for a channel on channels list") {
+			ACDXPSettings.searchACItem(searchItem = "${foundChannelName}");
+
+			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundChannelName}");
+		}
+
+		task ("Check that unsearched channel names do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundChannelName}");
+		}
+
+		task ("Search by name of a channel that does not exist") {
+			ACDXPSettings.searchACItem(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No channels were found.");
+		}
+
+		task ("Switch to Sites tab") {
+			ACDXPSettings.switchTab(tabName = "Sites");
+		}
+
+		task ("Search for a site on sites list") {
+			ACDXPSettings.searchACItem(searchItem = "${foundSitesName}");
+
+			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundSitesName}");
+		}
+
+		task ("Check that unsearched sites names do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundSitesName}");
+		}
+
+		task ("Search by name of a site that does not exist") {
+			ACDXPSettings.searchACItem(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No sites were found.");
+		}
+	}
+
 }

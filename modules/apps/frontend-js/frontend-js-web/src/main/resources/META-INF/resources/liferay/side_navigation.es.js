@@ -338,6 +338,35 @@ SideNavigation.prototype = {
 		this._emitter.emit(event, this);
 	},
 
+	_focusCloseButton() {
+		const intervalId = setInterval(() => {
+			const container = document.querySelector(this.options.container);
+
+			if (!container) {
+				return;
+			}
+
+			const button = container.querySelector('.sidenav-close');
+
+			if (!button) {
+				return;
+			}
+
+			button.addEventListener('click', () => this.toggler.focus(), {
+				once: true,
+			});
+
+			button.focus();
+
+			clearInterval(intervalId);
+			clearTimeout(timeoutId);
+		}, 200);
+
+		const timeoutId = setTimeout(() => {
+			clearInterval(intervalId);
+		}, 3000);
+	},
+
 	_getSidenavWidth() {
 		const options = this.options;
 
@@ -973,8 +1002,6 @@ SideNavigation.prototype = {
 					[openClass]: false,
 				});
 			});
-
-			instance._updateSkipLink();
 		}
 	},
 
@@ -1184,6 +1211,8 @@ SideNavigation.prototype = {
 		}
 
 		this.setWidth();
+
+		this._focusCloseButton();
 	},
 
 	showSimpleSidenav() {
@@ -1244,6 +1273,8 @@ SideNavigation.prototype = {
 				[openClass]: true,
 				'sidenav-transition': true,
 			});
+
+			this._focusCloseButton();
 		}
 	},
 

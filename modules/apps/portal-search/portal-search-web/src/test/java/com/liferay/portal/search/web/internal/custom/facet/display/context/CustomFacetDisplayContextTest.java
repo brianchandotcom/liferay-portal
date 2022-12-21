@@ -186,32 +186,15 @@ public class CustomFacetDisplayContextTest {
 	public void testOrderByTermFrequencyAscending() throws Exception {
 		List<TermCollector> termCollectors = _getTermCollectors(
 			new String[] {"alpha", "delta", "bravo", "charlie"},
-			new int[] {3, 4, 5, 6});
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext =
-			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-				"count:asc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			customFacetDisplayContext.getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"alpha:3|delta:4|bravo:5|charlie:6", nameFrequencyString);
-
-		termCollectors = _getTermCollectors(
-			new String[] {"alpha", "delta", "bravo", "charlie"},
 			new int[] {4, 5, 5, 6});
 
 		_setUpMultipleTermCollectors(termCollectors);
 
-		customFacetDisplayContext = _createDisplayContext(
+		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"count:asc");
 
-		nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -221,33 +204,16 @@ public class CustomFacetDisplayContextTest {
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
 		List<TermCollector> termCollectors = _getTermCollectors(
-			new String[] {"alpha", "charlie", "bravo", "delta"},
-			new int[] {3, 4, 5, 6});
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext =
-			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-				"count:desc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			customFacetDisplayContext.getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"delta:6|bravo:5|charlie:4|alpha:3", nameFrequencyString);
-
-		termCollectors = _getTermCollectors(
 			new String[] {"alpha", "delta", "bravo", "charlie"},
 			new int[] {4, 5, 5, 6});
 
 		_setUpMultipleTermCollectors(termCollectors);
 
-		customFacetDisplayContext = _createDisplayContext(
+		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"count:desc");
 
-		nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -257,31 +223,15 @@ public class CustomFacetDisplayContextTest {
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		List<TermCollector> termCollectors = _getTermCollectors(
-			"bravo", "delta", "alpha", "charlie");
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext =
-			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-				"key:asc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			customFacetDisplayContext.getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"alpha:3|bravo:1|charlie:4|delta:2", nameFrequencyString);
-
-		termCollectors = _getTermCollectors(
 			"bravo", "alpha", "bravo", "charlie");
 
 		_setUpMultipleTermCollectors(termCollectors);
 
-		customFacetDisplayContext = _createDisplayContext(
+		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"key:asc");
 
-		nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -291,31 +241,15 @@ public class CustomFacetDisplayContextTest {
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
 		List<TermCollector> termCollectors = _getTermCollectors(
-			"bravo", "delta", "alpha", "charlie");
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext =
-			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-				"key:desc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			customFacetDisplayContext.getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"delta:2|charlie:4|bravo:1|alpha:3", nameFrequencyString);
-
-		termCollectors = _getTermCollectors(
 			"bravo", "alpha", "bravo", "charlie");
 
 		_setUpMultipleTermCollectors(termCollectors);
 
-		customFacetDisplayContext = _createDisplayContext(
+		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"key:desc");
 
-		nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(

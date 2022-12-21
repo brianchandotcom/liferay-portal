@@ -873,18 +873,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 								draftLayout.getGroupId(), draftLayout.getPlid(),
 								true);
 
-					LayoutStructure layoutStructure = LayoutStructure.of(
-						layoutPageTemplateStructure.
-							getDefaultSegmentsExperienceData());
-
 					for (int i = 0; i < jsonArray.length(); i++) {
 						if (segmentsExperienceId == 0) {
+							LayoutStructure layoutStructure =
+								LayoutStructure.of(
+									layoutPageTemplateStructure.
+										getDefaultSegmentsExperienceData());
+
 							_layoutsImporter.importPageElement(
 								draftLayout, layoutStructure,
 								layoutStructure.getMainItemId(),
 								jsonArray.getString(i), i);
 						}
 						else {
+							LayoutStructure layoutStructure =
+								LayoutStructure.of(
+									layoutPageTemplateStructure.getData(
+										segmentsExperienceId));
+
 							_layoutsImporter.importPageElement(
 								draftLayout, layoutStructure,
 								layoutStructure.getMainItemId(),
@@ -3065,6 +3071,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 							jsonObject.getString("name_i18n")),
 						jsonObject.getBoolean("active", true));
 			}
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						draftLayout.getGroupId(), draftLayout.getPlid(), true);
+
+			LayoutStructure layoutStructure = new LayoutStructure();
+
+			layoutStructure.addRootLayoutStructureItem();
+
+			_layoutPageTemplateStructureRelLocalService.
+				addLayoutPageTemplateStructureRel(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId(),
+					segmentsExperience.getSegmentsExperienceId(),
+					layoutStructure.toString(), serviceContext);
 
 			Set<String> resourcePaths = _servletContext.getResourcePaths(
 				parentResourcePath);

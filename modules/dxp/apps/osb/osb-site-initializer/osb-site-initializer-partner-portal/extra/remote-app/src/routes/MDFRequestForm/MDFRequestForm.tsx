@@ -15,12 +15,12 @@ import {useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../common/interfaces/mdfRequest';
 import {Liferay} from '../../common/services/liferay';
 import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
+import {Status} from '../../common/utils/constants/status';
 import {getMDFRequestFromDTO} from '../../common/utils/dto/mdf-request/getMDFRequestFromDTO';
 import isObjectEmpty from '../../common/utils/isObjectEmpty';
 import useGetMDFRequestIdByHash from '../MDFClaimForm/hooks/useGetMDFRequestIdByHash';
@@ -38,9 +38,9 @@ const initialFormValues: MDFRequest = {
 	company: {},
 	country: {},
 	liferayBusinessSalesGoals: [],
+	mdfRequestStatus: Status.PENDING,
 	overallCampaignDescription: '',
 	overallCampaignName: '',
-	requestStatus: Status.PENDING,
 	targetAudienceRoles: [],
 	targetMarkets: [],
 };

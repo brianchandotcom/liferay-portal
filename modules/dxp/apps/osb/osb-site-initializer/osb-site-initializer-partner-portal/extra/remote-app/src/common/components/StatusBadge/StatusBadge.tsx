@@ -11,30 +11,30 @@
 
 import ClayIcon from '@clayui/icon';
 
-import {Status} from '../../enums/status';
-
-interface IProps {
-	status: Status;
-}
+import {Status} from '../../utils/constants/status';
 
 type StatusClassname = {
-	[key in Status]: string;
+	[key in string]: string;
 };
+
+interface Props {
+	status: string;
+}
 
 const statusClassName: StatusClassname = {
-	[Status.DRAFT]: 'text-neutral-5',
-	[Status.PENDING]: 'text-brand-secondary',
-	[Status.APPROVED]: 'text-success',
-	[Status.REQUEST_MORE_INFO]: 'text-info',
-	[Status.REJECT]: 'text-danger',
-	[Status.EXPIRED]: 'text-danger',
-	[Status.MARKETING_DIRECTOR_REVIEW]: 'text-brand-secondary-darken-3',
-	[Status.CANCELED]: 'text-neutral-10',
-	[Status.CLAIM_PAID]: 'text-brand-primary-lighten-2',
-	[Status.IN_FINANCE_REVIEW]: 'text-brand-secondary-darken-3',
+	[Status.DRAFT.name]: 'text-neutral-5',
+	[Status.PENDING.name]: 'text-brand-secondary',
+	[Status.APPROVED.name]: 'text-success',
+	[Status.REQUEST_MORE_INFO.name]: 'text-info',
+	[Status.REJECT.name]: 'text-danger',
+	[Status.EXPIRED.name]: 'text-danger',
+	[Status.MARKETING_DIRECTOR_REVIEW.name]: 'text-brand-secondary-darken-3',
+	[Status.CANCELED.name]: 'text-neutral-10',
+	[Status.CLAIM_PAID.name]: 'text-brand-primary-lighten-2',
+	[Status.IN_FINANCE_REVIEW.name]: 'text-brand-secondary-darken-3',
 };
 
-const StatusBadge = ({status}: IProps) => {
+const StatusBadge = ({status}: Props) => {
 	return (
 		<>
 			<ClayIcon

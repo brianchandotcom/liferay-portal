@@ -35,7 +35,7 @@ export default function useGetListItemsFromMDFRequests(
 					item.minDateActivity,
 					item.maxDateActivity
 				),
-				[MDFColumnKey.STATUS]: item.requestStatus,
+				[MDFColumnKey.STATUS]: item.mdfRequestStatus?.name,
 				[MDFColumnKey.PARTNER]: item.companyName,
 				...getMDFDates(item.dateCreated, item.dateModified),
 				...getMDFBudgetInfos(

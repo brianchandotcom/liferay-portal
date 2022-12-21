@@ -12,8 +12,8 @@
 import {FormikHelpers} from 'formik';
 
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
-import {Status} from '../../../common/enums/status';
 import mdfRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
+import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {Liferay} from '../../../common/services/liferay';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
@@ -31,27 +31,25 @@ export default async function submitForm(
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
 	mdfRequestId: number,
 	siteURL: string,
-	currentRequestStatus?: Status
+	currentRequestStatus?: LiferayPicklist
 ) {
 	formikHelpers.setSubmitting(true);
 
 	if (currentRequestStatus) {
-		values.requestStatus = currentRequestStatus;
+		values.mdfRequestStatus = currentRequestStatus;
 	}
 
 	let dtoMDFRequest: mdfRequestDTO | undefined = undefined;
 
 	if (Liferay.FeatureFlags['LPS-164528'] && !mdfRequestId) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	}
-	else if (mdfRequestId) {
+	} else if (mdfRequestId) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values,
 			mdfRequestId
 		);
-	}
-	else {
+	} else {
 		dtoMDFRequest = await createMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values
@@ -68,8 +66,7 @@ export default async function submitForm(
 						dtoMDFRequest?.id,
 						dtoMDFRequest?.externalReferenceCodeSF
 					);
-				}
-				else if (activity.id) {
+				} else if (activity.id) {
 					return await updateMDFRequestActivities(
 						ResourceName.ACTIVITY_DXP,
 						activity,
@@ -77,8 +74,7 @@ export default async function submitForm(
 						dtoMDFRequest?.id,
 						dtoMDFRequest?.externalReferenceCodeSF
 					);
-				}
-				else {
+				} else {
 					return await createMDFRequestActivities(
 						ResourceName.ACTIVITY_DXP,
 						activity,

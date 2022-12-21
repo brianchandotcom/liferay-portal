@@ -13,10 +13,10 @@ import Dropdown from '../../../common/components/Dropdown';
 import StatusBadge from '../../../common/components/StatusBadge';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
-import {Status} from '../../../common/enums/status';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
+import { Status } from '../../../common/utils/constants/status';
 
 export default function getMDFListColumns(
 	columns?: TableColumn<MDFRequestListItem>[],
@@ -77,7 +77,7 @@ export default function getMDFListColumns(
 			{
 				columnKey: MDFColumnKey.STATUS,
 				label: 'Status',
-				render: (data) => <StatusBadge status={data as Status} />,
+				render: (data) => <StatusBadge status={data as string} />,
 			},
 			...columns,
 			{

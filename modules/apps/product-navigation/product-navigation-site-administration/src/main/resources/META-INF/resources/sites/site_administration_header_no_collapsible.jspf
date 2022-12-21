@@ -70,7 +70,7 @@
 		<clay:content-col
 			cssClass="autofit-col-end"
 		>
-			<aui:icon aria-label='<%= LanguageUtil.get(request, "close") %>' cssClass="d-inline-block d-md-none icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:void(0);" />
+			<aui:icon aria-label='<%= LanguageUtil.get(request, "close") %>' cssClass="d-inline-block icon-monospaced ml-2 px-2 py-1 sidenav-close" image="times" markupView="lexicon" url="javascript:void(0);" />
 		</clay:content-col>
 	</clay:content-row>
 </span>

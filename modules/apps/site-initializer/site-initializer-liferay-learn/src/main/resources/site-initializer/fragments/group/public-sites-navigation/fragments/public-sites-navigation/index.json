@@ -43,6 +43,14 @@
 					"type": "checkbox"
 				},
 				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Navigation Links Only",
+					"label": "Navigation Links Only",
+					"name": "navigationLinksOnly",
+					"type": "checkbox"
+				},
+				{
 					"dataType": "int",
 					"defaultValue": "0",
 					"description": "site-navigation-menu-id",

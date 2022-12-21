@@ -12,9 +12,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given config file for client extension of type custom element created") {
-			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			// ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
 
-			ClientExtension.checkConfigFileCreatedProperly();
+			// ClientExtension.checkConfigFileCreatedProperly();
 
 			RemoteApps.goToRemoteAppsPortlet();
 		}
@@ -41,17 +41,13 @@ definition {
 		}
 
 		task ("Then field information is displayed correctly") {
-			RemoteApps.assertCustomElementFields(
-				entryCategoryName = "category.remote-apps",
-				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryDescription = "Custom Element Description",
-				entryFriendlyElementName = "vanilla",
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryProperties = "test-data-user=QAuser",
-				entrySourceCodeURL = "",
-				entryType = "Custom Element",
-				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+			RemoteApps.assertTextInputContent(
+				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name",
+				entryInformationList = "Vanilla Counter,,Custom Element,vanilla,vanilla-counter,category.remote-apps");
+				
+			RemoteApps.assertTextAreaContent(
+				entryFieldList = "description,CSS URLs,_URLs,properties",
+				entryInformationList = "Custom Element Description,https://liferay.github.io/liferay-frontend-projects/index.css,https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js,test-data-user=QAuser");
 
 			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
 
@@ -59,17 +55,11 @@ definition {
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.ViewDisabledCustomElementFields(
-				entryCategoryName = "category.remote-apps",
-				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryDescription = "Custom Element Description",
-				entryFriendlyElementName = "vanilla",
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryProperties = "test-data-user=QAuser",
-				entrySourceCodeURL = "",
-				entryType = "Custom Element",
-				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+			RemoteApps.assertTextInputDisable(
+				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
+			
+			RemoteApps.assertTextAreaDisable(
+				entryFieldList = "description,CSS URLs,_URLs,properties");	
 		}
 	}
 
@@ -86,9 +76,7 @@ definition {
 		}
 
 		task ("And Then Edit action is not an available option field information is displayed correctly") {
-			AssertElementNotPresent(
-				key_text = "Actions",
-				locator1 = "Button#ANY");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
 	}
 
@@ -105,17 +93,13 @@ definition {
 		}
 
 		task ("Then field information is displayed correctly") {
-			RemoteApps.assertCustomElementFields(
-				entryCategoryName = "category.remote-apps",
-				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryDescription = "Custom Element Description",
-				entryFriendlyElementName = "vanilla",
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryProperties = "test-data-user=QAuser",
-				entrySourceCodeURL = "",
-				entryType = "Custom Element",
-				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+			RemoteApps.assertTextInputContent(
+				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name",
+				entryInformationList = "Vanilla Counter,,Custom Element,vanilla,vanilla-counter,category.remote-apps");
+				
+			RemoteApps.assertTextAreaContent(
+				entryFieldList = "description,CSS URLs,_URLs,properties",
+				entryInformationList = "Custom Element Description,https://liferay.github.io/liferay-frontend-projects/index.css,https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js,test-data-user=QAuser");
 
 			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
 
@@ -123,17 +107,11 @@ definition {
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.ViewDisabledCustomElementFields(
-				entryCategoryName = "category.remote-apps",
-				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryDescription = "Custom Element Description",
-				entryFriendlyElementName = "vanilla",
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryProperties = "test-data-user=QAuser",
-				entrySourceCodeURL = "",
-				entryType = "Custom Element",
-				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+			RemoteApps.assertTextInputDisable(
+				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
+			
+			RemoteApps.assertTextAreaDisable(
+				entryFieldList = "description,CSS URLs,_URLs,properties");	
 		}
 	}
 

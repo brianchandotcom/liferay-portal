@@ -561,4 +561,192 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12581 | Test Summary: Check that it is possible to sort by name in the channels and sites tab on assigned property modal"
+	@priority = "3"
+	test SortInChannelsAndSitesTabOnAssignedPropertyModal {
+		var channelsPageListUp = "AC Sort Channels,DXP Sort Channels,Minium Demo Portal";
+		var channelsPageListDown = "Minium Demo Portal,DXP Sort Channels,AC Sort Channels";
+		var sitesPageListUp = "Liferay DXP,Minium Demo,Site Name";
+		var sitesPageListDown = "Site Name,Minium Demo,Liferay DXP";
+
+		task ("Create two new channels") {
+			for (var channelName : list "AC Sort Channels,DXP Sort Channels") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelName}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+		
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Toggle Commerce On > Click on the Assign button") {
+			Check.checkToggleSwitch(
+				key_propertyName = "${assignedPropertyName}",
+				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
+
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.switchTab(tabName = "Channel");
+		}
+
+		task ("Sort the list by the Channel Name column (Ascending)") {
+			ACDXPSettings.setFilterAndOrderInAssignModal(orderBy = "Channel Name");
+
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${channelsPageListUp}");
+		}
+
+		task ("Sort the list by the Channel Name column (Descending)") {
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${channelsPageListDown}");
+		}
+
+		task ("Switch to Sites tab") {
+			ACDXPSettings.switchTab(tabName = "Sites");
+		}
+
+		task ("Sort the list by the Site Name column (Ascending)") {
+			ACDXPSettings.setFilterAndOrderInAssignModal(orderBy = "Site Name");
+
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListUp}");
+		}
+
+		task ("Sort the list by the Site Name column (Descending)") {
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListDown}");
+		}
+
+		task ("Sort the list by the Friendly URL column (Ascending)") {
+			ACDXPSettings.setFilterAndOrderInAssignModal(orderBy = "Friendly URL");
+
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListUp}");
+		}
+
+		task ("Sort the list by the Friendly URL column (Descending)") {
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListDown}");
+		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Click on the Assign button") {
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.switchTab(tabName = "Channel");
+		}
+
+		task ("Sort the list by the Channel Name column (Ascending)") {
+			ACDXPSettings.setFilterAndOrderInAssignModal(orderBy = "Channel Name");
+
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${channelsPageListUp}");
+		}
+
+		task ("Sort the list by the Channel Name column (Descending)") {
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${channelsPageListDown}");
+		}
+
+		task ("Switch to Sites tab") {
+			ACDXPSettings.switchTab(tabName = "Sites");
+		}
+
+		task ("Sort the list by the Site Name column (Ascending)") {
+			ACDXPSettings.setFilterAndOrderInAssignModal(orderBy = "Site Name");
+
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListUp}");
+		}
+
+		task ("Sort the list by the Site Name column (Descending)") {
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListDown}");
+		}
+
+		task ("Sort the list by the Friendly URL column (Ascending)") {
+			ACDXPSettings.setFilterAndOrderInAssignModal(orderBy = "Friendly URL");
+
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListUp}");
+		}
+
+		task ("Sort the list by the Friendly URL column (Descending)") {
+			ACDXPSettings.setSortDirectionInAssignModal(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewAssignModalListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${sitesPageListDown}");
+		}
+	}
+
 }

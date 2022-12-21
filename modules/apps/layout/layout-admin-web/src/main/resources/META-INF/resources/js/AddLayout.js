@@ -50,7 +50,7 @@ export default function ({namespace}) {
 					const opener = getOpener();
 
 					opener.Liferay.fire('closeModal', {
-						id: `${namespace}addLayoutDialog`,
+						id: 'addLayoutDialog',
 						redirect: redirectURL.toString(),
 					});
 				}

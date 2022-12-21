@@ -3039,12 +3039,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Layout draftLayout = layout.fetchDraftLayout();
 
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					serviceContext.getScopeGroupId(),
-					jsonObject.getString("segmentsExperienceKey"), classNameId,
-					draftLayout.getClassPK());
-
 			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
@@ -3057,38 +3051,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 				unicodeProperties.putAll(map);
 			}
 
-			if (segmentsExperience == null) {
-				segmentsExperience =
-					_segmentsExperienceLocalService.addSegmentsExperience(
-						serviceContext.getUserId(),
-						serviceContext.getScopeGroupId(),
-						jsonObject.getLong("segmentsEntryId"),
-						jsonObject.getString("segmentsExperienceKey"),
-						classNameId, draftLayout.getClassPK(),
-						SiteInitializerUtil.toMap(
-							jsonObject.getString("name_i18n")),
-						jsonObject.getInt("priority"),
-						jsonObject.getBoolean("active", true),
-						unicodeProperties, serviceContext);
-			}
-			else {
-				segmentsExperience =
-					_segmentsExperienceLocalService.updateSegmentsExperience(
-						segmentsExperience.getSegmentsExperienceId(),
-						segmentsExperience.getSegmentsEntryId(),
-						SiteInitializerUtil.toMap(
-							jsonObject.getString("name_i18n")),
-						jsonObject.getBoolean("active", true));
-			}
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.addSegmentsExperience(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					jsonObject.getLong("segmentsEntryId"),
+					jsonObject.getString("segmentsExperienceKey"), classNameId,
+					draftLayout.getClassPK(),
+					SiteInitializerUtil.toMap(
+						jsonObject.getString("name_i18n")),
+					jsonObject.getInt("priority"),
+					jsonObject.getBoolean("active", true), unicodeProperties,
+					serviceContext);
+
+			LayoutStructure layoutStructure = new LayoutStructure();
+
+			layoutStructure.addRootLayoutStructureItem();
 
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				_layoutPageTemplateStructureLocalService.
 					fetchLayoutPageTemplateStructure(
 						draftLayout.getGroupId(), draftLayout.getPlid(), true);
-
-			LayoutStructure layoutStructure = new LayoutStructure();
-
-			layoutStructure.addRootLayoutStructureItem();
 
 			_layoutPageTemplateStructureRelLocalService.
 				addLayoutPageTemplateStructureRel(

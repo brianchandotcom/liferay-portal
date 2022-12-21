@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.modified.facet.portlet.shared.sea
 
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.util.CalendarFactory;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
@@ -67,13 +67,12 @@ public class ModifiedFacetPortletSharedSearchContributor
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
-			_modifiedFacetFactory, _calendarFactory, _dateFormatFactory,
-			_jsonFactory);
+			_modifiedFacetFactory, _dateFormatFactory, _jsonFactory);
 
 		modifiedFacetBuilder.setRangesJSONArray(
 			_dateRangeFactory.replaceAliases(
 				modifiedFacetPortletPreferences.getRangesJSONArray(),
-				_calendarFactory.getCalendar(), _jsonFactory));
+				CalendarFactoryUtil.getCalendar(), _jsonFactory));
 
 		modifiedFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
@@ -96,9 +95,6 @@ public class ModifiedFacetPortletSharedSearchContributor
 
 		return modifiedFacetBuilder.build();
 	}
-
-	@Reference
-	private CalendarFactory _calendarFactory;
 
 	@Reference
 	private DateFormatFactory _dateFormatFactory;

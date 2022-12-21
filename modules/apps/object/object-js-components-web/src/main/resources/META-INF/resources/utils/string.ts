@@ -12,6 +12,30 @@
  * details.
  */
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+/**
+ * Get the label according to the locale
+ */
+
+export function getLocalizableLabel(
+	creationLanguageId: Locale,
+	labels: LocalizedValue<string> | undefined,
+	fallback?: string
+) {
+	if (!labels) {
+		return fallback ?? '';
+	}
+
+	return (
+		labels[defaultLanguageId] ??
+		labels[creationLanguageId] ??
+		fallback ??
+		labels['en_US'] ??
+		''
+	);
+}
+
 /**
  * Checks if the string includes the query
  */

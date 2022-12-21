@@ -14,6 +14,59 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-10178. Select a product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
+	@priority = "3"
+	test CanCheckoutAMiniumProduct {
+		task ("Given a Commerce Account and Buyer User are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Buyer User logged in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And buyer user add a product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "Mount",
+				productQuantity = "5");
+		}
+
+		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Mount",
+				productQuantity = "5",
+				productUnitPrice = "3",
+				shippingMethod = "Standard");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10258. Create a new product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
 	@priority = "3"
 	test CanCheckoutNewProduct {
@@ -71,59 +124,6 @@ definition {
 				productName = "Soft Tyre",
 				productQuantity = "5",
 				productUnitPrice = "50",
-				shippingMethod = "Standard");
-
-			AssertTextEquals(
-				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-				value1 = "Success! Your order has been processed.");
-		}
-	}
-
-	@description = "This is a test for COMMERCE-10178. Select a product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
-	@priority = "3"
-	test CanCheckoutAMiniumProduct {
-		task ("Given a Commerce Account and Buyer User are created") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And Buyer User logged in") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And buyer user add a product to the cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "Mount",
-				productQuantity = "5");
-		}
-
-		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
-			CommerceCheckout.gotoCheckoutViaMiniCart();
-
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				productName = "Mount",
-				productQuantity = "5",
-				productUnitPrice = "3",
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -202,78 +202,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-10280. Set a promotion price lower then the price list and do the checkout"
-	@priority = "3"
-	test CanCheckoutProductWithPromotionPriceLowerThenPricelist {
-		task ("Given a Commerce Account and Buyer User are created") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And given a promotion price entry for U-Joint is set higher than price list") {
-			CommercePromotions.openPromotionsAdmin();
-
-			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = "14",
-				productSKU = "MIN55861",
-				promotionName = "Minium Base Promotion");
-		}
-
-		task ("And Buyer User logged in") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And buyer user add a product to the cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = "2");
-
-			CommerceNavigator.gotoMiniCart();
-
-			FrontStore.viewMiniCart(
-				cartItemNames = "U-Joint,",
-				cartItemPriceValues = "14,");
-		}
-
-		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
-			CommerceCheckout.gotoCheckoutViaMiniCart();
-
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				productName = "U-Joint",
-				productQuantity = "2",
-				productUnitPrice = "14",
-				shippingMethod = "Standard");
-
-			AssertTextEquals(
-				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-				value1 = "Success! Your order has been processed.");
-		}
-	}
-
 	@description = "This is a test for COMMERCE-10277."
 	@priority = "3"
 	test CanCheckoutProductWithPromotionPriceHigherThenPricelist {
@@ -339,6 +267,78 @@ definition {
 				productName = "U-Joint",
 				productQuantity = "3",
 				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10280. Set a promotion price lower then the price list and do the checkout"
+	@priority = "3"
+	test CanCheckoutProductWithPromotionPriceLowerThenPricelist {
+		task ("Given a Commerce Account and Buyer User are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a promotion price entry for U-Joint is set higher than price list") {
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = "14",
+				productSKU = "MIN55861",
+				promotionName = "Minium Base Promotion");
+		}
+
+		task ("And Buyer User logged in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And buyer user add a product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "2");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint,",
+				cartItemPriceValues = "14,");
+		}
+
+		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "2",
+				productUnitPrice = "14",
 				shippingMethod = "Standard");
 
 			AssertTextEquals(

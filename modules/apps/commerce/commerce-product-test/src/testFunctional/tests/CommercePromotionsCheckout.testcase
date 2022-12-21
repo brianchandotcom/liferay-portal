@@ -178,9 +178,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-10306. Can checkout an order of a product with price list with tier and promotion with bulk"
+	@description = "This is a test for COMMERCE-10307. Can checkout an order of a product with price list with bulk and promotion with bulk"
 	@priority = "3"
-	test CanCheckoutProductWithBulkPriceOnPromotionAndTierPriceOnPriceList {
+	test CanCheckoutProductWithBulkPriceOnPromotionAndPriceList {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -208,7 +208,7 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "MIN55861");
 
 			CommercePriceLists.createPriceListPriceTiers(
-				key_pricingType = "Tiered Pricing",
+				key_pricingType = "Bulk Pricing",
 				key_quantity = "1",
 				key_value = "50");
 		}
@@ -272,9 +272,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-10307. Can checkout an order of a product with price list with bulk and promotion with bulk"
+	@description = "This is a test for COMMERCE-10306. Can checkout an order of a product with price list with tier and promotion with bulk"
 	@priority = "3"
-	test CanCheckoutProductWithBulkPriceOnPromotionAndPriceList {
+	test CanCheckoutProductWithBulkPriceOnPromotionAndTierPriceOnPriceList {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -302,7 +302,7 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "MIN55861");
 
 			CommercePriceLists.createPriceListPriceTiers(
-				key_pricingType = "Bulk Pricing",
+				key_pricingType = "Tiered Pricing",
 				key_quantity = "1",
 				key_value = "50");
 		}

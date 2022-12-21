@@ -121,6 +121,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATION_ROLE_BUTTON_BODY</td>
+	<td>xpath=(//div[@style]//button[strong[contains(.,'${key_publicationRole}')]])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_ROLE_BUTTON_BODY_TITLE</td>
+	<td>//tbody//button[@title='${key_title}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATION_ROLE_BUTTON_HELP_TEXT</td>
 	<td>//button[strong[contains(.,'${key_publicationRole}')]//following-sibling::div[contains(.,'${key_publicationRoleHelpText}')]]</td>
 	<td></td>

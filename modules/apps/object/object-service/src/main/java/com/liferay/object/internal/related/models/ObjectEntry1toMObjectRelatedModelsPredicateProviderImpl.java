@@ -56,77 +56,152 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 			ObjectRelationship objectRelationship, Predicate predicate)
 		throws PortalException {
 
-		ObjectDefinition relatedObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				_getRelatedObjectDefinitionId(
-					_objectDefinition.getObjectDefinitionId(),
-					objectRelationship));
+		ObjectDefinition objectDefinition1 = _getObjectDefinition1(
+			objectRelationship);
 
-		DynamicObjectDefinitionTable relatedObjectTable =
-			new DynamicObjectDefinitionTable(
-				relatedObjectDefinition,
-				_objectFieldLocalService.getObjectFields(
-					relatedObjectDefinition.getObjectDefinitionId(),
-					relatedObjectDefinition.getDBTableName()),
-				relatedObjectDefinition.getDBTableName());
+		ObjectDefinition objectDefinition2 = _getObjectDefinition2(
+			objectRelationship);
 
-		Column<?, ?> relatedObjectDefinitionTableColumn =
-			relatedObjectTable.getColumn(
-				StringBundler.concat(
-					"r_", objectRelationship.getName(), "_",
-					_objectDefinition.getPKObjectFieldName()));
+		DynamicObjectDefinitionTable objectDefinition2Table = _getTable(
+			objectDefinition2);
 
-		DynamicObjectDefinitionTable relatedObjectExtensionTable =
-			new DynamicObjectDefinitionTable(
-				relatedObjectDefinition,
-				_objectFieldLocalService.getObjectFields(
-					relatedObjectDefinition.getObjectDefinitionId(),
-					relatedObjectDefinition.getExtensionDBTableName()),
-				relatedObjectDefinition.getExtensionDBTableName());
-
-		if (relatedObjectDefinitionTableColumn == null) {
-			relatedObjectDefinitionTableColumn =
-				relatedObjectExtensionTable.getColumn(
+		Column<DynamicObjectDefinitionTable, ?>
+			objectDefinition2RelationshipFieldTableColumn =
+				objectDefinition2Table.getColumn(
 					StringBundler.concat(
 						"r_", objectRelationship.getName(), "_",
-						_objectDefinition.getPKObjectFieldName()));
+						objectDefinition1.getPKObjectFieldName()));
+
+		DynamicObjectDefinitionTable objectDefinition2ExtensionTable =
+			_getExtensionTable(objectDefinition2);
+
+		if (objectDefinition2RelationshipFieldTableColumn == null) {
+			objectDefinition2RelationshipFieldTableColumn =
+				objectDefinition2ExtensionTable.getColumn(
+					StringBundler.concat(
+						"r_", objectRelationship.getName(), "_",
+						objectDefinition1.getPKObjectFieldName()));
 		}
 
-		DynamicObjectDefinitionTable objectTable =
-			new DynamicObjectDefinitionTable(
-				_objectDefinition,
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId(),
-					_objectDefinition.getDBTableName()),
-				_objectDefinition.getDBTableName());
+		DynamicObjectDefinitionTable objectDefinition1Table = _getTable(
+			objectDefinition1);
 
-		Column<?, ?> objectTableColumn = objectTable.getColumn(
-			_objectDefinition.getPKObjectFieldName() + "_");
+		Column<?, ?> objectDefinition1PKObjectFieldTableColumn =
+			_getPKObjectDefinitionTableColumn(
+				objectDefinition1Table, objectDefinition1);
 
-		return objectTableColumn.in(
+		if (_objectDefinition.getObjectDefinitionId() ==
+				objectRelationship.getObjectDefinitionId1()) {
+
+			return objectDefinition1PKObjectFieldTableColumn.in(
+				DSLQueryFactoryUtil.select(
+					objectDefinition2RelationshipFieldTableColumn
+				).from(
+					objectDefinition2Table
+				).innerJoinON(
+					objectDefinition2ExtensionTable,
+					objectDefinition2Table.getPrimaryKeyColumn(
+					).eq(
+						objectDefinition2ExtensionTable.getPrimaryKeyColumn()
+					)
+				).where(
+					predicate
+				));
+		}
+
+		Column<?, ?> objectDefinition2PKObjectFieldTableColumn =
+			_getPKObjectDefinitionTableColumn(
+				objectDefinition2Table, objectDefinition2);
+
+		DynamicObjectDefinitionTable objectDefinition1ExtensionTable =
+			_getExtensionTable(objectDefinition1);
+
+		return objectDefinition2PKObjectFieldTableColumn.in(
 			DSLQueryFactoryUtil.select(
-				relatedObjectDefinitionTableColumn
+				objectDefinition2PKObjectFieldTableColumn
 			).from(
-				relatedObjectTable
+				objectDefinition2Table
 			).innerJoinON(
-				relatedObjectExtensionTable,
-				relatedObjectExtensionTable.getPrimaryKeyColumn(
+				objectDefinition2ExtensionTable,
+				objectDefinition2Table.getPrimaryKeyColumn(
 				).eq(
-					relatedObjectExtensionTable.getPrimaryKeyColumn()
+					objectDefinition2ExtensionTable.getPrimaryKeyColumn()
 				)
 			).where(
-				predicate
+				objectDefinition2RelationshipFieldTableColumn.in(
+					DSLQueryFactoryUtil.select(
+						objectDefinition1PKObjectFieldTableColumn
+					).from(
+						objectDefinition1Table
+					).innerJoinON(
+						objectDefinition1ExtensionTable,
+						objectDefinition1Table.getPrimaryKeyColumn(
+						).eq(
+							objectDefinition1ExtensionTable.
+								getPrimaryKeyColumn()
+						)
+					).where(
+						predicate
+					))
 			));
 	}
 
-	private long _getRelatedObjectDefinitionId(
-		long objectDefinitionId, ObjectRelationship objectRelationship) {
+	private DynamicObjectDefinitionTable _getExtensionTable(
+		ObjectDefinition objectDefinition) {
 
-		if (objectRelationship.getObjectDefinitionId1() != objectDefinitionId) {
-			return objectRelationship.getObjectDefinitionId1();
+		return new DynamicObjectDefinitionTable(
+			objectDefinition,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getExtensionDBTableName()),
+			objectDefinition.getExtensionDBTableName());
+	}
+
+	private ObjectDefinition _getObjectDefinition1(
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		if (objectRelationship.getObjectDefinitionId1() ==
+				_objectDefinition.getObjectDefinitionId()) {
+
+			return _objectDefinition;
 		}
 
-		return objectRelationship.getObjectDefinitionId2();
+		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId1());
+	}
+
+	private ObjectDefinition _getObjectDefinition2(
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		if (objectRelationship.getObjectDefinitionId2() ==
+				_objectDefinition.getObjectDefinitionId()) {
+
+			return _objectDefinition;
+		}
+
+		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
+	}
+
+	private Column<?, ?> _getPKObjectDefinitionTableColumn(
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+		ObjectDefinition objectDefinition) {
+
+		return dynamicObjectDefinitionTable.getColumn(
+			objectDefinition.getPKObjectFieldDBColumnName());
+	}
+
+	private DynamicObjectDefinitionTable _getTable(
+		ObjectDefinition objectDefinition) {
+
+		return new DynamicObjectDefinitionTable(
+			objectDefinition,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getDBTableName()),
+			objectDefinition.getDBTableName());
 	}
 
 	private final ObjectDefinition _objectDefinition;

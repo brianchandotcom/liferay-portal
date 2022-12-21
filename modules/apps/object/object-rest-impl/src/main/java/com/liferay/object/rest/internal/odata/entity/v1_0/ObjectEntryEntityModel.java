@@ -25,7 +25,6 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -67,9 +66,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 		}
 
 		List<ObjectRelationship> objectRelationships =
-			ObjectRelationshipLocalServiceUtil.getObjectRelationships(
-				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectDefinition relatedObjectDefinition =

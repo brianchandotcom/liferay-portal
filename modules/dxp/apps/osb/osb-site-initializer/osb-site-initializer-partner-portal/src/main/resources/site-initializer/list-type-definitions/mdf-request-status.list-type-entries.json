@@ -1,0 +1,66 @@
+[
+	{
+		"key": "pendingMarketingReview",
+		"name": "Pending Marketing Review",
+		"name_i18n": {
+			"en-US": "Pending Marketing Review"
+		},
+		"type": "string"
+	},
+	{
+		"key": "approved",
+		"name": "Approved",
+		"name_i18n": {
+			"en-US": "Approved"
+		},
+		"type": "string"
+	},
+	{
+		"key": "marketingDirectorReview",
+		"name": "Marketing Director Review",
+		"name_i18n": {
+			"en-US": "Marketing Director Review"
+		},
+		"type": "string"
+	},
+	{
+		"key": "moreInfoRequested",
+		"name": "More Info Requested",
+		"name_i18n": {
+			"en-US": "More Info Requested"
+		},
+		"type": "string"
+	},
+	{
+		"key": "expired",
+		"name": "Expired",
+		"name_i18n": {
+			"en-US": "Expired"
+		},
+		"type": "string"
+	},
+	{
+		"key": "rejected",
+		"name": "Rejected",
+		"name_i18n": {
+			"en-US": "Rejected"
+		},
+		"type": "string"
+	},
+	{
+		"key": "canceled",
+		"name": "Canceled",
+		"name_i18n": {
+			"en-US": "Canceled"
+		},
+		"type": "string"
+	},
+	{
+		"key": "draft",
+		"name": "Draft",
+		"name_i18n": {
+			"en-US": "Draft"
+		},
+		"type": "string"
+	}
+]

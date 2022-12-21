@@ -59,9 +59,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"dispatch.task.executor.cluster.mode=single-node",
 		"dispatch.task.executor.feature.flag=LPS-166126",
-		"dispatch.task.executor.name=testray-testflow",
+		"dispatch.task.executor.name=testray-test-flow",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testray-testflow"
+		"dispatch.task.executor.type=testray-test-flow"
 	},
 	service = DispatchTaskExecutor.class
 )
@@ -122,7 +122,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray-testflow";
+		return "testray-test-flow";
 	}
 
 	private String _getTestrayIssueNames(

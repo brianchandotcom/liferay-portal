@@ -58,7 +58,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetKeywordsRankedPage_getExpectedActions());
 
 		keywordResource.deleteKeyword(keyword1.getId());
 		keywordResource.deleteKeyword(keyword2.getId());

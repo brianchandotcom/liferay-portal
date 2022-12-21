@@ -105,6 +105,11 @@
 	<td>//div[contains(@class,'fade show')]//div[@class='pagination-results']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSING_MODAL_PAGINATION</td>
+	<td>//div[contains(@class,'fade show')]//div[contains(@class,'pagination-items-per-page')]</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

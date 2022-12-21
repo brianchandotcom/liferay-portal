@@ -82,6 +82,12 @@ definition {
 		}
 	}
 
+	macro changeAssignModalPagination {
+		Click(locator1 = "ACDXPSettings#ASSING_MODAL_PAGINATION");
+
+		MenuItem.click(menuItem = "${itemsPerPage}");
+	}
+
 	macro disconnectDXPFromAnalyticsCloud {
 		ACDXPSettings.goToInstanceSettingsAC();
 

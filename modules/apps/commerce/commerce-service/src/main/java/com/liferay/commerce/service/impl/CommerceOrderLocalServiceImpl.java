@@ -35,6 +35,7 @@ import com.liferay.commerce.exception.CommerceOrderDateException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
 import com.liferay.commerce.exception.CommerceOrderRequestedDeliveryDateException;
 import com.liferay.commerce.exception.GuestCartMaxAllowedException;
+import com.liferay.commerce.helper.CommerceBaseModelDTOHelper;
 import com.liferay.commerce.internal.order.comparator.CommerceOrderModifiedDateComparator;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -1867,7 +1868,7 @@ public class CommerceOrderLocalServiceImpl
 			() -> {
 				Message message = new Message();
 
-				DTOConverter<?, ?> dtoConverter =
+				DTOConverter<?, ?> commerceOrderDTOConverter =
 					_dtoConverterRegistry.getDTOConverter(
 						CommerceOrder.class.getName());
 
@@ -1875,7 +1876,7 @@ public class CommerceOrderLocalServiceImpl
 					JSONUtil.put(
 						"commerceOrder",
 						() -> {
-							Object object = dtoConverter.toDTO(
+							Object object = commerceOrderDTOConverter.toDTO(
 								new DefaultDTOConverterContext(
 									_dtoConverterRegistry,
 									commerceOrder.getCommerceOrderId(),
@@ -1890,17 +1891,10 @@ public class CommerceOrderLocalServiceImpl
 						"model" + CommerceOrder.class.getSimpleName(),
 						commerceOrder.getModelAttributes()
 					).put(
-						"modelDTO" + dtoConverter.getContentType(),
-						() -> {
-							Object object = dtoConverter.toDTO(
-								new DefaultDTOConverterContext(
-									_dtoConverterRegistry,
-									commerceOrder.getCommerceOrderId(),
-									LocaleUtil.getSiteDefault(), null, null));
-
-							return _jsonFactory.createJSONObject(
-								_jsonFactory.looseSerializeDeep(object));
-						}
+						"modelDTO" + commerceOrderDTOConverter.getContentType(),
+						_commerceBaseModelDTOHelper.getBaseModelDTO(
+							commerceOrder.getUserId(), commerceOrder,
+							commerceOrderDTOConverter)
 					).put(
 						"paymentStatus", commerceOrder.getPaymentStatus()
 					).put(
@@ -2257,6 +2251,9 @@ public class CommerceOrderLocalServiceImpl
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceBaseModelDTOHelper _commerceBaseModelDTOHelper;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

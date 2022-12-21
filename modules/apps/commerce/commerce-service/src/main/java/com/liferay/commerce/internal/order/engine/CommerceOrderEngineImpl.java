@@ -33,6 +33,7 @@ import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
+import com.liferay.commerce.helper.CommerceBaseModelDTOHelper;
 import com.liferay.commerce.internal.order.status.CompletedCommerceOrderStatusImpl;
 import com.liferay.commerce.internal.order.status.ShippedCommerceOrderStatusImpl;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
@@ -558,8 +559,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 						commerceOrder.getModelAttributes()
 					).put(
 						"modelDTO" + commerceOrderDTOConverter.getContentType(),
-						_getCommerceOrderJSONObject(
-							commerceOrder, commerceOrderDTOConverter)
+						_commerceBaseModelDTOHelper.getBaseModelDTO(
+							commerceOrder.getUserId(), commerceOrder,
+							commerceOrderDTOConverter)
 					).put(
 						"orderStatus", commerceOrder.getOrderStatus()
 					));
@@ -689,6 +691,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceBaseModelDTOHelper _commerceBaseModelDTOHelper;
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;

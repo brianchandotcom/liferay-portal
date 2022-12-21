@@ -21,6 +21,7 @@ import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentShippingDateException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
 import com.liferay.commerce.exception.DuplicateCommerceShipmentException;
+import com.liferay.commerce.helper.CommerceBaseModelDTOHelper;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -731,7 +732,7 @@ public class CommerceShipmentLocalServiceImpl
 			() -> {
 				Message message = new Message();
 
-				DTOConverter<?, ?> dtoConverter =
+				DTOConverter<?, ?> commerceShipmentDTOConverter =
 					_dtoConverterRegistry.getDTOConverter(
 						CommerceShipment.class.getName());
 
@@ -739,7 +740,7 @@ public class CommerceShipmentLocalServiceImpl
 					JSONUtil.put(
 						"commerceShipment",
 						() -> {
-							Object object = dtoConverter.toDTO(
+							Object object = commerceShipmentDTOConverter.toDTO(
 								new DefaultDTOConverterContext(
 									_dtoConverterRegistry,
 									commerceShipment.getCommerceShipmentId(),
@@ -755,17 +756,11 @@ public class CommerceShipmentLocalServiceImpl
 						"model" + CommerceShipment.class.getName(),
 						commerceShipment.getModelAttributes()
 					).put(
-						"modelDTO" + dtoConverter.getContentType(),
-						() -> {
-							Object object = dtoConverter.toDTO(
-								new DefaultDTOConverterContext(
-									_dtoConverterRegistry,
-									commerceShipment.getCommerceShipmentId(),
-									LocaleUtil.getSiteDefault(), null, null));
-
-							return _jsonFactory.createJSONObject(
-								_jsonFactory.looseSerializeDeep(object));
-						}
+						"modelDTO" +
+							commerceShipmentDTOConverter.getContentType(),
+						_commerceBaseModelDTOHelper.getBaseModelDTO(
+							commerceShipment.getUserId(), commerceShipment,
+							commerceShipmentDTOConverter)
 					));
 
 				MessageBusUtil.sendMessage(
@@ -930,6 +925,9 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceBaseModelDTOHelper _commerceBaseModelDTOHelper;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

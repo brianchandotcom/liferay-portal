@@ -159,4 +159,69 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12577 | Test Summary: Check that a site and a channel can only be selected for a single property"
+	@priority = "4"
+	test CheckSiteAndChannelOnlyBeSelectedForSingleProperty {
+		var newPropertyName = "AC Single Property";
+		var channelName = "Minium Demo Portal";
+		var siteName = "Minium Demo";
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Toggle Commerce On > Assign channels to the property") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Assign sites to the property") {
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Check that the number of channels and sites matches the selected ones") {
+			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
+				propertyName = "${assignedPropertyName}",
+				syncedChannelsNumber = "1",
+				syncedSitesNumber = "1");
+		}
+
+		task ("Create new property") {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyName}");
+		}
+
+		task ("Toggle Commerce On > Assign channels to the new property and check that channels already used in another property are not available") {
+			Check.checkToggleSwitch(
+				key_propertyName = "${newPropertyName}",
+				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
+
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${newPropertyName}");
+
+			ACDXPSettings.switchTab(tabName = "Channel");
+
+			ACDXPSettings.searchACItem(searchItem = "${channelName}");
+
+			AssertElementPresent(
+				key_selectedName = "${channelName}",
+				locator1 = "ACDXPSettings#CHECKBOX_NOT_AVAILABLE_TO_SELECT");
+		}
+
+		task ("Assign sites to the new property and check that sites already used in another property are not available") {
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${newPropertyName}");
+
+			ACDXPSettings.switchTab(tabName = "Sites");
+
+			ACDXPSettings.searchACItem(searchItem = "${siteName}");
+
+			AssertElementPresent(
+				key_selectedName = "${siteName}",
+				locator1 = "ACDXPSettings#CHECKBOX_NOT_AVAILABLE_TO_SELECT");
+		}
+	}
+
 }

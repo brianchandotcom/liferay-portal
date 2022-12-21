@@ -260,7 +260,7 @@ public class AnalyticsConfigurationRegistryImpl
 	}
 
 	private void _addAnalyticsMessages(
-		String action, List<? extends BaseModel> baseModels) {
+		String action, List<? extends BaseModel> baseModels, long companyId) {
 
 		if (baseModels.isEmpty()) {
 			return;
@@ -277,6 +277,8 @@ public class AnalyticsConfigurationRegistryImpl
 			"entityModelListener",
 			_entityModelListenerRegistry.getEntityModelListener(
 				baseModel.getModelClassName()));
+
+		message.put("principalName", _getAnalyticsAdminUserId(companyId));
 
 		message.setPayload(baseModels);
 
@@ -312,7 +314,7 @@ public class AnalyticsConfigurationRegistryImpl
 			new ServiceContext());
 	}
 
-	private void _addUsersAnalyticsMessages(List<User> users) {
+	private void _addUsersAnalyticsMessages(long companyId, List<User> users) {
 		List<AnalyticsUserImpl> analyticsUsers = new ArrayList<>(users.size());
 
 		List<Contact> contacts = new ArrayList<>(users.size());
@@ -348,9 +350,9 @@ public class AnalyticsConfigurationRegistryImpl
 			}
 		}
 
-		_addAnalyticsMessages("update", analyticsUsers);
+		_addAnalyticsMessages("update", analyticsUsers, companyId);
 
-		_addAnalyticsMessages("update", contacts);
+		_addAnalyticsMessages("update", contacts, companyId);
 	}
 
 	private void _deleteAnalyticsAdmin(long companyId) throws Exception {
@@ -408,6 +410,17 @@ public class AnalyticsConfigurationRegistryImpl
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private long _getAnalyticsAdminUserId(long companyId) {
+		User user = _userLocalService.fetchUserByScreenName(
+			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
+
+		if (user == null) {
+			return 0L;
+		}
+
+		return user.getUserId();
 	}
 
 	private boolean _hasConfiguration() {
@@ -527,8 +540,10 @@ public class AnalyticsConfigurationRegistryImpl
 			}
 			else {
 				_syncOrganizationUsers(
+					(Long)dictionary.get("companyId"),
 					(String[])dictionary.get("syncedOrganizationIds"));
 				_syncUserGroupUsers(
+					(Long)dictionary.get("companyId"),
 					(String[])dictionary.get("syncedUserGroupIds"));
 			}
 
@@ -536,6 +551,9 @@ public class AnalyticsConfigurationRegistryImpl
 
 			message.put("command", AnalyticsMessagesProcessorCommand.SEND);
 			message.put("companyId", dictionary.get("companyId"));
+			message.put(
+				"principalName",
+				_getAnalyticsAdminUserId((Long)dictionary.get("companyId")));
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Queueing send analytics messages message");
@@ -573,7 +591,7 @@ public class AnalyticsConfigurationRegistryImpl
 			List<User> users = _userLocalService.getCompanyUsers(
 				companyId, start, end);
 
-			_addUsersAnalyticsMessages(users);
+			_addUsersAnalyticsMessages(companyId, users);
 		}
 	}
 
@@ -625,7 +643,9 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 	}
 
-	private void _syncOrganizationUsers(String[] organizationIds) {
+	private void _syncOrganizationUsers(
+		long companyId, String[] organizationIds) {
+
 		for (String organizationId : organizationIds) {
 			int count = _userLocalService.getOrganizationUsersCount(
 				GetterUtil.getLong(organizationId));
@@ -645,7 +665,7 @@ public class AnalyticsConfigurationRegistryImpl
 					List<User> users = _userLocalService.getOrganizationUsers(
 						GetterUtil.getLong(organizationId), start, end);
 
-					_addUsersAnalyticsMessages(users);
+					_addUsersAnalyticsMessages(companyId, users);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -677,11 +697,11 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 
 		if (!expandoColumns.isEmpty()) {
-			_addAnalyticsMessages("add", expandoColumns);
+			_addAnalyticsMessages("add", expandoColumns, companyId);
 		}
 	}
 
-	private void _syncUserGroupUsers(String[] userGroupIds) {
+	private void _syncUserGroupUsers(long companyId, String[] userGroupIds) {
 		for (String userGroupId : userGroupIds) {
 			int count = _userLocalService.getUserGroupUsersCount(
 				GetterUtil.getLong(userGroupId));
@@ -700,7 +720,7 @@ public class AnalyticsConfigurationRegistryImpl
 				List<User> users = _userLocalService.getUserGroupUsers(
 					GetterUtil.getLong(userGroupId), start, end);
 
-				_addUsersAnalyticsMessages(users);
+				_addUsersAnalyticsMessages(companyId, users);
 			}
 		}
 	}

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -88,10 +89,17 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 			return;
 		}
 
-		String urlCurrent = ParamUtil.getString(
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(resourceRequest)),
-			"urlCurrent");
+		String itemId = ParamUtil.getString(resourceRequest, "itemId");
+
+		String urlCurrent = HttpComponentsUtil.removeParameter(
+			ParamUtil.getString(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(resourceRequest)),
+				"urlCurrent"),
+			"itemId");
+
+		urlCurrent = HttpComponentsUtil.addParameter(
+			urlCurrent, "itemId", itemId);
 
 		JSONObject jsonObject = JSONUtil.put(
 			"url",
@@ -107,7 +115,7 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 			).setParameter(
 				"collectionKey", collectionKey
 			).setParameter(
-				"itemId", ParamUtil.getString(resourceRequest, "itemId")
+				"itemId", itemId
 			).setParameter(
 				"plid",
 				() -> {

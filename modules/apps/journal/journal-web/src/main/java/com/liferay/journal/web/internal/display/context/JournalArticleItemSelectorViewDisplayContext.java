@@ -430,7 +430,9 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	}
 
 	public boolean isRefererArticle(JournalArticle journalArticle) {
-		if (_getRefererClassPK() == journalArticle.getResourcePrimKey()) {
+		if (_infoItemItemSelectorCriterion.getRefererClassPK() ==
+				journalArticle.getResourcePrimKey()) {
+
 			return true;
 		}
 
@@ -572,17 +574,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _orderByType;
 	}
 
-	private long _getRefererClassPK() {
-		if (_refererClassPK != null) {
-			return _refererClassPK;
-		}
-
-		_refererClassPK = ParamUtil.getLong(
-			_httpServletRequest, "refererClassPK");
-
-		return _refererClassPK;
-	}
-
 	private BreadcrumbEntry _getSiteBreadcrumb() throws Exception {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
@@ -722,7 +713,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 	private final PortletURL _portletURL;
-	private Long _refererClassPK;
 	private final boolean _search;
 	private Boolean _searchEverywhere;
 	private final ThemeDisplay _themeDisplay;

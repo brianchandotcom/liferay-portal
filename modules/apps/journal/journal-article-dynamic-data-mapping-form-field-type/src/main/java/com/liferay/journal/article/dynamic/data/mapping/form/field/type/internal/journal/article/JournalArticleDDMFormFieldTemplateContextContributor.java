@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -114,38 +113,17 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
 
+		infoItemItemSelectorCriterion.setRefererClassPK(
+			_getRefererClassPK(httpServletRequest));
 		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new JournalArticleItemSelectorReturnType());
 
-		return PortletURLBuilder.create(
+		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 				ddmFormFieldRenderingContext.getPortletNamespace() +
 					"selectJournalArticle",
-				infoItemItemSelectorCriterion)
-		).setParameter(
-			"refererClassPK",
-			() -> {
-				String articleId = ParamUtil.getString(
-					httpServletRequest, "articleId");
-
-				if (Validator.isNotNull(articleId)) {
-					return 0;
-				}
-
-				long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-
-				JournalArticle journalArticle =
-					_journalArticleLocalService.fetchArticle(
-						groupId, articleId);
-
-				if (journalArticle == null) {
-					return 0;
-				}
-
-				return journalArticle.getResourcePrimKey();
-			}
-		).buildString();
+				infoItemItemSelectorCriterion));
 	}
 
 	private String _getMessage(Locale defaultLocale, String value) {
@@ -190,6 +168,25 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private long _getRefererClassPK(HttpServletRequest httpServletRequest) {
+		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
+
+		if (Validator.isNotNull(articleId)) {
+			return 0;
+		}
+
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchArticle(groupId, articleId);
+
+		if (journalArticle == null) {
+			return 0;
+		}
+
+		return journalArticle.getResourcePrimKey();
 	}
 
 	private String _getValue(String value) {

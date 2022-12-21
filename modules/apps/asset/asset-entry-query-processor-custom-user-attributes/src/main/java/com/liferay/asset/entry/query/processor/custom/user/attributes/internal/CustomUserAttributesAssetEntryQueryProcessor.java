@@ -35,7 +35,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
@@ -92,6 +95,14 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 			try {
 				userCustomFieldValue = userCustomAttributes.getAttribute(
 					customUserAttributeName);
+
+				if (userCustomFieldValue instanceof Map) {
+					Locale locale = user.getLocale();
+
+					userCustomFieldValue =
+						(Serializable)((HashMap)userCustomFieldValue).get(
+							locale);
+				}
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

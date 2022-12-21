@@ -835,9 +835,7 @@ definition {
 		task ("Assert specific warning message is shown in Import popup") {
 			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings.");
 
-			AssertElementPresent(
-				key_warningInfo = "Fragment with key Title was ignored because it does not exist.",
-				locator1 = "Message#WARNING_INFO");
+			Alert.viewWarningSpecific(warningMessage = "Fragment with key Title was ignored because it does not exist.");
 		}
 
 		task ("Assert new fragment is not shown in content page template") {
@@ -1176,9 +1174,7 @@ definition {
 		task ("Assert specific warning message is shown in Import popup") {
 			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings.");
 
-			AssertElementPresent(
-				key_warningInfo = "Role with key Account Manager was ignored because it does not exist.",
-				locator1 = "Message#WARNING_INFO");
+			Alert.viewWarningSpecific(warningMessage = "Role with key Account Manager was ignored because it does not exist.");
 		}
 
 		task ("Assert Account Manager is not shown in permissions panel of RSS Publisher") {

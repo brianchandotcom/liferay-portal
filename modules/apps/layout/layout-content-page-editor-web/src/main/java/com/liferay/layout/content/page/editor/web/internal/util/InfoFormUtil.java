@@ -23,6 +23,7 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -94,7 +95,19 @@ public class InfoFormUtil {
 						JSONUtil.put(
 							"fields", fieldSetFieldsJSONArray
 						).put(
-							"label", infoFieldSet.getLabel(locale)
+							"label",
+							() -> {
+								InfoLocalizedValue<String>
+									labelInfoLocalizedValue =
+										infoFieldSet.
+											getLabelInfoLocalizedValue();
+
+								if (labelInfoLocalizedValue == null) {
+									return null;
+								}
+
+								return labelInfoLocalizedValue.getValue(locale);
+							}
 						).put(
 							"name", infoFieldSet.getName()
 						));

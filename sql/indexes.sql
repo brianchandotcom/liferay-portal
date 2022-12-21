@@ -277,6 +277,7 @@ create unique index IX_52D84D95 on Layout (uuid_[$COLUMN_LENGTH:75$], groupId, p
 
 create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
 create unique index IX_FD57097D on LayoutBranch (layoutSetBranchId, plid, name[$COLUMN_LENGTH:75$]);
+create index IX_72FC531D on LayoutBranch (plid);
 
 create index IX_1C55E26 on LayoutFriendlyURL (companyId, ctCollectionId);
 create index IX_7ED3F2A8 on LayoutFriendlyURL (groupId, ctCollectionId);

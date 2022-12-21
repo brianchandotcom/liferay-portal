@@ -126,6 +126,8 @@ public interface LayoutBranchLocalService
 	public LayoutBranch deleteLayoutBranch(long layoutBranchId)
 		throws PortalException;
 
+	public void deleteLayoutBranchesByPlid(long plid) throws PortalException;
+
 	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
 		throws PortalException;
 

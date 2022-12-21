@@ -135,6 +135,13 @@ public class LayoutBranchLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteLayoutBranchesByPlid(long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutBranchLocalService.deleteLayoutBranchesByPlid(plid);
+	}
+
+	@Override
 	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

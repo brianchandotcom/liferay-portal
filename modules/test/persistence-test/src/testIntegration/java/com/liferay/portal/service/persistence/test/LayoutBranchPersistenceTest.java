@@ -184,6 +184,13 @@ public class LayoutBranchPersistenceTest {
 	}
 
 	@Test
+	public void testCountByPlid() throws Exception {
+		_persistence.countByPlid(RandomTestUtil.nextLong());
+
+		_persistence.countByPlid(0L);
+	}
+
+	@Test
 	public void testCountByL_P() throws Exception {
 		_persistence.countByL_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

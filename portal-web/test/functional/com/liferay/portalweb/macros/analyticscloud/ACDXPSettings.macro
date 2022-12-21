@@ -357,6 +357,12 @@ definition {
 		}
 	}
 
+	macro viewAssignModalResultsMessage {
+		AssertTextEquals(
+			locator1 = "ACDXPSettings#ASSING_MODAL_RESULT_MESSAGE",
+			value1 = "${results}");
+	}
+
 	macro viewSyncedChannelsAndSitesNumber {
 		if (isSet(syncedChannelsNumber)) {
 			AssertTextEquals(

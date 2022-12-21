@@ -38,9 +38,11 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -154,22 +156,58 @@ public class LayoutActionProvider {
 				));
 		}
 
-		itemsJSONArray.put(
-			JSONUtil.put(
-				"href",
-				StringUtil.replace(
-					_getConfigureLayoutURLTemplate(),
-					StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE,
-					valuesMap)
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119382"))) {
+			itemsJSONArray.put(
+				JSONUtil.put("type", "divider")
 			).put(
-				"id", "configure"
+				JSONUtil.put(
+					"href", ""
+				).put(
+					"id", "copy-page"
+				).put(
+					"label",
+					_language.get(_themeDisplay.getLocale(), "copy-page")
+				).put(
+					"symbolLeft", "copy"
+				).put(
+					"type", "item"
+				)
 			).put(
-				"label", _language.get(_themeDisplay.getLocale(), "configure")
+				JSONUtil.put("type", "divider")
 			).put(
-				"symbolLeft", "cog"
-			).put(
-				"type", "item"
-			));
+				JSONUtil.put(
+					"href",
+					StringUtil.replace(
+						_getConfigureLayoutURLTemplate(),
+						StringPool.OPEN_CURLY_BRACE,
+						StringPool.CLOSE_CURLY_BRACE, valuesMap)
+				).put(
+					"id", "configure"
+				).put(
+					"label",
+					_language.get(_themeDisplay.getLocale(), "configure")
+				).put(
+					"symbolLeft", "cog"
+				).put(
+					"type", "item"
+				)
+			);
+		}
+		else {
+			itemsJSONArray.put(
+				JSONUtil.put(
+					"href", ""
+				).put(
+					"id", "configure"
+				).put(
+					"label",
+					_language.get(_themeDisplay.getLocale(), "configure")
+				).put(
+					"symbolLeft", "cog"
+				).put(
+					"type", "item"
+				));
+		}
 
 		if (layout.isTypeCollection() &&
 			Validator.isNotNull(_getViewCollectionItemsURL())) {
@@ -202,6 +240,76 @@ public class LayoutActionProvider {
 				).put(
 					"type", "item"
 				));
+		}
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119382"))) {
+			itemsJSONArray.put(
+				JSONUtil.put(
+					"href", ""
+				).put(
+					"id", "permissions"
+				).put(
+					"label",
+					_language.get(_themeDisplay.getLocale(), "permissions")
+				).put(
+					"symbolLeft", "password-policies"
+				).put(
+					"type", "item"
+				)
+			).put(
+				JSONUtil.put("type", "divider")
+			).put(
+				JSONUtil.put(
+					"data",
+					HashMapBuilder.put(
+						"message",
+						() -> {
+							String messageKey =
+								"are-you-sure-you-want-to-delete-the-page-x.-" +
+									"it-will-be-removed-immediately";
+
+							if (layout.hasChildren() &&
+								_hasScopeGroup(layout)) {
+
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-serves-as-a-scope-for-",
+									"content-and-also-contains-child-pages");
+							}
+							else if (layout.hasChildren()) {
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-contains-child-pages-that-",
+									"will-also-be-removed");
+							}
+							else if (_hasScopeGroup(layout)) {
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-serves-as-a-scope-for-",
+									"content");
+							}
+
+							return _language.format(
+								_httpServletRequest, messageKey,
+								HtmlUtil.escape(
+									layout.getName(_themeDisplay.getLocale())));
+						}
+					).put(
+						"modalTitle",
+						_language.get(_themeDisplay.getLocale(), "delete-page")
+					).put(
+						"url", "url"
+					).build()
+				).put(
+					"id", "delete"
+				).put(
+					"label", _language.get(_themeDisplay.getLocale(), "delete")
+				).put(
+					"symbolLeft", "trash"
+				).put(
+					"type", "item"
+				)
+			);
 		}
 
 		return JSONUtil.putAll(
@@ -430,6 +538,20 @@ public class LayoutActionProvider {
 			"collectionPK={collectionPK}&",
 			PortalUtil.getPortletNamespace(AssetListPortletKeys.ASSET_LIST),
 			"collectionType={collectionType}");
+	}
+
+	private boolean _hasScopeGroup(Layout layout) throws Exception {
+		if (layout.hasScopeGroup()) {
+			return true;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return false;
+		}
+
+		return draftLayout.hasScopeGroup();
 	}
 
 	private boolean _isPageHierarchyOption(String pageTypeOption) {

@@ -29,7 +29,7 @@ public interface HighlightFieldBuilder {
 
 	public HighlightField build();
 
-	public HighlightFieldBuilder fragments(List<String> fragmentStream);
+	public HighlightFieldBuilder fragments(List<String> fragments);
 
 	public HighlightFieldBuilder name(String name);
 

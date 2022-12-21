@@ -77,15 +77,10 @@ public class XMLIndentationCheck extends BaseFileCheck {
 				break;
 			}
 
-			String s = content.substring(x + 1);
+			String s = StringUtil.trimLeading(content.substring(x + 1), '\n');
 
-			if (Validator.isNull(s) || StringUtil.startsWith(s, "\n")) {
-				continue;
-			}
-
-			s = StringUtil.trimLeading(s);
-
-			if (!s.startsWith("<") || s.startsWith("</") ||
+			if (Validator.isNull(s) || StringUtil.startsWith(s, "\n") ||
+				!s.startsWith("<") || s.startsWith("</") ||
 				s.startsWith("<![CDATA[") ||
 				XMLSourceUtil.isInsideCDATAMarkup(content, x)) {
 

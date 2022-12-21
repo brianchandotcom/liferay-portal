@@ -12,6 +12,25 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 }
 
+deploy {
+	doFirst {
+		delete liferay.deployDir
+
+		copy {
+			from (configurations.compile)
+			into liferay.deployDir
+		}
+	}
+}
+
+liferay {
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.lang.sanitizer/lib"
+}
+
+processResources {
+	dependsOn processSanitizerConfiguration
+}
+
 processSanitizerConfiguration {
 	from {
 		File antiSamyJarFile = configurations.compile.find {
@@ -36,10 +55,6 @@ processSanitizerConfiguration {
 	rename {
 		sanitizerConfigurationFile.name
 	}
-}
-
-processResources {
-	dependsOn processSanitizerConfiguration
 }
 
 private String _filterSanitizer(String line) {
@@ -105,19 +120,4 @@ private String _filterSanitizer(String line) {
 	}
 
 	return line
-}
-
-deploy {
-	doFirst {
-		delete liferay.deployDir
-
-		copy {
-			from (configurations.compile)
-			into liferay.deployDir
-		}
-	}
-}
-
-liferay {
-	deployDir = "../../../tools/sdk/dependencies/com.liferay.lang.sanitizer/lib"
 }

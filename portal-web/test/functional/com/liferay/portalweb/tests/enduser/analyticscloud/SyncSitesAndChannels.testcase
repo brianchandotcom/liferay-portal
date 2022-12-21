@@ -224,4 +224,61 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12578 | Test Summary: Check that the channel list cannot be edited if toggle is disabled"
+	@priority = "5"
+	test CheckChannelListCannotEditedIfToggleDisabled {
+		var channelNameList = "Minium Demo Portal,AC Channel Disabled";
+
+		task ("Create a new channel") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "AC Channel Disabled",
+				channelType = "site",
+				currencyCode = "USD",
+				externalReferenceCode = "101");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Toggle Commerce On > Assign channels to the property") {
+			ACDXPSettings.syncChannel(
+				channelName = "Minium Demo Portal",
+				propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Assign sites to the property") {
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "Minium Demo");
+		}
+
+		task ("Check that the number of channels and sites matches the selected ones") {
+			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
+				propertyName = "${assignedPropertyName}",
+				syncedChannelsNumber = "1",
+				syncedSitesNumber = "1");
+		}
+
+		task ("Toggle Commerce Off > Try to assign channels to the property") {
+			Uncheck.uncheckToggleSwitch(
+				key_propertyName = "${assignedPropertyName}",
+				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
+
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.switchTab(tabName = "Channel");
+		}
+
+		task ("Check that the channel list is disabled for editing") {
+			for (var channelName : list "${channelNameList}") {
+				AssertElementPresent(
+					key_selectedName = "${channelName}",
+					locator1 = "ACDXPSettings#CHECKBOX_NOT_AVAILABLE_TO_SELECT");
+			}
+		}
+	}
+
 }

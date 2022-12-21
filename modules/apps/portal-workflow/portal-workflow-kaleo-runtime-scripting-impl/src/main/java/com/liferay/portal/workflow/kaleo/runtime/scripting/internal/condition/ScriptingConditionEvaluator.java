@@ -32,15 +32,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = {
-		"scripting.language=beanshell", "scripting.language=groovy",
-		"scripting.language=javascript", "scripting.language=python",
-		"scripting.language=ruby"
-	},
-	service = ConditionEvaluator.class
-)
+@Component(service = ConditionEvaluator.class)
 public class ScriptingConditionEvaluator implements ConditionEvaluator {
+
+	@Override
+	public boolean canEvaluate(String scriptingLanguage) {
+		return _supportedScriptingLanguages.contains(scriptingLanguage);
+	}
 
 	@Override
 	public String evaluate(
@@ -67,6 +65,10 @@ public class ScriptingConditionEvaluator implements ConditionEvaluator {
 	private static final Set<String> _outputNames = new HashSet<>(
 		Arrays.asList(
 			_RETURN_VALUE, WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
+	private static final Set<String> _supportedScriptingLanguages =
+		new HashSet<>(
+			Arrays.asList(
+				"beanshell", "groovy", "javascript", "python", "ruby"));
 
 	@Reference
 	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;

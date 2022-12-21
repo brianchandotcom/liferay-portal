@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.hits;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -37,7 +38,6 @@ import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.TotalHits;
 
 import org.elasticsearch.common.document.DocumentField;
-import org.elasticsearch.common.text.Text;
 
 /**
  * @author Michael C. Han
@@ -162,15 +162,11 @@ public class SearchHitsTranslator {
 		org.elasticsearch.search.fetch.subphase.highlight.HighlightField
 			elasticsearchHighlightField) {
 
-		List<String> fragments = new ArrayList<>();
-
-		for (Text text : elasticsearchHighlightField.getFragments()) {
-			fragments.add(text.string());
-		}
-
 		return _highlightFieldBuilderFactory.builder(
 		).fragments(
-			fragments
+			TransformUtil.transformToList(
+				elasticsearchHighlightField.getFragments(),
+				text -> text.toString())
 		).name(
 			elasticsearchHighlightField.getName()
 		).build();

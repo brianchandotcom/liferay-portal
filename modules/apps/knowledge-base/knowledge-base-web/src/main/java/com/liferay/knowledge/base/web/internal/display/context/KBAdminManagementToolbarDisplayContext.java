@@ -478,9 +478,12 @@ public class KBAdminManagementToolbarDisplayContext {
 					WorkflowConstants.STATUS_ANY));
 		}
 
-		_searchContainer.setRowChecker(
-			new EntriesChecker(
-				_liferayPortletRequest, _liferayPortletResponse));
+		EntriesChecker entriesChecker = new EntriesChecker(
+			_liferayPortletRequest, _liferayPortletResponse);
+
+		entriesChecker.setRememberCheckBoxState(false);
+
+		_searchContainer.setRowChecker(entriesChecker);
 
 		return _searchContainer;
 	}

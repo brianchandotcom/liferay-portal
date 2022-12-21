@@ -340,4 +340,41 @@ definition {
 			value1 = "/test-page");
 	}
 
+	@description = "Widgets pages run into conflicts in a publication"
+	test WidgetPageChangesCanBeAutomaticallyResolved {
+		JSONGroup.addGroup(groupName = "Test Site");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Widget Page Name");
+
+		JSONPublications.addPublication(publicationName = "Test Publication");
+
+		Publications.selectPublication(publicationName = "Test Publication");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Widget Page Name",
+			widgetName = "Asset Publisher");
+
+		Publications.selectPublication(publicationName = "Test Publication");
+
+		Publications.workOnProduction();
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Widget Page Name",
+			widgetName = "Asset Publisher");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Test Publication");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+	}
+
 }

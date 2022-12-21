@@ -315,6 +315,12 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<ObjectRelationship> getAllObjectRelationships(
+		long objectDefinitionId) {
+
+		return getService().getAllObjectRelationships(objectDefinitionId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

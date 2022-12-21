@@ -360,6 +360,14 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.model.ObjectRelationship>
+		getAllObjectRelationships(long objectDefinitionId) {
+
+		return _objectRelationshipLocalService.getAllObjectRelationships(
+			objectDefinitionId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

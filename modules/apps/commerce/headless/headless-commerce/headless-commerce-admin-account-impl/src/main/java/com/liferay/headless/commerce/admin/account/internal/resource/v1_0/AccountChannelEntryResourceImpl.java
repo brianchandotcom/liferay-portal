@@ -47,8 +47,6 @@ import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelEntry;
 import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountChannelEntryDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelEntryResource;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -703,14 +701,7 @@ public class AccountChannelEntryResourceImpl
 		if ((accountChannelEntry.getClassPK() != null) ||
 			(accountChannelEntry.getClassExternalReferenceCode() != null)) {
 
-			try {
-				classPK = _getClassPK(accountChannelEntry, type);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
+			classPK = _getClassPK(accountChannelEntry, type);
 		}
 
 		_checkPermission(_userService.getUserById(classPK));
@@ -1093,6 +1084,14 @@ public class AccountChannelEntryResourceImpl
 			return commerceDiscount.getCommerceDiscountId();
 		}
 		else if (type == CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT) {
+			CommerceChannel commerceChannel =
+				_commerceChannelService.fetchCommerceChannel(
+					GetterUtil.getLong(accountChannelEntry.getChannelId()));
+
+			if (commerceChannel == null) {
+				throw new NoSuchChannelException();
+			}
+
 			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 				_commercePaymentMethodGroupRelService.
 					fetchCommercePaymentMethodGroupRel(
@@ -1100,14 +1099,6 @@ public class AccountChannelEntryResourceImpl
 
 			if ((commercePaymentMethodGroupRel == null) ||
 				!commercePaymentMethodGroupRel.isActive()) {
-
-				CommerceChannel commerceChannel =
-					_commerceChannelService.fetchCommerceChannel(
-						GetterUtil.getLong(accountChannelEntry.getChannelId()));
-
-				if (commerceChannel == null) {
-					throw new NoSuchChannelException();
-				}
 
 				commercePaymentMethodGroupRel =
 					_commercePaymentMethodGroupRelService.
@@ -1122,6 +1113,11 @@ public class AccountChannelEntryResourceImpl
 
 					throw new NoSuchPaymentMethodGroupRelException();
 				}
+			}
+			else if (commercePaymentMethodGroupRel.getGroupId() !=
+						commerceChannel.getGroupId()) {
+
+				throw new NoSuchPaymentMethodGroupRelException();
 			}
 
 			return commercePaymentMethodGroupRel.
@@ -1295,16 +1291,8 @@ public class AccountChannelEntryResourceImpl
 			commerceChannelAccountEntryRel.getCommerceChannelId();
 
 		if (accountChannelEntry.getChannelId() != null) {
-			try {
-				commerceChannelId = _getCommerceChannelId(
-					accountChannelEntry,
-					commerceChannelAccountEntryRel.getType());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
+			commerceChannelId = _getCommerceChannelId(
+				accountChannelEntry, commerceChannelAccountEntryRel.getType());
 		}
 
 		accountChannelEntry.setChannelId(commerceChannelId);
@@ -1314,14 +1302,7 @@ public class AccountChannelEntryResourceImpl
 		if ((accountChannelEntry.getClassPK() != null) ||
 			(accountChannelEntry.getClassExternalReferenceCode() != null)) {
 
-			try {
-				classPK = _getClassPK(accountChannelEntry, type);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
+			classPK = _getClassPK(accountChannelEntry, type);
 		}
 
 		return _toAccountChannelEntry(
@@ -1405,9 +1386,6 @@ public class AccountChannelEntryResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountChannelEntryResourceImpl.class);
 
 	@Reference
 	private AccountChannelEntryDTOConverter _accountChannelEntryDTOConverter;

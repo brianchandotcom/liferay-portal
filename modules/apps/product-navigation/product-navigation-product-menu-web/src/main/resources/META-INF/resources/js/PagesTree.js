@@ -287,7 +287,15 @@ function normalizeActions(actions, namespace) {
 									onClick: ({processClose}) => {
 										processClose();
 
-										navigate(item.data.url);
+										fetch(item.data.url, {
+											method: 'post',
+										})
+											.then((response) => {
+												if (response.redirected) {
+													navigate(response.url);
+												}
+											})
+											.catch(() => openErrorToast());
 									},
 								},
 							],

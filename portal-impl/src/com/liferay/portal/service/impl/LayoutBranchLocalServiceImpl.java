@@ -147,6 +147,16 @@ public class LayoutBranchLocalServiceImpl
 	}
 
 	@Override
+	public void deleteLayoutBranchesByPlid(long plid) throws PortalException {
+		List<LayoutBranch> layoutBranches = layoutBranchPersistence.findByPlid(
+			plid);
+
+		for (LayoutBranch layoutBranch : layoutBranches) {
+			deleteLayoutBranch(layoutBranch.getLayoutBranchId());
+		}
+	}
+
+	@Override
 	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
 		throws PortalException {
 

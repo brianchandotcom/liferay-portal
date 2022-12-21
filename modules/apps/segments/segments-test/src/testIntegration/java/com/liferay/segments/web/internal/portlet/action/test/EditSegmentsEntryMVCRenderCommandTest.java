@@ -108,82 +108,36 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		for (Object object : contributorsJSONArray) {
 			JSONObject jsonObject = (JSONObject)object;
 
-			JSONObject initialQueryJSONObject = jsonObject.getJSONObject(
-				"initialQuery");
-
 			Assert.assertNull(
-				"initialQuery is not null", initialQueryJSONObject);
+				"initialQuery is not null",
+				jsonObject.getJSONObject("initialQuery"));
 		}
 
-		String defaultLanguageId = (String)props.get("defaultLanguageId");
-
-		Assert.assertEquals(LocaleUtil.US.toString(), defaultLanguageId);
-
-		long groupId = (long)props.get("groupId");
-
-		Assert.assertEquals(_group.getGroupId(), groupId);
-
-		boolean hasUpdatePermission = (boolean)props.get("hasUpdatePermission");
-
-		Assert.assertTrue(hasUpdatePermission);
-
-		int initialMembersCount = (int)props.get("initialMembersCount");
-
-		Assert.assertEquals(0, initialMembersCount);
-
-		boolean initialSegmentActive = (boolean)props.get(
-			"initialSegmentActive");
-
-		Assert.assertFalse(initialSegmentActive);
-
-		JSONObject initialSegmentNameJSONObject = (JSONObject)props.get(
-			"initialSegmentName");
-
-		Assert.assertNull(initialSegmentNameJSONObject);
-
-		boolean segmentationEnabled = (boolean)props.get(
-			"isSegmentationEnabled");
-
-		Assert.assertTrue(segmentationEnabled);
-
-		String locale = (String)props.get("locale");
-
-		Assert.assertEquals(LocaleUtil.US.toString(), locale);
-
-		String previewMembersURL = (String)props.get("previewMembersURL");
-
-		Assert.assertNotNull("previewMembersURL is null", previewMembersURL);
-
-		String redirect = (String)props.get("redirect");
-
-		Assert.assertNotNull("redirect is null", redirect);
-
-		String requestMembersCountURL = (String)props.get(
-			"requestMembersCountURL");
-
+		Assert.assertEquals(
+			LocaleUtil.US.toString(), props.get("defaultLanguageId"));
+		Assert.assertNotNull(props.get("formId"));
+		Assert.assertEquals(_group.getGroupId(), (long)props.get("groupId"));
+		Assert.assertTrue((boolean)props.get("hasUpdatePermission"));
+		Assert.assertEquals(0, (int)props.get("initialMembersCount"));
+		Assert.assertFalse((boolean)props.get("initialSegmentActive"));
+		Assert.assertNull(props.get("initialSegmentName"));
+		Assert.assertTrue((boolean)props.get("isSegmentationEnabled"));
+		Assert.assertEquals(LocaleUtil.US.toString(), props.get("locale"));
 		Assert.assertNotNull(
-			"requestMembersCountURL is null", requestMembersCountURL);
-
-		String scopeName = (String)props.get("scopeName");
-
-		Assert.assertNotNull("scopeName is null", scopeName);
-
-		Assert.assertEquals(_group.getDescriptiveName(), scopeName);
-
-		String segmentsConfigurationURL = (String)props.get(
-			"segmentsConfigurationURL");
-
+			"previewMembersURL is null", props.get("previewMembersURL"));
+		Assert.assertNotNull("redirect is null", props.get("redirect"));
 		Assert.assertNotNull(
-			"segmentsConfigurationURL is null", segmentsConfigurationURL);
-
-		boolean showInEditMode = (boolean)props.get("showInEditMode");
-
-		Assert.assertTrue(showInEditMode);
-
-		String siteItemSelectorURL = (String)props.get("siteItemSelectorURL");
-
+			"requestMembersCountURL is null",
+			props.get("requestMembersCountURL"));
+		Assert.assertNotNull("scopeName is null", props.get("scopeName"));
+		Assert.assertEquals(
+			_group.getDescriptiveName(), props.get("scopeName"));
 		Assert.assertNotNull(
-			"siteItemSelectorURL is null", siteItemSelectorURL);
+			"segmentsConfigurationURL is null",
+			props.get("segmentsConfigurationURL"));
+		Assert.assertTrue((boolean)props.get("showInEditMode"));
+		Assert.assertNotNull(
+			"siteItemSelectorURL is null", props.get("siteItemSelectorURL"));
 	}
 
 	@Test
@@ -253,19 +207,10 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		}
 
 		Assert.assertTrue(findUserContributor);
-
-		String defaultLanguageId = (String)props.get("defaultLanguageId");
-
-		Assert.assertEquals(LocaleUtil.US.toString(), defaultLanguageId);
-
-		int initialMembersCount = (int)props.get("initialMembersCount");
-
-		Assert.assertEquals(1, initialMembersCount);
-
-		boolean initialSegmentActive = (boolean)props.get(
-			"initialSegmentActive");
-
-		Assert.assertTrue(initialSegmentActive);
+		Assert.assertEquals(
+			LocaleUtil.US.toString(), props.get("defaultLanguageId"));
+		Assert.assertEquals(1, (int)props.get("initialMembersCount"));
+		Assert.assertTrue((boolean)props.get("initialSegmentActive"));
 
 		JSONObject initialSegmentNameJSONObject = (JSONObject)props.get(
 			"initialSegmentName");
@@ -274,10 +219,9 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 			segmentsEntry.getName(LocaleUtil.US),
 			initialSegmentNameJSONObject.get(LocaleUtil.US.toString()));
 
-		String siteItemSelectorURL = (String)props.get("siteItemSelectorURL");
-
 		Assert.assertNull(
-			"siteItemSelectorURL is not null", siteItemSelectorURL);
+			"siteItemSelectorURL is not null",
+			props.get("siteItemSelectorURL"));
 	}
 
 	private SegmentsEntry _addSegmentEntry(String filterString)

@@ -181,28 +181,23 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 			JSONObject jsonObject = (JSONObject)object;
 
 			if (Objects.equals(jsonObject.getString("propertyKey"), "user")) {
-				JSONObject initialQueryJSONObject = jsonObject.getJSONObject(
-					"initialQuery");
-
-				Assert.assertEquals(
-					"and", initialQueryJSONObject.getString("conjunctionName"));
-				Assert.assertEquals(
-					"group_0", initialQueryJSONObject.getString("groupId"));
-
-				JSONArray itemsJSONArray = initialQueryJSONObject.getJSONArray(
-					"items");
-
-				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
-
 				Assert.assertEquals(
 					JSONUtil.put(
-						"operatorName", "eq"
+						"conjunctionName", "and"
 					).put(
-						"propertyName", "firstName"
+						"groupId", "group_0"
 					).put(
-						"value", "Test"
+						"items",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"operatorName", "eq"
+							).put(
+								"propertyName", "firstName"
+							).put(
+								"value", "Test"
+							))
 					).toString(),
-					itemJSONObject.toString());
+					String.valueOf(jsonObject.getJSONObject("initialQuery")));
 
 				findUserContributor = true;
 

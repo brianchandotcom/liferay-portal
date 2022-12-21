@@ -126,10 +126,10 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 		).setParameter(
 			"refererClassPK",
 			() -> {
-				long articleId = ParamUtil.getLong(
+				String articleId = ParamUtil.getString(
 					httpServletRequest, "articleId");
 
-				if (articleId <= 0) {
+				if (Validator.isNotNull(articleId)) {
 					return 0;
 				}
 
@@ -137,7 +137,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 
 				JournalArticle journalArticle =
 					_journalArticleLocalService.fetchArticle(
-						groupId, String.valueOf(articleId));
+						groupId, articleId);
 
 				return journalArticle.getResourcePrimKey();
 			}

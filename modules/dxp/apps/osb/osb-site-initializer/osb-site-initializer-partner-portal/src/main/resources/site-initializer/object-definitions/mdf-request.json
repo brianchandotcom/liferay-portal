@@ -176,14 +176,23 @@
 			"type": "String"
 		},
 		{
-			"indexed": true,
+			"DBType": "String",
+			"businessType": "Picklist",
 			"defaultValue": "pendingMarketingReview",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request Status$]",
+			"name": "mdfRequestStatus",
 			"objectFieldSettings": [
 				{
 					"name": "stateFlow",
 					"value": {
 						"objectStates": [
 							{
+								"key": "pendingMarketingReview",
 								"objectStateTransitions": [
 									{
 										"key": "approved"
@@ -203,10 +212,10 @@
 									{
 										"key": "canceled"
 									}
-								],
-								"key": "pendingMarketingReview"
+								]
 							},
 							{
+								"key": "approved",
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
@@ -226,10 +235,10 @@
 									{
 										"key": "canceled"
 									}
-								],
-								"key": "approved"
+								]
 							},
 							{
+								"key": "marketingDirectorReview",
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
@@ -249,10 +258,10 @@
 									{
 										"key": "canceled"
 									}
-								],
-								"key": "marketingDirectorReview"
+								]
 							},
 							{
+								"key": "moreInfoRequested",
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
@@ -272,10 +281,10 @@
 									{
 										"key": "canceled"
 									}
-								],
-								"key": "moreInfoRequested"
+								]
 							},
 							{
+								"key": "expired",
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
@@ -295,10 +304,10 @@
 									{
 										"key": "canceled"
 									}
-								],
-								"key": "expired"
+								]
 							},
 							{
+								"key": "rejected",
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
@@ -318,10 +327,10 @@
 									{
 										"key": "canceled"
 									}
-								],
-								"key": "rejected"
+								]
 							},
 							{
+								"key": "canceled",
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
@@ -341,32 +350,24 @@
 									{
 										"key": "rejected"
 									}
-								],
-								"key": "canceled"
+								]
 							},
 							{
+								"key": "draft",
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
 									}
-								],
-								"key": "draft"
+								]
 							}
 						]
 					}
 				}
 			],
-			"DBType": "String",
-			"label": {
-				"en_US": "MDF Request Status"
-			},
-			"type": "String",
 			"required": true,
-			"indexedAsKeyword": false,
-			"system": false,
-			"name": "mdfRequestStatus",
 			"state": true,
-			"businessType": "Picklist"
+			"system": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

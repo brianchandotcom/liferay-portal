@@ -43,15 +43,17 @@ public class InfoFormUtil {
 	public static JSONObject getConfigurationJSONObject(
 		InfoForm infoForm, Locale locale) {
 
+		if (infoForm == null) {
+			return JSONUtil.put(
+				"fieldSets",
+				JSONUtil.put(
+					JSONUtil.put("fields", JSONFactoryUtil.createJSONArray())));
+		}
+
 		JSONArray defaultFieldSetFieldsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		JSONArray fieldSetsJSONArray = JSONUtil.put(
-			JSONUtil.put("fields", defaultFieldSetFieldsJSONArray));
-
-		if (infoForm == null) {
-			return JSONUtil.put("fieldSets", fieldSetsJSONArray);
-		}
+		JSONArray fieldSetsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				infoForm.getInfoFieldSetEntries()) {
@@ -98,6 +100,11 @@ public class InfoFormUtil {
 						));
 				}
 			}
+		}
+
+		if (!JSONUtil.isEmpty(defaultFieldSetFieldsJSONArray)) {
+			fieldSetsJSONArray.put(
+				JSONUtil.put("fields", defaultFieldSetFieldsJSONArray));
 		}
 
 		return JSONUtil.put("fieldSets", fieldSetsJSONArray);

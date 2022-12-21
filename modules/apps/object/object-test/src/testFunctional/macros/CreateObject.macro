@@ -45,29 +45,17 @@ definition {
 	}
 
 	macro assertCanCollapseAndExpandEntryField {
-		WaitForSPARefresh();
+		Panel.collapsePanel(panel = "${blockName}");
 
-		if (IsElementPresent(key_closedOrOpen = "open", locator1 = "CreateObject#VIEW_COLLAPSE_ICON")) {
-			Click(locator1 = "CreateObject#COLLAPSE_EXPAND_OBJECT_PORTLET_ENTRY_FIELD");
+		AssertNotVisible(
+			key_entryLabel = "Custom Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-			WaitForSPARefresh();
+		Panel.expandPanel(panel = "${blockName}");
 
-			AssertNotVisible(
-				key_entryLabel = "Custom Field",
-				locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
-		}
-
-		WaitForSPARefresh();
-
-		if (IsElementPresent(key_closedOrOpen = "closed", locator1 = "CreateObject#VIEW_COLLAPSE_ICON")) {
-			Click(locator1 = "CreateObject#COLLAPSE_EXPAND_OBJECT_PORTLET_ENTRY_FIELD");
-
-			WaitForSPARefresh();
-
-			AssertVisible(
-				key_entryLabel = "Custom Field",
-				locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
-		}
+		AssertVisible(
+			key_entryLabel = "Custom Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
 	macro assertCannotAddRelationshipTabFirst {

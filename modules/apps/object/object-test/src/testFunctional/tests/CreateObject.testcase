@@ -857,7 +857,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		CreateObject.assertCanCollapseAndExpandEntryField();
+		CreateObject.assertCanCollapseAndExpandEntryField(blockName = "Block 1");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"

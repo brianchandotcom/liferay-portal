@@ -184,15 +184,15 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
-		List<TermCollector> termCollectors = _getTermCollectors(
-			new String[] {"alpha", "delta", "bravo", "charlie"},
-			new int[] {4, 5, 5, 6});
+		_setUpMultipleTermCollectors(
+			_getTermCollectors(
+				new String[] {"alpha", "delta", "bravo", "charlie"},
+				new int[] {4, 5, 5, 6}));
 
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
-			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-			"count:asc");
+		CustomFacetDisplayContext customFacetDisplayContext =
+			_createDisplayContext(
+				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
+				"count:asc");
 
 		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
@@ -203,15 +203,15 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
-		List<TermCollector> termCollectors = _getTermCollectors(
-			new String[] {"alpha", "delta", "bravo", "charlie"},
-			new int[] {4, 5, 5, 6});
+		_setUpMultipleTermCollectors(
+			_getTermCollectors(
+				new String[] {"alpha", "delta", "bravo", "charlie"},
+				new int[] {4, 5, 5, 6}));
 
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
-			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-			"count:desc");
+		CustomFacetDisplayContext customFacetDisplayContext =
+			_createDisplayContext(
+				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
+				"count:desc");
 
 		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
@@ -222,14 +222,13 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		List<TermCollector> termCollectors = _getTermCollectors(
-			"bravo", "alpha", "bravo", "charlie");
+		_setUpMultipleTermCollectors(
+			_getTermCollectors("bravo", "alpha", "bravo", "charlie"));
 
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
-			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-			"key:asc");
+		CustomFacetDisplayContext customFacetDisplayContext =
+			_createDisplayContext(
+				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
+				"key:asc");
 
 		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
@@ -240,14 +239,13 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		List<TermCollector> termCollectors = _getTermCollectors(
-			"bravo", "alpha", "bravo", "charlie");
+		_setUpMultipleTermCollectors(
+			_getTermCollectors("bravo", "alpha", "bravo", "charlie"));
 
-		_setUpMultipleTermCollectors(termCollectors);
-
-		CustomFacetDisplayContext customFacetDisplayContext = _createDisplayContext(
-			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
-			"key:desc");
+		CustomFacetDisplayContext customFacetDisplayContext =
+			_createDisplayContext(
+				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
+				"key:desc");
 
 		String nameFrequencyString = _buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());

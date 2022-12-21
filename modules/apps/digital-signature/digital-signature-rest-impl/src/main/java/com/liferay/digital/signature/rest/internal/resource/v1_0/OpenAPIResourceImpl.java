@@ -100,6 +100,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(DSEnvelopeResourceImpl.class);
 
+			add(DSRecipientViewDefinitionResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

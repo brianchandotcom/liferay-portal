@@ -43,18 +43,48 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DSRecipient")
+@GraphQLName("DSRecipientViewDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DSRecipient")
-public class DSRecipient implements Serializable {
+@XmlRootElement(name = "DSRecipientViewDefinition")
+public class DSRecipientViewDefinition implements Serializable {
 
-	public static DSRecipient toDTO(String json) {
-		return ObjectMapperUtil.readValue(DSRecipient.class, json);
+	public static DSRecipientViewDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			DSRecipientViewDefinition.class, json);
 	}
 
-	public static DSRecipient unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(DSRecipient.class, json);
+	public static DSRecipientViewDefinition unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			DSRecipientViewDefinition.class, json);
 	}
+
+	@Schema
+	public String getAuthenticationMethod() {
+		return authenticationMethod;
+	}
+
+	public void setAuthenticationMethod(String authenticationMethod) {
+		this.authenticationMethod = authenticationMethod;
+	}
+
+	@JsonIgnore
+	public void setAuthenticationMethod(
+		UnsafeSupplier<String, Exception> authenticationMethodUnsafeSupplier) {
+
+		try {
+			authenticationMethod = authenticationMethodUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String authenticationMethod;
 
 	@Schema
 	public String getClientUserId() {
@@ -85,20 +115,20 @@ public class DSRecipient implements Serializable {
 	protected String clientUserId;
 
 	@Schema
-	public String getEmailAddress() {
-		return emailAddress;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@JsonIgnore
-	public void setEmailAddress(
-		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
+	public void setEmail(
+		UnsafeSupplier<String, Exception> emailUnsafeSupplier) {
 
 		try {
-			emailAddress = emailAddressUnsafeSupplier.get();
+			email = emailUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -110,21 +140,23 @@ public class DSRecipient implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String emailAddress;
+	protected String email;
 
 	@Schema
-	public String getId() {
-		return id;
+	public String getReturnUrl() {
+		return returnUrl;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setReturnUrl(String returnUrl) {
+		this.returnUrl = returnUrl;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+	public void setReturnUrl(
+		UnsafeSupplier<String, Exception> returnUrlUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			returnUrl = returnUrlUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -136,21 +168,23 @@ public class DSRecipient implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String id;
+	protected String returnUrl;
 
 	@Schema
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setUserName(
+		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			userName = userNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -162,35 +196,7 @@ public class DSRecipient implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
-	@Schema
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
-
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String status;
+	protected String userName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -198,13 +204,14 @@ public class DSRecipient implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof DSRecipient)) {
+		if (!(object instanceof DSRecipientViewDefinition)) {
 			return false;
 		}
 
-		DSRecipient dsRecipient = (DSRecipient)object;
+		DSRecipientViewDefinition dsRecipientViewDefinition =
+			(DSRecipientViewDefinition)object;
 
-		return Objects.equals(toString(), dsRecipient.toString());
+		return Objects.equals(toString(), dsRecipientViewDefinition.toString());
 	}
 
 	@Override
@@ -218,6 +225,20 @@ public class DSRecipient implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (authenticationMethod != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"authenticationMethod\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(authenticationMethod));
+
+			sb.append("\"");
+		}
 
 		if (clientUserId != null) {
 			if (sb.length() > 1) {
@@ -233,58 +254,44 @@ public class DSRecipient implements Serializable {
 			sb.append("\"");
 		}
 
-		if (emailAddress != null) {
+		if (email != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"emailAddress\": ");
+			sb.append("\"email\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(emailAddress));
+			sb.append(_escape(email));
 
 			sb.append("\"");
 		}
 
-		if (id != null) {
+		if (returnUrl != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"returnUrl\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(id));
+			sb.append(_escape(returnUrl));
 
 			sb.append("\"");
 		}
 
-		if (name != null) {
+		if (userName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"userName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
-
-			sb.append("\"");
-		}
-
-		if (status != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"status\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(status));
+			sb.append(_escape(userName));
 
 			sb.append("\"");
 		}
@@ -296,7 +303,7 @@ public class DSRecipient implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSRecipient",
+		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

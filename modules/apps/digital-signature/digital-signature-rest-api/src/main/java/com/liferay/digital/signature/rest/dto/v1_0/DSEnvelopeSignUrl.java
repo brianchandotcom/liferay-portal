@@ -43,34 +43,32 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DSRecipient")
+@GraphQLName("DSEnvelopeSignUrl")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DSRecipient")
-public class DSRecipient implements Serializable {
+@XmlRootElement(name = "DSEnvelopeSignUrl")
+public class DSEnvelopeSignUrl implements Serializable {
 
-	public static DSRecipient toDTO(String json) {
-		return ObjectMapperUtil.readValue(DSRecipient.class, json);
+	public static DSEnvelopeSignUrl toDTO(String json) {
+		return ObjectMapperUtil.readValue(DSEnvelopeSignUrl.class, json);
 	}
 
-	public static DSRecipient unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(DSRecipient.class, json);
+	public static DSEnvelopeSignUrl unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(DSEnvelopeSignUrl.class, json);
 	}
 
 	@Schema
-	public String getClientUserId() {
-		return clientUserId;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setClientUserId(String clientUserId) {
-		this.clientUserId = clientUserId;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@JsonIgnore
-	public void setClientUserId(
-		UnsafeSupplier<String, Exception> clientUserIdUnsafeSupplier) {
-
+	public void setUrl(UnsafeSupplier<String, Exception> urlUnsafeSupplier) {
 		try {
-			clientUserId = clientUserIdUnsafeSupplier.get();
+			url = urlUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -82,115 +80,7 @@ public class DSRecipient implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String clientUserId;
-
-	@Schema
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	@JsonIgnore
-	public void setEmailAddress(
-		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
-
-		try {
-			emailAddress = emailAddressUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String emailAddress;
-
-	@Schema
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String id;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
-	@Schema
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
-
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String status;
+	protected String url;
 
 	@Override
 	public boolean equals(Object object) {
@@ -198,13 +88,13 @@ public class DSRecipient implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof DSRecipient)) {
+		if (!(object instanceof DSEnvelopeSignUrl)) {
 			return false;
 		}
 
-		DSRecipient dsRecipient = (DSRecipient)object;
+		DSEnvelopeSignUrl dsEnvelopeSignUrl = (DSEnvelopeSignUrl)object;
 
-		return Objects.equals(toString(), dsRecipient.toString());
+		return Objects.equals(toString(), dsEnvelopeSignUrl.toString());
 	}
 
 	@Override
@@ -219,72 +109,16 @@ public class DSRecipient implements Serializable {
 
 		sb.append("{");
 
-		if (clientUserId != null) {
+		if (url != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clientUserId\": ");
+			sb.append("\"url\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(clientUserId));
-
-			sb.append("\"");
-		}
-
-		if (emailAddress != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"emailAddress\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(emailAddress));
-
-			sb.append("\"");
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
-		}
-
-		if (status != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"status\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(status));
+			sb.append(_escape(url));
 
 			sb.append("\"");
 		}
@@ -296,7 +130,7 @@ public class DSRecipient implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSRecipient",
+		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl",
 		name = "x-class-name"
 	)
 	public String xClassName;

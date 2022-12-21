@@ -173,7 +173,7 @@ paths:
             tags: ["DSEnvelope"]
     "/sites/{siteId}/ds-recipient-view-definition/{dsEnvelopeId}":
         post:
-            operationId: postSiteDSRecipientViewDefinition
+            operationId: postSiteDSEnvelopeDsRecipientViewDefinition
             parameters:
                 - in: path
                   name: siteId

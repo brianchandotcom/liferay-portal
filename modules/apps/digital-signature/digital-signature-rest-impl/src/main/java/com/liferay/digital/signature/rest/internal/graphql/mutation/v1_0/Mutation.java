@@ -15,7 +15,10 @@
 package com.liferay.digital.signature.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
+import com.liferay.digital.signature.rest.resource.v1_0.DSRecipientViewDefinitionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -55,6 +58,15 @@ public class Mutation {
 			dsEnvelopeResourceComponentServiceObjects;
 	}
 
+	public static void
+		setDSRecipientViewDefinitionResourceComponentServiceObjects(
+			ComponentServiceObjects<DSRecipientViewDefinitionResource>
+				dsRecipientViewDefinitionResourceComponentServiceObjects) {
+
+		_dsRecipientViewDefinitionResourceComponentServiceObjects =
+			dsRecipientViewDefinitionResourceComponentServiceObjects;
+	}
+
 	@GraphQLField
 	public DSEnvelope createSiteDSEnvelope(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -81,6 +93,24 @@ public class Mutation {
 			this::_populateResourceContext,
 			dsEnvelopeResource -> dsEnvelopeResource.postSiteDSEnvelopeBatch(
 				Long.valueOf(siteKey), dsEnvelope, callbackURL, object));
+	}
+
+	@GraphQLField
+	public DSEnvelopeSignUrl createSiteDSRecipientViewDefinition(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("dsEnvelopeId") String dsEnvelopeId,
+			@GraphQLName("dsRecipientViewDefinition") DSRecipientViewDefinition
+				dsRecipientViewDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dsRecipientViewDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dsRecipientViewDefinitionResource ->
+				dsRecipientViewDefinitionResource.
+					postSiteDSRecipientViewDefinition(
+						Long.valueOf(siteKey), dsEnvelopeId,
+						dsRecipientViewDefinition));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -137,8 +167,29 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(
+			DSRecipientViewDefinitionResource dsRecipientViewDefinitionResource)
+		throws Exception {
+
+		dsRecipientViewDefinitionResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		dsRecipientViewDefinitionResource.setContextCompany(_company);
+		dsRecipientViewDefinitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		dsRecipientViewDefinitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		dsRecipientViewDefinitionResource.setContextUriInfo(_uriInfo);
+		dsRecipientViewDefinitionResource.setContextUser(_user);
+		dsRecipientViewDefinitionResource.setGroupLocalService(
+			_groupLocalService);
+		dsRecipientViewDefinitionResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<DSEnvelopeResource>
 		_dsEnvelopeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DSRecipientViewDefinitionResource>
+		_dsRecipientViewDefinitionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

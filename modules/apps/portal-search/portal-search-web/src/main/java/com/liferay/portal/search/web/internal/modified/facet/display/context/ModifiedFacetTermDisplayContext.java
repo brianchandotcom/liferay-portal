@@ -14,16 +14,12 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.display.context;
 
-import java.io.Serializable;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 
 /**
  * @author Lino Alves
  */
-public class ModifiedFacetTermDisplayContext implements Serializable {
-
-	public int getFrequency() {
-		return _frequency;
-	}
+public class ModifiedFacetTermDisplayContext extends BucketDisplayContext {
 
 	public String getLabel() {
 		return _label;
@@ -35,14 +31,6 @@ public class ModifiedFacetTermDisplayContext implements Serializable {
 
 	public String getRangeURL() {
 		return _rangeURL;
-	}
-
-	public boolean isSelected() {
-		return _selected;
-	}
-
-	public void setFrequency(int frequency) {
-		_frequency = frequency;
 	}
 
 	public void setLabel(String label) {
@@ -57,14 +45,8 @@ public class ModifiedFacetTermDisplayContext implements Serializable {
 		_rangeURL = rangeURL;
 	}
 
-	public void setSelected(boolean selected) {
-		_selected = selected;
-	}
-
-	private int _frequency;
 	private String _label;
 	private String _range;
 	private String _rangeURL;
-	private boolean _selected;
 
 }

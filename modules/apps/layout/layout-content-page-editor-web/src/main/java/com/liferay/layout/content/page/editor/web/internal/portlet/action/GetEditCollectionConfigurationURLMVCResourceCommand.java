@@ -88,6 +88,11 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 			return;
 		}
 
+		String urlCurrent = ParamUtil.getString(
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(resourceRequest)),
+			"urlCurrent");
+
 		JSONObject jsonObject = JSONUtil.put(
 			"url",
 			PortletURLBuilder.create(
@@ -97,6 +102,8 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/layout_content_page_editor/edit_collection_configuration"
+			).setRedirect(
+				urlCurrent
 			).setParameter(
 				"collectionKey", collectionKey
 			).setParameter(

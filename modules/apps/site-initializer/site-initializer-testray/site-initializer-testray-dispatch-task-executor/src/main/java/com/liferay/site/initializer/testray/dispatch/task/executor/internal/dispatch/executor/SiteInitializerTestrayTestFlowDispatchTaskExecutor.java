@@ -77,9 +77,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (Validator.isNull(
+		if (Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
+			Validator.isNull(
 				unicodeProperties.getProperty("testrayCaseTypeIds")) ||
-			Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
 			Validator.isNull(unicodeProperties.getProperty("testrayTaskId"))) {
 
 			_log.error("The required properties are not set");

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQName;
+import com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -55,6 +56,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -85,7 +87,10 @@ public class LayoutActionProvider {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public JSONArray getActionsJSONArray(Layout layout) throws Exception {
+	public JSONArray getActionsJSONArray(
+			Layout layout, Layout afterDeleteSelectedLayout)
+		throws Exception {
+
 		JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		if (_isShowPreviewDraftAction(layout)) {
@@ -308,7 +313,8 @@ public class LayoutActionProvider {
 						"modalTitle",
 						_language.get(_themeDisplay.getLocale(), "delete-page")
 					).put(
-						"url", _getDeleteLayoutURL(layout)
+						"url",
+						_getDeleteLayoutURL(layout, afterDeleteSelectedLayout)
 					).build()
 				).put(
 					"id", "delete"
@@ -476,12 +482,37 @@ public class LayoutActionProvider {
 		).buildString();
 	}
 
-	private String _getDeleteLayoutURL(Layout layout) {
+	private String _getDeleteLayoutURL(
+			Layout layout, Layout afterDeleteSelectedLayout)
+		throws Exception {
 
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
 			return null;
+		}
+
+		String redirect = ParamUtil.getString(
+			_liferayPortletRequest, "redirect", _themeDisplay.getURLCurrent());
+
+		Layout curLayout = _themeDisplay.getLayout();
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (Objects.equals(curLayout.getPlid(), layout.getPlid()) ||
+			((draftLayout != null) &&
+			 Objects.equals(curLayout.getPlid(), draftLayout.getPlid()))) {
+
+			if (afterDeleteSelectedLayout != null) {
+				redirect = PortalUtil.getLayoutRelativeURL(
+					afterDeleteSelectedLayout, _themeDisplay);
+			}
+			else {
+				redirect = String.valueOf(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+						PortletRequest.RENDER_PHASE));
+			}
 		}
 
 		return ActionURLBuilder.createActionURL(
@@ -490,6 +521,8 @@ public class LayoutActionProvider {
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/layout_admin/delete_layout"
+		).setRedirect(
+			redirect
 		).setParameter(
 			"selPlid", String.valueOf(layout.getPlid())
 		).buildString();

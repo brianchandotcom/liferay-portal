@@ -19,6 +19,10 @@ package com.liferay.digital.signature.model;
  */
 public class DSRecipient {
 
+	public String getDSClientUserId() {
+		return dsClientUserId;
+	}
+
 	public String getDSRecipientId() {
 		return dsRecipientId;
 	}
@@ -33,6 +37,10 @@ public class DSRecipient {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public void setDSClientUserId(String dsClientUserId) {
+		this.dsClientUserId = dsClientUserId;
 	}
 
 	public void setDSRecipientId(String dsRecipientId) {
@@ -51,6 +59,7 @@ public class DSRecipient {
 		this.status = status;
 	}
 
+	protected String dsClientUserId;
 	protected String dsRecipientId;
 	protected String emailAddress;
 	protected String name;

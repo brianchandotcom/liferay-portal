@@ -161,7 +161,17 @@ public class LayoutActionProvider {
 				JSONUtil.put("type", "divider")
 			).put(
 				JSONUtil.put(
-					"href", ""
+					"data",
+					JSONUtil.put(
+						"id", "copy-page"
+					).put(
+						"modalTitle",
+						_language.get(_themeDisplay.getLocale(), "copy-page")
+					).put(
+						"url", _getCopyLayoutRenderURL(layout)
+					)
+				).put(
+					"href", StringPool.POUND
 				).put(
 					"id", "copy-page"
 				).put(
@@ -448,6 +458,22 @@ public class LayoutActionProvider {
 		return StringBundler.concat(
 			_getConfigureLayoutURL(), StringPool.AMPERSAND,
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid={plid}");
+	}
+
+	private String _getCopyLayoutRenderURL(Layout layout) {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_admin/add_layout"
+		).setParameter(
+			"privateLayout", layout.isPrivateLayout()
+		).setParameter(
+			"sourcePlid", layout.getPlid()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private long _getGroupId() {

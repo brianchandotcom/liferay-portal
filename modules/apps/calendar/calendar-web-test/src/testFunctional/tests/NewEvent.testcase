@@ -898,8 +898,8 @@ definition {
 		CalendarEvent.setDatesToday();
 
 		CalendarEvent.setTimes(
-			endDateTime = "08:00 PM",
-			startDateTime = "07:00 PM");
+			endDateTime = " 8:00 PM",
+			startDateTime = " 7:00 PM");
 
 		Button.clickSubmitForPublication();
 
@@ -926,8 +926,8 @@ definition {
 		CalendarEvent.setDatesToday();
 
 		CalendarEvent.setTimes(
-			endDateTime = "08:00 PM",
-			startDateTime = "07:00 PM");
+			endDateTime = " 8:00 PM",
+			startDateTime = " 7:00 PM");
 
 		Button.clickSubmitForPublication();
 
@@ -1028,8 +1028,8 @@ definition {
 		CalendarEvent.setDatesToday();
 
 		CalendarEvent.setTimes(
-			endDateTime = "08:00 PM",
-			startDateTime = "07:00 PM");
+			endDateTime = " 8:00 PM",
+			startDateTime = " 7:00 PM");
 
 		Button.clickPublish();
 
@@ -1069,8 +1069,8 @@ definition {
 		CalendarEvent.setDatesToday();
 
 		CalendarEvent.setTimes(
-			endDateTime = "08:00 PM",
-			startDateTime = "07:00 PM");
+			endDateTime = " 8:00 PM",
+			startDateTime = " 7:00 PM");
 
 		Button.clickSubmitForPublication();
 
@@ -1109,8 +1109,8 @@ definition {
 		CalendarEvent.setDatesToday();
 
 		CalendarEvent.setTimes(
-			endDateTime = "03:00 PM",
-			startDateTime = "02:00 PM");
+			endDateTime = " 3:00 PM",
+			startDateTime = " 2:00 PM");
 
 		Button.clickSaveAsDraft();
 

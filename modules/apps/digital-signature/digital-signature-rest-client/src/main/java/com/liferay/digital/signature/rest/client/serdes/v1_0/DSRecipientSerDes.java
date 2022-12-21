@@ -55,6 +55,20 @@ public class DSRecipientSerDes {
 
 		sb.append("{");
 
+		if (dsRecipient.getClientUserId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientUserId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsRecipient.getClientUserId()));
+
+			sb.append("\"");
+		}
+
 		if (dsRecipient.getEmailAddress() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -130,6 +144,14 @@ public class DSRecipientSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (dsRecipient.getClientUserId() == null) {
+			map.put("clientUserId", null);
+		}
+		else {
+			map.put(
+				"clientUserId", String.valueOf(dsRecipient.getClientUserId()));
+		}
+
 		if (dsRecipient.getEmailAddress() == null) {
 			map.put("emailAddress", null);
 		}
@@ -180,7 +202,12 @@ public class DSRecipientSerDes {
 			DSRecipient dsRecipient, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "emailAddress")) {
+			if (Objects.equals(jsonParserFieldName, "clientUserId")) {
+				if (jsonParserFieldValue != null) {
+					dsRecipient.setClientUserId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
 					dsRecipient.setEmailAddress((String)jsonParserFieldValue);
 				}

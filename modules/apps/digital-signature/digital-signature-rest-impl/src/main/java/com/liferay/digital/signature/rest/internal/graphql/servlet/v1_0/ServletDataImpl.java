@@ -94,6 +94,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DSEnvelopeResourceImpl.class,
 							"postSiteDSEnvelopeBatch"));
+					put(
+						"mutation#createSiteDSEnvelopeDsRecipientViewDefinition",
+						new ObjectValuePair<>(
+							DSEnvelopeResourceImpl.class,
+							"postSiteDSEnvelopeDsRecipientViewDefinition"));
 
 					put(
 						"query#dSEnvelopes",

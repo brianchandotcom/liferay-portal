@@ -15,6 +15,8 @@
 package com.liferay.digital.signature.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -81,6 +83,23 @@ public class Mutation {
 			this::_populateResourceContext,
 			dsEnvelopeResource -> dsEnvelopeResource.postSiteDSEnvelopeBatch(
 				Long.valueOf(siteKey), dsEnvelope, callbackURL, object));
+	}
+
+	@GraphQLField
+	public DSEnvelopeSignUrl createSiteDSEnvelopeDsRecipientViewDefinition(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("dsEnvelopeId") String dsEnvelopeId,
+			@GraphQLName("dsRecipientViewDefinition") DSRecipientViewDefinition
+				dsRecipientViewDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dsEnvelopeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dsEnvelopeResource ->
+				dsEnvelopeResource.postSiteDSEnvelopeDsRecipientViewDefinition(
+					Long.valueOf(siteKey), dsEnvelopeId,
+					dsRecipientViewDefinition));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

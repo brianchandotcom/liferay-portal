@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelope;
+import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelopeSignUrl;
 import com.liferay.digital.signature.rest.client.http.HttpInvoker;
 import com.liferay.digital.signature.rest.client.pagination.Page;
 import com.liferay.digital.signature.rest.client.pagination.Pagination;
@@ -405,6 +406,13 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		return testGraphQLDSEnvelope_addDSEnvelope();
 	}
 
+	@Test
+	public void testPostSiteDSEnvelopeDsRecipientViewDefinition()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -554,6 +562,15 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		}
 	}
 
+	protected void assertEquals(
+		DSEnvelopeSignUrl dsEnvelopeSignUrl1,
+		DSEnvelopeSignUrl dsEnvelopeSignUrl2) {
+
+		Assert.assertTrue(
+			dsEnvelopeSignUrl1 + " does not equal " + dsEnvelopeSignUrl2,
+			equals(dsEnvelopeSignUrl1, dsEnvelopeSignUrl2));
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<DSEnvelope> dsEnvelopes1, List<DSEnvelope> dsEnvelopes2) {
 
@@ -680,7 +697,33 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected void assertValid(DSEnvelopeSignUrl dsEnvelopeSignUrl) {
+		boolean valid = true;
+
+		for (String additionalAssertFieldName :
+				getAdditionalDSEnvelopeSignUrlAssertFieldNames()) {
+
+			if (Objects.equals("url", additionalAssertFieldName)) {
+				if (dsEnvelopeSignUrl.getUrl() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalDSEnvelopeSignUrlAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -893,6 +936,36 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected boolean equals(
+		DSEnvelopeSignUrl dsEnvelopeSignUrl1,
+		DSEnvelopeSignUrl dsEnvelopeSignUrl2) {
+
+		if (dsEnvelopeSignUrl1 == dsEnvelopeSignUrl2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalDSEnvelopeSignUrlAssertFieldNames()) {
+
+			if (Objects.equals("url", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						dsEnvelopeSignUrl1.getUrl(),
+						dsEnvelopeSignUrl2.getUrl())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
@@ -1156,6 +1229,14 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 	protected DSEnvelope randomPatchDSEnvelope() throws Exception {
 		return randomDSEnvelope();
+	}
+
+	protected DSEnvelopeSignUrl randomDSEnvelopeSignUrl() throws Exception {
+		return new DSEnvelopeSignUrl() {
+			{
+				url = RandomTestUtil.randomString();
+			}
+		};
 	}
 
 	protected DSEnvelopeResource dsEnvelopeResource;

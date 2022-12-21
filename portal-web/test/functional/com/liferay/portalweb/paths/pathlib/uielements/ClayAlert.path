@@ -25,6 +25,16 @@
 	<td>//div[@class='alert alert-${key_alertType}']//strong[contains(@class,'lead') and contains(text(), '${key_alertBold}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>AUTOFIT_ROW</td>
+	<td>//div[@class='alert alert-${key_alertType}']//*[contains(@class, 'autofit-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_INDICATOR</td>
+	<td>//div[@class='alert alert-${key_alertType}']//*[@class = 'alert-indicator']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

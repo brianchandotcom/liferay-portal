@@ -95,6 +95,11 @@
 	<td>//tr[@data-testid='${key_propertyName}']//td[@class='table-column-text-end']//input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHECKBOX_NOT_AVAILABLE_TO_SELECT</td>
+	<td>//div[contains(@class,'fade show')]//tr[@data-testid='${key_selectedName}']//*[contains(@type,'checkbox')and @disabled]</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

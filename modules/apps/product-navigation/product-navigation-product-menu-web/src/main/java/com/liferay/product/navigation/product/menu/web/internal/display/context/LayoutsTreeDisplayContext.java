@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -87,8 +88,9 @@ public class LayoutsTreeDisplayContext {
 
 	public LayoutsTreeDisplayContext(
 		HttpServletRequest httpServletRequest, Language language,
-		LayoutService layoutService, LayoutsTree layoutsTree,
-		RenderRequest renderRequest, RenderResponse renderResponse,
+		LayoutLocalService layoutLocalService, LayoutService layoutService,
+		LayoutsTree layoutsTree, RenderRequest renderRequest,
+		RenderResponse renderResponse,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
@@ -98,6 +100,7 @@ public class LayoutsTreeDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_layoutLocalService = layoutLocalService;
 		_layoutService = layoutService;
 		_layoutsTree = layoutsTree;
 		_renderRequest = renderRequest;
@@ -704,7 +707,9 @@ public class LayoutsTreeDisplayContext {
 
 		selectedLayoutPath.add(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		if (selPlid <= 0) {
+		if ((selPlid <= 0) ||
+			(_layoutLocalService.fetchLayout(selPlid) == null)) {
+
 			return selectedLayoutPath;
 		}
 
@@ -956,6 +961,7 @@ public class LayoutsTreeDisplayContext {
 	private final GroupProvider _groupProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final LayoutLocalService _layoutLocalService;
 	private final LayoutService _layoutService;
 	private final LayoutsTree _layoutsTree;
 	private final LiferayPortletRequest _liferayPortletRequest;

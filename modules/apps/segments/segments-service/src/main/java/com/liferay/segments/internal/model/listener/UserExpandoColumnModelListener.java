@@ -16,15 +16,13 @@ package com.liferay.segments.internal.model.listener;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoColumnTable;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.model.ExpandoTableTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -51,6 +49,7 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -144,23 +143,6 @@ public class UserExpandoColumnModelListener
 		_unregister(_serviceRegistration);
 	}
 
-	private DynamicQuery _getTableDynamicQuery(long classNameId, String name) {
-		DynamicQuery dynamicQuery = _expandoTableLocalService.dynamicQuery();
-
-		Property classNameIdProperty = PropertyFactoryUtil.forName(
-			"classNameId");
-
-		dynamicQuery.add(classNameIdProperty.eq(classNameId));
-
-		Property nameProperty = PropertyFactoryUtil.forName("name");
-
-		dynamicQuery.add(nameProperty.eq(name));
-
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tableId"));
-
-		return dynamicQuery;
-	}
-
 	private Optional<EntityField> _getUserEntityFieldOptional(
 		ExpandoColumn expandoColumn) {
 
@@ -237,34 +219,39 @@ public class UserExpandoColumnModelListener
 
 		Map<Long, EntityField> userEntityFieldsMap = new HashMap<>();
 
-		ActionableDynamicQuery columnActionableDynamicQuery =
-			_expandoColumnLocalService.getActionableDynamicQuery();
+		long userClassNameId = _classNameLocalService.getClassNameId(
+			User.class.getName());
 
-		columnActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property tableProperty = PropertyFactoryUtil.forName("tableId");
+		List<ExpandoColumn> expandoColumnList =
+			_expandoColumnLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					ExpandoColumnTable.INSTANCE
+				).from(
+					ExpandoColumnTable.INSTANCE
+				).where(
+					ExpandoColumnTable.INSTANCE.tableId.in(
+						DSLQueryFactoryUtil.select(
+							ExpandoTableTable.INSTANCE.tableId
+						).from(
+							ExpandoTableTable.INSTANCE
+						).where(
+							ExpandoTableTable.INSTANCE.classNameId.eq(
+								userClassNameId
+							).and(
+								ExpandoTableTable.INSTANCE.name.eq(
+									ExpandoTableConstants.DEFAULT_TABLE_NAME)
+							)
+						))
+				));
 
-				long userClassNameId = _classNameLocalService.getClassNameId(
-					User.class.getName());
+		for (ExpandoColumn expandoColumn : expandoColumnList) {
+			Optional<EntityField> userEntityFieldOptional =
+				_getUserEntityFieldOptional(expandoColumn);
 
-				dynamicQuery.add(
-					tableProperty.in(
-						_getTableDynamicQuery(
-							userClassNameId,
-							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
-			});
-		columnActionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>)
-				expandoColumn -> {
-					Optional<EntityField> userEntityFieldOptional =
-						_getUserEntityFieldOptional(expandoColumn);
-
-					userEntityFieldOptional.ifPresent(
-						entityField -> userEntityFieldsMap.put(
-							expandoColumn.getColumnId(), entityField));
-				});
-
-		columnActionableDynamicQuery.performActions();
+			userEntityFieldOptional.ifPresent(
+				entityField -> userEntityFieldsMap.put(
+					expandoColumn.getColumnId(), entityField));
+		}
 
 		return userEntityFieldsMap;
 	}

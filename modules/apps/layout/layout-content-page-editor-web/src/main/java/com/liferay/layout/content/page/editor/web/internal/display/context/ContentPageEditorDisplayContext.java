@@ -401,6 +401,11 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_collection_variations")
 			).put(
+				"getEditCollectionConfigurationUrlURL",
+				_getResourceURL(
+					"/layout_content_page_editor" +
+						"/get_edit_collection_configuration_url")
+			).put(
 				"getExperienceDataURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_experience_data")

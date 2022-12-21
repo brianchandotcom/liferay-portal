@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "NAVIGATION_PRIMARY_LINKS",
+	"name": "Navigation Primary Links",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

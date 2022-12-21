@@ -490,7 +490,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 							Assert.assertEquals(1, page.getTotalCount());
 
 							assertEquals(Arrays.asList(irrelevant${schemaName}), (List<${schemaName}>)page.getItems());
-							assertValid(page);
+							assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
+								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+									irrelevant${javaMethodParameter.parameterName?cap_first}
+								</#list>
+							));
 						}
 					</#if>
 
@@ -533,10 +537,18 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if topLevel>
 						assertContains(${schemaVarName}1, (List<${schemaName}>)page.getItems());
 						assertContains(${schemaVarName}2, (List<${schemaName}>)page.getItems());
-						assertValid(page);
+						assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
+							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+								${javaMethodParameter.parameterName}
+							</#list>
+						));
 					<#else>
 						assertEqualsIgnoringOrder(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)page.getItems());
-						assertValid(page);
+						assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
+							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+								${javaMethodParameter.parameterName}
+							</#list>
+						));
 					</#if>
 
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
@@ -566,6 +578,27 @@ public abstract class Base${schemaName}ResourceTestCase {
 								</#list>);
 						</#if>
 					</#if>
+				}
+
+				protected Map<String, Map> test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
+					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+						${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}
+					</#list>
+				) throws Exception {
+
+					Map<String, Map> expectedActions = new HashMap<>();
+
+					<#if (javaMethodSignature.pathJavaMethodParameters?size == 1)>
+						<#assign firstPathJavaMethodParameter = javaMethodSignature.pathJavaMethodParameters[0] />
+
+						Map createBatchAction = new HashMap<>();
+						createBatchAction.put("method", "POST");
+						createBatchAction.put("href", "http://localhost:8080/o${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}/batch".replace("{${firstPathJavaMethodParameter.parameterName}}", String.valueOf(${firstPathJavaMethodParameter.parameterName})));
+
+						expectedActions.put("createBatch", createBatchAction);
+					</#if>
+
+					return expectedActions;
 				}
 
 				<#if parameters?contains("Filter filter")>
@@ -2152,7 +2185,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#if>
 
-	protected void assertValid(Page<${schemaClientJavaType}> page) {
+	protected void assertValid(Page<${schemaClientJavaType}> page, Map<String, Map> expectedActions) {
 		boolean valid = false;
 
 		java.util.Collection<${schemaClientJavaType}> ${schemaVarNames} = page.getItems();
@@ -2164,6 +2197,19 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	<#list relatedSchemaNames as relatedSchemaName>

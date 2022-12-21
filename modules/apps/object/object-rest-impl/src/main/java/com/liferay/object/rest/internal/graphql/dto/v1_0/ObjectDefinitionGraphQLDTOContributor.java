@@ -53,13 +53,10 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Javier de Arcos
@@ -222,18 +219,10 @@ public class ObjectDefinitionGraphQLDTOContributor
 				_objectDefinition.getObjectDefinitionId()),
 			search, sorts);
 
-		Collection<ObjectEntry> items = page.getItems();
-
-		Stream<ObjectEntry> stream = items.stream();
-
 		return Page.of(
 			page.getActions(), page.getFacets(),
-			stream.map(
-				this::_toMap
-			).collect(
-				Collectors.toList()
-			),
-			pagination, page.getTotalCount());
+			TransformUtil.transform(page.getItems(), this::_toMap), pagination,
+			page.getTotalCount());
 	}
 
 	@Override

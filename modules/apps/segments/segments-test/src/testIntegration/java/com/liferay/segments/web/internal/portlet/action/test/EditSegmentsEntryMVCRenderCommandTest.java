@@ -119,10 +119,6 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 
 		Assert.assertEquals(LocaleUtil.US.toString(), defaultLanguageId);
 
-		String formId = (String)props.get("formId");
-
-		Assert.assertNotNull("formId is null", formId);
-
 		long groupId = (long)props.get("groupId");
 
 		Assert.assertEquals(_group.getGroupId(), groupId);
@@ -262,18 +258,6 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 
 		Assert.assertEquals(LocaleUtil.US.toString(), defaultLanguageId);
 
-		String formId = (String)props.get("formId");
-
-		Assert.assertNotNull("formId is null", formId);
-
-		long groupId = (long)props.get("groupId");
-
-		Assert.assertEquals(_group.getGroupId(), groupId);
-
-		boolean hasUpdatePermission = (boolean)props.get("hasUpdatePermission");
-
-		Assert.assertTrue(hasUpdatePermission);
-
 		int initialMembersCount = (int)props.get("initialMembersCount");
 
 		Assert.assertEquals(1, initialMembersCount);
@@ -289,45 +273,6 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		Assert.assertEquals(
 			segmentsEntry.getName(LocaleUtil.US),
 			initialSegmentNameJSONObject.get(LocaleUtil.US.toString()));
-
-		boolean segmentationEnabled = (boolean)props.get(
-			"isSegmentationEnabled");
-
-		Assert.assertTrue(segmentationEnabled);
-
-		String locale = (String)props.get("locale");
-
-		Assert.assertEquals(LocaleUtil.US.toString(), locale);
-
-		String previewMembersURL = (String)props.get("previewMembersURL");
-
-		Assert.assertNotNull("previewMembersURL is null", previewMembersURL);
-
-		String redirect = (String)props.get("redirect");
-
-		Assert.assertNotNull("redirect is null", redirect);
-
-		String requestMembersCountURL = (String)props.get(
-			"requestMembersCountURL");
-
-		Assert.assertNotNull(
-			"requestMembersCountURL is null", requestMembersCountURL);
-
-		String scopeName = (String)props.get("scopeName");
-
-		Assert.assertNotNull("scopeName is null", scopeName);
-
-		Assert.assertEquals(_group.getDescriptiveName(), scopeName);
-
-		String segmentsConfigurationURL = (String)props.get(
-			"segmentsConfigurationURL");
-
-		Assert.assertNotNull(
-			"segmentsConfigurationURL is null", segmentsConfigurationURL);
-
-		boolean showInEditMode = (boolean)props.get("showInEditMode");
-
-		Assert.assertTrue(showInEditMode);
 
 		String siteItemSelectorURL = (String)props.get("siteItemSelectorURL");
 

@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -76,18 +75,15 @@ public class UserExpandoColumnModelListener
 				return;
 			}
 
-			Optional<EntityField> userEntityFieldOptional =
-				_getUserEntityFieldOptional(expandoColumn);
+			EntityField userEntityField = _getUserEntityField(expandoColumn);
 
-			userEntityFieldOptional.ifPresent(
-				entityField -> {
-					_userEntityFields.put(
-						expandoColumn.getColumnId(), entityField);
+			if (userEntityField != null) {
+				_userEntityFields.put(
+					expandoColumn.getColumnId(), userEntityField);
 
-					_serviceRegistration = _updateRegistry(
-						_bundleContext, _serviceRegistration,
-						_userEntityFields);
-				});
+				_serviceRegistration = _updateRegistry(
+					_bundleContext, _serviceRegistration, _userEntityFields);
+			}
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -143,9 +139,7 @@ public class UserExpandoColumnModelListener
 		_unregister(_serviceRegistration);
 	}
 
-	private Optional<EntityField> _getUserEntityFieldOptional(
-		ExpandoColumn expandoColumn) {
-
+	private EntityField _getUserEntityField(ExpandoColumn expandoColumn) {
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();
 
@@ -153,7 +147,7 @@ public class UserExpandoColumnModelListener
 			unicodeProperties.get(ExpandoColumnConstants.INDEX_TYPE));
 
 		if (indexType == ExpandoColumnConstants.INDEX_TYPE_NONE) {
-			return Optional.empty();
+			return null;
 		}
 
 		String encodedName =
@@ -211,7 +205,7 @@ public class UserExpandoColumnModelListener
 				encodedName, locale -> encodedIndexedFieldName);
 		}
 
-		return Optional.of(entityField);
+		return entityField;
 	}
 
 	private Map<Long, EntityField> _getUserEntityFields()
@@ -245,12 +239,12 @@ public class UserExpandoColumnModelListener
 				));
 
 		for (ExpandoColumn expandoColumn : expandoColumnList) {
-			Optional<EntityField> userEntityFieldOptional =
-				_getUserEntityFieldOptional(expandoColumn);
+			EntityField userEntityField = _getUserEntityField(expandoColumn);
 
-			userEntityFieldOptional.ifPresent(
-				entityField -> userEntityFieldsMap.put(
-					expandoColumn.getColumnId(), entityField));
+			if (userEntityField != null) {
+				userEntityFieldsMap.put(
+					expandoColumn.getColumnId(), userEntityField);
+			}
 		}
 
 		return userEntityFieldsMap;

@@ -74,6 +74,30 @@ definition {
 		}
 	}
 
+	@description = "Verify the text on the next line will not flow under the icon on the alert"
+	@priority = "4"
+	test CanPreventTextFromDisplayingUnderIcon {
+		task ("When the alert contains class='alert-indicator'") {
+			VerifyElementPresent(
+				key_alertType = "success",
+				locator1 = "ClayAlert#ALERT_INDICATOR");
+		}
+
+		task ("Then the text on the next line will not flow under the icon") {
+			AssertCssValue(
+				key_alertType = "success",
+				locator1 = "ClayAlert#AUTOFIT_ROW",
+				locator2 = "display",
+				value1 = "flex");
+
+			AssertCssValue(
+				key_alertType = "success",
+				locator1 = "ClayAlert#AUTOFIT_ROW",
+				locator2 = "flex-direction",
+				value1 = "row");
+		}
+	}
+
 	@description = "Verify the keyword is semi-bold when alert contains status icon and keyword"
 	@priority = "4"
 	test KeywordCanDisplayInSemibold {
@@ -157,27 +181,4 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	@description = "Verify if the text on the next line will not flow under the icon on the alert"
-	@priority = "4"
-	test CanPreventTextFromDisplayingUnderIcon {
-		task ("When the alert contains class='alert-indicator'") {
-			VerifyElementPresent(
-				locator1 = "ClayAlert#ALERT_INDICATOR",
-				key_alertType = "success");
-		}
-
-		task ("Then the text on the next line will not flow under the icon") {
-			AssertCssValue(
-				key_alertType = "success",
-				locator1 = "ClayAlert#AUTOFIT_ROW",
-				locator2 = "display",
-				value1 = "flex");
-			
-			AssertCssValue(
-				key_alertType = "success",
-				locator1 = "ClayAlert#AUTOFIT_ROW",
-				locator2 = "flex-direction",
-				value1 = "row");
-		}
-	}
 }

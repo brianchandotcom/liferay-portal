@@ -25,6 +25,7 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -136,11 +137,25 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		return InfoForm.builder(
 		).infoFieldSetEntry(
-			_getItemTypesInfoField()
+			InfoFieldSet.builder(
+			).infoFieldSetEntry(
+				_getItemTypesInfoField()
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(getClass(), "filter")
+			).name(
+				"filter"
+			).build()
 		).infoFieldSetEntry(
-			_getAssetCategoryRuleInfoField()
-		).infoFieldSetEntry(
-			_getSpecificAssetCategoryIdInfoField()
+			InfoFieldSet.builder(
+			).infoFieldSetEntry(
+				_getAssetCategoryRuleInfoField()
+			).infoFieldSetEntry(
+				_getSpecificAssetCategoryIdInfoField()
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(getClass(), "advanced-rule")
+			).name(
+				"advanced-rule"
+			).build()
 		).build();
 	}
 

@@ -58,8 +58,7 @@ definition {
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "AC Channel Disabled",
 				channelType = "site",
-				currencyCode = "USD",
-				externalReferenceCode = "101");
+				currencyCode = "USD");
 		}
 
 		task ("Connect the DXP to AC") {
@@ -115,8 +114,7 @@ definition {
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "AC Channel 1",
 				channelType = "site",
-				currencyCode = "USD",
-				externalReferenceCode = "101");
+				currencyCode = "USD");
 		}
 
 		task ("Connect the DXP to AC") {
@@ -293,8 +291,7 @@ definition {
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "${notFoundChannelName}",
 				channelType = "site",
-				currencyCode = "USD",
-				externalReferenceCode = "101");
+				currencyCode = "USD");
 		}
 		
 		task ("Connect the DXP to AC") {

@@ -14,14 +14,11 @@
 
 package com.liferay.blogs.web.internal.layout.display.page;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 
@@ -31,10 +28,12 @@ import java.util.Locale;
 public class BlogsLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<BlogsEntry> {
 
-	public BlogsLayoutDisplayPageObjectProvider(BlogsEntry blogsEntry)
+	public BlogsLayoutDisplayPageObjectProvider(
+			BlogsEntry blogsEntry, AssetHelper assetHelper)
 		throws PortalException {
 
 		_blogsEntry = blogsEntry;
+		_assetHelper = assetHelper;
 	}
 
 	@Override
@@ -74,18 +73,8 @@ public class BlogsLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getKeywords(Locale locale) {
-		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-			BlogsEntry.class.getName(), _blogsEntry.getEntryId());
-		String[] assetCategoryNames =
-			AssetCategoryLocalServiceUtil.getCategoryNames(
-				BlogsEntry.class.getName(), _blogsEntry.getEntryId());
-
-		String[] keywords =
-			new String[assetTagNames.length + assetCategoryNames.length];
-
-		ArrayUtil.combine(assetTagNames, assetCategoryNames, keywords);
-
-		return StringUtil.merge(keywords);
+		return _assetHelper.getAssetKeywords(
+			BlogsEntry.class.getName(), _blogsEntry.getEntryId(), locale);
 	}
 
 	@Override
@@ -98,6 +87,7 @@ public class BlogsLayoutDisplayPageObjectProvider
 		return _blogsEntry.getUrlTitle();
 	}
 
+	private final AssetHelper _assetHelper;
 	private final BlogsEntry _blogsEntry;
 
 }

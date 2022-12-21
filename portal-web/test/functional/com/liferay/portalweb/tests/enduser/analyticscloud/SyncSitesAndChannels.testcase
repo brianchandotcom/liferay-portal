@@ -41,9 +41,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-
-			JSONGroup.deleteGroupByName(groupName = "Minium Demo");
+			JSONGroup.tearDownNonDefaultGroups();
 
 			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
 		}

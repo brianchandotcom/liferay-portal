@@ -251,6 +251,8 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 					itemJSONObject.toString());
 
 				findUserContributor = true;
+
+				break;
 			}
 		}
 

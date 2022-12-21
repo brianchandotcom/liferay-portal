@@ -10,8 +10,15 @@
  * distribution rights of the Software.
  */
 
+/* eslint-disable no-undef */
+const findRequestIdUrl = (paramsUrl) => {
+	const splitParamsUrl = paramsUrl.split('?');
+
+	return splitParamsUrl[0];
+};
+
 const currentPath = Liferay.currentURL.split('/');
-const mdfRequestId = +currentPath.at(-1);
+const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 
 const updateStatusToApproved = fragmentElement.querySelector(
 	'#status-approved'
@@ -26,19 +33,21 @@ const updateStatus = async (status) => {
 	const statusManagerResponse = await fetch(
 		`/o/c/mdfrequests/${mdfRequestId}`,
 		{
-			body: `{"requestStatus": "${status}"}`,
+			body: `{"mdfRequestStatus": "${status}"}`,
 			headers: {
 				'content-type': 'application/json',
 				'x-csrf-token': Liferay.authToken,
 			},
-			method: 'PATCH',
+			method: 'PUT',
 		}
 	);
 	if (statusManagerResponse.ok) {
 		const data = await statusManagerResponse.json();
 		document.getElementById(
 			'mdf-request-status-display'
-		).innerHTML = `Status:${Liferay.Util.escape(data.requestStatus)}`;
+		).innerHTML = `Status:${Liferay.Util.escape(data.mdfRequestStatus)}`;
+
+		getMDFRequestStatus();
 
 		return;
 	}
@@ -54,7 +63,7 @@ updateStatusToApproved.onclick = () =>
 		message: 'Do you want to Approve this MDF?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				updateStatus('Approved');
+				updateStatus('approved');
 			}
 		},
 	});
@@ -64,7 +73,7 @@ updateStatusToRequestMoreInfo.onclick = () =>
 		message: 'Do you want to Request more info for this MDF?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				updateStatus('Request More Info');
+				updateStatus('moreInfoRequested');
 			}
 		},
 	});
@@ -74,7 +83,38 @@ updateStatusToReject.onclick = () =>
 		message: 'Do you want to Reject this MDF?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				updateStatus('Reject');
+				updateStatus('rejected');
 			}
 		},
 	});
+
+const getMDFRequestStatus = async () => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const statusResponse = await fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
+		headers: {
+			'accept': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
+
+	if (statusResponse.ok) {
+		const data = await statusResponse.json();
+
+		fragmentElement.querySelector(
+			'#mdf-request-status-display'
+		).innerHTML = `Status: ${Liferay.Util.escape(
+			data.mdfRequestStatus.name
+		)}`;
+
+		return;
+	}
+
+	Liferay.Util.openToast({
+		message: 'An unexpected error occured.',
+		type: 'danger',
+	});
+};
+
+if (layoutMode !== 'edit') {
+	getMDFRequestStatus();
+}

@@ -153,7 +153,7 @@ export default function () {
 
 	return (
 		<>
-			{request?.requestStatus === 'Approved' ? (
+			{request?.mdfRequestStatus.key === 'approved' ? (
 				<div>
 					{!!claims?.items.length && (
 						<div>

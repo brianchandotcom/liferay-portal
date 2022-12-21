@@ -391,19 +391,6 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "mdf-request-details-status-display"
-									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragment": {
 										"key": "mdf-request-manager-status"
 									},
 									"fragmentConfig": {

@@ -19,7 +19,6 @@ import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
-import com.liferay.object.entry.util.ObjectEntryNameUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -242,8 +241,7 @@ public class EditBatchPlannerPlanDisplayContext {
 			return internalClassName;
 		}
 
-		return ObjectEntryNameUtil.fromTechnicalName(
-			internalClassName.substring(index + 1));
+		return internalClassName.substring(index + 1);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

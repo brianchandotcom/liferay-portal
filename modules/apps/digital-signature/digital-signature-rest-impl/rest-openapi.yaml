@@ -48,8 +48,14 @@ components:
                 status:
                     type: string
             type: object
+        DSEnvelopeSignatureURL:
+            properties:
+                url:
+                    type: string
         DSRecipient:
             properties:
+                clientUserId:
+                    type: string
                 emailAddress:
                     type: string
                 id:
@@ -57,6 +63,18 @@ components:
                 name:
                     type: string
                 status:
+                    type: string
+        DSRecipientViewDefinition:
+            properties:
+                authenticationMethod:
+                    type: string
+                clientUserId:
+                    type: string
+                email:
+                    type: string
+                returnUrl:
+                    type: string
+                userName:
                     type: string
 info:
     description:
@@ -153,3 +171,36 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DSEnvelope"
             tags: ["DSEnvelope"]
+    "/sites/{siteId}/ds-recipient-view-definition/{dsEnvelopeId}":
+        post:
+            operationId: postSiteDSRecipientViewDefinition
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: dsEnvelopeId
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DSRecipientViewDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DSRecipientViewDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DSEnvelopeSignatureURL"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DSEnvelopeSignatureURL"
+            tags: ["DSRecipientViewDefinition"]

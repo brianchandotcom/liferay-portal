@@ -76,6 +76,22 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 					"r_", objectRelationship.getName(), "_",
 					_objectDefinition.getPKObjectFieldName()));
 
+		DynamicObjectDefinitionTable relatedObjectExtensionTable =
+			new DynamicObjectDefinitionTable(
+				relatedObjectDefinition,
+				_objectFieldLocalService.getObjectFields(
+					relatedObjectDefinition.getObjectDefinitionId(),
+					relatedObjectDefinition.getExtensionDBTableName()),
+				relatedObjectDefinition.getExtensionDBTableName());
+
+		if (relatedObjectDefinitionTableColumn == null) {
+			relatedObjectDefinitionTableColumn =
+				relatedObjectExtensionTable.getColumn(
+					StringBundler.concat(
+						"r_", objectRelationship.getName(), "_",
+						_objectDefinition.getPKObjectFieldName()));
+		}
+
 		DynamicObjectDefinitionTable objectTable =
 			new DynamicObjectDefinitionTable(
 				_objectDefinition,
@@ -92,6 +108,12 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 				relatedObjectDefinitionTableColumn
 			).from(
 				relatedObjectTable
+			).innerJoinON(
+				relatedObjectExtensionTable,
+				relatedObjectExtensionTable.getPrimaryKeyColumn(
+				).eq(
+					relatedObjectExtensionTable.getPrimaryKeyColumn()
+				)
 			).where(
 				predicate
 			));

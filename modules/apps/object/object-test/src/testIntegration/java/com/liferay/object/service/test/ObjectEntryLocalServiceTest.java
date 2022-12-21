@@ -40,12 +40,18 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectState;
+import com.liferay.object.model.ObjectStateFlow;
+import com.liferay.object.model.ObjectStateTransition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
+import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.CharPool;
@@ -2308,6 +2314,8 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		_testUpdateExternalReferenceCode();
+
+		_testUpdateObjectStateTransitions();
 	}
 
 	@Test
@@ -2689,6 +2697,99 @@ public class ObjectEntryLocalServiceTest {
 			objectEntry2.getObjectEntryId());
 	}
 
+	private void _testUpdateObjectStateTransitions() throws Exception {
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), "state");
+
+		ObjectStateFlow objectStateFlow =
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				objectField.getObjectFieldId());
+
+		List<ObjectState> objectStates =
+			_objectStateLocalService.getObjectStateFlowObjectStates(
+				objectStateFlow.getObjectStateFlowId());
+
+		for (ObjectState objectState : objectStates) {
+			List<ObjectStateTransition> objectStateTransitions =
+				_objectStateTransitionLocalService.
+					getObjectStateObjectStateTransitions(
+						objectState.getObjectStateId());
+
+			objectState.setObjectStateTransitions(
+				Collections.singletonList(objectStateTransitions.get(0)));
+		}
+
+		objectStateFlow.setObjectStates(objectStates);
+
+		_objectStateTransitionLocalService.updateObjectStateTransitions(
+			objectStateFlow);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"firstName", "John"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		ObjectState objectStateListTypeEntryKey1 = objectStates.get(0);
+		ObjectState objectStateListTypeEntryKey2 = objectStates.get(1);
+		ObjectState objectStateListTypeEntryKey3 = objectStates.get(2);
+
+		try {
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"state", "listTypeEntryKey3"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.InvalidObjectStateTransition
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				objectStateListTypeEntryKey1,
+				objectEntryValuesException.getSourceObjectState());
+			Assert.assertEquals(
+				objectStateListTypeEntryKey3,
+				objectEntryValuesException.getTargetObjectState());
+		}
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"state", "listTypeEntryKey2"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		try {
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"state", "listTypeEntryKey3"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.InvalidObjectStateTransition
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				objectStateListTypeEntryKey2,
+				objectEntryValuesException.getSourceObjectState());
+			Assert.assertEquals(
+				objectStateListTypeEntryKey3,
+				objectEntryValuesException.getTargetObjectState());
+		}
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+	}
+
 	private void _testUpdateStatus() throws Exception {
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
@@ -2786,6 +2887,16 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Inject
+	private ObjectStateLocalService _objectStateLocalService;
+
+	@Inject
+	private ObjectStateTransitionLocalService
+		_objectStateTransitionLocalService;
 
 	@Inject
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;

@@ -22,7 +22,7 @@ definition {
 
 			Site.tearDownCP();
 
-			Suborganization.tearDownCP();
+			Organization.tearDownCP(orgName = "Suborganization*");
 
 			Organization.tearDownCP();
 		}
@@ -344,7 +344,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Suborganization.addCP(
+		Organization.addSuborganizationCP(
 			orgName = "Organization Name",
 			suborgName = "Suborganization Name");
 
@@ -354,7 +354,7 @@ definition {
 
 		Breadcrumb.viewActiveEntry(breadcrumbName = "Organization Name");
 
-		Suborganization.viewCP(
+		Organization.viewSuborganizationCP(
 			orgName = "Organization Name",
 			orgType = "Organization",
 			suborgName = "Suborganization Name",
@@ -726,7 +726,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Suborganization.removeCP(
+		Organization.removeSuborganizationCP(
 			orgName = "Organization Name",
 			subOrgName = "Suborganization Name 1");
 

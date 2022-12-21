@@ -22,7 +22,7 @@ definition {
 
 			Site.tearDownCP();
 
-			Suborganization.tearDownCP();
+			Organization.tearDownCP(orgName = "Suborganization*");
 
 			Organization.tearDownCP();
 		}

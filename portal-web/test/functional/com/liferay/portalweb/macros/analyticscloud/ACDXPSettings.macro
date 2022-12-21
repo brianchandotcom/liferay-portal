@@ -172,7 +172,7 @@ definition {
 		}
 		else {
 			if (IsElementPresent(index = "3", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-				Check.checkToggleSwitch(
+				Uncheck.uncheckToggleSwitch(
 					key_syncFieldName = "Sync All Accounts",
 					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
 			}
@@ -213,7 +213,7 @@ definition {
 
 	macro syncContactsAndAccountstData {
 		if (IsElementPresent(index = "1", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-			Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+			Uncheck.uncheckToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 		}
 
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
@@ -256,7 +256,7 @@ definition {
 		}
 		else {
 			if (IsElementPresent(index = "2", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-				Check.checkToggleSwitch(
+				Uncheck.uncheckToggleSwitch(
 					key_syncFieldName = "Sync All Contacts",
 					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
 			}

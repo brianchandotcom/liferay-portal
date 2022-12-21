@@ -158,7 +158,7 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 
 				List<Pattern> globs = settingsStream.flatMap(
 					setting -> {
-						Stream<String> settings = null;
+						Stream<String> stream = null;
 
 						String[] split = setting.split("=");
 
@@ -168,14 +168,14 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 							String[] encodedValues = value.split("\n");
 
 							if (encodedValues.length == 1) {
-								settings = Stream.of(value);
+								stream = Stream.of(value);
 							}
 							else {
-								settings = Arrays.stream(encodedValues);
+								stream = Arrays.stream(encodedValues);
 							}
 						}
 
-						return settings;
+						return stream;
 					}
 				).filter(
 					Objects::nonNull

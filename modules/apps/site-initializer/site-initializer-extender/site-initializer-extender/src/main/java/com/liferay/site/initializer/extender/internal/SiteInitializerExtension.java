@@ -41,6 +41,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
@@ -116,6 +117,8 @@ public class SiteInitializerExtension {
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
+		LayoutPageTemplateStructureRelLocalService
+			layoutPageTemplateStructureRelLocalService,
 		LayoutSetLocalService layoutSetLocalService,
 		LayoutsImporter layoutsImporter,
 		ListTypeDefinitionResource listTypeDefinitionResource,
@@ -174,17 +177,17 @@ public class SiteInitializerExtension {
 			knowledgeBaseFolderResourceFactory, layoutCopyHelper,
 			layoutLocalService, layoutPageTemplateEntryLocalService,
 			layoutsImporter, layoutPageTemplateStructureLocalService,
-			layoutSetLocalService, listTypeDefinitionResource,
-			listTypeDefinitionResourceFactory, listTypeEntryResource,
-			listTypeEntryResourceFactory, notificationTemplateResourceFactory,
-			objectActionLocalService, objectDefinitionLocalService,
-			objectDefinitionResourceFactory, objectEntryLocalService,
-			objectEntryManager, objectFieldLocalService,
-			objectFieldResourceFactory, objectRelationshipLocalService,
-			objectRelationshipResourceFactory, organizationLocalService,
-			organizationResourceFactory, portal, resourceActionLocalService,
-			resourcePermissionLocalService, roleLocalService,
-			sapEntryLocalService, segmentsEntryLocalService,
+			layoutPageTemplateStructureRelLocalService, layoutSetLocalService,
+			listTypeDefinitionResource, listTypeDefinitionResourceFactory,
+			listTypeEntryResource, listTypeEntryResourceFactory,
+			notificationTemplateResourceFactory, objectActionLocalService,
+			objectDefinitionLocalService, objectDefinitionResourceFactory,
+			objectEntryLocalService, objectEntryManager,
+			objectFieldLocalService, objectFieldResourceFactory,
+			objectRelationshipLocalService, objectRelationshipResourceFactory,
+			organizationLocalService, organizationResourceFactory, portal,
+			resourceActionLocalService, resourcePermissionLocalService,
+			roleLocalService, sapEntryLocalService, segmentsEntryLocalService,
 			segmentsExperienceLocalService, settingsFactory,
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,

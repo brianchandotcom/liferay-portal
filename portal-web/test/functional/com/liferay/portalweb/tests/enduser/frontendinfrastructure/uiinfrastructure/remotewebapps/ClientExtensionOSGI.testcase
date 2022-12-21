@@ -13,7 +13,10 @@ definition {
 
 		task ("Given config file for client extension of type custom element created") {
 			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+
 			ClientExtension.checkConfigFileCreatedProperly();
+
+			RemoteApps.goToRemoteAppsPortlet();
 		}
 	}
 
@@ -23,17 +26,51 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 	}
 
-	@description = "LPS-169554"
+	@description = "LPS-169554 Access the osgi deployed custom element and assert that field information is displayed correctly and not editable"
 	@priority = "4"
 	test FieldsAreNotEditableWhenAccessed {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#FieldsAreNotEditableWhenAccessed";
 
-		// TODO LPS-169554 FieldsAreNotEditableWhenAccessed pending implementation
+		task ("When access the osgi deployed custom element") {
+			Click(
+				key_tableEntryName = "Vanilla Counter",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+		}
 
+		task ("Then field information is displayed correctly") {
+			RemoteApps.assertCustomElementFields(
+				entryCategoryName = "category.remote-apps",
+				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryDescription = "Custom Element Description",
+				entryFriendlyElementName = "vanilla",
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryProperties = "test-data-user=QAuser",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element",
+				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+
+			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
+
+			FormFields.viewCheckboxChecked(fieldName = "Use ES Modules");
+		}
+
+		task ("And Then fields are not editable") {
+			RemoteApps.ViewDisabledCustomElementFields(
+				entryCategoryName = "category.remote-apps",
+				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryDescription = "Custom Element Description",
+				entryFriendlyElementName = "vanilla",
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryProperties = "test-data-user=QAuser",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element",
+				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
 	}
 
 	@description = "LPS-169551: Verify that view button is visible"
@@ -41,13 +78,6 @@ definition {
 	test HasViewAction {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#HasViewAction";
-
-		task ("Navigate to 'Remote Apps' portlet") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Custom Apps",
-				panel = "Applications",
-				portlet = "Remote Apps");
-		}
 
 		task ("Then View action is an available option") {
 			AssertElementPresent(
@@ -62,14 +92,49 @@ definition {
 		}
 	}
 
-	@description = "LPS-169552 "
+	@description = "LPS-169552 Select view action from Remote app and assert that field information is displayed correctly and not editable"
 	@priority = "3"
 	test ViewActionCanDisplayFieldsAsNotEditable {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#ViewActionCanDisplayFieldsAsNotEditable";
 
-		// TODO LPS-169552 ViewActionCanDisplayFieldsAsNotEditable pending implementation
+		task ("When select view action") {
+			Click(
+				key_text = "View",
+				locator1 = "Button#ANY");
+		}
 
+		task ("Then field information is displayed correctly") {
+			RemoteApps.assertCustomElementFields(
+				entryCategoryName = "category.remote-apps",
+				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryDescription = "Custom Element Description",
+				entryFriendlyElementName = "vanilla",
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryProperties = "test-data-user=QAuser",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element",
+				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+
+			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
+
+			FormFields.viewCheckboxChecked(fieldName = "Use ES Modules");
+		}
+
+		task ("And Then fields are not editable") {
+			RemoteApps.ViewDisabledCustomElementFields(
+				entryCategoryName = "category.remote-apps",
+				entryCssurlText = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryDescription = "Custom Element Description",
+				entryFriendlyElementName = "vanilla",
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryProperties = "test-data-user=QAuser",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element",
+				entryURLText = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
 	}
 
 }

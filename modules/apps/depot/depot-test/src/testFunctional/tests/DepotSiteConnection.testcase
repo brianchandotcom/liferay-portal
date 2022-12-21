@@ -39,7 +39,7 @@ definition {
 	@description = "This ensures that a depot can be connected to different types of sites."
 	@e2e
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanConnectMultipleSites {
 		Site.openSitesAdmin();
 
@@ -93,7 +93,7 @@ definition {
 	@description = "This ensures that a depot can be connected to the site."
 	@e2e
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanConnectSite {
 		property portal.acceptance = "true";
 
@@ -115,7 +115,7 @@ definition {
 	@description = "This ensures that the disconnected site can not access the the depot."
 	@e2e
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDisconnectSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -140,7 +140,7 @@ definition {
 
 	@description = "This ensures that an asset library can not be connected to a staged site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CannotConnectStagedSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -167,7 +167,7 @@ definition {
 
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewRestrictionWhenConnectingSites {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -198,7 +198,7 @@ definition {
 
 	@description = "This asserts that a deactivated site is still shown in connected sites."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test DeactivatedSiteWillRemainInConnectedSitesList {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -232,7 +232,7 @@ definition {
 
 	@description = "This asserts that a deleted site is removed from connected sites."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test DeletedSiteCannotBeDisplayedInConnectedSitesList {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

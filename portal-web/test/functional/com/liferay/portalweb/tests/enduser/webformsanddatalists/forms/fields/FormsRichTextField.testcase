@@ -316,6 +316,35 @@ definition {
 
 	}
 
+	@description = "Verify if the source option of the rich text field is working correctly."
+	@priority = "4"
+	test CheckSourceOptionAtRichTextField {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Click(locator1 = "Form#SOURCE_FORM_BUTTON");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Form#SOURCE_FORM_EDITOR",
+			value1 = "<strong> Test </strong>");
+
+		Click(locator1 = "Form#SOURCE_FORM_BUTTON");
+
+		Form.viewRichTextPublished(text = "Test");
+	}
+
 	@description = "Verify that a help text can be added to a Rich Text Field"
 	@priority = "5"
 	test HelpTextCanBeAdded {

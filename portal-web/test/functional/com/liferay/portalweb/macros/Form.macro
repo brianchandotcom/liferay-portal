@@ -1110,6 +1110,19 @@ definition {
 		AssertElementPresent(locator1 = "Form#FIELD_REQUIRED_INDICATOR");
 	}
 
+	macro viewRichTextPublished {
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "Rich Text",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		AssertTextEquals(
+			key_richText = "${text}",
+			locator1 = "Form#SOURCE_FORM_EDITOR_PUBLISHED",
+			value1 = "${text}");
+	}
+
 	macro viewSaveNotification {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Form#SAVE_NOTIFICATION",

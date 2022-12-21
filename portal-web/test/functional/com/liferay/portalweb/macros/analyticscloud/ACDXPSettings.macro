@@ -12,6 +12,12 @@ definition {
 		Click(locator1 = "Button#CANCEL");
 	}
 
+	macro changeAssignModalPagination {
+		Click(locator1 = "ACDXPSettings#ASSING_MODAL_PAGINATION");
+
+		MenuItem.click(menuItem = "${itemsPerPage}");
+	}
+
 	macro clickToAssignSitesAndChannel {
 		Click(
 			key_propertyName = "${propertyName}",
@@ -80,12 +86,6 @@ definition {
 				key_text = "Create",
 				locator1 = "Button#ANY");
 		}
-	}
-
-	macro changeAssignModalPagination {
-		Click(locator1 = "ACDXPSettings#ASSING_MODAL_PAGINATION");
-
-		MenuItem.click(menuItem = "${itemsPerPage}");
 	}
 
 	macro disconnectDXPFromAnalyticsCloud {
@@ -343,6 +343,32 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro viewAssignModalListItemInOrder {
+		var itemValueList = ListUtil.newListFromString("${itemValueList}");
+		var indexList = ListUtil.newListFromString("${indexList}");
+		var size = ListUtil.size("${itemValueList}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var itemValue = ListUtil.get("${itemValueList}", "${i}");
+			var index = ListUtil.get("${indexList}", "${i}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ACDXPSettings#ASSING_MODAL_VIEW_LIST_ITEM_ORDER",
+				value1 = "${itemValue}");
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
+	macro viewAssignModalResultsMessage {
+		AssertTextEquals(
+			locator1 = "ACDXPSettings#ASSING_MODAL_RESULT_MESSAGE",
+			value1 = "${results}");
+	}
+
 	macro viewGenericListItem {
 		for (var itemValue : list "${itemValueList}") {
 			var key_itemValue = "${itemValue}";
@@ -371,38 +397,12 @@ definition {
 		}
 	}
 
-	macro viewAssignModalListItemInOrder {
-		var itemValueList = ListUtil.newListFromString("${itemValueList}");
-		var indexList = ListUtil.newListFromString("${indexList}");
-		var size = ListUtil.size("${itemValueList}");
-		var i = "0";
-
-		while ("${i}" != "${size}") {
-			var itemValue = ListUtil.get("${itemValueList}", "${i}");
-			var index = ListUtil.get("${indexList}", "${i}");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ACDXPSettings#ASSING_MODAL_VIEW_LIST_ITEM_ORDER",
-				value1 = "${itemValue}");
-
-			var i = ${i} + 1;
-
-			var i = StringUtil.valueOf("${i}");
-		}
-	}
-
 	macro viewGenericListItemNotPresent {
 		for (var itemValue : list "${itemValueList}") {
 			var key_itemValue = "${itemValue}";
 
 			AssertElementNotPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
 		}
-	}
-
-	macro viewAssignModalResultsMessage {
-		AssertTextEquals(
-			locator1 = "ACDXPSettings#ASSING_MODAL_RESULT_MESSAGE",
-			value1 = "${results}");
 	}
 
 	macro viewSyncedChannelsAndSitesNumber {

@@ -438,6 +438,56 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12569 | Test Summary: Assert Empty State upon property creation"
+	@priority = "2"
+	test CheckPropertyListEmptyStateMessage {
+		task ("Create a new workspace") {
+			ACUtils.launchAC(
+				emailList = "acworkspace@liferay.com",
+				workspaceName = "New AC Property List Empty State Workspace");
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP > Connect the DXP to AC") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Go to AC > Go to Settings > Go to Properties") {
+			ACUtils.launchAC(workspaceName = "New AC Workspace");
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Delete all the properties in the list") {
+			ACSettings.deleteAllProperties();
+		}
+
+		task ("Go to Instance Settings > Analytics Cloud") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Assert Empty state message when there is no property available") {
+			ACUtils.viewGenericText(textValueList = "Create a New Property,Create a property to add sites and channels.");
+
+			AssertElementPresent(
+				key_text = "New Property",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12583 | Test Summary: Check that the property list is sorted by creation date by default"
 	@priority = "3"
 	test CheckPropertyListSortedByCreationDateByDefault {
@@ -557,56 +607,6 @@ definition {
 			ACDXPSettings.viewGenericListItem(itemValueList = "Property OnlyAvailablePropertiesAppearInDXP 1");
 
 			ACDXPSettings.viewGenericListItem(itemValueList = "Property OnlyAvailablePropertiesAppearInDXP 2");
-		}
-	}
-
-	@description = "Story: LRAC-10858 | Automation ID: LRAC-12569 | Test Summary: Assert Empty State upon property creation"
-	@priority = "2"
-	test CheckPropertyListEmptyStateMessage {
-		task ("Create a new workspace") {
-			ACUtils.launchAC(
-				emailList = "acworkspace@liferay.com",
-				workspaceName = "New AC Property List Empty State Workspace");
-		}
-
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
-		}
-
-		task ("Go to DXP > Connect the DXP to AC") {
-			ACUtils.launchDXP();
-
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Go to AC > Go to Settings > Go to Properties") {
-			ACUtils.launchAC(workspaceName = "New AC Workspace");
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Delete all the properties in the list") {
-			ACSettings.deleteAllProperties();
-		}
-
-		task ("Go to Instance Settings > Analytics Cloud") {
-			ACUtils.launchDXP();
-
-			ACDXPSettings.goToInstanceSettingsAC();
-		}
-
-		task ("Go to the properties page in the sidebar") {
-			ACDXPSettings.navToSyncedSitesMenu();
-		}
-
-		task ("Assert Empty state message when there is no property available") {
-			ACUtils.viewGenericText(textValueList = "Create a New Property,Create a property to add sites and channels.");
-
-			AssertElementPresent(
-				key_text = "New Property",
-				locator1 = "Button#ANY");
 		}
 	}
 

@@ -16,8 +16,12 @@ package com.liferay.digital.signature.rest.internal.dto.v1_0.util;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSDocument;
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
 import com.liferay.digital.signature.rest.dto.v1_0.DSRecipient;
+import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author José Abelenda
@@ -67,6 +71,31 @@ public class DSEnvelopeUtil {
 		};
 	}
 
+	public static DSEnvelopeSignUrl toDSEnvelopeSignUrl(JSONObject jsonObject) {
+		return new DSEnvelopeSignUrl() {
+			{
+				url = jsonObject.getString("url");
+			}
+		};
+	}
+
+	public static JSONObject toJSONObject(
+		DSRecipientViewDefinition dsRecipientViewDefinition) {
+
+		return JSONUtil.put(
+			"authenticationMethod",
+			dsRecipientViewDefinition.getAuthenticationMethod()
+		).put(
+			"clientUserId", dsRecipientViewDefinition.getClientUserId()
+		).put(
+			"email", dsRecipientViewDefinition.getEmail()
+		).put(
+			"returnUrl", dsRecipientViewDefinition.getReturnUrl()
+		).put(
+			"userName", dsRecipientViewDefinition.getUserName()
+		);
+	}
+
 	private static DSDocument _toDSDocument(
 		com.liferay.digital.signature.model.DSDocument dsDocument) {
 
@@ -113,6 +142,7 @@ public class DSEnvelopeUtil {
 
 		return new com.liferay.digital.signature.model.DSRecipient() {
 			{
+				dsClientUserId = dsRecipient.getClientUserId();
 				dsRecipientId = dsRecipient.getId();
 				emailAddress = dsRecipient.getEmailAddress();
 				name = dsRecipient.getName();

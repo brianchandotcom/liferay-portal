@@ -173,6 +173,8 @@ definition {
 	@description = "LRQA-71596 - Verify that user can choose the color of calendar in the -Add Calendar- Page"
 	@priority = "4"
 	test CanChooseAColor {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddMyCalendars();
 
 		Calendar._editName(calendarName = "Calendar Name");

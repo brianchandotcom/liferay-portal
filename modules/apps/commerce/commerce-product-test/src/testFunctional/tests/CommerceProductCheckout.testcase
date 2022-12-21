@@ -81,7 +81,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-10178. Select a product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
 	@priority = "3"
-	test CanCheckoutProduct {
+	test CanCheckoutAMiniumProduct {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -276,7 +276,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-10277."
 	@priority = "3"
-	test CanCheckoutProductWithPromotionWhenPricelistIsLower {
+	test CanCheckoutProductWithPromotionPriceHigherThenPricelist {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",

@@ -16,7 +16,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-10343. Can checkout a product with two discounts, lower discount will be apply"
 	@priority = "3"
-	test CanCheckoutProductWithDiscountLowerDiscountIsApply {
+	test CanCheckoutProductWithDiscountsLowerDiscountIsApplied {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -71,7 +71,7 @@ definition {
 				productListPrice = "50.00");
 		}
 
-		task ("And the higher discount is deleted so the lower discount can be apllied") {
+		task ("And the higher discount is deleted so the lower discount can be Applied") {
 			CommerceNavigator.gotoPortlet(
 				category = "Pricing",
 				portlet = "Discounts");

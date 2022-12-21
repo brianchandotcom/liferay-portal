@@ -178,7 +178,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-10306. Can checkout of an order of a product with price list with tier and promotion with bulk"
+	@description = "This is a test for COMMERCE-10306. Can checkout an order of a product with price list with tier and promotion with bulk"
 	@priority = "3"
 	test CanCheckoutProductWithBulkPriceOnPromotionAndTierPriceOnPriceList {
 		task ("Given a Commerce Account and Buyer User are created") {
@@ -272,9 +272,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-10307. Can checkout of an order of a product with price list with bulk and promotion with bulk"
+	@description = "This is a test for COMMERCE-10307. Can checkout an order of a product with price list with bulk and promotion with bulk"
 	@priority = "3"
-	test CanCheckoutProductWithTBulkPriceOnPromotionAndPriceList {
+	test CanCheckoutProductWithBulkPriceOnPromotionAndPriceList {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -462,7 +462,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-10281. Can checkout an order of a product with tier pricing only on the promotions"
 	@priority = "3"
-	test CanCheckoutProductWithTierPriceOnlyInPromotionTierPrice {
+	test CanCheckoutProductWithTierPriceOnlyInPromotion {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",

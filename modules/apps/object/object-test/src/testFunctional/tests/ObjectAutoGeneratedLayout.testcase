@@ -22,6 +22,7 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify that the user can delete the attachment by clicking on the clear button"
+	@ignore = "true"
 	@priority = "4"
 	test CanDeleteAttachment {
 		ObjectAdmin.addObjectViaAPI(

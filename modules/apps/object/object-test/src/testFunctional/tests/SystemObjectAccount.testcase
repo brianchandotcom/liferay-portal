@@ -145,6 +145,7 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if Cascade deletion type of Relationship One to Many can delete and you also will delete the child related entry (if you also have permissions for it)"
+	@ignore = "true"
 	@priority = "4"
 	test CanDeleteRelationshipWhenDeletionTypeIsCascade {
 		Account.openAccountsAdmin();
@@ -251,6 +252,7 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify it's not possible to delete an entry if the relationship is one to many with prevent deletion type"
+	@ignore = "true"
 	@priority = "4"
 	test CannotDeleteEntryWhenDeletionTypeIsPrevent {
 		Account.openAccountsAdmin();
@@ -332,6 +334,7 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
+	@ignore = "true"
 	@priority = "4"
 	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
 		Account.openAccountsAdmin();

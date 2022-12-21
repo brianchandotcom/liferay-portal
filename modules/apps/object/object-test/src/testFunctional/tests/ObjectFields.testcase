@@ -844,6 +844,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify that admin can edit the Storage Folder path in Published objects"
+	@ignore = "true"
 	@priority = "4"
 	test CanEditPublishedObjectStorageFolder {
 		task ("Add new Custom Object scoped by site (via API)") {
@@ -1347,6 +1348,7 @@ definition {
 	}
 
 	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Sort, on the Custom Views tab"
+	@ignore = "true"
 	@priority = "4"
 	test CanSortWithERCField {
 		task ("Create Custom Object and Custom Field (via API)") {

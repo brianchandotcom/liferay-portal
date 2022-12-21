@@ -613,6 +613,7 @@ definition {
 	}
 
 	@description = "LPS-151676 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (One-to-Many)"
+	@ignore = "true"
 	@priority = "4"
 	test CanDeleteOneToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
 		task ("Add 2 users entries to relate to custom object entries") {
@@ -1490,6 +1491,7 @@ definition {
 	}
 
 	@description = "LPS-151676 - Verify that it's possible to relate a Custom Object entry with many Native Object entries (One-to-Many)"
+	@ignore = "true"
 	@priority = "5"
 	test CanRelateOneToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
@@ -1721,6 +1723,7 @@ definition {
 	}
 
 	@description = "LPS-158478 - Verify that it's possible to see all related entries to the entry on the relationship tab"
+	@ignore = "true"
 	@priority = "5"
 	test CanSeeRelatedEntriesOnTab {
 		property portal.acceptance = "true";

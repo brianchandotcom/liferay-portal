@@ -139,6 +139,10 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 					_journalArticleLocalService.fetchArticle(
 						groupId, articleId);
 
+				if (journalArticle == null) {
+					return 0;
+				}
+
 				return journalArticle.getResourcePrimKey();
 			}
 		).buildString();

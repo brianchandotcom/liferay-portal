@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -162,12 +163,12 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			JSONUtil.put(
 				"calculateSegmentsExperimentEstimatedDurationURL",
 				_getSegmentsExperimentActionURL(
-					"/calculate_segments_experiment_estimated_duration", group,
+					"/calculate_segments_experiment_estimated_duration",
 					httpServletRequest)
 			).put(
 				"createSegmentsExperimentURL",
 				_getSegmentsExperimentActionURL(
-					"/segments_experiment/add_segments_experiment", group,
+					"/segments_experiment/add_segments_experiment",
 					httpServletRequest)
 			).put(
 				"createSegmentsVariantURL",
@@ -199,22 +200,22 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			).put(
 				"deleteSegmentsExperimentURL",
 				_getSegmentsExperimentActionURL(
-					"/segments_experiment/delete_segments_experiment", group,
+					"/segments_experiment/delete_segments_experiment",
 					httpServletRequest)
 			).put(
 				"deleteSegmentsVariantURL",
 				_getSegmentsExperimentActionURL(
 					"/segments_experiment/delete_segments_experiment_rel",
-					group, httpServletRequest)
+					httpServletRequest)
 			).put(
 				"editSegmentsExperimentStatusURL",
 				_getSegmentsExperimentActionURL(
 					"/segments_experiment/edit_segments_experiment_status",
-					group, httpServletRequest)
+					httpServletRequest)
 			).put(
 				"editSegmentsExperimentURL",
 				_getSegmentsExperimentActionURL(
-					"/segments_experiment/edit_segments_experiment", group,
+					"/segments_experiment/edit_segments_experiment",
 					httpServletRequest)
 			).put(
 				"editSegmentsVariantLayoutURL",
@@ -223,12 +224,12 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			).put(
 				"editSegmentsVariantURL",
 				_getSegmentsExperimentActionURL(
-					"/segments_experiment/edit_segments_experiment_rel", group,
+					"/segments_experiment/edit_segments_experiment_rel",
 					httpServletRequest)
 			).put(
 				"runSegmentsExperimentURL",
 				_getSegmentsExperimentActionURL(
-					"/segments_experiment/run_segments_experiment", group,
+					"/segments_experiment/run_segments_experiment",
 					httpServletRequest)
 			)
 		).put(
@@ -317,9 +318,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"hideSegmentsExperimentPanelURL",
 			PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					httpServletRequest, group,
-					SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0, 0,
+				_portletURLFactory.create(
+					httpServletRequest, SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
 					PortletRequest.ACTION_PHASE)
 			).setActionName(
 				"/segments_experiment/hide_segments_experiment_panel"
@@ -430,12 +430,11 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private String _getSegmentsExperimentActionURL(
-		String action, Group group, HttpServletRequest httpServletRequest) {
+		String action, HttpServletRequest httpServletRequest) {
 
 		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, group,
-				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0, 0,
+			_portletURLFactory.create(
+				httpServletRequest, SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			action
@@ -461,6 +460,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

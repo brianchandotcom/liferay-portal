@@ -16,7 +16,6 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.entry.util.ObjectEntryNameUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -591,10 +591,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		String taskItemDelegateName = (String)parameters.get(
 			"taskItemDelegateName");
 
-		if (taskItemDelegateName != null) {
-			taskItemDelegateName = ObjectEntryNameUtil.fromTechnicalName(
-				taskItemDelegateName);
-
+		if (Validator.isNotNull(taskItemDelegateName)) {
 			_objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					contextCompany.getCompanyId(), taskItemDelegateName);

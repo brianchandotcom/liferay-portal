@@ -114,9 +114,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "An unstaged asset library cannot be connected to a staged site.");
+		Alert.viewErrorMessage(errorMessage = "An unstaged asset library cannot be connected to a staged site.");
 	}
 
 	@description = "This asserts that a deactivated site is still shown in connected sites and a deleted site is removed from connected sites."

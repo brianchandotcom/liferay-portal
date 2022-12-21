@@ -1,0 +1,35 @@
+definition {
+
+	macro addEntryOnRelationshipTab {
+		LexiconEntry.gotoAdd();
+
+		if (isSet(newEntry)) {
+			Click(
+				key_kebabOption = "Create New",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+
+			Type.type(
+				locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
+				value1 = "${newEntry}");
+
+			Button.clickSave();
+		}
+
+		if (isSet(selectEntry)) {
+			Click(
+				key_kebabOption = "Select Existing One",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			ClickNoError(
+				key_titleFieldName = "${selectEntry}",
+				locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
+		}
+
+		WaitForSPARefresh();
+
+		WaitForPageLoad();
+	}
+
+}

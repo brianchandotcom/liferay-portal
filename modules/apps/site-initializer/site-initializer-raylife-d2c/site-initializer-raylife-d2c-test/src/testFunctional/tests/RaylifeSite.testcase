@@ -44,26 +44,12 @@ definition {
 	@description = "Verify if Raylife can be created"
 	@priority = "5"
 	test CanRaylifeBeCreated {
-		Site.openSitesAdmin();
+		task ("Create a new Raylife D2C Site") {
+			Site.openSitesAdmin();
 
-		LexiconEntry.gotoAdd();
-
-		LexiconCard.clickCard(card = "Raylife D2C");
-
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
-
-		PortletEntry.inputName(name = "${testSiteName}");
-
-		Click(locator1 = "Raylife#BUTTON_ADD");
-
-		Site.openSitesAdmin();
-
-		while (IsElementNotPresent(key_siteName = "${testSiteName}", locator1 = "Sites#SITE_TABLE_NAME")) {
-			Refresh();
-
-			WaitForPageLoad();
+			Site.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Raylife D2C");
 		}
 	}
 

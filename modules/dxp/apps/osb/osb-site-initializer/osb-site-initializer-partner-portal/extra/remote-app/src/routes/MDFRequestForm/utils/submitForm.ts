@@ -23,6 +23,7 @@ import updateMDFRequestActivityBudget from '../../../common/services/liferay/obj
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
 import updateMDFRequest from '../../../common/services/liferay/object/mdf-requests/updateMDFRequest';
+import {Status} from '../../../common/utils/constants/status';
 import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
 import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
 
@@ -41,7 +42,11 @@ export default async function submitForm(
 
 	let dtoMDFRequest: mdfRequestDTO | undefined = undefined;
 
-	if (Liferay.FeatureFlags['LPS-164528'] && !mdfRequestId) {
+	if (
+		Liferay.FeatureFlags['LPS-164528'] &&
+		!mdfRequestId &&
+		values.mdfRequestStatus !== Status.DRAFT
+	) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
 	} else if (mdfRequestId) {
 		dtoMDFRequest = await updateMDFRequest(

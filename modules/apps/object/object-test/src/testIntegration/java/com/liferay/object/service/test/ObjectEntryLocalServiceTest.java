@@ -303,6 +303,14 @@ public class ObjectEntryLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false, false,
 			Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(),
+			_listTypeDefinition.getListTypeDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			ObjectFieldConstants.DB_TYPE_STRING, "listTypeEntryKey1", false,
+			true, "", LocalizedMapUtil.getLocalizedMap("State"), "state", true,
+			true, Collections.emptyList());
+		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
@@ -1391,7 +1399,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		int expectedValuesSize = 19;
+		int expectedValuesSize = 20;
 
 		Map<String, Serializable> values = _getValuesFromDatabase(
 			objectEntries.get(0));
@@ -1545,11 +1553,12 @@ public class ObjectEntryLocalServiceTest {
 			"listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(StringPool.BLANK, values.get("script"));
 		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("state"));
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 19, values.size());
+		Assert.assertEquals(values.toString(), 20, values.size());
 
 		try {
 			_objectEntryLocalService.getValues(0);
@@ -1601,7 +1610,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			"listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 
-		int expectedValuesSize = 25;
+		int expectedValuesSize = 26;
 
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
@@ -1769,7 +1778,7 @@ public class ObjectEntryLocalServiceTest {
 
 		List<ObjectEntry> objectEntries = baseModelSearchResult.getBaseModels();
 
-		int expectedValuesSize = 19;
+		int expectedValuesSize = 20;
 
 		Map<String, Serializable> values = _getValuesFromDatabase(
 			objectEntries.get(0));
@@ -1964,6 +1973,8 @@ public class ObjectEntryLocalServiceTest {
 				"multipleListTypeEntriesKey",
 				(Serializable)Arrays.asList(
 					"multipleListTypeEntryKey3", "multipleListTypeEntryKey4")
+			).put(
+				"state", "listTypeEntryKey1"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -1996,12 +2007,13 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(StringPool.BLANK, values.get("script"));
 		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("state"));
 		Assert.assertEquals(0L, values.get("upload"));
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 19, values.size());
+		Assert.assertEquals(values.toString(), 20, values.size());
 
 		Calendar calendar = new GregorianCalendar();
 
@@ -2038,6 +2050,8 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"speed", BigDecimal.valueOf(45L)
 			).put(
+				"state", "listTypeEntryKey2"
+			).put(
 				"upload", fileEntry.getFileEntryId()
 			).put(
 				"weight", 60
@@ -2068,13 +2082,14 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(script, values.get("script"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("state"));
 		Assert.assertNotEquals(
 			fileEntry.getFileEntryId(), values.get("upload"));
 		Assert.assertEquals(60D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 19, values.size());
+		Assert.assertEquals(values.toString(), 20, values.size());
 
 		long persistedFileEntryId = GetterUtil.getLong(values.get("upload"));
 
@@ -2097,6 +2112,8 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
+				"state", "listTypeEntryKey3"
+			).put(
 				"upload", 0L
 			).put(
 				"weight", 65D
@@ -2127,12 +2144,13 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(script, values.get("script"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
+		Assert.assertEquals("listTypeEntryKey3", values.get("state"));
 		Assert.assertEquals(0L, values.get("upload"));
 		Assert.assertEquals(65D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 19, values.size());
+		Assert.assertEquals(values.toString(), 20, values.size());
 
 		try {
 			_dlAppLocalService.getFileEntry(fileEntry.getFileEntryId());

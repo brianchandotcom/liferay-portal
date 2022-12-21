@@ -18,6 +18,7 @@ import com.liferay.headless.commerce.admin.account.internal.graphql.mutation.v1_
 import com.liferay.headless.commerce.admin.account.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountAddressResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountChannelEntryResourceImpl;
+import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountChannelShippingOptionResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountMemberResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountOrganizationResourceImpl;
@@ -25,6 +26,7 @@ import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.Accoun
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.UserResourceImpl;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountAddressResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelEntryResource;
+import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelShippingOptionResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountMemberResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountOrganizationResource;
@@ -61,6 +63,8 @@ public class ServletDataImpl implements ServletData {
 			_accountAddressResourceComponentServiceObjects);
 		Mutation.setAccountChannelEntryResourceComponentServiceObjects(
 			_accountChannelEntryResourceComponentServiceObjects);
+		Mutation.setAccountChannelShippingOptionResourceComponentServiceObjects(
+			_accountChannelShippingOptionResourceComponentServiceObjects);
 		Mutation.setAccountGroupResourceComponentServiceObjects(
 			_accountGroupResourceComponentServiceObjects);
 		Mutation.setAccountMemberResourceComponentServiceObjects(
@@ -76,6 +80,8 @@ public class ServletDataImpl implements ServletData {
 			_accountAddressResourceComponentServiceObjects);
 		Query.setAccountChannelEntryResourceComponentServiceObjects(
 			_accountChannelEntryResourceComponentServiceObjects);
+		Query.setAccountChannelShippingOptionResourceComponentServiceObjects(
+			_accountChannelShippingOptionResourceComponentServiceObjects);
 		Query.setAccountGroupResourceComponentServiceObjects(
 			_accountGroupResourceComponentServiceObjects);
 		Query.setAccountMemberResourceComponentServiceObjects(
@@ -378,6 +384,36 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelEntryResourceImpl.class,
 							"postAccountIdAccountChannelUser"));
 					put(
+						"mutation#deleteAccountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"deleteAccountChannelShippingOption"));
+					put(
+						"mutation#deleteAccountChannelShippingOptionBatch",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"deleteAccountChannelShippingOptionBatch"));
+					put(
+						"mutation#patchAccountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"patchAccountChannelShippingOption"));
+					put(
+						"mutation#createAccountByExternalReferenceCodeAccountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"postAccountByExternalReferenceCodeAccountChannelShippingOption"));
+					put(
+						"mutation#createAccountIdAccountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"postAccountIdAccountChannelShippingOption"));
+					put(
+						"mutation#createAccountIdAccountChannelShippingOptionBatch",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"postAccountIdAccountChannelShippingOptionBatch"));
+					put(
 						"mutation#createAccountGroup",
 						new ObjectValuePair<>(
 							AccountGroupResourceImpl.class,
@@ -632,6 +668,21 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelEntryResourceImpl.class,
 							"getAccountIdAccountChannelUsersPage"));
 					put(
+						"query#accountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"getAccountChannelShippingOption"));
+					put(
+						"query#accountByExternalReferenceCodeAccountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelShippingOptionPage"));
+					put(
+						"query#accountIdAccountChannelShippingOption",
+						new ObjectValuePair<>(
+							AccountChannelShippingOptionResourceImpl.class,
+							"getAccountIdAccountChannelShippingOptionPage"));
+					put(
 						"query#accountGroups",
 						new ObjectValuePair<>(
 							AccountGroupResourceImpl.class,
@@ -709,6 +760,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountChannelEntryResource>
 		_accountChannelEntryResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AccountChannelShippingOptionResource>
+		_accountChannelShippingOptionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountGroupResource>

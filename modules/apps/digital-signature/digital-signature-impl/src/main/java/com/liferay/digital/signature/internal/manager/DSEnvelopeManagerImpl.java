@@ -87,6 +87,18 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	@Override
+	public JSONObject addDSRecipientViewDefinitionJSONObject(
+		long companyId, long groupId, String dsEnvelopeId,
+		JSONObject jsonObject) {
+
+		return _dsHttp.post(
+			companyId, groupId,
+			StringBundler.concat(
+				"envelopes/", dsEnvelopeId, "/views/recipient"),
+			jsonObject);
+	}
+
+	@Override
 	public void deleteDSEnvelopes(
 			long companyId, long groupId, String... dsEnvelopeIds)
 		throws Exception {

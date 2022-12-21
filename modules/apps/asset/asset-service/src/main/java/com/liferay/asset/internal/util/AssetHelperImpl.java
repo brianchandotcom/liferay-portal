@@ -329,6 +329,31 @@ public class AssetHelperImpl implements AssetHelper {
 	}
 
 	@Override
+	public String getAssetKeywords(
+		String className, long classPK, Locale locale) {
+
+		String[] tagNames = _assetTagLocalService.getTagNames(
+			className, classPK);
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(className, classPK);
+
+		List<String> categoryTitles = new ArrayList<>();
+
+		for (AssetCategory assetCategory : assetCategories) {
+			categoryTitles.add(assetCategory.getTitle(locale));
+		}
+
+		String[] categoryNames = categoryTitles.toArray(new String[0]);
+
+		String[] keywords = new String[tagNames.length + categoryNames.length];
+
+		ArrayUtil.combine(tagNames, categoryNames, keywords);
+
+		return StringUtil.merge(keywords);
+	}
+
+	@Override
 	public List<AssetPublisherAddItemHolder> getAssetPublisherAddItemHolders(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long groupId,

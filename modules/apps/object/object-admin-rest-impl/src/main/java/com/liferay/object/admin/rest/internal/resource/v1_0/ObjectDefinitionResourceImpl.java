@@ -483,7 +483,10 @@ public class ObjectDefinitionResourceImpl
 		for (ObjectField objectField : objectDefinition.getObjectFields()) {
 			if (StringUtil.equals(
 					objectField.getBusinessTypeAsString(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) ||
+				StringUtil.equals(
+					objectField.getBusinessTypeAsString(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 				ObjectFieldUtil.addListTypeDefinition(
 					contextUser.getCompanyId(), _listTypeDefinitionLocalService,

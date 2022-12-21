@@ -445,91 +445,13 @@ definition {
 			JSONPublications.addPublication(publicationName = "Test Publication");
 		}
 
-		task ("Open Invite Users modal window and switch role to 'Viewer'") {
-			PublicationsNavigator.openPublicationsAdmin();
+		PublicationsNavigator.openPublicationsAdmin();
 
-			PublicationsNavigator._gotoPublicationEllipsisItem(
-				menuItem = "Invite Users",
-				publicationName = "Test Publication");
-
-			var userMissingPublicationsRole = "true";
-			var publicationRole = "Viewer";
-			var userInvite = "userea@liferay.com";
-
-			if (isSet(publicationRole)) {
-				Click(
-					key_title = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
-					locator1 = "Button#ANY_TITLE");
-
-				Click(
-					key_publicationRole = "${publicationRole}",
-					locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
-			}
-
-			for (var keyword : list "${userInvite}") {
-				Type(
-					locator1 = "Publications#KEYWORD_TEXTFIELD",
-					value1 = "${keyword}");
-
-				KeyPress(
-					locator1 = "Publications#KEYWORD_TEXTFIELD",
-					value1 = "\ENTER");
-			}
-		}
-
-		task ("Switch role to 'Editor' and switch it back to 'Viewer'") {
-			var publicationRole = "Editor";
-
-			if (isSet(publicationRole)) {
-				Click(
-					key_title = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
-					locator1 = "Button#ANY_TITLE");
-
-				Click(
-					key_publicationRole = "${publicationRole}",
-					locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
-			}
-
-			for (var keyword : list "${userInvite}") {
-				Type(
-					locator1 = "Publications#KEYWORD_TEXTFIELD",
-					value1 = "${keyword}");
-
-				KeyPress(
-					locator1 = "Publications#KEYWORD_TEXTFIELD",
-					value1 = "\ENTER");
-			}
-
-			var publicationRole = "Viewer";
-
-			if (isSet(publicationRole)) {
-				Click(
-					key_title = "Editors can view and edit. Editors cannot publish or invite other users.",
-					locator1 = "Button#ANY_TITLE");
-
-				Click(
-					key_publicationRole = "${publicationRole}",
-					locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
-			}
-
-			for (var keyword : list "${userInvite}") {
-				Type(
-					locator1 = "Publications#KEYWORD_TEXTFIELD",
-					value1 = "${keyword}");
-
-				KeyPress(
-					locator1 = "Publications#KEYWORD_TEXTFIELD",
-					value1 = "\ENTER");
-			}
-
-			Button.clickNoError(button = "Send");
-
-			if ("${userMissingPublicationsRole}" == "true") {
-				AssertConfirm(value1 = "You are inviting user ${userInvite} who does not have access to Publications. This user will be assigned the Publications User role to gain access to Publications.");
-			}
-
-			Alert.viewSuccessMessage();
-		}
+		Publications.inviteUsers(
+			publicationName = "Test Publication",
+			publicationRole = "Viewer",
+			switchBetweenPublicationRole = "Editor",
+			userInvite = "userea@liferay.com");
 	}
 
 	@description = "This is a use case for LPS-150313."

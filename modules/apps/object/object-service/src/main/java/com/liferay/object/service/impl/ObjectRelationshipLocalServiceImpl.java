@@ -417,6 +417,28 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectRelationship> getAllObjectRelationships(
+		long objectDefinitionId) {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+			).from(
+				ObjectRelationshipTable.INSTANCE
+			).where(
+				Predicate.withParentheses(
+					ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
+						objectDefinitionId
+					).or(
+						ObjectRelationshipTable.INSTANCE.objectDefinitionId2.eq(
+							objectDefinitionId)
+					)
+				).and(
+					ObjectRelationshipTable.INSTANCE.reverse.eq(false)
+				)
+			));
+	}
+
+	@Override
 	public ObjectRelationship getObjectRelationship(
 			long objectDefinitionId1, String name)
 		throws PortalException {

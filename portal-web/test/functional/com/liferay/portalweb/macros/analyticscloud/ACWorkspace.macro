@@ -85,7 +85,7 @@ definition {
 				value1 = "\ENTER");
 		}
 
-		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+		Click.clickAtNotVisible(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
 
 		Button.clickSubmitButton();
 

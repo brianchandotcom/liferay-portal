@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
@@ -79,7 +78,6 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpCalendarFactoryUtil();
 		setUpDateFormatFactoryUtil();
 		setUpDLAppLocalServiceUtil();
 		setUpFastDateFormatFactoryUtil();
@@ -478,12 +476,6 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
-	}
-
-	protected void setUpCalendarFactoryUtil() {
-		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
-
-		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
 	}
 
 	protected void setUpDateFormatFactoryUtil() {

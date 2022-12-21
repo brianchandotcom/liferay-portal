@@ -14,20 +14,18 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.display.context;
 
-import com.liferay.portal.kernel.util.CalendarFactory;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetCalendarDisplayContextBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.CalendarFactoryImpl;
 
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.TimeZone;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,11 +39,6 @@ public class ModifiedFacetCalendarDisplayContextBuilderTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		_calendarFactory = new CalendarFactoryImpl();
-	}
 
 	@Test
 	public void testDoNotBreakWithoutSettingValues() {
@@ -69,7 +62,7 @@ public class ModifiedFacetCalendarDisplayContextBuilderTest {
 			modifiedFacetCalendarDisplayContext =
 				modifiedFacetCalendarDisplayContextBuilder.build();
 
-		Calendar todayCalendar = _calendarFactory.getCalendar(timeZone);
+		Calendar todayCalendar = CalendarFactoryUtil.getCalendar(timeZone);
 
 		Calendar yesterdayCalendar = (Calendar)todayCalendar.clone();
 
@@ -145,8 +138,7 @@ public class ModifiedFacetCalendarDisplayContextBuilderTest {
 
 		ModifiedFacetCalendarDisplayContextBuilder
 			modifiedFacetCalendarDisplayContextBuilder =
-				new ModifiedFacetCalendarDisplayContextBuilder(
-					_calendarFactory);
+				new ModifiedFacetCalendarDisplayContextBuilder();
 
 		modifiedFacetCalendarDisplayContextBuilder.setLocale(
 			LocaleUtil.getDefault());
@@ -193,7 +185,5 @@ public class ModifiedFacetCalendarDisplayContextBuilderTest {
 
 		return Optional.of(TimeZoneUtil.getTimeZone(availableIDs[0]));
 	}
-
-	private CalendarFactory _calendarFactory;
 
 }

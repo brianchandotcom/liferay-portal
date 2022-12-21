@@ -18,7 +18,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.junit.Assert;
@@ -144,18 +143,6 @@ public class DateUtilTest {
 	}
 
 	private void _testGetDaysBetween(Date date1, Date date2, int expected) {
-		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
-
-		CalendarFactory calendarFactory = Mockito.mock(CalendarFactory.class);
-
-		calendarFactoryUtil.setCalendarFactory(calendarFactory);
-
-		Mockito.when(
-			calendarFactory.getCalendar()
-		).thenReturn(
-			new GregorianCalendar()
-		);
-
 		Assert.assertEquals(
 			expected, DateUtil.getDaysBetween(date1, date2, null));
 	}

@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.CalendarFactory;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -55,7 +53,6 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -99,7 +96,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_mockCalendarUtil();
 		_mockDigesterUtil();
 		_mockLanguageUtil();
 
@@ -581,20 +577,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.any(Long.class), Mockito.eq(false))
 		).thenReturn(
 			user
-		);
-	}
-
-	private void _mockCalendarUtil() {
-		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
-
-		CalendarFactory calendarFactory = Mockito.mock(CalendarFactory.class);
-
-		calendarFactoryUtil.setCalendarFactory(calendarFactory);
-
-		Mockito.when(
-			calendarFactory.getCalendar()
-		).thenReturn(
-			new GregorianCalendar()
 		);
 	}
 

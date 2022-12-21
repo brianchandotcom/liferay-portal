@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,7 +39,6 @@ import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFa
 import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.List;
@@ -67,8 +65,6 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_calendarFactory = new CalendarFactoryImpl();
-
 		_dateFormatFactory = new DateFormatFactoryImpl();
 
 		_dateRangeFactory = new DateRangeFactory(_dateFormatFactory);
@@ -394,7 +390,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 		try {
 			return new ModifiedFacetDisplayContextBuilder(
-				_calendarFactory, _dateFormatFactory, _getRenderRequest());
+				_dateFormatFactory, _getRenderRequest());
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
@@ -502,7 +498,6 @@ public class ModifiedFacetDisplayContextBuilderTest {
 		portalUtil.setPortal(portal);
 	}
 
-	private CalendarFactory _calendarFactory;
 	private DateFormatFactory _dateFormatFactory;
 	private DateRangeFactory _dateRangeFactory;
 	private final Facet _facet = Mockito.mock(Facet.class);

@@ -16,10 +16,11 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {fetch, openModal, openToast} from 'frontend-js-web';
+import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useRef, useState} from 'react';
 
+const ACTION_DELETE = 'delete';
 const ENTER_KEYCODE = 13;
 const ROOT_ITEM_ID = '0';
 const NOT_DROPPABLE_TYPES = ['url', 'link_to_layout'];
@@ -266,10 +267,38 @@ function normalizeActions(actions, namespace) {
 				nextItem.onClick = (event) => {
 					event.preventDefault();
 
+					let modalData = {
+						url: item.data.url,
+					};
+
+					if (item.id === ACTION_DELETE) {
+						modalData = {
+							bodyHTML: item.data.message,
+							buttons: [
+								{
+									autoFocus: true,
+									displayType: 'secondary',
+									label: Liferay.Language.get('cancel'),
+									type: 'cancel',
+								},
+								{
+									displayType: 'danger',
+									label: Liferay.Language.get('delete'),
+									onClick: ({processClose}) => {
+										processClose();
+
+										navigate(item.data.url);
+									},
+								},
+							],
+							status: 'danger',
+						};
+					}
+
 					openModal({
 						id: `${namespace}pagesTreeModal`,
 						title: item.data.modalTitle,
-						url: item.data.url,
+						...modalData,
 					});
 				};
 			}

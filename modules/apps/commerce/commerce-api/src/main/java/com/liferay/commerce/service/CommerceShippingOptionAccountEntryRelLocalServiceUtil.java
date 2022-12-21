@@ -317,6 +317,13 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceUtil {
 			start, end);
 	}
 
+	public static List<CommerceShippingOptionAccountEntryRel>
+		getCommerceShippingOptionAccountEntryRels(long accountEntryId) {
+
+		return getService().getCommerceShippingOptionAccountEntryRels(
+			accountEntryId);
+	}
+
 	/**
 	 * Returns the number of commerce shipping option account entry rels.
 	 *
@@ -324,6 +331,13 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceUtil {
 	 */
 	public static int getCommerceShippingOptionAccountEntryRelsCount() {
 		return getService().getCommerceShippingOptionAccountEntryRelsCount();
+	}
+
+	public static int getCommerceShippingOptionAccountEntryRelsCount(
+		long accountEntryId) {
+
+		return getService().getCommerceShippingOptionAccountEntryRelsCount(
+			accountEntryId);
 	}
 
 	public static

@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -66,6 +68,22 @@ public interface CommerceShippingOptionAccountEntryRelService
 			fetchCommerceShippingOptionAccountEntryRel(
 				long accountEntryId, long commerceChannelId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShippingOptionAccountEntryRel
+			getCommerceShippingOptionAccountEntryRel(
+				long commerceShippingOptionAccountEntryRelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingOptionAccountEntryRel>
+			getCommerceShippingOptionAccountEntryRels(long accountEntryId)
+		throws Exception;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShippingOptionAccountEntryRelsCount(
+			long accountEntryId)
+		throws Exception;
 
 	/**
 	 * Returns the OSGi service identifier.

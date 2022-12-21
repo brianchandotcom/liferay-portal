@@ -74,6 +74,36 @@ public class CommerceShippingOptionAccountEntryRelServiceWrapper
 				accountEntryId, commerceChannelId);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel
+			getCommerceShippingOptionAccountEntryRel(
+				long commerceShippingOptionAccountEntryRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingOptionAccountEntryRelService.
+			getCommerceShippingOptionAccountEntryRel(
+				commerceShippingOptionAccountEntryRelId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel>
+				getCommerceShippingOptionAccountEntryRels(long accountEntryId)
+			throws Exception {
+
+		return _commerceShippingOptionAccountEntryRelService.
+			getCommerceShippingOptionAccountEntryRels(accountEntryId);
+	}
+
+	@Override
+	public int getCommerceShippingOptionAccountEntryRelsCount(
+			long accountEntryId)
+		throws Exception {
+
+		return _commerceShippingOptionAccountEntryRelService.
+			getCommerceShippingOptionAccountEntryRelsCount(accountEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -182,6 +182,131 @@ public class CommerceShippingOptionAccountEntryRelServiceHttp {
 
 	public static
 		com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel
+				getCommerceShippingOptionAccountEntryRel(
+					HttpPrincipal httpPrincipal,
+					long commerceShippingOptionAccountEntryRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceShippingOptionAccountEntryRelServiceUtil.class,
+				"getCommerceShippingOptionAccountEntryRel",
+				_getCommerceShippingOptionAccountEntryRelParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceShippingOptionAccountEntryRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.model.
+				CommerceShippingOptionAccountEntryRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel>
+				getCommerceShippingOptionAccountEntryRels(
+					HttpPrincipal httpPrincipal, long accountEntryId)
+			throws Exception {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceShippingOptionAccountEntryRelServiceUtil.class,
+				"getCommerceShippingOptionAccountEntryRels",
+				_getCommerceShippingOptionAccountEntryRelsParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof Exception) {
+					throw (Exception)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.model.
+					CommerceShippingOptionAccountEntryRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCommerceShippingOptionAccountEntryRelsCount(
+			HttpPrincipal httpPrincipal, long accountEntryId)
+		throws Exception {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceShippingOptionAccountEntryRelServiceUtil.class,
+				"getCommerceShippingOptionAccountEntryRelsCount",
+				_getCommerceShippingOptionAccountEntryRelsCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof Exception) {
+					throw (Exception)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel
 				updateCommerceShippingOptionAccountEntryRel(
 					HttpPrincipal httpPrincipal,
 					long commerceShippingOptionAccountEntryRelId,
@@ -193,7 +318,7 @@ public class CommerceShippingOptionAccountEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceShippingOptionAccountEntryRelServiceUtil.class,
 				"updateCommerceShippingOptionAccountEntryRel",
-				_updateCommerceShippingOptionAccountEntryRelParameterTypes3);
+				_updateCommerceShippingOptionAccountEntryRelParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShippingOptionAccountEntryRelId,
@@ -242,7 +367,17 @@ public class CommerceShippingOptionAccountEntryRelServiceHttp {
 		_fetchCommerceShippingOptionAccountEntryRelParameterTypes2 =
 			new Class[] {long.class, long.class};
 	private static final Class<?>[]
-		_updateCommerceShippingOptionAccountEntryRelParameterTypes3 =
+		_getCommerceShippingOptionAccountEntryRelParameterTypes3 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getCommerceShippingOptionAccountEntryRelsParameterTypes4 =
+			new Class[] {long.class};
+	private static final Class<?>[]
+		_getCommerceShippingOptionAccountEntryRelsCountParameterTypes5 =
+			new Class[] {long.class};
+	private static final Class<?>[]
+		_updateCommerceShippingOptionAccountEntryRelParameterTypes6 =
 			new Class[] {long.class, String.class, String.class};
 
 }

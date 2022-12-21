@@ -359,6 +359,15 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceWrapper
 			getCommerceShippingOptionAccountEntryRels(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel>
+			getCommerceShippingOptionAccountEntryRels(long accountEntryId) {
+
+		return _commerceShippingOptionAccountEntryRelLocalService.
+			getCommerceShippingOptionAccountEntryRels(accountEntryId);
+	}
+
 	/**
 	 * Returns the number of commerce shipping option account entry rels.
 	 *
@@ -368,6 +377,14 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceWrapper
 	public int getCommerceShippingOptionAccountEntryRelsCount() {
 		return _commerceShippingOptionAccountEntryRelLocalService.
 			getCommerceShippingOptionAccountEntryRelsCount();
+	}
+
+	@Override
+	public int getCommerceShippingOptionAccountEntryRelsCount(
+		long accountEntryId) {
+
+		return _commerceShippingOptionAccountEntryRelLocalService.
+			getCommerceShippingOptionAccountEntryRelsCount(accountEntryId);
 	}
 
 	@Override

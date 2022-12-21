@@ -346,12 +346,20 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 							new Sort("nestedFieldArray.value_long#number", true)
 						});
 
+			ObjectEntry firstTestrayCaseResultObjectEntry =
+				testrayCaseResultObjectEntry.get(0);
+
+			Map<String, Object> map =
+				firstTestrayCaseResultObjectEntry.getProperties();
+
 			ObjectEntry testraySubtaskObjectEntry =
 				_siteInitializerTestrayDispatchTaskExecutorHelper.
 					addObjectEntry(
 						"Subtask",
 						HashMapBuilder.<String, Object>put(
 							"dueStatus", "OPEN"
+						).put(
+							"errors", map.get("errors")
 						).put(
 							"name", "ST-" + testraySubtaskNumber
 						).put(

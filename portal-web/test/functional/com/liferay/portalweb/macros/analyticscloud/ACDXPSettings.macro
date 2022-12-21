@@ -144,6 +144,16 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro setFilterAndOrderInAssignModal {
+		var menuItem = "${orderBy}";
+
+		Click.pauseClickAt(locator1 = "ACDXPSettings#ASSING_MODAL_FILTER_AND_ORDER");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro setSortDirection {
 		if (IsElementNotPresent(key_sortDirection = "${sortDirection}", locator1 = "ACDXPSettings#SORT_DIRECTION")) {
 			Click(locator1 = "ACDXPSettings#SORT_BUTTON");

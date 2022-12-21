@@ -125,6 +125,11 @@
 	<td>//div[contains(@class,'fade show')]//*[contains(@class,'order-list-${key_sortDirection}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSING_MODAL_FILTER_AND_ORDER</td>
+	<td>//div[contains(@class,'fade show')]//*[*[normalize-space(text())='Filter and Order']]</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

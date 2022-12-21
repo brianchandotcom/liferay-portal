@@ -12,9 +12,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given config file for client extension of type custom element created") {
-			// ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
 
-			// ClientExtension.checkConfigFileCreatedProperly();
+			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			ClientExtension.checkConfigFileCreatedProperly();
 
 			RemoteApps.goToRemoteAppsPortlet();
 		}
@@ -44,7 +44,7 @@ definition {
 			RemoteApps.assertTextInputContent(
 				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name",
 				entryInformationList = "Vanilla Counter,,Custom Element,vanilla,vanilla-counter,category.remote-apps");
-				
+
 			RemoteApps.assertTextAreaContent(
 				entryFieldList = "description,CSS URLs,_URLs,properties",
 				entryInformationList = "Custom Element Description,https://liferay.github.io/liferay-frontend-projects/index.css,https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js,test-data-user=QAuser");
@@ -55,11 +55,9 @@ definition {
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.assertTextInputDisable(
-				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
-			
-			RemoteApps.assertTextAreaDisable(
-				entryFieldList = "description,CSS URLs,_URLs,properties");	
+			RemoteApps.assertTextInputDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
+
+			RemoteApps.assertTextAreaDisable(entryFieldList = "description,CSS URLs,_URLs,properties");
 		}
 	}
 
@@ -96,7 +94,7 @@ definition {
 			RemoteApps.assertTextInputContent(
 				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name",
 				entryInformationList = "Vanilla Counter,,Custom Element,vanilla,vanilla-counter,category.remote-apps");
-				
+
 			RemoteApps.assertTextAreaContent(
 				entryFieldList = "description,CSS URLs,_URLs,properties",
 				entryInformationList = "Custom Element Description,https://liferay.github.io/liferay-frontend-projects/index.css,https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js,test-data-user=QAuser");
@@ -107,11 +105,9 @@ definition {
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.assertTextInputDisable(
-				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
-			
-			RemoteApps.assertTextAreaDisable(
-				entryFieldList = "description,CSS URLs,_URLs,properties");	
+			RemoteApps.assertTextInputDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
+
+			RemoteApps.assertTextAreaDisable(entryFieldList = "description,CSS URLs,_URLs,properties");
 		}
 	}
 

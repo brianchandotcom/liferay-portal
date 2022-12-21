@@ -158,6 +158,64 @@ definition {
 			value1 = "${entryName}");
 	}
 
+	macro assertTextAreaContent {
+		var list1 = ListUtil.newListFromString("${entryInformationList}");
+		var list2 = ListUtil.newListFromString("${entryFieldList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var entryInformation = ListUtil.get("${list1}", "${i}");
+			var entryField = ListUtil.get("${list2}", "${i}");
+
+			AssertTextEquals(
+				key_text = "${entryField}",
+				locator1 = "TextArea#ANY",
+				value1 = "${entryInformation}");
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
+	macro assertTextAreaDisable {
+		for (var entryField : list "${entryFieldList}") {
+			AssertNotEditable(
+				key_text = "${entryField}",
+				locator1 = "TextArea#ANY");
+		}
+	}
+
+	macro assertTextInputContent {
+		var list1 = ListUtil.newListFromString("${entryInformationList}");
+		var list2 = ListUtil.newListFromString("${entryFieldList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var entryInformation = ListUtil.get("${list1}", "${i}");
+			var entryField = ListUtil.get("${list2}", "${i}");
+
+			AssertTextEquals(
+				key_text = "${entryField}",
+				locator1 = "TextInput#ANY",
+				value1 = "${entryInformation}");
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
+	macro assertTextInputDisable {
+		for (var entryField : list "${entryFieldList}") {
+			AssertNotEditable(
+				key_text = "${entryField}",
+				locator1 = "TextInput#ANY");
+		}
+	}
+
 	macro deleteRemoteApp {
 		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
 
@@ -252,66 +310,6 @@ definition {
 		}
 
 		RemoteApps.viewEmptyRemoteTable();
-	}
-
-	macro assertTextInputDisable {
-		for (var entryField : list "${entryFieldList}") {
-			AssertNotEditable(
-				key_text = "${entryField}",
-				locator1 = "TextInput#ANY");
-		}
-	}
-
-	macro assertTextAreaDisable {
-		for (var entryField : list "${entryFieldList}") {
-			AssertNotEditable(
-				key_text = "${entryField}",
-				locator1 = "TextArea#ANY");
-		}
-	}
-
-	macro assertTextInputContent {
-		var list1 = ListUtil.newListFromString("${entryInformationList}");
-		var list2 = ListUtil.newListFromString("${entryFieldList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
-
-		while ("${i}" != "${size}"){
-			var entryInformation = ListUtil.get("${list1}", "${i}");
-			var entryField = ListUtil.get("${list2}", "${i}");
-
-			AssertTextEquals(
-				key_text = "${entryField}",
-				locator1 = "TextInput#ANY",
-				value1 = "${entryInformation}");
-	
-			var i = ${i} + 1;
-
-			var i = StringUtil.valueOf("${i}");
-		}
-
-	}
-
-	macro assertTextAreaContent {
-		var list1 = ListUtil.newListFromString("${entryInformationList}");
-		var list2 = ListUtil.newListFromString("${entryFieldList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
-
-		while ("${i}" != "${size}"){
-			var entryInformation = ListUtil.get("${list1}", "${i}");
-			var entryField = ListUtil.get("${list2}", "${i}");
-
-			AssertTextEquals(
-				key_text = "${entryField}",
-				locator1 = "TextArea#ANY",
-				value1 = "${entryInformation}");
-	
-			var i = ${i} + 1;
-
-			var i = StringUtil.valueOf("${i}");
-		}
-
 	}
 
 	macro viewEmptyRemoteTable {

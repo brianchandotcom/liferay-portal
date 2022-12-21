@@ -108,9 +108,7 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		for (Object object : contributorsJSONArray) {
 			JSONObject jsonObject = (JSONObject)object;
 
-			Assert.assertNull(
-				"initialQuery is not null",
-				jsonObject.getJSONObject("initialQuery"));
+			Assert.assertNull(jsonObject.getJSONObject("initialQuery"));
 		}
 
 		Assert.assertEquals(
@@ -123,21 +121,15 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		Assert.assertNull(props.get("initialSegmentName"));
 		Assert.assertTrue((boolean)props.get("isSegmentationEnabled"));
 		Assert.assertEquals(LocaleUtil.US.toString(), props.get("locale"));
-		Assert.assertNotNull(
-			"previewMembersURL is null", props.get("previewMembersURL"));
-		Assert.assertNotNull("redirect is null", props.get("redirect"));
-		Assert.assertNotNull(
-			"requestMembersCountURL is null",
-			props.get("requestMembersCountURL"));
-		Assert.assertNotNull("scopeName is null", props.get("scopeName"));
+		Assert.assertNotNull(props.get("previewMembersURL"));
+		Assert.assertNotNull(props.get("redirect"));
+		Assert.assertNotNull(props.get("requestMembersCountURL"));
+		Assert.assertNotNull(props.get("scopeName"));
 		Assert.assertEquals(
 			_group.getDescriptiveName(), props.get("scopeName"));
-		Assert.assertNotNull(
-			"segmentsConfigurationURL is null",
-			props.get("segmentsConfigurationURL"));
+		Assert.assertNotNull(props.get("segmentsConfigurationURL"));
 		Assert.assertTrue((boolean)props.get("showInEditMode"));
-		Assert.assertNotNull(
-			"siteItemSelectorURL is null", props.get("siteItemSelectorURL"));
+		Assert.assertNotNull(props.get("siteItemSelectorURL"));
 	}
 
 	@Test
@@ -219,9 +211,7 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 			segmentsEntry.getName(LocaleUtil.US),
 			initialSegmentNameJSONObject.get(LocaleUtil.US.toString()));
 
-		Assert.assertNull(
-			"siteItemSelectorURL is not null",
-			props.get("siteItemSelectorURL"));
+		Assert.assertNull(props.get("siteItemSelectorURL"));
 	}
 
 	private SegmentsEntry _addSegmentEntry(String filterString)

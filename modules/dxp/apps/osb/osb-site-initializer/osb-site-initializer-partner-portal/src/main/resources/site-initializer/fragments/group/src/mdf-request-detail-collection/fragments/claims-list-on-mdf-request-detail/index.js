@@ -14,16 +14,20 @@
 import ClayAlert from '@clayui/alert';
 import React, {useEffect, useState} from 'react';
 
+const findRequestIdUrl = (paramsUrl) => {
+	const splitParamsUrl = paramsUrl.split('?');
+
+	return splitParamsUrl[0];
+};
 function getIntlNumberFormat() {
 	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		currency: 'USD',
 		style: 'currency',
 	});
 }
-
 function getSiteVariables() {
 	const currentPath = Liferay.currentURL.split('/');
-	const mdfRequestId = +currentPath.at(-1);
+	const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 	const SITE_URL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 		.split('/')
 		.slice(0, 3)
@@ -136,8 +140,7 @@ export default function () {
 				type: 'danger',
 			});
 		};
-
-		if (mdfRequestId) {
+		if (!isNaN(mdfRequestId)) {
 			getClaimFromMDFRequest();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

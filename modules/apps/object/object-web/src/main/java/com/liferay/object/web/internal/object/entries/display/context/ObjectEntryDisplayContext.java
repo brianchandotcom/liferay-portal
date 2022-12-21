@@ -42,6 +42,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -101,7 +102,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
@@ -353,6 +353,16 @@ public class ObjectEntryDisplayContext {
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition2.getScope());
 
+		Map<String, String> relationshipContextParams =
+			getRelationshipContextParams();
+
+		long objectRelationshipId = GetterUtil.getLong(
+			relationshipContextParams.get("objectRelationshipId"));
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
 		if (!objectDefinition1.isSystem() && !objectDefinition2.isSystem() &&
 			ObjectEntryServiceUtil.hasPortletResourcePermission(
 				objectScopeProvider.getGroupId(
@@ -365,7 +375,9 @@ public class ObjectEntryDisplayContext {
 			  StringUtil.equals(
 				  objectDefinition2.getScope(),
 				  ObjectDefinitionConstants.SCOPE_SITE)) &&
-			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165850"))) {
+			StringUtil.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
@@ -386,26 +398,11 @@ public class ObjectEntryDisplayContext {
 						).setParameter(
 							ObjectFieldSettingConstants.
 								NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-							() -> {
-								Map<String, String> relationshipContextParams =
-									getRelationshipContextParams();
-
-								long objectRelationshipId = GetterUtil.getLong(
-									relationshipContextParams.get(
-										"objectRelationshipId"));
-
-								ObjectRelationship objectRelationship =
-									_objectRelationshipLocalService.
-										getObjectRelationship(
-											objectRelationshipId);
-
-								return ObjectFieldSettingUtil.getValue(
-									ObjectFieldSettingConstants.
-										NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-									_objectFieldLocalService.getObjectField(
-										objectRelationship.
-											getObjectFieldId2()));
-							}
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+								_objectFieldLocalService.getObjectField(
+									objectRelationship.getObjectFieldId2()))
 						).setParameter(
 							"objectDefinitionId",
 							objectDefinition2.getObjectDefinitionId()

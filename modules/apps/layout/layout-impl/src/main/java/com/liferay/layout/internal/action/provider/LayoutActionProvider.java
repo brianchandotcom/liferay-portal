@@ -308,7 +308,7 @@ public class LayoutActionProvider {
 						"modalTitle",
 						_language.get(_themeDisplay.getLocale(), "delete-page")
 					).put(
-						"url", "url"
+						"url", _getDeleteLayoutURL(layout)
 					).build()
 				).put(
 					"id", "delete"
@@ -473,6 +473,25 @@ public class LayoutActionProvider {
 			"sourcePlid", layout.getPlid()
 		).setWindowState(
 			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
+	private String _getDeleteLayoutURL(Layout layout) {
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
+			return null;
+		}
+
+		return ActionURLBuilder.createActionURL(
+			(ActionURL)PortalUtil.getControlPanelPortletURL(
+				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/layout_admin/delete_layout"
+		).setParameter(
+			"selPlid", String.valueOf(layout.getPlid())
 		).buildString();
 	}
 

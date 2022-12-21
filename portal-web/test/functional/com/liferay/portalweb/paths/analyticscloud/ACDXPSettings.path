@@ -115,6 +115,16 @@
 	<td>//div[contains(@class,'fade show')]//button[@aria-label='Next']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSING_MODAL_SORT_BUTTON</td>
+	<td>//div[contains(@class,'fade show')]//button[@aria-label='sort']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSING_MODAL_SORT_DIRECTION</td>
+	<td>//div[contains(@class,'fade show')]//*[contains(@class,'order-list-${key_sortDirection}')]</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

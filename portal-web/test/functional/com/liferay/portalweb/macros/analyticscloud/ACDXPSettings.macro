@@ -150,6 +150,12 @@ definition {
 		}
 	}
 
+	macro setSortDirectionInAssignModal {
+		if (IsElementNotPresent(key_sortDirection = "${sortDirection}", locator1 = "ACDXPSettings#ASSING_MODAL_SORT_DIRECTION")) {
+			Click(locator1 = "ACDXPSettings#ASSING_MODAL_SORT_BUTTON");
+		}
+	}
+
 	macro switchTab {
 		var key_tab = "${tabName}";
 

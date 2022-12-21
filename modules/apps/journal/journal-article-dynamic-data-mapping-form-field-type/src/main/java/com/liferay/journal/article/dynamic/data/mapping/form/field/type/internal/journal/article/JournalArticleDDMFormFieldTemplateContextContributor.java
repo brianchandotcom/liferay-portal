@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 import java.util.Map;
@@ -137,9 +136,8 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 				long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 				JournalArticle journalArticle =
-					_journalArticleLocalService.fetchLatestArticle(
-						groupId, String.valueOf(articleId),
-						WorkflowConstants.STATUS_APPROVED);
+					_journalArticleLocalService.fetchArticle(
+						groupId, String.valueOf(articleId));
 
 				return journalArticle.getResourcePrimKey();
 			}

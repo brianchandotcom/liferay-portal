@@ -34,4 +34,4 @@ class DadJoke extends React.Component {
 	}
 }
 
-export default Joke;
+export default DadJoke;

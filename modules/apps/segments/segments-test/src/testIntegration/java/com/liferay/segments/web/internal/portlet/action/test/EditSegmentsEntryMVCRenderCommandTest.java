@@ -16,7 +16,9 @@ package com.liferay.segments.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -34,6 +36,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -103,24 +107,32 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 
 		Map<String, Object> props = (Map<String, Object>)data.get("props");
 
-		JSONArray contributorsJSONArray = (JSONArray)props.get("contributors");
+		JSONArray jsonArray = (JSONArray)props.get("contributors");
 
-		for (Object object : contributorsJSONArray) {
+		for (Object object : jsonArray) {
 			JSONObject jsonObject = (JSONObject)object;
 
 			Assert.assertNull(jsonObject.getJSONObject("initialQuery"));
 		}
 
 		Assert.assertEquals(
-			LocaleUtil.US.toString(), props.get("defaultLanguageId"));
-		Assert.assertNotNull(props.get("formId"));
+			LocaleUtil.toLanguageId(
+				_portal.getSiteDefaultLocale(_group.getGroupId())),
+			props.get("defaultLanguageId"));
+
+		String formId = String.valueOf(props.get("formId"));
+
+		Assert.assertTrue(formId.endsWith("editSegmentFm"));
+
 		Assert.assertEquals(_group.getGroupId(), (long)props.get("groupId"));
 		Assert.assertTrue((boolean)props.get("hasUpdatePermission"));
 		Assert.assertEquals(0, (int)props.get("initialMembersCount"));
 		Assert.assertFalse((boolean)props.get("initialSegmentActive"));
 		Assert.assertNull(props.get("initialSegmentName"));
 		Assert.assertTrue((boolean)props.get("isSegmentationEnabled"));
-		Assert.assertEquals(LocaleUtil.US.toString(), props.get("locale"));
+		Assert.assertEquals(
+			String.valueOf(_portal.getLocale(mockLiferayPortletRenderRequest)),
+			props.get("locale"));
 		Assert.assertNotNull(props.get("previewMembersURL"));
 		Assert.assertNotNull(props.get("redirect"));
 		Assert.assertNotNull(props.get("requestMembersCountURL"));
@@ -199,17 +211,21 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		}
 
 		Assert.assertTrue(findUserContributor);
+
 		Assert.assertEquals(
-			LocaleUtil.US.toString(), props.get("defaultLanguageId"));
+			LocalizationUtil.getDefaultLanguageId(segmentsEntry.getName()),
+			props.get("defaultLanguageId"));
+
 		Assert.assertEquals(1, (int)props.get("initialMembersCount"));
 		Assert.assertTrue((boolean)props.get("initialSegmentActive"));
 
-		JSONObject initialSegmentNameJSONObject = (JSONObject)props.get(
-			"initialSegmentName");
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		Assert.assertEquals(
-			segmentsEntry.getName(LocaleUtil.US),
-			initialSegmentNameJSONObject.get(LocaleUtil.US.toString()));
+			String.valueOf(
+				JSONFactoryUtil.createJSONObject(
+					jsonSerializer.serializeDeep(segmentsEntry.getNameMap()))),
+			String.valueOf(props.get("initialSegmentName")));
 
 		Assert.assertNull(props.get("siteItemSelectorURL"));
 	}
@@ -268,6 +284,9 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		type = MVCRenderCommand.class
 	)
 	private MVCRenderCommand _mvcRenderCommand;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject(
 		filter = "segments.criteria.contributor.key=user",

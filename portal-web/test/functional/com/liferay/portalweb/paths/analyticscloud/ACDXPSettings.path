@@ -110,6 +110,11 @@
 	<td>//div[contains(@class,'fade show')]//div[contains(@class,'pagination-items-per-page')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSING_MODAL_NEXT_PAGE</td>
+	<td>//div[contains(@class,'fade show')]//button[@aria-label='Next']</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

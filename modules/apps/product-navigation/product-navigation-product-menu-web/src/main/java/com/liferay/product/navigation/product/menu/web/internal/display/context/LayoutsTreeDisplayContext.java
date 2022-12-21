@@ -443,13 +443,13 @@ public class LayoutsTreeDisplayContext {
 		return JSONUtil.put(
 			"items", itemsJSONArray
 		).put(
-			"name", LanguageUtil.get(_themeDisplay.getLocale(), nameKey)
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), nameKey)
 		);
 	}
 
 	private JSONObject _getOptionJSONObject(String name, String value) {
 		return JSONUtil.put(
-			"name", name
+			"label", name
 		).put(
 			"value", value
 		);

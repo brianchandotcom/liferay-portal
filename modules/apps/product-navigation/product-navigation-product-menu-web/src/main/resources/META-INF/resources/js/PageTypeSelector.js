@@ -12,7 +12,8 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -27,16 +28,12 @@ function PageTypeSelector({
 	namespace,
 	pageTypeOptions,
 	pageTypeSelectedOption,
-	pageTypeSelectedOptionLabel,
 	pagesTreeURL,
 	showAddIcon,
 }) {
 	const [addPageDropdownActive, setAddPageDropdownActive] = useState(false);
-	const [pageTypeDropdownActive, setPageTypeDropdownActive] = useState(false);
 
 	const handleSelect = (type) => {
-		setPageTypeDropdownActive(false);
-
 		setSessionValue(`${namespace}PAGE_TYPE_SELECTED_OPTION`, type).then(
 			() => {
 				Liferay.Portlet.destroy(`#p_p_id${namespace}`, true);
@@ -88,53 +85,31 @@ function PageTypeSelector({
 
 	return (
 		<div className="align-items-center d-flex page-type-selector">
-			<ClayDropDown
-				active={pageTypeDropdownActive}
-				menuElementAttrs={{
-					containerProps: {
-						className: 'cadmin',
-					},
-				}}
-				onActiveChange={setPageTypeDropdownActive}
-				trigger={
-					<ClayButton
-						className="form-control-select text-left"
-						displayType="secondary"
-						size="sm"
-						type="button"
-					>
-						{pageTypeSelectedOptionLabel}
-					</ClayButton>
-				}
+			<Picker
+				aria-label={Liferay.Language.get('pages-type')}
+				className="form-control-sm"
+				items={pageTypeOptions.filter((option) => option.items.length)}
+				onSelectionChange={handleSelect}
+				selectedKey={pageTypeSelectedOption}
 			>
-				<ClayDropDown.ItemList>
-					{pageTypeOptions
-						.filter((option) => option.items.length)
-						.map((option, index) => (
-							<React.Fragment key={index}>
-								<ClayDropDown.Item disabled key={option.value}>
-									{option.name}
-								</ClayDropDown.Item>
-
-								{option.items.map((item) => (
-									<ClayDropDown.Item
-										className="page-type-selector-option"
-										key={item.value}
-										onClick={() => handleSelect(item.value)}
-										symbolRight={
-											item.value ===
-											pageTypeSelectedOption
-												? 'check'
-												: null
-										}
-									>
-										{item.name}
-									</ClayDropDown.Item>
-								))}
-							</React.Fragment>
-						))}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
+				{(group) => (
+					<ClayDropDown.Group
+						header={group.label}
+						items={group.items}
+						key={group.label}
+					>
+						{(item) => (
+							<Option
+								className="page-type-selector-option"
+								id={item.value}
+								key={item.value}
+							>
+								{item.label}
+							</Option>
+						)}
+					</ClayDropDown.Group>
+				)}
+			</Picker>
 
 			<div className="flex-fill flex-grow-1 text-right">
 				{showAddIcon && (

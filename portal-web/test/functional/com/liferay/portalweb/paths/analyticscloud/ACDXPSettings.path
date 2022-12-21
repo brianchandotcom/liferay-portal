@@ -168,6 +168,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSING_MODAL_VIEW_LIST_ITEM_ORDER</td>
+	<td>xpath=(//div[contains(@class,'fade show')]//tr[@data-testid])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_BUTTON</td>
 	<td>//button[@aria-label='sort']</td>
 	<td></td>

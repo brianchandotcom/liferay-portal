@@ -1,5 +1,23 @@
 definition {
 
+	macro _switchBetweenPublicationRole {
+		Click(
+			key_title = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_BODY_TITLE");
+
+		Click(
+			key_publicationRole = "${switchBetweenPublicationRole}",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_BODY");
+
+		Click(
+			key_title  = "Editors can view and edit. Editors cannot publish or invite other users.",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_BODY_TITLE");
+
+		Click(
+			key_publicationRole = "${publicationRole}",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_BODY");
+	}
+
 	macro assertDiscardIsUnavailableForInactivePublication {
 		if (isSet(changeOrder)) {
 			var changeOrder = "${changeOrder}";
@@ -220,6 +238,12 @@ definition {
 			KeyPress(
 				locator1 = "Publications#KEYWORD_TEXTFIELD",
 				value1 = "\ENTER");
+		}
+
+		if (isSet(switchBetweenPublicationRole)) {
+			Publications._switchBetweenPublicationRole(
+				publicationRole = "${publicationRole}",
+				switchBetweenPublicationRole = "${switchBetweenPublicationRole}");
 		}
 
 		Button.clickNoError(button = "Send");

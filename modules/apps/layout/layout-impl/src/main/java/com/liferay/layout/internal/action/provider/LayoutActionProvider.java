@@ -52,6 +52,7 @@ import com.liferay.product.navigation.product.menu.constants.ProductNavigationPr
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Map;
 import java.util.Objects;
@@ -260,7 +261,17 @@ public class LayoutActionProvider {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119382"))) {
 			itemsJSONArray.put(
 				JSONUtil.put(
-					"href", ""
+					"data",
+					JSONUtil.put(
+						"id", "permissions"
+					).put(
+						"modalTitle",
+						_language.get(_themeDisplay.getLocale(), "permissions")
+					).put(
+						"url", _getPermissionsURL(layout)
+					)
+				).put(
+					"href", StringPool.POUND
 				).put(
 					"id", "permissions"
 				).put(
@@ -568,6 +579,15 @@ public class LayoutActionProvider {
 		_pageTypeSelectedOption = pageTypeSelectedOption;
 
 		return _pageTypeSelectedOption;
+	}
+
+	private String _getPermissionsURL(Layout layout) throws Exception {
+		return PermissionsURLTag.doTag(
+			StringPool.BLANK, Layout.class.getName(),
+			HtmlUtil.escape(layout.getName(_themeDisplay.getLocale())), null,
+			String.valueOf(layout.getPlid()),
+			LiferayWindowState.POP_UP.toString(), null,
+			_themeDisplay.getRequest());
 	}
 
 	private String _getRedirect() {

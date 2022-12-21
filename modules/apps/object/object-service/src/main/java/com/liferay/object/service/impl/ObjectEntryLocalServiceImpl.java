@@ -3217,8 +3217,13 @@ public class ObjectEntryLocalServiceImpl
 					listTypeEntry.getListTypeEntryId(),
 					objectStateFlow.getObjectStateFlowId());
 
-			throw new ObjectEntryValuesException.InvalidObjectStateTransition(
-				sourceObjectState, targetObjectState);
+			if (sourceObjectState.getObjectStateId() !=
+					targetObjectState.getObjectStateId()) {
+
+				throw new ObjectEntryValuesException.
+					InvalidObjectStateTransition(
+						sourceObjectState, targetObjectState);
+			}
 		}
 	}
 

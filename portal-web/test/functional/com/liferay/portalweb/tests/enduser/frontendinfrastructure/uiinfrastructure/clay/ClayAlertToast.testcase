@@ -1,7 +1,9 @@
 definition {
 
+	property portal.release = "true";
 	property portal.upstream = "true";
-    property testray.component.names = "Clay";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
 
 	setUp {
         TestCase.setUpPortalInstance();
@@ -33,12 +35,12 @@ definition {
 		}
 	}
 
-	@description = "LPS-170578 - Assert that alert message remain when mouse hover over it."
+	@description = "LPS-170578 Validate alert toast message does not disapear when mouse hovers over it."
 	@priority = "5"
 	test DoesNotDisappearWhenHoveredOver {
 		property portal.acceptance = "true";
 
-		task ("When a toast alert appear") {
+		task ("When a toast alert appears") {
 			WaitForElementPresent(
 				key_text = "Fail Submit",
 				locator1 = "Button#ANY");
@@ -53,7 +55,7 @@ definition {
 		}
 
 		task ("Then the alert does not disappear when hovered over") {
-            Pause(locator1 = "25000");
+            Pause(locator1 = "20100");
 
 			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
 		}

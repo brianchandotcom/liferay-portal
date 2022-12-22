@@ -48,14 +48,6 @@ public class SamlPeerBindingUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"drop index ", indexName, " on ", tableName));
 		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Index %s already does not exist on table %s",
-						indexName, tableName));
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

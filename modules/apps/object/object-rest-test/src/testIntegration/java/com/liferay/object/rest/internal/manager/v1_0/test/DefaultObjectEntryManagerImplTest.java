@@ -33,6 +33,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.mail.kernel.model.Account;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
@@ -65,6 +66,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -577,31 +579,12 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
 
-		try {
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry1.getAccountEntryId()
-						).put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				exception.getMessage(),
-				com.liferay.petra.string.StringBundler.concat(
-					"User ", _user.getUserId(), " must have ADD_OBJECT_ENTRY ",
-					"permission for ", _objectDefinition1.getResourceName(),
-					StringPool.SPACE));
-		}
+		_assertResourcePermissionFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				StringPool.SPACE, "must have ADD_OBJECT_ENTRY permission for ",
+				_objectDefinition1.getResourceName(), StringPool.SPACE),
+			() -> _addObjectEntry(accountEntry1));
 
 		Role buyerRole = _roleLocalService.getRole(_companyId, "Buyer");
 
@@ -614,46 +597,16 @@ public class DefaultObjectEntryManagerImplTest {
 			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
 			buyerRole.getRoleId());
 
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"r_oneToManyRelationshipName_accountEntryId",
-						accountEntry1.getAccountEntryId()
-					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Assert.assertNotNull(objectEntry);
+		Assert.assertNotNull(_addObjectEntry(accountEntry1));
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		try {
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry2.getAccountEntryId()
-						).put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				exception.getMessage(),
-				com.liferay.petra.string.StringBundler.concat(
-					"User ", _user.getUserId(), " has no access to the ",
-					"account entry ", accountEntry2.getAccountEntryId()));
-		}
+		_assertResourcePermissionFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				StringPool.SPACE, "has no access to the account entry ",
+				String.valueOf(accountEntry2.getAccountEntryId())),
+			() -> _addObjectEntry(accountEntry2));
 
 		// Organization scope
 
@@ -684,75 +637,26 @@ public class DefaultObjectEntryManagerImplTest {
 			_user.getUserId(), organizationGroup1.getGroupId(),
 			accountManagerRole.getRoleId());
 
-		try {
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry1.getAccountEntryId()
-						).put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				exception.getMessage(),
-				com.liferay.petra.string.StringBundler.concat(
-					"User ", _user.getUserId(), " must have ADD_OBJECT_ENTRY ",
-					"permission for ", _objectDefinition1.getResourceName(),
-					StringPool.SPACE));
-		}
+		_assertResourcePermissionFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				StringPool.SPACE, "must have ADD_OBJECT_ENTRY permission for ",
+				_objectDefinition1.getResourceName(), StringPool.SPACE),
+			() -> _addObjectEntry(accountEntry1));
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_companyId, _objectDefinition1.getResourceName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			accountManagerRole.getRoleId(), "ADD_OBJECT_ENTRY");
 
-		_objectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"r_oneToManyRelationshipName_accountEntryId",
-						accountEntry1.getAccountEntryId()
-					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_addObjectEntry(accountEntry1);
 
-		try {
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry2.getAccountEntryId()
-						).put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				exception.getMessage(),
-				com.liferay.petra.string.StringBundler.concat(
-					"User ", _user.getUserId(), " has no access to the ",
-					"account entry ", accountEntry2.getAccountEntryId()));
-		}
+		_assertResourcePermissionFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				StringPool.SPACE, "has no access to the account entry ",
+				String.valueOf(accountEntry2.getAccountEntryId())),
+			() -> _addObjectEntry(accountEntry2));
 
 		// Sub Organization scope
 
@@ -789,74 +693,25 @@ public class DefaultObjectEntryManagerImplTest {
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		try {
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry1.getAccountEntryId()
-						).put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				exception.getMessage(),
-				com.liferay.petra.string.StringBundler.concat(
-					"User ", _user.getUserId(), " must have ADD_OBJECT_ENTRY ",
-					"permission for ", _objectDefinition1.getResourceName(),
-					StringPool.SPACE));
-		}
+		_assertResourcePermissionFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				StringPool.SPACE, "must have ADD_OBJECT_ENTRY permission for ",
+				_objectDefinition1.getResourceName(), StringPool.SPACE),
+			() -> _addObjectEntry(accountEntry1));
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			_user.getUserId(), organizationGroup1.getGroupId(),
 			accountManagerRole.getRoleId());
 
-		_objectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"r_oneToManyRelationshipName_accountEntryId",
-						accountEntry1.getAccountEntryId()
-					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_addObjectEntry(accountEntry1);
 
-		try {
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry2.getAccountEntryId()
-						).put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				exception.getMessage(),
-				com.liferay.petra.string.StringBundler.concat(
-					"User ", _user.getUserId(), " has no access to the ",
-					"account entry ", accountEntry2.getAccountEntryId()));
-		}
+		_assertResourcePermissionFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				StringPool.SPACE, "has no access to the account entry ",
+				String.valueOf(accountEntry2.getAccountEntryId())),
+			() -> _addObjectEntry(accountEntry2));
 	}
 
 	@Test
@@ -1916,6 +1771,24 @@ public class DefaultObjectEntryManagerImplTest {
 		return listTypeEntry.getKey();
 	}
 
+	private ObjectEntry _addObjectEntry(AccountEntry accountEntry)
+		throws Exception {
+
+		return _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
 	private void _addResourcePermission(String actionId, long roleId)
 		throws Exception {
 
@@ -2099,6 +1972,19 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Assert.assertEquals(
 			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertResourcePermissionFailure(
+		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
+
+		try {
+			unsafeSupplier.get();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(exception.getMessage(), message);
+		}
 	}
 
 	private String _buildEqualsExpressionFilterString(

@@ -1,62 +1,52 @@
-<definition>
-	<command name="executeMethodInMacro">
-		<var name="expected" value="test,string," />
+definition {
 
-		<execute macro="ExternalMethod#stringUtilAdd">
-			<return from="macroReturn" name="actual" />
-		</execute>
+	macro executeMethodInMacro {
+		var expected = "test,string,";
+		var actual = ExternalMethod.stringUtilAdd();
 
-		<execute macro="ExternalMethod#validateMatch">
-			<var name="actual" value="${actual}" />
-			<var name="expected" value="${expected}" />
-		</execute>
+		ExternalMethod.validateMatch(
+			actual = "${actual}",
+			expected = "${expected}");
 
-		<var name="expected" value="TestString" />
+		var expected = "TestString";
+		var actual = ExternalMethod.stringUtilExtractChars();
 
-		<execute macro="ExternalMethod#stringUtilExtractChars">
-			<return from="macroReturn" name="actual" />
-		</execute>
+		ExternalMethod.validateMatch(
+			actual = "${actual}",
+			expected = "${expected}");
+	}
 
-		<execute macro="ExternalMethod#validateMatch">
-			<var name="actual" value="${actual}" />
-			<var name="expected" value="${expected}" />
-		</execute>
-	</command>
+	@returns = "macroReturn"
+	macro stringUtilAdd {
+		var stringUtilReturn = com.liferay.poshi.runner.util.StringUtil.add("test", "string");
 
-	<command name="stringUtilAdd" returns="macroReturn">
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="add">
-			<arg value="test" />
-			<arg value="string" />
-			<return name="stringUtilReturn" />
-		</execute>
+		return "${stringUtilReturn}";
+	}
 
-		<return name="macroReturn" value="${stringUtilReturn}" />
-	</command>
+	@returns = "macroReturn"
+	macro stringUtilExtractChars {
+		var stringUtilReturn = com.liferay.poshi.runner.util.StringUtil.extractChars("Test String");
 
-	<command name="stringUtilExtractChars" returns="macroReturn">
-		<execute class="com.liferay.poshi.runner.util.StringUtil" method="extractChars">
-			<arg value="Test String" />
-			<return name="stringUtilReturn" />
-		</execute>
+		return "${stringUtilReturn}";
+	}
 
-		<return name="macroReturn" value="${stringUtilReturn}" />
-	</command>
+	macro validateMatch {
+		if ("${actual}" == "${expected}") {
+			echo("The actual value matched the expected value.");
 
-	<command name="validateMatch">
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The actual value matched the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The actual value did NOT match the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
+			echo("action: '${actual}'");
 
-				<fail message="Execute method failed!" />
-			</else>
-		</if>
-	</command>
-</definition>
+			echo("expected: '${expected}'");
+		}
+		else {
+			echo("The actual value did NOT match the expected value!");
+
+			echo("action: '${actual}'");
+
+			echo("expected: '${expected}'");
+
+			fail("Execute method failed!");
+		}
+	}
+
+}

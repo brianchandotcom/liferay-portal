@@ -509,18 +509,32 @@ public class FragmentEntryProcessorHelperImpl
 			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 				try {
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-						"MM/dd/yy", locale);
+						"MM/dd/yy hh:mm a", locale);
 
 					return _getDateValue(
 						editableValueJSONObject,
 						simpleDateFormat.parse(value.toString()), locale);
 				}
-				catch (ParseException parseException) {
+				catch (ParseException parseException1) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(parseException);
+						_log.debug(parseException1);
 					}
 
-					return value;
+					try {
+						SimpleDateFormat simpleDateFormat =
+							new SimpleDateFormat("MM/dd/yy", locale);
+
+						return _getDateValue(
+							editableValueJSONObject,
+							simpleDateFormat.parse(value.toString()), locale);
+					}
+					catch (ParseException parseException2) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(parseException2);
+						}
+
+						return value;
+					}
 				}
 			}
 			else if (infoField.getInfoFieldType() instanceof

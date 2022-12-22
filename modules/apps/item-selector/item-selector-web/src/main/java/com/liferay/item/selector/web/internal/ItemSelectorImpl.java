@@ -179,7 +179,8 @@ public class ItemSelectorImpl implements ItemSelector {
 			ItemSelectorCriterionHandler<ItemSelectorCriterion>
 				itemSelectorCriterionHandler =
 					_itemSelectorCriterionHandlerServiceTrackerMap.getService(
-						itemSelectorCriterionClass.getName());
+						ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+							itemSelectorCriterionClass));
 
 			List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
 				itemSelectorCriterionHandler.getItemSelectorViews(
@@ -268,18 +269,10 @@ public class ItemSelectorImpl implements ItemSelector {
 				null,
 				ServiceReferenceMapperFactory.create(
 					bundleContext,
-					(itemSelectorCriterionHandler, emitter) -> {
-						Class<ItemSelectorCriterion>
-							itemSelectorCriterionClass =
-								itemSelectorCriterionHandler.
-									getItemSelectorCriterionClass();
-
-						emitter.emit(itemSelectorCriterionClass.getName());
-
-						emitter.emit(
-							ItemSelectorKeyUtil.getItemSelectorCriterionKey(
-								itemSelectorCriterionClass));
-					}));
+					(itemSelectorCriterionHandler, emitter) -> emitter.emit(
+						ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+							itemSelectorCriterionHandler.
+								getItemSelectorCriterionClass()))));
 		_itemSelectorViewRendererCustomizersServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ItemSelectorViewRendererCustomizer.class, null,

@@ -91,7 +91,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 						%>
 
 							<li class="facet-value">
-								<a href="<%= HtmlUtil.escapeHREF(modifiedFacetTermDisplayContext.getRangeURL()) %>">
+								<a href="<%= HtmlUtil.escapeHREF(modifiedFacetTermDisplayContext.getFilterValue()) %>">
 									<span class="term-name <%= modifiedFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 										<liferay-ui:message key="<%= HtmlUtil.escape(modifiedFacetTermDisplayContext.getBucketText()) %>" />
 									</span>
@@ -107,7 +107,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 						%>
 
 						<li class="facet-value">
-							<a href="<%= HtmlUtil.escapeHREF(customRangeModifiedFacetTermDisplayContext.getRangeURL()) %>" id="<portlet:namespace /><%= customRangeModifiedFacetTermDisplayContext.getBucketText() %>-toggleLink">
+							<a href="<%= HtmlUtil.escapeHREF(customRangeModifiedFacetTermDisplayContext.getFilterValue()) %>" id="<portlet:namespace /><%= customRangeModifiedFacetTermDisplayContext.getBucketText() %>-toggleLink">
 								<span class="term-name <%= customRangeModifiedFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>"><liferay-ui:message key="<%= HtmlUtil.escape(customRangeModifiedFacetTermDisplayContext.getBucketText()) %>" />&hellip;</span>
 
 								<c:if test="<%= customRangeModifiedFacetTermDisplayContext.isSelected() %>">

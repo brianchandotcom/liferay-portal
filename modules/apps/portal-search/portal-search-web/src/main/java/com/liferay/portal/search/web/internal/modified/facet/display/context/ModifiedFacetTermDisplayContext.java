@@ -25,19 +25,10 @@ public class ModifiedFacetTermDisplayContext extends BucketDisplayContext {
 		return _range;
 	}
 
-	public String getRangeURL() {
-		return _rangeURL;
-	}
-
 	public void setRange(String range) {
 		_range = range;
 	}
 
-	public void setRangeURL(String rangeURL) {
-		_rangeURL = rangeURL;
-	}
-
 	private String _range;
-	private String _rangeURL;
 
 }

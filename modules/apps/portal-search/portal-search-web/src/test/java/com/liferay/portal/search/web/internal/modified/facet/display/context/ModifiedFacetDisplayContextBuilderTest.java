@@ -369,7 +369,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 				continue;
 			}
 
-			String rangeURL = termDisplayContext.getRangeURL();
+			String rangeURL = termDisplayContext.getFilterValue();
 
 			_assertHasParameter(rangeURL, "modified");
 			_assertDoesNotHasParameter(rangeURL, "modifiedFrom");

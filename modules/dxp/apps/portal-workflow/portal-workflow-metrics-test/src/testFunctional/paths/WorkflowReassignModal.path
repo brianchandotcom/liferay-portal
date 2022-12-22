@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>NEXT_PAGINATION_BUTTON</td>
-	<td>//div[@class='modal-body']//button[contains(@aria-label,'Next')]</td>
+	<td>//div[@class='modal-body']//button[contains(@aria-label,'Next')] | //div[@class='modal-body']//a[contains(@aria-label,'next')]</td>
 	<td></td>
 </tr>
 <tr>

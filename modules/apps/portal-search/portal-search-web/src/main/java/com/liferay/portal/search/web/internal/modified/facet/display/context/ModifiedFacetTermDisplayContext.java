@@ -21,20 +21,12 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
  */
 public class ModifiedFacetTermDisplayContext extends BucketDisplayContext {
 
-	public String getLabel() {
-		return _label;
-	}
-
 	public String getRange() {
 		return _range;
 	}
 
 	public String getRangeURL() {
 		return _rangeURL;
-	}
-
-	public void setLabel(String label) {
-		_label = label;
 	}
 
 	public void setRange(String range) {
@@ -45,7 +37,6 @@ public class ModifiedFacetTermDisplayContext extends BucketDisplayContext {
 		_rangeURL = rangeURL;
 	}
 
-	private String _label;
 	private String _range;
 	private String _rangeURL;
 

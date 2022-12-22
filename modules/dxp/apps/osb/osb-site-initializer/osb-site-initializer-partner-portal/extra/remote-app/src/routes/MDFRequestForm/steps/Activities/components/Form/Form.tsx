@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useCallback} from 'react';
+import {useMemo} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
@@ -49,36 +49,36 @@ const Form = ({
 
 	const {
 		onTypeActivitySelected,
-		selectedTypeActivity,
-		tacticsBySelectedTypeActivity,
 		typeActivitiesOptions,
 	} = useTypeActivityOptions(
 		fieldEntries[LiferayPicklistName.TYPE_OF_ACTIVITY],
-		fieldEntries[LiferayPicklistName.TACTIC],
-		useCallback(
-			(selectedTypeActivity) => {
-				setFieldValue(
-					`activities[${currentActivityIndex}].typeActivity`,
-					selectedTypeActivity
-				);
+		(selectedTypeActivity) => {
+			setFieldValue(
+				`activities[${currentActivityIndex}].typeActivity`,
+				selectedTypeActivity
+			);
 
-				setFieldValue(`activities[${currentActivityIndex}].tactic`, {});
-			},
-			[currentActivityIndex, setFieldValue]
-		)
+			setFieldValue(`activities[${currentActivityIndex}].tactic`, {});
+		}
 	);
 
 	const {onTacticSelected, tacticsOptions} = useTacticsOptions(
-		tacticsBySelectedTypeActivity,
-		useCallback(
-			(selectedTactic) =>
-				setFieldValue(
-					`activities[${currentActivityIndex}].tactic`,
-					selectedTactic
+		useMemo(
+			() =>
+				fieldEntries[LiferayPicklistName.TACTIC]?.filter((tactic) =>
+					String(tactic.value).includes(
+						String(currentActivity.typeActivity?.key)
+					)
 				),
-			[currentActivityIndex, setFieldValue]
-		)
+			[currentActivity.typeActivity?.key, fieldEntries]
+		),
+		(selectedTactic) =>
+			setFieldValue(
+				`activities[${currentActivityIndex}].tactic`,
+				selectedTactic
+			)
 	);
+
 	const typeActivityComponents: TypeActivityComponent = {
 		[TypeActivityKey.DIGITAL_MARKETING]: (
 			<DigitalMarketingFields
@@ -133,7 +133,7 @@ const Form = ({
 
 				{
 					typeActivityComponents[
-						String(selectedTypeActivity?.value) || ''
+						String(currentActivity.typeActivity?.key) || ''
 					]
 				}
 

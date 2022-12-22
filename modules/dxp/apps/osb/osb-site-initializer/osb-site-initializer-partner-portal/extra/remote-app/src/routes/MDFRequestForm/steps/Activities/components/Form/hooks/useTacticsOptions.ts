@@ -24,7 +24,7 @@ export default function useTacticsOptions(
 
 		handleSelected({
 			key: optionSelected?.value as string,
-			name: optionSelected?.label as string,
+			name: optionSelected?.label,
 		});
 	};
 

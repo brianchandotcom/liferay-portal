@@ -1,0 +1,5 @@
+{
+	"description": "Card used over the Quick Links Section",
+	"fragmentCompositionDefinitionPath": "fragment-composition-definition.json",
+	"name": "Quick Links Card"
+}

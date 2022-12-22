@@ -9,26 +9,32 @@
  * distribution rights of the Software.
  */
 
+import {Status} from '../../../enums/status';
 import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../../interfaces/mdfRequest';
 
-export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
+export function getMDFRequestFromDTO(
+	mdfRequest: MDFRequestDTO,
+	requestUpdateStatus: Status
+): MDFRequest {
 	return {
 		...mdfRequest,
 		accountExternalReferenceCodeSF: mdfRequest.externalReferenceCodeSF,
-		activities: mdfRequest.mdfRequestToActivities?.map((activity) => ({
-			...activity,
-			budgets: activity.activityToBudgets,
-			leadFollowUpStrategies: activity.leadFollowUpStrategies?.split(
-				'; '
-			),
-			mdfRequestId: activity.r_mdfRequestToActivities_c_mdfRequestId,
-		})),
+		activities:
+			mdfRequest.mdfRequestToActivities?.map((activity) => ({
+				...activity,
+				budgets: activity.activityToBudgets || [],
+				leadFollowUpStrategies: activity.leadFollowUpStrategies?.split(
+					'; '
+				),
+				mdfRequestId: activity.r_mdfRequestToActivities_c_mdfRequestId,
+			})) || [],
 		additionalOption: mdfRequest.additionalOption,
 		company: mdfRequest.r_accountToMDFRequests_accountEntry,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.split(
 			'; '
 		),
+		requestStatus: requestUpdateStatus,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles?.split('; '),
 		targetMarkets: mdfRequest.targetMarkets?.split('; '),
 	};

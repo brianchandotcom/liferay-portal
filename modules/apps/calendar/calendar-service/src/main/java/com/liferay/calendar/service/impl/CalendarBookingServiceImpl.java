@@ -355,20 +355,14 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		List<CalendarBooking> filteredCalendarBookings = new ArrayList<>();
 
 		for (CalendarBooking calendarBooking : childCalendarBookings) {
-			try {
-				if (!_calendarLocalService.isStagingCalendar(
-						calendarBooking.getCalendar())) {
+			if (_calendarLocalService.isStagingCalendar(
+					_calendarLocalService.fetchCalendar(
+						calendarBooking.getCalendarId()))) {
 
-					filteredCalendarBookings.add(calendarBooking);
-				}
+				continue;
 			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException);
-				}
 
-				filteredCalendarBookings.add(calendarBooking);
-			}
+			filteredCalendarBookings.add(calendarBooking);
 		}
 
 		return filteredCalendarBookings;

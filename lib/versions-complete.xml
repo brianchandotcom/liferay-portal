@@ -570,20 +570,6 @@
 				<latest-version-publish-date>2022-11-02 03:05:03</latest-version-publish-date>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.report.impl.jar!curvesapi.jar</file-name>
-				<version>1.06</version>
-				<project-name>curvesapi</project-name>
-				<project-url>https://github.com/virtuald/curvesapi</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD License</license-name>
-						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2018-03-11 05:16:28</current-version-publish-date>
-				<latest-version-publish-date>2022-01-18 17:09:23</latest-version-publish-date>
-			</library>
-			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!ecj.jar</file-name>
 				<version>4.4.2</version>
 				<project-name>Eclipse Compiler for Java(TM)</project-name>
@@ -1092,8 +1078,8 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2019-05-06 20:10:54</current-version-publish-date>
-				<latest-version-publish-date>2022-11-07 09:32:17</latest-version-publish-date>
+				<current-version-publish-date>2019-05-06 20:12:11</current-version-publish-date>
+				<latest-version-publish-date>2022-12-22 09:23:34</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-services-oauth2.jar</file-name>
@@ -4662,7 +4648,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:32</current-version-publish-date>
-				<latest-version-publish-date>2022-12-20 21:47:32</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-21 22:24:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -4676,7 +4662,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:29</current-version-publish-date>
-				<latest-version-publish-date>2022-12-20 21:47:55</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-21 22:23:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -4690,7 +4676,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:53:45</current-version-publish-date>
-				<latest-version-publish-date>2022-12-20 21:47:02</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-21 22:24:00</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>

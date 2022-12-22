@@ -148,7 +148,7 @@ definition {
 	}
 
 	macro createProjectTestray {
-		Click(locator1 = "Testray#ADD_PROJECT");
+		Click(locator1 = "Button#PLUS");
 
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 

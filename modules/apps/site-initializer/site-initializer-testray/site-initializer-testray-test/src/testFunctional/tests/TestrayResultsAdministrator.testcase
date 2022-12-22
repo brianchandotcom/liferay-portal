@@ -398,6 +398,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160691 - Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
+	@ignore = "true"
 	@priority = "5"
 	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
 		task ("Given that the user add a new case results") {
@@ -430,8 +431,6 @@ definition {
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
-
-			Testray.clickOnPageNumber(pageNumber = "6");
 
 			Testray.assertItemName(key_name = "Components_1 Project");
 		}

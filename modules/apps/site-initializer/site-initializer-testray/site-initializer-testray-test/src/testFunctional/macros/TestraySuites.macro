@@ -103,6 +103,8 @@ definition {
 			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
 		}
 
+		Testray.checkSuccessAlertAppearsAndDisappears();
+
 		Button.clickSave();
 	}
 

@@ -16,7 +16,7 @@ import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
-import { Status } from '../../../common/utils/constants/status';
+import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFListColumns(
 	columns?: TableColumn<MDFRequestListItem>[],

@@ -112,7 +112,7 @@
 				"en_US": "MDF Claim Status"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Claim Status$]",
-			"name": "claimStatus",
+			"name": "mdfClaimStatus",
 			"objectFieldSettings": [
 				{
 					"name": "stateFlow",
@@ -135,9 +135,6 @@
 									},
 									{
 										"key": "rejected"
-									},
-									{
-										"key": "draft"
 									}
 								]
 							},
@@ -158,9 +155,6 @@
 									},
 									{
 										"key": "rejected"
-									},
-									{
-										"key": "draft"
 									}
 								]
 							},
@@ -181,9 +175,6 @@
 									},
 									{
 										"key": "rejected"
-									},
-									{
-										"key": "draft"
 									}
 								]
 							},
@@ -204,9 +195,6 @@
 									},
 									{
 										"key": "rejected"
-									},
-									{
-										"key": "draft"
 									}
 								]
 							},
@@ -227,9 +215,6 @@
 									},
 									{
 										"key": "rejected"
-									},
-									{
-										"key": "draft"
 									}
 								]
 							},
@@ -250,9 +235,6 @@
 									},
 									{
 										"key": "moreInfoRequested"
-									},
-									{
-										"key": "draft"
 									}
 								]
 							},
@@ -261,21 +243,6 @@
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
-									},
-									{
-										"key": "approved"
-									},
-									{
-										"key": "claimPaid"
-									},
-									{
-										"key": "inFinanceReview"
-									},
-									{
-										"key": "moreInfoRequested"
-									},
-									{
-										"key": "rejected"
 									}
 								]
 							}
@@ -292,6 +259,5 @@
 	"pluralLabel": {
 		"en_US": "MDF Claims"
 	},
-	"scope": "company",
-	"titleObjectFieldName": "ID"
+	"scope": "company"
 }

@@ -30,7 +30,7 @@ export default function useGetListItemsFromMDFClaims(
 				[MDFClaimColumnKey.REQUEST_ID]: String(item.id),
 				[MDFClaimColumnKey.PARTNER]:
 					item.r_accountToMdfClaims_accountEntry?.name,
-				[MDFClaimColumnKey.STATUS]: item.claimStatus.name,
+				[MDFClaimColumnKey.STATUS]: item.mdfClaimStatus.name,
 				[MDFClaimColumnKey.TYPE]: item.partial ? 'Partial' : 'Full',
 				...getMDFClaimAmountClaimedInfo(item.amountClaimed),
 				[MDFClaimColumnKey.DATE_SUBMITTED]: getDateCustomFormat(

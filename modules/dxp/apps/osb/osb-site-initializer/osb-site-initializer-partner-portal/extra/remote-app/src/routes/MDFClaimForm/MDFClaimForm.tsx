@@ -44,7 +44,7 @@ const getInitialFormValues = (
 		selected: false,
 		totalCost: 0,
 	})),
-	claimStatus: Status.PENDING,
+	mdfClaimStatus: Status.PENDING,
 	r_mdfRequestToMdfClaims_c_mdfRequestId: mdfRequestId,
 	totalClaimAmount: 0,
 	totalrequestedAmount,

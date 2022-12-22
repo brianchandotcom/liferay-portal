@@ -20,9 +20,9 @@ export function getDTOFromMDFClaim(
 ): MDFClaimDTO {
 	return {
 		amountClaimed: mdfClaim.totalClaimAmount,
-		claimStatus: mdfClaim.claimStatus,
 		companyName: mdfRequest.r_accountToMDFRequests_accountEntry?.name,
 		externalReferenceCodeSF,
+		mdfClaimStatus: mdfClaim.mdfClaimStatus,
 		mdfRequestExternalReferenceCodeSF: mdfRequest?.externalReferenceCodeSF,
 		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
 		mdfRequestedAmount: mdfClaim.totalrequestedAmount,

@@ -14,6 +14,12 @@
 import ClayAlert from '@clayui/alert';
 import React, {useEffect, useState} from 'react';
 
+const findRequestIdUrl = (paramsUrl) => {
+	const splitParamsUrl = paramsUrl.split('?');
+
+	return splitParamsUrl[0];
+};
+
 function getIntlNumberFormat() {
 	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		currency: 'USD',
@@ -23,7 +29,7 @@ function getIntlNumberFormat() {
 
 function getSiteVariables() {
 	const currentPath = Liferay.currentURL.split('/');
-	const mdfRequestId = +currentPath.at(-1);
+	const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 	const SITE_URL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 		.split('/')
 		.slice(0, 3)
@@ -74,8 +80,12 @@ const Panel = ({mdfClaims}) => {
 						{getIntlNumberFormat().format(mdfClaims.amountClaimed)}
 					</p>
 
-					<div className={statusClassName[mdfClaims.claimStatus.key]}>
-						{mdfClaims.claimStatus.name}
+					<div
+						className={
+							statusClassName[mdfClaims.mdfClaimStatus.key]
+						}
+					>
+						{mdfClaims.mdfClaimStatus.name}
 					</div>
 				</div>
 
@@ -133,7 +143,7 @@ export default function () {
 			});
 		};
 
-		if (mdfRequestId) {
+		if (!isNaN(mdfRequestId)) {
 			getClaimFromMDFRequest();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,7 +160,7 @@ export default function () {
 			ClaimStatus.REJECT,
 		];
 
-		return !ignoreStatus.includes(claim.claimStatus.key);
+		return !ignoreStatus.includes(claim.mdfClaimStatus.key);
 	});
 
 	return (

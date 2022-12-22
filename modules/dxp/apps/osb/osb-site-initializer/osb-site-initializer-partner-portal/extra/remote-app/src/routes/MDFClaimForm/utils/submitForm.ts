@@ -35,7 +35,7 @@ export default async function submitForm(
 	currentClaimStatus?: LiferayPicklist
 ) {
 	if (currentClaimStatus) {
-		values.claimStatus = currentClaimStatus;
+		values.mdfClaimStatus = currentClaimStatus;
 	}
 
 	formikHelpers.setSubmitting(true);
@@ -46,7 +46,7 @@ export default async function submitForm(
 
 	const dtoMDFClaim =
 		Liferay.FeatureFlags['LPS-164528'] &&
-		values.claimStatus !== Status.DRAFT
+		values.mdfClaimStatus !== Status.DRAFT
 			? await createMDFClaimProxyAPI(values, mdfRequest)
 			: await createMDFClaim(
 					ResourceName.MDF_CLAIM_DXP,

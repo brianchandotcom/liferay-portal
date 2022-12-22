@@ -76,7 +76,7 @@ function totalApprovedMDFToClaims(mdfRequests, chartColumns) {
 	const claimedRequests = mdfRequests?.items
 		?.map((claim) =>
 			claim.mdfRequestToMdfClaims.filter(
-				(request) => request.claimStatus === 'Approved'
+				(request) => request.mdfClaimStatus.key === 'approved'
 			)
 		)
 		.flat();
@@ -109,7 +109,7 @@ function totalMDFActivities(mdfRequests, chartColumns) {
 
 function totalMDFApprovedRequests(mdfRequests, chartColumns) {
 	const mdfApprovedRequests = mdfRequests?.items?.filter(
-		(request) => request.requestStatus === 'Approved'
+		(request) => request.mdfRequestStatus.key === 'approved'
 	);
 	const totalMDFApprovedRequestsAmount = mdfApprovedRequests?.reduce(
 		(acc, value) => acc + parseFloat(value.totalMDFRequestAmount),

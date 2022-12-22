@@ -72,6 +72,9 @@ public class CookiesBannerDisplayContext
 			cookiesConsentConfiguration.title();
 
 		return HashMapBuilder.<String, Object>put(
+			"configurationNamespace",
+			CookiesBannerPortletKeys.COOKIES_BANNER_CONFIGURATION
+		).put(
 			"configurationURL", getConfigurationURL()
 		).put(
 			"includeDeclineAllButton", isIncludeDeclineAllButton()

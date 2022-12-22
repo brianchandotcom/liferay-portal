@@ -23,7 +23,10 @@ import {
 	userConfigCookieName,
 } from '../../js/CookiesUtil';
 
+const cookiesBannerDisplayContext = {};
+
 export default function ({
+	configurationNamespace,
 	configurationURL,
 	includeDeclineAllButton,
 	namespace,
@@ -31,6 +34,10 @@ export default function ({
 	requiredConsentCookieTypeNames,
 	title,
 }) {
+	cookiesBannerDisplayContext.configurationURL = configurationURL;
+	cookiesBannerDisplayContext.configurationNamespace = configurationNamespace;
+	cookiesBannerDisplayContext.title = title;
+
 	const acceptAllButton = document.getElementById(
 		`${namespace}acceptAllButton`
 	);
@@ -163,3 +170,32 @@ function setBannerVisibility(cookieBanner) {
 		cookieBanner.style.display = 'block';
 	}
 }
+
+const openCookieConfigurationModal = ({
+	alertDisplayType,
+	alertMessage,
+	title,
+}) => {
+	let url = cookiesBannerDisplayContext.configurationURL;
+
+	const namespace = `_${cookiesBannerDisplayContext.configurationNamespace}_`;
+
+	if (alertDisplayType) {
+		url = `${url}&${namespace}alertDisplayType=${alertDisplayType}`;
+	}
+
+	if (alertMessage) {
+		url = `${url}&${namespace}alertMessage=${alertMessage}`;
+	}
+
+	openModal({
+		displayType: 'primary',
+		height: '70vh',
+		id: 'cookiesBannerConfiguration',
+		size: 'lg',
+		title: title || cookiesBannerDisplayContext.title || '',
+		url,
+	});
+};
+
+export {openCookieConfigurationModal};

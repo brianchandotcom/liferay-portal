@@ -18,6 +18,8 @@
 
 <%
 CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = (CookiesBannerConfigurationDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_BANNER_CONFIGURATION_DISPLAY_CONTEXT);
+
+String alertMessage = ParamUtil.getString(request, "alertMessage");
 %>
 
 <clay:container-fluid
@@ -25,6 +27,17 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 	id='<%= liferayPortletResponse.getNamespace() + "cookiesBannerConfigurationForm" %>'
 >
 	<clay:row>
+		<c:if test="<%= alertMessage != StringPool.BLANK %>">
+			<clay:col
+				size="12"
+			>
+				<clay:alert
+					displayType='<%= ParamUtil.getString(request, "alertDisplayType", "info") %>'
+					message="<%= alertMessage %>"
+				/>
+			</clay:col>
+		</c:if>
+
 		<clay:col
 			cssClass="mb-3"
 			size="12"

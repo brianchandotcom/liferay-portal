@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -55,10 +54,5 @@ public interface JournalHelper {
 	public List<JournalArticle> getArticles(Hits hits) throws PortalException;
 
 	public int getRestrictionType(long folderId);
-
-	public String getTemplateScript(
-			long groupId, String ddmTemplateKey, Map<String, String> tokens,
-			String languageId)
-		throws PortalException;
 
 }

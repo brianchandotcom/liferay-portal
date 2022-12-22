@@ -40,6 +40,11 @@ public class LayoutUtilityPageEntryUpgradeStepRegistrator
 			"1.1.0", "1.2.0",
 			UpgradeProcessFactory.alterColumnType(
 				"LayoutUtilityPageEntry", "type_", "STRING null"));
+
+		registry.register(
+			"1.2.0", "1.3.0",
+			UpgradeProcessFactory.alterColumnType(
+				"LayoutUtilityPageEntry", "type_", "VARCHAR(75) null"));
 	}
 
 }

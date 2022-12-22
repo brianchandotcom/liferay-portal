@@ -84,6 +84,8 @@ definition {
 				LexiconCard.clickCard(card = "${otherSite}");
 			}
 
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 			Click(
 				key_assetTitle = "${assetTitle}",
 				locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX");

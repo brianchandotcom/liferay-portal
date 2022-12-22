@@ -29,6 +29,13 @@ export enum CaseResultStatuses {
 	UNTESTED = 'UNTESTED',
 }
 
+export enum DispatchTriggerStatuses {
+	COMPLETED = 'completed',
+	FAILED = 'failed',
+	INPROGRESS = 'inprogress',
+	SCHEDULED = 'scheduled',
+}
+
 export enum TaskStatuses {
 	ABANDONED = 'ABANDONED',
 	COMPLETE = 'COMPLETE',

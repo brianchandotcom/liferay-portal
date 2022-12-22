@@ -25,6 +25,7 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -135,47 +136,62 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		return InfoForm.builder(
 		).infoFieldSetEntry(
-			_getItemTypesInfoField()
-		).infoFieldSetEntry(
-			InfoField.builder(
-			).infoFieldType(
-				SelectInfoFieldType.INSTANCE
-			).namespace(
-				StringPool.BLANK
-			).name(
-				"assetCategoryRule"
-			).attribute(
-				SelectInfoFieldType.OPTIONS,
-				ListUtil.fromArray(
-					new SelectInfoFieldType.Option(
-						new ResourceBundleInfoLocalizedValue(
-							getClass(), "not-selected"),
-						StringPool.BLANK),
-					new SelectInfoFieldType.Option(
-						new ResourceBundleInfoLocalizedValue(
-							getClass(), "any-category-of-the-same-vocabulary"),
-						"anyAssetCategoryOfTheSameVocabulary"),
-					new SelectInfoFieldType.Option(
-						new ResourceBundleInfoLocalizedValue(
-							getClass(), "a-specific-category"),
-						"specificAssetCategory"))
+			InfoFieldSet.builder(
+			).infoFieldSetEntry(
+				_getItemTypesInfoField()
 			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(getClass(), "and-contains")
-			).localizable(
-				true
+				InfoLocalizedValue.localize(getClass(), "filter")
+			).name(
+				"filter"
 			).build()
 		).infoFieldSetEntry(
-			InfoField.builder(
-			).infoFieldType(
-				TextInfoFieldType.INSTANCE
-			).namespace(
-				StringPool.BLANK
-			).name(
-				"specificAssetCategoryId"
+			InfoFieldSet.builder(
+			).infoFieldSetEntry(
+				InfoField.builder(
+				).infoFieldType(
+					SelectInfoFieldType.INSTANCE
+				).namespace(
+					StringPool.BLANK
+				).name(
+					"assetCategoryRule"
+				).attribute(
+					SelectInfoFieldType.OPTIONS,
+					ListUtil.fromArray(
+						new SelectInfoFieldType.Option(
+							new ResourceBundleInfoLocalizedValue(
+								getClass(), "not-selected"),
+							StringPool.BLANK),
+						new SelectInfoFieldType.Option(
+							new ResourceBundleInfoLocalizedValue(
+								getClass(),
+								"any-category-of-the-same-vocabulary"),
+							"anyAssetCategoryOfTheSameVocabulary"),
+						new SelectInfoFieldType.Option(
+							new ResourceBundleInfoLocalizedValue(
+								getClass(), "a-specific-category"),
+							"specificAssetCategory"))
+				).labelInfoLocalizedValue(
+					InfoLocalizedValue.localize(getClass(), "and-contains")
+				).localizable(
+					true
+				).build()
+			).infoFieldSetEntry(
+				InfoField.builder(
+				).infoFieldType(
+					TextInfoFieldType.INSTANCE
+				).namespace(
+					StringPool.BLANK
+				).name(
+					"specificAssetCategoryId"
+				).labelInfoLocalizedValue(
+					InfoLocalizedValue.localize(getClass(), "category")
+				).localizable(
+					false
+				).build()
 			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(getClass(), "category")
-			).localizable(
-				false
+				InfoLocalizedValue.localize(getClass(), "advanced-rule")
+			).name(
+				"advanced-rule"
 			).build()
 		).build();
 	}

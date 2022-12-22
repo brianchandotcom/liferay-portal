@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Gustavo Lima
  */
-public interface NotificationTermEvaluatorRegistry {
+public interface NotificationTermEvaluatorTracker {
 
 	public List<NotificationTermEvaluator> getNotificationTermEvaluators(
 		String className);

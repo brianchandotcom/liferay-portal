@@ -20,7 +20,7 @@ import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
-import com.liferay.notification.term.evaluator.NotificationTermEvaluatorRegistry;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -83,8 +83,8 @@ public class TermUsersProvider implements UsersProvider {
 		}
 
 		for (NotificationTermEvaluator notificationTermEvaluator :
-			_notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
-				notificationContext.getClassName())) {
+				_notificationTermEvaluatorTracker.getNotificationTermEvaluators(
+					notificationContext.getClassName())) {
 
 			for (String term : terms) {
 				users.add(
@@ -103,8 +103,7 @@ public class TermUsersProvider implements UsersProvider {
 		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 	@Reference
-	private NotificationTermEvaluatorRegistry
-		_notificationTermEvaluatorRegistry;
+	private NotificationTermEvaluatorTracker _notificationTermEvaluatorTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;

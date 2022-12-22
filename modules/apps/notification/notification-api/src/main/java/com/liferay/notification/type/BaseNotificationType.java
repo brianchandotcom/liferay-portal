@@ -28,7 +28,7 @@ import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
-import com.liferay.notification.term.evaluator.NotificationTermEvaluatorRegistry;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.notification.util.LocalizedMapUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -306,8 +306,8 @@ public abstract class BaseNotificationType implements NotificationType {
 		}
 
 		for (NotificationTermEvaluator notificationTermEvaluator :
-			notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
-				notificationContext.getClassName())) {
+				notificationTermEvaluatorTracker.getNotificationTermEvaluators(
+					notificationContext.getClassName())) {
 
 			for (String termName : termNames) {
 				content = StringUtil.replace(
@@ -381,8 +381,7 @@ public abstract class BaseNotificationType implements NotificationType {
 		notificationRecipientSettingLocalService;
 
 	@Reference
-	protected NotificationTermEvaluatorRegistry
-		notificationTermEvaluatorRegistry;
+	protected NotificationTermEvaluatorTracker notificationTermEvaluatorTracker;
 
 	@Reference
 	protected Portal portal;

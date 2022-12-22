@@ -16,7 +16,7 @@ package com.liferay.notification.internal.term;
 
 import com.liferay.notification.internal.term.evaluator.DefaultNotificationTermEvaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
-import com.liferay.notification.term.evaluator.NotificationTermEvaluatorRegistry;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -34,9 +34,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gustavo Lima
  */
-@Component(service = NotificationTermEvaluatorRegistry.class)
-public class NotificationTermEvaluatorRegistryImpl
-	implements NotificationTermEvaluatorRegistry {
+@Component(service = NotificationTermEvaluatorTracker.class)
+public class NotificationTermEvaluatorTrackerImpl
+	implements NotificationTermEvaluatorTracker {
 
 	@Override
 	public List<NotificationTermEvaluator> getNotificationTermEvaluators(

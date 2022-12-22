@@ -305,12 +305,9 @@ public abstract class BaseNotificationType implements NotificationType {
 			termNames.add(matcher.group());
 		}
 
-		List<NotificationTermEvaluator> notificationTermEvaluators =
-			notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
-				notificationContext.getClassName());
-
 		for (NotificationTermEvaluator notificationTermEvaluator :
-				notificationTermEvaluators) {
+			notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
+				notificationContext.getClassName())) {
 
 			for (String termName : termNames) {
 				content = StringUtil.replace(

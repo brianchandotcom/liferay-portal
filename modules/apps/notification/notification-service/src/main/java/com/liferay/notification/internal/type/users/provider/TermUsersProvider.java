@@ -82,12 +82,9 @@ public class TermUsersProvider implements UsersProvider {
 					notificationRecipient.getCompanyId(), screenName));
 		}
 
-		List<NotificationTermEvaluator> notificationTermEvaluators =
-			_notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
-				notificationContext.getClassName());
-
 		for (NotificationTermEvaluator notificationTermEvaluator :
-				notificationTermEvaluators) {
+			_notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
+				notificationContext.getClassName())) {
 
 			for (String term : terms) {
 				users.add(

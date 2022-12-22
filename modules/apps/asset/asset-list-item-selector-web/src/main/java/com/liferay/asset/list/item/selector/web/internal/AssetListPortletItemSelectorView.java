@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
@@ -33,8 +34,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -84,18 +83,16 @@ public class AssetListPortletItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/view.jsp");
-
-		servletRequest.setAttribute(
-			AssetListEntryItemSelectorDisplayContext.class.getName(),
-			new AssetListEntryItemSelectorDisplayContext(
-				(HttpServletRequest)servletRequest, _infoItemServiceRegistry,
-				_infoSearchClassMapperRegistry, itemSelectedEventName,
-				_language, portletURL,
-				infoCollectionProviderItemSelectorCriterion));
-
-		requestDispatcher.include(servletRequest, servletResponse);
+		_itemSelectorViewDescriptorRenderer.renderHTML(
+			servletRequest, servletResponse,
+			infoCollectionProviderItemSelectorCriterion, portletURL,
+			itemSelectedEventName, search,
+			new AssetListItemSelectorViewDescriptor(
+				new AssetListEntryItemSelectorDisplayContext(
+					(HttpServletRequest)servletRequest,
+					_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
+					_language, portletURL,
+					infoCollectionProviderItemSelectorCriterion)));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -109,11 +106,11 @@ public class AssetListPortletItemSelectorView
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
-	private Language _language;
+	private ItemSelectorViewDescriptorRenderer
+		<InfoCollectionProviderItemSelectorCriterion>
+			_itemSelectorViewDescriptorRenderer;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.list.item.selector.web)"
-	)
-	private ServletContext _servletContext;
+	@Reference
+	private Language _language;
 
 }

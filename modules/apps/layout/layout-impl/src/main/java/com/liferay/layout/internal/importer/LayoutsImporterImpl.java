@@ -1195,7 +1195,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			String externalReferenceCode, long groupId,
 			LayoutUtilityPageEntry layoutUtilityPageEntry, String name,
 			PageDefinition pageDefinition, String type, boolean overwrite,
-			String zipPath)
+			ZipEntry thumbnailZipEntry, String zipPath, ZipFile zipFile)
 		throws Exception {
 
 		try {
@@ -1227,6 +1227,17 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_processPageDefinition(
 					layoutUtilityPageEntry.getPlid(), pageDefinition,
 					warningMessages);
+
+				long previewFileEntryId = _getPreviewFileEntryId(
+					groupId,
+					layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+					thumbnailZipEntry, zipFile);
+
+				if (previewFileEntryId > 0) {
+					_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
+						layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+						previewFileEntryId);
+				}
 
 				_layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
@@ -2106,7 +2117,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_utilityPageTemplateEntry.getPageDefinition(),
 				UtilityPageTemplateUtil.convertToInternalValue(
 					utilityPageTemplate.getTypeAsString()),
-				_overwrite, _utilityPageTemplateEntry.getZipPath());
+				_overwrite, _utilityPageTemplateEntry.getThumbnailZipEntry(),
+				_utilityPageTemplateEntry.getZipPath(), _zipFile);
 
 			return null;
 		}

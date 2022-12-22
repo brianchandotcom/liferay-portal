@@ -60,6 +60,8 @@ export default {
 	'attachments': 'Attachments',
 	'attachments-x': 'Attachments ({0})',
 	'auto-fill-x': 'Auto Fill {0}',
+	'auto-fill-x-is-scheduled-to-be-processed':
+		'Auto Fill {0} is Scheduled to be Processed.',
 	'autoanalyze': 'Autoanalyze',
 	'automated-functional-test': 'Automate Funcional Test',
 	'available': 'Available',

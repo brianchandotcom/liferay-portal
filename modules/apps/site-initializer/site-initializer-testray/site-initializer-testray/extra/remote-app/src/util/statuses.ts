@@ -30,10 +30,10 @@ export enum CaseResultStatuses {
 }
 
 export enum DispatchTriggerStatuses {
-	COMPLETED = 'completed',
-	FAILED = 'failed',
-	INPROGRESS = 'inprogress',
-	SCHEDULED = 'scheduled',
+	COMPLETED = 'COMPLETED',
+	FAILED = 'FAILED',
+	INPROGRESS = 'INPROGRESS',
+	SCHEDULED = 'SCHEDULED',
 }
 
 export enum TaskStatuses {

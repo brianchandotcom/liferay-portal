@@ -20,6 +20,8 @@ import {useEffect} from 'react';
 
 import useRuns from '../../hooks/useRuns';
 import i18n from '../../i18n';
+import {Liferay} from '../../services/liferay';
+import {testrayRunImpl} from '../../services/rest';
 import Form from '../Form';
 
 type CompareRunsPopoverProps = {
@@ -43,6 +45,30 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 			setVisible(true);
 		}
 	}, [compareRuns, setVisible]);
+
+	const onAutoFill = (type: 'Build' | 'Run') => {
+		if (!compareRuns.runA || !compareRuns.runB) {
+			return;
+		}
+
+		testrayRunImpl
+			.autofill(compareRuns.runA, compareRuns.runB, type)
+			.then(() =>
+				Liferay.Util.openToast({
+					message: i18n.sub(
+						'auto-fill-x-is-scheduled-to-be-processed',
+						type
+					),
+				})
+			)
+			.then(() => setVisible(false))
+			.catch(() =>
+				Liferay.Util.openToast({
+					message: i18n.translate('an-unexpected-error-occurred'),
+					type: 'danger',
+				})
+			);
+	};
 
 	return (
 		<div
@@ -124,6 +150,7 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 							<ClayButton
 								disabled={validateCompareButtons}
 								displayType="primary"
+								onClick={() => onAutoFill('Run')}
 							>
 								{i18n.sub('auto-fill-x', 'runs')}
 							</ClayButton>
@@ -131,6 +158,7 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 							<ClayButton
 								disabled={validateCompareButtons}
 								displayType="primary"
+								onClick={() => onAutoFill('Build')}
 							>
 								{i18n.sub('auto-fill-x', 'builds')}
 							</ClayButton>

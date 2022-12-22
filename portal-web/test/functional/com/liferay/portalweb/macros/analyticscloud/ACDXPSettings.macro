@@ -128,6 +128,10 @@ definition {
 		Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_NAV_SIDEBAR");
 	}
 
+	macro navToSyncedAttributes {
+		Click(locator1 = "ACDXPSettings#SYNCED_ATTRIBUTES_DATA_NAV_SIDEBAR");
+	}
+
 	macro navToSyncedSitesMenu {
 		Click(locator1 = "ACDXPSettings#SYNCED_SITES_NAV_SIDEBAR");
 	}

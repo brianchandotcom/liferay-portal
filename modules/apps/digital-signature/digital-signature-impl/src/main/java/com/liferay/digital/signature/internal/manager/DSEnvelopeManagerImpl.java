@@ -88,8 +88,18 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public JSONObject addDSRecipientViewDefinitionJSONObject(
-		long companyId, long groupId, String dsEnvelopeId,
-		JSONObject jsonObject) {
+			long companyId, long groupId, String dsEnvelopeId,
+			JSONObject jsonObject)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) ||
+			!permissionChecker.isCompanyAdmin(companyId)) {
+
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
 
 		return _dsHttp.post(
 			companyId, groupId,

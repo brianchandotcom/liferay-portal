@@ -31,8 +31,9 @@ public interface DSEnvelopeManager {
 		long companyId, long groupId, DSEnvelope dsEnvelope);
 
 	public JSONObject addDSRecipientViewDefinitionJSONObject(
-		long companyId, long groupId, String dsEnvelopeId,
-		JSONObject jsonObject);
+			long companyId, long groupId, String dsEnvelopeId,
+			JSONObject jsonObject)
+		throws Exception;
 
 	public void deleteDSEnvelopes(
 			long companyId, long groupId, String... dsEnvelopeIds)

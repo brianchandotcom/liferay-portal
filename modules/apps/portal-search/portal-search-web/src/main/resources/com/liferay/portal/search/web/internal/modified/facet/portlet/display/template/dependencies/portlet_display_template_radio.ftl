@@ -25,7 +25,7 @@
 									disabled
 									id="${entry.getBucketText()}"
 									name="${entry.getBucketText()}"
-									onChange='${"window.location.href = \"${entry.getRangeURL()}\";"}'
+									onChange='${"window.location.href = \"${entry.getFilterValue()}\";"}'
 									role="radio"
 									type="radio"
 								/>
@@ -55,7 +55,7 @@
 							disabled
 							id="${customRangeModifiedFacetTermDisplayContext.getBucketText()}"
 							name="${customRangeModifiedFacetTermDisplayContext.getBucketText()}"
-							onChange='${"window.location.href = \"${customRangeModifiedFacetTermDisplayContext.getRangeURL()}\";"}'
+							onChange='${"window.location.href = \"${customRangeModifiedFacetTermDisplayContext.getFilterValue()}\";"}'
 							role="radio"
 							type="radio"
 						/>

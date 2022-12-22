@@ -269,11 +269,16 @@ function normalizeActions(actions, namespace) {
 					event.preventDefault();
 
 					let modalData = {
+						id: `${namespace}pagesTreeModal`,
+						title: item.data.modalTitle,
 						url: item.data.url,
 					};
 
 					if (item.id === ACTION_DELETE) {
+						delete modalData.url;
+
 						modalData = {
+							...modalData,
 							bodyHTML: item.data.message,
 							buttons: [
 								{
@@ -309,17 +314,8 @@ function normalizeActions(actions, namespace) {
 							id: 'addLayoutDialog',
 						};
 					}
-					else {
-						modalData = {
-							...modalData,
-							id: `${namespace}pagesTreeModal`,
-						};
-					}
 
-					openModal({
-						title: item.data.modalTitle,
-						...modalData,
-					});
+					openModal(modalData);
 				};
 			}
 

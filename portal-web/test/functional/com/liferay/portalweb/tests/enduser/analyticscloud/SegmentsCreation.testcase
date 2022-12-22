@@ -403,8 +403,10 @@ definition {
 				value1 = "False");
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewUserData(fieldNameList = "User Custom Field");
+		task ("Sync the Custom Field") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "User Custom Field");
 		}
 
 		task ("View the page as different users") {
@@ -1018,8 +1020,10 @@ definition {
 			}
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewUserData(fieldNameList = "Age");
+		task ("Sync the Custom Field") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "Age");
 		}
 
 		task ("View the page as different users") {

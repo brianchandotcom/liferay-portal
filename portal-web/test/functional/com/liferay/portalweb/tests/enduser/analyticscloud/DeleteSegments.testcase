@@ -408,8 +408,10 @@ definition {
 				userCustomFieldLabel = "Hobby");
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewUserData(fieldNameList = "hobby");
+		task ("Sync the Custom Field") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "hobby");
 		}
 
 		task ("Redefine the value of the custom field") {

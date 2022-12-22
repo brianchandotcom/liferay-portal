@@ -76,7 +76,7 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "userfn");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
 		}
@@ -131,7 +131,7 @@ definition {
 
 		ObjectPortlet.searchEntryRelationshipField(entryValue = "userfn");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
 	}
@@ -192,7 +192,7 @@ definition {
 					relationshipsLabelName = "Relationship",
 					tabName = "Relationship Tab ${fieldEntry}");
 
-				Button.clickSave();
+				PortletEntry.save();
 			}
 		}
 
@@ -268,7 +268,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject290");
 
@@ -445,7 +445,7 @@ definition {
 				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Define First Name as a title field on the native object") {
@@ -683,7 +683,7 @@ definition {
 				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Define First Name as a title field on the native object") {
@@ -789,7 +789,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject149249");
 
@@ -869,7 +869,7 @@ definition {
 
 			ObjectRelationships.editRelationshipsParameter(parameter = "Relationship with Custom Object");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 	}
 
@@ -1195,7 +1195,7 @@ definition {
 				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectLPS163658");
 		}
@@ -1574,7 +1574,7 @@ definition {
 				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Add a custom object entry per UI and relate the entries to the native object") {
@@ -1637,7 +1637,7 @@ definition {
 
 		ObjectPortlet.searchEntryRelationshipField(entryValue = "userfn");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
 	}
@@ -1779,7 +1779,7 @@ definition {
 				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163657");
 		}

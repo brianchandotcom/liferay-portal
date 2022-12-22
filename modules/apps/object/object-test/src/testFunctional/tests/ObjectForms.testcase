@@ -393,7 +393,7 @@ definition {
 			url = "http://localhost:8080/o/c/customobject213s",
 			username = "test@liferay.com");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		WaitForSPARefresh();
 
@@ -469,9 +469,7 @@ definition {
 			url = "http://localhost:8080/o/c/customobject214s",
 			username = "test@liferay.com");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 
 		Navigator.openURL();
 

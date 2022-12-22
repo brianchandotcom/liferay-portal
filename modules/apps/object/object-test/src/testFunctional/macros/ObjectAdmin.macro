@@ -16,7 +16,7 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		Button.clickSave();
+		PortletEntry.save();
 	}
 
 	macro addCategorizationOnLayoutTab {
@@ -87,9 +87,7 @@ definition {
 			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 		}
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 	}
 
 	macro addObjectDoubleFieldEntryViaUI {
@@ -99,9 +97,7 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_DOUBLE_VALUE_FIELD",
 			value1 = "${entryValue}");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 	}
 
 	macro addObjectFieldViaAPI {
@@ -201,7 +197,7 @@ definition {
 			}
 		}
 
-		Button.clickSave();
+		PortletEntry.save();
 	}
 
 	macro addObjectLayoutViaAPI {
@@ -219,9 +215,7 @@ definition {
 			locator1 = "ObjectAdmin#ADD_LAYOUT_NAME_FIELD",
 			value1 = "${layoutName}");
 
-		Button.clickSave();
-
-		WaitForPageLoad();
+		PortletEntry.save();
 	}
 
 	macro addObjectLongFieldEntryViaUI {
@@ -231,9 +225,7 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_LONG_VALUE_FIELD",
 			value1 = "${entryValue}");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 	}
 
 	macro addObjectPicklistFieldEntryViaUI {
@@ -251,10 +243,8 @@ definition {
 				locator1 = "Button#ANY");
 		}
 		else {
-			Button.clickSave();
+			PortletEntry.save();
 		}
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro addObjectRelationshipViaAPI {
@@ -302,7 +292,12 @@ definition {
 			ObjectRelationships.editRelationshipsParameter(parameter = "${parameter}");
 		}
 
-		Button.clickSave();
+		if ("${invalidEntry}" == "true") {
+			Button.clickSave();
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro addObjectSingleFieldEntryViaAPI {
@@ -331,11 +326,7 @@ definition {
 				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 		}
 
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 	}
 
 	macro addObjectViaAPI {
@@ -718,9 +709,7 @@ definition {
 			key_picklistOption = "${newPicklistOption}",
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 	}
 
 	macro changePluralLabelLanguage {
@@ -887,7 +876,7 @@ definition {
 
 		Uncheck.uncheckToggleSwitch(locator1 = "ObjectAction#ENABLE_DISABLE_CONDITION");
 
-		Button.clickSave();
+		PortletEntry.save();
 	}
 
 	macro editClobEntryName {
@@ -896,7 +885,7 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY",
 			value1 = "${clobEntry}");
 
-		Button.clickSave();
+		PortletEntry.save();
 	}
 
 	macro editCustomObject {
@@ -918,7 +907,7 @@ definition {
 				value1 = "${pluralLabelName}");
 		}
 
-		Button.clickSave();
+		PortletEntry.save();
 	}
 
 	macro editEntryName {
@@ -926,9 +915,7 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
 			value1 = "${newEntryValue}");
 
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.save();
 	}
 
 	macro editObjectAction {
@@ -1054,7 +1041,7 @@ definition {
 
 		if (isSet(click)) {
 			if (("${click}" == "save") && ("${notRefreshAttribute}" == "true")) {
-				Button.clickSave();
+				PortletEntry.save();
 			}
 			else if ("${click}" == "cancel") {
 				Button.clickCancel();
@@ -1062,7 +1049,7 @@ definition {
 				Refresh();
 			}
 			else if ("${click}" == "save") {
-				Button.clickSave();
+				PortletEntry.save();
 
 				Refresh();
 			}

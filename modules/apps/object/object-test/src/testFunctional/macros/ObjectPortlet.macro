@@ -22,11 +22,7 @@ definition {
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 			value1 = "${entry}");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
-
-		WaitForPageLoad();
+		PortletEntry.save();
 	}
 
 	macro assertAuthorColumnDisplaysUserName {
@@ -304,9 +300,7 @@ definition {
 				locator1 = "Form#FEEDBACK_MESSAGE");
 		}
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 
 		Navigator.gotoBack();
 	}
@@ -388,11 +382,7 @@ definition {
 			key_entry = "${newEntry}",
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
-
-		WaitForPageLoad();
+		PortletEntry.save();
 	}
 
 	macro selectSystemObject {
@@ -420,9 +410,7 @@ definition {
 
 		Check.checkNotVisible(locator1 = "//input[@type='checkbox']");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 	}
 
 	macro updateEntry {
@@ -432,9 +420,7 @@ definition {
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 			value1 = "${updateEntry}");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		PortletEntry.save();
 	}
 
 	macro viewClobEntryDetails {

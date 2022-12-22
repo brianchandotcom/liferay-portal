@@ -575,11 +575,11 @@ definition {
 	}
 
 	macro editValidation {
+		ScrollWebElementIntoView(locator1 = "FormFields#VALIDATION_ARGUMENT_2");
+
 		Click(locator1 = "FormFields#VALIDATION_ARGUMENT_2");
 
-		Click(
-			key_validationArgument = "${validationArgument}",
-			locator1 = "FormFields#VALIDATION_ARGUMENT_OPTION");
+		MenuItem.click(menuItem = "${validationArgument}");
 
 		Type(
 			locator1 = "FormFields#VALIDATION_INPUT",

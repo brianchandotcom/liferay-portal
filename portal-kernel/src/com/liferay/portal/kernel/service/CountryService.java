@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -178,6 +179,7 @@ public interface CountryService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<Country> searchCountries(
 			long companyId, Boolean active, String keywords, int start, int end,

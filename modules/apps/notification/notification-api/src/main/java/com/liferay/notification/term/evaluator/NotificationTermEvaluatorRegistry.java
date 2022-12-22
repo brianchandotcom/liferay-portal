@@ -21,10 +21,7 @@ import java.util.List;
  */
 public interface NotificationTermEvaluatorRegistry {
 
-	public List<NotificationTermEvaluator>
-		getNotificationTermEvaluatorsByNotificationTermEvaluatorKey(String key);
-
-	public List<NotificationTermEvaluator>
-		getNotificationTermEvaluatorsByNotificationTypeKey(String key);
+	public List<NotificationTermEvaluator> getNotificationTermEvaluators(
+		String className);
 
 }

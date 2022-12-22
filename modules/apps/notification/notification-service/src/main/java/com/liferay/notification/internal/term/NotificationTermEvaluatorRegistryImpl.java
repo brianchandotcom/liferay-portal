@@ -39,43 +39,22 @@ public class NotificationTermEvaluatorRegistryImpl
 	implements NotificationTermEvaluatorRegistry {
 
 	@Override
-	public List<NotificationTermEvaluator>
-		getNotificationTermEvaluatorsByNotificationTermEvaluatorKey(
-			String key) {
+	public List<NotificationTermEvaluator> getNotificationTermEvaluators(
+		String className) {
 
-		return _getNotificationTermEvaluators(
-			key, _serviceTrackerMapByNotificationTermEvaluatorKey);
-	}
-
-	@Override
-	public List<NotificationTermEvaluator>
-		getNotificationTermEvaluatorsByNotificationTypeKey(String key) {
-
-		return _getNotificationTermEvaluators(
-			key, _serviceTrackerMapByNotificationTypeKey);
+		return _getNotificationTermEvaluators(className, _serviceTrackerMap);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMapByNotificationTermEvaluatorKey =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, NotificationTermEvaluator.class,
-				"notification.term.contributor.key",
-				ServiceTrackerCustomizerFactory.
-					<NotificationTermEvaluator>serviceWrapper(bundleContext));
-		_serviceTrackerMapByNotificationTypeKey =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, NotificationTermEvaluator.class,
-				"notification.type.key",
-				ServiceTrackerCustomizerFactory.
-					<NotificationTermEvaluator>serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, NotificationTermEvaluator.class, "class.name",
+			ServiceTrackerCustomizerFactory.serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMapByNotificationTermEvaluatorKey.close();
-
-		_serviceTrackerMapByNotificationTypeKey.close();
+		_serviceTrackerMap.close();
 	}
 
 	private List<NotificationTermEvaluator> _getNotificationTermEvaluators(
@@ -120,13 +99,6 @@ public class NotificationTermEvaluatorRegistryImpl
 		<String,
 		 List
 			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <NotificationTermEvaluator>>>
-					_serviceTrackerMapByNotificationTermEvaluatorKey;
-	private ServiceTrackerMap
-		<String,
-		 List
-			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <NotificationTermEvaluator>>>
-					_serviceTrackerMapByNotificationTypeKey;
+				 <NotificationTermEvaluator>>> _serviceTrackerMap;
 
 }

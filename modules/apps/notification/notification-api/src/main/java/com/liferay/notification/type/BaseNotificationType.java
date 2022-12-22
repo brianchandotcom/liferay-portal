@@ -306,9 +306,8 @@ public abstract class BaseNotificationType implements NotificationType {
 		}
 
 		List<NotificationTermEvaluator> notificationTermEvaluators =
-			notificationTermEvaluatorRegistry.
-				getNotificationTermEvaluatorsByNotificationTypeKey(
-					notificationContext.getClassName());
+			notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
+				notificationContext.getClassName());
 
 		for (NotificationTermEvaluator notificationTermEvaluator :
 				notificationTermEvaluators) {

@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
-import com.liferay.notification.constants.NotificationTermEvaluatorConstants;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -244,7 +243,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition, _objectFieldLocalService,
 					_userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"notification.type.key", objectDefinition.getClassName()
+					"class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
 				ObjectRelatedModelsPredicateProvider.class,

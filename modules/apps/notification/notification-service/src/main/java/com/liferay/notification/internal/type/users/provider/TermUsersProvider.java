@@ -83,9 +83,8 @@ public class TermUsersProvider implements UsersProvider {
 		}
 
 		List<NotificationTermEvaluator> notificationTermEvaluators =
-			_notificationTermEvaluatorRegistry.
-				getNotificationTermEvaluatorsByNotificationTypeKey(
-					notificationContext.getClassName());
+			_notificationTermEvaluatorRegistry.getNotificationTermEvaluators(
+				notificationContext.getClassName());
 
 		for (NotificationTermEvaluator notificationTermEvaluator :
 				notificationTermEvaluators) {

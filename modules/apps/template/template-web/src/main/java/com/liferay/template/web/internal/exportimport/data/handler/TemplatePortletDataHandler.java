@@ -301,12 +301,8 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		for (TemplateHandler templateHandler :
 				_templateHandlerRegistry.getTemplateHandlers()) {
 
-			ClassName className = _classNameLocalService.fetchClassName(
+			ClassName className = _classNameLocalService.getClassName(
 				templateHandler.getClassName());
-
-			if (className == null) {
-				continue;
-			}
 
 			portletDataHandlerControls.add(
 				new PortletDataHandlerBoolean(

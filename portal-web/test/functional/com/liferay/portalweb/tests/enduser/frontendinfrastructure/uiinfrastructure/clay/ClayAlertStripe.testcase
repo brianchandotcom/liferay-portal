@@ -1,0 +1,61 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Clay Sample Portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		}
+	}
+
+    @description = "Verify stripe alert contains close button"
+	@priority = "5"
+	test CanDisplayAllAttributes {
+        task("When the alert is a stripe variation") {
+            VerifyElementPresent(
+                locator1 = "ClayAlert#ALERT_STRIPE",
+                key_alertType = "success");
+        }
+
+        task("Then the alert contains a close button") {
+            AssertElementPresent(
+                locator1 = "ClayAlert#ALERT_STRIPE_CLOSE",
+                key_alertType = "success");
+        }
+    }
+}

@@ -379,11 +379,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		portletResourcePermission.check(
-			permissionChecker, groupId, actionId);
+		portletResourcePermission.check(permissionChecker, groupId, actionId);
 
 		if (permissionChecker.hasPermission(
-			groupId, portletResourcePermission.getResourceName(), 0, actionId)) {
+				groupId, portletResourcePermission.getResourceName(), 0,
+				actionId)) {
 
 			return;
 		}

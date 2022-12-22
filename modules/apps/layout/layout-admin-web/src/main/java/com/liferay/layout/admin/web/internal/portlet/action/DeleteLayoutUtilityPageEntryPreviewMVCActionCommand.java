@@ -53,7 +53,9 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 			_layoutUtilityPageEntryService.fetchLayoutUtilityPageEntry(
 				layoutUtilityPageEntryId);
 
-		if (layoutUtilityPageEntry != null) {
+		if ((layoutUtilityPageEntry != null) &&
+			(layoutUtilityPageEntry.getPreviewFileEntryId() > 0)) {
+
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntryId, 0);
 

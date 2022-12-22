@@ -107,9 +107,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				JSONUtil.put(
 					"context",
 					_getContextJSONObject(
-						backURL, layout,
-						httpServletRequest,
-						redirect, segmentsExperienceId)
+						backURL, layout, httpServletRequest, redirect,
+						segmentsExperienceId)
 				).put(
 					"props",
 					_getPropsJSONObject(

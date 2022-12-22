@@ -692,6 +692,118 @@ definition {
 
 	// Ignored because of the ticket LRQA-57207
 
+	@description = "Verify if the show rule is working with predefined values."
+	@priority = "4"
+	test CheckEnableRuleIsWorkingWithPredefinedValue {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		FormFields.editBooleanPredefinedValue(predefinedValue = "True");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Boolean",
+			conditionOperator = "Is Equal To",
+			conditionRowNumber = "1",
+			conditionValueField = "True",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Enable",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldEnabled(fieldName = "Text");
+
+		FormFields.disableCheckbox(fieldName = "Boolean");
+
+		AssertNotEditable(
+			key_fieldName = "Text",
+			locator1 = "FormFields#TEXT_FIELD");
+	}
+
+	@description = "Verify if the show rule is working with predefined values."
+	@priority = "4"
+	test CheckShowRuleIsWorkingWithPredefinedValue {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		FormFields.editBooleanPredefinedValue(predefinedValue = "True");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Boolean",
+			conditionOperator = "Is Equal To",
+			conditionRowNumber = "1",
+			conditionValueField = "True",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewCheckboxChecked(fieldName = "Boolean");
+
+		FormFields.viewFieldEnabled(fieldName = "Text");
+
+		FormFields.disableCheckbox(fieldName = "Boolean");
+
+		AssertNotVisible(
+			key_fieldName = "Text",
+			locator1 = "FormFields#TEXT_FIELD");
+	}
+
 	@description = "Verify that a Rule creation can be canceled"
 	@priority = "5"
 	test CreationCanBeCanceled {
@@ -1042,61 +1154,6 @@ definition {
 		AssertElementNotPresent(
 			key_selectValue = "3 Page 3",
 			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE");
-	}
-
-	@description = "Verify if the show rule is working with predefined values."
-	@priority = "4"
-	test CheckEnableRuleIsWorkingWithPredefinedValue {
-		property portal.upstream = "true";
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Boolean");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		FormFields.editBooleanPredefinedValue(predefinedValue = "True");
-
-		Form.closeSidebar();
-
-		Form.addTextField(fieldPositionNumber = "1");
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.configureConditionOptions(
-			conditionField = "Boolean",
-			conditionOperator = "Is Equal To",
-			conditionRowNumber = "1",
-			conditionValueType = "Value",
-			conditionValueField = "True");
-
-		FormRules.configureActionOptions(
-			action = "Enable",
-			actionRowNumber = "1",
-			actionTarget = "Text");
-
-		FormRules.save();
-
-		FormsAdminNavigator.gotoFormBuilder();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.viewFieldEnabled(fieldName = "Text");		
-
-		FormFields.disableCheckbox(fieldName = "Boolean");	
-
-		AssertNotEditable(
-			key_fieldName = "Text",
-			locator1 = "FormFields#TEXT_FIELD");
 	}
 
 }

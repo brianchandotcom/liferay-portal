@@ -467,8 +467,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					_themeDisplay.getScopeGroupId());
 		}
 
-		return PortalUtil.getCurrentAndAncestorSiteGroupIds(
-			_themeDisplay.getScopeGroupId());
+		return new long[] {_themeDisplay.getScopeGroupId()};
 	}
 
 	private BreadcrumbEntry _getHomeBreadcrumb() throws Exception {

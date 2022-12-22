@@ -15,3 +15,30 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+EditCollectionConfigurationDisplayContext editCollectionConfigurationDisplayContext = (EditCollectionConfigurationDisplayContext)request.getAttribute(EditCollectionConfigurationDisplayContext.class.getName());
+%>
+
+<liferay-frontend:edit-form
+	action="<%= editCollectionConfigurationDisplayContext.getActionURL() %>"
+	method="post"
+	name="fm"
+>
+	<aui:input name="classNameId" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getClassNameId() %>" />
+	<aui:input name="classPK" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getClassPK() %>" />
+	<aui:input name="collectionKey" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getCollectionKey() %>" />
+	<aui:input name="itemId" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getItemId() %>" />
+	<aui:input name="plid" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getPlid() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getRedirect() %>" />
+	<aui:input name="segmentsExperienceId" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getSegmentsExperienceId() %>" />
+	<aui:input name="type" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getType() %>" />
+
+	<liferay-ui:error key="anUnexpectedErrorOccurred" message="an-unexpected-error-occurred" />
+
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= editCollectionConfigurationDisplayContext.getRedirect() %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

@@ -14,14 +14,15 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.display.context.EditCollectionConfigurationDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,14 +44,20 @@ public class EditCollectionConfigurationMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		EditCollectionConfigurationDisplayContext
+			editCollectionConfigurationDisplayContext =
+				new EditCollectionConfigurationDisplayContext(
+					httpServletRequest, renderResponse);
+
+		httpServletRequest.setAttribute(
+			EditCollectionConfigurationDisplayContext.class.getName(),
+			editCollectionConfigurationDisplayContext);
+
 		return "/edit_collection_configuration.jsp";
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

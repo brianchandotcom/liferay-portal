@@ -30,11 +30,8 @@ import PageToolbar from '../shared/PageToolbar';
 import Sidebar from '../shared/Sidebar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
-import {
-	DEFAULT_ERROR,
-	DEFAULT_INDEX_CONFIGURATION,
-	SIDEBARS,
-} from '../utils/constants';
+import {DEFAULT_INDEX_CONFIGURATION, SIDEBARS} from '../utils/constants';
+import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {addParams, fetchData, fetchPreviewSearch} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
 import {formatLocaleWithUnderscores, renameKeys} from '../utils/language';

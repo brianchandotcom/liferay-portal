@@ -9,6 +9,10 @@
  * distribution rights of the Software.
  */
 
+export const DEFAULT_ERROR = Liferay.Language.get(
+	'an-unexpected-error-occurred'
+);
+
 export const ERROR_MESSAGES = {
 	GREATER_THAN_X: Liferay.Language.get(
 		'please-enter-a-value-greater-than-or-equal-to-x'

@@ -17,13 +17,13 @@ import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {DEFAULT_ERROR} from '../utils/constants';
 import {
 	DEFAULT_ADVANCED_CONFIGURATION,
 	DEFAULT_HIGHLIGHT_CONFIGURATION,
 	DEFAULT_PARAMETER_CONFIGURATION,
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
+import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {fetchData} from '../utils/fetch';
 import {setInitialSuccessToast} from '../utils/toasts';
 import {filterAndSortClassNames} from '../utils/utils';

@@ -11,7 +11,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {DEFAULT_ERROR} from './constants';
+import {DEFAULT_ERROR} from './errorMessages';
 
 const DEFAULT_HEADERS_OBJECT = {
 	'Accept': 'application/json',

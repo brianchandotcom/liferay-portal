@@ -40,7 +40,8 @@ import Sidebar from '../shared/Sidebar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import SXPElement from '../shared/sxp_element/index';
-import {CONFIG_PREFIX, DEFAULT_ERROR} from '../utils/constants';
+import {CONFIG_PREFIX} from '../utils/constants';
+import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {
 	formatLocaleWithDashes,
 	formatLocaleWithUnderscores,

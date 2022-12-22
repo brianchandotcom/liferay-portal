@@ -11,7 +11,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {DEFAULT_ERROR} from '../utils/constants';
+import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
 
 export function download(url, parameters, title) {

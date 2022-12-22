@@ -13,7 +13,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {openToast} from 'frontend-js-web';
 import React, {Component} from 'react';
 
-import {DEFAULT_ERROR} from '../utils/constants';
+import {DEFAULT_ERROR} from '../utils/errorMessages';
 
 class ErrorBoundary extends Component {
 	state = {

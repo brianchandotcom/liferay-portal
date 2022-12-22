@@ -22,10 +22,6 @@ export const CONFIG_PREFIX = 'configuration';
 
 export const COPY_BUTTON_CSS_CLASS = 'sxp-copy-button';
 
-export const DEFAULT_ERROR = Liferay.Language.get(
-	'an-unexpected-error-occurred'
-);
-
 export const DEFAULT_INDEX_CONFIGURATION = {
 	external: false,
 	indexName: '',

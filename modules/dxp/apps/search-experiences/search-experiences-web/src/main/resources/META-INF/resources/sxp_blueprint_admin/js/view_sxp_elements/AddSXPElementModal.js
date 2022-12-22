@@ -17,8 +17,8 @@ import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {DEFAULT_ERROR} from '../utils/constants';
 import {CUSTOM_JSON_SXP_ELEMENT} from '../utils/data';
+import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {setInitialSuccessToast} from '../utils/toasts';
 import {isDefined} from '../utils/utils';
 

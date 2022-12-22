@@ -65,17 +65,12 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 					_objectDefinition.getObjectDefinitionId(),
 					objectRelationship));
 
-		DynamicObjectDefinitionTable relatedObjectTable =
-			new DynamicObjectDefinitionTable(
-				relatedObjectDefinition,
-				_objectFieldLocalService.getObjectFields(
-					relatedObjectDefinition.getObjectDefinitionId(),
-					relatedObjectDefinition.getDBTableName()),
-				relatedObjectDefinition.getDBTableName());
+		DynamicObjectDefinitionTable relatedObjectTable = _getTable(
+			relatedObjectDefinition);
 
 		Column<?, ?> relatedObjectDefinitionTableColumn =
 			relatedObjectTable.getColumn(
-				relatedObjectDefinition.getPKObjectFieldName() + "_");
+				relatedObjectDefinition.getPKObjectFieldDBColumnName());
 
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
@@ -91,24 +86,21 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 						"pkObjectFieldDBColumnName2"),
 					objectRelationship.getDBTableName());
 
-		DynamicObjectDefinitionTable objectTable =
-			new DynamicObjectDefinitionTable(
-				_objectDefinition,
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId(),
-					_objectDefinition.getDBTableName()),
-				_objectDefinition.getDBTableName());
+		DynamicObjectDefinitionTable objectTable = _getTable(_objectDefinition);
 
 		Column<?, ?> objectTableColumn = objectTable.getColumn(
-			_objectDefinition.getPKObjectFieldName() + "_");
+			_objectDefinition.getPKObjectFieldDBColumnName());
 
 		Column<DynamicObjectRelationshipMappingTable, ?> relatedObjectColumn =
 			dynamicObjectRelationshipMappingTable.getColumn(
-				relatedObjectDefinition.getPKObjectFieldName() + "_");
+				relatedObjectDefinition.getPKObjectFieldDBColumnName());
 
 		Column<DynamicObjectRelationshipMappingTable, ?> objectColumn =
 			dynamicObjectRelationshipMappingTable.getColumn(
-				_objectDefinition.getPKObjectFieldName() + "_");
+				_objectDefinition.getPKObjectFieldDBColumnName());
+
+		DynamicObjectDefinitionTable relatedObjectDefinitionExtensionTable =
+			_getExtensionTable(relatedObjectDefinition);
 
 		return objectTableColumn.in(
 			DSLQueryFactoryUtil.select(
@@ -121,10 +113,28 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 						relatedObjectDefinitionTableColumn
 					).from(
 						relatedObjectTable
+					).innerJoinON(
+						relatedObjectDefinitionExtensionTable,
+						relatedObjectTable.getPrimaryKeyColumn(
+						).eq(
+							relatedObjectDefinitionExtensionTable.
+								getPrimaryKeyColumn()
+						)
 					).where(
 						predicate
 					))
 			));
+	}
+
+	private DynamicObjectDefinitionTable _getExtensionTable(
+		ObjectDefinition objectDefinition) {
+
+		return new DynamicObjectDefinitionTable(
+			objectDefinition,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getExtensionDBTableName()),
+			objectDefinition.getExtensionDBTableName());
 	}
 
 	private long _getRelatedObjectDefinitionId(
@@ -135,6 +145,17 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 		}
 
 		return objectRelationship.getObjectDefinitionId2();
+	}
+
+	private DynamicObjectDefinitionTable _getTable(
+		ObjectDefinition objectDefinition) {
+
+		return new DynamicObjectDefinitionTable(
+			objectDefinition,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getDBTableName()),
+			objectDefinition.getDBTableName());
 	}
 
 	private final ObjectDefinition _objectDefinition;

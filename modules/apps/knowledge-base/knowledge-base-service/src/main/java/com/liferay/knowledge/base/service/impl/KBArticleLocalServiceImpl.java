@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1377,7 +1378,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return kbArticle;
 		}
 
-		String action = "add";
+		String action = Constants.ADD;
 
 		if (!kbArticle.isFirstVersion()) {
 			KBArticle oldKBArticle = kbArticlePersistence.findByR_V(
@@ -1388,7 +1389,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 			kbArticlePersistence.update(oldKBArticle);
 
-			action = "update";
+			action = Constants.UPDATE;
 		}
 
 		// Asset
@@ -1727,7 +1728,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		String action,
 		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
-		if (action.equals("add")) {
+		if (Constants.ADD.equals(action)) {
 			return kbGroupServiceConfiguration.emailKBArticleAddedBody();
 		}
 
@@ -1834,7 +1835,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	private int _getNotificationType(String action) {
-		if (action.equals("add")) {
+		if (Constants.ADD.equals(action)) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 		}
 
@@ -1896,7 +1897,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		String action,
 		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
-		if (action.equals("add")) {
+		if (Constants.ADD.equals(action)) {
 			return kbGroupServiceConfiguration.emailKBArticleAddedSubject();
 		}
 
@@ -2024,13 +2025,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
 			_getKBGroupServiceConfiguration(kbArticle.getGroupId());
 
-		if (action.equals("add") &&
+		if (Constants.ADD.equals(action) &&
 			!kbGroupServiceConfiguration.emailKBArticleAddedEnabled()) {
 
 			return;
 		}
 
-		if (action.equals("update") &&
+		if (Constants.UPDATE.equals(action) &&
 			!kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled()) {
 
 			return;

@@ -3200,6 +3200,17 @@ public class ObjectEntryLocalServiceImpl
 			_listTypeEntryLocalService.getListTypeEntry(
 				listTypeDefinitionId, String.valueOf(entry.getValue()));
 
+		ObjectState targetObjectState =
+			_objectStateLocalService.getObjectStateFlowObjectState(
+				listTypeEntry.getListTypeEntryId(),
+				objectStateFlow.getObjectStateFlowId());
+
+		if (sourceObjectState.getObjectStateId() ==
+				targetObjectState.getObjectStateId()) {
+
+			return;
+		}
+
 		boolean invalidObjectStateTransition = true;
 
 		for (ObjectState nextObjectState :
@@ -3207,25 +3218,15 @@ public class ObjectEntryLocalServiceImpl
 					sourceObjectState.getObjectStateId())) {
 
 			if (nextObjectState.getListTypeEntryId() ==
-					listTypeEntry.getListTypeEntryId()) {
+					targetObjectState.getListTypeEntryId()) {
 
 				invalidObjectStateTransition = false;
 			}
 		}
 
 		if (invalidObjectStateTransition) {
-			ObjectState targetObjectState =
-				_objectStateLocalService.getObjectStateFlowObjectState(
-					listTypeEntry.getListTypeEntryId(),
-					objectStateFlow.getObjectStateFlowId());
-
-			if (sourceObjectState.getObjectStateId() !=
-					targetObjectState.getObjectStateId()) {
-
-				throw new ObjectEntryValuesException.
-					InvalidObjectStateTransition(
-						sourceObjectState, targetObjectState);
-			}
+			throw new ObjectEntryValuesException.InvalidObjectStateTransition(
+				sourceObjectState, targetObjectState);
 		}
 	}
 

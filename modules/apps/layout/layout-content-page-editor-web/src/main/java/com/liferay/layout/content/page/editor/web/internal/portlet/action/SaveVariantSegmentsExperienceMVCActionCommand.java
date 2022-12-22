@@ -80,7 +80,7 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		MultiSessionMessages.add(actionRequest, "layoutPublished");
+		MultiSessionMessages.add(actionRequest, "variantSaved");
 
 		sendRedirect(actionRequest, actionResponse);
 	}

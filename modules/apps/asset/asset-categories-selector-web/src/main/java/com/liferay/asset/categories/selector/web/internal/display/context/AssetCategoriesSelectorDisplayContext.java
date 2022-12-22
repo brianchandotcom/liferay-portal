@@ -188,7 +188,9 @@ public class AssetCategoriesSelectorDisplayContext {
 				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
 					vocabularyId);
 
-			if (assetVocabulary != null) {
+			if ((assetVocabulary != null) &&
+				(assetVocabulary.getCategoriesCount() > 0)) {
+
 				assetVocabularies.add(assetVocabulary);
 			}
 		}

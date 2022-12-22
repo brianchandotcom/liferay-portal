@@ -110,12 +110,12 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					"context",
 					_getContextJSONObject(
 						backURL, layout,
-						_portal.getHttpServletRequest(resourceRequest),
+						httpServletRequest,
 						redirect, segmentsExperienceId)
 				).put(
 					"props",
 					_getPropsJSONObject(
-						_portal.getHttpServletRequest(resourceRequest), layout,
+						httpServletRequest, layout,
 						_portal.getLocale(httpServletRequest), redirect,
 						segmentsExperienceId)
 				));

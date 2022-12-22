@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -38,10 +37,8 @@ public class PortalStartupMonitor {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		BundleContext bundleContext = componentContext.getBundleContext();
-
 		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext,
+			componentContext.getBundleContext(),
 			StringBundler.concat(
 				"(&", ModuleServiceLifecycle.PORTAL_INITIALIZED,
 				"(objectClass=", ModuleServiceLifecycle.class.getName(), "))"),
@@ -55,7 +52,7 @@ public class PortalStartupMonitor {
 					componentContext.disableComponent(
 						PortalStartupMonitor.class.getName());
 
-					return bundleContext.getService(serviceReference);
+					return null;
 				}
 
 				@Override
@@ -68,8 +65,6 @@ public class PortalStartupMonitor {
 				public void removedService(
 					ServiceReference<ModuleServiceLifecycle> serviceReference,
 					ModuleServiceLifecycle moduleServiceLifecycle) {
-
-					bundleContext.ungetService(serviceReference);
 				}
 
 			});

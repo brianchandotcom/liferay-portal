@@ -648,7 +648,7 @@ definition {
 	@description = "LPS-149508 - Verify if there are default resources of the System Objects on the Audit Portlet"
 	@priority = "3"
 	test CanViewDefaultResourcesOnSystemObjects {
-		for (var loops : list "3,7,10,13,16") {
+		for (var loops : list "2,4,6,8,10,12") {
 			Audit.openAuditAdmin();
 
 			WaitForElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");
@@ -660,7 +660,7 @@ definition {
 			Click(locator1 = "Button#SUBMIT");
 
 			Audit.viewAuditDetailsByPosition(
-				additionalInformation = "company,false",
+				additionalInformation = "scope\":\"company",
 				clientIp = "",
 				key_resourceAction = "ADD",
 				key_resourceName = "ObjectDefinition",

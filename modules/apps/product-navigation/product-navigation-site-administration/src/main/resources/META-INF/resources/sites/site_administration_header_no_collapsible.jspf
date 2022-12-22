@@ -70,7 +70,16 @@
 		<clay:content-col
 			cssClass="autofit-col-end"
 		>
-			<aui:icon aria-label='<%= LanguageUtil.get(request, "close") %>' cssClass="d-inline-block icon-monospaced ml-2 px-2 py-1 sidenav-close" image="times" markupView="lexicon" url="javascript:void(0);" />
+			<clay:button
+				aria-label='<%= LanguageUtil.get(request, "close") %>'
+				borderless="<%= true %>"
+				cssClass="lfr-portal-tooltip sidenav-close text-white"
+				displayType="secondary"
+				icon="times"
+				monospaced="<%= true %>"
+				small="<%= true %>"
+				title='<%= LanguageUtil.get(request, "close") %>'
+			/>
 		</clay:content-col>
 	</clay:content-row>
 </span>

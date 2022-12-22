@@ -1,0 +1,194 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.segments.experiment.web.internal.portlet.action.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.io.ByteArrayOutputStream;
+
+import java.util.Locale;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+
+/**
+ * @author Cristina González
+ */
+@RunWith(Arquillian.class)
+public class GetDataMVCResourceCommandTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
+	}
+
+	@Test
+	public void testGetProps() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+
+		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+		themeDisplay.setLocale(_locale);
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPortalDomain("localhost");
+		themeDisplay.setPortalURL(_company.getPortalURL(_group.getGroupId()));
+		themeDisplay.setSecure(true);
+		themeDisplay.setServerName("localhost");
+		themeDisplay.setServerPort(8080);
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayResourceRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
+		String url = "http://localhost:8080";
+
+		mockLiferayResourceRequest.setParameter("backURL", url);
+		mockLiferayResourceRequest.setParameter("redirect", url);
+
+		mockLiferayResourceRequest.setParameter(
+			"plid", String.valueOf(layout.getPlid()));
+
+		String segmentsEntryName = RandomTestUtil.randomString();
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			segmentsEntryName, RandomTestUtil.randomString(), StringPool.BLANK,
+			SegmentsEntryConstants.SOURCE_DEFAULT);
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(),
+				_classNameLocalService.getClassNameId(Layout.class.getName()),
+				layout.getPlid(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		mockLiferayResourceRequest.setParameter(
+			"segmentsExperienceId",
+			String.valueOf(segmentsExperience.getSegmentsExperienceId()));
+
+		_mvcResourceCommand.serveResource(
+			mockLiferayResourceRequest, mockLiferayResourceResponse);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(byteArrayOutputStream.toByteArray()));
+
+		JSONObject propsJSONObject = jsonObject.getJSONObject("props");
+
+		Assert.assertEquals(
+			String.valueOf(segmentsExperience.getSegmentsExperienceId()),
+			propsJSONObject.getString("selectedSegmentsExperienceId"));
+
+		Assert.assertTrue(
+			propsJSONObject.getString(
+				"hideSegmentsExperimentPanelURL"
+			).contains(
+				HttpComponentsUtil.encodeParameters(url)
+			));
+	}
+
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private Layout _layout;
+	private final Locale _locale = LocaleUtil.US;
+
+	@Inject(filter = "mvc.command.name=/segments_experiment/get_data")
+	private MVCResourceCommand _mvcResourceCommand;
+
+}

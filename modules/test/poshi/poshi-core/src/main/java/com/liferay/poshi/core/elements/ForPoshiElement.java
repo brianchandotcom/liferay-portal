@@ -127,9 +127,16 @@ public class ForPoshiElement extends PoshiElement {
 		sb.append(attributeValue("param"));
 		sb.append(" : ");
 		sb.append(typeAttributeName);
-		sb.append(" \"");
-		sb.append(attributeValue(typeAttributeName));
-		sb.append("\")");
+		sb.append(" ");
+
+		String typeAttributeValue = attributeValue(typeAttributeName);
+
+		if (isQuotedContent(typeAttributeValue)) {
+			typeAttributeValue = "\"" + typeAttributeValue + "\"";
+		}
+
+		sb.append(typeAttributeValue);
+		sb.append(")");
 
 		return sb.toString();
 	}

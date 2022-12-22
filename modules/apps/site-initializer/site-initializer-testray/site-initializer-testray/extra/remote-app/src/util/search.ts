@@ -24,6 +24,7 @@ type Filter = {
  */
 
 export const searchUtil = {
+
 	/**
 	 * @description Contains
 	 * @example contains(title,'edmon')
@@ -37,9 +38,7 @@ export const searchUtil = {
 	 */
 
 	eq: (key: Key, value: Value) =>
-		`${key} eq ${
-			['boolean', 'number'].includes(typeof value) ? value : `'${value}'`
-		}`,
+		`${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`,
 
 	/**
 	 * @description In [values]

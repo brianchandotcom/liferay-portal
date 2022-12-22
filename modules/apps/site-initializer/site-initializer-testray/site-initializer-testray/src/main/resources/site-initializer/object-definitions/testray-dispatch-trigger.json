@@ -51,7 +51,6 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"defaultValue": "SCHEDULED",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {

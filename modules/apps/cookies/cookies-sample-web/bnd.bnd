@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Cookies Sample Web
+Bundle-SymbolicName: com.liferay.cookies.sample.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /cookies-sample-web

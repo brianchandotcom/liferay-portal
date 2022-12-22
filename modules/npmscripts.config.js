@@ -35,6 +35,9 @@ module.exports = {
 					'@liferay/content-dashboard-web': {
 						'/': '*',
 					},
+					'@liferay/cookies-banner-web': {
+						'/': '*',
+					},
 					'@liferay/document-library-preview-css': {
 						'/': '*',
 					},

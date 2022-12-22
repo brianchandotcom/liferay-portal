@@ -146,7 +146,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 				markupView="lexicon"
 				message="<%= StringPool.BLANK %>"
 				showWhenSingleIcon="<%= true %>"
-				triggerAriaLabel='<%= LanguageUtil.format(request, "current-translation-is-x-press-enter-to-navigate", new String[] {selectedLanguageName}, false) %>'
+				triggerAriaLabel='<%= LanguageUtil.format(request, "current-translation-is-x-press-enter-to-select-another-language", new String[] {selectedLanguageName}, false) %>'
 				triggerCssClass="input-localized-trigger"
 				triggerLabel="<%= normalizedSelectedLanguageId %>"
 				triggerType="button"
@@ -195,7 +195,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 							String translationInstructionAnnouncement = LanguageUtil.format(request, "press-enter-to-edit-x-translation", new String[] {languageName}, false);
 
 							Map<String, String> languageTranslationAriaLabelsMap = HashMapBuilder.put(
-								"currentlySelected", LanguageUtil.format(request, "current-translation-is-x-press-enter-to-navigate", new String[] {languageName}, false)
+								"currentlySelected", LanguageUtil.format(request, "current-translation-is-x-press-enter-to-select-another-language", new String[] {languageName}, false)
 							).put(
 								"defaultStatus", LanguageUtil.format(request, "default-translation-is-x", new String[] {languageName}, false) + StringPool.SPACE + translationInstructionAnnouncement
 							).put(

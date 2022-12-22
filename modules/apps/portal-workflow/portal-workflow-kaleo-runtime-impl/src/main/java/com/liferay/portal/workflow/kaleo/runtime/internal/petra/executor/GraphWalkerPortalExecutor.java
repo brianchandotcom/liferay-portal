@@ -145,6 +145,8 @@ public class GraphWalkerPortalExecutor {
 	}
 
 	private void _walk(PathElement pathElement) {
+		String name = PrincipalThreadLocal.getName();
+
 		try {
 			ExecutionContext executionContext =
 				pathElement.getExecutionContext();
@@ -179,6 +181,9 @@ public class GraphWalkerPortalExecutor {
 		}
 		catch (Throwable throwable) {
 			_log.error(throwable, throwable);
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
 		}
 	}
 

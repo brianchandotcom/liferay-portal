@@ -1499,25 +1499,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry1.getType());
 
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, "/test-public-layout");
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		SegmentsExperience segmentsExperience1 =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				groupId, "TEST-SEGMENTS-EXPERIENCE-1",
-				_portal.getClassNameId(Layout.class), draftLayout.getClassPK());
-
-		Assert.assertNotNull(segmentsExperience1);
-		Assert.assertEquals(
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsExperience1.getSegmentsEntryId());
-		Assert.assertEquals(
-			"Test Segments Experience 1",
-			segmentsExperience1.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertTrue(segmentsExperience1.isActive());
-
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				groupId, "TEST-SEGMENTS-ENTRY-2", true);
@@ -1530,19 +1511,23 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry2.getType());
 
-		SegmentsExperience segmentsExperience2 =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				groupId, "TEST-SEGMENTS-EXPERIENCE-2",
-				_portal.getClassNameId(Layout.class), draftLayout.getClassPK());
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, "/test-public-layout");
 
-		Assert.assertNotNull(segmentsExperience2);
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				groupId,
+				new long[] {
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId()
+				},
+				_portal.getClassNameId(Layout.class), draftLayout.getClassPK(),
+				true);
+
 		Assert.assertEquals(
-			segmentsEntry2.getSegmentsEntryId(),
-			segmentsExperience2.getSegmentsEntryId());
-		Assert.assertEquals(
-			"Test Segments Experience 2",
-			segmentsExperience2.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertTrue(segmentsExperience2.isActive());
+			segmentsExperiences.toString(), 2, segmentsExperiences.size());
 	}
 
 	private void _assertSiteConfiguration(Long groupId) {

@@ -18,7 +18,6 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
@@ -31,19 +30,13 @@ import com.liferay.portal.kernel.util.StringBundler;
  * @author Luis Miguel Barcos
  */
 public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
-	implements ObjectRelatedModelsPredicateProvider {
+	extends BaseObjectEntryObjectRelatedModelsPredicateProviderImpl {
 
 	public ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl(
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		_objectDefinition = objectDefinition;
-		_objectFieldLocalService = objectFieldLocalService;
-	}
-
-	@Override
-	public String getClassName() {
-		return _objectDefinition.getClassName();
+		super(objectDefinition, objectFieldLocalService);
 	}
 
 	@Override
@@ -62,7 +55,7 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 		ObjectDefinition objectDefinition2 = _getObjectDefinition2(
 			objectRelationship);
 
-		DynamicObjectDefinitionTable objectDefinition2Table = _getTable(
+		DynamicObjectDefinitionTable objectDefinition2Table = getTable(
 			objectDefinition2);
 
 		Column<DynamicObjectDefinitionTable, ?>
@@ -73,7 +66,7 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 						objectDefinition1.getPKObjectFieldName()));
 
 		DynamicObjectDefinitionTable objectDefinition2ExtensionTable =
-			_getExtensionTable(objectDefinition2);
+			getExtensionTable(objectDefinition2);
 
 		if (objectDefinition2RelationshipFieldTableColumn == null) {
 			objectDefinition2RelationshipFieldTableColumn =
@@ -83,14 +76,14 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 						objectDefinition1.getPKObjectFieldName()));
 		}
 
-		DynamicObjectDefinitionTable objectDefinition1Table = _getTable(
+		DynamicObjectDefinitionTable objectDefinition1Table = getTable(
 			objectDefinition1);
 
 		Column<?, ?> objectDefinition1PKObjectFieldTableColumn =
-			_getPKObjectDefinitionTableColumn(
+			getPKObjectDefinitionTableColumn(
 				objectDefinition1Table, objectDefinition1);
 
-		if (_objectDefinition.getObjectDefinitionId() ==
+		if (objectDefinition.getObjectDefinitionId() ==
 				objectRelationship.getObjectDefinitionId1()) {
 
 			return objectDefinition1PKObjectFieldTableColumn.in(
@@ -110,11 +103,11 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 		}
 
 		Column<?, ?> objectDefinition2PKObjectFieldTableColumn =
-			_getPKObjectDefinitionTableColumn(
+			getPKObjectDefinitionTableColumn(
 				objectDefinition2Table, objectDefinition2);
 
 		DynamicObjectDefinitionTable objectDefinition1ExtensionTable =
-			_getExtensionTable(objectDefinition1);
+			getExtensionTable(objectDefinition1);
 
 		return objectDefinition2PKObjectFieldTableColumn.in(
 			DSLQueryFactoryUtil.select(
@@ -146,25 +139,14 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 			));
 	}
 
-	private DynamicObjectDefinitionTable _getExtensionTable(
-		ObjectDefinition objectDefinition) {
-
-		return new DynamicObjectDefinitionTable(
-			objectDefinition,
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getExtensionDBTableName()),
-			objectDefinition.getExtensionDBTableName());
-	}
-
 	private ObjectDefinition _getObjectDefinition1(
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		if (objectRelationship.getObjectDefinitionId1() ==
-				_objectDefinition.getObjectDefinitionId()) {
+				objectDefinition.getObjectDefinitionId()) {
 
-			return _objectDefinition;
+			return objectDefinition;
 		}
 
 		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
@@ -176,35 +158,13 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 		throws PortalException {
 
 		if (objectRelationship.getObjectDefinitionId2() ==
-				_objectDefinition.getObjectDefinitionId()) {
+				objectDefinition.getObjectDefinitionId()) {
 
-			return _objectDefinition;
+			return objectDefinition;
 		}
 
 		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 			objectRelationship.getObjectDefinitionId2());
 	}
-
-	private Column<?, ?> _getPKObjectDefinitionTableColumn(
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-		ObjectDefinition objectDefinition) {
-
-		return dynamicObjectDefinitionTable.getColumn(
-			objectDefinition.getPKObjectFieldDBColumnName());
-	}
-
-	private DynamicObjectDefinitionTable _getTable(
-		ObjectDefinition objectDefinition) {
-
-		return new DynamicObjectDefinitionTable(
-			objectDefinition,
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getDBTableName()),
-			objectDefinition.getDBTableName());
-	}
-
-	private final ObjectDefinition _objectDefinition;
-	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

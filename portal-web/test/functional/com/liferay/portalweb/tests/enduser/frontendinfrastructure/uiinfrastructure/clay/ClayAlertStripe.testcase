@@ -43,19 +43,20 @@ definition {
 		}
 	}
 
-    @description = "Verify stripe alert contains close button"
+	@description = "Verify stripe alert contains close button"
 	@priority = "5"
 	test CanDisplayAllAttributes {
-        task("When the alert is a stripe variation") {
-            VerifyElementPresent(
-                locator1 = "ClayAlert#ALERT_STRIPE",
-                key_alertType = "success");
-        }
+		task ("When the alert is a stripe variation") {
+			VerifyElementPresent(
+				key_alertType = "success",
+				locator1 = "ClayAlert#ALERT_STRIPE");
+		}
 
-        task("Then the alert contains a close button") {
-            AssertElementPresent(
-                locator1 = "ClayAlert#ALERT_STRIPE_CLOSE",
-                key_alertType = "success");
-        }
-    }
+		task ("Then the alert contains a close button") {
+			AssertElementPresent(
+				key_alertType = "success",
+				locator1 = "ClayAlert#ALERT_STRIPE_CLOSE");
+		}
+	}
+
 }

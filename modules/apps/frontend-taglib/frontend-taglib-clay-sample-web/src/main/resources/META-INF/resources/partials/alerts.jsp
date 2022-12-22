@@ -52,30 +52,30 @@
 </blockquote>
 
 <clay:stripe
+	dismissible="<%= true %>"
 	displayType="danger"
 	message="This is an error message."
 	title="Error"
-	dismissible = "<%= true %>"
 />
 
 <clay:stripe
+	dismissible="<%= true %>"
 	displayType="success"
 	message="This is a success message."
 	title="Success"
-	dismissible = "<%= true %>"
 />
 
 <clay:stripe
+	dismissible="<%= true %>"
 	message="This is an info message."
 	title="Info"
-	dismissible = "<%= true %>"
 />
 
 <clay:stripe
+	dismissible="<%= true %>"
 	displayType="warning"
 	message="This is a warning message."
 	title="Warning"
-	dismissible = "<%= true %>"
 />
 
 <div>

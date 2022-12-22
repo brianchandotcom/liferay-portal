@@ -37,11 +37,11 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 			rows={[
 				{
 					title: 'Company Name',
-					value: mdfRequest.company.name,
+					value: mdfRequest.company?.name,
 				},
 				{
 					title: 'Region',
-					value: mdfRequest.country.name,
+					value: mdfRequest.country?.name,
 				},
 			]}
 			truncate
@@ -72,7 +72,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Liferay business/sales goals',
-					value: mdfRequest.liferayBusinessSalesGoals.join('; '),
+					value: mdfRequest.liferayBusinessSalesGoals?.join('; '),
 				},
 			]}
 			truncate
@@ -94,17 +94,17 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 			rows={[
 				{
 					title: 'Target Market(s)',
-					value: mdfRequest.targetMarkets.join('; '),
+					value: mdfRequest.targetMarkets?.join('; '),
 				},
 				{
 					title: 'Additional Options',
-					value: mdfRequest.additionalOption.name
-						? mdfRequest.additionalOption.name
+					value: mdfRequest.additionalOption?.name
+						? mdfRequest.additionalOption?.name
 						: 'N/A',
 				},
 				{
 					title: 'Target Audience/Role',
-					value: mdfRequest.targetAudienceRoles.join('; '),
+					value: mdfRequest.targetAudienceRoles?.join('; '),
 				},
 			]}
 			truncate

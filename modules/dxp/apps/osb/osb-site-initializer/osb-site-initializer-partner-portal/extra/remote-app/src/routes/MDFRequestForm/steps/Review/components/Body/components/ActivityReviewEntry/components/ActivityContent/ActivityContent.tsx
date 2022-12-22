@@ -63,7 +63,9 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => (
 				},
 				{
 					title: 'Lead Follow Up strategy',
-					value: mdfRequestActivity.leadFollowUpStrategies.join('; '),
+					value: mdfRequestActivity.leadFollowUpStrategies?.join(
+						'; '
+					),
 				},
 				{
 					title: 'Details on Lead Follow Up',

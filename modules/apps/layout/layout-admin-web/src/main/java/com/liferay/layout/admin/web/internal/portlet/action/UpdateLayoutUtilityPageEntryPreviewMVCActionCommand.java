@@ -15,12 +15,9 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.journal.model.JournalFolder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
@@ -29,9 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -85,8 +80,6 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 				LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
 		}
 
-		long folderId = 0;
-
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.fetchLayoutUtilityPageEntry(
 				layoutUtilityPageEntryId);
@@ -97,35 +90,9 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 					layoutUtilityPageEntry.getPreviewFileEntryId());
 
 			if (oldDLFileEntry != null) {
-				folderId = oldDLFileEntry.getFolderId();
-
 				_portletFileRepository.deletePortletFileEntry(
 					oldDLFileEntry.getFileEntryId());
 			}
-		}
-
-		String folderName = String.valueOf(layoutUtilityPageEntryId);
-
-		if (folderId == 0) {
-			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
-				themeDisplay.getScopeGroupId(), repository.getDlFolderId(),
-				folderName);
-
-			if (dlFolder != null) {
-				folderId = dlFolder.getFolderId();
-			}
-		}
-
-		if (folderId == 0) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				JournalFolder.class.getName(), actionRequest);
-
-			Folder folder = _portletFileRepository.addPortletFolder(
-				themeDisplay.getUserId(), repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
-				serviceContext);
-
-			folderId = folder.getFolderId();
 		}
 
 		String fileName =
@@ -134,7 +101,7 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 		fileEntry = _portletFileRepository.addPortletFileEntry(
 			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			LayoutUtilityPageEntry.class.getName(), layoutUtilityPageEntryId,
-			LayoutAdminPortletKeys.GROUP_PAGES, folderId,
+			LayoutAdminPortletKeys.GROUP_PAGES, repository.getDlFolderId(),
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
 			false);
 

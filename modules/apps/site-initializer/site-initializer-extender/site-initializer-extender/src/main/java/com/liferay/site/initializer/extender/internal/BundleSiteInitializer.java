@@ -3152,15 +3152,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.addSegmentsExperience(
+				_segmentsExperienceLocalService.appendSegmentsExperience(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
-					jsonObject.getLong("segmentsEntryId"),
-					jsonObject.getString("segmentsExperienceKey"), classNameId,
+					jsonObject.getLong("segmentsEntryId"), classNameId,
 					draftLayout.getClassPK(),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
-					jsonObject.getInt("priority"),
 					jsonObject.getBoolean("active", true), unicodeProperties,
 					serviceContext);
 

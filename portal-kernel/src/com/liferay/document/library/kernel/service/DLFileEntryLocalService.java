@@ -145,7 +145,7 @@ public interface DLFileEntryLocalService
 
 	public DLFileEntry copyFileEntry(
 			long userId, long groupId, long repositoryId, long fileEntryId,
-			long destFolderId, ServiceContext serviceContext)
+			long destFolderId, String fileName, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void copyFileEntryMetadata(

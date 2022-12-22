@@ -1,8 +1,11 @@
 definition {
 
 	property portal.upstream = "true";
+    property testray.component.names = "Clay";
 
 	setUp {
+        TestCase.setUpPortalInstance();
+
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
@@ -30,27 +33,29 @@ definition {
 		}
 	}
 
-	@description = "LPS-170578 - Assert that message remain after mouse is away from it."
+	@description = "LPS-170578 - Assert that alert message remain when mouse hover over it."
 	@priority = "5"
 	test DoesNotDisappearWhenHoveredOver {
 		property portal.acceptance = "true";
 
 		task ("When a toast alert appear") {
 			WaitForElementPresent(
-				key_text = "Success Submit",
+				key_text = "Fail Submit",
 				locator1 = "Button#ANY");
 
 			Click(
-				key_text = "Success Submit",
+				key_text = "Fail Submit",
 				locator1 = "Button#ANY");
 		}
 
 		task ("And user mouses over the alert") {
-			MouseOver(locator1 = "Message#SUCCESS");
+			MouseOver(locator1 = "Message#ERROR_DISMISSIBLE");
 		}
 
-		task ("Then the alert does not disappear when hovered ove") {
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+		task ("Then the alert does not disappear when hovered over") {
+            Pause(locator1 = "25000");
+
+			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
 		}
 	}
 

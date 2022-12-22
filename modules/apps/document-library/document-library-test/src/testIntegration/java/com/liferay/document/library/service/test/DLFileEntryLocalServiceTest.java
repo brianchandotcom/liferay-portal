@@ -536,7 +536,7 @@ public class DLFileEntryLocalServiceTest {
 				DLFileEntryLocalServiceUtil.copyFileEntry(
 					TestPropsValues.getUserId(), _group.getGroupId(),
 					_group.getGroupId(), fileEntry.getFileEntryId(),
-					destinationFolder.getFolderId(), serviceContext);
+					destinationFolder.getFolderId(), null, serviceContext);
 
 			ExpandoBridge expandoBridge = copyDLFileEntry.getExpandoBridge();
 

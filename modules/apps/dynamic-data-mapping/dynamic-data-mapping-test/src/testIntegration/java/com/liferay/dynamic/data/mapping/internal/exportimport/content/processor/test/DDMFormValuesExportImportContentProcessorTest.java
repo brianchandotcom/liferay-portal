@@ -225,7 +225,8 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		DLFileEntry newDLFileEntry = _dlFileEntryLocalService.copyFileEntry(
 			TestPropsValues.getUserId(), _liveGroup.getGroupId(),
 			_liveGroup.getGroupId(), fileEntryId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, new ServiceContext());
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			new ServiceContext());
 
 		newDLFileEntry.setUuid(_fileEntry.getUuid());
 

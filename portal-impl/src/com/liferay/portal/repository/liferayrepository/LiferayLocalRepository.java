@@ -209,7 +209,7 @@ public class LiferayLocalRepository
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.copyFileEntry(
 			userId, groupId, getRepositoryId(), fileEntryId,
-			toFolderId(destFolderId), serviceContext);
+			toFolderId(destFolderId), null, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

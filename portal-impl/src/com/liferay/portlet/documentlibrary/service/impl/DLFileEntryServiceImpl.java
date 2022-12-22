@@ -178,7 +178,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			destFolderId, ActionKeys.ADD_DOCUMENT);
 
 		return dlFileEntryLocalService.copyFileEntry(
-			getUserId(), groupId, repositoryId, fileEntryId, destFolderId,
+			getUserId(), groupId, repositoryId, fileEntryId, destFolderId, null,
 			serviceContext);
 	}
 

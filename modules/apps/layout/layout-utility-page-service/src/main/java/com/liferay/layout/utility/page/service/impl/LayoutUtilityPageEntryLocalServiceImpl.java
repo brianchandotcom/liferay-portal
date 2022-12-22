@@ -389,7 +389,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		DLFileEntry copyDLFileEntry = _dlFileEntryLocalService.copyFileEntry(
 			userId, dlFileEntry.getGroupId(), dlFileEntry.getRepositoryId(),
-			previewFileEntryId, folder.getFolderId(), serviceContext);
+			previewFileEntryId, folder.getFolderId(), null, serviceContext);
 
 		return copyDLFileEntry.getFileEntryId();
 	}

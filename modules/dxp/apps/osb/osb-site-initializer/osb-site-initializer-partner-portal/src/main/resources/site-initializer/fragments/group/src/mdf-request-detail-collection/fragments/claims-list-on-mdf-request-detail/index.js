@@ -33,27 +33,23 @@ function getSiteVariables() {
 }
 
 const ClaimStatus = {
-	APPROVED: 'Approved',
-	CANCELED: 'Canceled',
-	CLAIM_PAID: 'Claim Paid',
-	DRAFT: 'Draft',
-	EXPIRED: 'Expired',
-	IN_FINANCE_REVIEW: 'In Finance Review',
-	MARKETING_DIRECTOR_REVIEW: 'Marketing Director Review',
-	PENDING: 'Pending Marketing Review',
-	REJECT: 'Reject',
-	REQUEST_MORE_INFO: 'Request More Info',
+	APPROVED: 'approved',
+	CLAIM_PAID: 'claimPaid',
+	DRAFT: 'draft',
+	EXPIRED: 'expired',
+	IN_FINANCE_REVIEW: 'inFinanceReview',
+	MORE_INFO_REQUEST: 'moreInfoRequested',
+	PENDING: 'pendingMarketingReview',
+	REJECT: 'rejected',
 };
 
 const statusClassName = {
 	[ClaimStatus.DRAFT]: 'label label-tonal-dark ml-2',
 	[ClaimStatus.PENDING]: 'label label-tonal-warning ml-2',
 	[ClaimStatus.APPROVED]: 'label label-tonal-success ml-2',
-	[ClaimStatus.REQUEST_MORE_INFO]: 'label label-tonal-warning ml-2',
+	[ClaimStatus.MORE_INFO_REQUEST]: 'label label-tonal-warning ml-2',
 	[ClaimStatus.REJECT]: 'label label-tonal-danger ml-2',
 	[ClaimStatus.EXPIRED]: 'label label-tonal-danger ml-2',
-	[ClaimStatus.MARKETING_DIRECTOR_REVIEW]: 'label label-tonal-light ml-2',
-	[ClaimStatus.CANCELED]: 'label label-borderless-dark ml-2',
 	[ClaimStatus.CLAIM_PAID]: 'label label-tonal-info ml-2',
 	[ClaimStatus.IN_FINANCE_REVIEW]: 'label label-tonal-light ml-2',
 };
@@ -78,8 +74,8 @@ const Panel = ({mdfClaims}) => {
 						{getIntlNumberFormat().format(mdfClaims.amountClaimed)}
 					</p>
 
-					<div className={statusClassName[mdfClaims.claimStatus]}>
-						{mdfClaims.claimStatus}
+					<div className={statusClassName[mdfClaims.claimStatus.key]}>
+						{mdfClaims.claimStatus.name}
 					</div>
 				</div>
 
@@ -154,7 +150,7 @@ export default function () {
 			ClaimStatus.REJECT,
 		];
 
-		return !ignoreStatus.includes(claim.claimStatus);
+		return !ignoreStatus.includes(claim.claimStatus.key);
 	});
 
 	return (

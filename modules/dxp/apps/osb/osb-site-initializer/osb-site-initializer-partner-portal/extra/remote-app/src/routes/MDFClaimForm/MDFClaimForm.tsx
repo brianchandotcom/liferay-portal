@@ -13,13 +13,13 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFRequestActivityDTO from '../../common/interfaces/dto/mdfRequestActivityDTO';
 import MDFClaim from '../../common/interfaces/mdfClaim';
 import {Liferay} from '../../common/services/liferay';
 import useGetDocumentFolder from '../../common/services/liferay/headless-delivery/useGetDocumentFolders';
 import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
+import {Status} from '../../common/utils/constants/status';
 import MDFClaimPage from './components/MDFClaimPage';
 import claimSchema from './components/MDFClaimPage/schema/yup';
 import useGetMDFRequestIdByHash from './hooks/useGetMDFRequestIdByHash';

@@ -28,8 +28,9 @@ export default function useGetListItemsFromMDFClaims(
 		() =>
 			swrResponse.data?.items.map((item) => ({
 				[MDFClaimColumnKey.REQUEST_ID]: String(item.id),
-				[MDFClaimColumnKey.PARTNER]: item.companyName,
-				[MDFClaimColumnKey.STATUS]: item.claimStatus,
+				[MDFClaimColumnKey.PARTNER]:
+					item.r_accountToMdfClaims_accountEntry?.name,
+				[MDFClaimColumnKey.STATUS]: item.claimStatus.name,
 				[MDFClaimColumnKey.TYPE]: item.partial ? 'Partial' : 'Full',
 				...getMDFClaimAmountClaimedInfo(item.amountClaimed),
 				[MDFClaimColumnKey.DATE_SUBMITTED]: getDateCustomFormat(

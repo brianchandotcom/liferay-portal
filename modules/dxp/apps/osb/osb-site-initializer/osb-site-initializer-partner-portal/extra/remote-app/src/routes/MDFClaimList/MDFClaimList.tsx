@@ -26,7 +26,6 @@ import DateFilter from '../../common/components/TableHeader/Filter/components/fi
 import Search from '../../common/components/TableHeader/Search';
 import {LiferayPicklistName} from '../../common/enums/liferayPicklistName';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
-import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
@@ -69,7 +68,7 @@ const MDFClaimList = () => {
 		{
 			columnKey: MDFClaimColumnKey.STATUS,
 			label: 'Status',
-			render: (data?: string) => <StatusBadge status={data as Status} />,
+			render: (data?: string) => <StatusBadge status={data as string} />,
 		},
 		{
 			columnKey: MDFClaimColumnKey.TYPE,

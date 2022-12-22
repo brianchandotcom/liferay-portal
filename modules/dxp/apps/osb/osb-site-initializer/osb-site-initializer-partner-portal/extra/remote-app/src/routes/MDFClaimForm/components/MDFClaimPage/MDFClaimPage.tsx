@@ -18,10 +18,10 @@ import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import ResumeCard from '../../../../common/components/ResumeCard';
-import {Status} from '../../../../common/enums/status';
 import MDFRequestDTO from '../../../../common/interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
+import {Status} from '../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import ActivityClaimPanel from './components/ActivityClaimPanel';
 import useActivitiesAmount from './hooks/useActivitiesAmount';
@@ -54,9 +54,15 @@ const MDFClaimPage = ({
 
 	const claimsFiltered = mdfRequest.mdfRequestToMdfClaims?.filter(
 		(mdfRequestToMdfClaim) => {
-			const ignoreStatus = [Status.DRAFT, Status.EXPIRED, Status.REJECT];
+			const ignoreStatus = [
+				Status.DRAFT.key,
+				Status.EXPIRED.key,
+				Status.REJECT.key,
+			];
 
-			return !ignoreStatus.includes(mdfRequestToMdfClaim.claimStatus);
+			return !ignoreStatus.includes(
+				mdfRequestToMdfClaim.claimStatus.key as string
+			);
 		}
 	).length;
 

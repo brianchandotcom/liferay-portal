@@ -25,6 +25,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -43,11 +44,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -98,6 +101,16 @@ public class FragmentCollectionContributorRegistryTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+	}
+
+	@After
+	public void tearDown() throws PortalException {
+		for (Long fragmentEntryLinkId : _fragmentEntryLinkIds) {
+			_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLinkId);
+		}
+
+		_fragmentEntryLinkIds.clear();
 	}
 
 	@Test
@@ -181,15 +194,21 @@ public class FragmentCollectionContributorRegistryTest {
 			long segmentsExperienceId, long plid, String html)
 		throws Exception {
 
-		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
-			segmentsExperienceId, plid, _fragmentEntry.getCss(), html,
-			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
-			StringBundler.concat(
-				"{\"instanceid\":\"",
-				RandomTestUtil.randomString(_FRAGMENT_ENTRY_LINK_SIZE), "\"}"),
-			StringPool.BLANK, 0, _fragmentEntry.getFragmentEntryKey(),
-			FragmentConstants.TYPE_COMPONENT, _serviceContext);
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				segmentsExperienceId, plid, _fragmentEntry.getCss(), html,
+				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+				StringBundler.concat(
+					"{\"instanceid\":\"",
+					RandomTestUtil.randomString(_FRAGMENT_ENTRY_LINK_SIZE),
+					"\"}"),
+				StringPool.BLANK, 0, _fragmentEntry.getFragmentEntryKey(),
+				FragmentConstants.TYPE_COMPONENT, _serviceContext);
+
+		_fragmentEntryLinkIds.add(fragmentEntryLink.getFragmentEntryLinkId());
+
+		return fragmentEntryLink;
 	}
 
 	private static final int _FRAGMENT_ENTRY_LINK_SIZE = 3000;
@@ -206,6 +225,7 @@ public class FragmentCollectionContributorRegistryTest {
 		_fragmentCollectionContributorRegistry;
 
 	private FragmentEntry _fragmentEntry;
+	private final List<Long> _fragmentEntryLinkIds = new ArrayList<>();
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

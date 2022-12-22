@@ -54,11 +54,11 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 				layoutUtilityPageEntryId);
 
 		if (layoutUtilityPageEntry != null) {
-			_portletFileRepository.deletePortletFileEntry(
-				layoutUtilityPageEntry.getPreviewFileEntryId());
-
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntryId, 0);
+
+			_portletFileRepository.deletePortletFileEntry(
+				layoutUtilityPageEntry.getPreviewFileEntryId());
 		}
 	}
 

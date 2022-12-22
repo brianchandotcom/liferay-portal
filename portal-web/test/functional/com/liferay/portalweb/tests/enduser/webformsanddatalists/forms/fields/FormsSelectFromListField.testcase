@@ -62,7 +62,7 @@ definition {
 
 		FormFields.enableSwitch(fieldName = "Allow Multiple Selections");
 
-		Form.closeSidebar();
+		Form.save();
 
 		Form.publishForm();
 

@@ -131,9 +131,13 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Refresh();
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_DOCUMENT",
@@ -522,6 +526,10 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Refresh();
+
 		PermissionsInline.gotoDocumentsAndMediaDocumentPG(
 			dmDocumentTitle = "Document_1.doc",
 			pageName = "Documents and Media Page");
@@ -654,6 +662,10 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Organization Name");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Refresh();
+
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
@@ -716,6 +728,15 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -745,9 +766,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMFolder.viewPG(dmFolderName = "DM Folder Name");
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMFolder.viewPG(dmFolderName = "Subfolder1 Name");
+		DMNavigator.gotoFolder(dmFolderName = "SubFolder1 Name");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
@@ -821,6 +842,10 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Refresh();
 
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3",
@@ -1437,12 +1462,12 @@ definition {
 	test ImageFromGlobalSiteCanBeSelectedWithPermissionsInWCD {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONDocument.addFileWithUploadedFile(
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
+
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.png",
-			groupName = "Global",
-			mimeType = "image/png",
-			sourceFileName = "Document_1.png");
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "Document_1.png");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

@@ -131,6 +131,13 @@
 	<td></td>
 </tr>
 
+<!-- SELECT ATTRIBUTES TO PROPERTY SCREEN -->
+
+<tr>
+	<td>SELECT_ATTRIBUTES_BUTTON</td>
+	<td>//p[text()='${key_attributeCategory}']//ancestor::li//button</td>
+	<td></td>
+</tr>
 <!-- GENERIC CHECKBOX -->
 
 <tr>

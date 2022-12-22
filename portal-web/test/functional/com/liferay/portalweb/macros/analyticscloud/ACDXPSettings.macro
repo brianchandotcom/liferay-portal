@@ -423,4 +423,11 @@ definition {
 		}
 	}
 
+	macro clickToSelectAttributes {
+		Click(
+			key_attributeCategory = "${attributeCategory}",
+			locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_BUTTON");
+
+		WaitForPageLoad();
+	}
 }

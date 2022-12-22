@@ -54,7 +54,7 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 
 	constructor({
 		adapter,
-		nestedFields,
+		nestedFields = '',
 		transformData,
 		uri,
 	}: RestContructor<YupModel, ObjectModel, NestedObjectOptions>) {

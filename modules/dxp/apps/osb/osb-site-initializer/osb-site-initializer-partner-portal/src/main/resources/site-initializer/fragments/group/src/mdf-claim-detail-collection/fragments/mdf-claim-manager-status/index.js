@@ -21,6 +21,31 @@ const updateStatusToRequestMoreInfo = fragmentElement.querySelector(
 );
 const updateStatusToReject = fragmentElement.querySelector('#status-reject');
 
+const getMDFClaimStatus = async () => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const statusResponse = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
+		headers: {
+			'accept': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
+
+	if (statusResponse.ok) {
+		const data = await statusResponse.json();
+
+		fragmentElement.querySelector(
+			'#mdf-claim-status-display'
+		).innerHTML = `Status: ${Liferay.Util.escape(data.claimStatus.name)}`;
+
+		return;
+	}
+
+	Liferay.Util.openToast({
+		message: 'An unexpected error occured.',
+		type: 'danger',
+	});
+};
+
 const updateStatus = async (status) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const statusManagerResponse = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
@@ -29,7 +54,7 @@ const updateStatus = async (status) => {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
-		method: 'PATCH',
+		method: 'PUT',
 	});
 
 	if (statusManagerResponse.ok) {
@@ -38,6 +63,8 @@ const updateStatus = async (status) => {
 		document.getElementById(
 			'mdf-claim-status-display'
 		).innerHTML = `Status: ${Liferay.Util.escape(data.claimStatus)}`;
+
+		getMDFClaimStatus();
 
 		return;
 	}
@@ -53,7 +80,7 @@ updateStatusToApproved.onclick = () =>
 		message: 'Do you want to Approve this MDF?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				updateStatus('Approved');
+				updateStatus('inFinanceReview');
 			}
 		},
 	});
@@ -63,7 +90,7 @@ updateStatusToRequestMoreInfo.onclick = () =>
 		message: 'Do you want to Request more info for this MDF?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				updateStatus('Request More Info');
+				updateStatus('moreInfoRequested');
 			}
 		},
 	});
@@ -73,7 +100,9 @@ updateStatusToReject.onclick = () =>
 		message: 'Do you want to Reject this MDF?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				updateStatus('Reject');
+				updateStatus('rejected');
 			}
 		},
 	});
+
+getMDFClaimStatus();

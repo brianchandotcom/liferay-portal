@@ -361,19 +361,6 @@
 							},
 							{
 								"definition": {
-									"fragment": {
-										"key": "mdf-claim-details-status-display"
-									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
 									"fragmentStyle": {
 										"borderWidth": "0",
 										"textAlign": ""

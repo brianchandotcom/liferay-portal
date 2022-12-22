@@ -1,9 +1,0 @@
-{
-	"configurationPath": "configuration.json",
-	"cssPath": "index.css",
-	"htmlPath": "index.html",
-	"icon": "code",
-	"jsPath": "index.js",
-	"name": "MDF Claim Details Status Display",
-	"type": "component"
-}

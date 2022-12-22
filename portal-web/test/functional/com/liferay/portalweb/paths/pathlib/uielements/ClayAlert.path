@@ -25,6 +25,16 @@
 	<td>//div[@class='alert alert-${key_alertType}']//strong[contains(@class,'lead') and contains(text(), '${key_alertBold}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ALERT_STRIPE</td>
+	<td>//div[contains(@class, 'alert-fluid') and contains(@class, 'alert-${key_alertType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_STRIPE_CLOSE</td>
+	<td>//div[contains(@class, 'alert-fluid') and contains(@class, 'alert-${key_alertType}')]//button[@class='close']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

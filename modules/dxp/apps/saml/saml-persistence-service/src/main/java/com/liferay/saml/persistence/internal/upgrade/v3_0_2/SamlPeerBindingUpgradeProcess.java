@@ -20,11 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.saml.persistence.model.impl.SamlPeerBindingImpl;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-
-import java.util.Objects;
-
 /**
  * @author Stian Sigvartsen
  */

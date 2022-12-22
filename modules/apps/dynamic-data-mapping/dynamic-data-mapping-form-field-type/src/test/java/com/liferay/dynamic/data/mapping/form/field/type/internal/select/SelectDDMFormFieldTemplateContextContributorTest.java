@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldOptionsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -61,6 +62,8 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		_setUpDDMFormInstanceLocalService();
 
 		PropsTestUtil.setProps("collator.rules", "<<<");
 
@@ -382,6 +385,21 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		).thenReturn(
 			ddmFormFieldOptions
 		);
+	}
+
+	private void _setUpDDMFormInstanceLocalService() throws Exception {
+		DDMFormInstanceLocalService ddmFormInstanceLocalService = Mockito.mock(
+			DDMFormInstanceLocalService.class);
+
+		Mockito.when(
+			ddmFormInstanceLocalService.fetchDDMFormInstance(0)
+		).thenReturn(
+			null
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_selectDDMFormFieldTemplateContextContributor,
+			"_ddmFormInstanceLocalService", ddmFormInstanceLocalService);
 	}
 
 	private void _setUpJSONFactory() throws Exception {

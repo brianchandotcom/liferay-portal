@@ -244,9 +244,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition, _objectFieldLocalService,
 					_userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"notification.term.contributor.key",
-					NotificationTermEvaluatorConstants.BODY_AND_SUBJECT
-				).put(
 					"notification.type.key", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(

@@ -138,6 +138,17 @@
 	<td>//p[text()='${key_attributeCategory}']//ancestor::li//button</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHECK_SELECT_ATTRIBUTES_ENABLE</td>
+	<td>//tr[@class='table-active'and @data-testid='${key_attributeName}']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ATTRIBUTES_CHECKBOX</td>
+	<td>//tr[@data-testid='${key_attributeName}']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+
 <!-- GENERIC CHECKBOX -->
 
 <tr>

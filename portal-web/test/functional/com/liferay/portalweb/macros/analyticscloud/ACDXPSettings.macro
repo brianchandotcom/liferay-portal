@@ -430,4 +430,26 @@ definition {
 
 		WaitForPageLoad();
 	}
+
+	macro syncAttributes {
+		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
+		ACDXPSettings.clickToSelectAttributes(attributeCategory = "${attributeCategory}");
+
+		for (var attributeName : list "${attributeNameList}") {
+			var key_attributeName = "${attributeName}";
+
+			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
+
+			if (IsElementNotPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
+				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");
+			}
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+	}
 }

@@ -28,8 +28,8 @@ const VIEWS = {
 	timeline: Timeline,
 };
 
-const getViewComponent = (name) => {
-	return VIEWS[name];
+const getViewComponent = (contentRenderer) => {
+	return VIEWS[contentRenderer];
 };
 
 export default getViewComponent;

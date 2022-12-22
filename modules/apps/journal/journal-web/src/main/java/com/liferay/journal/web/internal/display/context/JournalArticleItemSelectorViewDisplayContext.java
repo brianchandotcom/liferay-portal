@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -591,31 +592,41 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		throws PortalException {
 
 		searchContext.setAndSearch(false);
-		searchContext.setAttribute(Field.ARTICLE_ID, getKeywords());
 		searchContext.setAttribute(
 			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
-		searchContext.setAttribute(Field.CONTENT, getKeywords());
-		searchContext.setAttribute(Field.DESCRIPTION, getKeywords());
 		searchContext.setAttribute(
 			Field.STATUS, _infoItemItemSelectorCriterion.getStatus());
-		searchContext.setAttribute(Field.TITLE, getKeywords());
 		searchContext.setAttribute("ddmStructureKey", getDDMStructureKey());
 		searchContext.setAttribute("head", Boolean.TRUE);
 		searchContext.setAttribute("latest", Boolean.TRUE);
-		searchContext.setAttribute(
-			"params",
-			LinkedHashMapBuilder.<String, Object>put(
-				"expandoAttributes", getKeywords()
-			).put(
-				"keywords", getKeywords()
-			).build());
 		searchContext.setAttribute("showNonindexable", Boolean.TRUE);
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(folderIds);
 		searchContext.setGroupIds(_getGroupIds());
 		searchContext.setIncludeInternalAssetCategories(true);
-		searchContext.setKeywords(getKeywords());
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setAttribute(Field.ARTICLE_ID, keywords);
+			searchContext.setAttribute(Field.CONTENT, keywords);
+			searchContext.setAttribute(Field.DESCRIPTION, keywords);
+			searchContext.setAttribute(Field.TITLE, keywords);
+			searchContext.setAttribute(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"expandoAttributes", keywords
+				).put(
+					"keywords", keywords
+				).build());
+			searchContext.setKeywords(keywords);
+		}
+		else {
+			searchContext.setAttribute(
+				SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH,
+				Boolean.TRUE);
+		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

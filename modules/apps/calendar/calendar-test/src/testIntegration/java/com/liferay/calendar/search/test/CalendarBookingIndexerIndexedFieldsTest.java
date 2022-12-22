@@ -137,7 +137,8 @@ public class CalendarBookingIndexerIndexedFieldsTest
 		SearchResponse searchResponse = searchOnlyOneSearchResponse(
 			keywords, LocaleUtil.HUNGARY);
 
-		FieldValuesAssert.assertFieldValues(map, searchResponse);
+		FieldValuesAssert.assertFieldValues(
+			map, name -> !name.equals("score"), searchResponse);
 	}
 
 	protected CalendarBooking addCalendarBooking(

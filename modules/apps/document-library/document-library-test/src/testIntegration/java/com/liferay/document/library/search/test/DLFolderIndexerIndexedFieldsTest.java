@@ -112,7 +112,8 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		populateExpectedFieldValues(childFolder, map);
 
-		FieldValuesAssert.assertFieldValues(map, searchResponse);
+		FieldValuesAssert.assertFieldValues(
+			map, name -> !name.equals("score"), searchResponse);
 	}
 
 	protected ServiceContext getServiceContext() {

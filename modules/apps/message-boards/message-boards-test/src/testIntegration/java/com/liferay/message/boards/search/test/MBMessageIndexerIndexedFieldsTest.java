@@ -103,7 +103,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 				searchTerm, locale);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(mbMessage), searchResponse);
+			_expectedFieldValues(mbMessage), name -> !name.equals("score"),
+			searchResponse);
 	}
 
 	@Rule

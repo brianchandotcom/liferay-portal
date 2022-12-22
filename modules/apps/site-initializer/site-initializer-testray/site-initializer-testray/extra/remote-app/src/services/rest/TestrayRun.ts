@@ -12,8 +12,13 @@
  * details.
  */
 
+import TestrayError from '../../TestrayError';
 import yupSchema from '../../schema/yup';
+import {DISPATCH_TRIGGER_TYPE} from '../../util/enum';
+import {DispatchTriggerStatuses} from '../../util/statuses';
+import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
 import Rest from './Rest';
+import {testrayDispatchTriggerImpl} from './TestrayDispatchTrigger';
 import {TestrayRun} from './types';
 
 type RunForm = Omit<typeof yupSchema.run.__outputType, 'id'>;
@@ -57,6 +62,46 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 			},
 			uri: 'runs',
 		});
+	}
+
+	public async autofill(
+		objectEntryId1: number,
+		objectEntryId2: number,
+		autoFillType: 'Build' | 'Run'
+	) {
+		const name = `AUTOFILL-${objectEntryId1}/${objectEntryId2}-${autoFillType}-${new Date().getTime()}`;
+
+		const response = await liferayDispatchTriggerImpl.create({
+			active: true,
+			dispatchTaskExecutorType: DISPATCH_TRIGGER_TYPE.AUTO_FILL,
+			dispatchTaskSettings: {
+				autoFillType,
+				objectEntryId1,
+				objectEntryId2,
+			},
+			externalReferenceCode: name,
+			name,
+			overlapAllowed: false,
+		});
+
+		const body = {
+			dueStatus: DispatchTriggerStatuses.INPROGRESS,
+			output: '',
+		};
+
+		try {
+			await liferayDispatchTriggerImpl.run(
+				response.liferayDispatchTrigger.id
+			);
+		} catch (error) {
+			body.dueStatus = DispatchTriggerStatuses.FAILED;
+			body.output = (error as TestrayError)?.message;
+		}
+
+		await testrayDispatchTriggerImpl.update(
+			response.testrayDispatchTrigger.id,
+			body
+		);
 	}
 }
 

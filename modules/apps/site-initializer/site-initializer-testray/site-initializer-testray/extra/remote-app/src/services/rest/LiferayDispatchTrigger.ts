@@ -12,8 +12,10 @@
  * details.
  */
 
+import {DispatchTriggerStatuses} from '../../util/statuses';
 import fetcher from '../fetcher';
 import {Liferay} from '../liferay';
+import {testrayDispatchTriggerImpl} from './TestrayDispatchTrigger';
 import {APIResponse} from './types';
 
 type DispatchTrigger = {
@@ -33,11 +35,26 @@ class LiferayDispatchTriggerImpl {
 		return fetcher<APIResponse<DispatchTrigger>>('/dispatch-triggers');
 	}
 
-	public create(data: Partial<DispatchTrigger>) {
-		return fetcher.post<DispatchTrigger>('/dispatch-triggers', {
-			...data,
-			userId: Liferay.ThemeDisplay.getUserId(),
+	public async create(data: Partial<DispatchTrigger>) {
+		const liferayDispatchTrigger = await fetcher.post<DispatchTrigger>(
+			'/dispatch-triggers',
+			{
+				...data,
+				userId: Liferay.ThemeDisplay.getUserId(),
+			}
+		);
+
+		const testrayDispatchTrigger = await testrayDispatchTriggerImpl.create({
+			dispatchTriggerId: liferayDispatchTrigger.id,
+			dueStatus: DispatchTriggerStatuses.SCHEDULED,
+			name: data.name,
+			type: data.dispatchTaskExecutorType,
 		});
+
+		return {
+			liferayDispatchTrigger,
+			testrayDispatchTrigger,
+		};
 	}
 
 	public run(dispatchTriggerId: number) {

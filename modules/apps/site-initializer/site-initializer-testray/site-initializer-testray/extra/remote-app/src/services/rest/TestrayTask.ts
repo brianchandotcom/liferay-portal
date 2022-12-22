@@ -15,6 +15,7 @@
 import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
+import {DISPATCH_TRIGGER_TYPE} from '../../util/enum';
 import {SearchBuilder, searchUtil} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
 import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
@@ -160,7 +161,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 
 		const dispatchTrigger = await liferayDispatchTriggerImpl.create({
 			active: true,
-			dispatchTaskExecutorType: 'testray-testflow',
+			dispatchTaskExecutorType: DISPATCH_TRIGGER_TYPE.CREATE_TASK_SUBTASK,
 			dispatchTaskSettings: {
 				testrayBuildId: data.buildId,
 				testrayCaseTypesId: data.caseTypes,
@@ -171,7 +172,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			overlapAllowed: false,
 		});
 
-		const dispatchTriggerId = dispatchTrigger?.id as number;
+		const dispatchTriggerId = dispatchTrigger.liferayDispatchTrigger.id;
 
 		await Promise.allSettled([
 			super.update(task.id, {

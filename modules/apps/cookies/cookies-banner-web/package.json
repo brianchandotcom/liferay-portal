@@ -4,6 +4,7 @@
 		"moment": "2.29.4",
 		"react-transition-group": "4.4.1"
 	},
+	"main": "js/index.js",
 	"name": "@liferay/cookies-banner-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

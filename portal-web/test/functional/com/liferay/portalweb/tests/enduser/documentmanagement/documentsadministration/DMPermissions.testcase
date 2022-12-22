@@ -34,8 +34,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test AddDMDocumentRegRoleDefaultPermissions {
+	@refactordone
+	test RegRoleCannotAddDocumentByDefault {
 		property portal.acceptance = "true";
 
 		Permissions.setUpRegRolePG(
@@ -57,8 +57,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test AddDMDocumentRegRoleDefinePermissions {
+	@refactordone
+	test CanAddAddDocumentPermissionsForRegRole {
 		property portal.acceptance = "true";
 
 		Permissions.setUpRegRolePG(
@@ -77,8 +77,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.enableActionsMenuOnPortlet();
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		User.logoutAndLoginPG(
@@ -90,10 +88,26 @@ definition {
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
+	}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+	@priority = "5"
+	@refactordone
+	test CanRemoveAddDocumentPermissionsForRegRole {
+		property portal.acceptance = "true";
+
+		Permissions.setUpRegRolePG(
+			pageName = "Documents and Media Page",
+			portletName = "Documents and Media",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_DOCUMENT",
+			resourceName = "com.liferay.document.library",
+			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_DOCUMENT",
@@ -110,8 +124,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddDMDocumentSiteMemberRoleInline {
+	@refactordone
+	test CanAddAddDocumentPermissionsForSiteMember {
 		property custom.properties = "default.layout.template.id=1_column";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -126,57 +140,6 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.addPG(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		DMDocument.tearDownCP(
-			pageName = "Documents and Media Page",
-			siteScopeName = "Site Name");
-
-		PermissionsInline.gotoDocumentsAndMediaHomeFolderPG(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name",
-			siteURLTemp = "true");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX",
-			roleTitle = "Site Member");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
-
-		MenuItem.viewNotPresent(menuItem = "File Upload");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -205,8 +168,52 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddDMDocumentSiteRole {
+	@refactordone
+	test CanRemoveAddDocumentPermissionsForSiteMember {
+		property custom.properties = "default.layout.template.id=1_column";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		Permissions.setUpSiteMemberRoleLoginUserPG(
+			pageName = "Documents and Media Page",
+			portletName = "Documents and Media",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		PermissionsInline.gotoDocumentsAndMediaHomeFolderPG(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name",
+			siteURLTemp = "true");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX",
+			roleTitle = "Site Member");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+
+		MenuItem.viewNotPresent(menuItem = "File Upload");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CannotAddDocumentAsSiteRoleWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
@@ -244,6 +251,27 @@ definition {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
 		MenuItem.viewNotPresent(menuItem = "File Upload");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddDocumentAsSiteRoleWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		Permissions.setUpSiteRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Documents and Media Page",
+			portletName = "Documents and Media",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -266,34 +294,12 @@ definition {
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Permissions.removePermissionViaAPI(
-			resourceAction = "ADD_DOCUMENT",
-			resourceName = "com.liferay.document.library",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
-
-		MenuItem.viewNotPresent(menuItem = "File Upload");
 	}
 
-	@description = "This is a test for LPS-LPS-128366, it ensures that the folder permissions are removed after removing permissions during folder addition."
+	@description = "This is a test for LPS-128366, it ensures that the folder permissions are removed after removing permissions during folder addition."
 	@priority = "3"
-	@refactorneeded
-	test AddFolderWithViewOnlyByOwnerPermissions {
+	@refactordone
+	test CanAddFolderWithViewOnlyByOwnerPermissions {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -305,8 +311,6 @@ definition {
 			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -422,11 +426,10 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CannotViewFolderAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -451,34 +454,12 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserSiteCP(
-			siteName = "Site Name",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMFolder.addPG(
+		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
 
@@ -490,27 +471,25 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM SubFolder1 Description",
+			dmFolderName = "SubFolder1 Name",
+			groupName = "Site Name",
+			parentFolderName = "DM Folder Name");
+
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Subfolder1 Description",
-			dmFolderName = "Subfolder1 Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "Subfolder1 Name");
+		DMFolder.viewPG(dmFolderName = "DM Folder Name");
 
 		DMFolder.viewPG(dmFolderName = "Subfolder1 Name");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
-
-		DMFolder.subscribePG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -544,7 +523,7 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CannotViewMultipleDocumentsAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -581,12 +560,6 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
-		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3",
 			viewableBy = "Owner");
@@ -607,8 +580,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test DeleteDMFolderRegRoleInline {
+	@refactordone
+	test CannotDeleteDMFolderAsRegularRoleWithoutPermission {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -630,8 +603,6 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
-		DMDocument.enableActionsMenuOnPortlet();
-
 		DMFolder.addDMFolderLoginUserPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -639,26 +610,6 @@ definition {
 			siteName = "Site Name",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
-
-		PermissionsInline.addOrRemoveAccessPermissionFromAllRoles(
-			addOrRemoveViewPermission = "Add",
-			roleList = "guest");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -678,47 +629,11 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
 		MenuItem.viewNotPresent(menuItem = "Delete");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
-
-		Role.definePermissionPG(
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMFolder.deletePG(dmFolderName = "DM Folder Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMPortlet.viewDefaultPG();
 	}
 
 	@description = "This test covers LPS-100096. It ensures that a document type cannot be edited without permissions."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test EntryCanNotBeEditedWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -1120,16 +1035,16 @@ definition {
 
 	@description = "This test covers LPS-106905. It ensures that a site admin user is able to select an image from the global site in WCD."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test ImageFromGlobalSiteCanBeSelectedWithPermissionsInWCD {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.png",
-			dmDocumentTitle = "Document_1.png");
+			dmDocumentTitle = "Document_1.png",
+			groupName = "Global",
+			mimeType = "image/png",
+			sourceFileName = "Document_1.png");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1980,8 +1895,8 @@ definition {
 
 	@description = "This is a use case for LPS-43104."
 	@priority = "5"
-	@refactorneeded
-	test ViewDMDocumentNoGuestRole {
+	@refactordone
+	test CannotViewDocumentAsGuestWithoutPermissions {
 		property portal.acceptance = "true";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1996,19 +1911,12 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.addPG(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Site Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",
@@ -2034,8 +1942,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewDMFolderGuestInline {
+	@refactordone
+	test CanViewFolderAsGuestWithPermissions {
 		property portal.acceptance = "true";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -2049,12 +1957,6 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2088,23 +1990,37 @@ definition {
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
 			value1 = "${dmFolderNameUpperCase}");
+	}
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn");
+	@priority = "4"
+	@refactordone
+	test CannotViewFolderAsGuestWithNoPermissions {
+		property portal.acceptance = "true";
 
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		DMDocument.enableActionsMenuOnPortlet();
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
 
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
+
+		PermissionsInline.addOrRemoveAccessPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "guest");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
@@ -2117,47 +2033,12 @@ definition {
 			siteName = "Site Name");
 
 		DMPortlet.viewDefaultPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
-
-		Role.definePermissionPG(
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
-
-		User.logoutPG();
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_dmFolderName = "DM Folder Name";
-
-		AssertClick(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "DM Folder Name");
-
-		var dmFolderNameUpperCase = StringUtil.upperCase("DM Folder Name");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
-			value1 = "${dmFolderNameUpperCase}");
 	}
 
 	@description = "This test covers LPS-93031. It ensures that the document still can be viewed after the author is deleted."
 	@priority = "4"
-	@refactorneeded
-	test ViewDocumentAfterDeletingAuthor {
+	@refactordone
+	test DocumentCanStillBeViewedAfterAuthorIsDeleted {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
@@ -2185,24 +2066,16 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(
-			dmDocumentFileName = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2224,8 +2097,8 @@ definition {
 
 	@description = "This test covers LPS-118268. It ensures that the user without document view permission can not view the document via the display page."
 	@priority = "4"
-	@refactorneeded
-	test ViewDocumentViaDisplayPage {
+	@refactordone
+	test CannotViewDocumentInDisplayPageWithoutPermissions {
 		property portal.acceptance = "true";
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -2255,19 +2128,6 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest");
 
-		User.logoutPG();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/d/${dmFileEntryId}");
-
-		AssertTextEquals(
-			key_dmDocumentTitle = "DM Document Title",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "DM Document Title");
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
@@ -2289,8 +2149,8 @@ definition {
 
 	@description = "This ensures that the user can create document viewable only by the owner."
 	@priority = "4"
-	@refactorneeded
-	test ViewDocumentWithOwnerAccessOnly {
+	@refactordone
+	test CannotViewDocumentWithOwnerAccessOnly {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
@@ -2327,12 +2187,6 @@ definition {
 		JSONUser.addUserToSite(
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",
@@ -2377,8 +2231,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test ViewFolderAsOrganizationUser {
+	@refactordone
+	test CannotViewFolderAsOrganizationMemberWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -2413,41 +2267,15 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONLayout.addPublicLayout(
+			groupName = "Organization Name",
+			layoutName = "Documents and Media Page");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.gotoCP(orgName = "Organization Name");
-
-		User.searchCP(searchTerm = "usersn");
-
-		Organization.viewUser(userName = "userfn userln");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(
-			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page");
-
-		PagesAdmin.configurePage(
-			columnName = "1 Column",
-			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Organization Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Organization Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",

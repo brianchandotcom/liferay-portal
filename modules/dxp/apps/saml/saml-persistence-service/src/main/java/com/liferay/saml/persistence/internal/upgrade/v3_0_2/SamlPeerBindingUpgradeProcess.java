@@ -33,7 +33,9 @@ public class SamlPeerBindingUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_dropIndex(SamlPeerBindingImpl.TABLE_NAME, "IX_E642E1AE");
+
 		_dropIndex(SamlPeerBindingImpl.TABLE_NAME, "IX_81ACF542");
+
 		_dropIndex(SamlPeerBindingImpl.TABLE_NAME, "IX_BC82BDFC");
 	}
 
@@ -46,7 +48,7 @@ public class SamlPeerBindingUpgradeProcess extends UpgradeProcess {
 					"Dropping index %s from table %s", indexName, tableName));
 		}
 
-		if (_tableHasIndex(tableName, indexName)) {
+		if (hasIndex(tableName, indexName)) {
 			runSQL(
 				StringBundler.concat(
 					"drop index ", indexName, " on ", tableName));
@@ -59,31 +61,6 @@ public class SamlPeerBindingUpgradeProcess extends UpgradeProcess {
 						indexName, tableName));
 			}
 		}
-	}
-
-	private boolean _tableHasIndex(String tableName, String indexName)
-		throws Exception {
-
-		DatabaseMetaData metadata = connection.getMetaData();
-
-		try (ResultSet resultSet = metadata.getIndexInfo(
-				null, null, tableName, false, false)) {
-
-			while (resultSet.next()) {
-				String curIndexName = resultSet.getString("index_name");
-
-				if (Objects.equals(indexName, curIndexName)) {
-					return true;
-				}
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

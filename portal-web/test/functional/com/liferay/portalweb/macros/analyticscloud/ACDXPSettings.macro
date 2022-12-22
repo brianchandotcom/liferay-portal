@@ -303,28 +303,6 @@ definition {
 		ACDXPSettings.syncContactsAndAccountstData();
 	}
 
-	macro syncNewUserData {
-		ACDXPSettings.goToInstanceSettingsAC();
-
-		ACDXPSettings.navToSyncedContactDataMenu();
-
-		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-		Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_USER_TAB");
-
-		for (var fieldName : list ${fieldNameList}) {
-			Check(
-				key_fieldName = ${fieldName},
-				locator1 = "ACDXPSettings#FIELD_NAME_CHECKBOX");
-		}
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro syncSites {
 		if (isSet(newPropertyName)) {
 			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyName}");

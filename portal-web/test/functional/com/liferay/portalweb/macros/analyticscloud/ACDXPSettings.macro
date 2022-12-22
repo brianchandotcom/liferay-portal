@@ -26,6 +26,14 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro clickToSelectAttributes {
+		Click(
+			key_attributeCategory = "${attributeCategory}",
+			locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_BUTTON");
+
+		WaitForPageLoad();
+	}
+
 	macro connectAnalyticsCloud {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
@@ -90,6 +98,22 @@ definition {
 		}
 	}
 
+	macro desyncAttributes {
+		ACDXPSettings.clickToSelectAttributes(attributeCategory = "${attributeCategory}");
+
+		for (var attributeName : list "${attributeNameList}") {
+			var key_attributeName = "${attributeName}";
+
+			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
+
+			if (IsElementPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
+				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");
+			}
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+	}
+
 	macro disconnectDXPFromAnalyticsCloud {
 		ACDXPSettings.goToInstanceSettingsAC();
 
@@ -126,12 +150,12 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR");
 	}
 
-	macro navToSyncedContactDataMenu {
-		Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_NAV_SIDEBAR");
-	}
-
 	macro navToSyncedAttributes {
 		Click(locator1 = "ACDXPSettings#SYNCED_ATTRIBUTES_DATA_NAV_SIDEBAR");
+	}
+
+	macro navToSyncedContactDataMenu {
+		Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_NAV_SIDEBAR");
 	}
 
 	macro navToSyncedSitesMenu {
@@ -209,6 +233,28 @@ definition {
 				key_syncFieldName = "Sync All Accounts",
 				locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
 		}
+	}
+
+	macro syncAttributes {
+		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
+		ACDXPSettings.clickToSelectAttributes(attributeCategory = "${attributeCategory}");
+
+		for (var attributeName : list "${attributeNameList}") {
+			var key_attributeName = "${attributeName}";
+
+			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
+
+			if (IsElementNotPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
+				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");
+			}
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
 
 	macro syncChannel {
@@ -405,52 +451,6 @@ definition {
 				locator1 = "ACDXPSettings#CHANNELS_OR_SITES_SYNCED_NUMBER",
 				value1 = "${syncedSitesNumber}");
 		}
-	}
-
-	macro clickToSelectAttributes {
-		Click(
-			key_attributeCategory = "${attributeCategory}",
-			locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_BUTTON");
-
-		WaitForPageLoad();
-	}
-
-	macro syncAttributes {
-		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) {
-			ACDXPSettings.goToInstanceSettingsAC();
-
-			ACDXPSettings.navToSyncedAttributes();
-		}
-
-		ACDXPSettings.clickToSelectAttributes(attributeCategory = "${attributeCategory}");
-
-		for (var attributeName : list "${attributeNameList}") {
-			var key_attributeName = "${attributeName}";
-
-			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
-
-			if (IsElementNotPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
-				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");
-			}
-		}
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-	}
-
-	macro desyncAttributes {
-		ACDXPSettings.clickToSelectAttributes(attributeCategory = "${attributeCategory}");
-
-		for (var attributeName : list "${attributeNameList}") {
-			var key_attributeName = "${attributeName}";
-
-			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
-
-			if (IsElementPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
-				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");
-			}
-		}
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
 
 }

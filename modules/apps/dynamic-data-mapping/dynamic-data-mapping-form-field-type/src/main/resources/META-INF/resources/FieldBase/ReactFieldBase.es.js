@@ -172,6 +172,7 @@ export function FieldBase({
 	displayErrors,
 	errorMessage,
 	fieldName,
+	fieldReference,
 	hideField,
 	hideEditedFlag,
 	id,
@@ -267,6 +268,7 @@ export function FieldBase({
 				'hide': !visible,
 			})}
 			data-field-name={name}
+			data-field-reference={fieldReference}
 			onClick={onClick}
 			style={style}
 			tabIndex={!renderLabel ? 0 : undefined}

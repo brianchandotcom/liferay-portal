@@ -18,11 +18,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.util.JournalHelper;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -269,20 +266,6 @@ public class JournalUtil {
 		return false;
 	}
 
-	public static String transform(
-			JournalArticle article, DDMTemplate ddmTemplate,
-			JournalHelper journalHelper, String languageId,
-			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
-			PortletRequestModel portletRequestModel, boolean propagateException,
-			String script, ThemeDisplay themeDisplay, String viewMode)
-		throws Exception {
-
-		return _journalTransformer.transform(
-			article, ddmTemplate, journalHelper, languageId,
-			layoutDisplayPageProviderRegistry, portletRequestModel,
-			propagateException, script, themeDisplay, viewMode);
-	}
-
 	private static String _getCustomTokenValue(
 		String tokenName,
 		JournalServiceConfiguration journalServiceConfiguration) {
@@ -488,7 +471,5 @@ public class JournalUtil {
 	private static final Log _log = LogFactoryUtil.getLog(JournalUtil.class);
 
 	private static Map<String, String> _customTokens;
-	private static final JournalTransformer _journalTransformer =
-		new JournalTransformer();
 
 }

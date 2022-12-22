@@ -1,88 +1,97 @@
-<definition component-name="portal-tools">
-	<property name="poshi.runner.acceptance" value="true" />
-	<property name="testray.main.component.name" value="Smoke" />
+@component-name = "portal-tools"
+definition {
 
-	<command name="AvailablePhysicalMemory" priority="5">
-		<var method="PropsUtil#get('test.base.dir.name')" name="testBaseDirName" />
-		<var method="PropsUtil#get('test.dependencies.dir.name')" name="testDependenciesDirName" />
+	property poshi.runner.acceptance = "true";
+	property testray.main.component.name = "Smoke";
 
-		<var name="jsonURL" value="file://${testBaseDirName}/${testDependenciesDirName}/sample.json" />
+	@disable-webdriver = "true"
+	@priority = "5"
+	test AvailablePhysicalMemory {
+		var testBaseDirName = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		<var name="jsonPath" value="$.computer[0].monitorData.['hudson.node_monitors.SwapSpaceMonitor'].availablePhysicalMemory" />
+		var jsonURL = "file://${testBaseDirName}/${testDependenciesDirName}/sample.json";
+		var jsonPath = "$.computer[0].monitorData.['hudson.node_monitors.SwapSpaceMonitor'].availablePhysicalMemory";
 
-		<var method="JSONCurlUtil#get('${jsonURL}', '${jsonPath}')" name="actual" />
-		<var name="expected" value="2054144000" />
+		var actual = JSONCurlUtil.get("${jsonURL}", "${jsonPath}");
+		var expected = "2054144000";
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The value found from '${jsonPath}' was a match to the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The value found from '${jsonPath}' was NOT a match to the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
+		if ("${actual}" == "${expected}") {
+			echo("The value found from '${jsonPath}' was a match to the expected value.");
 
-				<fail message="Found the wrong value!" />
-			</else>
-		</if>
-	</command>
+			echo("action: '${actual}'");
 
-	<command name="BusyExecutors" priority="5">
-		<var method="PropsUtil#get('test.base.dir.name')" name="testBaseDirName" />
-		<var method="PropsUtil#get('test.dependencies.dir.name')" name="testDependenciesDirName" />
+			echo("expected: '${expected}'");
+		}
+		else {
+			echo("The value found from '${jsonPath}' was NOT a match to the expected value!");
 
-		<var name="jsonURL" value="file://${testBaseDirName}/${testDependenciesDirName}/sample.json" />
+			echo("action: '${actual}'");
 
-		<var name="jsonPath" value="$.busyExecutors" />
+			echo("expected: '${expected}'");
 
-		<var method="JSONCurlUtil#get('${jsonURL}', '${jsonPath}')" name="actual" />
-		<var name="expected" value="25" />
+			fail("Found the wrong value!");
+		}
+	}
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The value found from '${jsonPath}' was a match to the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The value found from '${jsonPath}' was NOT a match to the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
+	@disable-webdriver = "true"
+	@priority = "5"
+	test BusyExecutors {
+		var testBaseDirName = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-				<fail message="Found the wrong value!" />
-			</else>
-		</if>
-	</command>
+		var jsonURL = "file://${testBaseDirName}/${testDependenciesDirName}/sample.json";
+		var jsonPath = "$.busyExecutors";
 
-	<command name="DisplayName" priority="5">
-		<var method="PropsUtil#get('test.base.dir.name')" name="testBaseDirName" />
-		<var method="PropsUtil#get('test.dependencies.dir.name')" name="testDependenciesDirName" />
+		var actual = JSONCurlUtil.get("${jsonURL}", "${jsonPath}");
+		var expected = "25";
 
-		<var name="jsonURL" value="file://${testBaseDirName}/${testDependenciesDirName}/sample.json" />
+		if ("${actual}" == "${expected}") {
+			echo("The value found from '${jsonPath}' was a match to the expected value.");
 
-		<var name="jsonPath" value="$.computer[2].displayName" />
+			echo("action: '${actual}'");
 
-		<var method="JSONCurlUtil#get('${jsonURL}', '${jsonPath}')" name="actual" />
-		<var name="expected" value="cloud-10-0-12-172" />
+			echo("expected: '${expected}'");
+		}
+		else {
+			echo("The value found from '${jsonPath}' was NOT a match to the expected value!");
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The value found from '${jsonPath}' was a match to the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The value found from '${jsonPath}' was NOT a match to the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
+			echo("action: '${actual}'");
 
-				<fail message="Found the wrong value!" />
-			</else>
-		</if>
-	</command>
-</definition>
+			echo("expected: '${expected}'");
+
+			fail("Found the wrong value!");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "5"
+	test DisplayName {
+		var testBaseDirName = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+
+		var jsonURL = "file://${testBaseDirName}/${testDependenciesDirName}/sample.json";
+		var jsonPath = "$.computer[2].displayName";
+
+		var actual = JSONCurlUtil.get("${jsonURL}", "${jsonPath}");
+		var expected = "cloud-10-0-12-172";
+
+		if ("${actual}" == "${expected}") {
+			echo("The value found from '${jsonPath}' was a match to the expected value.");
+
+			echo("action: '${actual}'");
+
+			echo("expected: '${expected}'");
+		}
+		else {
+			echo("The value found from '${jsonPath}' was NOT a match to the expected value!");
+
+			echo("action: '${actual}'");
+
+			echo("expected: '${expected}'");
+
+			fail("Found the wrong value!");
+		}
+	}
+
+}

@@ -1,32 +1,37 @@
-<definition component-name="portal-tools">
-	<property name="poshi.runner.acceptance" value="true" />
-	<property name="testray.main.component.name" value="Smoke" />
+@component-name = "portal-tools"
+definition {
 
-	<command name="ReturnInMacro" priority="5">
-		<execute macro="Return#returnInMacro" />
-	</command>
+	property poshi.runner.acceptance = "true";
+	property testray.main.component.name = "Smoke";
 
-	<command name="ReturnInTestCase" priority="5">
-		<execute macro="Return#returnValue">
-			<return from="variable" name="actual" />
-		</execute>
+	@disable-webdriver = "true"
+	@priority = "5"
+	test ReturnInMacro {
+		Return.returnInMacro();
+	}
 
-		<var name="expected" value="Return Value" />
+	@disable-webdriver = "true"
+	@priority = "5"
+	test ReturnInTestCase {
+		var actual = Return.returnValue();
+		var expected = "Return Value";
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The value returned from 'Return#return' was a match to the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The value returned from 'Return#return' was NOT a match to the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
+		if ("${actual}" == "${expected}") {
+			echo("The value returned from 'Return#return' was a match to the expected value.");
 
-				<fail message="Found the wrong value!" />
-			</else>
-		</if>
-	</command>
-</definition>
+			echo("action: '${actual}'");
+
+			echo("expected: '${expected}'");
+		}
+		else {
+			echo("The value returned from 'Return#return' was NOT a match to the expected value!");
+
+			echo("action: '${actual}'");
+
+			echo("expected: '${expected}'");
+
+			fail("Found the wrong value!");
+		}
+	}
+
+}

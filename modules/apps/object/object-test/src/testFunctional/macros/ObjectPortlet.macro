@@ -8,11 +8,12 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC",
 			value1 = "${entry}");
 
-		Button.clickSave();
-
-		WaitForSPARefresh();
-
-		WaitForPageLoad();
+		if ("${invalidEntry}" == "true") {
+			Button.clickSave();
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro addSingleFieldEntryViaUI {
@@ -22,7 +23,12 @@ definition {
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 			value1 = "${entry}");
 
-		PortletEntry.save();
+		if ("${invalidEntry}" == "true") {
+			Button.clickSave();
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro assertAuthorColumnDisplaysUserName {

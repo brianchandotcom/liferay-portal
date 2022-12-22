@@ -135,7 +135,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153559");
 
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Allowed Entry");
+		ObjectPortlet.addSingleFieldEntryViaUI(
+			entry = "Allowed Entry",
+			invalidEntry = "true");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
@@ -209,7 +211,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Allowed Entry");
 
-		ObjectAdmin.editEntryName(newEntryValue = "Decline Update Entry");
+		ObjectAdmin.editEntryName(
+			invalidEntry = "true",
+			newEntryValue = "Decline Update Entry");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
@@ -649,7 +653,9 @@ definition {
 		task ("Assert that Custom Validation with 'contains' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156688");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Decline Entry");
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "Decline Entry",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -687,7 +693,8 @@ definition {
 
 			ObjectPortlet.addCustomFieldEntryViaUI(
 				customField = "Custom Integer",
-				entry = "2004");
+				entry = "2004",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -756,7 +763,9 @@ definition {
 		task ("Assert that Custom Validation with 'Past Dates' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156701");
 
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "01/01/2023");
+			ObjectPortlet.addSingleFieldEntryViaUI(
+				entry = "01/01/2023",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -792,7 +801,9 @@ definition {
 		task ("Assert that Custom Validation with 'Future Dates' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156701");
 
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "02/02/2022");
+			ObjectPortlet.addSingleFieldEntryViaUI(
+				entry = "02/02/2022",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -859,7 +870,9 @@ definition {
 		task ("Assert that Custom Validation with 'is an Email' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156690");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "It is not an email");
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "It is not an email",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -926,7 +939,9 @@ definition {
 		task ("Assert that Custom Validation with 'is integer' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156698");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "1.23");
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "1.23",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -962,7 +977,9 @@ definition {
 		task ("Assert that Custom Validation with 'does not contains' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156698");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "9,87");
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "9,87",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1029,7 +1046,9 @@ definition {
 		task ("Assert that Custom Validation with 'is empty' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156695");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Invalid entry");
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "Invalid entry",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1100,7 +1119,8 @@ definition {
 
 			ObjectPortlet.addCustomFieldEntryViaUI(
 				customField = "Custom Integer",
-				entry = "54321");
+				entry = "54321",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1140,7 +1160,8 @@ definition {
 
 			ObjectPortlet.addCustomFieldEntryViaUI(
 				customField = "Custom Integer",
-				entry = "13579");
+				entry = "13579",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1211,7 +1232,8 @@ definition {
 
 			ObjectPortlet.addCustomFieldEntryViaUI(
 				customField = "Custom Integer",
-				entry = "4999");
+				entry = "4999",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1290,7 +1312,8 @@ definition {
 
 			ObjectPortlet.addCustomFieldEntryViaUI(
 				customField = "Custom Integer",
-				entry = "5001");
+				entry = "5001",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1367,7 +1390,9 @@ definition {
 		task ("Assert that Custom Validation with 'is a URL' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156689");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "It is not a URL");
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "It is not a URL",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1434,7 +1459,9 @@ definition {
 		task ("Assert that Custom Validation with 'Match' is working only with UPPERCASE letters") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156692");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "z");
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "z",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1790,7 +1817,9 @@ definition {
 		task ("Assert that Custom Validation with 'Range' is working") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156702");
 
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "05/30/2022");
+			ObjectPortlet.addSingleFieldEntryViaUI(
+				entry = "05/30/2022",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -1798,7 +1827,9 @@ definition {
 
 			Navigator.gotoBack();
 
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "01/07/2022");
+			ObjectPortlet.addSingleFieldEntryViaUI(
+				entry = "01/07/2022",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -2594,7 +2625,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153546");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Invalid Entry");
+		ObjectAdmin.addObjectStringFieldEntryViaUI(
+			entryValue = "Invalid Entry",
+			invalidEntry = "true");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",

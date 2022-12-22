@@ -1038,7 +1038,9 @@ definition {
 		task ("When a entry more than 16 digits is added") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject165995");
 
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "11111111111111111");
+			ObjectPortlet.addSingleFieldEntryViaUI(
+				entry = "11111111111111111",
+				invalidEntry = "true");
 		}
 
 		task ("Then the error message is displayed on the page") {
@@ -1655,7 +1657,8 @@ definition {
 
 			ObjectPortlet.addCustomFieldEntryViaUI(
 				customField = "Custom Field",
-				entry = "Entry Test");
+				entry = "Entry Test",
+				invalidEntry = "true");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",

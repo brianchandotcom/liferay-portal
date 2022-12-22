@@ -1740,6 +1740,7 @@ definition {
 		ObjectAdmin.gotoRelationshipsTab();
 
 		ObjectAdmin.addObjectRelationshipViaUI(
+			invalidEntry = "true",
 			label = "Relationship",
 			object = "Custom Object 41",
 			type = "One to Many");
@@ -2187,7 +2188,7 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 
-		PortletEntry.save();
+		Button.clickSave();
 
 		SelectFrame(locator1 = "Message#ERROR");
 

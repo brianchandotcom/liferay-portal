@@ -326,7 +326,12 @@ definition {
 				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 		}
 
-		PortletEntry.save();
+		if ("${invalidEntry}" == "true") {
+			Button.clickSave();
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro addObjectViaAPI {
@@ -915,7 +920,12 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
 			value1 = "${newEntryValue}");
 
-		PortletEntry.save();
+		if ("${invalidEntry}" == "true") {
+			Button.clickSave();
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro editObjectAction {

@@ -68,6 +68,11 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 	}
 
 	@Override
+	public String getName() {
+		return "customizedTable";
+	}
+
+	@Override
 	public boolean isDefault() {
 		return true;
 	}

@@ -73,6 +73,7 @@ import com.liferay.journal.exception.ArticleVersionException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.RequiredArticleLocalizationException;
+import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.internal.util.JournalTreePathUtil;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.internal.validation.JournalArticleModelValidator;
@@ -7555,7 +7556,7 @@ public class JournalArticleLocalServiceImpl
 				cacheable = _journalDefaultTemplateProvider.isCacheable();
 			}
 
-			content = JournalUtil.transform(
+			content = _journalTransformer.transform(
 				article, ddmTemplate, _journalHelper, languageId,
 				_layoutDisplayPageProviderRegistry, portletRequestModel,
 				propagateException, script, themeDisplay, viewMode);
@@ -9228,6 +9229,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private JournalHelper _journalHelper;
+
+	private final JournalTransformer _journalTransformer =
+		new JournalTransformer();
 
 	@Reference
 	private JSONFactory _jsonFactory;

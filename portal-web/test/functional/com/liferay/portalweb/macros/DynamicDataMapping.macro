@@ -158,7 +158,7 @@ definition {
 
 		var sourceJson = JSONUtil.formatJSONString("${sourceJson}");
 
-		Type.typeNotVisibleNoMouseOver(
+		Type.typeAceEditor(
 			locator1 = "DDMEditStructure#SOURCE_EDITOR_CONTENT",
 			value1 = "${sourceJson} ");
 	}

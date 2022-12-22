@@ -44,7 +44,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -105,19 +105,27 @@ public class ItemSelectorImplTest {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
+
+		_flickrItemSelectorCriterionHandlerServiceRegistration =
+			_bundleContext.registerService(
+				(Class<ItemSelectorCriterionHandler<?>>)
+					(Class<?>)ItemSelectorCriterionHandler.class,
+				new FlickrItemSelectorCriterionHandler(), null);
+		_mediaItemSelectorCriterionHandlerServiceRegistration =
+			_bundleContext.registerService(
+				(Class<ItemSelectorCriterionHandler<?>>)
+					(Class<?>)ItemSelectorCriterionHandler.class,
+				new MediaItemSelectorCriterionHandler(), null);
+
+		_itemSelectorImpl.activate(_bundleContext);
 	}
 
-	@After
-	public void tearDown() {
-		if (_registeredService) {
-			_flickrItemSelectorCriterionHandlerServiceRegistration.unregister();
+	@AfterClass
+	public static void tearDownClass() {
+		_flickrItemSelectorCriterionHandlerServiceRegistration.unregister();
+		_mediaItemSelectorCriterionHandlerServiceRegistration.unregister();
 
-			_mediaItemSelectorCriterionHandlerServiceRegistration.unregister();
-
-			_registeredService = false;
-
-			_itemSelectorImpl.deactivate();
-		}
+		_itemSelectorImpl.deactivate();
 	}
 
 	@Test
@@ -336,14 +344,18 @@ public class ItemSelectorImplTest {
 					(Class<?>)ItemSelectorCriterionHandler.class,
 				new MediaItemSelectorCriterionHandler(), null);
 
-		_registeredService = true;
-
 		_itemSelectorImpl.activate(_bundleContext);
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private static FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
+	private static ServiceRegistration<ItemSelectorCriterionHandler<?>>
+		_flickrItemSelectorCriterionHandlerServiceRegistration;
 	private static ItemSelectorImpl _itemSelectorImpl;
 	private static MediaItemSelectorCriterion _mediaItemSelectorCriterion;
+	private static ServiceRegistration<ItemSelectorCriterionHandler<?>>
+		_mediaItemSelectorCriterionHandlerServiceRegistration;
 	private static final StubItemSelectorCriterionSerializerImpl
 		_stubItemSelectorCriterionSerializerImpl =
 			new StubItemSelectorCriterionSerializerImpl();
@@ -355,14 +367,6 @@ public class ItemSelectorImplTest {
 			new TestStringItemSelectorReturnType();
 	private static final ItemSelectorReturnType _testURLItemSelectorReturnType =
 		new TestURLItemSelectorReturnType();
-
-	private final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
-	private ServiceRegistration<ItemSelectorCriterionHandler<?>>
-		_flickrItemSelectorCriterionHandlerServiceRegistration;
-	private ServiceRegistration<ItemSelectorCriterionHandler<?>>
-		_mediaItemSelectorCriterionHandlerServiceRegistration;
-	private boolean _registeredService;
 
 	private static class StubItemSelectorCriterionSerializerImpl
 		extends ItemSelectorCriterionSerializerImpl {

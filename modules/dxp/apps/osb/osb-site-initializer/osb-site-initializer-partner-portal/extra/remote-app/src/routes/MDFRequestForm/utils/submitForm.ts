@@ -13,18 +13,23 @@ import {FormikHelpers} from 'formik';
 
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {Status} from '../../../common/enums/status';
+import MDFRequestBudgetDTO from '../../../common/interfaces/dto/mdfRequestBudgetDTO';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {Liferay} from '../../../common/services/liferay';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
+import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
 import createMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
+import updateMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/updateMDFRequestActivityBudgets';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
+import updateMDFRequest from '../../../common/services/liferay/object/mdf-requests/updateMDFRequest';
 import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
 import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
 
 export default async function submitForm(
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
+	mdfRequestId: number,
 	siteURL: string,
 	currentRequestStatus?: Status
 ) {
@@ -33,15 +38,30 @@ export default async function submitForm(
 		values.requestStatus = currentRequestStatus;
 	}
 
-	const dtoMDFRequest = Liferay.FeatureFlags['LPS-164528']
-		? await createMDFRequestProxyAPI(values)
-		: await createMDFRequest(ResourceName.MDF_REQUEST_DXP, values);
+	const dtoMDFRequest =
+		Liferay.FeatureFlags['LPS-164528'] && currentRequestStatus
+			? await createMDFRequestProxyAPI(values)
+			: mdfRequestId
+			? await updateMDFRequest(
+					ResourceName.MDF_REQUEST_DXP,
+					values,
+					mdfRequestId
+			  )
+			: await createMDFRequest(ResourceName.MDF_REQUEST_DXP, values);
 
 	if (values?.activities?.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
 			values?.activities?.map((activity) =>
-				Liferay.FeatureFlags['LPS-164528']
+				Liferay.FeatureFlags['LPS-164528'] && currentRequestStatus
 					? createMDFRequestActivitiesProxyAPI(
+							activity,
+							values.company,
+							dtoMDFRequest.id,
+							dtoMDFRequest.externalReferenceCodeSF
+					  )
+					: mdfRequestId
+					? updateMDFRequestActivities(
+							ResourceName.ACTIVITY_DXP,
 							activity,
 							values.company,
 							dtoMDFRequest.id,
@@ -62,10 +82,20 @@ export default async function submitForm(
 				values.activities.map(async (activity, index) => {
 					const dtoActivity = dtoMDFRequestActivities[index];
 					if (activity.budgets?.length && dtoActivity?.id) {
-						return await createMDFRequestActivityBudgets(
-							dtoActivity.id,
-							activity.budgets
-						);
+						if (mdfRequestId) {
+							activity.budgets?.map(async (budget) => {
+								return await updateMDFRequestActivityBudgets(
+									dtoActivity.id as number,
+									activity.budgets as MDFRequestBudgetDTO[],
+									budget?.id as number
+								);
+							});
+						} else {
+							return await createMDFRequestActivityBudgets(
+								dtoActivity.id,
+								activity.budgets
+							);
+						}
 					}
 				})
 			);

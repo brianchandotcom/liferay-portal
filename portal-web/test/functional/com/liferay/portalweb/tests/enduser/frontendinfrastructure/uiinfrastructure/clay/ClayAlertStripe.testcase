@@ -45,7 +45,7 @@ definition {
 
 	@description = "Verify stripe alert contains close button"
 	@priority = "5"
-	test CanDisplayAllAttributes {
+	test CanDisplayCloseButton {
 		task ("When the alert is a stripe variation") {
 			VerifyElementPresent(
 				key_alertType = "success",

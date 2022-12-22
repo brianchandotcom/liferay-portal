@@ -334,45 +334,46 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			articleAndFolderSearchContainer.setResultsAndTotal(
 				() -> results, results.size());
+
+			_articleSearchContainer = articleAndFolderSearchContainer;
+
+			return _articleSearchContainer;
 		}
-		else {
-			articleAndFolderSearchContainer.setResultsAndTotal(
-				() -> {
-					OrderByComparator<Object> folderOrderByComparator = null;
 
-					boolean orderByAsc = false;
+		articleAndFolderSearchContainer.setResultsAndTotal(
+			() -> {
+				OrderByComparator<Object> folderOrderByComparator = null;
 
-					if (Objects.equals(_getOrderByType(), "asc")) {
-						orderByAsc = true;
-					}
+				boolean orderByAsc = false;
 
-					if (Objects.equals(_getOrderByCol(), "id")) {
-						folderOrderByComparator =
-							new FolderArticleArticleIdComparator(orderByAsc);
-					}
-					else if (Objects.equals(
-								_getOrderByCol(), "modified-date")) {
+				if (Objects.equals(_getOrderByType(), "asc")) {
+					orderByAsc = true;
+				}
 
-						folderOrderByComparator =
-							new FolderArticleModifiedDateComparator(orderByAsc);
-					}
-					else if (Objects.equals(_getOrderByCol(), "title")) {
-						folderOrderByComparator =
-							new FolderArticleTitleComparator(orderByAsc);
-					}
+				if (Objects.equals(_getOrderByCol(), "id")) {
+					folderOrderByComparator =
+						new FolderArticleArticleIdComparator(orderByAsc);
+				}
+				else if (Objects.equals(_getOrderByCol(), "modified-date")) {
+					folderOrderByComparator =
+						new FolderArticleModifiedDateComparator(orderByAsc);
+				}
+				else if (Objects.equals(_getOrderByCol(), "title")) {
+					folderOrderByComparator = new FolderArticleTitleComparator(
+						orderByAsc);
+				}
 
-					return JournalFolderServiceUtil.getFoldersAndArticles(
-						_getGroupId(), 0, _getFolderId(), getDDMStructureKey(),
-						_infoItemItemSelectorCriterion.getStatus(),
-						_themeDisplay.getLocale(),
-						articleAndFolderSearchContainer.getStart(),
-						articleAndFolderSearchContainer.getEnd(),
-						folderOrderByComparator);
-				},
-				JournalFolderServiceUtil.getFoldersAndArticlesCount(
+				return JournalFolderServiceUtil.getFoldersAndArticles(
 					_getGroupId(), 0, _getFolderId(), getDDMStructureKey(),
-					_infoItemItemSelectorCriterion.getStatus()));
-		}
+					_infoItemItemSelectorCriterion.getStatus(),
+					_themeDisplay.getLocale(),
+					articleAndFolderSearchContainer.getStart(),
+					articleAndFolderSearchContainer.getEnd(),
+					folderOrderByComparator);
+			},
+			JournalFolderServiceUtil.getFoldersAndArticlesCount(
+				_getGroupId(), 0, _getFolderId(), getDDMStructureKey(),
+				_infoItemItemSelectorCriterion.getStatus()));
 
 		_articleSearchContainer = articleAndFolderSearchContainer;
 

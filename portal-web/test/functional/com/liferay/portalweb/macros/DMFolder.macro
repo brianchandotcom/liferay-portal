@@ -146,6 +146,34 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = "${mgFolderName}");
 	}
 
+	macro assertExpectedFileNames {
+		var tempDir = PropsUtil.get("output.dir.name");
+
+		var fileName = FileUtil.exists("${tempDir}/${key_fileName}");
+
+		if ("${fileName}" == "false") {
+			fail("Filename "${fileName}" was not expected.");
+		}
+	}
+
+	macro assertExpectedFileNumber {
+		var tempDir = PropsUtil.get("output.dir.name");
+
+		var folderPath = "${tempDir}";
+
+		if (isSet(key_folder)) {
+			var folderPath = "${folderPath}${key_folder}";
+		}
+
+		var fileList = FileUtil.listFiles("${folderPath}");
+
+		var listSize = ListUtil.size("${fileList}");
+
+		if ("${listSize}" != "${expectedFileNumber}") {
+			fail("Number of files on "${key_folder}" differ from expected.");
+		}
+	}
+
 	macro cannotViewCP {
 		var key_dmFolderName = "${dmFolderName}";
 
@@ -249,6 +277,14 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_ICON");
+	}
+
+	macro downloadViaEllipsisMenu {
+		Click(
+			key_rowEntry = "${dmFolderName}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Download");
 	}
 
 	macro editCP {

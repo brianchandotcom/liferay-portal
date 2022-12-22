@@ -311,7 +311,11 @@ function normalizeActions(actions, namespace) {
 					else if (item.id === ACTION_COPY_PAGE) {
 						modalData = {
 							...modalData,
+							containerProps: {
+								className: 'cadmin copy-page-modal',
+							},
 							id: 'addLayoutDialog',
+							size: 'md',
 						};
 					}
 

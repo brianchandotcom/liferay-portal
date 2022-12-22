@@ -4,6 +4,12 @@ $product-menu-pages-administration-link-height: 72px;
 
 html#{$cadmin-selector} {
 	.cadmin {
+		&.copy-page-modal {
+			.modal-content {
+				min-height: 344px;
+			}
+		}
+
 		.pages-tree {
 			margin-bottom: calc(
 				#{$product-menu-pages-administration-link-height} + #{$cadmin-spacer}

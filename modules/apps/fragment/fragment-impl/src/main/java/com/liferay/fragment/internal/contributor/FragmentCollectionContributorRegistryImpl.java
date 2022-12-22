@@ -26,7 +26,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -230,7 +232,38 @@ public class FragmentCollectionContributorRegistryImpl
 			FragmentEntryLinkTable.INSTANCE
 		).where(
 			FragmentEntryLinkTable.INSTANCE.rendererKey.eq(
-				fragmentEntry.getFragmentEntryKey())
+				fragmentEntry.getFragmentEntryKey()
+			).and(
+				Predicate.withParentheses(
+					DSLFunctionFactoryUtil.castClobText(
+						FragmentEntryLinkTable.INSTANCE.configuration
+					).neq(
+						fragmentEntry.getConfiguration()
+					).or(
+						DSLFunctionFactoryUtil.castClobText(
+							FragmentEntryLinkTable.INSTANCE.css
+						).neq(
+							fragmentEntry.getCss()
+						)
+					).or(
+						DSLFunctionFactoryUtil.castClobText(
+							FragmentEntryLinkTable.INSTANCE.html
+						).neq(
+							fragmentEntry.getHtml()
+						)
+					).or(
+						DSLFunctionFactoryUtil.castClobText(
+							FragmentEntryLinkTable.INSTANCE.js
+						).neq(
+							fragmentEntry.getJs()
+						)
+					).or(
+						FragmentEntryLinkTable.INSTANCE.type.neq(
+							fragmentEntry.getType())
+					))
+			)
+		).orderBy(
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId.ascending()
 		);
 
 		return _fragmentEntryLinkLocalService.dslQuery(dslQuery);

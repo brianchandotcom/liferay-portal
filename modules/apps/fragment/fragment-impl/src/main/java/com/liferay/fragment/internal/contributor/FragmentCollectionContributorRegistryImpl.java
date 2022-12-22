@@ -19,7 +19,6 @@ import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -223,11 +222,9 @@ public class FragmentCollectionContributorRegistryImpl
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
 
-	private List<FragmentEntryLink> _getFragmentEntryLinks(
-		FragmentEntry fragmentEntry) {
-
+	private List<Long> _getFragmentEntryLinkIds(FragmentEntry fragmentEntry) {
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-			FragmentEntryLinkTable.INSTANCE
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId
 		).from(
 			FragmentEntryLinkTable.INSTANCE
 		).where(
@@ -270,13 +267,14 @@ public class FragmentCollectionContributorRegistryImpl
 	}
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
-			fragmentEntry);
+		for (Long fragmentEntryLinkId :
+				_getFragmentEntryLinkIds(fragmentEntry)) {
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			try {
 				_fragmentEntryLinkLocalService.updateLatestChanges(
-					fragmentEntry, fragmentEntryLink);
+					fragmentEntry,
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						fragmentEntryLinkId));
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);

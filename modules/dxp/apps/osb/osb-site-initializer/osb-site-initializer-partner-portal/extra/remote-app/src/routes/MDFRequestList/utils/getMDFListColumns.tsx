@@ -23,7 +23,7 @@ export default function getMDFListColumns(
 	siteURL?: string
 ): TableColumn<MDFRequestListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFRequestListItem) => {
-		if (row[MDFColumnKey.STATUS] !== Status.DRAFT) {
+		if (row[MDFColumnKey.STATUS] !== Status.DRAFT.name) {
 			return (
 				<Dropdown
 					options={[

@@ -92,7 +92,8 @@ public class AssetListPortletItemSelectorView
 					(HttpServletRequest)servletRequest,
 					_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
 					_language, portletURL,
-					infoCollectionProviderItemSelectorCriterion)));
+					infoCollectionProviderItemSelectorCriterion),
+				(HttpServletRequest)servletRequest));
 	}
 
 	private static final List<ItemSelectorReturnType>

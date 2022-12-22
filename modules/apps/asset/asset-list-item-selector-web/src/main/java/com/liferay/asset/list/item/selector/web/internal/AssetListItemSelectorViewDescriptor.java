@@ -21,6 +21,8 @@ import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -29,16 +31,19 @@ public class AssetListItemSelectorViewDescriptor
 
 	public AssetListItemSelectorViewDescriptor(
 		AssetListEntryItemSelectorDisplayContext
-			assetListEntryItemSelectorDisplayContext) {
+			assetListEntryItemSelectorDisplayContext,
+		HttpServletRequest httpServletRequest) {
 
 		_assetListEntryItemSelectorDisplayContext =
 			assetListEntryItemSelectorDisplayContext;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override
 	public ItemDescriptor getItemDescriptor(AssetListEntry assetListEntry) {
 		return new AssetListItemDescriptor(
-			assetListEntry, _assetListEntryItemSelectorDisplayContext);
+			assetListEntry, _assetListEntryItemSelectorDisplayContext,
+			_httpServletRequest);
 	}
 
 	@Override
@@ -58,5 +63,6 @@ public class AssetListItemSelectorViewDescriptor
 
 	private final AssetListEntryItemSelectorDisplayContext
 		_assetListEntryItemSelectorDisplayContext;
+	private final HttpServletRequest _httpServletRequest;
 
 }

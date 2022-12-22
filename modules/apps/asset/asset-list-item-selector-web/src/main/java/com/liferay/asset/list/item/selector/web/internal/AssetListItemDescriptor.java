@@ -21,11 +21,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 
 import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -36,11 +41,15 @@ public class AssetListItemDescriptor
 	public AssetListItemDescriptor(
 		AssetListEntry assetListEntry,
 		AssetListEntryItemSelectorDisplayContext
-			assetListEntryItemSelectorDisplayContext) {
+			assetListEntryItemSelectorDisplayContext,
+		HttpServletRequest httpServletRequest) {
 
 		_assetListEntry = assetListEntry;
 		_assetListEntryItemSelectorDisplayContext =
 			assetListEntryItemSelectorDisplayContext;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -71,12 +80,22 @@ public class AssetListItemDescriptor
 
 	@Override
 	public String getSubtitle(Locale locale) {
-		return null;
+		String type = _assetListEntryItemSelectorDisplayContext.getType(
+			_assetListEntry, _themeDisplay.getLocale());
+
+		String subtype = _assetListEntryItemSelectorDisplayContext.getSubtype(
+			_assetListEntry);
+
+		if (Validator.isNull(subtype)) {
+			return type;
+		}
+
+		return type + " - " + subtype;
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return null;
+		return _assetListEntry.getTitle();
 	}
 
 	@Override
@@ -91,5 +110,6 @@ public class AssetListItemDescriptor
 	private final AssetListEntry _assetListEntry;
 	private final AssetListEntryItemSelectorDisplayContext
 		_assetListEntryItemSelectorDisplayContext;
+	private final ThemeDisplay _themeDisplay;
 
 }

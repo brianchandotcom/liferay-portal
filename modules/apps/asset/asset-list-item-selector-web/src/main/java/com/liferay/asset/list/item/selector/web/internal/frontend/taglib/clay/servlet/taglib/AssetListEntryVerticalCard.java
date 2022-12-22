@@ -116,8 +116,7 @@ public class AssetListEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getTitle() {
-		return _assetListEntryItemSelectorDisplayContext.getTitle(
-			_assetListEntry, themeDisplay.getLocale());
+		return _assetListEntry.getTitle();
 	}
 
 	@Override

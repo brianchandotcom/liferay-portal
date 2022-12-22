@@ -26,7 +26,6 @@ import com.liferay.info.collection.provider.item.selector.criterion.InfoCollecti
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -220,15 +219,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 		}
 
 		return subtypeLabel;
-	}
-
-	public String getTitle(AssetListEntry assetListEntry, Locale locale) {
-		try {
-			return assetListEntry.getUnambiguousTitle(locale);
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
 	}
 
 	public String getType(AssetListEntry assetListEntry, Locale locale) {

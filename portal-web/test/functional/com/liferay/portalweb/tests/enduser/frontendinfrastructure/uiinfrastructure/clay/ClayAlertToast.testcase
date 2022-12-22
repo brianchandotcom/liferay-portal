@@ -1,0 +1,62 @@
+definition{
+
+    property portal.upstream = "true";
+
+    setUp{
+        
+        User.firstLoginPG();
+
+        JSONLayout.addPublicLayout(
+		    groupName = "Guest",			    
+            layoutName = "Clay Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+		   groupName = "Guest",
+		    layoutName = "Clay Page",
+		    widgetName = "Clay Sample");
+
+		Navigator.gotoPage(pageName = "Clay Page");
+
+    }
+
+    tearDown{
+
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Page");
+		}
+
+    }
+
+    @description = "LPS-170578 - Assert that message remain after mouse is away from it."
+    @priority = "5"
+    test DoesNotDisappearWhenHoveredOver {
+
+        property portal.acceptance = "true";
+
+        task("When a toast alert appear"){
+            WaitForElementPresent(
+                key_text = "Success Submit",
+                locator1 = "Button#ANY");
+
+            Click(
+                key_text = "Success Submit",
+                locator1 = "Button#ANY");
+        }
+
+        task("And user mouses over the alert"){
+            MouseOver(locator1 = "Message#SUCCESS");
+        }
+
+        task("Then the alert does not disappear when hovered ove"){
+            AssertElementPresent(locator1 = "Message#SUCCESS");
+        }
+
+    }
+}

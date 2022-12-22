@@ -419,6 +419,7 @@ public class CommerceServiceUpgradeStepRegistrator
 			"8.9.1", "8.9.2",
 			new com.liferay.commerce.internal.upgrade.v8_9_2.
 				CommercePermissionUpgradeProcess(
+					_resourceActionLocalService,
 					_resourcePermissionLocalService, _roleLocalService));
 
 		if (_log.isInfoEnabled()) {

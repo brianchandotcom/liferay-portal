@@ -126,10 +126,10 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 		<%
 		}
 
-		String selectedLanguageName = LanguageUtil.get(request, "language." + selectedLanguageId.substring(0, 2));
+		String selectedLanguageName = LanguageUtil.get(request, "language." + selectedLanguageId);
 
 		if (selectedLanguageName.contains("language.")) {
-			selectedLanguageName = LanguageUtil.get(request, "language." + selectedLanguageId);
+			selectedLanguageName = LanguageUtil.get(request, "language." + selectedLanguageId.substring(0, 2));
 		}
 		%>
 
@@ -186,10 +186,10 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 								"value", curLanguageId
 							).build();
 
-							String languageName = LanguageUtil.get(request, "language." + curLanguageId.substring(0, 2));
+							String languageName = LanguageUtil.get(request, "language." + curLanguageId);
 
 							if (languageName.contains("language.")) {
-								languageName = LanguageUtil.get(request, "language." + curLanguageId);
+								languageName = LanguageUtil.get(request, "language." + curLanguageId.substring(0, 2));
 							}
 
 							String translationInstructionAnnouncement = LanguageUtil.format(request, "press-enter-to-edit-x-translation", new String[] {languageName}, false);

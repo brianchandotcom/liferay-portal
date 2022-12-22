@@ -339,7 +339,7 @@ SideNavigation.prototype = {
 	},
 
 	_focusCloseButton() {
-		const intervalId = setInterval(() => {
+		const maybeFocus = () => {
 			const container = document.querySelector(this.options.container);
 
 			if (!container) {
@@ -360,11 +360,12 @@ SideNavigation.prototype = {
 
 			clearInterval(intervalId);
 			clearTimeout(timeoutId);
-		}, 200);
+		};
 
-		const timeoutId = setTimeout(() => {
-			clearInterval(intervalId);
-		}, 3000);
+		const intervalId = setInterval(maybeFocus, 200);
+		const timeoutId = setTimeout(() => clearInterval(intervalId), 3000);
+
+		maybeFocus();
 	},
 
 	_getSidenavWidth() {
@@ -1256,6 +1257,8 @@ SideNavigation.prototype = {
 				instance._emit('open.lexicon.sidenav');
 
 				dispatchCustomEvent(document, 'open.lexicon.sidenav', instance);
+
+				this._focusCloseButton();
 			});
 
 			setClasses(content, {
@@ -1273,8 +1276,6 @@ SideNavigation.prototype = {
 				[openClass]: true,
 				'sidenav-transition': true,
 			});
-
-			this._focusCloseButton();
 		}
 	},
 

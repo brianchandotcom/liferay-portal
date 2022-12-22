@@ -10,8 +10,15 @@
  * distribution rights of the Software.
  */
 
+/* eslint-disable no-undef */
+const findRequestIdUrl = (paramsUrl) => {
+	const splitParamsUrl = paramsUrl.split('?');
+
+	return splitParamsUrl[0];
+};
+
 const currentPath = Liferay.currentURL.split('/');
-const mdfClaimId = +currentPath.at(-1);
+const mdfClaimId = findRequestIdUrl(currentPath.at(-1));
 
 const updateStatusToApproved = fragmentElement.querySelector(
 	'#status-approved'
@@ -21,35 +28,10 @@ const updateStatusToRequestMoreInfo = fragmentElement.querySelector(
 );
 const updateStatusToReject = fragmentElement.querySelector('#status-reject');
 
-const getMDFClaimStatus = async () => {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const statusResponse = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
-		headers: {
-			'accept': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-	});
-
-	if (statusResponse.ok) {
-		const data = await statusResponse.json();
-
-		fragmentElement.querySelector(
-			'#mdf-claim-status-display'
-		).innerHTML = `Status: ${Liferay.Util.escape(data.claimStatus.name)}`;
-
-		return;
-	}
-
-	Liferay.Util.openToast({
-		message: 'An unexpected error occured.',
-		type: 'danger',
-	});
-};
-
 const updateStatus = async (status) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const statusManagerResponse = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
-		body: `{"claimStatus": "${status}"}`,
+		body: `{"mdfClaimStatus": "${status}"}`,
 		headers: {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
@@ -62,7 +44,7 @@ const updateStatus = async (status) => {
 
 		document.getElementById(
 			'mdf-claim-status-display'
-		).innerHTML = `Status: ${Liferay.Util.escape(data.claimStatus)}`;
+		).innerHTML = `Status: ${Liferay.Util.escape(data.mdfClaimStatus)}`;
 
 		getMDFClaimStatus();
 
@@ -105,4 +87,33 @@ updateStatusToReject.onclick = () =>
 		},
 	});
 
-getMDFClaimStatus();
+const getMDFClaimStatus = async () => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const statusResponse = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
+		headers: {
+			'accept': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
+
+	if (statusResponse.ok) {
+		const data = await statusResponse.json();
+
+		fragmentElement.querySelector(
+			'#mdf-claim-status-display'
+		).innerHTML = `Status: ${Liferay.Util.escape(
+			data.mdfClaimStatus.name
+		)}`;
+
+		return;
+	}
+
+	Liferay.Util.openToast({
+		message: 'An unexpected error occured.',
+		type: 'danger',
+	});
+};
+
+if (layoutMode !== 'edit') {
+	getMDFClaimStatus();
+}

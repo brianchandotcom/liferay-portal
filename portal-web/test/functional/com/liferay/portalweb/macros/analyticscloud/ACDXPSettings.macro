@@ -452,4 +452,21 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
+
+	macro desyncAttributes {
+		ACDXPSettings.clickToSelectAttributes(attributeCategory = "${attributeCategory}");
+
+		for (var attributeName : list "${attributeNameList}") {
+			var key_attributeName = "${attributeName}";
+
+			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
+
+			if (IsElementPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
+				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");
+			}
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+	}
+
 }

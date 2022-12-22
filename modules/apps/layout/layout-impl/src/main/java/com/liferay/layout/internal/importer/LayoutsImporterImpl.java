@@ -808,8 +808,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private long _getPreviewFileEntryId(
-			long groupId, long layoutPageTemplateEntryId, ZipEntry zipEntry,
-			ZipFile zipFile)
+			String className, long groupId, long layoutPageTemplateEntryId,
+			ZipEntry zipEntry, ZipFile zipFile)
 		throws Exception {
 
 		if (zipEntry == null) {
@@ -846,11 +846,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 
 		fileEntry = _portletFileRepository.addPortletFileEntry(
-			groupId, serviceContext.getUserId(),
-			LayoutPageTemplateEntry.class.getName(), layoutPageTemplateEntryId,
-			LayoutAdminPortletKeys.GROUP_PAGES, repository.getDlFolderId(),
-			bytes, imageFileName, MimeTypesUtil.getContentType(imageFileName),
-			false);
+			groupId, serviceContext.getUserId(), className,
+			layoutPageTemplateEntryId, LayoutAdminPortletKeys.GROUP_PAGES,
+			repository.getDlFolderId(), bytes, imageFileName,
+			MimeTypesUtil.getContentType(imageFileName), false);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -1094,7 +1093,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					warningMessages);
 
 				long previewFileEntryId = _getPreviewFileEntryId(
-					groupId,
+					LayoutPageTemplateEntry.class.getName(), groupId,
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 					thumbnailZipEntry, zipFile);
 
@@ -1229,7 +1228,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					warningMessages);
 
 				long previewFileEntryId = _getPreviewFileEntryId(
-					groupId,
+					LayoutUtilityPageEntry.class.getName(), groupId,
 					layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
 					thumbnailZipEntry, zipFile);
 

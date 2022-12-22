@@ -103,14 +103,189 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
+			"businessType": "Picklist",
+			"defaultValue": "pendingMarketingReview",
 			"indexed": true,
 			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "MDF Claim Status"
 			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Claim Status$]",
 			"name": "claimStatus",
-			"required": false,
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow",
+					"value": {
+						"objectStates": [
+							{
+								"key": "pendingMarketingReview",
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "draft"
+									}
+								]
+							},
+							{
+								"key": "approved",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "draft"
+									}
+								]
+							},
+							{
+								"key": "claimPaid",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "approved"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "draft"
+									}
+								]
+							},
+							{
+								"key": "inFinanceReview",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "approved"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "draft"
+									}
+								]
+							},
+							{
+								"key": "moreInfoRequested",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "approved"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "draft"
+									}
+								]
+							},
+							{
+								"key": "rejected",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "approved"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "draft"
+									}
+								]
+							},
+							{
+								"key": "draft",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "approved"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
+									}
+								]
+							}
+						]
+					}
+				}
+			],
+			"required": true,
+			"state": true,
+			"system": false,
 			"type": "String"
 		}
 	],

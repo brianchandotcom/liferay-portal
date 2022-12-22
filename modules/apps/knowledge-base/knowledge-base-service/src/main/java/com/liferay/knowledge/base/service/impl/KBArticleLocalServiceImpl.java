@@ -40,6 +40,7 @@ import com.liferay.knowledge.base.exception.KBArticleStatusException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
+import com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration;
 import com.liferay.knowledge.base.internal.helper.KBArticleLocalSiblingNavigationHelper;
 import com.liferay.knowledge.base.internal.importer.KBArchiveFactory;
 import com.liferay.knowledge.base.internal.importer.KBArticleImporter;
@@ -348,6 +349,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		Date date = new Date();
 
 		_checkKBArticlesByExpirationDate(date);
+
+		if (_previousCheckDate == null) {
+			_previousCheckDate = new Date(
+				date.getTime() - _getKBArticleCheckInterval());
+		}
+
 		_checkKBArticlesByReviewDate(date);
 
 		_previousCheckDate = date;
@@ -1762,6 +1769,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return emailKBArticleDiffs;
 	}
 
+	private long _getKBArticleCheckInterval() {
+		return _kbServiceConfiguration.checkInterval();
+	}
+
 	private List<KBArticle> _getKBArticlesByCompanyIdAndExpirationDate(
 		long companyId, Date expirationDate) {
 
@@ -2415,6 +2426,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Reference
 	private KBFolderPersistence _kbFolderPersistence;
+
+	@Reference
+	private KBServiceConfiguration _kbServiceConfiguration;
 
 	@Reference
 	private Portal _portal;

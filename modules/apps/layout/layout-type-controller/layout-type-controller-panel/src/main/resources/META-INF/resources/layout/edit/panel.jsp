@@ -36,132 +36,149 @@ if (selLayout != null) {
 	<liferay-ui:message key="select-the-applications-that-are-available-in-the-panel" />
 </div>
 
-<aui:input id='<%= HtmlUtil.escapeAttribute(idPrefix) + "panelSelectedPortlets" %>' name="TypeSettingsProperties--panelSelectedPortlets--" type="hidden" value="<%= panelSelectedPortlets %>" />
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-171683")) %>'>
 
-<div class="lfr-tree-loading" id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) %>selectPortletsTreeLoading">
-	<span class="icon icon-loading lfr-tree-loading-icon"></span>
-</div>
+		<%
+		WidgetsTreeDisplayContext widgetsTreeDisplayContext = new WidgetsTreeDisplayContext(request, layoutTypePortlet, user);
+		%>
 
-<div id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) %>selectPortletsTree" style="margin: 4px;"></div>
+		<div>
+			<react:component
+				module="js/WidgetsTree"
+				props="<%= widgetsTreeDisplayContext.getData() %>"
+			/>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<aui:input id='<%= HtmlUtil.escapeAttribute(idPrefix) + "panelSelectedPortlets" %>' name="TypeSettingsProperties--panelSelectedPortlets--" type="hidden" value="<%= panelSelectedPortlets %>" />
 
-<aui:script use="aui-tree-view">
-	var panelSelectedPortletsEl = A.one(
-		'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>panelSelectedPortlets'
-	);
+		<div class="lfr-tree-loading" id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) %>selectPortletsTreeLoading">
+			<span class="icon icon-loading lfr-tree-loading-icon"></span>
+		</div>
 
-	var selectedPortlets = A.Array.hash(panelSelectedPortletsEl.val().split(','));
+		<div id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) %>selectPortletsTree" style="margin: 4px;"></div>
 
-	var TreeUtil = {
-		formatJSONResults: function (json) {
-			var output = [];
+		<aui:script use="aui-tree-view">
+			var panelSelectedPortletsEl = A.one(
+				'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>panelSelectedPortlets'
+			);
 
-			A.each(json.children.list, (item, index) => {
-				var childPortlets = [];
-				var total = 0;
+			var selectedPortlets = A.Array.hash(panelSelectedPortletsEl.val().split(','));
 
-				var nodeChildren = item.children;
-				var plid = item.objId;
+			var TreeUtil = {
+				formatJSONResults: function (json) {
+					var output = [];
 
-				var checked = plid && plid in selectedPortlets;
+					A.each(json.children.list, (item, index) => {
+						var childPortlets = [];
+						var total = 0;
 
-				if (nodeChildren) {
-					childPortlets = nodeChildren.list;
-					total = childPortlets.length;
-				}
+						var nodeChildren = item.children;
+						var plid = item.objId;
 
-				var newNode = {
-					after: {
-						checkedChange: function (event) {
-							if (plid) {
-								if (event.newVal) {
-									selectedPortlets[plid] = true;
-								}
-								else if (selectedPortlets[plid]) {
-									delete selectedPortlets[plid];
-								}
+						var checked = plid && plid in selectedPortlets;
 
-								panelSelectedPortletsEl.val(
-									A.Object.keys(selectedPortlets)
-								);
-							}
-						},
-					},
-					alwaysShowHitArea: total,
-					checked: checked,
+						if (nodeChildren) {
+							childPortlets = nodeChildren.list;
+							total = childPortlets.length;
+						}
+
+						var newNode = {
+							after: {
+								checkedChange: function (event) {
+									if (plid) {
+										if (event.newVal) {
+											selectedPortlets[plid] = true;
+										}
+										else if (selectedPortlets[plid]) {
+											delete selectedPortlets[plid];
+										}
+
+										panelSelectedPortletsEl.val(
+											A.Object.keys(selectedPortlets)
+										);
+									}
+								},
+							},
+							alwaysShowHitArea: total,
+							checked: checked,
+							draggable: false,
+							expanded: false,
+							id: item.id,
+							label: item.name,
+							leaf: item.leaf,
+							type: 'task',
+						};
+
+						if (nodeChildren) {
+							newNode.children = TreeUtil.formatJSONResults(item);
+						}
+
+						output.push(newNode);
+					});
+
+					return output;
+				},
+			};
+
+			var initPanelSelectPortlets = function (event) {
+
+				<%
+				PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
+
+				portletLister.setHierarchicalTree(true);
+				portletLister.setIncludeInstanceablePortlets(false);
+				portletLister.setIteratePortlets(true);
+				portletLister.setLayoutTypePortlet(layoutTypePortlet);
+				portletLister.setRootNodeName(LanguageUtil.get(request, "application"));
+				portletLister.setServletContext(application);
+				portletLister.setThemeDisplay(themeDisplay);
+				portletLister.setUser(user);
+				%>
+
+				var portletList =
+					<%= JSONFactoryUtil.createJSONObject(JSONFactoryUtil.serialize(portletLister.getTreeView())) %>
+						.serializable.list.list[0];
+
+				var rootNode = {
+					alwaysShowHitArea: true,
+					children: TreeUtil.formatJSONResults(portletList),
 					draggable: false,
-					expanded: false,
-					id: item.id,
-					label: item.name,
-					leaf: item.leaf,
+					expanded: true,
+					id:
+						'<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsRootNode',
+					label: portletList.name,
+					leaf: false,
 					type: 'task',
 				};
 
-				if (nodeChildren) {
-					newNode.children = TreeUtil.formatJSONResults(item);
+				var treeview = new A.TreeView({
+					after: {
+						render: function () {
+							A.one(
+								'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTreeLoading'
+							).hide();
+						},
+					},
+					boundingBox:
+						'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTree',
+					children: [rootNode],
+					type: 'file',
+				}).render();
+
+				initPanelSelectPortlets = A.Lang.emptyFn;
+			};
+
+			<c:if test="<%= (selLayout == null) || selLayout.isTypePanel() %>">
+				initPanelSelectPortlets();
+			</c:if>
+
+			Liferay.on('<portlet:namespace />toggleLayoutTypeFields', (event) => {
+				if (event.type == 'panel') {
+					initPanelSelectPortlets();
 				}
-
-				output.push(newNode);
 			});
-
-			return output;
-		},
-	};
-
-	var initPanelSelectPortlets = function (event) {
-
-		<%
-		PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
-
-		portletLister.setHierarchicalTree(true);
-		portletLister.setIncludeInstanceablePortlets(false);
-		portletLister.setIteratePortlets(true);
-		portletLister.setLayoutTypePortlet(layoutTypePortlet);
-		portletLister.setRootNodeName(LanguageUtil.get(request, "application"));
-		portletLister.setServletContext(application);
-		portletLister.setThemeDisplay(themeDisplay);
-		portletLister.setUser(user);
-		%>
-
-		var portletList =
-			<%= JSONFactoryUtil.createJSONObject(JSONFactoryUtil.serialize(portletLister.getTreeView())) %>
-				.serializable.list.list[0];
-
-		var rootNode = {
-			alwaysShowHitArea: true,
-			children: TreeUtil.formatJSONResults(portletList),
-			draggable: false,
-			expanded: true,
-			id:
-				'<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsRootNode',
-			label: portletList.name,
-			leaf: false,
-			type: 'task',
-		};
-
-		var treeview = new A.TreeView({
-			after: {
-				render: function () {
-					A.one(
-						'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTreeLoading'
-					).hide();
-				},
-			},
-			boundingBox:
-				'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTree',
-			children: [rootNode],
-			type: 'file',
-		}).render();
-
-		initPanelSelectPortlets = A.Lang.emptyFn;
-	};
-
-	<c:if test="<%= (selLayout == null) || selLayout.isTypePanel() %>">
-		initPanelSelectPortlets();
-	</c:if>
-
-	Liferay.on('<portlet:namespace />toggleLayoutTypeFields', (event) => {
-		if (event.type == 'panel') {
-			initPanelSelectPortlets();
-		}
-	});
-</aui:script>
+		</aui:script>
+	</c:otherwise>
+</c:choose>

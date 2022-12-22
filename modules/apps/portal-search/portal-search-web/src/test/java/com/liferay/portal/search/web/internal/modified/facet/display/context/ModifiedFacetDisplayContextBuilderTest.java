@@ -270,7 +270,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 			modifiedFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			"past-hour", modifiedFacetTermDisplayContext.getLabel());
+			"past-hour", modifiedFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			"[20180515225959 TO 20180515235959]",
 			modifiedFacetTermDisplayContext.getRange());
@@ -279,7 +279,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 			1);
 
 		Assert.assertEquals(
-			"some-time-ago", modifiedFacetTermDisplayContext.getLabel());
+			"some-time-ago", modifiedFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			"[20180508235959 TO 20180514235959]",
 			modifiedFacetTermDisplayContext.getRange());
@@ -363,7 +363,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 		for (ModifiedFacetTermDisplayContext termDisplayContext :
 				termDisplayContexts) {
 
-			String label = termDisplayContext.getLabel();
+			String label = termDisplayContext.getBucketText();
 
 			if (label.equals("custom-range")) {
 				continue;

@@ -97,6 +97,14 @@ public class BucketDisplayContext {
 		return GetterUtil.getLong(_filterValue);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getBucketText()}
+	 */
+	@Deprecated
+	public String getLabel() {
+		return _bucketText;
+	}
+
 	public int getPopularity() {
 		return _popularity;
 	}

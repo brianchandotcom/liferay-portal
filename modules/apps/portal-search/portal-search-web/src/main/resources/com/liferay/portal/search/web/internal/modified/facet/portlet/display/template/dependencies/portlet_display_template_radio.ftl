@@ -17,14 +17,14 @@
 				<#list entries as entry>
 					<li class="facet-value">
 						<div class="custom-control custom-radio">
-							<label class="facet-checkbox-label" for="${entry.getLabel()}">
+							<label class="facet-checkbox-label" for="${entry.getBucketText()}">
 								<input
 									autocomplete="off"
 									${(entry.isSelected())?then("checked", "")}
 									class="custom-control-input facet-term"
 									disabled
-									id="${entry.getLabel()}"
-									name="${entry.getLabel()}"
+									id="${entry.getBucketText()}"
+									name="${entry.getBucketText()}"
 									onChange='${"window.location.href = \"${entry.getRangeURL()}\";"}'
 									role="radio"
 									type="radio"
@@ -32,7 +32,7 @@
 
 								<span class="custom-control-label term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 									<span class="custom-control-label-text">
-										<@liferay_ui["message"] key="${htmlUtil.escape(entry.getLabel())}" />
+										<@liferay_ui["message"] key="${htmlUtil.escape(entry.getBucketText())}" />
 									</span>
 								</span>
 
@@ -47,14 +47,14 @@
 
 			<li class="facet-value">
 				<div class="custom-control custom-radio">
-					<label class="facet-checkbox-label" for="${customRangeModifiedFacetTermDisplayContext.getLabel()}">
+					<label class="facet-checkbox-label" for="${customRangeModifiedFacetTermDisplayContext.getBucketText()}">
 						<input
 							autocomplete="off"
 							${(customRangeModifiedFacetTermDisplayContext.isSelected())?then("checked", "")}
 							class="custom-control-input facet-term"
 							disabled
-							id="${customRangeModifiedFacetTermDisplayContext.getLabel()}"
-							name="${customRangeModifiedFacetTermDisplayContext.getLabel()}"
+							id="${customRangeModifiedFacetTermDisplayContext.getBucketText()}"
+							name="${customRangeModifiedFacetTermDisplayContext.getBucketText()}"
 							onChange='${"window.location.href = \"${customRangeModifiedFacetTermDisplayContext.getRangeURL()}\";"}'
 							role="radio"
 							type="radio"
@@ -62,7 +62,7 @@
 
 						<span class="custom-control-label term-name ${(customRangeModifiedFacetTermDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 							<span class="custom-control-label-text">
-								<@liferay_ui["message"] key="${htmlUtil.escape(customRangeModifiedFacetTermDisplayContext.getLabel())}" />
+								<@liferay_ui["message"] key="${htmlUtil.escape(customRangeModifiedFacetTermDisplayContext.getBucketText())}" />
 							</span>
 						</span>
 

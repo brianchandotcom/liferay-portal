@@ -568,15 +568,36 @@ public class DLFileEntryLocalServiceImpl
 		intervalActionProcessor.performIntervalActions();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #copyFileEntry(long, long, long, long, long, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry copyFileEntry(
 			long userId, long groupId, long repositoryId, long fileEntryId,
 			long destFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
+		return copyFileEntry(
+			userId, groupId, repositoryId, fileEntryId, destFolderId, null,
+			serviceContext);
+	}
+
+	@Override
+	public DLFileEntry copyFileEntry(
+			long userId, long groupId, long repositoryId, long fileEntryId,
+			long destFolderId, String fileName, ServiceContext serviceContext)
+		throws PortalException {
+
 		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
 
 		String sourceFileName = "A";
+		String title = dlFileEntry.getTitle();
+
+		if (!Validator.isBlank(fileName)) {
+			sourceFileName = fileName;
+			title = fileName;
+		}
 
 		String extension = dlFileEntry.getExtension();
 
@@ -591,8 +612,8 @@ public class DLFileEntryLocalServiceImpl
 
 		DLFileEntry newDLFileEntry = addFileEntry(
 			null, userId, groupId, repositoryId, destFolderId, sourceFileName,
-			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
-			dlFileEntry.getTitle(), dlFileEntry.getDescription(), null,
+			dlFileEntry.getMimeType(), title, title,
+			dlFileEntry.getDescription(), null,
 			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
 			dlFileEntry.getSize(), dlFileEntry.getExpirationDate(),
 			dlFileEntry.getReviewDate(), serviceContext);

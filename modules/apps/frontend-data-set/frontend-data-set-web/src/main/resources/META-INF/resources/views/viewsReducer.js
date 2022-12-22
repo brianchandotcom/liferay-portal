@@ -113,7 +113,7 @@ export function viewsReducer(state, {type, value}) {
 		const activeView = views.find(({name}) => name === value);
 
 		if (activeView) {
-			activeView.component = getViewComponent(value);
+			activeView.component = getViewComponent(activeView.contentRenderer);
 		}
 
 		return {

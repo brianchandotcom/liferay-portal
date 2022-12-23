@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -75,9 +74,6 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = _companyLocalService.fetchCompany(
-			TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -251,13 +247,13 @@ public class UpdateSegmentsEntryMVCCommandTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLanguageId(
 			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -273,8 +269,6 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 		return themeDisplay;
 	}
-
-	private static Company _company;
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;

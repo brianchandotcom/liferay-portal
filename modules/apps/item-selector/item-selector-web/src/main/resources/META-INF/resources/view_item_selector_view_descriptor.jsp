@@ -162,41 +162,21 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						cssClass="entry entry-selector table-cell-expand table-cell-minw-200"
-						name="title"
-						value="<%= itemDescriptor.getTitle(locale) %>"
-					/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smaller table-cell-minw-150"
-						name="user"
-						value="<%= itemDescriptor.getUserName() %>"
-					/>
+					<%
+					TableItemView tableItemView = itemSelectorViewDescriptor.getTableItemView(row.getObject());
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-						name="modified-date"
-					>
-						<c:if test="<%= Objects.nonNull(itemDescriptor.getModifiedDate()) %>">
+					if (tableItemView == null) {
+						tableItemView = new DefaultTableItemView(itemDescriptor);
+					}
 
-							<%
-							Date modifiedDate = itemDescriptor.getModifiedDate();
-							%>
+					searchContainer.setHeaderNames(tableItemView.getHeaderNames());
 
-							<span class="text-default">
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" />
-							</span>
-						</c:if>
-					</liferay-ui:search-container-column-text>
+					for (SearchEntry searchEntry : tableItemView.getSearchEntries(locale)) {
+						row.addSearchEntry(searchEntry);
+					}
+					%>
 
-					<c:if test="<%= itemDescriptor.getStatus() != null %>">
-						<liferay-ui:search-container-column-status
-							cssClass="text-nowrap"
-							name="status"
-							status="<%= itemDescriptor.getStatus() %>"
-						/>
-					</c:if>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

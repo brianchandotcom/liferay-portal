@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/card": "3.83.1",
+		"@clayui/card": "3.84.0",
 		"@clayui/charts": "3.65.0",
 		"@clayui/icon": "3.56.0",
 		"@clayui/panel": "3.83.1",

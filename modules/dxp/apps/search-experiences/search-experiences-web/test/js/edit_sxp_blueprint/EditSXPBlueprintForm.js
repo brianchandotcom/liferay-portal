@@ -14,8 +14,8 @@ import React from 'react';
 
 import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/EditSXPBlueprintForm';
 import * as fetchUtils from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/fetch';
+import getUIConfigurationValues from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/get_ui_configuration_values';
 const Toasts = require('../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
-import {getUIConfigurationValues} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {ENTITY_JSON, INITIAL_CONFIGURATION} from '../mocks/data';
 import {QUERY_SXP_ELEMENTS} from '../mocks/sxpElements';
 

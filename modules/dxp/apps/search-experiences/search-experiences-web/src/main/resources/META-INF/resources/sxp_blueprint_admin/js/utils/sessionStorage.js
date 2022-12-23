@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {isDefined} from './utils';
+import isDefined from './functions/is_defined';
 
 const NAMESPACE = 'com.liferay.search.experiences.web_';
 

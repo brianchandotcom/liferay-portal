@@ -9,18 +9,26 @@
  * distribution rights of the Software.
  */
 
-export function alphabeticalSort(a, b) {
-	return a.toLowerCase().localeCompare(b.toLowerCase());
-}
+import isDefined from './is_defined';
 
-export function stringLengthSort(a, b) {
-	if (a.length < b.length) {
-		return -1;
+/**
+ * Used for converting a JSON string to display in a code mirror editor.
+ * @param {String} jsonString The JSON string to convert.
+ * @return {String} The converted JSON string.
+ */
+export default function parseAndPrettifyJSON(json) {
+	if (!isDefined(json) || json === '') {
+		return '';
 	}
 
-	if (a.length > b.length) {
-		return 1;
+	try {
+		return JSON.stringify(JSON.parse(json), null, 2);
 	}
+	catch (error) {
+		if (process.env.NODE_ENV === 'development') {
+			console.error(error);
+		}
 
-	return 0;
+		return json;
+	}
 }

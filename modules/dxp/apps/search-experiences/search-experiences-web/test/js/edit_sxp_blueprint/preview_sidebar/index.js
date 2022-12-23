@@ -13,7 +13,7 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import PreviewSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/preview_sidebar/index';
-import {transformToSearchPreviewHits} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
+import transformToSearchPreviewHits from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/transform_to_search_preview_hits';
 import {mockSearchResults} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';

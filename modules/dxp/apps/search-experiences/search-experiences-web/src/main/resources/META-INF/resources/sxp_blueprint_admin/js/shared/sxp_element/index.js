@@ -22,13 +22,11 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {ASSET_CATEGORY_ID} from '../../utils/constants';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
+import isDefined from '../../utils/functions/is_defined';
 import {INPUT_TYPES} from '../../utils/inputTypes';
-import {
-	cleanUIConfiguration,
-	getSXPElementJSON,
-	isDefined,
-	isElementInactiveFromNonCompanyIndex,
-} from '../../utils/utils';
+import cleanUIConfiguration from '../../utils/sxp_element/clean_ui_configuration';
+import getSXPElementJSON from '../../utils/sxp_element/get_sxp_element_json';
+import isElementInactiveFromNonCompanyIndex from '../../utils/sxp_element/is_element_inactive_from_noncompany_index';
 import {PreviewModalWithCopyDownload} from '../PreviewModal';
 import ThemeContext from '../ThemeContext';
 import {getLocalizedText} from './../../utils/language';

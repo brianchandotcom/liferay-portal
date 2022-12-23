@@ -38,7 +38,7 @@ import {
 import {addParams, fetchData} from '../../utils/fetch';
 import {getLocalizedText} from '../../utils/language';
 import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
-import {isElementInactiveFromNonCompanyIndex} from '../../utils/utils';
+import isElementInactiveFromNonCompanyIndex from '../../utils/sxp_element/is_element_inactive_from_noncompany_index';
 
 const DEFAULT_CATEGORY = 'other';
 const DEFAULT_EXPANDED_LIST = ['match'];

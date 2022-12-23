@@ -13,8 +13,8 @@ import {render} from '@testing-library/react';
 import React from 'react';
 
 import ClauseContributorsSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/clause_contributors_sidebar/index';
+import filterAndSortClassNames from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/functions/filter_and_sort_class_names';
 const Toasts = require('../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
-import {filterAndSortClassNames} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {mockClassNames} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';

@@ -33,27 +33,25 @@ import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_INDEX_CONFIGURATION, SIDEBARS} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {addParams, fetchData, fetchPreviewSearch} from '../utils/fetch';
+import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
+import getResultsError from '../utils/functions/get_results_error';
+import isDefined from '../utils/functions/is_defined';
 import {INPUT_TYPES} from '../utils/inputTypes';
 import {formatLocaleWithUnderscores, renameKeys} from '../utils/language';
 import {setStorageAddSXPElementSidebar} from '../utils/sessionStorage';
+import cleanUIConfiguration from '../utils/sxp_element/clean_ui_configuration';
+import getUIConfigurationValues from '../utils/sxp_element/get_ui_configuration_values';
+import isCustomJSONSXPElement from '../utils/sxp_element/is_custom_json_sxp_element';
+import parseCustomSXPElement from '../utils/sxp_element/parse_custom_sxp_element';
+import replaceTemplateVariable from '../utils/sxp_element/replace_template_variable';
+import transformToSearchContextAttributes from '../utils/sxp_element/transform_to_search_context_attributes';
+import transformToSearchPreviewHits from '../utils/sxp_element/transform_to_search_preview_hits';
 import {TEST_IDS} from '../utils/testIds';
 import {
 	openErrorToast,
 	openSuccessToast,
 	setInitialSuccessToast,
 } from '../utils/toasts';
-import {
-	cleanUIConfiguration,
-	filterAndSortClassNames,
-	getConfigurationEntry,
-	getResultsError,
-	getUIConfigurationValues,
-	isCustomJSONSXPElement,
-	isDefined,
-	parseCustomSXPElement,
-	transformToSearchContextAttributes,
-	transformToSearchPreviewHits,
-} from '../utils/utils';
 import {
 	validateBoost,
 	validateJSON,
@@ -539,7 +537,7 @@ function EditSXPBlueprintForm({
 				type,
 				uiConfigurationValues,
 			}) => ({
-				configurationEntry: getConfigurationEntry({
+				configurationEntry: replaceTemplateVariable({
 					sxpElement,
 					uiConfigurationValues,
 				}),

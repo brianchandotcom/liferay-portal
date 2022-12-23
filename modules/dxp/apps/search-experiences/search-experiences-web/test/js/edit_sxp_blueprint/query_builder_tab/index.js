@@ -17,7 +17,7 @@ import {QUERY_SXP_ELEMENTS} from '../../mocks/sxpElements';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {getUIConfigurationValues} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
+import getUIConfigurationValues from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/get_ui_configuration_values';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/CodeMirrorEditor',

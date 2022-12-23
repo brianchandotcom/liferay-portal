@@ -24,12 +24,12 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useRef, useState} from 'react';
 
+import removeDuplicates from '../utils/functions/remove_duplicates';
 import {
 	formatLocaleWithDashes,
 	formatLocaleWithUnderscores,
 	sub,
 } from '../utils/language';
-import {removeDuplicates} from '../utils/utils';
 import ThemeContext from './ThemeContext';
 
 /**

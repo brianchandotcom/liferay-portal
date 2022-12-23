@@ -25,8 +25,8 @@ import {
 } from '../utils/data';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {fetchData} from '../utils/fetch';
+import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import {setInitialSuccessToast} from '../utils/toasts';
-import {filterAndSortClassNames} from '../utils/utils';
 
 const ADD_EVENT = 'addSXPBlueprint';
 

@@ -27,9 +27,10 @@ import useDidUpdateEffect from '../../hooks/useDidUpdateEffect';
 import ErrorListItem from '../../shared/ErrorListItem';
 import {PreviewModalWithCopyDownload} from '../../shared/PreviewModal';
 import SearchInput from '../../shared/SearchInput';
+import isDefined from '../../utils/functions/is_defined';
+import parseAndPrettifyJSON from '../../utils/functions/parse_and_prettify_json';
 import {sub} from '../../utils/language';
 import {TEST_IDS} from '../../utils/testIds';
-import {isDefined, parseAndPrettifyJSON} from '../../utils/utils';
 import PreviewAttributesModal from './PreviewAttributesModal';
 import ResultListItem from './ResultListItem';
 

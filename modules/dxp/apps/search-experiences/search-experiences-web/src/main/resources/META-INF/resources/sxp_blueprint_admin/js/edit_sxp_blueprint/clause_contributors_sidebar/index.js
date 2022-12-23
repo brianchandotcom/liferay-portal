@@ -23,7 +23,7 @@ import {
 	DESCENDING,
 	INACTIVE,
 } from '../../utils/constants';
-import {removeDuplicates} from '../../utils/utils';
+import removeDuplicates from '../../utils/functions/remove_duplicates';
 import LearnMessage from './../../shared/LearnMessage';
 import ManagementToolbar from './ManagementToolbar';
 

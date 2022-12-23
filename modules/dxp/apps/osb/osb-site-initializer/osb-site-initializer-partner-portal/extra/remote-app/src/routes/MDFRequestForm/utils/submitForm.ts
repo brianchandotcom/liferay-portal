@@ -43,13 +43,15 @@ export default async function submitForm(
 
 	if (Liferay.FeatureFlags['LPS-164528'] && !mdfRequestId) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	} else if (mdfRequestId) {
+	}
+	else if (mdfRequestId) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values,
 			mdfRequestId
 		);
-	} else {
+	}
+	else {
 		dtoMDFRequest = await createMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values
@@ -66,7 +68,8 @@ export default async function submitForm(
 						dtoMDFRequest?.id,
 						dtoMDFRequest?.externalReferenceCodeSF
 					);
-				} else if (activity.id) {
+				}
+				else if (activity.id) {
 					return await updateMDFRequestActivities(
 						ResourceName.ACTIVITY_DXP,
 						activity,
@@ -74,7 +77,8 @@ export default async function submitForm(
 						dtoMDFRequest?.id,
 						dtoMDFRequest?.externalReferenceCodeSF
 					);
-				} else {
+				}
+				else {
 					return await createMDFRequestActivities(
 						ResourceName.ACTIVITY_DXP,
 						activity,

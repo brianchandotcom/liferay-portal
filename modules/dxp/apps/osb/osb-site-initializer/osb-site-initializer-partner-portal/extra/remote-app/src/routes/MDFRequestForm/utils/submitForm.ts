@@ -64,7 +64,11 @@ export default async function submitForm(
 	if (values?.activities?.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
 			values?.activities?.map(async (activity) => {
-				if (Liferay.FeatureFlags['LPS-164528'] && !mdfRequestId) {
+				if (
+					Liferay.FeatureFlags['LPS-164528'] &&
+					!mdfRequestId &&
+					values.mdfRequestStatus !== Status.DRAFT
+				) {
 					return await createMDFRequestActivitiesProxyAPI(
 						activity,
 						values.company,

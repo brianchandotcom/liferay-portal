@@ -357,6 +357,21 @@
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "approved"
+									},
+									{
+										"key": "marketingDirectorReview"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "expired"
+									},
+									{
+										"key": "rejected"
 									}
 								]
 							}

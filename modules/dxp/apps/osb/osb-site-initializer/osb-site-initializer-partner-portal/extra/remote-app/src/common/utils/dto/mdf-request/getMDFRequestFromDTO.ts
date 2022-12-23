@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {Status} from '../../../enums/status';
 import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
+import LiferayPicklist from '../../../interfaces/liferayPicklist';
 import MDFRequest from '../../../interfaces/mdfRequest';
 
 export function getMDFRequestFromDTO(
 	mdfRequest: MDFRequestDTO,
-	requestUpdateStatus: Status
+	requestUpdateStatus: LiferayPicklist
 ): MDFRequest {
 	return {
 		...mdfRequest,
@@ -36,7 +36,7 @@ export function getMDFRequestFromDTO(
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.split(
 			'; '
 		),
-		requestStatus: requestUpdateStatus,
+		mdfRequestStatus: requestUpdateStatus,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles?.split('; '),
 		targetMarkets: mdfRequest.targetMarkets?.split('; '),
 	};

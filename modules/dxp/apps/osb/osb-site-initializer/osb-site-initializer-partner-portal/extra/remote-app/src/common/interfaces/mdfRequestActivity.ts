@@ -17,7 +17,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	activityPromotion: string;
 	ad: string;
 	assetsLiferayRequired: string;
-	budgets?: MDFRequestBudget[];
+	budgets: MDFRequestBudget[];
 	description: string;
 	detailsLeadFollowUp: string;
 	endDate?: string;

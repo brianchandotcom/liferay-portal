@@ -62,7 +62,7 @@ updateStatusToApproved.onclick = () =>
 		message: 'Do you want to Approve this MDF?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				updateStatus('inFinanceReview');
+				updateStatus('approved');
 			}
 		},
 	});

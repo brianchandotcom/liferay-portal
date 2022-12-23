@@ -12,7 +12,6 @@
 import {FormikHelpers} from 'formik';
 
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
-import {Status} from '../../../common/enums/status';
 import DealRegistration from '../../../common/interfaces/dealRegistration';
 import {Liferay} from '../../../common/services/liferay';
 import createDealRegistrationProxyAPI from './createDealRegistrationProxyAPI';
@@ -21,7 +20,7 @@ export default async function submitForm(
 	values: DealRegistration,
 	formikHelpers: Omit<FormikHelpers<DealRegistration>, 'setFieldValue'>,
 	siteURL: string,
-	currentRequestStatus?: Status
+	currentRequestStatus?: string
 ) {
 	formikHelpers.setSubmitting(true);
 

@@ -14,10 +14,10 @@ import {useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import DealRegistration from '../../common/interfaces/dealRegistration';
 import {Liferay} from '../../common/services/liferay';
+import {Status} from '../../common/utils/constants/status';
 import isObjectEmpty from '../../common/utils/isObjectEmpty';
 import {StepType} from './enums/stepType';
 import General from './steps/General';
@@ -51,7 +51,7 @@ const initialFormValues: DealRegistration = {
 		postalCode: '',
 		state: {},
 	},
-	registrationStatus: Status.PENDING,
+	registrationStatus: Status.PENDING.name,
 };
 
 type StepComponent = {

@@ -18,6 +18,7 @@ import com.liferay.asset.list.item.selector.web.internal.display.context.AssetLi
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
@@ -54,6 +55,12 @@ public class AssetListItemSelectorViewDescriptor
 	@Override
 	public SearchContainer<AssetListEntry> getSearchContainer() {
 		return _assetListEntryItemSelectorDisplayContext.getSearchContainer();
+	}
+
+	@Override
+	public TableItemView getTableItemView(AssetListEntry assetListEntry) {
+		return new AssetListTableItemView(
+			assetListEntry, _assetListEntryItemSelectorDisplayContext);
 	}
 
 	@Override

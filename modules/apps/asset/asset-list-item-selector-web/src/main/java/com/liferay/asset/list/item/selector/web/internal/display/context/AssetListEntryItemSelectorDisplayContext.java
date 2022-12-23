@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -32,12 +33,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -85,6 +89,27 @@ public class AssetListEntryItemSelectorDisplayContext {
 		}
 
 		return assetListEntrySegmentsEntryRelsCount;
+	}
+
+	public int getAssetListEntryUsageCount(AssetListEntry assetListEntry) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			return AssetListEntryUsageLocalServiceUtil.
+				getCompanyAssetListEntryUsagesCount(
+					themeDisplay.getCompanyId(),
+					PortalUtil.getClassNameId(AssetListEntry.class),
+					String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
+		return AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsagesCount(
+			themeDisplay.getScopeGroupId(),
+			PortalUtil.getClassNameId(AssetListEntry.class),
+			String.valueOf(assetListEntry.getAssetListEntryId()));
 	}
 
 	public SearchContainer<AssetListEntry> getSearchContainer() {

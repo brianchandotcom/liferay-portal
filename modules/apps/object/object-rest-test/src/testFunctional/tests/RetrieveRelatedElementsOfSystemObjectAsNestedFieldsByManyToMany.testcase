@@ -76,6 +76,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "3"
 	test CanGetRelationshipDetailsInNestedFieldsWithoutRelatedEntries {
 		property portal.acceptance = "true";
@@ -97,6 +98,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "3"
 	test CanNotGetRelationshipDetailsInNestedFieldsAfterRelationshipIsDeleted {
 		property portal.acceptance = "true";
@@ -129,6 +131,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanReturnMultipleNestedFieldsDetailsInManyToManyRelationship {
 		property portal.acceptance = "true";
@@ -161,6 +164,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanReturnNestedFieldsDetailsInManyToManyRelationship {
 		property portal.acceptance = "true";
@@ -187,6 +191,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanReturnNestedFieldsDetailsInManyToManyRelationshipAfterObjectEntryDeletion {
 		property portal.acceptance = "true";

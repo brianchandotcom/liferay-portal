@@ -6130,6 +6130,7 @@ public class LayoutFriendlyURLPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -6143,7 +6144,7 @@ public class LayoutFriendlyURLPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("plid");
 		ctStrictColumnNames.add("privateLayout");
-		ctStrictColumnNames.add("friendlyURL");
+		ctMergeColumnNames.add("friendlyURL");
 		ctStrictColumnNames.add("languageId");
 		ctStrictColumnNames.add("lastPublishDate");
 
@@ -6151,6 +6152,7 @@ public class LayoutFriendlyURLPersistenceImpl
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("layoutFriendlyURLId"));

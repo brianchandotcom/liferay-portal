@@ -20149,13 +20149,13 @@ public class LayoutPersistenceImpl
 		ctMergeColumnNames.add("typeSettings");
 		ctStrictColumnNames.add("hidden_");
 		ctStrictColumnNames.add("system_");
-		ctStrictColumnNames.add("friendlyURL");
+		ctMergeColumnNames.add("friendlyURL");
 		ctStrictColumnNames.add("iconImageId");
 		ctStrictColumnNames.add("themeId");
 		ctStrictColumnNames.add("colorSchemeId");
 		ctStrictColumnNames.add("styleBookEntryId");
 		ctStrictColumnNames.add("css");
-		ctStrictColumnNames.add("priority");
+		ctMergeColumnNames.add("priority");
 		ctStrictColumnNames.add("faviconFileEntryId");
 		ctStrictColumnNames.add("masterLayoutPlid");
 		ctStrictColumnNames.add("layoutPrototypeUuid");

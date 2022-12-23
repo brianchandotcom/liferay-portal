@@ -599,13 +599,13 @@
 		<column change-tracking-resolution-type="merge" name="typeSettings" type="String" />
 		<column name="hidden" type="boolean" />
 		<column name="system" type="boolean" />
-		<column name="friendlyURL" type="String" />
+		<column change-tracking-resolution-type="merge" name="friendlyURL" type="String" />
 		<column name="iconImageId" type="long" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
 		<column name="styleBookEntryId" type="long" />
 		<column name="css" type="String" />
-		<column name="priority" type="int" />
+		<column change-tracking-resolution-type="merge" name="priority" type="int" />
 		<column name="faviconFileEntryId" type="long" />
 		<column name="masterLayoutPlid" type="long" />
 		<column name="layoutPrototypeUuid" type="String" />
@@ -787,7 +787,7 @@
 
 		<column name="plid" type="long" />
 		<column name="privateLayout" type="boolean" />
-		<column name="friendlyURL" type="String" />
+		<column change-tracking-resolution-type="merge" name="friendlyURL" type="String" />
 		<column name="languageId" type="String" />
 		<column name="lastPublishDate" type="Date" />
 

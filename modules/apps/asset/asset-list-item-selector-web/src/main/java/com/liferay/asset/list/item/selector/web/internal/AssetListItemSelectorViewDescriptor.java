@@ -41,6 +41,11 @@ public class AssetListItemSelectorViewDescriptor
 	}
 
 	@Override
+	public String[] getDisplayViews() {
+		return new String[] {"icon", "list"};
+	}
+
+	@Override
 	public ItemDescriptor getItemDescriptor(AssetListEntry assetListEntry) {
 		return new AssetListItemDescriptor(
 			assetListEntry, _assetListEntryItemSelectorDisplayContext,

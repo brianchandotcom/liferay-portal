@@ -14,25 +14,26 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -101,23 +102,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			_validateCriteria(criteria, dynamic);
 
 			if (segmentsEntryId <= 0) {
-				long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-				if (groupId > 0) {
-					serviceContext.setScopeGroupId(groupId);
-				}
-				else {
-					if (GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LPS-166954"))) {
-
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)actionRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
-						serviceContext.setScopeGroupId(
-							themeDisplay.getCompanyGroupId());
-					}
-				}
+				serviceContext.setScopeGroupId(
+					_getGroupId(actionRequest, serviceContext));
 
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
 					segmentsEntryKey, nameMap, descriptionMap, active,
@@ -173,6 +159,28 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private long _getGroupId(
+			ActionRequest actionRequest, ServiceContext serviceContext)
+		throws PortalException {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		if (groupId == 0) {
+			groupId = serviceContext.getScopeGroupId();
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group.isControlPanel()) {
+			Company company = _companyLocalService.getCompany(
+				group.getCompanyId());
+
+			return company.getGroupId();
+		}
+
+		return groupId;
+	}
+
 	private String _getSaveAndContinueRedirect(
 		ActionRequest actionRequest, SegmentsEntry segmentsEntry,
 		String redirect) {
@@ -205,6 +213,12 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			throw new SegmentsEntryCriteriaException();
 		}
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Localization _localization;

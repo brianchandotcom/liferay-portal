@@ -290,19 +290,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": ",Last Modified:",
-																				"ca_ES": ",Last Modified:",
-																				"de_DE": ",Last Modified:",
-																				"en_US": ",Last Modified:",
-																				"es_ES": ",Last Modified:",
-																				"fi_FI": ",Last Modified:",
-																				"fr_FR": ",Last Modified:",
-																				"hu_HU": ",Last Modified:",
-																				"ja_JP": ",Last Modified:",
-																				"nl_NL": ",Last Modified:",
-																				"pt_BR": ",Last Modified:",
-																				"sv_SE": ",Last Modified:",
-																				"zh_CN": ",Last Modified:"
+																				"ar_SA": ", Last Modified:",
+																				"ca_ES": ", Last Modified:",
+																				"de_DE": ", Last Modified:",
+																				"en_US": ", Last Modified:",
+																				"es_ES": ", Last Modified:",
+																				"fi_FI": ", Last Modified:",
+																				"fr_FR": ", Last Modified:",
+																				"hu_HU": ", Last Modified:",
+																				"ja_JP": ", Last Modified:",
+																				"nl_NL": ", Last Modified:",
+																				"pt_BR": ", Last Modified:",
+																				"sv_SE": ", Last Modified:",
+																				"zh_CN": ", Last Modified:"
 																			}
 																		}
 																	}

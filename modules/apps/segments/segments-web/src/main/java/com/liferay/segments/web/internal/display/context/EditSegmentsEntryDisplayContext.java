@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -35,15 +36,14 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -80,6 +80,7 @@ import javax.servlet.http.HttpServletRequest;
 public class EditSegmentsEntryDisplayContext {
 
 	public EditSegmentsEntryDisplayContext(
+		CompanyLocalService companyLocalService,
 		FilterParserProvider filterParserProvider,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
@@ -89,6 +90,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry,
 		SegmentsEntryService segmentsEntryService) {
 
+		_companyLocalService = companyLocalService;
 		_filterParserProvider = filterParserProvider;
 		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
@@ -357,15 +359,24 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private long _getGroupId() throws PortalException {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
-			return BeanParamUtil.getLong(
-				_getSegmentsEntry(), _httpServletRequest, "groupId",
-				_themeDisplay.getScopeGroupId());
-		}
-
 		return BeanParamUtil.getLong(
 			_getSegmentsEntry(), _httpServletRequest, "groupId",
-			_themeDisplay.getCompanyGroupId());
+			_getInitialGroupId());
+	}
+
+	private long _getInitialGroupId() throws PortalException {
+		long groupId = _themeDisplay.getScopeGroupId();
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group.isControlPanel()) {
+			Company company = _companyLocalService.getCompany(
+				group.getCompanyId());
+
+			return company.getGroupId();
+		}
+
+		return groupId;
 	}
 
 	private JSONObject _getInitialQueryJSONObject(
@@ -611,6 +622,7 @@ public class EditSegmentsEntryDisplayContext {
 		EditSegmentsEntryDisplayContext.class);
 
 	private String _backURL;
+	private final CompanyLocalService _companyLocalService;
 	private Map<String, Object> _data;
 	private final FilterParserProvider _filterParserProvider;
 	private Long _groupId;

@@ -36,7 +36,7 @@ definition {
 	test CanContinueWithBasicsPageFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 	}
 
 	@description = "LPS-146557 - Verify if Continue Button is only enabled when has a valid email in 'Business Email'. Smartphone)"
@@ -44,7 +44,7 @@ definition {
 	test CanContinueWithBusinessEmailFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -74,7 +74,7 @@ definition {
 	test CanContinueWithPhoneEmailFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -110,7 +110,7 @@ definition {
 	test CanContinueWithPhysicalAddressFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -162,7 +162,7 @@ definition {
 	test CanContinueWithPhysicalAddressFilledTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -175,12 +175,12 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "LPS-146560 - Verify if the Continue button is enabled without a business website inserted in 'Business Website'. (Smartphone)"
+	@description = "LPS-146560 - Verify if the Continue button is enabled without a business webkey_site inserted in 'Business Website'. (Smartphone)"
 	@priority = "4"
 	test ContinueEnableWithoutWebsiteInsertedPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -216,7 +216,7 @@ definition {
 	test IfPreviousButtonOfPhoneWorksPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -250,7 +250,7 @@ definition {
 	test IfPreviousButtonWorksFromPhysicalAddressPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -292,7 +292,7 @@ definition {
 	test PreviousButtonOfYourNamePhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

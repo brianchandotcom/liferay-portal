@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-148626 - Verify if when all required fields are filled in the confirm uploads button is enabled"
 	@priority = "4"
 	test UploadDocumentButtonIsEnabledTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -77,7 +77,7 @@ definition {
 	@description = "LPS-148623 - Verify if when users complete the upload documents section, that completed section is indicated with a green checkmark"
 	@priority = "5"
 	test UploadDocumentSectionCompletedPhone {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -109,7 +109,7 @@ definition {
 	@description = "LPS-148625 - Verify if when users complete the upload documents section, that completed section is indicated with a green checkmark"
 	@priority = "5"
 	test UploadDocumentsSectionCompletedTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 

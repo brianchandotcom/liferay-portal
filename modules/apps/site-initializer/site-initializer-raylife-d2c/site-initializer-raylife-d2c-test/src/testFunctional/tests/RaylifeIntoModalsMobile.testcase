@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -35,7 +35,7 @@ definition {
 	test IfClickingOnDismissPanelIsClosedPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -53,7 +53,7 @@ definition {
 	test IfClickingOnDismissPanelIsClosedTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -71,7 +71,7 @@ definition {
 	test IfPanelFromMoreInfoShowsUpPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -87,7 +87,7 @@ definition {
 	test IfPanelFromMoreInfoShowsUpTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 

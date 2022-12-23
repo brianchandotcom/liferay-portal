@@ -15,7 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -34,7 +34,7 @@ definition {
 	@description = "LPS-142187 - Verify if error message appear after inserting a wrong ZipCode."
 	@priority = "4"
 	test CanViewErrorMessageForWrongZipCode {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Type(
 			locator1 = "RaylifeHomePage#HOME_PAGE_ZIP_CODE",
@@ -50,7 +50,7 @@ definition {
 	@description = "LPS-142182 - Verify if ZipCode is required."
 	@priority = "4"
 	test ZipCodeIsRequired {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
 
@@ -60,7 +60,7 @@ definition {
 	@description = "LPS-142184 - Verify ZipCode Max number of characters (max chars 5)."
 	@priority = "2"
 	test ZipCodeMaxNumber {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_MESSAGE_MAX_NUMBER_CHARACTERS");
 	}

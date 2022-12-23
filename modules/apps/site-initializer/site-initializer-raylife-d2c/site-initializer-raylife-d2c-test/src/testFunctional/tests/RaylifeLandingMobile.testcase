@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -35,7 +35,7 @@ definition {
 	test CanClickInContinueButtonPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -49,7 +49,7 @@ definition {
 	test CanClickInContinueButtonTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -63,7 +63,7 @@ definition {
 	test ClickingCloseButtonOptionsDissapearPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeMobile#MENU_LINK");
 
@@ -79,7 +79,7 @@ definition {
 	test ClickMenuButtonOptionsAppearTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeMobile#MENU_LINK");
 

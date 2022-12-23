@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -35,7 +35,7 @@ definition {
 	test CanPaypalPaymentButtonDisabledTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -81,7 +81,7 @@ definition {
 	test CanViewPayButtonEnabledPhone {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -117,7 +117,7 @@ definition {
 	test CanViewPayButtonEnabledTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -167,7 +167,7 @@ definition {
 	test CanViewPaymentSectionPhone {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 

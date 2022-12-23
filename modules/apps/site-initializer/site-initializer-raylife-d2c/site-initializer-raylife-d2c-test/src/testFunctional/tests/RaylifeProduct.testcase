@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-142241 - Verify if when the 'Dismiss' button is clicked, the information panel for 'More Info' is dismissed"
 	@priority = "3"
 	test CanDismissProductInfoPanel {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -51,7 +51,7 @@ definition {
 	@description = "LPS-142540 - Verify if clicking on Previous returns to Previous Screen (Contact Information/'Just the business basics!')"
 	@priority = "3"
 	test CanGoBackOnProductSelectionKeepingAllData {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -73,7 +73,7 @@ definition {
 	@description = "LPS-142237 - Verify if only one product can be selected at a time"
 	@priority = "3"
 	test CanSelectOnlyOneProduct {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -85,7 +85,7 @@ definition {
 	@description = "LPS-142239 - Verify if when selecting 'More Info' in a product, information panel is opened"
 	@priority = "3"
 	test CanViewProductInfoPanel {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 

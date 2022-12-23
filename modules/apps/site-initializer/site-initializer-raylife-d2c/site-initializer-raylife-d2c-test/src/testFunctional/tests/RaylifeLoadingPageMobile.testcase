@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-146214 - Verify Loading Page is reachable after pressing Continue on Property page. (Tablet)"
 	@priority = "5"
 	test IfContinueFromPropertyGoToLoadingPageTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -61,7 +61,7 @@ definition {
 	@description = "LPS-146121 - Verify Loading Page redirects automatically to Quote Profile Page. (SmartPhone)"
 	@priority = "4"
 	test IfRedirectsToQuoteProfilePagePhone {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 

@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-142596 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Let's get in touch.' page)"
 	@priority = "3"
 	test CanDismissContactAgentPageInfoPanel {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -63,7 +63,7 @@ definition {
 	@description = "LPS-142608 - Verify if you can reach the contact page by 'Let’s get to know your business!' page"
 	@priority = "5"
 	test CanReachContactPageByBusinessPage {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -91,7 +91,7 @@ definition {
 	@description = "LPS-142609 - Verify if you can reach the contact page by 'Tell us about your employees!' page"
 	@priority = "5"
 	test CanReachContactPageByEmployeesPage {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -123,7 +123,7 @@ definition {
 	@description = "LPS-142610 - Verify if you can reach the contact page by 'More about... <Business Street Address>' page"
 	@priority = "5"
 	test CanReachContactPageByPropertyPage {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -169,7 +169,7 @@ definition {
 	@description = "LPS-142584 - Verify if Application ID was generated after the user saved their Contact Info"
 	@priority = "5"
 	test CanViewApplicationId {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -195,7 +195,7 @@ definition {
 	@description = "LPS-142589 - Verify if when the user click in the 'Back to edit info', the previous data persist"
 	@priority = "5"
 	test DataPersistsWhenTryToEditInfo {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-148623 - Make sure that the 'Create Account' button is only active after all fields are filled in"
 	@priority = "5"
 	test CreateAccountButtonIsEnabledPhone {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -69,7 +69,7 @@ definition {
 	@description = "LPS-148625 - Make sure that the 'Create Account' button is only active after all fields are filled in"
 	@priority = "5"
 	test CreateAccountButtonIsEnabledTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -115,7 +115,7 @@ definition {
 	@description = "LPS-148624 - Verify if when users complete the account creation section, that completed section is indicated with a green checkmark"
 	@priority = "4"
 	test CreateAccountSectionCompletedPhone {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -151,7 +151,7 @@ definition {
 	@description = "LPS-148626 - Verify if when users complete the account creation section, that completed section is indicated with a green checkmark"
 	@priority = "4"
 	test CreateAccountSectionCompletedTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 

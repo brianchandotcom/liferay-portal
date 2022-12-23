@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-144519 - Check if the Building Interior Photos field is required"
 	@priority = "4"
 	test BuildingInteriorPhotosFieldIsRequired {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -51,7 +51,7 @@ definition {
 	@description = "LPS-144525 - Check if I can cancel discard changes in the modal"
 	@priority = "4"
 	test CanCancelChangesInModal {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -75,7 +75,7 @@ definition {
 	@description = "LPS-144345 - Verify if users can delete attached files"
 	@priority = "5"
 	test CanUserDeleteAttachedFiles {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -99,7 +99,7 @@ definition {
 	@description = "LPS-144524 - heck that I can discard Files by clicking the Discard Changes button"
 	@priority = "4"
 	test CanUserDiscardFiles {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -124,7 +124,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanUserModifyAttachedFiles {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -169,7 +169,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanUsersDeleteAttachedPhotos {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -194,7 +194,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test DeleteChangesButtonAppearsWhenAddingFiles {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -213,7 +213,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test IsLimitOf4FilesReached {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -226,7 +226,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test IsLimitOf4PhotosReached {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -239,7 +239,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test IsUploadButtonEnabled {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -264,7 +264,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test MaxIs4FilesToCommercialLicense {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -277,7 +277,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test UploadSectionCompleted {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

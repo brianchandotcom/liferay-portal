@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-144323 - Verify if pressing the 'Purchase this policy' button in the 'Basic' quote redirects to another page"
 	@priority = "5"
 	test CanPurchaseBasicPolicy {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -63,7 +63,7 @@ definition {
 	@description = "LPS-144325 - Verify if pressing the 'Purchase this policy' button in the 'Premium' quote redirects to another page"
 	@priority = "5"
 	test CanPurchasePremiumPolicy {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -93,7 +93,7 @@ definition {
 	@description = "LPS-144324 - Verify if pressing the 'Purchase this policy' button in the 'Standard' quote redirects to another page"
 	@priority = "5"
 	test CanPurchaseStandardPolicy {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -123,7 +123,7 @@ definition {
 	@description = "LPS-144321 = Verify Page Header's Title: <User’s First Name>, here’s your custom quote! shows the same First Name from the user input on Basics - Contact Info page"
 	@priority = "4"
 	test CanViewUserNameInTitle {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

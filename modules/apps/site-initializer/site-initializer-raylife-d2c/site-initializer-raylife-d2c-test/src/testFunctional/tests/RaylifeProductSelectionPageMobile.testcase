@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-146122 - Check if I can follow the flow by clicking on the continue button (Smartphone)"
 	@priority = "5"
 	test CanClickInContinueButtonPhone {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -55,7 +55,7 @@ definition {
 	@description = "LPS-146126 - Check if I can follow the flow by clicking on the continue button (Tablet)"
 	@priority = "5"
 	test CanClickInContinueButtonTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -77,7 +77,7 @@ definition {
 	@description = "LPS-146704 - Check if I can go back to the previous page (Smartphone)"
 	@priority = "5"
 	test CanViewBackPagePhone {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -95,7 +95,7 @@ definition {
 	@description = "LPS-146705 - Check if I can go back to the previous page (Tablet)"
 	@priority = "5"
 	test CanViewBackPageTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -113,7 +113,7 @@ definition {
 	@description = "LPS-146120 - Verify that the continue button is activated when selecting a product (Smartphone)"
 	@priority = "5"
 	test CanViewContinueButtonActivatedPhone {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -133,7 +133,7 @@ definition {
 	@description = "LPS-146125 - Verify that the continue button is activated when selecting a product (Tablet)"
 	@priority = "5"
 	test CanViewContinueButtonActivatedTablet {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 

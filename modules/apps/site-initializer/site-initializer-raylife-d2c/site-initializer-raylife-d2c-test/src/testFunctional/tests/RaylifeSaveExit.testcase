@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(site = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-143610 - Verify if, by clicking on the Continue Quote button on the modal, the user is taken back to the current quote in the Basic section"
 	@priority = "3"
 	test CanContinueQuoteAfterClickOnButton {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -67,7 +67,7 @@ definition {
 	@description = "LPS-143610 - Verify if, by clicking on the "x" button on the modal, the user is taken back to the current quote in the Basic section"
 	@priority = "3"
 	test CanContinueQuoteAfterClickOnX {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -103,7 +103,7 @@ definition {
 	@description = "LPS-143609 - Verify if, by clicking the 'send link and exit' button on the modal, the user is taken to the Raylife home page in the Basic section"
 	@priority = "4"
 	test CanSendLinkAndExit {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -132,7 +132,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -156,7 +156,7 @@ definition {
 	@description = "LPS-143607 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
 	@priority = "4"
 	test CanViewSavedProgressModal {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -178,7 +178,7 @@ definition {
 	@description = "LPS-143614 - Verify if, after filling in all the mandatory fields from Basics - Contact Info page, user can click on Save and Exit Button, close the Save and Exit modal and Continue button is enabled"
 	@priority = "2"
 	test IsContinueButtonEnabledAfterNotSavingAndExiting {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -200,7 +200,7 @@ definition {
 	@description = "LPS-143608 - Check that the email (from a 'Progress is Saved' modal) is equal to the Business Email from the Basics - Contact Info page"
 	@priority = "4"
 	test IsModalEmailEqualsToBusinessEmail {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -234,7 +234,7 @@ definition {
 	@description = "LPS-143604 -  Check save and exit button is enabled in the Business section"
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnBusiness {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -254,7 +254,7 @@ definition {
 	@description = "LPS-143600 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
 	@priority = "5"
 	test IsSaveAndExitButtonEnabledOnContactInfo {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -284,7 +284,7 @@ definition {
 	@description = "LPS-143605 - Check save and exit button is enabled in the Employees section"
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnEmployees {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -308,7 +308,7 @@ definition {
 	@description = "LPS-143601 - Check save and exit button is enabled in the Basics section - Product Selection page"
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnProductSelection {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -328,7 +328,7 @@ definition {
 	@description = "LPS-143606 - Check save and exit button is enabled in the Property section"
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnProperty {
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

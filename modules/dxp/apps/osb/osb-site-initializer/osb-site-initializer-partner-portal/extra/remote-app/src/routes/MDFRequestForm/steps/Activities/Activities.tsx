@@ -12,11 +12,12 @@
 import Button from '@clayui/button';
 import classNames from 'classnames';
 import {ArrayHelpers, useFormikContext} from 'formik';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import Form from './components/Form';
@@ -34,6 +35,7 @@ const Activities = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps & IProps) => {
 	const {
+		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
@@ -41,51 +43,63 @@ const Activities = ({
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
 
-	const [isForm, setIsForm] = useState<boolean>(false);
-	const [currentActivityIndex, setCurrentActivityIndex] = useState<number>(
-		values.activities.length
-	);
-	const [fromOnEdit, setFromOnEdit] = useState(false);
+	const [currentActivityIndex, setCurrentActivityIndex] = useState<
+		number | undefined
+	>();
+	const [currentActivityIndexEdit, setCurrentActivityIndexEdit] = useState<
+		number
+	>();
 
-	const [activityFormEmpty, setActivityFormEmpty] = useState(false);
+	const activityErrors =
+		currentActivityIndex && errors.activities?.[currentActivityIndex];
 
-	const onAdd = () => {
-		setCurrentActivityIndex(values.activities.length);
-		setIsForm(true);
-		setFromOnEdit(false);
-
-		if (activityFormEmpty) {
-			arrayHelpers.remove(currentActivityIndex);
-			setActivityFormEmpty(true);
-		}
-	};
+	const onAdd = () => setCurrentActivityIndex(values.activities.length);
 
 	const onEdit = (index: number) => {
-		setCurrentActivityIndex(index);
-		setFromOnEdit(true);
+		arrayHelpers.push(values.activities[index]);
 
-		setIsForm(true);
+		setCurrentActivityIndex(values.activities.length);
+		setCurrentActivityIndexEdit(index);
 	};
 
-	const onPreviousForm = () => {
-		!fromOnEdit
-			? arrayHelpers.remove(currentActivityIndex)
-			: currentActivityIndex;
+	const onPreviousForm = useCallback(() => {
+		if (currentActivityIndex !== undefined) {
+			arrayHelpers.remove(currentActivityIndex);
 
-		setIsForm(false);
+			setCurrentActivityIndex(undefined);
+		}
+
+		setCurrentActivityIndexEdit(undefined);
+	}, [arrayHelpers, currentActivityIndex]);
+
+	const onContinueForm = () => {
+		if (currentActivityIndex === undefined) {
+			onContinue?.(formikHelpers, StepType.REVIEW);
+
+			return;
+		}
+
+		if (currentActivityIndexEdit !== undefined) {
+			arrayHelpers.swap(currentActivityIndex, currentActivityIndexEdit);
+
+			arrayHelpers.remove(currentActivityIndex);
+		}
+
+		setCurrentActivityIndexEdit(undefined);
+		setCurrentActivityIndex(undefined);
 	};
 
 	return (
 		<PRMForm
 			className={classNames({
-				'mb-3': !isForm,
-				'mb-4': isForm,
+				'mb-3': !currentActivityIndex,
+				'mb-4': currentActivityIndex,
 			})}
 			description="Choose the activities that best match your Campaign MDF request"
 			name="Activities"
 			title={values.overallCampaignName}
 		>
-			{isForm ? (
+			{currentActivityIndex !== undefined ? (
 				<Form
 					currentActivity={values.activities[currentActivityIndex]}
 					currentActivityIndex={currentActivityIndex}
@@ -106,7 +120,7 @@ const Activities = ({
 					<Button
 						displayType={null}
 						onClick={() =>
-							isForm
+							currentActivityIndex !== undefined
 								? onPreviousForm()
 								: onPrevious?.(StepType.GOALS)
 						}
@@ -133,12 +147,12 @@ const Activities = ({
 					</Button>
 
 					<Button
-						disabled={!isValid}
-						onClick={() =>
-							isForm
-								? setIsForm(false)
-								: onContinue?.(formikHelpers, StepType.REVIEW)
+						disabled={
+							currentActivityIndex !== undefined
+								? !isObjectEmpty(activityErrors as Object)
+								: !isValid
 						}
+						onClick={onContinueForm}
 					>
 						Continue
 					</Button>

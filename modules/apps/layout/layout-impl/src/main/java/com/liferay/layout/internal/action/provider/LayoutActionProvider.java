@@ -484,6 +484,10 @@ public class LayoutActionProvider {
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/layout_admin/add_layout"
+		).setRedirect(
+			ParamUtil.getString(
+				_liferayPortletRequest, "redirect",
+				_themeDisplay.getURLCurrent())
 		).setParameter(
 			"privateLayout", layout.isPrivateLayout()
 		).setParameter(

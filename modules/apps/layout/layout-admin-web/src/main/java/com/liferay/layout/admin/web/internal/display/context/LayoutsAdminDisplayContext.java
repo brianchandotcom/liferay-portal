@@ -381,6 +381,8 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletResponse
 		).setActionName(
 			"/layout_admin/copy_layout"
+		).setRedirect(
+			getRedirect()
 		).setParameter(
 			"explicitCreation", Boolean.TRUE
 		).setParameter(

@@ -256,7 +256,7 @@ public class VarPoshiElement extends PoshiElement {
 
 			if (!content.equals("")) {
 				value = StringUtil.replace(
-					value, content, swapParameterQuotations(content));
+					value, content, swapParameterQuotations(content, false));
 			}
 
 			addAttribute("method", value);
@@ -365,7 +365,7 @@ public class VarPoshiElement extends PoshiElement {
 						else {
 							value = StringUtil.replace(
 								value, content,
-								swapParameterQuotations(content));
+								swapParameterQuotations(content, true));
 						}
 					}
 				}
@@ -470,7 +470,9 @@ public class VarPoshiElement extends PoshiElement {
 		}
 	}
 
-	protected String swapParameterQuotations(String parametersString) {
+	protected String swapParameterQuotations(
+		String parametersString, boolean toScript) {
+
 		StringBuilder sb = new StringBuilder();
 
 		parametersString = parametersString.trim();
@@ -496,7 +498,10 @@ public class VarPoshiElement extends PoshiElement {
 				methodParameterValue = StringUtil.replace(
 					methodParameterValue, "\"", "\\\"");
 
-				methodParameterValue = doubleQuoteContent(methodParameterValue);
+				if (isQuotedContent(methodParameterValue) && toScript) {
+					methodParameterValue = doubleQuoteContent(
+						methodParameterValue);
+				}
 			}
 			else if (methodParameterValue.endsWith("\"") &&
 					 methodParameterValue.startsWith("\"")) {
@@ -512,6 +517,11 @@ public class VarPoshiElement extends PoshiElement {
 				methodParameterValue = singleQuoteContent(methodParameterValue);
 			}
 			else {
+				if (!toScript) {
+					methodParameterValue = singleQuoteContent(
+						methodParameterValue);
+				}
+
 				methodParameterValue = methodParameterValue.trim();
 			}
 

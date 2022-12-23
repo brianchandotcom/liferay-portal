@@ -15,17 +15,13 @@ import getDTOFromMDFRequestBudget from '../../../../utils/dto/mdf-request-budget
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default async function createMDFRequestActivityBudgets(
+export default async function createMDFRequestActivityBudget(
 	activityId: number,
-	budgets: MDFRequestBudget[]
+	budget: MDFRequestBudget
 ) {
-	return await Promise.all(
-		budgets.map((budget) =>
-			liferayFetcher.post(
-				`/o/${LiferayAPIs.OBJECT}/budgets`,
-				Liferay.authToken,
-				getDTOFromMDFRequestBudget(budget, activityId)
-			)
-		)
+	return await liferayFetcher.post(
+		`/o/${LiferayAPIs.OBJECT}/budgets`,
+		Liferay.authToken,
+		getDTOFromMDFRequestBudget(budget, activityId)
 	);
 }

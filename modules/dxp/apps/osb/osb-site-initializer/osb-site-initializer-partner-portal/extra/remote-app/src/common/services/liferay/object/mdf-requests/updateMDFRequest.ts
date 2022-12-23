@@ -22,7 +22,7 @@ export default async function updateMDFRequest(
 	mdfRequestId: number,
 	externalReferenceCodeSF?: string
 ) {
-	return await liferayFetcher.patch(
+	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/${mdfRequestId}`,
 		Liferay.authToken,
 		getDTOFromMDFRequest(mdfRequest, externalReferenceCodeSF)

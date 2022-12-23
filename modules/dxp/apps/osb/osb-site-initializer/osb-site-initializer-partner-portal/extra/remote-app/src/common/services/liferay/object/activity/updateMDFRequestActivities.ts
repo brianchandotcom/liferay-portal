@@ -25,7 +25,7 @@ export default async function updateMDFRequestActivities(
 	mdfRequestExternalReferenceCodeSF?: string,
 	externalReferenceCodeSF?: string
 ) {
-	return await liferayFetcher.patch(
+	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/${mdfRequestActivity.id}`,
 		Liferay.authToken,
 		getDTOFromMDFRequestActivity(

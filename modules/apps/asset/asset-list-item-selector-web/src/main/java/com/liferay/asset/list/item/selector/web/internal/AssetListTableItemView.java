@@ -72,7 +72,8 @@ public class AssetListTableItemView implements TableItemView {
 
 		TextSearchEntry nameTextSearchEntry = new TextSearchEntry();
 
-		nameTextSearchEntry.setCssClass("table-cell-expand text-truncate");
+		nameTextSearchEntry.setCssClass(
+			"entry entry-selector table-cell-expand text-truncate");
 		nameTextSearchEntry.setName(
 			HtmlUtil.escape(_assetListEntry.getTitle()));
 

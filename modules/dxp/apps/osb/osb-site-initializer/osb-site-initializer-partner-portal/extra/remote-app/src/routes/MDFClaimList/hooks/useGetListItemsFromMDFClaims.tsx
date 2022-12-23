@@ -29,7 +29,7 @@ export default function useGetListItemsFromMDFClaims(
 			swrResponse.data?.items.map((item) => ({
 				[MDFClaimColumnKey.REQUEST_ID]: String(item.id),
 				[MDFClaimColumnKey.PARTNER]:
-					item.r_accountToMdfClaims_accountEntry?.name,
+					item.companyName,
 				[MDFClaimColumnKey.STATUS]: item.mdfClaimStatus.name,
 				[MDFClaimColumnKey.TYPE]: item.partial ? 'Partial' : 'Full',
 				...getMDFClaimAmountClaimedInfo(item.amountClaimed),

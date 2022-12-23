@@ -101,6 +101,10 @@ const MDFClaimList = () => {
 							icon: 'view',
 							key: 'approve',
 							label: ' View',
+							onClick: () =>
+								Liferay.Util.navigate(
+									`${siteURL}/l/${row[MDFClaimColumnKey.REQUEST_ID]}`
+								),
 						},
 					]}
 				></Dropdown>

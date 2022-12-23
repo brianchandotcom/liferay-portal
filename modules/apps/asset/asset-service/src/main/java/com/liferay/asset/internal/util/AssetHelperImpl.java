@@ -317,14 +317,16 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public String getAssetKeywords(String className, long classPK) {
-		String[] tagNames = _assetTagLocalService.getTagNames(
-			className, classPK);
-		String[] categoryNames = _assetCategoryLocalService.getCategoryNames(
-			className, classPK);
+		List<String> keywords = new ArrayList<>();
 
-		String[] keywords = new String[tagNames.length + categoryNames.length];
-
-		ArrayUtil.combine(tagNames, categoryNames, keywords);
+		keywords.addAll(
+			ListUtil.toList(
+				_assetTagLocalService.getTags(className, classPK),
+				AssetTag.NAME_ACCESSOR));
+		keywords.addAll(
+			ListUtil.toList(
+				_assetCategoryLocalService.getCategories(className, classPK),
+				AssetCategory.NAME_ACCESSOR));
 
 		return StringUtil.merge(keywords);
 	}

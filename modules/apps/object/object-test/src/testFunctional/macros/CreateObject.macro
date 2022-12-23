@@ -44,20 +44,6 @@ definition {
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 	}
 
-	macro assertCanCollapseAndExpandEntryField {
-		Panel.collapsePanel(panel = "${blockName}");
-
-		AssertNotVisible(
-			key_entryLabel = "Custom Field",
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
-
-		Panel.expandPanel(panel = "${blockName}");
-
-		AssertVisible(
-			key_entryLabel = "Custom Field",
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
-	}
-
 	macro assertCannotAddRelationshipTabFirst {
 		LexiconEntry.gotoAddNoSelectFrame();
 

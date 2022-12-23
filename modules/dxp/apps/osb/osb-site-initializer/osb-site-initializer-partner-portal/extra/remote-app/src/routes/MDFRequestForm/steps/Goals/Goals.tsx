@@ -53,7 +53,8 @@ const Goals = ({
 				);
 			},
 			[setFieldValue]
-		)
+		),
+		values.company
 	);
 
 	const {

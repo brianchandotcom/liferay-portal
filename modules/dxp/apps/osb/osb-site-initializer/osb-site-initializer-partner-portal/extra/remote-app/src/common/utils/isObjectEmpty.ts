@@ -10,5 +10,5 @@
  */
 
 export default function isObjectEmpty(object: Object) {
-	return object && !Object.keys(object).length;
+	return !object || !Object.keys(object).length;
 }

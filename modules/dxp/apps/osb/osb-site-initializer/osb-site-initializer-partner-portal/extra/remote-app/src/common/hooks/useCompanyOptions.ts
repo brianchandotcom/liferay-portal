@@ -21,11 +21,12 @@ export default function useCompanyOptions(
 		country: LiferayPicklist,
 		company: LiferayAccountBrief,
 		accountExternalReferenceCodeSF?: string
-	) => void
+	) => void,
+	currentCompany?: LiferayAccountBrief
 ) {
 	const [selectedAccountBrief, setSelectedAccountBrief] = useState<
-		LiferayAccountBrief
-	>();
+		LiferayAccountBrief | undefined
+	>(currentCompany);
 
 	const {data: companyExtender} = useGetCompanyExtenderByAccountEntryId(
 		selectedAccountBrief?.id

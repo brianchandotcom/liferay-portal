@@ -19,15 +19,17 @@ export function getMDFRequestFromDTO(
 ): MDFRequest {
 	return {
 		...mdfRequest,
-		accountExternalReferenceCodeSF: mdfRequest.externalReferenceCodeSF,
 		activities:
 			mdfRequest.mdfRequestToActivities?.map((activity) => ({
 				...activity,
 				budgets: activity.activityToBudgets || [],
+				endDate: activity.endDate?.split('T')[0],
 				leadFollowUpStrategies: activity.leadFollowUpStrategies?.split(
 					'; '
 				),
+				leadGenerated: String(activity.leadGenerated),
 				mdfRequestId: activity.r_mdfRequestToActivities_c_mdfRequestId,
+				startDate: activity.startDate?.split('T')[0],
 			})) || [],
 		additionalOption: mdfRequest.additionalOption,
 		company: mdfRequest.r_accountToMDFRequests_accountEntry,

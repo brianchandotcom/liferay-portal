@@ -243,21 +243,6 @@
 								"objectStateTransitions": [
 									{
 										"key": "pendingMarketingReview"
-									},
-									{
-										"key": "approved"
-									},
-									{
-										"key": "claimPaid"
-									},
-									{
-										"key": "inFinanceReview"
-									},
-									{
-										"key": "moreInfoRequested"
-									},
-									{
-										"key": "rejected"
 									}
 								]
 							}

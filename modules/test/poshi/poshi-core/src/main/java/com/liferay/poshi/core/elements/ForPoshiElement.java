@@ -16,6 +16,7 @@ package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.Dom4JUtil;
+import com.liferay.poshi.core.util.StringUtil;
 
 import java.io.IOException;
 
@@ -79,7 +80,13 @@ public class ForPoshiElement extends PoshiElement {
 		if (matcher.find()) {
 			addAttribute("param", matcher.group(1));
 
-			addAttribute(matcher.group(2), matcher.group(3));
+			String value = matcher.group(3);
+
+			if (value.contains("\"")) {
+				value = StringUtil.replace(value, "\"", "");
+			}
+
+			addAttribute(matcher.group(2), value);
 		}
 		else {
 			throw new RuntimeException(
@@ -188,6 +195,6 @@ public class ForPoshiElement extends PoshiElement {
 		"^" + _POSHI_SCRIPT_KEYWORD + BLOCK_NAME_PARAMETER_REGEX,
 		Pattern.DOTALL);
 	private static final Pattern _blockParameterPattern = Pattern.compile(
-		"var[\\s]*([\\w]*)[\\s]*:[\\s]*([\\w]*)[\\s]*\"(.*)\"");
+		"var[\\s]*([\\w]*)[\\s]*:[\\s]*([\\w]*)[\\s]*(?:(\\$\\{.*}|.*))");
 
 }

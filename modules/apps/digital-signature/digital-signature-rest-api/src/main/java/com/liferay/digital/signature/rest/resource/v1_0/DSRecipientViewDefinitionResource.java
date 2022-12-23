@@ -14,7 +14,7 @@
 
 package com.liferay.digital.signature.rest.resource.v1_0;
 
-import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -53,7 +53,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DSRecipientViewDefinitionResource {
 
-	public DSEnvelopeSignUrl postSiteDSRecipientViewDefinition(
+	public DSEnvelopeSignatureURL postSiteDSRecipientViewDefinition(
 			Long siteId, String dsEnvelopeId,
 			DSRecipientViewDefinition dsRecipientViewDefinition)
 		throws Exception;

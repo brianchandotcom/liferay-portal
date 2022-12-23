@@ -14,7 +14,7 @@
 
 package com.liferay.digital.signature.rest.client.serdes.v1_0;
 
-import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DSEnvelopeSignUrlSerDes {
+public class DSEnvelopeSignatureURLSerDes {
 
-	public static DSEnvelopeSignUrl toDTO(String json) {
-		DSEnvelopeSignUrlJSONParser dsEnvelopeSignUrlJSONParser =
-			new DSEnvelopeSignUrlJSONParser();
+	public static DSEnvelopeSignatureURL toDTO(String json) {
+		DSEnvelopeSignatureURLJSONParser dsEnvelopeSignatureURLJSONParser =
+			new DSEnvelopeSignatureURLJSONParser();
 
-		return dsEnvelopeSignUrlJSONParser.parseToDTO(json);
+		return dsEnvelopeSignatureURLJSONParser.parseToDTO(json);
 	}
 
-	public static DSEnvelopeSignUrl[] toDTOs(String json) {
-		DSEnvelopeSignUrlJSONParser dsEnvelopeSignUrlJSONParser =
-			new DSEnvelopeSignUrlJSONParser();
+	public static DSEnvelopeSignatureURL[] toDTOs(String json) {
+		DSEnvelopeSignatureURLJSONParser dsEnvelopeSignatureURLJSONParser =
+			new DSEnvelopeSignatureURLJSONParser();
 
-		return dsEnvelopeSignUrlJSONParser.parseToDTOs(json);
+		return dsEnvelopeSignatureURLJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(DSEnvelopeSignUrl dsEnvelopeSignUrl) {
-		if (dsEnvelopeSignUrl == null) {
+	public static String toJSON(DSEnvelopeSignatureURL dsEnvelopeSignatureURL) {
+		if (dsEnvelopeSignatureURL == null) {
 			return "null";
 		}
 
@@ -55,7 +55,7 @@ public class DSEnvelopeSignUrlSerDes {
 
 		sb.append("{");
 
-		if (dsEnvelopeSignUrl.getUrl() != null) {
+		if (dsEnvelopeSignatureURL.getUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -64,7 +64,7 @@ public class DSEnvelopeSignUrlSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(dsEnvelopeSignUrl.getUrl()));
+			sb.append(_escape(dsEnvelopeSignatureURL.getUrl()));
 
 			sb.append("\"");
 		}
@@ -75,52 +75,52 @@ public class DSEnvelopeSignUrlSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		DSEnvelopeSignUrlJSONParser dsEnvelopeSignUrlJSONParser =
-			new DSEnvelopeSignUrlJSONParser();
+		DSEnvelopeSignatureURLJSONParser dsEnvelopeSignatureURLJSONParser =
+			new DSEnvelopeSignatureURLJSONParser();
 
-		return dsEnvelopeSignUrlJSONParser.parseToMap(json);
+		return dsEnvelopeSignatureURLJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		DSEnvelopeSignUrl dsEnvelopeSignUrl) {
+		DSEnvelopeSignatureURL dsEnvelopeSignatureURL) {
 
-		if (dsEnvelopeSignUrl == null) {
+		if (dsEnvelopeSignatureURL == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (dsEnvelopeSignUrl.getUrl() == null) {
+		if (dsEnvelopeSignatureURL.getUrl() == null) {
 			map.put("url", null);
 		}
 		else {
-			map.put("url", String.valueOf(dsEnvelopeSignUrl.getUrl()));
+			map.put("url", String.valueOf(dsEnvelopeSignatureURL.getUrl()));
 		}
 
 		return map;
 	}
 
-	public static class DSEnvelopeSignUrlJSONParser
-		extends BaseJSONParser<DSEnvelopeSignUrl> {
+	public static class DSEnvelopeSignatureURLJSONParser
+		extends BaseJSONParser<DSEnvelopeSignatureURL> {
 
 		@Override
-		protected DSEnvelopeSignUrl createDTO() {
-			return new DSEnvelopeSignUrl();
+		protected DSEnvelopeSignatureURL createDTO() {
+			return new DSEnvelopeSignatureURL();
 		}
 
 		@Override
-		protected DSEnvelopeSignUrl[] createDTOArray(int size) {
-			return new DSEnvelopeSignUrl[size];
+		protected DSEnvelopeSignatureURL[] createDTOArray(int size) {
+			return new DSEnvelopeSignatureURL[size];
 		}
 
 		@Override
 		protected void setField(
-			DSEnvelopeSignUrl dsEnvelopeSignUrl, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			DSEnvelopeSignatureURL dsEnvelopeSignatureURL,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "url")) {
 				if (jsonParserFieldValue != null) {
-					dsEnvelopeSignUrl.setUrl((String)jsonParserFieldValue);
+					dsEnvelopeSignatureURL.setUrl((String)jsonParserFieldValue);
 				}
 			}
 		}

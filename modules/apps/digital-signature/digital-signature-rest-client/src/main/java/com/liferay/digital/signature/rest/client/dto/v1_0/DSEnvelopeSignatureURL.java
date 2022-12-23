@@ -15,7 +15,7 @@
 package com.liferay.digital.signature.rest.client.dto.v1_0;
 
 import com.liferay.digital.signature.rest.client.function.UnsafeSupplier;
-import com.liferay.digital.signature.rest.client.serdes.v1_0.DSEnvelopeSignUrlSerDes;
+import com.liferay.digital.signature.rest.client.serdes.v1_0.DSEnvelopeSignatureURLSerDes;
 
 import java.io.Serializable;
 
@@ -28,10 +28,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DSEnvelopeSignUrl implements Cloneable, Serializable {
+public class DSEnvelopeSignatureURL implements Cloneable, Serializable {
 
-	public static DSEnvelopeSignUrl toDTO(String json) {
-		return DSEnvelopeSignUrlSerDes.toDTO(json);
+	public static DSEnvelopeSignatureURL toDTO(String json) {
+		return DSEnvelopeSignatureURLSerDes.toDTO(json);
 	}
 
 	public String getUrl() {
@@ -54,8 +54,8 @@ public class DSEnvelopeSignUrl implements Cloneable, Serializable {
 	protected String url;
 
 	@Override
-	public DSEnvelopeSignUrl clone() throws CloneNotSupportedException {
-		return (DSEnvelopeSignUrl)super.clone();
+	public DSEnvelopeSignatureURL clone() throws CloneNotSupportedException {
+		return (DSEnvelopeSignatureURL)super.clone();
 	}
 
 	@Override
@@ -64,13 +64,14 @@ public class DSEnvelopeSignUrl implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof DSEnvelopeSignUrl)) {
+		if (!(object instanceof DSEnvelopeSignatureURL)) {
 			return false;
 		}
 
-		DSEnvelopeSignUrl dsEnvelopeSignUrl = (DSEnvelopeSignUrl)object;
+		DSEnvelopeSignatureURL dsEnvelopeSignatureURL =
+			(DSEnvelopeSignatureURL)object;
 
-		return Objects.equals(toString(), dsEnvelopeSignUrl.toString());
+		return Objects.equals(toString(), dsEnvelopeSignatureURL.toString());
 	}
 
 	@Override
@@ -81,7 +82,7 @@ public class DSEnvelopeSignUrl implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return DSEnvelopeSignUrlSerDes.toJSON(this);
+		return DSEnvelopeSignatureURLSerDes.toJSON(this);
 	}
 
 }

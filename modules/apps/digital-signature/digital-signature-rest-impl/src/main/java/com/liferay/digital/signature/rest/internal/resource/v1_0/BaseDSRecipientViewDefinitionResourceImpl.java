@@ -14,7 +14,7 @@
 
 package com.liferay.digital.signature.rest.internal.resource.v1_0;
 
-import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.resource.v1_0.DSRecipientViewDefinitionResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -83,7 +83,7 @@ public abstract class BaseDSRecipientViewDefinitionResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public DSEnvelopeSignUrl postSiteDSRecipientViewDefinition(
+	public DSEnvelopeSignatureURL postSiteDSRecipientViewDefinition(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
@@ -95,7 +95,7 @@ public abstract class BaseDSRecipientViewDefinitionResourceImpl
 			DSRecipientViewDefinition dsRecipientViewDefinition)
 		throws Exception {
 
-		return new DSEnvelopeSignUrl();
+		return new DSEnvelopeSignatureURL();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

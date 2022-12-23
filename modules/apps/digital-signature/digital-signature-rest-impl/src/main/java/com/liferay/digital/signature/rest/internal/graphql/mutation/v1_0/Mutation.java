@@ -15,7 +15,7 @@
 package com.liferay.digital.signature.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
-import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
 import com.liferay.digital.signature.rest.resource.v1_0.DSRecipientViewDefinitionResource;
@@ -96,7 +96,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DSEnvelopeSignUrl createSiteDSRecipientViewDefinition(
+	public DSEnvelopeSignatureURL createSiteDSRecipientViewDefinition(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("dsEnvelopeId") String dsEnvelopeId,
 			@GraphQLName("dsRecipientViewDefinition") DSRecipientViewDefinition

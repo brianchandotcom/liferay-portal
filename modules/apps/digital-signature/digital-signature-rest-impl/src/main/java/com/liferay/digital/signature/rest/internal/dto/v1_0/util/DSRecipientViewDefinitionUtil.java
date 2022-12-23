@@ -14,7 +14,7 @@
 
 package com.liferay.digital.signature.rest.internal.dto.v1_0.util;
 
-import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public class DSRecipientViewDefinitionUtil {
 
-	public static DSEnvelopeSignUrl toDSEnvelopeSignUrl(JSONObject jsonObject) {
-		return new DSEnvelopeSignUrl() {
+	public static DSEnvelopeSignatureURL toDSEnvelopeSignUrl(
+		JSONObject jsonObject) {
+
+		return new DSEnvelopeSignatureURL() {
 			{
 				url = jsonObject.getString("url");
 			}

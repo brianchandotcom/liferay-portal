@@ -35,10 +35,12 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.List;
@@ -128,6 +130,14 @@ public class DisplayPageVerticalCard
 	public List<LabelItem> getLabels() {
 		if (_draftLayout == null) {
 			return Collections.emptyList();
+		}
+
+		if (!GetterUtil.getBoolean(
+				_draftLayout.getTypeSettingsProperty("published"))) {
+
+			return LabelItemListBuilder.add(
+				labelItem -> labelItem.setStatus(WorkflowConstants.STATUS_DRAFT)
+			).build();
 		}
 
 		return LabelItemListBuilder.add(

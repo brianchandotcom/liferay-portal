@@ -16281,6 +16281,24 @@ url=${short.hostname}:8080</echo>
 
 		<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 
+		<get-testcase-property property.name="custom.startup.timeout" />
+
+		<if>
+			<isset property="custom.startup.timeout" />
+			<then>
+				<math
+					datatype="int"
+					operand1="${custom.startup.timeout}"
+					operand2="1000"
+					operation="*"
+					result="upgrade.client.timeout"
+				/>
+			</then>
+			<else>
+				<property name="upgrade.client.timeout" value="900000" />
+			</else>
+		</if>
+
 		<trycatch property="upgrade.error">
 			<try>
 				<if>
@@ -16291,7 +16309,7 @@ url=${short.hostname}:8080</echo>
 							failonerror="true"
 							fork="true"
 							jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
-							timeout="900000"
+							timeout="${upgrade.client.timeout}"
 						>
 							<env key="JAVA_HOME" value="${java.jdk.home}" />
 							<env key="WAS_HOME" value="${app.server.dir}" />
@@ -16303,7 +16321,7 @@ url=${short.hostname}:8080</echo>
 							failonerror="true"
 							fork="true"
 							jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
-							timeout="900000"
+							timeout="${upgrade.client.timeout}"
 						>
 							<env key="JAVA_HOME" value="${java.jdk.home}" />
 						</java>
@@ -16315,7 +16333,15 @@ url=${short.hostname}:8080</echo>
 					<param name="process.name" value="DBUpgrader" />
 				</antcall>
 
-				<fail message="${upgrade.error}" />
+				<if>
+					<isset property="custom.startup.timeout" />
+					<then>
+						<fail message="${upgrade.error}. Failed to complete the upgrade in ${custom.startup.timeout} seconds." />
+					</then>
+					<else>
+						<fail message="${upgrade.error}" />
+					</else>
+				</if>
 			</catch>
 		</trycatch>
 	</target>

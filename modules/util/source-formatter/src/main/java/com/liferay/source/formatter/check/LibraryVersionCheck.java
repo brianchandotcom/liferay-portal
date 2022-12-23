@@ -25,13 +25,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.GitException;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.upgrade.GradleBuildFile;
 import com.liferay.source.formatter.upgrade.GradleDependency;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.StringReader;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -216,22 +221,19 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		String githubToken = null;
+		if (Validator.isNull(_githubAccessToken)) {
+			SourceProcessor sourceProcessor = getSourceProcessor();
 
-		if (Validator.isNull(githubToken)) {
-			File file = new File(_GITHUB_TOKEN_FILE_PATH);
+			SourceFormatterArgs sourceFormatterArgs =
+				sourceProcessor.getSourceFormatterArgs();
 
-			if (!file.exists()) {
-				throw new GitException(
-					_GITHUB_TOKEN_FILE_PATH + " does not exist");
+			if (sourceFormatterArgs.isFormatCurrentBranch() &&
+				sourceFormatterArgs.isUseCiGithubAccessToken()) {
+
+				_githubAccessToken = _getCiGithubAccessToken();
 			}
-
-			githubToken = FileUtil.read(file);
-
-			if (Validator.isNull(githubToken)) {
-				throw new GitException(
-					"No github token found, place the github token in " +
-						_GITHUB_TOKEN_FILE_PATH);
+			else {
+				_githubAccessToken = _getLocalGithubAccessToken();
 			}
 		}
 
@@ -239,7 +241,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			securityAdvisoryEcosystemEnum + ":" + packageName,
 			_getSecurityVulnerabilityNodes(
 				packageName, null, securityAdvisoryEcosystemEnum, severities,
-				githubToken));
+				_githubAccessToken));
 	}
 
 	private synchronized String _getCachedLibraryVulnerabilitiesContent()
@@ -262,6 +264,53 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		_cachedLibraryVulnerabilitiesContent = FileUtil.read(file);
 
 		return _cachedLibraryVulnerabilitiesContent;
+	}
+
+	private synchronized String _getCiGithubAccessToken() throws Exception {
+		if (_githubAccessToken != null) {
+			return _githubAccessToken;
+		}
+
+		URL urlObject = new URL(_CI_PROPERTIES_URL);
+
+		URLConnection urlConnection = urlObject.openConnection();
+
+		urlConnection.connect();
+
+		Properties properties = new Properties();
+
+		properties.load(urlConnection.getInputStream());
+
+		_githubAccessToken = properties.getProperty("github.access.token");
+
+		if (Validator.isNull(_githubAccessToken)) {
+			throw new Exception(
+				"Can not find ci access token in " + _GITHUB_TOKEN_FILE_PATH);
+		}
+
+		return _githubAccessToken;
+	}
+
+	private synchronized String _getLocalGithubAccessToken() throws Exception {
+		if (_githubAccessToken != null) {
+			return _githubAccessToken;
+		}
+
+		File file = new File(_GITHUB_TOKEN_FILE_PATH);
+
+		if (!file.exists()) {
+			throw new Exception(_GITHUB_TOKEN_FILE_PATH + " does not exist");
+		}
+
+		_githubAccessToken = FileUtil.read(file);
+
+		if (Validator.isNull(_githubAccessToken)) {
+			throw new Exception(
+				"Can not find ci access token, place the github token in " +
+					_GITHUB_TOKEN_FILE_PATH);
+		}
+
+		return _githubAccessToken;
 	}
 
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
@@ -610,6 +659,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
+	private static final String _CI_PROPERTIES_URL =
+		"http://mirrors.lax.liferay.com/github.com/liferay/liferay-jenkins-" +
+			"ee/commands/build.properties";
+
 	private static final String _GITHUB_TOKEN_FILE_PATH =
 		System.getProperty("user.home") + "/github.token";
 
@@ -619,6 +672,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		LibraryVersionCheck.class);
 
 	private String _cachedLibraryVulnerabilitiesContent;
+	private String _githubAccessToken;
 	private final Map<String, List<SecurityVulnerabilityNode>>
 		_vulnerableVersionMap = new ConcurrentHashMap<>();
 

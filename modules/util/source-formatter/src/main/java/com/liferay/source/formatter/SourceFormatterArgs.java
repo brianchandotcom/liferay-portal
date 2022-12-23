@@ -66,6 +66,8 @@ public class SourceFormatterArgs {
 
 	public static final boolean SHOW_DEBUG_INFORMATION = false;
 
+	public static final boolean USE_CI_GITHUB_ACCESS_TOKEN = false;
+
 	public static final boolean VALIDATE_COMMIT_MESSAGES = false;
 
 	public void addRecentChangesFileNames(
@@ -179,6 +181,10 @@ public class SourceFormatterArgs {
 
 	public boolean isShowDebugInformation() {
 		return _showDebugInformation;
+	}
+
+	public boolean isUseCiGithubAccessToken() {
+		return _useCiGithubAccessToken;
 	}
 
 	public boolean isValidateCommitMessages() {
@@ -300,6 +306,10 @@ public class SourceFormatterArgs {
 		_sourceFormatterProperties = sourceFormatterProperties;
 	}
 
+	public void setUseCiGithubAccessToken(boolean useCiGithubAccessToken) {
+		_useCiGithubAccessToken = useCiGithubAccessToken;
+	}
+
 	public void setValidateCommitMessages(boolean validateCommitMessages) {
 		_validateCommitMessages = validateCommitMessages;
 	}
@@ -329,6 +339,7 @@ public class SourceFormatterArgs {
 	private boolean _showDebugInformation = SHOW_DEBUG_INFORMATION;
 	private List<String> _skipCheckNames = new ArrayList<>();
 	private List<String> _sourceFormatterProperties = new ArrayList<>();
+	private boolean _useCiGithubAccessToken = USE_CI_GITHUB_ACCESS_TOKEN;
 	private boolean _validateCommitMessages = VALIDATE_COMMIT_MESSAGES;
 
 }

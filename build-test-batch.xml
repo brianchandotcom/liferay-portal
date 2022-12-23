@@ -7679,6 +7679,7 @@ information. Make sure to commit in all build services results.
 							<property name="source.fail.on.has.warning" value="true" />
 							<property name="source.print.errors" value="false" />
 							<property name="source.use.properties" value="false" />
+							<property name="use.ci.github.access.token" value="true" />
 							<property name="validate.commit.messages" value="true" />
 						</ant>
 					</then>
@@ -7693,6 +7694,7 @@ information. Make sure to commit in all build services results.
 							<property name="source.fail.on.has.warning" value="true" />
 							<property name="source.print.errors" value="false" />
 							<property name="source.use.properties" value="false" />
+							<property name="use.ci.github.access.token" value="true" />
 							<property name="validate.commit.messages" value="true" />
 						</ant>
 					</else>

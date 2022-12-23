@@ -95,6 +95,34 @@ const MDFClaimPage = ({
 			);
 		}
 
+		if (mdfRequest.mdfRequestStatus?.key !== "approved") {
+			return (
+				<PRMForm name="New" title="Reimbursement Claim">
+					<div className="d-flex justify-content-center mt-4">
+						<ClayAlert
+							className="m-0 w-100"
+							displayType="info"
+							title="Info:"
+						>
+							Waiting for Manager approval
+						</ClayAlert>
+					</div>
+
+					<PRMForm.Footer>
+						<div className="d-flex mr-auto">
+							<ClayButton
+								className="mr-4"
+								displayType="secondary"
+								onClick={() => onCancel()}
+							>
+								Cancel
+							</ClayButton>
+						</div>
+					</PRMForm.Footer>
+				</PRMForm>
+			);
+		}
+
 		return (
 			<PRMForm name="New" title="Reimbursement Claim">
 				<PRMForm.Section

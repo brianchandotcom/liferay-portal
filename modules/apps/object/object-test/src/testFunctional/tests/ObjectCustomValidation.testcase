@@ -1184,6 +1184,8 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Greater Than Or Equal To' to integer fields"
 	@priority = "4"
 	test CanDefineExpressionIsGreaterThanOrEqualTo {
+		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsGreaterThanOrEqualTo";
+
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156696",

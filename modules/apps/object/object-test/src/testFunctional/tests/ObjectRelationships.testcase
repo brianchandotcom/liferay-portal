@@ -928,6 +928,8 @@ definition {
 	@description = "LPS-146754 - Verify that it's not possible for a Custom Object to create a Many-to-Many relationship with itself"
 	@priority = "4"
 	test CannotCreateManytoManyRelationshipWithItself {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotCreateManytoManyRelationshipWithItself";
+
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 290",
@@ -1599,6 +1601,8 @@ definition {
 	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object scoped by Site entry with a Native Object entry"
 	@priority = "4"
 	test CanRelateOneToManyNativeObjectWithCustomSiteScoped {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanRelateOneToManyNativeObjectWithCustomSiteScoped";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 291",
 			objectName = "CustomObject291",
@@ -1809,6 +1813,8 @@ definition {
 	@description = "LPS-145393 - Verify it is possible to set a Title Field for a Native Object"
 	@priority = "4"
 	test CanSetTitleFieldForNativeObject {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanSetTitleFieldForNativeObject";
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "User");

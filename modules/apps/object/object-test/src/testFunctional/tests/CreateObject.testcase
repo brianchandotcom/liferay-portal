@@ -1990,6 +1990,8 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to publish an Object without the Publish Object Definition permission"
 	@priority = "4"
 	test CannotPublishObjectWithouPublishPermission {
+		property test.name.skip.portal.instance = "CreateObject#CannotPublishObjectWithouPublishPermission";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 53",
 			objectName = "CustomObject53",
@@ -6499,6 +6501,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Process Builder page when inactivated"
 	@priority = "4"
 	test ObjectDisappearsProcessBuilderWhenInactivated {
+		property test.name.skip.portal.instance = "CreateObject#ObjectDisappearsProcessBuilderWhenInactivated";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 143",
 			objectName = "CustomObject143",
@@ -6526,6 +6530,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Site Menu page when inactivated"
 	@priority = "4"
 	test ObjectDisappearsWorkflowSiteMenuWhenInactivated {
+		property test.name.skip.portal.instance = "CreateObject#ObjectDisappearsWorkflowSiteMenuWhenInactivated";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 144",
 			objectName = "CustomObject144",

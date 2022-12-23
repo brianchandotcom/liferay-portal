@@ -731,6 +731,8 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Then field blank"
 	@priority = "3"
 	test CannotLeaveActionThenBlank {
+		property test.name.skip.portal.instance = "ObjectActions#CannotLeaveActionThenBlank";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 187",
 			objectName = "CustomObject187",
@@ -756,6 +758,8 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
 	@priority = "3"
 	test CannotLeaveActionWhenBlank {
+		property test.name.skip.portal.instance = "ObjectActions#CannotLeaveActionWhenBlank";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 188",
 			objectName = "CustomObject188",
@@ -782,6 +786,8 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the URL field blank when Webhook is selected"
 	@priority = "3"
 	test CannotLeaveURLBlank {
+		property test.name.skip.portal.instance = "ObjectActions#CannotLeaveURLBlank";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 189",
 			objectName = "CustomObject189",
@@ -1124,6 +1130,8 @@ definition {
 	@description = "LPS-146871 - Verify that the Action name is required"
 	@priority = "4"
 	test VerifyActionNameIsRequired {
+		property test.name.skip.portal.instance = "ObjectActions#VerifyActionNameIsRequired";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 156562",
 			objectName = "CustomObject1",

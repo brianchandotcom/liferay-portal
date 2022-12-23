@@ -10,6 +10,7 @@
  */
 
 import Button from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useFormikContext} from 'formik';
 import {useCallback, useMemo} from 'react';
 
@@ -19,6 +20,7 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import {Status} from '../../../../common/utils/constants/status';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
@@ -162,11 +164,16 @@ const Goals = ({
 			<PRMForm.Footer>
 				<div className="d-flex justify-content-end mr-auto">
 					<Button
+						className="inline-item inline-item-after"
 						disabled={isSubmitting}
 						displayType={null}
 						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
 					>
 						Save as Draft
+						{isSubmitting &&
+							values.mdfRequestStatus === Status.DRAFT && (
+								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+							)}
 					</Button>
 				</div>
 

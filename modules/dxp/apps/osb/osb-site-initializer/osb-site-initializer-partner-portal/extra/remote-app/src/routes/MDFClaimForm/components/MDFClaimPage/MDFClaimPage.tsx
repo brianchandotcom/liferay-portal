@@ -11,6 +11,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useFormikContext} from 'formik';
 import {useCallback} from 'react';
 
@@ -95,7 +96,7 @@ const MDFClaimPage = ({
 			);
 		}
 
-		if (mdfRequest.mdfRequestStatus?.key !== "approved") {
+		if (mdfRequest.mdfRequestStatus?.key !== 'approved') {
 			return (
 				<PRMForm name="New" title="Reimbursement Claim">
 					<div className="d-flex justify-content-center mt-4">
@@ -187,12 +188,16 @@ const MDFClaimPage = ({
 				<PRMForm.Footer>
 					<div className="d-flex mr-auto">
 						<ClayButton
-							className="pl-0"
+							className="inline-item inline-item-after pl-0"
 							disabled={isSubmitting}
 							displayType={null}
 							onClick={() => onSaveAsDraft(values, formikHelpers)}
 						>
 							Save as Draft
+							{isSubmitting &&
+								values.mdfClaimStatus === Status.DRAFT && (
+									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+								)}
 						</ClayButton>
 					</div>
 
@@ -206,10 +211,15 @@ const MDFClaimPage = ({
 						</ClayButton>
 
 						<ClayButton
+							className="inline-item inline-item-after"
 							disabled={!isValid || isSubmitting}
 							type="submit"
 						>
 							Submit
+							{isSubmitting &&
+								values.mdfClaimStatus === Status.PENDING && (
+									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+								)}
 						</ClayButton>
 					</div>
 				</PRMForm.Footer>

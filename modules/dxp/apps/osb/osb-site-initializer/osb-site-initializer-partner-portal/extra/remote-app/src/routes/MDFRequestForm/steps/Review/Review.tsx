@@ -10,6 +10,7 @@
  */
 
 import Button from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useFormikContext} from 'formik';
 import {useMemo} from 'react';
 
@@ -17,6 +18,7 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import ResumeCard from '../../../../common/components/ResumeCard';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
+import {Status} from '../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import getTotalBudget from '../../../../common/utils/getTotalBudget';
 import getTotalMDFRequest from '../../../../common/utils/getTotalMDFRequest';
@@ -113,7 +115,7 @@ const Review = ({
 							</Button>
 
 							<Button
-								className="pl-0"
+								className="inline-item inline-item-after pl-0"
 								disabled={isSubmitting}
 								displayType={null}
 								onClick={() =>
@@ -121,6 +123,11 @@ const Review = ({
 								}
 							>
 								Save as Draft
+								{isSubmitting &&
+									values.mdfRequestStatus ===
+										Status.DRAFT && (
+										<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+									)}
 							</Button>
 						</div>
 
@@ -133,8 +140,17 @@ const Review = ({
 								Cancel
 							</Button>
 
-							<Button disabled={isSubmitting} type="submit">
+							<Button
+								className="inline-item inline-item-after"
+								disabled={isSubmitting}
+								type="submit"
+							>
 								Submit
+								{isSubmitting &&
+									values.mdfRequestStatus ===
+										Status.PENDING && (
+										<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+									)}
 							</Button>
 						</div>
 					</div>

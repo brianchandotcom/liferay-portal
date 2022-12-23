@@ -10,6 +10,7 @@
  */
 
 import Button from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {ArrayHelpers, useFormikContext} from 'formik';
 import {useCallback, useState} from 'react';
@@ -17,6 +18,7 @@ import {useCallback, useState} from 'react';
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import {Status} from '../../../../common/utils/constants/status';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -129,11 +131,16 @@ const Activities = ({
 					</Button>
 
 					<Button
+						className="inline-item inline-item-after"
 						disabled={isSubmitting}
 						displayType={null}
 						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
 					>
 						Save as Draft
+						{isSubmitting &&
+							values.mdfRequestStatus === Status.DRAFT && (
+								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+							)}
 					</Button>
 				</div>
 

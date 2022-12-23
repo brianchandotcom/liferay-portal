@@ -10,6 +10,7 @@
  */
 
 import Button from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useFormikContext} from 'formik';
 
 import PRMForm from '../../../../common/components/PRMForm';
@@ -260,8 +261,15 @@ const Review = ({
 							Cancel
 						</Button>
 
-						<Button disabled={isSubmitting} type="submit">
+						<Button
+							className="inline-item inline-item-after"
+							disabled={isSubmitting}
+							type="submit"
+						>
 							Proceed
+							{isSubmitting && values.registrationStatus && (
+								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+							)}
 						</Button>
 					</div>
 				</PRMForm.Footer>

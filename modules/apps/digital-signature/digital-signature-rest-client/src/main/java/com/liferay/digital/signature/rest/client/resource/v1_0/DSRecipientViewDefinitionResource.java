@@ -14,11 +14,11 @@
 
 package com.liferay.digital.signature.rest.client.resource.v1_0;
 
-import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.client.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.client.http.HttpInvoker;
 import com.liferay.digital.signature.rest.client.problem.Problem;
-import com.liferay.digital.signature.rest.client.serdes.v1_0.DSEnvelopeSignUrlSerDes;
+import com.liferay.digital.signature.rest.client.serdes.v1_0.DSEnvelopeSignatureURLSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -39,7 +39,7 @@ public interface DSRecipientViewDefinitionResource {
 		return new Builder();
 	}
 
-	public DSEnvelopeSignUrl postSiteDSRecipientViewDefinition(
+	public DSEnvelopeSignatureURL postSiteDSRecipientViewDefinition(
 			Long siteId, String dsEnvelopeId,
 			DSRecipientViewDefinition dsRecipientViewDefinition)
 		throws Exception;
@@ -129,7 +129,7 @@ public interface DSRecipientViewDefinitionResource {
 	public static class DSRecipientViewDefinitionResourceImpl
 		implements DSRecipientViewDefinitionResource {
 
-		public DSEnvelopeSignUrl postSiteDSRecipientViewDefinition(
+		public DSEnvelopeSignatureURL postSiteDSRecipientViewDefinition(
 				Long siteId, String dsEnvelopeId,
 				DSRecipientViewDefinition dsRecipientViewDefinition)
 			throws Exception {
@@ -164,7 +164,7 @@ public interface DSRecipientViewDefinitionResource {
 			}
 
 			try {
-				return DSEnvelopeSignUrlSerDes.toDTO(content);
+				return DSEnvelopeSignatureURLSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(

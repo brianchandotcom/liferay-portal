@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.client.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.client.http.HttpInvoker;
 import com.liferay.digital.signature.rest.client.pagination.Page;
@@ -287,12 +287,13 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 	}
 
 	protected void assertEquals(
-		DSEnvelopeSignUrl dsEnvelopeSignUrl1,
-		DSEnvelopeSignUrl dsEnvelopeSignUrl2) {
+		DSEnvelopeSignatureURL dsEnvelopeSignatureURL1,
+		DSEnvelopeSignatureURL dsEnvelopeSignatureURL2) {
 
 		Assert.assertTrue(
-			dsEnvelopeSignUrl1 + " does not equal " + dsEnvelopeSignUrl2,
-			equals(dsEnvelopeSignUrl1, dsEnvelopeSignUrl2));
+			dsEnvelopeSignatureURL1 + " does not equal " +
+				dsEnvelopeSignatureURL2,
+			equals(dsEnvelopeSignatureURL1, dsEnvelopeSignatureURL2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -407,14 +408,14 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(DSEnvelopeSignUrl dsEnvelopeSignUrl) {
+	protected void assertValid(DSEnvelopeSignatureURL dsEnvelopeSignatureURL) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
-				getAdditionalDSEnvelopeSignUrlAssertFieldNames()) {
+				getAdditionalDSEnvelopeSignatureURLAssertFieldNames()) {
 
 			if (Objects.equals("url", additionalAssertFieldName)) {
-				if (dsEnvelopeSignUrl.getUrl() == null) {
+				if (dsEnvelopeSignatureURL.getUrl() == null) {
 					valid = false;
 				}
 
@@ -433,7 +434,7 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 		return new String[0];
 	}
 
-	protected String[] getAdditionalDSEnvelopeSignUrlAssertFieldNames() {
+	protected String[] getAdditionalDSEnvelopeSignatureURLAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -594,20 +595,20 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 	}
 
 	protected boolean equals(
-		DSEnvelopeSignUrl dsEnvelopeSignUrl1,
-		DSEnvelopeSignUrl dsEnvelopeSignUrl2) {
+		DSEnvelopeSignatureURL dsEnvelopeSignatureURL1,
+		DSEnvelopeSignatureURL dsEnvelopeSignatureURL2) {
 
-		if (dsEnvelopeSignUrl1 == dsEnvelopeSignUrl2) {
+		if (dsEnvelopeSignatureURL1 == dsEnvelopeSignatureURL2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
-				getAdditionalDSEnvelopeSignUrlAssertFieldNames()) {
+				getAdditionalDSEnvelopeSignatureURLAssertFieldNames()) {
 
 			if (Objects.equals("url", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dsEnvelopeSignUrl1.getUrl(),
-						dsEnvelopeSignUrl2.getUrl())) {
+						dsEnvelopeSignatureURL1.getUrl(),
+						dsEnvelopeSignatureURL2.getUrl())) {
 
 					return false;
 				}
@@ -809,8 +810,10 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 		return randomDSRecipientViewDefinition();
 	}
 
-	protected DSEnvelopeSignUrl randomDSEnvelopeSignUrl() throws Exception {
-		return new DSEnvelopeSignUrl() {
+	protected DSEnvelopeSignatureURL randomDSEnvelopeSignatureURL()
+		throws Exception {
+
+		return new DSEnvelopeSignatureURL() {
 			{
 				url = RandomTestUtil.randomString();
 			}

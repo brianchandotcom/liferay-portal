@@ -43,17 +43,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DSEnvelopeSignUrl")
+@GraphQLName("DSEnvelopeSignatureURL")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DSEnvelopeSignUrl")
-public class DSEnvelopeSignUrl implements Serializable {
+@XmlRootElement(name = "DSEnvelopeSignatureURL")
+public class DSEnvelopeSignatureURL implements Serializable {
 
-	public static DSEnvelopeSignUrl toDTO(String json) {
-		return ObjectMapperUtil.readValue(DSEnvelopeSignUrl.class, json);
+	public static DSEnvelopeSignatureURL toDTO(String json) {
+		return ObjectMapperUtil.readValue(DSEnvelopeSignatureURL.class, json);
 	}
 
-	public static DSEnvelopeSignUrl unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(DSEnvelopeSignUrl.class, json);
+	public static DSEnvelopeSignatureURL unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			DSEnvelopeSignatureURL.class, json);
 	}
 
 	@Schema
@@ -88,13 +89,14 @@ public class DSEnvelopeSignUrl implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof DSEnvelopeSignUrl)) {
+		if (!(object instanceof DSEnvelopeSignatureURL)) {
 			return false;
 		}
 
-		DSEnvelopeSignUrl dsEnvelopeSignUrl = (DSEnvelopeSignUrl)object;
+		DSEnvelopeSignatureURL dsEnvelopeSignatureURL =
+			(DSEnvelopeSignatureURL)object;
 
-		return Objects.equals(toString(), dsEnvelopeSignUrl.toString());
+		return Objects.equals(toString(), dsEnvelopeSignatureURL.toString());
 	}
 
 	@Override
@@ -130,7 +132,7 @@ public class DSEnvelopeSignUrl implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl",
+		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignatureURL",
 		name = "x-class-name"
 	)
 	public String xClassName;

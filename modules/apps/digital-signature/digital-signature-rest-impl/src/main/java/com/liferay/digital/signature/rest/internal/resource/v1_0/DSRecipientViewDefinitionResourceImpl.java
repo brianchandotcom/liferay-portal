@@ -15,7 +15,7 @@
 package com.liferay.digital.signature.rest.internal.resource.v1_0;
 
 import com.liferay.digital.signature.manager.DSRecipientViewDefinitionManager;
-import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignatureURL;
 import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.internal.dto.v1_0.util.DSRecipientViewDefinitionUtil;
 import com.liferay.digital.signature.rest.resource.v1_0.DSRecipientViewDefinitionResource;
@@ -36,7 +36,7 @@ public class DSRecipientViewDefinitionResourceImpl
 	extends BaseDSRecipientViewDefinitionResourceImpl {
 
 	@Override
-	public DSEnvelopeSignUrl postSiteDSRecipientViewDefinition(
+	public DSEnvelopeSignatureURL postSiteDSRecipientViewDefinition(
 			Long siteId, String dsEnvelopeId,
 			DSRecipientViewDefinition dsRecipientViewDefinition)
 		throws Exception {

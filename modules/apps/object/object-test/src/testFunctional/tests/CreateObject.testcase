@@ -1745,9 +1745,7 @@ definition {
 			object = "Custom Object 41",
 			type = "One to Many");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "An error occurred.");
+		Alert.viewErrorMessage(errorMessage = "Internal Server Error");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"

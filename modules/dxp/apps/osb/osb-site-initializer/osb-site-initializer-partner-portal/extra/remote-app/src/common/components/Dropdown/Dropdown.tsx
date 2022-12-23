@@ -16,7 +16,7 @@ interface DropdownOption {
 	icon: string;
 	key: string;
 	label: string;
-	onClick?: () => void;
+	onClick: () => void;
 }
 
 interface Props {

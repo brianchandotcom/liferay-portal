@@ -72,7 +72,16 @@ export default function getMDFListColumns(
 			{
 				columnKey: MDFColumnKey.ID,
 				label: 'Request ID',
-				render: (data) => <>{`Request-${data}`}</>,
+				render: (data, row) => (
+					<a
+						className="link"
+						onClick={() =>
+							Liferay.Util.navigate(
+								`${siteURL}/l/${row[MDFColumnKey.ID]}`
+							)
+						}
+					>{`Request-${data}`}</a>
+				),
 			},
 			{
 				columnKey: MDFColumnKey.STATUS,

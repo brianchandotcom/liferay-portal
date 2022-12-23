@@ -59,7 +59,16 @@ const MDFClaimList = () => {
 		{
 			columnKey: MDFClaimColumnKey.REQUEST_ID,
 			label: 'Request ID',
-			render: (data?: string) => <>{`Request-${data}`}</>,
+			render: (data: string | undefined, row: MDFClaimListItem) => (
+				<a
+					className="link"
+					onClick={() =>
+						Liferay.Util.navigate(
+							`${siteURL}/l/${row[MDFClaimColumnKey.REQUEST_ID]}`
+						)
+					}
+				>{`Request-${data}`}</a>
+			),
 		},
 		{
 			columnKey: MDFClaimColumnKey.PARTNER,
@@ -103,7 +112,9 @@ const MDFClaimList = () => {
 							label: ' View',
 							onClick: () =>
 								Liferay.Util.navigate(
-									`${siteURL}/l/${row[MDFClaimColumnKey.REQUEST_ID]}`
+									`${siteURL}/l/${
+										row[MDFClaimColumnKey.REQUEST_ID]
+									}`
 								),
 						},
 					]}

@@ -66,6 +66,10 @@ public interface ItemSelectorViewDescriptor<T> {
 
 	public SearchContainer<T> getSearchContainer() throws PortalException;
 
+	public default TableItemView getTableItemView(T t) {
+		return null;
+	}
+
 	public default boolean isShowBreadcrumb() {
 		return true;
 	}

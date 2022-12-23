@@ -54,6 +54,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "5"
 	test CanCreateMultipleManyToManyRelationshipsBetweenTwoObjects {
 		property portal.acceptance = "true";
@@ -86,6 +87,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "5"
 	test CanCreateMultipleOneToManyRelationshipsBetweenTwoObjects {
 		property portal.acceptance = "true";
@@ -124,6 +126,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanGetEmptyPageWithNoEntriesRelated {
 		property portal.acceptance = "true";

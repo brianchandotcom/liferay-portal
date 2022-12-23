@@ -66,6 +66,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanBreakManyToManyRelationship {
 		property portal.acceptance = "true";
@@ -93,6 +94,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanBreakOneToManyRelationship {
 		property portal.acceptance = "true";
@@ -120,6 +122,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanBreakOneToManyRelationshipKeepingOtherEntriesRelated {
 		property portal.acceptance = "true";

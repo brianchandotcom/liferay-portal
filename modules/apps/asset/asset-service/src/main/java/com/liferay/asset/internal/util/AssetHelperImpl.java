@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -332,23 +333,16 @@ public class AssetHelperImpl implements AssetHelper {
 	public String getAssetKeywords(
 		String className, long classPK, Locale locale) {
 
-		String[] tagNames = _assetTagLocalService.getTagNames(
-			className, classPK);
+		List<String> keywords = new ArrayList<>();
 
-		List<AssetCategory> assetCategories =
-			_assetCategoryLocalService.getCategories(className, classPK);
-
-		List<String> categoryTitles = new ArrayList<>();
-
-		for (AssetCategory assetCategory : assetCategories) {
-			categoryTitles.add(assetCategory.getTitle(locale));
-		}
-
-		String[] categoryNames = categoryTitles.toArray(new String[0]);
-
-		String[] keywords = new String[tagNames.length + categoryNames.length];
-
-		ArrayUtil.combine(tagNames, categoryNames, keywords);
+		keywords.addAll(
+			ListUtil.toList(
+				_assetTagLocalService.getTags(className, classPK),
+				AssetTag.NAME_ACCESSOR));
+		keywords.addAll(
+			ListUtil.toList(
+				_assetCategoryLocalService.getCategories(className, classPK),
+				assetCategory -> assetCategory.getTitle(locale)));
 
 		return StringUtil.merge(keywords);
 	}

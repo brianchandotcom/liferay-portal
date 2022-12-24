@@ -24,7 +24,7 @@ import org.junit.Test;
 public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testLibraryVersion() throws Exception {
+	public void testLibraryVulnerabilities() throws Exception {
 		test(
 			"dependencies.testproperties",
 			StringBundler.concat(

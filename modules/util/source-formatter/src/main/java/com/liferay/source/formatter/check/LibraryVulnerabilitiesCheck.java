@@ -555,8 +555,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 					ContentType.APPLICATION_JSON));
 			httpPost.addHeader("Authorization", "bearer " + githubToken);
 			httpPost.addHeader(
-				"Content-Type",
-				"application/json; charset=utf-8; application/graphql");
+				"Content-Type", "application/json; charset=utf-8");
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpPost);

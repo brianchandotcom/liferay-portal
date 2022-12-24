@@ -114,19 +114,21 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		while (iterator.hasNext()) {
 			GradleDependency gradleDependency = iterator.next();
 
-			if (Validator.isNull(gradleDependency.getGroup()) ||
-				Validator.isNull(gradleDependency.getName()) ||
-				Validator.isNull(gradleDependency.getVersion())) {
+			String gradleDependencyGroup = gradleDependency.getGroup();
+			String gradleDependencyName = gradleDependency.getName();
+			String gradleDependencyVersion = gradleDependency.getVersion();
+
+			if (Validator.isNull(gradleDependencyGroup) ||
+				Validator.isNull(gradleDependencyName) ||
+				Validator.isNull(gradleDependencyVersion)) {
 
 				continue;
 			}
 
 			_checkVulnerabilities(
 				fileName, absolutePath,
-				gradleDependency.getGroup() + StringPool.COLON +
-					gradleDependency.getName(),
-				gradleDependency.getVersion(),
-				SecurityAdvisoryEcosystemEnum.MAVEN);
+				gradleDependencyGroup + StringPool.COLON + gradleDependencyName,
+				gradleDependencyVersion, SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
 	}
 

@@ -66,6 +66,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanBreakManyToManyRelationship {
 		property portal.acceptance = "true";
@@ -78,8 +79,8 @@ definition {
 		}
 
 		task ("When using the delete request deleteUserAccount{relationshipName}") {
-			UserAccountAPI.deleteUserAccountRelationship(
-				customObjectId = "${staticObjectEntryId3}",
+			UserAccountAPI.deleteObjectEntryRelatedToUserAccount(
+				customObjectEntryId = "${staticObjectEntryId3}",
 				relationshipName = "usersSecondFoundations",
 				userAccountId = "${staticUserAccountId}");
 		}
@@ -93,6 +94,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanBreakOneToManyRelationship {
 		property portal.acceptance = "true";
@@ -105,8 +107,8 @@ definition {
 		}
 
 		task ("When using the delete request deleteUserAccount{relationshipName}") {
-			UserAccountAPI.deleteUserAccountRelationship(
-				customObjectId = "${staticObjectEntryId1}",
+			UserAccountAPI.deleteObjectEntryRelatedToUserAccount(
+				customObjectEntryId = "${staticObjectEntryId1}",
 				relationshipName = "userFoundations",
 				userAccountId = "${staticUserAccountId}");
 		}
@@ -120,6 +122,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test CanBreakOneToManyRelationshipKeepingOtherEntriesRelated {
 		property portal.acceptance = "true";
@@ -137,8 +140,8 @@ definition {
 		}
 
 		task ("When deleting one of the foundation entries with deleteUserAccount{relationshipName} request") {
-			UserAccountAPI.deleteUserAccountRelationship(
-				customObjectId = "${staticObjectEntryId1}",
+			UserAccountAPI.deleteObjectEntryRelatedToUserAccount(
+				customObjectEntryId = "${staticObjectEntryId1}",
 				relationshipName = "userFoundations",
 				userAccountId = "${staticUserAccountId}");
 		}

@@ -9,11 +9,9 @@ definition {
 			if (isSet(parameter)) {
 				var api = "user-accounts/${userAccountId}?${parameter}=${parameterValue}";
 			}
-			else if (isSet(customObjectId)) {
-				var api = "user-accounts/${userAccountId}/${relationshipName}/${customObjectId}";
-			}
-			else {
-				var api = "user-accounts/${userAccountId}/${relationshipName}";
+
+			if (isSet(relationshipName) && isSet(customObjectEntryId) && isSet(userAccountId)) {
+				var api = "user-accounts/${userAccountId}/${relationshipName}/${customObjectEntryId}";
 			}
 		}
 		else {
@@ -75,11 +73,11 @@ definition {
 		return "${response}";
 	}
 
-	macro deleteUserAccountRelationship {
-		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${customObjectId}");
+	macro deleteObjectEntryRelatedToUserAccount {
+		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${customObjectEntryId}");
 
 		var curl = UserAccountAPI._curlUserAccount(
-			customObjectId = "${customObjectId}",
+			customObjectEntryId = "${customObjectEntryId}",
 			relationshipName = "${relationshipName}",
 			userAccountId = "${userAccountId}");
 
@@ -87,9 +85,16 @@ definition {
 	}
 
 	macro getRelationshipByUserAccountId {
-		var curl = UserAccountAPI._curlUserAccount(
-			relationshipName = "${relationshipName}",
-			userAccountId = "${userAccountId}");
+		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/user-accounts/${userAccountId}/${relationshipName} \
+			-H accept: application/json \
+			-H Content-Type: application/json \
+			-u test@liferay.com:test \
+		''';
 
 		var response = JSONCurlUtil.get("${curl}");
 
@@ -152,10 +157,14 @@ definition {
 	macro relateObjectEntries {
 		Variables.assertDefined(parameterList = "${userAccountId},${customObjectId},${relationshipName}");
 
-		var curl = UserAccountAPI._curlUserAccount(
-			customObjectId = "${customObjectId}",
-			relationshipName = "${relationshipName}",
-			userAccountId = "${userAccountId}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/user-accounts/${userAccountId}/${relationshipName}/${customObjectId} \
+			-H accept: application/json \
+			-H Content-Type: application/json \
+			-u test@liferay.com:test \
+		''';
 
 		var response = JSONCurlUtil.put("${curl}");
 
@@ -172,7 +181,8 @@ definition {
 			givenName = "usergn");
 
 		static var staticResponse = "${response}";
-		static var staticUserAccountId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		static var staticUserAccountId = JSONUtil.getWithJSONPath("${staticResponse}", "$.id");
 
 		return "${staticResponse}";
 

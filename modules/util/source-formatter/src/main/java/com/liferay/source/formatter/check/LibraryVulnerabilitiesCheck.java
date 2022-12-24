@@ -564,9 +564,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
-			int statusCode = statusLine.getStatusCode();
-
-			if (statusCode != HttpStatus.SC_OK) {
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
 				throw new GitException(
 					"Unable to access GitHub GraphQL API, check the github " +
 						"token in " + _GITHUB_TOKEN_FILE_PATH);

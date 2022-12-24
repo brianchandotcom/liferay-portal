@@ -308,7 +308,7 @@ public class DefaultObjectEntryManagerImplTest {
 					Collections.emptyList()
 				).build()));
 
-		ObjectRelationship objectRelationship =
+		ObjectRelationship objectRelationship1 =
 			_objectRelationshipLocalService.addObjectRelationship(
 				_adminUser.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
@@ -320,23 +320,72 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_addAggregationObjectField(
 			"AVERAGE", "precisionDecimalObjectFieldName",
-			objectRelationship.getName());
-		_addAggregationObjectField("COUNT", null, objectRelationship.getName());
+			objectRelationship1.getName());
 		_addAggregationObjectField(
-			"MAX", "integerObjectFieldName", objectRelationship.getName());
+			"COUNT", null, objectRelationship1.getName());
 		_addAggregationObjectField(
-			"MIN", "longIntegerObjectFieldName", objectRelationship.getName());
+			"MAX", "integerObjectFieldName", objectRelationship1.getName());
 		_addAggregationObjectField(
-			"SUM", "decimalObjectFieldName", objectRelationship.getName());
+			"MIN", "longIntegerObjectFieldName", objectRelationship1.getName());
+		_addAggregationObjectField(
+			"SUM", "decimalObjectFieldName", objectRelationship1.getName());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
+			objectRelationship1.getObjectFieldId2());
 
 		_objectRelationshipERCObjectFieldName = ObjectFieldSettingUtil.getValue(
 			ObjectFieldSettingConstants.
 				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 			objectField);
 		_objectRelationshipFieldName = objectField.getName();
+
+		_objectDefinition3 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				_adminUser.getUserId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList());
+
+		ObjectDefinition accountEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_companyId, "AccountEntry");
+
+		ObjectRelationship objectRelationship2 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				_adminUser.getUserId(),
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				_objectDefinition3.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oneToManyRelationshipName",
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinition3.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship2.getObjectFieldId2());
+
+		_objectDefinition3.setAccountEntryRestricted(true);
+
+		_objectDefinition3 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition3);
+
+		_objectDefinition3 =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				_adminUser.getUserId(),
+				_objectDefinition3.getObjectDefinitionId());
+
+		_accountManagerRole = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+		_accountAdministratorRole = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+
+		_buyerRole = _roleLocalService.getRole(_companyId, "Buyer");
 	}
 
 	@After
@@ -563,8 +612,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testAddObjectEntryAccountRestriction() throws Exception {
-		_restrictObjectDefinitionByAccount();
-
 		_user = _addPrincipalUser();
 
 		// Account scope
@@ -578,16 +625,14 @@ public class DefaultObjectEntryManagerImplTest {
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have ADD_OBJECT_ENTRY permission for ",
-				_objectDefinition1.getResourceName(), StringPool.SPACE),
+				_objectDefinition3.getResourceName(), StringPool.SPACE),
 			() -> _addObjectEntry(accountEntry1));
 
-		Role buyerRole = _roleLocalService.getRole(_companyId, "Buyer");
-
-		_addResourcePermission("ADD_OBJECT_ENTRY", buyerRole);
+		_addResourcePermission("ADD_OBJECT_ENTRY", _buyerRole);
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
-			buyerRole.getRoleId());
+			_buyerRole.getRoleId());
 
 		Assert.assertNotNull(_addObjectEntry(accountEntry1));
 
@@ -610,20 +655,16 @@ public class DefaultObjectEntryManagerImplTest {
 			accountEntry1.getAccountEntryId(),
 			organization1.getOrganizationId());
 
-		Role accountManagerRole = _roleLocalService.getRole(
-			_companyId,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
-
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		_assertResourcePermissionFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have ADD_OBJECT_ENTRY permission for ",
-				_objectDefinition1.getResourceName(), StringPool.SPACE),
+				_objectDefinition3.getResourceName(), StringPool.SPACE),
 			() -> _addObjectEntry(accountEntry1));
 
-		_addResourcePermission("ADD_OBJECT_ENTRY", accountManagerRole);
+		_addResourcePermission("ADD_OBJECT_ENTRY", _accountManagerRole);
 
 		_addObjectEntry(accountEntry1);
 
@@ -634,7 +675,7 @@ public class DefaultObjectEntryManagerImplTest {
 				String.valueOf(accountEntry2.getAccountEntryId())),
 			() -> _addObjectEntry(accountEntry2));
 
-		_removeResourcePermission("ADD_OBJECT_ENTRY", accountManagerRole);
+		_removeResourcePermission("ADD_OBJECT_ENTRY", _accountManagerRole);
 
 		// Sub Organization scope
 
@@ -663,16 +704,16 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addPrincipalUser();
 
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		_assertResourcePermissionFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have ADD_OBJECT_ENTRY permission for ",
-				_objectDefinition1.getResourceName(), StringPool.SPACE),
+				_objectDefinition3.getResourceName(), StringPool.SPACE),
 			() -> _addObjectEntry(accountEntry1));
 
-		_addResourcePermission("ADD_OBJECT_ENTRY", accountManagerRole);
+		_addResourcePermission("ADD_OBJECT_ENTRY", _accountManagerRole);
 
 		_addObjectEntry(accountEntry1);
 
@@ -686,8 +727,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testDeleteObjectEntryAccountRestriction() throws Exception {
-		_restrictObjectDefinitionByAccount();
-
 		AccountEntry accountEntry1 = _addAccountEntry();
 		AccountEntry accountEntry2 = _addAccountEntry();
 
@@ -704,31 +743,25 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry2.getAccountEntryId(), _user.getUserId());
 
-		Role accountAdministratorRole = _roleLocalService.getRole(
-			_companyId,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
-
-		_addResourcePermission(ActionKeys.DELETE, accountAdministratorRole);
-		_addResourcePermission(ActionKeys.VIEW, accountAdministratorRole);
+		_addResourcePermission(ActionKeys.DELETE, _accountAdministratorRole);
+		_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
-			accountAdministratorRole.getRoleId());
+			_accountAdministratorRole.getRoleId());
 
-		Role buyerRole = _roleLocalService.getRole(_companyId, "Buyer");
-
-		_addResourcePermission(ActionKeys.VIEW, buyerRole);
+		_addResourcePermission(ActionKeys.VIEW, _buyerRole);
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			_user.getUserId(), accountEntry2.getAccountEntryGroupId(),
-			buyerRole.getRoleId());
+			_buyerRole.getRoleId());
 
 		_objectEntryManager.deleteObjectEntry(
-			_objectDefinition1, objectEntry1.getId());
+			_objectDefinition3, objectEntry1.getId());
 
 		try {
 			_objectEntryManager.deleteObjectEntry(
-				_objectDefinition1, objectEntry2.getId());
+				_objectDefinition3, objectEntry2.getId());
 
 			Assert.fail();
 		}
@@ -738,7 +771,7 @@ public class DefaultObjectEntryManagerImplTest {
 				StringBundler.concat(
 					"User ", String.valueOf(_user.getUserId()),
 					" must have DELETE permission for ",
-					_objectDefinition1.getClassName(), StringPool.SPACE,
+					_objectDefinition3.getClassName(), StringPool.SPACE,
 					String.valueOf(objectEntry2.getId())));
 		}
 
@@ -755,13 +788,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		Role accountManagerRole = _roleLocalService.getRole(
-			_companyId,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+		_addResourcePermission(ActionKeys.VIEW, _accountManagerRole);
 
-		_addResourcePermission(ActionKeys.VIEW, accountManagerRole);
-
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry1.getAccountEntryId(),
@@ -777,7 +806,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		try {
 			_objectEntryManager.deleteObjectEntry(
-				_objectDefinition1, objectEntry1.getId());
+				_objectDefinition3, objectEntry1.getId());
 
 			Assert.fail();
 		}
@@ -786,16 +815,16 @@ public class DefaultObjectEntryManagerImplTest {
 				exception.getMessage(),
 				com.liferay.petra.string.StringBundler.concat(
 					"User ", _user.getUserId(), " must have DELETE permission ",
-					"for ", _objectDefinition1.getClassName(), StringPool.SPACE,
+					"for ", _objectDefinition3.getClassName(), StringPool.SPACE,
 					objectEntry1.getId()));
 		}
 
 		_assertObjectEntriesSize(1);
 
-		_addResourcePermission(ActionKeys.DELETE, accountManagerRole);
+		_addResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
 		_objectEntryManager.deleteObjectEntry(
-			_objectDefinition1, objectEntry1.getId());
+			_objectDefinition3, objectEntry1.getId());
 
 		_assertObjectEntriesSize(0);
 
@@ -820,7 +849,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addPrincipalUser();
 
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		Organization suborganization1 = OrganizationTestUtil.addOrganization(
 			organization1.getOrganizationId(), RandomTestUtil.randomString(),
@@ -840,11 +869,11 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(1);
 
-		_removeResourcePermission(ActionKeys.DELETE, accountManagerRole);
+		_removeResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
 		try {
 			_objectEntryManager.deleteObjectEntry(
-				_objectDefinition1, objectEntry1.getId());
+				_objectDefinition3, objectEntry1.getId());
 
 			Assert.fail();
 		}
@@ -853,16 +882,16 @@ public class DefaultObjectEntryManagerImplTest {
 				exception.getMessage(),
 				com.liferay.petra.string.StringBundler.concat(
 					"User ", _user.getUserId(), " must have DELETE permission ",
-					"for ", _objectDefinition1.getClassName(), StringPool.SPACE,
+					"for ", _objectDefinition3.getClassName(), StringPool.SPACE,
 					objectEntry1.getId()));
 		}
 
 		_assertObjectEntriesSize(1);
 
-		_addResourcePermission(ActionKeys.DELETE, accountManagerRole);
+		_addResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
 		_objectEntryManager.deleteObjectEntry(
-			_objectDefinition1, objectEntry1.getId());
+			_objectDefinition3, objectEntry1.getId());
 
 		_assertObjectEntriesSize(0);
 	}
@@ -1123,8 +1152,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testGetObjectEntriesAccountRestrictions() throws Exception {
-		_restrictObjectDefinitionByAccount();
-
 		AccountEntry accountEntry1 = _addAccountEntry();
 		AccountEntry accountEntry2 = _addAccountEntry();
 
@@ -1141,7 +1168,7 @@ public class DefaultObjectEntryManagerImplTest {
 		Role randomRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
+			_companyId, _objectDefinition3.getClassName(),
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
 			randomRole.getRoleId(), ActionKeys.VIEW);
 
@@ -1150,7 +1177,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_assertObjectEntriesSize(2);
 
 		_resourcePermissionLocalService.removeResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
+			_companyId, _objectDefinition3.getClassName(),
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
 			randomRole.getRoleId(), ActionKeys.VIEW);
 
@@ -1158,7 +1185,7 @@ public class DefaultObjectEntryManagerImplTest {
 		// account
 
 		_resourcePermissionLocalService.setResourcePermissions(
-			_companyId, _objectDefinition1.getClassName(),
+			_companyId, _objectDefinition3.getClassName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(objectEntry1.getId()), randomRole.getRoleId(),
 			new String[] {ActionKeys.VIEW});
@@ -1174,17 +1201,13 @@ public class DefaultObjectEntryManagerImplTest {
 		// the users belong if those account roles have the view resource
 		// permission
 
-		Role accountAdministratorRole = _roleLocalService.getRole(
-			_companyId,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+		_giveAccountRole(accountEntry1, _accountAdministratorRole, _user);
 
-		_giveAccountRole(accountEntry1, accountAdministratorRole, _user);
-
-		_addResourcePermission(ActionKeys.VIEW, accountAdministratorRole);
+		_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
 
 		_assertObjectEntriesSize(1);
 
-		_removeResourcePermission(ActionKeys.VIEW, accountAdministratorRole);
+		_removeResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
 
 		_assertObjectEntriesSize(0);
 
@@ -1215,11 +1238,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		Role accountManagerRole = _roleLocalService.getRole(
-			_companyId,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
-
-		_addResourcePermission(ActionKeys.VIEW, accountManagerRole);
+		_addResourcePermission(ActionKeys.VIEW, _accountManagerRole);
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry1.getAccountEntryId(),
@@ -1231,7 +1250,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addPrincipalUser();
 
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		_assertObjectEntriesSize(2);
 
@@ -1277,11 +1296,11 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addPrincipalUser();
 
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		_assertObjectEntriesSize(1);
 
-		_giveOrganizationRole(suborganization2, accountManagerRole, _user);
+		_giveOrganizationRole(suborganization2, _accountManagerRole, _user);
 
 		_assertObjectEntriesSize(2);
 
@@ -1298,8 +1317,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testUpdateObjectEntryAccountRestriction() throws Exception {
-		_restrictObjectDefinitionByAccount();
-
 		AccountEntry accountEntry1 = _addAccountEntry();
 		AccountEntry accountEntry2 = _addAccountEntry();
 
@@ -1308,37 +1325,31 @@ public class DefaultObjectEntryManagerImplTest {
 
 		// Account scope
 
-		Role accountAdministratorRole = _roleLocalService.getRole(
-			_companyId,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
-
-		_addResourcePermission(ActionKeys.UPDATE, accountAdministratorRole);
-		_addResourcePermission(ActionKeys.VIEW, accountAdministratorRole);
+		_addResourcePermission(ActionKeys.UPDATE, _accountAdministratorRole);
+		_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
 
 		_user = _addPrincipalUser();
 
-		_giveAccountRole(accountEntry1, accountAdministratorRole, _user);
+		_giveAccountRole(accountEntry1, _accountAdministratorRole, _user);
 
-		Role buyerRole = _roleLocalService.getRole(_companyId, "Buyer");
+		_addResourcePermission(ActionKeys.VIEW, _buyerRole);
 
-		_addResourcePermission(ActionKeys.VIEW, buyerRole);
-
-		_giveAccountRole(accountEntry2, buyerRole, _user);
+		_giveAccountRole(accountEntry2, _buyerRole, _user);
 
 		_assertObjectEntriesSize(2);
 
 		_objectEntryManager.updateObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
+			_simpleDTOConverterContext, _objectDefinition3,
 			objectEntry1.getId(), objectEntry1);
 
 		_assertResourcePermissionFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have UPDATE permission for ",
-				_objectDefinition1.getClassName(), StringPool.SPACE,
+				_objectDefinition3.getClassName(), StringPool.SPACE,
 				String.valueOf(objectEntry2.getId())),
 			() -> _objectEntryManager.updateObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
+				_simpleDTOConverterContext, _objectDefinition3,
 				objectEntry2.getId(), objectEntry2));
 
 		// Organization scope
@@ -1347,13 +1358,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		Role accountManagerRole = _roleLocalService.getRole(
-			_companyId,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+		_addResourcePermission(ActionKeys.VIEW, _accountManagerRole);
 
-		_addResourcePermission(ActionKeys.VIEW, accountManagerRole);
-
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry1.getAccountEntryId(),
@@ -1369,19 +1376,19 @@ public class DefaultObjectEntryManagerImplTest {
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have UPDATE permission for ",
-				_objectDefinition1.getClassName(), StringPool.SPACE,
+				_objectDefinition3.getClassName(), StringPool.SPACE,
 				String.valueOf(objectEntry1.getId())),
 			() -> _objectEntryManager.updateObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
+				_simpleDTOConverterContext, _objectDefinition3,
 				objectEntry1.getId(), objectEntry1));
 
-		_addResourcePermission(ActionKeys.UPDATE, accountManagerRole);
+		_addResourcePermission(ActionKeys.UPDATE, _accountManagerRole);
 
 		_objectEntryManager.updateObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
+			_simpleDTOConverterContext, _objectDefinition3,
 			objectEntry1.getId(), objectEntry1);
 
-		_removeResourcePermission(ActionKeys.UPDATE, accountManagerRole);
+		_removeResourcePermission(ActionKeys.UPDATE, _accountManagerRole);
 
 		// Sub organization scope
 
@@ -1403,7 +1410,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addPrincipalUser();
 
-		_giveOrganizationRole(organization1, accountManagerRole, _user);
+		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
 		_assertObjectEntriesSize(1);
 
@@ -1411,16 +1418,16 @@ public class DefaultObjectEntryManagerImplTest {
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have UPDATE permission for ",
-				_objectDefinition1.getClassName(), StringPool.SPACE,
+				_objectDefinition3.getClassName(), StringPool.SPACE,
 				String.valueOf(objectEntry1.getId())),
 			() -> _objectEntryManager.updateObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
+				_simpleDTOConverterContext, _objectDefinition3,
 				objectEntry1.getId(), objectEntry1));
 
-		_addResourcePermission(ActionKeys.UPDATE, accountManagerRole);
+		_addResourcePermission(ActionKeys.UPDATE, _accountManagerRole);
 
 		_objectEntryManager.updateObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
+			_simpleDTOConverterContext, _objectDefinition3,
 			objectEntry1.getId(), objectEntry1);
 	}
 
@@ -1497,14 +1504,12 @@ public class DefaultObjectEntryManagerImplTest {
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
+			_simpleDTOConverterContext, _objectDefinition3,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"r_oneToManyRelationshipName_accountEntryId",
 						accountEntry.getAccountEntryId()
-					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
 					).build();
 				}
 			},
@@ -1525,10 +1530,10 @@ public class DefaultObjectEntryManagerImplTest {
 	private void _addResourcePermission(String actionId, Role role)
 		throws Exception {
 
-		String name = _objectDefinition1.getClassName();
+		String name = _objectDefinition3.getClassName();
 
 		if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-			name = _objectDefinition1.getResourceName();
+			name = _objectDefinition3.getResourceName();
 		}
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -1698,13 +1703,13 @@ public class DefaultObjectEntryManagerImplTest {
 
 	private void _assertObjectEntriesSize(long size) throws Exception {
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
-			_companyId, _objectDefinition1, null, null,
+			_companyId, _objectDefinition3, null, null,
 			new DefaultDTOConverterContext(
 				false, Collections.emptyMap(), _dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, _user),
 			null,
 			_filterPredicateFactory.create(
-				null, _objectDefinition2.getObjectDefinitionId()),
+				null, _objectDefinition3.getObjectDefinitionId()),
 			null, null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
@@ -1855,40 +1860,15 @@ public class DefaultObjectEntryManagerImplTest {
 	private void _removeResourcePermission(String actionId, Role role)
 		throws Exception {
 
-		String name = _objectDefinition1.getClassName();
+		String name = _objectDefinition3.getClassName();
 
 		if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-			name = _objectDefinition1.getResourceName();
+			name = _objectDefinition3.getResourceName();
 		}
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			_companyId, name, ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			role.getRoleId(), actionId);
-	}
-
-	private void _restrictObjectDefinitionByAccount() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				_companyId, "AccountEntry");
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				_adminUser.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
-				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationshipName",
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_objectDefinition1.setAccountEntryRestrictedObjectFieldId(
-			objectRelationship.getObjectFieldId2());
-
-		_objectDefinition1.setAccountEntryRestricted(true);
-
-		_objectDefinition1 =
-			_objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
 	}
 
 	private void _setUpDTOConverterContext() {
@@ -1971,6 +1951,8 @@ public class DefaultObjectEntryManagerImplTest {
 	private static DateFormat _simpleDateFormat;
 	private static DTOConverterContext _simpleDTOConverterContext;
 
+	private Role _accountAdministratorRole;
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -1981,8 +1963,12 @@ public class DefaultObjectEntryManagerImplTest {
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
+	private Role _accountManagerRole;
+
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	private Role _buyerRole;
 
 	@Inject
 	private DLAppService _dlAppService;
@@ -2012,6 +1998,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition3;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

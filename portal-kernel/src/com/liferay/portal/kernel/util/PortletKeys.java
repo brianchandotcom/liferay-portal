@@ -19,8 +19,6 @@ package com.liferay.portal.kernel.util;
  */
 public class PortletKeys {
 
-	public static final String ADMIN_PLUGINS = "136";
-
 	public static final String ALERTS =
 		"com_liferay_announcements_web_portlet_AlertsPortlet";
 

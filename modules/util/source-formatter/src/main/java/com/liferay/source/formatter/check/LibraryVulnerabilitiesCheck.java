@@ -151,20 +151,12 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 					(List<Element>)dependenciesElement.elements("dependency")) {
 
 				String name = dependencyElement.attributeValue("name");
-
-				if (Validator.isNull(name)) {
-					continue;
-				}
-
 				String org = dependencyElement.attributeValue("org");
-
-				if (Validator.isNull(org)) {
-					continue;
-				}
-
 				String rev = dependencyElement.attributeValue("rev");
 
-				if (Validator.isNull(rev)) {
+				if (Validator.isNull(name) || Validator.isNull(org) ||
+					Validator.isNull(rev)) {
+
 					continue;
 				}
 
@@ -189,7 +181,6 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			_checkVersionInJsonFile(
 				fileName, absolutePath,
 				contentJSONObject.getJSONObject("dependencies"));
-
 			_checkVersionInJsonFile(
 				fileName, absolutePath,
 				contentJSONObject.getJSONObject("devDependencies"));
@@ -221,20 +212,12 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 				Element artifactIdElement = dependencyElement.element(
 					"artifactId");
-
-				if (artifactIdElement == null) {
-					continue;
-				}
-
 				Element groupIdElement = dependencyElement.element("groupId");
-
-				if (groupIdElement == null) {
-					continue;
-				}
-
 				Element versionElement = dependencyElement.element("version");
 
-				if (versionElement == null) {
+				if ((artifactIdElement == null) || (groupIdElement == null) ||
+					(versionElement == null)) {
+
 					continue;
 				}
 
@@ -263,20 +246,12 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 					Element artifactIdElement = pluginElement.element(
 						"artifactId");
-
-					if (artifactIdElement == null) {
-						continue;
-					}
-
 					Element groupIdElement = pluginElement.element("groupId");
-
-					if (groupIdElement == null) {
-						continue;
-					}
-
 					Element versionElement = pluginElement.element("version");
 
-					if (versionElement == null) {
+					if ((artifactIdElement == null) ||
+						(groupIdElement == null) || (versionElement == null)) {
+
 						continue;
 					}
 

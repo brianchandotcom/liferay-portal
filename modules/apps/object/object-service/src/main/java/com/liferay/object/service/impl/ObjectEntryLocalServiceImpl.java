@@ -193,6 +193,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -2173,21 +2174,21 @@ public class ObjectEntryLocalServiceImpl
 		Column<?, Long> column = (Column<?, Long>)table.getColumn(
 			objectField.getDBColumnName());
 
-		Table<OrganizationTable> tempOrganizationTable =
-			DSLQueryFactoryUtil.select(
-				OrganizationTable.INSTANCE.treePath
-			).from(
-				OrganizationTable.INSTANCE
-			).innerJoinON(
-				AccountEntryOrganizationRelTable.INSTANCE,
-				AccountEntryOrganizationRelTable.INSTANCE.organizationId.eq(
-					OrganizationTable.INSTANCE.organizationId)
-			).where(
-				AccountEntryOrganizationRelTable.INSTANCE.accountEntryId.eq(
-					column)
-			).as(
-				"tempOrganizationTable", OrganizationTable.INSTANCE
-			);
+		Table<?> tempOrganizationTable = DSLQueryFactoryUtil.select(
+			AccountEntryOrganizationRelTable.INSTANCE.accountEntryId,
+			OrganizationTable.INSTANCE.treePath
+		).from(
+			OrganizationTable.INSTANCE
+		).innerJoinON(
+			AccountEntryOrganizationRelTable.INSTANCE,
+			AccountEntryOrganizationRelTable.INSTANCE.organizationId.eq(
+				OrganizationTable.INSTANCE.organizationId)
+		).as(
+			"tempOrganizationTable",
+			Arrays.asList(
+				AccountEntryOrganizationRelTable.INSTANCE.accountEntryId,
+				OrganizationTable.INSTANCE.treePath)
+		);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
 			RoleTable.INSTANCE.roleId
@@ -2223,6 +2224,12 @@ public class ObjectEntryLocalServiceImpl
 									new Scalar<>("%"),
 									OrganizationTable.INSTANCE.treePath,
 									new Scalar<>("%"))
+							)
+						).where(
+							tempOrganizationTable.getColumn(
+								"accountEntryId", Long.class
+							).eq(
+								column
 							)
 						))
 				).withParentheses()

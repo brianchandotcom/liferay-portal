@@ -66,7 +66,7 @@ import org.dom4j.Element;
 /**
  * @author Qi Zhang
  */
-public class LibraryVersionCheck extends BaseFileCheck {
+public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
@@ -79,22 +79,252 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.endsWith(".gradle")) {
-			_gradleLibraryVersionCheck(fileName, absolutePath, content);
+			_checkGradleLibraryVulnerabilities(fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith(".json")) {
-			_jsonLibraryVersionCheck(fileName, absolutePath, content);
+			_checkJsonLibraryVulnerabilities(fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith(".properties")) {
-			_propertiesLibraryVersionCheck(fileName, absolutePath, content);
+			_checkPropertiesLibraryVulnerabilities(
+				fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith("ivy.xml")) {
-			_ivyXmlLibraryVersionCheck(fileName, absolutePath, content);
+			_checkIvyXmlLibraryVulnerabilities(fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith("pom.xml")) {
-			_pomXmlLibraryVersionCheck(fileName, absolutePath, content);
+			_checkPomXmlLibraryVulnerabilities(fileName, absolutePath, content);
 		}
 
 		return content;
+	}
+
+	private void _checkGradleLibraryVulnerabilities(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		GradleBuildFile gradleBuildFile = new GradleBuildFile(content);
+
+		List<GradleDependency> gradleDependencies =
+			gradleBuildFile.getGradleDependencies();
+
+		gradleDependencies.addAll(gradleBuildFile.getBuildScriptDependencies());
+
+		Iterator<GradleDependency> iterator = gradleDependencies.iterator();
+
+		while (iterator.hasNext()) {
+			GradleDependency gradleDependency = iterator.next();
+
+			if (Validator.isNull(gradleDependency.getGroup()) ||
+				Validator.isNull(gradleDependency.getName()) ||
+				Validator.isNull(gradleDependency.getVersion())) {
+
+				continue;
+			}
+
+			_checkVulnerabilities(
+				fileName, absolutePath,
+				gradleDependency.getGroup() + StringPool.COLON +
+					gradleDependency.getName(),
+				gradleDependency.getVersion(),
+				SecurityAdvisoryEcosystemEnum.MAVEN);
+		}
+	}
+
+	private void _checkIvyXmlLibraryVulnerabilities(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (Validator.isNull(content)) {
+			return;
+		}
+
+		Document document = SourceUtil.readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element dependenciesElement :
+				(List<Element>)rootElement.elements("dependencies")) {
+
+			for (Element dependencyElement :
+					(List<Element>)dependenciesElement.elements("dependency")) {
+
+				String name = dependencyElement.attributeValue("name");
+
+				if (Validator.isNull(name)) {
+					continue;
+				}
+
+				String org = dependencyElement.attributeValue("org");
+
+				if (Validator.isNull(org)) {
+					continue;
+				}
+
+				String rev = dependencyElement.attributeValue("rev");
+
+				if (Validator.isNull(rev)) {
+					continue;
+				}
+
+				_checkVulnerabilities(
+					fileName, absolutePath, org + StringPool.COLON + name, rev,
+					SecurityAdvisoryEcosystemEnum.MAVEN);
+			}
+		}
+	}
+
+	private void _checkJsonLibraryVulnerabilities(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (Validator.isNull(content)) {
+			return;
+		}
+
+		try {
+			JSONObject contentJSONObject = new JSONObjectImpl(content);
+
+			_checkVersionInJsonFile(
+				fileName, absolutePath,
+				contentJSONObject.getJSONObject("dependencies"));
+
+			_checkVersionInJsonFile(
+				fileName, absolutePath,
+				contentJSONObject.getJSONObject("devDependencies"));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+	}
+
+	private void _checkPomXmlLibraryVulnerabilities(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (Validator.isNull(content)) {
+			return;
+		}
+
+		Document document = SourceUtil.readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element dependenciesElement :
+				(List<Element>)rootElement.elements("dependencies")) {
+
+			for (Element dependencyElement :
+					(List<Element>)dependenciesElement.elements("dependency")) {
+
+				Element artifactIdElement = dependencyElement.element(
+					"artifactId");
+
+				if (artifactIdElement == null) {
+					continue;
+				}
+
+				Element groupIdElement = dependencyElement.element("groupId");
+
+				if (groupIdElement == null) {
+					continue;
+				}
+
+				Element versionElement = dependencyElement.element("version");
+
+				if (versionElement == null) {
+					continue;
+				}
+
+				String version = versionElement.getText();
+
+				if (version.startsWith(StringPool.DOLLAR)) {
+					continue;
+				}
+
+				_checkVulnerabilities(
+					fileName, absolutePath,
+					groupIdElement.getText() + StringPool.COLON +
+						artifactIdElement.getText(),
+					version, SecurityAdvisoryEcosystemEnum.MAVEN);
+			}
+		}
+
+		for (Element buildsElement :
+				(List<Element>)rootElement.elements("build")) {
+
+			for (Element pluginsElement :
+					(List<Element>)buildsElement.elements("plugins")) {
+
+				for (Element pluginElement :
+						(List<Element>)pluginsElement.elements("plugin")) {
+
+					Element artifactIdElement = pluginElement.element(
+						"artifactId");
+
+					if (artifactIdElement == null) {
+						continue;
+					}
+
+					Element groupIdElement = pluginElement.element("groupId");
+
+					if (groupIdElement == null) {
+						continue;
+					}
+
+					Element versionElement = pluginElement.element("version");
+
+					if (versionElement == null) {
+						continue;
+					}
+
+					String version = versionElement.getText();
+
+					if (version.startsWith(StringPool.DOLLAR)) {
+						continue;
+					}
+
+					_checkVulnerabilities(
+						fileName, absolutePath,
+						groupIdElement.getText() + StringPool.COLON +
+							artifactIdElement.getText(),
+						version, SecurityAdvisoryEcosystemEnum.MAVEN);
+				}
+			}
+		}
+	}
+
+	private void _checkPropertiesLibraryVulnerabilities(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(content));
+
+		Enumeration<String> enumeration =
+			(Enumeration<String>)properties.propertyNames();
+
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
+
+			String value = properties.getProperty(key);
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			String[] dependency = value.split(StringPool.COLON);
+
+			if (dependency.length < 3) {
+				continue;
+			}
+
+			_checkVulnerabilities(
+				fileName, absolutePath,
+				dependency[0] + StringPool.COLON + dependency[1], dependency[2],
+				SecurityAdvisoryEcosystemEnum.MAVEN);
+		}
 	}
 
 	private void _checkVersionInJsonFile(
@@ -430,235 +660,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		return Collections.emptyList();
 	}
 
-	private void _gradleLibraryVersionCheck(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		GradleBuildFile gradleBuildFile = new GradleBuildFile(content);
-
-		List<GradleDependency> gradleDependencies =
-			gradleBuildFile.getGradleDependencies();
-
-		gradleDependencies.addAll(gradleBuildFile.getBuildScriptDependencies());
-
-		Iterator<GradleDependency> iterator = gradleDependencies.iterator();
-
-		while (iterator.hasNext()) {
-			GradleDependency gradleDependency = iterator.next();
-
-			if (Validator.isNull(gradleDependency.getGroup()) ||
-				Validator.isNull(gradleDependency.getName()) ||
-				Validator.isNull(gradleDependency.getVersion())) {
-
-				continue;
-			}
-
-			_checkVulnerabilities(
-				fileName, absolutePath,
-				gradleDependency.getGroup() + StringPool.COLON +
-					gradleDependency.getName(),
-				gradleDependency.getVersion(),
-				SecurityAdvisoryEcosystemEnum.MAVEN);
-		}
-	}
-
-	private void _ivyXmlLibraryVersionCheck(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (Validator.isNull(content)) {
-			return;
-		}
-
-		Document document = SourceUtil.readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		for (Element dependenciesElement :
-				(List<Element>)rootElement.elements("dependencies")) {
-
-			for (Element dependencyElement :
-					(List<Element>)dependenciesElement.elements("dependency")) {
-
-				String name = dependencyElement.attributeValue("name");
-
-				if (Validator.isNull(name)) {
-					continue;
-				}
-
-				String org = dependencyElement.attributeValue("org");
-
-				if (Validator.isNull(org)) {
-					continue;
-				}
-
-				String rev = dependencyElement.attributeValue("rev");
-
-				if (Validator.isNull(rev)) {
-					continue;
-				}
-
-				_checkVulnerabilities(
-					fileName, absolutePath, org + StringPool.COLON + name, rev,
-					SecurityAdvisoryEcosystemEnum.MAVEN);
-			}
-		}
-	}
-
-	private void _jsonLibraryVersionCheck(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (Validator.isNull(content)) {
-			return;
-		}
-
-		try {
-			JSONObject contentJSONObject = new JSONObjectImpl(content);
-
-			_checkVersionInJsonFile(
-				fileName, absolutePath,
-				contentJSONObject.getJSONObject("dependencies"));
-
-			_checkVersionInJsonFile(
-				fileName, absolutePath,
-				contentJSONObject.getJSONObject("devDependencies"));
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-		}
-	}
-
-	private void _pomXmlLibraryVersionCheck(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (Validator.isNull(content)) {
-			return;
-		}
-
-		Document document = SourceUtil.readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		for (Element dependenciesElement :
-				(List<Element>)rootElement.elements("dependencies")) {
-
-			for (Element dependencyElement :
-					(List<Element>)dependenciesElement.elements("dependency")) {
-
-				Element artifactIdElement = dependencyElement.element(
-					"artifactId");
-
-				if (artifactIdElement == null) {
-					continue;
-				}
-
-				Element groupIdElement = dependencyElement.element("groupId");
-
-				if (groupIdElement == null) {
-					continue;
-				}
-
-				Element versionElement = dependencyElement.element("version");
-
-				if (versionElement == null) {
-					continue;
-				}
-
-				String version = versionElement.getText();
-
-				if (version.startsWith(StringPool.DOLLAR)) {
-					continue;
-				}
-
-				_checkVulnerabilities(
-					fileName, absolutePath,
-					groupIdElement.getText() + StringPool.COLON +
-						artifactIdElement.getText(),
-					version, SecurityAdvisoryEcosystemEnum.MAVEN);
-			}
-		}
-
-		for (Element buildsElement :
-				(List<Element>)rootElement.elements("build")) {
-
-			for (Element pluginsElement :
-					(List<Element>)buildsElement.elements("plugins")) {
-
-				for (Element pluginElement :
-						(List<Element>)pluginsElement.elements("plugin")) {
-
-					Element artifactIdElement = pluginElement.element(
-						"artifactId");
-
-					if (artifactIdElement == null) {
-						continue;
-					}
-
-					Element groupIdElement = pluginElement.element("groupId");
-
-					if (groupIdElement == null) {
-						continue;
-					}
-
-					Element versionElement = pluginElement.element("version");
-
-					if (versionElement == null) {
-						continue;
-					}
-
-					String version = versionElement.getText();
-
-					if (version.startsWith(StringPool.DOLLAR)) {
-						continue;
-					}
-
-					_checkVulnerabilities(
-						fileName, absolutePath,
-						groupIdElement.getText() + StringPool.COLON +
-							artifactIdElement.getText(),
-						version, SecurityAdvisoryEcosystemEnum.MAVEN);
-				}
-			}
-		}
-	}
-
-	private void _propertiesLibraryVersionCheck(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Properties properties = new Properties();
-
-		properties.load(new StringReader(content));
-
-		Enumeration<String> enumeration =
-			(Enumeration<String>)properties.propertyNames();
-
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
-
-			String value = properties.getProperty(key);
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			String[] dependency = value.split(StringPool.COLON);
-
-			if (dependency.length < 3) {
-				continue;
-			}
-
-			_checkVulnerabilities(
-				fileName, absolutePath,
-				dependency[0] + StringPool.COLON + dependency[1], dependency[2],
-				SecurityAdvisoryEcosystemEnum.MAVEN);
-		}
-	}
-
 	private static final String _CI_PROPERTIES_URL =
 		"http://mirrors.lax.liferay.com/github.com/liferay/liferay-jenkins-" +
 			"ee/commands/build.properties";
@@ -669,7 +670,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private static final String _SEVERITIES = "severities";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LibraryVersionCheck.class);
+		LibraryVulnerabilitiesCheck.class);
 
 	private String _cachedLibraryVulnerabilitiesContent;
 	private String _githubAccessToken;

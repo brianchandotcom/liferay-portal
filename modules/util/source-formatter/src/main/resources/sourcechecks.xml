@@ -1241,7 +1241,7 @@
 
 		<!-- Liferay Source Checks -->
 
-		<check name="LibraryVersionCheck">
+		<check name="LibraryVulnerabilitiesCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks the introduction of libraries and third party components with known vulnerabilities" />
 			<property name="enabled" value="false" />

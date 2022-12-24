@@ -756,8 +756,6 @@ public class MainServlet extends HttpServlet {
 				0, true);
 		}
 
-		ServletContext servletContext = getServletContext();
-
 		String[] webIds = PortalInstances.getWebIds();
 
 		for (String webId : webIds) {
@@ -769,7 +767,7 @@ public class MainServlet extends HttpServlet {
 				skipCheck = true;
 			}
 
-			PortalInstances.initCompany(servletContext, webId, skipCheck);
+			PortalInstances.initCompany(webId, skipCheck);
 		}
 	}
 

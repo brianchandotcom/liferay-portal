@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -157,8 +156,7 @@ public class CompanySampleDataGenerationTest {
 			Company company = _companyLocalService.addCompany(
 				null, webId, webId, webId, 0, true);
 
-			PortalInstances.initCompany(
-				ServletContextPool.get(StringPool.BLANK), webId);
+			PortalInstances.initCompany(webId);
 
 			// Add user
 

@@ -63,8 +63,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.ServletContext;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -94,7 +92,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.reload(_servletContext);
+		PortalInstances.reload();
 
 		try {
 			setUpPortlet(
@@ -132,7 +130,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			_companyLocalService.deleteCompany(company1);
 
-			PortalInstances.reload(_servletContext);
+			PortalInstances.reload();
 		}
 	}
 
@@ -145,7 +143,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			companies.add(company1);
 
-			PortalInstances.reload(_servletContext);
+			PortalInstances.reload();
 
 			setUpPortlet(
 				_internalClassTestPortlet,
@@ -160,7 +158,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			companies.add(company2);
 
-			PortalInstances.reload(_servletContext);
+			PortalInstances.reload();
 
 			Map<String, Portlet> portlets =
 				_portletLocalService.loadGetPortletsMap(
@@ -188,7 +186,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 				company -> _companyLocalService.deleteCompany(company),
 				companies);
 
-			PortalInstances.reload(_servletContext);
+			PortalInstances.reload();
 		}
 	}
 
@@ -221,7 +219,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.reload(_servletContext);
+		PortalInstances.reload();
 
 		try {
 			setUpPortlet(
@@ -264,7 +262,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			_companyLocalService.deleteCompany(company1);
 
-			PortalInstances.reload(_servletContext);
+			PortalInstances.reload();
 		}
 	}
 
@@ -467,9 +465,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
-
-	@Inject(filter = "original.bean=true")
-	private ServletContext _servletContext;
 
 	private class InternalClassTestPortlet extends TestPortlet {
 

@@ -100,8 +100,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.SitesUtil;
 
-import java.io.File;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -124,9 +122,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
-
-import org.springframework.core.io.FileSystemResourceLoader;
-import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Mika Koivisto
@@ -165,11 +160,6 @@ public class CompanyLocalServiceTest {
 		_companyId = CompanyThreadLocal.getCompanyId();
 
 		CompanyThreadLocal.setCompanyId(PortalInstances.getDefaultCompanyId());
-
-		File file = new File("portal-web/docroot");
-
-		_mockServletContext = new MockServletContext(
-			"file:" + file.getAbsolutePath(), new FileSystemResourceLoader());
 	}
 
 	@After
@@ -936,7 +926,7 @@ public class CompanyLocalServiceTest {
 		Company company = CompanyLocalServiceUtil.addCompany(
 			null, webId, webId, "test.com", 0, true);
 
-		PortalInstances.initCompany(_mockServletContext, webId);
+		PortalInstances.initCompany(webId);
 
 		CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
@@ -1162,7 +1152,6 @@ public class CompanyLocalServiceTest {
 	@Inject
 	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
 
-	private MockServletContext _mockServletContext;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 

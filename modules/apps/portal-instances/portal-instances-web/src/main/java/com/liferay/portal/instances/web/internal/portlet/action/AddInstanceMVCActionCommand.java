@@ -32,12 +32,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -106,15 +103,13 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		String siteInitializerKey = ParamUtil.getString(
 			actionRequest, "siteInitializerKey");
-		ServletContext servletContext =
-			(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(
 					company.getCompanyId())) {
 
 			_portalInstancesLocalService.initializePortalInstance(
-				company.getCompanyId(), siteInitializerKey, servletContext);
+				company.getCompanyId(), siteInitializerKey);
 		}
 
 		_synchronizePortalInstances();

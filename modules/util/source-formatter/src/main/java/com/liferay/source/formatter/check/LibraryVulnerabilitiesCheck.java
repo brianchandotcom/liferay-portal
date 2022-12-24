@@ -333,7 +333,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		DefaultArtifactVersion version) {
 
 		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
-			_vulnerableVersionMap.get(
+			_cachedVulnerableVersionMap.get(
 				securityAdvisoryEcosystemEnum + ":" + packageName);
 
 		for (SecurityVulnerabilityNode securityVulnerabilityNode :
@@ -403,7 +403,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			return;
 		}
 
-		if (!_vulnerableVersionMap.containsKey(
+		if (!_cachedVulnerableVersionMap.containsKey(
 				securityAdvisoryEcosystemEnum + ":" + packageName)) {
 
 			_generateVulnerableVersionMap(
@@ -422,7 +422,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			List<String> severities)
 		throws Exception {
 
-		if (_vulnerableVersionMap.containsKey(
+		if (_cachedVulnerableVersionMap.containsKey(
 				securityAdvisoryEcosystemEnum + ":" + packageName)) {
 
 			return;
@@ -444,7 +444,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			}
 		}
 
-		_vulnerableVersionMap.put(
+		_cachedVulnerableVersionMap.put(
 			securityAdvisoryEcosystemEnum + ":" + packageName,
 			_getSecurityVulnerabilityNodes(
 				packageName, null, securityAdvisoryEcosystemEnum, severities,
@@ -650,9 +650,9 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		LibraryVulnerabilitiesCheck.class);
 
 	private String _cachedLibraryVulnerabilitiesContent;
-	private String _githubAccessToken;
 	private final Map<String, List<SecurityVulnerabilityNode>>
-		_vulnerableVersionMap = new ConcurrentHashMap<>();
+		_cachedVulnerableVersionMap = new ConcurrentHashMap<>();
+	private String _githubAccessToken;
 
 	private static class SecurityVulnerabilityNode {
 

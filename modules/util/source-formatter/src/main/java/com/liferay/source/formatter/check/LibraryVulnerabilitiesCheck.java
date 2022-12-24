@@ -531,13 +531,6 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build()) {
 
-			HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
-
-			httpPost.addHeader("Authorization", "bearer " + githubToken);
-			httpPost.addHeader(
-				"Content-Type",
-				"application/json; charset=utf-8; application/graphql");
-
 			String queryArguments = StringBundler.concat(
 				"first: 100, package:\\\"", packageName, "\\\", ecosystem: ",
 				securityAdvisoryEcosystemEnum.name(), ", severities: ",
@@ -552,12 +545,18 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 					"severity vulnerableVersionRange } pageInfo {endCursor " +
 						"hasNextPage } totalCount }";
 
+			HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
+
 			httpPost.setEntity(
 				new StringEntity(
 					StringBundler.concat(
 						"{\"query\": \"{ securityVulnerabilities(",
 						queryArguments, ") ", resultArguments, "}\" }"),
 					ContentType.APPLICATION_JSON));
+			httpPost.addHeader("Authorization", "bearer " + githubToken);
+			httpPost.addHeader(
+				"Content-Type",
+				"application/json; charset=utf-8; application/graphql");
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpPost);

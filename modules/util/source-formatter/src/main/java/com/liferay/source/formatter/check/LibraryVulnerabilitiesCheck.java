@@ -610,8 +610,6 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 				securityVulnerabilityNode.setSummary(
 					advisoryJSONObject.getString("summary"));
 
-				securityVulnerabilityNode.setSecurityAdvisoryEcosystemEnum(
-					securityAdvisoryEcosystemEnum);
 				securityVulnerabilityNode.setVersionRange(
 					nodeJSONObject.getString("vulnerableVersionRange"));
 
@@ -660,12 +658,6 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			return _permalink;
 		}
 
-		public SecurityAdvisoryEcosystemEnum
-			getSecurityAdvisoryEcosystemEnum() {
-
-			return _securityAdvisoryEcosystemEnum;
-		}
-
 		public String getSummary() {
 			return _summary;
 		}
@@ -676,12 +668,6 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 		public void setPermalink(String permalink) {
 			_permalink = permalink;
-		}
-
-		public void setSecurityAdvisoryEcosystemEnum(
-			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum) {
-
-			_securityAdvisoryEcosystemEnum = securityAdvisoryEcosystemEnum;
 		}
 
 		public void setSummary(String summary) {
@@ -742,7 +728,6 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		}
 
 		private String _permalink;
-		private SecurityAdvisoryEcosystemEnum _securityAdvisoryEcosystemEnum;
 		private String _summary;
 		private VersionRange _versionRange;
 

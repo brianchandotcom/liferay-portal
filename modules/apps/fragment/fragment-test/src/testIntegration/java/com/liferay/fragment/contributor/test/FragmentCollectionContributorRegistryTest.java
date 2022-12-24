@@ -201,7 +201,7 @@ public class FragmentCollectionContributorRegistryTest {
 				segmentsExperienceId, plid, _fragmentEntry.getCss(), html,
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 				StringBundler.concat(
-					"{\"instanceid\":\"",
+					"{\"instanceid\": \"",
 					RandomTestUtil.randomString(_FRAGMENT_ENTRY_LINK_SIZE),
 					"\"}"),
 				StringPool.BLANK, 0, _fragmentEntry.getFragmentEntryKey(),

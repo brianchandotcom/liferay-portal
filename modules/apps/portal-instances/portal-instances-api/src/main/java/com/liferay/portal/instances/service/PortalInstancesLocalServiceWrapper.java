@@ -81,12 +81,11 @@ public class PortalInstancesLocalServiceWrapper
 
 	@Override
 	public void initializePortalInstance(
-			long companyId, String siteInitializerKey,
-			javax.servlet.ServletContext servletContext)
+			long companyId, String siteInitializerKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_portalInstancesLocalService.initializePortalInstance(
-			companyId, siteInitializerKey, servletContext);
+			companyId, siteInitializerKey);
 	}
 
 	@Override
@@ -115,8 +114,8 @@ public class PortalInstancesLocalServiceWrapper
 	}
 
 	@Override
-	public void reload(javax.servlet.ServletContext servletContext) {
-		_portalInstancesLocalService.reload(servletContext);
+	public void reload() {
+		_portalInstancesLocalService.reload();
 	}
 
 	@Override

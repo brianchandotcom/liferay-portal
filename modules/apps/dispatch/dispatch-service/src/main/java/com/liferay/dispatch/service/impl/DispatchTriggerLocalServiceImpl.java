@@ -368,7 +368,7 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	private void _validate(
-			long dispatchTriggerId, long companyId,			
+			long dispatchTriggerId, long companyId,
 			DispatchTaskExecutor dispatchTaskExecutor,
 			String dispatchTaskExecutorType, String name)
 		throws PortalException {

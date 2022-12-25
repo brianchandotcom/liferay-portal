@@ -94,15 +94,7 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						mdfRequestId,
-						siteURL,
-						Status.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 				validationSchema={goalsSchema}
 			/>
 		),
@@ -119,15 +111,7 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						mdfRequestId,
-						siteURL,
-						Status.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 				validationSchema={activitiesSchema}
 			/>
 		),
@@ -141,15 +125,7 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						mdfRequestId,
-						siteURL,
-						Status.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 			/>
 		),
 	};
@@ -169,7 +145,7 @@ const MDFRequestForm = () => {
 					: initialFormValues
 			}
 			onSubmit={(values, formikHelpers) =>
-				submitForm(values, formikHelpers, mdfRequestId, siteURL)
+				submitForm(values, formikHelpers, siteURL)
 			}
 		>
 			{StepFormComponent[step]}

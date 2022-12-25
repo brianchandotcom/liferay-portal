@@ -56,7 +56,8 @@ const Goals = ({
 			},
 			[setFieldValue]
 		),
-		values.company
+		values.company,
+		values.country
 	);
 
 	const {

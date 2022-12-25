@@ -12,16 +12,12 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.trash;
+package com.liferay.message.boards.internal.trash;
 
-import com.liferay.asset.util.AssetHelper;
-import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
-
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -29,30 +25,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.class.name=com.liferay.message.boards.model.MBThread",
+	property = "model.class.name=com.liferay.message.boards.model.MBCategory",
 	service = TrashRendererFactory.class
 )
-public class MBThreadTrashRendererFactory implements TrashRendererFactory {
+public class MBCategoryTrashRendererFactory implements TrashRendererFactory {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		MBThreadTrashRenderer mbThreadTrashRenderer = new MBThreadTrashRenderer(
-			_mbThreadLocalService.getThread(classPK), _assetHelper);
-
-		mbThreadTrashRenderer.setServletContext(_servletContext);
-
-		return mbThreadTrashRenderer;
+		return new MBCategoryTrashRenderer(
+			_mbCategoryLocalService.getCategory(classPK));
 	}
 
 	@Reference
-	private AssetHelper _assetHelper;
-
-	@Reference
-	private MBThreadLocalService _mbThreadLocalService;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.message.boards.web)"
-	)
-	private ServletContext _servletContext;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

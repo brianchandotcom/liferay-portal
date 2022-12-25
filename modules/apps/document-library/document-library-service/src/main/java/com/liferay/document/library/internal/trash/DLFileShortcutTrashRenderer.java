@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.trash;
+package com.liferay.document.library.internal.trash;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;

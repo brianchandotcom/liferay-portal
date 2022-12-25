@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.GitException;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
@@ -33,6 +32,8 @@ import com.liferay.source.formatter.upgrade.GradleDependency;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.StringReader;
 
 import java.net.URL;
@@ -478,21 +479,28 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			return _githubAccessToken;
 		}
 
-		URL urlObject = new URL(_CI_PROPERTIES_URL);
-
-		URLConnection urlConnection = urlObject.openConnection();
-
-		urlConnection.connect();
-
 		Properties properties = new Properties();
 
-		properties.load(urlConnection.getInputStream());
+		try {
+			URL url = new URL(_CI_PROPERTIES_URL);
+
+			URLConnection urlConnection = url.openConnection();
+
+			urlConnection.connect();
+
+			properties.load(urlConnection.getInputStream());
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+		}
 
 		_githubAccessToken = properties.getProperty("github.access.token");
 
 		if (Validator.isNull(_githubAccessToken)) {
 			throw new Exception(
-				"Can not find ci access token in " + _GITHUB_TOKEN_FILE_PATH);
+				"Unable to find ci access token in " + _CI_PROPERTIES_URL);
 		}
 
 		return _githubAccessToken;
@@ -503,18 +511,21 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			return _githubAccessToken;
 		}
 
-		File file = new File(_GITHUB_TOKEN_FILE_PATH);
+		File file = new File(_GITHUB_ACCESS_TOKEN_FILE_PATH);
 
 		if (!file.exists()) {
-			throw new Exception(_GITHUB_TOKEN_FILE_PATH + " does not exist");
+			throw new FileNotFoundException(
+				_GITHUB_ACCESS_TOKEN_FILE_PATH +
+					" does not exist, place your github access token in " +
+						_GITHUB_ACCESS_TOKEN_FILE_PATH);
 		}
 
 		_githubAccessToken = FileUtil.read(file);
 
 		if (Validator.isNull(_githubAccessToken)) {
 			throw new Exception(
-				"Can not find ci access token, place the github token in " +
-					_GITHUB_TOKEN_FILE_PATH);
+				"Unable to find ci access token in " +
+					_GITHUB_ACCESS_TOKEN_FILE_PATH);
 		}
 
 		return _githubAccessToken;
@@ -563,9 +574,9 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-				throw new GitException(
+				throw new Exception(
 					"Unable to access GitHub GraphQL API, check the github " +
-						"token in " + _GITHUB_TOKEN_FILE_PATH);
+						"token in " + _GITHUB_ACCESS_TOKEN_FILE_PATH);
 			}
 
 			JSONObject jsonObject = new JSONObjectImpl(
@@ -635,7 +646,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		"http://mirrors.lax.liferay.com/github.com/liferay/liferay-jenkins-" +
 			"ee/commands/build.properties";
 
-	private static final String _GITHUB_TOKEN_FILE_PATH =
+	private static final String _GITHUB_ACCESS_TOKEN_FILE_PATH =
 		System.getProperty("user.home") + "/github.token";
 
 	private static final String _SEVERITIES = "severities";

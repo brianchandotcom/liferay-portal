@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -280,7 +279,8 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		return _trashRendererFactory.getTrashRenderer(classPK);
+		return new MBCategoryTrashRenderer(
+			_mbCategoryLocalService.getCategory(classPK));
 	}
 
 	@Override
@@ -436,10 +436,5 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Reference
 	private TrashHelper _trashHelper;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
-	)
-	private TrashRendererFactory _trashRendererFactory;
 
 }

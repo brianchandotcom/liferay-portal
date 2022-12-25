@@ -9,9 +9,11 @@
  * distribution rights of the Software.
  */
 
+import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
+import updateMDFRequest from '../../../common/services/liferay/object/mdf-requests/updateMDFRequest';
 
 export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 	const dtoMDFRequestSFResponse = await createMDFRequest(
@@ -19,12 +21,22 @@ export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 		mdfRequest
 	);
 
+	let dtoMDFRequestResponse: MDFRequestDTO | undefined = undefined;
+
 	if (dtoMDFRequestSFResponse.externalReferenceCode) {
-		const dtoMDFRequestResponse = await createMDFRequest(
-			ResourceName.MDF_REQUEST_DXP,
-			mdfRequest,
-			dtoMDFRequestSFResponse.externalReferenceCode
-		);
+		if (mdfRequest.id) {
+			dtoMDFRequestResponse = await updateMDFRequest(
+				ResourceName.MDF_REQUEST_DXP,
+				mdfRequest,
+				dtoMDFRequestSFResponse.externalReferenceCode
+			);
+		} else {
+			dtoMDFRequestResponse = await createMDFRequest(
+				ResourceName.MDF_REQUEST_DXP,
+				mdfRequest,
+				dtoMDFRequestSFResponse.externalReferenceCode
+			);
+		}
 
 		return dtoMDFRequestResponse;
 	}

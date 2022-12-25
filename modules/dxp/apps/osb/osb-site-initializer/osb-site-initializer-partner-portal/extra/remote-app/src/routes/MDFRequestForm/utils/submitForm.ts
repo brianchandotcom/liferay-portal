@@ -30,7 +30,6 @@ import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
 export default async function submitForm(
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
-	mdfRequestId: number,
 	siteURL: string,
 	currentRequestStatus?: LiferayPicklist
 ) {
@@ -44,15 +43,13 @@ export default async function submitForm(
 
 	if (
 		Liferay.FeatureFlags['LPS-164528'] &&
-		!mdfRequestId &&
 		values.mdfRequestStatus !== Status.DRAFT
 	) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	} else if (mdfRequestId) {
+	} else if (values.id) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
-			values,
-			mdfRequestId
+			values
 		);
 	} else {
 		dtoMDFRequest = await createMDFRequest(
@@ -66,7 +63,6 @@ export default async function submitForm(
 			values?.activities?.map(async (activity) => {
 				if (
 					Liferay.FeatureFlags['LPS-164528'] &&
-					!mdfRequestId &&
 					values.mdfRequestStatus !== Status.DRAFT
 				) {
 					return await createMDFRequestActivitiesProxyAPI(

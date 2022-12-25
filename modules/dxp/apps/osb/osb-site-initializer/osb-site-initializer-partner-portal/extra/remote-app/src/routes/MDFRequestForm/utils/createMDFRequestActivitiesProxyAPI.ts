@@ -9,9 +9,11 @@
  * distribution rights of the Software.
  */
 
+import MDFRequestActivityDTO from '../../../common/interfaces/dto/mdfRequestActivityDTO';
 import LiferayAccountBrief from '../../../common/interfaces/liferayAccountBrief';
 import MDFRequestActivity from '../../../common/interfaces/mdfRequestActivity';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
+import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 
 export default async function createMDFRequestActivitiesProxyAPI(
@@ -28,8 +30,21 @@ export default async function createMDFRequestActivitiesProxyAPI(
 		mdFRequestExternalReferenceCodeSF
 	);
 
+	let dtoMDFRequestResponse: MDFRequestActivityDTO | undefined = undefined;
+
 	if (dtoMDFRequestActivitySFResponse.externalReferenceCode) {
-		const dtoMDFRequestResponse = await createMDFRequestActivities(
+		if (mdfRequestActivity.id) {
+			dtoMDFRequestResponse = await updateMDFRequestActivities(
+				ResourceName.ACTIVITY_DXP,
+				mdfRequestActivity,
+				company,
+				mdfRequestId,
+				mdFRequestExternalReferenceCodeSF,
+				dtoMDFRequestActivitySFResponse.externalReferenceCode
+			);
+		}
+	} else {
+		dtoMDFRequestResponse = await createMDFRequestActivities(
 			ResourceName.ACTIVITY_DXP,
 			mdfRequestActivity,
 			company,
@@ -37,7 +52,7 @@ export default async function createMDFRequestActivitiesProxyAPI(
 			mdFRequestExternalReferenceCodeSF,
 			dtoMDFRequestActivitySFResponse.externalReferenceCode
 		);
-
-		return dtoMDFRequestResponse;
 	}
+
+	return dtoMDFRequestResponse;
 }

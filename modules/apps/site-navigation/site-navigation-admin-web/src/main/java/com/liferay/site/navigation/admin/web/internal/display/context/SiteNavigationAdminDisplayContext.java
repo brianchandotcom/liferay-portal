@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,7 +74,6 @@ import java.util.stream.Stream;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -397,7 +395,7 @@ public class SiteNavigationAdminDisplayContext {
 			}
 		}
 
-		PortletURL addURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/add_site_navigation_menu_item.jsp"
@@ -418,20 +416,9 @@ public class SiteNavigationAdminDisplayContext {
 			"siteNavigationMenuId", getSiteNavigationMenuId()
 		).setParameter(
 			"type", siteNavigationMenuItemType.getType()
-		).build();
-
-		try {
-			addURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(windowStateException);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return addURL.toString();
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private JSONArray _getDDMTemplatesJSONArray() {

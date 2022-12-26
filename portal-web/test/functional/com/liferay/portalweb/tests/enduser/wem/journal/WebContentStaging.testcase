@@ -466,12 +466,12 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-82757."
+	@description = "This is a use case for LPS-82757. The feedId should be different between staging and live."
 	@priority = "3"
 	test PublishWebContentWithFeeds {
 		property test.name.skip.portal.instance = "WebContentStaging#PublishWebContentWithFeeds";
 
-		task ("Given: User enable feeds for Web Contents in the settings") {
+		task ("Given a site designer has web content feeds") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 			SystemSettings.openSystemSettingsAdmin();
@@ -484,18 +484,13 @@ definition {
 			FormFields.enableCheckbox(fieldName = "Show Feeds");
 
 			SystemSettings.saveConfiguration();
-		}
 
-		task ("And: Add AP portlet to the staging site") {
 			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
 				groupName = "Site Name (Staging)",
 				layoutName = "Staging Test Page",
 				site = "false",
 				widgetName = "Asset Publisher");
-		}
 
-		task ("And: Add WC feed then publish the site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 			NavItem.gotoFeeds();
@@ -520,38 +515,31 @@ definition {
 			NavItem.gotoFeeds();
 
 			WebContentFeeds.viewTableEntryCP(feedName = "Web Content Feed");
-		}
 
-		task ("And: Add a second page to the default site with a WC display widget") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name (Staging)",
 				layoutName = "Second Page",
 				site = "false");
 
 			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
 				groupName = "Site Name (Staging)",
 				layoutName = "Second Page",
 				site = "false",
 				widgetName = "Web Content Display");
-		}
 
-		task ("And: Save the Id and the external URL of the feed on staging") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 			NavItem.gotoFeeds();
 
 			WebContentNavigator.gotoEditFeed(feedName = "Web Content Feed");
 
-			var webContentFeedURL = selenium.getAttribute("//a[contains(@href,'rss') and contains(.,'Preview')]@href");
+			WaitForPageLoad();
 
-			var stagingFeedId = StringUtil.extractLast("${webContentFeedURL}", "/");
+			var stagingFeedId = selenium.getWebElementAttribute("//div[label[normalize-space()='ID']]//input[not(contains(@type,'checkbox'))]", "value");
+			var webContentFeedURL = selenium.getWebElementAttribute("//a[contains(@href,'rss') and contains(.,'Preview')]", "href");
+
 			var entryExternalURL = StringUtil.replace("${webContentFeedURL}", "http://", "");
 
-			echo("## * Staging FeedId: ${stagingFeedId}");
-		}
-
-		task ("And: Add a new WC which points to external URL we previously saved then publish it") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
@@ -563,20 +551,16 @@ definition {
 				entryExternalURL = "${entryExternalURL}",
 				fieldLabel = "Content");
 
-			Button.clickPublish();
-
-			VerifyElementPresent(locator1 = "Message#SUCCESS");
+			PortletEntry.publish();
 		}
 
-		task ("When: User select this new WC for the WC display widget on the second stage on staging") {
+		task ("When the site designer displays web contents on Web Content Display") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Second Page",
 				siteName = "Site Name");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
-		}
 
-		task ("And: Make a publish process from staging") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
@@ -586,20 +570,18 @@ definition {
 			Staging.publishToLive();
 		}
 
-		task ("Then: The feedId on staging and on live should be different") {
+		task ("Then the feedId on staging and on live should be different") {
 			Navigator.gotoSitePage(
 				pageName = "Second Page",
 				siteName = "Site Name");
 
-			var webContentFeedURL = selenium.getAttribute("//div[contains(@class,'journal-content-article')]//a[contains(@href,'rss')]@href");
+			var webContentFeedURL = selenium.getWebElementAttribute("//div[contains(@class,'journal-content-article')]//a[contains(@href,'rss')]", "href");
 
 			var liveFeedId = StringUtil.extractLast("${webContentFeedURL}", "/");
 
-			echo("## * Live FeedId: ${liveFeedId}");
-
-			if ("${liveFeedId}" == "${stagingFeedId}") {
-				fail("The feedID should be different in live site.");
-			}
+			TestUtils.assertNotEquals(
+				actual = "${liveFeedId}",
+				expected = "${stagingFeedId}");
 		}
 	}
 

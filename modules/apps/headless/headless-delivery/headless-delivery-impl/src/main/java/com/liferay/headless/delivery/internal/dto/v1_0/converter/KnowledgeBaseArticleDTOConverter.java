@@ -31,6 +31,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,7 +42,6 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -99,13 +99,15 @@ public class KnowledgeBaseArticleDTOConverter
 					_assetTagLocalService.getTags(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
 					AssetTag.NAME_ACCESSOR);
-				numberOfAttachments = Optional.ofNullable(
-					kbArticle.getAttachmentsFileEntries()
-				).map(
-					List::size
-				).orElse(
-					0
-				);
+
+				numberOfAttachments = 0;
+				List<FileEntry> fileEntries =
+					kbArticle.getAttachmentsFileEntries();
+
+				if (fileEntries != null) {
+					numberOfAttachments = fileEntries.size();
+				}
+
 				numberOfKnowledgeBaseArticles =
 					_kbArticleService.getKBArticlesCount(
 						kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),

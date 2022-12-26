@@ -28,7 +28,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Victor Oliveira
@@ -76,25 +75,15 @@ public class DDMFormValuesUtil {
 			formFieldValue.getName());
 
 		if (ddmFormField != null) {
-			value = Optional.ofNullable(
-				formFieldValue.getValue()
-			).map(
-				Object::toString
-			).map(
-				stringValue -> {
-					if (ddmFormField.isLocalizable()) {
-						return new LocalizedValue() {
-							{
-								addString(locale, stringValue);
-							}
-						};
-					}
+			String stringValue = formFieldValue.getValue();
 
-					return _VALUE;
-				}
-			).orElse(
-				_VALUE
-			);
+			if ((stringValue != null) && ddmFormField.isLocalizable()) {
+				value = new LocalizedValue() {
+					{
+						addString(locale, stringValue);
+					}
+				};
+			}
 		}
 
 		ddmFormFieldValue.setValue(value);

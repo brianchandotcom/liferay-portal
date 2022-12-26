@@ -71,11 +71,11 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
-				String externalReferenceCode, String type, long userId)
+				String externalReferenceCode, long userId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			externalReferenceCode, type, userId);
+			externalReferenceCode, userId, type);
 	}
 
 	/**

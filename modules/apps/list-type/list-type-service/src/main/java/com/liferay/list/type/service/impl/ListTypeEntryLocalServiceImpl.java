@@ -59,7 +59,8 @@ public class ListTypeEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateExternalReferenceCode(
-			externalReferenceCode, user.getCompanyId(), listTypeDefinitionId);
+			externalReferenceCode, user.getCompanyId(), listTypeDefinitionId,
+			0);
 
 		_validateKey(listTypeDefinitionId, key);
 		_validateName(nameMap);
@@ -70,11 +71,7 @@ public class ListTypeEntryLocalServiceImpl
 		listTypeEntry.setCompanyId(user.getCompanyId());
 		listTypeEntry.setUserId(user.getUserId());
 		listTypeEntry.setUserName(user.getFullName());
-
-		if (Validator.isNotNull(externalReferenceCode)) {
-			listTypeEntry.setExternalReferenceCode(externalReferenceCode);
-		}
-
+		listTypeEntry.setExternalReferenceCode(externalReferenceCode);
 		listTypeEntry.setListTypeDefinitionId(listTypeDefinitionId);
 		listTypeEntry.setKey(key);
 		listTypeEntry.setNameMap(nameMap);
@@ -124,20 +121,16 @@ public class ListTypeEntryLocalServiceImpl
 			Map<Locale, String> nameMap)
 		throws PortalException {
 
-		_validateName(nameMap);
-
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
 			listTypeEntryId);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886")) &&
-			Validator.isNotNull(externalReferenceCode)) {
+		_validateExternalReferenceCode(
+			externalReferenceCode, listTypeEntry.getCompanyId(),
+			listTypeEntry.getListTypeDefinitionId(), listTypeEntryId);
 
-			_validateExternalReferenceCode(
-				externalReferenceCode, listTypeEntry.getCompanyId(),
-				listTypeEntry.getListTypeDefinitionId());
+		_validateName(nameMap);
 
-			listTypeEntry.setExternalReferenceCode(externalReferenceCode);
-		}
+		listTypeEntry.setExternalReferenceCode(externalReferenceCode);
 
 		listTypeEntry.setNameMap(nameMap);
 
@@ -145,15 +138,22 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long companyId,
-			long listTypeDefinitionId)
-		throws PortalException {
+		String externalReferenceCode, long companyId, long listTypeDefinitionId,
+		long listTypeEntryId) {
+
+		if (Validator.isNull(externalReferenceCode) ||
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886"))) {
+
+			return;
+		}
 
 		ListTypeEntry listTypeEntry =
 			listTypeEntryPersistence.fetchByERC_C_LTDI(
 				externalReferenceCode, companyId, listTypeDefinitionId);
 
-		if (listTypeEntry != null) {
+		if ((listTypeEntry != null) &&
+			(listTypeEntry.getListTypeEntryId() != listTypeEntryId)) {
+
 			throw new DuplicateListTypeEntryExternalReferenceCodeException(
 				externalReferenceCode);
 		}

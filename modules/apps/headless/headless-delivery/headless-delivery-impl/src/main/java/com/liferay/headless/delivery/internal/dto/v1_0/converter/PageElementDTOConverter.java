@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -58,17 +56,18 @@ public class PageElementDTOConverter
 					layoutStructureItem.getItemId());
 		}
 
+		LayoutStructure layoutStructure =
+			(LayoutStructure)dtoConverterContext.getAttribute(
+				"layoutStructure");
+
+		if (layoutStructure == null) {
+			throw new IllegalArgumentException(
+				"Layout structure is not defined for layout structure item " +
+					layoutStructureItem.getItemId());
+		}
+
 		long groupId = GetterUtil.getLong(groupIdObject);
 
-		LayoutStructure layoutStructure = Optional.ofNullable(
-			dtoConverterContext.getAttribute("layoutStructure")
-		).map(
-			LayoutStructure.class::cast
-		).orElseThrow(
-			() -> new IllegalArgumentException(
-				"Layout structure is not defined for layout structure item " +
-					layoutStructureItem.getItemId())
-		);
 		boolean saveInlineContent = GetterUtil.getBoolean(
 			dtoConverterContext.getAttribute("saveInlineContent"), true);
 		boolean saveMappingConfiguration = GetterUtil.getBoolean(

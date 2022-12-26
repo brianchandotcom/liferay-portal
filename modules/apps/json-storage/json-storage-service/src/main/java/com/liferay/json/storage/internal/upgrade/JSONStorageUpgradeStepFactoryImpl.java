@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = JSONStorageUpgradeStepFactory.class)
+@Component(service = JSONStorageUpgradeStepFactory.class)
 public class JSONStorageUpgradeStepFactoryImpl
 	implements JSONStorageUpgradeStepFactory {
 

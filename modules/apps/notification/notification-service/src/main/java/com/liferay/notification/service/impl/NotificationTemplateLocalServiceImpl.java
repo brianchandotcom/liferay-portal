@@ -131,18 +131,19 @@ public class NotificationTemplateLocalServiceImpl
 			String externalReferenceCode, String type, long userId)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
-		long notificationTemplateId = counterLocalService.increment();
-
 		NotificationTemplate notificationTemplate =
-			notificationTemplatePersistence.create(notificationTemplateId);
+			notificationTemplatePersistence.create(
+				counterLocalService.increment());
+
+		notificationTemplate.setExternalReferenceCode(externalReferenceCode);
+
+		User user = _userLocalService.getUser(userId);
 
 		notificationTemplate.setUserId(userId);
 		notificationTemplate.setUserName(user.getFullName());
 		notificationTemplate.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
-		notificationTemplate.setExternalReferenceCode(externalReferenceCode);
+
 		notificationTemplate.setName(externalReferenceCode);
 		notificationTemplate.setType(type);
 
@@ -151,30 +152,33 @@ public class NotificationTemplateLocalServiceImpl
 
 		_resourceLocalService.addResources(
 			notificationTemplate.getCompanyId(), 0, userId,
-			NotificationTemplate.class.getName(), notificationTemplateId, false,
-			true, true);
-
-		long notificationRecipientId = counterLocalService.increment();
+			NotificationTemplate.class.getName(),
+			notificationTemplate.getNotificationTemplateId(), false, true,
+			true);
 
 		NotificationRecipient notificationRecipient =
 			_notificationRecipientLocalService.createNotificationRecipient(
-				notificationRecipientId);
+				counterLocalService.increment());
 
 		notificationRecipient.setClassNameId(
 			_portal.getClassNameId(NotificationTemplate.class));
-		notificationRecipient.setClassPK(notificationTemplateId);
+		notificationRecipient.setClassPK(
+			notificationTemplate.getNotificationTemplateId());
 
 		_notificationRecipientLocalService.updateNotificationRecipient(
 			notificationRecipient);
 
 		_addNotificationRecipientSetting(
-			LocaleUtil.getDefault(), "to", notificationRecipientId,
+			LocaleUtil.getDefault(), "to",
+			notificationRecipient.getNotificationRecipientId(),
 			externalReferenceCode);
 		_addNotificationRecipientSetting(
-			LocaleUtil.getDefault(), "fromName", notificationRecipientId,
+			LocaleUtil.getDefault(), "fromName",
+			notificationRecipient.getNotificationRecipientId(),
 			externalReferenceCode);
 		_addNotificationRecipientSetting(
-			null, "from", notificationRecipientId, externalReferenceCode);
+			null, "from", notificationRecipient.getNotificationRecipientId(),
+			externalReferenceCode);
 
 		return notificationTemplate;
 	}

@@ -110,8 +110,9 @@ public class ObjectActionLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateParametersUnicodeProperties(
-			user.getCompanyId(), conditionExpression, objectActionExecutorKey,
-			objectActionTriggerKey, parametersUnicodeProperties, userId);
+			user.getCompanyId(), userId, conditionExpression,
+			objectActionExecutorKey, objectActionTriggerKey,
+			parametersUnicodeProperties);
 
 		ObjectAction objectAction = objectActionPersistence.create(
 			counterLocalService.increment());
@@ -238,9 +239,9 @@ public class ObjectActionLocalServiceImpl
 			objectActionId);
 
 		_validateParametersUnicodeProperties(
-			objectAction.getCompanyId(), conditionExpression,
-			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties, objectAction.getUserId());
+			objectAction.getCompanyId(), objectAction.getUserId(),
+			conditionExpression, objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties);
 
 		objectAction.setActive(active);
 		objectAction.setConditionExpression(conditionExpression);
@@ -412,9 +413,9 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	private void _validateParametersUnicodeProperties(
-			long companyId, String conditionExpression,
+			long companyId, long userId, String conditionExpression,
 			String objectActionExecutorKey, String objectActionTriggerKey,
-			UnicodeProperties parametersUnicodeProperties, long userId)
+			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
 		Map<String, Object> errorMessageKeys = new HashMap<>();

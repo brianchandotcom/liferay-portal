@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 
-import java.util.Optional;
-
 /**
  * @author Drew Brokke
  */
@@ -59,15 +57,23 @@ public class ServiceBuilderCountryUtil {
 	public static long toServiceBuilderCountryId(
 		long companyId, String addressCountry) {
 
-		return Optional.ofNullable(
-			addressCountry
-		).map(
-			country -> toServiceBuilderCountry(companyId, country)
-		).map(
-			Country::getCountryId
-		).orElse(
-			(long)0
-		);
+		if (addressCountry == null) {
+			return 0;
+		}
+
+		Country country = toServiceBuilderCountry(companyId, addressCountry);
+
+		if (country == null) {
+			return 0;
+		}
+
+		Long id = country.getCountryId();
+
+		if (id != null) {
+			return id;
+		}
+
+		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

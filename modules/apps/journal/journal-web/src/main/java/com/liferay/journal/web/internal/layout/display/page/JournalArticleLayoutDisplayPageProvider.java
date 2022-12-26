@@ -58,7 +58,7 @@ public class JournalArticleLayoutDisplayPageProvider
 
 		try {
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, _assetHelper);
+				article, assetHelper);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -77,7 +77,7 @@ public class JournalArticleLayoutDisplayPageProvider
 			}
 
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, _assetHelper);
+				article, assetHelper);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -99,7 +99,7 @@ public class JournalArticleLayoutDisplayPageProvider
 			}
 
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, _assetHelper);
+				article, assetHelper);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -110,6 +110,9 @@ public class JournalArticleLayoutDisplayPageProvider
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE;
 	}
+
+	@Reference
+	protected AssetHelper assetHelper;
 
 	@Reference
 	protected JournalArticleLocalService journalArticleLocalService;
@@ -143,8 +146,5 @@ public class JournalArticleLayoutDisplayPageProvider
 
 		return null;
 	}
-
-	@Reference
-	private AssetHelper _assetHelper;
 
 }

@@ -35,8 +35,6 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -112,11 +110,11 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 		FormDocument formDocument = multipartBody.getValueAsInstance(
 			"formDocument", FormDocument.class);
 
-		long folderId = Optional.ofNullable(
-			formDocument.getFolderId()
-		).orElse(
-			0L
-		);
+		Long folderId = formDocument.getFolderId();
+
+		if (folderId == null) {
+			folderId = 0L;
+		}
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 

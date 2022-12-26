@@ -101,13 +101,15 @@ public class WikiPageDTOConverter
 						BlogsEntry.class.getName(), wikiPage.getPageId()),
 					AssetTag.NAME_ACCESSOR);
 				numberOfAttachments = wikiPage.getAttachmentsFileEntriesCount();
-				numberOfWikiPages = Optional.ofNullable(
-					wikiPage.getChildPages()
-				).map(
-					List::size
-				).orElse(
-					0
-				);
+				numberOfWikiPages = 0;
+
+				List<com.liferay.wiki.model.WikiPage> wikiPages =
+					wikiPage.getChildPages();
+
+				if (wikiPages != null) {
+					numberOfWikiPages = wikiPages.size();
+				}
+
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					_dtoConverterRegistry, wikiPage.getModelClassName(),

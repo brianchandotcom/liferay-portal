@@ -43,7 +43,8 @@ export default async function createMDFRequestActivitiesProxyAPI(
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
 		}
-	} else {
+	}
+	else {
 		dtoMDFRequestResponse = await createMDFRequestActivities(
 			ResourceName.ACTIVITY_DXP,
 			mdfRequestActivity,

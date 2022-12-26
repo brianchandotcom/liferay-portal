@@ -3127,6 +3127,68 @@ definition {
 		}
 	}
 
+	@description = "LPS-152122 TC7. Import JSON file to configure the SAML SP provider via Import/Export Center in a non-default port."
+	@priority = "4"
+	test ImportJSONFileToConfigureSAMLSPOnNonDefaultPort {
+		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property keystore.enabled = "true";
+		property portal.release = "false";
+		property skip.start.app.server.index = "1";
+		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLSPOnNonDefaultPort";
+
+		task ("Given: Start up second bundle and add SAP") {
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				nodePort = "9080");
+
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin(baseURL = "http://localhost:9080");
+
+			ServiceAccessPolicy.addServiceAccessPolicy(
+				enabled = "true",
+				methodName = "*",
+				policyName = "SAML_Provider",
+				serviceClass = "com.liferay.saml.admin.rest.internal.resource.v1_0.SamlProviderResourceImpl",
+				title = "Configure SAML provider");
+		}
+
+		task ("When: Import the JSON file via Import/Export Center") {
+			ImportExport.openImportExportAdmin(baseURL = "http://localhost:9080");
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				fileName = "saml-sp.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then: SAML is enabled with SP role") {
+			SAML.goToSAMLAdmin(baseURL = "http://localhost:9080");
+
+			SAMLRole.viewGeneralConfigurations(
+				samlEntityId = "samlsp",
+				samlRoleType = "Service Provider");
+		}
+
+		task ("And: All the configurations which defines in saml-sp.json are configured") {
+			SAMLNavigation.gotoServiceProvider();
+
+			SAMLPortlet.viewServiceProviderConfigurations(clockSkew = "3500");
+		}
+	}
+
 	@description = "This is a use case for LPS-108077. Import signing certificate from PKCS12 keystore file."
 	@priority = 5
 	test ImportSigningCertificateFromPKCS12KeystoreFile {

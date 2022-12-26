@@ -7858,6 +7858,22 @@ ${docker.start.error}</fail>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-test-smtp-server">
+		<sequential>
+			<exec executable="/bin/bash" outputproperty="java.pid">
+				<arg value="-c" />
+				<arg value="netstat -nlp | grep 8282 | cut -d/ -f1 | awk '{print $7}'" />
+			</exec>
+
+			<echo>java.pid is${java.pid}</echo>
+
+			<exec executable="/bin/bash">
+				<arg value="-c" />
+				<arg value="kill -9 ${java.pid}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="swap-dxp-license">
 		<attribute name="dxp.license.file" />
 
@@ -16154,7 +16170,23 @@ url=${short.hostname}:8080</echo>
 	</target>
 
 	<target name="start-test-smtp-server">
-		<start-test-smtp-server />
+		<exec executable="/bin/bash" outputproperty="output">
+			<arg value="-c" />
+			<arg value="netstat -nlp | grep 8282" />
+		</exec>
+		<echo>output is${output}</echo>
+		<if>
+			<not>
+				<equals arg1="${output}" arg2="" />
+			</not>
+			<then>
+				<stop-test-smtp-server />
+				<start-test-smtp-server />
+			</then>
+			<else>
+				<start-test-smtp-server />
+			</else>
+		</if>
 	</target>
 
 	<target name="stop-app-server">

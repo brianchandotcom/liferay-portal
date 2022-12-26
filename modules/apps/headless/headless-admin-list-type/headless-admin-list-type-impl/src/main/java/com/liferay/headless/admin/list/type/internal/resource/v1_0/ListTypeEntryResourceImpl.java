@@ -133,8 +133,7 @@ public class ListTypeEntryResourceImpl
 			return ListTypeEntryUtil.toListTypeEntry(
 				null, contextAcceptLanguage.getPreferredLocale(),
 				_listTypeEntryService.addListTypeEntry(
-					listTypeEntry.getKey(), listTypeDefinitionId,
-					listTypeEntry.getKey(),
+					null, listTypeDefinitionId, listTypeEntry.getKey(),
 					LocalizedMapUtil.getLocalizedMap(
 						listTypeEntry.getName_i18n())));
 		}
@@ -152,6 +151,15 @@ public class ListTypeEntryResourceImpl
 	public ListTypeEntry putListTypeEntry(
 			Long listTypeEntryId, ListTypeEntry listTypeEntry)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886"))) {
+			return ListTypeEntryUtil.toListTypeEntry(
+				null, contextAcceptLanguage.getPreferredLocale(),
+				_listTypeEntryService.updateListTypeEntry(
+					null, listTypeEntryId,
+					LocalizedMapUtil.getLocalizedMap(
+						listTypeEntry.getName_i18n())));
+		}
 
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),

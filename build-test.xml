@@ -6565,6 +6565,7 @@ go</echo>
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.3.21" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u1" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u33" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u43" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u44" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u45" />
 					</or>

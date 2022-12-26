@@ -41,36 +41,48 @@ import './index.scss';
 const HEADERS = [
 	{
 		clickable: true,
+		clickableSort: false,
 		greyColor: true,
 		key: 'applicationCreateDate',
+		requestLabel: 'applicationCreateDate',
 		type: 'link',
 		value: 'Date Filed',
 	},
 	{
+		clickableSort: false,
 		key: 'productName',
+		requestLabel: 'productName',
 		value: 'Product',
 	},
 	{
 		bold: true,
 		clickable: true,
+		clickableSort: false,
 		key: 'externalReferenceCode',
+		requestLabel: 'externalReferenceCode',
 		type: 'link',
 		value: 'Application Number',
 	},
 	{
+		clickableSort: false,
 		key: 'fullName',
+		requestLabel: 'fullName',
 		value: 'Name',
 	},
 	{
 		clickable: true,
+		clickableSort: false,
 		greyColor: true,
 		key: 'email',
+		requestLabel: 'email',
 		type: 'link',
 		value: 'Email Address',
 	},
 	{
+		clickableSort: false,
 		greyColor: true,
 		key: 'name',
+		requestLabel: 'name',
 		type: 'hasBubble',
 		value: 'Status',
 	},
@@ -100,10 +112,16 @@ type Application = {
 type TableContent = {[keys: string]: string};
 
 type TableItemType = {
-	bold: boolean;
-	clickable: boolean;
+	centered?: boolean;
+	clickable?: boolean;
+	clickableSort?: boolean;
+	greyColor?: boolean;
+	hasSort?: boolean;
+	icon?: boolean;
 	key: string;
-	type: string;
+	redColor?: boolean;
+	requestLabel: string;
+	type?: string;
 	value: string;
 };
 
@@ -126,7 +144,22 @@ type itemsPicklists = {
 	[keys: string]: string;
 };
 
+type StateSortType = {
+	[keys: string]: boolean;
+};
+
 const ApplicationsTable = () => {
+	const [sortState, setSortState] = useState<StateSortType>({
+		commission: false,
+		externalReferenceCode: false,
+		monthlyPremium: false,
+		policyOwnerName: false,
+		policyPeriod: true,
+		policyStatus: false,
+		productName: false,
+		renewalDue: true,
+	});
+
 	const [applications, setApplications] = useState<TableContent[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(0);
 	const [pageSize, setPageSize] = useState<number>(5);
@@ -788,6 +821,8 @@ const ApplicationsTable = () => {
 				data={applications}
 				headers={HEADERS}
 				onClickRules={onClickRules}
+				setSort={setSortState}
+				sort={sortState}
 			/>
 
 			<div className="d-flex justify-content-between mt-3">

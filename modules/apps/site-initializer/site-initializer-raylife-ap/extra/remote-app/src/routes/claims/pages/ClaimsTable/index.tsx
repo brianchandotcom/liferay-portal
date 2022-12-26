@@ -66,6 +66,15 @@ type ItemsFilteredType = {
 	item: string;
 };
 
+type StateSortType = {
+	[keys: string]: boolean;
+};
+
+enum Order {
+	Ascendant = 'asc',
+	Descendant = 'desc',
+}
+
 const ClaimsTable = () => {
 	const [dataClaims, setDataClaims] = useState<TableContentType[]>([]);
 	const [totalPages, setTotalPages] = useState<number>(0);
@@ -77,7 +86,7 @@ const ClaimsTable = () => {
 		1
 	);
 	const [searchInput, setSearchInput] = useState('');
-	const [sortByDate, setSortByDate] = useState<string>('desc');
+	const [sortedOrder, setSortedOrder] = useState<string>(Order.Descendant);
 	const [activeFilter, setActiveFilter] = useState(true);
 	const [productFilterItems, setProductFilterItems] = useState<string[]>([]);
 	const [statusFilterItems, setStatusFilterItems] = useState<string[]>([]);
@@ -90,6 +99,16 @@ const ClaimsTable = () => {
 	const [checkedStateStatus, setCheckedStateStatus] = useState<boolean[]>([]);
 	const [policyERCByPON, setPolicyERCByPON] = useState<string>();
 	const [policyERCByProduct, setPolicyERCByProduct] = useState<string[]>([]);
+	const [currentSort, setCurrentSort] = useState<string>('claimCreateDate');
+
+	const [sortState, setSortState] = useState<StateSortType>({
+		claimCreateDate: true,
+		claimStatus: false,
+		id: false,
+		policyNumber: false,
+		policyOwnerName: false,
+		productName: false,
+	});
 
 	const filterSearch = `contains(id, '${searchInput}') or contains(r_policyToClaims_c_raylifePolicyERC, '${searchInput}') or contains(r_policyToClaims_c_raylifePolicyERC, '${policyERCByPON}')`;
 
@@ -120,13 +139,13 @@ const ClaimsTable = () => {
 				? {
 						page: pageAndPageSize?.page,
 						pageSize: pageAndPageSize?.pageSize,
-						sort: `claimCreateDate:${sortByDate}`,
+						sort: `${currentSort}:${sortedOrder}`,
 				  }
 				: {
 						filter: filtered,
 						page: pageAndPageSize?.page,
 						pageSize: pageAndPageSize?.pageSize,
-						sort: `claimCreateDate:${sortByDate}`,
+						sort: `${currentSort}:${sortedOrder}`,
 				  };
 
 		return parameters;
@@ -201,35 +220,52 @@ const ClaimsTable = () => {
 
 	const HEADERS = [
 		{
+			clickableSort: true,
 			greyColor: true,
 			hasSort: true,
 			key: 'claimCreateDate',
+			requestLabel: 'claimCreateDate',
 			value: 'Date Field',
 		},
 		{
+			clickableSort: false,
 			greyColor: true,
+			hasSort: false,
 			key: 'productName',
+			requestLabel: 'productName',
 			value: 'Product',
 		},
 		{
 			bold: true,
+			clickableSort: true,
+			hasSort: false,
 			key: 'id',
+			requestLabel: 'id',
 			type: 'link',
 			value: 'Claim Number',
 		},
 		{
+			clickableSort: true,
 			greyColor: true,
+			hasSort: false,
 			key: 'policyNumber',
+			requestLabel: 'r_policyToClaims_c_raylifePolicyERC',
 			value: 'Policy Number',
 		},
 		{
+			clickableSort: false,
 			greyColor: true,
+			hasSort: false,
 			key: 'claimName',
+			requestLabel: 'policyOwnerName',
 			value: 'Name',
 		},
 		{
+			clickableSort: true,
 			greyColor: true,
+			hasSort: false,
 			key: 'claimStatus',
+			requestLabel: 'claimStatus',
 			type: 'hasBubble',
 			value: 'Status',
 		},
@@ -324,7 +360,7 @@ const ClaimsTable = () => {
 				key: externalReferenceCode,
 				policyNumber:
 					r_policyToClaims_c_raylifePolicy?.externalReferenceCode,
-				productName: r_policyToClaims_c_raylifePolicy?.productName,
+				productName: r_policyToClaims_c_raylifePolicy.productName,
 			});
 		}
 
@@ -345,9 +381,10 @@ const ClaimsTable = () => {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
+		dataClaims,
 		page,
 		pageSize,
-		sortByDate,
+		sortedOrder,
 		searchInput,
 		filterSearch,
 		filterProduct,
@@ -364,7 +401,7 @@ const ClaimsTable = () => {
 	}, [
 		page,
 		pageSize,
-		sortByDate,
+		sortedOrder,
 		searchInput,
 		filterSearch,
 		filterProduct,
@@ -530,7 +567,14 @@ const ClaimsTable = () => {
 	};
 
 	const setSortRule = () => {
-		sortByDate === 'desc' ? setSortByDate('asc') : setSortByDate('desc');
+		sortedOrder === Order.Descendant
+			? setSortedOrder(Order.Ascendant)
+			: setSortedOrder(Order.Descendant);
+	};
+
+	const setHeader = (user: string) => {
+		setCurrentSort(user);
+		setSortRule();
 	};
 
 	const title = `Claims (${totalCount})`;
@@ -785,8 +829,10 @@ const ClaimsTable = () => {
 				]}
 				data={dataClaims}
 				headers={HEADERS}
-				setSortByDate={setSortRule}
-				sortByDate={sortByDate}
+				onSaveCurrent={setHeader}
+				setSort={setSortState}
+				sort={sortState}
+				sortByOrder={sortedOrder}
 			/>
 
 			<div className="d-flex justify-content-between mt-3 px-3">

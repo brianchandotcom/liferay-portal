@@ -33,25 +33,33 @@ import InsuranceProducts from '../../applications/contents/InsuranceProducts';
 const HEADERS = [
 	{
 		clickable: true,
+		clickableSort: false,
 		greyColor: true,
 		key: 'applicationCreateDate',
+		requestLabel: 'applicationCreateDate',
 		type: 'link',
 		value: 'Date',
 	},
 	{
+		clickableSort: false,
 		key: 'productName',
+		requestLabel: 'productName',
 		value: 'Product',
 	},
 	{
 		bold: true,
 		clickable: true,
+		clickableSort: false,
 		key: 'externalReferenceCode',
+		requestLabel: 'externalReferenceCode',
 		type: 'link',
 		value: 'Application Number',
 	},
 	{
+		clickableSort: false,
 		greyColor: true,
 		key: 'name',
+		requestLabel: 'name',
 		type: 'hasBubble',
 		value: 'Status',
 	},
@@ -86,16 +94,37 @@ enum ModalType {
 }
 
 type TableItemType = {
-	bold: boolean;
-	clickable: boolean;
+	centered?: boolean;
+	clickable?: boolean;
+	clickableSort?: boolean;
+	greyColor?: boolean;
+	hasSort?: boolean;
+	icon?: boolean;
 	key: string;
-	type: string;
+	redColor?: boolean;
+	requestLabel: string;
+	type?: string;
 	value: string;
 };
 
 type TableRowContentType = {[keys: string]: string};
 
+type StateSortType = {
+	[keys: string]: boolean;
+};
+
 const RecentApplications = () => {
+	const [sortState, setSortState] = useState<StateSortType>({
+		commission: false,
+		externalReferenceCode: false,
+		monthlyPremium: false,
+		policyOwnerName: false,
+		policyPeriod: true,
+		policyStatus: false,
+		productName: false,
+		renewalDue: true,
+	});
+
 	const [applications, setApplications] = useState<TableContent[]>([]);
 	const [visible, setVisible] = useState(false);
 	const [contentModal, setContentModal] = useState(ModalType.insurance);
@@ -316,6 +345,8 @@ const RecentApplications = () => {
 				data={applications.slice(0, 6)}
 				headers={HEADERS}
 				onClickRules={onClickRules}
+				setSort={setSortState}
+				sort={sortState}
 			/>
 
 			<div className="align-items-center bottom-container d-flex justify-content-end mt-4 pb-3 px-3">

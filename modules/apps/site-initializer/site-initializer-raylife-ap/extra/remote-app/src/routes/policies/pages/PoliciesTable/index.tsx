@@ -49,10 +49,16 @@ type Policy = {
 type TableContent = {[keys: string]: string};
 
 type TableItemType = {
-	bold: boolean;
-	clickable: boolean;
+	centered?: boolean;
+	clickable?: boolean;
+	clickableSort?: boolean;
+	greyColor?: boolean;
+	hasSort?: boolean;
+	icon?: boolean;
 	key: string;
-	type: string;
+	redColor?: boolean;
+	requestLabel: string;
+	type?: string;
 	value: string;
 };
 
@@ -74,6 +80,15 @@ type itemsProducts = {
 type itemsPicklists = {
 	[keys: string]: string;
 };
+
+type StateSortType = {
+	[keys: string]: boolean;
+};
+
+enum Order {
+	Ascendant = 'asc',
+	Descendant = 'desc',
+}
 
 const daysToExpirePolicyAlert = 15;
 
@@ -102,8 +117,19 @@ const PoliciesTable = () => {
 	);
 	const [checkedStateStatus, setCheckedStateStatus] = useState<boolean[]>([]);
 	const [sortPolicyByEndDate, setSortPolicyByEndDate] = useState<string>(
-		'asc'
+		Order.Ascendant
 	);
+
+	const [sortState, setSortState] = useState<StateSortType>({
+		commission: false,
+		externalReferenceCode: false,
+		monthlyPremium: false,
+		policyOwnerName: false,
+		policyPeriod: true,
+		policyStatus: false,
+		productName: false,
+		renewalDue: true,
+	});
 
 	const filterSearch = `contains(policyOwnerName,'${searchInput}') or contains(policyOwnerEmail, '${searchInput}') or contains(externalReferenceCode, '${searchInput}')`;
 
@@ -383,46 +409,62 @@ const PoliciesTable = () => {
 		{
 			bold: false,
 			centered: true,
+			clickableSort: true,
 			hasSort: true,
 			key: 'renewalDue',
 			redColor: hasRedLine,
+			requestLabel: 'renewalDue',
 			value: 'Renewal Due',
 		},
 		{
+			clickableSort: false,
 			key: 'productName',
+			requestLabel: 'productName',
 			value: 'Product',
 		},
 		{
 			bold: true,
 			clickable: true,
+			clickableSort: false,
 			key: 'externalReferenceCode',
+			requestLabel: 'externalReferenceCode',
 			type: 'link',
 			value: 'Policy Number',
 		},
 		{
+			clickableSort: false,
 			greyColor: true,
 			key: 'policyOwnerName',
+			requestLabel: 'policyOwnerName',
 			value: 'Name',
 		},
 		{
+			clickableSort: false,
 			greyColor: true,
 			key: 'monthlyPremium',
+			requestLabel: 'monthlyPremium',
 			value: 'Monthly Premium',
 		},
 		{
+			clickableSort: true,
 			greyColor: true,
 			hasSort: true,
 			key: 'policyPeriod',
+			requestLabel: 'renewalDue',
 			value: 'Policy Period',
 		},
 		{
+			clickableSort: false,
 			greyColor: true,
 			key: 'commission',
+			requestLabel: 'commission',
 			value: 'Commission',
 		},
 		{
+			clickableSort: false,
 			greyColor: true,
 			key: 'policyStatus',
+			requestLabel: 'policyStatus',
 			value: 'Status',
 		},
 	];
@@ -518,9 +560,8 @@ const PoliciesTable = () => {
 						if (renewalDue === 0) {
 							return 'Due Today';
 						}
-						else {
-							return renewalDue;
-						}
+
+						return renewalDue;
 					};
 
 					const policyPeriod = `${formatDate(
@@ -580,9 +621,9 @@ const PoliciesTable = () => {
 	};
 
 	const setSortRule = () => {
-		sortPolicyByEndDate === 'desc'
-			? handleParametersChange('asc')
-			: handleParametersChange('desc');
+		sortPolicyByEndDate === Order.Descendant
+			? handleParametersChange(Order.Ascendant)
+			: handleParametersChange(Order.Descendant);
 	};
 
 	const title = `Policies (${totalCount})`;
@@ -615,6 +656,10 @@ const PoliciesTable = () => {
 				'policy-details'
 			);
 		}
+	};
+
+	const setHeader = () => {
+		setSortRule();
 	};
 
 	return (
@@ -821,8 +866,11 @@ const PoliciesTable = () => {
 				data={policies}
 				headers={HEADERS}
 				onClickRules={onClickRules}
-				setSortByDate={setSortRule}
-				sortByDate={sortPolicyByEndDate}
+				onSaveCurrent={setHeader}
+				setSort={setSortState}
+				setSortByOrder={setSortRule}
+				sort={sortState}
+				sortByOrder={sortPolicyByEndDate}
 			/>
 
 			<div className="d-flex justify-content-between mt-3">

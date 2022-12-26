@@ -870,13 +870,11 @@ public class UserAccountResourceImpl
 			);
 		}
 
-		if (userAccount.getCustomFields() != null) {
-			Optional.ofNullable(
-				userAccount.getCustomFields()
-			).ifPresent(
-				existingUserAccount::setCustomFields
-			);
-		}
+		Optional.ofNullable(
+			userAccount.getCustomFields()
+		).ifPresent(
+			existingUserAccount::setCustomFields
+		);
 	}
 
 	private void _checkCurrentPassword(User user, String currentPassword)

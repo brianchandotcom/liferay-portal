@@ -87,7 +87,7 @@ public interface NotificationTemplateLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate addNotificationTemplate(
-			String externalReferenceCode, String type, long userId)
+			String externalReferenceCode, long userId, String type)
 		throws PortalException;
 
 	/**

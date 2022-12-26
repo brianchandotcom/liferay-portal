@@ -69,11 +69,11 @@ public class NotificationTemplateLocalServiceUtil {
 	}
 
 	public static NotificationTemplate addNotificationTemplate(
-			String externalReferenceCode, String type, long userId)
+			String externalReferenceCode, long userId, String type)
 		throws PortalException {
 
 		return getService().addNotificationTemplate(
-			externalReferenceCode, type, userId);
+			externalReferenceCode, userId, type);
 	}
 
 	/**

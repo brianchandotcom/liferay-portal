@@ -55,7 +55,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -317,11 +316,13 @@ public class AccountResourceImpl
 	}
 
 	private String[] _getDomains(Account account) {
-		return Optional.ofNullable(
-			account.getDomains()
-		).orElse(
-			new String[0]
-		);
+		String[] domains = account.getDomains();
+
+		if (domains == null) {
+			return new String[0];
+		}
+
+		return domains;
 	}
 
 	private DTOConverterContext _getDTOConverterContext(long accountEntryId) {
@@ -433,21 +434,23 @@ public class AccountResourceImpl
 	}
 
 	private long[] _getOrganizationIds(Account account) {
-		return Optional.ofNullable(
-			account.getOrganizationIds()
-		).map(
-			ArrayUtil::toArray
-		).orElse(
-			new long[0]
-		);
+		Long[] organizationIds = account.getOrganizationIds();
+
+		if (organizationIds == null) {
+			return new long[0];
+		}
+
+		return ArrayUtil.toArray(organizationIds);
 	}
 
 	private long _getParentAccountId(Account account) {
-		return Optional.ofNullable(
-			account.getParentAccountId()
-		).orElse(
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
-		);
+		Long parentAccountId = account.getParentAccountId();
+
+		if (parentAccountId == null) {
+			return AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
+		}
+
+		return parentAccountId;
 	}
 
 	private ServiceContext _getServiceContext(Account account)
@@ -468,19 +471,23 @@ public class AccountResourceImpl
 	}
 
 	private int _getStatus(Account account) {
-		return Optional.ofNullable(
-			account.getStatus()
-		).orElse(
-			WorkflowConstants.STATUS_APPROVED
-		);
+		Integer status = account.getStatus();
+
+		if (status == null) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return status;
 	}
 
 	private String _getType(Account account) {
-		return Optional.ofNullable(
-			account.getTypeAsString()
-		).orElse(
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS
-		);
+		String type = account.getTypeAsString();
+
+		if (type == null) {
+			return AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+		}
+
+		return type;
 	}
 
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {

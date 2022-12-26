@@ -617,7 +617,7 @@ definition {
 		var dmDocumentTitle = '''Special Characters Title 12345`~!@#$%_&_(){}[],.__/__''';
 
 		AssertTextEquals(
-			key_dmDocumentTitle = '''Special Characters Title 12345`~!@#$%_&amp;_(){}[],.__/__''',
+			key_dmDocumentTitle = "${dmDocumentTitle}",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
 	}

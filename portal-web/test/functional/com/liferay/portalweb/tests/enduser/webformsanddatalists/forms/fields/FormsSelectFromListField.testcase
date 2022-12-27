@@ -32,6 +32,43 @@ definition {
 		}
 	}
 
+	@description = "Verify if the user can add an empty option just with the field reference."
+	@priority = "4"
+	test CanAddEmptyOptionSelectFromList {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List",
+			formPageNumber = "0");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editOptionsRowValueOrFieldReference(
+			fieldReference = "Test",
+			optionValue = "",
+			rowNumber = "2");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewSelectFromListOption(optionValue = "");
+	}
+
 	@description = "LPS-76079 - Verify that a Select From List Field can allow Multiple Selections"
 	@priority = "5"
 	test CanAllowMultipleSelections {

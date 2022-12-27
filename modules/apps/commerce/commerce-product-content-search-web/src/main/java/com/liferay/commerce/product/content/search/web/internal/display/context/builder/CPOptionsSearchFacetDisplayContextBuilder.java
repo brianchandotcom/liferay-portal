@@ -20,6 +20,7 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -42,8 +43,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -212,17 +211,10 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	protected List<CPOptionsSearchFacetTermDisplayContext>
 		getEmptyTermDisplayContexts() {
 
-		Stream<Long> categoryIdsStream = _selectedCategoryIds.stream();
-
-		return categoryIdsStream.map(
-			this::_getEmptyTermDisplayContext
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			TransformUtil.transform(
+				_selectedCategoryIds, this::_getEmptyTermDisplayContext),
+			contextOptional -> contextOptional.orElse(null));
 	}
 
 	protected double getPopularity(

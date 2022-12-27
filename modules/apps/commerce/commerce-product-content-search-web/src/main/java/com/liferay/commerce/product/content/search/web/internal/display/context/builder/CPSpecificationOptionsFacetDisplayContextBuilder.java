@@ -21,6 +21,7 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -46,8 +48,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -80,15 +80,10 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	}
 
 	public void parameterValues(String... parameterValues) {
-		_selectedCPSpecificationOptionIds = Stream.of(
-			Objects.requireNonNull(parameterValues)
-		).map(
-			GetterUtil::getLong
-		).filter(
-			cpSpecificationOptionId -> cpSpecificationOptionId > 0
-		).collect(
-			Collectors.toList()
-		);
+		_selectedCPSpecificationOptionIds = ListUtil.filter(
+			TransformUtil.transformToList(
+				Objects.requireNonNull(parameterValues), GetterUtil::getLong),
+			cpSpecificationOptionId -> cpSpecificationOptionId > 0);
 	}
 
 	public void portal(Portal portal) {

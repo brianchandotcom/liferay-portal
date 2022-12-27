@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -257,7 +258,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_modelResourcePermissionsServiceTrackerMap.getService(
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
 		return modelResourcePermission.contains(
@@ -274,7 +275,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				objectEntry.getObjectDefinitionId());
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_modelResourcePermissionsServiceTrackerMap.getService(
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
 		return modelResourcePermission.contains(
@@ -315,14 +316,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_modelResourcePermissionsServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<ModelResourcePermission<ObjectEntry>>)
-					(Class<?>)ModelResourcePermission.class,
-				"(&(com.liferay.object=true)(model.class.name=*))",
-				(serviceReference, emitter) -> emitter.emit(
-					(String)serviceReference.getProperty("model.class.name")));
 		_objectConfiguration = ConfigurableUtil.createConfigurable(
 			ObjectConfiguration.class, properties);
 		_portletResourcePermissionsServiceTrackerMap =
@@ -335,7 +328,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Deactivate
 	protected void deactivate() {
-		_modelResourcePermissionsServiceTrackerMap.close();
 		_portletResourcePermissionsServiceTrackerMap.close();
 	}
 
@@ -347,7 +339,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_modelResourcePermissionsServiceTrackerMap.getService(
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
 		modelResourcePermission.check(
@@ -461,9 +453,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
-	private volatile ServiceTrackerMap
-		<String, ModelResourcePermission<ObjectEntry>>
-			_modelResourcePermissionsServiceTrackerMap;
 	private volatile ObjectConfiguration _objectConfiguration;
 
 	@Reference

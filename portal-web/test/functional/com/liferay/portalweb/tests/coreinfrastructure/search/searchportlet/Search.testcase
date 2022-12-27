@@ -1226,6 +1226,67 @@ definition {
 	}
 
 	@priority = "3"
+	test CanOrderCustomFacetTerms {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Black.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_3",
+			groupName = "Guest",
+			mimeType = "audio/mp3",
+			sourceFileName = "Document_3.mp3");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.png",
+			groupName = "Guest",
+			mimeType = "image/png",
+			sourceFileName = "Document_1.png");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		SearchFacetPortlet.configureCustomFacet(aggregationField = "extension");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "png,doc,jpg,mp3");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "Custom Facet",
+			sortOption = "Term Frequency Ascending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "doc,jpg,mp3,png");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "Custom Facet",
+			sortOption = "Term Value Ascending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "doc,jpg,mp3,png");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "Custom Facet",
+			sortOption = "Term Value Descending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "png,mp3,jpg,doc");
+	}
+
+	@priority = "3"
 	test CanOrderFolderFacetTerms {
 		for (var folder : list "Product,Engineering,2021,2022") {
 			JSONFolder.addFolder(

@@ -1,0 +1,22 @@
+[
+	{
+		"active": true,
+		"name": "actionReplicateID",
+		"objectActionExecutorKey": "update-object-entry",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+		"parameters": {
+			"objectDefinitionExternalReferenceCode": "OBJECT-EVP-ORGANIZATION",
+			"predefinedValues": [
+				{
+					"inputAsValue": false,
+					"label": {
+						"en_US": "IDNumber"
+					},
+					"name": "idNumber",
+					"value": "id"
+				}
+			]
+		}
+	}
+]

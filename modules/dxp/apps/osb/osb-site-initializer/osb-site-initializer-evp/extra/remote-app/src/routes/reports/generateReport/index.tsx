@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -26,6 +25,7 @@ type generateReportsType = typeof yupSchema.report.__outputType;
 const GenerateReport = () => {
 	const [statuses, setStatuses] = useState<any>([]);
 	const [branches, setBranches] = useState<any>([]);
+
 	const {
 		formState: {errors},
 		handleSubmit,
@@ -34,22 +34,21 @@ const GenerateReport = () => {
 		watch,
 	} = useForm<generateReportsType>({
 		defaultValues: {
-			branchRequest: [],
-			statusRequest: [],
+			finalRequestDate: '',
+			initialRequestDate: '',
+			liferayBranch: [],
+			requestStatus: [],
 		},
 		resolver: yupResolver(yupSchema.report),
 	});
-	const onSubmit: SubmitHandler<generateReportsType> = (data) => {
-		// eslint-disable-next-line no-console
-		console.log('data', data);
+	const onSubmit: SubmitHandler<generateReportsType> = (data: any) => {
+		// console.log(data);
 
-		getRequestsByFilter().then((response) =>
-			console.log('response', response)
-		);
+		getRequestsByFilter(data).then((response) => response);
 	};
 
-	const branchesWatch = watch('branchRequest') as number[];
-	const statusesWatch = watch('statusRequest') as number[];
+	const branchesWatch = watch('liferayBranch') as string[];
+	const statusesWatch = watch('requestStatus') as string[];
 
 	const formProps = {
 		errors,
@@ -66,30 +65,27 @@ const GenerateReport = () => {
 	};
 
 	const onClickBranches = (event: any) => {
-		const value = Number(event.target.value);
+		const value = event.target.value;
 
 		const brachesFiltered = branchesWatch?.includes(value)
 			? branchesWatch.filter((branchId) => branchId !== value)
 			: [...branchesWatch, value];
 
-		setValue('branchRequest', brachesFiltered);
+		setValue('liferayBranch', brachesFiltered);
 	};
 
 	const onClickStatus = (event: any) => {
-		const value = Number(event.target.value);
-
+		const value = event.target.value;
 		const statusesFiltered = statusesWatch?.includes(value)
 			? statusesWatch.filter((statusId) => statusId !== value)
 			: [...statusesWatch, value];
 
-		setValue('statusRequest', statusesFiltered);
+		setValue('requestStatus', statusesFiltered);
 	};
 
 	useEffect(() => {
 		loadPickLists();
 	}, []);
-
-	console.log('errors', errors);
 
 	return (
 		<>
@@ -97,19 +93,21 @@ const GenerateReport = () => {
 				<div className="row">
 					<div className="col">
 						<Form.DatePicker
-							{...formProps}
+							id="initialRequestDate"
 							label="Initial Request Date"
 							name="initialRequestDate"
 							placeholder="YYYY-MM-DD"
+							setValue={setValue}
 						/>
 					</div>
 
 					<div className="col">
 						<Form.DatePicker
-							{...formProps}
+							id="finalRequestDate"
 							label="Final Request Date"
 							name="finalRequestDate"
 							placeholder="YYYY-MM-DD"
+							setValue={setValue}
 						/>
 					</div>
 				</div>
@@ -118,18 +116,9 @@ const GenerateReport = () => {
 					<div className="col">
 						<Form.Input
 							{...formProps}
-							label="Initial User Name"
-							name="initialUserName"
-							placeholder="User name"
-						/>
-					</div>
-
-					<div className="col">
-						<Form.Input
-							{...formProps}
-							label="Final User Name"
-							name="finalUserName"
-							placeholder="User name"
+							label="Full Name"
+							name="fullName"
+							placeholder="Full name"
 						/>
 					</div>
 				</div>
@@ -158,18 +147,9 @@ const GenerateReport = () => {
 					<div className="col">
 						<Form.Input
 							{...formProps}
-							label="Initial Company Name"
-							name="initialCompanyName"
+							label="Company Name"
+							name="organizationName"
 							placeholder="Company Name"
-						/>
-					</div>
-
-					<div className="col">
-						<Form.Input
-							{...formProps}
-							label="Final Company Name"
-							name="finalCompanyName"
-							placeholder="Initial Company Name"
 						/>
 					</div>
 				</div>
@@ -184,12 +164,14 @@ const GenerateReport = () => {
 								key={index}
 							>
 								<Form.Checkbox
-									checked={statusesWatch?.includes(status.id)}
-									id="statusRequest"
+									checked={statusesWatch?.includes(
+										status.key
+									)}
+									id="requestStatus"
 									label={status.name}
-									name="statusRequest"
+									name="requestStatus"
 									onChange={onClickStatus}
-									value={status.id}
+									value={status.key}
 								/>
 							</div>
 						))}
@@ -204,12 +186,14 @@ const GenerateReport = () => {
 								key={index}
 							>
 								<Form.Checkbox
-									checked={branchesWatch?.includes(branch.id)}
-									id="branchRequest"
+									checked={branchesWatch?.includes(
+										branch.key
+									)}
+									id="liferayBranch"
 									label={branch.name}
-									name="branchRequest"
+									name="liferayBranch"
 									onChange={onClickBranches}
-									value={branch.id}
+									value={branch.key}
 								/>
 							</div>
 						))}

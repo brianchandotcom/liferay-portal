@@ -14,16 +14,14 @@ import * as yup from 'yup';
 
 const yupSchema = {
 	report: yup.object({
-		branchRequest: yup.array(yup.number()),
 		finalCompanyId: yup.string(),
-		finalCompanyName: yup.string(),
 		finalRequestDate: yup.string(),
-		finalUserName: yup.string(),
+		fullName: yup.string(),
 		initialCompanyId: yup.string(),
-		initialCompanyName: yup.string(),
 		initialRequestDate: yup.string(),
-		initialUserName: yup.string(),
-		statusRequest: yup.array(yup.number()),
+		liferayBranch: yup.array(yup.string()),
+		organizationName: yup.string(),
+		requestStatus: yup.array(yup.string()),
 	}),
 };
 

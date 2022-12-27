@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,7 +10,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import {InputHTMLAttributes} from 'react';
+import {InputHTMLAttributes, useEffect, useState} from 'react';
 
 import BaseWrapper from '../Base/BaseWrapper';
 
@@ -22,6 +21,7 @@ type DatePickerTypes = {
 	name: string;
 	register?: any;
 	required?: boolean;
+	setValue?: any;
 	type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -29,12 +29,16 @@ const DatePicker: React.FC<DatePickerTypes> = ({
 	errors = {},
 	label,
 	name,
-	register = () => {},
 	id = name,
-	value,
 	required = false,
-	...otherProps
+	setValue = () => {},
 }) => {
+	const [data, setData] = useState('');
+
+	useEffect(() => {
+		setValue(name, data);
+	}, [data, name, setValue]);
+
 	return (
 		<BaseWrapper
 			error={errors[name]?.message}
@@ -43,13 +47,13 @@ const DatePicker: React.FC<DatePickerTypes> = ({
 			required={required}
 		>
 			<ClayDatePicker
-				value={value}
+				onChange={setData}
+				placeholder="YYYY-MM-DD"
+				value={data}
 				years={{
 					end: 2024,
 					start: 1997,
 				}}
-				{...otherProps}
-				{...register(name, {required})}
 			/>
 		</BaseWrapper>
 	);

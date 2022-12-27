@@ -8,7 +8,7 @@
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager@liferay.com",
 			"phoneNumber": "888888888",
-			"r_organization_c_evpOrganizationId": "[$EVPOrganization#EVPORG-02$]",
+			"r_organization_c_evpOrganizationId": "[$EVPOrganization#EVPORG-01$]",
 			"requestBehalf": "displacedDistressed",
 			"requestDescription": "Request Description",
 			"requestPurposes": "disasterRelief",

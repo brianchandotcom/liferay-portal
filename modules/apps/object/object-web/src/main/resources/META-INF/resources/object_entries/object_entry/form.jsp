@@ -171,22 +171,17 @@ portletDisplay.setURLBack(backURL);
 								);
 							}
 
-							let relationshipValues =
-								'<%= objectEntryDisplayContext.getRelationshipValues() %>';
+							const autoRelatedValue = {
+								['relationshipField']:
+									'<%= objectEntryDisplayContext.getObjectRelationshipERCObjectFieldName() %>',
+								['parentObjectEntryERC']:
+									'<%= objectEntryDisplayContext.getParentObjectEntryId() %>',
+							};
 
-							relationshipValues = relationshipValues.substring(
-								1,
-								relationshipValues.length - 1
-							);
-
-							if (relationshipValues.length > 0) {
-								const [
-									relationshipField,
-									relationshipFieldValue,
-								] = relationshipValues.split('=');
-
+							if (autoRelatedValue['relationshipField'] !== 'null') {
 								values = Object.assign(values, {
-									[relationshipField]: relationshipFieldValue,
+									[autoRelatedValue['relationshipField']]:
+										autoRelatedValue['parentObjectEntryERC'],
 								});
 							}
 

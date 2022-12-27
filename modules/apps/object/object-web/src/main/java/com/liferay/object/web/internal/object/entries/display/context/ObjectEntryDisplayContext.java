@@ -337,6 +337,22 @@ public class ObjectEntryDisplayContext {
 		return optional.get();
 	}
 
+	public String getObjectRelationshipERCObjectFieldName() {
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return httpServletRequest.getParameter(
+			ObjectFieldSettingConstants.
+				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME);
+	}
+
+	public String getParentObjectEntryId() {
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return httpServletRequest.getParameter("parentObjectEntryERC");
+	}
+
 	public CreationMenu getRelatedModelCreationMenu(
 			ObjectDefinition objectDefinition2)
 		throws PortalException {
@@ -518,23 +534,6 @@ public class ObjectEntryDisplayContext {
 		).put(
 			"readOnly", String.valueOf(_readOnly || isDefaultUser())
 		).build();
-	}
-
-	public Map<String, Object> getRelationshipValues() {
-		HttpServletRequest httpServletRequest =
-			_objectRequestHelper.getRequest();
-
-		String value = httpServletRequest.getParameter(
-			ObjectFieldSettingConstants.
-				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME);
-
-		if (Validator.isNotNull(value)) {
-			return HashMapBuilder.<String, Object>put(
-				value, httpServletRequest.getParameter("parentObjectEntryERC")
-			).build();
-		}
-
-		return Collections.emptyMap();
 	}
 
 	public boolean isDefaultUser() {

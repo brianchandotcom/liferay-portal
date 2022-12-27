@@ -733,9 +733,82 @@ public class DefaultObjectEntryManagerImplTest {
 		ObjectEntry objectEntry1 = _addObjectEntry(accountEntry1);
 		ObjectEntry objectEntry2 = _addObjectEntry(accountEntry2);
 
+		// Regular roles' company scope permissions should not be restricted by
+		// account
+
 		_user = _addPrincipalUser();
 
+		Role randomRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.VIEW);
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.DELETE);
+
+		_userLocalService.addRoleUser(randomRole.getRoleId(), _user);
+
+		_objectEntryManager.deleteObjectEntry(
+			_objectDefinition3, objectEntry1.getId());
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.DELETE);
+
+		try {
+			_objectEntryManager.deleteObjectEntry(
+				_objectDefinition3, objectEntry2.getId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				exception.getMessage(),
+				StringBundler.concat(
+					"User ", String.valueOf(_user.getUserId()),
+					" must have DELETE permission for ",
+					_objectDefinition3.getClassName(), StringPool.SPACE,
+					String.valueOf(objectEntry2.getId())));
+		}
+
+		// Regular roles' individual permissions should not be restricted by
+		// account
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		PrincipalThreadLocal.setName(_adminUser.getUserId());
+
+		objectEntry1 = _addObjectEntry(accountEntry1);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry1.getId()), randomRole.getRoleId(),
+			new String[] {ActionKeys.DELETE});
+
+		_objectEntryManager.deleteObjectEntry(
+			_objectDefinition3, objectEntry1.getId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		PrincipalThreadLocal.setName(_adminUser.getUserId());
+
+		objectEntry1 = _addObjectEntry(accountEntry1);
+
 		// Account scope
+
+		_user = _addPrincipalUser();
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
@@ -1322,6 +1395,56 @@ public class DefaultObjectEntryManagerImplTest {
 
 		ObjectEntry objectEntry1 = _addObjectEntry(accountEntry1);
 		ObjectEntry objectEntry2 = _addObjectEntry(accountEntry2);
+
+		// Regular roles' company scope permissions should not be restricted by
+		// account
+
+		_user = _addPrincipalUser();
+
+		Role randomRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.VIEW);
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.UPDATE);
+
+		_userLocalService.addRoleUser(randomRole.getRoleId(), _user);
+
+		_objectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			objectEntry1.getId(), objectEntry1);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.UPDATE);
+
+		_assertResourcePermissionFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				" must have UPDATE permission for ",
+				_objectDefinition3.getClassName(), StringPool.SPACE,
+				String.valueOf(objectEntry2.getId())),
+			() -> _objectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition3,
+				objectEntry2.getId(), objectEntry2));
+
+		// Regular roles' individual permissions should not be restricted by
+		// account
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry1.getId()), randomRole.getRoleId(),
+			new String[] {ActionKeys.UPDATE});
+
+		_objectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			objectEntry1.getId(), objectEntry1);
 
 		// Account scope
 

@@ -96,12 +96,16 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public String getStickerCssClass() {
-		return "select-style-book-option-sticker sticker-primary";
+		return "sticker-primary";
 	}
 
 	@Override
 	public String getStickerIcon() {
-		return "check-circle";
+		if (_styleBookEntry.isDefaultStyleBookEntry()) {
+			return "check-circle";
+		}
+
+		return null;
 	}
 
 	@Override

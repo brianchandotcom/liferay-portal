@@ -105,6 +105,14 @@ public class StyleBookEntryItemSelectorViewDescriptor
 		styleFromThemeStyleBookEntry.setName(
 			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
 
+		StyleBookEntry defaultStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+				_themeDisplay.getScopeGroupId());
+
+		if (defaultStyleBookEntry == null) {
+			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
+		}
+
 		styleBookEntries.add(styleFromThemeStyleBookEntry);
 
 		styleBookEntries.addAll(

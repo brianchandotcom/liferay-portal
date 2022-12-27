@@ -81,12 +81,16 @@ public class SelectMasterLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public String getStickerCssClass() {
-		return "select-master-layout-option-sticker sticker-primary";
+		return "sticker-primary";
 	}
 
 	@Override
 	public String getStickerIcon() {
-		return "check-circle";
+		if (_layoutPageTemplateEntry.isDefaultTemplate()) {
+			return "check-circle";
+		}
+
+		return null;
 	}
 
 	@Override

@@ -103,6 +103,18 @@ public class MasterLayoutPageTemplateEntryItemSelectorViewDescriptor
 
 		layoutPageTemplateEntry.setName(
 			LanguageUtil.get(_httpServletRequest, "blank"));
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					_themeDisplay.getScopeGroupId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+					WorkflowConstants.STATUS_APPROVED);
+
+		if (defaultLayoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry.setDefaultTemplate(true);
+		}
+
 		layoutPageTemplateEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		masterLayoutPageTemplateEntries.add(layoutPageTemplateEntry);

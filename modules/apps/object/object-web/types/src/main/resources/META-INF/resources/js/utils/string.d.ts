@@ -23,6 +23,12 @@ export declare function firstLetterLowercase(str: string): string;
 export declare function firstLetterUppercase(str: string): string;
 
 /**
+ *
+ * Check if the first letter of a string is uppercase
+ */
+export declare function checkIfFirstLetterIsUppercase(str: string): boolean;
+
+/**
  * Normalize languageId to be used in the
  * frontend with themeDisplay.getDefaultLanguageId()
  */

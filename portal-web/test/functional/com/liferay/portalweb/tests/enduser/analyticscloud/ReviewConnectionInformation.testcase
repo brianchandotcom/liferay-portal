@@ -99,4 +99,62 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-11044 | Automation ID: LRAC-12677 | Test Summary: Check that you can modify the sync of contacts in the people review sidebar"
+	@priority = "4"
+	test CanModifyContactsSyncInPeopleReviewSidebar {
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+		task ("Disable toggle to sync contacts and accounts") {
+			Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+		}
+
+		task ("Enable toggle to sync contacts") {
+			ACDXPSettings.syncContactsData();
+		}
+
+		task ("Sync a account group") {
+			ACDXPSettings.syncAccountsData(accountGroup = "European Accounts");
+		}
+
+		task ("Refresh the page and Go to the people page in the sidebar") {
+			TestUtils.hardRefresh();
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+		task ("Check that only sync contacts toggle is enable") {
+			for (var syncFieldName : list "Sync All Contacts and Accounts,Sync All Accounts") {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_syncFieldName = "${syncFieldName}",
+					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+			}
+
+			AssertChecked.assertCheckedNotVisible(
+				key_syncFieldName = "Sync All Contacts",
+				locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+		}
+
+		task ("Check selected account group number") {
+			Click(
+				key_panel = "Select Accounts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Account Groups",
+				syncNumber = "1 Selected");
+		}
+
+		task ("Sync a account group") {
+			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
+		}
+
+		task ("Check selected account group number") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Account Groups",
+				syncNumber = "2 Selected");
+		}
+	}
+
 }

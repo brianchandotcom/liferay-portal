@@ -706,13 +706,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	public int getSiteUserMessageBoardMessagesActivityCount(
-		long userId, long groupId)
+			long userId, long groupId)
 		throws PortalException {
 
 		_userPermission.check(getPermissionChecker(), userId, ActionKeys.VIEW);
 
-		return mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(
-			userId, groupId);
+		return mbMessageLocalService.
+			getSiteUserMessageBoardMessagesActivityCount(userId, groupId);
 	}
 
 	@Override

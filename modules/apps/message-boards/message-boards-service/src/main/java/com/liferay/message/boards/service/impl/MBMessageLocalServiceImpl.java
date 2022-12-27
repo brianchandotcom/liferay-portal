@@ -1491,9 +1491,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						MBMessageTable.INSTANCE.categoryId.eq(
 							aliasMBMessageTable.categoryId)
 					).and(
-						MBMessageTable.INSTANCE.groupId.eq(
-							groupId
-						)
+						MBMessageTable.INSTANCE.groupId.eq(groupId)
 					).and(
 						MBMessageTable.INSTANCE.userId.eq(userId)
 					)
@@ -1512,9 +1510,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								MBMessageTable.INSTANCE.parentMessageId)
 						))
 				).and(
-					MBMessageTable.INSTANCE.groupId.eq(
-						groupId
-					)
+					MBMessageTable.INSTANCE.groupId.eq(groupId)
 				).and(
 					MBMessageTable.INSTANCE.userId.eq(userId)
 				)
@@ -1553,9 +1549,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							MBMessageTable.INSTANCE.categoryId.eq(
 								aliasMBMessageTable.categoryId)
 						).and(
-							MBMessageTable.INSTANCE.groupId.eq(
-								groupId
-							)
+							MBMessageTable.INSTANCE.groupId.eq(groupId)
 						).and(
 							MBMessageTable.INSTANCE.userId.eq(userId)
 						)
@@ -1563,6 +1557,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				).or(
 					MBMessageTable.INSTANCE.parentMessageId.eq(
 						0L
+					).and(
+						MBMessageTable.INSTANCE.groupId.eq(groupId)
 					).and(
 						MBMessageTable.INSTANCE.rootMessageId.notIn(
 							DSLQueryFactoryUtil.select(
@@ -1573,10 +1569,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								MBMessageTable.INSTANCE.rootMessageId.eq(
 									MBMessageTable.INSTANCE.parentMessageId)
 							))
-					).and(
-						MBMessageTable.INSTANCE.groupId.eq(
-							groupId
-						)
 					).and(
 						MBMessageTable.INSTANCE.userId.eq(userId)
 					)

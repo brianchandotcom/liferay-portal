@@ -54,7 +54,10 @@ export default function _JournalPortlet({
 	);
 	const saveButton = document.getElementById(`${namespace}saveButton`);
 
-	const availableLocales = [...initialAvailableLocales];
+	const availableLocales = [
+		...initialAvailableLocales,
+		initialDefaultLanguageId,
+	];
 
 	let articleId = initialArticleId;
 	let defaultLanguageId = initialDefaultLanguageId;

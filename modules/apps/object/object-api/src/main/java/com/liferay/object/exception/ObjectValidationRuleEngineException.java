@@ -21,11 +21,24 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectValidationRuleEngineException extends PortalException {
 
-	public ObjectValidationRuleEngineException() {
+	public String getMessageKey() {
+		return _messageKey;
+	}
+
+	public static class InvalidScript 
+		extends ObjectValidationRuleEngineException{
+
+		public InvalidScript(){
+			super(
+				"There is already a term defined for the selected channel",
+				"there-was-an-error-with-the-validation-of-your-data");
+		}
+
 	}
 
 	public ObjectValidationRuleEngineException(String msg) {
 		super(msg);
+
 	}
 
 	public ObjectValidationRuleEngineException(
@@ -37,5 +50,13 @@ public class ObjectValidationRuleEngineException extends PortalException {
 	public ObjectValidationRuleEngineException(Throwable throwable) {
 		super(throwable);
 	}
+
+	private ObjectValidationRuleEngineException(String message, String messageKey) {
+		super(message);
+
+		_messageKey = messageKey;
+	}
+
+	private String _messageKey;
 
 }

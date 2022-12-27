@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOTE_APPS_FIELDS</td>
+	<td>//div[label[contains(.,'${key_text}')]]//input[not(contains(@type,'checkbox'))] | //textarea[contains(@name,'${key_text}') or contains(@title,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_REMOTE_TABLE_MESSAGE</td>
 	<td>//div[contains(@class,'empty-state-text') and contains(.,'Sorry, no results were found.')]</td>
 	<td></td>

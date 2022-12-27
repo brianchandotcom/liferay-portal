@@ -61,7 +61,7 @@ public class AMImageRequestHandler
 	implements AMRequestHandler<AMImageProcessor> {
 
 	@Override
-	public Optional<AdaptiveMedia<AMImageProcessor>> handleRequest(
+	public AdaptiveMedia<AMImageProcessor> handleRequest(
 			HttpServletRequest httpServletRequest)
 		throws IOException, ServletException {
 
@@ -69,17 +69,18 @@ public class AMImageRequestHandler
 			_interpretPath(httpServletRequest.getPathInfo());
 
 		if (interpretedPath == null) {
-			return Optional.empty();
+			return null;
 		}
 
-		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
-			_findAdaptiveMedia(interpretedPath.first, interpretedPath.second);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = _findAdaptiveMedia(
+			interpretedPath.first, interpretedPath.second);
 
-		adaptiveMediaOptional.ifPresent(
-			adaptiveMedia -> _processAMImage(
-				adaptiveMedia, interpretedPath.first, interpretedPath.second));
+		if (adaptiveMedia != null) {
+			_processAMImage(
+				adaptiveMedia, interpretedPath.first, interpretedPath.second);
+		}
 
-		return adaptiveMediaOptional;
+		return adaptiveMedia;
 	}
 
 	private AdaptiveMedia<AMImageProcessor> _createRawAdaptiveMedia(
@@ -97,7 +98,7 @@ public class AMImageRequestHandler
 			AMImageAttributeMapping.fromFileVersion(fileVersion), null);
 	}
 
-	private Optional<AdaptiveMedia<AMImageProcessor>> _findAdaptiveMedia(
+	private AdaptiveMedia<AMImageProcessor> _findAdaptiveMedia(
 		FileVersion fileVersion,
 		AMImageAttributeMapping amImageAttributeMapping) {
 
@@ -114,7 +115,7 @@ public class AMImageRequestHandler
 								fileVersion.getCompanyId(), configurationUuid));
 
 			if (!amImageConfigurationEntryOptional.isPresent()) {
-				return Optional.empty();
+				return null;
 			}
 
 			AMImageConfigurationEntry amImageConfigurationEntry =
@@ -124,17 +125,17 @@ public class AMImageRequestHandler
 				_findExactAdaptiveMedia(fileVersion, amImageConfigurationEntry);
 
 			if (adaptiveMediaOptional.isPresent()) {
-				return adaptiveMediaOptional;
+				return adaptiveMediaOptional.get();
 			}
 
 			adaptiveMediaOptional = _findClosestAdaptiveMedia(
 				fileVersion, amImageConfigurationEntry);
 
 			if (adaptiveMediaOptional.isPresent()) {
-				return adaptiveMediaOptional;
+				return adaptiveMediaOptional.get();
 			}
 
-			return Optional.of(_createRawAdaptiveMedia(fileVersion));
+			return _createRawAdaptiveMedia(fileVersion);
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);

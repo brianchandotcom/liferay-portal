@@ -18,8 +18,6 @@ import com.liferay.adaptive.media.AdaptiveMedia;
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,19 +30,16 @@ import javax.servlet.http.HttpServletRequest;
 public interface AMRequestHandler<T> {
 
 	/**
-	 * Returns the requested {@link AdaptiveMedia} instance wrapped in an {@link
-	 * Optional} instance. If no media is found matching the request, or an
-	 * application error is raised while fetching the media, an empty {@link
-	 * Optional} is returned.
+	 * Returns the requested {@link AdaptiveMedia} instance. If no media is found matching the request, or an
+	 * application error is raised while fetching the media, a null value is
+	 * returned.
 	 *
 	 * @param  httpServletRequest the request to process
-	 * @return a non-<code>null</code> {@link Optional} instance containing the
-	 *         value (if any).
+	 * @return a {@link AdaptiveMedia} instance or null.
 	 * @throws IOException if an IO error occurred while processing the request
 	 * @throws ServletException if any other processing error occurred
 	 */
-	public Optional<AdaptiveMedia<T>> handleRequest(
-			HttpServletRequest httpServletRequest)
+	public AdaptiveMedia<T> handleRequest(HttpServletRequest httpServletRequest)
 		throws IOException, ServletException;
 
 }

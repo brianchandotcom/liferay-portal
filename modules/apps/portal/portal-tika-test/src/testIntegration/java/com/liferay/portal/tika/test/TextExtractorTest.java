@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.test.rule.Inject;
@@ -113,6 +114,21 @@ public class TextExtractorTest {
 			StringPool.BLANK,
 			_textExtractor.extractText(
 				new UnsyncByteArrayInputStream(new byte[0]), -1));
+	}
+
+	@Test
+	public void testForkProcessEnabled() throws Exception {
+		_withTikaConfiguration(
+			true, new String[] {ContentTypes.APPLICATION_PDF}, null,
+			() -> {
+				String text = extractText("test-2010.pdf");
+
+				Assert.assertEquals("Extract test.", text);
+
+				text = extractText("test.pdf");
+
+				Assert.assertEquals("Extract test.", text);
+			});
 	}
 
 	@Test

@@ -30,6 +30,7 @@ import Sheet from './Sheet';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
+import {EntryDisplayContainer} from './EntryDisplayContainer';
 
 interface ObjectDetailsProps {
 	DBTableName: string;
@@ -84,22 +85,18 @@ export default function ObjectDetails({
 	siteKeyValuePair,
 }: ObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
-	const [accountRelationshipFields, setAccountRelationshipFields] = useState<
-		LabelValueObject[]
-	>([]);
 	const [selectedObjectField, setSelectedObjectField] = useState<
 		ObjectField
 	>();
+
+	const [accountRelationshipFields, setAccountRelationshipFields] = useState<
+		LabelValueObject[]
+	>([]);
+
 	const [selectedPanelCategoryKey, setSelectedPanelCategoryKey] = useState(
 		''
 	);
 	const [panelCategoryKeyQuery, setPanelCategoryKeyQuery] = useState('');
-
-	const titleFieldOptions = useMemo(() => {
-		return nonRelationshipObjectFieldsInfo.map(({label, name}) => {
-			return {label: label[defaultLanguageId] ?? '', name};
-		});
-	}, [nonRelationshipObjectFieldsInfo]);
 
 	const {
 		errors,
@@ -326,41 +323,16 @@ export default function ObjectDetails({
 						values={values}
 					/>
 
-					<ClayPanel
-						collapsable
-						defaultExpanded
-						displayTitle={Liferay.Language.get('entry-display')}
-						displayType="unstyled"
-					>
-						<ClayPanel.Body>
-							<SingleSelect<{label: string; name: string}>
-								error={errors.titleObjectFieldId}
-								label={Liferay.Language.get(
-									'title-object-field-id'
-								)}
-								onChange={(target: {
-									label: string;
-									name: string;
-								}) => {
-									const field = objectFields.find(
-										({name}) => name === target.name
-									);
-
-									setSelectedObjectField(field);
-
-									setValues({
-										titleObjectFieldName: field?.name,
-									});
-								}}
-								options={titleFieldOptions}
-								value={
-									selectedObjectField?.label[
-										defaultLanguageId
-									]
-								}
-							/>
-						</ClayPanel.Body>
-					</ClayPanel>
+					<EntryDisplayContainer
+						errors={errors}
+						nonRelationshipObjectFieldsInfo={
+							nonRelationshipObjectFieldsInfo
+						}
+						objectFields={objectFields}
+						selectedObjectField={selectedObjectField}
+						setSelectedObjectField={setSelectedObjectField}
+						setValues={setValues}
+					/>
 
 					<ClayPanel
 						collapsable

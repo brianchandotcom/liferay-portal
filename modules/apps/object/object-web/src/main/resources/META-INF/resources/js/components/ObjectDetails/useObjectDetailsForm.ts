@@ -87,6 +87,15 @@ export function useObjectDetailsForm({
 			errors.pluralLabel = REQUIRED_MSG;
 		}
 
+		if (
+			objectDefinition.accountEntryRestricted &&
+			!objectDefinition.accountEntryRestrictedObjectFieldName
+		) {
+			errors.accountEntryRestrictedObjectFieldName = Liferay.Language.get(
+				'if-activated-the-account-restriction-field-must-be-selected'
+			);
+		}
+
 		getNameErrors(objectDefinition.name as string, errors);
 
 		return errors;

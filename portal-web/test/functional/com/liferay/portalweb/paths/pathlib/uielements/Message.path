@@ -441,6 +441,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_LINK</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_RESTORE_LOCATION</td>
 	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')]</td>
 	<td></td>

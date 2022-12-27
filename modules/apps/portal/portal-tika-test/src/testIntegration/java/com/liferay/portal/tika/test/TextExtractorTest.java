@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.test.rule.Inject;
@@ -201,6 +202,21 @@ public class TextExtractorTest {
 
 		Assert.assertEquals(
 			expectedText.trim(), extractText("test-encoding-Shift_JIS.txt"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testWrongTikaConfigXml() throws Exception {
+		Map<String, Object> properties =
+			new HashMapBuilder<>().<String, Object>put(
+				"tikaConfigXml", "wrong/tika.xml"
+			).build();
+
+		Object tikaConfigurationHelper = ReflectionTestUtil.getFieldValue(
+			_textExtractor, "_tikaConfigurationHelper");
+
+		ReflectionTestUtil.invoke(
+			tikaConfigurationHelper, "activate", new Class<?>[] {Map.class},
+			properties);
 	}
 
 	@Test

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -88,9 +89,13 @@ public class FragmentCollectionContributorRegistryTest {
 
 		_bundleContext = bundle.getBundleContext();
 
+		_fragmentCollectionKey = StringUtil.randomId();
+
 		_fragmentEntry = FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
 
-		_fragmentEntry.setFragmentEntryKey("test-component-fragment-entry");
+		_fragmentEntry.setFragmentEntryKey(
+			_fragmentCollectionKey + StringPool.DASH +
+				RandomTestUtil.randomString());
 		_fragmentEntry.setName(RandomTestUtil.randomString());
 		_fragmentEntry.setCss(RandomTestUtil.randomString());
 		_fragmentEntry.setHtml(RandomTestUtil.randomString());
@@ -156,7 +161,7 @@ public class FragmentCollectionContributorRegistryTest {
 
 		TestFragmentCollectionContributor testFragmentCollectionContributor =
 			new TestFragmentCollectionContributor(
-				"test",
+				_fragmentCollectionKey,
 				HashMapBuilder.put(
 					FragmentConstants.TYPE_COMPONENT, _fragmentEntry
 				).build());
@@ -225,6 +230,7 @@ public class FragmentCollectionContributorRegistryTest {
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 
+	private String _fragmentCollectionKey;
 	private FragmentEntry _fragmentEntry;
 	private final List<Long> _fragmentEntryLinkIds = new ArrayList<>();
 

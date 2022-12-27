@@ -78,11 +78,9 @@ export default function () {
 	const getCurrentStatusColor = (item) => {
 		if (item?.expirationDays <= 5) {
 			return status[5];
-		}
-		else if (item?.expirationDays <= 15) {
+		} else if (item?.expirationDays <= 15) {
 			return status[15];
-		}
-		else if (item?.expirationDays <= 30) {
+		} else if (item?.expirationDays <= 30) {
 			return status[30];
 		}
 	};
@@ -91,6 +89,7 @@ export default function () {
 		<Container
 			footer={
 				<ClayButton
+					className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
 					displayType="secondary"
 					onClick={() =>
 						Liferay.Util.navigate(

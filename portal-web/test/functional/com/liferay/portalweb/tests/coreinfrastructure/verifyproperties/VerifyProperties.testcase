@@ -11,4 +11,20 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "LRQA-78467: Verify Properties is executed before the PortalUpgradeProcess starts to upgrade database when enable AutoUpgrade on startup"
+	@priority = "3"
+	test VerifyPropertiesIsExecutedUsingAutoUpgrade {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.name.skip.portal.instance = "VerifyProperties#VerifyPropertiesIsExecutedUsingAutoUpgrade";
+
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+
+		AssertConsoleTextPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
+	}
 }

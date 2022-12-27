@@ -276,6 +276,9 @@
 	<td>//span[text()='${key_syncFieldName}']/..//input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SYNC_NUMBER_PREVIEW</td>
+	<td>//p[contains(text(),'${key_syncFieldName}')]/..//p[contains(@class,'list-group-text')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -273,7 +273,9 @@
 </tr>
 <tr>
 	<td>SYNC_TOGGLE_ICON</td>
-	<td>//*[contains(@class, 'toggle-switch-check')]/..//span[text()='${key_syncFieldName}']</td>
+	<td>//span[text()='${key_syncFieldName}']/..//input</td>
+	<td></td>
+</tr>
 	<td></td>
 </tr>
 </tbody>

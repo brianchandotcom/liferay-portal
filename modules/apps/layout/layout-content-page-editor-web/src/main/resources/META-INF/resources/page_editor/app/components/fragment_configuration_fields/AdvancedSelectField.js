@@ -27,19 +27,19 @@ import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
+import {useSelector} from '../../contexts/StoreContext';
+import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import getPreviousResponsiveStyle from '../../utils/getPreviousResponsiveStyle';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import isValidStyleValue from '../../utils/isValidStyleValue';
 
 export function AdvancedSelectField({
-	canDetachTokenValues,
 	disabled,
 	field,
 	item,
 	onValueSelect,
 	options,
-	selectedViewportSize,
 	tokenValues,
 	value,
 }) {
@@ -55,6 +55,11 @@ export function AdvancedSelectField({
 		!isNullOrUndefined(tokenValues[value]) || !value
 	);
 	const [nextValue, setNextValue] = useControlledState(value);
+
+	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	const handleSelectChange = (event) => {
 		const nextValue =

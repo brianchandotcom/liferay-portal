@@ -24,8 +24,6 @@ import useControlledState from '../../../common/hooks/useControlledState';
 import {useId} from '../../../common/hooks/useId';
 import {useStyleBook} from '../../../plugins/page_design_options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
-import {useSelector} from '../../contexts/StoreContext';
-import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import {AdvancedSelectField} from './AdvancedSelectField';
 
@@ -37,11 +35,7 @@ export function SelectField({
 	onValueSelect,
 	value,
 }) {
-	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const {tokenValues} = useStyleBook();
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
 
 	const validValues = field.typeOptions?.validValues || [];
 
@@ -86,13 +80,11 @@ export function SelectField({
 				/>
 			) : field.icon ? (
 				<AdvancedSelectField
-					canDetachTokenValues={canDetachTokenValues}
 					disabled={disabled}
 					field={field}
 					item={item}
 					onValueSelect={onValueSelect}
 					options={getOptions(validValues)}
-					selectedViewportSize={selectedViewportSize}
 					tokenValues={tokenValues}
 					value={
 						isNullOrUndefined(value) ? field.defaultValue : value

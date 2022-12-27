@@ -1,8 +1,248 @@
+components:
+    schemas:
+        UserNotification:
+            description:
+                Represents the current user notification.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
+                dateCreated:
+                    # @review
+                    description:
+                        The user notification's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    # @review
+                    description:
+                        The user notification's identifier.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                message:
+                    # @review
+                    description:
+                        The user notification's message.
+                    type: string
+                read:
+                    # @review
+                    description:
+                        A flag that indicates whether this user notification has been read.
+                    readOnly: true
+                    type: boolean
+                type:
+                    # @review
+                    description:
+                        User notification's type.
+                    format: int32
+                    readOnly: true
+                    type: integer
 info:
-    description: "HeadlessUserNotification REST API"
+    description:
+        "Headless User Notification REST API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.user.notification.client', and version '1.0.0'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
     title: "HeadlessUserNotification"
     version: v1.0
 openapi: 3.0.1
+paths:
+    "/my-user-notifications":
+        get:
+            # @review
+            description:
+                Retrieves the current user's notifications. Results can be paginated, filtered, searched and sorted.
+            operationId: getMyUserNotificationsPage
+            parameters:
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserNotification"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserNotification"
+                                type: array
+            tags: ["UserNotification"]
+    "/user-accounts/{userAccountId}/user-notifications":
+        get:
+            # @review
+            description:
+                Retrieves the user account's notifications. Results can be paginated, filtered, searched and sorted.
+            operationId: getUserAccountUserNotificationsPage
+            parameters:
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserNotification"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserNotification"
+                                type: array
+            tags: ["UserNotification"]
+    "/user-notifications/{userNotificationId}":
+        get:
+            # @review
+            description:
+                Retrieves the user notification.
+            operationId: getUserNotification
+            parameters:
+                - in: path
+                  name: userNotificationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserNotification"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserNotification"
+            tags: ["UserNotification"]
+    "/user-notifications/{userNotificationId}/read":
+        put:
+            # @review
+            description:
+                Mark the user notification as read.
+            operationId: putUserNotificationRead
+            parameters:
+                - in: path
+                  name: userNotificationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserNotification"]
+    "/user-notifications/{userNotificationId}/unread":
+        put:
+            # @review
+            description:
+                Mark the user notification as unread.
+            operationId: putUserNotificationUnread
+            parameters:
+                - in: path
+                  name: userNotificationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserNotification"]

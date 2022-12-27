@@ -162,7 +162,7 @@ definition {
 		Click(locator1 = "ACDXPSettings#SYNCED_SITES_NAV_SIDEBAR");
 	}
 
-	macro searchACItem {
+	macro searchACItemInAssignModal {
 		Click(locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD");
 
 		Type(
@@ -275,7 +275,7 @@ definition {
 		ACDXPSettings.switchTab(tabName = "Channel");
 
 		if (isSet(channelName)) {
-			ACDXPSettings.searchACItem(searchItem = "${channelName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${channelName}");
 		}
 
 		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
@@ -365,7 +365,7 @@ definition {
 		ACDXPSettings.switchTab(tabName = "Sites");
 
 		if (isSet(siteName)) {
-			ACDXPSettings.searchACItem(searchItem = "${siteName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${siteName}");
 		}
 
 		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");

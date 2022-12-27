@@ -79,7 +79,7 @@ definition {
 		}
 
 		task ("Search for a channel on channels list") {
-			ACDXPSettings.searchACItem(searchItem = "${foundChannelName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundChannelName}");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
@@ -93,7 +93,7 @@ definition {
 		}
 
 		task ("Search by name of a channel that does not exist") {
-			ACDXPSettings.searchACItem(searchItem = "ACQA");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "ACQA");
 		}
 
 		task ("Check that no result is found for the search") {
@@ -105,7 +105,7 @@ definition {
 		}
 
 		task ("Search for a site on sites list") {
-			ACDXPSettings.searchACItem(searchItem = "${foundSitesName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundSitesName}");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
@@ -119,7 +119,7 @@ definition {
 		}
 
 		task ("Search by name of a site that does not exist") {
-			ACDXPSettings.searchACItem(searchItem = "ACQA");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "ACQA");
 		}
 
 		task ("Check that no result is found for the search") {
@@ -141,7 +141,7 @@ definition {
 		}
 
 		task ("Search for a channel on channels list") {
-			ACDXPSettings.searchACItem(searchItem = "${foundChannelName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundChannelName}");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
@@ -155,7 +155,7 @@ definition {
 		}
 
 		task ("Search by name of a channel that does not exist") {
-			ACDXPSettings.searchACItem(searchItem = "ACQA");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "ACQA");
 		}
 
 		task ("Check that no result is found for the search") {
@@ -167,7 +167,7 @@ definition {
 		}
 
 		task ("Search for a site on sites list") {
-			ACDXPSettings.searchACItem(searchItem = "${foundSitesName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundSitesName}");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
@@ -181,7 +181,7 @@ definition {
 		}
 
 		task ("Search by name of a site that does not exist") {
-			ACDXPSettings.searchACItem(searchItem = "ACQA");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "ACQA");
 		}
 
 		task ("Check that no result is found for the search") {
@@ -347,7 +347,7 @@ definition {
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 
-			ACDXPSettings.searchACItem(searchItem = "${channelName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${channelName}");
 
 			AssertElementPresent(
 				key_selectedName = "${channelName}",
@@ -359,7 +359,7 @@ definition {
 
 			ACDXPSettings.switchTab(tabName = "Sites");
 
-			ACDXPSettings.searchACItem(searchItem = "${siteName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = "${siteName}");
 
 			AssertElementPresent(
 				key_selectedName = "${siteName}",

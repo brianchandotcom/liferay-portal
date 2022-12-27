@@ -22,6 +22,7 @@ import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
+	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet, fieldIsDisabled} from './FieldSet';
@@ -35,6 +36,9 @@ export function CommonStyles({
 	const dispatch = useDispatch();
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
+	);
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
 	);
 
 	const permissions = useSelector((state) => state.permissions);
@@ -87,10 +91,12 @@ export function CommonStyles({
 								typeOptions: {spacingFieldSets},
 							},
 						]}
+						fragmentEntryLinks={fragmentEntryLinksRef.current}
 						item={item}
 						label={Liferay.Language.get('spacing')}
 						languageId={config.defaultLanguageId}
 						onValueSelect={handleValueSelect}
+						selectedViewportSize={selectedViewportSize}
 						values={commonStylesValues}
 					/>
 				) : null}
@@ -99,11 +105,13 @@ export function CommonStyles({
 					return (
 						<FieldSet
 							fields={fieldSet.styles}
+							fragmentEntryLinks={fragmentEntryLinksRef.current}
 							item={item}
 							key={index}
 							label={fieldSet.label}
 							languageId={config.defaultLanguageId}
 							onValueSelect={handleValueSelect}
+							selectedViewportSize={selectedViewportSize}
 							values={commonStylesValues}
 						/>
 					);

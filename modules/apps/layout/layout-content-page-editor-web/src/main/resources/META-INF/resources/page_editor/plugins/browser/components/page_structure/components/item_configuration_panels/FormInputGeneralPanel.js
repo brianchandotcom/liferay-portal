@@ -133,6 +133,14 @@ export function FormInputGeneralPanel({item}) {
 		selectFragmentEntryLink(state, item)
 	);
 
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
+
 	const configurationValues = useSelectorCallback(
 		(state) =>
 			selectFragmentEntryLink(state, item).editableValues[
@@ -338,10 +346,14 @@ export function FormInputGeneralPanel({item}) {
 
 							<FieldSet
 								fields={configFields}
+								fragmentEntryLinks={
+									fragmentEntryLinksRef.current
+								}
 								item={item}
 								label=""
 								languageId={languageId}
 								onValueSelect={handleValueSelect}
+								selectedViewportSize={selectedViewportSize}
 								values={configurationValues}
 							/>
 						</>

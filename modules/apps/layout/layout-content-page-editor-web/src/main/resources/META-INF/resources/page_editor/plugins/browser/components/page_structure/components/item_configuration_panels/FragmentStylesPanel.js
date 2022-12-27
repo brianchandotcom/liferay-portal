@@ -22,6 +22,7 @@ import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
+	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import getFragmentConfigurationValues from '../../../../../../app/utils/getFragmentConfigurationValues';
@@ -94,6 +95,14 @@ FragmentStylesPanel.propTypes = {
 };
 
 const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
+
 	const fieldSets = fragmentEntryLink.configuration?.fieldSets?.filter(
 		(fieldSet) =>
 			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.style
@@ -107,11 +116,13 @@ const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
 				return (
 					<FieldSet
 						fields={fieldSet.fields}
+						fragmentEntryLinks={fragmentEntryLinksRef.current}
 						isCustomStylesFieldSet
 						key={index}
 						label={fieldSet.label}
 						languageId={config.defaultLanguageId}
 						onValueSelect={onValueSelect}
+						selectedViewportSize={selectedViewportSize}
 						values={getFragmentConfigurationValues(
 							fragmentEntryLink
 						)}

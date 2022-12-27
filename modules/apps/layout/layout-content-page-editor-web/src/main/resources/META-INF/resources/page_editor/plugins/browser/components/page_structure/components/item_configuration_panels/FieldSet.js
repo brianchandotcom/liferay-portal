@@ -21,7 +21,6 @@ import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/cont
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
-import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import isNullOrUndefined from '../../../../../../app/utils/isNullOrUndefined';
 import Collapse from '../../../../../../common/components/Collapse';
@@ -45,6 +44,10 @@ export function fieldIsDisabled(item, field) {
 }
 
 function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
+	if (!fragmentEntryLinks && !viewportSize) {
+		return fields;
+	}
+
 	let availableFields = fields;
 
 	if (viewportSize !== VIEWPORT_SIZES.desktop) {
@@ -70,6 +73,8 @@ function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
 }
 
 export function FieldSet({
+	fragmentEntryLinks,
+	selectedViewportSize,
 	isCustomStylesFieldSet = false,
 	fields,
 	item = {},
@@ -78,10 +83,6 @@ export function FieldSet({
 	onValueSelect,
 	values,
 }) {
-	const store = useSelector((state) => state);
-
-	const {fragmentEntryLinks, selectedViewportSize} = store;
-
 	const availableFields = getAvailableFields(
 		item,
 		fields,
@@ -183,10 +184,12 @@ function getFieldValue({field, languageId, values}) {
 
 FieldSet.propTypes = {
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
+	fragmentEntryLinks: PropTypes.object,
 	isCustomStylesFieldSet: PropTypes.bool,
 	item: PropTypes.object,
 	label: PropTypes.string,
 	languageId: PropTypes.string.isRequired,
 	onValueSelect: PropTypes.func.isRequired,
+	selectedViewportSize: PropTypes.string,
 	values: PropTypes.object,
 };

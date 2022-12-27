@@ -22,6 +22,7 @@ import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
+	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import getFragmentConfigurationValues from '../../../../../../app/utils/getFragmentConfigurationValues';
@@ -38,6 +39,14 @@ export function FragmentAdvancedPanel({item}) {
 		[item.config.fragmentEntryLinkId]
 	);
 	const languageId = useSelector(selectLanguageId);
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
 
 	const onConfigurationValueSelect = useCallback(
 		(name, value) => {
@@ -69,10 +78,12 @@ export function FragmentAdvancedPanel({item}) {
 					return (
 						<FieldSet
 							fields={fieldSet.fields}
+							fragmentEntryLinks={fragmentEntryLinksRef.current}
 							key={index}
 							label={fieldSet.label}
 							languageId={config.defaultLanguageId}
 							onValueSelect={onConfigurationValueSelect}
+							selectedViewportSize={selectedViewportSize}
 							values={getFragmentConfigurationValues(
 								fragmentEntryLink
 							)}

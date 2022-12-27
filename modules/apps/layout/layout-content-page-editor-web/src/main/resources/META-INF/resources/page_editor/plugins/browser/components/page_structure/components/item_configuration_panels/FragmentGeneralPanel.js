@@ -22,6 +22,7 @@ import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
+	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import getFragmentConfigurationValues from '../../../../../../app/utils/getFragmentConfigurationValues';
@@ -44,6 +45,10 @@ export function FragmentGeneralPanel({item}) {
 	);
 
 	const languageId = useSelector(selectLanguageId);
+
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
 
 	const fieldSets =
 		fragmentEntryLink.configuration?.fieldSets?.filter(
@@ -79,10 +84,14 @@ export function FragmentGeneralPanel({item}) {
 						<div className="mb-1" key={index}>
 							<FieldSet
 								fields={fieldSet.fields}
+								fragmentEntryLinks={
+									fragmentEntryLinksRef.current
+								}
 								isCustomStylesFieldSet
 								label={fieldSet.label}
 								languageId={languageId}
 								onValueSelect={onValueSelect}
+								selectedViewportSize={selectedViewportSize}
 								values={getFragmentConfigurationValues(
 									fragmentEntryLink
 								)}

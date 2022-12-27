@@ -34,7 +34,7 @@ const Cookie = () => {
 						alertDisplayType: 'info',
 						alertMessage:
 							'the-compare-function-requires-acceptance-of-functional-cookies',
-						title: Liferay.Language.get(
+						customTitle: Liferay.Language.get(
 							'product-comparison-uses-non-essential-cookies'
 						),
 					});

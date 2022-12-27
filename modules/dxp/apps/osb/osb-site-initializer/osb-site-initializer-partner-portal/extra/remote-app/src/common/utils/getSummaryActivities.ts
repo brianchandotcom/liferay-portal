@@ -16,8 +16,8 @@ import getTotalBudget from './getTotalBudget';
 import getTotalMDFRequest from './getTotalMDFRequest';
 
 interface DateActivities {
-	endDates: Date[];
-	startDates: Date[];
+	endDates: string[];
+	startDates: string[];
 }
 
 export default function getSummaryActivities(
@@ -42,7 +42,7 @@ export default function getSummaryActivities(
 					startDates: startDateAccumulator,
 				};
 			},
-			{endDates: [] as Date[], startDates: [] as Date[]}
+			{endDates: [], startDates: []}
 		);
 
 		return {

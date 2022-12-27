@@ -33,7 +33,7 @@ export default function useGetListItemsFromMDFClaims(
 				[MDFClaimColumnKey.TYPE]: item.partial ? 'Partial' : 'Full',
 				...getMDFClaimAmountClaimedInfo(item.amountClaimed),
 				[MDFClaimColumnKey.DATE_SUBMITTED]: getDateCustomFormat(
-					item.dateCreated as Date,
+					item.dateCreated as string,
 					customFormatDateOptions.SHORT_MONTH
 				),
 			})),

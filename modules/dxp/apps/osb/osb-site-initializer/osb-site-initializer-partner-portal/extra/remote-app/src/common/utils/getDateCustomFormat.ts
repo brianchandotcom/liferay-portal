@@ -12,7 +12,7 @@
 import {Liferay} from '../services/liferay';
 
 export default function getDateCustomFormat(
-	rawDate: Date,
+	rawDate: string,
 	format: Intl.DateTimeFormatOptions
 ) {
 	const date = new Date(rawDate);

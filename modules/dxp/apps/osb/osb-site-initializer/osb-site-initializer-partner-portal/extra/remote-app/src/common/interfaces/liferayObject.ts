@@ -10,8 +10,8 @@
  */
 
 export default interface LiferayObject {
-	dateCreated: Date;
-	dateModified: Date;
+	dateCreated: string;
+	dateModified: string;
 	externalReferenceCode: string;
 	id: number;
 }

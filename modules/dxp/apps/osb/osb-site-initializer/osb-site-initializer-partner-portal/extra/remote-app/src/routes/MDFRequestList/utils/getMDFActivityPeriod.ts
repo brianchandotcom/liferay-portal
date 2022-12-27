@@ -14,8 +14,8 @@ import {customFormatDateOptions} from '../../../common/utils/constants/customFor
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
 export default function getMDFActivityPeriod(
-	minDateActivity?: Date,
-	maxDateActivity?: Date
+	minDateActivity?: string,
+	maxDateActivity?: string
 ) {
 	if (minDateActivity && maxDateActivity) {
 		const startDate = getDateCustomFormat(

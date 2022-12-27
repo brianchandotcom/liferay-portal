@@ -31,7 +31,7 @@ export default interface DealRegistrationDTO
 	additionalContacts?: string;
 	additionalInformationAboutTheOpportunity?: string;
 	amount?: number;
-	closeDate?: Date;
+	closeDate?: string;
 	leadExternalReferenceCode?: string;
 	leadStatus?: string;
 	mdfActivityExternalReferenceCodeSF?: string;
@@ -50,8 +50,8 @@ export default interface DealRegistrationDTO
 	primaryProspectPhone?: string;
 	projectCategories?: string;
 	projectNeed?: string;
-	projectSubscriptionEndDate?: Date;
-	projectSubscriptionStartDate?: Date;
+	projectSubscriptionEndDate?: string;
+	projectSubscriptionStartDate?: string;
 	projectTimeline: string;
 	prospectAccountName?: string;
 	prospectAddress?: string;

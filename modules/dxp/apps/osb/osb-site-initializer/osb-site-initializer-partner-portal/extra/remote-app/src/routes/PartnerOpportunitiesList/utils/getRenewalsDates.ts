@@ -13,7 +13,7 @@ import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpport
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
-export default function getRenewalsDates(closeDate?: Date) {
+export default function getRenewalsDates(closeDate?: string) {
 	if (closeDate) {
 		const closeDateCustomFormat = getDateCustomFormat(
 			closeDate,

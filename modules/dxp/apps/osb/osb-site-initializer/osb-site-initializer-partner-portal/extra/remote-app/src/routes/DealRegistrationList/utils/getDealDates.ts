@@ -13,7 +13,7 @@ import {DealRegistrationColumnKey} from '../../../common/enums/dealRegistrationC
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
-export default function getDealDates(startDate?: Date) {
+export default function getDealDates(startDate?: string) {
 	if (startDate) {
 		const startDateCustomFormat = getDateCustomFormat(
 			startDate,

@@ -13,7 +13,10 @@ import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
-export default function getMDFDates(dateCreated?: Date, dateModified?: Date) {
+export default function getMDFDates(
+	dateCreated?: string,
+	dateModified?: string
+) {
 	if (dateCreated && dateModified) {
 		const dateSubmitted = getDateCustomFormat(
 			dateCreated,

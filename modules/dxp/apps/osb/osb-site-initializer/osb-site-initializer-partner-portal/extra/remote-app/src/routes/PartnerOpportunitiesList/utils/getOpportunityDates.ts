@@ -13,7 +13,10 @@ import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpport
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
-export default function getOpportunityDates(startDate?: Date, endDate?: Date) {
+export default function getOpportunityDates(
+	startDate?: string,
+	endDate?: string
+) {
 	if (startDate && endDate) {
 		const startDateCustomFormat = getDateCustomFormat(
 			startDate,

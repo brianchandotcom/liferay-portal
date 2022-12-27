@@ -27,6 +27,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Hugo Huijser
  */
-@Component(immediate = true, property = StringPool.UNDERLINE + Constants.SUBSCRIBE_TO_COMMENTS, service = {}) @DDMForm @DDMFormLayout({@DDMFormLayoutPage({@DDMFormLayoutRow({@DDMFormLayoutColumn(size = 12, value = {"prop1", "prop2", "prop3"})})})})
+@Component(property = StringPool.UNDERLINE + Constants.SUBSCRIBE_TO_COMMENTS, service = {}) @DDMForm @DDMFormLayout({@DDMFormLayoutPage({@DDMFormLayoutRow({@DDMFormLayoutColumn(size = 12, value = {"prop1", "prop2", "prop3"})})})})
 public class JavaAnnotation {
 }

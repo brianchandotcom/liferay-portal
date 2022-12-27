@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Hugo Huijser
  */
 @Component(
-	immediate = true,
 	property = StringPool.UNDERLINE + Constants.SUBSCRIBE_TO_COMMENTS,
 	service = {}
 )

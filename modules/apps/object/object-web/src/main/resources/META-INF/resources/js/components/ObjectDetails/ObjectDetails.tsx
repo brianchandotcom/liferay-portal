@@ -19,13 +19,14 @@ import React, {useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 import ObjectManagementToolbar from '../ObjectManagementToolbar';
+import {ConfigurationContainer} from './ConfigurationContainer';
+import {EntryDisplayContainer} from './EntryDisplayContainer';
 import {ObjectDataContainer} from './ObjectDataContainer';
+import {ScopeContainer} from './ScopeContainer';
 import Sheet from './Sheet';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
-import {EntryDisplayContainer} from './EntryDisplayContainer';
-import {ScopeContainer} from './ScopeContainer';
 
 export type KeyValuePair = {
 	key: string;
@@ -307,77 +308,14 @@ export default function ObjectDetails({
 						</ClayPanel.Body>
 					</ClayPanel>
 
-					<ClayPanel
-						collapsable
-						defaultExpanded
-						displayTitle={Liferay.Language.get('configuration')}
-						displayType="unstyled"
-					>
-						<ClayPanel.Body>
-							<div className="lfr-objects__object-definition-details-configuration">
-								<ClayToggle
-									disabled={
-										values.system ||
-										!hasUpdateObjectDefinitionPermission
-									}
-									label={Liferay.Language.get('show-widget')}
-									name="showWidget"
-									onToggle={() =>
-										setValues({portlet: !values.portlet})
-									}
-									toggled={values.portlet}
-								/>
-
-								<ClayToggle
-									disabled={
-										values.system ||
-										!hasUpdateObjectDefinitionPermission
-									}
-									label={Liferay.Language.get(
-										'enable-categorization'
-									)}
-									name="enableCategorization"
-									onToggle={() =>
-										setValues({
-											enableCategorization: !values.enableCategorization,
-										})
-									}
-									toggled={values.enableCategorization}
-								/>
-
-								<ClayToggle
-									disabled={
-										values.system ||
-										!hasUpdateObjectDefinitionPermission
-									}
-									label={Liferay.Language.get(
-										'enable-comments'
-									)}
-									name="enableComments"
-									onToggle={() =>
-										setValues({
-											enableComments: !values.enableComments,
-										})
-									}
-									toggled={values.enableComments}
-								/>
-
-								<ClayToggle
-									disabled={values.system || isApproved}
-									label={Liferay.Language.get(
-										'enable-entry-history'
-									)}
-									name="enableEntryHistory"
-									onToggle={() =>
-										setValues({
-											enableObjectEntryHistory: !values.enableObjectEntryHistory,
-										})
-									}
-									toggled={values.enableObjectEntryHistory}
-								/>
-							</div>
-						</ClayPanel.Body>
-					</ClayPanel>
+					<ConfigurationContainer
+						hasUpdateObjectDefinitionPermission={
+							hasUpdateObjectDefinitionPermission
+						}
+						isApproved={isApproved}
+						setValues={setValues}
+						values={values}
+					/>
 				</Sheet>
 			</div>
 		</>

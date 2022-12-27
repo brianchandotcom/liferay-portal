@@ -1470,8 +1470,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public List<MBMessage> getSiteUserMessageBoardMessagesActivity(
 		long groupId, long userId, int start, int end) {
 
-		MBMessageTable aliasMBMessageTable1 = MBMessageTable.INSTANCE.as(
-			"aliasMBMessageTable1");
+		MBMessageTable aliasMBMessageTable = MBMessageTable.INSTANCE.as(
+			"aliasMBMessageTable");
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 			MBMessageTable.INSTANCE
@@ -1483,19 +1483,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					DSLFunctionFactoryUtil.max(
 						MBMessageTable.INSTANCE.modifiedDate)
 				).from(
-					aliasMBMessageTable1
+					aliasMBMessageTable
 				).where(
 					MBMessageTable.INSTANCE.rootMessageId.eq(
 						MBMessageTable.INSTANCE.parentMessageId
 					).and(
+						MBMessageTable.INSTANCE.categoryId.eq(
+							aliasMBMessageTable.categoryId)
+					).and(
 						MBMessageTable.INSTANCE.groupId.eq(
 							groupId
-						).and(
-							MBMessageTable.INSTANCE.userId.eq(userId)
 						)
 					).and(
-						MBMessageTable.INSTANCE.categoryId.eq(
-							aliasMBMessageTable1.categoryId)
+						MBMessageTable.INSTANCE.userId.eq(userId)
 					)
 				)
 			).or(
@@ -1514,9 +1514,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				).and(
 					MBMessageTable.INSTANCE.groupId.eq(
 						groupId
-					).and(
-						MBMessageTable.INSTANCE.userId.eq(userId)
 					)
+				).and(
+					MBMessageTable.INSTANCE.userId.eq(userId)
 				)
 			)
 		).orderBy(
@@ -1532,8 +1532,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public int getSiteUserMessageBoardMessagesActivityCount(
 		long groupId, long userId) {
 
-		MBMessageTable aliasMBMessageTable1 = MBMessageTable.INSTANCE.as(
-			"aliasMBMessageTable1");
+		MBMessageTable aliasMBMessageTable = MBMessageTable.INSTANCE.as(
+			"aliasMBMessageTable");
 
 		return mbMessagePersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
@@ -1545,19 +1545,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						DSLFunctionFactoryUtil.max(
 							MBMessageTable.INSTANCE.modifiedDate)
 					).from(
-						aliasMBMessageTable1
+						aliasMBMessageTable
 					).where(
 						MBMessageTable.INSTANCE.rootMessageId.eq(
 							MBMessageTable.INSTANCE.parentMessageId
 						).and(
+							MBMessageTable.INSTANCE.categoryId.eq(
+								aliasMBMessageTable.categoryId)
+						).and(
 							MBMessageTable.INSTANCE.groupId.eq(
 								groupId
-							).and(
-								MBMessageTable.INSTANCE.userId.eq(userId)
 							)
 						).and(
-							MBMessageTable.INSTANCE.categoryId.eq(
-								aliasMBMessageTable1.categoryId)
+							MBMessageTable.INSTANCE.userId.eq(userId)
 						)
 					)
 				).or(
@@ -1576,9 +1576,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					).and(
 						MBMessageTable.INSTANCE.groupId.eq(
 							groupId
-						).and(
-							MBMessageTable.INSTANCE.userId.eq(userId)
 						)
+					).and(
+						MBMessageTable.INSTANCE.userId.eq(userId)
 					)
 				)
 			));

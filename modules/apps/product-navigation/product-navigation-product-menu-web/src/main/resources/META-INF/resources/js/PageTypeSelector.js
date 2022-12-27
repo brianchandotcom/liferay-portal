@@ -87,7 +87,7 @@ function PageTypeSelector({
 		<div className="align-items-center d-flex page-type-selector">
 			<Picker
 				aria-label={Liferay.Language.get('pages-type')}
-				className="form-control-sm"
+				className="form-control-sm w-auto"
 				items={pageTypeOptions.filter((option) => option.items.length)}
 				onSelectionChange={handleSelect}
 				selectedKey={pageTypeSelectedOption}

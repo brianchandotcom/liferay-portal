@@ -14,44 +14,25 @@
 
 /// <reference types="react" />
 
+import {FormError} from '@liferay/object-js-components-web';
+import {KeyValuePair} from './ObjectDetails';
 import './ObjectDetails.scss';
-export declare type KeyValuePair = {
-	key: string;
-	value: string;
-};
-interface ObjectDetailsProps {
-	DBTableName: string;
-	backURL: string;
+interface ScopeContainerProps {
 	companyKeyValuePair: KeyValuePair[];
-	externalReferenceCode: string;
-	hasPublishObjectPermission: boolean;
+	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
-	label: LocalizedValue<string>;
-	nonRelationshipObjectFieldsInfo: {
-		label: LocalizedValue<string>;
-		name: string;
-	}[];
-	objectDefinitionId: number;
-	pluralLabel: LocalizedValue<string>;
-	portletNamespace: string;
-	shortName: string;
+	setValues: (values: Partial<ObjectDefinition>) => void;
 	siteKeyValuePair: KeyValuePair[];
+	values: Partial<ObjectDefinition>;
 }
-export default function ObjectDetails({
-	DBTableName,
-	backURL,
+export declare function ScopeContainer({
 	companyKeyValuePair,
-	externalReferenceCode,
-	hasPublishObjectPermission,
+	errors,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
-	label,
-	nonRelationshipObjectFieldsInfo,
-	objectDefinitionId,
-	pluralLabel,
-	portletNamespace,
-	shortName,
+	setValues,
 	siteKeyValuePair,
-}: ObjectDetailsProps): JSX.Element;
+	values,
+}: ScopeContainerProps): JSX.Element;
 export {};

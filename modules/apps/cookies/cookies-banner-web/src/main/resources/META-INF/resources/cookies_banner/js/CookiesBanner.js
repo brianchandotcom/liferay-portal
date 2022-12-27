@@ -23,7 +23,7 @@ import {
 	userConfigCookieName,
 } from '../../js/CookiesUtil';
 
-const cookiesBannerDisplayContext = {};
+let openCookieConfigurationModal;
 
 export default function ({
 	configurationNamespace,
@@ -34,10 +34,6 @@ export default function ({
 	requiredConsentCookieTypeNames,
 	title,
 }) {
-	cookiesBannerDisplayContext.configurationURL = configurationURL;
-	cookiesBannerDisplayContext.configurationNamespace = configurationNamespace;
-	cookiesBannerDisplayContext.title = title;
-
 	const acceptAllButton = document.getElementById(
 		`${namespace}acceptAllButton`
 	);
@@ -77,7 +73,21 @@ export default function ({
 			setUserConfigCookie();
 		});
 
-		configurationButton.addEventListener('click', () => {
+		openCookieConfigurationModal = ({
+			alertDisplayType,
+			alertMessage,
+			customTitle,
+		}) => {
+			let url = configurationURL;
+
+			if (alertDisplayType) {
+				url = `${url}&_${configurationNamespace}_alertDisplayType=${alertDisplayType}`;
+			}
+
+			if (alertMessage) {
+				url = `${url}&_${configurationNamespace}_alertMessage=${alertMessage}`;
+			}
+
 			openModal({
 				buttons: [
 					{
@@ -144,9 +154,13 @@ export default function ({
 				height: '70vh',
 				id: 'cookiesBannerConfiguration',
 				size: 'lg',
-				title,
-				url: configurationURL,
+				title: customTitle || title,
+				url,
 			});
+		};
+
+		configurationButton.addEventListener('click', () => {
+			openCookieConfigurationModal({});
 		});
 
 		declineAllButton.addEventListener('click', () => {
@@ -170,32 +184,5 @@ function setBannerVisibility(cookieBanner) {
 		cookieBanner.style.display = 'block';
 	}
 }
-
-const openCookieConfigurationModal = ({
-	alertDisplayType,
-	alertMessage,
-	title,
-}) => {
-	let url = cookiesBannerDisplayContext.configurationURL;
-
-	const namespace = `_${cookiesBannerDisplayContext.configurationNamespace}_`;
-
-	if (alertDisplayType) {
-		url = `${url}&${namespace}alertDisplayType=${alertDisplayType}`;
-	}
-
-	if (alertMessage) {
-		url = `${url}&${namespace}alertMessage=${alertMessage}`;
-	}
-
-	openModal({
-		displayType: 'primary',
-		height: '70vh',
-		id: 'cookiesBannerConfiguration',
-		size: 'lg',
-		title: title || cookiesBannerDisplayContext.title || '',
-		url,
-	});
-};
 
 export {openCookieConfigurationModal};

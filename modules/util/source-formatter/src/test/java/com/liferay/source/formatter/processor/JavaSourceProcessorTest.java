@@ -527,6 +527,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testRemoveComponentAnnotationsUncessaryAttribute() throws Exception {
+		test("RemoveComponentAnnotationsUnnecessaryAttribute.testjava");
+	}
+
+	@Test
 	public void testResultCountSet() throws Exception {
 		test(
 			"ResultSetCount.testjava", "Use resultSet.getInt(1) for count", 35);

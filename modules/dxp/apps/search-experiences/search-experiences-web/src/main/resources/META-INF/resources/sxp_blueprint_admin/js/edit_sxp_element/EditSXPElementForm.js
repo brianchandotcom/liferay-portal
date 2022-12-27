@@ -42,12 +42,10 @@ import ThemeContext from '../shared/ThemeContext';
 import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
-import {
-	formatLocaleWithDashes,
-	formatLocaleWithUnderscores,
-	renameKeys,
-	sub,
-} from '../utils/language';
+import formatLocaleWithDashes from '../utils/language/format_locale_with_dashes';
+import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
+import renameKeys from '../utils/language/rename_keys';
+import sub from '../utils/language/sub';
 import getUIConfigurationValues from '../utils/sxp_element/get_ui_configuration_values';
 import isCustomJSONSXPElement from '../utils/sxp_element/is_custom_json_sxp_element';
 import {openErrorToast, setInitialSuccessToast} from '../utils/toasts';

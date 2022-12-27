@@ -18,7 +18,7 @@ import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
-import {getLocalizedLearnMessageObject} from '../../../sxp_blueprint_admin/js/utils/language';
+import getLocalizedLearnMessageObject from '../../../sxp_blueprint_admin/js/utils/language/get_localized_learn_message_object';
 import SelectSXPBlueprintModal from './SelectSXPBlueprintModal';
 
 const Configuration = ({

@@ -9,16 +9,14 @@
  * distribution rights of the Software.
  */
 
-import {renameKeys} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/language';
+import renameKeys from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/language/rename_keys';
 
-describe('utils', () => {
-	describe('renameKeys', () => {
-		it('replaces the string for locale', () => {
-			expect(
-				renameKeys({'en-US': 'Hello', 'zh-CN': 'Ni Hao'}, (str) =>
-					str.replace('-', '_')
-				)
-			).toEqual({en_US: 'Hello', zh_CN: 'Ni Hao'});
-		});
+describe('renameKeys', () => {
+	it('replaces the string for locale', () => {
+		expect(
+			renameKeys({'en-US': 'Hello', 'zh-CN': 'Ni Hao'}, (str) =>
+				str.replace('-', '_')
+			)
+		).toEqual({en_US: 'Hello', zh_CN: 'Ni Hao'});
 	});
 });

@@ -25,11 +25,9 @@ import PropTypes from 'prop-types';
 import React, {useContext, useRef, useState} from 'react';
 
 import removeDuplicates from '../utils/functions/remove_duplicates';
-import {
-	formatLocaleWithDashes,
-	formatLocaleWithUnderscores,
-	sub,
-} from '../utils/language';
+import formatLocaleWithDashes from '../utils/language/format_locale_with_dashes';
+import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
+import sub from '../utils/language/sub';
 import ThemeContext from './ThemeContext';
 
 /**

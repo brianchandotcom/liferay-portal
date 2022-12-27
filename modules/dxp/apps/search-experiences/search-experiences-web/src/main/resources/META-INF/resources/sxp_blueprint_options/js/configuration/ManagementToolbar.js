@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
+import sub from '../../../sxp_blueprint_admin/js/utils/language/sub';
 
 const ManagementToolbar = ({
 	filterItems,

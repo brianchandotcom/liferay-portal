@@ -29,7 +29,7 @@ import {PreviewModalWithCopyDownload} from '../../shared/PreviewModal';
 import SearchInput from '../../shared/SearchInput';
 import isDefined from '../../utils/functions/is_defined';
 import parseAndPrettifyJSON from '../../utils/functions/parse_and_prettify_json';
-import {sub} from '../../utils/language';
+import sub from '../../utils/language/sub';
 import {TEST_IDS} from '../../utils/testIds';
 import PreviewAttributesModal from './PreviewAttributesModal';
 import ResultListItem from './ResultListItem';

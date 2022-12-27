@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {formatLocaleWithUnderscores, renameKeys} from '../language';
+import formatLocaleWithUnderscores from '../language/format_locale_with_underscores';
+import renameKeys from '../language/rename_keys';
 import replaceTemplateVariable from './replace_template_variable';
 
 /**

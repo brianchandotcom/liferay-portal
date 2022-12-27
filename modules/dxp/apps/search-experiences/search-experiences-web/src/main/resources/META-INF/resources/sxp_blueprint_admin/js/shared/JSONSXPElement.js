@@ -21,7 +21,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import sxpElementSchema from '../../schemas/sxp-query-element.schema.json';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
-import {getLocalizedText} from '../utils/language';
+import getLocalizedText from '../utils/language/get_localized_text';
 import ThemeContext from './ThemeContext';
 import JSONInput from './sxp_element/JSONInput';
 

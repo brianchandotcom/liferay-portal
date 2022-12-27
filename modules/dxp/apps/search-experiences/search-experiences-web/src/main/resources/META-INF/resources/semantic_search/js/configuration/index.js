@@ -14,7 +14,7 @@ import {useFormik} from 'formik';
 import React from 'react';
 
 import {LearnMessageWithoutContext} from '../../../sxp_blueprint_admin/js/shared/LearnMessage';
-import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
+import sub from '../../../sxp_blueprint_admin/js/utils/language/sub';
 import Input from './Input';
 import TestConfigurationButton from './TestConfigurationButton';
 import {TEXT_EMBEDDING_PROVIDER_TYPES} from './constants';

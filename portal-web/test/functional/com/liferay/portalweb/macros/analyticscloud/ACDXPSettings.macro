@@ -203,16 +203,18 @@ definition {
 	}
 
 	macro syncAccountsData {
-		Click(
-			key_option = "Select Accounts",
-			locator1 = "Panel#PANEL_COLLAPSED");
+		if (IsElementPresent(key_panel = "Select Accounts", locator1 = "Panel#PANEL_COLLAPSED")) {
+			Click(
+				key_panel = "Select Accounts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+		}
 
 		if (isSet(accountGroup)) {
 			Click(
 				key_option = "Sync by Account Groups",
 				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
 
-			Click(
+			Click.clickAtNotVisible(
 				key_entry = "${accountGroup}",
 				locator1 = "ACDXPSettings#SELECT_OPTION_CHECKBOX");
 
@@ -224,7 +226,7 @@ definition {
 		}
 		else {
 			if (IsElementPresent(index = "3", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-				Uncheck.uncheckToggleSwitch(
+				Check.checkToggleSwitch(
 					key_syncFieldName = "Sync All Accounts",
 					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
 			}

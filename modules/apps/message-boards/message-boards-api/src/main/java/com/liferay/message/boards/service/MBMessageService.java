@@ -220,7 +220,12 @@ public interface MBMessageService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getSiteUserMessageBoardMessagesActivity(
-			long userId, long siteId, int start, int end)
+			long userId, long groupId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSiteUserMessageBoardMessagesActivityCount(
+			long userId, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

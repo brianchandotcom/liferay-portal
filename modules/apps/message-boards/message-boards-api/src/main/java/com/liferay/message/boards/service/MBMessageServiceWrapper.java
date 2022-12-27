@@ -337,11 +337,20 @@ public class MBMessageServiceWrapper
 
 	@Override
 	public java.util.List<MBMessage> getSiteUserMessageBoardMessagesActivity(
-			long userId, long siteId, int start, int end)
+			long userId, long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mbMessageService.getSiteUserMessageBoardMessagesActivity(
-			userId, siteId, start, end);
+			userId, groupId, start, end);
+	}
+
+	@Override
+	public int getSiteUserMessageBoardMessagesActivityCount(
+			long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageService.getSiteUserMessageBoardMessagesActivityCount(
+			userId, groupId);
 	}
 
 	@Override

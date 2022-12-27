@@ -705,6 +705,16 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			userId, groupId, start, end);
 	}
 
+	public int getSiteUserMessageBoardMessagesActivityCount(
+		long userId, long groupId)
+		throws PortalException {
+
+		_userPermission.check(getPermissionChecker(), userId, ActionKeys.VIEW);
+
+		return mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(
+			userId, groupId);
+	}
+
 	@Override
 	public String[] getTempAttachmentNames(long groupId, String folderName)
 		throws PortalException {

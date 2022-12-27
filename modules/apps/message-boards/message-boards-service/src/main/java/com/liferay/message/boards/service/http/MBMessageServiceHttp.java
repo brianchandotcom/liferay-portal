@@ -1117,7 +1117,7 @@ public class MBMessageServiceHttp {
 
 	public static java.util.List<com.liferay.message.boards.model.MBMessage>
 			getSiteUserMessageBoardMessagesActivity(
-				HttpPrincipal httpPrincipal, long userId, long siteId,
+				HttpPrincipal httpPrincipal, long userId, long groupId,
 				int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1128,7 +1128,7 @@ public class MBMessageServiceHttp {
 				_getSiteUserMessageBoardMessagesActivityParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, siteId, start, end);
+				methodKey, userId, groupId, start, end);
 
 			Object returnObj = null;
 
@@ -1159,6 +1159,47 @@ public class MBMessageServiceHttp {
 		}
 	}
 
+	public static int getSiteUserMessageBoardMessagesActivityCount(
+			HttpPrincipal httpPrincipal, long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBMessageServiceUtil.class,
+				"getSiteUserMessageBoardMessagesActivityCount",
+				_getSiteUserMessageBoardMessagesActivityCountParameterTypes27);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static String[] getTempAttachmentNames(
 			HttpPrincipal httpPrincipal, long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1166,7 +1207,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "getTempAttachmentNames",
-				_getTempAttachmentNamesParameterTypes27);
+				_getTempAttachmentNamesParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderName);
@@ -1206,7 +1247,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "getThreadAnswersCount",
-				_getThreadAnswersCountParameterTypes28);
+				_getThreadAnswersCountParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, categoryId, threadId);
@@ -1240,7 +1281,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "getThreadMessages",
-				_getThreadMessagesParameterTypes29);
+				_getThreadMessagesParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, categoryId, threadId, status, start, end);
@@ -1274,7 +1315,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "getThreadMessagesCount",
-				_getThreadMessagesCountParameterTypes30);
+				_getThreadMessagesCountParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, categoryId, threadId, status);
@@ -1310,7 +1351,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "getThreadMessagesRSS",
-				_getThreadMessagesRSSParameterTypes31);
+				_getThreadMessagesRSSParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, threadId, status, max, type, version, displayStyle,
@@ -1351,7 +1392,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "moveMessageAttachmentToTrash",
-				_moveMessageAttachmentToTrashParameterTypes32);
+				_moveMessageAttachmentToTrashParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId, fileName);
@@ -1387,7 +1428,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "restoreMessageAttachmentFromTrash",
-				_restoreMessageAttachmentFromTrashParameterTypes33);
+				_restoreMessageAttachmentFromTrashParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId, fileName);
@@ -1423,7 +1464,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "subscribeMessage",
-				_subscribeMessageParameterTypes34);
+				_subscribeMessageParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId);
@@ -1459,7 +1500,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "unsubscribeMessage",
-				_unsubscribeMessageParameterTypes35);
+				_unsubscribeMessageParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId);
@@ -1496,7 +1537,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "updateAnswer",
-				_updateAnswerParameterTypes36);
+				_updateAnswerParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId, answer, cascade);
@@ -1539,7 +1580,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "updateDiscussionMessage",
-				_updateDiscussionMessageParameterTypes37);
+				_updateDiscussionMessageParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, messageId, subject, body,
@@ -1586,7 +1627,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBMessageServiceUtil.class, "updateMessage",
-				_updateMessageParameterTypes38);
+				_updateMessageParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId, subject, body, inputStreamOVPs, priority,
@@ -1726,42 +1767,45 @@ public class MBMessageServiceHttp {
 		_getSiteUserMessageBoardMessagesActivityParameterTypes26 = new Class[] {
 			long.class, long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getTempAttachmentNamesParameterTypes27 =
+	private static final Class<?>[]
+		_getSiteUserMessageBoardMessagesActivityCountParameterTypes27 =
+			new Class[] {long.class, long.class};
+	private static final Class<?>[] _getTempAttachmentNamesParameterTypes28 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getThreadAnswersCountParameterTypes28 =
+	private static final Class<?>[] _getThreadAnswersCountParameterTypes29 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _getThreadMessagesParameterTypes29 =
+	private static final Class<?>[] _getThreadMessagesParameterTypes30 =
 		new Class[] {
 			long.class, long.class, long.class, int.class, int.class, int.class
 		};
-	private static final Class<?>[] _getThreadMessagesCountParameterTypes30 =
+	private static final Class<?>[] _getThreadMessagesCountParameterTypes31 =
 		new Class[] {long.class, long.class, long.class, int.class};
-	private static final Class<?>[] _getThreadMessagesRSSParameterTypes31 =
+	private static final Class<?>[] _getThreadMessagesRSSParameterTypes32 =
 		new Class[] {
 			long.class, int.class, int.class, String.class, double.class,
 			String.class, String.class, String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[]
-		_moveMessageAttachmentToTrashParameterTypes32 = new Class[] {
+		_moveMessageAttachmentToTrashParameterTypes33 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_restoreMessageAttachmentFromTrashParameterTypes33 = new Class[] {
+		_restoreMessageAttachmentFromTrashParameterTypes34 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _subscribeMessageParameterTypes34 =
+	private static final Class<?>[] _subscribeMessageParameterTypes35 =
 		new Class[] {long.class};
-	private static final Class<?>[] _unsubscribeMessageParameterTypes35 =
+	private static final Class<?>[] _unsubscribeMessageParameterTypes36 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateAnswerParameterTypes36 =
+	private static final Class<?>[] _updateAnswerParameterTypes37 =
 		new Class[] {long.class, boolean.class, boolean.class};
-	private static final Class<?>[] _updateDiscussionMessageParameterTypes37 =
+	private static final Class<?>[] _updateDiscussionMessageParameterTypes38 =
 		new Class[] {
 			String.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateMessageParameterTypes38 =
+	private static final Class<?>[] _updateMessageParameterTypes39 =
 		new Class[] {
 			long.class, String.class, String.class, java.util.List.class,
 			double.class, boolean.class,

@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.internal.layout.display.page;
 
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -55,7 +56,8 @@ public class KBArticleLayoutDisplayPageProvider
 				return null;
 			}
 
-			return new KBArticleLayoutDisplayPageObjectProvider(kbArticle);
+			return new KBArticleLayoutDisplayPageObjectProvider(
+				kbArticle, _assetHelper);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -78,7 +80,8 @@ public class KBArticleLayoutDisplayPageProvider
 				return null;
 			}
 
-			return new KBArticleLayoutDisplayPageObjectProvider(kbArticle);
+			return new KBArticleLayoutDisplayPageObjectProvider(
+				kbArticle, _assetHelper);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -105,6 +108,9 @@ public class KBArticleLayoutDisplayPageProvider
 
 		return KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;

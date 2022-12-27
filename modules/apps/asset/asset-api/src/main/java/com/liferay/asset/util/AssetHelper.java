@@ -76,6 +76,9 @@ public interface AssetHelper {
 
 	public String getAssetKeywords(String className, long classPK);
 
+	public String getAssetKeywords(
+		String className, long classPK, Locale locale);
+
 	public List<AssetPublisherAddItemHolder> getAssetPublisherAddItemHolders(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long groupId,

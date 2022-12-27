@@ -17,8 +17,6 @@ import ClayPanel from '@clayui/panel';
 import {
 	API,
 	AutoComplete,
-	Input,
-	InputLocalized,
 	SingleSelect,
 	filterArrayByQuery,
 	openToast,
@@ -27,10 +25,11 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 import ObjectManagementToolbar from '../ObjectManagementToolbar';
-
-import './ObjectDetails.scss';
+import {ObjectDataContainer} from './ObjectDataContainer';
 import Sheet from './Sheet';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
+
+import './ObjectDetails.scss';
 
 interface ObjectDetailsProps {
 	DBTableName: string;
@@ -315,80 +314,17 @@ export default function ObjectDetails({
 
 			<div className="lfr-objects__object-definition-details">
 				<Sheet title={Liferay.Language.get('basic-information')}>
-					<ClayPanel
-						displayTitle={Liferay.Language.get(
-							'object-definition-data'
-						)}
-						displayType="unstyled"
-					>
-						<ClayPanel.Body>
-							<Input
-								disabled={
-									isApproved ||
-									!hasUpdateObjectDefinitionPermission
-								}
-								error={errors.name}
-								label={Liferay.Language.get('name')}
-								name="name"
-								onChange={handleChange}
-								required
-								value={values.name}
-							/>
-
-							<InputLocalized
-								disabled={
-									values.system ||
-									!hasUpdateObjectDefinitionPermission
-								}
-								error={errors.label}
-								label={Liferay.Language.get('label')}
-								onChange={(label) => setValues({label})}
-								required
-								translations={
-									values.label as LocalizedValue<string>
-								}
-							/>
-
-							<InputLocalized
-								disabled={
-									values.system ||
-									!hasUpdateObjectDefinitionPermission
-								}
-								error={errors.pluralLabel}
-								label={Liferay.Language.get('plural-label')}
-								onChange={(pluralLabel) =>
-									setValues({pluralLabel})
-								}
-								required
-								translations={
-									values.pluralLabel as LocalizedValue<string>
-								}
-							/>
-
-							<Input
-								disabled
-								label={Liferay.Language.get(
-									'object-definition-table-name'
-								)}
-								name="name"
-								value={DBTableName}
-							/>
-
-							<ClayToggle
-								disabled={
-									!isApproved ||
-									values.system ||
-									!hasUpdateObjectDefinitionPermission
-								}
-								label={Liferay.Language.get('active')}
-								name="active"
-								onToggle={() =>
-									setValues({active: !values.active})
-								}
-								toggled={values.active}
-							/>
-						</ClayPanel.Body>
-					</ClayPanel>
+					<ObjectDataContainer
+						DBTableName={DBTableName}
+						errors={errors}
+						handleChange={handleChange}
+						hasUpdateObjectDefinitionPermission={
+							hasUpdateObjectDefinitionPermission
+						}
+						isApproved={isApproved}
+						setValues={setValues}
+						values={values}
+					/>
 
 					<ClayPanel
 						collapsable

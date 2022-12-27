@@ -57,7 +57,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"dispatch.task.executor.cluster.mode=single-node",
 		"dispatch.task.executor.feature.flag=LPS-166126",
 		"dispatch.task.executor.name=testray-test-flow",
 		"dispatch.task.executor.overlapping=false",
@@ -123,6 +122,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 	@Override
 	public String getName() {
 		return "testray-test-flow";
+	}
+
+	@Override
+	public boolean isClusterModeSingle() {
+		return true;
 	}
 
 	private String _getTestrayIssueNames(

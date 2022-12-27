@@ -364,16 +364,17 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101354 and for LPS-89115. The contributed fragments can be copied."
+	@description = "This is a test for LPS-101354, LPS-89115 and LPS-166203. The contributed fragments can be copied."
 	@priority = "5"
 	@uitest
 	test CopyContributedFragment {
+		property custom.properties = "feature.flag.LPS-166203=true";
 		property portal.acceptance = "true";
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
-				name = "Collection Name");
+				name = "Fragment Set Name");
 		}
 
 		task ("Navigate to the Fragments admin") {
@@ -387,16 +388,17 @@ definition {
 				entry = "Button",
 				item = "Copy To");
 
-			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+			Select(
+				key_fieldLabel = "Fragment Sets",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Fragment Set Name");
 		}
 
 		task ("View the copied fragment") {
+			Modal.save();
+
+			MenuBar.viewActive(menuBar = "Fragment Set Name");
+
 			FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");
 		}
 	}

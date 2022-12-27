@@ -78,11 +78,18 @@ export default {
 		return serviceFetch(config.getCollectionFiltersURL, {}, () => {});
 	},
 
-	getCollectionItemCount({collection, onNetworkStatus}) {
+	getCollectionItemCount({
+		classNameId,
+		classPK,
+		collection,
+		onNetworkStatus,
+	}) {
 		return serviceFetch(
 			config.getCollectionItemCountURL,
 			{
 				body: {
+					classNameId,
+					classPK,
 					layoutObjectReference: JSON.stringify(collection),
 				},
 			},

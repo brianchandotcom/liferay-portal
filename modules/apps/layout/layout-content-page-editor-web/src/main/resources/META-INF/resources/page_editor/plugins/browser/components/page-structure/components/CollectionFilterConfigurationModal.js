@@ -22,6 +22,7 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {useDisplayPagePreviewItem} from '../../../../../app/contexts/DisplayPagePreviewItemContext';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
 import {selectPageContents} from '../../../../../app/selectors/selectPageContents';
@@ -220,9 +221,13 @@ const FilterInformationToolbar = ({
 		collectionConfigurationValues,
 	});
 
+	const previewItem = useDisplayPagePreviewItem();
+
 	useEffect(() => {
 		if (hasConfigurationValues) {
 			CollectionService.getCollectionItemCount({
+				classNameId: previewItem?.data.classNameId,
+				classPK: previewItem?.data.classPK,
 				collection: itemConfig?.collection,
 				onNetworkStatus: () => {},
 			}).then(({totalNumberOfItems}) => {
@@ -231,7 +236,12 @@ const FilterInformationToolbar = ({
 				}
 			});
 		}
-	}, [isMounted, itemConfig?.collection, hasConfigurationValues]);
+	}, [
+		isMounted,
+		itemConfig?.collection,
+		hasConfigurationValues,
+		previewItem,
+	]);
 
 	useEffect(() => {
 		const element = filterInformationMessageElementRef.current;

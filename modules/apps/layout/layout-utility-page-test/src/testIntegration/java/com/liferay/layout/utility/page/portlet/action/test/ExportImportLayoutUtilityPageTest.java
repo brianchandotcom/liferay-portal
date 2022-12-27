@@ -97,13 +97,11 @@ public class ExportImportLayoutUtilityPageTest {
 	public void testExportImportLayoutUtilityPageEntry() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		String type = "LAYOUT";
-
 		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				externalReferenceCode, _serviceContext1.getUserId(),
 				_serviceContext1.getScopeGroupId(), 0, 0, false,
-				StringUtil.randomString(), type, 0);
+				StringUtil.randomString(), "LAYOUT", 0);
 
 		_addItemsToLayout(
 			layoutUtilityPageEntry1.getGroupId(),

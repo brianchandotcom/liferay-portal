@@ -192,6 +192,107 @@ public class ExportImportLayoutUtilityPageTest {
 			LayoutDataItemTypeConstants.TYPE_ROW);
 	}
 
+	@Test
+	public void testExportImportLayoutUtilityPageEntryOverriding()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				externalReferenceCode, _serviceContext1.getUserId(),
+				_serviceContext1.getScopeGroupId(), 0, 0, false,
+				StringUtil.randomString(), "LAYOUT", 0);
+
+		_addItemsToLayout(
+			layoutUtilityPageEntry1.getGroupId(),
+			layoutUtilityPageEntry1.getPlid(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			LayoutDataItemTypeConstants.TYPE_ROW);
+
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
+
+		if (repository == null) {
+			repository = _portletFileRepository.addPortletRepository(
+				_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
+				_serviceContext1);
+		}
+
+		Class<?> clazz = getClass();
+
+		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+			null, _group1.getGroupId(), TestPropsValues.getUserId(),
+			LayoutUtilityPageEntry.class.getName(),
+			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
+			RandomTestUtil.randomString(), repository.getDlFolderId(),
+			clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId() +
+				"_preview.png",
+			ContentTypes.IMAGE_PNG, false);
+
+		layoutUtilityPageEntry1 =
+			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
+				layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
+				fileEntry.getFileEntryId());
+
+		Assert.assertNotEquals(
+			0, layoutUtilityPageEntry1.getPreviewFileEntryId());
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getFile", new Class<?>[] {long[].class},
+			new long[] {layoutUtilityPageEntry1.getLayoutUtilityPageEntryId()});
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group1.getGroupId(), 0, file,
+				false);
+
+		Assert.assertNotNull(layoutsImporterResultEntries);
+
+		Assert.assertEquals(
+			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.size());
+
+		LayoutsImporterResultEntry layoutUtilityPageImportEntry =
+			layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IGNORED,
+			layoutUtilityPageImportEntry.getStatus());
+
+		layoutsImporterResultEntries = _layoutsImporter.importFile(
+			TestPropsValues.getUserId(), _group1.getGroupId(), 0, file, true);
+
+		Assert.assertNotNull(layoutsImporterResultEntries);
+
+		Assert.assertEquals(
+			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.size());
+
+		layoutUtilityPageImportEntry = layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutUtilityPageImportEntry.getStatus());
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByExternalReferenceCode(
+					externalReferenceCode, _group1.getGroupId());
+
+		Assert.assertNotNull(layoutUtilityPageEntry2);
+
+		Assert.assertEquals(
+			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
+			layoutUtilityPageEntry2.getLayoutUtilityPageEntryId());
+
+		_assertExpectedLayoutStructureItem(
+			_group1.getGroupId(), layoutUtilityPageEntry2.getPlid(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			LayoutDataItemTypeConstants.TYPE_ROW);
+	}
+
 	private void _addItemsToLayout(long groupId, long plid, String... itemTypes)
 		throws Exception {
 

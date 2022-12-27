@@ -374,7 +374,7 @@ public class MessageBoardMessageResourceImpl
 					siteId, userId, start, end),
 				this::_toMessageBoardMessage),
 			pagination,
-			_mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(
+			_mbMessageService.getSiteUserMessageBoardMessagesActivityCount(
 				siteId, userId));
 	}
 

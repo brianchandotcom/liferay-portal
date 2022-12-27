@@ -23,6 +23,7 @@ import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
+import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
@@ -454,7 +455,11 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			contextUriInfo, _ignoredParameters);
 
 		if (createStrategy != null) {
-			parameters.put("createStrategy", createStrategy);
+			CreateStrategy createStrategyEnum = CreateStrategy.valueOf(
+				createStrategy);
+
+			parameters.put(
+				"createStrategy", createStrategyEnum.getDbOperation());
 		}
 
 		if (updateStrategy != null) {

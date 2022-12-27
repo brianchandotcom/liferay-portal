@@ -12,9 +12,7 @@
  * details.
  */
 
-import {ClayToggle} from '@clayui/form';
-import ClayPanel from '@clayui/panel';
-import {API, SingleSelect, openToast} from '@liferay/object-js-components-web';
+import {API, openToast} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -27,6 +25,7 @@ import Sheet from './Sheet';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
+import {AccountRestrictionContainer} from './AccountRestrictionContainer';
 
 export type KeyValuePair = {
 	key: string;
@@ -69,9 +68,6 @@ export default function ObjectDetails({
 	siteKeyValuePair,
 }: ObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
-	const [accountRelationshipFields, setAccountRelationshipFields] = useState<
-		LabelValueObject[]
-	>([]);
 
 	const {
 		errors,
@@ -163,33 +159,6 @@ export default function ObjectDetails({
 				objectDefinitionId
 			);
 
-			const relationshipFields = objectFieldsResponse.filter(
-				(field) => field.businessType === 'Relationship'
-			);
-
-			const accountRelationshipFieldsResponse = relationshipFields.filter(
-				(relationshipField) => {
-					return relationshipField.objectFieldSettings?.find(
-						(fieldSetting) => fieldSetting.value === 'AccountEntry'
-					);
-				}
-			);
-
-			if (accountRelationshipFieldsResponse.length) {
-				setAccountRelationshipFields(
-					accountRelationshipFieldsResponse.map(
-						(accountRelationshipField) => {
-							return {
-								label: accountRelationshipField.label[
-									defaultLanguageId
-								] as string,
-								value: accountRelationshipField.name,
-							};
-						}
-					)
-				);
-			}
-
 			setValues(objectDefinitionResponse);
 			setObjectFields(objectFieldsResponse);
 		};
@@ -258,55 +227,13 @@ export default function ObjectDetails({
 						values={values}
 					/>
 
-					<ClayPanel
-						collapsable
-						defaultExpanded
-						displayTitle={Liferay.Language.get(
-							'account-restriction'
-						)}
-						displayType="unstyled"
-					>
-						<ClayPanel.Body>
-							<ClayToggle
-								disabled={
-									!accountRelationshipFields.length ||
-									isApproved
-								}
-								label={Liferay.Language.get('active')}
-								name="accountEntryRestricted"
-								onToggle={() =>
-									setValues({
-										accountEntryRestricted: !values.accountEntryRestricted,
-									})
-								}
-								toggled={values.accountEntryRestricted}
-							/>
-
-							<SingleSelect
-								disabled={
-									!accountRelationshipFields.length ||
-									!values.accountEntryRestricted ||
-									isApproved
-								}
-								label={Liferay.Language.get(
-									'Account Restricted Field'
-								)}
-								onChange={({value}) => {
-									setValues({
-										accountEntryRestrictedObjectFieldName: value,
-									});
-								}}
-								options={accountRelationshipFields}
-								value={
-									accountRelationshipFields.find(
-										(relationshipField) =>
-											relationshipField.value ===
-											values.accountEntryRestrictedObjectFieldName
-									)?.label
-								}
-							/>
-						</ClayPanel.Body>
-					</ClayPanel>
+					<AccountRestrictionContainer
+						errors={errors}
+						isApproved={isApproved}
+						objectFields={objectFields}
+						setValues={setValues}
+						values={values}
+					/>
 
 					<ConfigurationContainer
 						hasUpdateObjectDefinitionPermission={

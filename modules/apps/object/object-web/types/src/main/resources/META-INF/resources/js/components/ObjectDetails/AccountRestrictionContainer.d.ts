@@ -14,16 +14,19 @@
 
 /// <reference types="react" />
 
-interface ConfigurationContainerProps {
-	hasUpdateObjectDefinitionPermission: boolean;
+import {FormError} from '@liferay/object-js-components-web';
+interface AccountRestrictionContainerProps {
+	errors: FormError<ObjectDefinition>;
 	isApproved: boolean;
+	objectFields: ObjectField[];
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
-export declare function ConfigurationContainer({
-	hasUpdateObjectDefinitionPermission,
+export declare function AccountRestrictionContainer({
+	errors,
 	isApproved,
+	objectFields,
 	setValues,
 	values,
-}: ConfigurationContainerProps): JSX.Element;
+}: AccountRestrictionContainerProps): JSX.Element;
 export {};

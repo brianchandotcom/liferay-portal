@@ -22,6 +22,7 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.admin.web.internal.item.selector.MasterLayoutPageTemplateEntryItemSelectorCriterion;
 import com.liferay.layout.admin.web.internal.item.selector.StyleBookEntryItemSelectorCriterion;
 import com.liferay.layout.admin.web.internal.util.FaviconUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -164,13 +164,26 @@ public class LayoutLookAndFeelDisplayContext {
 	public Map<String, Object> getMasterLayoutConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
 			"changeMasterLayoutURL",
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/select_master_layout.jsp"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+			() -> {
+				MasterLayoutPageTemplateEntryItemSelectorCriterion
+					masterLayoutPageTemplateEntryItemSelectorCriterion =
+						new MasterLayoutPageTemplateEntryItemSelectorCriterion();
+
+				masterLayoutPageTemplateEntryItemSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new UUIDItemSelectorReturnType());
+
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						_httpServletRequest);
+
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory,
+						_liferayPortletResponse.getNamespace() +
+							"selectMasterLayout",
+						masterLayoutPageTemplateEntryItemSelectorCriterion));
+			}
 		).put(
 			"editMasterLayoutURL",
 			() -> {

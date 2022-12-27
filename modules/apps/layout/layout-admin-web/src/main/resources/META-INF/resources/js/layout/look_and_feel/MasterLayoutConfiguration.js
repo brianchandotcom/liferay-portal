@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import {createRenderURL, openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const DEFAULT_MASTER_LAYOUT_PLID = '0';
@@ -32,25 +32,21 @@ export default function MasterLayoutConfiguration({
 	});
 
 	const handleChangeMasterButtonClick = () => {
-		const renderURL = createRenderURL(changeMasterLayoutURL, {
-			masterLayoutPlid: masterLayout.plid,
-		});
-
 		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('done'),
 			iframeBodyCssClass: '',
-			multiple: true,
 			onSelect(selectedItem) {
 				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
 					setMasterLayout({
-						name: selectedItem.name,
-						plid: selectedItem.plid,
+						name: itemValue.name,
+						plid: itemValue.plid,
 					});
 				}
 			},
 			selectEventName: `${portletNamespace}selectMasterLayout`,
 			title: Liferay.Language.get('select-master'),
-			url: renderURL.toString(),
+			url: changeMasterLayoutURL,
 		});
 	};
 

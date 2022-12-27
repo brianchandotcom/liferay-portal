@@ -63,10 +63,6 @@ public class SelectMasterLayoutVerticalCard implements VerticalCard {
 	@Override
 	public Map<String, String> getDynamicAttributes() {
 		return HashMapBuilder.put(
-			"data-name", _layoutPageTemplateEntry.getName()
-		).put(
-			"data-plid", String.valueOf(_layoutPageTemplateEntry.getPlid())
-		).put(
 			"role", "button"
 		).put(
 			"tabIndex", "0"

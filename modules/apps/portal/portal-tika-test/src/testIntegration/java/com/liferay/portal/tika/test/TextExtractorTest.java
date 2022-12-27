@@ -15,11 +15,14 @@
 package com.liferay.portal.tika.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -215,6 +218,40 @@ public class TextExtractorTest {
 
 		return text.trim();
 	}
+
+	private void _withTikaConfiguration(
+			boolean textExtractionForkProcessEnabled,
+			String[] textExtractionForkProcessMimeTypes, String tikaConfigXml,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		HashMapDictionaryBuilder.HashMapDictionaryWrapper<String, Object>
+			hashMapDictionaryWrapper =
+				new HashMapDictionaryBuilder.HashMapDictionaryWrapper<>();
+
+		if (textExtractionForkProcessEnabled) {
+			hashMapDictionaryWrapper.put(
+				"textExtractionForkProcessEnabled",
+				textExtractionForkProcessEnabled);
+			hashMapDictionaryWrapper.put(
+				"textExtractionForkProcessMimeTypes",
+				textExtractionForkProcessMimeTypes);
+		}
+
+		if (tikaConfigXml != null) {
+			hashMapDictionaryWrapper.put("tikaConfigXml", tikaConfigXml);
+		}
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_TIKA_CONFIGURATION, hashMapDictionaryWrapper.build())) {
+
+			unsafeRunnable.run();
+		}
+	}
+
+	private static final String _TIKA_CONFIGURATION =
+		"com.liferay.portal.tika.internal.configuration.TikaConfiguration";
 
 	private static Closeable _resetTikaConfigCloseable;
 

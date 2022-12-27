@@ -12,8 +12,10 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given config file for client extension of type custom element created") {
-			// ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
-			// ClientExtension.checkConfigFileCreatedProperly();
+
+			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			ClientExtension.checkConfigFileCreatedProperly();
+
 			RemoteApps.goToRemoteAppsPortlet();
 		}
 	}
@@ -40,16 +42,16 @@ definition {
 
 		task ("Then field information is displayed correctly") {
 			RemoteApps.assertMultipleFields(
-				entryName = "Vanilla Counter",
-				entrySourceCodeURL = "",
-				entryType = "Custom Element",
+				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
+				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entrydescription = "Custom Element Description",
 				entryFriendlyURLMapping = "vanilla",
 				entryHTMLElementName = "vanilla-counter",
+				entryName = "Vanilla Counter",
 				entryPortletCategoryName = "category.remote-apps",
-				entrydescription = "Custom Element Description",
-				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
-				entryproperties = "test-data-user=QAuser");
+				entryproperties = "test-data-user=QAuser",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element");
 
 			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
 
@@ -92,17 +94,17 @@ definition {
 
 		task ("Then field information is displayed correctly") {
 			RemoteApps.assertMultipleFields(
-				entryName = "Vanilla Counter",
-				entrySourceCodeURL = "",
-				entryType = "Custom Element",
+				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
+				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entrydescription = "Custom Element Description",
 				entryFriendlyURLMapping = "vanilla",
 				entryHTMLElementName = "vanilla-counter",
+				entryName = "Vanilla Counter",
 				entryPortletCategoryName = "category.remote-apps",
-				entrydescription = "Custom Element Description",
-				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
-				entryproperties = "test-data-user=QAuser");
-			
+				entryproperties = "test-data-user=QAuser",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element");
+
 			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
 
 			FormFields.viewCheckboxChecked(fieldName = "Use ES Modules");

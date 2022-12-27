@@ -81,6 +81,13 @@ definition {
 			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 	}
 
+	macro assertContentField {
+		AssertTextEquals(
+			key_text = "${entryField}",
+			locator1 = "RemoteApps#REMOTE_APPS_FIELDS",
+			value1 = "${entryInformation}");
+	}
+
 	macro assertCustomElementFields {
 		AssertTextEquals(
 			custom_entryName = "${entryName}",
@@ -151,62 +158,6 @@ definition {
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index2.css");
 	}
 
-	macro assertTableEntryNameNotPresent {
-		AssertElementNotPresent(
-			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
-			value1 = "${entryName}");
-	}
-
-	macro assertContentField {
-			AssertTextEquals(
-				key_text = "${entryField}",
-				locator1 = "RemoteApps#REMOTE_APPS_FIELDS",
-				value1 = "${entryInformation}");
-	}
-
-	macro assertMultipleFields {
-			RemoteApps.assertContentField(
-				entryField = "Name",
-				entryInformation = "${entryName}");
-				
-			RemoteApps.assertContentField(
-				entryField = "Source Code URL",
-				entryInformation = "${entrySourceCodeURL}");
-
-			RemoteApps.assertContentField(
-				entryField = "Type",
-				entryInformation = "${entryType}");
-
-			RemoteApps.assertContentField(
-				entryField = "Friendly URL Mapping",
-				entryInformation = "${entryFriendlyURLMapping}");
-			
-			RemoteApps.assertContentField(
-				entryField = "HTML Element Name",
-				entryInformation = "${entryHTMLElementName}");
-			
-			RemoteApps.assertContentField(
-				entryField = "Portlet Category Name",
-				entryInformation = "${entryPortletCategoryName}");
-			
-			RemoteApps.assertContentField(
-				entryField = "description",
-				entryInformation = "${entrydescription}");
-			
-			RemoteApps.assertContentField(
-				entryField = "CSS URLs",
-				entryInformation = "${entryCSSURLs}");
-			
-			RemoteApps.assertContentField(
-				entryField = "_URLs",
-				entryInformation = "${entry_URLs}");
-			
-			RemoteApps.assertContentField(
-				entryField = "properties",
-				entryInformation = "${entryproperties}");
-	}
-
 	macro assertFieldDisable {
 		for (var entryField : list "${entryFieldList}") {
 			AssertNotEditable(
@@ -215,6 +166,54 @@ definition {
 		}
 	}
 
+	macro assertMultipleFields {
+		RemoteApps.assertContentField(
+			entryField = "Name",
+			entryInformation = "${entryName}");
+
+		RemoteApps.assertContentField(
+			entryField = "Source Code URL",
+			entryInformation = "${entrySourceCodeURL}");
+
+		RemoteApps.assertContentField(
+			entryField = "Type",
+			entryInformation = "${entryType}");
+
+		RemoteApps.assertContentField(
+			entryField = "Friendly URL Mapping",
+			entryInformation = "${entryFriendlyURLMapping}");
+
+		RemoteApps.assertContentField(
+			entryField = "HTML Element Name",
+			entryInformation = "${entryHTMLElementName}");
+
+		RemoteApps.assertContentField(
+			entryField = "Portlet Category Name",
+			entryInformation = "${entryPortletCategoryName}");
+
+		RemoteApps.assertContentField(
+			entryField = "description",
+			entryInformation = "${entrydescription}");
+
+		RemoteApps.assertContentField(
+			entryField = "CSS URLs",
+			entryInformation = "${entryCSSURLs}");
+
+		RemoteApps.assertContentField(
+			entryField = "_URLs",
+			entryInformation = "${entry_URLs}");
+
+		RemoteApps.assertContentField(
+			entryField = "properties",
+			entryInformation = "${entryproperties}");
+	}
+
+	macro assertTableEntryNameNotPresent {
+		AssertElementNotPresent(
+			key_tableEntryName = "${entryName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
+			value1 = "${entryName}");
+	}
 
 	macro deleteRemoteApp {
 		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");

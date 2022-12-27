@@ -71,6 +71,23 @@
 }
 
 .portlet-dynamic-data-lists {
+	.form-control[readonly] {
+		background-color: #f1f2f5;
+		border-color: #e7e7ed;
+		color: #d3d3d3;
+		cursor: not-allowed;
+	}
+
+	.has-error .form-control[readonly] {
+		background-color: #feefef;
+		border-color: #f48989;
+	}
+
+	.has-success .form-control[readonly] {
+		background-color: #f1f2f5;
+		border-color: #e7e7ed;
+	}
+
 	.sidebar {
 		.taglib-workflow-status {
 			display: block;

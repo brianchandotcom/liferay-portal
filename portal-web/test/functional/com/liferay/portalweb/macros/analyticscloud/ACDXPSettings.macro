@@ -104,7 +104,7 @@ definition {
 		for (var attributeName : list "${attributeNameList}") {
 			var key_attributeName = "${attributeName}";
 
-			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
+			ACUtils.searchBar(searchItem = "${attributeName}");
 
 			if (IsElementPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
 				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");
@@ -249,7 +249,7 @@ definition {
 		for (var attributeName : list "${attributeNameList}") {
 			var key_attributeName = "${attributeName}";
 
-			ACDXPSettings.searchACItem(searchItem = "${attributeName}");
+			ACUtils.searchBar(searchItem = "${attributeName}");
 
 			if (IsElementNotPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE")) {
 				Click.clickAtNotVisible(locator1 = "ACDXPSettings#SELECT_ATTRIBUTES_CHECKBOX");

@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
 public class ObjectValidationRuleEngineExceptionMapper
 	extends BaseExceptionMapper<ObjectValidationRuleEngineException> {
 
-	public ObjectValidationRuleEngineExceptionMapper(Language language){
+	public ObjectValidationRuleEngineExceptionMapper(Language language) {
 		_language = language;
 	}
 
@@ -49,8 +49,10 @@ public class ObjectValidationRuleEngineExceptionMapper
 	protected boolean isSanitize() {
 		return false;
 	}
+
 	@Context
 	private AcceptLanguage _acceptLanguage;
 
 	private final Language _language;
+
 }

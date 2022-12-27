@@ -34,7 +34,6 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -226,10 +225,7 @@ public class ObjectValidationRuleLocalServiceImpl
 				variables, objectValidationRule.getScript());
 
 			if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-
-
 				throw new ObjectValidationRuleEngineException.InvalidScript();
-
 			}
 
 			if (GetterUtil.getBoolean(results.get("invalidFields"))) {
@@ -314,9 +310,6 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

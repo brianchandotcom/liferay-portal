@@ -843,6 +843,10 @@ definition {
 		Click(
 			key_checkboxOption = "${checkboxOption}",
 			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "${checkboxOption}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	macro selectTranslation {

@@ -779,46 +779,6 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
-	@description = "LPS-167481. Verify if with 'Limit to one submission per user' enabled, visiting users must log in before viewing the form"
-	@priority = "4"
-	test CanTranslateOneSubmissionPerUserMessage {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Text");
-
-		FormsAdminNavigator.gotoSettings();
-
-		Form.gotoSubmissionsTab();
-
-		Form.selectOptionSubmissions(checkboxOption = "Limit to One Submission per User");
-
-		Button.clickDone();
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishCopyURLLink();
-
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
-
-		Navigator.openURL();
-
-		UserBar.signOut();
-
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
-
-		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
-
-		User.firstLoginPG();
-	}
-
 	@description = "Verify that with the option Limit to one submission per user activated, the user cannot send more than one submission."
 	@priority = "4"
 	test CheckCantSendMoreThanOneSubmitPerUser {
@@ -1079,6 +1039,46 @@ definition {
 		Form.deleteSuccessPage(formPageNumber = "2");
 
 		Form.addSuccessPageForm();
+	}
+
+	@description = "LPS-167481. Verify if with 'Limit to one submission per user' enabled, visiting users must log in before viewing the form"
+	@priority = "4"
+	test GuestUserCantSeeFormWithOneSubmissionPerUserEnabled {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Form.selectOptionSubmissions(checkboxOption = "Limit to One Submission per User");
+
+		Button.clickDone();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+
+		Navigator.openURL();
+
+		UserBar.signOut();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+
+		User.firstLoginPG();
 	}
 
 	@description = "Verify that an email notification is sent after a Form is submitted"

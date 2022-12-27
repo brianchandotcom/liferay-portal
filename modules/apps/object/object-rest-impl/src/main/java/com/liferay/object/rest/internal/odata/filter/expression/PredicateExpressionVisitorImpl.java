@@ -230,7 +230,9 @@ public class PredicateExpressionVisitorImpl
 					LiteralExpression.Type.STRING,
 					literalExpression.getType())) {
 
-			return StringUtil.unquote(literalExpression.getText());
+			return StringUtil.replace(
+				StringUtil.unquote(literalExpression.getText()),
+				StringPool.DOUBLE_APOSTROPHE, StringPool.APOSTROPHE);
 		}
 
 		return literalExpression.getText();

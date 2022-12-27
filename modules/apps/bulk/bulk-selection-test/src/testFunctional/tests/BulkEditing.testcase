@@ -460,6 +460,67 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = "DM Folder Name2");
 	}
 
+	@description = "This ensures that the shortcuts permissions can be edited via bulk editing."
+	@priority = "5"
+	test CanEditShortcutsPermissions {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title2",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONDocument.addShortcut(
+			dmDocumentTitle = "DM Document Title1",
+			sourceGroupName = "Site Name",
+			targetGroupName = "Guest");
+
+		JSONDocument.addShortcut(
+			dmDocumentTitle = "DM Document Title2",
+			sourceGroupName = "Site Name",
+			targetGroupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title1");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title1,DM Document Title2");
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsBulkEditing = "true",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title1");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title2");
+	}
+
 	@description = "This test selects multiple documents and moves them into one folder."
 	@priority = "5"
 	test CanMoveDocumentsToFolder {
@@ -518,7 +579,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the permissions option in the bulk editing is disabled when editing file and folder simultaneously."
+	@description = "This ensures that the users can not edit file and folder permissions simultaneously."
 	@priority = "4"
 	test CannotEditFileAndFolderPermissionsSimultaneously {
 		JSONDocument.addFileWithUploadedFile(
@@ -536,6 +597,34 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,DM Folder Name");
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		Alert.viewErrorMessage(errorMessage = "It is not possible to simultaneously change the permissions of different asset types.");
+	}
+
+	@description = "This ensures that users can not edit file and shortcut permissions simultaneously."
+	@priority = "4"
+	test CannotEditFileAndShortcutPermissionsSimultaneously {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONDocument.addShortcut(
+			dmDocumentTitle = "DM Document Title",
+			sourceGroupName = "Site Name",
+			targetGroupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",

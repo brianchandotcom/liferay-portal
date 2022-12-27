@@ -37,7 +37,7 @@ boolean portletTitleBasedNavigation = true;
 
 <liferay-ui:input-editor
 	contents="<%= mainLanguageValue %>"
-	contentsLanguageId="<%= languageId %>"
+	contentsLanguageId="liferay_<%= languageId %>_test"
 	cssClass='<%= \"language-value \" + cssClass %>'
 	editorName="<%= editorName %>"
 	name='<%= inputEditorName %>'

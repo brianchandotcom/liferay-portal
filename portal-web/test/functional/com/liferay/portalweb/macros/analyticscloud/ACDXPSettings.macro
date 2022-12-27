@@ -289,7 +289,7 @@ definition {
 
 	macro syncContactsAndAccountstData {
 		if (IsElementPresent(index = "1", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-			Uncheck.uncheckToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+			Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 		}
 
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");

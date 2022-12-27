@@ -29,6 +29,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166207. The site designer could add a page template set during convert to page template when the site doesn't have a page template set."
+	@priority = "5"
+	test AddFirstPageTemplateSetWhenCreatePageTemplate {
+		property custom.properties = "feature.flag.LPS-166201=true";
+
+		task ("Given a site designer has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the site designer creates page template from content page") {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
+		}
+
+		task ("Then the site designer could create a page template set") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Add Page Template Set");
+
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Untitled Set");
+
+			Modal.save();
+
+			Alert.viewSuccessMessageText(successMessage = "The page template was created successfully. You can view it here: See in Page Templates.");
+
+			AssertClick(
+				locator1 = "Message#SUCCESS_LINK",
+				value1 = "See in Page Templates");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Page Templates");
+
+			PageTemplatesAdmin.viewPageTemplateSetPresent(setName = "Untitled Set");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Test Page Name - Page Template");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Test Page Name - Page Template",
+				workflowStatus = "Draft");
+		}
+	}
+
 	@description = "This is a test for LPS-140483. The site admin cannot create page templates with same names from content page in the same collection."
 	@priority = "4"
 	test CannotCreatePageTemplatesWithSameNameFromContentPageInTheSameCollection {

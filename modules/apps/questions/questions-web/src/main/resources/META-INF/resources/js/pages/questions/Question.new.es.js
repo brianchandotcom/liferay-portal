@@ -72,10 +72,6 @@ import useFlagsContainer from './hooks/useFlagsContainer.es';
 const tabs = [
 	{label: Liferay.Language.get('newest'), sortBy: 'dateCreated:desc'},
 	{label: Liferay.Language.get('oldest'), sortBy: 'dateCreated:asc'},
-	{
-		label: Liferay.Language.get('votes'),
-		sortBy: 'ratingsStatTotalScore:desc',
-	},
 ];
 
 const Question = ({
@@ -518,7 +514,7 @@ const Question = ({
 										</div>
 									</div>
 
-									<p className="align-items-start d-flex justify-content-start small text-secondary">
+									<div className="align-items-start d-flex justify-content-start small text-secondary">
 										<EditedTimestamp
 											dateCreated={question.dateCreated}
 											dateModified={question.dateModified}
@@ -533,7 +529,7 @@ const Question = ({
 											),
 											[question.viewCount]
 										)}`}
-									</p>
+									</div>
 								</div>
 							</div>
 
@@ -709,7 +705,7 @@ const Question = ({
 				/>
 			)}
 
-			{isPageScroll && !display?.preview && (
+			{answers?.totalCount > 0 && isPageScroll && !display?.preview && (
 				<div className="scroll-to-element">
 					<ClayButtonWithIcon
 						displayType="secondary"

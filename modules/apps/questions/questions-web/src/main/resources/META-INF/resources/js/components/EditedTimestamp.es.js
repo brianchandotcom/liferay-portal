@@ -46,7 +46,7 @@ const EditedTimestamp = ({
 	const elapsedTime = fromNow(dateCreated);
 
 	return (
-		<div className="mr-2 pl-2 row text-weight-bolder">
+		<div className="mr-1 pl-2 row text-weight-bolder">
 			{styledTimeStamp && (
 				<div className="d-flex flex-row mb-0 ml-1">
 					<span className="text-3 text-weight-bolder">{creator}</span>

@@ -101,15 +101,13 @@ export default withRouter(
 
 						<div className="c-mb-4 c-mb-md-0 c-ml-3 col-lg-11 col-md-10 col-sm-12 col-xl-11">
 							<div
-								className={classnames(
-									'd-flex justify-content-between',
-									{
-										'flex-column':
-											showAsAnswer && !display?.preview,
-										'flex-row-reverse':
-											showAsAnswer && display?.preview,
-									}
-								)}
+								className={classnames('d-flex', {
+									'flex-column':
+										showAsAnswer && !display?.preview,
+									'flex-row-reverse':
+										showAsAnswer && display?.preview,
+									'justify-content-between': display?.preview,
+								})}
 							>
 								{showAsAnswer && (
 									<div
@@ -144,13 +142,13 @@ export default withRouter(
 										styledTimeStamp={styledItems}
 									/>
 								</span>
-							</div>
 
-							{answer.modified && (
-								<span className="question-edited">
-									{' - '}({Liferay.Language.get('edited')})
-								</span>
-							)}
+								{answer.modified && (
+									<span className="question-edited">
+										({Liferay.Language.get('edited')})
+									</span>
+								)}
+							</div>
 
 							{answer.status && answer.status !== 'approved' && (
 								<span className="c-ml-2 text-secondary">

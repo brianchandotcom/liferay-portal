@@ -434,7 +434,7 @@ export default withRouter(
 											)}
 										</h1>
 
-										<p className="c-mb-0 small text-secondary">
+										<div className="c-mb-0 d-flex small text-secondary">
 											<EditedTimestamp
 												dateCreated={
 													question.dateCreated
@@ -449,7 +449,7 @@ export default withRouter(
 
 											{`
 											/ ${lang.sub(Liferay.Language.get('viewed-x-times'), [question.viewCount])}`}
-										</p>
+										</div>
 									</div>
 
 									{!question.locked && (

@@ -56,10 +56,10 @@ public class StatusSystemObjectFieldFilterStrategy
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems()
 		throws JSONException {
 
+		JSONArray jsonArray = getJSONArray();
+
 		List<SelectionFDSFilterItem> selectionFDSFilterItems =
 			new ArrayList<>();
-
-		JSONArray jsonArray = getJSONArray();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Integer status = (Integer)jsonArray.get(i);

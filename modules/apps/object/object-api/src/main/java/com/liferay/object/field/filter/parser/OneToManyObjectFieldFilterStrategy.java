@@ -127,10 +127,10 @@ public class OneToManyObjectFieldFilterStrategy
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems()
 		throws PortalException {
 
+		JSONArray jsonArray = getJSONArray();
+
 		List<SelectionFDSFilterItem> selectionFDSFilterItems =
 			new ArrayList<>();
-
-		JSONArray jsonArray = getJSONArray();
 
 		if (_objectDefinition1.isSystem()) {
 			for (int i = 0; i < jsonArray.length(); i++) {

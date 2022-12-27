@@ -74,10 +74,10 @@ public class PicklistObjectFieldFilterStrategy
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems()
 		throws JSONException {
 
+		JSONArray jsonArray = getJSONArray();
+
 		List<SelectionFDSFilterItem> selectionFDSFilterItems =
 			new ArrayList<>();
-
-		JSONArray jsonArray = getJSONArray();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ListTypeEntry listTypeEntry =

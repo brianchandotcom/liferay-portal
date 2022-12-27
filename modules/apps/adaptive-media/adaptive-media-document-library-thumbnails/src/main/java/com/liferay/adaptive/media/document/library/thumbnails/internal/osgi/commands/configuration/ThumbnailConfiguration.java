@@ -19,10 +19,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -63,15 +61,18 @@ public class ThumbnailConfiguration {
 		return false;
 	}
 
-	public Optional<AMImageConfigurationEntry> selectMatchingConfigurationEntry(
+	public AMImageConfigurationEntry selectMatchingConfigurationEntry(
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries) {
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
-			amImageConfigurationEntries.stream();
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
 
-		return amImageConfigurationEntryStream.filter(
-			this::matches
-		).findFirst();
+			if (matches(amImageConfigurationEntry)) {
+				return amImageConfigurationEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private final int _height;

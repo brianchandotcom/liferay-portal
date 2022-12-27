@@ -10,16 +10,14 @@
  */
 
 import MDFRequestActivity from '../mdfRequestActivity';
+import MDFRequestActivityDescription from '../mdfRequestActivityDescription';
 import MDFRequestBudgetDTO from './mdfRequestBudgetDTO';
 
 type MDFRequestActivityDTO = Omit<
 	MDFRequestActivity,
 	'activityDescription' | 'budgets'
 > &
-	Omit<
-		MDFRequestActivity['activityDescription'],
-		'leadFollowUpStrategies' | 'mdfRequestId'
-	> & {
+	Omit<MDFRequestActivityDescription, 'leadFollowUpStrategies'> & {
 		activityToBudgets?: MDFRequestBudgetDTO[];
 		externalReferenceCodeSF?: string;
 		leadFollowUpStrategies?: string;

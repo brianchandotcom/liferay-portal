@@ -988,6 +988,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-156566 - Verify an Action with Groovy Script can be triggered after deleting an entry."
+	@priority = "4"
+	test CanTriggerActionDeleteWithGroovyScript {
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156",
+				objectName = "CustomObject156",
+				pluralLabelName = "Custom Objects 156");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject156");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156");
+		}
+
+		task ("When an action is created using Groovy Script and is triggered when an object entry is deleted") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Action Name",
+				active = "true",
+				scriptValidation = "println 'Success'",
+				thenAction = "Groovy Script",
+				whenAction = "On After Delete");
+		}
+
+		task ("Then deleting an object entry will trigger the action") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customInteger",
+				objectName = "CustomObject156",
+				value = "8");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156");
+
+			ObjectPortlet.deleteEntry(entry = "8");
+
+			AssertConsoleTextPresent(value1 = "Success");
+		}
+	}
+
 	@description = "LPS-139008 - Verify it is possible to update an Action"
 	@priority = "4"
 	test CanUpdateAction {

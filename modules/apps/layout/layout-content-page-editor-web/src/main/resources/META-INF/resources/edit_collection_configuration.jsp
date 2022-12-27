@@ -18,6 +18,11 @@
 
 <%
 EditCollectionConfigurationDisplayContext editCollectionConfigurationDisplayContext = (EditCollectionConfigurationDisplayContext)request.getAttribute(EditCollectionConfigurationDisplayContext.class.getName());
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(editCollectionConfigurationDisplayContext.getRedirect());
+
+renderResponse.setTitle(LanguageUtil.get(request, "filter-collection"));
 %>
 
 <liferay-frontend:edit-form

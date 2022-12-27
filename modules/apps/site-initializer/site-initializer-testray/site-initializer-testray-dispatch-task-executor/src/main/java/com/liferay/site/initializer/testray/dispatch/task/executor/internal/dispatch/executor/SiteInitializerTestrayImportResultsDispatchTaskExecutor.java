@@ -149,6 +149,11 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		return "testray-import-results";
 	}
 
+	@Override
+	public boolean isClusterModeSingle() {
+		return true;
+	}
+
 	private JSONArray _addTestrayAttachments(Node testcaseNode)
 		throws Exception {
 

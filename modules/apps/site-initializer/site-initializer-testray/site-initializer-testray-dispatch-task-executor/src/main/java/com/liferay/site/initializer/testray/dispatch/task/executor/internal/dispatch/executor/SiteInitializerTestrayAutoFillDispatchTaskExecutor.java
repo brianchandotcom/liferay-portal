@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"dispatch.task.executor.cluster.mode=single-node",
 		"dispatch.task.executor.feature.flag=LPS-170809",
 		"dispatch.task.executor.name=testray-auto-fill",
 		"dispatch.task.executor.overlapping=false",
@@ -103,6 +102,11 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 	@Override
 	public String getName() {
 		return "testray-auto-fill";
+	}
+
+	@Override
+	public boolean isClusterModeSingle() {
+		return true;
 	}
 
 	private void _process(long companyId, UnicodeProperties unicodeProperties)

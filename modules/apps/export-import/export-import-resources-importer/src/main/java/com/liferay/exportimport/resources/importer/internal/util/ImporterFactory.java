@@ -27,8 +27,8 @@ import com.liferay.exportimport.resources.importer.internal.constants.ResourcesI
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -53,17 +53,17 @@ import com.liferay.portal.search.index.IndexStatusManager;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -154,51 +154,26 @@ public class ImporterFactory {
 		return importer;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(!(portlet.preferences.translator.portlet.id=" + ResourcesImporterConstants.PORTLET_ID_DEFAULT + "))"
-	)
-	protected void setPortletPreferencesTranslator(
-		PortletPreferencesTranslator portletPreferencesTranslator,
-		Map<String, Object> properties) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, PortletPreferencesTranslator.class,
+			"(!(portlet.preferences.translator.portlet.id=" +
+				ResourcesImporterConstants.PORTLET_ID_DEFAULT + "))",
+			(serviceReference, emitter) -> {
+				String rootPortletId = GetterUtil.getString(
+					serviceReference.getProperty(
+						"portlet.preferences.translator.portlet.id"));
 
-		String rootPortletId = GetterUtil.getString(
-			properties.get("portlet.preferences.translator.portlet.id"));
-
-		if (Validator.isNotNull(rootPortletId)) {
-			_portletPreferencesTranslators.put(
-				rootPortletId, portletPreferencesTranslator);
-
-			return;
-		}
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"The property \"portlet.preferences.translator.portlet.id\" " +
-					"is null");
-		}
+				if (Validator.isNotNull(rootPortletId)) {
+					emitter.emit(rootPortletId);
+				}
+			});
 	}
 
-	protected void unsetPortletPreferencesTranslator(
-		PortletPreferencesTranslator portletPreferencesTranslator,
-		Map<String, Object> properties) {
-
-		String rootPortletId = GetterUtil.getString(
-			properties.get("portlet.preferences.translator.portlet.id"));
-
-		if (Validator.isNull(rootPortletId)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No portlet.preferences.translator.portlet.id defined " +
-						"for service: " + portletPreferencesTranslator);
-			}
-
-			return;
-		}
-
-		_portletPreferencesTranslators.remove(rootPortletId);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private void _configureImporter(
@@ -249,13 +224,27 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
-			_portletPreferencesTranslator, _portletPreferencesTranslators,
+			_portletPreferencesTranslator, _getPortletPreferencesTranslators(),
 			_repositoryLocalService, _saxReader, _themeLocalService,
 			_dlURLHelper);
 	}
 
 	private LARImporter _getLARImporter() {
 		return new LARImporter();
+	}
+
+	private Map<String, PortletPreferencesTranslator>
+		_getPortletPreferencesTranslators() {
+
+		HashMap<String, PortletPreferencesTranslator>
+			portletPreferencesTranslators = new HashMap<>();
+
+		for (String key : _serviceTrackerMap.keySet()) {
+			portletPreferencesTranslators.put(
+				key, _serviceTrackerMap.getService(key));
+		}
+
+		return portletPreferencesTranslators;
 	}
 
 	private ResourceImporter _getResourceImporter() {
@@ -269,13 +258,10 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
-			_portletPreferencesTranslator, _portletPreferencesTranslators,
+			_portletPreferencesTranslator, _getPortletPreferencesTranslators(),
 			_repositoryLocalService, _saxReader, _themeLocalService,
 			_dlURLHelper);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ImporterFactory.class);
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
@@ -348,14 +334,14 @@ public class ImporterFactory {
 	)
 	private PortletPreferencesTranslator _portletPreferencesTranslator;
 
-	private final Map<String, PortletPreferencesTranslator>
-		_portletPreferencesTranslators = new ConcurrentHashMap<>();
-
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private SAXReader _saxReader;
+
+	private ServiceTrackerMap<String, PortletPreferencesTranslator>
+		_serviceTrackerMap;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

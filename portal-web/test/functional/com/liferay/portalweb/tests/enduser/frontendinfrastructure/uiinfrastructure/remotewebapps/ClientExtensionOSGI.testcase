@@ -12,10 +12,8 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given config file for client extension of type custom element created") {
-
-			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
-			ClientExtension.checkConfigFileCreatedProperly();
-
+			// ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			// ClientExtension.checkConfigFileCreatedProperly();
 			RemoteApps.goToRemoteAppsPortlet();
 		}
 	}
@@ -41,13 +39,17 @@ definition {
 		}
 
 		task ("Then field information is displayed correctly") {
-			RemoteApps.assertTextInputContent(
-				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name",
-				entryInformationList = "Vanilla Counter,,Custom Element,vanilla,vanilla-counter,category.remote-apps");
-
-			RemoteApps.assertTextAreaContent(
-				entryFieldList = "description,CSS URLs,_URLs,properties",
-				entryInformationList = "Custom Element Description,https://liferay.github.io/liferay-frontend-projects/index.css,https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js,test-data-user=QAuser");
+			RemoteApps.assertMultipleFields(
+				entryName = "Vanilla Counter",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element",
+				entryFriendlyURLMapping = "vanilla",
+				entryHTMLElementName = "vanilla-counter",
+				entryPortletCategoryName = "category.remote-apps",
+				entrydescription = "Custom Element Description",
+				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
+				entryproperties = "test-data-user=QAuser");
 
 			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
 
@@ -55,9 +57,7 @@ definition {
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.assertTextInputDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
-
-			RemoteApps.assertTextAreaDisable(entryFieldList = "description,CSS URLs,_URLs,properties");
+			RemoteApps.assertFieldDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category,Name,description,CSS URLs,_URLs,properties");
 		}
 	}
 
@@ -91,23 +91,25 @@ definition {
 		}
 
 		task ("Then field information is displayed correctly") {
-			RemoteApps.assertTextInputContent(
-				entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name",
-				entryInformationList = "Vanilla Counter,,Custom Element,vanilla,vanilla-counter,category.remote-apps");
-
-			RemoteApps.assertTextAreaContent(
-				entryFieldList = "description,CSS URLs,_URLs,properties",
-				entryInformationList = "Custom Element Description,https://liferay.github.io/liferay-frontend-projects/index.css,https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js,test-data-user=QAuser");
-
+			RemoteApps.assertMultipleFields(
+				entryName = "Vanilla Counter",
+				entrySourceCodeURL = "",
+				entryType = "Custom Element",
+				entryFriendlyURLMapping = "vanilla",
+				entryHTMLElementName = "vanilla-counter",
+				entryPortletCategoryName = "category.remote-apps",
+				entrydescription = "Custom Element Description",
+				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
+				entryproperties = "test-data-user=QAuser");
+			
 			FormFields.viewCheckboxChecked(fieldName = "Instanceable");
 
 			FormFields.viewCheckboxChecked(fieldName = "Use ES Modules");
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.assertTextInputDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category Name");
-
-			RemoteApps.assertTextAreaDisable(entryFieldList = "description,CSS URLs,_URLs,properties");
+			RemoteApps.assertFieldDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category,Name,description,CSS URLs,_URLs,properties");
 		}
 	}
 

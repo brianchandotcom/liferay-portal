@@ -22,34 +22,41 @@ ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = 
 %>
 
 <div class="lfr-object__edit-object-definition">
-	<div>
-		<react:component
-			module="js/components/ObjectManagementToolbar"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
-				).put(
-					"externalReferenceCode", objectDefinition.getExternalReferenceCode()
-				).put(
-					"hasPublishObjectPermission", objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission()
-				).put(
-					"hasUpdateObjectDefinitionPermission", objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission()
-				).put(
-					"isApproved", objectDefinition.isApproved()
-				).put(
-					"label", objectDefinition.getLabel(locale, true)
-				).put(
-					"objectDefinitionId", objectDefinition.getObjectDefinitionId()
-				).put(
-					"portletNamespace", liferayPortletResponse.getNamespace()
-				).put(
-					"screenNavigationCategoryKey", ParamUtil.getString(request, "screenNavigationCategoryKey")
-				).put(
-					"system", objectDefinition.isSystem()
-				).build()
-			%>'
-		/>
-	</div>
+	<c:choose>
+		<c:when test='<%= Objects.equals(ParamUtil.getString(request, "screenNavigationCategoryKey"), "details") %>'>
+			<div style="margin-bottom: 4rem;"></div>
+		</c:when>
+		<c:otherwise>
+			<div>
+				<react:component
+					module="js/components/ObjectManagementToolbar"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
+						).put(
+							"externalReferenceCode", objectDefinition.getExternalReferenceCode()
+						).put(
+							"hasPublishObjectPermission", objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission()
+						).put(
+							"hasUpdateObjectDefinitionPermission", objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission()
+						).put(
+							"isApproved", objectDefinition.isApproved()
+						).put(
+							"label", objectDefinition.getLabel(locale, true)
+						).put(
+							"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+						).put(
+							"portletNamespace", liferayPortletResponse.getNamespace()
+						).put(
+							"screenNavigationCategoryKey", ParamUtil.getString(request, "screenNavigationCategoryKey")
+						).put(
+							"system", objectDefinition.isSystem()
+						).build()
+					%>'
+				/>
+			</div>
+		</c:otherwise>
+	</c:choose>
 
 	<liferay-frontend:screen-navigation
 		context="<%= objectDefinition %>"

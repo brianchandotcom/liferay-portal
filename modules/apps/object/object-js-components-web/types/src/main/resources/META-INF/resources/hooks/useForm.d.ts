@@ -23,16 +23,17 @@ interface IUseForm<T, P = {}, K extends Partial<T> = Partial<T>> {
 	errors: FormError<T & P>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: FormEventHandler<HTMLFormElement>;
+	handleValidate: () => FormError<T & P>;
 	setValues: (values: Partial<T>) => void;
 	validateSubmit: () => void;
 	values: K;
 }
+export declare type FormError<T> = {
+	[key in keyof T]?: string;
+};
 export declare function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 	initialValues,
 	onSubmit,
 	validate,
 }: IProps<T, P, K>): IUseForm<T, P, K>;
-export declare type FormError<T> = {
-	[key in keyof T]?: string;
-};
 export {};

@@ -28,10 +28,15 @@ interface IUseForm<T, P = {}, K extends Partial<T> = Partial<T>> {
 	errors: FormError<T & P>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: FormEventHandler<HTMLFormElement>;
+	handleValidate: () => FormError<T & P>;
 	setValues: (values: Partial<T>) => void;
 	validateSubmit: () => void;
 	values: K;
 }
+
+export type FormError<T> = {
+	[key in keyof T]?: string;
+};
 
 export function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 	initialValues,
@@ -64,17 +69,27 @@ export function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 		target: {name, value},
 	}) => setValues((values) => ({...values, [name]: value}));
 
+	const handleValidate = () => {
+		const errors = validate(values);
+
+		if (Object.keys(errors).length) {
+			setErrors(errors);
+		}
+		else {
+			setErrors({});
+		}
+
+		return errors;
+	};
+
 	return {
 		errors,
 		handleChange,
 		handleSubmit,
+		handleValidate,
 		setValues: (values: Partial<T>) =>
 			setValues((currentValues) => ({...currentValues, ...values})),
 		validateSubmit,
 		values,
 	};
 }
-
-export type FormError<T> = {
-	[key in keyof T]?: string;
-};

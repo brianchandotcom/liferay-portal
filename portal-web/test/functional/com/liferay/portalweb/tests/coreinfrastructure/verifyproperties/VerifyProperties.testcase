@@ -27,4 +27,15 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
 	}
+
+	@description = "LRQA-78468: Verify Properties not run when start portal with empty database"
+	@priority = "3"
+	test VerifyPropertiesNotRunWithEmptyDatabase {
+		property test.name.skip.portal.instance = "VerifyProperties#VerifyPropertiesNotRunWithEmptyDatabase";
+
+		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+
+		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+	}
+
 }

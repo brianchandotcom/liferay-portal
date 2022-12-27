@@ -65,6 +65,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166203. The site designer could add fragment set during copy OOTB fragment when the site doesn't have fragment set."
+	@priority = "5"
+	test AddFirstFragmentSetWhenCopyContributedFragment {
+		property custom.properties = "feature.flag.LPS-166203=true";
+
+		task ("Given a site designer navigates to the Fragments admin of a new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the site designer copies the Button fragment from Basic Components fragment set") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Button",
+				item = "Copy To");
+		}
+
+		task ("Then the site designer could add a fragment set") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Add Fragment Set");
+
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Untitled Set");
+
+			Modal.save();
+
+			Alert.viewSuccessMessageText(successMessage = "The fragment has been copied successfully.");
+
+			MenuBar.viewActive(menuBar = "Untitled Set");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");
+		}
+	}
+
 	@description = "This is a test for LPS-159235. Add folders to fragment resource and check hints."
 	@priority = "4"
 	test AddFoldersToResourceAndCheckHints {

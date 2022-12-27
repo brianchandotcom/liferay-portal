@@ -32,6 +32,113 @@ definition {
 		}
 	}
 
+	@description = "Verify that the user can navigate through the pages of the form when he is inserted in a page."
+	@priority = "4"
+	test CheckNavigatesBetweenFormPagesOnPages {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName();
+
+		Form.editPageTitle(
+			formPageName = "Page 1",
+			formTitleNumber = "1");
+
+		Form.addTextField(formPageNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page 2",
+			formTitleNumber = "2");
+
+		Form.addTextField(formPageNumber = "1");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "2");
+
+		Form.editPageTitle(
+			formPageName = "Page 3",
+			formTitleNumber = "3");
+
+		Form.addTextField(formPageNumber = "2");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 3");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "3");
+
+		Form.editPageTitle(
+			formPageName = "Page 4",
+			formTitleNumber = "4");
+
+		Form.addTextField(formPageNumber = "3");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 4");
+
+		Form.closeSidebar();
+
+		Form.publishForm();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewTextField(
+			fieldLabel = "Text Field 1",
+			fieldName = "Text Field 1");
+
+		FormPortlet.nextPage(
+			formPageCurrent = "Page 1",
+			formPageNext = "Page 2");
+
+		FormFields.viewTextField(
+			fieldLabel = "Text Field 2",
+			fieldName = "Text Field 2");
+
+		FormPortlet.nextPage(
+			formPageCurrent = "Page 2",
+			formPageNext = "Page 3");
+
+		FormFields.viewTextField(
+			fieldLabel = "Text Field 3",
+			fieldName = "Text Field 3");
+
+		FormPortlet.nextPage(
+			formPageCurrent = "Page 3",
+			formPageNext = "Page 4");
+
+		FormFields.viewTextField(
+			fieldLabel = "Text Field 4",
+			fieldName = "Text Field 4");
+	}
+
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewFormRulesSummary {

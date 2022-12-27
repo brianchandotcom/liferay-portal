@@ -354,3 +354,25 @@ export async function updatePickListItem({
 		'PUT'
 	);
 }
+
+export async function publishObjectDefinition(objectDefinitionId: number) {
+	return await fetch(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish`,
+		{
+			method: 'POST',
+		}
+	);
+}
+
+export async function putObjectDefinitionByExternalReferenceCode(
+	values: Partial<ObjectDefinition>
+) {
+	return await fetch(
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${values.externalReferenceCode}`,
+		{
+			body: JSON.stringify(values),
+			headers,
+			method: 'PUT',
+		}
+	);
+}

@@ -158,4 +158,10 @@ export declare function updatePickListItem({
 	id,
 	name_i18n,
 }: Partial<PickListItem>): Promise<void>;
+export declare function publishObjectDefinition(
+	objectDefinitionId: number
+): Promise<Response>;
+export declare function putObjectDefinitionByExternalReferenceCode(
+	values: Partial<ObjectDefinition>
+): Promise<Response>;
 export {};

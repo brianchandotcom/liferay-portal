@@ -19,6 +19,7 @@ interface ObjectDefinition {
 	dateCreated: string;
 	dateModified: string;
 	defaultLanguageId: string;
+	externalReferenceCode: string;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;

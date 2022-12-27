@@ -102,10 +102,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
-		return _language.get(resourceBundle, "menu-display");
+		return _language.get(locale, "menu-display");
 	}
 
 	@Override

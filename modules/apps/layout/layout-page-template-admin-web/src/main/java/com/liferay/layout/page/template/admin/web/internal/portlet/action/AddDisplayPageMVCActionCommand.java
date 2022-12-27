@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -40,11 +41,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -130,9 +128,6 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			serviceContext.getLocale(), AddDisplayPageMVCActionCommand.class);
-
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
@@ -149,14 +144,14 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 			if (portalException instanceof NoSuchClassNameException) {
 				errorJSONObject = JSONUtil.put(
 					"classNameId",
-					ResourceBundleUtil.getString(
-						resourceBundle, "invalid-content-type"));
+					_language.get(
+						serviceContext.getLocale(), "invalid-content-type"));
 			}
 			else if (portalException instanceof NoSuchClassTypeException) {
 				errorJSONObject = JSONUtil.put(
 					"classTypeId",
-					ResourceBundleUtil.getString(
-						resourceBundle, "invalid-subtype"));
+					_language.get(
+						serviceContext.getLocale(), "invalid-subtype"));
 			}
 			else {
 				errorJSONObject = JSONUtil.put(
@@ -177,6 +172,9 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

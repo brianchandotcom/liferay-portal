@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -87,8 +86,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			JournalPortletKeys.JOURNAL,
-			ResourceBundleUtil.getBundle(locale, getClass()));
+			JournalPortletKeys.JOURNAL, locale);
 
 		return _language.format(locale, "x-template", portletTitle, false);
 	}

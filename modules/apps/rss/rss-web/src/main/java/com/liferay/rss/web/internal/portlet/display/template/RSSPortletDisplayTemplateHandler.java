@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTempla
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.rss.constants.RSSPortletKeys;
 import com.liferay.rss.web.internal.display.context.RSSDisplayContext;
@@ -50,9 +49,7 @@ public class RSSPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			RSSPortletKeys.RSS,
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale, getClass()));
+			RSSPortletKeys.RSS, locale);
 
 		return _language.format(locale, "x-template", portletTitle, false);
 	}

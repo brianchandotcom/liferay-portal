@@ -46,14 +46,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -82,9 +80,6 @@ public class LayoutClassedModelUsagesDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(), getClass());
 	}
 
 	public int getAllUsageCount() {
@@ -196,7 +191,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 				PortalUtil.getClassNameId(LayoutPageTemplateStructure.class))) {
 
 			return LanguageUtil.format(
-				_resourceBundle, "x-widget",
+				_themeDisplay.getLocale(), "x-widget",
 				PortalUtil.getPortletTitle(
 					PortletIdCodec.decodePortletName(
 						layoutClassedModelUsage.getContainerKey()),
@@ -219,16 +214,18 @@ public class LayoutClassedModelUsagesDisplayContext {
 			}
 
 			if (!fragmentEntryLink.isTypeSection()) {
-				return LanguageUtil.format(_resourceBundle, "x-element", name);
+				return LanguageUtil.format(
+					_themeDisplay.getLocale(), "x-element", name);
 			}
 
-			return LanguageUtil.format(_resourceBundle, "x-section", name);
+			return LanguageUtil.format(
+				_themeDisplay.getLocale(), "x-section", name);
 		}
 
 		if (layoutClassedModelUsage.getContainerType() ==
 				PortalUtil.getClassNameId(LayoutPageTemplateStructure.class)) {
 
-			return LanguageUtil.get(_resourceBundle, "section");
+			return LanguageUtil.get(_themeDisplay.getLocale(), "section");
 		}
 
 		return StringPool.BLANK;
@@ -478,7 +475,6 @@ public class LayoutClassedModelUsagesDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final ResourceBundle _resourceBundle;
 	private SearchContainer<LayoutClassedModelUsage> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

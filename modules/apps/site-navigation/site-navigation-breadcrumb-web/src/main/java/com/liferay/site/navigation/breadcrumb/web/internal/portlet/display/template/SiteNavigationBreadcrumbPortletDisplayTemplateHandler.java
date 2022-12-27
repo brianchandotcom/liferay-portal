@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.breadcrumb.web.internal.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration;
 import com.liferay.site.navigation.breadcrumb.web.internal.constants.SiteNavigationBreadcrumbPortletKeys;
@@ -72,7 +71,7 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
 			SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB,
-			ResourceBundleUtil.getBundle(locale, getClass()));
+			locale);
 
 		return _language.format(locale, "x-template", portletTitle, false);
 	}

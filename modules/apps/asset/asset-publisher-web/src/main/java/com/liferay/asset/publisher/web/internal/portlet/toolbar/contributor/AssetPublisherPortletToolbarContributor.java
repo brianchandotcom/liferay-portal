@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
@@ -45,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -145,11 +143,8 @@ public class AssetPublisherPortletToolbarContributor
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
-
 		String title = _language.get(
-			resourceBundle, "add-content-select-scope-and-type");
+			themeDisplay.getLocale(), "add-content-select-scope-and-type");
 
 		urlMenuItem.setData(
 			HashMapBuilder.<String, Object>put(

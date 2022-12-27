@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.constants.TemplateConstants;
 
@@ -51,8 +50,7 @@ public class InformationTemplatesTemplateHandler extends BaseTemplateHandler {
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			TemplatePortletKeys.TEMPLATE,
-			ResourceBundleUtil.getBundle(locale, getClass()));
+			TemplatePortletKeys.TEMPLATE, locale);
 
 		return _language.format(locale, "x-template", portletTitle, false);
 	}

@@ -19,13 +19,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,12 +77,9 @@ public class ToggleControlsTemplateContextContributor
 		contextObjects.put("show_toggle_controls", themeDisplay.isSignedIn());
 
 		if (themeDisplay.isSignedIn()) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
-
 			contextObjects.put(
 				"toggle_controls_text",
-				_language.get(resourceBundle, "toggle-controls"));
+				_language.get(themeDisplay.getLocale(), "toggle-controls"));
 
 			contextObjects.put("toggle_controls_url", "javascript:void(0);");
 		}

@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -59,7 +58,6 @@ import java.net.ConnectException;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -135,7 +133,8 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 						group.getClassPK());
 
 					_groupName = LanguageUtil.format(
-						_getResourceBundle(), "x-site", user.getFullName());
+						_themeDisplay.getLocale(), "x-site",
+						user.getFullName());
 				}
 			}
 			else {
@@ -508,11 +507,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		}
 
 		return null;
-	}
-
-	private ResourceBundle _getResourceBundle() {
-		return ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(), getClass());
 	}
 
 	private boolean _hasStagingPermission() throws PortalException {

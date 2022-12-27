@@ -19,13 +19,11 @@ import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,12 +43,8 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		return LanguageUtil.format(
-			resourceBundle, "download-as-x",
-			StringUtil.toUpperCase(getExtension()));
+			locale, "download-as-x", StringUtil.toUpperCase(getExtension()));
 	}
 
 	@Override

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -35,7 +34,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -168,15 +166,8 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(),
-			SiteNavigationMenuItemItemSelectorViewDisplayContext.class);
-
 		jsonObject.put(
-			"name",
-			LanguageUtil.get(
-				themeDisplay.getLocale(),
-				ResourceBundleUtil.getString(resourceBundle, name)));
+			"name", LanguageUtil.get(themeDisplay.getLocale(), name));
 
 		jsonArray.put(jsonObject);
 

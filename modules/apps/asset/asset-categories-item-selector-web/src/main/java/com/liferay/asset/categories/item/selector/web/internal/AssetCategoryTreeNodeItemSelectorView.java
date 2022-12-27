@@ -21,14 +21,13 @@ import com.liferay.asset.categories.item.selector.web.internal.display.context.S
 import com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetVocabularyDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -70,10 +69,7 @@ public class AssetCategoryTreeNodeItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, AssetCategoryTreeNodeItemSelectorView.class);
-
-		return ResourceBundleUtil.getString(resourceBundle, "source");
+		return _language.get(locale, "source");
 	}
 
 	@Override
@@ -116,6 +112,9 @@ public class AssetCategoryTreeNodeItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new AssetCategoryTreeNodeItemSelectorReturnType());
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.asset.categories.item.selector.web)"

@@ -25,12 +25,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -64,9 +62,6 @@ public class LayoutInformationMessagesDisplayContext {
 					return null;
 				}
 
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", themeDisplay.getLocale(), getClass());
-
 				String message =
 					"this-page-is-linked-to-a-site-template-which-does-not-" +
 						"allow-modifications-to-it";
@@ -84,7 +79,7 @@ public class LayoutInformationMessagesDisplayContext {
 					message = "this-page-belongs-to-a-user-group";
 				}
 
-				return LanguageUtil.get(resourceBundle, message);
+				return LanguageUtil.get(themeDisplay.getLocale(), message);
 			}
 		).put(
 			"portletNamespace",

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
@@ -49,7 +48,6 @@ import java.io.Writer;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -101,9 +99,6 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
-
 		PortletURL editPageURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
@@ -131,7 +126,8 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		Map<String, String> values = HashMapBuilder.put(
 			"configurePage",
-			_html.escape(_language.get(resourceBundle, "configure-page"))
+			_html.escape(
+				_language.get(themeDisplay.getLocale(), "configure-page"))
 		).put(
 			"editPageURL", editPageURL.toString()
 		).build();
@@ -152,7 +148,8 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			successTag.setKey("layoutUpdated");
 			successTag.setMessage(
 				_language.get(
-					resourceBundle, "the-page-was-updated-successfully"));
+					themeDisplay.getLocale(),
+					"the-page-was-updated-successfully"));
 			successTag.setTargetNode("#controlMenuAlertsContainer");
 
 			values.put(

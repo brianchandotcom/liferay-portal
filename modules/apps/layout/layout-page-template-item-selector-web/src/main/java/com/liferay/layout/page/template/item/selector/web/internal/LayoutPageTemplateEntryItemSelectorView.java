@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -97,10 +96,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return ResourceBundleUtil.getString(
-			ResourceBundleUtil.getBundle(
-				locale, LayoutPageTemplateEntryItemSelectorView.class),
-			"page-template");
+		return _language.get(locale, "page-template");
 	}
 
 	@Override

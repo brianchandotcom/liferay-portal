@@ -782,8 +782,7 @@ public class LayoutsTreeDisplayContext {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Group ID ", _getGroupId(),
-					" and site navigation menu ",
+					"Group ID ", _getGroupId(), " and site navigation menu ",
 					_siteNavigationMenuJSONArray));
 		}
 

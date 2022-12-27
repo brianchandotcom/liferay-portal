@@ -1265,7 +1265,7 @@
 		</check>
 		<check name="PoshiImportsCheck">
 			<category name="Styling" />
-			<description name="Sorts and groups imports in `*.testcase` files." />
+			<description name="Sorts and groups imports in Poshi Script files." />
 		</check>
 		<check name="PoshiPauseUsageCheck">
 			<category name="Performance" />

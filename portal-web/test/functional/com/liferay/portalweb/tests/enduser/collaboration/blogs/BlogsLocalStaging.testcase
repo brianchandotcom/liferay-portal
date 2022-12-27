@@ -39,6 +39,32 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-81685. It ensures that blogs aren't available to edit on Live"
+	@priority = "4"
+	test CanNotEditBlogsAfterPublishToLive {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
+
+		AssertTextNotPresent(value1 = "Edit");
+	}
+
 	@description = "This test covers LPS-79000. It ensures that users can only publish an Approved blog entry. Draft entries should not have the Publish option."
 	@priority = "5"
 	@refactordone

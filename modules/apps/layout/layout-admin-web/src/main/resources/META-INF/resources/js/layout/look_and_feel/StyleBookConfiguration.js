@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {createRenderURL, openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function StyleBookConfiguration({
@@ -28,25 +28,21 @@ export default function StyleBookConfiguration({
 	});
 
 	const handleChangeStyleBookClick = () => {
-		const renderURL = createRenderURL(changeStyleBookURL, {
-			styleBookEntryId: styleBookEntry.styleBookEntryId,
-		});
-
 		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('done'),
 			iframeBodyCssClass: '',
-			multiple: true,
 			onSelect(selectedItem) {
 				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
 					setStyleBookEntry({
-						name: selectedItem.name,
-						styleBookEntryId: selectedItem.stylebookentryid,
+						name: itemValue.name,
+						styleBookEntryId: itemValue.styleBookEntryId,
 					});
 				}
 			},
 			selectEventName: `${portletNamespace}selectStyleBook`,
 			title: Liferay.Language.get('select-style-book'),
-			url: renderURL.toString(),
+			url: changeStyleBookURL,
 		});
 	};
 

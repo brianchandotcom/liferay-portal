@@ -20,6 +20,9 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceU
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.admin.web.internal.item.selector.StyleBookEntryItemSelectorCriterion;
 import com.liferay.layout.admin.web.internal.util.FaviconUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -35,6 +38,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -76,6 +81,8 @@ public class LayoutLookAndFeelDisplayContext {
 
 		_cetManager = (CETManager)_httpServletRequest.getAttribute(
 			CETManager.class.getName());
+		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
+			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -236,23 +243,29 @@ public class LayoutLookAndFeelDisplayContext {
 	public Map<String, Object> getStyleBookConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
 			"changeStyleBookURL",
-			() -> PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/select_style_book.jsp"
-			).setParameter(
-				"editableMasterLayout", hasEditableMasterLayout()
-			).setParameter(
-				"selPlid",
-				() -> {
-					Layout selLayout =
-						_layoutsAdminDisplayContext.getSelLayout();
+			() -> {
+				StyleBookEntryItemSelectorCriterion
+					styleBookEntryItemSelectorCriterion =
+						new StyleBookEntryItemSelectorCriterion();
 
-					return selLayout.getPlid();
-				}
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+				styleBookEntryItemSelectorCriterion.setSelPlid(
+					_layoutsAdminDisplayContext.getSelPlid());
+
+				styleBookEntryItemSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new UUIDItemSelectorReturnType());
+
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						_httpServletRequest);
+
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory,
+						_liferayPortletResponse.getNamespace() +
+							"selectStyleBook",
+						styleBookEntryItemSelectorCriterion));
+			}
 		).put(
 			"styleBookEntryId",
 			() -> {
@@ -591,6 +604,7 @@ public class LayoutLookAndFeelDisplayContext {
 	private Boolean _hasMasterLayout;
 	private Boolean _hasStyleBooks;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _masterLayoutName;

@@ -15,6 +15,9 @@
 package com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -75,11 +78,6 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 	@Override
 	public Map<String, String> getDynamicAttributes() {
 		return HashMapBuilder.put(
-			"data-name", _styleBookEntry.getName()
-		).put(
-			"data-styleBookEntryId",
-			String.valueOf(_styleBookEntry.getStyleBookEntryId())
-		).put(
 			"role", "button"
 		).put(
 			"tabIndex", "0"
@@ -132,7 +130,7 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 				_themeDisplay.getLocale(), "styles-from-theme");
 		}
 
-		if (ParamUtil.getBoolean(_renderRequest, "editableMasterLayout") &&
+		if (_hasEditableMasterLayout() &&
 			(_selLayout.getMasterLayoutPlid() > 0)) {
 
 			return LanguageUtil.get(
@@ -144,6 +142,28 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public boolean isSelectable() {
+		return false;
+	}
+
+	private boolean _hasEditableMasterLayout() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(_selLayout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(_selLayout.getClassPK());
+		}
+
+		if ((layoutPageTemplateEntry == null) ||
+			!Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			return true;
+		}
+
 		return false;
 	}
 

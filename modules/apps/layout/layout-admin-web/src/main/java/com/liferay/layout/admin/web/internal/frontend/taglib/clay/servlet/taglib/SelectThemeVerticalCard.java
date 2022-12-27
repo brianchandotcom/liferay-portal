@@ -42,8 +42,7 @@ public class SelectThemeVerticalCard implements VerticalCard {
 
 	@Override
 	public String getCssClass() {
-		return "card-img-align-top card-interactive " +
-			"card-interactive-secondary selector-button";
+		return "card-interactive card-interactive-secondary selector-button";
 	}
 
 	@Override

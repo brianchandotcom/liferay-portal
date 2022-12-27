@@ -7,22 +7,6 @@
 @import '../js/layout/look_and_feel/GlobalJSCETsConfiguration';
 
 .portlet-layouts-admin {
-	.active.card {
-		box-shadow: 0 0 0 2px $primary-l1;
-
-		& .select-master-layout-option-sticker,
-		& .select-style-book-option-sticker {
-			display: block;
-		}
-	}
-
-	.card {
-		& .select-master-layout-option-sticker,
-		& .select-style-book-option-sticker {
-			display: none;
-		}
-	}
-
 	.card-page-item-directory {
 		@include media-breakpoint-up(lg) {
 			flex-basis: 33.33333%;
@@ -30,43 +14,8 @@
 		}
 	}
 
-	.customization-settings #main-content {
-		.portlet-column {
-			border: 1px solid #0b5fff;
-			padding: 0 10px;
-			text-align: center;
-		}
-
-		.portlet-layout {
-			margin-bottom: 0;
-		}
-
-		.row {
-			&:nth-child(2n-1) .portlet-column:nth-child(2n-1),
-			&:nth-child(2n) .portlet-column:nth-child(2n) {
-				background-color: #e5f5fc;
-			}
-		}
-	}
-
-	.dialog-footer {
-		position: fixed;
-	}
-
-	.friendly-url {
-		.input-group-item-shrink {
-			max-width: 50%;
-		}
-	}
-
-	.searchcontainer-content .breadcrumb {
-		margin-bottom: 0;
-		padding: 0;
-	}
-
-	.card-img-align-top img {
-		top: 0;
-		transform: translate(-50%, 0);
-		width: 100%;
+	.customization-settings #main-content .portlet-column {
+		border: 1px solid #0b5fff;
+		text-align: center;
 	}
 }

@@ -77,23 +77,20 @@ public class ExportImportLayoutUtilityPageTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group1 = GroupTestUtil.addGroup();
-		_group2 = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
-		_serviceContext1 = ServiceContextTestUtil.getServiceContext(
-			_group1, TestPropsValues.getUserId());
-		_serviceContext2 = ServiceContextTestUtil.getServiceContext(
-			_group2, TestPropsValues.getUserId());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group, TestPropsValues.getUserId());
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_repository = _portletFileRepository.fetchPortletRepository(
-			_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
+			_group.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
 
 		if (_repository == null) {
 			_repository = _portletFileRepository.addPortletRepository(
-				_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
-				_serviceContext1);
+				_group.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
+				_serviceContext);
 		}
 	}
 
@@ -108,8 +105,8 @@ public class ExportImportLayoutUtilityPageTest {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				externalReferenceCode, _serviceContext1.getUserId(),
-				_serviceContext1.getScopeGroupId(), 0, 0, false,
+				externalReferenceCode, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(), 0, 0, false,
 				StringUtil.randomString(), "LAYOUT", 0);
 
 		_addItemsToLayout(
@@ -121,7 +118,7 @@ public class ExportImportLayoutUtilityPageTest {
 		Class<?> clazz = getClass();
 
 		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
-			null, _group1.getGroupId(), TestPropsValues.getUserId(),
+			null, _group.getGroupId(), TestPropsValues.getUserId(),
 			LayoutUtilityPageEntry.class.getName(),
 			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
 			RandomTestUtil.randomString(), _repository.getDlFolderId(),
@@ -144,11 +141,17 @@ public class ExportImportLayoutUtilityPageTest {
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+		Group otherGroup = GroupTestUtil.addGroup();
+
+		ServiceContext otherGroupServiceContext =
+			ServiceContextTestUtil.getServiceContext(
+				otherGroup, TestPropsValues.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(otherGroupServiceContext);
 
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
-				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+				TestPropsValues.getUserId(), otherGroup.getGroupId(), 0, file,
 				false);
 		}
 		finally {
@@ -171,7 +174,7 @@ public class ExportImportLayoutUtilityPageTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
 			_layoutUtilityPageEntryLocalService.
 				fetchLayoutUtilityPageEntryByExternalReferenceCode(
-					externalReferenceCode, _group2.getGroupId());
+					externalReferenceCode, otherGroup.getGroupId());
 
 		Assert.assertNotNull(layoutUtilityPageEntry2);
 
@@ -200,8 +203,8 @@ public class ExportImportLayoutUtilityPageTest {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				externalReferenceCode, _serviceContext1.getUserId(),
-				_serviceContext1.getScopeGroupId(), 0, 0, false,
+				externalReferenceCode, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(), 0, 0, false,
 				StringUtil.randomString(), "LAYOUT", 0);
 
 		_addItemsToLayout(
@@ -213,7 +216,7 @@ public class ExportImportLayoutUtilityPageTest {
 		Class<?> clazz = getClass();
 
 		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
-			null, _group1.getGroupId(), TestPropsValues.getUserId(),
+			null, _group.getGroupId(), TestPropsValues.getUserId(),
 			LayoutUtilityPageEntry.class.getName(),
 			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
 			RandomTestUtil.randomString(), _repository.getDlFolderId(),
@@ -236,7 +239,7 @@ public class ExportImportLayoutUtilityPageTest {
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			_layoutsImporter.importFile(
-				TestPropsValues.getUserId(), _group1.getGroupId(), 0, file,
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
 				false);
 
 		Assert.assertNotNull(layoutsImporterResultEntries);
@@ -253,7 +256,7 @@ public class ExportImportLayoutUtilityPageTest {
 			layoutUtilityPageImportEntry.getStatus());
 
 		layoutsImporterResultEntries = _layoutsImporter.importFile(
-			TestPropsValues.getUserId(), _group1.getGroupId(), 0, file, true);
+			TestPropsValues.getUserId(), _group.getGroupId(), 0, file, true);
 
 		Assert.assertNotNull(layoutsImporterResultEntries);
 
@@ -270,7 +273,7 @@ public class ExportImportLayoutUtilityPageTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
 			_layoutUtilityPageEntryLocalService.
 				fetchLayoutUtilityPageEntryByExternalReferenceCode(
-					externalReferenceCode, _group1.getGroupId());
+					externalReferenceCode, _group.getGroupId());
 
 		Assert.assertNotNull(layoutUtilityPageEntry2);
 
@@ -279,7 +282,7 @@ public class ExportImportLayoutUtilityPageTest {
 			layoutUtilityPageEntry2.getLayoutUtilityPageEntryId());
 
 		_assertExpectedLayoutStructureItem(
-			_group1.getGroupId(), layoutUtilityPageEntry2.getPlid(),
+			_group.getGroupId(), layoutUtilityPageEntry2.getPlid(),
 			LayoutDataItemTypeConstants.TYPE_CONTAINER,
 			LayoutDataItemTypeConstants.TYPE_ROW);
 	}
@@ -342,10 +345,7 @@ public class ExportImportLayoutUtilityPageTest {
 	}
 
 	@DeleteAfterTestRun
-	private Group _group1;
-
-	@DeleteAfterTestRun
-	private Group _group2;
+	private Group _group;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -374,7 +374,6 @@ public class ExportImportLayoutUtilityPageTest {
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
-	private ServiceContext _serviceContext1;
-	private ServiceContext _serviceContext2;
+	private ServiceContext _serviceContext;
 
 }

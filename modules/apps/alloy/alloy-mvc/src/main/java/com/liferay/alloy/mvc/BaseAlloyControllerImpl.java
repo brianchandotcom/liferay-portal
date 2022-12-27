@@ -881,8 +881,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 							getSchedulerStorageType());
 					}
 
-					MessageBusUtil.unregisterMessageListener(
-						destinationName, curMessageListener);
+					destination.unregister(curMessageListener);
 				}
 				catch (Exception exception) {
 					log.error(exception, exception);
@@ -897,21 +896,19 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 					destinationName);
 
-			Destination serialDestination =
-				DestinationFactoryUtil.createDestination(
-					destinationConfiguration);
+			destination = DestinationFactoryUtil.createDestination(
+				destinationConfiguration);
 
 			destinationServiceRegistrations.put(
-				serialDestination.getName(),
+				destinationName,
 				_bundleContext.registerService(
-					Destination.class, serialDestination,
+					Destination.class, destination,
 					MapUtil.singletonDictionary(
-						"destination.name", serialDestination.getName())));
+						"destination.name", destinationName)));
 		}
 
 		try {
-			MessageBusUtil.registerMessageListener(
-				destinationName, messageListener);
+			destination.register(messageListener);
 
 			if (enableScheduler) {
 				SchedulerEngineHelperUtil.schedule(

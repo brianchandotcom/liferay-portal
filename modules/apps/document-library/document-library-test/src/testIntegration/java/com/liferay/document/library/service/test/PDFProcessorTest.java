@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -516,8 +517,10 @@ public class PDFProcessorTest {
 
 		final AtomicInteger count = new AtomicInteger();
 
-		_messageBus.registerMessageListener(
-			DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR,
+		Destination destination = _messageBus.getDestination(
+			DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
+
+		destination.register(
 			new MessageListener() {
 
 				@Override

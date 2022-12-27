@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -187,8 +188,10 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			countDownLatch.countDown();
 		};
 
-		_messageBus.registerMessageListener(
-			DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
+		Destination destination = _messageBus.getDestination(
+			DestinationNames.BACKGROUND_TASK_STATUS);
+
+		destination.register(messageListener);
 
 		try {
 			_indexWriterHelper.reindex(
@@ -200,8 +203,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 				TimeUnit.MILLISECONDS);
 		}
 		finally {
-			_messageBus.unregisterMessageListener(
-				DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
+			destination.unregister(messageListener);
 		}
 	}
 

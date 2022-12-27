@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.image.internal.configuration.test;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.constants.AMImageDestinationNames;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -77,17 +78,16 @@ public abstract class BaseAMImageConfigurationTestCase {
 
 		MessageListener messageListener = messages::add;
 
-		_messageBus.registerMessageListener(
-			AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION,
-			messageListener);
+		Destination destination = _messageBus.getDestination(
+			AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION);
+
+		destination.register(messageListener);
 
 		try {
 			runnable.run();
 		}
 		finally {
-			_messageBus.unregisterMessageListener(
-				AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION,
-				messageListener);
+			destination.unregister(messageListener);
 		}
 
 		return messages;

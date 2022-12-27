@@ -12,8 +12,8 @@ definition {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMajorVersion";
 
 		var script = '''
-			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 			import com.liferay.portal.kernel.model.*;
+			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 			import com.liferay.portal.kernel.version.Version;
 
 			Release release = ReleaseLocalServiceUtil.fetchRelease(ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
@@ -50,8 +50,8 @@ definition {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMicroVersion";
 
 		var script = '''
-			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 			import com.liferay.portal.kernel.model.*;
+			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 			import com.liferay.portal.kernel.version.Version;
 
 			Release release = ReleaseLocalServiceUtil.fetchRelease(ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
@@ -99,8 +99,8 @@ definition {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMinorVersion";
 
 		var script = '''
-			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 			import com.liferay.portal.kernel.model.*;
+			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 			import com.liferay.portal.kernel.version.Version;
 
 			Release release = ReleaseLocalServiceUtil.fetchRelease(ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);

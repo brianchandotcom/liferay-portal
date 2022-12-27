@@ -437,11 +437,12 @@ definition {
 	test CanEditActionWithGroovyScript {
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
-			import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 			import com.liferay.object.model.ObjectEntry;
+			import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 			import com.liferay.portal.kernel.service.ServiceContext;
 
 			import java.io.Serializable;
+
 			import java.util.Map;
 
 			ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);

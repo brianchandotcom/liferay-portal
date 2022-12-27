@@ -62,8 +62,8 @@ definition {
 		ServerAdministration.openServerAdmin();
 
 		var script = '''
-			import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 			import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+			import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 
 			fragmentCollectionId = CounterLocalServiceUtil.increment();
 
@@ -92,11 +92,11 @@ definition {
 		ServerAdministration.openServerAdmin();
 
 		var script = '''
-			import com.liferay.portal.util.PropsUtil;
-			import com.liferay.portal.kernel.util.PropsUtil;
 			import com.liferay.portal.kernel.configuration.Configuration;
 			import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 			import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+			import com.liferay.portal.kernel.util.PropsUtil;
+			import com.liferay.portal.util.PropsUtil;
 
 			println("com.liferay.portal.util.PropsUtil:" + com.liferay.portal.util.PropsUtil.get("partnerstamm-api-user"))
 

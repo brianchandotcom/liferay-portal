@@ -17,7 +17,7 @@
 	{
 		"dataType": 20,
 		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"name": "Menu Item Image Url",
+		"name": "Menu Item Image URL",
 		"properties": {
 			"displayType": "text-box",
 			"height": "150",

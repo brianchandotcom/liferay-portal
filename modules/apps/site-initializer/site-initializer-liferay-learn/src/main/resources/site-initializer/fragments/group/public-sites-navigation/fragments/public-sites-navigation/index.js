@@ -14,6 +14,18 @@
 
 /* eslint-disable no-undef */
 
+adtSpatialNavigationProvider = new navigation.default.SpatialNavigationProvider(
+	'.adt-submenu-item-link'
+);
+
+spatialNavigationProvider = new navigation.default.SpatialNavigationProvider(
+	'.adt-nav-text'
+);
+
+const primaryNav = fragmentElement.querySelector('.primary-nav');
+
+spatialNavigationProvider.addFocusableClasses(primaryNav);
+
 window.addEventListener('load', () => {
 	new navigation.default.DropdownProvider(
 		'.account',
@@ -27,7 +39,6 @@ window.addEventListener('load', () => {
 		'show',
 		true
 	);
-
 
 	new navigation.default.DropdownProvider(
 		'.menu-button-group',
@@ -43,9 +54,16 @@ window.addEventListener('load', () => {
 	);
 
 	new navigation.default.DropdownProvider(
-		'.adt-nav-item',
-		'.adt-nav-item',
-		'dropdown-open'
+		'.adt-nav-text',
+		'.adt-submenu',
+		'dropdown-open',
+		false,
+		(menu) => {
+			adtSpatialNavigationProvider.addFocusableClasses(menu);
+		},
+		(menu) => {
+			adtSpatialNavigationProvider.removeFocusableClasses(menu);
+		}
 	);
 
 	new navigation.default.DropdownProvider(

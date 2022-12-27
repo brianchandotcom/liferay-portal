@@ -1,8 +1,8 @@
 <ul class="adt-navigation">
 	<#if entries?has_content>
 		<#list entries as navPrimaryItem>
-			<li class="adt-nav-item w-100">
-				<div class="adt-nav-text d-flex focusable" tabindex="3">
+			<li class="adt-nav-item ml-3 w-100">
+				<div class="adt-nav-text d-flex" tabindex="4">
 					<span class="adt-nav-title text-truncate">
 						${navPrimaryItem.getName()}
 					</span>
@@ -45,13 +45,13 @@
 							<#assign
 								tertiaryCustomFields = navTertiaryItem.getExpandoAttributes()
 								descriptionText = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Description"])!""
-								imageURL = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Image Url"])!""
+								imageURL = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Image URL"])!""
 								menuItemType = tertiaryCustomFields["Menu Item Type"]?first!""
 								preheaderText = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Preheader"])!""
 							/>
 
 							<li class="adt-submenu-item-content ${menuItemType?lower_case}-type grid-column-span-${childColumns}">
-								<a class="adt-submenu-item-link" href="${navTertiaryItem.getURL()}" tabindex="3">
+								<a class="adt-submenu-item-link" href="${navTertiaryItem.getURL()}" tabindex="4">
 									<#if stringUtil.equals(menuItemType, "Image") && imageURL?has_content>
 										<img class="adt-submenu-item-image" loading="lazy" src="${imageURL}" />
 									</#if>

@@ -53,7 +53,7 @@ const useFlagsContainer = ({
 	const flagsModal = useFlags({
 		baseData: props.baseData,
 		forceLogin: false,
-		namespace: context.namespace,
+		namespace,
 		...props,
 	});
 

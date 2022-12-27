@@ -33,6 +33,10 @@ export default function App(props) {
 
 	const packageName = props.npmResolvedPackageName;
 
+	const questionComponent = Liferay.FeatureFlags['LPS-167151']
+		? `${packageName}/js/pages/questions/Question.new.es`
+		: `${packageName}/js/pages/questions/Question.es`;
+
 	const questionsComponent = Liferay.FeatureFlags['LPS-165491']
 		? `${packageName}/js/pages/questions/Questions.new.es`
 		: `${packageName}/js/pages/questions/Questions.es`;
@@ -196,7 +200,9 @@ export default function App(props) {
 												<Route
 													component={(props) => (
 														<Component
-															module={`${packageName}/js/pages/questions/Question.es`}
+															module={
+																questionComponent
+															}
 															props={props}
 														/>
 													)}

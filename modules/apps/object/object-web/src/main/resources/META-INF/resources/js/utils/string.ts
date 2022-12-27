@@ -27,6 +27,15 @@ export function firstLetterUppercase(str: string): string {
 }
 
 /**
+ *
+ * Check if the first letter of a string is uppercase
+ */
+
+export function checkIfFirstLetterIsUppercase(str: string) {
+	return str.charAt(0) === str.charAt(0).toUpperCase();
+}
+
+/**
  * Normalize languageId to be used in the
  * frontend with themeDisplay.getDefaultLanguageId()
  */

@@ -1,0 +1,10 @@
+@import 'cadmin-variables';
+
+a.experience-picker-option {
+	color: $cadmin-gray-900;
+
+	&:hover {
+		color: $cadmin-gray-900;
+		text-decoration: none;
+	}
+}

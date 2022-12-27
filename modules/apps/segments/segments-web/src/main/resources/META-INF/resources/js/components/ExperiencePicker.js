@@ -17,27 +17,37 @@ import Label from '@clayui/label';
 import Layout from '@clayui/layout';
 import React from 'react';
 
+import '../../css/experience_picker.scss';
+
 const TriggerLabel = React.forwardRef(({selectedItem, ...otherProps}, ref) => {
 	return (
-		<div ref={ref} {...otherProps} tabIndex={0}>
-			<Layout.ContentRow verticalAlign="center">
-				<Layout.ContentCol expand>
-					<Text size={3} weight="semi-bold">
-						{selectedItem.segmentsExperienceName}
-					</Text>
-				</Layout.ContentCol>
+		<button
+			{...otherProps}
+			className="btn btn-sm btn-unstyled form-control-select"
+			ref={ref}
+			tabIndex={0}
+		>
+			<div className="c-inner" tabIndex="-1">
+				<Layout.ContentRow verticalAlign="center">
+					<Layout.ContentCol className="mr-2" expand>
+						<Text size={4} truncate>
+							{selectedItem.segmentsExperienceName}
+						</Text>
+					</Layout.ContentCol>
 
-				<Layout.ContentCol>
-					<Label
-						displayType={
-							selectedItem.active ? 'success' : 'secondary'
-						}
-					>
-						{selectedItem.statusLabel}
-					</Label>
-				</Layout.ContentCol>
-			</Layout.ContentRow>
-		</div>
+					<Layout.ContentCol>
+						<Label
+							className="bg-transparent m-0"
+							displayType={
+								selectedItem.active ? 'success' : 'secondary'
+							}
+						>
+							{selectedItem.statusLabel}
+						</Label>
+					</Layout.ContentCol>
+				</Layout.ContentRow>
+			</div>
+		</button>
 	);
 });
 
@@ -54,9 +64,9 @@ const ExperiencePicker = ({experiences, selectedExperience}) => {
 					selectedItem={selectedExperience}
 					textValue={item.segmentsExperienceName}
 				>
-					<a href={item.url}>
+					<a className="experience-picker-option" href={item.url}>
 						<Layout.ContentRow>
-							<Layout.ContentCol expand>
+							<Layout.ContentCol className="pl-0" expand>
 								<Text
 									id={`${item.segmentsExperienceName}-title`}
 									size={3}
@@ -66,19 +76,18 @@ const ExperiencePicker = ({experiences, selectedExperience}) => {
 								</Text>
 
 								<Text
-									aria-hidden
 									color="secondary"
 									id={`${item.segmentsExperienceName}-description`}
-									size={2}
+									size={3}
 								>
 									{`${Liferay.Language.get('segment')}:
 									${item.segmentsEntryName}`}
 								</Text>
 							</Layout.ContentCol>
 
-							<Layout.ContentCol>
+							<Layout.ContentCol className="pr-0">
 								<Label
-									aria-hidden
+									className="mr-0"
 									displayType={
 										item.active ? 'success' : 'secondary'
 									}

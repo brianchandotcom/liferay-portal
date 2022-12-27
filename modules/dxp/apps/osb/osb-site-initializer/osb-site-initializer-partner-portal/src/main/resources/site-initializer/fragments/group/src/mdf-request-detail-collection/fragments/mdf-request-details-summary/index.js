@@ -72,6 +72,7 @@ const formatEndDate = (value) =>
 	new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		day: 'numeric',
 		month: 'short',
+		timeZone: 'UTC',
 		year: 'numeric',
 	}).format(new Date(value));
 
@@ -79,6 +80,7 @@ const formatNewDate = (value) =>
 	new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		day: 'numeric',
 		month: 'short',
+		timeZone: 'UTC',
 	}).format(new Date(value));
 
 if (layoutMode !== 'edit') {

@@ -14,7 +14,7 @@
 
 import ClayPanel from '@clayui/panel';
 import {FormError, SingleSelect} from '@liferay/object-js-components-web';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 
@@ -25,26 +25,45 @@ interface EntryDisplayContainerProps {
 		name: string;
 	}[];
 	objectFields: ObjectField[];
-	selectedObjectField?: ObjectField;
-	setSelectedObjectField: React.Dispatch<
-		React.SetStateAction<ObjectField | undefined>
-	>;
 	setValues: (values: Partial<ObjectDefinition>) => void;
+	values: Partial<ObjectDefinition>;
 }
 
 export function EntryDisplayContainer({
 	errors,
 	nonRelationshipObjectFieldsInfo,
 	objectFields,
-	selectedObjectField,
-	setSelectedObjectField,
 	setValues,
+	values,
 }: EntryDisplayContainerProps) {
+	const [selectedObjectField, setSelectedObjectField] = useState<
+		ObjectField
+	>();
+
 	const titleFieldOptions = useMemo(() => {
 		return nonRelationshipObjectFieldsInfo.map(({label, name}) => {
 			return {label: label[defaultLanguageId] ?? '', name};
 		});
 	}, [nonRelationshipObjectFieldsInfo]);
+
+	useEffect(() => {
+		if (values.titleObjectFieldName) {
+			const titleObjectField = objectFields.find(
+				(objectField) =>
+					objectField.name === values.titleObjectFieldName
+			);
+
+			setSelectedObjectField(titleObjectField);
+
+			return;
+		}
+
+		const idField = objectFields.find((field) => field.name === 'id');
+
+		setValues({titleObjectFieldName: idField?.name});
+		setSelectedObjectField(idField);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.titleObjectFieldName, objectFields]);
 
 	return (
 		<ClayPanel

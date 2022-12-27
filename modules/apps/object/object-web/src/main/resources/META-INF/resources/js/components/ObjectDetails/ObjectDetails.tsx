@@ -68,10 +68,6 @@ export default function ObjectDetails({
 	siteKeyValuePair,
 }: ObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
-	const [selectedObjectField, setSelectedObjectField] = useState<
-		ObjectField
-	>();
-
 	const [accountRelationshipFields, setAccountRelationshipFields] = useState<
 		LabelValueObject[]
 	>([]);
@@ -193,30 +189,7 @@ export default function ObjectDetails({
 				);
 			}
 
-			const newObjectDefinition = {
-				...objectDefinitionResponse,
-			};
-
-			if (!objectDefinitionResponse.titleObjectFieldName) {
-				const idField = objectFieldsResponse.find(
-					(field) => field.name === 'id'
-				);
-
-				newObjectDefinition.titleObjectFieldName = idField?.name as string;
-
-				setSelectedObjectField(idField);
-			}
-			else {
-				const titleObjectField = objectFieldsResponse.find(
-					(objectField) =>
-						objectField.name ===
-						objectDefinitionResponse.titleObjectFieldName
-				);
-
-				setSelectedObjectField(titleObjectField);
-			}
-
-			setValues(newObjectDefinition);
+			setValues(objectDefinitionResponse);
 			setObjectFields(objectFieldsResponse);
 		};
 
@@ -268,9 +241,8 @@ export default function ObjectDetails({
 							nonRelationshipObjectFieldsInfo
 						}
 						objectFields={objectFields}
-						selectedObjectField={selectedObjectField}
-						setSelectedObjectField={setSelectedObjectField}
 						setValues={setValues}
+						values={values}
 					/>
 
 					<ScopeContainer

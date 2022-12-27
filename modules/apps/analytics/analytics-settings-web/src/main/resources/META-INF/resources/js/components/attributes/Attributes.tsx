@@ -165,10 +165,8 @@ const Attributes: React.FC = () => {
 						<ClayList.ItemField expand>
 							<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
 
-							<ClayList.ItemText className="text-secondary">
-								<span className="mr-1">{count}</span>
-
-								<span>{Liferay.Language.get('selected')}</span>
+							<ClayList.ItemText className="mr-1 text-secondary">
+								{count} {Liferay.Language.get('selected')}
 							</ClayList.ItemText>
 						</ClayList.ItemField>
 

@@ -260,6 +260,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166203. The site designer could save in new set during copy OOTB fragment when the site has fragment sets."
+	@priority = "5"
+	test AddNewFragmentSetWhenCopyContributedFragment {
+		property custom.properties = "feature.flag.LPS-166203=true";
+
+		task ("Given a site designer has a fragment set") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the site designer copies the Button fragment from Basic Components fragment set") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Button",
+				item = "Copy To");
+		}
+
+		task ("Then the site designer could add a new fragment set") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Select Fragment Set");
+
+			Click(
+				key_text = "Save In New Set",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Add Fragment Set");
+
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Untitled Set");
+
+			Modal.save();
+
+			Alert.viewSuccessMessageText(successMessage = "The fragment has been copied successfully.");
+
+			MenuBar.viewActive(menuBar = "Untitled Set");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");
+		}
+	}
+
 	@description = "Fragments that are being used cannot be deleted."
 	@priority = "5"
 	@uitest

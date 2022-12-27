@@ -1252,7 +1252,7 @@ public class JenkinsResultsParserUtil {
 		Properties buildProperties = null;
 
 		try {
-			buildProperties = getBuildProperties();
+			buildProperties = getBuildProperties(false);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

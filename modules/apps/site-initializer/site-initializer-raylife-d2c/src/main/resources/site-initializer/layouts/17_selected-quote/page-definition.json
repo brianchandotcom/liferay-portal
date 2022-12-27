@@ -39,7 +39,6 @@
 						"definition": {
 							"widgetInstance": {
 								"widgetConfig": {
-									"portletSetupPortletDecoratorId": "barebone",
 									"properties": "applicationsfoldername=Quote Applications\nroute=selected-quote"
 								},
 								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFE$]"

@@ -15,7 +15,7 @@
 import {Option, Picker, Text} from '@clayui/core';
 import Label from '@clayui/label';
 import Layout from '@clayui/layout';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import '../../css/experience_picker.scss';
 
@@ -52,9 +52,22 @@ const TriggerLabel = React.forwardRef(({selectedItem, ...otherProps}, ref) => {
 });
 
 const ExperiencePicker = ({experiences, selectedExperience}) => {
+	const [disabled, setDisabled] = useState(false);
+
+	useEffect(() => {
+		Liferay.on('SimulationMenu:closeSimulationPanel', () =>
+			setDisabled(false)
+		);
+
+		Liferay.on('SimulationMenu:openSimulationPanel', () =>
+			setDisabled(true)
+		);
+	}, []);
+
 	return (
 		<Picker
 			as={TriggerLabel}
+			disabled={disabled}
 			items={experiences}
 			selectedItem={selectedExperience}
 		>

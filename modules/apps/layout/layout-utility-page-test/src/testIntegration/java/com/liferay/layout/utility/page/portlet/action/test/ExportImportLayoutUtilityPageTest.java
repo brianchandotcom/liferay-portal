@@ -18,13 +18,22 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -39,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 
@@ -94,6 +104,12 @@ public class ExportImportLayoutUtilityPageTest {
 				externalReferenceCode, _serviceContext1.getUserId(),
 				_serviceContext1.getScopeGroupId(), 0, 0, false,
 				StringUtil.randomString(), type, 0);
+
+		_addItemsToLayout(
+			layoutUtilityPageEntry1.getGroupId(),
+			layoutUtilityPageEntry1.getPlid(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			LayoutDataItemTypeConstants.TYPE_ROW);
 
 		Repository repository = _portletFileRepository.fetchPortletRepository(
 			_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
@@ -170,6 +186,69 @@ public class ExportImportLayoutUtilityPageTest {
 
 		Assert.assertNotEquals(
 			0, layoutUtilityPageEntry2.getPreviewFileEntryId());
+
+		_assertExpectedLayoutStructureItem(
+			layoutUtilityPageEntry2.getGroupId(),
+			layoutUtilityPageEntry2.getPlid(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			LayoutDataItemTypeConstants.TYPE_ROW);
+	}
+
+	private void _addItemsToLayout(long groupId, long plid, String... itemTypes)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(groupId, plid);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		String parentItemId = layoutStructure.getMainItemId();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		for (String itemType : itemTypes) {
+			JSONObject addItemJSONObject =
+				ContentLayoutTestUtil.addItemToLayout(
+					"{}", itemType, layout, parentItemId, 0,
+					segmentsExperienceId);
+
+			parentItemId = addItemJSONObject.getString("addedItemId");
+		}
+
+		_assertExpectedLayoutStructureItem(groupId, plid, itemTypes);
+	}
+
+	private void _assertExpectedLayoutStructureItem(
+		long groupId, long plid, String... itemTypes) {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(groupId, plid);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		for (String itemType : itemTypes) {
+			List<String> childrenItemIds =
+				layoutStructureItem.getChildrenItemIds();
+
+			Assert.assertEquals(
+				childrenItemIds.toString(), 1, childrenItemIds.size());
+
+			layoutStructureItem = layoutStructure.getLayoutStructureItem(
+				childrenItemIds.get(0));
+
+			Assert.assertEquals(itemType, layoutStructureItem.getItemType());
+		}
 	}
 
 	@DeleteAfterTestRun
@@ -177,6 +256,13 @@ public class ExportImportLayoutUtilityPageTest {
 
 	@DeleteAfterTestRun
 	private Group _group2;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private LayoutsImporter _layoutsImporter;
@@ -192,6 +278,9 @@ public class ExportImportLayoutUtilityPageTest {
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;

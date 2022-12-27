@@ -10,7 +10,7 @@
  */
 
 import {ERROR_MESSAGES} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/errorMessages';
-import {INPUT_TYPES} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/inputTypes';
+import {INPUT_TYPES} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/types/inputTypes';
 import {
 	validateBoost,
 	validateJSON,

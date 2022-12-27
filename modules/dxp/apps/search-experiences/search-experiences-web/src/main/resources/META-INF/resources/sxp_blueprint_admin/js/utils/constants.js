@@ -27,14 +27,6 @@ export const DEFAULT_INDEX_CONFIGURATION = {
 	indexName: '',
 };
 
-export const SIDEBARS = {
-	ADD_SXP_ELEMENT: 'addSXPElement',
-	CLAUSE_CONTRIBUTORS: 'clauseContributors',
-	INDEXER_CLAUSES: 'indexerClauses',
-	PREVIEW: 'preview',
-};
-
 export const SXP_ELEMENT_PREFIX = {
 	QUERY: 'querySXPElement',
 };
-export const SXP_ELEMENT_TYPE = {QUERY: 10};

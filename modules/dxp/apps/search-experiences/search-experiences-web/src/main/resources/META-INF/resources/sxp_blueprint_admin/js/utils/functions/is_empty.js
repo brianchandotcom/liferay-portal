@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {INPUT_TYPES} from '../inputTypes';
+import {INPUT_TYPES} from '../types/inputTypes';
 import isDefined from './is_defined';
 
 /**

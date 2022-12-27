@@ -10,7 +10,7 @@
  */
 
 import isEmpty from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/functions/is_empty';
-import {INPUT_TYPES} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/inputTypes';
+import {INPUT_TYPES} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/types/inputTypes';
 
 describe('isEmpty', () => {
 	it('returns true for an empty string', () => {

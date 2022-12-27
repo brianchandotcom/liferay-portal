@@ -15,7 +15,7 @@ import {CONFIG_PREFIX} from '../constants';
 import isEmpty from '../functions/is_empty';
 import replaceStr from '../functions/replace_str';
 import toNumber from '../functions/to_number';
-import {INPUT_TYPES} from '../inputTypes';
+import {INPUT_TYPES} from '../types/inputTypes';
 import cleanUIConfiguration from './clean_ui_configuration';
 import isCustomJSONSXPElement from './is_custom_json_sxp_element';
 import parseCustomSXPElement from './parse_custom_sxp_element';

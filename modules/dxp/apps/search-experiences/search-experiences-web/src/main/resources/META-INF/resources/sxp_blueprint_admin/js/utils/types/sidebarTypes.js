@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
-export const FRAMEWORK_TYPES = {
-	ALL: 'all',
-	BASELINE: 'baseline',
+export const SIDEBAR_TYPES = {
+	ADD_SXP_ELEMENT: 'addSXPElement',
+	CLAUSE_CONTRIBUTORS: 'clauseContributors',
+	INDEXER_CLAUSES: 'indexerClauses',
+	PREVIEW: 'preview',
 };

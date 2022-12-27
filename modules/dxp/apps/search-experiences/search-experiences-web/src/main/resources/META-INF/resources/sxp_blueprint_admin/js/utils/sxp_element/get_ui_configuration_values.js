@@ -12,7 +12,7 @@
 import moment from 'moment';
 
 import toNumber from '../functions/to_number';
-import {INPUT_TYPES} from '../inputTypes';
+import {INPUT_TYPES} from '../types/inputTypes';
 import cleanUIConfiguration from './clean_ui_configuration';
 import getSXPElementJSON from './get_sxp_element_json';
 

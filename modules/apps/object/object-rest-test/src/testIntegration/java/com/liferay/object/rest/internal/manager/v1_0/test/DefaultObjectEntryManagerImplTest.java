@@ -621,7 +621,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -638,7 +638,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" has no access to the account entry ",
@@ -657,7 +657,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -668,7 +668,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_addObjectEntry(accountEntry1);
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" has no access to the account entry ",
@@ -706,7 +706,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_giveOrganizationRole(organization1, _accountManagerRole, _user);
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -717,7 +717,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_addObjectEntry(accountEntry1);
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" has no access to the account entry ",
@@ -1423,7 +1423,7 @@ public class DefaultObjectEntryManagerImplTest {
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
 			randomRole.getRoleId(), ActionKeys.UPDATE);
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have UPDATE permission for ",
@@ -1465,7 +1465,7 @@ public class DefaultObjectEntryManagerImplTest {
 			_simpleDTOConverterContext, _objectDefinition3,
 			objectEntry1.getId(), objectEntry1);
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have UPDATE permission for ",
@@ -1495,7 +1495,7 @@ public class DefaultObjectEntryManagerImplTest {
 			accountEntry2.getAccountEntryId(),
 			organization2.getOrganizationId());
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have UPDATE permission for ",
@@ -1537,7 +1537,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(1);
 
-		_assertResourcePermissionFailure(
+		_assertFailure(
 			StringBundler.concat(
 				"User ", String.valueOf(_user.getUserId()),
 				" must have UPDATE permission for ",
@@ -1824,6 +1824,19 @@ public class DefaultObjectEntryManagerImplTest {
 		}
 	}
 
+	private void _assertFailure(
+		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
+
+		try {
+			unsafeSupplier.get();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(exception.getMessage(), message);
+		}
+	}
+
 	private void _assertObjectEntriesSize(long size) throws Exception {
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			_companyId, _objectDefinition3, null, null,
@@ -1839,19 +1852,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Assert.assertEquals(
 			objectEntries.toString(), size, objectEntries.size());
-	}
-
-	private void _assertResourcePermissionFailure(
-		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		try {
-			unsafeSupplier.get();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(exception.getMessage(), message);
-		}
 	}
 
 	private String _buildEqualsExpressionFilterString(

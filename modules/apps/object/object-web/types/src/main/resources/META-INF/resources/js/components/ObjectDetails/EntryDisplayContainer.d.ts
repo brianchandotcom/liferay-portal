@@ -12,8 +12,9 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {FormError} from '@liferay/object-js-components-web';
-import React from 'react';
 interface EntryDisplayContainerProps {
 	errors: FormError<ObjectDefinition>;
 	nonRelationshipObjectFieldsInfo: {
@@ -21,18 +22,14 @@ interface EntryDisplayContainerProps {
 		name: string;
 	}[];
 	objectFields: ObjectField[];
-	selectedObjectField?: ObjectField;
-	setSelectedObjectField: React.Dispatch<
-		React.SetStateAction<ObjectField | undefined>
-	>;
 	setValues: (values: Partial<ObjectDefinition>) => void;
+	values: Partial<ObjectDefinition>;
 }
 export declare function EntryDisplayContainer({
 	errors,
 	nonRelationshipObjectFieldsInfo,
 	objectFields,
-	selectedObjectField,
-	setSelectedObjectField,
 	setValues,
+	values,
 }: EntryDisplayContainerProps): JSX.Element;
 export {};

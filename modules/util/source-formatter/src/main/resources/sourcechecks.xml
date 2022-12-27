@@ -1267,6 +1267,10 @@
 			<category name="Styling" />
 			<description name="Sorts and groups imports in Poshi Script files." />
 		</check>
+		<check name="PoshiIndentationCheck">
+			<category name="Styling" />
+			<description name="Finds incorrect indentation in Poshi Script files." />
+		</check>
 		<check name="PoshiPauseUsageCheck">
 			<category name="Performance" />
 			<description name="Finds missing comment with JIRA project when using `Pause`." />

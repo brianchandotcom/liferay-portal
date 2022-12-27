@@ -754,12 +754,6 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM SubFolder1 Description",
-			dmFolderName = "SubFolder1 Name",
-			groupName = "Site Name",
-			parentFolderName = "DM Folder Name");
-
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
@@ -767,6 +761,10 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Subfolder1 Description",
+			dmFolderName = "SubFolder1 Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "SubFolder1 Name");
 

@@ -1594,6 +1594,8 @@ definition {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "${dmDocumentTitle}");
+
+			WaitForPageLoad();
 		}
 
 		DMDocument.editCmd(

@@ -179,9 +179,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-140483. The site admin could create page template from a content page with elements."
+	@description = "This is a test for LPS-140483 and LPS-166207. The site admin could create page template from a content page with elements."
 	@priority = "5"
 	test CreatePageTemplateFromContentPage {
+		property custom.properties = "feature.flag.LPS-166201=true";
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment and an Asset Publisher widget to content page then publish") {
@@ -214,25 +215,25 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.createPageTemplate(
-				collectionName = "Page Template Collection",
-				pageTemplateName = "Content Page Template Name");
+			PageEditor.createPageTemplate(collectionName = "Page Template Collection");
 		}
 
 		task ("View the content page template shown in Page Templates admin") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			AssertClick(
+				locator1 = "Message#SUCCESS_LINK",
+				value1 = "See in Page Templates");
 
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
+			PageTemplatesAdmin.viewPageTemplateSetPresent(setName = "Page Template Collection");
 
-			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Template Name");
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Test Page Name - Page Template");
 
 			PageTemplatesAdmin.viewEntryWorkflowStatus(
-				entry = "Content Page Template Name",
+				entry = "Test Page Name - Page Template",
 				workflowStatus = "Draft");
 		}
 
 		task ("View the Heading and Asset Publisher are shown in content page template") {
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
 
 			for (var elementName : list "Heading,Asset Publisher") {
 				PageEditor.viewFragment(fragmentName = "${elementName}");

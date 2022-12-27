@@ -94,6 +94,23 @@ public class ListTypeDefinitionServiceImpl
 	}
 
 	@Override
+	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionLocalService.
+				getListTypeDefinitionByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			listTypeDefinition.getListTypeDefinitionId(), ActionKeys.VIEW);
+
+		return listTypeDefinition;
+	}
+
+	@Override
 	public List<ListTypeDefinition> getListTypeDefinitions(int start, int end) {
 		return listTypeDefinitionLocalService.getListTypeDefinitions(
 			start, end);

@@ -296,16 +296,18 @@ definition {
 	}
 
 	macro syncContactsData {
-		Click(
-			key_option = "Select Contacts",
-			locator1 = "Panel#PANEL_COLLAPSED");
+		if (IsElementPresent(key_panel = "Select Contacts", locator1 = "Panel#PANEL_COLLAPSED")) {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+		}
 
 		if (isSet(orgName)) {
 			Click(
 				key_option = "Organizations",
 				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
 
-			Click(
+			Click.clickAtNotVisible(
 				key_entry = "${orgName}",
 				locator1 = "ACDXPSettings#SELECT_OPTION_CHECKBOX");
 
@@ -320,7 +322,7 @@ definition {
 				key_option = "User Groups",
 				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
 
-			Click(
+			Click.clickAtNotVisible(
 				key_entry = "${userGroup}",
 				locator1 = "ACDXPSettings#SELECT_OPTION_CHECKBOX");
 
@@ -332,7 +334,7 @@ definition {
 		}
 		else {
 			if (IsElementPresent(index = "2", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-				Uncheck.uncheckToggleSwitch(
+				Check.checkToggleSwitch(
 					key_syncFieldName = "Sync All Contacts",
 					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
 			}

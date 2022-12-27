@@ -86,6 +86,15 @@ public class ExportImportLayoutUtilityPageTest {
 			_group2, TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
+
+		_repository = _portletFileRepository.fetchPortletRepository(
+			_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
+
+		if (_repository == null) {
+			_repository = _portletFileRepository.addPortletRepository(
+				_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
+				_serviceContext1);
+		}
 	}
 
 	@After
@@ -109,22 +118,13 @@ public class ExportImportLayoutUtilityPageTest {
 			LayoutDataItemTypeConstants.TYPE_CONTAINER,
 			LayoutDataItemTypeConstants.TYPE_ROW);
 
-		Repository repository = _portletFileRepository.fetchPortletRepository(
-			_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
-
-		if (repository == null) {
-			repository = _portletFileRepository.addPortletRepository(
-				_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
-				_serviceContext1);
-		}
-
 		Class<?> clazz = getClass();
 
 		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
 			null, _group1.getGroupId(), TestPropsValues.getUserId(),
 			LayoutUtilityPageEntry.class.getName(),
 			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
-			RandomTestUtil.randomString(), repository.getDlFolderId(),
+			RandomTestUtil.randomString(), _repository.getDlFolderId(),
 			clazz.getResourceAsStream("dependencies/thumbnail.png"),
 			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId() +
 				"_preview.png",
@@ -210,22 +210,13 @@ public class ExportImportLayoutUtilityPageTest {
 			LayoutDataItemTypeConstants.TYPE_CONTAINER,
 			LayoutDataItemTypeConstants.TYPE_ROW);
 
-		Repository repository = _portletFileRepository.fetchPortletRepository(
-			_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
-
-		if (repository == null) {
-			repository = _portletFileRepository.addPortletRepository(
-				_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
-				_serviceContext1);
-		}
-
 		Class<?> clazz = getClass();
 
 		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
 			null, _group1.getGroupId(), TestPropsValues.getUserId(),
 			LayoutUtilityPageEntry.class.getName(),
 			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
-			RandomTestUtil.randomString(), repository.getDlFolderId(),
+			RandomTestUtil.randomString(), _repository.getDlFolderId(),
 			clazz.getResourceAsStream("dependencies/thumbnail.png"),
 			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId() +
 				"_preview.png",
@@ -377,6 +368,8 @@ public class ExportImportLayoutUtilityPageTest {
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;
+
+	private Repository _repository;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

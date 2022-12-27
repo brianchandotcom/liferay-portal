@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -113,7 +114,8 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		}
 
 		ModelResourcePermission<?> modelResourcePermission =
-			_modelPermissions.getService(className);
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				className);
 
 		if (modelResourcePermission != null) {
 			PortletResourcePermission portletResourcePermission =
@@ -282,13 +284,6 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 					}
 
 				});
-
-	private static final ServiceTrackerMap<String, ModelResourcePermission<?>>
-		_modelPermissions = ServiceTrackerMapFactory.openSingleValueMap(
-			SystemBundleUtil.getBundleContext(),
-			(Class<ModelResourcePermission<?>>)
-				(Class<?>)ModelResourcePermission.class,
-			"model.class.name");
 
 	@BeanReference(type = ResourcePermissionLocalService.class)
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

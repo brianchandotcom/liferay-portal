@@ -14,17 +14,13 @@
 
 package com.liferay.notification.internal.type.users.provider;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -32,25 +28,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUsersProvider implements UsersProvider {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<ModelResourcePermission<?>>)
-				(Class<?>)ModelResourcePermission.class,
-			"model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	protected boolean hasViewPermission(
 		String className, long classPK, User user) {
 
 		ModelResourcePermission<?> modelResourcePermission =
-			_serviceTrackerMap.getService(className);
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				className);
 
 		if (modelResourcePermission != null) {
 			try {
@@ -68,8 +51,5 @@ public abstract class BaseUsersProvider implements UsersProvider {
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	private ServiceTrackerMap<String, ModelResourcePermission<?>>
-		_serviceTrackerMap;
 
 }

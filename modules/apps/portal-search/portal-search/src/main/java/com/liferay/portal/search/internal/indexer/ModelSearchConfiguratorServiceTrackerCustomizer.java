@@ -16,8 +16,6 @@ package com.liferay.portal.search.internal.indexer;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -31,7 +29,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistry;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -169,13 +167,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			(Class<DocumentContributor<?>>)(Class<?>)DocumentContributor.class,
 			"(!(indexer.class.name=*))");
 
-		_modelResourcePermissionServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<ModelResourcePermission<?>>)
-					(Class<?>)ModelResourcePermission.class,
-				"model.class.name");
-
 		_queryConfigContributors = ServiceTrackerListFactory.open(
 			_bundleContext, QueryConfigContributor.class,
 			"(!(indexer.class.name=*))");
@@ -305,8 +296,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		IndexerPermissionPostFilter indexerPermissionPostFilter =
 			new IndexerPermissionPostFilterImpl(
 				() -> Optional.ofNullable(
-					_modelResourcePermissionServiceTrackerMap.getService(
-						modelSearchConfigurator.getClassName())),
+					ModelResourcePermissionRegistryUtil.
+						getModelResourcePermission(
+							modelSearchConfigurator.getClassName())),
 				() -> Optional.ofNullable(
 					modelSearchConfigurator.getModelVisibilityContributor()));
 
@@ -359,8 +351,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerList<DocumentContributor<?>> _documentContributors;
-	private ServiceTrackerMap<String, ModelResourcePermission<?>>
-		_modelResourcePermissionServiceTrackerMap;
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

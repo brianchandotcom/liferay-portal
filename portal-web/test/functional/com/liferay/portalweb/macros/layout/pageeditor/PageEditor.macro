@@ -1712,14 +1712,21 @@ definition {
 				value1 = "The page template is based on the current experience.");
 		}
 
-		PortletEntry.inputName(name = "${pageTemplateName}");
+		if (IsElementNotPresent(locator1 = "Modal#SAVE_BUTTON")) {
+			PortletEntry.inputName(name = "${pageTemplateName}");
+		}
 
 		Select(
 			key_fieldLabel = "Page Template Set",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${collectionName}");
 
-		Button.click(button = "Create");
+		if (IsElementPresent(locator1 = "Modal#SAVE_BUTTON")) {
+			Click(locator1 = "Modal#SAVE_BUTTON");
+		}
+		else {
+			Button.click(button = "Create");
+		}
 
 		if (IsElementPresent(locator1 = "Message#ERROR_DISMISSIBLE")) {
 			AssertTextEquals.assertPartialText(

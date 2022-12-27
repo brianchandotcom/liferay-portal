@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "recipient.type=" + NotificationRecipientConstants.TYPE_TERM,
 	service = UsersProvider.class
 )
-public class TermUsersProvider implements UsersProvider {
+public class TermUsersProvider
+	extends BaseUsersProvider implements UsersProvider {
 
 	@Override
 	public String getRecipientType() {
@@ -80,7 +81,7 @@ public class TermUsersProvider implements UsersProvider {
 		users.addAll(
 			TransformUtil.unsafeTransform(
 				screenNames,
-				user -> _usersProviderHelper.hasViewPermission(
+				user -> hasViewPermission(
 					notificationContext.getClassName(),
 					notificationContext.getClassPK(), user),
 				screenName -> _userLocalService.getUserByScreenName(
@@ -93,7 +94,7 @@ public class TermUsersProvider implements UsersProvider {
 			users.addAll(
 				TransformUtil.unsafeTransform(
 					terms,
-					user -> _usersProviderHelper.hasViewPermission(
+					user -> hasViewPermission(
 						notificationContext.getClassName(),
 						notificationContext.getClassPK(), user),
 					term -> _userLocalService.getUser(
@@ -114,8 +115,5 @@ public class TermUsersProvider implements UsersProvider {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersProviderHelper _usersProviderHelper;
 
 }

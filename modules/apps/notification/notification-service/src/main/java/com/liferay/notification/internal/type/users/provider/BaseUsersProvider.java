@@ -24,17 +24,29 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
  */
-@Component(service = UsersProviderHelper.class)
-public class UsersProviderHelper {
+public abstract class BaseUsersProvider implements UsersProvider {
 
-	public boolean hasViewPermission(
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<ModelResourcePermission<?>>)
+				(Class<?>)ModelResourcePermission.class,
+			"model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	protected boolean hasViewPermission(
 		String className, long classPK, User user) {
 
 		ModelResourcePermission<?> modelResourcePermission =
@@ -52,20 +64,6 @@ public class UsersProviderHelper {
 		}
 
 		return false;
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<ModelResourcePermission<?>>)
-				(Class<?>)ModelResourcePermission.class,
-			"model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
 	}
 
 	@Reference

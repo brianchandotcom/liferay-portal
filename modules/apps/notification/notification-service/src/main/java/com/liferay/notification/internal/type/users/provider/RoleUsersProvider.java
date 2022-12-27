@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "recipient.type=" + NotificationRecipientConstants.TYPE_ROLE,
 	service = UsersProvider.class
 )
-public class RoleUsersProvider implements UsersProvider {
+public class RoleUsersProvider
+	extends BaseUsersProvider implements UsersProvider {
 
 	@Override
 	public String getRecipientType() {
@@ -75,7 +76,7 @@ public class RoleUsersProvider implements UsersProvider {
 
 		return TransformUtil.unsafeTransform(
 			userIds,
-			user -> _usersProviderHelper.hasViewPermission(
+			user -> hasViewPermission(
 				notificationContext.getClassName(),
 				notificationContext.getClassPK(), user),
 			userId -> _userLocalService.getUser(userId));
@@ -86,8 +87,5 @@ public class RoleUsersProvider implements UsersProvider {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersProviderHelper _usersProviderHelper;
 
 }

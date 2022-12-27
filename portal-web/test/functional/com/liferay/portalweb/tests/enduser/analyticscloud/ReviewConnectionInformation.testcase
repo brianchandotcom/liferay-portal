@@ -157,4 +157,84 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-11044 | Automation ID: LRAC-12678 | Test Summary: Check that you can modify selected attributes in the attribute review sidebar"
+	@priority = "4"
+	test CanModifySelectedAttributesInAttributeReviewSidebar {
+		task ("Go to the attributes page in the sidebar") {
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
+		task ("Check the current amount of selected attributes before editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "People",
+				syncNumber = "31 Selected");
+		}
+
+		task ("Deselect some attributes") {
+			ACDXPSettings.desyncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "agreedToTermsOfUse,companyId");
+		}
+
+		task ("Check that the correct amount of attributes appear as selected after editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "People",
+				syncNumber = "29 Selected");
+		}
+
+		task ("Deselect some attributes") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "facebookId");
+		}
+
+		task ("Check that the correct amount of attributes appear as selected after editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "People",
+				syncNumber = "30 Selected");
+		}
+
+		task ("Check the current amount of selected attributes before editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Account",
+				syncNumber = "23 Selected");
+		}
+
+		task ("Deselect some attributes") {
+			ACDXPSettings.desyncAttributes(
+				attributeCategory = "Account",
+				attributeNameList = "defaultBillingAddressId,defaultCPaymentMethodKey");
+		}
+
+		task ("Check that the correct amount of attributes appear as selected after editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Account",
+				syncNumber = "21 Selected");
+		}
+
+		task ("Deselect some attributes") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "Account",
+				attributeNameList = "externalReferenceCode");
+		}
+
+		task ("Check that the correct amount of attributes appear as selected after editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Account",
+				syncNumber = "22 Selected");
+		}
+
+		task ("Check the current amount of selected attributes before editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Products",
+				syncNumber = "34 Selected");
+		}
+
+		task ("Check that the correct amount of attributes appear as selected after editing") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Order",
+				syncNumber = "35 Selected");
+		}
+	}
+
 }

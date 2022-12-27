@@ -129,7 +129,7 @@ const useSubtasksActions = () => {
 		},
 		{
 			action: (subtask, mutate) =>
-				testraySubTaskImpl.returnToOpen(subtask).then(() =>
+				testraySubTaskImpl.returnToOpen(subtask).then(() => {
 					updateItemFromList(
 						mutate,
 						0,
@@ -137,8 +137,10 @@ const useSubtasksActions = () => {
 						{
 							revalidate: true,
 						}
-					)
-				),
+					);
+
+					revalidateSubtask();
+				}),
 			hidden: ({dueStatus}) => dueStatus.key !== SubTaskStatuses.COMPLETE,
 			icon: 'polls',
 			name: i18n.translate('return-to-open'),

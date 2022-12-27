@@ -48,8 +48,7 @@ const useTestflowActions = () => {
 						}
 					)
 				),
-			hidden: ({dueStatus}) =>
-				dueStatus?.key === TaskStatuses.IN_ANALYSIS,
+			hidden: ({dueStatus}) => dueStatus.key === TaskStatuses.IN_ANALYSIS,
 			icon: 'polls',
 			name: i18n.translate('reanalyze'),
 		},
@@ -65,9 +64,7 @@ const useTestflowActions = () => {
 						}
 					)
 				),
-
-			hidden: ({dueStatus}) =>
-				dueStatus?.key === TaskStatuses.IN_ANALYSIS,
+			hidden: ({dueStatus}) => dueStatus.key === TaskStatuses.IN_ANALYSIS,
 			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',

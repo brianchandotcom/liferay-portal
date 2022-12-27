@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PathInterpreter.class)
 public class PathInterpreter {
 
-	public Optional<Tuple<FileVersion, Map<String, String>>> interpretPath(
+	public Tuple<FileVersion, Map<String, String>> interpretPath(
 		String pathInfo) {
 
 		try {
@@ -50,7 +49,7 @@ public class PathInterpreter {
 			Matcher matcher = _pattern.matcher(pathInfo);
 
 			if (!matcher.matches()) {
-				return Optional.empty();
+				return null;
 			}
 
 			long fileEntryId = Long.valueOf(matcher.group(1));
@@ -65,7 +64,7 @@ public class PathInterpreter {
 					_getConfigurationEntryUUID(matcher));
 
 			if (amImageConfigurationEntry == null) {
-				return Optional.of(Tuple.of(fileVersion, new HashMap<>()));
+				return Tuple.of(fileVersion, new HashMap<>());
 			}
 
 			Map<String, String> curProperties =
@@ -78,7 +77,7 @@ public class PathInterpreter {
 				configurationUuidAMAttribute.getName(),
 				amImageConfigurationEntry.getUUID());
 
-			return Optional.of(Tuple.of(fileVersion, curProperties));
+			return Tuple.of(fileVersion, curProperties);
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);

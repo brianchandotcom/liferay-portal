@@ -189,7 +189,9 @@ public class AssetCategoriesSelectorDisplayContext {
 					vocabularyId);
 
 			if ((assetVocabulary != null) &&
-				(assetVocabulary.getCategoriesCount() > 0)) {
+				(isMoveCategory() ||
+				 (!isMoveCategory() &&
+				  (assetVocabulary.getCategoriesCount() > 0)))) {
 
 				assetVocabularies.add(assetVocabulary);
 			}

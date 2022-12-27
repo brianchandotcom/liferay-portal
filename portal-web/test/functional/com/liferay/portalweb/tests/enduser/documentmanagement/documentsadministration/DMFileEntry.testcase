@@ -2561,17 +2561,21 @@ definition {
 			roleTitle = "Portal Content Reviewer",
 			userEmailAddress = "userea@liferay.com");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_5.txt");
+
 		DMDocument.updateCheckInterval(fieldValue = "1");
 
-		DMNavigator.openToAddEntry(
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_5.txt",
 			groupName = "Guest",
 			siteURLKey = "guest");
 
 		WaitForPageLoad();
-
-		DMDocument.editDocument(
-			dmDocumentFile = "Document_5.txt",
-			dmDocumentTitle = "Document_5.txt");
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",

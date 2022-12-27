@@ -16,12 +16,6 @@ definition {
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
-
-		task ("Add a page template collection") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection");
-		}
 	}
 
 	tearDown {
@@ -39,6 +33,10 @@ definition {
 	@priority = "4"
 	test CannotCreatePageTemplatesWithSameNameFromContentPageInTheSameCollection {
 		task ("Create a content page template from the content page under page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -67,6 +65,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment and an Asset Publisher widget to content page then publish") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -124,6 +126,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment to a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
 				groupName = "Test Site Name",
 				layoutPageTemplateCollectionName = "Page Template Collection",
@@ -191,6 +197,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Header Dark fragment to the header of master page") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
@@ -292,6 +302,10 @@ definition {
 		}
 
 		task ("Add a Heading to a content page") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -357,6 +371,10 @@ definition {
 	@priority = "4"
 	test CreatePageTemplateFromEmptyContentPage {
 		task ("Create a content page template from the empty content page under page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",

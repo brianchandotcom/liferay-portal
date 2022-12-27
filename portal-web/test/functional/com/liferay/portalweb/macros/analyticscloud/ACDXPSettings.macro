@@ -453,4 +453,12 @@ definition {
 		}
 	}
 
+	macro viewSyncNumberPreview {
+		var key_syncFieldName = "${syncFieldName}";
+
+		AssertTextEquals(
+			locator1 = "ACDXPSettings#SYNC_NUMBER_PREVIEW",
+			value1 = "${syncNumber}");
+	}
+
 }

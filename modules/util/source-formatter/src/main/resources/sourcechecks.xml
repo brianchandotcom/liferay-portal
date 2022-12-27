@@ -1263,6 +1263,10 @@
 			<description name="Checks that dependencies files are located in the correct directory." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="PoshiImportsCheck">
+			<category name="Styling" />
+			<description name="Sorts and groups imports in `*.testcase` files." />
+		</check>
 		<check name="PoshiPauseUsageCheck">
 			<category name="Performance" />
 			<description name="Finds missing comment with JIRA project when using `Pause`." />

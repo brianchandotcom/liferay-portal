@@ -1142,16 +1142,9 @@ public class ObjectEntryDisplayContext {
 			return true;
 		}
 
-		HttpServletRequest httpServletRequest =
-			_objectRequestHelper.getRequest();
-
-		String value = httpServletRequest.getParameter(
-			ObjectFieldSettingConstants.
-				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME);
-
-		if (Validator.isNotNull(value) &&
+		if (Validator.isNotNull(getObjectRelationshipERCObjectFieldName()) &&
 			Objects.equals(
-				value,
+				getObjectRelationshipERCObjectFieldName(),
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.
 						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,

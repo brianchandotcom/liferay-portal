@@ -19,9 +19,9 @@ package com.liferay.batch.engine.constants;
  */
 public enum CreateStrategy {
 
-	CREATE_ONLY("only-add-new-records", false),
-	UPDATE_ONLY("only-update-records", false),
-	UPSERT("add-or-update-records", true);
+	CREATE_ONLY("INSERT", "only-add-new-records", false),
+	CREATE_OR_UPDATE("UPSERT", "add-or-update-records", true),
+	UPDATE_ONLY("UPDATE", "only-update-records", false);
 
 	public static CreateStrategy getDefaultCreateStrategy() {
 		for (CreateStrategy createStrategy : values()) {
@@ -33,6 +33,10 @@ public enum CreateStrategy {
 		throw new IllegalStateException();
 	}
 
+	public String getDbOperation() {
+		return _dbOperation;
+	}
+
 	public String getLabel() {
 		return _label;
 	}
@@ -41,11 +45,15 @@ public enum CreateStrategy {
 		return _defaultStrategy;
 	}
 
-	private CreateStrategy(String label, boolean defaultStrategy) {
+	private CreateStrategy(
+		String dbOperation, String label, boolean defaultStrategy) {
+
+		_dbOperation = dbOperation;
 		_label = label;
 		_defaultStrategy = defaultStrategy;
 	}
 
+	private final String _dbOperation;
 	private final boolean _defaultStrategy;
 	private final String _label;
 

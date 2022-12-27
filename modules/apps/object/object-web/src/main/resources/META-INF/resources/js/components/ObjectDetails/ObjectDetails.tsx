@@ -14,14 +14,8 @@
 
 import {ClayToggle} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
-import {
-	API,
-	AutoComplete,
-	SingleSelect,
-	filterArrayByQuery,
-	openToast,
-} from '@liferay/object-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import {API, SingleSelect, openToast} from '@liferay/object-js-components-web';
+import React, {useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 import ObjectManagementToolbar from '../ObjectManagementToolbar';
@@ -31,7 +25,12 @@ import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
 import {EntryDisplayContainer} from './EntryDisplayContainer';
+import {ScopeContainer} from './ScopeContainer';
 
+export type KeyValuePair = {
+	key: string;
+	value: string;
+};
 interface ObjectDetailsProps {
 	DBTableName: string;
 	backURL: string;
@@ -51,22 +50,6 @@ interface ObjectDetailsProps {
 	shortName: string;
 	siteKeyValuePair: KeyValuePair[];
 }
-
-type KeyValuePair = {
-	key: string;
-	value: string;
-};
-
-const SCOPE_OPTIONS = [
-	{
-		label: Liferay.Language.get('company'),
-		value: 'company',
-	},
-	{
-		label: Liferay.Language.get('site'),
-		value: 'site',
-	},
-];
 
 export default function ObjectDetails({
 	DBTableName,
@@ -92,11 +75,6 @@ export default function ObjectDetails({
 	const [accountRelationshipFields, setAccountRelationshipFields] = useState<
 		LabelValueObject[]
 	>([]);
-
-	const [selectedPanelCategoryKey, setSelectedPanelCategoryKey] = useState(
-		''
-	);
-	const [panelCategoryKeyQuery, setPanelCategoryKeyQuery] = useState('');
 
 	const {
 		errors,
@@ -179,32 +157,6 @@ export default function ObjectDetails({
 		}
 	};
 
-	const setPanelCategoryKey = (
-		KeyValuePairArray: KeyValuePair[],
-		panelCategoryKey: string
-	) => {
-		const currentPanelCategory = KeyValuePairArray.find(
-			(company) => company.key === panelCategoryKey
-		);
-
-		if (currentPanelCategory) {
-			setSelectedPanelCategoryKey(currentPanelCategory.value);
-		}
-	};
-
-	const filteredPanelCaretogyKey = useMemo(() => {
-		return filterArrayByQuery(
-			values.scope === 'company' ? companyKeyValuePair : siteKeyValuePair,
-			'value',
-			panelCategoryKeyQuery
-		) as KeyValuePair[];
-	}, [
-		values.scope,
-		companyKeyValuePair,
-		siteKeyValuePair,
-		panelCategoryKeyQuery,
-	]);
-
 	useEffect(() => {
 		const makeFetch = async () => {
 			const objectFieldsResponse = await API.getObjectFieldsByExternalReferenceCode(
@@ -264,19 +216,6 @@ export default function ObjectDetails({
 				setSelectedObjectField(titleObjectField);
 			}
 
-			if (objectDefinitionResponse.scope === 'company') {
-				setPanelCategoryKey(
-					companyKeyValuePair,
-					objectDefinitionResponse.panelCategoryKey
-				);
-			}
-			else {
-				setPanelCategoryKey(
-					siteKeyValuePair,
-					objectDefinitionResponse.panelCategoryKey
-				);
-			}
-
 			setValues(newObjectDefinition);
 			setObjectFields(objectFieldsResponse);
 		};
@@ -334,66 +273,17 @@ export default function ObjectDetails({
 						setValues={setValues}
 					/>
 
-					<ClayPanel
-						collapsable
-						defaultExpanded
-						displayTitle={Liferay.Language.get('scope')}
-						displayType="unstyled"
-					>
-						<ClayPanel.Body>
-							<SingleSelect<LabelValueObject>
-								disabled={
-									isApproved ||
-									!hasUpdateObjectDefinitionPermission
-								}
-								error={errors.titleObjectFieldId}
-								label={Liferay.Language.get('scope')}
-								onChange={({value}) => {
-									setValues({
-										panelCategoryKey: '',
-										scope: value,
-									});
-									setSelectedPanelCategoryKey('');
-								}}
-								options={SCOPE_OPTIONS}
-								value={
-									SCOPE_OPTIONS.find(
-										(scopeOption) =>
-											scopeOption.value === values.scope
-									)?.label
-								}
-							/>
-
-							<AutoComplete
-								disabled={
-									values.system ||
-									!hasUpdateObjectDefinitionPermission
-								}
-								emptyStateMessage={Liferay.Language.get(
-									'no-options-were-found'
-								)}
-								error={errors.titleObjectFieldId}
-								items={filteredPanelCaretogyKey}
-								label={Liferay.Language.get('panelCategoryKey')}
-								onChangeQuery={setPanelCategoryKeyQuery}
-								onSelectItem={({key, value}: KeyValuePair) => {
-									setValues({
-										panelCategoryKey: key,
-									});
-
-									setSelectedPanelCategoryKey(value);
-								}}
-								query={panelCategoryKeyQuery}
-								value={selectedPanelCategoryKey}
-							>
-								{({value}) => (
-									<div className="d-flex justify-content-between">
-										<div>{value}</div>
-									</div>
-								)}
-							</AutoComplete>
-						</ClayPanel.Body>
-					</ClayPanel>
+					<ScopeContainer
+						companyKeyValuePair={companyKeyValuePair}
+						errors={errors}
+						hasUpdateObjectDefinitionPermission={
+							hasUpdateObjectDefinitionPermission
+						}
+						isApproved={isApproved}
+						setValues={setValues}
+						siteKeyValuePair={siteKeyValuePair}
+						values={values}
+					/>
 
 					<ClayPanel
 						collapsable

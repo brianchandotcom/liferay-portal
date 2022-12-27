@@ -15,6 +15,7 @@
 package com.liferay.layout.utility.page.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -22,7 +23,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -94,13 +95,18 @@ public class ExportImportLayoutUtilityPageTest {
 				_serviceContext1.getScopeGroupId(), 0, 0, false,
 				StringUtil.randomString(), type, 0);
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			_group1.getGroupId(), RandomTestUtil.randomString(),
-			_serviceContext1);
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES);
+
+		if (repository == null) {
+			repository = _portletFileRepository.addPortletRepository(
+				_group1.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
+				_serviceContext1);
+		}
 
 		Class<?> clazz = getClass();
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
 			null, _group1.getGroupId(), TestPropsValues.getUserId(),
 			LayoutUtilityPageEntry.class.getName(),
 			layoutUtilityPageEntry1.getLayoutUtilityPageEntryId(),
@@ -183,6 +189,9 @@ public class ExportImportLayoutUtilityPageTest {
 		filter = "mvc.command.name=/layout_admin/export_layout_utility_page_entries"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;

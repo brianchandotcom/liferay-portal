@@ -162,7 +162,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ListTypeDefinition"
-            tags: [ "ListTypeDefinition" ]
+            tags: ["ListTypeDefinition"]
         put:
             operationId: putListTypeDefinitionByExternalReferenceCode
             parameters:
@@ -188,7 +188,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ListTypeDefinition"
-            tags: [ "ListTypeDefinition" ]
+            tags: ["ListTypeDefinition"]
     "/list-type-definitions/{listTypeDefinitionId}":
         delete:
             operationId: deleteListTypeDefinition

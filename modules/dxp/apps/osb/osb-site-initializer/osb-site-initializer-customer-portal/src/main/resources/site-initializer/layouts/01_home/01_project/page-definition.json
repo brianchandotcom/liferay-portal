@@ -3,6 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
@@ -24,7 +25,6 @@
 							},
 							"widgetInstance": {
 								"widgetConfig": {
-									"portletSetupPortletDecoratorId": "barebone",
 									"properties": "submit-support-ticket-url=https://help.liferay.com/hc/requests/new\nroute=portal\narticle-account-support-url=https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support\narticle-deploying-activation-keys-url=https://help.liferay.com/hc/en-us/articles/360018163571-Deploying-Activation-Keys\ngravatar-api=https://www.gravatar.com/avatar"
 								},
 								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"

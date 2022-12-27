@@ -3,6 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
@@ -24,7 +25,6 @@
 							},
 							"widgetInstance": {
 								"widgetConfig": {
-									"portletSetupPortletDecoratorId": "barebone",
 									"properties": "route=home"
 								},
 								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"

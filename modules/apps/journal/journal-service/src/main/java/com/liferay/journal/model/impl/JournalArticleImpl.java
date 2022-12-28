@@ -752,7 +752,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	private static volatile DDMFormValuesToFieldsConverter
 		_ddmFormValuesToFieldsConverter;
 	private static volatile JournalConverter _journalConverter;
-	private static LocaleTransformerListener _localeTransformerListener;
+	private static volatile LocaleTransformerListener
+		_localeTransformerListener;
 
 	private Map<Locale, String> _descriptionMap;
 	private Document _document;

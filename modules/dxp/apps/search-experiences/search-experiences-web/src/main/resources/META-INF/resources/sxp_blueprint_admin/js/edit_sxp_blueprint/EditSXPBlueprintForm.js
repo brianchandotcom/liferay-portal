@@ -54,12 +54,10 @@ import {
 } from '../utils/toasts';
 import {INPUT_TYPES} from '../utils/types/inputTypes';
 import {SIDEBAR_TYPES} from '../utils/types/sidebarTypes';
-import {
-	validateBoost,
-	validateJSON,
-	validateNumberRange,
-	validateRequired,
-} from '../utils/validation';
+import validateBoost from '../utils/validation/validate_boost';
+import validateJSON from '../utils/validation/validate_json';
+import validateNumberRange from '../utils/validation/validate_number_range';
+import validateRequired from '../utils/validation/validate_required';
 import AddSXPElementSidebar from './add_sxp_element_sidebar/index';
 import ClauseContributorsSidebar from './clause_contributors_sidebar/index';
 import ConfigurationTab from './configuration_tab/index';

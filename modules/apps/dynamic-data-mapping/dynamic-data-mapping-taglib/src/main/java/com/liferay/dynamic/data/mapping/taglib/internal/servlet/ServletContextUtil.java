@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.taglib.internal.servlet;
 
+import com.liferay.item.selector.ItemSelector;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,8 +27,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class ServletContextUtil {
 
+	public static ItemSelector getItemSelector() {
+		return _itemSelector;
+	}
+
 	public static ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
 	}
 
 	@Reference(
@@ -37,6 +48,7 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
+	private static ItemSelector _itemSelector;
 	private static ServletContext _servletContext;
 
 }

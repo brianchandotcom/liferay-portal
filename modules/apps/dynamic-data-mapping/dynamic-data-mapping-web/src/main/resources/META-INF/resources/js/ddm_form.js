@@ -3899,6 +3899,8 @@ AUI.add(
 
 				imageSelectorURL: {},
 
+				layoutSelectorURL: {},
+
 				liferayForm: {
 					valueFn: '_valueLiferayForm',
 				},

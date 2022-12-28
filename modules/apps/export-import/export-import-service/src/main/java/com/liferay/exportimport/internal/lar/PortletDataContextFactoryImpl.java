@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -231,7 +231,7 @@ public class PortletDataContextFactoryImpl
 			}
 		}
 		catch (Exception exception) {
-			if (CompanyThreadLocal.isDeleteInProcess()) {
+			if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
 				PortletDataException portletDataException =
 					new PortletDataException(
 						PortletDataException.COMPANY_BEING_DELETED, exception);
@@ -256,7 +256,7 @@ public class PortletDataContextFactoryImpl
 			}
 		}
 		catch (Exception exception) {
-			if (CompanyThreadLocal.isDeleteInProcess()) {
+			if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
 				PortletDataException portletDataException =
 					new PortletDataException(
 						PortletDataException.COMPANY_BEING_DELETED, exception);

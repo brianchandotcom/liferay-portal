@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -45,6 +44,7 @@ import com.liferay.portal.security.service.access.policy.exception.SAPEntryNameE
 import com.liferay.portal.security.service.access.policy.exception.SAPEntryTitleException;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.base.SAPEntryLocalServiceBaseImpl;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 import java.util.Locale;
@@ -179,7 +179,9 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException {
-		if (sapEntry.isSystem() && !CompanyThreadLocal.isDeleteInProcess()) {
+		if (sapEntry.isSystem() &&
+			!PortalInstances.isCurrentCompanyInDeletionProcess()) {
+
 			throw new RequiredSAPEntryException();
 		}
 

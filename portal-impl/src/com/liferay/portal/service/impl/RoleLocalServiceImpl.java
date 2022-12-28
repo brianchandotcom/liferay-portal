@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -108,6 +107,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.RoleLocalServiceBaseImpl;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -448,7 +448,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		type = SystemEventConstants.TYPE_DELETE
 	)
 	public Role deleteRole(Role role) throws PortalException {
-		if (role.isSystem() && !CompanyThreadLocal.isDeleteInProcess()) {
+		if (role.isSystem() &&
+			!PortalInstances.isCurrentCompanyInDeletionProcess()) {
+
 			throw new RequiredRoleException();
 		}
 

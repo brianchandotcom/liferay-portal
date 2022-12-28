@@ -141,10 +141,10 @@ public class AMImageRequestHandlerTest {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
-		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
-		Assert.assertFalse(adaptiveMediaOptional.isPresent());
+		Assert.assertNull(adaptiveMedia);
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -163,10 +163,10 @@ public class AMImageRequestHandlerTest {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
-		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
-		Assert.assertFalse(adaptiveMediaOptional.isPresent());
+		Assert.assertNull(adaptiveMedia);
 	}
 
 	@Test
@@ -211,7 +211,7 @@ public class AMImageRequestHandlerTest {
 			_fileVersion, getConfigurationEntryFilter);
 
 		Assert.assertEquals(
-			Optional.of(closestAdaptiveMedia),
+			closestAdaptiveMedia,
 			_amImageRequestHandler.handleRequest(httpServletRequest));
 
 		Mockito.verify(
@@ -238,7 +238,7 @@ public class AMImageRequestHandlerTest {
 			_fileVersion, amImageConfigurationEntry);
 
 		Assert.assertEquals(
-			Optional.of(adaptiveMedia),
+			adaptiveMedia,
 			_amImageRequestHandler.handleRequest(httpServletRequest));
 
 		Mockito.verify(
@@ -265,13 +265,10 @@ public class AMImageRequestHandlerTest {
 			invocation -> Collections.emptyList()
 		);
 
-		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
-		Assert.assertTrue(adaptiveMediaOptional.isPresent());
-
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
-			adaptiveMediaOptional.get();
+		Assert.assertNotNull(adaptiveMedia);
 
 		Assert.assertEquals(
 			_fileVersion.getContentStream(false),

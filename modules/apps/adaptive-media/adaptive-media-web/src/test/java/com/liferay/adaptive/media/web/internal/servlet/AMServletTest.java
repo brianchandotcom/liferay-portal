@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Optional;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -98,7 +96,7 @@ public class AMServletTest {
 		Mockito.when(
 			_amRequestHandler.handleRequest(_httpServletRequest)
 		).thenReturn(
-			Optional.empty()
+			null
 		);
 
 		_amServlet.doGet(_httpServletRequest, _httpServletResponse);
@@ -129,7 +127,7 @@ public class AMServletTest {
 		Mockito.when(
 			_amRequestHandler.handleRequest(_httpServletRequest)
 		).thenReturn(
-			Optional.empty()
+			null
 		);
 
 		_amServlet.doGet(_httpServletRequest, _httpServletResponse);

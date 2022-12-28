@@ -75,12 +75,13 @@ public class AMServlet extends HttpServlet {
 				return;
 			}
 
-			Optional<AdaptiveMedia<?>> adaptiveMediaOptional =
-				(Optional<AdaptiveMedia<?>>)amRequestHandler.handleRequest(
+			AdaptiveMedia<?> adaptiveMedia =
+				(AdaptiveMedia<?>)amRequestHandler.handleRequest(
 					httpServletRequest);
 
-			AdaptiveMedia<?> adaptiveMedia = adaptiveMediaOptional.orElseThrow(
-				AMException.AMNotFound::new);
+			if (adaptiveMedia == null) {
+				throw new AMException.AMNotFound();
+			}
 
 			Optional<Long> contentLengthOptional =
 				adaptiveMedia.getValueOptional(

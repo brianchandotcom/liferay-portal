@@ -48,13 +48,12 @@ definition {
 	@description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
 	@priority = "3"
 	test RequestInvalidIPCanReturnErrorConnectionRefused {
-
 		task ("When open action list dropdown menu in 1st row item. And When access async connection refused to request invalid ip address") {
-
 			FrontendDataSet.selectItemActionDropdownMenuList(
 				key_title = "Sample1",
 				key_viewMode = "Async Connection Refused");
 		}
+
 		task ("Then returns unexpected error alert toast") {
 			AssertElementPresent(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -65,12 +64,10 @@ definition {
 	@description = "LPS-170537. Request Non Existing Resource Can Return Error Not Found."
 	@priority = "3"
 	test RequestNonExistingResourceCanReturnErrorNotFound {
-
 		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request a resource that does not exist") {
-
 			FrontendDataSet.selectItemActionDropdownMenuList(
 				key_title = "Sample1",
-				key_viewMode = "Async Resource Not Found");			
+				key_viewMode = "Async Resource Not Found");
 		}
 
 		task ("Then returns unexpected error alert toast") {
@@ -83,13 +80,10 @@ definition {
 	@description = "LPS-170535. Request Valid IP Can Return Success."
 	@priority = "3"
 	test RequestValidIPCanReturnSuccess {
-
 		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
-
 			FrontendDataSet.selectItemActionDropdownMenuList(
 				key_title = "Sample1",
 				key_viewMode = "Async Success");
-			
 		}
 
 		task ("Then returns success alert toast") {
@@ -98,5 +92,5 @@ definition {
 				value1 = "Success:Your request completed successfully.");
 		}
 	}
-}
 
+}

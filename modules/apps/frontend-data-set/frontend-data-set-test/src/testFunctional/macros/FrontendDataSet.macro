@@ -1,13 +1,13 @@
 definition {
-    
-    macro selectItemActionDropdownMenuList {
-        Click(
-            key_title = "${key_title}",
-            locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
-        Click(
-            key_viewMode = "${key_viewMode}",
-            locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
+
+	macro selectItemActionDropdownMenuList {
+		Click(
+			key_title = "${key_title}",
+			locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
+
+		Click(
+			key_viewMode = "${key_viewMode}",
+			locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
 	}
+
 }
-
-

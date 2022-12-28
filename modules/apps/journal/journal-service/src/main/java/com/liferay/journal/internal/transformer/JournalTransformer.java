@@ -112,6 +112,7 @@ public class JournalTransformer {
 			JournalArticle article, DDMTemplate ddmTemplate,
 			JournalHelper journalHelper, String languageId,
 			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
+			List<TransformerListener> transformerListeners,
 			PortletRequestModel portletRequestModel, boolean propagateException,
 			String script, ThemeDisplay themeDisplay, String viewMode)
 		throws Exception {
@@ -147,9 +148,6 @@ public class JournalTransformer {
 		if (_logTransformBefore.isDebugEnabled()) {
 			_logTransformBefore.debug(document);
 		}
-
-		List<TransformerListener> transformerListeners =
-			JournalTransformerListenerRegistryUtil.getTransformerListeners();
 
 		for (TransformerListener transformerListener : transformerListeners) {
 

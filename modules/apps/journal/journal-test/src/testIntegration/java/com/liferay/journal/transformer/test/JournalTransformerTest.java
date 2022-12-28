@@ -23,7 +23,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
-import com.liferay.journal.util.JournalTransformerListenerRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -325,10 +324,6 @@ public class JournalTransformerTest {
 
 	@Inject
 	private JournalHelper _journalHelper;
-
-	@Inject
-	private JournalTransformerListenerRegistry
-		_journalTransformerListenerRegistry;
 
 	@Inject
 	private Language _language;

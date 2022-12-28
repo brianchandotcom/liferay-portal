@@ -338,12 +338,11 @@
 																							{
 																								"definition": {
 																									"fragment": {
-																										"key": "fake-content",
+																										"key": "claims-settled",
 																										"siteKey": "AP"
 																									},
 																									"fragmentConfig": {
-																										"fakeContentId": "fake content",
-																										"height": "257px"
+																										"textColor": ""
 																									},
 																									"fragmentFields": [
 																									],
@@ -504,6 +503,11 @@
 										"type": "Section"
 									}
 								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							}
 						],

@@ -35,6 +35,7 @@ import {
 	Liferay,
 	LiferayOnAction,
 } from '../../../../common/services/liferay/liferay';
+import {capitalizeFirstLetter} from '../../../../common/utils/constantsType';
 import formatDate from '../../../../common/utils/dateFormatter';
 
 type ClaimTableType = {
@@ -74,6 +75,7 @@ enum Order {
 	Ascendant = 'asc',
 	Descendant = 'desc',
 }
+type ActionType = {eventName: string};
 
 const ClaimsTable = () => {
 	const [dataClaims, setDataClaims] = useState<TableContentType[]>([]);
@@ -109,6 +111,7 @@ const ClaimsTable = () => {
 		policyOwnerName: false,
 		productName: false,
 	});
+	const [isRemaining, setIsRemaining] = useState<boolean>(false);
 
 	const filterSearch = `contains(id, '${searchInput}') or contains(r_policyToClaims_c_raylifePolicyERC, '${searchInput}') or contains(r_policyToClaims_c_raylifePolicyERC, '${policyERCByPON}')`;
 
@@ -132,6 +135,15 @@ const ClaimsTable = () => {
 		page: page.toString(),
 		pageSize: pageSize.toString(),
 	};
+
+	enum ClaimsChartStatuses {
+		Remaining = 'Remaining',
+		Settled = 'Settled',
+	}
+	enum ClaimsChartTypes {
+		SettledClaims = 'settledClaims',
+		TotalClaims = 'totalClaims',
+	}
 
 	const generateParameters = (filtered?: string) => {
 		const parameters: Parameters =
@@ -580,12 +592,17 @@ const ClaimsTable = () => {
 	const title = `Claims (${totalCount})`;
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const updateCheckedProduct = (currentFilterName: string) => {
-		const isChecked = checkedStateProduct.map(
+	const genericUpdateCheckedStatus = (
+		currentFilterName: string,
+		checkedArray: boolean[],
+		items: ItemsFilteredType[][],
+		chartType: string
+	) => {
+		const isChecked = checkedArray.map(
 			(checked: boolean, index: number) => {
-				const productName = itemProducts[index]?.[0]?.item;
+				const filteredArray = items[index]?.[0]?.item;
 
-				if (currentFilterName === productName) {
+				if (currentFilterName === filteredArray) {
 					return !checked;
 				}
 
@@ -593,15 +610,53 @@ const ClaimsTable = () => {
 			}
 		);
 
-		return setCheckedStateProduct(isChecked);
+		const isRemainingStatuses =
+			currentFilterName !== ClaimsChartStatuses.Settled;
+
+		const checkRemainingStatus = checkedArray.fill(
+			true,
+			0,
+			checkedArray.length - 1
+		);
+
+		if (chartType === ClaimsChartTypes.SettledClaims) {
+			if (!isRemainingStatuses) {
+				return setCheckedStateStatus(isChecked);
+			}
+
+			return setCheckedStateStatus(checkRemainingStatus);
+		}
+
+		if (chartType === ClaimsChartTypes.TotalClaims) {
+			return setCheckedStateProduct(isChecked);
+		}
+	};
+
+	const handleApplyFilter = (statuses: string) => {
+		setFilterCheckedLabel((prevFilterCheckedLabels: string[]) => [
+			...prevFilterCheckedLabels,
+			statuses,
+		]);
+
+		setActiveFilter(false);
+
+		genericUpdateCheckedStatus(
+			statuses,
+			checkedStateStatus,
+			itemStatus,
+			ClaimsChartTypes.SettledClaims
+		);
+
+		setFilterStatusCheck((prevFilterStatusCheck: string[]) => [
+			...prevFilterStatusCheck,
+			`'${statuses}'`,
+		]);
 	};
 
 	useEffect(() => {
-		type ActionType = {eventName: string};
-
 		const handler: LiferayOnAction<ActionType> = ({eventName}) => {
 			const hasDoubleClick = filterCheckedLabel.some(
-				(productName) => productName === eventName
+				(productName: string) => productName === eventName
 			);
 
 			if (!hasDoubleClick) {
@@ -615,7 +670,12 @@ const ClaimsTable = () => {
 				]);
 				setActiveFilter(false);
 
-				updateCheckedProduct(eventName);
+				genericUpdateCheckedStatus(
+					eventName,
+					checkedStateProduct,
+					itemProducts,
+					ClaimsChartTypes.TotalClaims
+				);
 			}
 		};
 
@@ -628,12 +688,44 @@ const ClaimsTable = () => {
 			);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		productFilterItems,
-		checkedStateProduct,
-		updateCheckedProduct,
-		filterCheckedLabel,
-	]);
+	}, [productFilterItems, checkedStateProduct, filterCheckedLabel]);
+
+	useEffect(() => {
+		const handler: LiferayOnAction<ActionType> = ({eventName}) => {
+			const capitalized = capitalizeFirstLetter(eventName);
+
+			const hasSettledClick = filterCheckedLabel.some(
+				(status: string) => status === capitalized
+			);
+
+			if (capitalized === ClaimsChartStatuses.Remaining && !isRemaining) {
+				statusFilterItems.map((claimStatus: string) => {
+					if (claimStatus !== ClaimsChartStatuses.Settled) {
+						handleApplyFilter(claimStatus);
+
+						setIsRemaining(true);
+					}
+				});
+			}
+
+			if (
+				!hasSettledClick &&
+				capitalized !== ClaimsChartStatuses.Remaining
+			) {
+				handleApplyFilter(capitalized);
+			}
+		};
+
+		Liferay.on<ActionType>('openSettingsFilterClaimsSettledEvent', handler);
+
+		return () =>
+			Liferay.detach<ActionType>(
+				'openSettingsFilterClaimsSettledEvent',
+				handler
+			);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [statusFilterItems, checkedStateStatus, filterCheckedLabel]);
 
 	return (
 		<div className="px-3">

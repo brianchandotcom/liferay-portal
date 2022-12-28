@@ -216,7 +216,10 @@ public class InfoFormUtil {
 	}
 
 	private static String _getType(InfoFieldType infoFieldType) {
-		if (infoFieldType instanceof BooleanInfoFieldType) {
+		if (infoFieldType instanceof CategoriesInfoFieldType) {
+			return "itemSelector";
+		}
+		else if (infoFieldType instanceof BooleanInfoFieldType) {
 			return "checkbox";
 		}
 		else if (infoFieldType instanceof SelectInfoFieldType) {

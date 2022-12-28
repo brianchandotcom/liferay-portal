@@ -35,6 +35,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-170578 Validate alert toast message does disapear."
+	@priority = "5"
+	test DisappearsWhenNotHoveredOver {
+		property portal.acceptance = "true";
+
+		task ("When a toast alert appears") {
+			WaitForElementPresent(
+				key_text = "Fail Submit",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Fail Submit",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then the alert disappears after 20 seconds") {
+
+			// For LPS-170578, need this pause to wait longer than the auto close time of the fail message
+
+			Pause(locator1 = "19000");
+
+			if (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "Message#ERROR_DISMISSIBLE")) {
+				Pause(locator1 = "1100");
+
+				if (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "Message#ERROR_DISMISSIBLE")) {
+					fail("Alert message did not disappear after 20 seconds");
+				}
+			}
+			else {
+				fail("Alert message disappeared before 20 seconds");
+			}
+		}
+	}
+
 	@description = "LPS-170578 Validate alert toast message does not disapear when mouse hovers over it."
 	@priority = "5"
 	test DoesNotDisappearWhenHoveredOver {

@@ -106,26 +106,26 @@ definition {
 
 		task ("Type a invalid value in the field and assert the error message") {
 			Type(
-			locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
-			value1 = "0");
+				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
+				value1 = "0");
 
 			AssertElementPresent(
-			key_error = "enter-a-minimum-node-value-greater-than-0",
-			locator1 = "CP2NavigationMenu#NODES_ERROR");
-			
+				key_error = "enter-a-minimum-node-value-greater-than-0",
+				locator1 = "CP2NavigationMenu#NODES_ERROR");
+
 			Type(
-			locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
-			value1 = "1");
+				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
+				value1 = "1");
 
 			AssertElementPresent(
-			key_error = "max-nodes-must-be-greater-than-min-nodes",
-			locator1 = "CP2NavigationMenu#NODES_ERROR");
+				key_error = "max-nodes-must-be-greater-than-min-nodes",
+				locator1 = "CP2NavigationMenu#NODES_ERROR");
 
 			CustomerPortal.clickAtButton(text = "Filter");
 		}
 
 		task ("Type a invalid value on search bar and assert the error message") {
-			CP2Utils.searchKeys(searchinput = "NothingAreFound");
+			CP2Utils.searchKeys(searchinput = "NothingIsFound");
 
 			AssertElementPresent(locator1 = "CP2NavigationMenu#SEARCH_NO_RESULT");
 		}

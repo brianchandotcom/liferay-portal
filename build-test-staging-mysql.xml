@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="portal-test-staging-mysql" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="rebuild-staging-database">
+		<delete dir="${liferay.home}/data/elasticsearch7" />
+
+		<!--<mirrors-get
+			dest="${liferay.home}/${custom.database.zip.name}"
+			src="${custom.database.zip.url}"
+			verbose="true"
+		/>-->
+
+		<!--<unzip
+			dest="${liferay.home}"
+			src="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${custom.database.zip.name}"
+		/>-->
+
+		<copy
+			todir="${liferay.home}"
+		>
+			<fileset
+				dir="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${custom.database.file.name}"
+			/>
+		</copy>
+
+		<property name="database.type" value="mysql" />
+
+		<get-database-property property.name="database.docker.image" />
+
+		<if>
+			<isset property="database.docker.image" />
+			<then>
+				<get-database-property property.name="database.host" />
+				<get-database-property property.name="database.password" />
+				<get-database-property property.name="database.schema" />
+				<get-database-property property.name="database.username" />
+				<get-database-property property.name="database.version" />
+
+				<property location="import-database.sh" name="import.database.sh.file.path" />
+
+				<echo>Database Type is: ${database.type}</echo>
+
+				<if>
+					<equals arg1="${database.type}" arg2="mysql" />
+					<then>
+						<antcall target="rebuild-database">
+							<param name="database.type" value="${database.type}" />
+							<param name="sql.dir" value="sql/create-bare/" />
+							<param name="sql.file" value="create-bare-mysql.sql" />
+						</antcall>
+
+						<echo file="${import.database.sh.file.path}">
+							<![CDATA[
+								#!/bin/bash
+
+								mysql --database=${database.schema} --password=${database.password} --user=${database.username} < /tmp/${database.type}.sql
+							]]>
+						</echo>
+
+						<property name="docker.database.dest.path" value="/tmp/${database.type}.sql" />
+						<property name="import.database.src.path" value="${liferay.home}/${database.type}.sql" />
+					</then>
+				</if>
+
+				<execute>
+					<![CDATA[
+						docker cp ${import.database.sh.file.path} ${database.host}:/tmp/import-database.sh
+						docker cp ${import.database.src.path} ${database.host}:${docker.database.dest.path}
+
+						docker exec ${database.host} /bin/bash /tmp/import-database.sh
+					]]>
+				</execute>
+
+				<echo>Import process is finished</echo>
+			</then>
+		</if>
+	</target>
+</project>

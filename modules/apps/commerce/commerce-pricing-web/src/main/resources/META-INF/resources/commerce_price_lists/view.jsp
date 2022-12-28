@@ -28,7 +28,7 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 
 		<frontend-data-set:headless-display
 			apiURL="<%= commercePriceListDisplayContext.getPriceListsApiUrl(portletName) %>"
-			creationMenu="<%= commercePriceListDisplayContext.getPriceListCreationMenu() %>"
+			creationMenu="<%= commercePriceListDisplayContext.getPriceListCreationMenu(portletName) %>"
 			fdsActionDropdownItems="<%= commercePriceListDisplayContext.getPriceListFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommercePricingFDSNames.PRICE_LISTS %>"

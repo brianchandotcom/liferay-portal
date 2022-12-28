@@ -18,7 +18,10 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.display.context.EditCollectionConfigurationDisplayContext;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.RenderRequest;
@@ -49,6 +52,14 @@ public class EditCollectionConfigurationMVCRenderCommand
 			new EditCollectionConfigurationDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
 				_infoItemServiceRegistry, _itemSelector, renderResponse));
+
+		LiferayRenderRequest liferayRenderRequest =
+			(LiferayRenderRequest)renderRequest;
+
+		DynamicServletRequest dynamicRequest =
+			(DynamicServletRequest)liferayRenderRequest.getHttpServletRequest();
+
+		dynamicRequest.setParameter("p_l_mode", Constants.EDIT);
 
 		return "/edit_collection_configuration.jsp";
 	}

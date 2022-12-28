@@ -7,16 +7,16 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-            ${portalURL}/api/jsonws/segments.segmentsexperience/get-segments-experiences \
-                -u test@liferay.com:test \
-                -d groupId=${groupId} \
-                -d classNameId=20032 \
-                -d classPK=6 \
-                -d active=true \
-                -d "start=-1" \
-                -d "end=-1" \
-                -d -orderByComparator=
-        ''';
+			${portalURL}/api/jsonws/segments.segmentsexperience/get-segments-experiences \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d classNameId=20032 \
+				-d classPK=6 \
+				-d active=true \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
+		''';
 		var criteria = "$[?(@.nameCurrentValue == '${experienceName}')]['segmentsExperienceId']";
 
 		var segmentExperienceId = JSONCurlUtil.post("${curl}", "${criteria}");

@@ -11,10 +11,10 @@ definition {
 		}
 
 		var curl = '''
-            ${portalURL}/o/headless-delivery/v1.0/${api}/languages \
-		    -u test@liferay.com:test \
-		    -H accept: application/json \
-	    ''';
+			${portalURL}/o/headless-delivery/v1.0/${api}/languages \
+				-u test@liferay.com:test \
+				-H accept: application/json \
+		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
 

@@ -63,14 +63,14 @@ definition {
 
 		var curl = '''
 			http://${portalHostname}:${port}/liferay-${companyId}/_delete_by_query?pretty \
-			-H 'Content-Type: application/json' \
-			-d '{
-				"query": {
-					"match": {
+				-H 'Content-Type: application/json' \
+				-d '{
+					"query": {
+						"match": {
 							"_type": "LiferayDocumentType"
+						}
 					}
-				}
-			}'
+				}'
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

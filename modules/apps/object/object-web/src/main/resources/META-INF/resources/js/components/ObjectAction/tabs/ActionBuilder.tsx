@@ -112,13 +112,6 @@ export default function ActionBuilder({
 	const showConditionContainer = values.objectActionTriggerKey
 		? triggerKeys.includes(values.objectActionTriggerKey)
 		: true;
-		
-	const closeWarningAlert = (warning: string) => {
-		setWarningAlerts((previousWarnings) => ({
-			...previousWarnings,
-			[warning]: false,
-		}));
-	};
 
 	useEffect(() => {
 		const predefinedValues = values.parameters?.predefinedValues;

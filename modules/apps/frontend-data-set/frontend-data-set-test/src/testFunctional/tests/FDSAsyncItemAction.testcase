@@ -48,18 +48,13 @@ definition {
 	@description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
 	@priority = "3"
 	test RequestInvalidIPCanReturnErrorConnectionRefused {
-		task ("When open action list dropdown menu in 1st row item") {
-			Click(
+
+		task ("When open action list dropdown menu in 1st row item. And When access async connection refused to request invalid ip address") {
+
+			FrontendDataSet.selectItemActionDropdownMenuList(
 				key_title = "Sample1",
-				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
+				key_viewMode = "Async Connection Refused");
 		}
-
-		task ("And When access async connection refused to request invalid ip address") {
-			Click(
-				key_viewMode = "Async Connection Refused",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
-		}
-
 		task ("Then returns unexpected error alert toast") {
 			AssertElementPresent(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -70,16 +65,12 @@ definition {
 	@description = "LPS-170537. Request Non Existing Resource Can Return Error Not Found."
 	@priority = "3"
 	test RequestNonExistingResourceCanReturnErrorNotFound {
-		task ("When open action list dropdown menu in 1st row item") {
-			Click(
-				key_title = "Sample1",
-				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
-		}
 
-		task ("And When access async success action item to request a resource that does not exist") {
-			Click(
-				key_viewMode = "Async Resource Not Found",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
+		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request a resource that does not exist") {
+
+			FrontendDataSet.selectItemActionDropdownMenuList(
+				key_title = "Sample1",
+				key_viewMode = "Async Resource Not Found");			
 		}
 
 		task ("Then returns unexpected error alert toast") {
@@ -92,16 +83,13 @@ definition {
 	@description = "LPS-170535. Request Valid IP Can Return Success."
 	@priority = "3"
 	test RequestValidIPCanReturnSuccess {
-		task ("When open action list dropdown menu in 1st row item") {
-			Click(
-				key_title = "Sample1",
-				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
-		}
 
-		task ("And When access async success action item to request valid ip address") {
-			Click(
-				key_viewMode = "Async Success",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
+		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
+
+			FrontendDataSet.selectItemActionDropdownMenuList(
+				key_title = "Sample1",
+				key_viewMode = "Async Success");
+			
 		}
 
 		task ("Then returns success alert toast") {
@@ -110,5 +98,5 @@ definition {
 				value1 = "Success:Your request completed successfully.");
 		}
 	}
-
 }
+

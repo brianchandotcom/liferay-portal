@@ -4,8 +4,8 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		var buildNumberCurl = '''
-				${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
-			''';
+			${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
+		''';
 
 		var buildNumberOutput = JSONCurlUtil.post("${buildNumberCurl}");
 

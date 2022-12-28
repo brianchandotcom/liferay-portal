@@ -465,8 +465,8 @@ definition {
 
 		var cleanCurl = '''
 			${analyticsCloudAsahCuratorBatchURL}/admin/sessions/close \
-			-H 'Content-Type: application/json' \
-			-H 'osb-asah-project-id: osbasah'
+				-H 'Content-Type: application/json' \
+				-H 'osb-asah-project-id: osbasah'
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");

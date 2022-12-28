@@ -68,6 +68,11 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>layoutSelectorURL</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>localizable</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

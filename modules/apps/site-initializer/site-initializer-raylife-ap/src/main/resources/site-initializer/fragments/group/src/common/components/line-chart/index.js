@@ -82,9 +82,9 @@ const LineChart = ({
 
 								const formatedValue = hasPersonalizedTooltip
 									? value
-									: `$${value.toFixed(1)}`;
+									: `$${value.toFixed(2)}`;
 
-								return `<div class="line-chart-tooltip w-100 bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex font-weight-normal mr-2 w-100">${title}</span> ${formatedValue}</div>`;
+								return `<div class="line-chart-tooltip w-100 bg-neutral-0 d-flex font-weight-bold rounded-sm p-1"><span class="d-flex text-nowrap font-weight-normal mr-1 w-100">${title}</span> ${formatedValue}</div>`;
 							},
 						}}
 					/>

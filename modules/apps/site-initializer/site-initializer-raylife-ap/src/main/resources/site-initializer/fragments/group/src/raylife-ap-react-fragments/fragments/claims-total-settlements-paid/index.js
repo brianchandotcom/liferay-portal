@@ -141,7 +141,7 @@ export default function () {
 	}
 
 	function setSettlementPaidName(finalArray) {
-		return finalArray.unshift('SettlementPaid');
+		return finalArray.unshift('Settlements Paid');
 	}
 
 	const PERIOD = {

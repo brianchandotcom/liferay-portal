@@ -72,7 +72,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Marco Leo
@@ -97,13 +96,15 @@ public class PredicateExpressionVisitorImpl
 	public Predicate visitBinaryExpressionOperation(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
-		Optional<Predicate> predicateOptional = _getPredicateOptional(
-			operation, left, right);
+		Predicate predicate = _getPredicate(operation, left, right);
 
-		return predicateOptional.orElseThrow(
-			() -> new UnsupportedOperationException(
-				"Unsupported method visitBinaryExpressionOperation with " +
-					"operation " + operation));
+		if (predicate != null) {
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitBinaryExpressionOperation with " +
+				"operation " + operation);
 	}
 
 	@Override
@@ -436,32 +437,7 @@ public class PredicateExpressionVisitorImpl
 		return entityModel;
 	}
 
-	private Predicate _getPredicateForRelationships(
-			BinaryExpression.Operation operation, Object left, Object right)
-		throws Exception {
-
-		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				_objectDefinitionId);
-
-		ObjectRelatedModelsPredicateProvider
-			objectRelatedModelsPredicateProvider =
-				_objectRelatedModelsPredicateProviderRegistry.
-					getObjectRelatedModelsPredicateProvider(
-						objectDefinition1.getClassName(),
-						_objectRelationship.getType());
-
-		long relatedObjectDefinitionId = _getRelatedObjectDefinitionId(
-			_objectDefinitionId, _objectRelationship);
-
-		return objectRelatedModelsPredicateProvider.getPredicate(
-			_objectRelationship,
-			_getExpressionPredicate(
-				_getColumn(_relatedFieldName, relatedObjectDefinitionId),
-				operation, _getValue(left, relatedObjectDefinitionId, right)));
-	}
-
-	private Optional<Predicate> _getPredicateOptional(
+	private Predicate _getPredicate(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
 		Predicate predicate = null;
@@ -486,27 +462,50 @@ public class PredicateExpressionVisitorImpl
 		}
 
 		if (predicate != null) {
-			return Optional.of(predicate);
+			return predicate;
 		}
 
 		if (_objectRelationship != null) {
 			try {
-				return Optional.ofNullable(
-					_getPredicateForRelationships(operation, left, right));
+				return _getPredicateForRelationships(operation, left, right);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception);
 				}
 
-				return Optional.empty();
+				return null;
 			}
 		}
 
-		return Optional.ofNullable(
+		return _getExpressionPredicate(
+			_getColumn(left, _objectDefinitionId), operation,
+			_getValue(left, _objectDefinitionId, right));
+	}
+
+	private Predicate _getPredicateForRelationships(
+			BinaryExpression.Operation operation, Object left, Object right)
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+				_objectDefinitionId);
+
+		ObjectRelatedModelsPredicateProvider
+			objectRelatedModelsPredicateProvider =
+				_objectRelatedModelsPredicateProviderRegistry.
+					getObjectRelatedModelsPredicateProvider(
+						objectDefinition1.getClassName(),
+						_objectRelationship.getType());
+
+		long relatedObjectDefinitionId = _getRelatedObjectDefinitionId(
+			_objectDefinitionId, _objectRelationship);
+
+		return objectRelatedModelsPredicateProvider.getPredicate(
+			_objectRelationship,
 			_getExpressionPredicate(
-				_getColumn(left, _objectDefinitionId), operation,
-				_getValue(left, _objectDefinitionId, right)));
+				_getColumn(_relatedFieldName, relatedObjectDefinitionId),
+				operation, _getValue(left, relatedObjectDefinitionId, right)));
 	}
 
 	private long _getRelatedObjectDefinitionId(

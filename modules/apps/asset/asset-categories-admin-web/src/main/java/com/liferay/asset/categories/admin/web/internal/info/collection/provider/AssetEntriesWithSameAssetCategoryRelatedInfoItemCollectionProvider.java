@@ -212,9 +212,6 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		assetEntryQuery.setAllCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
 
@@ -227,8 +224,12 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		assetEntryQuery.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
+
 		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
 		assetEntryQuery.setOrderByType1("DESC");
 

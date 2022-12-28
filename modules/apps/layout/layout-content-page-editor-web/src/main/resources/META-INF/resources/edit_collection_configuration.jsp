@@ -39,8 +39,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "filter-collection"));
 	<aui:input name="segmentsExperienceId" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getSegmentsExperienceId() %>" />
 	<aui:input name="type" type="hidden" value="<%= editCollectionConfigurationDisplayContext.getType() %>" />
 
-	<liferay-ui:error key="anUnexpectedErrorOccurred" message="an-unexpected-error-occurred" />
-
 	<liferay-frontend:edit-form-footer>
 		<liferay-frontend:edit-form-buttons
 			redirect="<%= editCollectionConfigurationDisplayContext.getRedirect() %>"

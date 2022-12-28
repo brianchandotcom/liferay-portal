@@ -394,11 +394,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		Long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
-		boolean deleteInProcess = CompanyThreadLocal.isDeleteInProcess();
 
-		try {
-			CompanyThreadLocal.setCompanyId(companyId);
-			CompanyThreadLocal.setDeleteInProcess(true);
+		try (SafeCloseable safeCloseable1 =
+				CompanyThreadLocal.setWithSafeCloseable(
+					companyThreadLocalCompanyId);
+			SafeCloseable safeCloseable2 =
+				PortalInstances.setCompanyInDeletionProcess(
+					companyThreadLocalCompanyId)) {
 
 			return doDeleteCompany(companyId);
 		}
@@ -408,10 +410,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 
 			throw portalException;
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
-			CompanyThreadLocal.setDeleteInProcess(deleteInProcess);
 		}
 	}
 
@@ -1227,25 +1225,21 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
 		if (DBPartitionUtil.isPartitionEnabled()) {
-			try (SafeCloseable safeCloseable =
-					DBPartitionUtil.setCompanyInDeletionProcess(companyId)) {
+			_clearCompanyCache(companyId);
+			_clearVirtualHostCache(companyId);
 
-				_clearCompanyCache(companyId);
-				_clearVirtualHostCache(companyId);
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					PortalInstances.removeCompany(company.getCompanyId());
 
-				TransactionCommitCallbackUtil.registerCallback(
-					() -> {
-						PortalInstances.removeCompany(company.getCompanyId());
+					unregisterCompany(company);
 
-						unregisterCompany(company);
+					return null;
+				});
 
-						return null;
-					});
+			DBPartitionUtil.removeDBPartition(companyId);
 
-				DBPartitionUtil.removeDBPartition(companyId);
-
-				return company;
-			}
+			return company;
 		}
 
 		preunregisterCompany(company);

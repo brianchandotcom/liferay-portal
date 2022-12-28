@@ -21,7 +21,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {KeyValuePair} from './ObjectDetails';
+import {KeyValuePair} from './EditObjectDetails';
 
 import './ObjectDetails.scss';
 

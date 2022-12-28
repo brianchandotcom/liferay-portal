@@ -15,7 +15,7 @@
 /// <reference types="react" />
 
 import {FormError} from '@liferay/object-js-components-web';
-import {KeyValuePair} from './ObjectDetails';
+import {KeyValuePair} from './EditObjectDetails';
 import './ObjectDetails.scss';
 interface ScopeContainerProps {
 	companyKeyValuePair: KeyValuePair[];

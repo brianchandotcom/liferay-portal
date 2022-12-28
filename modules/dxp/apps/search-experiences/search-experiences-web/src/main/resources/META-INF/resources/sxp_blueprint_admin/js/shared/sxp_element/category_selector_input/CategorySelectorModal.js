@@ -17,7 +17,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import getCN from 'classnames';
 import React, {useState} from 'react';
 
-import {fetchData} from '../../../utils/fetch';
+import fetchData from '../../../utils/fetch/fetch_data';
 import {FETCH_URLS} from './index';
 
 /**

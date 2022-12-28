@@ -24,7 +24,7 @@ import {
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
-import {fetchData} from '../utils/fetch';
+import fetchData from '../utils/fetch/fetch_data';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import {setInitialSuccessToast} from '../utils/toasts';
 

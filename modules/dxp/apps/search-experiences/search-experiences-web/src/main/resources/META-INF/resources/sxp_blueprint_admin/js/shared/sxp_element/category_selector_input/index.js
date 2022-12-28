@@ -18,7 +18,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useDebounceCallback from '../../../hooks/useDebounceCallback';
-import {DEFAULT_HEADERS} from '../../../utils/fetch';
+import {DEFAULT_HEADERS} from '../../../utils/fetch/fetch_data';
 import removeDuplicates from '../../../utils/functions/remove_duplicates';
 import toNumber from '../../../utils/functions/to_number';
 import CategorySelectorModal from './CategorySelectorModal';

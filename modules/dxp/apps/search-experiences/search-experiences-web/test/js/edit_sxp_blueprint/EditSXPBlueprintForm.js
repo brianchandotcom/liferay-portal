@@ -13,7 +13,7 @@ import {fireEvent, render, within} from '@testing-library/react';
 import React from 'react';
 
 import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/EditSXPBlueprintForm';
-import * as fetchUtils from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/fetch';
+import fetchPreviewSearch from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/fetch/fetch_preview_search';
 import getUIConfigurationValues from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/get_ui_configuration_values';
 const Toasts = require('../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
 import {ENTITY_JSON, INITIAL_CONFIGURATION} from '../mocks/data';
@@ -28,6 +28,10 @@ jest.mock(
 	() => ({onChange, value}) => (
 		<textarea aria-label="text-area" onChange={onChange} value={value} />
 	)
+);
+
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/fetch/fetch_preview_search'
 );
 
 // Prevents "TypeError: Liferay.component is not a function" error on openToast
@@ -162,8 +166,6 @@ describe('EditSXPBlueprintForm', () => {
 	});
 
 	describe('fetchPreviewSearch responses', () => {
-		const fetchPreviewSearch = jest.spyOn(fetchUtils, 'fetchPreviewSearch');
-
 		async function setupAndGetErrorItems() {
 			const {
 				findAllByTestId,

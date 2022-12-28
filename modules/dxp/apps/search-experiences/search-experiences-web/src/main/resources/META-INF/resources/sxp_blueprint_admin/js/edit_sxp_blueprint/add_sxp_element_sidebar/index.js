@@ -35,7 +35,8 @@ import {
 	CUSTOM_JSON_SXP_ELEMENT,
 	DEFAULT_SXP_ELEMENT_ICON,
 } from '../../utils/data';
-import {addParams, fetchData} from '../../utils/fetch';
+import addParams from '../../utils/fetch/add_params';
+import fetchData from '../../utils/fetch/fetch_data';
 import getLocalizedText from '../../utils/language/get_localized_text';
 import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 import isElementInactiveFromNonCompanyIndex from '../../utils/sxp_element/is_element_inactive_from_noncompany_index';

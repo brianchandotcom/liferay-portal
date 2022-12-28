@@ -225,6 +225,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			null);
 
 		String assetCategoryRule = StringPool.BLANK;
+		long specificAssetCategoryId = 0;
 
 		if ((configuration != null) &&
 			!ArrayUtil.isEmpty(configuration.get("assetCategoryRule"))) {
@@ -233,6 +234,17 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				"assetCategoryRule");
 
 			assetCategoryRule = assetCategoryRules[0];
+
+			if (Objects.equals(assetCategoryRule, "specificAssetCategory") &&
+				!ArrayUtil.isEmpty(
+					configuration.get("specificAssetCategoryId"))) {
+
+				String[] specificAssetCategoryIds = configuration.get(
+					"specificAssetCategoryId");
+
+				specificAssetCategoryId = GetterUtil.getLong(
+					specificAssetCategoryIds[0]);
+			}
 		}
 
 		if (Objects.equals(
@@ -247,6 +259,14 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 								QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 							AssetCategory.CATEGORY_ID_ACCESSOR)),
 					categoryId -> categoryId != assetCategory.getCategoryId()));
+		}
+		else if ((specificAssetCategoryId > 0) &&
+				 (specificAssetCategoryId != assetCategory.getCategoryId())) {
+
+			assetEntryQuery.setAllCategoryIds(
+				new long[] {
+					assetCategory.getCategoryId(), specificAssetCategoryId
+				});
 		}
 
 		assetEntryQuery.setClassNameIds(_getClassNameIds(collectionQuery));

@@ -51,6 +51,14 @@ public class DispatchTriggerResourceTest
 
 		return _addDispatchTrigger(dispatchTrigger);
 	}
+	@Override
+	protected DispatchTrigger
+	testPostDispatchTriggersPageRun_addDispatchTrigger(
+		DispatchTrigger dispatchTrigger) throws Exception{
+
+		return _addDispatchTrigger(dispatchTrigger);
+	}
+
 
 	private DispatchTrigger _addDispatchTrigger(
 		DispatchTrigger dispatchTrigger)

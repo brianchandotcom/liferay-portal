@@ -143,7 +143,6 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setUserName(user.getFullName());
 		notificationTemplate.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
-
 		notificationTemplate.setName(externalReferenceCode);
 		notificationTemplate.setType(type);
 
@@ -160,6 +159,8 @@ public class NotificationTemplateLocalServiceImpl
 			_notificationRecipientLocalService.createNotificationRecipient(
 				counterLocalService.increment());
 
+		notificationRecipient.setUserId(userId);
+		notificationRecipient.setUserName(user.getFullName());
 		notificationRecipient.setClassNameId(
 			_portal.getClassNameId(NotificationTemplate.class));
 		notificationRecipient.setClassPK(
@@ -170,15 +171,15 @@ public class NotificationTemplateLocalServiceImpl
 
 		_addNotificationRecipientSetting(
 			LocaleUtil.getDefault(), "to",
-			notificationRecipient.getNotificationRecipientId(),
+			notificationRecipient.getNotificationRecipientId(), user,
 			externalReferenceCode);
 		_addNotificationRecipientSetting(
 			LocaleUtil.getDefault(), "fromName",
-			notificationRecipient.getNotificationRecipientId(),
+			notificationRecipient.getNotificationRecipientId(), user,
 			externalReferenceCode);
 		_addNotificationRecipientSetting(
 			null, "from", notificationRecipient.getNotificationRecipientId(),
-			externalReferenceCode);
+			user, externalReferenceCode);
 
 		return notificationTemplate;
 	}
@@ -326,7 +327,7 @@ public class NotificationTemplateLocalServiceImpl
 	}
 
 	private void _addNotificationRecipientSetting(
-		Locale locale, String name, long notificationRecipientId,
+		Locale locale, String name, long notificationRecipientId, User user,
 		String value) {
 
 		NotificationRecipientSetting notificationRecipientSetting =
@@ -334,6 +335,8 @@ public class NotificationTemplateLocalServiceImpl
 				createNotificationRecipientSetting(
 					counterLocalService.increment());
 
+		notificationRecipientSetting.setUserId(user.getUserId());
+		notificationRecipientSetting.setUserName(user.getFullName());
 		notificationRecipientSetting.setNotificationRecipientId(
 			notificationRecipientId);
 		notificationRecipientSetting.setName(name);

@@ -19,7 +19,7 @@ export declare type KeyValuePair = {
 	key: string;
 	value: string;
 };
-interface ObjectDetailsProps {
+interface EditObjectDetailsProps {
 	DBTableName: string;
 	backURL: string;
 	companyKeyValuePair: KeyValuePair[];
@@ -38,7 +38,7 @@ interface ObjectDetailsProps {
 	shortName: string;
 	siteKeyValuePair: KeyValuePair[];
 }
-export default function ObjectDetails({
+export default function EditObjectDetails({
 	DBTableName,
 	backURL,
 	companyKeyValuePair,
@@ -53,5 +53,5 @@ export default function ObjectDetails({
 	portletNamespace,
 	shortName,
 	siteKeyValuePair,
-}: ObjectDetailsProps): JSX.Element;
+}: EditObjectDetailsProps): JSX.Element;
 export {};

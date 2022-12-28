@@ -31,7 +31,7 @@ export type KeyValuePair = {
 	key: string;
 	value: string;
 };
-interface ObjectDetailsProps {
+interface EditObjectDetailsProps {
 	DBTableName: string;
 	backURL: string;
 	companyKeyValuePair: KeyValuePair[];
@@ -51,7 +51,7 @@ interface ObjectDetailsProps {
 	siteKeyValuePair: KeyValuePair[];
 }
 
-export default function ObjectDetails({
+export default function EditObjectDetails({
 	DBTableName,
 	backURL,
 	companyKeyValuePair,
@@ -66,7 +66,7 @@ export default function ObjectDetails({
 	portletNamespace,
 	shortName,
 	siteKeyValuePair,
-}: ObjectDetailsProps) {
+}: EditObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 
 	const {

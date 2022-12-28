@@ -7,6 +7,7 @@
 						"borderWidth": "0",
 						"textAlign": ""
 					},
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,

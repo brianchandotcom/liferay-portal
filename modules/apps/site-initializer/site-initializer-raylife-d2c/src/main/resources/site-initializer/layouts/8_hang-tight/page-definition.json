@@ -11,6 +11,7 @@
 						"paddingTop": "6",
 						"textAlign": ""
 					},
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,

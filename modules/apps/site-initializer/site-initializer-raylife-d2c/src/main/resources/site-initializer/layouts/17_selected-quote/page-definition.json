@@ -8,6 +8,7 @@
 						"borderWidth": "0",
 						"opacity": "100"
 					},
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,

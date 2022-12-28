@@ -56,7 +56,8 @@
 						"shadow": "",
 						"textAlign": "",
 						"width": ""
-					}
+					},
+					"indexed": true
 				},
 				"type": "Fragment"
 			},

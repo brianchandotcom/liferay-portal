@@ -20,7 +20,6 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -88,39 +87,39 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 			return;
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
-			"url",
-			PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					resourceRequest,
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/layout_content_page_editor/edit_collection_configuration"
-			).setRedirect(
-				ParamUtil.getString(resourceRequest, "redirect")
-			).setParameter(
-				"collectionKey", collectionKey
-			).setParameter(
-				"itemId", ParamUtil.getString(resourceRequest, "itemId")
-			).setParameter(
-				"plid",
-				() -> {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)resourceRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					return themeDisplay.getPlid();
-				}
-			).setParameter(
-				"segmentsExperienceId",
-				ParamUtil.getLong(resourceRequest, "segmentsExperienceId")
-			).setParameter(
-				"type", ParamUtil.getLong(resourceRequest, "type")
-			).buildString());
-
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"url",
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						resourceRequest,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/layout_content_page_editor/edit_collection_configuration"
+				).setRedirect(
+					ParamUtil.getString(resourceRequest, "redirect")
+				).setParameter(
+					"collectionKey", collectionKey
+				).setParameter(
+					"itemId", ParamUtil.getString(resourceRequest, "itemId")
+				).setParameter(
+					"plid",
+					() -> {
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)resourceRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						return themeDisplay.getPlid();
+					}
+				).setParameter(
+					"segmentsExperienceId",
+					ParamUtil.getLong(resourceRequest, "segmentsExperienceId")
+				).setParameter(
+					"type", ParamUtil.getLong(resourceRequest, "type")
+				).buildString()));
 	}
 
 	@Reference

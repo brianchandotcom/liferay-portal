@@ -537,7 +537,7 @@ for (String analyticsType : analyticsTypes) {
 		<c:when test='<%= StringUtil.equalsIgnoreCase(analyticsType, "googleAnalytics4") %>'>
 
 			<%
-			String googleAnalytics4Id = groupTypeSettings.getProperty("googleAnalytics4Id");
+			String googleAnalytics4Id = groupTypeSettingsUnicodeProperties.getProperty("googleAnalytics4Id");
 			%>
 
 			<c:if test="<%= Validator.isNotNull(googleAnalytics4Id) %>">
@@ -550,7 +550,7 @@ for (String analyticsType : analyticsTypes) {
 					gtag('config', '<%= HtmlUtil.escapeJS(googleAnalytics4Id) %>');
 
 					<%
-					String googleAnalytics4CustomConfiguration = groupTypeSettings.getProperty("googleAnalytics4CustomConfiguration");
+					String googleAnalytics4CustomConfiguration = groupTypeSettingsUnicodeProperties.getProperty("googleAnalytics4CustomConfiguration");
 					%>
 
 					<c:if test="<%= Validator.isNotNull(googleAnalytics4CustomConfiguration) %>">

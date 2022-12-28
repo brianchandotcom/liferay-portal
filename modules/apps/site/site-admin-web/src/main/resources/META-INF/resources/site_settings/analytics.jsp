@@ -46,13 +46,13 @@ for (String analyticsType : analyticsTypes) {
 		</c:when>
 		<c:when test='<%= StringUtil.equalsIgnoreCase(analyticsType, "googleAnalytics4") %>'>
 			<aui:field-wrapper cssClass="form-group">
-				<aui:input label="google-analytics-4-id" name="googleAnalytics4Id" type="text" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalytics4Id") %>' />
+				<aui:input label="google-analytics-4-id" name="googleAnalytics4Id" type="text" value='<%= PropertiesParamUtil.getString(groupTypeSettingsUnicodeProperties, request, "googleAnalytics4Id") %>' />
 
 				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-4-id-that-is-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>
 
 			<aui:field-wrapper cssClass="form-group">
-				<aui:input label="google-analytics-4-custom-configuration" name="googleAnalytics4CustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalytics4CustomConfiguration") %>' />
+				<aui:input label="google-analytics-4-custom-configuration" name="googleAnalytics4CustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettingsUnicodeProperties, request, "googleAnalytics4CustomConfiguration") %>' />
 
 				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-4-custom-options-that-are-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>

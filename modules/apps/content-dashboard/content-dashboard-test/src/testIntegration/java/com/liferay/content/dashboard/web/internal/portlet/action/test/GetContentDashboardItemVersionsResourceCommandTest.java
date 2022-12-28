@@ -43,7 +43,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 
@@ -419,10 +418,10 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 		}
 
 		@Override
-		public Optional<ContentDashboardItemSubtypeFactory>
-			getContentDashboardItemSubtypeFactoryOptional() {
+		public ContentDashboardItemSubtypeFactory
+			getContentDashboardItemSubtypeFactory() {
 
-			return Optional.empty();
+			return null;
 		}
 
 		private final int _versionsCount;

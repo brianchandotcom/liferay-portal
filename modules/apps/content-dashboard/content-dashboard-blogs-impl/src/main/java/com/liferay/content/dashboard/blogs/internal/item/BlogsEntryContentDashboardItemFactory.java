@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,8 +62,8 @@ public class BlogsEntryContentDashboardItemFactory
 	}
 
 	@Override
-	public Optional<ContentDashboardItemSubtypeFactory>
-		getContentDashboardItemSubtypeFactoryOptional() {
+	public ContentDashboardItemSubtypeFactory
+		getContentDashboardItemSubtypeFactory() {
 
 		return _contentDashboardItemSubtypeFactoryRegistry.
 			getContentDashboardItemSubtypeFactoryOptional(

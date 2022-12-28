@@ -624,10 +624,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 						}
 
 						@Override
-						public Optional<ContentDashboardItemSubtypeFactory>
-							getContentDashboardItemSubtypeFactoryOptional() {
+						public ContentDashboardItemSubtypeFactory
+							getContentDashboardItemSubtypeFactory() {
 
-							return Optional.empty();
+							return null;
 						}
 
 					};

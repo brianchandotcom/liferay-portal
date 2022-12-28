@@ -89,8 +89,8 @@ public class FileEntryContentDashboardItemFactory
 	}
 
 	@Override
-	public Optional<ContentDashboardItemSubtypeFactory>
-		getContentDashboardItemSubtypeFactoryOptional() {
+	public ContentDashboardItemSubtypeFactory
+		getContentDashboardItemSubtypeFactory() {
 
 		return _contentDashboardItemSubtypeFactoryRegistry.
 			getContentDashboardItemSubtypeFactoryOptional(

@@ -1,0 +1,75 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"borderColor": "colorNeutral2",
+			"borderRadius": "borderRadiusLg",
+			"borderWidth": "1px",
+			"paddingBottom": "3",
+			"paddingTop": "3"
+		},
+		"fragmentViewports": [
+			{
+				"fragmentViewportStyle": {
+					"marginBottom": "4"
+				},
+				"id": "tablet"
+			}
+		],
+		"indexed": true,
+		"layout": {
+			"align": "Center",
+			"borderColor": "colorNeutral2",
+			"borderWidth": 0,
+			"contentDisplay": "FlexColumn",
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"opacity": 100,
+			"paddingBottom": 1,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 1,
+			"widthType": "Fluid"
+		},
+		"name": "Quick Link Card Small"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-image"
+				},
+				"fragmentConfig": {
+					"imageSize": "w-0"
+				},
+				"fragmentFields": [
+				],
+				"fragmentStyle": {
+					"marginBottom": "3"
+				},
+				"indexed": true
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragment": {
+					"key": "DIALECT-dialect-text"
+				},
+				"fragmentConfig": {
+					"textType": "h6",
+					"truncateText": false
+				},
+				"fragmentFields": [
+				],
+				"fragmentStyle": {
+					"fontWeight": "fontWeightBold"
+				},
+				"indexed": true
+			},
+			"type": "Fragment"
+		}
+	],
+	"type": "Section"
+}

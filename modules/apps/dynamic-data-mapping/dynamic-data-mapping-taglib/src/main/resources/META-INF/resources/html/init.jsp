@@ -30,6 +30,7 @@ java.lang.String fieldsNamespace = GetterUtil.getString((java.lang.String)reques
 long groupId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-ddm:html:groupId")));
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:ignoreRequestValue")));
 java.lang.String imageSelectorURL = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:html:imageSelectorURL"));
+java.lang.String layoutSelectorURL = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:html:layoutSelectorURL"));
 boolean localizable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:localizable")), true);
 boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:readOnly")));
 boolean repeatable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:repeatable")), true);

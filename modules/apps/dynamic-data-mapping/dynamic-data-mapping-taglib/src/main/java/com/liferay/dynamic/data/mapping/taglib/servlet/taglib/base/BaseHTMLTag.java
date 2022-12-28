@@ -77,6 +77,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _imageSelectorURL;
 	}
 
+	public java.lang.String getLayoutSelectorURL() {
+		return _layoutSelectorURL;
+	}
+
 	public boolean getLocalizable() {
 		return _localizable;
 	}
@@ -149,6 +153,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_imageSelectorURL = imageSelectorURL;
 	}
 
+	public void setLayoutSelectorURL(java.lang.String layoutSelectorURL) {
+		_layoutSelectorURL = layoutSelectorURL;
+	}
+
 	public void setLocalizable(boolean localizable) {
 		_localizable = localizable;
 	}
@@ -199,6 +207,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_groupId = 0;
 		_ignoreRequestValue = false;
 		_imageSelectorURL = null;
+		_layoutSelectorURL = null;
 		_localizable = true;
 		_readOnly = false;
 		_repeatable = true;
@@ -226,6 +235,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "groupId", _groupId);
 		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "imageSelectorURL", _imageSelectorURL);
+		setNamespacedAttribute(request, "layoutSelectorURL", _layoutSelectorURL);
 		setNamespacedAttribute(request, "localizable", _localizable);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
 		setNamespacedAttribute(request, "repeatable", _repeatable);
@@ -251,6 +261,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private long _groupId = 0;
 	private boolean _ignoreRequestValue = false;
 	private java.lang.String _imageSelectorURL = null;
+	private java.lang.String _layoutSelectorURL = null;
 	private boolean _localizable = true;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

@@ -4216,7 +4216,7 @@ public class JenkinsResultsParserUtil {
 					String jenkinsAdminUserToken = buildProperties.getProperty(
 						"jenkins.admin.user.token");
 
-					if (url.contains("test-1-0")) {
+					if (url.matches("https?:\\/\\/test-1-0.*")) {
 						jenkinsAdminUserToken = buildProperties.getProperty(
 							"jenkins.admin.user.token[test-1-0]");
 					}

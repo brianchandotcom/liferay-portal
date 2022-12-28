@@ -16,16 +16,14 @@ definition {
 			expected = "${expected}");
 	}
 
-	@returns = "macroReturn"
 	macro stringUtilAdd {
-		var stringUtilReturn = com.liferay.poshi.runner.util.StringUtil.add("test", "string");
+		var stringUtilReturn = StringUtil.add("test", "string");
 
 		return "${stringUtilReturn}";
 	}
 
-	@returns = "macroReturn"
 	macro stringUtilExtractChars {
-		var stringUtilReturn = com.liferay.poshi.runner.util.StringUtil.extractChars("Test String");
+		var stringUtilReturn = StringUtil.extractChars("Test String");
 
 		return "${stringUtilReturn}";
 	}

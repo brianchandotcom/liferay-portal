@@ -14,14 +14,14 @@ definition {
 	@priority = "5"
 	test ExecuteMethodStringArguments {
 		var expected = "test,string,";
-		var actual = com.liferay.poshi.runner.util.StringUtil.add("test", "string");
+		var actual = StringUtil.add("test", "string");
 
 		ExternalMethod.validateMatch(
 			actual = "${actual}",
 			expected = "${expected}");
 
 		var expected = "TestString";
-		var actual = com.liferay.poshi.runner.util.StringUtil.extractChars("Test String");
+		var actual = StringUtil.extractChars("Test String");
 
 		ExternalMethod.validateMatch(
 			actual = "${actual}",
@@ -34,7 +34,7 @@ definition {
 		var argument1 = "test";
 		var argument2 = "string";
 		var expected = "test,string,";
-		var actual = com.liferay.poshi.runner.util.StringUtil.add("${argument1}", "${argument2}");
+		var actual = StringUtil.add("${argument1}", "${argument2}");
 
 		ExternalMethod.validateMatch(
 			actual = "${actual}",
@@ -42,7 +42,7 @@ definition {
 
 		var argument = "Test String";
 		var expected = "TestString";
-		var actual = com.liferay.poshi.runner.util.StringUtil.extractChars("${argument}");
+		var actual = StringUtil.extractChars("${argument}");
 
 		ExternalMethod.validateMatch(
 			actual = "${actual}",
@@ -54,18 +54,18 @@ definition {
 	test ExecuteMethodVariableReturn {
 		var expected = "test,string,";
 		var returnVariable = "actual";
-		var returnVariable = com.liferay.poshi.core.util.StringUtil.add("test", "string");
+		var returnVariable = StringUtil.add("test", "string");
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
+			actual = "${returnVariable}",
 			expected = "${expected}");
 
 		var expected = "TestString";
 		var returnVariable = "actual";
-		var returnVariable = com.liferay.poshi.core.util.StringUtil.extractChars("Test String");
+		var returnVariable = StringUtil.extractChars("Test String");
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
+			actual = "${returnVariable}",
 			expected = "${expected}");
 	}
 

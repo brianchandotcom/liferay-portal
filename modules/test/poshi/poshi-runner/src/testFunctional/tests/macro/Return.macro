@@ -22,7 +22,6 @@ definition {
 		}
 	}
 
-	@returns = "variable"
 	macro returnValue {
 		return "Return Value";
 	}

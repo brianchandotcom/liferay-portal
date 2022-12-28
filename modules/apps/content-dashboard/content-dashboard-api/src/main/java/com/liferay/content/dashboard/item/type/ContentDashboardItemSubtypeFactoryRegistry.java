@@ -15,7 +15,6 @@
 package com.liferay.content.dashboard.item.type;
 
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * @author Cristina González
@@ -24,7 +23,7 @@ public interface ContentDashboardItemSubtypeFactoryRegistry {
 
 	public Collection<String> getClassNames();
 
-	public Optional<ContentDashboardItemSubtypeFactory>
-		getContentDashboardItemSubtypeFactoryOptional(String className);
+	public ContentDashboardItemSubtypeFactory
+		getContentDashboardItemSubtypeFactory(String className);
 
 }

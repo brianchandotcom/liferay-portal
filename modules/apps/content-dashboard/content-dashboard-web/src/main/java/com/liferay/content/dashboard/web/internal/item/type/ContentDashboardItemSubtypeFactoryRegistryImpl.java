@@ -23,7 +23,6 @@ import com.liferay.petra.reflect.GenericUtil;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -43,10 +42,10 @@ public class ContentDashboardItemSubtypeFactoryRegistryImpl
 	}
 
 	@Override
-	public Optional<ContentDashboardItemSubtypeFactory>
-		getContentDashboardItemSubtypeFactoryOptional(String className) {
+	public ContentDashboardItemSubtypeFactory
+		getContentDashboardItemSubtypeFactory(String className) {
 
-		return Optional.ofNullable(_serviceTrackerMap.getService(className));
+		return _serviceTrackerMap.getService(className);
 	}
 
 	@Activate

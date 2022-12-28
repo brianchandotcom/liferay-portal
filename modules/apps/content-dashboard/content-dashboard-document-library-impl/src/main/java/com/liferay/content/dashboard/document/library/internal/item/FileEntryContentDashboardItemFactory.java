@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,17 +61,16 @@ public class FileEntryContentDashboardItemFactory
 					fileEntry.getPrimaryKey());
 		}
 
+		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
+			getContentDashboardItemSubtypeFactory();
+
+		if (contentDashboardItemSubtypeFactory == null) {
+			throw new NoSuchModelException();
+		}
+
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
-
-		Optional<ContentDashboardItemSubtypeFactory>
-			contentDashboardItemSubtypeFactoryOptional =
-				getContentDashboardItemSubtypeFactoryOptional();
-
-		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
-			contentDashboardItemSubtypeFactoryOptional.orElseThrow(
-				NoSuchModelException::new);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

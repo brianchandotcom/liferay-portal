@@ -194,16 +194,12 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				continue;
 			}
 
-			Optional<ContentDashboardItemSubtypeFactory>
-				contentDashboardItemSubtypeFactoryOptional =
+			ContentDashboardItemSubtypeFactory
+				contentDashboardItemSubtypeFactory =
 					contentDashboardItemFactory.
-						getContentDashboardItemSubtypeFactoryOptional();
+						getContentDashboardItemSubtypeFactory();
 
-			if (contentDashboardItemSubtypeFactoryOptional.isPresent()) {
-				ContentDashboardItemSubtypeFactory
-					contentDashboardItemSubtypeFactory =
-						contentDashboardItemSubtypeFactoryOptional.get();
-
+			if (contentDashboardItemSubtypeFactory != null) {
 				_populateContentDashboardItemTypesJSONArray(
 					className, contentDashboardItemSubtypeFactory,
 					checkedContentDashboardItemSubtypesInfoItemReferences,

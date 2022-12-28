@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -77,13 +75,12 @@ public class JournalArticleContentDashboardItemFactory
 					journalArticle.getPrimaryKey());
 		}
 
-		Optional<ContentDashboardItemSubtypeFactory>
-			contentDashboardItemSubtypeFactoryOptional =
-				getContentDashboardItemSubtypeFactoryOptional();
-
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
-			contentDashboardItemSubtypeFactoryOptional.orElseThrow(
-				NoSuchModelException::new);
+			getContentDashboardItemSubtypeFactory();
+
+		if (contentDashboardItemSubtypeFactory == null) {
+			throw new NoSuchModelException();
+		}
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
@@ -110,8 +107,8 @@ public class JournalArticleContentDashboardItemFactory
 	}
 
 	@Override
-	public Optional<ContentDashboardItemSubtypeFactory>
-		getContentDashboardItemSubtypeFactoryOptional() {
+	public ContentDashboardItemSubtypeFactory
+		getContentDashboardItemSubtypeFactory() {
 
 		return _contentDashboardItemSubtypeFactoryRegistry.
 			getContentDashboardItemSubtypeFactoryOptional(

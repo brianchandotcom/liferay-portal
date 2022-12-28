@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -228,7 +229,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 				DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
 
 		try (SafeCloseable safeCloseable =
-				DBPartitionUtil.setCompanyInDeletionProcess(
+				PortalInstances.setCompanyInDeletionProcess(
 					_activeCompanyIds[0])) {
 
 			_countDownLatch = new CountDownLatch(_activeCompanyIds.length);

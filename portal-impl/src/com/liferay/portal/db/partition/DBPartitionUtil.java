@@ -163,10 +163,6 @@ public class DBPartitionUtil {
 		return companyId;
 	}
 
-	public static boolean isCompanyInDeletionProcess(long companyId) {
-		return _companyIdsInDeletionProcess.contains(companyId);
-	}
-
 	public static boolean isPartitionEnabled() {
 		return _DATABASE_PARTITION_ENABLED;
 	}
@@ -183,22 +179,6 @@ public class DBPartitionUtil {
 		}
 
 		return _dropDBPartition(companyId);
-	}
-
-	public static SafeCloseable setCompanyInDeletionProcess(long companyId) {
-		if (!_DATABASE_PARTITION_ENABLED) {
-			return () -> {
-			};
-		}
-
-		if (_companyIdsInDeletionProcess.contains(companyId)) {
-			throw new UnsupportedOperationException(
-				companyId + " is already in deletion");
-		}
-
-		_companyIdsInDeletionProcess.add(companyId);
-
-		return () -> _companyIdsInDeletionProcess.remove(companyId);
 	}
 
 	public static void setDefaultCompanyId(Connection connection)
@@ -810,8 +790,6 @@ public class DBPartitionUtil {
 		DBPartitionUtil.class);
 
 	private static final List<Long> _companyIds = new CopyOnWriteArrayList<>();
-	private static final List<Long> _companyIdsInDeletionProcess =
-		new CopyOnWriteArrayList<>();
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("company", "virtualhost"));
 	private static volatile long _defaultCompanyId;

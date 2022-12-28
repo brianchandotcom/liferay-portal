@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
@@ -436,6 +437,15 @@ public class PortalInstances {
 		return false;
 	}
 
+	public static boolean isCompanyInDeletionProcess(long companyId) {
+		return _companyIdsInDeletionProcess.contains(companyId);
+	}
+
+	public static boolean isCurrentCompanyInDeletionProcess() {
+		return _companyIdsInDeletionProcess.contains(
+			CompanyThreadLocal.getCompanyId());
+	}
+
 	public static boolean isVirtualHostsIgnoreHost(String host) {
 		return _virtualHostsIgnoreHosts.contains(host);
 	}
@@ -472,6 +482,17 @@ public class PortalInstances {
 		getWebIds();
 
 		WebAppPool.remove(companyId, WebKeys.PORTLET_CATEGORY);
+	}
+
+	public static SafeCloseable setCompanyInDeletionProcess(long companyId) {
+		if (_companyIdsInDeletionProcess.contains(companyId)) {
+			throw new UnsupportedOperationException(
+				companyId + " is already in deletion");
+		}
+
+		_companyIdsInDeletionProcess.add(companyId);
+
+		return () -> _companyIdsInDeletionProcess.remove(companyId);
 	}
 
 	private static long _getCompanyIdByHost(
@@ -616,6 +637,8 @@ public class PortalInstances {
 	private static final Set<String> _autoLoginIgnoreHosts;
 	private static final Set<String> _autoLoginIgnorePaths;
 	private static final CopyOnWriteArrayList<Long> _companyIds;
+	private static final List<Long> _companyIdsInDeletionProcess =
+		new CopyOnWriteArrayList<>();
 	private static final Set<String> _virtualHostsIgnoreHosts;
 	private static final Set<String> _virtualHostsIgnorePaths;
 	private static String[] _webIds;

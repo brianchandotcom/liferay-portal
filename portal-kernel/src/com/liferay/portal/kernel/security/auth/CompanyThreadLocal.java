@@ -41,10 +41,6 @@ public class CompanyThreadLocal {
 		return companyId;
 	}
 
-	public static boolean isDeleteInProcess() {
-		return _deleteInProcess.get();
-	}
-
 	public static boolean isInitializingPortalInstance() {
 		return _initializingPortalInstance.get();
 	}
@@ -69,10 +65,6 @@ public class CompanyThreadLocal {
 		if (_setCompanyId(companyId)) {
 			CTCollectionThreadLocal.removeCTCollectionId();
 		}
-	}
-
-	public static void setDeleteInProcess(boolean deleteInProcess) {
-		_deleteInProcess.set(deleteInProcess);
 	}
 
 	public static SafeCloseable setInitializingCompanyIdWithSafeCloseable(
@@ -153,10 +145,6 @@ public class CompanyThreadLocal {
 		new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._companyId",
 			() -> CompanyConstants.SYSTEM);
-	private static final ThreadLocal<Boolean> _deleteInProcess =
-		new CentralizedThreadLocal<>(
-			CompanyThreadLocal.class + "._deleteInProcess",
-			() -> Boolean.FALSE);
 	private static final CentralizedThreadLocal<Boolean>
 		_initializingPortalInstance = new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._initializingPortalInstance",

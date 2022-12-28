@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.ServletContext;
 
@@ -114,11 +113,11 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	public PortalInstance postPortalInstance(PortalInstance portalInstance)
 		throws Exception {
 
-		long companyId = Optional.ofNullable(
-			portalInstance.getCompanyId()
-		).orElse(
-			0L
-		);
+		Long companyId = portalInstance.getCompanyId();
+
+		if (companyId == null) {
+			companyId = 0L;
+		}
 
 		Company company = _companyService.addCompany(
 			companyId, portalInstance.getPortalInstanceId(),

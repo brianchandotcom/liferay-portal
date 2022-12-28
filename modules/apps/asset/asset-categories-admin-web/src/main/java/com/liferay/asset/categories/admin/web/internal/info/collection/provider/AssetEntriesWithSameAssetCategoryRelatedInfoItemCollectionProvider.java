@@ -227,7 +227,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		String assetCategoryRule = StringPool.BLANK;
 		long specificAssetCategoryId = 0;
 
-		if ((configuration != null) &&
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166275")) &&
+			(configuration != null) &&
 			!ArrayUtil.isEmpty(configuration.get("assetCategoryRule"))) {
 
 			String[] assetCategoryRules = configuration.get(

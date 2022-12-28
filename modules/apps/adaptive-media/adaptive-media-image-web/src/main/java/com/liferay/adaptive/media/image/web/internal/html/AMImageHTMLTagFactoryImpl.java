@@ -66,11 +66,11 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 		return sb.toString();
 	}
 
-	private Optional<String> _getMediaQueryString(MediaQuery mediaQuery) {
+	private String _getMediaQueryString(MediaQuery mediaQuery) {
 		List<Condition> conditions = mediaQuery.getConditions();
 
 		if (conditions.isEmpty()) {
-			return Optional.empty();
+			return null;
 		}
 
 		String[] conditionStrings = new String[conditions.size()];
@@ -84,7 +84,7 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 				StringPool.CLOSE_PARENTHESIS);
 		}
 
-		return Optional.of(StringUtil.merge(conditionStrings, " and "));
+		return StringUtil.merge(conditionStrings, " and ");
 	}
 
 	private String _getSourceElement(MediaQuery mediaQuery) {

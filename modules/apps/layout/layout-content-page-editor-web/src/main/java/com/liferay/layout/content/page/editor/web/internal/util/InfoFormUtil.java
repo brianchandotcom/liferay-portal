@@ -158,6 +158,34 @@ public class InfoFormUtil {
 
 			try {
 				jsonObject.put(
+					"defaultValue",
+					() -> {
+						if (GetterUtil.getBoolean(
+								infoField.getAttribute(
+									SelectInfoFieldType.MULTIPLE))) {
+
+							JSONArray jsonArray =
+								JSONFactoryUtil.createJSONArray();
+
+							for (SelectInfoFieldType.Option option : options) {
+								if (option.isActive()) {
+									jsonArray.put(
+										String.valueOf(option.getValue()));
+								}
+							}
+
+							return jsonArray;
+						}
+
+						for (SelectInfoFieldType.Option option : options) {
+							if (option.isActive()) {
+								return String.valueOf(option.getValue());
+							}
+						}
+
+						return null;
+					}
+				).put(
 					"typeOptions",
 					JSONUtil.put(
 						"multiSelect",
@@ -173,7 +201,8 @@ public class InfoFormUtil {
 							).put(
 								"value", String.valueOf(option.getValue())
 							))
-					));
+					)
+				);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

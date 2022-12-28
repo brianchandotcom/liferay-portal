@@ -20,7 +20,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import java.util.Date;
-import java.util.Optional;
 
 /**
  * @author Michael C. Han
@@ -42,6 +41,6 @@ public interface CertificateTool {
 
 	public String getSerialNumber(X509Certificate x509Certificate);
 
-	public Optional<String> getSubjectName(X509Certificate x509Certificate);
+	public String getSubjectName(X509Certificate x509Certificate);
 
 }

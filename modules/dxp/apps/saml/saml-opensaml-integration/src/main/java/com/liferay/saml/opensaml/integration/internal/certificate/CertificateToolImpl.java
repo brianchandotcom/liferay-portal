@@ -34,7 +34,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import java.util.Date;
-import java.util.Optional;
 
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -150,18 +149,18 @@ public class CertificateToolImpl implements CertificateTool {
 	}
 
 	@Override
-	public Optional<String> getSubjectName(X509Certificate x509Certificate) {
+	public String getSubjectName(X509Certificate x509Certificate) {
 		if (x509Certificate == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		Principal principal = x509Certificate.getSubjectDN();
 
 		if (principal != null) {
-			return Optional.of(principal.getName());
+			return principal.getName();
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private X500Name _createX500Name(CertificateEntityId certificateEntityId) {

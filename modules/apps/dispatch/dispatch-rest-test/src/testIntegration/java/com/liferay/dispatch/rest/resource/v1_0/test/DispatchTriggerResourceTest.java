@@ -25,4 +25,39 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DispatchTriggerResourceTest
 	extends BaseDispatchTriggerResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(testGroup.getGroupId());
+	}
+
+	@Override
+	protected DispatchTrigger
+		testGetDispatchTriggersPage_addDispatchTrigger(
+		DispatchTrigger dispatchTrigger) throws Exception{
+
+		return _addDispatchTrigger(dispatchTrigger);
+	}
+
+	@Override
+	protected DispatchTrigger
+	testPostDispatchTriggersPage_addDispatchTrigger(
+		DispatchTrigger dispatchTrigger) throws Exception{
+
+		return _addDispatchTrigger(dispatchTrigger);
+	}
+
+	private DispatchTrigger _addDispatchTrigger(
+		DispatchTrigger dispatchTrigger)
+		throws Exception{
+
+		return dispatchTriggerResource.postDispatchTrigger(
+			dispatchTrigger);
+	}
+
 }

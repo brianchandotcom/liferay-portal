@@ -31,12 +31,12 @@ import java.io.Serializable;
 
 import java.lang.reflect.Array;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
-import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -47,31 +47,30 @@ public class CustomFieldsUtil {
 		boolean acceptAllLanguages, String className, long classPK,
 		long companyId, Locale locale) {
 
+		List<CustomField> customFields = new ArrayList<>();
+
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, className, classPK);
 
 		Map<String, Serializable> attributes = expandoBridge.getAttributes();
 
-		Set<Map.Entry<String, Serializable>> entries = attributes.entrySet();
+		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
+			UnicodeProperties unicodeProperties =
+				expandoBridge.getAttributeProperties(entry.getKey());
 
-		Stream<Map.Entry<String, Serializable>> entriesStream =
-			entries.stream();
-
-		return entriesStream.filter(
-			entry -> {
-				UnicodeProperties unicodeProperties =
-					expandoBridge.getAttributeProperties(entry.getKey());
-
-				return !GetterUtil.getBoolean(
+			if (GetterUtil.getBoolean(
 					unicodeProperties.getProperty(
-						ExpandoColumnConstants.PROPERTY_HIDDEN));
+						ExpandoColumnConstants.PROPERTY_HIDDEN))) {
+
+				continue;
 			}
-		).map(
-			entry -> _toCustomField(
-				acceptAllLanguages, entry, expandoBridge, locale)
-		).toArray(
-			CustomField[]::new
-		);
+
+			customFields.add(
+				_toCustomField(
+					acceptAllLanguages, entry, expandoBridge, locale));
+		}
+
+		return customFields.toArray(new CustomField[0]);
 	}
 
 	private static Map<String, String> _getLocalizedValues(

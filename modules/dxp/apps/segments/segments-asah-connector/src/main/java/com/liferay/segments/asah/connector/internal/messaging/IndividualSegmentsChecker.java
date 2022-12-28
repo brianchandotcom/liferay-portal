@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.messaging;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -41,7 +42,6 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -96,18 +96,20 @@ public class IndividualSegmentsChecker {
 
 		ServiceContext serviceContext = _getServiceContext(companyId);
 
-		List<Long> segmentsEntryIds = new ArrayList<>();
+		List<Long> segmentsEntryIds = TransformUtil.transform(
+			individualSegmentIds,
+			individualSegmentId -> {
+				SegmentsEntry segmentsEntry =
+					_segmentsEntryLocalService.fetchSegmentsEntry(
+						serviceContext.getScopeGroupId(), individualSegmentId,
+						true);
 
-		for (String individualSegmentId : individualSegmentIds) {
-			SegmentsEntry segmentsEntry =
-				_segmentsEntryLocalService.fetchSegmentsEntry(
-					serviceContext.getScopeGroupId(), individualSegmentId,
-					true);
+				if (segmentsEntry != null) {
+					return segmentsEntry.getSegmentsEntryId();
+				}
 
-			if (segmentsEntry != null) {
-				segmentsEntryIds.add(segmentsEntry.getSegmentsEntryId());
-			}
-		}
+				return null;
+			});
 
 		_asahSegmentsEntryCache.putSegmentsEntryIds(
 			individualPK, ArrayUtil.toLongArray(segmentsEntryIds));

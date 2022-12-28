@@ -138,7 +138,7 @@ definition {
 				key_selectField = "Picklist Item Test",
 				locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that entry was added") {
@@ -272,7 +272,7 @@ definition {
 				key_dropdownItem = "Picklist Item Test 2",
 				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Go to State Manager tab and assert Picklist") {
@@ -298,7 +298,7 @@ definition {
 				key_selectField = "Picklist Item Test 2",
 				locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that entry was added") {
@@ -473,7 +473,7 @@ definition {
 			itemName = "Teste de entrada",
 			newLanguage = "pt_BR");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -543,7 +543,7 @@ definition {
 			itemName = "Teste na lista",
 			newLanguage = "pt_BR");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -582,7 +582,7 @@ definition {
 			itemkey = "entryTest",
 			newItemName = "Update Entry");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -612,7 +612,7 @@ definition {
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -734,7 +734,7 @@ definition {
 				itemName = "Teste de entrada",
 				newLanguage = "pt_BR");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Go to Custom Object and Fields tab") {
@@ -833,7 +833,7 @@ definition {
 			itemName = "Teste de entrada",
 			newLanguage = "pt_BR");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -911,7 +911,7 @@ definition {
 			itemName = "Teste de entrada",
 			newLanguage = "pt_BR");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -972,7 +972,7 @@ definition {
 				itemName = "Teste na lista",
 				newLanguage = "pt_BR");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Change the language") {
@@ -1051,7 +1051,7 @@ definition {
 			itemName = "Teste de entrada",
 			newLanguage = "pt_BR");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 

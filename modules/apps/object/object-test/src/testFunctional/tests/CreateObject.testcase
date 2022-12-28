@@ -2204,9 +2204,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry 1");
 
-		Button.clickSubmitForPublication();
-
-		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		PortletEntry.submitForPublication();
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to submit an entry with a invalid value on the Relationship field"
@@ -2609,7 +2607,7 @@ definition {
 
 			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
 
-			Button.clickPublish();
+			PortletEntry.publish();
 		}
 
 		task ("Define Regular Role for new User") {
@@ -2792,7 +2790,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 73");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.openURL();
 
@@ -8723,7 +8721,7 @@ definition {
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Site Builder");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.openURL();
 
@@ -8782,7 +8780,7 @@ definition {
 
 			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
 
-			Button.clickPublish();
+			PortletEntry.publish();
 		}
 
 		task ("Go to Custom Object entries and assert that the relationship is mandatory") {

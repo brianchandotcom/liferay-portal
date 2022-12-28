@@ -90,9 +90,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test text");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -151,9 +149,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "123.123456");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -206,9 +202,7 @@ definition {
 			checkboxName = "Boolean",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -261,9 +255,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/2001");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -320,9 +312,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1.54");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -375,9 +365,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "123456789");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -430,9 +418,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1234567891234567");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -499,9 +485,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectPicklistObject(picklistItem = "Item Test 1");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -556,11 +540,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -635,9 +615,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "String text");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -690,9 +668,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test text");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -749,9 +725,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/2001");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 

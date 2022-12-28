@@ -1214,7 +1214,7 @@ definition {
 	}
 
 	macro publishObjectViaUI {
-		Button.clickPublish();
+		PortletEntry.publish();
 	}
 
 	macro saveCustomObject {

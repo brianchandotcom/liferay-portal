@@ -382,7 +382,7 @@ definition {
 			locator1 = "CreateObject#SELECT_DELETION_TYPE",
 			value1 = "${deletionType}");
 
-		Button.clickSave();
+		PortletEntry.save();
 	}
 
 	macro selectPanelCategoryKey {

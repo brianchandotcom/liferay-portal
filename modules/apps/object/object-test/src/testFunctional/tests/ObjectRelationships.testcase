@@ -1445,7 +1445,7 @@ definition {
 				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Add 2 entries by API to relate to user entries") {

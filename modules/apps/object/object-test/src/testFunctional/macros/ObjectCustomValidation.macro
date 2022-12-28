@@ -23,7 +23,7 @@ definition {
 			key_validationType = "${validationType}",
 			locator1 = "ObjectCustomValidation#CHOOSE_OPTION_TYPE_VALIDATION");
 
-		Button.clickSave();
+		PortletEntry.save();
 	}
 
 	macro assertValidationPresent {

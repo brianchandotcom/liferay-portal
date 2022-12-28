@@ -105,11 +105,7 @@ definition {
 			locator1 = "Picklist#ADD_PICKLIST_NAME",
 			value1 = "${picklistName}");
 
-		Button.clickSave();
-
-		Refresh();
-
-		WaitForPageLoad();
+		PortletEntry.save();
 	}
 
 	macro assertDisabledPicklistItem {

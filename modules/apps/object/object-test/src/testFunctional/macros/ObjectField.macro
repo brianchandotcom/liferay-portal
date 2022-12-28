@@ -15,7 +15,7 @@ definition {
 			locator1 = "ObjectPortlet#INPUT_NAME",
 			value1 = "${folderName}");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		AssertTextEquals(
 			locator1 = "ObjectField#DOCUMENT_NAME",

@@ -147,7 +147,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -159,7 +159,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Picklist.gotoPicklists();
 
@@ -280,7 +280,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "DELETE,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -334,7 +334,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "DELETE,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -385,7 +385,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "DELETE,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -573,7 +573,7 @@ definition {
 			owner = "true",
 			permissionsList = "PERMISSIONS");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -657,7 +657,7 @@ definition {
 			owner = "true",
 			permissionsList = "DELETE");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -769,7 +769,7 @@ definition {
 			owner = "true",
 			permissionsList = "DELETE");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -839,7 +839,7 @@ definition {
 			owner = "true",
 			permissionsList = "DELETE");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -917,7 +917,7 @@ definition {
 			owner = "true",
 			permissionsList = "PERMISSIONS");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -995,7 +995,7 @@ definition {
 			owner = "true",
 			permissionsList = "UPDATE");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1126,7 +1126,7 @@ definition {
 			owner = "true",
 			permissionsList = "PERMISSIONS");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1200,7 +1200,7 @@ definition {
 			owner = "true",
 			permissionsList = "UPDATE");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1266,7 +1266,7 @@ definition {
 			owner = "true",
 			permissionsList = "UPDATE");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1344,7 +1344,7 @@ definition {
 			owner = "true",
 			permissionsList = "VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1448,7 +1448,7 @@ definition {
 			owner = "true",
 			permissionsList = "VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1510,7 +1510,7 @@ definition {
 			owner = "true",
 			permissionsList = "VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1565,7 +1565,7 @@ definition {
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1635,7 +1635,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1647,7 +1647,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1717,7 +1717,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "UPDATE,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1777,7 +1777,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1789,7 +1789,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -1837,7 +1837,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "UPDATE,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1894,7 +1894,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "UPDATE,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1906,7 +1906,7 @@ definition {
 
 		Picklist.updatePicklistName(picklistName = "Update Custom Picklist");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Picklist.gotoPicklists();
 
@@ -1964,7 +1964,7 @@ definition {
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -2138,7 +2138,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -2190,7 +2190,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -2239,7 +2239,7 @@ definition {
 
 		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -2337,7 +2337,7 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
 			value1 = "Entry Test");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 

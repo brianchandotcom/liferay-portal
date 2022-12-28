@@ -78,11 +78,7 @@ definition {
 				key_picklistOption = "${typeLabel}",
 				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-
-			WaitForSPARefresh();
+			PortletEntry.save();
 
 			Navigator.gotoBack();
 		}
@@ -203,7 +199,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
@@ -309,7 +305,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -392,7 +388,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
@@ -519,7 +515,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Test Business Account Description");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
 
@@ -601,7 +597,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Test Business Account");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
@@ -662,7 +658,7 @@ definition {
 
 			ObjectCustomViews.addColumnsViaUI(addColumns = "ID,Relationship");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Go to Custom Objects entries, and add relationship by Account") {
@@ -672,7 +668,7 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Account Name");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Account is present on entries table") {
@@ -719,7 +715,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "business");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
 

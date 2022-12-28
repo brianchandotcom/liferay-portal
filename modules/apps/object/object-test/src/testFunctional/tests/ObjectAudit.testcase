@@ -62,7 +62,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -116,7 +116,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -181,7 +181,7 @@ definition {
 
 		CreateObject.editLabel(labelName = "Update Relationship");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -265,7 +265,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -319,7 +319,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -385,7 +385,7 @@ definition {
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -446,7 +446,7 @@ definition {
 			columnOption = "ID",
 			sortOption = "Ascending");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -998,7 +998,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -1037,7 +1037,7 @@ definition {
 
 		CreateObject.editLabel(labelName = "New Relationship");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 
@@ -1075,7 +1075,7 @@ definition {
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Audit.openAuditAdmin();
 

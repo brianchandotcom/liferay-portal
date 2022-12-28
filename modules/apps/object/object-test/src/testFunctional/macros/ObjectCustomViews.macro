@@ -11,7 +11,7 @@ definition {
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 		}
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
@@ -86,9 +86,7 @@ definition {
 			locator1 = "ObjectCustomViews#ADD_VIEW_NAME",
 			value1 = "${viewName}");
 
-		Button.clickSave();
-
-		WaitForPageLoad();
+		PortletEntry.save();
 	}
 
 	macro assertColumnLabelPresent {

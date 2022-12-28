@@ -107,7 +107,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry Test");
 
-		Button.clickSubmitForPublication();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -162,9 +162,7 @@ definition {
 			content = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.",
 			fieldLabel = "Rich Text");
 
-		Button.clickSubmitForPublication();
-
-		WaitForSPARefresh();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -213,9 +211,7 @@ definition {
 
 		FormViewBuilder.editClobText(fieldLong = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 
@@ -264,9 +260,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 
-		Button.clickSubmitForPublication();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.submitForPublication();
 
 		Navigator.openURL();
 

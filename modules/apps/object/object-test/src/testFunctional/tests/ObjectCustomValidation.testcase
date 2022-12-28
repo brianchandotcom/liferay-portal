@@ -59,7 +59,7 @@ definition {
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
 
@@ -108,7 +108,7 @@ definition {
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
@@ -131,7 +131,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Allowed Entry')");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153559");
 
@@ -182,7 +182,7 @@ definition {
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
@@ -205,7 +205,7 @@ definition {
 
 		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Update Entry')");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
 
@@ -269,7 +269,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'concat' is working") {
@@ -319,7 +319,7 @@ definition {
 				customField = "Custom Text D",
 				entry = " Experience");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156694");
 
@@ -374,7 +374,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'condition with custom text' is working") {
@@ -408,7 +408,7 @@ definition {
 				customField = "Food",
 				entry = "banana");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156703A");
 
@@ -459,7 +459,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'condition with custom boolean' is working") {
@@ -497,9 +497,7 @@ definition {
 				key_checkboxName = "customMark",
 				locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX_BY_NAME");
 
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156703B");
 
@@ -550,7 +548,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'condition with custom boolean' is working") {
@@ -584,9 +582,7 @@ definition {
 				customField = "Validate",
 				entry = "100");
 
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156703C");
 
@@ -647,7 +643,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'contains' is working") {
@@ -685,7 +681,7 @@ definition {
 
 			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "NOT(contains(customInteger, '2004'))");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'does not contains' is working") {
@@ -757,7 +753,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'Past Dates' is working") {
@@ -795,7 +791,7 @@ definition {
 
 			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "futureDates(customDate, '2022-06-01')");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'Future Dates' is working") {
@@ -864,7 +860,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is an Email' is working") {
@@ -933,7 +929,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is integer' is working") {
@@ -971,7 +967,7 @@ definition {
 
 			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isDecimal(customText)");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'does not contains' is working") {
@@ -1040,7 +1036,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is empty' is working") {
@@ -1111,7 +1107,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is Equal To' is working") {
@@ -1152,7 +1148,7 @@ definition {
 
 			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customInteger != 13579");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is Not Equal To' is working") {
@@ -1226,7 +1222,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is Greater Than Or Equal To' is working") {
@@ -1306,7 +1302,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is Less Than Or Equal To' is working") {
@@ -1386,7 +1382,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'is a URL' is working") {
@@ -1455,7 +1451,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'Match' is working only with UPPERCASE letters") {
@@ -1526,7 +1522,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'plus' is working") {
@@ -1568,7 +1564,7 @@ definition {
 				customField = "Custom Integer C",
 				entry = "3250");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156700");
 
@@ -1590,7 +1586,7 @@ definition {
 
 			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customIntegerA == customIntegerB - customIntegerC");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'minus' is working") {
@@ -1632,7 +1628,7 @@ definition {
 				customField = "Custom Integer C",
 				entry = "750");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156700");
 
@@ -1654,7 +1650,7 @@ definition {
 
 			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customIntegerA == customIntegerB * customIntegerC");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'time' is working") {
@@ -1696,7 +1692,7 @@ definition {
 				customField = "Custom Integer C",
 				entry = "2");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156700");
 
@@ -1718,7 +1714,7 @@ definition {
 
 			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customIntegerA == customIntegerB / customIntegerC");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'divided by' is working") {
@@ -1760,7 +1756,7 @@ definition {
 				customField = "Custom Integer C",
 				entry = "2");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156700");
 
@@ -1813,7 +1809,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'Range' is working") {
@@ -1896,7 +1892,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation with 'sum' is working") {
@@ -1946,7 +1942,7 @@ definition {
 				customField = "Custom Integer D",
 				entry = "4000");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156699");
 
@@ -2020,7 +2016,7 @@ definition {
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
@@ -2084,7 +2080,7 @@ definition {
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		for (var entryTitle : list "Entry Test,Decline Entry") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
@@ -2138,7 +2134,7 @@ definition {
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -2166,7 +2162,7 @@ definition {
 
 		ObjectCustomValidation.desactiveValidation();
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Refresh();
 
@@ -2389,9 +2385,7 @@ definition {
 				customField = "Custom Integer",
 				entry = "123456789");
 
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+			PortletEntry.save();
 		}
 
 		task ("Assert that the status was updated") {
@@ -2475,7 +2469,7 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Assert that Custom Validation has been added'") {
@@ -2508,7 +2502,7 @@ definition {
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
 				value1 = "Userln");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			User.openUsersAdmin();
 
@@ -2567,7 +2561,7 @@ definition {
 
 		ObjectCustomValidation.editLabelOnCustomValidation(editValidationName = "Validação customizada");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 
@@ -2623,7 +2617,7 @@ definition {
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153546");
 

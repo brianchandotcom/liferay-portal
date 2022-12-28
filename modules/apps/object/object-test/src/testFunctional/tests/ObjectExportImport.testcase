@@ -229,7 +229,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Field");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		ObjectAdmin.openObjectAdmin();
 

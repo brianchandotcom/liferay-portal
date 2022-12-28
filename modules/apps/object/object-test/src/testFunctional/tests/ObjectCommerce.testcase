@@ -47,7 +47,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Title");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Create a Commerce Product Group") {
@@ -76,7 +76,7 @@ definition {
 
 			Refresh();
 
-			Button.clickPublish();
+			PortletEntry.publish();
 		}
 
 		task ("Create an object entry related to Commerce Product Group") {
@@ -86,7 +86,7 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "PG2");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject288");
 
@@ -122,7 +122,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Name");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Create a Commerce Product") {
@@ -147,9 +147,7 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Simple T-Shirt");
 
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+			PortletEntry.save();
 
 			CreateObject.assertEntrySelectedOnRelationshipField(entry = "Simple T-Shirt");
 		}

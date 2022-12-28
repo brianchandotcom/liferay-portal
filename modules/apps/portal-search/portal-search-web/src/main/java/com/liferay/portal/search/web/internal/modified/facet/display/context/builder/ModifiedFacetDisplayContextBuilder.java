@@ -233,7 +233,6 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		modifiedFacetTermDisplayContext.setFrequency(
 			getFrequency(_getCustomRangeTermCollector(selected)));
 		modifiedFacetTermDisplayContext.setBucketText("custom-range");
-		modifiedFacetTermDisplayContext.setRange("custom-range");
 		modifiedFacetTermDisplayContext.setFilterValue(_getCustomRangeURL());
 		modifiedFacetTermDisplayContext.setSelected(selected);
 
@@ -255,7 +254,6 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 			new ModifiedFacetTermDisplayContext();
 
 		modifiedFacetTermDisplayContext.setBucketText(label);
-		modifiedFacetTermDisplayContext.setRange(label);
 		modifiedFacetTermDisplayContext.setSelected(true);
 
 		return modifiedFacetTermDisplayContext;
@@ -270,7 +268,6 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		modifiedFacetTermDisplayContext.setFrequency(
 			getFrequency(getTermCollector(range)));
 		modifiedFacetTermDisplayContext.setBucketText(label);
-		modifiedFacetTermDisplayContext.setRange(range);
 		modifiedFacetTermDisplayContext.setFilterValue(_getLabeledRangeURL(label));
 		modifiedFacetTermDisplayContext.setSelected(
 			_selectedRanges.contains(label));

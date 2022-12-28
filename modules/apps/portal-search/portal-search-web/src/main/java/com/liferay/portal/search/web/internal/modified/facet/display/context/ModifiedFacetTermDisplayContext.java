@@ -21,14 +21,4 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
  */
 public class ModifiedFacetTermDisplayContext extends BucketDisplayContext {
 
-	public String getRange() {
-		return _range;
-	}
-
-	public void setRange(String range) {
-		_range = range;
-	}
-
-	private String _range;
-
 }

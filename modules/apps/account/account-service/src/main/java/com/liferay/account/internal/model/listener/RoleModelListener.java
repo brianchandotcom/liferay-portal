@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.Objects;
 
@@ -108,7 +108,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
 	public void onBeforeRemove(Role role) throws ModelListenerException {
-		if (CompanyThreadLocal.isDeleteInProcess()) {
+		if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
 			return;
 		}
 

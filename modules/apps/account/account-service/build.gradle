@@ -5,6 +5,7 @@ buildService {
 
 dependencies {
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compileOnly group: "commons-validator", name: "commons-validator", version: "1.7"

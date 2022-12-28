@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 import com.liferay.portal.search.index.IndexStatusManager;
+import com.liferay.portal.util.PortalInstances;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
@@ -77,7 +77,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			return null;
 		}
 
-		if (CompanyThreadLocal.isDeleteInProcess()) {
+		if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skipping indexer request buffer because a company " +

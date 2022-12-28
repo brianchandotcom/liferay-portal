@@ -32,14 +32,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetVocabularyConstants" %><%@
 page import="com.liferay.list.type.model.ListTypeDefinition" %><%@
 page import="com.liferay.object.constants.ObjectLayoutBoxConstants" %><%@
-page import="com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException" %><%@
-page import="com.liferay.object.exception.ObjectDefinitionActiveException" %><%@
-page import="com.liferay.object.exception.ObjectDefinitionLabelException" %><%@
-page import="com.liferay.object.exception.ObjectDefinitionNameException" %><%@
-page import="com.liferay.object.exception.ObjectDefinitionPluralLabelException" %><%@
-page import="com.liferay.object.exception.ObjectDefinitionScopeException" %><%@
-page import="com.liferay.object.exception.ObjectDefinitionStatusException" %><%@
-page import="com.liferay.object.exception.RequiredObjectFieldException" %><%@
 page import="com.liferay.object.model.ObjectAction" %><%@
 page import="com.liferay.object.model.ObjectDefinition" %><%@
 page import="com.liferay.object.model.ObjectField" %><%@
@@ -50,7 +42,6 @@ page import="com.liferay.object.model.ObjectRelationship" %><%@
 page import="com.liferay.object.model.ObjectValidationRule" %><%@
 page import="com.liferay.object.model.ObjectView" %><%@
 page import="com.liferay.object.rest.dto.v1_0.ObjectEntry" %><%@
-page import="com.liferay.object.scope.ObjectScopeProvider" %><%@
 page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
 page import="com.liferay.object.web.internal.list.type.constants.ListTypeFDSNames" %><%@
 page import="com.liferay.object.web.internal.list.type.display.context.ViewListTypeDefinitionsDisplayContext" %><%@
@@ -77,16 +68,14 @@ page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %>
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Objects" %>
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,6 +81,10 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			StringBundler sb = new StringBundler(lines.length * 2);
 
 			for (String line : lines) {
+				if (Validator.isNull(line.trim())) {
+					continue;
+				}
+
 				sb.append(line);
 				sb.append(CharPool.NEW_LINE);
 			}

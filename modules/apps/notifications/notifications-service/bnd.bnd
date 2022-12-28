@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Notifications Service
+Bundle-SymbolicName: com.liferay.notifications.service
+Bundle-Version: 1.0.0
+Liferay-Service: true
+-dsannotations-options: inherit

@@ -20,8 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import java.util.Optional;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -48,13 +46,18 @@ public class TaxonomyCategoryExceptionMapper
 		AssetCategoryException assetCategoryException) {
 
 		String errorMessage = StringPool.BLANK;
-		String vocabularyName = Optional.ofNullable(
-			assetCategoryException.getVocabulary()
-		).map(
-			AssetVocabulary::getName
-		).orElse(
-			StringPool.BLANK
-		);
+		String vocabularyName = StringPool.BLANK;
+
+		AssetVocabulary assetVocabulary =
+			assetCategoryException.getVocabulary();
+
+		if (assetVocabulary != null) {
+			String name = assetVocabulary.getName();
+
+			if (name != null) {
+				vocabularyName = name;
+			}
+		}
 
 		if (assetCategoryException.getType() ==
 				AssetCategoryException.AT_LEAST_ONE_CATEGORY) {

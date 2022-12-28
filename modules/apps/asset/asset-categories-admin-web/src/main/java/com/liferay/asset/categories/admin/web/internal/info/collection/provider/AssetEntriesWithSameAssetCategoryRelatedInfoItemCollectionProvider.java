@@ -94,12 +94,13 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
-		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(collectionQuery);
+		AssetCategory assetCategory = (AssetCategory)relatedItem;
+
+		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
+			assetCategory, collectionQuery);
 
 		try {
-			AssetCategory assetCategory = (AssetCategory)relatedItem;
-
-			SearchContext searchContext = _getSearchContext(assetCategory);
+			SearchContext searchContext = _getSearchContext();
 
 			Hits hits = _assetHelper.search(
 				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
@@ -207,12 +208,15 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
-		CollectionQuery collectionQuery) {
+		AssetCategory assetCategory, CollectionQuery collectionQuery) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
+
+		assetEntryQuery.setAllCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
 
 		assetEntryQuery.setClassNameIds(_getClassNameIds(collectionQuery));
 		assetEntryQuery.setEnablePermissions(true);
@@ -338,14 +342,14 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return finalStep.build();
 	}
 
-	private SearchContext _getSearchContext(AssetCategory assetCategory) {
+	private SearchContext _getSearchContext() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		return SearchContextFactory.getInstance(
-			new long[] {assetCategory.getCategoryId()}, new String[0],
+			new long[0], new String[0],
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(

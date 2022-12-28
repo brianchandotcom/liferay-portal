@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -402,11 +403,14 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor/get_collection_variations")
 			).put(
 				"getEditCollectionConfigurationUrlURL",
-				HttpComponentsUtil.addParameter(
-					_getResourceURL(
-						"/layout_content_page_editor" +
-							"/get_edit_collection_configuration_url"),
-					"urlCurrent", themeDisplay.getURLCurrent())
+				ResourceURLBuilder.createResourceURL(
+					_renderResponse
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).setResourceID(
+					"/layout_content_page_editor" +
+						"/get_edit_collection_configuration_url"
+				).buildString()
 			).put(
 				"getExperienceDataURL",
 				_getResourceURL(

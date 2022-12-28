@@ -351,6 +351,12 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 			vocabularyBucketDisplayContexts.add(bucketDisplayContext);
 
+			if (_order != null) {
+				vocabularyBucketDisplayContexts.sort(
+					BucketDisplayContextComparatorFactoryUtil.
+						getBucketDisplayContextComparator(_order));
+			}
+
 			bucketDisplayContextsMap.put(
 				vocabularyName, vocabularyBucketDisplayContexts);
 		}

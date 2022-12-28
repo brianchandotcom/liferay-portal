@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>ICON</td>
-	<td>//button[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-${type}')]]</td>
+	<td>//a[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-${type}')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ICON_DISABLED</td>
-	<td>//button[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-${type}')]][@disabled]</td>
+	<td>//li[contains(@class, 'page-item')][.//*[name()='svg'][contains(@class,'lexicon-icon-${type}')]][contains(@class,'disabled')]</td>
 	<td></td>
 </tr>
 <tr>

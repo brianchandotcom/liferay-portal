@@ -30,21 +30,16 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Jürgen Kappler
@@ -66,7 +61,8 @@ public class InfoItemFieldReaderRegistryImpl
 		}
 
 		List<InfoItemFieldReader> infoItemFieldReaderWrappers =
-			_infoItemFieldReaderWrappersMap.get(itemClassName);
+			_infoItemFieldReaderWrapperServiceTrackerMap.getService(
+				itemClassName);
 
 		if (infoItemFieldReaderWrappers == null) {
 			infoItemFieldReaderWrappers = Collections.emptyList();
@@ -78,6 +74,42 @@ public class InfoItemFieldReaderRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_infoItemFieldReaderWrapperServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext,
+				(Class<InfoDisplayContributorField<Object>>)
+					(Class<?>)InfoDisplayContributorField.class,
+				"model.class.name",
+				new ServiceTrackerCustomizer
+					<InfoDisplayContributorField<Object>,
+					 InfoItemFieldReader>() {
+
+					@Override
+					public InfoItemFieldReader addingService(
+						ServiceReference<InfoDisplayContributorField<Object>>
+							serviceReference) {
+
+						return new InfoItemFieldReaderWrapper(
+							bundleContext.getService(serviceReference));
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<InfoDisplayContributorField<Object>>
+							serviceReference,
+						InfoItemFieldReader infoItemFieldReader) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<InfoDisplayContributorField<Object>>
+							serviceReference,
+						InfoItemFieldReader infoItemFieldReader) {
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
 		_itemInfoItemFieldReaderServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, InfoItemFieldReader.class, null,
@@ -92,68 +124,13 @@ public class InfoItemFieldReaderRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
+		_infoItemFieldReaderWrapperServiceTrackerMap.close();
+
 		_itemInfoItemFieldReaderServiceTrackerMap.close();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setInfoItemFieldReaderWrapper(
-		InfoDisplayContributorField<Object> infoDisplayContributorField,
-		Map<String, Object> properties) {
-
-		String className = (String)properties.get("model.class.name");
-
-		if (Validator.isNull(className)) {
-			return;
-		}
-
-		List<InfoItemFieldReader> infoItemFieldReaderWrappers =
-			_infoItemFieldReaderWrappersMap.computeIfAbsent(
-				className, itemClass -> new ArrayList<>());
-
-		infoItemFieldReaderWrappers.add(
-			new InfoItemFieldReaderWrapper(infoDisplayContributorField));
-	}
-
-	protected void unsetInfoItemFieldReaderWrapper(
-		InfoDisplayContributorField<?> infoDisplayContributorField,
-		Map<String, Object> properties) {
-
-		String className = (String)properties.get("model.class.name");
-
-		if (Validator.isNull(className)) {
-			return;
-		}
-
-		List<InfoItemFieldReader> infoItemFieldReaderWrappers =
-			_infoItemFieldReaderWrappersMap.get(className);
-
-		if (infoItemFieldReaderWrappers != null) {
-			for (InfoItemFieldReader infoItemFieldReader :
-					infoItemFieldReaderWrappers) {
-
-				InfoItemFieldReaderWrapper infoItemFieldReaderWrapper =
-					(InfoItemFieldReaderWrapper)infoItemFieldReader;
-
-				InfoDisplayContributorField<?>
-					existingInfoDisplayContributorField =
-						infoItemFieldReaderWrapper.
-							getInfoDisplayContributorField();
-
-				if (existingInfoDisplayContributorField ==
-						infoDisplayContributorField) {
-
-					infoItemFieldReaderWrappers.remove(
-						infoItemFieldReaderWrapper);
-				}
-			}
-		}
-	}
-
-	private final Map<String, List<InfoItemFieldReader>>
-		_infoItemFieldReaderWrappersMap = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, List<InfoItemFieldReader>>
+		_infoItemFieldReaderWrapperServiceTrackerMap;
 	private ServiceTrackerMap<String, List<InfoItemFieldReader>>
 		_itemInfoItemFieldReaderServiceTrackerMap;
 

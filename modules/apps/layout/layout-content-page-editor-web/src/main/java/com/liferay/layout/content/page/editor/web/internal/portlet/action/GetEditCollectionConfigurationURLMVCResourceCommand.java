@@ -87,6 +87,8 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 			return;
 		}
 
+		String redirect = ParamUtil.getString(resourceRequest, "redirect");
+
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
@@ -100,7 +102,9 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 				).setMVCRenderCommandName(
 					"/layout_content_page_editor/edit_collection_configuration"
 				).setRedirect(
-					ParamUtil.getString(resourceRequest, "redirect")
+					redirect
+				).setBackURL(
+					redirect
 				).setParameter(
 					"collectionKey", collectionKey
 				).setParameter(

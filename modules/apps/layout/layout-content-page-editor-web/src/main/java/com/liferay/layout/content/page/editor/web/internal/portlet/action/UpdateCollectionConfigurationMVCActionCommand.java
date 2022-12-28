@@ -20,11 +20,8 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,66 +57,48 @@ public class UpdateCollectionConfigurationMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		long plid = ParamUtil.getLong(actionRequest, "plid");
 
-		try {
-			LayoutStructureUtil.updateLayoutPageTemplateData(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId, plid,
-				layoutStructure -> {
-					String itemId = ParamUtil.getString(
-						actionRequest, "itemId");
+		LayoutStructureUtil.updateLayoutPageTemplateData(
+			themeDisplay.getScopeGroupId(), segmentsExperienceId, plid,
+			layoutStructure -> {
+				String itemId = ParamUtil.getString(actionRequest, "itemId");
 
-					LayoutStructureItem layoutStructureItem =
-						layoutStructure.getLayoutStructureItem(itemId);
+				LayoutStructureItem layoutStructureItem =
+					layoutStructure.getLayoutStructureItem(itemId);
 
-					if (!(layoutStructureItem instanceof
-							CollectionStyledLayoutStructureItem)) {
+				if (!(layoutStructureItem instanceof
+						CollectionStyledLayoutStructureItem)) {
 
-						return;
-					}
+					return;
+				}
 
-					String collectionConfig = ParamUtil.getString(
-						actionRequest, "collectionConfig");
+				String collectionConfig = ParamUtil.getString(
+					actionRequest, "collectionConfig");
 
-					CollectionStyledLayoutStructureItem
-						collectionStyledLayoutStructureItem =
-							(CollectionStyledLayoutStructureItem)
-								layoutStructureItem;
+				CollectionStyledLayoutStructureItem
+					collectionStyledLayoutStructureItem =
+						(CollectionStyledLayoutStructureItem)
+							layoutStructureItem;
 
-					JSONObject collectionJSONObject =
-						collectionStyledLayoutStructureItem.
-							getCollectionJSONObject();
+				JSONObject collectionJSONObject =
+					collectionStyledLayoutStructureItem.
+						getCollectionJSONObject();
 
-					collectionJSONObject.put(
-						"config",
-						_jsonFactory.createJSONObject(collectionConfig));
+				collectionJSONObject.put(
+					"config", _jsonFactory.createJSONObject(collectionConfig));
 
-					collectionStyledLayoutStructureItem.setCollectionJSONObject(
-						collectionJSONObject);
+				collectionStyledLayoutStructureItem.setCollectionJSONObject(
+					collectionJSONObject);
 
-					layoutStructure.updateItemConfig(
-						collectionStyledLayoutStructureItem.
-							getItemConfigJSONObject(),
-						itemId);
-				});
+				layoutStructure.updateItemConfig(
+					collectionStyledLayoutStructureItem.
+						getItemConfigJSONObject(),
+					itemId);
+			});
 
-			sendRedirect(
-				actionRequest, actionResponse,
-				ParamUtil.getString(actionRequest, "redirect"));
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			hideDefaultErrorMessage(actionRequest);
-
-			SessionErrors.add(actionRequest, "anUnexpectedErrorOccurred");
-
-			actionResponse.setRenderParameter(
-				"mvcRenderCommandName",
-				"/layout_content_page_editor/edit_collection_configuration");
-		}
+		sendRedirect(
+			actionRequest, actionResponse,
+			ParamUtil.getString(actionRequest, "redirect"));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateCollectionConfigurationMVCActionCommand.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

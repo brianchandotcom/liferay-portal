@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -90,17 +89,15 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 	private String _getSourceElement(MediaQuery mediaQuery) {
 		StringBundler sb = new StringBundler(5);
 
-		Optional<String> mediaQueryStringOptional = _getMediaQueryString(
-			mediaQuery);
+		String mediaQueryString = _getMediaQueryString(mediaQuery);
 
-		mediaQueryStringOptional.ifPresent(
-			mediaQueryString -> {
-				sb.append("<source media=\"");
-				sb.append(mediaQueryString);
-				sb.append("\" srcset=\"");
-				sb.append(mediaQuery.getSrc());
-				sb.append("\" />");
-			});
+		if (mediaQueryString != null) {
+			sb.append("<source media=\"");
+			sb.append(mediaQueryString);
+			sb.append("\" srcset=\"");
+			sb.append(mediaQuery.getSrc());
+			sb.append("\" />");
+		}
 
 		return sb.toString();
 	}

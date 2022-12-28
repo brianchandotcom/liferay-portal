@@ -1,0 +1,33 @@
+dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
+	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationCompile project(":apps:asset:asset-list-api")
+	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:depot:depot-api")
+	testIntegrationCompile project(":apps:document-library:document-library-test-util")
+	testIntegrationCompile project(":apps:dispatch:dispatch-api")
+	testIntegrationCompile project(":apps:dispatch:dispatch-rest-api")
+	testIntegrationCompile project(":apps:dispatch:dispatch-rest-client")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-api")
+	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-client")
+	testIntegrationCompile project(":apps:journal:journal-api")
+	testIntegrationCompile project(":apps:journal:journal-test-util")
+	testIntegrationCompile project(":apps:knowledge-base:knowledge-base-api")
+	testIntegrationCompile project(":apps:layout:layout-api")
+	testIntegrationCompile project(":apps:layout:layout-page-template-api")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
+	testIntegrationCompile project(":apps:message-boards:message-boards-api")
+	testIntegrationCompile project(":apps:message-boards:message-boards-test-util")
+	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":apps:segments:segments-api")
+	testIntegrationCompile project(":apps:wiki:wiki-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

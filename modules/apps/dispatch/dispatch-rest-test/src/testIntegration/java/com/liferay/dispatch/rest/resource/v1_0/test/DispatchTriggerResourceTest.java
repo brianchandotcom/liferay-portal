@@ -22,7 +22,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Nilton Vieira
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DispatchTriggerResourceTest
 	extends BaseDispatchTriggerResourceTestCase {

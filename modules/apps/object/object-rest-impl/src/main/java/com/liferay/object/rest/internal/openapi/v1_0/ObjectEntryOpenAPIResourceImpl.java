@@ -51,7 +51,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -98,16 +97,9 @@ public class ObjectEntryOpenAPIResourceImpl
 			String propertyName = schemaEntry.getKey();
 			Schema propertySchema = schemaEntry.getValue();
 
-			if (Optional.ofNullable(
-					propertySchema.getReadOnly()
-				).orElse(
-					false
-				) ||
-				Optional.ofNullable(
-					propertySchema.getWriteOnly()
-				).orElse(
-					false
-				) || propertyName.startsWith("x-")) {
+			if ((propertySchema == null) || propertySchema.getReadOnly() ||
+				propertySchema.getWriteOnly() ||
+				propertyName.startsWith("x-")) {
 
 				continue;
 			}
@@ -116,18 +108,9 @@ public class ObjectEntryOpenAPIResourceImpl
 				propertyName,
 				Field.of(
 					propertySchema.getDescription(), propertyName,
-					Optional.ofNullable(
-						propertySchema.getReadOnly()
-					).orElse(
-						false
-					),
+					propertySchema.getReadOnly(),
 					requiredPropertySchemaNames.contains(propertyName),
-					propertySchema.getType(),
-					Optional.ofNullable(
-						propertySchema.getWriteOnly()
-					).orElse(
-						false
-					)));
+					propertySchema.getType(), propertySchema.getWriteOnly()));
 		}
 
 		return fields;

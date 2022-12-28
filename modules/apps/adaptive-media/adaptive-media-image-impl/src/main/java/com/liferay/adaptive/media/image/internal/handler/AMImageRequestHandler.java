@@ -65,22 +65,21 @@ public class AMImageRequestHandler
 			HttpServletRequest httpServletRequest)
 		throws IOException, ServletException {
 
-		Optional<Tuple<FileVersion, AMImageAttributeMapping>>
-			interpretedPathOptional = _interpretPath(
-				httpServletRequest.getPathInfo());
+		Tuple<FileVersion, AMImageAttributeMapping> interpretedPath =
+			_interpretPath(httpServletRequest.getPathInfo());
 
-		return interpretedPathOptional.flatMap(
-			tuple -> {
-				Optional<AdaptiveMedia<AMImageProcessor>>
-					adaptiveMediaOptional = _findAdaptiveMedia(
-						tuple.first, tuple.second);
+		if (interpretedPath == null) {
+			return Optional.empty();
+		}
 
-				adaptiveMediaOptional.ifPresent(
-					adaptiveMedia -> _processAMImage(
-						adaptiveMedia, tuple.first, tuple.second));
+		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
+			_findAdaptiveMedia(interpretedPath.first, interpretedPath.second);
 
-				return adaptiveMediaOptional;
-			});
+		adaptiveMediaOptional.ifPresent(
+			adaptiveMedia -> _processAMImage(
+				adaptiveMedia, interpretedPath.first, interpretedPath.second));
+
+		return adaptiveMediaOptional;
 	}
 
 	private AdaptiveMedia<AMImageProcessor> _createRawAdaptiveMedia(

@@ -15,6 +15,12 @@ definition {
 	macro addRelationshipAndSelectEntry {
 		LexiconEntry.gotoAdd();
 
+		var menuItem = "Select Existing One";
+
+		if (IsElementPresent(key_menuItem = "${menuItem}", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			MenuItem.click(menuItem = "${menuItem}");
+		}
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		ClickNoError(

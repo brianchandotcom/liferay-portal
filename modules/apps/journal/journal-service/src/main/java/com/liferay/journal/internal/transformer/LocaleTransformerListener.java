@@ -37,6 +37,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,6 +79,11 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 	@Activate
 	protected void activate() {
 		JournalArticleImpl.setLocaleTransformerListener(this);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		JournalArticleImpl.setLocaleTransformerListener(null);
 	}
 
 	protected void filter(

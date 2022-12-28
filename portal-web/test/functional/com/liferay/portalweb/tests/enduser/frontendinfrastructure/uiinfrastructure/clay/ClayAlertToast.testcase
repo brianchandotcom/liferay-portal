@@ -52,11 +52,14 @@ definition {
 
 		task ("Then the alert disappears after 20 seconds") {
 
-			// For LPS-170578, need this pause to wait longer than the auto close time of the fail message
+			// For LPS-170578, need this to pause until right before auto close time of the fail message
 
 			Pause(locator1 = "19000");
 
 			if (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "Message#ERROR_DISMISSIBLE")) {
+
+				// For LPS-170578, need this to pause longer than the auto close time of the fail message
+
 				Pause(locator1 = "1100");
 
 				if (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "Message#ERROR_DISMISSIBLE")) {
@@ -90,7 +93,7 @@ definition {
 
 		task ("Then the alert does not disappear when hovered over") {
 
-			// For LPS-170578, need this pause to wait longer than the auto close time of the fail message
+			// For LPS-170578, need this to pause longer than the auto close time of the fail message
 
 			Pause(locator1 = "20100");
 

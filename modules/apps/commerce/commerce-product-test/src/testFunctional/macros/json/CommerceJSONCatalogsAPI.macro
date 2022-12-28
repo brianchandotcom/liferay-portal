@@ -38,8 +38,8 @@ definition {
 			for (var catalogId : list "${catalogIds}") {
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -69,8 +69,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		if (isSet(catalogName)) {
@@ -97,8 +97,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var catalogIds = JSONCurlUtil.get("${curl}", "$.items[?(@['system'] == false)].['id']");

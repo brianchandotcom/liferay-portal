@@ -8,8 +8,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
-			  -u test@liferay.com:test \
-			  -d groupIds=[${groupId}]
+				-u test@liferay.com:test \
+				-d groupIds=[${groupId}]
 		''';
 
 		var fileEntryTypeId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${fileEntryTypeName}')]['fileEntryTypeId']");
@@ -29,8 +29,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
-			  -u test@liferay.com:test \
-			  -d groupIds=[${groupId}]
+				-u test@liferay.com:test \
+				-d groupIds=[${groupId}]
 		''';
 
 		var fileEntryTypeIds = JSONCurlUtil.post("${curl}", "$..fileEntryTypeId");

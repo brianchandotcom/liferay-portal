@@ -37,8 +37,8 @@ definition {
 
 		var curl = '''
 			${analyticsCloudURL}/api/reports/export/${type}\?fromDate=${startDate}T${startTime}Z\&toDate=${endDate}T${endTime}Z
-			-H "Authorization: Bearer ${token}"
-			''';
+				-H "Authorization: Bearer ${token}"
+		''';
 
 		static var apiResponse = JSONCurlUtil.get("${curl}", "$");
 
@@ -50,7 +50,7 @@ definition {
 
 		var curl = '''
 			${analyticsCloudURL}/api/reports -H "Authorization: Bearer ${token}"
-			''';
+		''';
 
 		static var apiResponse = JSONCurlUtil.get("${curl}", "$");
 
@@ -94,16 +94,16 @@ definition {
 		if (isSet(parameters)) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords?${parameters} \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
+					-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+					-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+			''';
 		}
 		else {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
+					-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+					-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+			''';
 		}
 
 		static var apiResponse = JSONCurlUtil.get("${curl}");
@@ -130,11 +130,11 @@ definition {
 
 		var curl = '''
 			${analyticsCloudURL}/o/faro/main/${groupId}/preferences/send_email_report
-			-u 'test@liferay.com:test'
-			-F 'channelId="${channelId}"'
-			-F 'userId="${userID}"'
-			-F 'frequency="${frequency}"'
-			''';
+				-u 'test@liferay.com:test'
+				-F 'channelId="${channelId}"'
+				-F 'userId="${userID}"'
+				-F 'frequency="${frequency}"'
+		''';
 
 		JSONCurlUtil.post("${curl}");
 	}

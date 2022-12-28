@@ -12,12 +12,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/wiki.wikipage/add-page-attachment \
-			-u test@liferay.com:test \
-			-F nodeId=${nodeId} \
-			-F fileName=${fileName} \
-			-F mimeType=${mimeType} \
-			-F title=${title} \
-			-F file=@${filePath}
+				-u test@liferay.com:test \
+				-F nodeId=${nodeId} \
+				-F fileName=${fileName} \
+				-F mimeType=${mimeType} \
+				-F title=${title} \
+				-F file=@${filePath}
 		''';
 
 		echo("## Adding a 'File' with the following info using JSONWS:");
@@ -65,18 +65,18 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test' \
-			-d '{
-				"content": "${content}",
-				"creator": {},
-				"encodingFormat": "${encodingFormat}",
-				"headline": "${headline}",
-				"keywords": [${tagName}],
-				"parentWikiPageId": 0,
-				"taxonomyCategoryIds": [${assetCategoryIds}],
-				"viewableBy": "${viewableBy}"
-			}'
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test' \
+				-d '{
+					"content": "${content}",
+					"creator": {},
+					"encodingFormat": "${encodingFormat}",
+					"headline": "${headline}",
+					"keywords": [${tagName}],
+					"parentWikiPageId": 0,
+					"taxonomyCategoryIds": [${assetCategoryIds}],
+					"viewableBy": "${viewableBy}"
+				}'
 		''';
 
 		var messageId = JSONCurlUtil.post("${curl}");
@@ -142,17 +142,17 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test' \
-			-d '{
-				"content": "${content}",
-				"creator": {},
-				"encodingFormat": "${encodingFormat}",
-				"headline": "${headline}",
-				"keywords": [${tagName}],
-				"taxonomyCategoryIds": [${assetCategoryIds}],
-				"viewableBy": "${viewableBy}"
-			}'
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test' \
+				-d '{
+					"content": "${content}",
+					"creator": {},
+					"encodingFormat": "${encodingFormat}",
+					"headline": "${headline}",
+					"keywords": [${tagName}],
+					"taxonomyCategoryIds": [${assetCategoryIds}],
+					"viewableBy": "${viewableBy}"
+				}'
 		''';
 
 		var response = JSONCurlUtil.post("${curl}");
@@ -166,9 +166,9 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-		${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test' \
+			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test' \
 		''';
 
 		var response = JSONCurlUtil.delete("${curl}");
@@ -321,18 +321,18 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test' \
-			-d '{
-				"content": "${content}",
-				"creator": {},
-				"encodingFormat": "${encodingFormat}",
-				"headline": "${headline}",
-				"keywords": [${tagName}],
-				"taxonomyCategoryIds": [${assetCategoryIds}],
-				"viewableBy": "${viewableBy}",
-				"wikiNodeId": 0
-			}'
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test' \
+				-d '{
+					"content": "${content}",
+					"creator": {},
+					"encodingFormat": "${encodingFormat}",
+					"headline": "${headline}",
+					"keywords": [${tagName}],
+					"taxonomyCategoryIds": [${assetCategoryIds}],
+					"viewableBy": "${viewableBy}",
+					"wikiNodeId": 0
+				}'
 		''';
 
 		var messageId = JSONCurlUtil.put("${curl}");

@@ -22,13 +22,13 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${entryId}/comments \
-			-H 'Content-Type: application/json' \
-			-u '${userEmailAddress}:${userPassword}'
-			-d '{
-				"creator": {},
-				"parentCommentId": "${parentCommentId}",
-				"text": "${commentBody}"
-			}'
+				-H 'Content-Type: application/json' \
+				-u '${userEmailAddress}:${userPassword}'
+				-d '{
+					"creator": {},
+					"parentCommentId": "${parentCommentId}",
+					"text": "${commentBody}"
+				}'
 		''';
 
 		echo("## Adding a 'Comment' with the following info using JSONWS:");
@@ -111,25 +111,25 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/blogs.blogsentry/add-entry \
-			-u ${userEmailAddress}:${userPassword} \
-			-d externalReferenceCode= \
-			-d title=${entryTitle} \
-			-d subtitle=${entrySubtitle} \
-			-d urlTitle=${friendlyURL} \
-			-d description=${entryAbstractDescription} \
-			-d content=${contentXml} \
-			-d displayDateMonth=${displayDateMonth} \
-			-d displayDateDay=${displayDateDay} \
-			-d displayDateYear=${displayDateYear} \
-			-d displayDateHour=${displayDateHour} \
-			-d displayDateMinute=${displayDateMinute} \
-			-d allowPingbacks=true \
-			-d allowTrackbacks=false \
-			-d trackbacks= \
-			-d coverImageCaption= \
-			-d -coverImageImageSelector= \
-			-d -smallImageImageSelector= \
-			-d serviceContext=${serviceContext}
+				-u ${userEmailAddress}:${userPassword} \
+				-d externalReferenceCode= \
+				-d title=${entryTitle} \
+				-d subtitle=${entrySubtitle} \
+				-d urlTitle=${friendlyURL} \
+				-d description=${entryAbstractDescription} \
+				-d content=${contentXml} \
+				-d displayDateMonth=${displayDateMonth} \
+				-d displayDateDay=${displayDateDay} \
+				-d displayDateYear=${displayDateYear} \
+				-d displayDateHour=${displayDateHour} \
+				-d displayDateMinute=${displayDateMinute} \
+				-d allowPingbacks=true \
+				-d allowTrackbacks=false \
+				-d trackbacks= \
+				-d coverImageCaption= \
+				-d -coverImageImageSelector= \
+				-d -smallImageImageSelector= \
+				-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'Blog' with the following info using JSONWS:");
@@ -194,7 +194,7 @@ definition {
 		}
 
 		var curl = '''
-				${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
+			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-u ${userEmailAddress}:${userPassword} \
@@ -204,8 +204,8 @@ definition {
 					"creator": {},
 					"headline": "${entryTitle}",
 					"image": {
-					"caption": "",
-					"imageId": ${coverImageId}
+						"caption": "",
+						"imageId": ${coverImageId}
 					},
 					"keywords": [${assetTagNames}],
 					"taxonomyCategoryIds": [${assetCategoryIds}],
@@ -237,17 +237,17 @@ definition {
 		if (isSet(friendlyURL)) {
 			var curl = '''
 				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
-			 	-u test@liferay.com:test \
-			 	-d groupId=${groupId} \
-			  	-d urlTitle=${friendlyURL}
-				''';
+					-u test@liferay.com:test \
+					-d groupId=${groupId} \
+					-d urlTitle=${friendlyURL}
+			''';
 		}
 		else {
 			var curl = '''
 				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
-			  	-u test@liferay.com:test \
-			  	-d groupId=${groupId} \
-			  	-d urlTitle=${entryTitle}
+					-u test@liferay.com:test \
+					-d groupId=${groupId} \
+					-d urlTitle=${entryTitle}
 			''';
 		}
 
@@ -272,8 +272,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test'
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test'
 		''';
 
 		var imageId = JSONCurlUtil.get("${curl}", "$..[?(@['title'] == '${imageTitle}')]['id']");
@@ -300,8 +300,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/blogs.blogsentry/move-entry-to-trash \
-			-u ${userEmailAddress}:${userPassword} \
-			-d entryId=${entryId} \
+				-u ${userEmailAddress}:${userPassword} \
+				-d entryId=${entryId} \
 		''';
 
 		var messageId = JSONCurlUtil.post("${curl}");
@@ -318,8 +318,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-posting-images/${imageId} \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test'
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test'
 		''';
 
 		JSONCurlUtil.delete("${curl}");
@@ -350,7 +350,7 @@ definition {
 			site = "${site}");
 
 		var curl = '''
-				${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings/subscribe \
+			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings/subscribe \
 				-H Content-Type: application/json \
 				-u ${userEmailAddress}:${userPassword}
 		''';
@@ -431,25 +431,25 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/blogs.blogsentry/update-entry \
-			-u ${userEmailAddress}:${userPassword} \
-			-d entryId=${entryId} \
-			-d title=${newEntryTitle} \
-			-d subtitle=${entrySubtitle} \
-			-d urlTitle=${newFriendlyURL} \
-			-d description= \
-			-d content=${contentXml} \
-			-d displayDateMonth=${displayDateMonth} \
-			-d displayDateDay=${displayDateDay} \
-			-d displayDateYear=${displayDateYear} \
-			-d displayDateHour=${displayDateHour} \
-			-d displayDateMinute=${displayDateMinute} \
-			-d allowPingbacks=true \
-			-d allowTrackbacks=true \
-			-d trackbacks= \
-			-d coverImageCaption='' \
-			-d -coverImageImageSelector= \
-			-d -smallImageImageSelector= \
-			-d serviceContext=${serviceContext}
+				-u ${userEmailAddress}:${userPassword} \
+				-d entryId=${entryId} \
+				-d title=${newEntryTitle} \
+				-d subtitle=${entrySubtitle} \
+				-d urlTitle=${newFriendlyURL} \
+				-d description= \
+				-d content=${contentXml} \
+				-d displayDateMonth=${displayDateMonth} \
+				-d displayDateDay=${displayDateDay} \
+				-d displayDateYear=${displayDateYear} \
+				-d displayDateHour=${displayDateHour} \
+				-d displayDateMinute=${displayDateMinute} \
+				-d allowPingbacks=true \
+				-d allowTrackbacks=true \
+				-d trackbacks= \
+				-d coverImageCaption='' \
+				-d -coverImageImageSelector= \
+				-d -smallImageImageSelector= \
+				-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Updating a 'Blog' with the following info using JSONWS:");
@@ -486,7 +486,7 @@ definition {
 		}
 
 		var curl = '''
-				${portalURL}/o/headless-delivery/v1.0/blog-postings/${entryId} \
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/${entryId} \
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-u ${userEmailAddress}:${userPassword} \
@@ -495,8 +495,8 @@ definition {
 					"creator": {},
 					"headline": "${entryTitle}",
 					"image": {
-					"caption": "",
-					"imageId": ${coverImageId}
+						"caption": "",
+						"imageId": ${coverImageId}
 					}
 				}
 		''';
@@ -525,10 +525,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
-			-H accept: application/json \
-			-H Content-Type: multipart/form-data \
-			-u test@liferay.com:test \
-			-F file=@${filePath}
+				-H accept: application/json \
+				-H Content-Type: multipart/form-data \
+				-u test@liferay.com:test \
+				-F file=@${filePath}
 		''';
 
 		var imageId = JSONCurlUtil.post("${curl}", "$..id");

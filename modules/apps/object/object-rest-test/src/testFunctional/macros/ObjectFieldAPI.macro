@@ -12,9 +12,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/${api} \
-			-H accept: application/json \
-			-H Content-Type: application/json \
-			-u test@liferay.com:test \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u test@liferay.com:test \
 		''';
 
 		return "${curl}";

@@ -32,12 +32,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/redirect.redirectentry/add-redirect-entry \
-			-u ${userEmailAddress}:${userPassword} \
-			-d groupId=${groupId} \
-			-d destinationURL=${destinationURL} \
-			-d expirationDate=${expirationDate} \
-			-d permanent=${permanent} \
-			-d sourceURL=${sourceURL}
+				-u ${userEmailAddress}:${userPassword} \
+				-d groupId=${groupId} \
+				-d destinationURL=${destinationURL} \
+				-d expirationDate=${expirationDate} \
+				-d permanent=${permanent} \
+				-d sourceURL=${sourceURL}
 		''';
 
 		echo("## Adding a 'Redirection' with the following info using JSONWS:");
@@ -82,11 +82,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/redirect.redirectentry/get-redirect-entries \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d "start=-1" \
-			-d "end=-1" \
-			-d -orderByComparator=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
 		''';
 
 		var redirectEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['destinationURL'] == '${destinationURL}')]['redirectEntryId']");
@@ -130,7 +130,7 @@ definition {
 				-d expirationDate=${expirationDate} \
 				-d permanent=${permanent} \
 				-d sourceURL=${sourceURL}
-
+				
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

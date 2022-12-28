@@ -5,12 +5,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-d {
-				"externalReferenceCode": "${externalReferenceCode}",
-				"name": "${name}"
-			}
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"externalReferenceCode": "${externalReferenceCode}",
+					"name": "${name}"
+				}
 		''';
 
 		var curl = JSONCurlUtil.post("${curl}");
@@ -25,9 +25,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/${externalReferenceCode} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-H accept: application/json \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-H accept: application/json \
 		''';
 
 		return "${curl}";
@@ -40,8 +40,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${taxonomyCategoryId} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");

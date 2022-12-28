@@ -7,17 +7,17 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/announcementsentry/add-entry \
-			-u ${userEmailAddress}:${userPassword} \
-			-d classNameId=0 \
-			-d classPK=0 \
-			-d title=${announcementTitle} \
-			-d content=${announcementContent} \
-			-d url=${announcementURL} \
-			-d type=${announcementType} \
-			-d displayDate=${displayDate} \
-			-d expirationDate=${expirationDate} \
-			-d priority=${priority} \
-			-d alert=false
+				-u ${userEmailAddress}:${userPassword} \
+				-d classNameId=0 \
+				-d classPK=0 \
+				-d title=${announcementTitle} \
+				-d content=${announcementContent} \
+				-d url=${announcementURL} \
+				-d type=${announcementType} \
+				-d displayDate=${displayDate} \
+				-d expirationDate=${expirationDate} \
+				-d priority=${priority} \
+				-d alert=false
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

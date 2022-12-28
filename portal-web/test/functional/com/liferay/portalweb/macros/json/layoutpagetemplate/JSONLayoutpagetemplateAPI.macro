@@ -8,15 +8,15 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d layoutPageTemplateCollectionId=0 \
-			  -d classNameId=${classNameId} \
-			  -d classTypeId=${classTypeId} \
-			  -d name=${displayPageTemplateEntryName} \
-			  -d masterLayoutPlid=${masterLayoutPlid} \
-			  -d status=${status} \
-			  -d serviceContext=${serviceContext}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d layoutPageTemplateCollectionId=0 \
+				-d classNameId=${classNameId} \
+				-d classTypeId=${classTypeId} \
+				-d name=${displayPageTemplateEntryName} \
+				-d masterLayoutPlid=${masterLayoutPlid} \
+				-d status=${status} \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -30,11 +30,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoutprototype/add-layout-prototype \
-			  -u test@liferay.com:test \
-			  -d nameMap=${nameMap} \
-			  -d descriptionMap=${descriptionMap} \
-			  -d active=${active} \
-			  -d serviceContext=${serviceContext}
+				-u test@liferay.com:test \
+				-d nameMap=${nameMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d active=${active} \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -48,11 +48,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d name=${layoutPageTemplateCollectionName} \
-			  -d description=${description} \
-			  -d serviceContext=${serviceContext}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${layoutPageTemplateCollectionName} \
+				-d description=${description} \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -66,14 +66,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d layoutPageTemplateCollectionId=${layoutPageTemplateCollectionId} \
-			  -d name=${layoutPageTemplateEntryName} \
-			  -d type=${type} \
-			  -d masterLayoutPlid=${masterLayoutPlid} \
-			  -d status=${status} \
-			  -d serviceContext=${serviceContext}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d layoutPageTemplateCollectionId=${layoutPageTemplateCollectionId} \
+				-d name=${layoutPageTemplateEntryName} \
+				-d type=${type} \
+				-d masterLayoutPlid=${masterLayoutPlid} \
+				-d status=${status} \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -87,14 +87,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d layoutPageTemplateCollectionId=0 \
-			  -d name=${masterPageTemplateEntryName} \
-			  -d type=3 \
-			  -d masterLayoutPlid=0 \
-			  -d status=2 \
-			  -d serviceContext=${serviceContext}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d layoutPageTemplateCollectionId=0 \
+				-d name=${masterPageTemplateEntryName} \
+				-d type=3 \
+				-d masterLayoutPlid=0 \
+				-d status=2 \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -108,8 +108,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/delete-layout-page-template-entry \
-			  -u test@liferay.com:test \
-			  -d layoutPageTemplateEntryId=${layoutPageTemplateEntryId}
+				-u test@liferay.com:test \
+				-d layoutPageTemplateEntryId=${layoutPageTemplateEntryId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -123,12 +123,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d type=1 \
-			  -d "start=-1" \
-			  -d "end=-1" \
-			  -d -orderByComparator=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d type=1 \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
 		''';
 
 		var displayPageTemplatePlid = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${displayPageTemplateEntryName}')]['plid']");
@@ -169,12 +169,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d type=${type} \
-			  -d "start=-1" \
-			  -d "end=-1" \
-			  -d -orderByComparator=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d type=${type} \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
 		''';
 
 		var layoutPageTemplateEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${layoutPageTemplateEntryName}')]['layoutPageTemplateEntryId']");
@@ -194,12 +194,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d type=${type} \
-			  -d "start=-1" \
-			  -d "end=-1" \
-			  -d -orderByComparator=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d type=${type} \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
 		''';
 
 		var layoutPrototypeId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${layoutPageTemplateEntryName}')]['layoutPrototypeId']");
@@ -219,12 +219,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d type=3 \
-			  -d "start=-1" \
-			  -d "end=-1" \
-			  -d -orderByComparator=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d type=3 \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
 		''';
 
 		var masterLayoutPlid = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${masterLayoutEntryName}')]['plid']");

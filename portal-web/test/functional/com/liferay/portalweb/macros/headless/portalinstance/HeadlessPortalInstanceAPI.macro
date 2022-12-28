@@ -13,8 +13,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-			-u ${userName}:test \
-			-H Content-Type: application/json
+				-u ${userName}:test \
+				-H Content-Type: application/json
 		''';
 
 		var json = JSONCurlUtil.get("${curl}");
@@ -51,9 +51,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-			-u ${userName}:test \
-			-d ${parameters} \
-			-H Content-Type: application/json
+				-u ${userName}:test \
+				-d ${parameters} \
+				-H Content-Type: application/json
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -93,9 +93,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-			-u ${userName}:test \
-			-d ${parameters} \
-			-H Content-Type: application/json
+				-u ${userName}:test \
+				-d ${parameters} \
+				-H Content-Type: application/json
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -132,8 +132,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
-			-u ${userName}:test \
-			-H Content-Type: application/json
+				-u ${userName}:test \
+				-H Content-Type: application/json
 		''';
 
 		JSONCurlUtil.delete("${curl}");

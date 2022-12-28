@@ -49,8 +49,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var response = JSONCurlUtil.get("${curl}");

@@ -9,10 +9,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/team/add-team \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d name=${teamName} \
-			-d description=${teamDescription} \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${teamName} \
+				-d description=${teamDescription} \
 		''';
 
 		echo("## Adding a 'Team' with the following info using JSONWS:");
@@ -35,9 +35,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-team-users \
-			-u test@liferay.com:test \
-			-d teamId=${teamId} \
-			-d userIds=[${userId}]
+				-u test@liferay.com:test \
+				-d teamId=${teamId} \
+				-d userIds=[${userId}]
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -52,9 +52,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/team/get-team \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d name=${key_teamName}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${key_teamName}
 		''';
 
 		var teamId = JSONCurlUtil.post("${curl}", "$.teamId");

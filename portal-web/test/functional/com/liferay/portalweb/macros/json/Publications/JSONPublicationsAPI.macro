@@ -42,12 +42,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ct.ctcollection/get-ct-collections \
-			-u test@liferay.com:test \
-			-d companyId=${companyId} \
-			-d statuses=[2] \
-			-d <CURL_DATA[start=-1]CURL_DATA> \
-			-d <CURL_DATA[end=-1]CURL_DATA> \
-			-d -orderByComparator=
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d statuses=[2] \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -orderByComparator=
 		''';
 
 		var ctCollectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${publicationName}')]['ctCollectionId']");

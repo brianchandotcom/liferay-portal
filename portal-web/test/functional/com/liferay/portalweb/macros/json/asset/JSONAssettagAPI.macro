@@ -8,7 +8,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/assettag/add-tag \
-			-u test@liferay.com:test \
+				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d name=${tagName}
 		''';

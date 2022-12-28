@@ -18,10 +18,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H Content-Type: multipart/form-data \
-            -F document={"externalReferenceCode": "${externalReferenceCode}"} \
-			-F file=@${filePath} 
+				-u test@liferay.com:test \
+				-H Content-Type: multipart/form-data \
+				-F document={"externalReferenceCode": "${externalReferenceCode}"} \
+				-F file=@${filePath}
 		''';
 
 		var curl = JSONCurlUtil.post("${curl}");
@@ -43,8 +43,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.delete("${curl}");
@@ -59,8 +59,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/documents?filter=${filtervalue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -82,8 +82,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -98,8 +98,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -125,7 +125,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u test@liferay.com:test \
+				-u test@liferay.com:test \
 		''';
 		var delimiter = " ";
 

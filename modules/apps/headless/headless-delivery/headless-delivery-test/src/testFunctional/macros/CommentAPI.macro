@@ -33,9 +33,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments/batch?createStrategy=${createStrategy} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-d ${body}
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d ${body}
 		''';
 
 		var curl = JSONCurlUtil.post("${curl}");
@@ -55,8 +55,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
 		''';
 
 		return "${curl}";
@@ -79,8 +79,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/${api} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		return "${curl}";

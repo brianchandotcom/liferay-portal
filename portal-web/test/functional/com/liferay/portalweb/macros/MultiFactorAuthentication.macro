@@ -34,8 +34,8 @@ definition {
 
 	macro canAdminDisableBasicAuthentication {
 		var curl = '''
-				http://www.able.com:8080/api/jsonws/user/get-current-user
-			''';
+			http://www.able.com:8080/api/jsonws/user/get-current-user
+		''';
 
 		var reponse = JSONCurlUtil.get("${curl}");
 

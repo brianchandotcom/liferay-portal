@@ -135,15 +135,15 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{
-				  	"accountId": "${accountEntryId}",
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"accountId": "${accountEntryId}",
 					"billingAddressId": ${billingAddressId},
-            		"channelId": "${commerceChannelIds}",
-            		"currencyCode": "USD",
-            		"paymentStatus": "${paymentStatus}",
+					"channelId": "${commerceChannelIds}",
+					"currencyCode": "USD",
+					"paymentStatus": "${paymentStatus}",
 					"paymentMethod": "${paymentMethod}",
 					"orderItems": [${orderItemsList}],
 					"orderStatus": ${orderStatus},
@@ -180,12 +180,12 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderItems \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{
-				  	"quantity": "${quantity}",
-      				"skuId": "${skuId}"
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"quantity": "${quantity}",
+					"skuId": "${skuId}"
 				}'
 		''';
 
@@ -224,19 +224,19 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/order-rules \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
- 			-H 'Content-Type: application/json' \
-  			-d '{	
-  				  "active": true,
-				  "description": "${orderRuleDescription}",
-				  "name": "${orderRuleName}",
-				  "neverExpire": true,
-				  "priority": ${priority},
-				  "type": "${orderRuleType}",
-				  "typeSettings": "${orderRuleType}-field-amount=${amount}\n${orderRuleType}-field-apply-to=${orderRuleType}-field-apply-to-order-${applyTo}\n${orderRuleType}-field-currency-code=${currencyCode}\n"
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": true,
+					"description": "${orderRuleDescription}",
+					"name": "${orderRuleName}",
+					"neverExpire": true,
+					"priority": ${priority},
+					"type": "${orderRuleType}",
+					"typeSettings": "${orderRuleType}-field-amount=${amount}\n${orderRuleType}-field-apply-to=${orderRuleType}-field-apply-to-order-${applyTo}\n${orderRuleType}-field-currency-code=${currencyCode}\n"
 				}'
-			''';
+		''';
 
 		JSONCurlUtil.post("${curl}");
 	}
@@ -276,11 +276,11 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/order-types \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
- 			-H 'Content-Type: application/json' \
-  			-d '{
-  					"active": ${active},
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": ${active},
 					"customFields": {},
 					"description": {
 						"en_US": "${orderTypeDescription}"
@@ -293,12 +293,12 @@ definition {
 					},
 					"neverExpire": ${neverExpire},
 					"workflowStatusInfo": {
-					"code": 0,
-					"label": "approved",
-					"label_i18n": "Approved"
+						"code": 0,
+						"label": "approved",
+						"label_i18n": "Approved"
 					}
 				}'
-			''';
+		''';
 
 		JSONCurlUtil.post("${curl}");
 	}
@@ -320,8 +320,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -351,8 +351,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var orderId = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -378,8 +378,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders?pageSize=${ordersCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var orderIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -398,8 +398,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderItems \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var orderItemCustomFieldValue = JSONCurlUtil.get("${curl}", "$..items[?(@['sku'] == '${sku}')].customFields[?(@['name'] == '${customFieldName}')].customValue.data");
@@ -418,8 +418,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var ordersCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
@@ -444,9 +444,9 @@ definition {
 
 		var curl = '''
 			${baseURL}/api/jsonws/commerce.commerceorder/update-commerce-order-external-reference-code \
-			-u test@liferay.com:test \
-			-d externalReferenceCode='${externalReferenceCode}' \
-			-d commerceOrderId=${commerceOrderId}
+				-u test@liferay.com:test \
+				-d externalReferenceCode='${externalReferenceCode}' \
+				-d commerceOrderId=${commerceOrderId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

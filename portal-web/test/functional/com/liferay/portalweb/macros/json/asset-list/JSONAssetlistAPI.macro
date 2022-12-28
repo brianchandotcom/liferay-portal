@@ -8,10 +8,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetlist.assetlistentry/add-asset-list-entry \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d title=${title} \
-			-d type=${type}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d title=${title} \
+				-d type=${type}
 		''';
 
 		var assetListEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['assetListEntryId']");
@@ -33,11 +33,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetlist.assetlistentry/add-dynamic-asset-list-entry \
-			-u test@liferay.com:test \
-			-d userId=${userId} \
-			-d groupId=${groupId} \
-			-d title=${title} \
-			-d typeSettings=${typeSettings}
+				-u test@liferay.com:test \
+				-d userId=${userId} \
+				-d groupId=${groupId} \
+				-d title=${title} \
+				-d typeSettings=${typeSettings}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -71,10 +71,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetlist.assetlistentry/update-asset-list-entry-type-settings \
-			-u test@liferay.com:test \
-			-d assetListEntryId=${assetListEntryId} \
-			-d segmentsEntryId=${segmentsEntryId} \
-			-d typeSettings=${typeSettings}
+				-u test@liferay.com:test \
+				-d assetListEntryId=${assetListEntryId} \
+				-d segmentsEntryId=${segmentsEntryId} \
+				-d typeSettings=${typeSettings}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

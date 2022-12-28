@@ -22,20 +22,20 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"label": {
-				"en_US": "${labelName}"
-			},
-			"name": "${objectName}",
-			"objectFields": [],
-			"panelCategoryKey": "${panelCategoryKey}",
-			"pluralLabel": {
-				"en_US": "${pluralLabelName}"
-			},
-			"scope": "${scope}"
-			}'
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"label": {
+						"en_US": "${labelName}"
+					},
+					"name": "${objectName}",
+					"objectFields": [],
+					"panelCategoryKey": "${panelCategoryKey}",
+					"pluralLabel": {
+						"en_US": "${pluralLabelName}"
+					},
+					"scope": "${scope}"
+				}'
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -89,132 +89,132 @@ definition {
 			if ("${showFilesInDocumentsAndMedia}" == "false") {
 				var curl = '''
 					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
-					-H 'Content-Type: application/json' \
-					-u ${userEmailAddress}:${userPassword} \
-					-d '{
-					"DBType": "${fieldType}",
-					"businessType": "${fieldBusinessType}",
-					"indexed": ${indexed},
-					"indexedAsKeyword": ${indexedAsKeyword},
-					"label": {
-						"en_US": "${fieldLabelName}"
-					},
-					"listTypeDefinitionId": ${picklistId},
-					"name": "${fieldName}",
-					"objectFieldSettings": [
-						{
-							"name": "acceptedFileExtensions",
-							"value": "jpeg, jpg, pdf, png"
+						-H 'Content-Type: application/json' \
+						-u ${userEmailAddress}:${userPassword} \
+						-d '{
+							"DBType": "${fieldType}",
+							"businessType": "${fieldBusinessType}",
+							"indexed": ${indexed},
+							"indexedAsKeyword": ${indexedAsKeyword},
+							"label": {
+								"en_US": "${fieldLabelName}"
 							},
-							{
-							"name": "maximumFileSize",
-							"value": "100"
-							},
-						{
-							"name": "fileSource",
-							"value": "userComputer"
-						},
-						{
-							"name": "showFilesInDocumentsAndMedia",
-							"value": "false"
-						}
-					],
-					"required": ${isRequired}
-					}'
+							"listTypeDefinitionId": ${picklistId},
+							"name": "${fieldName}",
+							"objectFieldSettings": [
+								{
+									"name": "acceptedFileExtensions",
+									"value": "jpeg, jpg, pdf, png"
+								},
+								{
+									"name": "maximumFileSize",
+									"value": "100"
+								},
+								{
+									"name": "fileSource",
+									"value": "userComputer"
+								},
+								{
+									"name": "showFilesInDocumentsAndMedia",
+									"value": "false"
+								}
+							],
+							"required": ${isRequired}
+						}'
 				''';
 			}
 			else {
 				var curl = '''
 					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
-					-H 'Content-Type: application/json' \
-					-u ${userEmailAddress}:${userPassword} \
-					-d '{
-					"DBType": "${fieldType}",
-					"businessType": "${fieldBusinessType}",
-					"indexed": ${indexed},
-					"indexedAsKeyword": ${indexedAsKeyword},
-					"label": {
-						"en_US": "${fieldLabelName}"
-					},
-					"listTypeDefinitionId": ${picklistId},
-					"name": "${fieldName}",
-					"objectFieldSettings": [
-						{
-							"name": "acceptedFileExtensions",
-							"value": "jpeg, jpg, pdf, png"
+						-H 'Content-Type: application/json' \
+						-u ${userEmailAddress}:${userPassword} \
+						-d '{
+							"DBType": "${fieldType}",
+							"businessType": "${fieldBusinessType}",
+							"indexed": ${indexed},
+							"indexedAsKeyword": ${indexedAsKeyword},
+							"label": {
+								"en_US": "${fieldLabelName}"
 							},
-							{
-							"name": "maximumFileSize",
-							"value": "100"
-							},
-						{
-							"name": "fileSource",
-							"value": "userComputer"
-						},
-						{
-							"name": "showFilesInDocumentsAndMedia",
-							"value": "true"
-						},
-						{
-							"name": "storageDLFolderPath",
-							"value": "${storageDLFolderPath}"
-						}
-					],
-					"required": ${isRequired}
-					}'
+							"listTypeDefinitionId": ${picklistId},
+							"name": "${fieldName}",
+							"objectFieldSettings": [
+								{
+									"name": "acceptedFileExtensions",
+									"value": "jpeg, jpg, pdf, png"
+								},
+								{
+									"name": "maximumFileSize",
+									"value": "100"
+								},
+								{
+									"name": "fileSource",
+									"value": "userComputer"
+								},
+								{
+									"name": "showFilesInDocumentsAndMedia",
+									"value": "true"
+								},
+								{
+									"name": "storageDLFolderPath",
+									"value": "${storageDLFolderPath}"
+								}
+							],
+							"required": ${isRequired}
+						}'
 				''';
 			}
 		}
 		else if ("${fileSource}" == "documentsAndMedia") {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
-				-H 'Content-Type: application/json' \
-				-u ${userEmailAddress}:${userPassword} \
-				-d '{
-				"DBType": "${fieldType}",
-				"businessType": "${fieldBusinessType}",
-				"indexed": ${indexed},
-				"indexedAsKeyword": ${indexedAsKeyword},
-				"label": {
-					"en_US": "${fieldLabelName}"
-				},
-				"listTypeDefinitionId": ${picklistId},
-				"name": "${fieldName}",
-				"objectFieldSettings": [
-					{
-						"name": "acceptedFileExtensions",
-						"value": "jpeg, jpg, pdf, png"
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"DBType": "${fieldType}",
+						"businessType": "${fieldBusinessType}",
+						"indexed": ${indexed},
+						"indexedAsKeyword": ${indexedAsKeyword},
+						"label": {
+							"en_US": "${fieldLabelName}"
 						},
-						{
-						"name": "maximumFileSize",
-						"value": "100"
-						},
-					{
-						"name": "fileSource",
-						"value": "documentsAndMedia"
-					}
-				],
-				"required": ${isRequired}
-				}'
+						"listTypeDefinitionId": ${picklistId},
+						"name": "${fieldName}",
+						"objectFieldSettings": [
+							{
+								"name": "acceptedFileExtensions",
+								"value": "jpeg, jpg, pdf, png"
+							},
+							{
+								"name": "maximumFileSize",
+								"value": "100"
+							},
+							{
+								"name": "fileSource",
+								"value": "documentsAndMedia"
+							}
+						],
+						"required": ${isRequired}
+					}'
 			''';
 		}
 		else {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
-				-H 'Content-Type: application/json' \
-				-u ${userEmailAddress}:${userPassword} \
-				-d '{
-				"DBType": "${fieldType}",
-				"businessType": "${fieldBusinessType}",
-				"indexed": ${indexed},
-				"indexedAsKeyword": ${indexedAsKeyword},
-				"label": {
-					"en_US": "${fieldLabelName}"
-				},
-				"listTypeDefinitionId": ${picklistId},
-				"name": "${fieldName}",
-				"required": ${isRequired}
-				}'
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"DBType": "${fieldType}",
+						"businessType": "${fieldBusinessType}",
+						"indexed": ${indexed},
+						"indexedAsKeyword": ${indexedAsKeyword},
+						"label": {
+							"en_US": "${fieldLabelName}"
+						},
+						"listTypeDefinitionId": ${picklistId},
+						"name": "${fieldName}",
+						"required": ${isRequired}
+					}'
 			''';
 		}
 
@@ -239,15 +239,15 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-layouts \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"defaultObjectLayout": false,
-			"name": {
-				"en_US": "${layoutName}"
-			},
-			"objectDefinitionId": ${objectId}
-			}'
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"defaultObjectLayout": false,
+					"name": {
+						"en_US": "${layoutName}"
+					},
+					"objectDefinitionId": ${objectId}
+				}'
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -279,19 +279,19 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectID_1}/object-relationships \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"deletionType": "${deletionType}",
-			"label": {
-			  "en_US": "${relationshipLabel}"
-			},
-			"name": "${relationshipName}",
-			"objectDefinitionId1": ${objectID_1},
-			"objectDefinitionId2": ${objectID_2},
-			"objectDefinitionName2": "${objectName_2}",
-			"type": "${relationshipType}"
-			}'
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"deletionType": "${deletionType}",
+					"label": {
+						"en_US": "${relationshipLabel}"
+					},
+					"name": "${relationshipName}",
+					"objectDefinitionId1": ${objectID_1},
+					"objectDefinitionId2": ${objectID_2},
+					"objectDefinitionName2": "${objectName_2}",
+					"type": "${relationshipType}"
+				}'
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -313,12 +313,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"${fieldName}": "${value}"
-			}'
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"${fieldName}": "${value}"
+				}'
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -338,14 +338,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"name": "${picklistName}",
-			"name_i18n": {
-				"en_US": "${picklistName}"
-			}
-			}'
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"name": "${picklistName}",
+					"name_i18n": {
+						"en_US": "${picklistName}"
+					}
+				}'
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -369,15 +369,15 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"key": "${itemKey}",
-			"name": "${itemName}",
-			"name_i18n": {
-				"en_US": "${itemName}"
-			}
-			}'
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"key": "${itemKey}",
+					"name": "${itemName}",
+					"name_i18n": {
+						"en_US": "${itemName}"
+					}
+				}'
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -397,7 +397,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		var objectIdList = JSONCurlUtil.get("${curl}", "$.items[?(@['system'] == false)]['id']");
@@ -405,9 +405,9 @@ definition {
 		if ("${objectIdList}" != "") {
 			for (var objectId : list "${objectIdList}") {
 				var curl = '''
-				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
-				-u ${userEmailAddress}:${userPassword}
-			''';
+					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
+						-u ${userEmailAddress}:${userPassword}
+				''';
 
 				JSONCurlUtil.delete("${curl}");
 			}
@@ -428,7 +428,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		var picklistIdList = JSONCurlUtil.get("${curl}", "$.items..id");
@@ -436,9 +436,9 @@ definition {
 		if ("${picklistIdList}" != "") {
 			for (var picklistId : list "${picklistIdList}") {
 				var curl = '''
-				${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
-				-u ${userEmailAddress}:${userPassword}
-			''';
+					${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
+						-u ${userEmailAddress}:${userPassword}
+				''';
 
 				JSONCurlUtil.delete("${curl}");
 			}
@@ -463,7 +463,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		JSONCurlUtil.delete("${curl}");
@@ -491,7 +491,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s/${entryId} \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		JSONCurlUtil.delete("${curl}");
@@ -515,7 +515,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		JSONCurlUtil.delete("${curl}");
@@ -543,7 +543,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s/${entryId} \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 	}
 
@@ -584,7 +584,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		if (("${type}" == "Attachment") || ("${type}" == "Picklist")) {
@@ -612,7 +612,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		var entryId = JSONCurlUtil.get("${curl}", "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
@@ -633,7 +633,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${objectName}')]['id']");
@@ -654,7 +654,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
-			-u ${userEmailAddress}:${userPassword}
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		var picklistId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${picklistName}')]['id']");
@@ -680,8 +680,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/publish \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword}
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword}
 		''';
 
 		JSONCurlUtil.post("${curl}");

@@ -9,13 +9,13 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmstructure/get-structures \
-			  -u test@liferay.com:test \
-			  -d companyId=${companyId} \
-			  -d groupIds=[${groupId}] \
-			  -d classNameId=${classNameId} \
-			  -d "start=-1" \
-			  -d "end=-1" \
-			  -d -orderByComparator=
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d groupIds=[${groupId}] \
+				-d classNameId=${classNameId} \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
 		''';
 
 		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${structureName}')]['structureId']");
@@ -36,13 +36,13 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmstructure/get-structures \
-			  -u test@liferay.com:test \
-			  -d companyId=${companyId} \
-			  -d groupIds=[${groupId}] \
-			  -d classNameId=${classNameId} \
-			  -d "start=-1" \
-			  -d "end=-1" \
-			  -d -orderByComparator=
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d groupIds=[${groupId}] \
+				-d classNameId=${classNameId} \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
 		''';
 
 		var structureIds = JSONCurlUtil.post("${curl}", "$..structureId");

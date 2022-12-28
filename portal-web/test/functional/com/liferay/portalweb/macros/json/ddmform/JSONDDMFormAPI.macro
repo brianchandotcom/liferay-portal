@@ -9,11 +9,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmforminstance/get-form-instances \
-			  -u test@liferay.com:test \
-			  -d companyId=${companyId} \
-			  -d groupId=${groupId} \
-			  -d "start=-1" \
-			  -d "end=-1"
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d groupId=${groupId} \
+				-d "start=-1" \
+				-d "end=-1"
 		''';
 
 		var formInstanceId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${formName}')]['formInstanceId']");
@@ -30,8 +30,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmforminstancerecord/get-form-instance-records \
-			  -u test@liferay.com:test \
-			  -d ddmFormInstanceId=${formInstanceId}
+				-u test@liferay.com:test \
+				-d ddmFormInstanceId=${formInstanceId}
 		''';
 
 		var formInstanceRecordId = JSONCurlUtil.post("${curl}", "$.[?(@['formInstanceId'] == '${formInstanceId}')]['formInstanceRecordId']");

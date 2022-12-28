@@ -128,7 +128,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-				${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints?search=${title} \
+			${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints?search=${title} \
 				-H 'accept: application/json' \
 				-u test@liferay.com:test
 		''';
@@ -146,7 +146,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-				${portalURL}/o/search-experiences-rest/v1.0/sxp-elements?search=${title} \
+			${portalURL}/o/search-experiences-rest/v1.0/sxp-elements?search=${title} \
 				-H 'accept: application/json' \
 				-u test@liferay.com:test
 		''';

@@ -12,8 +12,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
 		''';
 
 		return "${curl}";

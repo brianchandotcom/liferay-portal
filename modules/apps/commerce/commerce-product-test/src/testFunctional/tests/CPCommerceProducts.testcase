@@ -1285,26 +1285,26 @@ definition {
 			var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "Master");
 
 			var curl = '''
-			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{
-      			    "name": {
-           		      "en_US": "Simple Product"
-        		    },
-        			"catalogId": ${catalogId},
-        			"active": true,
-        			"productType": "simple",
-        			"images": [   
-           			 		      {
-                				    "src": "${baseURL}/documents/d/guest/tree-png",
-                				    "title": {
-                    	 		      "en_US": "icon"
-                				    }
-            					  }  
-       			 			  ]
-   				}'
+				${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+					-H 'Content-Type: application/json' \
+					-d '{
+						"name": {
+							"en_US": "Simple Product"
+						},
+						"catalogId": ${catalogId},
+						"active": true,
+						"productType": "simple",
+						"images": [
+							{
+								"src": "${baseURL}/documents/d/guest/tree-png",
+								"title": {
+									"en_US": "icon"
+								}
+							}
+						]
+					}'
 			''';
 
 			var responseBody = JSONCurlUtil.post("${curl}");

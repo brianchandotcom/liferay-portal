@@ -58,28 +58,28 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u ${userEmailAddress}:${userPassword} \
-			-H accept: application/json \
-			-H Content-Type: application/json \
-			-d {
-				"contentFields": [
-					{
-						"contentFieldValue": {
-							"data": "${content}"
-						},
-						"contentFieldValue_i18n": ${contentMap},
-						"name": "content"
-					}
-				],
-				"contentStructureId": ${structureId},
-				"description": "${description}",
-				"keywords": [${assetTagNames}],
-				"taxonomyCategoryIds": [${assetCategoryIds}],
-				"description_i18n": ${descriptionMap},
-				"title": "${title}",
-				"title_i18n": ${titleMap},
-				"viewableBy": "${viewableBy}"
-			}
+				-u ${userEmailAddress}:${userPassword} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+					"contentFields": [
+						{
+							"contentFieldValue": {
+								"data": "${content}"
+							},
+							"contentFieldValue_i18n": ${contentMap},
+							"name": "content"
+						}
+					],
+					"contentStructureId": ${structureId},
+					"description": "${description}",
+					"keywords": [${assetTagNames}],
+					"taxonomyCategoryIds": [${assetCategoryIds}],
+					"description_i18n": ${descriptionMap},
+					"title": "${title}",
+					"title_i18n": ${titleMap},
+					"viewableBy": "${viewableBy}"
+				}
 		''';
 
 		var articleId = JSONCurlUtil.post("${curl}", "$.id");
@@ -99,8 +99,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -139,24 +139,24 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api}/structured-contents/ \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-d {
-				"contentFields": [{
-					"contentFieldValue": {
-						"data": "${data}"
-					},
-					"dataType": "string",
-					"label": "${label}",
-					"name": "${name}",
-					"nestedContentFields": [],
-					"repeatable": false
-				}],
-				"contentStructureId": "${ddmStructureId}",
-				"title": "${title}",
-				"priority": "${priority}",
-				"externalReferenceCode": "${externalReferenceCode}"
-			}
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"contentFields": [{
+						"contentFieldValue": {
+							"data": "${data}"
+						},
+						"dataType": "string",
+						"label": "${label}",
+						"name": "${name}",
+						"nestedContentFields": [],
+						"repeatable": false
+					}],
+					"contentStructureId": "${ddmStructureId}",
+					"title": "${title}",
+					"priority": "${priority}",
+					"externalReferenceCode": "${externalReferenceCode}"
+				}
 		''';
 
 		var curl = JSONCurlUtil.post("${curl}");
@@ -174,23 +174,23 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents/draft \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-d {
-				"contentFields": [{
-					"contentFieldValue": {
-						"data": "${data}"
-					},
-					"dataType": "string",
-					"label": "${label}",
-					"name": "${name}",
-					"nestedContentFields": [],
-					"repeatable": false
-				}],
-				"contentStructureId": "${ddmStructureId}",
-				"priority": "${priority}",
-				"title": "${title}"
-			}
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"contentFields": [{
+						"contentFieldValue": {
+							"data": "${data}"
+						},
+						"dataType": "string",
+						"label": "${label}",
+						"name": "${name}",
+						"nestedContentFields": [],
+						"repeatable": false
+					}],
+					"contentStructureId": "${ddmStructureId}",
+					"priority": "${priority}",
+					"title": "${title}"
+				}
 		''';
 
 		var curl = JSONCurlUtil.post("${curl}");
@@ -205,8 +205,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.delete("${curl}");
@@ -228,8 +228,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.delete("${curl}");
@@ -246,24 +246,24 @@ definition {
 			site = "true");
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-H accept: application/json \
-			-d {
-				"contentFields": [{
-					"contentFieldValue": {
-						"data": "${data}"
-					},
-					"dataType": "string",
-					"label": "${label}",
-					"name": "${name}",
-					"nestedContentFields": [],
-					"repeatable": false
-				}],
-				"contentStructureId": "${ddmStructureId}",
-				"title": "${title}",
-				"priority": "${priority}"
-			}
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-H accept: application/json \
+				-d {
+					"contentFields": [{
+						"contentFieldValue": {
+							"data": "${data}"
+						},
+						"dataType": "string",
+						"label": "${label}",
+						"name": "${name}",
+						"nestedContentFields": [],
+						"repeatable": false
+					}],
+					"contentStructureId": "${ddmStructureId}",
+					"title": "${title}",
+					"priority": "${priority}"
+				}
 		''';
 
 		var curl = JSONCurlUtil.put("${curl}");
@@ -281,8 +281,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -300,8 +300,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue}\&sort=${sortvalue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -319,8 +319,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -335,8 +335,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents?filter=${filtervalue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -351,8 +351,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents/by-external-reference-code/${externalReferenceCode} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -387,8 +387,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/${headlessComponent}/v1.0/${api} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
 		''';
 
 		return "${curl}";
@@ -404,8 +404,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents?sort=${sortvalue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");
@@ -420,20 +420,20 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents/by-external-reference-code/${externalReferenceCode} \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-d {
-				"contentFields": [{
-					"contentFieldValue": {
-						"data": "${data}"
-					},
-					"label": "${label}",
-					"name": "${name}"
-				}],
-				"contentStructureId": "${ddmStructureId}",
-				"externalReferenceCode": "${updateExternalReferenceCode}",
-				"title": "${title}"
-			}
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"contentFields": [{
+						"contentFieldValue": {
+							"data": "${data}"
+						},
+						"label": "${label}",
+						"name": "${name}"
+					}],
+					"contentStructureId": "${ddmStructureId}",
+					"externalReferenceCode": "${updateExternalReferenceCode}",
+					"title": "${title}"
+				}
 		''';
 
 		var curl = JSONCurlUtil.put("${curl}");
@@ -467,8 +467,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/structured-contents/${api} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");

@@ -710,11 +710,11 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		var curl = '''
-				${portalURL}/o/oauth2/token \
-					-d client_id=${generatedClientId} \
-					-d client_secret=${generatedClientSecret} \
-					-d grant_type=client_credentials
-				''';
+			${portalURL}/o/oauth2/token \
+				-d client_id=${generatedClientId} \
+				-d client_secret=${generatedClientSecret} \
+				-d grant_type=client_credentials
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -725,14 +725,14 @@ definition {
 		var jwt = FileUtil.read("${jwtFileBaseDir}/${jwtFileName}");
 
 		var curl = '''
-				${portalURL}/o/oauth2/token \
-					-H 'Content-Type: application/x-www-form-urlencoded' \
-					--data-urlencode 'client_id=${clientId}' \
-					--data-urlencode 'client_secret=${clientSecret}' \
-					--data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer' \
-					--data-urlencode 'scope=${scopes}'
-					--data-urlencode 'assertion=${jwt}'
-				''';
+			${portalURL}/o/oauth2/token \
+				-H 'Content-Type: application/x-www-form-urlencoded' \
+				--data-urlencode 'client_id=${clientId}' \
+				--data-urlencode 'client_secret=${clientSecret}' \
+				--data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer' \
+				--data-urlencode 'scope=${scopes}'
+				--data-urlencode 'assertion=${jwt}'
+		''';
 
 		if (!(isSet(noResponse))) {
 			var scopeList = JSONCurlUtil.post("${curl}", "$['scope']");

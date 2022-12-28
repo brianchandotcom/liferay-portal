@@ -13,8 +13,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/api/jsonws/dispatch.dispatchtrigger/delete-dispatch-trigger \
-			-u test@liferay.com:test \
-			-d dispatchTriggerId=${triggerId}
+				-u test@liferay.com:test \
+				-d dispatchTriggerId=${triggerId}
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -35,8 +35,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/api/jsonws/dispatch.dispatchtrigger/delete-dispatch-trigger \
-					-u test@liferay.com:test \
-					-d dispatchTriggerId=${triggerId}
+						-u test@liferay.com:test \
+						-d dispatchTriggerId=${triggerId}
 				''';
 
 				JSONCurlUtil.post("${curl}");
@@ -65,9 +65,9 @@ definition {
 
 		var curl = '''
 			${baseURL}/api/jsonws/dispatch.dispatchtrigger/get-dispatch-triggers \
-			-u test@liferay.com:test \
-			-d start=0 \
-			-d end=${triggerCount}
+				-u test@liferay.com:test \
+				-d start=0 \
+				-d end=${triggerCount}
 		''';
 
 		var triggerIds = JSONCurlUtil.post("${curl}", "$.[?(@['dispatchTaskExecutorType'] == '${taskExecutorType}')].['dispatchTriggerId']");
@@ -78,8 +78,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/api/jsonws/dispatch.dispatchtrigger/delete-dispatch-trigger \
-					-u test@liferay.com:test \
-					-d dispatchTriggerId=${triggerId}
+						-u test@liferay.com:test \
+						-d dispatchTriggerId=${triggerId}
 				''';
 
 				JSONCurlUtil.post("${curl}");
@@ -108,9 +108,9 @@ definition {
 
 		var curl = '''
 			${baseURL}/api/jsonws/dispatch.dispatchtrigger/get-dispatch-triggers \
-			-u test@liferay.com:test \
-			-d start=0 \
-			-d end=${triggerCount}
+				-u test@liferay.com:test \
+				-d start=0 \
+				-d end=${triggerCount}
 		''';
 
 		var triggerId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${triggerName}')]['dispatchTriggerId']");
@@ -134,9 +134,9 @@ definition {
 
 		var curl = '''
 			${baseURL}/api/jsonws/dispatch.dispatchtrigger/get-dispatch-triggers \
-			-u test@liferay.com:test \
-			-d start=0 \
-			-d end=${triggerCount}
+				-u test@liferay.com:test \
+				-d start=0 \
+				-d end=${triggerCount}
 		''';
 
 		var triggerIds = JSONCurlUtil.post("${curl}", "$..['dispatchTriggerId']");

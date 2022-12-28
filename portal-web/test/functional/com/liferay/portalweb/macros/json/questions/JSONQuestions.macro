@@ -27,7 +27,7 @@ definition {
 				-d format='creole' \
 				-d inputStreamOVPs= \
 				-d anonymous=false \
-			 	-d priority=0 \
+				-d priority=0 \
 				-d allowPingbacks=false
 		''';
 
@@ -89,14 +89,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbmessage/get-thread-messages \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d categoryId=${categoryId} \
-			-d threadId=${threadId} \
-			-d status=0 \
-			-d "start=-1" \
-			-d "end=-1"
-
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d categoryId=${categoryId} \
+				-d threadId=${threadId} \
+				-d status=0 \
+				-d "start=-1" \
+				-d "end=-1"
+				
 		''';
 
 		var commentTitle = JSONCurlUtil.post("${curl}", "$.[?(@['subject'] == 'RE: ${replyTitle}')]['subject']");
@@ -121,8 +121,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test'
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test'
 		''';
 
 		var status = JSONCurlUtil.get("${curl}", "$.[?(@['headline'] == '${titleField}')]['status']");
@@ -148,8 +148,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test'
+				-H 'Content-Type: application/json' \
+				-u 'test@liferay.com:test'
 		''';
 
 		var status = JSONCurlUtil.get("${curl}", "$.[?(@['headline'] == '${titleField}')]['status']");
@@ -176,13 +176,13 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbthread/get-threads \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d categoryId=${categoryId} \
-			-d status=0 \
-			-d "start=-1" \
-			-d "end=-1"
-
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d categoryId=${categoryId} \
+				-d status=0 \
+				-d "start=-1" \
+				-d "end=-1"
+				
 		''';
 
 		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['rootMessageId']");
@@ -213,13 +213,13 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbthread/get-threads \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d categoryId=${categoryId} \
-			-d status=${status} \
-			-d "start=-1" \
-			-d "end=-1"
-
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d categoryId=${categoryId} \
+				-d status=${status} \
+				-d "start=-1" \
+				-d "end=-1"
+				
 		''';
 
 		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['threadId']");

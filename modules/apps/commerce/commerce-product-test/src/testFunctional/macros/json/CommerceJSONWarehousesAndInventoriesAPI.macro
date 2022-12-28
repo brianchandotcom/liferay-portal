@@ -17,14 +17,14 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-  			-d '{
-				"quantity": ${warehouseItemQuantity},
-				"reservedQuantity": ${warehouseItemReservedQuantity},
-				"sku": "${warehouseItemSku}"
-			}'
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"quantity": ${warehouseItemQuantity},
+					"reservedQuantity": ${warehouseItemReservedQuantity},
+					"sku": "${warehouseItemSku}"
+				}'
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -105,10 +105,10 @@ definition {
 		}
 
 		var curl = '''
-				${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses?pageSize=${warehousesCount} \
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses?pageSize=${warehousesCount} \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
-			''';
+		''';
 
 		var warehouseIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
@@ -123,10 +123,10 @@ definition {
 		}
 
 		var curl = '''
-				${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses \
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
-			''';
+		''';
 
 		var warehousesCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
@@ -152,10 +152,10 @@ definition {
 		}
 
 		var curl = '''
-				${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses?pageSize=${warehousesCount} \
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses?pageSize=${warehousesCount} \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
-			''';
+		''';
 
 		if (isSet(warehouseName)) {
 			var warehouseId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${warehouseName}')].['id']");
@@ -176,10 +176,10 @@ definition {
 		var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = "${warehouseName}");
 
 		var curl = '''
-						${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems?pageSize=200 \
-						-u test@liferay.com:test \
-						-H 'accept: application/json' \
-					''';
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems?pageSize=200 \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+		''';
 
 		var warehouseItemId = JSONCurlUtil.get("${curl}", "$..items[?(@['sku'] == '${productSku}')]['id']");
 
@@ -231,11 +231,11 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouseItems/${warehouseItemId} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{${payload}}'
-			''';
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
 	}

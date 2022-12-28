@@ -9,8 +9,8 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountrole/associate-user \
 				-u test@liferay.com:test \
-                -d accountEntryId=${accountEntryId}
-                -d accountRoleId=${accountRoleId}
+				-d accountEntryId=${accountEntryId}
+				-d accountRoleId=${accountRoleId}
 				-d userId=${userId} \
 		''';
 

@@ -17,8 +17,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups/${accountGroupId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -46,10 +46,10 @@ definition {
 		}
 
 		var curl = '''
-				${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupCount} \
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupCount} \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
-			''';
+		''';
 
 		var accountGroupId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${accountGroupName}')].['id']");
 
@@ -72,8 +72,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -90,8 +90,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountGroupsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");

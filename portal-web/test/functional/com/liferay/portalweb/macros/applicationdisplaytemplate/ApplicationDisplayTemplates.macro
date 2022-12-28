@@ -134,8 +134,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmtemplate/get-template \
-			-u test@liferay.com:test \
-			-d templateId=${templateID}
+				-u test@liferay.com:test \
+				-d templateId=${templateID}
 		''';
 
 		var templateKey = JSONCurlUtil.post("${curl}", "$.templateKey");

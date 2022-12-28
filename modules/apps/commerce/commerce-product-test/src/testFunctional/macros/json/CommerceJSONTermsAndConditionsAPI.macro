@@ -32,12 +32,12 @@ definition {
             ''';
 
 			var curl = '''
-                ${baseURL}/o/headless-commerce-admin-order/v1.0/terms \
-                -u test@liferay.com:test \
-                -H 'accept: application/json' \
-				-H 'Content-Type: application/json' \
-                -d '${payload}'
-            ''';
+				${baseURL}/o/headless-commerce-admin-order/v1.0/terms \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+					-H 'Content-Type: application/json' \
+					-d '${payload}'
+			''';
 			var i = ${i} + 1;
 
 			JSONCurlUtil.post("${curl}");
@@ -61,8 +61,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-order/v1.0/terms/${termsAndConditionsId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -82,8 +82,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/terms \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var termsAndConditionsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
@@ -109,8 +109,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/terms?pageSize=${termsAndConditionsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var termsAndConditionsIds = JSONCurlUtil.get("${curl}", "$..['id']");

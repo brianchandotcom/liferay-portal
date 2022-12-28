@@ -25,11 +25,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoutset/update-layout-set-prototype-link-enabled \
-                           -u test@liferay.com:test \
-                           -d groupId=${groupId}  \
-                           -d privateLayout=${privateLayout} \
-                           -d layoutSetPrototypeLinkEnabled=true \
-                           -d layoutSetPrototypeUuid=${layoutSetPrototypeUuid}
+				-u test@liferay.com:test \
+				-d groupId=${groupId}  \
+				-d privateLayout=${privateLayout} \
+				-d layoutSetPrototypeLinkEnabled=true \
+				-d layoutSetPrototypeUuid=${layoutSetPrototypeUuid}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -88,8 +88,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoutsetprototype/get-layout-set-prototypes \
-                          -u test@liferay.com:test \
-                          -d companyId=${companyId}
+				-u test@liferay.com:test \
+				-d companyId=${companyId}
 		''';
 
 		var layoutSetPrototypeId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${siteTemplateName}')]['layoutSetPrototypeId']");
@@ -109,8 +109,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoutsetprototype/get-layout-set-prototypes \
-				 -u test@liferay.com:test \
-				 -d companyId=${companyId}
+				-u test@liferay.com:test \
+				-d companyId=${companyId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

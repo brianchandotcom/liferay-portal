@@ -450,10 +450,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/knowledge-base-articles/${resourcePrimKey}/knowledge-base-attachments \
-			-H accept: application/json \
-			-H Content-Type: multipart/form-data \
-			-u test@liferay.com:test \
-			-F file=@${filePath}
+				-H accept: application/json \
+				-H Content-Type: multipart/form-data \
+				-u test@liferay.com:test \
+				-F file=@${filePath}
 		''';
 
 		JSONCurlUtil.post("${curl}");

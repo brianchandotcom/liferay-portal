@@ -17,8 +17,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments/${shipmentId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -45,8 +45,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments?pageSize=${shipmentsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var shipmentIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -63,8 +63,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var shipmentsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");

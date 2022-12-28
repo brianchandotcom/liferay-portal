@@ -32,14 +32,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.clientextensionentry/add-client-extension-entry \
-				  -u test@liferay.com:test \
-				  -d description= \
-				  -d externalReferenceCode= \
-				  -d nameMap='{\"en_US\":\"${nameModified}\"}' \
-				  -d properties=${customElementPropertiesModified} \
-				  -d sourceCodeURL= \
-				  -d type='customElement' \
-				  -d typeSettings=cssURLs=${customElementCssurlModified}%0AhtmlElementName=${htmlNameModified}%0Aurls=${customElementURLModified}%0AuseESM=${customElementUseESMValue}%0Ainstanceable=true%0AportletCategoryName=category.remote-apps
+				-u test@liferay.com:test \
+				-d description= \
+				-d externalReferenceCode= \
+				-d nameMap='{\"en_US\":\"${nameModified}\"}' \
+				-d properties=${customElementPropertiesModified} \
+				-d sourceCodeURL= \
+				-d type='customElement' \
+				-d typeSettings=cssURLs=${customElementCssurlModified}%0AhtmlElementName=${htmlNameModified}%0Aurls=${customElementURLModified}%0AuseESM=${customElementUseESMValue}%0Ainstanceable=true%0AportletCategoryName=category.remote-apps
 		''';
 
 		JSONCurlUtil.post("${curl}");
@@ -95,9 +95,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.clientextensionentry/delete-client-extension-entry-by-external-reference-code \
-				  -u test@liferay.com:test \
-				  -d companyId=${companyId} \
-				  -d externalReferenceCode=${externalReferenceCode}
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d externalReferenceCode=${externalReferenceCode}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

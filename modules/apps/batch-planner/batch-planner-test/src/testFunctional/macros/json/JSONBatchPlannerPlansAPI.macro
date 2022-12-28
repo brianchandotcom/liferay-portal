@@ -16,7 +16,7 @@ definition {
 				var curl = '''
 					${baseURL}/api/jsonws/batchplanner.batchplannerplan/delete-batch-planner-plan \
 						-u test@liferay.com:test \
-                        -d batchPlannerPlanId=${batchPlannerPlanId}
+						-d batchPlannerPlanId=${batchPlannerPlanId}
 				''';
 
 				JSONCurlUtil.post("${curl}");
@@ -37,12 +37,12 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			  ${baseURL}/api/jsonws/batchplanner.batchplannerplan/get-batch-planner-plans \
-              -u test@liferay.com:test \
-              -d companyId=${companyId} \
-              -d start=0 \
-              -d end=100 \
-              -d -orderByComparator=
+			${baseURL}/api/jsonws/batchplanner.batchplannerplan/get-batch-planner-plans \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d start=0 \
+				-d end=100 \
+				-d -orderByComparator=
 		''';
 
 		var batchPlannerPlanIds = JSONCurlUtil.post("${curl}", "$..['batchPlannerPlanId']");

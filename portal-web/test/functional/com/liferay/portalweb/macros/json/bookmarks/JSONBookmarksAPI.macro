@@ -22,7 +22,7 @@ definition {
 				-d url=${url}
 				-d description=${description}
 				-d serviceContext=${serviceContext}
-
+				
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

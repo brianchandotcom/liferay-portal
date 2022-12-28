@@ -28,13 +28,13 @@ definition {
 		}
 
 		var curl = '''
-				${baseURL}/api/jsonws/commerce.commerceshippingoptionaccountentryrel/add-commerce-shipping-option-account-entry-rel \
+			${baseURL}/api/jsonws/commerce.commerceshippingoptionaccountentryrel/add-commerce-shipping-option-account-entry-rel \
 				-u test@liferay.com:test \
 				-d accountEntryId=${accountEntryId} \
 				-d commerceChannelId=${commerceChannelId} \
 				-d commerceShippingMethodKey='${commerceShippingMethodKey}' \
 				-d commerceShippingOptionKey='${commerceShippingOptionKey}'
-			''';
+		''';
 
 		JSONCurlUtil.post("${curl}");
 	}

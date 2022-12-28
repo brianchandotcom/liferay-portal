@@ -5,8 +5,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddl.ddlrecord/get-records \
-			-u test@liferay.com:test \
-			-d recordSetId=${recordSetId}
+				-u test@liferay.com:test \
+				-d recordSetId=${recordSetId}
 		''';
 
 		var recordId = JSONCurlUtil.post("${curl}", "$.[?(@['recordSetId'] == '${recordSetId}')]['recordId']");
@@ -26,8 +26,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddl.ddlrecordset/get-record-sets \
-			-u test@liferay.com:test \
-			-d groupIds=${groupId}
+				-u test@liferay.com:test \
+				-d groupIds=${groupId}
 		''';
 
 		var recordSetId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${ddlListName}')]['recordSetId']");

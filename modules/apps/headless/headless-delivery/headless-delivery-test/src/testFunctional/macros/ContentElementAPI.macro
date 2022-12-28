@@ -7,8 +7,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/content-elements?${parameter}=${fieldValue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
+				-u test@liferay.com:test \
+				-H accept: application/json
 		''';
 
 		var curl = JSONCurlUtil.get("${curl}");

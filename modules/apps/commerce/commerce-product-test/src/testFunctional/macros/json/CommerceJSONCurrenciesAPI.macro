@@ -37,12 +37,12 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			  ${baseURL}/api/jsonws/commerce.commercecurrency/get-commerce-currencies \
-				  -u test@liferay.com:test \
-				  -d companyId=${companyId} \
-				  -d "start=-1" \
-				  -d "end=-1" \
-				  -d -orderByComparator=''
+			${baseURL}/api/jsonws/commerce.commercecurrency/get-commerce-currencies \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=''
 		''';
 
 		echo("curl: ${curl}");

@@ -640,9 +640,9 @@ definition {
 		// Get Company ID
 
 		var curl = '''
-					${specificURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
-						-u ${creatorEmailAddress}:${creatorPassword}
-				''';
+			${specificURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+				-u ${creatorEmailAddress}:${creatorPassword}
+		''';
 
 		echo("# Get Company ID");
 
@@ -651,9 +651,9 @@ definition {
 		// Get User ID
 
 		var curl = '''
-					${specificURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
-						-u ${creatorEmailAddress}:${creatorPassword}
-				''';
+			${specificURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
+				-u ${creatorEmailAddress}:${creatorPassword}
+		''';
 
 		echo("# Get User ID");
 
@@ -662,13 +662,13 @@ definition {
 		// Reset password to "test"
 
 		var curl = '''
-					${specificURL}/api/jsonws/user/update-password \
-						-u ${creatorEmailAddress}:${creatorPassword} \
-						-d userId=${userId} \
-						-d password1=test \
-						-d password2=test \
-						-d passwordReset=false
-				''';
+			${specificURL}/api/jsonws/user/update-password \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d userId=${userId} \
+				-d password1=test \
+				-d password2=test \
+				-d passwordReset=false
+		''';
 
 		echo("# Reset password to : test");
 
@@ -678,14 +678,14 @@ definition {
 
 		var passwordPolicyName = "Default Password Policy";
 		var curl = '''
-					${specificURL}/api/jsonws/passwordpolicy/search \
-						-u ${creatorEmailAddress}:${creatorPassword} \
-						-d companyId=${companyId} \
-						-d "name=Default Password Policy" \
-						-d "start=-1" \
-						-d "end=-1" \
-						-d -orderByComparator=
-				''';
+			${specificURL}/api/jsonws/passwordpolicy/search \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d companyId=${companyId} \
+				-d "name=Default Password Policy" \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
+		''';
 
 		var passwordPolicyId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${passwordPolicyName}')]['passwordPolicyId']");
 
@@ -731,16 +731,16 @@ definition {
 		// Aggree terms and conditions and answer reminder query
 
 		var curl = '''
-				${specificURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
-					-u ${creatorEmailAddress}:${creatorPassword}
-			''';
+			${specificURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
+				-u ${creatorEmailAddress}:${creatorPassword}
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 
 		var curl = '''
-				${specificURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
-					-u ${creatorEmailAddress}:${creatorPassword}
-			''';
+			${specificURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
+				-u ${creatorEmailAddress}:${creatorPassword}
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 

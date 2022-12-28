@@ -8,9 +8,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/depot.depotentry/add-depot-entry \
-			-u test@liferay.com:test \
-			-d nameMap={"en_US": "${depotName}"} \
-			-d descriptionMap={"en_US": "${depotDescription}"}
+				-u test@liferay.com:test \
+				-d nameMap={"en_US": "${depotName}"} \
+				-d descriptionMap={"en_US": "${depotDescription}"}
 		''';
 
 		echo("## Adding a 'Depot' with the following info using JSONWS:");
@@ -40,7 +40,7 @@ definition {
 				-u test@liferay.com:test \
 				-d depotEntryId=${depotId}
 				-d toGroupId=${groupId}
-			''';
+		''';
 
 		echo("## Connect a 'Depot' to a site with the following info using JSONWS:");
 
@@ -62,7 +62,7 @@ definition {
 			${portalURL}/api/jsonws/depot.depotentry/delete-depot-entry \
 				-u test@liferay.com:test \
 				-d depotEntryId=${depotId}
-			''';
+		''';
 
 		echo("## Deleting a 'Depot' with the following info using JSONWS:");
 
@@ -86,7 +86,7 @@ definition {
 			${portalURL}/api/jsonws/depot.depotentrygrouprel/delete-depot-entry-group-rel \
 				-u test@liferay.com:test \
 				-d depotEntryGroupRelId=${depotEntryGroupRelId}
-			''';
+		''';
 
 		echo("## Disconnect a 'Depot' to a site with the following info using JSONWS:");
 
@@ -145,7 +145,7 @@ definition {
 				-u test@liferay.com:test \
 				-d depotEntryGroupRelId=${depotEntryGroupRelId} \
 				-d ddmStructuresAvailable=${ddmStructuresAvailable}
-			''';
+		''';
 
 		JSONCurlUtil.post("${curl}");
 	}

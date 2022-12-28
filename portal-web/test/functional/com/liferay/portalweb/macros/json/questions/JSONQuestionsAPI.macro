@@ -20,14 +20,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
-			-H 'Content-Type: application/json' \
-			-u '${userEmailAddress}:${userPassword}' \
-			-d '{
-				"headline": "${titleField}",
-				"articleBody": "${bodyField}",
-				"encodingFormat": "${encodingFormat}",
-				"viewableBy": "Anyone"
-			}'
+				-H 'Content-Type: application/json' \
+				-u '${userEmailAddress}:${userPassword}' \
+				-d '{
+					"headline": "${titleField}",
+					"articleBody": "${bodyField}",
+					"encodingFormat": "${encodingFormat}",
+					"viewableBy": "Anyone"
+				}'
 		''';
 
 		echo("## Adding a 'Question' with the following info using JSONWS:");
@@ -57,16 +57,16 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
-			-H 'Content-Type: application/json' \
-			-u '${userEmailAddress}:${userPassword}' \
-			-d '{
-				"keywords": [
-					"${tagField}"
-				],
-				"headline": "${titleField}",
-				"articleBody": "${bodyField}",
-				"viewableBy": "Anyone"
-			}'
+				-H 'Content-Type: application/json' \
+				-u '${userEmailAddress}:${userPassword}' \
+				-d '{
+					"keywords": [
+						"${tagField}"
+					],
+					"headline": "${titleField}",
+					"articleBody": "${bodyField}",
+					"viewableBy": "Anyone"
+				}'
 		''';
 
 		echo("## Adding a 'Question' with the following info using JSONWS:");

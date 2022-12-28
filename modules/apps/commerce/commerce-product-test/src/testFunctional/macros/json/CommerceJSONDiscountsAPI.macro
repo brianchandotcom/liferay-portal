@@ -48,25 +48,25 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-  			-d '{
-				"active": ${active},
-				"couponCode": "${couponCode}",
-				"level": "${level}",
-				"limitationType": "${limitationType}",
-				"maximumDiscountAmount": ${maximumDiscountAmount},
-				"neverExpire": true,
-				"percentageLevel1": ${percentageLevel1},
-				"percentageLevel2": ${percentageLevel2},
-				"percentageLevel3": ${percentageLevel3},
-				"percentageLevel4": ${percentageLevel4},
-				"target": "${target}",
-				"title": "${title}",
-				"useCouponCode": ${useCouponCode},
-				"usePercentage": ${usePercentage}
-			}'
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": ${active},
+					"couponCode": "${couponCode}",
+					"level": "${level}",
+					"limitationType": "${limitationType}",
+					"maximumDiscountAmount": ${maximumDiscountAmount},
+					"neverExpire": true,
+					"percentageLevel1": ${percentageLevel1},
+					"percentageLevel2": ${percentageLevel2},
+					"percentageLevel3": ${percentageLevel3},
+					"percentageLevel4": ${percentageLevel4},
+					"target": "${target}",
+					"title": "${title}",
+					"useCouponCode": ${useCouponCode},
+					"usePercentage": ${usePercentage}
+				}'
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -86,12 +86,12 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-account-groups \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-  			-d '{
-				"accountGroupId": ${accountGroupId}
-			}'
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"accountGroupId": ${accountGroupId}
+				}'
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -111,12 +111,12 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-products \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-  			-d '{
-				"productId": ${productId}
-			}'
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"productId": ${productId}
+				}'
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -139,8 +139,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -167,8 +167,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var discountIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -185,8 +185,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var discountsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
@@ -213,10 +213,10 @@ definition {
 		}
 
 		var curl = '''
-				${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountCount} \
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountCount} \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
-			''';
+		''';
 
 		var discountId = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${discountTitle}')].['id']");
 

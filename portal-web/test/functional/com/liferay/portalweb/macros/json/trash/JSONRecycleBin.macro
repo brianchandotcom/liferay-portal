@@ -28,8 +28,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/trash.trashentry/delete-entries \
-			-u ${userEmailAddress}:${userPassword} \
-			-d groupId=${groupId}
+				-u ${userEmailAddress}:${userPassword} \
+				-d groupId=${groupId}
 		''';
 
 		JSONCurlUtil.post("${curl}");

@@ -309,10 +309,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users \
-			-u ${userName}:test \
-			-d companyId=${companyId} \
-			-d <CURL_DATA[start=-1]CURL_DATA> \
-			-d <CURL_DATA[end=-1]CURL_DATA>
+				-u ${userName}:test \
+				-d companyId=${companyId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
 
 		var userIds = JSONCurlUtil.post("${curl}", "$..['userId']");
@@ -400,8 +400,8 @@ definition {
 				-d passwordReset=false \
 				-d reminderQueryQuestion= \
 				-d reminderQueryAnswer= \
-		  		-d screenName=${screenNameUpdate} \
-		  		-d emailAddress=${userEmailAddressUpdate} \
+				-d screenName=${screenNameUpdate} \
+				-d emailAddress=${userEmailAddressUpdate} \
 				-d hasPortrait=false \
 				-d portraitBytes= \
 				-d languageId=0 \

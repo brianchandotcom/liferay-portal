@@ -342,11 +342,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-company-countries \
-			-u test@liferay.com:test \
-			-d companyId=${companyId} \
-			-d start=0 \
-			-d end=1 \
-			-d -orderByComparator=
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d start=0 \
+				-d end=1 \
+				-d -orderByComparator=
 		''';
 
 		var languageId = JSONCurlUtil.post("${curl}", "$..defaultLanguageId");

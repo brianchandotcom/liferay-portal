@@ -17,8 +17,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-admin-user/v1.0/organizations/${organizationId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -45,8 +45,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-admin-user/v1.0/organizations?pageSize=${organizationsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var channelIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -63,8 +63,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-admin-user/v1.0/organizations \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var organizationsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");

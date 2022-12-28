@@ -15,10 +15,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d name=${name} \
-			-d description=${description}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${name} \
+				-d description=${description}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -32,21 +32,21 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d fragmentCollectionId=${collectionId} \
-			-d fragmentEntryKey= \
-			-d <CURL_DATA[name=${name}]CURL_DATA> \
-			-d css= \
-			-d <CURL_DATA[html=${html}]CURL_DATA> \
-			-d js= \
-			-d cacheable=false \
-			-d configuration=${configuration} \
-			-d icon= \
-			-d previewFileEntryId=0 \
-			-d type=${type} \
-			-d typeOptions= \
-			-d status=${status}
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d fragmentCollectionId=${collectionId} \
+				-d fragmentEntryKey= \
+				-d <CURL_DATA[name=${name}]CURL_DATA> \
+				-d css= \
+				-d <CURL_DATA[html=${html}]CURL_DATA> \
+				-d js= \
+				-d cacheable=false \
+				-d configuration=${configuration} \
+				-d icon= \
+				-d previewFileEntryId=0 \
+				-d type=${type} \
+				-d typeOptions= \
+				-d status=${status}
 		''';
 
 		var fragmentEntryId = JSONCurlUtil.post("${curl}", "$..fragmentEntryId");
@@ -62,8 +62,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/delete-fragment-collection \
-			-u test@liferay.com:test \
-			-d fragmentCollectionId=${collectionId}
+				-u test@liferay.com:test \
+				-d fragmentCollectionId=${collectionId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -77,12 +77,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d name=${collectionName} \
-			-d <CURL_DATA[start=-1]CURL_DATA> \
-			-d <CURL_DATA[end=-1]CURL_DATA> \
-			-d -orderByComparator=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${collectionName} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -orderByComparator=
 		''';
 
 		var collectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${collectionName}')]['fragmentCollectionId']");
@@ -100,12 +100,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d name=${collectionName} \
-			-d <CURL_DATA[start=-1]CURL_DATA> \
-			-d <CURL_DATA[end=-1]CURL_DATA> \
-			-d -orderByComparator=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${collectionName} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -orderByComparator=
 		''';
 
 		var collectionNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${collectionName}')]");
@@ -119,11 +119,11 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmententry/get-fragment-entries \
-			-u test@liferay.com:test \
-			-d groupId=${groupId} \
-			-d fragmentCollectionId=${fragmentCollectionId} \
-			-d <CURL_DATA[start=-1]CURL_DATA> \
-			-d <CURL_DATA[end=-1]CURL_DATA>
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d fragmentCollectionId=${fragmentCollectionId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
 
 		var fragmentNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${fragmentName}')]");

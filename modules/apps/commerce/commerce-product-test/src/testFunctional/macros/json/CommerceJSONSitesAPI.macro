@@ -36,8 +36,8 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 		var curl = '''
-			  ${baseURL}/api/jsonws/group/get-user-sites-groups \
-				  -u test@liferay.com:test \
+			${baseURL}/api/jsonws/group/get-user-sites-groups \
+				-u test@liferay.com:test \
 		''';
 
 		echo("curl: ${curl}");

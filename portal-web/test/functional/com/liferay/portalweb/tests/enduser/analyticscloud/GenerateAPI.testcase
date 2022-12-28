@@ -203,8 +203,8 @@ definition {
 
 			var curl = '''
 				${analyticsCloudURL}/api/reports/export/${type}?fromDate=${startDate}\&toDate=${endDate}
-				-H "Authorization: Bearer ${token}"
-				''';
+					-H "Authorization: Bearer ${token}"
+			''';
 
 			var apiResponse = JSONCurlUtil.get("${curl}", "$");
 		}
@@ -235,8 +235,8 @@ definition {
 
 			var curl = '''
 				${analyticsCloudURL}/api/reports/export/${type}
-				-H "Authorization: Bearer ${token}"
-				''';
+					-H "Authorization: Bearer ${token}"
+			''';
 
 			var apiResponse = JSONCurlUtil.get("${curl}", "$");
 		}
@@ -252,8 +252,8 @@ definition {
 
 			var curl = '''
 				${analyticsCloudURL}/api/reports/export/${type}?toDate=${endDate}T${endTime}Z
-				-H "Authorization: Bearer ${token}"
-				''';
+					-H "Authorization: Bearer ${token}"
+			''';
 
 			var apiResponse = JSONCurlUtil.get("${curl}", "$");
 		}
@@ -269,8 +269,8 @@ definition {
 
 			var curl = '''
 				${analyticsCloudURL}/api/reports/export/${type}?fromDate=${startDate}T${startTime}Z
-				-H "Authorization: Bearer ${token}"
-				''';
+					-H "Authorization: Bearer ${token}"
+			''';
 
 			var apiResponse = JSONCurlUtil.get("${curl}", "$");
 		}

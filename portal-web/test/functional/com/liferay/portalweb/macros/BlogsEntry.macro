@@ -544,17 +544,17 @@ definition {
 
 		var curl = '''
 			${portalURL}/xmlrpc/pingback \
-			-H 'Content-Type: text/xml' \
-			-u test@liferay.com:test \
-			-d '
-			<?xml version="1.0" encoding="iso-8859-1"?>
-			<methodCall>
-			<methodName>pingback.ping</methodName>
-			<params>
-			<param><value><string>http://${ip}</string></value></param>
-			<param><value><string>${portalURL}/web/guest/home/-/blogs/${entryTitle}</string></value></param>
-			</params>
-			</methodCall>'
+				-H 'Content-Type: text/xml' \
+				-u test@liferay.com:test \
+				-d '
+				<?xml version="1.0" encoding="iso-8859-1"?>
+				<methodCall>
+				<methodName>pingback.ping</methodName>
+				<params>
+				<param><value><string>http://${ip}</string></value></param>
+				<param><value><string>${portalURL}/web/guest/home/-/blogs/${entryTitle}</string></value></param>
+				</params>
+				</methodCall>'
 		''';
 
 		echo("${curl}");

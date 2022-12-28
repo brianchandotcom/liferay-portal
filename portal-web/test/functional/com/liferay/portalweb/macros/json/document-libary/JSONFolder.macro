@@ -37,12 +37,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/add-folder \
-			-u test@liferay.com:test \
-			-d repositoryId=${repositoryId} \
-			-d parentFolderId=${parentFolderId} \
-			-d name=${dmFolderName} \
-		 	-d description=${dmFolderDescription} \
-			-d serviceContext=${serviceContext}
+				-u test@liferay.com:test \
+				-d repositoryId=${repositoryId} \
+				-d parentFolderId=${parentFolderId} \
+				-d name=${dmFolderName} \
+				-d description=${dmFolderDescription} \
+				-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'Folder' with the following info using JSONWS:");
@@ -63,8 +63,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfolder/delete-folder \
-			-u test@liferay.com:test \
-			-d folderId=${folderId}
+				-u test@liferay.com:test \
+				-d folderId=${folderId}
 		''';
 	}
 
@@ -77,8 +77,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/dltrash/move-folder-to-trash \
-			-u test@liferay.com:test \
-			-d folderId=${folderId}
+				-u test@liferay.com:test \
+				-d folderId=${folderId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

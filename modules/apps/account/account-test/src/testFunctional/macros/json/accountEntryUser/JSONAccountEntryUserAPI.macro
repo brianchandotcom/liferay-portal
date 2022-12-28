@@ -44,7 +44,7 @@ definition {
 			${portalURL}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rels \
 				-u ${creatorEmailAddress}:${creatorPassword} \
 				-d accountEntryId=${accountEntryId} \
-				-d accountUserIds=${userId} 
+				-d accountUserIds=${userId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

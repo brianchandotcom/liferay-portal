@@ -49,14 +49,14 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-  			-d '{
-				    "accountId": ${accountEntryId},
-                    "cartItems": [${cartItemsList}],
-                    "currencyCode": "${currencyCode}"
-                }'
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"accountId": ${accountEntryId},
+					"cartItems": [${cartItemsList}],
+					"currencyCode": "${currencyCode}"
+				}'
 		''';
 
 		var responseBody = JSONCurlUtil.post("${curl}");

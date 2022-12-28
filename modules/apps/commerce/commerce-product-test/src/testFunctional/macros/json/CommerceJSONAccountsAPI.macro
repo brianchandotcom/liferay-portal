@@ -17,8 +17,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -44,8 +44,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-admin-user/v1.0/accounts/${accountEntryId}/postal-addresses \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountAddressCity = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['addressLocality']]");
@@ -68,8 +68,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-admin-user/v1.0/accounts/${accountEntryId}/postal-addresses \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountAddressCountry = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['addressCountry']]");
@@ -92,8 +92,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/accountAddresses \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountAddressId = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['id']]");
@@ -116,8 +116,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-admin-user/v1.0/accounts/${accountEntryId}/postal-addresses \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountAddressStreet = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['streetAddressLine${streetNumber}']]");
@@ -148,8 +148,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountEmail = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${accountName}' && @['type']==${accountTypeValue})].['emailAddresses'][:1]");
@@ -173,8 +173,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts?pageSize=${accountsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -191,8 +191,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var accountsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");

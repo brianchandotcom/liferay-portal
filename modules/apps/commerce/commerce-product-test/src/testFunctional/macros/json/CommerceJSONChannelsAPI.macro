@@ -15,16 +15,16 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-            -H 'Content-Type: application/json' \
-			-d '{
-				"externalReferenceCode": "${externalReferenceCode}",
-				"siteGroupId": 0,
-				"name": "${channelName}",
-				"type": "${channelType}",
-				"currencyCode": "${currencyCode}"
-			}'
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"externalReferenceCode": "${externalReferenceCode}",
+					"siteGroupId": 0,
+					"name": "${channelName}",
+					"type": "${channelType}",
+					"currencyCode": "${currencyCode}"
+				}'
 		''';
 
 		var addChannelResponse = JSONCurlUtil.post("${curl}");
@@ -49,8 +49,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-channel/v1.0/channels/${channelId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -79,8 +79,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels?pageSize=${channelsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var channelId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${channelName}')].['id']");
@@ -104,8 +104,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels?pageSize=${channelsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var channelIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -122,8 +122,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var channelsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");

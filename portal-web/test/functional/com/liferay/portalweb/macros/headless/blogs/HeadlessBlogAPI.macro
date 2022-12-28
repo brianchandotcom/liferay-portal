@@ -64,22 +64,22 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
-			-H accept: application/json \
-			-H Content-Type: application/json \
-			-u ${userEmailAddress}:${userPassword} \
-			-d {
-				"alternativeHeadline": "${subtitle}",
-				"articleBody": "${content}",
-				"headline": "${title}",
-				"description": "${description}",
-				"image": {
-					"caption": "${coverImageCaption}",
-					"imageId": ${coverImageId}
-				},
-				"keywords": [${assetTagNames}],
-				"taxonomyCategoryIds": [${assetCategoryIds}],
-				"viewableBy": "${viewableBy}"
-			}
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u ${userEmailAddress}:${userPassword} \
+				-d {
+					"alternativeHeadline": "${subtitle}",
+					"articleBody": "${content}",
+					"headline": "${title}",
+					"description": "${description}",
+					"image": {
+						"caption": "${coverImageCaption}",
+						"imageId": ${coverImageId}
+					},
+					"keywords": [${assetTagNames}],
+					"taxonomyCategoryIds": [${assetCategoryIds}],
+					"viewableBy": "${viewableBy}"
+				}
 		''';
 
 		var entryId = JSONCurlUtil.post("${curl}", "$.id");

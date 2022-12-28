@@ -20,9 +20,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-user/v1.0/${api} \
-			-H accept: application/json \
-			-H Content-Type: application/json \
-			-u test@liferay.com:test \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u test@liferay.com:test \
 		''';
 
 		return "${curl}";
@@ -91,9 +91,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-user/v1.0/user-accounts/${userAccountId}/${relationshipName} \
-			-H accept: application/json \
-			-H Content-Type: application/json \
-			-u test@liferay.com:test \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u test@liferay.com:test \
 		''';
 
 		var response = JSONCurlUtil.get("${curl}");
@@ -161,9 +161,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-user/v1.0/user-accounts/${userAccountId}/${relationshipName}/${customObjectId} \
-			-H accept: application/json \
-			-H Content-Type: application/json \
-			-u test@liferay.com:test \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u test@liferay.com:test \
 		''';
 
 		var response = JSONCurlUtil.put("${curl}");

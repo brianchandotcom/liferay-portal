@@ -8,10 +8,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/stylebook.stylebookentry/add-style-book-entry \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d name=${styleBookEntryName} \
-			  -d styleBookEntryKey=
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${styleBookEntryName} \
+				-d styleBookEntryKey=
 		''';
 
 		var styleBookEntryId = JSONCurlUtil.post("${curl}", "$.styleBookEntryId");

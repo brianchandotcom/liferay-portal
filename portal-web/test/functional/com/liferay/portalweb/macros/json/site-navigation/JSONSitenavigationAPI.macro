@@ -8,12 +8,12 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d name=${siteNavigationMenuName} \
-			  -d type=0 \
-			  -d auto=${auto}
-			''';
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${siteNavigationMenuName} \
+				-d type=0 \
+				-d auto=${auto}
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -32,7 +32,7 @@ definition {
 				-d parentSiteNavigationMenuItemId=${parentSiteNavigationMenuItemId} \
 				-d type=${type} \
 				-d typeSettings=${typeSettings}
-			''';
+		''';
 
 		JSONCurlUtil.post("${curl}");
 	}
@@ -45,8 +45,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
-			  -u test@liferay.com:test \
-			  -d siteNavigationMenuId=${siteNavigationMenuId}
+				-u test@liferay.com:test \
+				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

@@ -190,32 +190,32 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
 					"active": true,
 					"catalogId": "${catalogId}",
 					"categories": [],
 					"customFields": [],
 					"description": {
-					  "en_US": "${productDescription}"
+						"en_US": "${productDescription}"
 					},
 					"displayDate": "${displayDate}",
 					"expando": {},
 					"expirationDate": "${expirationDate}",
 					"externalReferenceCode": "",
 					"metaDescription": {
-					  "en_US": "${metaDescription}"
+						"en_US": "${metaDescription}"
 					},
 					"metaKeyword": {
-					  "en_US": "${metaKeyword}"
+						"en_US": "${metaKeyword}"
 					},
 					"metaTitle": {
-					  "en_US": "${metaTitle}"
+						"en_US": "${metaTitle}"
 					},
 					"name": {
-					  "en_US": "${productName}"
+						"en_US": "${productName}"
 					},
 					"neverExpire": "${neverExpire}",
 					"productAccountGroupFilter": false,
@@ -223,10 +223,10 @@ definition {
 					"productStatus": "${productStatus}",
 					"productType": "${productType}",
 					"shortDescription": {
-					  "en_US": "${shortDescription}"
+						"en_US": "${shortDescription}"
 					},
 					"productConfiguration": {
-    					"allowBackOrder": ${allowBackOrder},
+						"allowBackOrder": ${allowBackOrder},
 						"allowedOrderQuantities": [],
 						"displayAvailability": ${displayAvailability},
 						"displayStockQuantity": ${displayStockQuantity},
@@ -239,36 +239,36 @@ definition {
 					},
 					"productSpecifications": [${productSpecifications}],
 					"shippingConfiguration": {
-                        "freeShipping": false
-                     },
+						"freeShipping": false
+					},
 					"skus": [
-				    {
-				      "cost": "${cost}",
-				      "depth": "${depth}",
-				      "discontinued": "${discontinued}",
-				      "gtin": "${gtin}",
-				      "height": "${height}",
-				      "manufacturerPartNumber": "${manufacturerPartNumber}",
-				      "neverExpire": true,
-					  "price": ${price},
-					  "promoPrice": ${promoPrice},
-				      "published": true,
-				      "purchasable": "${purchasable}",
-				      "replacementSkuId": "${replacementSkuId}",
-				      "sku": "${sku}",
-				      "unspsc": "${unspc}",
-				      "weight": "${weight}",
-				      "width": "${width}"
-				    }
-				  ],
+						{
+							"cost": "${cost}",
+							"depth": "${depth}",
+							"discontinued": "${discontinued}",
+							"gtin": "${gtin}",
+							"height": "${height}",
+							"manufacturerPartNumber": "${manufacturerPartNumber}",
+							"neverExpire": true,
+							"price": ${price},
+							"promoPrice": ${promoPrice},
+							"published": true,
+							"purchasable": "${purchasable}",
+							"replacementSkuId": "${replacementSkuId}",
+							"sku": "${sku}",
+							"unspsc": "${unspc}",
+							"weight": "${weight}",
+							"width": "${width}"
+						}
+					],
 					"tags": [],
 					"workflowStatusInfo": {
-					  "code": 0,
-					  "label": "approved",
-					  "label_i18n": "Approved"
+						"code": 0,
+						"label": "approved",
+						"label_i18n": "Approved"
 					}
 				}'
-			''';
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 
@@ -314,25 +314,25 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{
-      			    "active": true,
-  					"catalogId": "${catalogId}",
-  					"productType": "${productType}",
-  					"images": [
-        				{
-            				"src": "${src}",
-            				"title": {
-                				"en_US": "${imageTitle}"
-            				}
-        				}
-    				],
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": true,
+					"catalogId": "${catalogId}",
+					"productType": "${productType}",
+					"images": [
+						{
+							"src": "${src}",
+							"title": {
+								"en_US": "${imageTitle}"
+							}
+						}
+					],
 					"name": {"en_US": "${productTitle}"},
-  					"productStatus": ${productStatus}
-   				}'
-			''';
+					"productStatus": ${productStatus}
+				}'
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -376,24 +376,24 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${diagramProductId}/pins \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{
-  				  "mappedProduct": {
-					"customFields": [],
-					"productId": ${productId},
-					"quantity": ${quantity},
-					"sequence": "${position}",
-					"sku": "${sku}",
-					"skuId": ${skuId},
-					"type": "${pinType}"
-				  },
-				  "positionX": ${positionX},
-				  "positionY": ${positionY},
-				  "sequence": "${position}"
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"mappedProduct": {
+						"customFields": [],
+						"productId": ${productId},
+						"quantity": ${quantity},
+						"sequence": "${position}",
+						"sku": "${sku}",
+						"skuId": ${skuId},
+						"type": "${pinType}"
+					},
+					"positionX": ${positionX},
+					"positionY": ${positionY},
+					"sequence": "${position}"
 				}'
-			''';
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -415,8 +415,8 @@ definition {
 
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -443,8 +443,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${productsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productIds = JSONCurlUtil.get("${curl}", "$..['productId']");
@@ -465,8 +465,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/images \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productImageIds = JSONCurlUtil.get("${curl}", "$..['id']");
@@ -489,8 +489,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productImageURL = JSONCurlUtil.get("${curl}", "$..['urlImage']");
@@ -511,8 +511,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productOptionId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productOptionName}')].['id']");
@@ -533,8 +533,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productOptions = JSONCurlUtil.get("${curl}", "$..['name'].['en_US']");
@@ -553,8 +553,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/productOptions/${productOptionId}/productOptionValues \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productOptionValues = JSONCurlUtil.get("${curl}", "$..['key']");
@@ -571,8 +571,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
@@ -595,8 +595,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productSpecifications = JSONCurlUtil.get("${curl}", "$..['value'].['en_US']");
@@ -648,8 +648,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/api/jsonws/commerce.cpdefinition/fetch-cp-definition-by-c-product-id \
-			-u test@liferay.com:test \
-			-d cProductId=${productId}
+				-u test@liferay.com:test \
+				-d cProductId=${productId}
 		''';
 
 		var cpDefinitionId = JSONCurlUtil.post("${curl}", "$..['CPDefinitionId']");
@@ -667,8 +667,8 @@ definition {
 		var productCreateDate = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?search=%22${search}%22 \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var productCreateDate = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productName}')].['productCreateDate']");
@@ -694,8 +694,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?search=%22${search}%22 \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		if (isSet(productSKU)) {
@@ -720,8 +720,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus?search=${productSKU} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		if (isSet(productSKU)) {
@@ -812,11 +812,11 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/configuration \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{${payload}}'
-			''';
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
 	}
@@ -867,27 +867,27 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${productERC} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{
-      			    "images": [
-    				{
-						"attachment": "${attachment}",
-      					"cdnEnabled": "${cdnEnabled}",
-      					"cdnURL": "${cdnURL}",
-						${contentType} 
-						"displayDate": "${displayDate}",  
-						"externalReferenceCode": "${externalReferenceCode}",
-      					"neverExpire": "${neverExpire}",
-      					"priority": "${priority}",
-						"title": {
-       						"en_US": "${imageTitle}"
-      					}  
-    				}
-  					]
-   				}'
-			''';
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"images": [
+						{
+							"attachment": "${attachment}",
+							"cdnEnabled": "${cdnEnabled}",
+							"cdnURL": "${cdnURL}",
+							${contentType}
+							"displayDate": "${displayDate}",
+							"externalReferenceCode": "${externalReferenceCode}",
+							"neverExpire": "${neverExpire}",
+							"priority": "${priority}",
+							"title": {
+								"en_US": "${imageTitle}"
+							}
+						}
+					]
+				}'
+		''';
 
 		var responseBody = JSONCurlUtil.patch("${curl}");
 
@@ -959,11 +959,11 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-  			-H 'Content-Type: application/json' \
-  			-d '{${payload}}'
-			''';
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
 	}
@@ -1056,7 +1056,7 @@ definition {
 				-d expirationDateHour=${expirationDateHour} \
 				-d expirationDateMinute=${expirationDateMinute} \
 				-d neverExpire=${neverExpire}
-			''';
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}

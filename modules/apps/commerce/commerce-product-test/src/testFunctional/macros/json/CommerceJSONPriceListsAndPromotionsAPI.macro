@@ -15,21 +15,21 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-			-d '{
-				  "active": true,
-				  "catalogBasePriceList": false,
-				  "catalogId": "${catalogId}",
-				  "currencyCode": "${currencyCode}",
-				  "name": "${priceListName}",
-				  "netPrice": true,
-				  "neverExpire": true,
-				  "priority": ${priority},
-				  "type": "price-list"
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": true,
+					"catalogBasePriceList": false,
+					"catalogId": "${catalogId}",
+					"currencyCode": "${currencyCode}",
+					"name": "${priceListName}",
+					"netPrice": true,
+					"neverExpire": true,
+					"priority": ${priority},
+					"type": "price-list"
 				}'
-			''';
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -46,17 +46,17 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId}/price-entries \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-			-d '{
-				  "active": true,
-				  "neverExpire": true,
-				  "price": "${entryPrice}",
-				  "priceListId": "${priceListId}",
-				  "skuId": "${skuId}"
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": true,
+					"neverExpire": true,
+					"price": "${entryPrice}",
+					"priceListId": "${priceListId}",
+					"skuId": "${skuId}"
 				}'
-			''';
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -72,21 +72,21 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-			-d '{
-				  "active": true,
-				  "catalogBasePriceList": false,
-				  "catalogId": "${catalogId}",
-				  "currencyCode": "${currencyCode}",
-				  "name": "${promotionName}",
-				  "netPrice": true,
-				  "neverExpire": true,
-				  "priority": 0,
-				  "type": "promotion"
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": true,
+					"catalogBasePriceList": false,
+					"catalogId": "${catalogId}",
+					"currencyCode": "${currencyCode}",
+					"name": "${promotionName}",
+					"netPrice": true,
+					"neverExpire": true,
+					"priority": 0,
+					"type": "promotion"
 				}'
-			''';
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -103,17 +103,17 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${promotionId}/price-entries \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
-			-d '{
-				  "active": true,
-				  "neverExpire": true,
-				  "price": "${entryPrice}",
-				  "priceListId": "${promotionId}",
-				  "skuId": "${skuId}"
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": true,
+					"neverExpire": true,
+					"price": "${entryPrice}",
+					"priceListId": "${promotionId}",
+					"skuId": "${skuId}"
 				}'
-			''';
+		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -131,8 +131,8 @@ definition {
 			for (var priceListAndPromotionId : list "${priceListAndPromotionIds}") {
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListAndPromotionId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
 				''';
 
 				JSONCurlUtil.delete("${curl}");
@@ -159,8 +159,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists?pageSize=${priceListsAndPromotionsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var priceListAndPromotionIds = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] != 'Master Base Promotion' && @['name'] != 'Master Base Price List')].['id']");
@@ -186,8 +186,8 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists?pageSize=${priceListsAndPromotionsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
 		var priceListAndPromotionId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${priceListAndPromotionName}')].['id']");

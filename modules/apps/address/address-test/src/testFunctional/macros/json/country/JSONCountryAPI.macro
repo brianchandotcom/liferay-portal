@@ -34,8 +34,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-			-u test@liferay.com:test \
-			-d name=${countryName} \
+				-u test@liferay.com:test \
+				-d name=${countryName} \
 		''';
 
 		echo("${curl}");
@@ -53,8 +53,8 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-			-u test@liferay.com:test \
-			-d name=${countryName} \
+				-u test@liferay.com:test \
+				-d name=${countryName} \
 		''';
 
 		var country = JSONCurlUtil.post("${curl}");
@@ -71,10 +71,10 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/region/get-regions \
-			-u test@liferay.com:test \
-			-d companyId=${companyId} \
-			-d a2=${countryAbbreviation} \
-			-d active=true
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d a2=${countryAbbreviation} \
+				-d active=true
 		''';
 
 		var countryRegions = JSONCurlUtil.post("${curl}");

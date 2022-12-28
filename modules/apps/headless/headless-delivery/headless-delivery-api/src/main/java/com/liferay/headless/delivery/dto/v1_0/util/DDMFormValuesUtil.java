@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,10 +45,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 
@@ -86,13 +84,8 @@ public class DDMFormValuesUtil {
 		LayoutLocalService layoutLocalService, Locale locale,
 		List<DDMFormField> rootDDMFormFields) {
 
-		Map<String, List<ContentField>> contentFieldMap = Optional.ofNullable(
-			contentFields
-		).map(
-			fields -> _toContentFieldsMap(Stream.of(fields))
-		).orElse(
-			new HashMap<>()
-		);
+		Map<String, List<ContentField>> contentFieldMap = _toContentFieldsMap(
+			ListUtil.fromArray(contentFields));
 
 		return new DDMFormValues(ddmForm) {
 			{
@@ -121,25 +114,21 @@ public class DDMFormValuesUtil {
 			return Collections.emptyList();
 		}
 
-		Stream<DDMFormField> stream = ddmFormFields.stream();
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
-		return stream.map(
-			ddmFormField -> {
-				try {
-					return unsafeFunction.apply(ddmFormField);
-				}
-				catch (RuntimeException runtimeException) {
-					throw runtimeException;
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(exception);
-				}
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			try {
+				ddmFormFieldValues.addAll(unsafeFunction.apply(ddmFormField));
 			}
-		).flatMap(
-			List::stream
-		).collect(
-			Collectors.toList()
-		);
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		return ddmFormFieldValues;
 	}
 
 	private static Set<Locale> _getAvailableLocales(
@@ -174,9 +163,30 @@ public class DDMFormValuesUtil {
 	}
 
 	private static Map<String, List<ContentField>> _toContentFieldsMap(
-		Stream<ContentField> stream) {
+		List<ContentField> contentFields) {
 
-		return stream.collect(Collectors.groupingBy(ContentField::getName));
+		if (contentFields.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		Map<String, List<ContentField>> contentFieldMap = new HashMap<>();
+
+		for (ContentField contentField : contentFields) {
+			String contentFieldName = contentField.getName();
+
+			if (!contentFieldMap.containsKey(contentFieldName)) {
+				contentFieldMap.put(
+					contentFieldName, ListUtil.fromArray(contentField));
+			}
+			else {
+				List<ContentField> contentFields2 = contentFieldMap.get(
+					contentFieldName);
+
+				contentFields2.add(contentField);
+			}
+		}
+
+		return contentFieldMap;
 	}
 
 	private static DDMFormFieldValue _toDDMFormFieldValue(
@@ -186,7 +196,7 @@ public class DDMFormValuesUtil {
 		LayoutLocalService layoutLocalService, Locale locale, Value value) {
 
 		Map<String, List<ContentField>> contentFieldMap = _toContentFieldsMap(
-			contentFields.stream());
+			contentFields);
 
 		return new DDMFormFieldValue() {
 			{

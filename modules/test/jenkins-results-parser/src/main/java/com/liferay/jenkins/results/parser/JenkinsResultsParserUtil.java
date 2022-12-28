@@ -4204,7 +4204,7 @@ public class JenkinsResultsParserUtil {
 
 				if ((httpAuthorizationHeader == null) &&
 					url.matches(
-						"https?:\\/\\/test-\\d+-\\d+(?:\\.liferay\\.com)?.*?" +
+						"https?:\\/\\/test-[135]-\\d+(?:\\.liferay\\.com)?.*?" +
 							"|http:\\/\\/localhost:8081.*?")) {
 
 					if (isCINode()) {

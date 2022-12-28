@@ -18,6 +18,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.CategoriesInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -226,7 +227,8 @@ public class InfoFormUtil {
 	}
 
 	private static boolean _isValidInfoFieldType(InfoFieldType infoFieldType) {
-		if (infoFieldType instanceof SelectInfoFieldType ||
+		if (infoFieldType instanceof CategoriesInfoFieldType ||
+			infoFieldType instanceof SelectInfoFieldType ||
 			infoFieldType instanceof TextInfoFieldType) {
 
 			return true;

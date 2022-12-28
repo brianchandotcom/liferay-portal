@@ -40,9 +40,9 @@ public interface Build {
 
 	public void archive();
 
-	public void archive(String archiveName);
-
 	public List<Callable<Object>> getArchiveCallables();
+
+	public void archive(String archiveName);
 
 	public String getArchiveName();
 

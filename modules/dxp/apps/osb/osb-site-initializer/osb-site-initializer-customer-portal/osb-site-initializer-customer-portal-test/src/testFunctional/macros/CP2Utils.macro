@@ -252,16 +252,6 @@ definition {
 		}
 	}
 
-	macro typeEnableNodeField {
-		Type(
-			locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
-			value1 = "${value}");
-
-		AssertElementPresent(
-			key_error = "${error}",
-			locator1 = "CP2NavigationMenu#NODES_ERROR");
-	}
-
 	macro typeSetupInfoFields {
 		if (!(isSet(position))) {
 			var position = "1";

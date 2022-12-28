@@ -175,9 +175,8 @@ public class FileSystemImporter extends BaseImporter {
 		this.portal = portal;
 		this.portletPreferencesFactory = portletPreferencesFactory;
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
-		this.portletPreferencesTranslators =
-			new DefaultedPortletPreferencesTranslatorMap(
-				portletPreferencesTranslators, portletPreferencesTranslator);
+		this.portletPreferencesTranslator = portletPreferencesTranslator;
+		this.portletPreferencesTranslators = portletPreferencesTranslators;
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;
@@ -1283,6 +1282,7 @@ public class FileSystemImporter extends BaseImporter {
 	protected final PortletPreferencesFactory portletPreferencesFactory;
 	protected final PortletPreferencesLocalService
 		portletPreferencesLocalService;
+	protected final PortletPreferencesTranslator portletPreferencesTranslator;
 	protected final Map<String, PortletPreferencesTranslator>
 		portletPreferencesTranslators;
 	protected final RepositoryLocalService repositoryLocalService;
@@ -1506,6 +1506,10 @@ public class FileSystemImporter extends BaseImporter {
 
 		PortletPreferencesTranslator portletPreferencesTranslator =
 			portletPreferencesTranslators.get(rootPortletId);
+
+		if (portletPreferencesTranslator == null) {
+			portletPreferencesTranslator = this.portletPreferencesTranslator;
+		}
 
 		String portletId = layoutTypePortlet.addPortletId(
 			userId, rootPortletId, columnId, -1, false);
@@ -2039,34 +2043,5 @@ public class FileSystemImporter extends BaseImporter {
 	private final Map<String, FileEntry> _fileEntries = new HashMap<>();
 	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private File _resourcesDir;
-
-	private class DefaultedPortletPreferencesTranslatorMap
-		extends HashMap<String, PortletPreferencesTranslator> {
-
-		public DefaultedPortletPreferencesTranslatorMap(
-			Map<String, PortletPreferencesTranslator>
-				portletPreferencesTranslators,
-			PortletPreferencesTranslator portletPreferencesTranslator) {
-
-			super(portletPreferencesTranslators);
-
-			_portletPreferencesTranslator = portletPreferencesTranslator;
-		}
-
-		@Override
-		public PortletPreferencesTranslator get(Object key) {
-			PortletPreferencesTranslator value = super.get(key);
-
-			if (value == null) {
-				value = _portletPreferencesTranslator;
-			}
-
-			return value;
-		}
-
-		private final PortletPreferencesTranslator
-			_portletPreferencesTranslator;
-
-	}
 
 }

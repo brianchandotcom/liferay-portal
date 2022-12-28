@@ -122,6 +122,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _curlPattern = Pattern.compile(
-		"(?<=\n)\t*var curl = '''(\n.*?\n\t*)''';(?=\n)", Pattern.DOTALL);
+		"(?<=\n)\t*var \\w+curl = '''(\n.*?\n\t*)''';(?=\n)",
+		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
 }

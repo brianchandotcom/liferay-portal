@@ -231,11 +231,6 @@
 	<bean class="com.liferay.portal.kernel.util.PortalUtil" id="com.liferay.portal.kernel.util.PortalUtil">
 		<property name="portal" ref="com.liferay.portal.util.Portal" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.util.PortletListerFactoryUtil" id="com.liferay.portal.kernel.util.PortletListerFactoryUtil">
-		<property name="portletListerFactory">
-			<bean class="com.liferay.portal.util.PortletListerFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.util.ThemeFactoryImpl" id="com.liferay.portal.kernel.util.ThemeFactory" />
 	<bean class="com.liferay.portal.kernel.util.ThemeFactoryUtil" id="com.liferay.portal.kernel.util.ThemeFactoryUtil">
 		<property name="ThemeFactory" ref="com.liferay.portal.kernel.util.ThemeFactory" />

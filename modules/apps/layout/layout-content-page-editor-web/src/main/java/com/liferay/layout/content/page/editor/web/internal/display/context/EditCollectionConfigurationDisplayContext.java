@@ -31,20 +31,17 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
-import javax.portlet.ActionURL;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -111,21 +108,15 @@ public class EditCollectionConfigurationDisplayContext {
 			"configurationDefinition", _getConfigurationJSONObject()
 		).put(
 			"getCollectionItemCountURL",
-			() -> {
-				ResourceURL resourceURL = _renderResponse.createResourceURL();
-
-				resourceURL.setResourceID(
-					"/layout_content_page_editor/get_collection_item_count");
-
-				String url = HttpComponentsUtil.addParameter(
-					resourceURL.toString(), "p_l_mode", Constants.EDIT);
-
-				url = HttpComponentsUtil.addParameter(
-					url, "classNameId", getClassNameId());
-
-				return HttpComponentsUtil.addParameter(
-					url, "classPK", getClassPK());
-			}
+			ResourceURLBuilder.createResourceURL(
+				_renderResponse
+			).setParameter(
+				"classNameId", getClassNameId()
+			).setParameter(
+				"classPK", getClassPK()
+			).setResourceID(
+				"/layout_content_page_editor/get_collection_item_count"
+			).buildString()
 		).put(
 			"languageId", _themeDisplay.getLanguageId()
 		).put(

@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
-import com.liferay.exportimport.resources.importer.internal.constants.ResourcesImporterConstants;
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -156,17 +154,7 @@ public class ImporterFactory {
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, PortletPreferencesTranslator.class,
-			"(!(portlet.preferences.translator.portlet.id=" +
-				ResourcesImporterConstants.PORTLET_ID_DEFAULT + "))",
-			(serviceReference, emitter) -> {
-				String rootPortletId = GetterUtil.getString(
-					serviceReference.getProperty(
-						"portlet.preferences.translator.portlet.id"));
-
-				if (Validator.isNotNull(rootPortletId)) {
-					emitter.emit(rootPortletId);
-				}
-			});
+			"portlet.preferences.translator.portlet.id");
 	}
 
 	@Deactivate
@@ -222,9 +210,8 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
-			_portletPreferencesTranslator, _serviceTrackerMap,
-			_repositoryLocalService, _saxReader, _themeLocalService,
-			_dlURLHelper);
+			_serviceTrackerMap, _repositoryLocalService, _saxReader,
+			_themeLocalService, _dlURLHelper);
 	}
 
 	private LARImporter _getLARImporter() {
@@ -242,9 +229,8 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
-			_portletPreferencesTranslator, _serviceTrackerMap,
-			_repositoryLocalService, _saxReader, _themeLocalService,
-			_dlURLHelper);
+			_serviceTrackerMap, _repositoryLocalService, _saxReader,
+			_themeLocalService, _dlURLHelper);
 	}
 
 	@Reference
@@ -312,11 +298,6 @@ public class ImporterFactory {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference(
-		target = "(portlet.preferences.translator.portlet.id=" + ResourcesImporterConstants.PORTLET_ID_DEFAULT + ")"
-	)
-	private PortletPreferencesTranslator _portletPreferencesTranslator;
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

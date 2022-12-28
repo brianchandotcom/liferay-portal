@@ -40,6 +40,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
+import com.liferay.exportimport.resources.importer.internal.constants.ResourcesImporterConstants;
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -148,7 +149,6 @@ public class FileSystemImporter extends BaseImporter {
 		MimeTypes mimeTypes, Portal portal,
 		PortletPreferencesFactory portletPreferencesFactory,
 		PortletPreferencesLocalService portletPreferencesLocalService,
-		PortletPreferencesTranslator portletPreferencesTranslator,
 		ServiceTrackerMap<String, PortletPreferencesTranslator>
 			serviceTrackerMap,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
@@ -177,7 +177,6 @@ public class FileSystemImporter extends BaseImporter {
 		this.portal = portal;
 		this.portletPreferencesFactory = portletPreferencesFactory;
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
-		this.portletPreferencesTranslator = portletPreferencesTranslator;
 		this.serviceTrackerMap = serviceTrackerMap;
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
@@ -1284,7 +1283,6 @@ public class FileSystemImporter extends BaseImporter {
 	protected final PortletPreferencesFactory portletPreferencesFactory;
 	protected final PortletPreferencesLocalService
 		portletPreferencesLocalService;
-	protected final PortletPreferencesTranslator portletPreferencesTranslator;
 	protected final RepositoryLocalService repositoryLocalService;
 	protected final SAXReader saxReader;
 	protected ServiceContext serviceContext;
@@ -1510,7 +1508,8 @@ public class FileSystemImporter extends BaseImporter {
 			serviceTrackerMap.getService(rootPortletId);
 
 		if (portletPreferencesTranslator == null) {
-			portletPreferencesTranslator = this.portletPreferencesTranslator;
+			portletPreferencesTranslator = serviceTrackerMap.getService(
+				ResourcesImporterConstants.PORTLET_ID_DEFAULT);
 		}
 
 		String portletId = layoutTypePortlet.addPortletId(

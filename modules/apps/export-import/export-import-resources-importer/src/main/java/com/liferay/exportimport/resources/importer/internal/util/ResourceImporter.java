@@ -87,7 +87,6 @@ public class ResourceImporter extends FileSystemImporter {
 		MimeTypes mimeTypes, Portal portal,
 		PortletPreferencesFactory portletPreferencesFactory,
 		PortletPreferencesLocalService portletPreferencesLocalService,
-		PortletPreferencesTranslator portletPreferencesTranslator,
 		ServiceTrackerMap<String, PortletPreferencesTranslator>
 			serviceTrackerMap,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
@@ -103,8 +102,8 @@ public class ResourceImporter extends FileSystemImporter {
 			layoutPrototypeLocalService, layoutSetLocalService,
 			layoutSetPrototypeLocalService, mimeTypes, portal,
 			portletPreferencesFactory, portletPreferencesLocalService,
-			portletPreferencesTranslator, serviceTrackerMap,
-			repositoryLocalService, saxReader, themeLocalService, dlURLHelper);
+			serviceTrackerMap, repositoryLocalService, saxReader,
+			themeLocalService, dlURLHelper);
 	}
 
 	@Override

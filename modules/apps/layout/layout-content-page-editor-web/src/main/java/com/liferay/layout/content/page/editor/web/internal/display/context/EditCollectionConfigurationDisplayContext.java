@@ -67,14 +67,6 @@ public class EditCollectionConfigurationDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public ActionURL getActionURL() {
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/layout_content_page_editor/update_collection_configuration"
-		).buildActionURL();
-	}
-
 	public long getClassNameId() {
 		if (Validator.isNotNull(_classNameId)) {
 			return _classNameId;

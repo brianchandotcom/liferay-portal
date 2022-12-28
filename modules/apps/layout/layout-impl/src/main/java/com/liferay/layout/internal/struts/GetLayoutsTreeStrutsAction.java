@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,10 +46,6 @@ public class GetLayoutsTreeStrutsAction implements StrutsAction {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
-
-		httpServletRequest.setAttribute(
-			ProductNavigationProductMenuWebKeys.RETURN_LAYOUTS_AS_ARRAY,
-			Boolean.TRUE);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

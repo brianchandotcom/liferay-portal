@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,7 +56,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -555,12 +553,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			if (includeActions &&
-				GetterUtil.getBoolean(
-					httpServletRequest.getAttribute(
-						ProductNavigationProductMenuWebKeys.
-							RETURN_LAYOUTS_AS_ARRAY))) {
-
+			if (includeActions) {
 				LayoutActionProvider layoutActionProvider =
 					new LayoutActionProvider(
 						httpServletRequest, _language,
@@ -650,13 +643,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			List<LayoutTreeNode> layoutTreeNodesList =
 				childLayoutTreeNodes.getLayoutTreeNodesList();
 
-			if (GetterUtil.getBoolean(
-					httpServletRequest.getAttribute(
-						ProductNavigationProductMenuWebKeys.
-							RETURN_LAYOUTS_AS_ARRAY)) &&
-				(childLayoutTreeNodes.getTotal() !=
-					layoutTreeNodesList.size())) {
-
+			if (childLayoutTreeNodes.getTotal() != layoutTreeNodesList.size()) {
 				jsonObject.put("paginated", true);
 			}
 
@@ -763,23 +750,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					layoutTreeNodes));
 		}
 
-		JSONArray jsonArray = _toJSONArray(
+		return _toJSONArray(
 			httpServletRequest, groupId, includeActions, layoutTreeNodes,
 			layoutSetBranch);
-
-		if (GetterUtil.getBoolean(
-				httpServletRequest.getAttribute(
-					ProductNavigationProductMenuWebKeys.
-						RETURN_LAYOUTS_AS_ARRAY))) {
-
-			return jsonArray;
-		}
-
-		return JSONUtil.put(
-			"layouts", jsonArray
-		).put(
-			"total", layoutTreeNodes.getTotal()
-		);
 	}
 
 	private JSONSerializable _toJSONSerializable(

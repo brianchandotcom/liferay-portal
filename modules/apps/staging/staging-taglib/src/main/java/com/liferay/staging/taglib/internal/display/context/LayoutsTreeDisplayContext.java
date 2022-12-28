@@ -93,9 +93,6 @@ public class LayoutsTreeDisplayContext {
 	private JSONArray _getLayoutsJSONArray() throws Exception {
 		JSONArray layoutsJSONArray = null;
 
-		_httpServletRequest.setAttribute(
-			"RETURN_LAYOUTS_AS_ARRAY", Boolean.TRUE);
-
 		LayoutsTree layoutsTree = ServletContextUtil.getLayoutsTree();
 
 		String layoutsJSON = layoutsTree.getLayoutsJSON(

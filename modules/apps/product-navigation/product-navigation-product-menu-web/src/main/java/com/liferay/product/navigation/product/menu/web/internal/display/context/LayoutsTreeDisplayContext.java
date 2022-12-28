@@ -394,10 +394,6 @@ public class LayoutsTreeDisplayContext {
 				_httpServletRequest, "productMenuPagesTree"),
 			0L);
 
-		_httpServletRequest.setAttribute(
-			ProductNavigationProductMenuWebKeys.RETURN_LAYOUTS_AS_ARRAY,
-			Boolean.TRUE);
-
 		String layoutsJSON = _layoutsTree.getLayoutsJSON(
 			_httpServletRequest, _getGroupId(), true, _isPrivateLayout(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true,

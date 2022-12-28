@@ -993,6 +993,9 @@ public class ObjectEntryDisplayContext {
 		LiferayPortletResponse liferayPortletResponse, ObjectEntry objectEntry,
 		ObjectLayoutTab objectLayoutTab) {
 
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
 		if (_readOnly) {
 			LiferayPortletURL liferayPortletURL =
 				(LiferayPortletURL)liferayPortletResponse.createResourceURL();
@@ -1001,6 +1004,8 @@ public class ObjectEntryDisplayContext {
 
 			return PortletURLBuilder.create(
 				liferayPortletURL
+			).setBackURL(
+				httpServletRequest.getParameter("backURL")
 			).setParameter(
 				"externalReferenceCode", objectEntry.getExternalReferenceCode()
 			).setParameter(
@@ -1012,6 +1017,8 @@ public class ObjectEntryDisplayContext {
 			liferayPortletResponse.createRenderURL()
 		).setMVCRenderCommandName(
 			"/object_entries/edit_object_entry"
+		).setBackURL(
+			httpServletRequest.getParameter("backURL")
 		).setParameter(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode()
 		).setParameter(

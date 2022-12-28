@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=1",
+	property = "service.ranking:Integer=1",
 	service = CommerceContextFactory.class
 )
 public class TestCustomCommerceContextFactory

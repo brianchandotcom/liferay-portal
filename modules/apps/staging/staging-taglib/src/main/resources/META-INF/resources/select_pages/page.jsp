@@ -16,10 +16,6 @@
 
 <%@ include file="/select_pages/init.jsp" %>
 
-<c:if test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169001")) %>'>
-	<aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(selectPagesGroupId, selectPagesPrivateLayout, selectedLayoutIds) %>" />
-</c:if>
-
 <aui:fieldset cssClass="options-group" id="pages-fieldset" markupView="lexicon">
 	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="pages" /></h3>
@@ -131,38 +127,17 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<c:choose>
-								<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169001")) %>'>
 
-									<%
-									LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(selectPagesGroup, selectPagesGroupId, request, selectPagesPrivateLayout, renderResponse, selectedLayoutIdsArray, treeId);
-									%>
+							<%
+							LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(selectPagesGroup, selectPagesGroupId, request, selectPagesPrivateLayout, renderResponse, selectedLayoutIdsArray, treeId);
+							%>
 
-									<div>
-										<react:component
-											module="js/PagesTree"
-											props="<%= layoutsTreeDisplayContext.getPagesTreeData() %>"
-										/>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="pages-selector">
-										<liferay-layout:layouts-tree
-											defaultStateChecked="<%= true %>"
-											draggableTree="<%= false %>"
-											groupId="<%= selectPagesGroupId %>"
-											incomplete="<%= false %>"
-											portletURL="<%= renderResponse.createRenderURL() %>"
-											privateLayout="<%= selectPagesPrivateLayout %>"
-											rootNodeName="<%= selectPagesGroup.getLayoutRootNodeName(selectPagesPrivateLayout, locale) %>"
-											selectableTree="<%= true %>"
-											selectedLayoutIds="<%= selectedLayoutIds %>"
-											selPlid='<%= ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID) %>'
-											treeId="<%= treeId %>"
-										/>
-									</div>
-								</c:otherwise>
-							</c:choose>
+							<div>
+								<react:component
+									module="js/PagesTree"
+									props="<%= layoutsTreeDisplayContext.getPagesTreeData() %>"
+								/>
+							</div>
 						</c:otherwise>
 					</c:choose>
 				</aui:fieldset>

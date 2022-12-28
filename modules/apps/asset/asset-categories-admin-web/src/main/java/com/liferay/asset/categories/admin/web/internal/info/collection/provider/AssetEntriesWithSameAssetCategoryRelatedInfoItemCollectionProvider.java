@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
@@ -35,6 +36,7 @@ import com.liferay.info.localized.bundle.ResourceBundleInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,6 +66,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -215,6 +218,37 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		assetEntryQuery.setAllCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
 
+		Optional<Map<String, String[]>> configurationOptional =
+			collectionQuery.getConfigurationOptional();
+
+		Map<String, String[]> configuration = configurationOptional.orElse(
+			null);
+
+		String assetCategoryRule = StringPool.BLANK;
+
+		if ((configuration != null) &&
+			!ArrayUtil.isEmpty(configuration.get("assetCategoryRule"))) {
+
+			String[] assetCategoryRules = configuration.get(
+				"assetCategoryRule");
+
+			assetCategoryRule = assetCategoryRules[0];
+		}
+
+		if (Objects.equals(
+				assetCategoryRule, "anyAssetCategoryOfTheSameVocabulary")) {
+
+			assetEntryQuery.setAnyCategoryIds(
+				ArrayUtil.filter(
+					ArrayUtil.toArray(
+						ListUtil.toArray(
+							_assetCategoryLocalService.getVocabularyCategories(
+								assetCategory.getVocabularyId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+							AssetCategory.CATEGORY_ID_ACCESSOR)),
+					categoryId -> categoryId != assetCategory.getCategoryId()));
+		}
+
 		assetEntryQuery.setClassNameIds(_getClassNameIds(collectionQuery));
 		assetEntryQuery.setEnablePermissions(true);
 
@@ -365,6 +399,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider.
 			class);
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetHelper _assetHelper;

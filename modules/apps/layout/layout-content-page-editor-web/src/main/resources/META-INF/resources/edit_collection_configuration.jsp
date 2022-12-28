@@ -25,6 +25,8 @@ portletDisplay.setURLBack(editCollectionConfigurationDisplayContext.getRedirect(
 renderResponse.setTitle(LanguageUtil.get(request, "filter-collection"));
 %>
 
+<liferay-product-navigation:control-menu />
+
 <portlet:actionURL name="/layout_content_page_editor/update_collection_configuration" var="updateCollectionConfigurationURL" />
 
 <liferay-frontend:edit-form

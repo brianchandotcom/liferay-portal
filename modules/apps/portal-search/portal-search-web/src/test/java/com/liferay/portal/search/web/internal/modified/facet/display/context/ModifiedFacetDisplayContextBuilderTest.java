@@ -271,18 +271,12 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 		Assert.assertEquals(
 			"past-hour", modifiedFacetTermDisplayContext.getBucketText());
-		Assert.assertEquals(
-			"[20180515225959 TO 20180515235959]",
-			modifiedFacetTermDisplayContext.getRange());
 
 		modifiedFacetTermDisplayContext = modifiedFacetTermDisplayContexts.get(
 			1);
 
 		Assert.assertEquals(
 			"some-time-ago", modifiedFacetTermDisplayContext.getBucketText());
-		Assert.assertEquals(
-			"[20180508235959 TO 20180514235959]",
-			modifiedFacetTermDisplayContext.getRange());
 	}
 
 	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder() {

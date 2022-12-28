@@ -130,7 +130,6 @@ definition {
 				-d expirationDate=${expirationDate} \
 				-d permanent=${permanent} \
 				-d sourceURL=${sourceURL}
-				
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

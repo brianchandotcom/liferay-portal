@@ -298,7 +298,6 @@ definition {
 				-d status=0 \
 				-d "start=-1" \
 				-d "end=-1"
-				
 		''';
 
 		var messageId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${threadSubject}')]['rootMessageId']");
@@ -332,7 +331,6 @@ definition {
 				-d status=0 \
 				-d "start=-1" \
 				-d "end=-1"
-				
 		''';
 
 		var threadId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${threadSubject}')]['threadId']");

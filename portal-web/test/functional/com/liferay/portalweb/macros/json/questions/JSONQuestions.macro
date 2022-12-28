@@ -96,7 +96,6 @@ definition {
 				-d status=0 \
 				-d "start=-1" \
 				-d "end=-1"
-				
 		''';
 
 		var commentTitle = JSONCurlUtil.post("${curl}", "$.[?(@['subject'] == 'RE: ${replyTitle}')]['subject']");
@@ -182,7 +181,6 @@ definition {
 				-d status=0 \
 				-d "start=-1" \
 				-d "end=-1"
-				
 		''';
 
 		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['rootMessageId']");
@@ -219,7 +217,6 @@ definition {
 				-d status=${status} \
 				-d "start=-1" \
 				-d "end=-1"
-				
 		''';
 
 		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['threadId']");

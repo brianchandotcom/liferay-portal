@@ -34,12 +34,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Cristina González
@@ -158,35 +158,41 @@ public class ContentStructureUtil {
 				required = ddmFormField.isRequired();
 				showLabel = ddmFormField.isShowLabel();
 
-				setOptions(
-					() -> Optional.ofNullable(
-						ddmFormField.getDDMFormFieldOptions()
-					).map(
-						DDMFormFieldOptions::getOptions
-					).map(
-						Map::entrySet
-					).map(
-						Set::stream
-					).orElseGet(
-						Stream::empty
-					).map(
-						entry -> new Option() {
-							{
-								LocalizedValue localizedValue =
-									entry.getValue();
+				Option[] options = new Option[0];
 
-								setLabel(_toString(localizedValue, locale));
-								setLabel_i18n(
-									LocalizedMapUtil.getI18nMap(
-										acceptAllLanguage,
-										localizedValue.getValues()));
+				DDMFormFieldOptions ddmFormFieldOptions =
+					ddmFormField.getDDMFormFieldOptions();
 
-								setValue(entry.getKey());
-							}
-						}
-					).toArray(
-						Option[]::new
-					));
+				if (ddmFormFieldOptions != null) {
+					Map<String, LocalizedValue> localizedValueMap =
+						ddmFormFieldOptions.getOptions();
+
+					List<Option> optionList = new ArrayList<>();
+
+					for (Map.Entry<String, LocalizedValue> entry :
+							localizedValueMap.entrySet()) {
+
+						optionList.add(
+							new Option() {
+								{
+									LocalizedValue localizedValue =
+										entry.getValue();
+
+									setLabel(_toString(localizedValue, locale));
+									setLabel_i18n(
+										LocalizedMapUtil.getI18nMap(
+											acceptAllLanguage,
+											localizedValue.getValues()));
+
+									setValue(entry.getKey());
+								}
+							});
+					}
+
+					options = optionList.toArray(new Option[0]);
+				}
+
+				setOptions(options);
 			}
 		};
 	}

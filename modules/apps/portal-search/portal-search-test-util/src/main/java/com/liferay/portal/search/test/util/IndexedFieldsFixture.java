@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -215,6 +216,10 @@ public class IndexedFieldsFixture {
 			DocumentBuilder documentBuilder = _documentBuilderFactory.builder(
 				document);
 
+			documentBuilder.setString(
+				"userGroupRoleNames",
+				StringUtil.toLowerCase(
+					document.getString("userGroupRoleNames")));
 			documentBuilder.unsetValue("score");
 
 			return documentBuilder.build();

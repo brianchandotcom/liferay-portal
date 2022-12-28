@@ -121,15 +121,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -726,6 +723,12 @@ public class StructuredContentResourceImpl
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
 
+		Double priority = structuredContent.getPriority();
+
+		if (priority == null) {
+			priority = 0.0;
+		}
+
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
 				externalReferenceCode, groupId, parentStructuredContentFolderId,
@@ -747,13 +750,7 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				_createServiceContext(
-					Optional.ofNullable(
-						structuredContent.getPriority()
-					).orElse(
-						0.0
-					),
-					groupId, structuredContent)));
+				_createServiceContext(priority, groupId, structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
@@ -796,6 +793,12 @@ public class StructuredContentResourceImpl
 			JournalArticle journalArticle, StructuredContent structuredContent)
 		throws Exception {
 
+		Double priority = structuredContent.getPriority();
+
+		if (priority != null) {
+			return priority;
+		}
+
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
 				JournalArticle.class);
@@ -804,11 +807,7 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
-		return Optional.ofNullable(
-			structuredContent.getPriority()
-		).orElse(
-			assetEntry.getPriority()
-		);
+		return assetEntry.getPriority();
 	}
 
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
@@ -998,14 +997,14 @@ public class StructuredContentResourceImpl
 			_layoutLocalService, contextAcceptLanguage.getPreferredLocale(),
 			_getRootDDMFormFields(ddmStructure));
 
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
+		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap = new HashMap<>();
 
-		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
 
-		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap = stream.collect(
-			Collectors.toMap(
-				DDMFormFieldValue::getFieldReference, Function.identity()));
+			ddmFormFieldValuesMap.put(
+				ddmFormFieldValue.getFieldReference(), ddmFormFieldValue);
+		}
 
 		for (ContentField contentField : contentFields) {
 			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValuesMap.get(

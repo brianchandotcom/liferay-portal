@@ -241,6 +241,41 @@ public class PullRequest {
 		return _commonParentSHA;
 	}
 
+	public List<String> getCompletedTestSuites() {
+		List<String> testSuiteNames = new ArrayList<>();
+
+		JSONArray statusesJSONArray = getSenderSHAStatusesJSONArray();
+
+		for (int i = 0; i < statusesJSONArray.length(); i++) {
+			JSONObject jsonObject = statusesJSONArray.getJSONObject(i);
+
+			Matcher matcher = _liferayContextPattern.matcher(
+				jsonObject.getString("context"));
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String testSuiteName = matcher.group("testSuiteName");
+
+			if (testSuiteNames.contains(testSuiteName)) {
+				continue;
+			}
+
+			String state = jsonObject.getString("state");
+
+			if (!Objects.equals("failure", state) &&
+				!Objects.equals("success", state)) {
+
+				continue;
+			}
+
+			testSuiteNames.add(testSuiteName);
+		}
+
+		return testSuiteNames;
+	}
+
 	public List<String> getFileNames() {
 		if (!_fileNames.isEmpty()) {
 			return _fileNames;
@@ -529,6 +564,37 @@ public class PullRequest {
 		}
 
 		return false;
+	}
+
+	public boolean hasRequiredCompletedTestSuites() {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String requiredCompletedSuites = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "pull.request.forward.required.completed.suites",
+			getGitRepositoryName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredCompletedSuites)) {
+			return true;
+		}
+
+		List<String> completedTestSuites = getCompletedTestSuites();
+
+		for (String requiredCompletedSuite :
+				requiredCompletedSuites.split(",")) {
+
+			if (!completedTestSuites.contains(requiredCompletedSuite)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public boolean hasRequiredPassingTestSuites() {

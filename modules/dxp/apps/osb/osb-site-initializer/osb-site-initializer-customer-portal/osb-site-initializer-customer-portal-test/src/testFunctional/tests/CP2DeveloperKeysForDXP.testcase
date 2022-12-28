@@ -105,13 +105,21 @@ definition {
 		}
 
 		task ("Type a invalid value in the field and assert the error message") {
-			CP2Utils.typeEnableNodeField(
-				error = "enter-a-minimum-node-value-greater-than-0",
-				value = "0");
+			Type(
+			locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
+			value1 = "0");
 
-			CP2Utils.typeEnableNodeField(
-				error = "max-nodes-must-be-greater-than-min-nodes",
-				value = "1");
+			AssertElementPresent(
+			key_error = "enter-a-minimum-node-value-greater-than-0",
+			locator1 = "CP2NavigationMenu#NODES_ERROR");
+			
+			Type(
+			locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
+			value1 = "1");
+
+			AssertElementPresent(
+			key_error = "max-nodes-must-be-greater-than-min-nodes",
+			locator1 = "CP2NavigationMenu#NODES_ERROR");
 
 			CustomerPortal.clickAtButton(text = "Filter");
 		}

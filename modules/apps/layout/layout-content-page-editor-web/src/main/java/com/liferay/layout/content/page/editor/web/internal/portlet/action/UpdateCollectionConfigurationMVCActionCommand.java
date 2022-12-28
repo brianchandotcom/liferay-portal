@@ -95,9 +95,7 @@ public class UpdateCollectionConfigurationMVCActionCommand
 					itemId);
 			});
 
-		sendRedirect(
-			actionRequest, actionResponse,
-			ParamUtil.getString(actionRequest, "redirect"));
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

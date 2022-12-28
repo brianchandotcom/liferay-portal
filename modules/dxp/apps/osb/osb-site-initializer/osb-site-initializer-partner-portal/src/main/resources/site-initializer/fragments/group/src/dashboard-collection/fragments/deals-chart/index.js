@@ -64,6 +64,10 @@ export default function () {
 
 				return;
 			}
+			Liferay.Util.openToast({
+				message: 'An unexpected error occured.',
+				type: 'danger',
+			});
 		};
 		getOpportunities();
 		getLeads();

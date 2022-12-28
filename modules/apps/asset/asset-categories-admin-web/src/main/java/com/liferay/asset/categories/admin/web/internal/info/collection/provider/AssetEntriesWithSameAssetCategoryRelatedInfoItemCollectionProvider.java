@@ -27,8 +27,8 @@ import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.type.CategoriesInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
@@ -179,7 +179,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			).infoFieldSetEntry(
 				InfoField.builder(
 				).infoFieldType(
-					TextInfoFieldType.INSTANCE
+					CategoriesInfoFieldType.INSTANCE
 				).namespace(
 					StringPool.BLANK
 				).name(

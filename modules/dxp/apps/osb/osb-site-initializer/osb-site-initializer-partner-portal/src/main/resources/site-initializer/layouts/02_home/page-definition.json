@@ -742,7 +742,7 @@
 													"rowViewportDefinition": {
 														"modulesPerRow": 2,
 														"reverseOrder": false,
-														"verticalAlignment": "middle"
+														"verticalAlignment": "top"
 													}
 												}
 											],
@@ -836,54 +836,52 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"fragmentLink": {
-																				"href": {
-																					"mapping": {
-																						"itemReference": {
-																							"className": "com.liferay.portal.kernel.model.Layout",
-																							"fields": [
-																								{
-																									"fieldName": "friendlyURL",
-																									"fieldValue": "/sales/deal-registrations"
-																								},
-																								{
-																									"fieldName": "privatePage",
-																									"fieldValue": "false"
-																								},
-																								{
-																									"fieldName": "siteKey",
-																									"fieldValue": "[$GROUP_KEY$]"
-																								}
-																							]
-																						}
-																					}
-																				}
+																			"fragmentStyle": {
+																				"borderColor": "colorNeutral2",
+																				"borderRadius": "borderRadiusLg",
+																				"borderWidth": "1px",
+																				"paddingBottom": "3",
+																				"paddingTop": "3"
 																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true,
 																			"layout": {
+																				"align": "Center",
+																				"borderColor": "colorNeutral2",
 																				"borderWidth": 0,
+																				"contentDisplay": "FlexColumn",
 																				"marginBottom": 0,
 																				"marginLeft": 0,
 																				"marginRight": 0,
 																				"marginTop": 0,
-																				"paddingBottom": 0,
+																				"opacity": 100,
+																				"paddingBottom": 1,
 																				"paddingLeft": 0,
 																				"paddingRight": 0,
-																				"paddingTop": 0,
+																				"paddingTop": 1,
 																				"widthType": "Fluid"
-																			}
+																			},
+																			"name": "Quick Link Card Small"
 																		},
 																		"pageElements": [
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "quick-link"
+																						"key": "BASIC_COMPONENT-image"
 																					},
 																					"fragmentConfig": {
+																						"imageSize": "w-0"
 																					},
 																					"fragmentFields": [
 																						{
-																							"id": "brief-image",
+																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
 																									"url": {
@@ -899,11 +897,48 @@
 																								"fragmentLink": {
 																								}
 																							}
-																						},
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h6",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
 																						{
-																							"id": "quick-link",
+																							"id": "element-text",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"value_i18n": {
+																												"ar_SA": "https://www.liferay.com/",
+																												"ca_ES": "https://www.liferay.com/",
+																												"de_DE": "https://www.liferay.com/",
+																												"en_US": "https://www.liferay.com/",
+																												"es_ES": "https://www.liferay.com/",
+																												"fi_FI": "https://www.liferay.com/",
+																												"fr_FR": "https://www.liferay.com/",
+																												"hu_HU": "https://www.liferay.com/",
+																												"ja_JP": "https://www.liferay.com/",
+																												"nl_NL": "https://www.liferay.com/",
+																												"pt_BR": "https://www.liferay.com/",
+																												"sv_SE": "https://www.liferay.com/",
+																												"zh_CN": "https://www.liferay.com/"
+																											}
+																										}
+																									}
 																								},
 																								"text": {
 																									"value_i18n": {
@@ -925,15 +960,9 @@
 																							}
 																						}
 																					],
-																					"fragmentViewports": [
-																						{
-																							"fragmentViewportStyle": {
-																								"marginBottom": "4",
-																								"paddingBottom": "2"
-																							},
-																							"id": "tablet"
-																						}
-																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBold"
+																					},
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -970,31 +999,55 @@
 																"pageElements": [
 																	{
 																		"definition": {
+																			"fragmentStyle": {
+																				"borderColor": "colorNeutral2",
+																				"borderRadius": "borderRadiusLg",
+																				"borderWidth": "1",
+																				"paddingBottom": "3",
+																				"paddingTop": "3",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4",
+																						"paddingBottom": "3"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true,
 																			"layout": {
-																				"borderWidth": 0,
+																				"align": "Center",
+																				"borderColor": "colorNeutral2",
+																				"borderWidth": 1,
+																				"contentDisplay": "FlexColumn",
 																				"marginBottom": 0,
 																				"marginLeft": 0,
 																				"marginRight": 0,
 																				"marginTop": 0,
-																				"paddingBottom": 0,
+																				"opacity": 100,
+																				"paddingBottom": 1,
 																				"paddingLeft": 0,
 																				"paddingRight": 0,
-																				"paddingTop": 0,
+																				"paddingTop": 1,
 																				"widthType": "Fluid"
-																			}
+																			},
+																			"name": "Quick Link Card Small"
 																		},
 																		"pageElements": [
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "quick-link"
+																						"key": "BASIC_COMPONENT-image"
 																					},
 																					"fragmentConfig": {
+																						"imageSize": "w-0"
 																					},
 																					"fragmentFields": [
 																						{
-																							"id": "brief-image",
+																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
 																									"url": {
@@ -1010,11 +1063,51 @@
 																								"fragmentLink": {
 																								}
 																							}
-																						},
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"marginBottom": "3",
+																						"shadow": "",
+																						"textAlign": ""
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h6",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
 																						{
-																							"id": "quick-link",
+																							"id": "element-text",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"value_i18n": {
+																												"ar_SA": "https://www.liferay.com/",
+																												"ca_ES": "https://www.liferay.com/",
+																												"de_DE": "https://www.liferay.com/",
+																												"en_US": "https://www.liferay.com/",
+																												"es_ES": "https://www.liferay.com/",
+																												"fi_FI": "https://www.liferay.com/",
+																												"fr_FR": "https://www.liferay.com/",
+																												"hu_HU": "https://www.liferay.com/",
+																												"ja_JP": "https://www.liferay.com/",
+																												"nl_NL": "https://www.liferay.com/",
+																												"pt_BR": "https://www.liferay.com/",
+																												"sv_SE": "https://www.liferay.com/",
+																												"zh_CN": "https://www.liferay.com/"
+																											}
+																										}
+																									}
 																								},
 																								"text": {
 																									"value_i18n": {
@@ -1036,15 +1129,9 @@
 																							}
 																						}
 																					],
-																					"fragmentViewports": [
-																						{
-																							"fragmentViewportStyle": {
-																								"marginBottom": "4",
-																								"paddingBottom": "2"
-																							},
-																							"id": "tablet"
-																						}
-																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBold"
+																					},
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1081,54 +1168,48 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"fragmentLink": {
-																				"href": {
-																					"mapping": {
-																						"itemReference": {
-																							"className": "com.liferay.portal.kernel.model.Layout",
-																							"fields": [
-																								{
-																									"fieldName": "friendlyURL",
-																									"fieldValue": "/marketing/mdf-requests"
-																								},
-																								{
-																									"fieldName": "privatePage",
-																									"fieldValue": "false"
-																								},
-																								{
-																									"fieldName": "siteKey",
-																									"fieldValue": "[$GROUP_KEY$]"
-																								}
-																							]
-																						}
-																					}
-																				}
+																			"fragmentStyle": {
+																				"borderColor": "colorNeutral2",
+																				"borderRadius": "borderRadiusLg",
+																				"borderWidth": "1",
+																				"paddingBottom": "3",
+																				"paddingTop": "3",
+																				"shadow": "",
+																				"textAlign": ""
 																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "landscapeMobile"
+																				}
+																			],
 																			"indexed": true,
 																			"layout": {
-																				"borderWidth": 0,
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
+																				"align": "Center",
+																				"borderColor": "colorNeutral2",
+																				"borderWidth": 1,
+																				"contentDisplay": "FlexColumn",
+																				"opacity": 100,
+																				"paddingBottom": 1,
+																				"paddingTop": 1,
 																				"widthType": "Fluid"
-																			}
+																			},
+																			"name": "Quick Link Card Small"
 																		},
 																		"pageElements": [
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "quick-link"
+																						"key": "BASIC_COMPONENT-image"
 																					},
 																					"fragmentConfig": {
+																						"imageSize": "w-0"
 																					},
 																					"fragmentFields": [
 																						{
-																							"id": "brief-image",
+																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
 																									"url": {
@@ -1167,9 +1248,27 @@
 																									}
 																								}
 																							}
-																						},
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h6",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
 																						{
-																							"id": "quick-link",
+																							"id": "element-text",
 																							"value": {
 																								"fragmentLink": {
 																									"value": {
@@ -1216,22 +1315,12 @@
 																							}
 																						}
 																					],
-																					"fragmentViewports": [
-																						{
-																							"fragmentViewportStyle": {
-																								"marginBottom": "4",
-																								"paddingBottom": "2"
-																							},
-																							"id": "landscapeMobile"
-																						},
-																						{
-																							"fragmentViewportStyle": {
-																								"marginBottom": "0",
-																								"paddingBottom": "0"
-																							},
-																							"id": "tablet"
-																						}
-																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"fontWeight": "fontWeightBold",
+																						"shadow": "",
+																						"textAlign": ""
+																					},
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1339,56 +1428,47 @@
 																	{
 																		"definition": {
 																			"fragmentStyle": {
-																				"borderWidth": "0",
-																				"height": "0"
+																				"borderColor": "colorNeutral2",
+																				"borderRadius": "borderRadiusLg",
+																				"borderWidth": "1",
+																				"paddingBottom": "3",
+																				"paddingTop": "3",
+																				"shadow": "",
+																				"textAlign": ""
 																			},
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
-																						"height": "0",
-																						"marginBottom": "0"
-																					},
-																					"id": "landscapeMobile"
-																				},
-																				{
-																					"fragmentViewportStyle": {
-																						"marginBottom": "0"
-																					},
-																					"id": "portraitMobile"
-																				},
-																				{
-																					"fragmentViewportStyle": {
-																						"height": "145px",
-																						"marginBottom": "0"
+																						"marginBottom": "4"
 																					},
 																					"id": "tablet"
 																				}
 																			],
 																			"indexed": true,
 																			"layout": {
-																				"borderWidth": 0,
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
+																				"align": "Center",
+																				"borderColor": "colorNeutral2",
+																				"borderWidth": 1,
+																				"contentDisplay": "FlexColumn",
+																				"opacity": 100,
+																				"paddingBottom": 1,
+																				"paddingTop": 1,
 																				"widthType": "Fluid"
-																			}
+																			},
+																			"name": "Quick Link Card Small"
 																		},
 																		"pageElements": [
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "quick-link"
+																						"key": "BASIC_COMPONENT-image"
 																					},
 																					"fragmentConfig": {
+																						"imageSize": "w-0"
 																					},
 																					"fragmentFields": [
 																						{
-																							"id": "brief-image",
+																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
 																									"url": {
@@ -1404,11 +1484,51 @@
 																								"fragmentLink": {
 																								}
 																							}
-																						},
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"marginBottom": "3",
+																						"shadow": "",
+																						"textAlign": ""
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h6",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
 																						{
-																							"id": "quick-link",
+																							"id": "element-text",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"value_i18n": {
+																												"ar_SA": "https://www.liferay.com/",
+																												"ca_ES": "https://www.liferay.com/",
+																												"de_DE": "https://www.liferay.com/",
+																												"en_US": "https://www.liferay.com/",
+																												"es_ES": "https://www.liferay.com/",
+																												"fi_FI": "https://www.liferay.com/",
+																												"fr_FR": "https://www.liferay.com/",
+																												"hu_HU": "https://www.liferay.com/",
+																												"ja_JP": "https://www.liferay.com/",
+																												"nl_NL": "https://www.liferay.com/",
+																												"pt_BR": "https://www.liferay.com/",
+																												"sv_SE": "https://www.liferay.com/",
+																												"zh_CN": "https://www.liferay.com/"
+																											}
+																										}
+																									}
 																								},
 																								"text": {
 																									"value_i18n": {
@@ -1430,15 +1550,12 @@
 																							}
 																						}
 																					],
-																					"fragmentViewports": [
-																						{
-																							"fragmentViewportStyle": {
-																								"marginBottom": "4",
-																								"paddingBottom": "2"
-																							},
-																							"id": "tablet"
-																						}
-																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"fontWeight": "fontWeightBold",
+																						"shadow": "",
+																						"textAlign": ""
+																					},
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1482,6 +1599,9 @@
 																					}
 																				}
 																			},
+																			"fragmentStyle": {
+																				"borderWidth": "0"
+																			},
 																			"indexed": true,
 																			"layout": {
 																				"borderWidth": 0,
@@ -1489,6 +1609,7 @@
 																				"marginLeft": 0,
 																				"marginRight": 0,
 																				"marginTop": 0,
+																				"opacity": 100,
 																				"paddingBottom": 0,
 																				"paddingLeft": 0,
 																				"paddingRight": 0,
@@ -1499,58 +1620,139 @@
 																		"pageElements": [
 																			{
 																				"definition": {
-																					"fragment": {
-																						"key": "quick-link"
+																					"fragmentStyle": {
+																						"borderColor": "colorNeutral2",
+																						"borderRadius": "borderRadiusLg",
+																						"borderWidth": "1",
+																						"paddingBottom": "3",
+																						"paddingTop": "3",
+																						"shadow": "",
+																						"textAlign": ""
 																					},
-																					"fragmentConfig": {
+																					"indexed": true,
+																					"layout": {
+																						"align": "Center",
+																						"borderColor": "colorNeutral2",
+																						"borderWidth": 1,
+																						"contentDisplay": "FlexColumn",
+																						"marginBottom": 0,
+																						"marginLeft": 0,
+																						"marginRight": 0,
+																						"marginTop": 0,
+																						"opacity": 100,
+																						"paddingBottom": 1,
+																						"paddingLeft": 0,
+																						"paddingRight": 0,
+																						"paddingTop": 1,
+																						"widthType": "Fluid"
 																					},
-																					"fragmentFields": [
-																						{
-																							"id": "brief-image",
-																							"value": {
-																								"fragmentImage": {
-																									"url": {
-																										"mapping": {
-																											"fieldKey": "FileEntry_previewImage",
-																											"itemReference": {
-																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/price-books.png#]"
+																					"name": "Quick Link Card Small"
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-image"
+																							},
+																							"fragmentConfig": {
+																								"imageSize": "w-0"
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "image-square",
+																									"value": {
+																										"fragmentImage": {
+																											"url": {
+																												"mapping": {
+																													"fieldKey": "FileEntry_previewImage",
+																													"itemReference": {
+																														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/price-books.png#]"
+																													}
+																												}
+																											}
+																										},
+																										"fragmentLink": {
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"borderRadius": "",
+																								"marginBottom": "3",
+																								"shadow": "",
+																								"textAlign": ""
+																							},
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "DIALECT-dialect-text"
+																							},
+																							"fragmentConfig": {
+																								"textType": "h6",
+																								"truncateText": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "element-text",
+																									"value": {
+																										"fragmentLink": {
+																											"value": {
+																												"href": {
+																													"value_i18n": {
+																														"ar_SA": "https://www.liferay.com/",
+																														"ca_ES": "https://www.liferay.com/",
+																														"de_DE": "https://www.liferay.com/",
+																														"en_US": "https://www.liferay.com/",
+																														"es_ES": "https://www.liferay.com/",
+																														"fi_FI": "https://www.liferay.com/",
+																														"fr_FR": "https://www.liferay.com/",
+																														"hu_HU": "https://www.liferay.com/",
+																														"ja_JP": "https://www.liferay.com/",
+																														"nl_NL": "https://www.liferay.com/",
+																														"pt_BR": "https://www.liferay.com/",
+																														"sv_SE": "https://www.liferay.com/",
+																														"zh_CN": "https://www.liferay.com/"
+																													}
+																												}
+																											}
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"ar_SA": "Price Books",
+																												"ca_ES": "Price Books",
+																												"de_DE": "Price Books",
+																												"en_US": "Price Books",
+																												"es_ES": "Price Books",
+																												"fi_FI": "Price Books",
+																												"fr_FR": "Price Books",
+																												"hu_HU": "Price Books",
+																												"ja_JP": "Price Books",
+																												"nl_NL": "Price Books",
+																												"pt_BR": "Price Books",
+																												"sv_SE": "Price Books",
+																												"zh_CN": "Price Books"
 																											}
 																										}
 																									}
-																								},
-																								"fragmentLink": {
 																								}
-																							}
+																							],
+																							"fragmentStyle": {
+																								"borderRadius": "",
+																								"fontWeight": "fontWeightBold",
+																								"shadow": "",
+																								"textAlign": ""
+																							},
+																							"indexed": true
 																						},
-																						{
-																							"id": "quick-link",
-																							"value": {
-																								"fragmentLink": {
-																								},
-																								"text": {
-																									"value_i18n": {
-																										"ar_SA": "Price Books",
-																										"ca_ES": "Price Books",
-																										"de_DE": "Price Books",
-																										"en_US": "Price Books",
-																										"es_ES": "Price Books",
-																										"fi_FI": "Price Books",
-																										"fr_FR": "Price Books",
-																										"hu_HU": "Price Books",
-																										"ja_JP": "Price Books",
-																										"nl_NL": "Price Books",
-																										"pt_BR": "Price Books",
-																										"sv_SE": "Price Books",
-																										"zh_CN": "Price Books"
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"indexed": true
-																				},
-																				"type": "Fragment"
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "Section"
 																			}
 																		],
 																		"type": "Section"

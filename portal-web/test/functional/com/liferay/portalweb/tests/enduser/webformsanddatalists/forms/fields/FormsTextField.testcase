@@ -1444,4 +1444,38 @@ definition {
 
 	}
 
+	@description = "Verify if the confirmation error message and validation error message together work correctly."
+	test ViewConfirmationAndValidationErrorMessage {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Require Confirmation");
+
+		FormFields.enableSwitch(fieldName = "Validation");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "The information does not match.");
+
+		FormFields.editConfirmationFieldText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is invalid.");
+	}
+
 }

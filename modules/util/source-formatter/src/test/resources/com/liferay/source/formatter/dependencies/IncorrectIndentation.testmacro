@@ -1,0 +1,20 @@
+definition {
+
+	macro _addPage {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test' \
+			-d '{
+				"keywords": [
+				"${tagField}"
+				],
+				"headline": "${titleField}",
+				"articleBody": "${bodyField}"
+			}'
+			''';
+	}
+
+}

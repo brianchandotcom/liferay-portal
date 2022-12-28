@@ -27,6 +27,11 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectIndentation() throws Exception {
+		test("IncorrectIndentation.testmacro");
+	}
+
+	@Test
 	public void testMultipleSpacesInTaskDefinitions() throws Exception {
 		test("MultipleSpacesInTaskDefinitions.testmacro");
 	}

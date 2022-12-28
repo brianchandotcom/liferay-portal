@@ -42,17 +42,16 @@ export default async function createMDFRequestActivitiesProxyAPI(
 				mdFRequestExternalReferenceCodeSF,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
+		} else {
+			dtoMDFRequestResponse = await createMDFRequestActivities(
+				ResourceName.ACTIVITY_DXP,
+				mdfRequestActivity,
+				company,
+				mdfRequestId,
+				mdFRequestExternalReferenceCodeSF,
+				dtoMDFRequestActivitySFResponse.externalReferenceCode
+			);
 		}
-	}
-	else {
-		dtoMDFRequestResponse = await createMDFRequestActivities(
-			ResourceName.ACTIVITY_DXP,
-			mdfRequestActivity,
-			company,
-			mdfRequestId,
-			mdFRequestExternalReferenceCodeSF,
-			dtoMDFRequestActivitySFResponse.externalReferenceCode
-		);
 	}
 
 	return dtoMDFRequestResponse;

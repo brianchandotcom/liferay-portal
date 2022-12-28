@@ -15,14 +15,12 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
-
 const colors = {
 	approved: '#8FB5FF',
 	closedwon: '#002C62',
 	rejected: '#FF6060',
 	submited: '#E7EFFF',
 };
-
 const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 	.split('/')
 	.slice(0, 3)
@@ -31,50 +29,47 @@ const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 export default function () {
 	const [opportunities, setOpportunities] = useState();
 	const [leads, setLeads] = useState();
+
 	useEffect(() => {
 		const getOpportunities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			await fetch('/o/c/opportunitysfs', {
+			const response = await fetch('/o/c/opportunitysfs', {
 				headers: {
 					'accept': 'application/json',
 					'x-csrf-token': Liferay.authToken,
 				},
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					setOpportunities(data?.items);
-				})
-				.catch(() => {
-					Liferay.Util.openToast({
-						message: 'An unexpected error occured.',
-						type: 'danger',
-					});
-				});
+			});
+			if (response.ok) {
+				const data = await response.json();
+				setOpportunities(data?.items);
+
+				return;
+			}
+			Liferay.Util.openToast({
+				message: 'An unexpected error occured.',
+				type: 'danger',
+			});
 		};
 		const getLeads = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			await fetch('/o/c/leadsfs', {
+			const response = await fetch('/o/c/leadsfs', {
 				headers: {
 					'accept': 'application/json',
 					'x-csrf-token': Liferay.authToken,
 				},
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					setLeads(data?.items);
-				})
-				.catch(() => {
-					Liferay.Util.openToast({
-						message: 'An unexpected error occured.',
-						type: 'danger',
-					});
-				});
+			});
+			if (response.ok) {
+				const data = await response.json();
+				setLeads(data?.items);
+
+				return;
+			}
 		};
 		getOpportunities();
 		getLeads();
 	}, []);
 
-	const getFilteredDeals = useMemo(() => {
+	const getDealsByType = useMemo(() => {
 		return {
 			approvedDeals: opportunities?.filter(
 				(item) => item.stage === 'Open'
@@ -94,67 +89,81 @@ export default function () {
 		};
 	}, [leads, opportunities]);
 
-	const getDealsByQuarter = useMemo(() => {
-		const quarters = ['q1', 'q2', 'q3', 'q4'];
+	const getFilteredDealsByQuarter = useMemo(() => {
+		const q1 = (item) =>
+			item?.dateCreated?.slice(5, 7) === '01' ||
+			item?.dateCreated?.slice(5, 7) === '02' ||
+			item?.dateCreated?.slice(5, 7) === '03';
+		const q2 = (item) =>
+			item?.dateCreated?.slice(5, 7) === '04' ||
+			item?.dateCreated?.slice(5, 7) === '05' ||
+			item?.dateCreated?.slice(5, 7) === '06';
+		const q3 = (item) =>
+			item?.dateCreated?.slice(5, 7) === '07' ||
+			item?.dateCreated?.slice(5, 7) === '08' ||
+			item?.dateCreated?.slice(5, 7) === '09';
+		const q4 = (item) =>
+			item?.dateCreated?.slice(5, 7) === '10' ||
+			item?.dateCreated?.slice(5, 7) === '11' ||
+			item?.dateCreated?.slice(5, 7) === '12';
 
-		const getQuarter = (quarter) => {
-			return (item) => {
-				const month = item?.dateCreated?.slice(5, 7);
-
-				switch (quarter) {
-					case 'q1':
-						return (
-							month === '01' || month === '02' || month === '03'
-						);
-					case 'q2':
-						return (
-							month === '04' || month === '05' || month === '06'
-						);
-					case 'q3':
-						return (
-							month === '07' || month === '08' || month === '09'
-						);
-					case 'q4':
-						return (
-							month === '10' || month === '11' || month === '12'
-						);
-					default:
-				}
-			};
+		return {
+			q1: {
+				approved: getDealsByType?.approvedDeals?.filter(q1).length,
+				closedwon: getDealsByType?.closedWonDeals?.filter(q1).length,
+				rejected: getDealsByType?.rejectedDeals?.filter(q1).length,
+				submited: getDealsByType?.submitedDeals?.filter(q1).length,
+			},
+			q2: {
+				approved: getDealsByType?.approvedDeals?.filter(q2).length,
+				closedwon: getDealsByType?.closedWonDeals?.filter(q2).length,
+				rejected: getDealsByType?.rejectedDeals?.filter(q2).length,
+				submited: getDealsByType?.submitedDeals?.filter(q2).length,
+			},
+			q3: {
+				approved: getDealsByType?.approvedDeals?.filter(q3).length,
+				closedwon: getDealsByType?.closedWonDeals?.filter(q3).length,
+				rejected: getDealsByType?.rejectedDeals?.filter(q3).length,
+				submited: getDealsByType?.submitedDeals?.filter(q3).length,
+			},
+			q4: {
+				approved: getDealsByType?.approvedDeals?.filter(q4).length,
+				closedwon: getDealsByType?.closedWonDeals?.filter(q4).length,
+				rejected: getDealsByType?.rejectedDeals?.filter(q4).length,
+				submited: getDealsByType?.submitedDeals?.filter(q4).length,
+			},
 		};
+	}, [
+		getDealsByType?.approvedDeals,
+		getDealsByType?.closedWonDeals,
+		getDealsByType?.rejectedDeals,
+		getDealsByType?.submitedDeals,
+	]);
 
-		return quarters.map((quarter) => {
-			return {
-				quarter: {
-					approved: getFilteredDeals.approvedDeals?.filter(
-						getQuarter(quarter)
-					).length,
-					closedWon: getFilteredDeals.closedWonDeals?.filter(
-						getQuarter(quarter)
-					).length,
-					rejected: getFilteredDeals.rejectedDeals?.filter(
-						getQuarter(quarter)
-					).length,
-					submited: getFilteredDeals.submitedDeals?.filter(
-						getQuarter(quarter)
-					).length,
-				},
-			};
-		});
-	}, [getFilteredDeals]);
-
-	const approvedAmount = getDealsByQuarter?.map((item) => {
-		return item?.quarter?.approved;
-	});
-	const closedWonAmount = getDealsByQuarter?.map((item) => {
-		return item?.quarter?.closedWon;
-	});
-	const rejectedAmount = getDealsByQuarter?.map((item) => {
-		return item?.quarter?.rejected;
-	});
-	const submitedAmount = getDealsByQuarter?.map((item) => {
-		return item?.quarter?.submited;
-	});
+	const approvedChartValues = [
+		getFilteredDealsByQuarter?.q1.approved,
+		getFilteredDealsByQuarter?.q2.approved,
+		getFilteredDealsByQuarter?.q3.approved,
+		getFilteredDealsByQuarter?.q4.approved,
+	];
+	const closedWonChartValues = [
+		getFilteredDealsByQuarter?.q1.closedwon,
+		getFilteredDealsByQuarter?.q2.closedwon,
+		getFilteredDealsByQuarter?.q3.closedwon,
+		getFilteredDealsByQuarter?.q4.closedwon,
+	];
+	const rejectedChartValues = [
+		getFilteredDealsByQuarter?.q1.rejected,
+		getFilteredDealsByQuarter?.q2.rejected,
+		getFilteredDealsByQuarter?.q3.rejected,
+		getFilteredDealsByQuarter?.q4.rejected,
+	];
+	const submitedChartValues = [
+		getFilteredDealsByQuarter?.q1.submited,
+		getFilteredDealsByQuarter?.q2.submited,
+		getFilteredDealsByQuarter?.q3.submited,
+		getFilteredDealsByQuarter?.q4.submited,
+	];
 
 	const chart = {
 		bar: {
@@ -168,10 +177,10 @@ export default function () {
 		data: {
 			colors,
 			columns: [
-				['submited', ...submitedAmount],
-				['approved', ...approvedAmount],
-				['rejected', ...rejectedAmount],
-				['closedwon', ...closedWonAmount],
+				['submited', ...submitedChartValues],
+				['approved', ...approvedChartValues],
+				['rejected', ...rejectedChartValues],
+				['closedwon', ...closedWonChartValues],
 			],
 			groups: [['submited', 'approved', 'closedwon']],
 			order: 'desc',
@@ -193,15 +202,20 @@ export default function () {
 	return (
 		<Container className="deals-chart-card-height" title="Deals">
 			{(
-				approvedAmount ||
-				closedWonAmount ||
-				rejectedAmount ||
-				submitedAmount
+				approvedChartValues ||
+				closedWonChartValues ||
+				rejectedChartValues ||
+				submitedChartValues
 			).includes(undefined) && (
 				<ClayLoadingIndicator className="mb-10" size="md" />
 			)}
 
-			{!approvedAmount.includes(undefined) && (
+			{!(
+				approvedChartValues ||
+				closedWonChartValues ||
+				rejectedChartValues ||
+				submitedChartValues
+			).includes(undefined) && (
 				<ClayChart
 					bar={chart?.bar}
 					data={chart?.data}

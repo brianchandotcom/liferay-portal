@@ -3132,7 +3132,7 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Nesting Level",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = "2");
+			value1 = "${maxNestingLevel}");
 
 		PageEditor.waitForAutoSave();
 	}

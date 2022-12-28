@@ -4,6 +4,7 @@
 		"@clayui/date-picker": "^3.81.0",
 		"@clayui/form": "^3.80.0",
 		"@hookform/resolvers": "^2.9.10",
+		"dayjs": "^1.11.7",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.39.4",

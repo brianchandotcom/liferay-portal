@@ -17,6 +17,7 @@ import Form from '../../../common/components/Form';
 import yupSchema, {yupResolver} from '../../../common/schema/yup';
 import {getPicklistByName} from '../../../common/services/picklist';
 import {getRequestsByFilter} from '../../../common/services/request';
+import {LiferayBranch, Statuses} from '../../../types/index';
 
 import './index.scss';
 
@@ -42,8 +43,6 @@ const GenerateReport = () => {
 		resolver: yupResolver(yupSchema.report),
 	});
 	const onSubmit: SubmitHandler<generateReportsType> = (data: any) => {
-		// console.log(data);
-
 		getRequestsByFilter(data).then((response) => response);
 	};
 
@@ -158,7 +157,7 @@ const GenerateReport = () => {
 					<div className="col">
 						<label>Statuses</label>
 
-						{statuses.map((status: any, index: string) => (
+						{statuses.map((status: Statuses, index: string) => (
 							<div
 								className="align-items-center d-flex"
 								key={index}
@@ -180,23 +179,25 @@ const GenerateReport = () => {
 					<div className="col">
 						<label>Liferay Branch</label>
 
-						{branches.map((branch: any, index: string) => (
-							<div
-								className="align-items-center d-flex"
-								key={index}
-							>
-								<Form.Checkbox
-									checked={branchesWatch?.includes(
-										branch.key
-									)}
-									id="liferayBranch"
-									label={branch.name}
-									name="liferayBranch"
-									onChange={onClickBranches}
-									value={branch.key}
-								/>
-							</div>
-						))}
+						{branches.map(
+							(branch: LiferayBranch, index: string) => (
+								<div
+									className="align-items-center d-flex"
+									key={index}
+								>
+									<Form.Checkbox
+										checked={branchesWatch?.includes(
+											branch.key
+										)}
+										id="liferayBranch"
+										label={branch.name}
+										name="liferayBranch"
+										onChange={onClickBranches}
+										value={branch.key}
+									/>
+								</div>
+							)
+						)}
 					</div>
 				</div>
 

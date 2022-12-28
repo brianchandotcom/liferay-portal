@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {OrganizationFilterType} from '../../types';
+import {OrganizationFilterType} from '../../types/index';
 import fetcher from './fetcher';
 const resource = 'o/c/evporganizations';
 
@@ -22,7 +22,7 @@ export async function getOrganizations(organizationName: string) {
 }
 
 export async function getIdGreaterOrEqualOrganization(
-	idOrganizationInitial: Number
+	idOrganizationInitial: number
 ) {
 	const response = await fetcher(
 		`${resource}/?filter=idNumber ge ${idOrganizationInitial}`
@@ -32,7 +32,7 @@ export async function getIdGreaterOrEqualOrganization(
 }
 
 export async function filteredOrganizationsERC(organization: any) {
-	const externalReferenceCodes: String[] = [];
+	const externalReferenceCodes: string[] = [];
 
 	organization.items.forEach((organization: OrganizationFilterType) => {
 		externalReferenceCodes.push(organization.externalReferenceCode);
@@ -42,7 +42,7 @@ export async function filteredOrganizationsERC(organization: any) {
 }
 
 export async function getIdLessOrEqualOrganization(
-	idOrganizationFinal: Number
+	idOrganizationFinal: number
 ) {
 	const response = await fetcher(
 		`${resource}/?filter=idNumber le ${idOrganizationFinal}`
@@ -52,30 +52,29 @@ export async function getIdLessOrEqualOrganization(
 }
 
 export async function getOrganizationBetweenIds(
-	idOrganizationInitial: Number,
-	idOrganizationFinal: Number
+	idOrganizationInitial: number,
+	idOrganizationFinal: number
 ) {
 	const response = await fetcher(
 		`${resource}/?filter=idNumber ge ${idOrganizationInitial} and idNumber le ${idOrganizationFinal}`
 	);
 
-	// console.log(response);
-
 	return response;
 }
 
-// export async function eachOrganization(
-// 	organizationName: any,
-// 	idOrganizationInitial: Number
-// ) {
-// 	const externalReferenceCodes: String[] = [];
-// 	const filteredOrganization = organizationName.items.filter(
-// 		(organization: OrganizationFilterType) =>
-// 			organization.idNumber.includes(idOrganizationInitial)
-// 	);
-// 	filteredOrganization.forEach((organization: OrganizationFilterType) => {
-// 		externalReferenceCodes.push(organization.externalReferenceCode);
-// 	});
+export async function getOrganizationName(organizationName: string) {
+	const organizations = await getOrganizations(organizationName);
 
-// 	return externalReferenceCodes;
-// }
+	const externalReferenceCodes: String[] = [];
+
+	const filteredOrganization = organizations.items.filter(
+		(organization: OrganizationFilterType) =>
+			organization.organizationName.includes(organizationName)
+	);
+
+	filteredOrganization.forEach((organization: OrganizationFilterType) => {
+		externalReferenceCodes.push(organization.externalReferenceCode);
+	});
+
+	return externalReferenceCodes;
+}

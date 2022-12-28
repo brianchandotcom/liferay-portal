@@ -9,31 +9,58 @@
  * distribution rights of the Software.
  */
 export interface RequestFilterType {
-	finalCompanyId: String;
-	finalRequestDate: String;
-	fullName: String;
-	initialCompanyId: String;
-	initialRequestDate: String;
-	liferayBranch: String[];
-	organizationName: String;
-	requestStatus: String[];
+	finalCompanyId: string;
+	finalRequestDate: string;
+	fullName: string;
+	initialCompanyId: string;
+	initialRequestDate: string;
+	liferayBranch: string[];
+	organizationName: string;
+	requestStatus: string[];
 }
 export interface OrganizationFilterType {
-	city: String;
-	contactEmail: String;
-	contactName: String;
-	contactPhone: String;
-	country: String;
-	externalReferenceCode: String;
-	id: String;
+	city: string;
+	contactEmail: string;
+	contactName: string;
+	contactPhone: string;
+	country: string;
+	externalReferenceCode: string;
+	id: string;
 	idNumber: Number;
-	organizationName: String;
-	organizationSiteSocialMediaLink: String;
-	organizationStatus: String[];
-	smallDescription: String;
-	state: String;
-	status: String[];
-	street: String;
-	taxIdentificationNumber: String;
-	zip: String;
+	organizationName: string;
+	organizationSiteSocialMediaLink: string;
+	organizationStatus: string[];
+	smallDescription: string;
+	state: string;
+	status: string[];
+	street: string;
+	taxIdentificationNumber: string;
+	zip: string;
+}
+
+export type Statuses = {
+	dateCreated: string;
+	dateModified: string;
+	id: number;
+	key: string;
+	name: string;
+};
+
+export type LiferayBranch = {
+	dateCreated: string;
+	dateModified: string;
+	id: number;
+	key: string;
+	name: string;
+};
+
+export enum FIELDSREPORT {
+	FINALCOMPANYID = 'finalCompanyId',
+	FINALREQUESTDATE = 'finalRequestDate',
+	FULLNAME = 'fullName',
+	INITIALCOMPANYID = 'initialCompanyId',
+	INITIALREQUESTDATE = 'initialRequestDate',
+	LIFERAYBRANCH = 'liferayBranch',
+	ORGANIZATIONNAME = 'organizationName',
+	REQUESTSTATUS = 'requestStatus',
 }

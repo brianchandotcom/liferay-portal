@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -10,38 +9,21 @@
  * distribution rights of the Software.
  */
 
-import {OrganizationFilterType, RequestFilterType} from '../../types';
+import dayjs from 'dayjs';
+
+import {FIELDSREPORT, RequestFilterType} from '../../types';
 import fetcher from './fetcher';
 import {
 	filteredOrganizationsERC,
 	getIdGreaterOrEqualOrganization,
 	getIdLessOrEqualOrganization,
 	getOrganizationBetweenIds,
-	getOrganizations,
+	getOrganizationName,
 } from './organization';
 
 const resource = 'o/c/evprequests';
 
 const nestedFields = '&nestedFields=r_organization_c_evpOrganization';
-
-const getOrganizationName = async (organizationName: string) => {
-	const organizations = await getOrganizations(organizationName);
-
-	const externalReferenceCodes: String[] = [];
-
-	const filteredOrganization = organizations.items.filter(
-		(organization: OrganizationFilterType) =>
-			organization.organizationName.includes(organizationName)
-	);
-
-	filteredOrganization.forEach((organization: OrganizationFilterType) => {
-		externalReferenceCodes.push(organization.externalReferenceCode);
-	});
-
-	// console.log(filteredOrganization);
-
-	return externalReferenceCodes;
-};
 
 const formatArrayUrl = (key: string, value: String[]) => {
 	let operator = `${key} in ({values})`;
@@ -53,117 +35,154 @@ const formatArrayUrl = (key: string, value: String[]) => {
 	return operator;
 };
 
-const createURLFilter = async (filters: Array<Array<string>>) => {
-	let filter = '/?filter=';
+const finalFormatRequestTime = (dateFinal: string) => {
+	return dateFinal.split('T')[0] + 'T23:59:59.999Z';
+};
+
+const createURLFilter = async (data: RequestFilterType) => {
 	let formatUrl;
 	let externalReferenceCodeOrganization;
-	const fieldsCompanyIds = [];
+	const filterAnd = '/?filter=';
+	const filter = [];
+	let ISOFormattedInitialRequestDate;
+	let ISOFormattedFinalRequestDate;
+	let formattedTimeFinalRequestDate;
 
-	// console.log(filters);
+	if (data.fullName) {
+		filter.push(`contains(${FIELDSREPORT.FULLNAME},'${data.fullName}')`);
+	}
 
-	for (let i = 0; i < filters.length; i++) {
-		const key = filters[i][0];
-		const value = filters[i][1];
+	if (data.requestStatus.length !== 0) {
+		formatUrl = formatArrayUrl(
+			FIELDSREPORT.REQUESTSTATUS,
+			data.requestStatus
+		);
+		filter.push(formatUrl);
+	}
 
-		if (key) {
-			if (Array.isArray(value)) {
-				formatUrl = formatArrayUrl(key, value);
+	if (data.liferayBranch.length !== 0) {
+		formatUrl = formatArrayUrl(
+			FIELDSREPORT.LIFERAYBRANCH,
+			data.liferayBranch
+		);
+		filter.push(formatUrl);
+	}
 
-				filter += formatUrl;
-			} else if (key.includes('fullName')) {
-				filter += `contains(${key},'${value}')`;
-			} else if (key.includes('organizationName')) {
-				externalReferenceCodeOrganization = await getOrganizationName(
-					value
-				);
+	if (data.organizationName) {
+		externalReferenceCodeOrganization = await getOrganizationName(
+			data.organizationName
+		);
+		filter.push(
+			`contains(r_organization_c_evpOrganizationERC,'${externalReferenceCodeOrganization}')`
+		);
+	}
 
-				filter += `contains(r_organization_c_evpOrganizationERC,'${externalReferenceCodeOrganization}')`;
-			} else if (
-				key.includes('initialCompanyId') ||
-				key.includes('finalCompanyId')
-			) {
-				fieldsCompanyIds.push(value);
-				if (key.includes('initialCompanyId')) {
-					const organizationsGreaterOrEqual = await getIdGreaterOrEqualOrganization(
-						Number(value)
-					);
+	if (data.initialCompanyId && data.finalCompanyId) {
+		const organizationsBetweenIds = await getOrganizationBetweenIds(
+			Number(data.initialCompanyId),
+			Number(data.finalCompanyId)
+		);
 
-					externalReferenceCodeOrganization = await filteredOrganizationsERC(
-						organizationsGreaterOrEqual
-					);
-
-					formatUrl = formatArrayUrl(
-						'r_organization_c_evpOrganizationERC',
-						externalReferenceCodeOrganization
-					);
-
-					filter += formatUrl;
-				}
-				if (key.includes('finalCompanyId')) {
-					const organizationsLessOrEqual = await getIdLessOrEqualOrganization(
-						Number(value)
-					);
-
-					externalReferenceCodeOrganization = await filteredOrganizationsERC(
-						organizationsLessOrEqual
-					);
-
-					formatUrl = formatArrayUrl(
-						'r_organization_c_evpOrganizationERC',
-						externalReferenceCodeOrganization
-					);
-
-					filter += formatUrl;
-				}
-
-				if (fieldsCompanyIds.length === 2) {
-					const organizationsBetweenIds = await getOrganizationBetweenIds(
-						Number(fieldsCompanyIds[0]),
-						Number(fieldsCompanyIds[1])
-					);
-
-					externalReferenceCodeOrganization = await filteredOrganizationsERC(
-						organizationsBetweenIds
-					);
-
-					formatUrl = formatArrayUrl(
-						'r_organization_c_evpOrganizationERC',
-						externalReferenceCodeOrganization
-					);
-
-					filter += formatUrl;
-				}
-			} else {
-				filter += `${key} eq '${value}'`;
-			}
-
-			console.log(filter);
-		}
-
-		// console.log(filter);
-
-		if (i < filters.length - 1) {
-			filter += ' and ';
+		externalReferenceCodeOrganization = await filteredOrganizationsERC(
+			organizationsBetweenIds
+		);
+		if (externalReferenceCodeOrganization.length !== 0) {
+			formatUrl = formatArrayUrl(
+				'r_organization_c_evpOrganizationERC',
+				externalReferenceCodeOrganization
+			);
+			filter.push(formatUrl);
 		}
 	}
 
-	return filter;
+	if (data.finalCompanyId) {
+		const organizationsLessOrEqual = await getIdLessOrEqualOrganization(
+			Number(data.finalCompanyId)
+		);
+
+		externalReferenceCodeOrganization = await filteredOrganizationsERC(
+			organizationsLessOrEqual
+		);
+
+		if (externalReferenceCodeOrganization.length !== 0) {
+			formatUrl = formatArrayUrl(
+				'r_organization_c_evpOrganizationERC',
+				externalReferenceCodeOrganization
+			);
+			filter.push(formatUrl);
+		}
+	}
+
+	if (data.initialCompanyId) {
+		const organizationsGreaterOrEqual = await getIdGreaterOrEqualOrganization(
+			Number(data.initialCompanyId)
+		);
+		externalReferenceCodeOrganization = await filteredOrganizationsERC(
+			organizationsGreaterOrEqual
+		);
+
+		if (externalReferenceCodeOrganization.length !== 0) {
+			formatUrl = formatArrayUrl(
+				'r_organization_c_evpOrganizationERC',
+				externalReferenceCodeOrganization
+			);
+			filter.push(formatUrl);
+		}
+	}
+
+	if (data.initialRequestDate && data.finalRequestDate) {
+		ISOFormattedInitialRequestDate = dayjs(
+			data.initialRequestDate
+		).toISOString();
+		ISOFormattedFinalRequestDate = dayjs(
+			data.finalRequestDate
+		).toISOString();
+
+		if (ISOFormattedInitialRequestDate === ISOFormattedFinalRequestDate) {
+			formattedTimeFinalRequestDate = finalFormatRequestTime(
+				ISOFormattedFinalRequestDate
+			);
+
+			filter.push(
+				`dateCreated ge ${ISOFormattedInitialRequestDate} and dateCreated le ${formattedTimeFinalRequestDate}`
+			);
+		}
+		else {
+			formattedTimeFinalRequestDate = finalFormatRequestTime(
+				ISOFormattedFinalRequestDate
+			);
+
+			filter.push(
+				`dateCreated ge ${ISOFormattedInitialRequestDate} and dateCreated le ${formattedTimeFinalRequestDate}`
+			);
+		}
+	}
+	else if (data.initialRequestDate) {
+		ISOFormattedInitialRequestDate = dayjs(
+			data.initialRequestDate
+		).toISOString();
+
+		filter.push(`dateCreated ge ${ISOFormattedInitialRequestDate}`);
+	}
+	else if (data.finalRequestDate) {
+		ISOFormattedFinalRequestDate = dayjs(
+			data.finalRequestDate
+		).toISOString();
+
+		formattedTimeFinalRequestDate = finalFormatRequestTime(
+			ISOFormattedFinalRequestDate
+		);
+
+		filter.push(`dateCreated le ${formattedTimeFinalRequestDate}`);
+	}
+
+	return filterAnd + filter.join(' and ');
 };
 
 export async function getRequestsByFilter(data: RequestFilterType) {
-	const filteredFields = [];
-	console.log(data);
-	for (const [key, value] of Object.entries(data)) {
-		if (value && !!value.length) {
-			filteredFields.push([key, value]);
-		}
-	}
-
-	const filter = await createURLFilter(filteredFields);
+	const filter = await createURLFilter(data);
 
 	const response = await fetcher(`${resource}${filter}${nestedFields}`);
-
-	console.log(response);
 
 	return response;
 }

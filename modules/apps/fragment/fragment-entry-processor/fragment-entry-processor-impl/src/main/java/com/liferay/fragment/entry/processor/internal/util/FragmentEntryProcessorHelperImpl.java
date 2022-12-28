@@ -557,7 +557,7 @@ public class FragmentEntryProcessorHelperImpl
 
 					return _getDateValue(
 						editableValueJSONObject, date,
-						_getDefaultPattern(locale), locale);
+						_getShortTimeStylePattern(locale), locale);
 				}
 				catch (ParseException parseException1) {
 					if (_log.isDebugEnabled()) {

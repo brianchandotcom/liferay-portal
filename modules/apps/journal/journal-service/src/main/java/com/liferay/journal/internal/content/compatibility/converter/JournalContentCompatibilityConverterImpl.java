@@ -47,9 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = JournalContentCompatibilityConverter.class
-)
+@Component(service = JournalContentCompatibilityConverter.class)
 public class JournalContentCompatibilityConverterImpl
 	implements JournalContentCompatibilityConverter {
 

@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Balázs Sáfrány-Kovalik
  */
-@Component(immediate = true, service = UADExporter.class)
+@Component(service = UADExporter.class)
 public class JournalArticleUADExporter extends BaseJournalArticleUADExporter {
 
 	@Override

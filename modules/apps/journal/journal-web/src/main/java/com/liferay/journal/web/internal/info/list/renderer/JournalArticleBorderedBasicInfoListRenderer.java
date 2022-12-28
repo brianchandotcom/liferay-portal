@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = InfoListRenderer.class)
+@Component(service = InfoListRenderer.class)
 public class JournalArticleBorderedBasicInfoListRenderer
 	extends BaseJournalArticleBasicInfoListRenderer
 	implements BorderedBasicInfoListRenderer<JournalArticle> {

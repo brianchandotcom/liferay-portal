@@ -66,7 +66,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=web-content",
 		"com.liferay.portlet.add-default-resource=true",

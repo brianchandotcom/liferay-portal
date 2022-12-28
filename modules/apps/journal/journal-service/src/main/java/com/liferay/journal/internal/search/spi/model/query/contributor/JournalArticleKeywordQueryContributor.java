@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.journal.model.JournalArticle",
 	service = KeywordQueryContributor.class
 )

@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalFileUploadsConfiguration",
-	immediate = true, service = ImageJournalUploadFileEntryHandler.class
+	service = ImageJournalUploadFileEntryHandler.class
 )
 public class ImageJournalUploadFileEntryHandler
 	implements UploadFileEntryHandler {

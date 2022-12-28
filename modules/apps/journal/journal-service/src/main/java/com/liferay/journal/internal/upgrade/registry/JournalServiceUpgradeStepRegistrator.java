@@ -108,7 +108,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true,
 	service = {
 		JournalServiceUpgradeStepRegistrator.class, UpgradeStepRegistrator.class
 	}

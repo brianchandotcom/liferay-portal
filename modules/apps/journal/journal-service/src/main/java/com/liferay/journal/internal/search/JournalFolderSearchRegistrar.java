@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class JournalFolderSearchRegistrar {
 
 	@Activate

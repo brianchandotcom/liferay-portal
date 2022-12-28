@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
-	immediate = true, service = TermsOfUseContentProvider.class
+	service = TermsOfUseContentProvider.class
 )
 public class JournalArticleTermsOfUseContentProvider
 	implements TermsOfUseContentProvider {

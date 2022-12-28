@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
-	immediate = true, service = PortalInstanceLifecycleListener.class
+	service = PortalInstanceLifecycleListener.class
 )
 public class AddDefaultJournalStructuresPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {

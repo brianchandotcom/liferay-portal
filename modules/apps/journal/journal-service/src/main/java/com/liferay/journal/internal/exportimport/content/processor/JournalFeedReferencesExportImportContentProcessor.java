@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Díaz
  */
 @Component(
-	immediate = true, property = "content.processor.type=JournalFeedReferences",
+	property = "content.processor.type=JournalFeedReferences",
 	service = ExportImportContentProcessor.class
 )
 public class JournalFeedReferencesExportImportContentProcessor

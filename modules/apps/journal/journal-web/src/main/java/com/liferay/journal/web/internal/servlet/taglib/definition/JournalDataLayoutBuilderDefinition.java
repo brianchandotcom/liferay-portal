@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "content.type=journal",
+	property = "content.type=journal",
 	service = DataLayoutBuilderDefinition.class
 )
 public class JournalDataLayoutBuilderDefinition

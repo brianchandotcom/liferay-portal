@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	enabled = false, immediate = true, service = UpgradeStepRegistrator.class
-)
+@Component(enabled = false, service = UpgradeStepRegistrator.class)
 public class JournalImageServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

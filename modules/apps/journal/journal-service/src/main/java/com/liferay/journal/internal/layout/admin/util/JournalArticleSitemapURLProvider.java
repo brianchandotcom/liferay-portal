@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = SitemapURLProvider.class)
+@Component(service = SitemapURLProvider.class)
 public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	@Override

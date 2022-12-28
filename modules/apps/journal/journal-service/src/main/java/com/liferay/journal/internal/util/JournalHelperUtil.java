@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tom Wang
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class JournalHelperUtil {
 
 	public static String createURLPattern(

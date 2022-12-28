@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jonathan McCann
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.journal.configuration.JournalServiceConfiguration",
 	service = ConfigurationModelListener.class
 )

@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leticia Maciel
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 		"mvc.command.name=/journal/import_and_override_data_definition"

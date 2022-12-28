@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class RecentGroupManagerUtil {
 
 	public static RecentGroupManager getRecentGroupManager() {

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Balázs Sáfrány-Kovalik
  */
-@Component(immediate = true, service = UADDisplay.class)
+@Component(service = UADDisplay.class)
 public class JournalArticleUADDisplay extends BaseJournalArticleUADDisplay {
 
 	@Override

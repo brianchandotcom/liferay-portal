@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Noor Najjar
  */
-@Component(immediate = true, service = CTCollectionHistoryProvider.class)
+@Component(service = CTCollectionHistoryProvider.class)
 public class JournalArticleCTCollectionHistoryProvider
 	implements CTCollectionHistoryProvider<JournalArticle> {
 

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=100",
 	service = LayoutDisplayPageProvider.class
 )
 public class DefaultJournalArticleLayoutDisplayPageProvider

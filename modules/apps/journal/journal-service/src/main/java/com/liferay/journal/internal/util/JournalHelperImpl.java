@@ -76,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tom Wang
  */
-@Component(immediate = true, service = JournalHelper.class)
+@Component(service = JournalHelper.class)
 public class JournalHelperImpl implements JournalHelper {
 
 	@Override

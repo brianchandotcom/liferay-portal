@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=journal_article",
 		"ddm.form.field.type.description=journal-article-description",

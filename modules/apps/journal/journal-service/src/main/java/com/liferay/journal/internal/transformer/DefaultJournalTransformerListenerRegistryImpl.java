@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = JournalTransformerListenerRegistry.class)
+@Component(service = JournalTransformerListenerRegistry.class)
 public class DefaultJournalTransformerListenerRegistryImpl
 	implements JournalTransformerListenerRegistry {
 

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Joel Kozikowski
  */
-@Component(immediate = true, service = JournalCreationStrategy.class)
+@Component(service = JournalCreationStrategy.class)
 public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 
 	/**

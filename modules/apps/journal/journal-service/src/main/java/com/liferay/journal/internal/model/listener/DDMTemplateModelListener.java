@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mariano Álvaro Sáiz
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class DDMTemplateModelListener extends BaseModelListener<DDMTemplate> {
 
 	@Override

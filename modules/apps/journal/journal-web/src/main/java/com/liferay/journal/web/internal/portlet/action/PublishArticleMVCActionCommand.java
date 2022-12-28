@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zoltan Csaszi
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 		"mvc.command.name=/journal/publish_article"

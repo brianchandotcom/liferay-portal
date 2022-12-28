@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = JournalDefaultTemplateProvider.class)
+@Component(service = JournalDefaultTemplateProvider.class)
 public class JournalDefaultTemplateProviderImpl
 	implements JournalDefaultTemplateProvider {
 

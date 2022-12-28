@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemFormVariationsProvider.class)
+@Component(service = InfoItemFormVariationsProvider.class)
 public class JournalArticleInfoItemFormVariationsProvider
 	implements InfoItemFormVariationsProvider<JournalArticle> {
 

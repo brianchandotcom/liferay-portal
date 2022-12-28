@@ -201,4 +201,50 @@ definition {
 			value1 = "Knowledge Base Article Title");
 	}
 
+	@description = "This test covers LPS-166627. It ensures that child article can be viewed after setting nesting level with minimum."
+	@priority = "4"
+	test CanViewChildArticleAfterSettingNestingLevelWithMinimum {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Content",
+			kbArticleTitle = "KB Parent Article");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "KB Parent Article",
+			kbChildArticleContent = "KB Child Article Content",
+			kbChildArticleTitle = "KB Child Article");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Knowledge Base Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Guest");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Menu Display",
+			fragmentName = "Knowledge Base Navigation");
+
+		PageEditor.editKBArticleNavigationMaxNestingLevel(maxNestingLevel = "1");
+
+		PageEditor.publish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/k/kb-child-article");
+
+		AssertVisible(
+			key_kbArticleTitle = "KB Parent Article",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_TOP_LEVEL_HIERARCHY");
+
+		AssertVisible(
+			key_kbArticleTitle = "KB Child Article",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
+	}
+
 }

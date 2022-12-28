@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,18 +44,11 @@ public class EditCollectionConfigurationMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		EditCollectionConfigurationDisplayContext
-			editCollectionConfigurationDisplayContext =
-				new EditCollectionConfigurationDisplayContext(
-					httpServletRequest, _infoItemServiceRegistry, _itemSelector,
-					renderResponse);
-
-		httpServletRequest.setAttribute(
+		renderRequest.setAttribute(
 			EditCollectionConfigurationDisplayContext.class.getName(),
-			editCollectionConfigurationDisplayContext);
+			new EditCollectionConfigurationDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_infoItemServiceRegistry, _itemSelector, renderResponse));
 
 		return "/edit_collection_configuration.jsp";
 	}

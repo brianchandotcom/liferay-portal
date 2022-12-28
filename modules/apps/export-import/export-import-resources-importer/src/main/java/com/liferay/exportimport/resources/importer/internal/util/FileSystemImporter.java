@@ -47,6 +47,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -148,7 +149,8 @@ public class FileSystemImporter extends BaseImporter {
 		PortletPreferencesFactory portletPreferencesFactory,
 		PortletPreferencesLocalService portletPreferencesLocalService,
 		PortletPreferencesTranslator portletPreferencesTranslator,
-		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
+		ServiceTrackerMap<String, PortletPreferencesTranslator>
+			serviceTrackerMap,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
 		ThemeLocalService themeLocalService, DLURLHelper dlURLHelper) {
 
@@ -176,7 +178,7 @@ public class FileSystemImporter extends BaseImporter {
 		this.portletPreferencesFactory = portletPreferencesFactory;
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
 		this.portletPreferencesTranslator = portletPreferencesTranslator;
-		this.portletPreferencesTranslators = portletPreferencesTranslators;
+		this.serviceTrackerMap = serviceTrackerMap;
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;
@@ -1283,11 +1285,11 @@ public class FileSystemImporter extends BaseImporter {
 	protected final PortletPreferencesLocalService
 		portletPreferencesLocalService;
 	protected final PortletPreferencesTranslator portletPreferencesTranslator;
-	protected final Map<String, PortletPreferencesTranslator>
-		portletPreferencesTranslators;
 	protected final RepositoryLocalService repositoryLocalService;
 	protected final SAXReader saxReader;
 	protected ServiceContext serviceContext;
+	protected final ServiceTrackerMap<String, PortletPreferencesTranslator>
+		serviceTrackerMap;
 	protected final ThemeLocalService themeLocalService;
 
 	private void _addApplicationDisplayTemplates(String dirName)
@@ -1505,7 +1507,7 @@ public class FileSystemImporter extends BaseImporter {
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		PortletPreferencesTranslator portletPreferencesTranslator =
-			portletPreferencesTranslators.get(rootPortletId);
+			serviceTrackerMap.getService(rootPortletId);
 
 		if (portletPreferencesTranslator == null) {
 			portletPreferencesTranslator = this.portletPreferencesTranslator;

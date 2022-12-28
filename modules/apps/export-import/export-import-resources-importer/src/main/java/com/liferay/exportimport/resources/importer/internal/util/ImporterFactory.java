@@ -53,8 +53,6 @@ import com.liferay.portal.search.index.IndexStatusManager;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -224,27 +222,13 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
-			_portletPreferencesTranslator, _getPortletPreferencesTranslators(),
+			_portletPreferencesTranslator, _serviceTrackerMap,
 			_repositoryLocalService, _saxReader, _themeLocalService,
 			_dlURLHelper);
 	}
 
 	private LARImporter _getLARImporter() {
 		return new LARImporter();
-	}
-
-	private Map<String, PortletPreferencesTranslator>
-		_getPortletPreferencesTranslators() {
-
-		HashMap<String, PortletPreferencesTranslator>
-			portletPreferencesTranslators = new HashMap<>();
-
-		for (String key : _serviceTrackerMap.keySet()) {
-			portletPreferencesTranslators.put(
-				key, _serviceTrackerMap.getService(key));
-		}
-
-		return portletPreferencesTranslators;
 	}
 
 	private ResourceImporter _getResourceImporter() {
@@ -258,7 +242,7 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _portletPreferencesLocalService,
-			_portletPreferencesTranslator, _getPortletPreferencesTranslators(),
+			_portletPreferencesTranslator, _serviceTrackerMap,
 			_repositoryLocalService, _saxReader, _themeLocalService,
 			_dlURLHelper);
 	}

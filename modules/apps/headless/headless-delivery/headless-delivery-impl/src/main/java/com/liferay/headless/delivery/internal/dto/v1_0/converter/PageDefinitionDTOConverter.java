@@ -40,7 +40,6 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,15 +66,14 @@ public class PageDefinitionDTOConverter
 			LayoutStructure layoutStructure)
 		throws Exception {
 
-		Layout layout = Optional.ofNullable(
-			dtoConverterContext.getAttribute("layout")
-		).map(
-			Layout.class::cast
-		).orElseThrow(
-			() -> new IllegalArgumentException(
+		Layout layout = (Layout)dtoConverterContext.getAttribute("layout");
+
+		if (layout == null) {
+			throw new IllegalArgumentException(
 				"Layout is not defined for layout structure item " +
-					layoutStructure.getMainItemId())
-		);
+					layoutStructure.getMainItemId());
+		}
+
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
 		boolean saveInlineContent = GetterUtil.getBoolean(

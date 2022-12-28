@@ -31,6 +31,7 @@ import {useCollectionActiveItemContext} from '../contexts/CollectionActiveItemCo
 import {CollectionItemContext} from '../contexts/CollectionItemContext';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector, useSelectorCallback} from '../contexts/StoreContext';
+import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemConfiguration';
 import selectCanViewItemConfiguration from '../selectors/selectCanViewItemConfiguration';
 import {deepEqual} from '../utils/checkDeepEqual';
 
@@ -69,6 +70,10 @@ function ItemConfigurationContent({
 		(state) => selectPanels(activeItemId, activeItemType, state),
 		[activeItemId, activeItemType],
 		deepEqual
+	);
+
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
 	);
 
 	const [previousPanel, setPreviousPanel] = useState({});
@@ -130,21 +135,23 @@ function ItemConfigurationContent({
 			{activeItemType === ITEM_TYPES.editable && (
 				<SidebarPanelHeader
 					iconLeft={
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'back-to-parent-configuration'
-							)}
-							borderless
-							className="mb-0 mr-3 p-0"
-							displayType="secondary"
-							onClick={() => selectItem(activeItem.parentId)}
-							size="sm"
-							title={Liferay.Language.get(
-								'back-to-parent-configuration'
-							)}
-						>
-							<ClayIcon symbol="angle-left" />
-						</ClayButton>
+						canUpdateItemConfiguration && (
+							<ClayButton
+								aria-label={Liferay.Language.get(
+									'back-to-parent-configuration'
+								)}
+								borderless
+								className="mb-0 mr-3 p-0"
+								displayType="secondary"
+								onClick={() => selectItem(activeItem.parentId)}
+								size="sm"
+								title={Liferay.Language.get(
+									'back-to-parent-configuration'
+								)}
+							>
+								<ClayIcon symbol="angle-left" />
+							</ClayButton>
+						)
 					}
 					showCloseButton={false}
 				>

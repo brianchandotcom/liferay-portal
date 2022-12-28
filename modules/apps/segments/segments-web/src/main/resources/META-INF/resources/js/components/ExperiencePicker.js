@@ -15,6 +15,7 @@
 import {Option, Picker, Text} from '@clayui/core';
 import Label from '@clayui/label';
 import Layout from '@clayui/layout';
+import {navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import '../../css/experience_picker.scss';
@@ -53,6 +54,19 @@ const TriggerLabel = React.forwardRef(({selectedItem, ...otherProps}, ref) => {
 
 const ExperiencePicker = ({experiences, selectedExperience}) => {
 	const [disabled, setDisabled] = useState(false);
+	const [selectedKey] = React.useState(
+		selectedExperience.segmentsExperienceId
+	);
+
+	const handleExperienceChange = (key) => {
+		const newSelectedExperience = experiences.find(
+			(experience) => experience.segmentsExperienceId === key
+		);
+
+		if (newSelectedExperience && newSelectedExperience.url) {
+			navigate(newSelectedExperience.url);
+		}
+	};
 
 	useEffect(() => {
 		Liferay.on('SimulationMenu:closeSimulationPanel', () =>
@@ -68,49 +82,53 @@ const ExperiencePicker = ({experiences, selectedExperience}) => {
 		<Picker
 			as={TriggerLabel}
 			disabled={disabled}
+			id="experience-picker"
 			items={experiences}
+			onSelectionChange={handleExperienceChange}
 			selectedItem={selectedExperience}
+			selectedKey={selectedKey}
 		>
 			{(item) => (
 				<Option
+					aria-describedby={`${item.segmentsExperienceId}-description`}
+					aria-labelledby={`${item.segmentsExperienceId}-title`}
 					key={item.segmentsExperienceId}
-					selectedItem={selectedExperience}
 					textValue={item.segmentsExperienceName}
 				>
-					<a className="experience-picker-option" href={item.url}>
-						<Layout.ContentRow>
-							<Layout.ContentCol className="pl-0" expand>
-								<Text
-									id={`${item.segmentsExperienceName}-title`}
-									size={3}
-									weight="semi-bold"
-								>
-									{item.segmentsExperienceName}
-								</Text>
+					<Layout.ContentRow>
+						<Layout.ContentCol className="pl-0" expand>
+							<Text
+								id={`${item.segmentsExperienceId}-title`}
+								size={3}
+								weight="semi-bold"
+							>
+								{item.segmentsExperienceName}
+							</Text>
 
-								<Text
-									color="secondary"
-									id={`${item.segmentsExperienceName}-description`}
-									size={3}
-								>
-									{`${Liferay.Language.get('segment')}:
-									${item.segmentsEntryName}`}
-								</Text>
-							</Layout.ContentCol>
+							<Text
+								aria-hidden
+								color="secondary"
+								id={`${item.segmentsExperienceId}-description`}
+								size={3}
+							>
+								{`${Liferay.Language.get('segment')}:
+										${item.segmentsEntryName}`}
+							</Text>
+						</Layout.ContentCol>
 
-							<Layout.ContentCol className="pr-0">
-								<Label
-									className="mr-0"
-									displayType={
-										item.active ? 'success' : 'secondary'
-									}
-									id={`${item.segmentsExperienceName}-status`}
-								>
-									{item.statusLabel}
-								</Label>
-							</Layout.ContentCol>
-						</Layout.ContentRow>
-					</a>
+						<Layout.ContentCol className="pr-0">
+							<Label
+								aria-hidden
+								className="mr-0"
+								displayType={
+									item.active ? 'success' : 'secondary'
+								}
+								id={`${item.segmentsExperienceId}-status`}
+							>
+								{item.statusLabel}
+							</Label>
+						</Layout.ContentCol>
+					</Layout.ContentRow>
 				</Option>
 			)}
 		</Picker>

@@ -111,8 +111,7 @@ public class JournalArticleContentDashboardItemFactory
 		getContentDashboardItemSubtypeFactory() {
 
 		return _contentDashboardItemSubtypeFactoryRegistry.
-			getContentDashboardItemSubtypeFactoryOptional(
-				DDMStructure.class.getName());
+			getContentDashboardItemSubtypeFactory(DDMStructure.class.getName());
 	}
 
 	@Reference

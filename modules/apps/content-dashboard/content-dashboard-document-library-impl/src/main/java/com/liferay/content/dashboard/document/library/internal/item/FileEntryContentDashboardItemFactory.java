@@ -90,7 +90,7 @@ public class FileEntryContentDashboardItemFactory
 		getContentDashboardItemSubtypeFactory() {
 
 		return _contentDashboardItemSubtypeFactoryRegistry.
-			getContentDashboardItemSubtypeFactoryOptional(
+			getContentDashboardItemSubtypeFactory(
 				DLFileEntryType.class.getName());
 	}
 

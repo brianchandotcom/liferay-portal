@@ -66,8 +66,7 @@ public class BlogsEntryContentDashboardItemFactory
 		getContentDashboardItemSubtypeFactory() {
 
 		return _contentDashboardItemSubtypeFactoryRegistry.
-			getContentDashboardItemSubtypeFactoryOptional(
-				BlogsEntry.class.getName());
+			getContentDashboardItemSubtypeFactory(BlogsEntry.class.getName());
 	}
 
 	@Reference

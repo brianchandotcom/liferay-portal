@@ -146,7 +146,7 @@ public class InfoItemFieldReaderRegistryImpl
 						infoDisplayContributorField) {
 
 					infoItemFieldReaderWrappers.remove(
-						infoDisplayContributorField);
+						infoItemFieldReaderWrapper);
 				}
 			}
 		}

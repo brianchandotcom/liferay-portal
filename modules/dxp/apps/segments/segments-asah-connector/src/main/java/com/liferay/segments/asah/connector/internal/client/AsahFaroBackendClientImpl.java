@@ -194,12 +194,15 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			IndividualSegment.Status.ACTIVE.name());
 
 		try {
+			MultivaluedMap<String, Object> parameters = _getParameters(
+				filterBuilder,
+				FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL_SEGMENT, cur,
+				delta, orderByFields);
+
+			parameters.putSingle("dataSourceId", getDataSourceId(companyId));
+
 			String response = _jsonWebServiceClient.doGet(
-				_getBaseURI(companyId), _PATH_INDIVIDUAL_SEGMENTS,
-				_getParameters(
-					filterBuilder,
-					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL_SEGMENT, cur,
-					delta, orderByFields),
+				_getBaseURI(companyId), _PATH_INDIVIDUAL_SEGMENTS, parameters,
 				_getHeaders(companyId));
 
 			return _individualSegmentJSONObjectMapper.mapToResults(response);

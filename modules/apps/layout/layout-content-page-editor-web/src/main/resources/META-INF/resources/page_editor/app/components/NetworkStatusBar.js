@@ -20,39 +20,35 @@ import React, {useEffect, useState} from 'react';
 
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 
-const LoadingText = ({children}) => (
-	<>
-		<span className="d-none d-sm-block m-0 navbar-text page-editor__status-bar text-info">
-			{children}
-		</span>
-		<ClayLoadingIndicator className="my-0" size="sm" />
-	</>
-);
-
-const SuccessText = ({children}) => (
-	<>
-		<span className="d-none d-sm-block m-0 navbar-text page-editor__status-bar text-success">
-			{children}
-		</span>
-		<ClayIcon className="text-success" symbol="check-circle" />
-	</>
-);
-
 const getContent = (isOnline, status) => {
 	if (!isOnline) {
 		return (
-			<LoadingText>
-				{Liferay.Language.get('trying-to-reconnect')}
-			</LoadingText>
+			<ClayLoadingIndicator
+				className="my-0"
+				size="sm"
+				title={Liferay.Language.get('trying-to-reconnect')}
+			/>
 		);
 	}
 
 	if (status === SERVICE_NETWORK_STATUS_TYPES.draftSaved) {
-		return <SuccessText>{Liferay.Language.get('saved')}</SuccessText>;
+		return (
+			<ClayIcon
+				className="text-success"
+				symbol="check-circle"
+				title={Liferay.Language.get('saved')}
+			/>
+		);
 	}
 
 	if (status === SERVICE_NETWORK_STATUS_TYPES.savingDraft) {
-		return <LoadingText>{Liferay.Language.get('saving')}</LoadingText>;
+		return (
+			<ClayLoadingIndicator
+				className="my-0"
+				size="sm"
+				title={Liferay.Language.get('saving')}
+			/>
+		);
 	}
 
 	return null;
@@ -60,6 +56,7 @@ const getContent = (isOnline, status) => {
 
 const NetworkStatusBar = ({error, status}) => {
 	const [isOnline, setIsOnline] = useState(true);
+	const [firstAutosaveMessage, setFirstAutosaveMessage] = useState(null);
 
 	useEffect(() => {
 		if (status === SERVICE_NETWORK_STATUS_TYPES.error) {
@@ -70,6 +67,17 @@ const NetworkStatusBar = ({error, status}) => {
 		}
 	}, [error, status]);
 
+	useEffect(() => {
+		if (
+			status === SERVICE_NETWORK_STATUS_TYPES.draftSaved &&
+			!firstAutosaveMessage
+		) {
+			setFirstAutosaveMessage(
+				Liferay.Language.get('page-editor-autosaves-your-work')
+			);
+		}
+	}, [firstAutosaveMessage, status]);
+
 	useEventListener('online', () => setIsOnline(true), true, window);
 
 	useEventListener('offline', () => setIsOnline(false), true, window);
@@ -77,9 +85,13 @@ const NetworkStatusBar = ({error, status}) => {
 	const content = getContent(isOnline, status);
 
 	return (
-		<span className="align-items-center d-flex h-100 text-truncate">
+		<div className="page-editor__status-bar">
+			<span className="sr-only" role="alert">
+				{firstAutosaveMessage}
+			</span>
+
 			{content}
-		</span>
+		</div>
 	);
 };
 

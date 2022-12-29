@@ -20,5 +20,4 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
  * @author Lino Alves
  */
 public class ModifiedFacetTermDisplayContext extends BucketDisplayContext {
-
 }

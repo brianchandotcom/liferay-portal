@@ -146,13 +146,7 @@ definition {
 
 		LexiconCard.clickCardTitle(card = "${styleBookName}");
 
-		AssertElementPresent(
-			key_card = "${styleBookName}",
-			locator1 = "Card#CARD_SELECTED");
-
 		SelectFrameTop();
-
-		Button.clickDone();
 	}
 
 	macro selectStyleBookViaPageDesignOptions {

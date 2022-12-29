@@ -57,13 +57,7 @@ definition {
 
 		LexiconCard.clickCardTitle(card = "${masterLayoutName}");
 
-		AssertElementPresent(
-			key_card = "${masterLayoutName}",
-			locator1 = "Card#CARD_SELECTED");
-
 		SelectFrameTop();
-
-		Button.clickDone();
 	}
 
 	macro selectMasterViaPageDesignOptions {

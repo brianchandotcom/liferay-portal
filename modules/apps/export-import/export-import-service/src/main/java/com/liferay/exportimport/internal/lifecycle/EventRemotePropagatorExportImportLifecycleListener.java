@@ -148,38 +148,38 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		return !remoteAddress.equals("localhost");
 	}
 
-	private Optional<ExportImportConfiguration> _getExportImportConfiguration(
+	private ExportImportConfiguration _getExportImportConfiguration(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
 		List<Serializable> attributes =
 			exportImportLifecycleEvent.getAttributes();
 
-		return Optional.ofNullable(
-			(ExportImportConfiguration)attributes.get(0));
+		return (ExportImportConfiguration)attributes.get(0);
 	}
 
-	private Optional<HttpPrincipal> _getHttpPrincipal(
+	private HttpPrincipal _getHttpPrincipal(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
-		Optional<ExportImportConfiguration> exportImportConfigurationOptional =
+		ExportImportConfiguration exportImportConfiguration =
 			_getExportImportConfiguration(exportImportLifecycleEvent);
 
-		return exportImportConfigurationOptional.map(
-			exportImportConfiguration ->
-				exportImportConfiguration.getSettingsMap()
-		).map(
-			settingsMap -> MapUtil.getLong(settingsMap, "userId")
-		).map(
-			userId -> _userLocalService.fetchUser(userId)
-		).flatMap(
-			user -> _getHttpPrincipal(
-				user, _getRemoteURL(exportImportLifecycleEvent))
-		);
+		if (exportImportConfiguration == null) {
+			return null;
+		}
+
+		User user = _userLocalService.fetchUser(
+			MapUtil.getLong(
+				exportImportConfiguration.getSettingsMap(), "userId"));
+
+		if (user == null) {
+			return null;
+		}
+
+		return _getHttpPrincipal(
+			user, _getRemoteURL(exportImportLifecycleEvent));
 	}
 
-	private Optional<HttpPrincipal> _getHttpPrincipal(
-		User user, String remoteURL) {
-
+	private HttpPrincipal _getHttpPrincipal(User user, String remoteURL) {
 		HttpPrincipal httpPrincipal = null;
 
 		try {
@@ -196,7 +196,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			}
 		}
 
-		return Optional.ofNullable(httpPrincipal);
+		return httpPrincipal;
 	}
 
 	private String _getRemoteURL(
@@ -214,25 +214,24 @@ public class EventRemotePropagatorExportImportLifecycleListener
 	private void _propagateEvent(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
-		_getHttpPrincipal(
-			exportImportLifecycleEvent
-		).ifPresent(
-			httpPrincipal -> {
-				try {
-					StagingServiceHttp.propagateExportImportLifecycleEvent(
-						httpPrincipal, exportImportLifecycleEvent.getCode(),
-						exportImportLifecycleEvent.getProcessFlag(),
-						exportImportLifecycleEvent.getProcessId(),
-						exportImportLifecycleEvent.getAttributes());
-				}
-				catch (PortalException portalException) {
-					_log.error(
-						"Unable to propagate staging lifecycle event to the " +
-							"remote live site",
-						portalException);
-				}
+		HttpPrincipal httpPrincipal = _getHttpPrincipal(
+			exportImportLifecycleEvent);
+
+		if (httpPrincipal != null) {
+			try {
+				StagingServiceHttp.propagateExportImportLifecycleEvent(
+					httpPrincipal, exportImportLifecycleEvent.getCode(),
+					exportImportLifecycleEvent.getProcessFlag(),
+					exportImportLifecycleEvent.getProcessId(),
+					exportImportLifecycleEvent.getAttributes());
 			}
-		);
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to propagate staging lifecycle event to the " +
+						"remote live site",
+					portalException);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

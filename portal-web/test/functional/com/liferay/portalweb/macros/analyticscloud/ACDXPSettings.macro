@@ -465,4 +465,11 @@ definition {
 			value1 = "${syncNumber}");
 	}
 
-}
+	macro assertToggleOnOff {
+		AssertElementPresent(
+			locator1 = "ACUtils#TOGGLE_ICON_ON_OFF", 
+			key_toggleType = "${toggleType}", 
+			key_boolean = "${boolean}");
+	}
+
+}  

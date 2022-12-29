@@ -28,6 +28,8 @@ import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -58,6 +60,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -103,6 +106,8 @@ public class JournalArticleExpandoGeolocationSearchTest {
 
 	@Test
 	public void testGeoDistanceFilter() throws Exception {
+		Assume.assumeFalse(_isSearchEngine("Solr"));
+
 		addJournalArticleWithTwoExpandoColumns(
 			"Software Engineer", _EXPANDO_COLUMN, ExpandoColumnConstants.STRING,
 			_GEOLOCATION_VALUE, _EXPANDO_COLUMN_GEOLOCATION,
@@ -228,9 +233,15 @@ public class JournalArticleExpandoGeolocationSearchTest {
 	}
 
 	protected void assertGeolocationExpandoFieldIndexed() {
+		String expected = _GEOLOCATION_EXPECTED;
+
+		if (_isSearchEngine("Solr")) {
+			expected = _GEOLOCATION_EXPECTED_SOLR;
+		}
+
 		assertSearch(
 			searchRequestBuilder -> searchRequestBuilder.queryString("alpha"),
-			_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME, _GEOLOCATION_EXPECTED);
+			_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME, expected);
 	}
 
 	protected void assertNoGeolocationExpandoClauseInSearchQuery(
@@ -295,6 +306,9 @@ public class JournalArticleExpandoGeolocationSearchTest {
 	}
 
 	@Inject
+	protected static SearchEngineHelper searchEngineHelper;
+
+	@Inject
 	protected ClassNameLocalService classNameLocalService;
 
 	@Inject
@@ -321,6 +335,14 @@ public class JournalArticleExpandoGeolocationSearchTest {
 	@Inject
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
+	private boolean _isSearchEngine(String engine) {
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
+
+		String vendor = searchEngine.getVendor();
+
+		return vendor.equals(engine);
+	}
+
 	private static final String _EXPANDO_COLUMN = "expandoColumn";
 
 	private static final String _EXPANDO_COLUMN_GEOLOCATION = "location";
@@ -330,6 +352,9 @@ public class JournalArticleExpandoGeolocationSearchTest {
 
 	private static final String _GEOLOCATION_EXPECTED =
 		"[(34.013727866113186,-117.42460448294878)]";
+
+	private static final String _GEOLOCATION_EXPECTED_SOLR =
+		"[34.013727866113186,-117.42460448294878]";
 
 	private static final String _GEOLOCATION_VALUE =
 		"{\"latitude\":34.013727866113186, \"longitude\":-117.42460448294878}";

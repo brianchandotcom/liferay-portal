@@ -390,7 +390,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
-			portlet = "Koroneiki Accounts");
+			portlet = "Koroneiki Account");
 
 		CustomerPortal.viewCPObjectInfo();
 

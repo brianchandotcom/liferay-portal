@@ -19,11 +19,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Luis Miguel Barcos
@@ -44,12 +41,11 @@ public class EntityExtensionUtil {
 		Field[] extendedEntityFields =
 			extendedEntityClassSuperclass.getDeclaredFields();
 
-		Stream<Field> extendedEntityFieldsStream = Arrays.stream(
-			extendedEntityFields);
+		Map<String, Field> extendedEntityFieldsMap = new HashMap<>();
 
-		Map<String, Field> extendedEntityFieldsMap =
-			extendedEntityFieldsStream.collect(
-				Collectors.toMap(Field::getName, Function.identity()));
+		for (Field field : extendedEntityFields) {
+			extendedEntityFieldsMap.put(field.getName(), field);
+		}
 
 		for (Field baseEntityField : baseEntityClass.getDeclaredFields()) {
 			int modifiers = baseEntityField.getModifiers();

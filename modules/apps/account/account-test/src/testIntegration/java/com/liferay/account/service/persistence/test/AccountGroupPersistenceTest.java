@@ -257,6 +257,15 @@ public class AccountGroupPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_LikeN() throws Exception {
+		_persistence.countByC_LikeN(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_LikeN(0L, "null");
+
+		_persistence.countByC_LikeN(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_T() throws Exception {
 		_persistence.countByC_T(RandomTestUtil.nextLong(), "");
 

@@ -15,21 +15,24 @@ import {FIELDSREPORT, RequestFilterType} from '../../types';
 import fetcher from './fetcher';
 import {
 	filteredOrganizationsERC,
-	getIdGreaterOrEqualOrganization,
-	getIdLessOrEqualOrganization,
+	getERCOrganization,
+	getGreaterOrEqualOrganizationId,
+	getLessOrEqualOrganizationId,
 	getOrganizationBetweenIds,
-	getOrganizationName,
 } from './organization';
 
 const resource = 'o/c/evprequests';
 
 const nestedFields = '&nestedFields=r_organization_c_evpOrganization';
 
-const formatArrayUrl = (key: string, value: String[]) => {
+const formatArrayUrl = async (key: string, values: String[]) => {
 	let operator = `${key} in ({values})`;
 
 	operator = operator
-		.replace('{values}', value.map((value) => `'${value}'`).join(','))
+		.replace(
+			'{values}',
+			values.map((value: String) => `'${value}'`).join(',')
+		)
 		.trim();
 
 	return operator;
@@ -39,40 +42,65 @@ const finalFormatRequestTime = (dateFinal: string) => {
 	return dateFinal.split('T')[0] + 'T23:59:59.999Z';
 };
 
-const createURLFilter = async (data: RequestFilterType) => {
+const formattedFieldsUrl = (key: string, value: string[]) => {
+	const formatUrl = formatArrayUrl(key, value);
+
+	return formatUrl;
+};
+
+const formattedFields = async (payload: any) => {
+	const externalReferenceCodeOrganization = await filteredOrganizationsERC(
+		payload
+	);
+
 	let formatUrl;
+
+	if (externalReferenceCodeOrganization.length !== 0) {
+		formatUrl = await formattedFieldsUrl(
+			'r_organization_c_evpOrganizationERC',
+			externalReferenceCodeOrganization
+		);
+	}
+
+	return formatUrl;
+};
+
+const createURLFilter = async (data: RequestFilterType) => {
 	let externalReferenceCodeOrganization;
-	const filterAnd = '/?filter=';
-	const filter = [];
+	const filter = '/?filter=';
+	const filterUrl = [];
 	let ISOFormattedInitialRequestDate;
 	let ISOFormattedFinalRequestDate;
 	let formattedTimeFinalRequestDate;
 
 	if (data.fullName) {
-		filter.push(`contains(${FIELDSREPORT.FULLNAME},'${data.fullName}')`);
+		filterUrl.push(`contains(${FIELDSREPORT.FULLNAME},'${data.fullName}')`);
 	}
 
 	if (data.requestStatus.length !== 0) {
-		formatUrl = formatArrayUrl(
-			FIELDSREPORT.REQUESTSTATUS,
-			data.requestStatus
+		filterUrl.push(
+			await formattedFieldsUrl(
+				FIELDSREPORT.REQUESTSTATUS,
+				data.requestStatus
+			)
 		);
-		filter.push(formatUrl);
 	}
 
 	if (data.liferayBranch.length !== 0) {
-		formatUrl = formatArrayUrl(
-			FIELDSREPORT.LIFERAYBRANCH,
-			data.liferayBranch
+		filterUrl.push(
+			await formattedFieldsUrl(
+				FIELDSREPORT.LIFERAYBRANCH,
+				data.liferayBranch
+			)
 		);
-		filter.push(formatUrl);
 	}
 
 	if (data.organizationName) {
-		externalReferenceCodeOrganization = await getOrganizationName(
+		externalReferenceCodeOrganization = await getERCOrganization(
 			data.organizationName
 		);
-		filter.push(
+
+		filterUrl.push(
 			`contains(r_organization_c_evpOrganizationERC,'${externalReferenceCodeOrganization}')`
 		);
 	}
@@ -83,51 +111,21 @@ const createURLFilter = async (data: RequestFilterType) => {
 			Number(data.finalCompanyId)
 		);
 
-		externalReferenceCodeOrganization = await filteredOrganizationsERC(
-			organizationsBetweenIds
-		);
-		if (externalReferenceCodeOrganization.length !== 0) {
-			formatUrl = formatArrayUrl(
-				'r_organization_c_evpOrganizationERC',
-				externalReferenceCodeOrganization
-			);
-			filter.push(formatUrl);
-		}
+		filterUrl.push(await formattedFields(organizationsBetweenIds));
 	}
-
-	if (data.finalCompanyId) {
-		const organizationsLessOrEqual = await getIdLessOrEqualOrganization(
+	else if (data.finalCompanyId) {
+		const organizationsLessOrEqual = await getLessOrEqualOrganizationId(
 			Number(data.finalCompanyId)
 		);
 
-		externalReferenceCodeOrganization = await filteredOrganizationsERC(
-			organizationsLessOrEqual
-		);
-
-		if (externalReferenceCodeOrganization.length !== 0) {
-			formatUrl = formatArrayUrl(
-				'r_organization_c_evpOrganizationERC',
-				externalReferenceCodeOrganization
-			);
-			filter.push(formatUrl);
-		}
+		filterUrl.push(await formattedFields(organizationsLessOrEqual));
 	}
-
-	if (data.initialCompanyId) {
-		const organizationsGreaterOrEqual = await getIdGreaterOrEqualOrganization(
+	else if (data.initialCompanyId) {
+		const organizationsGreaterOrEqual = await getGreaterOrEqualOrganizationId(
 			Number(data.initialCompanyId)
 		);
-		externalReferenceCodeOrganization = await filteredOrganizationsERC(
-			organizationsGreaterOrEqual
-		);
 
-		if (externalReferenceCodeOrganization.length !== 0) {
-			formatUrl = formatArrayUrl(
-				'r_organization_c_evpOrganizationERC',
-				externalReferenceCodeOrganization
-			);
-			filter.push(formatUrl);
-		}
+		filterUrl.push(await formattedFields(organizationsGreaterOrEqual));
 	}
 
 	if (data.initialRequestDate && data.finalRequestDate) {
@@ -138,31 +136,21 @@ const createURLFilter = async (data: RequestFilterType) => {
 			data.finalRequestDate
 		).toISOString();
 
-		if (ISOFormattedInitialRequestDate === ISOFormattedFinalRequestDate) {
-			formattedTimeFinalRequestDate = finalFormatRequestTime(
-				ISOFormattedFinalRequestDate
-			);
+		formattedTimeFinalRequestDate = finalFormatRequestTime(
+			ISOFormattedFinalRequestDate
+		);
 
-			filter.push(
-				`dateCreated ge ${ISOFormattedInitialRequestDate} and dateCreated le ${formattedTimeFinalRequestDate}`
-			);
-		}
-		else {
-			formattedTimeFinalRequestDate = finalFormatRequestTime(
-				ISOFormattedFinalRequestDate
-			);
-
-			filter.push(
-				`dateCreated ge ${ISOFormattedInitialRequestDate} and dateCreated le ${formattedTimeFinalRequestDate}`
-			);
-		}
+		filterUrl.push(
+			`dateCreated ge ${ISOFormattedInitialRequestDate} and dateCreated le ${formattedTimeFinalRequestDate}`
+		);
 	}
-	else if (data.initialRequestDate) {
+
+	if (data.initialRequestDate) {
 		ISOFormattedInitialRequestDate = dayjs(
 			data.initialRequestDate
 		).toISOString();
 
-		filter.push(`dateCreated ge ${ISOFormattedInitialRequestDate}`);
+		filterUrl.push(`dateCreated ge ${ISOFormattedInitialRequestDate}`);
 	}
 	else if (data.finalRequestDate) {
 		ISOFormattedFinalRequestDate = dayjs(
@@ -173,10 +161,10 @@ const createURLFilter = async (data: RequestFilterType) => {
 			ISOFormattedFinalRequestDate
 		);
 
-		filter.push(`dateCreated le ${formattedTimeFinalRequestDate}`);
+		filterUrl.push(`dateCreated le ${formattedTimeFinalRequestDate}`);
 	}
 
-	return filterAnd + filter.join(' and ');
+	return filter + filterUrl.filter((item) => item).join(' and ');
 };
 
 export async function getRequestsByFilter(data: RequestFilterType) {

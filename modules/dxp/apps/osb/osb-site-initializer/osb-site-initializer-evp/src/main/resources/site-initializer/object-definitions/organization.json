@@ -186,7 +186,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "IDNumber"
+				"en_US": "ID Number"
 			},
 			"name": "idNumber",
 			"objectFieldSettings": [

@@ -17,11 +17,11 @@ import Form from '../../../common/components/Form';
 import yupSchema, {yupResolver} from '../../../common/schema/yup';
 import {getPicklistByName} from '../../../common/services/picklist';
 import {getRequestsByFilter} from '../../../common/services/request';
-import {LiferayBranch, Statuses} from '../../../types/index';
+import {LiferayBranchType, Statustype} from '../../../types/index';
 
 import './index.scss';
 
-type generateReportsType = typeof yupSchema.report.__outputType;
+export type generateReportsType = typeof yupSchema.report.__outputType;
 
 const GenerateReport = () => {
 	const [statuses, setStatuses] = useState<any>([]);
@@ -63,23 +63,26 @@ const GenerateReport = () => {
 		setBranches(branchList);
 	};
 
-	const onClickBranches = (event: any) => {
+	const fieldsChecked = (
+		event: {target: HTMLInputElement},
+		fieldWatch: string[],
+		field: keyof generateReportsType
+	) => {
 		const value = event.target.value;
 
-		const brachesFiltered = branchesWatch?.includes(value)
-			? branchesWatch.filter((branchId) => branchId !== value)
-			: [...branchesWatch, value];
+		const fildChecked = fieldWatch?.includes(value)
+			? fieldWatch.filter((fieldWatchId) => fieldWatchId !== value)
+			: [...fieldWatch, value];
 
-		setValue('liferayBranch', brachesFiltered);
+		setValue(field, fildChecked);
 	};
 
-	const onClickStatus = (event: any) => {
-		const value = event.target.value;
-		const statusesFiltered = statusesWatch?.includes(value)
-			? statusesWatch.filter((statusId) => statusId !== value)
-			: [...statusesWatch, value];
+	const onClickBranches = (event: {target: HTMLInputElement}) => {
+		return fieldsChecked(event, branchesWatch, 'liferayBranch');
+	};
 
-		setValue('requestStatus', statusesFiltered);
+	const onClickStatus = (event: {target: HTMLInputElement}) => {
+		return fieldsChecked(event, statusesWatch, 'requestStatus');
 	};
 
 	useEffect(() => {
@@ -157,7 +160,7 @@ const GenerateReport = () => {
 					<div className="col">
 						<label>Statuses</label>
 
-						{statuses.map((status: Statuses, index: string) => (
+						{statuses.map((status: Statustype, index: number) => (
 							<div
 								className="align-items-center d-flex"
 								key={index}
@@ -180,7 +183,7 @@ const GenerateReport = () => {
 						<label>Liferay Branch</label>
 
 						{branches.map(
-							(branch: LiferayBranch, index: string) => (
+							(branch: LiferayBranchType, index: number) => (
 								<div
 									className="align-items-center d-flex"
 									key={index}

@@ -21,17 +21,17 @@ export async function getOrganizations(organizationName: string) {
 	return response;
 }
 
-export async function getIdGreaterOrEqualOrganization(
-	idOrganizationInitial: number
-) {
+export async function getGreaterOrEqualOrganizationId(organizationId: number) {
 	const response = await fetcher(
-		`${resource}/?filter=idNumber ge ${idOrganizationInitial}`
+		`${resource}/?filter=idNumber ge ${organizationId}`
 	);
 
 	return response;
 }
 
-export async function filteredOrganizationsERC(organization: any) {
+export async function filteredOrganizationsERC(organization: {
+	items: OrganizationFilterType[];
+}) {
 	const externalReferenceCodes: string[] = [];
 
 	organization.items.forEach((organization: OrganizationFilterType) => {
@@ -41,28 +41,26 @@ export async function filteredOrganizationsERC(organization: any) {
 	return externalReferenceCodes;
 }
 
-export async function getIdLessOrEqualOrganization(
-	idOrganizationFinal: number
-) {
+export async function getLessOrEqualOrganizationId(organizationId: number) {
 	const response = await fetcher(
-		`${resource}/?filter=idNumber le ${idOrganizationFinal}`
+		`${resource}/?filter=idNumber le ${organizationId}`
 	);
 
 	return response;
 }
 
 export async function getOrganizationBetweenIds(
-	idOrganizationInitial: number,
-	idOrganizationFinal: number
+	initialOrganizationId: number,
+	finalOrganizationId: number
 ) {
 	const response = await fetcher(
-		`${resource}/?filter=idNumber ge ${idOrganizationInitial} and idNumber le ${idOrganizationFinal}`
+		`${resource}/?filter=idNumber ge ${initialOrganizationId} and idNumber le ${finalOrganizationId}`
 	);
 
 	return response;
 }
 
-export async function getOrganizationName(organizationName: string) {
+export async function getERCOrganization(organizationName: string) {
 	const organizations = await getOrganizations(organizationName);
 
 	const externalReferenceCodes: String[] = [];

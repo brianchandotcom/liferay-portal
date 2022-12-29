@@ -11,7 +11,9 @@
 
 import ClayDatePicker from '@clayui/date-picker';
 import {InputHTMLAttributes, useEffect, useState} from 'react';
+import {UseFormRegister} from 'react-hook-form';
 
+import {generateReportsType} from '../../../../routes/reports/generateReport';
 import BaseWrapper from '../Base/BaseWrapper';
 
 type DatePickerTypes = {
@@ -19,7 +21,7 @@ type DatePickerTypes = {
 	id?: string;
 	label?: string;
 	name: string;
-	register?: any;
+	register?: UseFormRegister<generateReportsType>;
 	required?: boolean;
 	setValue?: any;
 	type?: string;

@@ -8,7 +8,8 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-export interface RequestFilterType {
+
+export type RequestFilterType = {
 	finalCompanyId: string;
 	finalRequestDate: string;
 	fullName: string;
@@ -17,8 +18,9 @@ export interface RequestFilterType {
 	liferayBranch: string[];
 	organizationName: string;
 	requestStatus: string[];
-}
-export interface OrganizationFilterType {
+};
+
+export type OrganizationFilterType = {
 	city: string;
 	contactEmail: string;
 	contactName: string;
@@ -36,9 +38,9 @@ export interface OrganizationFilterType {
 	street: string;
 	taxIdentificationNumber: string;
 	zip: string;
-}
+};
 
-export type Statuses = {
+export type Statustype = {
 	dateCreated: string;
 	dateModified: string;
 	id: number;
@@ -46,7 +48,7 @@ export type Statuses = {
 	name: string;
 };
 
-export type LiferayBranch = {
+export type LiferayBranchType = {
 	dateCreated: string;
 	dateModified: string;
 	id: number;

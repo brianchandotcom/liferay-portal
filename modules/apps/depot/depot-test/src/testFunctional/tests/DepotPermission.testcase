@@ -1265,7 +1265,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			assetLibrariesScope = "true",
 			define = "true",
 			permissionNavHeader = "Site Builder",
@@ -1285,7 +1285,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			permissionNavHeader = "Site Builder",
 			permissionNavItem = "Collections",
 			permissionSheetSubtitle = "Asset List Entry",
@@ -1315,7 +1315,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			assetLibrariesScope = "true",
 			define = "true",
 			permissionNavHeader = "Content & Data",
@@ -1335,7 +1335,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			permissionNavHeader = "Content & Data",
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "Documents",
@@ -1365,7 +1365,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			assetLibrariesScope = "true",
 			define = "true",
 			permissionNavHeader = "Content & Data",
@@ -1385,7 +1385,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			permissionNavHeader = "Content & Data",
 			permissionNavItem = "Web Content",
 			permissionSheetSubtitle = "General Permissions",

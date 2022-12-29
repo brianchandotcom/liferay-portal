@@ -159,4 +159,27 @@ definition {
 				syncNumber = "1 Selected");
 		}
     }
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12670 | Test Summary: Can sync all contacts and account groups only"
+	@priority = "5"
+	test CanSyncAllContactsAndAccountsGroupsOnly {
+		task ("Click on sync all contacts and sync all accounts") {
+			ACDXPSettings.syncContactsData();
+
+			ACDXPSettings.syncAccountsData();
+        }
+
+		task("Check if the toggle was enabled") {
+			ACDXPSettings.assertToggleOnOff(
+				toggleType = "sync-all-contacts-and-accounts",
+				boolean = "true");
+
+			ACDXPSettings.assertToggleOnOff(
+				toggleType = "sync-all-contacts",
+				boolean = "true");
+
+			ACDXPSettings.assertToggleOnOff(
+				toggleType = "sync-all-accounts",
+				boolean = "true");
+        }
+	}
 }

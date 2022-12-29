@@ -49,7 +49,11 @@ export default function WidgetsTree({
 	);
 }
 
-WidgetsTree.propTypes = {};
+WidgetsTree.propTypes = {
+	items: PropTypes.array.isRequired,
+	portletNamespace: PropTypes.array.isRequired,
+	selectedPortlets: PropTypes.array.isRequired,
+};
 
 function TreeItem({item, namespace}) {
 	return (

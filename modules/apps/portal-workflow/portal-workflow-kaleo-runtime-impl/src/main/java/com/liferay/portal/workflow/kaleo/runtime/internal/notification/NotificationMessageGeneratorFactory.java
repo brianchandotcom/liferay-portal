@@ -14,17 +14,16 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -37,7 +36,7 @@ public class NotificationMessageGeneratorFactory {
 		throws WorkflowException {
 
 		NotificationMessageGenerator notificationMessageGenerator =
-			_notificationMessageGenerators.get(templateLanguage);
+			_serviceTrackerMap.getService(templateLanguage);
 
 		if (notificationMessageGenerator == null) {
 			throw new WorkflowException(
@@ -47,35 +46,28 @@ public class NotificationMessageGeneratorFactory {
 		return notificationMessageGenerator;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addNotificationMessageGenerator(
-		NotificationMessageGenerator notificationMessageGenerator) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, NotificationMessageGenerator.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(notificationMessageGenerator, emitter) -> {
+					for (String templateLanguage :
+							notificationMessageGenerator.
+								getTemplateLanguages()) {
 
-		String[] templateLanguages =
-			notificationMessageGenerator.getTemplateLanguages();
-
-		for (String templateLanguage : templateLanguages) {
-			_notificationMessageGenerators.put(
-				templateLanguage, notificationMessageGenerator);
-		}
+						emitter.emit(templateLanguage);
+					}
+				}));
 	}
 
-	protected void removeNotificationMessageGenerator(
-		NotificationMessageGenerator notificationMessageGenerator) {
-
-		String[] templateLanguages =
-			notificationMessageGenerator.getTemplateLanguages();
-
-		for (String templateLanguage : templateLanguages) {
-			_notificationMessageGenerators.remove(templateLanguage);
-		}
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, NotificationMessageGenerator>
-		_notificationMessageGenerators = new HashMap<>();
+	private ServiceTrackerMap<String, NotificationMessageGenerator>
+		_serviceTrackerMap;
 
 }

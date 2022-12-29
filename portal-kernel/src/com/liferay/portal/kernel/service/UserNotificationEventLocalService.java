@@ -104,7 +104,6 @@ public interface UserNotificationEventLocalService
 			long userId, Collection<NotificationEvent> notificationEvents)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
 	public void archiveUserNotificationEvents(
 			long userId, int deliveryType, boolean actionRequired)
 		throws PortalException;

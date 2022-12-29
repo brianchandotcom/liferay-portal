@@ -319,6 +319,7 @@
 	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationDeliveryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserNotificationDeliveryModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationDeliveryPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPersistence" />
 	<bean class="com.liferay.portal.service.impl.UserNotificationEventLocalServiceImpl" id="com.liferay.portal.kernel.service.UserNotificationEventLocalService" />
+	<bean class="com.liferay.portal.service.impl.UserNotificationEventServiceImpl" id="com.liferay.portal.kernel.service.UserNotificationEventService" />
 	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationEventModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserNotificationEventModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationEventPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence" />
 	<bean class="com.liferay.portal.service.impl.UserTrackerLocalServiceImpl" id="com.liferay.portal.kernel.service.UserTrackerLocalService" />

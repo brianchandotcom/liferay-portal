@@ -99,8 +99,8 @@ public class KnowledgeBaseArticleDTOConverter
 					_assetTagLocalService.getTags(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
 					AssetTag.NAME_ACCESSOR);
-
 				numberOfAttachments = 0;
+
 				List<FileEntry> fileEntries =
 					kbArticle.getAttachmentsFileEntries();
 

@@ -21,6 +21,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -458,33 +459,32 @@ public class AMImageConfigurationHelperImpl
 		}
 	}
 
-	private Stream<AMImageConfigurationEntry> _getAMImageConfigurationEntries(
+	private List<AMImageConfigurationEntry> _getAMImageConfigurationEntries(
 		long companyId) {
 
 		ArrayList<AMImageConfigurationEntry> amImageConfigurationEntries =
 			(ArrayList<AMImageConfigurationEntry>)_portalCache.get(companyId);
 
 		if (amImageConfigurationEntries != null) {
-			return amImageConfigurationEntries.stream();
+			return amImageConfigurationEntries;
 		}
 
 		try {
-			amImageConfigurationEntries = Stream.of(
-				_getImageVariants(
-					SettingsFactoryUtil.getSettings(
-						new CompanyServiceSettingsLocator(
-							companyId,
-							AMImageCompanyConfiguration.class.getName())))
-			).map(
-				_amImageConfigurationEntryParser::parse
-			).collect(
-				Collectors.toCollection(ArrayList::new)
-			);
+			amImageConfigurationEntries =
+				(ArrayList<AMImageConfigurationEntry>)
+					TransformUtil.transformToList(
+						_getImageVariants(
+							SettingsFactoryUtil.getSettings(
+								new CompanyServiceSettingsLocator(
+									companyId,
+									AMImageCompanyConfiguration.class.
+										getName()))),
+						_amImageConfigurationEntryParser::parse);
 
 			PortalCacheHelperUtil.putWithoutReplicator(
 				_portalCache, companyId, amImageConfigurationEntries);
 
-			return amImageConfigurationEntries.stream();
+			return amImageConfigurationEntries;
 		}
 		catch (SettingsException settingsException) {
 			throw new AMRuntimeException.InvalidConfiguration(

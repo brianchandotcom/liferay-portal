@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
@@ -77,27 +76,6 @@ public class ChangesetManagerImpl
 	@Override
 	public boolean hasChangeset(String changesetUuid) {
 		return _changesets.containsKey(changesetUuid);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Optional<Changeset> peekChangeset(String changesetUuid) {
-		return Optional.ofNullable(_changesets.get(changesetUuid));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #removeChangeset(String changesetUuid)}
-	 */
-	@Deprecated
-	@Override
-	public Optional<Changeset> popChangeset(String changesetUuid) {
-		Changeset changeset = _changesets.remove(changesetUuid);
-
-		return Optional.ofNullable(changeset);
 	}
 
 	/**

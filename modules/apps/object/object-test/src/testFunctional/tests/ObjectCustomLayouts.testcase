@@ -219,6 +219,8 @@ definition {
 
 		PortletEntry.save();
 
+		Refresh();
+
 		AssetCategorization.removeCategories(categoryNameList = "Category 1,Category 2");
 	}
 

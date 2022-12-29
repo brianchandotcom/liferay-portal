@@ -699,6 +699,15 @@ definition {
 		}
 	}
 
+	macro assertThatTheProjectListIsNotPresent {
+		for (var project : list "${projectList}") {
+			AssertElementNotPresent(
+				key_project = "${project}",
+				locator1 = "CP2LiferayContact#PROJECT_TABLE",
+				title = "${project}");
+		}
+	}
+
 	macro tearDownForOktaAndSAML {
 		task ("Teardown") {
 			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";

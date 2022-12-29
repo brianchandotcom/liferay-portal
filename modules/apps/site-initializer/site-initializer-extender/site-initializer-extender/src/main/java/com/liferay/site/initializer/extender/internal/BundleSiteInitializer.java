@@ -885,24 +885,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 								draftLayout.getGroupId(), draftLayout.getPlid(),
 								true);
 
+					LayoutStructure layoutStructure = null;
+
+					if (segmentsExperienceId == 0) {
+						layoutStructure = LayoutStructure.of(
+							layoutPageTemplateStructure.
+								getDefaultSegmentsExperienceData());
+					}
+					else {
+						layoutStructure = LayoutStructure.of(
+							layoutPageTemplateStructure.getData(
+								segmentsExperienceId));
+					}
+
 					for (int i = 0; i < jsonArray.length(); i++) {
 						if (segmentsExperienceId == 0) {
-							LayoutStructure layoutStructure =
-								LayoutStructure.of(
-									layoutPageTemplateStructure.
-										getDefaultSegmentsExperienceData());
-
 							_layoutsImporter.importPageElement(
 								draftLayout, layoutStructure,
 								layoutStructure.getMainItemId(),
 								jsonArray.getString(i), i);
 						}
 						else {
-							LayoutStructure layoutStructure =
-								LayoutStructure.of(
-									layoutPageTemplateStructure.getData(
-										segmentsExperienceId));
-
 							_layoutsImporter.importPageElement(
 								draftLayout, layoutStructure,
 								layoutStructure.getMainItemId(),

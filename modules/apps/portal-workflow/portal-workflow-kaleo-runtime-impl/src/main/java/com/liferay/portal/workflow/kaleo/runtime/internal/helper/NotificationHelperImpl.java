@@ -63,6 +63,19 @@ public class NotificationHelperImpl implements NotificationHelper {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_notificationMessageGeneratorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, NotificationMessageGenerator.class, null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(notificationMessageGenerator, emitter) -> {
+						for (String templateLanguage :
+								notificationMessageGenerator.
+									getTemplateLanguages()) {
+
+							emitter.emit(templateLanguage);
+						}
+					}));
 		_notificationSenderServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, NotificationSender.class, null,
@@ -70,25 +83,13 @@ public class NotificationHelperImpl implements NotificationHelper {
 					bundleContext,
 					(notificationSender, emitter) -> emitter.emit(
 						notificationSender.getNotificationType())));
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, NotificationMessageGenerator.class, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(notificationMessageGenerator, emitter) -> {
-					for (String templateLanguage :
-							notificationMessageGenerator.
-								getTemplateLanguages()) {
-
-						emitter.emit(templateLanguage);
-					}
-				}));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_notificationSenderServiceTrackerMap.close();
+		_notificationMessageGeneratorServiceTrackerMap.close();
 
-		_serviceTrackerMap.close();
+		_notificationSenderServiceTrackerMap.close();
 	}
 
 	private NotificationMessageGenerator _getNotificationMessageGenerator(
@@ -96,7 +97,8 @@ public class NotificationHelperImpl implements NotificationHelper {
 		throws WorkflowException {
 
 		NotificationMessageGenerator notificationMessageGenerator =
-			_serviceTrackerMap.getService(templateLanguage);
+			_notificationMessageGeneratorServiceTrackerMap.getService(
+				templateLanguage);
 
 		if (notificationMessageGenerator == null) {
 			throw new WorkflowException(
@@ -173,9 +175,9 @@ public class NotificationHelperImpl implements NotificationHelper {
 	private KaleoNotificationRecipientLocalService
 		_kaleoNotificationRecipientLocalService;
 
+	private ServiceTrackerMap<String, NotificationMessageGenerator>
+		_notificationMessageGeneratorServiceTrackerMap;
 	private ServiceTrackerMap<String, NotificationSender>
 		_notificationSenderServiceTrackerMap;
-	private ServiceTrackerMap<String, NotificationMessageGenerator>
-		_serviceTrackerMap;
 
 }

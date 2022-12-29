@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -31,6 +32,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,6 +61,10 @@ public class UserNotificationResourceImpl
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-83384"))) {
+			throw new NotFoundException();
+		}
+
 		return _getPageUserNotification(
 			filter, pagination, search, sorts, contextUser.getUserId());
 	}
@@ -69,6 +75,10 @@ public class UserNotificationResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-83384"))) {
+			throw new NotFoundException();
+		}
+
 		return _getPageUserNotification(
 			filter, pagination, search, sorts, userAccountId);
 	}
@@ -76,6 +86,10 @@ public class UserNotificationResourceImpl
 	@Override
 	public UserNotification getUserNotification(Long userNotificationId)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-83384"))) {
+			throw new NotFoundException();
+		}
 
 		return _toUserNotification(
 			_userNotificationEventLocalService.getUserNotificationEvent(
@@ -85,6 +99,10 @@ public class UserNotificationResourceImpl
 	@Override
 	public void putUserNotificationRead(Long userNotificationId)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-83384"))) {
+			throw new NotFoundException();
+		}
 
 		UserNotificationEvent userNotificationEvent =
 			_userNotificationEventLocalService.getUserNotificationEvent(
@@ -98,6 +116,10 @@ public class UserNotificationResourceImpl
 	@Override
 	public void putUserNotificationUnread(Long userNotificationId)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-83384"))) {
+			throw new NotFoundException();
+		}
 
 		UserNotificationEvent userNotificationEvent =
 			_userNotificationEventLocalService.getUserNotificationEvent(

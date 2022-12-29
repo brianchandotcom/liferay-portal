@@ -46,212 +46,355 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0"
+							"fragment": {
+								"key": "content-welcome-banner"
 							},
-							"indexed": true,
-							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
-								"widthType": "Fluid"
-							}
+							"fragmentConfig": {
+								"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+							},
+							"fragmentFields": [
+								{
+									"id": "first-banner-primary-button-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Watch a Video Tour",
+												"ca_ES": "Watch a Video Tour",
+												"de_DE": "Watch a Video Tour",
+												"en_US": "Watch a Video Tour",
+												"es_ES": "Watch a Video Tour",
+												"fi_FI": "Watch a Video Tour",
+												"fr_FR": "Watch a Video Tour",
+												"hu_HU": "Watch a Video Tour",
+												"ja_JP": "Watch a Video Tour",
+												"nl_NL": "Watch a Video Tour",
+												"pt_BR": "Watch a Video Tour",
+												"sv_SE": "Watch a Video Tour",
+												"zh_CN": "Watch a Video Tour"
+											}
+										}
+									}
+								},
+								{
+									"id": "second-banner-primary-button-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Watch a Video Tour",
+												"ca_ES": "Watch a Video Tour",
+												"de_DE": "Watch a Video Tour",
+												"en_US": "Watch a Video Tour",
+												"es_ES": "Watch a Video Tour",
+												"fi_FI": "Watch a Video Tour",
+												"fr_FR": "Watch a Video Tour",
+												"hu_HU": "Watch a Video Tour",
+												"ja_JP": "Watch a Video Tour",
+												"nl_NL": "Watch a Video Tour",
+												"pt_BR": "Watch a Video Tour",
+												"sv_SE": "Watch a Video Tour",
+												"zh_CN": "Watch a Video Tour"
+											}
+										}
+									}
+								},
+								{
+									"id": "first-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Welcome to Partner Marketing",
+												"ca_ES": "Welcome to Partner Marketing",
+												"de_DE": "Welcome to Partner Marketing",
+												"en_US": "Welcome to Partner Marketing",
+												"es_ES": "Welcome to Partner Marketing",
+												"fi_FI": "Welcome to Partner Marketing",
+												"fr_FR": "Welcome to Partner Marketing",
+												"hu_HU": "Welcome to Partner Marketing",
+												"ja_JP": "Welcome to Partner Marketing",
+												"nl_NL": "Welcome to Partner Marketing",
+												"pt_BR": "Welcome to Partner Marketing",
+												"sv_SE": "Welcome to Partner Marketing",
+												"zh_CN": "Welcome to Partner Marketing"
+											}
+										}
+									}
+								},
+								{
+									"id": "first-welcome-banner-description",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"ca_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"de_DE": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"en_US": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"es_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"fi_FI": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"fr_FR": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"hu_HU": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"ja_JP": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"nl_NL": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"pt_BR": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"sv_SE": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
+												"zh_CN": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline."
+											}
+										}
+									}
+								},
+								{
+									"id": "second-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Partner Marketing",
+												"ca_ES": "Partner Marketing",
+												"de_DE": "Partner Marketing",
+												"en_US": "Partner Marketing",
+												"es_ES": "Partner Marketing",
+												"fi_FI": "Partner Marketing",
+												"fr_FR": "Partner Marketing",
+												"hu_HU": "Partner Marketing",
+												"ja_JP": "Partner Marketing",
+												"nl_NL": "Partner Marketing",
+												"pt_BR": "Partner Marketing",
+												"sv_SE": "Partner Marketing",
+												"zh_CN": "Partner Marketing"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {
-										"key": "marketing-welcome-banner"
-									},
-									"fragmentConfig": {
-										"secondaryButtonLink": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
-									},
-									"fragmentFields": [
-										{
-											"id": "first-banner-primary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Watch a Video Tour",
-														"ca_ES": "Watch a Video Tour",
-														"de_DE": "Watch a Video Tour",
-														"en_US": "Watch a Video Tour",
-														"es_ES": "Watch a Video Tour",
-														"fi_FI": "Watch a Video Tour",
-														"fr_FR": "Watch a Video Tour",
-														"hu_HU": "Watch a Video Tour",
-														"ja_JP": "Watch a Video Tour",
-														"nl_NL": "Watch a Video Tour",
-														"pt_BR": "Watch a Video Tour",
-														"sv_SE": "Watch a Video Tour",
-														"zh_CN": "Watch a Video Tour"
-													}
-												}
-											}
-										},
-										{
-											"id": "second-banner-primary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Watch a Video Tour",
-														"ca_ES": "Watch a Video Tour",
-														"de_DE": "Watch a Video Tour",
-														"en_US": "Watch a Video Tour",
-														"es_ES": "Watch a Video Tour",
-														"fi_FI": "Watch a Video Tour",
-														"fr_FR": "Watch a Video Tour",
-														"hu_HU": "Watch a Video Tour",
-														"ja_JP": "Watch a Video Tour",
-														"nl_NL": "Watch a Video Tour",
-														"pt_BR": "Watch a Video Tour",
-														"sv_SE": "Watch a Video Tour",
-														"zh_CN": "Watch a Video Tour"
-													}
-												}
-											}
-										},
-										{
-											"id": "second-banner-secondary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Partner Marketing Guide",
-														"ca_ES": "Partner Marketing Guide",
-														"de_DE": "Partner Marketing Guide",
-														"en_US": "Partner Marketing Guide",
-														"es_ES": "Partner Marketing Guide",
-														"fi_FI": "Partner Marketing Guide",
-														"fr_FR": "Partner Marketing Guide",
-														"hu_HU": "Partner Marketing Guide",
-														"ja_JP": "Partner Marketing Guide",
-														"nl_NL": "Partner Marketing Guide",
-														"pt_BR": "Partner Marketing Guide",
-														"sv_SE": "Partner Marketing Guide",
-														"zh_CN": "Partner Marketing Guide"
-													}
-												}
-											}
-										},
-										{
-											"id": "first-welcome-banner-title",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Welcome to Partner Marketing",
-														"ca_ES": "Welcome to Partner Marketing",
-														"de_DE": "Welcome to Partner Marketing",
-														"en_US": "Welcome to Partner Marketing",
-														"es_ES": "Welcome to Partner Marketing",
-														"fi_FI": "Welcome to Partner Marketing",
-														"fr_FR": "Welcome to Partner Marketing",
-														"hu_HU": "Welcome to Partner Marketing",
-														"ja_JP": "Welcome to Partner Marketing",
-														"nl_NL": "Welcome to Partner Marketing",
-														"pt_BR": "Welcome to Partner Marketing",
-														"sv_SE": "Welcome to Partner Marketing",
-														"zh_CN": "Welcome to Partner Marketing"
-													}
-												}
-											}
-										},
-										{
-											"id": "first-banner-secondary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Get Your Partner Marketing Guide",
-														"ca_ES": "Get Your Partner Marketing Guide",
-														"de_DE": "Get Your Partner Marketing Guide",
-														"en_US": "Get Your Partner Marketing Guide",
-														"es_ES": "Get Your Partner Marketing Guide",
-														"fi_FI": "Get Your Partner Marketing Guide",
-														"fr_FR": "Get Your Partner Marketing Guide",
-														"hu_HU": "Get Your Partner Marketing Guide",
-														"ja_JP": "Get Your Partner Marketing Guide",
-														"nl_NL": "Get Your Partner Marketing Guide",
-														"pt_BR": "Get Your Partner Marketing Guide",
-														"sv_SE": "Get Your Partner Marketing Guide",
-														"zh_CN": "Get Your Partner Marketing Guide"
-													}
-												}
-											}
-										},
-										{
-											"id": "first-welcome-banner-description",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"ca_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"de_DE": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"en_US": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"es_ES": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"fi_FI": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"fr_FR": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"hu_HU": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"ja_JP": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"nl_NL": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"pt_BR": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"sv_SE": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
-														"zh_CN": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline."
-													}
-												}
-											}
-										},
-										{
-											"id": "second-welcome-banner-title",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Partner Marketing",
-														"ca_ES": "Partner Marketing",
-														"de_DE": "Partner Marketing",
-														"en_US": "Partner Marketing",
-														"es_ES": "Partner Marketing",
-														"fi_FI": "Partner Marketing",
-														"fr_FR": "Partner Marketing",
-														"hu_HU": "Partner Marketing",
-														"ja_JP": "Partner Marketing",
-														"nl_NL": "Partner Marketing",
-														"pt_BR": "Partner Marketing",
-														"sv_SE": "Partner Marketing",
-														"zh_CN": "Partner Marketing"
-													}
-												}
-											}
-										}
-									],
-									"fragmentStyle": {
-										"marginBottom": "5",
-										"textAlign": ""
-									},
-									"indexed": true
 								},
-								"type": "Fragment"
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "clay-icon-link"
+											},
+											"fragmentConfig": {
+												"iconName": "check-circle"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "outline-primary"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"ar_SA": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"ca_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"de_DE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"es_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"fi_FI": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"fr_FR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"hu_HU": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"ja_JP": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"nl_NL": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"pt_BR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"sv_SE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"zh_CN": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Get Your Partner Marketing Guide",
+																"ca_ES": "Get Your Partner Marketing Guide",
+																"de_DE": "Get Your Partner Marketing Guide",
+																"en_US": "Get Your Partner Marketing Guide",
+																"es_ES": "Get Your Partner Marketing Guide",
+																"fi_FI": "Get Your Partner Marketing Guide",
+																"fr_FR": "Get Your Partner Marketing Guide",
+																"hu_HU": "Get Your Partner Marketing Guide",
+																"ja_JP": "Get Your Partner Marketing Guide",
+																"nl_NL": "Get Your Partner Marketing Guide",
+																"pt_BR": "Get Your Partner Marketing Guide",
+																"sv_SE": "Get Your Partner Marketing Guide",
+																"zh_CN": "Get Your Partner Marketing Guide"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"description": {
+																"value_i18n": {
+																	"en_US": ""
+																}
+															},
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/content-welcome-banner-resources/marketing-welcome-banner-bg.png#]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "clay-icon-link"
+											},
+											"fragmentConfig": {
+												"iconName": "video"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "primary"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"ar_SA": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"ca_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"de_DE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"es_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"fi_FI": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"fr_FR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"hu_HU": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"ja_JP": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"nl_NL": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"pt_BR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"sv_SE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"zh_CN": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Partner Marketing Guide",
+																"ca_ES": "Partner Marketing Guide",
+																"de_DE": "Partner Marketing Guide",
+																"en_US": "Partner Marketing Guide",
+																"es_ES": "Partner Marketing Guide",
+																"fi_FI": "Partner Marketing Guide",
+																"fr_FR": "Partner Marketing Guide",
+																"hu_HU": "Partner Marketing Guide",
+																"ja_JP": "Partner Marketing Guide",
+																"nl_NL": "Partner Marketing Guide",
+																"pt_BR": "Partner Marketing Guide",
+																"sv_SE": "Partner Marketing Guide",
+																"zh_CN": "Partner Marketing Guide"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
 							}
 						],
-						"type": "Section"
+						"type": "Fragment"
 					},
 					{
 						"definition": {
@@ -816,6 +959,29 @@
 																			},
 																			{
 																				"definition": {
+																					"fragmentLink": {
+																						"href": {
+																							"mapping": {
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.model.Layout",
+																									"fields": [
+																										{
+																											"fieldName": "friendlyURL",
+																											"fieldValue": "/marketing/mdf-requests/new"
+																										},
+																										{
+																											"fieldName": "privatePage",
+																											"fieldValue": "false"
+																										},
+																										{
+																											"fieldName": "siteKey",
+																											"fieldValue": "[$GROUP_KEY$]"
+																										}
+																									]
+																								}
+																							}
+																						}
+																					},
 																					"fragmentStyle": {
 																						"borderRadius": "",
 																						"borderWidth": "0",
@@ -1149,9 +1315,6 @@
 																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
-																									"title": {
-																										"value": "book-green.png"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",

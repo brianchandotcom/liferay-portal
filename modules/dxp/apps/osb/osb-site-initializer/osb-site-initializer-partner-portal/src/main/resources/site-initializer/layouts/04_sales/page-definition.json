@@ -46,209 +46,351 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": ""
+							"fragment": {
+								"key": "content-welcome-banner"
 							},
-							"indexed": true,
-							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
-								"widthType": "Fluid"
-							}
+							"fragmentConfig": {
+								"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+							},
+							"fragmentFields": [
+								{
+									"id": "first-banner-primary-button-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Watch a Video Tour",
+												"ca_ES": "Watch a Video Tour",
+												"de_DE": "Watch a Video Tour",
+												"en_US": "Watch a Video Tour",
+												"es_ES": "Watch a Video Tour",
+												"fi_FI": "Watch a Video Tour",
+												"fr_FR": "Watch a Video Tour",
+												"hu_HU": "Watch a Video Tour",
+												"ja_JP": "Watch a Video Tour",
+												"nl_NL": "Watch a Video Tour",
+												"pt_BR": "Watch a Video Tour",
+												"sv_SE": "Watch a Video Tour",
+												"zh_CN": "Watch a Video Tour"
+											}
+										}
+									}
+								},
+								{
+									"id": "second-banner-primary-button-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Watch a Video Tour",
+												"ca_ES": "Watch a Video Tour",
+												"de_DE": "Watch a Video Tour",
+												"en_US": "Watch a Video Tour",
+												"es_ES": "Watch a Video Tour",
+												"fi_FI": "Watch a Video Tour",
+												"fr_FR": "Watch a Video Tour",
+												"hu_HU": "Watch a Video Tour",
+												"ja_JP": "Watch a Video Tour",
+												"nl_NL": "Watch a Video Tour",
+												"pt_BR": "Watch a Video Tour",
+												"sv_SE": "Watch a Video Tour",
+												"zh_CN": "Watch a Video Tour"
+											}
+										}
+									}
+								},
+								{
+									"id": "first-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Welcome to Partner Sales",
+												"ca_ES": "Welcome to Partner Sales",
+												"de_DE": "Welcome to Partner Sales",
+												"en_US": "Welcome to Partner Sales",
+												"es_ES": "Welcome to Partner Sales",
+												"fi_FI": "Welcome to Partner Sales",
+												"fr_FR": "Welcome to Partner Sales",
+												"hu_HU": "Welcome to Partner Sales",
+												"ja_JP": "Welcome to Partner Sales",
+												"nl_NL": "Welcome to Partner Sales",
+												"pt_BR": "Welcome to Partner Sales",
+												"sv_SE": "Welcome to Partner Sales",
+												"zh_CN": "Welcome to Partner Sales"
+											}
+										}
+									}
+								},
+								{
+									"id": "first-welcome-banner-description",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"ca_ES": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"de_DE": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"en_US": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"es_ES": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"fi_FI": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"fr_FR": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"hu_HU": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"ja_JP": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"nl_NL": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"pt_BR": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"sv_SE": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+												"zh_CN": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager."
+											}
+										}
+									}
+								},
+								{
+									"id": "second-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Partner Sales",
+												"ca_ES": "Partner Sales",
+												"de_DE": "Partner Sales",
+												"en_US": "Partner Sales",
+												"es_ES": "Partner Sales",
+												"fi_FI": "Partner Sales",
+												"fr_FR": "Partner Sales",
+												"hu_HU": "Partner Sales",
+												"ja_JP": "Partner Sales",
+												"nl_NL": "Partner Sales",
+												"pt_BR": "Partner Sales",
+												"sv_SE": "Partner Sales",
+												"zh_CN": "Partner Sales"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {
-										"key": "sales-welcome-banner"
-									},
-									"fragmentConfig": {
-										"secondaryButtonLink": "https://www.liferay.com/pt/home"
-									},
-									"fragmentFields": [
-										{
-											"id": "first-banner-primary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Watch a Video Tour",
-														"ca_ES": "Watch a Video Tour",
-														"de_DE": "Watch a Video Tour",
-														"en_US": "Watch a Video Tour",
-														"es_ES": "Watch a Video Tour",
-														"fi_FI": "Watch a Video Tour",
-														"fr_FR": "Watch a Video Tour",
-														"hu_HU": "Watch a Video Tour",
-														"ja_JP": "Watch a Video Tour",
-														"nl_NL": "Watch a Video Tour",
-														"pt_BR": "Watch a Video Tour",
-														"sv_SE": "Watch a Video Tour",
-														"zh_CN": "Watch a Video Tour"
-													}
-												}
-											}
-										},
-										{
-											"id": "second-banner-primary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Watch a Video Tour",
-														"ca_ES": "Watch a Video Tour",
-														"de_DE": "Watch a Video Tour",
-														"en_US": "Watch a Video Tour",
-														"es_ES": "Watch a Video Tour",
-														"fi_FI": "Watch a Video Tour",
-														"fr_FR": "Watch a Video Tour",
-														"hu_HU": "Watch a Video Tour",
-														"ja_JP": "Watch a Video Tour",
-														"nl_NL": "Watch a Video Tour",
-														"pt_BR": "Watch a Video Tour",
-														"sv_SE": "Watch a Video Tour",
-														"zh_CN": "Watch a Video Tour"
-													}
-												}
-											}
-										},
-										{
-											"id": "second-banner-secondary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Register New Deal",
-														"ca_ES": "Register New Deal",
-														"de_DE": "Register New Deal",
-														"en_US": "Register New Deal",
-														"es_ES": "Register New Deal",
-														"fi_FI": "Register New Deal",
-														"fr_FR": "Register New Deal",
-														"hu_HU": "Register New Deal",
-														"ja_JP": "Register New Deal",
-														"nl_NL": "Register New Deal",
-														"pt_BR": "Register New Deal",
-														"sv_SE": "Register New Deal",
-														"zh_CN": "Register New Deal"
-													}
-												}
-											}
-										},
-										{
-											"id": "first-welcome-banner-title",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Welcome to Partner Sales",
-														"ca_ES": "Welcome to Partner Sales",
-														"de_DE": "Welcome to Partner Sales",
-														"en_US": "Welcome to Partner Sales",
-														"es_ES": "Welcome to Partner Sales",
-														"fi_FI": "Welcome to Partner Sales",
-														"fr_FR": "Welcome to Partner Sales",
-														"hu_HU": "Welcome to Partner Sales",
-														"ja_JP": "Welcome to Partner Sales",
-														"nl_NL": "Welcome to Partner Sales",
-														"pt_BR": "Welcome to Partner Sales",
-														"sv_SE": "Welcome to Partner Sales",
-														"zh_CN": "Welcome to Partner Sales"
-													}
-												}
-											}
-										},
-										{
-											"id": "first-banner-secondary-button-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Register a New Deal",
-														"ca_ES": "Register a New Deal",
-														"de_DE": "Register a New Deal",
-														"en_US": "Register a New Deal",
-														"es_ES": "Register a New Deal",
-														"fi_FI": "Register a New Deal",
-														"fr_FR": "Register a New Deal",
-														"hu_HU": "Register a New Deal",
-														"ja_JP": "Register a New Deal",
-														"nl_NL": "Register a New Deal",
-														"pt_BR": "Register a New Deal",
-														"sv_SE": "Register a New Deal",
-														"zh_CN": "Register a New Deal"
-													}
-												}
-											}
-										},
-										{
-											"id": "first-welcome-banner-description",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"ca_ES": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"de_DE": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"en_US": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"es_ES": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"fi_FI": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"fr_FR": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"hu_HU": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"ja_JP": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"nl_NL": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"pt_BR": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"sv_SE": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
-														"zh_CN": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager."
-													}
-												}
-											}
-										},
-										{
-											"id": "second-welcome-banner-title",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"ar_SA": "Partner Sales",
-														"ca_ES": "Partner Sales",
-														"de_DE": "Partner Sales",
-														"en_US": "Partner Sales",
-														"es_ES": "Partner Sales",
-														"fi_FI": "Partner Sales",
-														"fr_FR": "Partner Sales",
-														"hu_HU": "Partner Sales",
-														"ja_JP": "Partner Sales",
-														"nl_NL": "Partner Sales",
-														"pt_BR": "Partner Sales",
-														"sv_SE": "Partner Sales",
-														"zh_CN": "Partner Sales"
-													}
-												}
-											}
-										}
-									],
-									"indexed": true
 								},
-								"type": "Fragment"
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "clay-icon-link"
+											},
+											"fragmentConfig": {
+												"iconName": "video"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "outline-primary"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/sales/deal-registrations/new"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				},
+																				{
+																					"fieldName": "siteKey",
+																					"fieldValue": "[$GROUP_KEY$]"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Register a New Deal",
+																"ca_ES": "Register a New Deal",
+																"de_DE": "Register a New Deal",
+																"en_US": "Register a New Deal",
+																"es_ES": "Register a New Deal",
+																"fi_FI": "Register a New Deal",
+																"fr_FR": "Register a New Deal",
+																"hu_HU": "Register a New Deal",
+																"ja_JP": "Register a New Deal",
+																"nl_NL": "Register a New Deal",
+																"pt_BR": "Register a New Deal",
+																"sv_SE": "Register a New Deal",
+																"zh_CN": "Register a New Deal"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"description": {
+																"value_i18n": {
+																	"en_US": ""
+																}
+															},
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/content-welcome-banner-resources/sales-welcome-banner-bg.png#]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "clay-icon-link"
+											},
+											"fragmentConfig": {
+												"iconName": "video"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "primary"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/sales/deal-registrations/new"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				},
+																				{
+																					"fieldName": "siteKey",
+																					"fieldValue": "[$GROUP_KEY$]"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Register New Deal"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
 							}
 						],
-						"type": "Section"
+						"type": "Fragment"
 					},
 					{
 						"definition": {
@@ -3850,7 +3992,6 @@
 																					"indexed": true,
 																					"layout": {
 																						"contentDisplay": "FlexRow",
-																						"opacity": 100,
 																						"widthType": "Fluid"
 																					},
 																					"name": "Link Container"
@@ -4117,9 +4258,9 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Start",
+																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
 																				"justify": "Center",
-																				"opacity": 100,
 																				"widthType": "Fluid"
 																			},
 																			"name": "Image Container"
@@ -4247,7 +4388,6 @@
 																			"layout": {
 																				"align": "Start",
 																				"contentDisplay": "FlexColumn",
-																				"opacity": 100,
 																				"widthType": "Fluid"
 																			},
 																			"name": "Card Content Container"

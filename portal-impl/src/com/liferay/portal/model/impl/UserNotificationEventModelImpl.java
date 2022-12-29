@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -58,6 +59,7 @@ import java.util.function.Function;
  * @see UserNotificationEventImpl
  * @generated
  */
+@JSON(strict = true)
 public class UserNotificationEventModelImpl
 	extends BaseModelImpl<UserNotificationEvent>
 	implements UserNotificationEventModel {
@@ -378,6 +380,7 @@ public class UserNotificationEventModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -392,6 +395,7 @@ public class UserNotificationEventModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -420,6 +424,7 @@ public class UserNotificationEventModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
+	@JSON
 	@Override
 	public long getUserNotificationEventId() {
 		return _userNotificationEventId;
@@ -434,6 +439,7 @@ public class UserNotificationEventModelImpl
 		_userNotificationEventId = userNotificationEventId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -458,6 +464,7 @@ public class UserNotificationEventModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -497,6 +504,7 @@ public class UserNotificationEventModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
+	@JSON
 	@Override
 	public String getType() {
 		if (_type == null) {
@@ -525,6 +533,7 @@ public class UserNotificationEventModelImpl
 		return getColumnOriginalValue("type_");
 	}
 
+	@JSON
 	@Override
 	public long getTimestamp() {
 		return _timestamp;
@@ -539,6 +548,7 @@ public class UserNotificationEventModelImpl
 		_timestamp = timestamp;
 	}
 
+	@JSON
 	@Override
 	public int getDeliveryType() {
 		return _deliveryType;
@@ -563,6 +573,7 @@ public class UserNotificationEventModelImpl
 			this.<Integer>getColumnOriginalValue("deliveryType"));
 	}
 
+	@JSON
 	@Override
 	public long getDeliverBy() {
 		return _deliverBy;
@@ -577,11 +588,13 @@ public class UserNotificationEventModelImpl
 		_deliverBy = deliverBy;
 	}
 
+	@JSON
 	@Override
 	public boolean getDelivered() {
 		return _delivered;
 	}
 
+	@JSON
 	@Override
 	public boolean isDelivered() {
 		return _delivered;
@@ -606,6 +619,7 @@ public class UserNotificationEventModelImpl
 			this.<Boolean>getColumnOriginalValue("delivered"));
 	}
 
+	@JSON
 	@Override
 	public String getPayload() {
 		if (_payload == null) {
@@ -625,11 +639,13 @@ public class UserNotificationEventModelImpl
 		_payload = payload;
 	}
 
+	@JSON
 	@Override
 	public boolean getActionRequired() {
 		return _actionRequired;
 	}
 
+	@JSON
 	@Override
 	public boolean isActionRequired() {
 		return _actionRequired;
@@ -654,11 +670,13 @@ public class UserNotificationEventModelImpl
 			this.<Boolean>getColumnOriginalValue("actionRequired"));
 	}
 
+	@JSON
 	@Override
 	public boolean getArchived() {
 		return _archived;
 	}
 
+	@JSON
 	@Override
 	public boolean isArchived() {
 		return _archived;

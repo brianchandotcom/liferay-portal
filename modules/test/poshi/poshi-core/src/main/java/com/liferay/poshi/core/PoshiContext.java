@@ -64,7 +64,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -709,15 +708,17 @@ public class PoshiContext {
 			testCaseNamespacedClassCommandName;
 	}
 
-	private static void _executePoshiFileCallables(
-			String poshiFileType, List<PoshiFileCallable> poshiFileCallables,
+	private static void _executePoshiFileRunnables(
+			String poshiFileType, List<PoshiFileRunnable> poshiFileRunnables,
 			int threadPoolSize)
 		throws Exception {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			threadPoolSize);
 
-		executorService.invokeAll(poshiFileCallables);
+		for (PoshiFileRunnable poshiFileRunnable : poshiFileRunnables) {
+			executorService.execute(poshiFileRunnable);
+		}
 
 		executorService.shutdown();
 
@@ -1634,10 +1635,10 @@ public class PoshiContext {
 	private static void _storeRootElements(Set<URL> urls, String namespace)
 		throws Exception {
 
-		List<PoshiFileCallable> dependencyPoshiFileCallables =
+		List<PoshiFileRunnable> dependencyPoshiFileRunnables =
 			new ArrayList<>();
-		List<PoshiFileCallable> macroPoshiFileCallables = new ArrayList<>();
-		List<PoshiFileCallable> testPoshiFileCallables = new ArrayList<>();
+		List<PoshiFileRunnable> macroPoshiFileRunnables = new ArrayList<>();
+		List<PoshiFileRunnable> testPoshiFileRunnables = new ArrayList<>();
 
 		for (URL url : urls) {
 			File file = new File(url.getFile());
@@ -1663,33 +1664,33 @@ public class PoshiContext {
 					namespace + "." +
 						StringUtil.replace(fileName, ".macro", ""));
 
-				macroPoshiFileCallables.add(
-					new PoshiFileCallable(url, namespace));
+				macroPoshiFileRunnables.add(
+					new PoshiFileRunnable(url, namespace));
 
 				continue;
 			}
 
 			if (fileName.endsWith(".testcase") || fileName.endsWith(".prose")) {
-				testPoshiFileCallables.add(
-					new PoshiFileCallable(url, namespace));
+				testPoshiFileRunnables.add(
+					new PoshiFileRunnable(url, namespace));
 
 				continue;
 			}
 
-			dependencyPoshiFileCallables.add(
-				new PoshiFileCallable(url, namespace));
+			dependencyPoshiFileRunnables.add(
+				new PoshiFileRunnable(url, namespace));
 		}
 
-		_executePoshiFileCallables(
-			"dependency", dependencyPoshiFileCallables,
+		_executePoshiFileRunnables(
+			"dependency", dependencyPoshiFileRunnables,
 			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 
-		_executePoshiFileCallables(
-			"macro", macroPoshiFileCallables,
+		_executePoshiFileRunnables(
+			"macro", macroPoshiFileRunnables,
 			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 
-		_executePoshiFileCallables(
-			"test", testPoshiFileCallables,
+		_executePoshiFileRunnables(
+			"test", testPoshiFileRunnables,
 			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 	}
 
@@ -2011,9 +2012,9 @@ public class PoshiContext {
 	private static final List<String> _testCaseNamespacedClassNames =
 		Collections.synchronizedList(new ArrayList<>());
 
-	private static class PoshiFileCallable implements Callable<URL> {
+	private static class PoshiFileRunnable implements Runnable {
 
-		public URL call() {
+		public void run() {
 			String filePath = _url.getFile();
 
 			try {
@@ -2062,11 +2063,9 @@ public class PoshiContext {
 					}
 				}
 			}
-
-			return _url;
 		}
 
-		private PoshiFileCallable(URL url, String namespace) {
+		private PoshiFileRunnable(URL url, String namespace) {
 			_url = url;
 			_namespace = namespace;
 		}

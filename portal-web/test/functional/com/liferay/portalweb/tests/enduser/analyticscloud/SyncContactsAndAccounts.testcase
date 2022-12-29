@@ -146,4 +146,17 @@ definition {
 				syncNumber = "1 Selected");
 		}
     }
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12662 | Test Summary: Can sync all contacts by organizations"
+	@priority = "5"
+	test CanSyncAllContactsByOrganizations {
+        task ("Click on sync by organizations") {
+			ACDXPSettings.syncContactsData(orgName = "Minium");
+        }
+
+		task("See that there's one organization selected") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Organizations",
+				syncNumber = "1 Selected");
+		}
+    }
 }

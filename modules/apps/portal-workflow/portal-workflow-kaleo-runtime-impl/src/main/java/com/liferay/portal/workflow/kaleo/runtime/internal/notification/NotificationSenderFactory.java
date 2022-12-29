@@ -14,17 +14,16 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -35,7 +34,7 @@ public class NotificationSenderFactory {
 	public NotificationSender getNotificationSender(String notificationType)
 		throws WorkflowException {
 
-		NotificationSender notificationSender = _notificationSenders.get(
+		NotificationSender notificationSender = _serviceTrackerMap.getService(
 			notificationType);
 
 		if (notificationSender == null) {
@@ -46,25 +45,21 @@ public class NotificationSenderFactory {
 		return notificationSender;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addNotificationSender(
-		NotificationSender notificationSender) {
-
-		_notificationSenders.put(
-			notificationSender.getNotificationType(), notificationSender);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, NotificationSender.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(notificationSender, emitter) -> emitter.emit(
+					notificationSender.getNotificationType())));
 	}
 
-	protected void removeNotificationSender(
-		NotificationSender notificationSender) {
-
-		_notificationSenders.remove(notificationSender.getNotificationType());
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, NotificationSender> _notificationSenders =
-		new HashMap<>();
+	private ServiceTrackerMap<String, NotificationSender> _serviceTrackerMap;
 
 }

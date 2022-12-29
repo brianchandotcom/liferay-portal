@@ -980,6 +980,18 @@ definition {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
 
+	macro tearDownCommerce {
+		JSONUser.tearDownNonAdminUsers();
+		
+		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+
+        CommerceJSONAccountGroupsAPI._deleteAllCommerceAccountGroups();
+
+        CommerceJSONOrganizationsAPI._deleteAllOrganizations();
+
+        CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+	}
+
 	macro viewActivePage {
 		AssertTextEquals(
 			locator1 = "ACUtils#ACTIVE_PAGE",

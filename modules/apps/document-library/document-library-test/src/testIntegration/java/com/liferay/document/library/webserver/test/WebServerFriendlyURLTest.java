@@ -69,12 +69,31 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 		String urlTitle = RandomTestUtil.randomString();
 
-		_addFileEntry(urlTitle);
+		_addFileEntry(RandomTestUtil.randomString(), urlTitle);
 
 		Assert.assertTrue(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					_getFileEntryFriendlyURL(urlTitle))));
+	}
+
+	@Test
+	public void testHasFilesWithFileEntryNameHasSpecialChars()
+		throws Exception {
+
+		String fileName = RandomTestUtil.randomString() + "+ .txt";
+
+		Assert.assertFalse(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format("/%s/0/%s", group.getGroupId(), fileName))));
+
+		_addFileEntry(fileName, RandomTestUtil.randomString());
+
+		Assert.assertTrue(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format("/%s/0/%s", group.getGroupId(), fileName))));
 	}
 
 	@Test
@@ -88,7 +107,8 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 		String urlTitle = RandomTestUtil.randomString();
 
-		FileEntry fileEntry = _addFileEntry(urlTitle);
+		FileEntry fileEntry = _addFileEntry(
+			RandomTestUtil.randomString(), urlTitle);
 
 		Assert.assertTrue(
 			WebServerServlet.hasFiles(
@@ -112,7 +132,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 		String urlTitle = RandomTestUtil.randomString();
 
-		_addFileEntry(urlTitle);
+		_addFileEntry(RandomTestUtil.randomString(), urlTitle);
 
 		mockHttpServletResponse = service(
 			Method.GET, _getFileEntryFriendlyURL(urlTitle),
@@ -123,11 +143,12 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
-	private FileEntry _addFileEntry(String urlTitle) throws Exception {
+	private FileEntry _addFileEntry(String fileName, String urlTitle)
+		throws Exception {
+
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), urlTitle,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

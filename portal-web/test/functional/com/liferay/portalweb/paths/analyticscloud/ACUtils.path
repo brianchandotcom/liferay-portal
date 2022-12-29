@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOGGLE_ICON_ON_OFF</td>
+	<td>//*[contains(@data-testid, '${key_toggleType}__${key_boolean}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_NAME_BUTTON</td>
 	<td>//div[contains(@class,'editor')]</td>
 	<td></td>

@@ -30,7 +30,6 @@ import com.liferay.saml.opensaml.integration.processor.context.ProcessorContext;
 import java.io.Serializable;
 
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,7 +38,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * @author Stian Sigvartsen
@@ -181,13 +179,13 @@ public abstract class BaseProcessorImpl
 			handleUnsafeStringArray(
 				fieldExpression,
 				(object, value) -> {
-					Stream<String> stream = Arrays.stream(value);
+					long[] longArray = new long[value.length];
 
-					biConsumer.accept(
-						object,
-						stream.mapToLong(
-							Long::parseLong
-						).toArray());
+					for (int i = 0; i < longArray.length; i++) {
+						longArray[i] = GetterUtil.getLong(value[i]);
+					}
+
+					biConsumer.accept(object, longArray);
 				});
 		}
 

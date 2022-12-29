@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -145,13 +144,13 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			return false;
 		}
 
-		String remoteAddress = StringPool.BLANK;
-
 		if (remoteAddressValue != null) {
-			remoteAddress = GetterUtil.getString(remoteAddressValue);
+			String remoteAddress = GetterUtil.getString(remoteAddressValue);
+
+			return !remoteAddress.equals("localhost");
 		}
 
-		return !remoteAddress.equals("localhost");
+		return true;
 	}
 
 	private ExportImportConfiguration _getExportImportConfiguration(

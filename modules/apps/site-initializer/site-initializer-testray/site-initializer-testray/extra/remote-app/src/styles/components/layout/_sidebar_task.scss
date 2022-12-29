@@ -1,4 +1,4 @@
-$opacity-transition: opacity 1s ease;
+$opacity-transition: all 0.3s ease;
 
 .task-sidebar {
 	color: #8b8db2;
@@ -8,28 +8,25 @@ $opacity-transition: opacity 1s ease;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	padding: 0 20px 20px;
-
 	&-expanded {
 		opacity: 1;
 		transition: $opacity-transition;
 		visibility: visible;
-		width: 100%;
+		width: 199px;
 	}
 
 	&-hidden {
-		height: 0 !important;
 		opacity: 0;
-		overflow: hidden;
 		transition: $opacity-transition;
 		visibility: hidden;
-		width: 0 !important;
+		width: 65px;
 	}
 
 	.task-sidebar-title {
-		background-color: #18215c;
 		height: 30px;
 
 		&-expanded {
+			background-color: #18215c;
 			display: flex;
 			justify-content: space-between;
 			width: 100%;
@@ -37,7 +34,7 @@ $opacity-transition: opacity 1s ease;
 
 		&-hidden {
 			display: flex;
-			justify-content: center;
+			position: relative;
 		}
 	}
 
@@ -45,11 +42,11 @@ $opacity-transition: opacity 1s ease;
 		background-color: #303376;
 		color: #fff;
 		height: 22px;
-		padding: 9px;
 		width: 22px;
 	}
 
 	.subtask-sidebar {
+		animation-delay: 1s;
 		background-color: #303376;
 		box-sizing: border-box;
 		font-size: 14px !important;
@@ -79,34 +76,38 @@ $opacity-transition: opacity 1s ease;
 	}
 
 	.notification {
+		margin-left: 10px;
+		position: fixed;
+		top: 315px;
+		user-select: none;
+
 		.task-sidebar-notification {
 			align-items: center;
 			background: #f00;
 			border-radius: 100%;
-			bottom: 35px;
-			box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+			bottom: 10px;
+			box-shadow: 1px 2px 3px rgba(200, 0, 0, 0.3);
 			color: #fff;
 			display: flex;
-			height: 25px;
+			font-size: 12px;
+			height: 20px;
 			justify-content: center;
 			left: 10px;
 			padding: 10px;
-			position: relative;
-			width: 25px;
+			position: absolute;
+			transition: all 1s ease;
+			user-select: none;
+			width: 20px;
 		}
 
 		&-hide {
-			opacity: 0;
-			transition: $opacity-transition;
-			visibility: hidden;
-			width: 0;
+			opacity: 0 !important;
+			transition: all 0.3s ease;
 		}
 
 		&-show {
-			opacity: 1;
-			transition: $opacity-transition;
-			visibility: visible;
-			width: 100%;
+			opacity: 1 !important;
+			transition: all 1s ease;
 		}
 	}
 
@@ -152,4 +153,11 @@ $opacity-transition: opacity 1s ease;
 
 .task-sidebar-divider {
 	border-top: solid #8b8db2 1px;
+}
+
+.ellipsis-text {
+	overflow: hidden;
+	text-align: justify;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

@@ -40,13 +40,7 @@ const Header = () => {
 	);
 	const navigate = useNavigate();
 
-	const notifications: TestrayDyspatchTrigger[] = [
-		{
-			creator: {name: 'wellignton barbosa	'},
-			status: 'blocked',
-			type: 'ajksdhaskd',
-		},
-	];
+	const notifications: TestrayDyspatchTrigger[] = [];
 
 	const filteredHeaderActions = Permission.filterActions(
 		headerActions.actions,

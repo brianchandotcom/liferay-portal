@@ -1,3 +1,5 @@
+$opacity-transition: all 0.3s ease;
+
 .compare-runs-popover {
 	background-color: white;
 	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.04),
@@ -6,36 +8,36 @@
 	position: absolute;
 	top: 213px;
 	width: 490px;
-}
 
-.box-hidden {
-	left: 90px;
-	opacity: 0 !important;
-	transition: all 1s ease;
-	visibility: hidden !important;
-	z-index: 99;
-}
+	&.box-hidden {
+		left: 85px;
+		opacity: 0 !important;
+		transition: $opacity-transition;
+		visibility: hidden !important;
+		z-index: 99;
+	}
 
-.box-visible {
-	left: 95px;
-	opacity: 1;
-	transition: all 1s ease;
-	visibility: visible;
-	z-index: 99;
-}
+	&.box-visible {
+		left: 90px;
+		opacity: 1;
+		transition: $opacity-transition;
+		visibility: visible;
+		z-index: 99;
+	}
 
-.box-hidden-expanded {
-	left: 245px;
-	opacity: 0 !important;
-	transition: all 1s ease;
-	visibility: hidden !important;
-	z-index: 99;
-}
+	&.box-hidden-expanded {
+		left: 245px;
+		opacity: 0 !important;
+		transition: $opacity-transition;
+		visibility: hidden !important;
+		z-index: 99;
+	}
 
-.box-visible-expanded {
-	left: 250px;
-	opacity: 1;
-	transition: all 1s ease;
-	visibility: visible;
-	z-index: 99;
+	&.box-visible-expanded {
+		left: 250px;
+		opacity: 1;
+		transition: $opacity-transition;
+		visibility: visible;
+		z-index: 99;
+	}
 }

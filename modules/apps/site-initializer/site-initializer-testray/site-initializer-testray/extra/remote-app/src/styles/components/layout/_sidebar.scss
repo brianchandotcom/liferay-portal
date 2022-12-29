@@ -1,7 +1,7 @@
-$hover-transition-width: width 0.9s ease;
-$hover-transition: opacity 1s ease;
-$normal-transition-width: width 0.9s ease;
-$normal-transition: opacity 1s ease;
+$hover-transition-width: all 0.3s ease;
+$hover-transition: all 0.3s ease;
+$normal-transition-width: all 0.3s ease;
+$normal-transition: all 0.3s ease;
 
 .testray-sidebar {
 	background-color: #18215c;
@@ -158,13 +158,13 @@ $normal-transition: opacity 1s ease;
 		background-color: #303376;
 		color: #fff;
 		fill: #fff;
-		transition: transform 0.5s ease 0.4s;
+		transition: $normal-transition;
 	}
 
 	&:hover > svg path {
 		color: #fff;
 		fill: #fff;
-		transition: transform 0.5s ease 0.4s;
+		transition: $normal-transition;
 	}
 }
 

@@ -14,14 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
-import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -29,8 +26,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -119,25 +114,6 @@ public class EditCollectionConfigurationDisplayContext {
 			).buildString()
 		).put(
 			"languageId", _themeDisplay.getLanguageId()
-		).put(
-			"selectAssetCategoryURL",
-			() -> {
-				InfoItemItemSelectorCriterion itemSelectorCriterion =
-					new InfoItemItemSelectorCriterion();
-
-				itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-					new InfoItemItemSelectorReturnType());
-				itemSelectorCriterion.setItemType(
-					AssetCategory.class.getName());
-
-				return PortletURLBuilder.create(
-					_itemSelector.getItemSelectorURL(
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest),
-						_renderResponse.getNamespace() + "selectItem",
-						itemSelectorCriterion)
-				).buildString();
-			}
 		).build();
 	}
 

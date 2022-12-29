@@ -35,11 +35,17 @@ import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.info.localized.bundle.ResourceBundleInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -67,6 +73,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -184,6 +192,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 					StringPool.BLANK
 				).name(
 					"specificAssetCategoryId"
+				).attribute(
+					CategoriesInfoFieldType.INFO_ITEM_SELECTOR_URL,
+					_getItemSelectorURL()
 				).labelInfoLocalizedValue(
 					InfoLocalizedValue.localize(getClass(), "category")
 				).localizable(
@@ -329,6 +340,43 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			});
 	}
 
+	private String _getItemSelectorURL() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return null;
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return null;
+		}
+
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
+
+		String namespace = StringPool.BLANK;
+
+		LiferayPortletResponse liferayPortletResponse =
+			serviceContext.getLiferayPortletResponse();
+
+		if (liferayPortletResponse != null) {
+			namespace = liferayPortletResponse.getNamespace();
+		}
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				namespace + "selectItem", itemSelectorCriterion)
+		).buildString();
+	}
+
 	private InfoField _getItemTypesInfoField() {
 		List<SelectInfoFieldType.Option> options = new ArrayList<>();
 
@@ -417,6 +465,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;

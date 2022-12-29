@@ -97,5 +97,5 @@ TreeItem.propTypes = {
 };
 
 function getId(namespace, key) {
-	return `${namespace}pages-tree-${key}`;
+	return `${namespace}widgets-tree-${key}`;
 }

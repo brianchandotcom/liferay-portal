@@ -29,6 +29,8 @@ const colors = {
 export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
 	const [titleChart, setTitleChart] = useState('');
+	const [valueChart, setValueChart] = useState('');
+
 	const [loading, setLoading] = useState(false);
 
 	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
@@ -52,7 +54,12 @@ export default function () {
 		if (response.ok) {
 			const mdfRequests = await response.json();
 
-			getChartColumns(mdfRequests, setColumnsMDFChart, setTitleChart);
+			getChartColumns(
+				mdfRequests,
+				setColumnsMDFChart,
+				setTitleChart,
+				setValueChart
+			);
 			setLoading(false);
 
 			return;
@@ -80,7 +87,7 @@ export default function () {
 			footer={
 				<>
 					<ClayButton
-						className="mr-4 mt-2"
+						className="mr-4"
 						displayType="primary"
 						onClick={() =>
 							Liferay.Util.navigate(
@@ -91,7 +98,7 @@ export default function () {
 						New MDF Request
 					</ClayButton>
 					<ClayButton
-						className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
+						className="border-brand-primary-darken-1 text-brand-primary-darken-1"
 						displayType="secondary"
 						onClick={() =>
 							Liferay.Util.navigate(
@@ -103,11 +110,16 @@ export default function () {
 					</ClayButton>
 				</>
 			}
+			positionButton
 			title="Market Development Funds"
 		>
 			{loading && <ClayLoadingIndicator className="mt-10" size="md" />}
 
-			<DonutChart chartData={chartData} titleChart={titleChart} />
+			<DonutChart
+				chartData={chartData}
+				titleChart={titleChart}
+				valueChart={valueChart}
+			/>
 		</Container>
 	);
 }

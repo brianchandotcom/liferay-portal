@@ -23,6 +23,7 @@ const colors = {
 
 export default function () {
 	const [titleChart, setTitleChart] = useState('');
+	const [valueChart, setValueChart] = useState('');
 	const [columnsRevenueChart, setColumnsRevenueChart] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -42,6 +43,7 @@ export default function () {
 			getRevenueChartColumns(
 				revenueData,
 				setTitleChart,
+				setValueChart,
 				setColumnsRevenueChart
 			);
 			setLoading(false);
@@ -68,7 +70,11 @@ export default function () {
 		<Container className="revenue-chart-card-height" title="Revenue">
 			{loading && <ClayLoadingIndicator className="mt-10" size="md" />}
 
-			<DonutChart chartData={chartData} titleChart={titleChart} />
+			<DonutChart
+				chartData={chartData}
+				titleChart={titleChart}
+				valueChart={valueChart}
+			/>
 		</Container>
 	);
 }

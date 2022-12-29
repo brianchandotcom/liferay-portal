@@ -14,6 +14,7 @@ import {currencyFormat} from '.';
 export default function getRevenueChartColumns(
 	revenueData,
 	setTitleChart,
+	setValueChart,
 	setColumnsRevenueChart
 ) {
 	const chartColumns = [];
@@ -23,7 +24,8 @@ export default function getRevenueChartColumns(
 			accumulator + currentValue.netSubscriptionArr || 0,
 		0
 	);
-	setTitleChart(`$${currencyFormat(totalRevenueAmount)} Total Revenue`);
+	setValueChart(currencyFormat(totalRevenueAmount));
+	setTitleChart(` Total Revenue`);
 
 	const totalNewBusiness = revenueData?.items?.reduce(
 		(accumulator, currentValue) =>

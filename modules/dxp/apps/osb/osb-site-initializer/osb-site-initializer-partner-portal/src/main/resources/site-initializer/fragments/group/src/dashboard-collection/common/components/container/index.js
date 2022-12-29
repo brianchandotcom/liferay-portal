@@ -9,9 +9,16 @@
  * distribution rights of the Software.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
-function Container({children, className, footer, title}) {
+function Container({
+	children,
+	className,
+	footer,
+	positionButton = false,
+	title,
+}) {
 	return (
 		<div
 			className={`bg-neutral-0 d-flex flex-column justify-content-between py-4 rounded shadow-sm ${className}`}
@@ -28,10 +35,20 @@ function Container({children, className, footer, title}) {
 				{children}
 
 				{footer && (
-					<div>
+					<div
+						className={classNames('', {
+							'd-flex': positionButton,
+						})}
+					>
 						<hr className="mb-3 mt-1" />
 
-						<div className="d-flex">{footer}</div>
+						<div
+							className={classNames('d-flex', {
+								'': positionButton,
+							})}
+						>
+							{footer}
+						</div>
 					</div>
 				)}
 			</div>

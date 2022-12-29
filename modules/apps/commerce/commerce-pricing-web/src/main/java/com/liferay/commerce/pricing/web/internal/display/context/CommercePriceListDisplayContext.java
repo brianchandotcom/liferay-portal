@@ -260,20 +260,40 @@ public class CommercePriceListDisplayContext
 		return commercePriceList.getParentCommercePriceListId();
 	}
 
-	public CreationMenu getPriceListCreationMenu() throws Exception {
+	public CreationMenu getPriceListCreationMenu(String portletName)
+		throws Exception {
+
 		CreationMenu creationMenu = new CreationMenu();
 
 		if (hasPermission(
 				CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST)) {
 
-			creationMenu.addDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(getAddCommercePriceListRenderURL());
-					dropdownItem.setLabel(
-						LanguageUtil.get(
-							httpServletRequest, "create-new-price-list"));
-					dropdownItem.setTarget("modal-lg");
-				});
+			if (portletName.equals(
+					CommercePricingPortletKeys.COMMERCE_PRICE_LIST)) {
+
+				creationMenu.addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							getAddCommercePriceListRenderURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								httpServletRequest, "create-new-price-list"));
+						dropdownItem.setTarget("modal-lg");
+					});
+			}
+			else if (portletName.equals(
+						CommercePricingPortletKeys.COMMERCE_PROMOTION)) {
+
+				creationMenu.addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							getAddCommercePriceListRenderURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								httpServletRequest, "create-new-promotion"));
+						dropdownItem.setTarget("modal-lg");
+					});
+			}
 		}
 
 		return creationMenu;

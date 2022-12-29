@@ -893,4 +893,64 @@ definition {
 			rowEntry = "Message Boards Thread");
 	}
 
+	@description = "This is a test for LPS-69728. It checks that site member can view their saved draft message."
+	@priority = "4"
+	test SiteMemberCanViewTheirSavedDraftMessage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			saveAsDraft = "true",
+			threadReplyBody = "MB Body Reply",
+			threadSubject = "Message Boards Thread");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewReplyPG(
+			replyCount = "0",
+			threadBody = "MB Body Reply",
+			threadReplyBody = "Message Boards Thread Body",
+			threadReplyStatus = "Draft",
+			threadSubject = "Message Boards Thread");
+
+		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS_REPLY_CARD");
+
+		MenuItem.viewPresent(menuItem = "Edit");
+	}
+
 }

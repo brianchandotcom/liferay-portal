@@ -1,6 +1,6 @@
 .category-selector-modal {
 	.selector-modal-tree {
-		background-color: $secondaryHover;
+		background-color: $lightL1;
 		border-radius: 4px;
 		height: 382px;
 		margin-top: 24px;
@@ -20,7 +20,7 @@
 		}
 
 		.treeview-link:hover {
-			background-color: $mainLighten74;
+			background-color: $secondaryL3;
 
 			.quick-action-item {
 				opacity: 1;
@@ -30,7 +30,7 @@
 
 	.subnav-tbar {
 		&.secondary {
-			background-color: $lightBackground;
+			background-color: $light;
 		}
 
 		.component-text {

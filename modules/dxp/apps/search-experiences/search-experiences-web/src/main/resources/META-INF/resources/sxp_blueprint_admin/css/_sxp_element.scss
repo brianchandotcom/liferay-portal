@@ -12,14 +12,14 @@
 		}
 
 		.configuration-header-list .sticker {
-			color: $mainLighten52;
+			color: $secondaryL1;
 		}
 
 		.has-error {
 			.form-control,
 			select {
-				border-color: $lightBackground;
-				color: $mainLighten52;
+				border-color: $light;
+				color: $secondaryL1;
 			}
 
 			.form-feedback-item {
@@ -60,12 +60,12 @@
 	}
 
 	.CodeMirror {
-		background-color: $lightBackground;
+		background-color: $light;
 		border-radius: 4px;
 		font-size: 13px;
 
 		.CodeMirror-gutters {
-			background-color: $lightBackground;
+			background-color: $light;
 		}
 	}
 
@@ -82,8 +82,8 @@
 		}
 
 		.sticker {
-			background-color: $lightBackground;
-			color: $mainLighten28;
+			background-color: $light;
+			color: $secondary;
 		}
 	}
 
@@ -199,7 +199,7 @@
 	.custom-json {
 		&.disabled {
 			.codemirror-editor-wrapper {
-				border-color: $lightBackground;
+				border-color: $light;
 
 				.cm-atom,
 				.cm-string,
@@ -216,7 +216,7 @@
 			border-color: $errorL1;
 
 			&:disabled {
-				border-color: $lightBackground;
+				border-color: $light;
 			}
 		}
 
@@ -229,7 +229,7 @@
 			border-left: 0;
 
 			&.secondary {
-				border-color: $lightBackground;
+				border-color: $light;
 			}
 		}
 	}

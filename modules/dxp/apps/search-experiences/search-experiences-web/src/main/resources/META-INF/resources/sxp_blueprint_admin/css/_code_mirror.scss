@@ -19,12 +19,12 @@
 
 	li.CodeMirror-hint-active {
 		background-color: $primaryL4;
-		color: $main;
+		color: $dark;
 	}
 }
 
 .codemirror-editor-wrapper {
-	border: 1px solid $mainLighten74;
+	border: 1px solid $secondaryL3;
 	border-radius: 4px;
 
 	.CodeMirror-foldmarker {

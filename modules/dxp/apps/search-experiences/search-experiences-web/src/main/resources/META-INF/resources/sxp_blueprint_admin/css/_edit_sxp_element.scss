@@ -14,7 +14,7 @@ $sxpElementHeaderHeight: 48px;
 	}
 
 	.sxp-element-section {
-		border-color: $mainLighten74;
+		border-color: $secondaryL3;
 		border-style: solid;
 		border-width: 0.0625rem;
 		box-sizing: border-box;
@@ -24,8 +24,8 @@ $sxpElementHeaderHeight: 48px;
 		margin: 0 4px;
 
 		.sxp-element-header {
-			background-color: $secondaryHover;
-			border-color: $mainLighten74;
+			background-color: $lightL1;
+			border-color: $secondaryL3;
 			border-style: solid;
 			border-width: 0 0 0.0625rem;
 			display: flex;
@@ -64,7 +64,7 @@ $sxpElementHeaderHeight: 48px;
 
 			.sidebar {
 				background-color: $white;
-				border-color: $mainLighten74;
+				border-color: $secondaryL3;
 				border-right-width: 0.0625rem;
 				border-style: solid;
 
@@ -148,7 +148,7 @@ $sxpElementHeaderHeight: 48px;
 
 		.col-4,
 		.col-8 {
-			background-color: $lightBackground;
+			background-color: $light;
 			padding: 0;
 		}
 	}

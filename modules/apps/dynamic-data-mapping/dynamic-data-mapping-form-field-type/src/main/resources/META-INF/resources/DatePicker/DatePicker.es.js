@@ -85,7 +85,8 @@ export default function DatePicker({
 
 		const clayFormat = dateFormat
 			.replace('YYYY', 'yyyy')
-			.replace('DD', 'dd');
+			.replace('DD', 'dd')
+			.replace('D', 'd');
 
 		const placeholder = momentFormat.replace(WORD_CHARACTER_REGEX, '_');
 

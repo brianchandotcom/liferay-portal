@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -192,6 +193,10 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 					StringPool.BLANK
 				).name(
 					"specificAssetCategoryId"
+				).attribute(
+					CategoriesInfoFieldType.DEPENDENCY,
+					new KeyValuePair(
+						"assetCategoryRule", "specificAssetCategory")
 				).attribute(
 					CategoriesInfoFieldType.INFO_ITEM_SELECTOR_URL,
 					_getItemSelectorURL()

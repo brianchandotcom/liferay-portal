@@ -33,14 +33,12 @@ function handleOverrideExistingRecordsCheckbox(namespace) {
 		`#${namespace}createStrategy`
 	);
 
-	const ignoreBlankFieldCheckbox = document.querySelector(
-		`#${namespace}onUpdateDoPatch`
+	const updateStrategySelect = document.querySelector(
+		`#${namespace}updateStrategy`
 	);
 
 	createStrategySelect.addEventListener('change', ({target}) => {
-		ignoreBlankFieldCheckbox.disabled = target.value === 'CREATE_ONLY';
-
-		ignoreBlankFieldCheckbox.checked = false;
+		updateStrategySelect.disabled = target.value === 'INSERT';
 	});
 }
 

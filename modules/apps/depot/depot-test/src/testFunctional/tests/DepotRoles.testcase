@@ -504,7 +504,7 @@ definition {
 
 		Role.editRole(roleTitleEdit = "AL Role Name Edit");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Content & Data",
 			permissionNavItem = "Documents and Media",

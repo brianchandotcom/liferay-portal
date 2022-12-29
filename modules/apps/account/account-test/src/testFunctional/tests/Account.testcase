@@ -1600,7 +1600,7 @@ definition {
 		}
 
 		task ("Add all Account Management permissions under the Site and Asset Library Administration tab") {
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				navItem = "Define Group Scope Permissions",
 				permissionNavHeader = "Applications",
@@ -1629,7 +1629,7 @@ definition {
 		}
 
 		task ("Add all Account Management permissions under the Site and Asset Library Administration tab") {
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				navItem = "Define Group Scope Permissions",
 				permissionNavHeader = "Applications",
@@ -1660,14 +1660,14 @@ definition {
 		}
 
 		task ("Select All permissions for Applications and Resource Permissions for Account Entries") {
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Accounts",
 				permissionSheetSubtitle = "Application Permissions",
 				permissionValues = "Action");
 
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Accounts",
@@ -1676,7 +1676,7 @@ definition {
 		}
 
 		task ("Select All permissions for Resource Permissions for Account Users") {
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Account Users",
@@ -1685,7 +1685,7 @@ definition {
 		}
 
 		task ("Select All permissions for Resource Permissions for Account Groups") {
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Account Groups",

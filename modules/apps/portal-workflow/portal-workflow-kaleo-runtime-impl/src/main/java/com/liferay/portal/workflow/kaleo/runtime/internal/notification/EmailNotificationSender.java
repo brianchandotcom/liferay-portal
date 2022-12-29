@@ -45,13 +45,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"fromAddress=no-reply@liferay.com",
-		"fromName=Liferay Portal Workflow Notifications",
-		"notification.type=email"
+		"fromName=Liferay Portal Workflow Notifications"
 	},
 	service = NotificationSender.class
 )
 public class EmailNotificationSender
 	extends BaseNotificationSender implements NotificationSender {
+
+	@Override
+	public String getNotificationType() {
+		return "email";
+	}
 
 	protected void activate(Map<String, Object> properties) {
 		_fromAddress = (String)properties.get("fromAddress");

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
 
@@ -52,46 +49,19 @@ public class NotificationSenderFactory {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(notification.type=*)"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addNotificationSender(
-		NotificationSender notificationSender, Map<String, Object> properties) {
+		NotificationSender notificationSender) {
 
-		String[] notificationTypes = _getNotificationTypes(
-			notificationSender, properties);
-
-		for (String notificationType : notificationTypes) {
-			_notificationSenders.put(notificationType, notificationSender);
-		}
+		_notificationSenders.put(
+			notificationSender.getNotificationType(), notificationSender);
 	}
 
 	protected void removeNotificationSender(
-		NotificationSender notificationSender, Map<String, Object> properties) {
+		NotificationSender notificationSender) {
 
-		String[] notificationTypes = _getNotificationTypes(
-			notificationSender, properties);
-
-		for (String notificationType : notificationTypes) {
-			_notificationSenders.remove(notificationType);
-		}
-	}
-
-	private String[] _getNotificationTypes(
-		NotificationSender notificationSender, Map<String, Object> properties) {
-
-		Object value = properties.get("notification.type");
-
-		String[] notificationTypes = GetterUtil.getStringValues(
-			value, new String[] {String.valueOf(value)});
-
-		if (ArrayUtil.isEmpty(notificationTypes)) {
-			throw new IllegalArgumentException(
-				"The property \"notification.type\" is invalid for " +
-					ClassUtil.getClassName(notificationSender));
-		}
-
-		return notificationTypes;
+		_notificationSenders.remove(notificationSender.getNotificationType());
 	}
 
 	private final Map<String, NotificationSender> _notificationSenders =

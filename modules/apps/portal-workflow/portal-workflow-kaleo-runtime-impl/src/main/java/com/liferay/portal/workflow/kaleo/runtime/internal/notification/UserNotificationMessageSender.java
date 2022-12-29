@@ -42,12 +42,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "notification.type=user-notification",
-	service = NotificationSender.class
-)
+@Component(service = NotificationSender.class)
 public class UserNotificationMessageSender
 	extends BaseNotificationSender implements NotificationSender {
+
+	@Override
+	public String getNotificationType() {
+		return "user-notification";
+	}
 
 	@Override
 	protected void doSendNotification(

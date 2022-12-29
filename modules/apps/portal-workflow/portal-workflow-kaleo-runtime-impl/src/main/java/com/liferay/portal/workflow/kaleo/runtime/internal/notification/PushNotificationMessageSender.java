@@ -45,14 +45,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	property = {
-		"fromName=Liferay Portal Workflow Notifications",
-		"notification.type=push-notification"
-	},
+	property = "fromName=Liferay Portal Workflow Notifications",
 	service = NotificationSender.class
 )
 public class PushNotificationMessageSender
 	extends BaseNotificationSender implements NotificationSender {
+
+	@Override
+	public String getNotificationType() {
+		return "push-notification";
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {

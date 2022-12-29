@@ -56,11 +56,6 @@ export const sortedByOptions = [
 		value: 'oldest',
 	},
 	{
-		label: Liferay.Language.get('recent-activity'),
-		sortValue: 'dateModified:desc',
-		value: 'recent-activity',
-	},
-	{
 		label: Liferay.Language.get('highest-score'),
 		sortValue: 'ratingsStatTotalScore:desc',
 		value: 'highest-score',

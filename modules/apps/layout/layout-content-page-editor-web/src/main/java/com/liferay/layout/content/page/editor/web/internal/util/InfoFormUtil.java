@@ -95,6 +95,21 @@ public class InfoFormUtil {
 				if (!JSONUtil.isEmpty(fieldSetFieldsJSONArray)) {
 					fieldSetsJSONArray.put(
 						JSONUtil.put(
+							"description",
+							() -> {
+								InfoLocalizedValue<String>
+									descriptionInfoLocalizedValue =
+										infoFieldSet.
+											getDescriptionInfoLocalizedValue();
+
+								if (descriptionInfoLocalizedValue == null) {
+									return null;
+								}
+
+								return descriptionInfoLocalizedValue.getValue(
+									locale);
+							}
+						).put(
 							"fields", fieldSetFieldsJSONArray
 						).put(
 							"label",

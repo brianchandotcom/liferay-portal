@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -124,6 +125,10 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				return fragmentCollectionId;
 			}
 		).buildString();
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		MultiSessionMessages.add(actionRequest, "fragmentEntryCopied");
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}

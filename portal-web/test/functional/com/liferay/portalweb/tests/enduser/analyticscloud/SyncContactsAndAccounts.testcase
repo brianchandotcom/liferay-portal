@@ -394,4 +394,104 @@ definition {
 			ACUtils.viewGenericText(textValueList = "No user groups were found.");
 		}
 	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12664 | Test Summary: Check that it is possible to make pagination in the groups"
+	@priority = "3"
+	test CheckIsPossiblePaginateGroups {
+        var firstPageList = "AC UserGroup Pagination 1,AC UserGroup Pagination 2,AC UserGroup Pagination 3,AC UserGroup Pagination 4,AC UserGroup Pagination 5";
+		var secondPageList = "AC UserGroup Pagination 6";
+
+		task ("Create some user groups") {
+            for (var userGroupName : list "${firstPageList},${secondPageList}") {
+                JSONUserGroup.addUserGroup(
+                    userGroupDescription = "UserGroup Description",
+                    userGroupName = "${userGroupName}");
+            }
+		}
+
+		task ("Click on Select Contacts > Click on sync contacts by groups") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+            Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+        task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+		}
+
+		task ("Check that 5 user groups appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+        task ("Check that the user group on the second page does not appear on the first") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${secondPageList}");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+		}
+
+        task ("Check that 2 user groups appear on the second page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
+		}
+
+        task ("Check that the user group on the first page does not appear on the second") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+
+        task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+        task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+        task ("Click on Select Contacts > Click on sync contacts by groups") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+            Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+        task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+		}
+
+		task ("Check that 5 user groups appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+        task ("Check that the user group on the second page does not appear on the first") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${secondPageList}");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+		}
+
+        task ("Check that 2 user groups appear on the second page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
+		}
+
+        task ("Check that the user group on the first page does not appear on the second") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+	}
+
 }

@@ -1493,7 +1493,8 @@ public class PoshiValidation {
 	protected static void validatePropertyElement(PoshiElement poshiElement) {
 		String filePath = _getFilePath(poshiElement);
 
-		List<String> attributeNames = Arrays.asList("line-number", "name");
+		List<String> attributeNames = new ArrayList<>(
+			Arrays.asList("line-number", "name"));
 
 		if (Validator.isNotNull(poshiElement.attributeValue("value"))) {
 			attributeNames.add("value");

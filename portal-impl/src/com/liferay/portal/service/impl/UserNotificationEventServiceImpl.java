@@ -14,6 +14,10 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.service.base.UserNotificationEventServiceBaseImpl;
 
 /**
@@ -21,4 +25,38 @@ import com.liferay.portal.service.base.UserNotificationEventServiceBaseImpl;
  */
 public class UserNotificationEventServiceImpl
 	extends UserNotificationEventServiceBaseImpl {
+
+	@Override
+	public UserNotificationEvent getUserNotificationEvent(
+			long userNotificationEventId)
+		throws PortalException {
+
+		UserNotificationEvent userNotificationEvent =
+			userNotificationEventLocalService.getUserNotificationEvent(
+				userNotificationEventId);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userNotificationEvent.getUserId(),
+			ActionKeys.VIEW);
+
+		return userNotificationEvent;
+	}
+
+	@Override
+	public UserNotificationEvent updateUserNotificationEvent(
+			String uuid, long companyId, boolean archive)
+		throws PortalException {
+
+		UserNotificationEvent userNotificationEvent =
+			userNotificationEventLocalService.
+				getUserNotificationEventByUuidAndCompanyId(uuid, companyId);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userNotificationEvent.getUserId(),
+			ActionKeys.UPDATE);
+
+		return userNotificationEventLocalService.updateUserNotificationEvent(
+			uuid, companyId, archive);
+	}
+
 }

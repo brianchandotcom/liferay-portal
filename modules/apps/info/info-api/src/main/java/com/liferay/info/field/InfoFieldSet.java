@@ -79,6 +79,10 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 		return allInfoFields;
 	}
 
+	public InfoLocalizedValue<String> getDescriptionInfoLocalizedValue() {
+		return _builder._descriptionInfoLocalizedValue;
+	}
+
 	public InfoField<?> getInfoField(String name) {
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				_builder._infoFieldSetEntries.values()) {
@@ -148,6 +152,14 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 			return new InfoFieldSet(this);
 		}
 
+		public Builder descriptionInfoLocalizedValue(
+			InfoLocalizedValue<String> descriptionInfoLocalizedValue) {
+
+			_descriptionInfoLocalizedValue = descriptionInfoLocalizedValue;
+
+			return this;
+		}
+
 		public Builder infoFieldSetEntries(
 			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
 
@@ -189,6 +201,7 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 			return this;
 		}
 
+		private InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
 		private final Map<String, InfoFieldSetEntry> _infoFieldSetEntries =
 			new LinkedHashMap<>();
 		private InfoLocalizedValue<String> _labelInfoLocalizedValue;

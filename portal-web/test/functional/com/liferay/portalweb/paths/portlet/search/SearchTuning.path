@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>RESULT_RANKINGS_ALIAS_VALUE</td>
-	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_alias}')]</td>
+	<td>//span[contains(@class,'label-item label-item-expand') and contains(.,'${key_alias}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -6,6 +6,12 @@ definition {
 			key_text = "${text}");
 	}
 
+	macro assertThatTheOrganizationIsNotPresent {
+		AssertElementNotPresent(
+			locator1 = "CP2Utils#TEXT",
+			key_text = "${text}");
+	}
+
 	macro assertChangeRole {
 		AssertElementPresent(
 			key_email = "${email}",

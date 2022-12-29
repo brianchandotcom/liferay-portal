@@ -74,7 +74,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	public String getAddCategoryURL() throws Exception {
 		long[] vocabularyIds = getVocabularyIds();
 
-		if (vocabularyIds.length != 1) {
+		if (vocabularyIds.length > 1) {
 			return null;
 		}
 

@@ -68,8 +68,8 @@ const CaseForm = () => {
 	} = useOutletContext();
 
 	useHeader({
+		tabs: [],
 		timeout: 100,
-		useTabs: [],
 	});
 
 	const {data: testrayComponentsData} = useFetch<

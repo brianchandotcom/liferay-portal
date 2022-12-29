@@ -20,22 +20,21 @@ import useProjectActions from './useProjectActions';
 
 type ProjectsProps = {
 	PageContainer?: React.FC;
-	addHeading?: boolean;
 };
 
 const Projects: React.FC<ProjectsProps> = ({PageContainer = Container}) => {
 	const {actions, navigate} = useProjectActions();
 
 	useHeader({
-		useDropdown: [],
-		useHeaderActions: {actions: []},
-		useHeading: [
+		dropdown: [],
+		headerActions: {actions: []},
+		heading: [
 			{
 				category: i18n.translate('project'),
 				title: i18n.translate('project-directory'),
 			},
 		],
-		useIcon: 'polls',
+		icon: 'polls',
 	});
 
 	return (

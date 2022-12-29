@@ -57,7 +57,7 @@ const RequirementsForm = () => {
 	const {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
-	useHeader({timeout: 100, useTabs: []});
+	useHeader({tabs: [], timeout: 100});
 	const {projectId, requirementId} = useParams();
 	const {
 		mutateTestrayRequirement,

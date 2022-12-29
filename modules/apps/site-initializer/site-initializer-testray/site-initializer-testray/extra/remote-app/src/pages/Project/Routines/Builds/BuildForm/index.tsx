@@ -144,8 +144,8 @@ const BuildForm = () => {
 	});
 
 	useHeader({
+		tabs: [],
 		timeout: 150,
-		useTabs: [],
 	});
 
 	const productVersionId = watch('productVersionId');

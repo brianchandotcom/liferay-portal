@@ -73,13 +73,13 @@ const TestFlowTasks = () => {
 	const {updateItemFromList} = useMutate();
 
 	useHeader({
-		useHeading: [
+		heading: [
 			{
 				category: i18n.translate('task'),
 				title: testrayTask?.name,
 			},
 		],
-		useTabs: [],
+		tabs: [],
 	});
 
 	const {

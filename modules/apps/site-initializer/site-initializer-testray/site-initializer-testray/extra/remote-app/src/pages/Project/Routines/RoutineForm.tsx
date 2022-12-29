@@ -38,7 +38,7 @@ type OutletContext = {
 };
 
 const RoutineForm = () => {
-	useHeader({timeout: 110, useTabs: []});
+	useHeader({tabs: [], timeout: 110});
 
 	const {
 		mutateTestrayRoutine,

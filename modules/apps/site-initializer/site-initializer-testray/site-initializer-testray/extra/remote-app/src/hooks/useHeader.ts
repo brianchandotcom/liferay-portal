@@ -24,14 +24,14 @@ import {
 } from '../context/HeaderContext';
 
 type UseHeader = {
+	dropdown?: Dropdown;
+	headerActions?: HeaderActions;
+	heading?: HeaderTitle[];
+	icon?: string;
 	shouldUpdate?: boolean;
+	tabs?: HeaderTabs[];
 	timeout?: number;
 	title?: string;
-	useDropdown?: Dropdown;
-	useHeaderActions?: HeaderActions;
-	useHeading?: HeaderTitle[];
-	useIcon?: string;
-	useTabs?: HeaderTabs[];
 };
 
 const DEFAULT_TIMEOUT = 0;
@@ -39,18 +39,18 @@ const DEFAULT_TIMEOUT = 0;
 const useHeader = ({
 	shouldUpdate = true,
 	timeout = DEFAULT_TIMEOUT,
-	useHeading,
-	useHeaderActions,
-	useIcon,
-	useDropdown,
-	useTabs = [],
+	heading,
+	headerActions,
+	icon,
+	dropdown,
+	tabs = [],
 }: UseHeader = {}) => {
 	const [context, dispatch] = useContext(HeaderContext);
 
-	const useDropdownRef = useRef(useDropdown);
-	const useHeaderActionsRef = useRef(useHeaderActions);
-	const useHeadingRef = useRef(useHeading);
-	const useTabsRef = useRef(useTabs);
+	const dropdownRef = useRef(dropdown);
+	const headerActionsRef = useRef(headerActions);
+	const headingRef = useRef(heading);
+	const tabsRef = useRef(tabs);
 
 	const actTimeout = useCallback(
 		(fn: () => void) => {
@@ -111,32 +111,32 @@ const useHeader = ({
 	);
 
 	useEffect(() => {
-		if (shouldUpdate && useHeadingRef.current) {
-			actTimeout(() => setHeading(useHeadingRef.current));
+		if (shouldUpdate && headingRef.current) {
+			actTimeout(() => setHeading(headingRef.current));
 		}
 	}, [actTimeout, setHeading, shouldUpdate]);
 
 	useEffect(() => {
-		if (shouldUpdate && useIcon) {
-			setDropdownIcon(useIcon);
+		if (shouldUpdate && icon) {
+			setDropdownIcon(icon);
 		}
-	}, [setDropdownIcon, shouldUpdate, useIcon]);
+	}, [setDropdownIcon, shouldUpdate, icon]);
 
 	useEffect(() => {
-		if (shouldUpdate && useTabsRef.current) {
-			setTabs(useTabsRef.current);
+		if (shouldUpdate && tabsRef.current) {
+			setTabs(tabsRef.current);
 		}
 	}, [setTabs, shouldUpdate]);
 
 	useEffect(() => {
-		if (shouldUpdate && useHeaderActionsRef.current) {
-			setHeaderActions(useHeaderActionsRef.current);
+		if (shouldUpdate && headerActionsRef.current) {
+			setHeaderActions(headerActionsRef.current);
 		}
 	}, [setHeaderActions, shouldUpdate]);
 
 	useEffect(() => {
-		if (shouldUpdate && useDropdownRef.current) {
-			setDropdown(useDropdownRef.current);
+		if (shouldUpdate && dropdownRef.current) {
+			setDropdown(dropdownRef.current);
 		}
 	}, [setDropdown, shouldUpdate]);
 

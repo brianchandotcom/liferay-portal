@@ -107,7 +107,7 @@ const TestflowForm = () => {
 	});
 
 	useHeader({
-		useHeading: [
+		heading: [
 			{
 				category: i18n.translate('task'),
 				title: i18n.translate('testflow'),
@@ -169,8 +169,7 @@ const TestflowForm = () => {
 			}
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

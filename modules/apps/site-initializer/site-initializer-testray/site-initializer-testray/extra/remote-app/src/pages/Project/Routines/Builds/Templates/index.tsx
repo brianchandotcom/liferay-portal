@@ -27,9 +27,9 @@ import useBuildTemplateActions from './useBuildTemplateActions';
 const searchBuilder = new SearchBuilder({useURIEncode: false});
 
 const BuildTemplates = () => {
-	const navigate = useNavigate();
-	const {projectId, routineId} = useParams();
 	const {actions} = useBuildTemplateActions();
+	const {projectId, routineId} = useParams();
+	const navigate = useNavigate();
 
 	const buildFilter = searchBuilder
 		.eq('projectId', projectId as string)
@@ -42,9 +42,9 @@ const BuildTemplates = () => {
 		.build();
 
 	useHeader({
+		headerActions: {actions: []},
+		tabs: [],
 		timeout: 110,
-		useHeaderActions: {actions: []},
-		useTabs: [],
 	});
 
 	return (

@@ -41,8 +41,8 @@ const ProjectForm = () => {
 		useOutletContext<OutletContext>() || {};
 
 	useHeader({
+		tabs: [],
 		timeout: 100,
-		useTabs: [],
 	});
 
 	const {

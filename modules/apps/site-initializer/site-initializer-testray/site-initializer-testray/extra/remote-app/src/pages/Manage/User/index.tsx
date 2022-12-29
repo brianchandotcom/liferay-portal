@@ -101,13 +101,13 @@ const Users = () => {
 	const navigate = useNavigate();
 
 	useHeader({
-		useDropdown: [],
-		useHeading: [
+		dropdown: [],
+		heading: [
 			{
 				title: i18n.translate('manage-users'),
 			},
 		],
-		useIcon: 'cog',
+		icon: 'cog',
 	});
 
 	return (

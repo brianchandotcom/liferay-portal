@@ -40,17 +40,17 @@ const TestflowNavigationOutlet = () => {
 	const archivedPathIsActive = pathname === '/testflow/archived';
 
 	const {setTabs} = useHeader({
-		shouldUpdate: currentPathIsActive || archivedPathIsActive,
-		useDropdown: [],
-		useHeaderActions: {
+		dropdown: [],
+		headerActions: {
 			actions: [],
 		},
-		useHeading: [
+		heading: [
 			{
 				category: i18n.translate('task').toUpperCase(),
 				title: i18n.translate('testflow'),
 			},
 		],
+		shouldUpdate: currentPathIsActive || archivedPathIsActive,
 	});
 
 	useEffect(() => {

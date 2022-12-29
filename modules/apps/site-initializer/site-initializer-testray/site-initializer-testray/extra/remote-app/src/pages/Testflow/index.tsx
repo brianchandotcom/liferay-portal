@@ -32,7 +32,7 @@ import useTestflowActions from './useTestflowActions';
 const TestFlow = () => {
 	const {actions, modal} = useTestflowActions();
 
-	useHeader({useIcon: 'merge'});
+	useHeader({icon: 'merge'});
 
 	return (
 		<Container>

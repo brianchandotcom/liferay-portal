@@ -99,4 +99,17 @@ definition {
 		}
     }
 
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12666 | Test Summary: Can sync all accounts"
+	@priority = "5"
+	test CanSyncAllAccounts {
+        task ("Click on sync all accounts") {
+			ACDXPSettings.syncAccountsData();
+        }
+
+		task("Check if the toggle was enabled") {
+			ACDXPSettings.assertToggleOnOff(
+				toggleType = "sync-all-accounts",
+				boolean = "true");
+		}
+    }
 }

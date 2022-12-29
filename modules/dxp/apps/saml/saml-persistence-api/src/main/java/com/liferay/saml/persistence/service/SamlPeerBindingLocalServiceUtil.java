@@ -223,6 +223,17 @@ public class SamlPeerBindingLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+		long companyId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlNameIdValue,
+		String samlPeerEntityId,
+		OrderByComparator<SamlPeerBinding> orderByComparator) {
+
+		return getService().fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
+			samlNameIdValue, samlPeerEntityId, orderByComparator);
+	}
+
 	public static SamlPeerBinding fetchSamlPeerBinding(long samlPeerBindingId) {
 		return getService().fetchSamlPeerBinding(samlPeerBindingId);
 	}
@@ -234,6 +245,27 @@ public class SamlPeerBindingLocalServiceUtil {
 		return getService().fetchSamlPeerBinding(
 			companyId, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlSpEntityId);
+	}
+
+	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
+		long companyId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlNameIdValue,
+		String samlPeerEntityId) {
+
+		return getService().findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
+			samlNameIdValue, samlPeerEntityId);
+	}
+
+	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
+		long companyId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlNameIdValue,
+		String samlPeerEntityId, int start, int end,
+		OrderByComparator<SamlPeerBinding> orderByComparator) {
+
+		return getService().findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
+			samlNameIdValue, samlPeerEntityId, start, end, orderByComparator);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

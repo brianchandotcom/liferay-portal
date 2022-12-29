@@ -253,6 +253,22 @@ public class SamlPeerBindingLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlPeerBinding
+		fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			long companyId, boolean deleted, String samlNameIdFormat,
+			String samlNameIdNameQualifier, String samlNameIdValue,
+			String samlPeerEntityId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.saml.persistence.model.SamlPeerBinding>
+					orderByComparator) {
+
+		return _samlPeerBindingLocalService.
+			fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+				companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
+				samlNameIdValue, samlPeerEntityId, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlPeerBinding
 		fetchSamlPeerBinding(long samlPeerBindingId) {
 
 		return _samlPeerBindingLocalService.fetchSamlPeerBinding(
@@ -269,6 +285,33 @@ public class SamlPeerBindingLocalServiceWrapper
 		return _samlPeerBindingLocalService.fetchSamlPeerBinding(
 			companyId, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlSpEntityId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.saml.persistence.model.SamlPeerBinding>
+		findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			long companyId, boolean deleted, String samlNameIdFormat,
+			String samlNameIdNameQualifier, String samlNameIdValue,
+			String samlPeerEntityId) {
+
+		return _samlPeerBindingLocalService.findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
+			samlNameIdValue, samlPeerEntityId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.saml.persistence.model.SamlPeerBinding>
+		findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			long companyId, boolean deleted, String samlNameIdFormat,
+			String samlNameIdNameQualifier, String samlNameIdValue,
+			String samlPeerEntityId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.saml.persistence.model.SamlPeerBinding>
+					orderByComparator) {
+
+		return _samlPeerBindingLocalService.findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
+			samlNameIdValue, samlPeerEntityId, start, end, orderByComparator);
 	}
 
 	@Override

@@ -81,21 +81,22 @@ definition {
 	@priority = "3"
 	test RequestValidIPCanReturnSuccess {
 		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
-			// FrontendDataSet.selectItemActionDropdownMenuList(
-			// 	key_title = "Sample1",
-			// 	key_viewMode = "Async Success");
+
+			//FrontendDataSet.selectItemActionDropdownMenuList(
+			//	key_title = "Sample1",
+			//	key_viewMode = "Async Success");
 
 			Click(
-			key_title = "Sample1",
-			locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
 
 			takeScreenshot();
 
 			Click(
-			key_viewMode = "Async Success",
-			locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
-			takeScreenshot();
+				key_viewMode = "Async Success",
+				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
 
+			takeScreenshot();
 		}
 
 		task ("Then returns success alert toast") {
@@ -104,22 +105,22 @@ definition {
 				value1 = "Success:Your request completed successfully.");
 		}
 	}
+
 	@description = "LPS-170535. Request Valid IP Can Return Success."
 	@priority = "3"
 	test RequestValidIPCanReturnSuccess2 {
 		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
-
 			Click.pauseClickAt(
-			key_title = "Sample1",
-			locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
 
 			takeScreenshot();
 
 			Click.pauseClickAt(
-			key_viewMode = "Async Success",
-			locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
-			takeScreenshot();
+				key_viewMode = "Async Success",
+				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
 
+			takeScreenshot();
 		}
 
 		task ("Then returns success alert toast") {

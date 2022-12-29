@@ -14,8 +14,8 @@
 
 package com.liferay.portal.monitoring.internal.messaging;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -26,19 +26,16 @@ import com.liferay.portal.kernel.monitoring.Level;
 import com.liferay.portal.kernel.monitoring.MonitoringControl;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -80,7 +77,7 @@ public class MonitoringMessageListener
 		}
 
 		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
-			_dataSampleProcessors.get(namespace);
+			_serviceTrackerMap.getService(namespace);
 
 		if (ListUtil.isEmpty(dataSampleProcessors)) {
 			return;
@@ -110,6 +107,20 @@ public class MonitoringMessageListener
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext,
+			(Class<DataSampleProcessor<DataSample>>)
+				(Class<?>)DataSampleProcessor.class,
+			"namespace");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void doReceive(Message message) throws Exception {
@@ -122,68 +133,8 @@ public class MonitoringMessageListener
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected synchronized void registerDataSampleProcessor(
-		DataSampleProcessor<DataSample> dataSampleProcessor,
-		Map<String, Object> properties) {
-
-		String namespace = (String)properties.get("namespace");
-
-		if (Validator.isNull(namespace)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No namespace defined for service " +
-						dataSampleProcessor.getClass());
-			}
-
-			return;
-		}
-
-		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
-			_dataSampleProcessors.get(namespace);
-
-		if (dataSampleProcessors == null) {
-			dataSampleProcessors = new ArrayList<>();
-
-			_dataSampleProcessors.put(namespace, dataSampleProcessors);
-		}
-
-		dataSampleProcessors.add(dataSampleProcessor);
-	}
-
-	protected synchronized void unregisterDataSampleProcessor(
-		DataSampleProcessor<DataSample> dataSampleProcessor,
-		Map<String, Object> properties) {
-
-		String namespace = (String)properties.get("namespace");
-
-		if (Validator.isNull(namespace)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No namespace defined for service " +
-						dataSampleProcessor.getClass());
-			}
-
-			return;
-		}
-
-		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
-			_dataSampleProcessors.get(namespace);
-
-		if (dataSampleProcessors != null) {
-			dataSampleProcessors.remove(dataSampleProcessor);
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MonitoringMessageListener.class);
-
-	private final Map<String, List<DataSampleProcessor<DataSample>>>
-		_dataSampleProcessors = new ConcurrentHashMap<>();
 	private final Map<String, Level> _levels = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, List<DataSampleProcessor<DataSample>>>
+		_serviceTrackerMap;
 
 }

@@ -374,6 +374,18 @@ definition {
 		CustomerPortal.customerPortalApisTearDown();
 	}
 
+	macro activeAccountRestriction {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectObject(label = "Koroneiki Account");
+
+		CreateObject.activeToogleAccountRestriction();
+
+		CreateObject.selectAccountRestrictedField(accountRestrictedField = "Koroneiki Account");
+
+		CreateObject.saveObject();
+	}
+
 	macro deactivateKoroneikiAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",

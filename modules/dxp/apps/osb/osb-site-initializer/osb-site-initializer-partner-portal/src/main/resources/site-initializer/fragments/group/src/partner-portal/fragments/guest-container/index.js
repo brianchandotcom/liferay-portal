@@ -10,10 +10,10 @@
  * distribution rights of the Software.
  */
 
-import {navigate} from 'frontend-js-web';
-
 if (layoutMode !== 'edit' && themeDisplay.isSignedIn()) {
 	const relativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
 
-	navigate(relativeURL.substring(0, relativeURL.lastIndexOf('/')) + '/home');
+	window.location.replace(
+		relativeURL.substring(0, relativeURL.lastIndexOf('/')) + '/home'
+	);
 }

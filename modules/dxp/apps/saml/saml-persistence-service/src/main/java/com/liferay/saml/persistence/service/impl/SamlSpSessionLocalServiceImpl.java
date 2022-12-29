@@ -59,7 +59,7 @@ public class SamlSpSessionLocalServiceImpl
 		SamlPeerBinding samlPeerBinding =
 			_samlPeerBindingLocalService.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, nameIdNameQualifier,
-				nameIdValue, samlIdpEntityId, null);
+				nameIdValue, samlIdpEntityId);
 
 		if ((samlPeerBinding != null) &&
 			(user.getUserId() != samlPeerBinding.getUserId())) {
@@ -216,7 +216,7 @@ public class SamlSpSessionLocalServiceImpl
 		SamlPeerBinding samlPeerBinding =
 			_samlPeerBindingLocalService.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, nameIdNameQualifier,
-				nameIdValue, samlIdpEntityId, null);
+				nameIdValue, samlIdpEntityId);
 
 		if (samlPeerBinding == null) {
 			samlPeerBinding = _samlPeerBindingLocalService.addSamlPeerBinding(

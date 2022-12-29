@@ -69,7 +69,7 @@ public class SamlIdpSpSessionLocalServiceImpl
 		SamlPeerBinding samlPeerBinding =
 			_samlPeerBindingLocalService.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, null, nameIdValue,
-				samlSpEntityId, null);
+				samlSpEntityId);
 
 		if (samlPeerBinding == null) {
 			samlPeerBinding = _samlPeerBindingLocalService.addSamlPeerBinding(

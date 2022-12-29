@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext;
-import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext;
 import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortlet;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
@@ -93,7 +92,7 @@ public class ModifiedFacetPortletDisplayTemplateHandler
 			"getLabel()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"term", ModifiedFacetTermDisplayContext.class,
+			"term", ModifiedFacetDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getLabel()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =

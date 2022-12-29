@@ -74,7 +74,7 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			_httpServletRequest);
 	}
 
-	public long getFolderId(){
+	public long getFolderId() {
 		return _ddmUserPersonalFolderItemSelectorCriterion.getFolderId();
 	}
 

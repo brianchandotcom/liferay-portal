@@ -110,6 +110,14 @@ public class BucketDisplayContext {
 	}
 
 	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
+	 */
+	@Deprecated
+	public String getRangeURL() {
+		return _filterValue;
+	}
+
+	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getBucketText()}
 	 */
 	@Deprecated
@@ -135,14 +143,6 @@ public class BucketDisplayContext {
 
 	public boolean isFrequencyVisible() {
 		return _frequencyVisible;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
-	 */
-	@Deprecated
-	public String getRangeURL(){
-		return _filterValue;
 	}
 
 	public boolean isSelected() {

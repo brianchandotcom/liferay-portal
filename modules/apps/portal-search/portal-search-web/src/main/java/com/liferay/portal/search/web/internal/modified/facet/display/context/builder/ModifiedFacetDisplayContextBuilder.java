@@ -268,7 +268,8 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		modifiedFacetTermDisplayContext.setFrequency(
 			getFrequency(getTermCollector(range)));
 		modifiedFacetTermDisplayContext.setBucketText(label);
-		modifiedFacetTermDisplayContext.setFilterValue(_getLabeledRangeURL(label));
+		modifiedFacetTermDisplayContext.setFilterValue(
+			_getLabeledRangeURL(label));
 		modifiedFacetTermDisplayContext.setSelected(
 			_selectedRanges.contains(label));
 

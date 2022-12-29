@@ -147,9 +147,9 @@ public class MessageBoardThreadResourceTest
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {
-			"creatorId", "lastPostDate", "messageBoardSectionId",
-			"messageBoardThreadId", "modified", "parentMessageBoardMessageId",
-			"ratingValue"
+			"childMessagesCount", "creatorId", "lastPostDate",
+			"messageBoardSectionId", "messageBoardThreadId", "modified",
+			"parentMessageBoardMessageId", "ratingsStatTotalScore", "viewCount"
 		};
 	}
 

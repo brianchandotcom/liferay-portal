@@ -308,4 +308,90 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12663 | Test Summary: Can search for groups in the select contacts modal"
+	@priority = "4"
+	test CanSearchGroupsInContactsModal {
+        var foundUserGroup = "LXC UserGroup";
+		var notFoundUserGroup = "AC UserGroup,DXP UserGroup";
+
+		task ("Create some user groups") {
+            for (var userGroupName : list "${foundUserGroup},${notFoundUserGroup}") {
+                JSONUserGroup.addUserGroup(
+                    userGroupDescription = "UserGroup Description",
+                    userGroupName = "${userGroupName}");
+            }
+		}
+
+		task ("Click on Select Contacts > Click on sync contacts by groups") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+            Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+        task ("Search for a group on groups list") {
+			ACUtils.searchBar(searchItem = "${foundUserGroup}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundUserGroup}");
+		}
+
+		task ("Check that unsearched user groups do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundUserGroup}");
+		}
+
+        task ("Search by name of a user group that does not exist") {
+			ACUtils.searchBar(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No user groups were found.");
+		}
+
+        task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+        task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+        task ("Click on Select Contacts > Click on sync contacts by groups") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+            Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+        task ("Search for a group on groups list") {
+			ACUtils.searchBar(searchItem = "${foundUserGroup}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundUserGroup}");
+		}
+
+		task ("Check that unsearched user groups do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundUserGroup}");
+		}
+
+        task ("Search by name of a user group that does not exist") {
+			ACUtils.searchBar(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No user groups were found.");
+		}
+	}
 }

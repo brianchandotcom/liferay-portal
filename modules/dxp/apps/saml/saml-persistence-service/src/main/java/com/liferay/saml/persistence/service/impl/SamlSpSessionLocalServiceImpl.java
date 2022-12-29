@@ -73,7 +73,7 @@ public class SamlSpSessionLocalServiceImpl
 
 		if (samlPeerBinding == null) {
 			_deleteSamlPeerBindings(
-				_samlPeerBindingPersistence.findByC_U_D_SNIF_SNINQ_SPEI(
+				_samlPeerBindingLocalService.findByC_U_D_SNIF_SNINQ_SPEI(
 					user.getCompanyId(), user.getUserId(), false, nameIdFormat,
 					nameIdNameQualifier, samlIdpEntityId));
 

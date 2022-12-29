@@ -1445,6 +1445,69 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-162049. When configuring the Type Facet, I can choose from different ordering options so that facet terms are displayed according to the sort strategy"
+	@priority = "3"
+	test CanOrderTypeFacetTerms {
+		task ("Add some Wiki Page examples") {
+			for (var wikiNumber : list "1,2,3,4") {
+				JSONWiki.addWikiPage(
+					groupName = "Guest",
+					wikiNodeName = "Main",
+					wikiPageContent = "Wiki Page Content",
+					wikiPageName = "Wiki Page ${wikiNumber}");
+			}
+		}
+
+		task ("Add some Documents examples and one new Page") {
+			for (var documentNumber : list "1,2") {
+				JSONDocument.addFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document ${documentNumber}",
+					groupName = "Guest");
+			}
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		task ("Assert that the Type facet sorts by term frequency descending by default") {
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,Document,Page,User");
+		}
+
+		task ("Assert that the Type facet values are correct when sorted by term frequency ascending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Type Facet",
+				sortOption = "Term Frequency Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Page,Document,Wiki Page");
+		}
+
+		task ("Assert that the Type facet values are correct when sorted by term value ascending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Type Facet",
+				sortOption = "Term Value Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Page,User,Wiki Page");
+		}
+
+		task ("Assert that the Type facet values are correct when sorted by term value descending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Type Facet",
+				sortOption = "Term Value Descending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,User,Page,Document");
+		}
+	}
+
 	@priority = "4"
 	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
 		property custom.properties = "enterprise.product.notification.enabled=true";
@@ -4649,66 +4712,4 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	@description = "This is a use case for LPS-162049. When configuring the Type Facet, I can choose from different ordering options so that facet terms are displayed according to the sort strategy"
-	@priority = "3"
-	test CanOrderTypeFacetTerms {
-		task("Add some Wiki Page examples") {
-			for (var wikiNumber : list "1,2,3,4") {
-				JSONWiki.addWikiPage(
-					groupName = "Guest",
-					wikiNodeName = "Main",
-					wikiPageContent = "Wiki Page Content",
-					wikiPageName = "Wiki Page ${wikiNumber}");
-			}
-		}
-
-		task("Add some Documents examples and one new Page") {
-			for (var documentNumber : list "1,2") {
-				JSONDocument.addFile(
-					dmDocumentDescription = "DM Document Description",
-					dmDocumentTitle = "DM Document ${documentNumber}",
-					groupName = "Guest");
-			}
-
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page");
-		}
-
-		SearchPortlets.searchEmbedded(searchTerm = "test");
-
-		task ("Assert that the Type facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,Document,Page,User");
-		}
-
-		task ("Assert that the Type facet values are correct when sorted by term frequency ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
-				portletName = "Type Facet",
-				sortOption = "Term Frequency Ascending");
-
-			Refresh();
-
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Page,Document,Wiki Page");
-		}
-
-		task ("Assert that the Type facet values are correct when sorted by term value ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
-				portletName = "Type Facet",
-				sortOption = "Term Value Ascending");
-
-			Refresh();
-
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Page,User,Wiki Page");
-		}
-
-		task ("Assert that the Type facet values are correct when sorted by term value descending") {
-			SearchFacetPortlet.updateFacetConfiguration(
-				portletName = "Type Facet",
-				sortOption = "Term Value Descending");
-
-			Refresh();
-
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,User,Page,Document");
-		}
-	}
 }

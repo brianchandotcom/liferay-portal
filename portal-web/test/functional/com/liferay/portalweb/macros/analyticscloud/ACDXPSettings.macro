@@ -8,6 +8,13 @@ definition {
 			value1 = "Connected");
 	}
 
+	macro assertToggleOnOff {
+		AssertElementPresent(
+			key_boolean = "${boolean}",
+			key_toggleType = "${toggleType}",
+			locator1 = "ACUtils#TOGGLE_ICON_ON_OFF");
+	}
+
 	macro cancelWizardConfiguration {
 		Click(locator1 = "Button#CANCEL");
 	}
@@ -465,11 +472,4 @@ definition {
 			value1 = "${syncNumber}");
 	}
 
-	macro assertToggleOnOff {
-		AssertElementPresent(
-			locator1 = "ACUtils#TOGGLE_ICON_ON_OFF", 
-			key_toggleType = "${toggleType}", 
-			key_boolean = "${boolean}");
-	}
-
-}  
+}

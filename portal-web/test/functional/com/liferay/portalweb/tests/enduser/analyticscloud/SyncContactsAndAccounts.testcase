@@ -1,5 +1,6 @@
 @component-name = "portal-analytics-cloud"
 definition {
+
 	property analytics.cloud.release = "true";
 	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
@@ -20,36 +21,36 @@ definition {
 			ACUtils.launchDXP();
 		}
 
-        task ("Create DXP Site with Commerce") {
+		task ("Create DXP Site with Commerce") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium Demo");
 		}
 
-        task ("Connect Commerce and AC") {
-            ACDXPSettings.connectAnalyticsCloud();
-        }
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
 
-        task ("Get the property name to enable commerce on the right one") {
-            var channelName = "Minium Demo Portal";
-            var siteName = "Minium Demo";
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
 
-            ACDXPSettings.getAssignedPropertyName();
-        }
+			ACDXPSettings.getAssignedPropertyName();
+		}
 
-        task ("Enable commerce and sync the commerce channel and the related site") {
-            ACDXPSettings.syncChannel(
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
 				channelName = "${channelName}",
 				propertyName = "${assignedPropertyName}");
 
-            ACDXPSettings.syncSites(
-			propertyName = "${assignedPropertyName}",
-			siteName = "${siteName}");
-        }
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
 
-        task("Go to the next page to configure people data") {
-            Click(
-                key_text = "Next",
-                locator1 = "Button#ANY");
-        }
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	tearDown {
@@ -62,147 +63,15 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
-        else {
-            JSONGroup.tearDownNonDefaultGroups();
+		else {
+			JSONGroup.tearDownNonDefaultGroups();
 
 			ACUtils.tearDownCommerce();
 
 			UserGroup.tearDownCP();
-        }
+		}
 	}
 
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12658 | Test Summary: Can sync all contacts and accounts"
-	@priority = "5"
-	test CanSyncAllContactsAndAccounts {
-        task("Click on sync all contacts and accounts") {
-            ACDXPSettings.syncContactsAndAccountstData();
-        }
-
-        task("Check if the toggle was enabled") {
-			ACDXPSettings.assertToggleOnOff(
-				toggleType = "sync-all-contacts-and-accounts",
-				boolean = "true");
-        }
-    }
-    @description = "Story: LRAC-10859 | Automation ID: LRAC-12659 | Test Summary: Can sync all contacts"
-	@priority = "5"
-	test CanSyncAllContacts {
-        task ("Click on sync all contacts") {
-			ACDXPSettings.syncContactsData();
-        }
-
-		task("Check if the toggle was enabled") {
-			ACDXPSettings.assertToggleOnOff(
-				toggleType = "sync-all-contacts",
-				boolean = "true");
-		}
-    }
-
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12666 | Test Summary: Can sync all accounts"
-	@priority = "5"
-	test CanSyncAllAccounts {
-        task ("Click on sync all accounts") {
-			ACDXPSettings.syncAccountsData();
-        }
-
-		task("Check if the toggle was enabled") {
-			ACDXPSettings.assertToggleOnOff(
-				toggleType = "sync-all-accounts",
-				boolean = "true");
-		}
-    }
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12669 | Test Summary: Can sync by account groups"
-	@priority = "5"
-	test CanSyncByAccountGroups {
-        task ("Click on sync by account groups") {
-			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
-        }
-
-		task("See that there's one account selected") {
-			ACDXPSettings.viewSyncNumberPreview(
-				syncFieldName = "Account Groups",
-				syncNumber = "1 Selected");
-		}
-    }
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12665 | Test Summary: Can sync all contacts by groups"
-	@priority = "5"
-	test CanSyncAllContactsByGroups {
-		JSONUserGroup.addUserGroup(
-		    userGroupDescription = "Group 1",
-			userGroupName = "Group 1");
-
-        task ("Click on sync by user groups") {
-			ACDXPSettings.goToInstanceSettingsAC();
-
-			ACDXPSettings.navToSyncedContactDataMenu();
-
-			ACDXPSettings.syncContactsData(userGroup = "Minium User Group");
-        }
-
-		task("See that there's one user group selected") {
-			ACDXPSettings.viewSyncNumberPreview(
-				syncFieldName = "User Groups",
-				syncNumber = "1 Selected");
-		}
-    }
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12662 | Test Summary: Can sync all contacts by organizations"
-	@priority = "5"
-	test CanSyncAllContactsByOrganizations {
-        task ("Click on sync by organizations") {
-			ACDXPSettings.syncContactsData(orgName = "Minium");
-        }
-
-		task("See that there's one organization selected") {
-			ACDXPSettings.viewSyncNumberPreview(
-				syncFieldName = "Organizations",
-				syncNumber = "1 Selected");
-		}
-    }
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12670 | Test Summary: Can sync all contacts and account groups only"
-	@priority = "5"
-	test CanSyncAllContactsAndAccountsGroupsOnly {
-		task ("Click on sync all contacts and sync all accounts") {
-			ACDXPSettings.syncContactsData();
-
-			ACDXPSettings.syncAccountsData();
-        }
-
-		task("Check if the toggle was enabled") {
-			ACDXPSettings.assertToggleOnOff(
-				toggleType = "sync-all-contacts-and-accounts",
-				boolean = "true");
-
-			ACDXPSettings.assertToggleOnOff(
-				toggleType = "sync-all-contacts",
-				boolean = "true");
-
-			ACDXPSettings.assertToggleOnOff(
-				toggleType = "sync-all-accounts",
-				boolean = "true");
-        }
-	}
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12660 | Test Summary: Can search for organizations in the select contacts modal"
-	@priority = "4"
-	test CanSearchOrganizationsInContactsModal {
-		task ("Click on sync by organizations") {
-			Click(
-				key_panel = "Select Contacts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			Click(
-				key_option = "Organizations",
-				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-        }
-
-		task ("Search for an organization and assert the result") {
-			ACUtils.searchBar(searchItem = "Minium");
-
-			ACDXPSettings.viewGenericListItem(itemValueList = "Minium");
-
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Canada,Italy,United States");
-		}	
-	}
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12667 | Test Summary: Can search for account groups in the select contacts modal"
 	@priority = "4"
 	test CanSearchAccountGroupsInContactsModal {
@@ -214,26 +83,20 @@ definition {
 			Click(
 				key_option = "Sync by Account Groups",
 				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-        }
+		}
 
 		task ("Search for an account group and assert the result") {
 			ACUtils.searchBar(searchItem = "Gold Accounts");
-			
+
 			ACDXPSettings.viewGenericListItem(itemValueList = "Gold Accounts");
 
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "European Accounts,North American Accounts");
 		}
 	}
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12661 | Test Summary: Check that it is possible to make pagination in the organizations"
-	@priority = "4"
-	test CheckIsPossiblePaginateOrganizations {
-		task ("Create 2 organizations") {
-			for (var organizationName : list "Brazil,France") {
-				JSONOrganization.addOrganization(
-					organizationName = "${organizationName}");
-			}
-		}
 
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12660 | Test Summary: Can search for organizations in the select contacts modal"
+	@priority = "4"
+	test CanSearchOrganizationsInContactsModal {
 		task ("Click on sync by organizations") {
 			Click(
 				key_panel = "Select Contacts",
@@ -242,26 +105,133 @@ definition {
 			Click(
 				key_option = "Organizations",
 				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-        }
-
-		task ("Choose the pagination to 5 items per page") {
-			ACUtils.changePagination(itemsPerPage = "5");
 		}
 
-		task ("See that there's only 5 organizations present in the list on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "Brazil,Canada,France,Italy,Minium");
+		task ("Search for an organization and assert the result") {
+			ACUtils.searchBar(searchItem = "Minium");
 
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "United States");
-		}
+			ACDXPSettings.viewGenericListItem(itemValueList = "Minium");
 
-		task ("Go to the second page and see that there's only one organization in the list") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-
-			ACDXPSettings.viewGenericListItem(itemValueList = "United States");
-
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazil,Canada,France,Italy,Minium");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Canada,Italy,United States");
 		}
 	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12666 | Test Summary: Can sync all accounts"
+	@priority = "5"
+	test CanSyncAllAccounts {
+		task ("Click on sync all accounts") {
+			ACDXPSettings.syncAccountsData();
+		}
+
+		task ("Check if the toggle was enabled") {
+			ACDXPSettings.assertToggleOnOff(
+				boolean = "true",
+				toggleType = "sync-all-accounts");
+		}
+	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12659 | Test Summary: Can sync all contacts"
+	@priority = "5"
+	test CanSyncAllContacts {
+		task ("Click on sync all contacts") {
+			ACDXPSettings.syncContactsData();
+		}
+
+		task ("Check if the toggle was enabled") {
+			ACDXPSettings.assertToggleOnOff(
+				boolean = "true",
+				toggleType = "sync-all-contacts");
+		}
+	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12658 | Test Summary: Can sync all contacts and accounts"
+	@priority = "5"
+	test CanSyncAllContactsAndAccounts {
+		task ("Click on sync all contacts and accounts") {
+			ACDXPSettings.syncContactsAndAccountstData();
+		}
+
+		task ("Check if the toggle was enabled") {
+			ACDXPSettings.assertToggleOnOff(
+				boolean = "true",
+				toggleType = "sync-all-contacts-and-accounts");
+		}
+	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12670 | Test Summary: Can sync all contacts and account groups only"
+	@priority = "5"
+	test CanSyncAllContactsAndAccountsGroupsOnly {
+		task ("Click on sync all contacts and sync all accounts") {
+			ACDXPSettings.syncContactsData();
+
+			ACDXPSettings.syncAccountsData();
+		}
+
+		task ("Check if the toggle was enabled") {
+			ACDXPSettings.assertToggleOnOff(
+				boolean = "true",
+				toggleType = "sync-all-contacts-and-accounts");
+
+			ACDXPSettings.assertToggleOnOff(
+				boolean = "true",
+				toggleType = "sync-all-contacts");
+
+			ACDXPSettings.assertToggleOnOff(
+				boolean = "true",
+				toggleType = "sync-all-accounts");
+		}
+	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12665 | Test Summary: Can sync all contacts by groups"
+	@priority = "5"
+	test CanSyncAllContactsByGroups {
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "Group 1",
+			userGroupName = "Group 1");
+
+		task ("Click on sync by user groups") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			ACDXPSettings.syncContactsData(userGroup = "Minium User Group");
+		}
+
+		task ("See that there's one user group selected") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "User Groups",
+				syncNumber = "1 Selected");
+		}
+	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12662 | Test Summary: Can sync all contacts by organizations"
+	@priority = "5"
+	test CanSyncAllContactsByOrganizations {
+		task ("Click on sync by organizations") {
+			ACDXPSettings.syncContactsData(orgName = "Minium");
+		}
+
+		task ("See that there's one organization selected") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Organizations",
+				syncNumber = "1 Selected");
+		}
+	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12669 | Test Summary: Can sync by account groups"
+	@priority = "5"
+	test CanSyncByAccountGroups {
+		task ("Click on sync by account groups") {
+			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
+		}
+
+		task ("See that there's one account selected") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Account Groups",
+				syncNumber = "1 Selected");
+		}
+	}
+
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12668 | Test Summary: Check that it is possible to make pagination in the account groups"
 	@priority = "4"
 	test CheckIsPossiblePaginateInAccountGroups {
@@ -279,7 +249,7 @@ definition {
 			Click(
 				key_option = "Sync by Account Groups",
 				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-        }
+		}
 
 		task ("Choose the pagination to 5 items per page") {
 			ACUtils.changePagination(itemsPerPage = "5");
@@ -299,4 +269,43 @@ definition {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazilian Accounts,Copper Accounts,European Accounts,Gold Accounts,North American Accounts");
 		}
 	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12661 | Test Summary: Check that it is possible to make pagination in the organizations"
+	@priority = "4"
+	test CheckIsPossiblePaginateOrganizations {
+		task ("Create 2 organizations") {
+			for (var organizationName : list "Brazil,France") {
+				JSONOrganization.addOrganization(organizationName = "${organizationName}");
+			}
+		}
+
+		task ("Click on sync by organizations") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "Organizations",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+		task ("Choose the pagination to 5 items per page") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("See that there's only 5 organizations present in the list on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "Brazil,Canada,France,Italy,Minium");
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "United States");
+		}
+
+		task ("Go to the second page and see that there's only one organization in the list") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "United States");
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazil,Canada,France,Italy,Minium");
+		}
+	}
+
 }

@@ -974,22 +974,22 @@ definition {
 		ACSettings.deleteAllDataSource();
 	}
 
+	macro tearDownCommerce {
+		JSONUser.tearDownNonAdminUsers();
+
+		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+
+		CommerceJSONAccountGroupsAPI._deleteAllCommerceAccountGroups();
+
+		CommerceJSONOrganizationsAPI._deleteAllOrganizations();
+
+		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+	}
+
 	macro tearDownDXP {
 		ACUtils.launchDXP();
 
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-	}
-
-	macro tearDownCommerce {
-		JSONUser.tearDownNonAdminUsers();
-		
-		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
-
-        CommerceJSONAccountGroupsAPI._deleteAllCommerceAccountGroups();
-
-        CommerceJSONOrganizationsAPI._deleteAllOrganizations();
-
-        CommerceJSONChannelsAPI._deleteAllCommerceChannels();
 	}
 
 	macro viewActivePage {

@@ -41,7 +41,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -92,33 +91,41 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			return false;
 		}
 
-		Optional<ExportImportConfiguration> exportImportConfigurationOptional =
+		long sourceGroupId = GetterUtil.getLong(
+			GroupConstants.ANY_PARENT_GROUP_ID);
+
+		long targetGroupId = GetterUtil.getLong(
+			GroupConstants.ANY_PARENT_GROUP_ID);
+
+		Object remoteAddressValue = null;
+
+		ExportImportConfiguration exportImportConfiguration =
 			_getExportImportConfiguration(exportImportLifecycleEvent);
 
-		Optional<Map<String, Serializable>> settingsMapOptional =
-			exportImportConfigurationOptional.map(
-				exportImportConfiguration ->
-					exportImportConfiguration.getSettingsMap());
+		if (exportImportConfiguration != null) {
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
 
-		long sourceGroupId = GetterUtil.getLong(
-			settingsMapOptional.map(
-				settingsMap -> settingsMap.get("sourceGroupId")
-			).orElse(
-				GroupConstants.ANY_PARENT_GROUP_ID
-			));
+			Object sourceGroupValue = settingsMap.get("sourceGroupId");
+
+			if (sourceGroupValue != null) {
+				sourceGroupId = GetterUtil.getLong(sourceGroupValue);
+			}
+
+			Object targetGroupValue = settingsMap.get("targetGroupId");
+
+			if (targetGroupValue != null) {
+				targetGroupId = GetterUtil.getLong(targetGroupValue);
+			}
+
+			remoteAddressValue = settingsMap.get("remoteAddress");
+		}
 
 		Group sourceGroup = _groupLocalService.fetchGroup(sourceGroupId);
 
 		if ((sourceGroup == null) || !sourceGroup.isStagedRemotely()) {
 			return false;
 		}
-
-		long targetGroupId = GetterUtil.getLong(
-			settingsMapOptional.map(
-				settingsMap -> settingsMap.get("targetGroupId")
-			).orElse(
-				GroupConstants.ANY_PARENT_GROUP_ID
-			));
 
 		Group targetGroup = _groupLocalService.fetchGroup(targetGroupId);
 
@@ -138,12 +145,11 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			return false;
 		}
 
-		String remoteAddress = GetterUtil.getString(
-			settingsMapOptional.map(
-				settingsMap -> settingsMap.get("remoteAddress")
-			).orElse(
-				StringPool.BLANK
-			));
+		String remoteAddress = StringPool.BLANK;
+
+		if (remoteAddressValue != null) {
+			remoteAddress = GetterUtil.getString(remoteAddressValue);
+		}
 
 		return !remoteAddress.equals("localhost");
 	}

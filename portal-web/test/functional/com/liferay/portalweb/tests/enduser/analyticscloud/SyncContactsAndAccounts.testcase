@@ -182,4 +182,25 @@ definition {
 				boolean = "true");
         }
 	}
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12660 | Test Summary: Can search for organizations in the select contacts modal"
+	@priority = "4"
+	test CanSearchOrganizationsInContactsModal {
+		task ("Click on sync by organizations") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "Organizations",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+        }
+
+		task ("Search for an organization and assert the result") {
+			ACUtils.searchBar(searchItem = "Minium");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "Minium");
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Canada,Italy,United States");
+		}	
+	}
 }

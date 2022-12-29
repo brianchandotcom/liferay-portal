@@ -73,61 +73,59 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		sendRedirect(
-			actionRequest, actionResponse,
-			PortletURLBuilder.createRenderURL(
-				_portal.getLiferayPortletResponse(actionResponse)
-			).setParameter(
-				"fragmentCollectionId",
-				() -> {
-					ServiceContext serviceContext =
-						ServiceContextFactory.getInstance(actionRequest);
+		String redirect = PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse)
+		).setParameter(
+			"fragmentCollectionId",
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
 
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)actionRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-					long[] fragmentEntryIds = StringUtil.split(
-						ParamUtil.getString(actionRequest, "fragmentEntryIds"),
-						0L);
+				long[] fragmentEntryIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "fragmentEntryIds"), 0L);
 
-					long fragmentCollectionId = ParamUtil.getLong(
-						actionRequest, "fragmentCollectionId");
+				long fragmentCollectionId = ParamUtil.getLong(
+					actionRequest, "fragmentCollectionId");
 
-					for (long fragmentEntryId : fragmentEntryIds) {
-						_fragmentEntryService.copyFragmentEntry(
-							themeDisplay.getScopeGroupId(), fragmentEntryId,
-							fragmentCollectionId, serviceContext);
-					}
-
-					String[] contributedEntryKeys = StringUtil.split(
-						ParamUtil.getString(
-							actionRequest, "contributedEntryKeys"));
-
-					for (String contributedEntryKey : contributedEntryKeys) {
-						FragmentComposition fragmentComposition =
-							_fragmentCollectionContributorRegistry.
-								getFragmentComposition(contributedEntryKey);
-
-						FragmentEntry fragmentEntry =
-							_fragmentCollectionContributorRegistry.
-								getFragmentEntry(contributedEntryKey);
-
-						if (fragmentComposition != null) {
-							_addFragmentComposition(
-								fragmentCollectionId, fragmentComposition,
-								serviceContext, themeDisplay);
-						}
-						else if (fragmentEntry != null) {
-							_addFragmentEntry(
-								fragmentCollectionId, fragmentEntry,
-								serviceContext, themeDisplay);
-						}
-					}
-
-					return fragmentCollectionId;
+				for (long fragmentEntryId : fragmentEntryIds) {
+					_fragmentEntryService.copyFragmentEntry(
+						themeDisplay.getScopeGroupId(), fragmentEntryId,
+						fragmentCollectionId, serviceContext);
 				}
-			).buildString());
+
+				String[] contributedEntryKeys = StringUtil.split(
+					ParamUtil.getString(actionRequest, "contributedEntryKeys"));
+
+				for (String contributedEntryKey : contributedEntryKeys) {
+					FragmentComposition fragmentComposition =
+						_fragmentCollectionContributorRegistry.
+							getFragmentComposition(contributedEntryKey);
+
+					FragmentEntry fragmentEntry =
+						_fragmentCollectionContributorRegistry.getFragmentEntry(
+							contributedEntryKey);
+
+					if (fragmentComposition != null) {
+						_addFragmentComposition(
+							fragmentCollectionId, fragmentComposition,
+							serviceContext, themeDisplay);
+					}
+					else if (fragmentEntry != null) {
+						_addFragmentEntry(
+							fragmentCollectionId, fragmentEntry, serviceContext,
+							themeDisplay);
+					}
+				}
+
+				return fragmentCollectionId;
+			}
+		).buildString();
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	private void _addFragmentComposition(

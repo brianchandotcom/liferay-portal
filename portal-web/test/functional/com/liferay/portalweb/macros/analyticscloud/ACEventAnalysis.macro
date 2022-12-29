@@ -47,7 +47,7 @@ definition {
 
 		ACUtils.selectGenericOption(optionValue = "${optionValue}");
 
-		if ("${dropdownIndex}" != "") {
+		if (isSet(dropdownIndex)) {
 			ACEventAnalysis.selectAutocompleteOption(
 				dropdownData = "${dropdownData}",
 				key_index = "${dropdownIndex}");

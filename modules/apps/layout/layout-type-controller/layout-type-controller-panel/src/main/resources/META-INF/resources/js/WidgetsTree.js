@@ -21,9 +21,9 @@ import React, {useState} from 'react';
 export default function WidgetsTree({
 	items,
 	portletNamespace: namespace,
-	selectedPortlets: initialSelectedIds,
+	selectedPortlets,
 }) {
-	const [selectedIds, setSelectedIds] = useState(initialSelectedIds || []);
+	const [selectedIds, setSelectedIds] = useState(selectedPortlets);
 
 	return (
 		<>

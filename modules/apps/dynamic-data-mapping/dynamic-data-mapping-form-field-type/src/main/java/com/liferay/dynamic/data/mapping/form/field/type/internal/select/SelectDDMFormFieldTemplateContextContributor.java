@@ -169,12 +169,14 @@ public class SelectDDMFormFieldTemplateContextContributor
 			}
 		}
 
+		String objectFieldName = GetterUtil.getString(
+			ddmFormField.getProperty("objectFieldName"));
+
 		if ((objectDefinition != null) &&
-			Validator.isNotNull(ddmFormField.getProperty("objectFieldName"))) {
+			Validator.isNotNull(objectFieldName)) {
 
 			return _getOptionsFromObject(
-				objectDefinition.getObjectDefinitionId(),
-				(String)ddmFormField.getProperty("objectFieldName"));
+				objectDefinition.getObjectDefinitionId(), objectFieldName);
 		}
 
 		List<Map<String, String>> options = new ArrayList<>();

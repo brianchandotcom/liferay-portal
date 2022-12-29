@@ -35,9 +35,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		Click(
-			key_site = "Minium",
-			locator1 = "CommerceEntry#TREEVIEW_NODE_COLLAPSED_PAGES");
+		if ("${multipleVocabularies}" == "true") {
+			Click(
+				key_site = "Minium",
+				locator1 = "CommerceEntry#TREEVIEW_NODE_COLLAPSED_PAGES");
+		}
 
 		Click(
 			key_nodeName = "${key_card}",

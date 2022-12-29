@@ -40,6 +40,9 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -262,8 +265,18 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				String[] specificAssetCategoryIds = configuration.get(
 					"specificAssetCategoryId");
 
-				specificAssetCategoryId = GetterUtil.getLong(
-					specificAssetCategoryIds[0]);
+				try {
+					JSONObject jsonObject = _jsonFactory.createJSONObject(
+						specificAssetCategoryIds[0]);
+
+					specificAssetCategoryId = GetterUtil.getLong(
+						jsonObject.get("classPK"));
+				}
+				catch (JSONException jsonException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jsonException);
+					}
+				}
 			}
 		}
 
@@ -482,6 +495,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

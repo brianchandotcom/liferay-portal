@@ -98,7 +98,7 @@ public class SamlPeerBindingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlPeerBinding (samlPeerBindingId LONG not null primary key,companyId LONG,createDate DATE null,userId LONG,userName VARCHAR(75) null,deleted BOOLEAN,samlNameIdFormat VARCHAR(1024) null,samlNameIdNameQualifier VARCHAR(75) null,samlNameIdSpNameQualifier VARCHAR(75) null,samlNameIdSpProvidedId VARCHAR(75) null,samlNameIdValue VARCHAR(1024) null,samlPeerEntityId VARCHAR(1024) null)";
+		"create table SamlPeerBinding (samlPeerBindingId LONG not null primary key,companyId LONG,createDate DATE null,userId LONG,userName VARCHAR(75) null,deleted BOOLEAN,samlNameIdFormat VARCHAR(128) null,samlNameIdNameQualifier VARCHAR(75) null,samlNameIdSpNameQualifier VARCHAR(75) null,samlNameIdSpProvidedId VARCHAR(75) null,samlNameIdValue VARCHAR(1024) null,samlPeerEntityId VARCHAR(1024) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlPeerBinding";
 
@@ -130,38 +130,26 @@ public class SamlPeerBindingModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SAMLNAMEIDFORMAT_COLUMN_BITMASK = 4L;
+	public static final long SAMLNAMEIDVALUE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SAMLNAMEIDNAMEQUALIFIER_COLUMN_BITMASK = 8L;
+	public static final long SAMLPEERENTITYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SAMLNAMEIDVALUE_COLUMN_BITMASK = 16L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long SAMLPEERENTITYID_COLUMN_BITMASK = 32L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 64L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SAMLPEERBINDINGID_COLUMN_BITMASK = 128L;
+	public static final long SAMLPEERBINDINGID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -506,15 +494,6 @@ public class SamlPeerBindingModelImpl
 		_samlNameIdFormat = samlNameIdFormat;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalSamlNameIdFormat() {
-		return getColumnOriginalValue("samlNameIdFormat");
-	}
-
 	@Override
 	public String getSamlNameIdNameQualifier() {
 		if (_samlNameIdNameQualifier == null) {
@@ -532,15 +511,6 @@ public class SamlPeerBindingModelImpl
 		}
 
 		_samlNameIdNameQualifier = samlNameIdNameQualifier;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalSamlNameIdNameQualifier() {
-		return getColumnOriginalValue("samlNameIdNameQualifier");
 	}
 
 	@Override

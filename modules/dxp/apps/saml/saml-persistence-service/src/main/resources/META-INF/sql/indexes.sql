@@ -7,6 +7,7 @@ create index IX_E5D1CDD3 on SamlIdpSsoSession (createDate);
 create index IX_5E8BFDF9 on SamlIdpSsoSession (samlIdpSsoSessionKey[$COLUMN_LENGTH:75$]);
 
 create index IX_A082E91 on SamlPeerBinding (companyId, deleted, samlNameIdValue[$COLUMN_LENGTH:1024$]);
+create index IX_72442B04 on SamlPeerBinding (companyId, userId, deleted, samlPeerEntityId[$COLUMN_LENGTH:1024$]);
 
 create index IX_49073861 on SamlSpAuthRequest (createDate);
 create index IX_10D77E09 on SamlSpAuthRequest (samlIdpEntityId[$COLUMN_LENGTH:1024$], samlSpAuthRequestKey[$COLUMN_LENGTH:75$]);

@@ -214,22 +214,19 @@ public interface SamlPeerBindingPersistence
 		long companyId, boolean deleted, String samlNameIdValue);
 
 	/**
-	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @return the matching saml peer bindings
 	 */
-	public java.util.List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId);
+	public java.util.List<SamlPeerBinding> findByC_U_D_SPEI(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId);
 
 	/**
-	 * Returns a range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns a range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
@@ -238,20 +235,17 @@ public interface SamlPeerBindingPersistence
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param start the lower bound of the range of saml peer bindings
 	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
 	 * @return the range of matching saml peer bindings
 	 */
-	public java.util.List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId, int start,
-		int end);
+	public java.util.List<SamlPeerBinding> findByC_U_D_SPEI(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId,
+		int start, int end);
 
 	/**
-	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
@@ -260,23 +254,20 @@ public interface SamlPeerBindingPersistence
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param start the lower bound of the range of saml peer bindings
 	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching saml peer bindings
 	 */
-	public java.util.List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId, int start,
-		int end,
+	public java.util.List<SamlPeerBinding> findByC_U_D_SPEI(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
@@ -285,8 +276,6 @@ public interface SamlPeerBindingPersistence
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param start the lower bound of the range of saml peer bindings
 	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
@@ -294,142 +283,120 @@ public interface SamlPeerBindingPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml peer bindings
 	 */
-	public java.util.List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId, int start,
-		int end,
+	public java.util.List<SamlPeerBinding> findByC_U_D_SPEI(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching saml peer binding
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
-	public SamlPeerBinding findByC_U_D_SNIF_SNINQ_SPEI_First(
+	public SamlPeerBinding findByC_U_D_SPEI_First(
 			long companyId, long userId, boolean deleted,
-			String samlNameIdFormat, String samlNameIdNameQualifier,
 			String samlPeerEntityId,
 			com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 				orderByComparator)
 		throws NoSuchPeerBindingException;
 
 	/**
-	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
-	public SamlPeerBinding fetchByC_U_D_SNIF_SNINQ_SPEI_First(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId,
+	public SamlPeerBinding fetchByC_U_D_SPEI_First(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 			orderByComparator);
 
 	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching saml peer binding
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
-	public SamlPeerBinding findByC_U_D_SNIF_SNINQ_SPEI_Last(
+	public SamlPeerBinding findByC_U_D_SPEI_Last(
 			long companyId, long userId, boolean deleted,
-			String samlNameIdFormat, String samlNameIdNameQualifier,
 			String samlPeerEntityId,
 			com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 				orderByComparator)
 		throws NoSuchPeerBindingException;
 
 	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
-	public SamlPeerBinding fetchByC_U_D_SNIF_SNINQ_SPEI_Last(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId,
+	public SamlPeerBinding fetchByC_U_D_SPEI_Last(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 			orderByComparator);
 
 	/**
-	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * @param samlPeerBindingId the primary key of the current saml peer binding
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next saml peer binding
 	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
 	 */
-	public SamlPeerBinding[] findByC_U_D_SNIF_SNINQ_SPEI_PrevAndNext(
+	public SamlPeerBinding[] findByC_U_D_SPEI_PrevAndNext(
 			long samlPeerBindingId, long companyId, long userId,
-			boolean deleted, String samlNameIdFormat,
-			String samlNameIdNameQualifier, String samlPeerEntityId,
+			boolean deleted, String samlPeerEntityId,
 			com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 				orderByComparator)
 		throws NoSuchPeerBindingException;
 
 	/**
-	 * Removes all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63; from the database.
+	 * Removes all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 */
-	public void removeByC_U_D_SNIF_SNINQ_SPEI(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId);
+	public void removeByC_U_D_SPEI(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId);
 
 	/**
-	 * Returns the number of saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the number of saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlPeerEntityId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @return the number of matching saml peer bindings
 	 */
-	public int countByC_U_D_SNIF_SNINQ_SPEI(
-		long companyId, long userId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId);
+	public int countByC_U_D_SPEI(
+		long companyId, long userId, boolean deleted, String samlPeerEntityId);
 
 	/**
 	 * Caches the saml peer binding in the entity cache if it is enabled.

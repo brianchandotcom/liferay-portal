@@ -28,4 +28,4 @@ StringBundlerNamingCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks
 TestClassCheck | .java | Checks that names of test classes follow naming conventions. |
 ThreadNameCheck | .java | Checks that names of threads follow naming conventions. |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | .java | Checks that type names conform to a specified pattern. |
-VariableNameCheck | .java | Checks that variable names follow naming conventions. |
+VariableNameCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that variable names follow naming conventions. |

@@ -148,6 +148,11 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			InfoFieldSet.builder(
 			).infoFieldSetEntry(
 				_getItemTypesInfoField()
+			).descriptionInfoLocalizedValue(
+				InfoLocalizedValue.localize(
+					getClass(),
+					"by-filtering-you-can-narrow-down-the-results-that-" +
+						"appear-on-the-page")
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "filter")
 			).name(
@@ -205,6 +210,10 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				).localizable(
 					false
 				).build()
+			).descriptionInfoLocalizedValue(
+				InfoLocalizedValue.localize(
+					getClass(),
+					"you-can-also-add-a-rule-for-more-accurate-results")
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "advanced-rule")
 			).name(

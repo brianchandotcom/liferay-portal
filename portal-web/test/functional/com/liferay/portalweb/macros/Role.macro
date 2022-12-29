@@ -144,7 +144,7 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
-	macro editPermissionCmdCPUI {
+	macro editPermissionCP {
 		if (!(isSet(navItem))) {
 			var navItem = "Define Permissions";
 		}

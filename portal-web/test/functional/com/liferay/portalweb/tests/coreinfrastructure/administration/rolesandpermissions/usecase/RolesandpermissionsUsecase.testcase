@@ -59,7 +59,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Roles Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Content & Data",
 			permissionNavItem = "Documents and Media",
@@ -480,7 +480,7 @@ definition {
 
 		Role.add(roleTitle = "Group Scope Role Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Applications",
 			permissionNavItem = "Bookmarks",
@@ -658,7 +658,7 @@ definition {
 
 		Role.add(roleTitle = "Roles Siterole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Applications",
 			permissionNavItem = "Bookmarks",
@@ -1196,7 +1196,7 @@ definition {
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Users",
 			permissionNavItem = "Users and Organizations",
@@ -1213,7 +1213,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Roles Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Site Builder",
 			permissionNavItem = "Pages",
@@ -1242,7 +1242,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Site Member");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			permissionNavHeader = "Applications",
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "Documents",

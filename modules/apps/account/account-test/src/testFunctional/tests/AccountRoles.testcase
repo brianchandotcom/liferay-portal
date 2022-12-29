@@ -330,7 +330,7 @@ definition {
 				menuItem = "Define Permissions",
 				rowEntry = "New Account Role");
 
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Accounts",
@@ -341,7 +341,7 @@ definition {
 				permissionDefinitionValue = "View",
 				permissionNavigationValue = "Accounts");
 
-			Role.editPermissionCmdCPUI(
+			Role.editPermissionCP(
 				define = "true",
 				navItem = "Define Group Scope Permissions",
 				permissionNavHeader = "Applications",

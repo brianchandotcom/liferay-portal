@@ -154,7 +154,7 @@ definition {
 
 		// The define permission via json macro is not able to change the permission scope
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Content & Data",
 			permissionNavItem = "Documents and Media",
@@ -175,7 +175,7 @@ definition {
 
 		// The define permission via json macro is not able to change the permission scope
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			permissionNavHeader = "Content & Data",
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "Documents",
@@ -245,7 +245,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Permission Scope");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			define = "true",
 			permissionNavHeader = "Applications",
 			permissionNavItem = "Documents and Media",

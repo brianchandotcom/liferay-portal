@@ -262,4 +262,41 @@ definition {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazil,Canada,France,Italy,Minium");
 		}
 	}
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12668 | Test Summary: Check that it is possible to make pagination in the account groups"
+	@priority = "4"
+	test CheckIsPossiblePaginateInAccountGroups {
+		task ("Create 3 more account groups") {
+			for (var accountGroupName : list "Brazilian Accounts,Silver Accounts,Copper Accounts") {
+				JSONAccountGroup.addAccountGroup(accountGroupName = "${accountGroupName}");
+			}
+		}
+
+		task ("Click on sync by account groups") {
+			Click(
+				key_panel = "Select Accounts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "Sync by Account Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+        }
+
+		task ("Choose the pagination to 5 items per page") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("See that there's only 5 account groups present in the list on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "Brazilian Accounts,Copper Accounts,European Accounts,Gold Accounts,North American Accounts");
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Silver Accounts");
+		}
+
+		task ("Go to the second page and see that there's only one account group in the list") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "Silver Accounts");
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazilian Accounts,Copper Accounts,European Accounts,Gold Accounts,North American Accounts");
+		}
+	}
 }

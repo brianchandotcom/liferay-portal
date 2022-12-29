@@ -129,5 +129,28 @@ definition {
 				value1 = "Success:Your request completed successfully.");
 		}
 	}
+	
+	@description = "LPS-170535. Request Valid IP Can Return Success."
+	@priority = "3"
+	test RequestValidIPCanReturnSucces3 {
+		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
+			Click(
+				locator1 ="//*[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-unstyled']");
+
+			takeScreenshot();
+
+			Click(
+				key_viewMode = "Async Success",
+				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
+
+			takeScreenshot();
+		}
+
+		task ("Then returns success alert toast") {
+			AssertTextEquals(
+				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				value1 = "Success:Your request completed successfully.");
+		}
+	}
 
 }

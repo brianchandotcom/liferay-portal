@@ -51,13 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
-@Component(
-	property = {
-		"template.language=freemarker", "template.language=soy",
-		"template.language=velocity"
-	},
-	service = NotificationMessageGenerator.class
-)
+@Component(service = NotificationMessageGenerator.class)
 public class TemplateNotificationMessageGenerator
 	implements NotificationMessageGenerator {
 
@@ -106,6 +100,11 @@ public class TemplateNotificationMessageGenerator
 			throw new NotificationMessageGenerationException(
 				"Unable to generate notification message", exception);
 		}
+	}
+
+	@Override
+	public String[] getTemplateLanguages() {
+		return new String[] {"freemarker", "soy", "velocity"};
 	}
 
 	@Activate

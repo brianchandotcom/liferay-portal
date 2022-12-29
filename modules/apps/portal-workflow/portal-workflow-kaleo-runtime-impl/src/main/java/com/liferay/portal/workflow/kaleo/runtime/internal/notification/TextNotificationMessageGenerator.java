@@ -22,10 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "template.language=text",
-	service = NotificationMessageGenerator.class
-)
+@Component(service = NotificationMessageGenerator.class)
 public class TextNotificationMessageGenerator
 	implements NotificationMessageGenerator {
 
@@ -36,6 +33,11 @@ public class TextNotificationMessageGenerator
 		ExecutionContext executionContext) {
 
 		return notificationTemplate;
+	}
+
+	@Override
+	public String[] getTemplateLanguages() {
+		return new String[] {"text"};
 	}
 
 }

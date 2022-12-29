@@ -27,4 +27,6 @@ public interface NotificationMessageGenerator {
 			ExecutionContext executionContext)
 		throws NotificationMessageGenerationException;
 
+	public String[] getTemplateLanguages();
+
 }

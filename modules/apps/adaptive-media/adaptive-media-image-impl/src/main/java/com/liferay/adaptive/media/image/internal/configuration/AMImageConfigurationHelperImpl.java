@@ -476,8 +476,7 @@ public class AMImageConfigurationHelperImpl
 			Optional<String[]> nullableImageVariantsOptional =
 				_getNullableImageVariants(settings);
 
-			String[] imageVariants = nullableImageVariantsOptional.orElseGet(
-				() -> settings.getValues("imageVariants", new String[0]));
+			String[] imageVariants = nullableImageVariantsOptional.get();
 
 			amImageConfigurationEntries = Stream.of(
 				imageVariants
@@ -507,7 +506,13 @@ public class AMImageConfigurationHelperImpl
 
 		Map<String, String[]> map = portletPreferences.getMap();
 
-		return Optional.ofNullable(map.get("imageVariants"));
+		String[] imageVariants = map.get("imageVariants");
+
+		if (imageVariants == null) {
+			imageVariants = settings.getValues("imageVariants", new String[0]);
+		}
+
+		return Optional.of(imageVariants);
 	}
 
 	private final boolean _isPositiveNumber(String s) {

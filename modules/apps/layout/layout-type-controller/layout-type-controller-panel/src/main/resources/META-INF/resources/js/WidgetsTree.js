@@ -18,8 +18,6 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const ROOT_ITEM_ID = '0';
-
 export default function WidgetsTree({
 	items,
 	portletNamespace: namespace,
@@ -30,7 +28,6 @@ export default function WidgetsTree({
 	return (
 		<>
 			<ClayTreeView
-				defaultExpandedKeys={new Set([ROOT_ITEM_ID])}
 				defaultItems={items}
 				onSelectionChange={(nextSelectedIds) => {
 					setSelectedIds(Array.from(nextSelectedIds));

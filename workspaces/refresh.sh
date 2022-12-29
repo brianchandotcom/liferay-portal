@@ -1,5 +1,13 @@
 #!/bin/bash
 
+function apply_diffs() {
+	for patch in diffs/$1/*
+	do
+		echo PATCH: $patch
+		git apply $patch
+	done
+}
+
 function check_blade {
 	if [ -e ~/jpm/bin/blade ]
 	then
@@ -107,6 +115,20 @@ function refresh_sample_minimal_workspace {
 	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
 	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
 	copy_template theme-spritemap sample-minimal-workspace/client-extensions/able-theme-spritemap "Able Theme Spritemap"
+
+	#
+	# Angular custom element client extension
+	#
+
+	rm -fr sample-minimal-workspace/client-extensions/angular-custom-element
+
+	cd sample-minimal-workspace/client-extensions
+
+	npx @angular/cli new angular-custom-element --defaults --skip-install
+
+	cd ../..
+
+	apply_diffs angular-custom-element
 
 	#
 	# Fox remote app client extension

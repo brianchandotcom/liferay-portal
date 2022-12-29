@@ -1,0 +1,67 @@
+diff --git a/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/package.json b/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/package.json
+index 8c250cf6ad76d..b787159a830df 100644
+--- a/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/package.json
++++ b/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/package.json
+@@ -14,6 +14,7 @@
+     "@angular/common": "^15.0.0",
+     "@angular/compiler": "^15.0.0",
+     "@angular/core": "^15.0.0",
++    "@angular/elements": "^15.0.0",
+     "@angular/forms": "^15.0.0",
+     "@angular/platform-browser": "^15.0.0",
+     "@angular/platform-browser-dynamic": "^15.0.0",
+diff --git a/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.component.ts b/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.component.ts
+index 367c943d537eb..3b0984fb67e21 100644
+--- a/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.component.ts
++++ b/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.component.ts
+@@ -1,4 +1,4 @@
+-import { Component } from '@angular/core';
++import { Component, Input } from '@angular/core';
+
+ @Component({
+   selector: 'app-root',
+@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
+   styleUrls: ['./app.component.css']
+ })
+ export class AppComponent {
+-  title = 'angular-custom-element';
++  @Input('title') title = 'angular-custom-element';
+ }
+diff --git a/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.module.ts b/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.module.ts
+index 8dfc1d68272a4..e0907a803891c 100644
+--- a/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.module.ts
++++ b/workspaces/sample-minimal-workspace/client-extensions/angular-custom-element/src/app/app.module.ts
+@@ -1,4 +1,5 @@
+-import { NgModule } from '@angular/core';
++import { Injector, NgModule } from '@angular/core';
++import { createCustomElement } from '@angular/elements';
+ import { BrowserModule } from '@angular/platform-browser';
+
+ import { AppComponent } from './app.component';
+@@ -7,10 +8,24 @@ import { AppComponent } from './app.component';
+   declarations: [
+     AppComponent
+   ],
++  entryComponents: [
++    AppComponent
++  ],
+   imports: [
+     BrowserModule
+   ],
+   providers: [],
+-  bootstrap: [AppComponent]
+ })
+-export class AppModule { }
++export class AppModule {
++
++  constructor(private injector: Injector) {}
++
++  ngDoBootstrap() {
++    const AppComponentElement = createCustomElement(AppComponent, {
++      injector: this.injector
++    });
++
++    customElements.define('app-component', AppComponentElement);
++  }
++
++}

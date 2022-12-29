@@ -14,15 +14,18 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.helper;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.internal.notification.NotificationMessageGeneratorFactory;
 import com.liferay.portal.workflow.kaleo.runtime.internal.notification.NotificationSenderFactory;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
@@ -32,7 +35,10 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocal
 
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -56,15 +62,50 @@ public class NotificationHelperImpl implements NotificationHelper {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, NotificationMessageGenerator.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(notificationMessageGenerator, emitter) -> {
+					for (String templateLanguage :
+							notificationMessageGenerator.
+								getTemplateLanguages()) {
+
+						emitter.emit(templateLanguage);
+					}
+				}));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private NotificationMessageGenerator _getNotificationMessageGenerator(
+			String templateLanguage)
+		throws WorkflowException {
+
+		NotificationMessageGenerator notificationMessageGenerator =
+			_serviceTrackerMap.getService(templateLanguage);
+
+		if (notificationMessageGenerator == null) {
+			throw new WorkflowException(
+				"Invalid template language " + templateLanguage);
+		}
+
+		return notificationMessageGenerator;
+	}
+
 	private void _sendKaleoNotification(
 			KaleoNotification kaleoNotification,
 			ExecutionContext executionContext)
 		throws PortalException {
 
 		NotificationMessageGenerator notificationMessageGenerator =
-			_notificationMessageGeneratorFactory.
-				getNotificationMessageGenerator(
-					kaleoNotification.getTemplateLanguage());
+			_getNotificationMessageGenerator(
+				kaleoNotification.getTemplateLanguage());
 
 		String notificationMessage =
 			notificationMessageGenerator.generateMessage(
@@ -112,10 +153,9 @@ public class NotificationHelperImpl implements NotificationHelper {
 		_kaleoNotificationRecipientLocalService;
 
 	@Reference
-	private NotificationMessageGeneratorFactory
-		_notificationMessageGeneratorFactory;
-
-	@Reference
 	private NotificationSenderFactory _notificationSenderFactory;
+
+	private ServiceTrackerMap<String, NotificationMessageGenerator>
+		_serviceTrackerMap;
 
 }

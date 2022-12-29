@@ -18,6 +18,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -36,11 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
@@ -216,15 +214,10 @@ public class ActionUtil {
 			if (httpMethodName.equals("GET")) {
 				Class<?> returnType = method.getReturnType();
 
-				Stream<Method> stream = Arrays.stream(clazz.getMethods());
-
 				operation = GraphQLNamingUtil.getGraphQLPropertyName(
 					methodName, returnType.getName(),
-					stream.map(
-						Method::getName
-					).collect(
-						Collectors.toList()
-					));
+					TransformUtil.transformToList(
+						clazz.getMethods(), Method::getName));
 
 				type = "query";
 			}
@@ -330,19 +323,15 @@ public class ActionUtil {
 		MultivaluedMap<String, String> pathParameters =
 			uriInfo.getPathParameters();
 
-		Set<Map.Entry<String, List<String>>> entrySet =
-			pathParameters.entrySet();
+		Map<String, Object> parameterMap = new HashMap<>();
 
-		Stream<Map.Entry<String, List<String>>> stream = entrySet.stream();
+		for (Map.Entry<String, List<String>> entry :
+				pathParameters.entrySet()) {
 
-		Map<String, Object> parameterMap = stream.collect(
-			Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> {
-					List<String> value = entry.getValue();
+			List<String> value = entry.getValue();
 
-					return value.get(0);
-				}));
+			parameterMap.put(entry.getKey(), value.get(0));
+		}
 
 		String firstParameterName = _getFirstParameterNameFromPath(
 			clazz.getSuperclass(), methodName);

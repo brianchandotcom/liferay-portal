@@ -14,9 +14,15 @@ import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
+const findRequestIdUrl = (paramsUrl) => {
+	const splitParamsUrl = paramsUrl.split('?');
+
+	return splitParamsUrl[0];
+};
+
 function getSiteVariables() {
 	const currentPath = Liferay.currentURL.split('/');
-	const mdfClaimId = +currentPath.at(-1);
+	const mdfClaimId = findRequestIdUrl(currentPath.at(-1));
 
 	return mdfClaimId;
 }
@@ -92,7 +98,9 @@ const ReimbursementInvoice = () => {
 			});
 		};
 
-		getDocuments();
+		if (!isNaN(mdfClaimId)) {
+			getDocuments();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -249,7 +257,9 @@ export default function () {
 			});
 		};
 
-		getActivities();
+		if (!isNaN(mdfClaimId)) {
+			getActivities();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

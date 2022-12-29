@@ -207,6 +207,13 @@ public class IndexedFieldsFixture {
 		com.liferay.portal.kernel.search.Document document) {
 
 		if (_isSearchEngineSolr()) {
+			if (Validator.isNotNull(document.get("roleNames"))) {
+				document.add(
+					new Field(
+						"roleNames",
+						StringUtil.toLowerCase(document.get("roleNames"))));
+			}
+
 			document.remove("score");
 		}
 	}

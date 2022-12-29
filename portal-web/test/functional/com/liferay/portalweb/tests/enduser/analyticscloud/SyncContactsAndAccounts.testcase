@@ -151,6 +151,9 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12658 | Test Summary: Can sync all contacts and accounts"
 	@priority = "5"
 	test CanSyncAllContactsAndAccounts {
+
+		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
+
 		task ("Click on sync all contacts and accounts") {
 			ACDXPSettings.syncContactsAndAccountstData();
 		}
@@ -165,6 +168,9 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12670 | Test Summary: Can sync all contacts and account groups only"
 	@priority = "5"
 	test CanSyncAllContactsAndAccountsGroupsOnly {
+
+		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
+
 		task ("Click on sync all contacts and sync all accounts") {
 			ACDXPSettings.syncContactsData();
 
@@ -189,15 +195,17 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12665 | Test Summary: Can sync all contacts by groups"
 	@priority = "5"
 	test CanSyncAllContactsByGroups {
-		JSONUserGroup.addUserGroup(
-			userGroupDescription = "Group 1",
-			userGroupName = "Group 1");
+
+		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
+		// This test should cover the SyncDataSourceContactsByGroups after the changes
+
+		task ("Create some user groups") {
+            JSONUserGroup.addUserGroup(
+				userGroupDescription = "Group 1",
+				userGroupName = "Group 1");
+		}
 
 		task ("Click on sync by user groups") {
-			ACDXPSettings.goToInstanceSettingsAC();
-
-			ACDXPSettings.navToSyncedContactDataMenu();
-
 			ACDXPSettings.syncContactsData(userGroup = "Minium User Group");
 		}
 
@@ -211,6 +219,10 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12662 | Test Summary: Can sync all contacts by organizations"
 	@priority = "5"
 	test CanSyncAllContactsByOrganizations {
+
+		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
+		// This test should cover the SyncDataSourceContactsByOrganizations after the changes
+
 		task ("Click on sync by organizations") {
 			ACDXPSettings.syncContactsData(orgName = "Minium");
 		}

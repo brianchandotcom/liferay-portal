@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -96,7 +96,7 @@ public class UserNotificationResourceImpl
 		}
 
 		return _toUserNotification(
-			_userNotificationEventLocalService.getUserNotificationEvent(
+			_userNotificationEventService.getUserNotificationEvent(
 				userNotificationId));
 	}
 
@@ -109,10 +109,10 @@ public class UserNotificationResourceImpl
 		}
 
 		UserNotificationEvent userNotificationEvent =
-			_userNotificationEventLocalService.getUserNotificationEvent(
+			_userNotificationEventService.getUserNotificationEvent(
 				userNotificationId);
 
-		_userNotificationEventLocalService.updateUserNotificationEvent(
+		_userNotificationEventService.updateUserNotificationEvent(
 			userNotificationEvent.getUuid(),
 			userNotificationEvent.getCompanyId(), true);
 	}
@@ -126,10 +126,10 @@ public class UserNotificationResourceImpl
 		}
 
 		UserNotificationEvent userNotificationEvent =
-			_userNotificationEventLocalService.getUserNotificationEvent(
+			_userNotificationEventService.getUserNotificationEvent(
 				userNotificationId);
 
-		_userNotificationEventLocalService.updateUserNotificationEvent(
+		_userNotificationEventService.updateUserNotificationEvent(
 			userNotificationEvent.getUuid(),
 			userNotificationEvent.getCompanyId(), false);
 	}
@@ -152,7 +152,7 @@ public class UserNotificationResourceImpl
 			},
 			sorts,
 			document -> _toUserNotification(
-				_userNotificationEventLocalService.getUserNotificationEvent(
+				_userNotificationEventService.getUserNotificationEvent(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -208,7 +208,6 @@ public class UserNotificationResourceImpl
 	private UserNotificationDTOConverter _userNotificationDTOConverter;
 
 	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
+	private UserNotificationEventService _userNotificationEventService;
 
 }

@@ -112,4 +112,17 @@ definition {
 				boolean = "true");
 		}
     }
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12669 | Test Summary: Can sync by account groups"
+	@priority = "5"
+	test CanSyncByAccountGroups {
+        task ("Click on sync by account groups") {
+			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
+        }
+
+		task("See that there's one account selected") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "Account Groups",
+				syncNumber = "1 Selected");
+		}
+    }
 }

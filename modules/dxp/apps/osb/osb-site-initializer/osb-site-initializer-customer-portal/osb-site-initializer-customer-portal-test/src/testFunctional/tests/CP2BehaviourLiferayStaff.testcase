@@ -66,9 +66,36 @@ definition {
     @description = "Automation ID: LPS-157646 | Test Summary: Verify that when the user is not a Liferay Staff only the project he is associated with is displayed to him"
 	@priority = "4"
 	test NonStaffUsersJustSeeTheAssociatedProject {
+		task ("Then I go to CP2.0 and assert that all projects are visible") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-		// TODO LPS-157646 NonStaffUsersJustSeeTheAssociatedProject pending implementation
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
 
+			CustomerPortal.tableListInHomepage(projectList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0,Test Account No SLA");
+		}
+
+		task ("Given that I activate account restriction") {
+			CustomerPortal.activeAccountRestriction();
+		}
+
+		task ("Then I assert that the user is not a Liferay Staff") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UserNavigator.gotoUser(userScreenName = "test");
+
+			UserNavigator.gotoOrganizations();
+
+			CP2Utils.assertThatTheOrganizationIsNotPresent(text = "Liferay Staff");
+
+			CP2Utils.assertTextVisible( = "This user does not belong to an organization.");
+		}
+
+		task ("And I assert that no project is showing") {
+			CP2Utils.assertThatTheProjectListIsNotPresent(projectList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0,Test Account No SLA");
+		}
 	}
 
 }

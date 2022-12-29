@@ -58,9 +58,15 @@ const STATE = {
 	},
 };
 
-const renderComponent = ({activeItemId, activeItemType}) =>
+const renderComponent = ({activeItemId, activeItemType, permissions = {}}) =>
 	render(
-		<StoreAPIContextProvider dispatch={() => {}} getState={() => STATE}>
+		<StoreAPIContextProvider
+			dispatch={() => {}}
+			getState={() => ({
+				...STATE,
+				permissions: {...STATE.permissions, ...permissions},
+			})}
+		>
 			<ItemConfiguration
 				activeItemId={activeItemId}
 				activeItemType={activeItemType}
@@ -99,6 +105,18 @@ describe('ItemConfiguration', () => {
 		renderComponent({
 			activeItemId: 'fragmentItemId1',
 			activeItemType: LAYOUT_DATA_ITEM_TYPES.fragment,
+		});
+
+		expect(
+			screen.queryByTitle('back-to-parent-configuration')
+		).not.toBeInTheDocument();
+	});
+
+	it('does not show back button when user has no permissions', async () => {
+		renderComponent({
+			activeItemId: 'fragmentEntryLinkId1-editableId1',
+			activeItemType: ITEM_TYPES.editable,
+			permissions: {UPDATE: false},
 		});
 
 		expect(

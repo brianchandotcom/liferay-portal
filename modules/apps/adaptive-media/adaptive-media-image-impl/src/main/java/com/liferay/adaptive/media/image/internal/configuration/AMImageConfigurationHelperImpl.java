@@ -473,10 +473,10 @@ public class AMImageConfigurationHelperImpl
 				new CompanyServiceSettingsLocator(
 					companyId, AMImageCompanyConfiguration.class.getName()));
 
-			Optional<String[]> nullableImageVariantsOptional =
-				_getNullableImageVariants(settings);
+			Optional<String[]> imageVariantsOptional = _getImageVariants(
+				settings);
 
-			String[] imageVariants = nullableImageVariantsOptional.get();
+			String[] imageVariants = imageVariantsOptional.get();
 
 			amImageConfigurationEntries = Stream.of(
 				imageVariants
@@ -497,7 +497,7 @@ public class AMImageConfigurationHelperImpl
 		}
 	}
 
-	private Optional<String[]> _getNullableImageVariants(Settings settings) {
+	private Optional<String[]> _getImageVariants(Settings settings) {
 		PortletPreferencesSettings portletPreferencesSettings =
 			(PortletPreferencesSettings)settings;
 

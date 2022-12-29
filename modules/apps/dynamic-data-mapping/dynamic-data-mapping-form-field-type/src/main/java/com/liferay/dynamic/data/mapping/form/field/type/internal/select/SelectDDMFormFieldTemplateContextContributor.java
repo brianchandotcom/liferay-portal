@@ -291,10 +291,6 @@ public class SelectDDMFormFieldTemplateContextContributor
 					continue;
 				}
 
-				if (options == null) {
-					options = new ArrayList<>();
-				}
-
 				options.add(
 					HashMapBuilder.put(
 						"label", entry.getValue()

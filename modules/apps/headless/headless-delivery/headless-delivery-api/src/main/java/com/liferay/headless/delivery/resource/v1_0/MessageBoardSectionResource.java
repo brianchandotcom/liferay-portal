@@ -100,6 +100,10 @@ public interface MessageBoardSectionResource {
 			MessageBoardSection messageBoardSection)
 		throws Exception;
 
+	public MessageBoardSection getSiteMessageBoardSectionByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
 			Long siteId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

@@ -1873,6 +1873,12 @@ definition {
 			AssertTextEquals(
 				locator1 = "MessageBoardsThread#MESSAGE_RATING_THUMBS_DOWN",
 				value1 = "0");
+
+			if (isSet(threadReplyStatus)) {
+				AssertTextEquals(
+					locator1 = "MessageBoardsThread#MESSAGE_WORKFLOW_STATUS_1",
+					value1 = "${threadReplyStatus}");
+			}
 		}
 
 		if ("${guestReply}" == "false") {

@@ -18,10 +18,13 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBCategoryLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -32,6 +35,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -107,6 +112,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setUserName(user.getFullName());
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
+		category.setUrlCategory(
+			_getUniqueUrlCategory(groupId, categoryId, name));
 		category.setDescription(description);
 		category.setDisplayStyle(displayStyle);
 		category.setExpandoBridgeAttributes(serviceContext);
@@ -908,6 +915,44 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		return parentCategoryId;
 	}
 
+	private String _getUniqueUrlCategory(
+		long groupId, long categoryId, String name) {
+
+		String urlSubject = _getUrlCategory(categoryId, name);
+
+		String uniqueUrlSubject = urlSubject;
+
+		MBCategory mbCategory = mbCategoryPersistence.fetchByG_UC(
+			groupId, uniqueUrlSubject);
+
+		for (int i = 1; mbCategory != null; i++) {
+			uniqueUrlSubject = urlSubject + StringPool.DASH + i;
+
+			mbCategory = mbCategoryPersistence.fetchByG_UC(
+				groupId, uniqueUrlSubject);
+		}
+
+		return uniqueUrlSubject;
+	}
+
+	private String _getUrlCategory(long categoryId, String name) {
+		if (name == null) {
+			return String.valueOf(categoryId);
+		}
+
+		name = StringUtil.toLowerCase(name.trim());
+
+		if (Validator.isNull(name) || Validator.isNumber(name)) {
+			name = String.valueOf(categoryId);
+		}
+		else {
+			name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(name);
+		}
+
+		return ModelHintsUtil.trimString(
+			MBCategory.class.getName(), "urlCategory", name);
+	}
+
 	private void _mergeCategories(MBCategory fromCategory, long toCategoryId)
 		throws PortalException {
 
@@ -1140,6 +1185,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private MBMailingListLocalService _mbMailingListLocalService;

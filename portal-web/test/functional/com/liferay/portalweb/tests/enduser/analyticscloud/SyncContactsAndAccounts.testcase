@@ -88,6 +88,8 @@ definition {
 		task ("Search for an account group and assert the result") {
 			ACUtils.searchBar(searchItem = "Gold Accounts");
 
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+
 			ACDXPSettings.viewGenericListItem(itemValueList = "Gold Accounts");
 
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "European Accounts,North American Accounts");
@@ -109,6 +111,8 @@ definition {
 
 		task ("Search for an organization and assert the result") {
 			ACUtils.searchBar(searchItem = "Minium");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 
 			ACDXPSettings.viewGenericListItem(itemValueList = "Minium");
 

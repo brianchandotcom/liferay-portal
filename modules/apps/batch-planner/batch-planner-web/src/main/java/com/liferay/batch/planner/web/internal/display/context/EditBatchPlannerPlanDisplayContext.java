@@ -16,6 +16,7 @@ package com.liferay.batch.planner.web.internal.display.context;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.constants.CreateStrategy;
+import com.liferay.batch.engine.constants.UpdateStrategy;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
@@ -157,6 +158,19 @@ public class EditBatchPlannerPlanDisplayContext {
 		}
 
 		return _themeDisplay;
+	}
+
+	public List<SelectOption> getUpdateStrategySelectOptions() {
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		for (UpdateStrategy updateStrategy : UpdateStrategy.values()) {
+			selectOptions.add(
+				new SelectOption(
+					LanguageUtil.get(getLocale(), updateStrategy.getLabel()),
+					updateStrategy.name(), updateStrategy.isDefaultStrategy()));
+		}
+
+		return selectOptions;
 	}
 
 	private List<SelectOption> _getInternalClassNameSelectOptions(

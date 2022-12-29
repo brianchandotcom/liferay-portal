@@ -22,6 +22,7 @@ import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -172,6 +173,21 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
+	public List<AccountGroup> getAccountGroups(
+		long companyId, String name, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		if (name.isEmpty()) {
+			return accountGroupPersistence.findByCompanyId(
+				companyId, start, end);
+		}
+
+		return accountGroupPersistence.findByC_LikeN(
+			companyId, StringPool.PERCENT + name + StringPool.PERCENT, start,
+			end, orderByComparator);
+	}
+
+	@Override
 	public List<AccountGroup> getAccountGroupsByAccountGroupId(
 		long[] accountGroupIds) {
 
@@ -181,6 +197,16 @@ public class AccountGroupLocalServiceImpl
 	@Override
 	public int getAccountGroupsCount(long companyId) {
 		return accountGroupPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public long getAccountGroupsCount(long companyId, String name) {
+		if (name.isEmpty()) {
+			return accountGroupPersistence.countByCompanyId(companyId);
+		}
+
+		return accountGroupPersistence.countByC_LikeN(
+			companyId, StringPool.PERCENT + name + StringPool.PERCENT);
 	}
 
 	@Override

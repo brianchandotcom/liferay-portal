@@ -86,7 +86,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEXT</td>
+	<td>ANY_TEXT</td>
 	<td>//*[contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>

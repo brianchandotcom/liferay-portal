@@ -1,17 +1,5 @@
 definition {
 
-	macro assertOrganization {
-		AssertElementPresent(
-			locator1 = "CP2Utils#TEXT",
-			key_text = "${text}");
-	}
-
-	macro assertThatTheOrganizationIsNotPresent {
-		AssertElementNotPresent(
-			locator1 = "CP2Utils#TEXT",
-			key_text = "${text}");
-	}
-
 	macro assertChangeRole {
 		AssertElementPresent(
 			key_email = "${email}",
@@ -62,10 +50,22 @@ definition {
 			locator1 = "CP2Utils#ROLE");
 	}
 
+	macro assertOrganization {
+		AssertElementPresent(
+			key_text = "${text}",
+			locator1 = "CP2Utils#ANY_TEXT");
+	}
+
 	macro assertTextVisible {
 		var key_text = "${text}";
 
 		AssertVisible(locator1 = "CP2Utils#MODAL_TEXT");
+	}
+
+	macro assertThatTheOrganizationIsNotPresent {
+		AssertElementNotPresent(
+			key_text = "${text}",
+			locator1 = "CP2Utils#ANY_TEXT");
 	}
 
 	macro assigneToRoleViaUsersTab {

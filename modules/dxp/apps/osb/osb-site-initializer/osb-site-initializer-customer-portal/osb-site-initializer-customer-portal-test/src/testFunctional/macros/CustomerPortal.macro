@@ -4,6 +4,18 @@ definition {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}
 
+	macro activeAccountRestriction {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectObject(label = "Koroneiki Account");
+
+		CreateObject.activeToogleAccountRestriction();
+
+		CreateObject.selectAccountRestrictedField(accountRestrictedField = "Koroneiki Account");
+
+		CreateObject.saveObject();
+	}
+
 	macro activeContactRole {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -209,6 +221,15 @@ definition {
 		AssertVisible(locator1 = "CustomerPortalSite#ANY_LINK");
 	}
 
+	macro assertThatTheProjectListIsNotPresent {
+		for (var project : list "${projectList}") {
+			AssertElementNotPresent(
+				key_project = "${project}",
+				locator1 = "CP2LiferayContact#PROJECT_TABLE",
+				title = "${project}");
+		}
+	}
+
 	macro assignUserToOrganization {
 		if (!(isSet(organizationName))) {
 			var organizationName = "Liferay Staff";
@@ -372,18 +393,6 @@ definition {
 		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-");
 
 		CustomerPortal.customerPortalApisTearDown();
-	}
-
-	macro activeAccountRestriction {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectObject(label = "Koroneiki Account");
-
-		CreateObject.activeToogleAccountRestriction();
-
-		CreateObject.selectAccountRestrictedField(accountRestrictedField = "Koroneiki Account");
-
-		CreateObject.saveObject();
 	}
 
 	macro deactivateKoroneikiAccount {
@@ -693,15 +702,6 @@ definition {
 	macro tableListInHomepage {
 		for (var project : list "${projectList}") {
 			AssertElementPresent(
-				key_project = "${project}",
-				locator1 = "CP2LiferayContact#PROJECT_TABLE",
-				title = "${project}");
-		}
-	}
-
-	macro assertThatTheProjectListIsNotPresent {
-		for (var project : list "${projectList}") {
-			AssertElementNotPresent(
 				key_project = "${project}",
 				locator1 = "CP2LiferayContact#PROJECT_TABLE",
 				title = "${project}");

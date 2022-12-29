@@ -58,6 +58,7 @@ public class GetLayoutsTreeStrutsAction implements StrutsAction {
 
 		long groupId = ParamUtil.getLong(
 			httpServletRequest, "groupId", themeDisplay.getScopeGroupId());
+
 		boolean privateLayout = ParamUtil.getBoolean(
 			httpServletRequest, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(

@@ -102,7 +102,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -1224,14 +1223,13 @@ public class PortletExportControllerImpl implements PortletExportController {
 	private PortletDataHandler _getPortletDataHandler(
 		PortletDataContext portletDataContext, Portlet portlet) {
 
-		Optional<Portlet> portletOptional = _replacePortlet(
-			portletDataContext, portlet);
+		portlet = _replacePortlet(portletDataContext, portlet);
 
-		return portletOptional.map(
-			Portlet::getPortletDataHandlerInstance
-		).orElse(
-			null
-		);
+		if (portlet != null) {
+			return portlet.getPortletDataHandlerInstance();
+		}
+
+		return null;
 	}
 
 	private boolean _hasPortletId(
@@ -1287,7 +1285,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 		return false;
 	}
 
-	private Optional<Portlet> _replacePortlet(
+	private Portlet _replacePortlet(
 		PortletDataContext portletDataContext, Portlet portlet) {
 
 		if (ExportImportDateUtil.isRangeFromLastPublishDate(
@@ -1296,20 +1294,17 @@ public class PortletExportControllerImpl implements PortletExportController {
 			String changesetPortletId = ChangesetPortletKeys.CHANGESET;
 
 			if (ExportImportThreadLocal.isPortletStagingInProcess()) {
-				Portlet changesetPortlet = _portletLocalService.getPortletById(
-					changesetPortletId);
-
-				return Optional.of(changesetPortlet);
+				return _portletLocalService.getPortletById(changesetPortletId);
 			}
 
 			if (ExportImportThreadLocal.isLayoutStagingInProcess() &&
 				!changesetPortletId.equals(portlet.getPortletId())) {
 
-				return Optional.empty();
+				return null;
 			}
 		}
 
-		return Optional.of(portlet);
+		return portlet;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

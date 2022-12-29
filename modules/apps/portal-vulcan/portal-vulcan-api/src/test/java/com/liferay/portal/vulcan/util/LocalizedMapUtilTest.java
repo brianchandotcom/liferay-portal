@@ -14,13 +14,20 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+
+import javax.ws.rs.BadRequestException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -81,6 +88,44 @@ public class LocalizedMapUtilTest {
 		Assert.assertEquals(map.toString(), 2, map.size());
 		Assert.assertEquals("bonjour", map.get(LocaleUtil.FRANCE));
 		Assert.assertEquals("hello", map.get(LocaleUtil.US));
+	}
+
+	@Test
+	public void testValidateI18n() {
+		String randomEntityName = RandomTestUtil.randomString();
+
+		Set<Locale> notFoundLocales = new HashSet<Locale>() {
+			{
+				add(LocaleUtil.CHINESE);
+				add(LocaleUtil.GERMAN);
+			}
+		};
+
+		try {
+			LocalizedMapUtil.validateI18n(
+				false, LocaleUtil.ENGLISH, randomEntityName,
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				notFoundLocales);
+
+			Assert.fail();
+		}
+		catch (BadRequestException badRequestException) {
+			String message = badRequestException.getMessage();
+
+			List<Locale> missingNotFoundLocales = new ArrayList<>();
+
+			for (Locale notFoundLocale : notFoundLocales) {
+				if (!message.contains(notFoundLocale.toString())) {
+					missingNotFoundLocales.add(notFoundLocale);
+				}
+			}
+
+			Assert.assertTrue(
+				"Error message missing locales: " + missingNotFoundLocales,
+				missingNotFoundLocales.isEmpty());
+		}
 	}
 
 }

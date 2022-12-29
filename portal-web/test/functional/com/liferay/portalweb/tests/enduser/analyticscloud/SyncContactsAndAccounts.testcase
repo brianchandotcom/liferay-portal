@@ -224,4 +224,42 @@ definition {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "European Accounts,North American Accounts");
 		}
 	}
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12661 | Test Summary: Check that it is possible to make pagination in the organizations"
+	@priority = "4"
+	test CheckIsPossiblePaginateOrganizations {
+		task ("Create 2 organizations") {
+			for (var organizationName : list "Brazil,France") {
+				JSONOrganization.addOrganization(
+					organizationName = "${organizationName}");
+			}
+		}
+
+		task ("Click on sync by organizations") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "Organizations",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+        }
+
+		task ("Choose the pagination to 5 items per page") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("See that there's only 5 organizations present in the list on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "Brazil,Canada,France,Italy,Minium");
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "United States");
+		}
+
+		task ("Go to the second page and see that there's only one organization in the list") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "United States");
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazil,Canada,France,Italy,Minium");
+		}
+	}
 }

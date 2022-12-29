@@ -125,4 +125,25 @@ definition {
 				syncNumber = "1 Selected");
 		}
     }
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12665 | Test Summary: Can sync all contacts by groups"
+	@priority = "5"
+	test CanSyncAllContactsByGroups {
+		JSONUserGroup.addUserGroup(
+		    userGroupDescription = "Group 1",
+			userGroupName = "Group 1");
+
+        task ("Click on sync by user groups") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			ACDXPSettings.syncContactsData(userGroup = "Minium User Group");
+        }
+
+		task("See that there's one user group selected") {
+			ACDXPSettings.viewSyncNumberPreview(
+				syncFieldName = "User Groups",
+				syncNumber = "1 Selected");
+		}
+    }
 }

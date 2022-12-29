@@ -57,7 +57,7 @@ if (portletTitleBasedNavigation) {
 	<%
 	KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
 
-	ViewKBArticleDisplayContext viewKbArticleDisplayContext = new ViewKBArticleDisplayContext(liferayPortletRequest, liferayPortletResponse);
+	ViewKBArticleDisplayContext viewKBArticleDisplayContext = new ViewKBArticleDisplayContext(liferayPortletRequest, liferayPortletResponse);
 	%>
 
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
@@ -69,7 +69,7 @@ if (portletTitleBasedNavigation) {
 							<clay:link
 								aria-label='<%= LanguageUtil.get(request, "edit") %>'
 								cssClass="btn-monospaced btn-secondary btn-sm"
-								href="<%= viewKbArticleDisplayContext.getEditArticleURL(kbArticle) %>"
+								href="<%= viewKBArticleDisplayContext.getEditArticleURL(kbArticle) %>"
 								icon="pencil"
 								title='<%= LanguageUtil.get(request, "edit") %>'
 							/>
@@ -89,13 +89,13 @@ if (portletTitleBasedNavigation) {
 					/>
 				</li>
 
-				<c:if test='<%= viewKbArticleDisplayContext.isSubscriptionEnabled(kbArticle) && GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
+				<c:if test='<%= viewKBArticleDisplayContext.isSubscriptionEnabled(kbArticle) && GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
 					<li class="nav-item">
 						<clay:link
-							aria-label="<%= viewKbArticleDisplayContext.getSubscriptionLabel(kbArticle) %>"
+							aria-label="<%= viewKBArticleDisplayContext.getSubscriptionLabel(kbArticle) %>"
 							cssClass="btn-primary btn-sm"
-							href="<%= viewKbArticleDisplayContext.getSubscriptionURL(kbArticle).toString() %>"
-							label="<%= viewKbArticleDisplayContext.getSubscriptionLabel(kbArticle) %>"
+							href="<%= viewKBArticleDisplayContext.getSubscriptionURL(kbArticle).toString() %>"
+							label="<%= viewKBArticleDisplayContext.getSubscriptionLabel(kbArticle) %>"
 						/>
 					</li>
 				</c:if>

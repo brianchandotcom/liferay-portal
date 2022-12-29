@@ -899,19 +899,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					}
 
 					for (int i = 0; i < jsonArray.length(); i++) {
-						if (segmentsExperienceId == 0) {
-							_layoutsImporter.importPageElement(
-								draftLayout, layoutStructure,
-								layoutStructure.getMainItemId(),
-								jsonArray.getString(i), i);
-						}
-						else {
-							_layoutsImporter.importPageElement(
-								draftLayout, layoutStructure,
-								layoutStructure.getMainItemId(),
-								jsonArray.getString(i), i,
-								segmentsExperienceId);
-						}
+						_layoutsImporter.importPageElement(
+							draftLayout, layoutStructure,
+							layoutStructure.getMainItemId(),
+							jsonArray.getString(i), i, segmentsExperienceId);
 					}
 				}
 			}

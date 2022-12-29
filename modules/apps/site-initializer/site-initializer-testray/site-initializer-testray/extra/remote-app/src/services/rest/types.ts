@@ -12,6 +12,7 @@
  * details.
  */
 
+import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import {DescriptionType} from '../../types';
 
 export type FacetAggregation = {
@@ -164,6 +165,15 @@ export type TestrayCaseType = {
 	id: number;
 	name: string;
 	status: string;
+};
+
+export type TestrayDyspatchTrigger = {
+	creator: {
+		name: string;
+		urlImage?: string;
+	};
+	status: StatusBadgeType;
+	type: string;
 };
 
 export type TestrayFactorOption = {

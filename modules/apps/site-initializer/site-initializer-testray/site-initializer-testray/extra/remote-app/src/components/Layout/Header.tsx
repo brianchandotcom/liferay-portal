@@ -20,11 +20,13 @@ import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {HeaderContext} from '../../context/HeaderContext';
+import {TestrayDyspatchTrigger} from '../../services/rest';
 import {Permission} from '../../util/permission';
 import BreadcrumbFinder from '../BreadcrumbFinder';
 import DropDown from '../DropDown';
 import DropDownWithActions from '../DropDown/DropDown';
 import TestrayIcons from '../Icons/TestrayIcon';
+import NotificationPopover from '../NotificationPopover';
 
 const Divider = () => <p className="mx-2 text-paragraph-lg">/</p>;
 
@@ -36,13 +38,20 @@ const Header = () => {
 	const [{dropdown, headerActions, heading, symbol, tabs}] = useContext(
 		HeaderContext
 	);
+	const navigate = useNavigate();
+
+	const notifications: TestrayDyspatchTrigger[] = [
+		{
+			creator: {name: 'wellignton barbosa	'},
+			status: 'blocked',
+			type: 'ajksdhaskd',
+		},
+	];
 
 	const filteredHeaderActions = Permission.filterActions(
 		headerActions.actions,
 		headerActions.item?.actions
 	);
-
-	const navigate = useNavigate();
 
 	const BreadCrumbTrigger: React.FC<BreadCrumbTriggerProps> = ({
 		displayCarret,
@@ -133,14 +142,18 @@ const Header = () => {
 						})}
 					</div>
 
-					{!!filteredHeaderActions.length && (
-						<DropDownWithActions
-							actions={filteredHeaderActions}
-							item={headerActions.item}
-							mutate={headerActions.mutate}
-							position={Align.BottomLeft}
-						/>
-					)}
+					<div className="align-items-center d-flex justify-content-center">
+						{!!filteredHeaderActions.length && (
+							<DropDownWithActions
+								actions={filteredHeaderActions}
+								item={headerActions.item}
+								mutate={headerActions.mutate}
+								position={Align.BottomLeft}
+							/>
+						)}
+
+						<NotificationPopover notifications={notifications} />
+					</div>
 				</div>
 			</div>
 

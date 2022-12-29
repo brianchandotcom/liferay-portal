@@ -1,0 +1,60 @@
+$opacity-transition: all 0.3s ease;
+
+.notification-popover {
+	background-color: white;
+	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.04),
+		0 4px 14px 0 rgba(0, 0, 0, 0.1);
+	margin: auto;
+	position: absolute;
+	width: 700px;
+
+	&.box-hidden {
+		opacity: 0 !important;
+		right: 17px;
+		top: 60px;
+		transition: $opacity-transition;
+		visibility: hidden !important;
+		z-index: 99;
+	}
+
+	&.box-visible {
+		opacity: 1;
+		right: 17px;
+		top: 70px;
+		transition: $opacity-transition;
+		visibility: visible;
+		z-index: 99;
+	}
+}
+
+.header-notification {
+	align-items: center;
+	background: #f00;
+	border-radius: 100%;
+	box-shadow: 1px 2px 3px rgba(200, 0, 0, 0.3);
+	color: #fff;
+	display: flex;
+	font-size: 12px;
+	justify-content: center;
+	opacity: 0;
+	padding: 10px;
+	position: absolute;
+	right: 19px;
+	top: 33px;
+	transition: $opacity-transition;
+	user-select: none;
+
+	&.show {
+		height: 20px;
+		opacity: 1 !important;
+		transition: $opacity-transition;
+		width: 20px;
+	}
+
+	&.hide {
+		height: 0;
+		opacity: 0 !important;
+		transition: $opacity-transition;
+		width: 0;
+	}
+}

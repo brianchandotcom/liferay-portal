@@ -109,6 +109,108 @@ function refresh_sample_minimal_workspace {
 	copy_template theme-spritemap sample-minimal-workspace/client-extensions/able-theme-spritemap "Able Theme Spritemap"
 
 	#
+	# Angular custom element client extension
+	#
+
+	rm -fr sample-minimal-workspace/client-extensions/angular-custom-element
+
+	cd sample-minimal-workspace/client-extensions
+
+	npx @angular/cli new angular-custom-element --defaults --skip-install
+
+	cd angular-custom-element
+
+	# Add support for custom elements and disable tests
+
+	sed -i \
+		-e '/"@angular\/core":/a\    "@angular/elements": "^15.0.0",' \
+		-e 's/"test":/"e2e-test":/' \
+		package.json
+
+	# Convert sample widget to custom element
+
+	sed -i \
+		-e 's/{ Component }/{ Component, Input }/' \
+		-e 's/title = /@Input("title") title = /' \
+		src/app/app.component.ts
+
+	sed -i \
+		-e 's/{ NgModule }/{ Injector, NgModule }/' \
+		-e '/@angular\/core/aimport { createCustomElement } from "@angular/elements";' \
+		-e '/@NgModule({/a\  entryComponents: [AppComponent],' \
+		-e '/bootstrap: /d' \
+		-e 's/class AppModule { }/class AppModule {/' \
+		-e '/class AppModule {/a\ ' \
+		-e '/class AppModule {/a\  constructor(private injector: Injector) {}' \
+		-e '/class AppModule {/a\ ' \
+		-e '/class AppModule {/a\  ngDoBootstrap() {' \
+		-e '/class AppModule {/a\    const AppComponentElement = ' \
+		-e '/class AppModule {/a\      createCustomElement(AppComponent, {' \
+		-e '/class AppModule {/a\        injector: this.injector' \
+		-e '/class AppModule {/a\      });' \
+		-e '/class AppModule {/a\ ' \
+		-e '/class AppModule {/a\    customElements.define("app-component",' \
+		-e '/class AppModule {/a\      AppComponentElement' \
+		-e '/class AppModule {/a\    );' \
+		-e '/class AppModule {/a\  }' \
+		-e '/class AppModule {/a\ ' \
+		-e '/class AppModule {/a}' \
+		src/app/app.module.ts
+
+	# Configure client extension
+
+	cat <<EOF >client-extension.yaml
+assemble:
+    - from: dist
+      include: angular-custom-element/
+      into: static/
+
+angular-custom-element:
+    cssURLs:
+        - angular-custom-element/styles.*.css
+    friendlyURLMapping: angular-custom-element
+    htmlElementName: app-component
+    instanceable: true
+    name: Angular Custom Element
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - angular-custom-element/main.*.js
+        - angular-custom-element/polyfills.*.js
+        - angular-custom-element/runtime.*.js
+    useESM: true
+
+#
+# To enable live development replace the configuration sections cssURLs and urls
+# above with the following ones:
+#
+# cssURLs:
+#     - http://localhost:4200/styles.js
+#
+# urls:
+#     - http://localhost:4200/runtime.js
+#     - http://localhost:4200/polyfills.js
+#     - http://localhost:4200/styles.js
+#     - http://localhost:4200/vendor.js
+#     - http://localhost:4200/main.js
+#
+# Then run the following command:
+#
+#        blade gw deploy && yarn start
+#
+# This will deploy the client extension pointing to Angular's live development
+# server (which is usually started at http://localhost:4200) instead of bundling
+# the built files inside the deployable ZIP.
+#
+# With this simple trick, DXP will fetch the custom element from the live
+# development server and update it accordingly as soon as you make any change to
+# the source code and refresh the page.
+#
+EOF
+
+	cd ../../..
+
+	#
 	# Fox remote app client extension
 	#
 

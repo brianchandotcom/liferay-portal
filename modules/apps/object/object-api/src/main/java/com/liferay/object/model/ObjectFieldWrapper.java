@@ -473,6 +473,13 @@ public class ObjectFieldWrapper
 		return model.getName();
 	}
 
+	@Override
+	public ObjectDefinition getObjectDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getObjectDefinition();
+	}
+
 	/**
 	 * Returns the object definition ID of this object field.
 	 *

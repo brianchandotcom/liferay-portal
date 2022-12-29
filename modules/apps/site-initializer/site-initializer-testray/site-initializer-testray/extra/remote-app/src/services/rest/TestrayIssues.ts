@@ -31,7 +31,9 @@ class TestrayIssuesImpl extends Rest<Issue, TestrayIssue> {
 	}
 
 	public async createIfNotExist(name: string) {
-		const response = await this.getAll(searchUtil.eq('name', name));
+		const response = await this.getAll({
+			filter: searchUtil.eq('name', name),
+		});
 
 		if ((response?.totalCount ?? 0) > 0) {
 			return response?.items[0];

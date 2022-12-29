@@ -64,9 +64,10 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 	}
 
 	public async assign(taskId: number, userIds: number[] | number) {
-		let response = await this.getAll(
-			`${searchUtil.eq('taskId', taskId)}&pageSize=100`
-		);
+		let response = await this.getAll({
+			filter: searchUtil.eq('taskId', taskId),
+			pageSize: 100,
+		});
 
 		response = this.transformDataFromList(
 			response as APIResponse<TestrayTaskUser>

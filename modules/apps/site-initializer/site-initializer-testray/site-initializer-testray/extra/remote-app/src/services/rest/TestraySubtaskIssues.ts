@@ -53,9 +53,9 @@ class TestraySubtaskIssuesImpl extends Rest<
 	}
 
 	public async createIfNotExist(data: SubtaskIssues) {
-		const response = await this.getAll(
-			searchUtil.eq('name', data.name as string)
-		);
+		const response = await this.getAll({
+			filter: searchUtil.eq('name', data.name as string),
+		});
 
 		if ((response?.totalCount ?? 0) > 0) {
 			return response?.items[0];

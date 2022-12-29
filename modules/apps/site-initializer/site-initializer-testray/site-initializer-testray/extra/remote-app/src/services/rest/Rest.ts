@@ -18,6 +18,13 @@ import {APIResponse} from './types';
 type Adapter<T = any> = (data: T) => Partial<T>;
 type TransformData<T = any> = (data: T) => T;
 
+type APIParametersOptions = {
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	sort?: string;
+};
+
 const getNestedFieldDepth = (nestedFields: string | undefined) => {
 	if (!nestedFields) {
 		return 1;
@@ -93,10 +100,28 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		await Promise.allSettled(data.map((item) => this.create(item)));
 	}
 
-	public getAll(
-		filter?: string
-	): Promise<APIResponse<ObjectModel> | undefined> {
-		return this.fetcher(`${this.resource}&filter=${filter}`);
+	public getAll({
+		filter,
+		page = 1,
+		pageSize = 20,
+		sort = '',
+	}: APIParametersOptions = {}): Promise<
+		APIResponse<ObjectModel> | undefined
+	> {
+		const searchParams = new URLSearchParams();
+
+		searchParams.set('page', page.toString());
+		searchParams.set('pageSize', pageSize.toString());
+
+		if (filter) {
+			searchParams.set('filter', filter);
+		}
+
+		if (sort) {
+			searchParams.set('sort', sort.toString());
+		}
+
+		return this.fetcher(`${this.resource}${searchParams.toString()}`);
 	}
 
 	public getOne(id: number): Promise<ObjectModel | undefined> {

@@ -888,8 +888,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Messaging
 
-		Assert.assertFalse(
-			_messageBus.hasDestination(objectDefinition.getDestinationName()));
+		Assert.assertNull(
+			_messageBus.getDestination(objectDefinition.getDestinationName()));
 
 		// Resources
 
@@ -980,8 +980,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Messaging
 
-		Assert.assertFalse(
-			_messageBus.hasDestination(objectDefinition.getDestinationName()));
+		Assert.assertNull(
+			_messageBus.getDestination(objectDefinition.getDestinationName()));
 
 		// Resources
 

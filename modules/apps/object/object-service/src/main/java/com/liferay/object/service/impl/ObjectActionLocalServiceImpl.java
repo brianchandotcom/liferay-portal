@@ -347,7 +347,7 @@ public class ObjectActionLocalServiceImpl
 				objectActionTrigger -> StringUtil.equals(
 					objectActionTrigger.getKey(), objectActionTriggerKey))) {
 
-			if (!_messageBus.hasDestination(objectActionTriggerKey)) {
+			if (_messageBus.getDestination(objectActionTriggerKey) == null) {
 				throw new ObjectActionTriggerKeyException();
 			}
 

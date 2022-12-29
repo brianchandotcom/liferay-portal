@@ -25,8 +25,6 @@ public interface MessageBus {
 
 	public Destination getDestination(String destinationName);
 
-	public boolean hasDestination(String destinationName);
-
 	public boolean registerMessageListener(
 		String destinationName, MessageListener messageListener);
 

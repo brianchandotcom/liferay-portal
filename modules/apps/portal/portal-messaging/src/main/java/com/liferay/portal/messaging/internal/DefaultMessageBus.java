@@ -87,11 +87,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	}
 
 	@Override
-	public boolean hasDestination(String destinationName) {
-		return _destinations.containsKey(destinationName);
-	}
-
-	@Override
 	public synchronized boolean registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 

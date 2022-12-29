@@ -72,4 +72,17 @@ definition {
         }
 	}
 
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12658 | Test Summary: Can sync all contacts and accounts"
+	@priority = "5"
+	test CanSyncAllContactsAndAccounts {
+        task("Click on sync all contacts and accounts") {
+            ACDXPSettings.syncContactsAndAccountstData();
+        }
+
+        task("Check if the toggle was enabled") {
+			ACDXPSettings.assertToggleOnOff(
+				toggleType = "sync-all-contacts-and-accounts",
+				boolean = "true");
+        }
+    }
 }

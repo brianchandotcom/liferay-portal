@@ -628,9 +628,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			try {
 				if ((draftLayout != null) &&
-					(_layoutContentModelResourcePermission.contains(
-						themeDisplay.getPermissionChecker(), layout.getPlid(),
-						ActionKeys.UPDATE) ||
+					(!layout.isPublished() ||
+					 _layoutContentModelResourcePermission.contains(
+						 themeDisplay.getPermissionChecker(), layout.getPlid(),
+						 ActionKeys.UPDATE) ||
 					 _layoutPermission.containsLayoutUpdatePermission(
 						 themeDisplay.getPermissionChecker(), layout))) {
 

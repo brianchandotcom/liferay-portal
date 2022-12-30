@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -438,7 +437,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
-		if (!LayoutPermissionUtil.contains(
+		if (!_layoutPermission.contains(
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.DELETE)) {
 
@@ -593,7 +592,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			Layout draftLayout = _getDraftLayout(layout);
 
 			if ((draftLayout != null) &&
-				LayoutPermissionUtil.contains(
+				_layoutPermission.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)) {
 
@@ -663,7 +662,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			jsonObject.put(
 				"parentable",
-				LayoutPermissionUtil.contains(
+				_layoutPermission.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.ADD_LAYOUT)
 			).put(
@@ -689,7 +688,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				"type", layout.getType()
 			).put(
 				"updateable",
-				LayoutPermissionUtil.contains(
+				_layoutPermission.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)
 			).put(

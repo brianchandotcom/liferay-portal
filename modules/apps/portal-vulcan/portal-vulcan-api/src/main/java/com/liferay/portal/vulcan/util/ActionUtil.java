@@ -79,6 +79,21 @@ public class ActionUtil {
 			uriInfo);
 	}
 
+	public static Map<String, String> addAction(
+		String actionName, Class<?> clazz, Long id, String methodName,
+		ModelResourcePermission<?> modelResourcePermission, Long parameterId,
+		UriInfo uriInfo) {
+
+		try {
+			return _addAction(
+				actionName, clazz, id, methodName, modelResourcePermission,
+				null, null, parameterId, null, null, uriInfo);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addAction(String, Class, Long, String, Object,
@@ -92,7 +107,7 @@ public class ActionUtil {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, methodName, null, object, ownerId,
+				actionName, clazz, id, methodName, null, object, ownerId, id,
 				permissionName, siteId, uriInfo);
 		}
 		catch (Exception exception) {
@@ -108,7 +123,7 @@ public class ActionUtil {
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, modelResourcePermission,
-				object, null, null, null, uriInfo);
+				object, null, id, null, null, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -148,7 +163,8 @@ public class ActionUtil {
 	private static Map<String, String> _addAction(
 			String actionName, Class<?> clazz, Long id, String methodName,
 			ModelResourcePermission<?> modelResourcePermission, Object object,
-			Long ownerId, String permissionName, Long siteId, UriInfo uriInfo)
+			Long ownerId, Long parameterId, String permissionName, Long siteId,
+			UriInfo uriInfo)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -244,7 +260,8 @@ public class ActionUtil {
 				).path(
 					clazz.getSuperclass(), methodName
 				).resolveTemplates(
-					_getParameterMap(clazz, id, methodName, siteId, uriInfo)
+					_getParameterMap(
+						clazz, parameterId, methodName, siteId, uriInfo)
 				).toTemplate();
 			}
 		).put(

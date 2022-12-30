@@ -18,18 +18,22 @@ import com.liferay.headless.user.notification.dto.v1_0.UserNotification;
 import com.liferay.headless.user.notification.internal.dto.v1_0.UserNotificationDTOConverter;
 import com.liferay.headless.user.notification.internal.odata.entity.v1_0.UserNotificationEntityModel;
 import com.liferay.headless.user.notification.resource.v1_0.UserNotificationResource;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import javax.ws.rs.NotFoundException;
@@ -148,18 +152,8 @@ public class UserNotificationResourceImpl
 			},
 			sorts,
 			document -> _toUserNotification(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
-	}
-
-	private UserNotification _toUserNotification(long userNotificationId)
-		throws Exception {
-
-		return _userNotificationDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
-				_dtoConverterRegistry, userNotificationId,
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+				_userNotificationEventLocalService.getUserNotificationEvent(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private UserNotification _toUserNotification(
@@ -168,8 +162,34 @@ public class UserNotificationResourceImpl
 
 		return _userNotificationDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null, null,
-				contextHttpServletRequest,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"get",
+					ActionUtil.addAction(
+						ActionKeys.VIEW, getClass(),
+						userNotificationEvent.getUserId(),
+						"getUserNotification", _userModelResourcePermission,
+						userNotificationEvent.getUserNotificationEventId(),
+						contextUriInfo)
+				).put(
+					"mark-read",
+					ActionUtil.addAction(
+						ActionKeys.UPDATE, getClass(),
+						userNotificationEvent.getUserId(),
+						"putUserNotificationRead", _userModelResourcePermission,
+						userNotificationEvent.getUserNotificationEventId(),
+						contextUriInfo)
+				).put(
+					"mark-unread",
+					ActionUtil.addAction(
+						ActionKeys.UPDATE, getClass(),
+						userNotificationEvent.getUserId(),
+						"putUserNotificationUnread",
+						_userModelResourcePermission,
+						userNotificationEvent.getUserNotificationEventId(),
+						contextUriInfo)
+				).build(),
+				null, contextHttpServletRequest,
 				userNotificationEvent.getUserNotificationEventId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
@@ -179,8 +199,10 @@ public class UserNotificationResourceImpl
 	private static final EntityModel _entityModel =
 		new UserNotificationEntityModel();
 
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ModelResourcePermission<User> _userModelResourcePermission;
 
 	@Reference
 	private UserNotificationDTOConverter _userNotificationDTOConverter;

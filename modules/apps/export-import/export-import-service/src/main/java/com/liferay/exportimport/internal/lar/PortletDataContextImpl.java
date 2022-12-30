@@ -596,7 +596,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Element element, ClassedModel classedModel) {
 
 		return createServiceContext(
-			element, null, classedModel, classedModel.getModelClass());
+			element, classedModel, classedModel.getModelClass());
 	}
 
 	@Override
@@ -609,8 +609,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StagedModel stagedModel, Class<?> clazz) {
 
 		return createServiceContext(
-			getImportDataStagedModelElement(stagedModel),
-			ExportImportPathUtil.getModelPath(stagedModel), stagedModel, clazz);
+			getImportDataStagedModelElement(stagedModel), stagedModel, clazz);
 	}
 
 	@Override
@@ -618,7 +617,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String path, ClassedModel classedModel) {
 
 		return createServiceContext(
-			null, path, classedModel, classedModel.getModelClass());
+			null, classedModel, classedModel.getModelClass());
 	}
 
 	@Override
@@ -1908,8 +1907,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected ServiceContext createServiceContext(
-		Element element, String path, ClassedModel classedModel,
-		Class<?> clazz) {
+		Element element, ClassedModel classedModel, Class<?> clazz) {
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -171,7 +171,7 @@ export function CollectionGeneralPanel({item}) {
 					)}\n\n${Liferay.Language.get('do-you-want-to-continue')}`,
 					onConfirm: (isConfirmed) => {
 						if (isConfirmed) {
-							callback(isConfirmed);
+							callback(false);
 						}
 					},
 				});

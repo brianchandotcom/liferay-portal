@@ -402,13 +402,13 @@ renderResponse.setTitle(title);
 
 							searchContainer.addRow(
 								[itemValue.name, workflowDefinitions, ddmStructureLink],
-								itemValue.ddmstructureid
+								itemValue.ddmstructureid.toString()
 							);
 						</c:when>
 						<c:otherwise>
 							searchContainer.addRow(
 								[itemValue.name, ddmStructureLink],
-								itemValue.ddmstructureid
+								itemValue.ddmstructureid.toString()
 							);
 						</c:otherwise>
 					</c:choose>
@@ -430,6 +430,8 @@ renderResponse.setTitle(title);
 			var tr = link.ancestor('tr');
 
 			searchContainer.deleteRow(tr, link.attr('data-rowId'));
+
+			searchContainer.updateDataStore();
 		},
 		'.modify-link'
 	);

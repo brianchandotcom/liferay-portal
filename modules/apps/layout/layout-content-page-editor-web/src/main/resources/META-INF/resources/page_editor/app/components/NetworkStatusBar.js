@@ -24,6 +24,7 @@ const getContent = (isOnline, status) => {
 	if (!isOnline) {
 		return (
 			<ClayLoadingIndicator
+				aria-label={Liferay.Language.get('trying-to-reconnect')}
 				className="my-0"
 				size="sm"
 				title={Liferay.Language.get('trying-to-reconnect')}
@@ -34,9 +35,10 @@ const getContent = (isOnline, status) => {
 	if (status === SERVICE_NETWORK_STATUS_TYPES.draftSaved) {
 		return (
 			<ClayIcon
+				aria-label={Liferay.Language.get('saved')}
 				className="text-success"
+				data-title={Liferay.Language.get('saved')}
 				symbol="check-circle"
-				title={Liferay.Language.get('saved')}
 			/>
 		);
 	}
@@ -44,6 +46,7 @@ const getContent = (isOnline, status) => {
 	if (status === SERVICE_NETWORK_STATUS_TYPES.savingDraft) {
 		return (
 			<ClayLoadingIndicator
+				aria-label={Liferay.Language.get('saving')}
 				className="my-0"
 				size="sm"
 				title={Liferay.Language.get('saving')}

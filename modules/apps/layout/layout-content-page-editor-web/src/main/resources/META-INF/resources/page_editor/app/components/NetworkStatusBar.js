@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 
@@ -56,7 +56,7 @@ const getContent = (isOnline, status) => {
 
 const NetworkStatusBar = ({error, status}) => {
 	const [isOnline, setIsOnline] = useState(true);
-	const [firstAutosaveMessage, setFirstAutosaveMessage] = useState(null);
+	const autoSaveMessageRef = useRef(null);
 
 	useEffect(() => {
 		if (status === SERVICE_NETWORK_STATUS_TYPES.error) {
@@ -70,13 +70,13 @@ const NetworkStatusBar = ({error, status}) => {
 	useEffect(() => {
 		if (
 			status === SERVICE_NETWORK_STATUS_TYPES.draftSaved &&
-			!firstAutosaveMessage
+			!autoSaveMessageRef.current
 		) {
-			setFirstAutosaveMessage(
-				Liferay.Language.get('page-editor-autosaves-your-work')
+			autoSaveMessageRef.current = Liferay.Language.get(
+				'page-editor-autosaves-your-work'
 			);
 		}
-	}, [firstAutosaveMessage, status]);
+	}, [status]);
 
 	useEventListener('online', () => setIsOnline(true), true, window);
 
@@ -87,7 +87,7 @@ const NetworkStatusBar = ({error, status}) => {
 	return (
 		<div className="page-editor__status-bar">
 			<span className="sr-only" role="alert">
-				{firstAutosaveMessage}
+				{autoSaveMessageRef.current}
 			</span>
 
 			{content}

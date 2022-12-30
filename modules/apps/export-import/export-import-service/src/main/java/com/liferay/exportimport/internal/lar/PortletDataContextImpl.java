@@ -1979,7 +1979,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 			expandoPath = element.attributeValue("expando-path");
 		}
 		else {
-			expandoPath = ExportImportPathUtil.getExpandoPath(path);
+			expandoPath = ExportImportPathUtil.getExpandoPath(
+				ExportImportPathUtil.getModelPath(
+					this, classedModel.getModelClassName(),
+					ExportImportClassedModelUtil.getClassPK(classedModel)));
 		}
 
 		if (Validator.isNotNull(expandoPath)) {

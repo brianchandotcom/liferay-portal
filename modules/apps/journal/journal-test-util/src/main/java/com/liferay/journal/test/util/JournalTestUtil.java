@@ -41,8 +41,6 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.util.JournalHelper;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -943,14 +941,6 @@ public class JournalTestUtil {
 		return ReflectionTestUtil.getMethod(
 			_JOURNAL_UTIL_CLASS, "getTokens", JournalArticle.class,
 			DDMTemplate.class, PortletRequestModel.class, ThemeDisplay.class);
-	}
-
-	public static Method getJournalUtilTransformMethod() {
-		return ReflectionTestUtil.getMethod(
-			_JOURNAL_UTIL_CLASS, "transform", JournalArticle.class,
-			DDMTemplate.class, JournalHelper.class, String.class,
-			LayoutDisplayPageProviderRegistry.class, PortletRequestModel.class,
-			boolean.class, String.class, ThemeDisplay.class, String.class);
 	}
 
 	public static String getSampleTemplateFTL() {

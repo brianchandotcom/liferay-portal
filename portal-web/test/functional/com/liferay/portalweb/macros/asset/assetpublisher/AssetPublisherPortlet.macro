@@ -1043,9 +1043,7 @@ definition {
 			}
 		}
 		else {
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE_CARD");
 		}
 
 		if (isSet(assetListName)) {

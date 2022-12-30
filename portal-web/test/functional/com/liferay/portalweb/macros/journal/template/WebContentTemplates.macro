@@ -55,16 +55,16 @@ definition {
 
 			var key_tableEntry = "${structureName}";
 
-			AssertElementPresent(locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+			AssertElementPresent(locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 
 			var browserType = PropsUtil.get("browser.type");
 
 			if ("${browserType}" == "safari") {
-				Click.javaScriptClick(locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+				Click.javaScriptClick(locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 			}
 			else {
 				AssertClick.assertTextClickAt(
-					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 					value1 = "${structureName}");
 			}
 

@@ -178,10 +178,7 @@ function DisplayPageItemContextualSidebar({
 						/>
 					</ClayInput.GroupItem>
 
-					<ClayInput.GroupItem
-						className="site-navigation-language-selector"
-						shrink
-					>
+					<ClayInput.GroupItem shrink>
 						<TranslationAdminSelector
 							activeLanguageIds={locales.map(
 								(locale) => locale.id

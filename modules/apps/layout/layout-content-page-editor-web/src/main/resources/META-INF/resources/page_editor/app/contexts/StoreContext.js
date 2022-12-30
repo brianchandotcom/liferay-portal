@@ -25,13 +25,13 @@ import React, {
 
 import useUndo from '../components/undo/useUndo';
 
-const StoreDispatchContext = React.createContext(() => {});
-const StoreGetStateContext = React.createContext(null);
-const StoreSubscriptionContext = React.createContext(() => {});
-
 const DEFAULT_COMPARE_EQUAL = (a, b) => a === b;
 const DEFAULT_DISPATCH = () => {};
 const DEFAULT_GET_STATE = () => ({});
+
+const StoreDispatchContext = React.createContext(DEFAULT_DISPATCH);
+const StoreGetStateContext = React.createContext(DEFAULT_GET_STATE);
+const StoreSubscriptionContext = React.createContext(() => {});
 
 class EventEmitter {
 	constructor() {
@@ -180,7 +180,9 @@ export function useSelectorCallback(
 		});
 
 		return () => {
-			handler.removeListener();
+			if (handler) {
+				handler.removeListener();
+			}
 		};
 	}, [getState, selectorCallback, subscribe]);
 

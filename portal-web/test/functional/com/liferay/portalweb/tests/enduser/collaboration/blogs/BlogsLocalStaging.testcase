@@ -39,6 +39,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168638. It checks that blog cover images in a staged environment will also display from repository in Live."
+	@priority = "4"
+	test CanCoverImageDisplayFromRepositoryAfterPublishToLive {
+		var imageId = JSONBlog.uploadBlogImage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			sourceFileName = "Document_1.jpg");
+
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${imageId}",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		Navigator.gotoNavTab(navTab = "Images");
+
+		LexiconEntry.viewEntryName(rowEntry = "Document_1.jpg");
+	}
+
 	@description = "This test covers LPS-81685. It ensures that blogs aren't available to edit on Live"
 	@priority = "4"
 	test CanNotEditBlogsAfterPublishToLive {

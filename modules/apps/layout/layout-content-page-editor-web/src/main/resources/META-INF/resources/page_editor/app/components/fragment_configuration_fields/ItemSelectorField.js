@@ -25,7 +25,7 @@ import {useDispatch} from '../../contexts/StoreContext';
 import InfoItemService from '../../services/InfoItemService';
 import itemSelectorValueToInfoItem from '../../utils/item_selector_value/itemSelectorValueToInfoItem';
 
-export function ItemSelectorField({field, onValueSelect, value}) {
+export function ItemSelectorField({field, onValueSelect, value = {}}) {
 	const collectionItemContext = useContext(CollectionItemContext);
 
 	const {typeOptions = {}} = field;

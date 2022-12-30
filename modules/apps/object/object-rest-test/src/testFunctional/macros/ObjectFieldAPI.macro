@@ -20,13 +20,7 @@ definition {
 		return "${curl}";
 	}
 
-	macro deleteObjectField {
-		var curl = ObjectFieldAPI._curlObjectField(objectFieldId = "${staticObjectFieldId}");
-
-		JSONCurlUtil.delete("${curl}");
-	}
-
-	macro getIdOfCreatedObjectField {
+	macro createObjectFieldByObjectDefinitionId {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${dbType},${name}");
 
 		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = "${objectDefinitionId}");
@@ -49,7 +43,24 @@ definition {
 
 		var curl = StringUtil.add("${curl}", "${body}", " ");
 
-		var objectFieldId = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+	macro deleteObjectField {
+		var curl = ObjectFieldAPI._curlObjectField(objectFieldId = "${staticObjectFieldId}");
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	macro getIdOfCreatedObjectField {
+		var response = ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
+			dbType = "${dbType}",
+			name = "${name}",
+			objectDefinitionId = "${objectDefinitionId}");
+
+		var objectFieldId = JSONCurlUtil.get("${response}", "$.id");
 
 		return "${objectFieldId}";
 	}

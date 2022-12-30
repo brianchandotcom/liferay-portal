@@ -70,7 +70,16 @@ definition {
 	macro _createObjectDefinition {
 		Variables.assertDefined(parameterList = "${en_US_label},${name},${requiredStringFieldName},${en_US_plural_label}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
@@ -111,16 +120,31 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${name}");
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
-		var portalURL = JSONCompany.getPortalURL();
 
-		var curl = '''
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var body = '''"name": "${name}"''';
+
+		if (isSet(secondField)) {
+			var body = StringUtil.add("${body},", "\"secondField\":\"${secondFieldValue}\"", "");
+		}
+
+		var curlWithoutBody = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase} \
 				-u test@liferay.com:test \
 				-H Content-Type: application/json \
-				-d {
-					"name": "${name}"
-				}
 		''';
+
+		var curl = StringUtil.add("${curlWithoutBody}", "-d {${body}}", " ");
 
 		var objectId = JSONCurlUtil.post("${curl}", "$.id");
 
@@ -246,7 +270,16 @@ definition {
 	macro _getObjectDefinitionStatusById {
 		Variables.assertDefined(parameterList = "${objectDefinitionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
@@ -262,7 +295,17 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectId}");
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
-		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId} \
@@ -385,7 +428,16 @@ definition {
 	macro _publishObjectDefinition {
 		Variables.assertDefined(parameterList = "${objectDefinitionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish \
@@ -606,11 +658,16 @@ definition {
 			en_US_label = "${en_US_label}",
 			en_US_plural_label = "${en_US_plural_label}",
 			name = "${name}",
-			requiredStringFieldName = "${requiredStringFieldName}");
+			requiredStringFieldName = "${requiredStringFieldName}",
+			virtualHost = "${virtualHost}");
 
-		ObjectDefinitionAPI._publishObjectDefinition(objectDefinitionId = "${objectDefinitionId}");
+		ObjectDefinitionAPI._publishObjectDefinition(
+			objectDefinitionId = "${objectDefinitionId}",
+			virtualHost = "${virtualHost}");
 
-		var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId}");
+		var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(
+			objectDefinitionId = "${objectDefinitionId}",
+			virtualHost = "${virtualHost}");
 
 		TestUtils.assertEquals(
 			actual = "${objectDefinitionStatus}",
@@ -648,11 +705,14 @@ definition {
 	macro createObjectEntryWithName {
 		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = "${en_US_plural_label}",
-			name = "${name}");
+			name = "${name}",
+			secondFieldValue = "${secondFieldValue}",
+			virtualHost = "${virtualHost}");
 
 		var actualName = ObjectDefinitionAPI._getObjectEntryNameById(
 			en_US_plural_label = "${en_US_plural_label}",
-			objectId = "${objectId}");
+			objectId = "${objectId}",
+			virtualHost = "${virtualHost}");
 
 		TestUtils.assertEquals(
 			actual = "${actualName}",
@@ -741,7 +801,17 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label}");
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
-		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase}/ \

@@ -447,7 +447,17 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete an object"
 	macro deleteObject {
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
 		var objectId = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
@@ -598,7 +608,16 @@ definition {
 	}
 
 	macro getObjectEntryId {
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = "8080";
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";

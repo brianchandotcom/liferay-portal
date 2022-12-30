@@ -625,11 +625,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			String layoutName = layout.getName(themeDisplay.getLocale());
 
 			if ((draftLayout != null) &&
-				(!layout.isPublished() ||
+				(hasUpdatePermission || !layout.isPublished() ||
 				 _layoutContentModelResourcePermission.contains(
 					 themeDisplay.getPermissionChecker(), layout.getPlid(),
-					 ActionKeys.UPDATE) ||
-				 hasUpdatePermission)) {
+					 ActionKeys.UPDATE))) {
 
 				layoutName = layoutName + StringPool.STAR;
 			}

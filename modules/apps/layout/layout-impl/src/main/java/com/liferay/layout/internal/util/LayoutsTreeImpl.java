@@ -592,9 +592,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			Layout draftLayout = _getDraftLayout(layout);
 
 			if ((draftLayout != null) &&
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE)) {
+				_layoutPermission.containsLayoutUpdatePermission(
+					themeDisplay.getPermissionChecker(), layout)) {
 
 				jsonObject.put("draftStatus", "draft");
 
@@ -688,9 +687,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				"type", layout.getType()
 			).put(
 				"updateable",
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE)
+				_layoutPermission.containsLayoutUpdatePermission(
+					themeDisplay.getPermissionChecker(), layout)
 			).put(
 				"uuid", layout.getUuid()
 			);

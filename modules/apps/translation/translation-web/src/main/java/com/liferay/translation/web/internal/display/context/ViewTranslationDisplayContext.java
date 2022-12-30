@@ -37,7 +37,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,10 +60,7 @@ public class ViewTranslationDisplayContext {
 		InfoField infoField,
 		InfoFieldType.Attribute<TextInfoFieldType, Boolean> attribute) {
 
-		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
-			attribute);
-
-		return attributeOptional.orElse(false);
+		return GetterUtil.getBoolean(infoField.getAttribute(attribute));
 	}
 
 	public String getInfoFieldLabel(InfoField infoField) {

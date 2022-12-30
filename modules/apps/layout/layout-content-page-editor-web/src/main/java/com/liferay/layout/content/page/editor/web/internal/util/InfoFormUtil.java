@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
@@ -148,24 +148,22 @@ public class InfoFormUtil {
 		);
 
 		if (infoFieldType instanceof SelectInfoFieldType) {
-			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
-				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
+			List<SelectInfoFieldType.Option> options =
+				(List<SelectInfoFieldType.Option>)infoField.getAttribute(
+					SelectInfoFieldType.OPTIONS);
 
-			List<SelectInfoFieldType.Option> options = optionsOptional.orElse(
-				Collections.emptyList());
+			if (options == null) {
+				options = Collections.emptyList();
+			}
 
 			try {
 				jsonObject.put(
 					"typeOptions",
 					JSONUtil.put(
 						"multiSelect",
-						() -> {
-							Optional<Boolean> multipleOptional =
-								infoField.getAttributeOptional(
-									SelectInfoFieldType.MULTIPLE);
-
-							return multipleOptional.orElse(false);
-						}
+						() -> GetterUtil.getBoolean(
+							infoField.getAttribute(
+								SelectInfoFieldType.MULTIPLE))
 					).put(
 						"validValues",
 						JSONUtil.toJSONArray(

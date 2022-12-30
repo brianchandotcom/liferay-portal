@@ -18,8 +18,6 @@ import com.liferay.info.field.InfoField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,10 +46,7 @@ public class TextInfoFieldTypeTest {
 			TextInfoFieldType.MULTILINE, false
 		).build();
 
-		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.MULTILINE);
-
-		Assert.assertFalse(attributeOptional.get());
+		Assert.assertFalse(infoField.getAttribute(TextInfoFieldType.MULTILINE));
 	}
 
 	@Test
@@ -67,10 +62,7 @@ public class TextInfoFieldTypeTest {
 			TextInfoFieldType.MULTILINE, true
 		).build();
 
-		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.MULTILINE);
-
-		Assert.assertTrue(attributeOptional.get());
+		Assert.assertTrue(infoField.getAttribute(TextInfoFieldType.MULTILINE));
 	}
 
 	@Test
@@ -84,10 +76,7 @@ public class TextInfoFieldTypeTest {
 			"test-field"
 		).build();
 
-		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.MULTILINE);
-
-		Assert.assertFalse(attributeOptional.isPresent());
+		Assert.assertNull(infoField.getAttribute(TextInfoFieldType.MULTILINE));
 	}
 
 }

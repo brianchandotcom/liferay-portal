@@ -57,16 +57,12 @@ import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -124,10 +120,7 @@ public class TranslateDisplayContext {
 		InfoField<TextInfoFieldType> infoField,
 		InfoFieldType.Attribute<TextInfoFieldType, Boolean> attribute) {
 
-		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
-			attribute);
-
-		return attributeOptional.orElse(false);
+		return GetterUtil.getBoolean(infoField.getAttribute(attribute));
 	}
 
 	public String getInfoFieldLabel(InfoField infoField) {
@@ -178,24 +171,23 @@ public class TranslateDisplayContext {
 				HashMapBuilder.<String, Object>put(
 					"fields",
 					() -> {
-						Stream<InfoField> stream = infoFields.stream();
+						List<HashMap<String, Object>> list = new ArrayList<>();
 
-						return stream.map(
-							infoField -> {
-								String infoFieldId =
-									"infoField--" + infoField.getUniqueId() +
-										"--";
+						for (InfoField infoField : infoFields) {
+							String infoFieldId =
+								"infoField--" + infoField.getUniqueId() + "--";
 
-								Map<String, Object> editorConfiguration = null;
+							Map<String, Object> editorConfiguration = null;
 
-								if (getBooleanValue(
-										infoField, TextInfoFieldType.HTML)) {
+							if (getBooleanValue(
+									infoField, TextInfoFieldType.HTML)) {
 
-									editorConfiguration =
-										_getInfoFieldEditorConfig(infoFieldId);
-								}
+								editorConfiguration = _getInfoFieldEditorConfig(
+									infoFieldId);
+							}
 
-								return HashMapBuilder.<String, Object>put(
+							list.add(
+								HashMapBuilder.<String, Object>put(
 									"editorConfiguration", editorConfiguration
 								).put(
 									"html",
@@ -229,11 +221,10 @@ public class TranslateDisplayContext {
 										getTargetLocale(), "lang.dir")
 								).put(
 									"targetLanguageId", getTargetLanguageId()
-								).build();
-							}
-						).collect(
-							Collectors.toList()
-						);
+								).build());
+						}
+
+						return list;
 					}
 				).put(
 					"legend",
@@ -352,18 +343,16 @@ public class TranslateDisplayContext {
 	public List<String> getSourceStringValues(
 		InfoField infoField, Locale locale) {
 
-		Collection<InfoFieldValue<Object>> infoFieldValues =
-			_sourceInfoItemFieldValues.getInfoFieldValues(
-				infoField.getUniqueId());
+		List<String> values = new ArrayList<>();
 
-		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
+		for (InfoFieldValue<Object> infoFieldValue :
+				_sourceInfoItemFieldValues.getInfoFieldValues(
+					infoField.getUniqueId())) {
 
-		return stream.map(
-			infoFieldValue -> GetterUtil.getString(
-				infoFieldValue.getValue(locale))
-		).collect(
-			Collectors.toList()
-		);
+			values.add(GetterUtil.getString(infoFieldValue.getValue(locale)));
+		}
+
+		return values;
 	}
 
 	public String getTargetLanguageId() {
@@ -377,18 +366,16 @@ public class TranslateDisplayContext {
 	public List<String> getTargetStringValues(
 		InfoField infoField, Locale locale) {
 
-		Collection<InfoFieldValue<Object>> infoFieldValues =
-			_targetInfoItemFieldValues.getInfoFieldValues(
-				infoField.getUniqueId());
+		List<String> values = new ArrayList<>();
 
-		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
+		for (InfoFieldValue<Object> infoFieldValue :
+				_targetInfoItemFieldValues.getInfoFieldValues(
+					infoField.getUniqueId())) {
 
-		return stream.map(
-			infoFieldValue -> GetterUtil.getString(
-				infoFieldValue.getValue(locale))
-		).collect(
-			Collectors.toList()
-		);
+			values.add(GetterUtil.getString(infoFieldValue.getValue(locale)));
+		}
+
+		return values;
 	}
 
 	public String getTitle() {

@@ -58,7 +58,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -281,10 +280,9 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		Object objectValue = null;
 
-		Optional<Boolean> decimalOptional = infoField.getAttributeOptional(
-			NumberInfoFieldType.DECIMAL);
+		if (GetterUtil.getBoolean(
+				infoField.getAttribute(NumberInfoFieldType.DECIMAL))) {
 
-		if (decimalOptional.orElse(false)) {
 			objectValue = new BigDecimal(value);
 		}
 		else {

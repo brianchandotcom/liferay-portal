@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -83,7 +84,6 @@ import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -175,10 +175,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
-		Optional<Boolean> optional = infoField.getAttributeOptional(
-			TextInfoFieldType.HTML);
-
-		Assert.assertTrue(optional.orElse(false));
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				infoField.getAttribute(TextInfoFieldType.HTML)));
 	}
 
 	@Test
@@ -219,10 +218,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 				categoryTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
-		Optional<Boolean> optional = infoField.getAttributeOptional(
-			TextInfoFieldType.HTML);
-
-		Assert.assertTrue(optional.orElse(false));
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				infoField.getAttribute(TextInfoFieldType.HTML)));
 	}
 
 	@Test
@@ -285,10 +283,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 				_portal.getSiteDefaultLocale(_group.getGroupId())),
 			infoFieldValue.getValue());
 
-		Optional<Boolean> optional = infoField.getAttributeOptional(
-			TextInfoFieldType.HTML);
-
-		Assert.assertTrue(optional.orElse(false));
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				infoField.getAttribute(TextInfoFieldType.HTML)));
 	}
 
 	@Test

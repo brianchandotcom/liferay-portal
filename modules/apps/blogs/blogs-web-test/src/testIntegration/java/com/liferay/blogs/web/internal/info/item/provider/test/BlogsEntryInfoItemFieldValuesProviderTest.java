@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,7 +49,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.InputStream;
 
 import java.util.Date;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,10 +116,9 @@ public class BlogsEntryInfoItemFieldValuesProviderTest {
 
 		InfoField infoField = contentInfoFieldValue.getInfoField();
 
-		Optional<Boolean> optional = infoField.getAttributeOptional(
-			TextInfoFieldType.HTML);
-
-		Assert.assertTrue(optional.orElse(false));
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				infoField.getAttribute(TextInfoFieldType.HTML)));
 	}
 
 	@Test

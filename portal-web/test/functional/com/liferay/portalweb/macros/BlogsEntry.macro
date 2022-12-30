@@ -209,6 +209,8 @@ definition {
 			LexiconCard.clickCard(card = "${depotName}");
 		}
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		Click(
 			key_assetTitle = "${assetTitle}",
 			locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX");

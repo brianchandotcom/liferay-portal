@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 const ConfigurationFieldPropTypes = {
 	dataType: PropTypes.string,
 	defaultValue: PropTypes.oneOfType([
+		PropTypes.array,
 		PropTypes.bool,
 		PropTypes.number,
 		PropTypes.object,

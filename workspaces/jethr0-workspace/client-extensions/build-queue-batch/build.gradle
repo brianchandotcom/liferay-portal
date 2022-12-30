@@ -1,8 +1,9 @@
 deploy {
-    doLast {
-        File srcFile = new File("${rootDir}/bundles/osgi/client-extensions/build-queue-batch.zip")
-        File destFile = new File("${rootDir}/bundles/deploy/build-queue-batch.zip")
+	doLast {
+		File srcFile = new File("${rootDir}/bundles/osgi/client-extensions/build-queue-batch.zip")
 
-        srcFile.renameTo(destFile)
-    }
+		File destFile = new File("${rootDir}/bundles/deploy/build-queue-batch.zip")
+
+		srcFile.renameTo(destFile)
+	}
 }

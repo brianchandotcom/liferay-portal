@@ -3,6 +3,8 @@ definition {
 
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";
@@ -51,8 +53,6 @@ definition {
 		JSONRole.assignRoleToUser(
 			roleTitle = "Publications User",
 			userEmailAddress = "userea@liferay.com");
-
-		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name 1");
 
@@ -180,9 +180,6 @@ definition {
 
 	@priority = "3"
 	test ExplainEachRoleInInviteUsers {
-		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
-		property osgi.module.configurations = "enabled=B\"true\"";
-
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		PublicationsNavigator.gotoReviewChanges(
@@ -246,8 +243,6 @@ definition {
 			resourceAction = "PUBLISH",
 			resourceName = "com.liferay.change.tracking.model.CTCollection",
 			roleTitle = "Publications User");
-
-		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -313,8 +308,6 @@ definition {
 		JSONRole.assignRoleToUser(
 			roleTitle = "Publications User",
 			userEmailAddress = "userea@liferay.com");
-
-		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -386,8 +379,6 @@ definition {
 			resourceName = "com.liferay.change.tracking.model.CTCollection",
 			roleTitle = "Publications User");
 
-		Publications.enablePublications();
-
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		PublicationsNavigator.openPublicationsAdmin();
@@ -448,8 +439,6 @@ definition {
 			groupName = "Guest",
 			roleTitle = "Site Administrator",
 			userEmailAddress = "userea@liferay.com");
-
-		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

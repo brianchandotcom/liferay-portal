@@ -67,10 +67,10 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 				level += getLevel(
 					trimmedLine,
 					new String[] {
-						StringPool.OPEN_CURLY_BRACE, StringPool.OPEN_BRACKET
+						StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE
 					},
 					new String[] {
-						StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_BRACKET
+						StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE
 					});
 
 				if (trimmedLine.endsWith("'{")) {

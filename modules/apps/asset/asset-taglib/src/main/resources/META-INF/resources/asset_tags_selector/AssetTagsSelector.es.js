@@ -223,6 +223,7 @@ function AssetTagsSelector({
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
+							alignmentByViewport
 							aria-describedby={
 								helpText
 									? `${inputName}_MultiSelectHelpText`

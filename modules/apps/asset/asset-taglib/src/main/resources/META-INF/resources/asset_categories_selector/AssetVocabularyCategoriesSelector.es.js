@@ -214,6 +214,7 @@ function AssetVocabulariesCategoriesSelector({
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
+							alignmentByViewport
 							id={inputName + '_MultiSelect'}
 							inputName={inputName}
 							items={selectedItems}

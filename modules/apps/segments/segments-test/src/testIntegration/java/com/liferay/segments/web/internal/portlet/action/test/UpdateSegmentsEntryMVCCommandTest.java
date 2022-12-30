@@ -36,10 +36,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -130,14 +128,7 @@ public class UpdateSegmentsEntryMVCCommandTest {
 			criteria.contains(
 				String.format("(lastName eq '%s')", user.getLastName())));
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
-			Assert.assertEquals(
-				_company.getGroupId(), segmentsEntry1.getGroupId());
-		}
-		else {
-			Assert.assertEquals(
-				_group.getGroupId(), segmentsEntry1.getGroupId());
-		}
+		Assert.assertEquals(_group.getGroupId(), segmentsEntry1.getGroupId());
 	}
 
 	@Test

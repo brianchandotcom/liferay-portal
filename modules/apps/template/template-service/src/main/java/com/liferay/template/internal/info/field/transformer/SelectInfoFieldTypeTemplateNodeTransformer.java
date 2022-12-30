@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.template.info.field.transformer.BaseTemplateNodeTransformer;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
@@ -32,7 +33,6 @@ import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,10 +55,8 @@ public class SelectInfoFieldTypeTemplateNodeTransformer
 
 		String stringValue = StringPool.BLANK;
 
-		Optional<Boolean> multipleOptional = infoField.getAttributeOptional(
-			SelectInfoFieldType.MULTIPLE);
-
-		Boolean multiple = multipleOptional.orElse(false);
+		Boolean multiple = GetterUtil.getBoolean(
+			infoField.getAttribute(SelectInfoFieldType.MULTIPLE));
 
 		JSONArray selectedOptionValuesJSONArray =
 			_getSelectedOptionValuesJSONArray(
@@ -80,12 +78,15 @@ public class SelectInfoFieldTypeTemplateNodeTransformer
 				"multiple", String.valueOf(multiple)
 			).build());
 
-		Optional<List<SelectInfoFieldType.Option>> optionsOptional =
-			infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
+		List<SelectInfoFieldType.Option> options =
+			(List<SelectInfoFieldType.Option>)infoField.getAttribute(
+				SelectInfoFieldType.OPTIONS);
 
-		for (SelectInfoFieldType.Option option :
-				optionsOptional.orElse(Collections.emptyList())) {
+		if (options == null) {
+			options = Collections.emptyList();
+		}
 
+		for (SelectInfoFieldType.Option option : options) {
 			templateNode.appendOptionMap(
 				option.getValue(), option.getLabel(themeDisplay.getLocale()));
 		}

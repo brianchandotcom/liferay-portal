@@ -29,7 +29,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Adolfo Pérez
@@ -43,9 +42,7 @@ public class InfoItemHelper {
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
-	public Optional<String> getInfoItemTitleOptional(
-		long classPK, Locale locale) {
-
+	public String getInfoItemTitle(long classPK, Locale locale) {
 		try {
 			ObjectValuePair<InfoItemReference, String>
 				infoItemReferenceSuffixObjectValuePair =
@@ -64,20 +61,16 @@ public class InfoItemHelper {
 				infoItemReference.getClassPK());
 
 			if (object == null) {
-				return Optional.empty();
+				return null;
 			}
 
-			return _getTitleOptional(
-				infoItemReference.getClassName(), object, locale
-			).map(
-				title ->
-					title + infoItemReferenceSuffixObjectValuePair.getValue()
-			);
+			return _getTitle(infoItemReference.getClassName(), object, locale) +
+				infoItemReferenceSuffixObjectValuePair.getValue();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 
-			return Optional.empty();
+			return null;
 		}
 	}
 
@@ -108,9 +101,7 @@ public class InfoItemHelper {
 				StringPool.CLOSE_PARENTHESIS));
 	}
 
-	private Optional<String> _getTitleOptional(
-		String className, Object object, Locale locale) {
-
+	private String _getTitle(String className, Object object, Locale locale) {
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
@@ -119,14 +110,13 @@ public class InfoItemHelper {
 			infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
 
 		if (titleInfoFieldValue != null) {
-			return Optional.ofNullable(
-				(String)titleInfoFieldValue.getValue(locale));
+			return (String)titleInfoFieldValue.getValue(locale);
 		}
 
 		InfoFieldValue<Object> nameInfoFieldValue =
 			infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
 
-		return Optional.ofNullable((String)nameInfoFieldValue.getValue(locale));
+		return (String)nameInfoFieldValue.getValue(locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(InfoItemHelper.class);

@@ -44,11 +44,11 @@ public interface JournalCreationStrategy {
 	 * Returns <code>true</code> if the default group permissions should be
 	 * added when the specified journalObject is created.
 	 *
-	 * @param  context the portlet data context
-	 * @param  journalObject the journal object
-	 * @return <code>true</code> if default group permissions should be added to
-	 *         the specified journalObject
-	 * @throws Exception if an exception occurred
+	 * @param      context the portlet data context
+	 * @param      journalObject the journal object
+	 * @return     <code>true</code> if default group permissions should be
+	 *             added to the specified journalObject
+	 * @throws     Exception if an exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
@@ -60,11 +60,11 @@ public interface JournalCreationStrategy {
 	 * Returns <code>true</code> if the default guest permissions should be
 	 * added when the specified journalObject is created.
 	 *
-	 * @param  context the portlet data context
-	 * @param  journalObject the journal object
-	 * @return <code>true</code> if default guest permissions should be added to
-	 *         the specified journalObject
-	 * @throws Exception if an exception occurred
+	 * @param      context the portlet data context
+	 * @param      journalObject the journal object
+	 * @return     <code>true</code> if default guest permissions should be
+	 *             added to the specified journalObject
+	 * @throws     Exception if an exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated

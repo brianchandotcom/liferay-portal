@@ -112,7 +112,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Override
 	public String getName() {
-		return null;
+		return TALEND;
 	}
 
 	private void _checkTalendProcessOutput(

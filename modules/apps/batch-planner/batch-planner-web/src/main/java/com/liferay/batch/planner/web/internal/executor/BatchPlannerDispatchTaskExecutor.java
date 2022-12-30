@@ -38,12 +38,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"dispatch.task.executor.name=batch-planner-executor-name",
+		"dispatch.task.executor.name=" + BatchPlannerDispatchTaskExecutor.KEY,
 		"dispatch.task.executor.type=batch-planner"
 	},
 	service = DispatchTaskExecutor.class
 )
 public class BatchPlannerDispatchTaskExecutor extends BaseDispatchTaskExecutor {
+
+	public static final String KEY = "batch-planner-executor-name";
 
 	@Override
 	public void doExecute(
@@ -92,7 +94,7 @@ public class BatchPlannerDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Override
 	public String getName() {
-		return null;
+		return KEY;
 	}
 
 	private static final TransactionConfig _transactionConfig =

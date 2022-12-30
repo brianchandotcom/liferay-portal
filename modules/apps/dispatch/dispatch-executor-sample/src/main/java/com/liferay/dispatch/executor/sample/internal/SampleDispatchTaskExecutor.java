@@ -33,12 +33,14 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"dispatch.task.executor.name=dispatch-executor-sample-name",
+		"dispatch.task.executor.name=" + SampleDispatchTaskExecutor.KEY,
 		"dispatch.task.executor.type=Sample"
 	},
 	service = DispatchTaskExecutor.class
 )
 public class SampleDispatchTaskExecutor extends BaseDispatchTaskExecutor {
+
+	public static final String KEY = "dispatch-executor-sample-name";
 
 	@Override
 	public void doExecute(
@@ -74,7 +76,7 @@ public class SampleDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Override
 	public String getName() {
-		return null;
+		return KEY;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

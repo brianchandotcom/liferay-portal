@@ -66,7 +66,7 @@ public class CommerceAvalaraDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return null;
+		return AVALARA;
 	}
 
 	@Reference

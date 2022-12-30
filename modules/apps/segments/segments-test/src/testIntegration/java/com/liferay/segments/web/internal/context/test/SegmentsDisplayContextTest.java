@@ -49,12 +49,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -325,14 +323,7 @@ public class SegmentsDisplayContextTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId()));
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
-			Assert.assertEquals("Current Site", _getScopeName(segmentsEntry));
-		}
-		else {
-			Assert.assertEquals(
-				_group.getDescriptiveName(LocaleUtil.getDefault()),
-				_getScopeName(segmentsEntry));
-		}
+		Assert.assertEquals("Current Site", _getScopeName(segmentsEntry));
 	}
 
 	@Test
@@ -490,12 +481,7 @@ public class SegmentsDisplayContextTest {
 			ServiceContextTestUtil.getServiceContext(
 				_company.getGroupId(), _user.getUserId()));
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
-			Assert.assertFalse(_isShowDeleteAction(segmentsEntry));
-		}
-		else {
-			Assert.assertTrue(_isShowDeleteAction(segmentsEntry));
-		}
+		Assert.assertFalse(_isShowDeleteAction(segmentsEntry));
 	}
 
 	@Test

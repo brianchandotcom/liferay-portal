@@ -173,13 +173,13 @@ public class ExportTranslationServlet extends HttpServlet {
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
 			className, _infoItemServiceRegistry);
 
-		Optional<String> infoItemTitleOptional =
-			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
+		String infoItemTitle = infoItemHelper.getInfoItemTitle(classPK, locale);
 
-		String infoItemTitle = infoItemTitleOptional.orElseGet(
-			() ->
+		if (infoItemTitle == null) {
+			infoItemTitle =
 				_language.get(locale, "model.resource." + className) +
-					StringPool.SPACE + classPK);
+					StringPool.SPACE + classPK;
+		}
 
 		Optional<TranslationInfoItemFieldValuesExporter>
 			exportFileFormatOptional =
@@ -254,17 +254,19 @@ public class ExportTranslationServlet extends HttpServlet {
 	}
 
 	private String _getPrefixName(
-		long classPK, String classNameTitle,
-		Optional<String> infoItemTitleOptional, boolean multipleModels,
-		Locale locale) {
+		long classPK, String classNameTitle, String infoItemTitle,
+		boolean multipleModels, Locale locale) {
 
 		if (multipleModels) {
 			return classNameTitle + StringPool.SPACE +
 				_language.get(locale, "translations");
 		}
 
-		return infoItemTitleOptional.orElseGet(
-			() -> classNameTitle + StringPool.SPACE + classPK);
+		if (infoItemTitle != null) {
+			return infoItemTitle;
+		}
+
+		return classNameTitle + StringPool.SPACE + classPK;
 	}
 
 	private String _getXLIFFFileName(
@@ -286,14 +288,13 @@ public class ExportTranslationServlet extends HttpServlet {
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
 			className, _infoItemServiceRegistry);
 
-		Optional<String> infoItemTitleOptional =
-			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
+		String infoItemTitle = infoItemHelper.getInfoItemTitle(classPK, locale);
 
 		return StringBundler.concat(
 			StringUtil.removeSubstrings(
 				_getPrefixName(
-					classPK, classNameTitle, infoItemTitleOptional,
-					multipleModels, locale),
+					classPK, classNameTitle, infoItemTitle, multipleModels,
+					locale),
 				PropsValues.DL_CHAR_BLACKLIST),
 			StringPool.DASH, sourceLanguageId, ".zip");
 	}

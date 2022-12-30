@@ -65,7 +65,7 @@ function ResultListItem({explanation = '', fields, id, score = 0}) {
 	const _renderListRow = (property, value) =>
 		value && (
 			<ClayLayout.Row justify="start" key={property}>
-				<ClayLayout.Col className="semibold" size={4}>
+				<ClayLayout.Col size={4}>
 					{removeSXPBlueprintFieldPrefix(property)}
 				</ClayLayout.Col>
 

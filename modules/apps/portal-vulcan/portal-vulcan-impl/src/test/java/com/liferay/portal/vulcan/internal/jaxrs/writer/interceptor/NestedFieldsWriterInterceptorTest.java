@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -33,8 +34,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.validation.constraints.NotNull;
 
@@ -923,15 +922,10 @@ public class NestedFieldsWriterInterceptorTest {
 				_toProductOption(30L, "test3"));
 
 			if (name != null) {
-				Stream<ProductOption> productOptionsStream =
-					productOptions.stream();
-
-				productOptions = productOptionsStream.filter(
+				productOptions = ListUtil.filter(
+					productOptions,
 					productOption -> Objects.equals(
-						productOption.getName(), name)
-				).collect(
-					Collectors.toList()
-				);
+						productOption.getName(), name));
 			}
 
 			return productOptions;
@@ -1033,15 +1027,10 @@ public class NestedFieldsWriterInterceptorTest {
 				_toProductOption(3L, "test3"));
 
 			if (name != null) {
-				Stream<ProductOption> productOptionsStream =
-					productOptions.stream();
-
-				productOptions = productOptionsStream.filter(
+				productOptions = ListUtil.filter(
+					productOptions,
 					productOption -> Objects.equals(
-						productOption.getName(), name)
-				).collect(
-					Collectors.toList()
-				);
+						productOption.getName(), name));
 			}
 
 			return productOptions;

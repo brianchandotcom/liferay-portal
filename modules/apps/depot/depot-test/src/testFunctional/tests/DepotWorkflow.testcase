@@ -228,16 +228,11 @@ definition {
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
-		Depot.assignUserAsMember(
+		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			userEmailAddress = "user1@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignAssetLibraryRole(
 			roleTitle = "Asset Library Content Reviewer",

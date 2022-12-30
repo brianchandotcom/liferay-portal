@@ -22,7 +22,6 @@ import com.liferay.layout.util.LayoutsTree;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -591,10 +590,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			Layout draftLayout = _getDraftLayout(layout);
 
-			if ((draftLayout != null) &&
+			boolean hasUpdatePermission =
 				_layoutPermission.containsLayoutUpdatePermission(
-					themeDisplay.getPermissionChecker(), layout)) {
+					themeDisplay.getPermissionChecker(), layout);
 
+			if ((draftLayout != null) && hasUpdatePermission) {
 				jsonObject.put("draftStatus", "draft");
 
 				String draftLayoutURL = _portal.getLayoutFriendlyURL(
@@ -624,20 +624,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			String layoutName = layout.getName(themeDisplay.getLocale());
 
-			try {
-				if ((draftLayout != null) &&
-					(!layout.isPublished() ||
-					 _layoutContentModelResourcePermission.contains(
-						 themeDisplay.getPermissionChecker(), layout.getPlid(),
-						 ActionKeys.UPDATE) ||
-					 _layoutPermission.containsLayoutUpdatePermission(
-						 themeDisplay.getPermissionChecker(), layout))) {
+			if ((draftLayout != null) &&
+				(!layout.isPublished() ||
+				 _layoutContentModelResourcePermission.contains(
+					 themeDisplay.getPermissionChecker(), layout.getPlid(),
+					 ActionKeys.UPDATE) ||
+				 hasUpdatePermission)) {
 
-					layoutName = layoutName + StringPool.STAR;
-				}
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
+				layoutName = layoutName + StringPool.STAR;
 			}
 
 			jsonObject.put(
@@ -686,9 +680,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			).put(
 				"type", layout.getType()
 			).put(
-				"updateable",
-				_layoutPermission.containsLayoutUpdatePermission(
-					themeDisplay.getPermissionChecker(), layout)
+				"updateable", hasUpdatePermission
 			).put(
 				"uuid", layout.getUuid()
 			);

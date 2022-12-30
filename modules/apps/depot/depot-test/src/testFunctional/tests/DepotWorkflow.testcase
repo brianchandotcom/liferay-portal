@@ -73,26 +73,12 @@ definition {
 
 		BlogsNavigator.gotoSelectFile();
 
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		AssertClick(
-			key_navTab = "Documents and Media",
-			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Documents and Media");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Everywhere");
-
-		Click(
-			key_rowEntry = "DM Folder Name",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-		AssertElementNotPresent(
-			key_imageFileName = "Document_1.jpg",
-			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder.");
+		ItemSelector.selectRepositoryImage(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name",
+			imageFileName = "Document_1.jpg",
+			navTab = "Documents and Media",
+			noViewPermission = "true");
 
 		Navigator.openURL();
 

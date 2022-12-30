@@ -218,7 +218,7 @@ class ContributorBuilder extends React.Component {
 														<div className="align-items-center d-flex justify-content-between mb-3">
 															<p className="mb-0 mr-6 text-dark">
 																{Liferay.Language.get(
-																	'select-the-scope-of-your-segment'
+																	'select-the-scope-of-your-segment-to-specify-where-it-can-be-used'
 																)}
 															</p>
 

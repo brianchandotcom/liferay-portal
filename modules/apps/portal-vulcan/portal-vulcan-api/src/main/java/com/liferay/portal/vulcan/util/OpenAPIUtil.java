@@ -14,9 +14,11 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
+import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
@@ -33,9 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Javier de Arcos
@@ -128,23 +127,26 @@ public class OpenAPIUtil {
 	private static String _getOperationScope(Operation operation) {
 		List<Parameter> parameters = operation.getParameters();
 
-		Stream<Parameter> parametersStream = parameters.stream();
+		StringBundler sb = new StringBundler(parameters.size() * 2);
 
-		return parametersStream.filter(
-			parameter -> StringUtil.equals(parameter.getIn(), "path")
-		).map(
-			parameter -> {
-				String name = parameter.getName();
-
-				if (name.endsWith("Id")) {
-					name = StringUtil.removeLast(name, "Id");
-				}
-
-				return name;
+		for (Parameter parameter : parameters) {
+			if (!StringUtil.equals(parameter.getIn(), "path")) {
+				continue;
 			}
-		).collect(
-			Collectors.joining(",")
-		);
+
+			String name = parameter.getName();
+
+			if (name.endsWith("Id")) {
+				name = StringUtil.removeLast(name, "Id");
+			}
+
+			sb.append(name);
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private static List<String> _getRequiredPropertySchemaNames(Schema schema) {
@@ -167,34 +169,38 @@ public class OpenAPIUtil {
 			return false;
 		}
 
-		Set<Map.Entry<ResponseCode, Response>> entries = responses.entrySet();
+		for (Map.Entry<ResponseCode, Response> entry : responses.entrySet()) {
+			if (!_isOKResponseCode(entry.getKey())) {
+				continue;
+			}
 
-		Stream<Map.Entry<ResponseCode, Response>> stream = entries.stream();
+			Response response = entry.getValue();
 
-		return stream.filter(
-			entry -> _isOKResponseCode(entry.getKey())
-		).map(
-			Map.Entry::getValue
-		).map(
-			Response::getContent
-		).map(
-			Map::entrySet
-		).flatMap(
-			Set::stream
-		).map(
-			Map.Entry::getValue
-		).anyMatch(
-			content -> Optional.ofNullable(
-				content.getSchema()
-			).map(
-				Schema::getReference
-			).map(
-				reference -> StringUtil.equals(
-					name, reference.substring(reference.lastIndexOf('/') + 1))
-			).orElse(
-				false
-			)
-		);
+			Map<String, Content> contentMap = response.getContent();
+
+			for (Map.Entry<String, Content> contentEntry :
+					contentMap.entrySet()) {
+
+				Content content = contentEntry.getValue();
+
+				if (Optional.ofNullable(
+						content.getSchema()
+					).map(
+						Schema::getReference
+					).map(
+						reference -> StringUtil.equals(
+							name,
+							reference.substring(reference.lastIndexOf('/') + 1))
+					).orElse(
+						false
+					)) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private static boolean _isOKResponseCode(ResponseCode responseCode) {

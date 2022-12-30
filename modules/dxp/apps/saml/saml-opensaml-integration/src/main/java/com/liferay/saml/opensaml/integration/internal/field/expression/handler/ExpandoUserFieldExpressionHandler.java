@@ -56,7 +56,6 @@ import com.liferay.saml.opensaml.integration.processor.context.ProcessorContext;
 import com.liferay.saml.opensaml.integration.processor.context.UserProcessorContext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,7 +65,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import javax.naming.Binding;
 import javax.naming.NamingEnumeration;
@@ -223,16 +221,16 @@ public class ExpandoUserFieldExpressionHandler
 					"\" must match only 1 user, but it matched ", userIds));
 		}
 
-		Stream<ExpandoValue> stream = expandoValues.stream();
+		for (ExpandoValue expandoValue : expandoValues) {
+			User user = _userLocalService.fetchUserById(
+				expandoValue.getClassPK());
 
-		return stream.map(
-			ExpandoValue::getClassPK
-		).map(
-			_userLocalService::fetchUserById
-		).findFirst(
-		).orElse(
-			null
-		);
+			if (user != null) {
+				return user;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -560,11 +558,14 @@ public class ExpandoUserFieldExpressionHandler
 						return null;
 					}
 
-					Stream<String> stream = Arrays.stream(values);
+					int[] valuesIntArray = new int[values.length];
 
-					return stream.mapToInt(
-						GetterUtil::getIntegerStrict
-					).toArray();
+					for (int i = 0; i < valuesIntArray.length; i++) {
+						valuesIntArray[i] = GetterUtil.getIntegerStrict(
+							values[i]);
+					}
+
+					return valuesIntArray;
 				},
 				ExpandoValue::setIntegerArray)
 		).put(
@@ -580,11 +581,14 @@ public class ExpandoUserFieldExpressionHandler
 						return null;
 					}
 
-					Stream<String> stream = Arrays.stream(values);
+					long[] valuesLongArray = new long[values.length];
 
-					return stream.mapToLong(
-						GetterUtil::getLongStrict
-					).toArray();
+					for (int i = 0; i < valuesLongArray.length; i++) {
+						valuesLongArray[i] = GetterUtil.getLongStrict(
+							values[i]);
+					}
+
+					return valuesLongArray;
 				},
 				ExpandoValue::setLongArray)
 		).put(

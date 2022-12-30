@@ -226,11 +226,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Memberships");
+		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
 		Depot.assignUserAsMember(
 			depotName = "Test Depot Name",

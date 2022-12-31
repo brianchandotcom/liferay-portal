@@ -77,6 +77,7 @@ export default function ({
 			alertDisplayType,
 			alertMessage,
 			customTitle,
+			onCloseFunction,
 		}) => {
 			let url = configurationURL;
 
@@ -153,6 +154,7 @@ export default function ({
 				displayType: 'primary',
 				height: '70vh',
 				id: 'cookiesBannerConfiguration',
+				onClose: onCloseFunction || undefined,
 				size: 'lg',
 				title: customTitle || title,
 				url,

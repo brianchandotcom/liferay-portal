@@ -28,13 +28,13 @@ definition {
 		property test.run.environment = "EE";
 
 		task ("Assert custom remote app is present after upgrade") {
-			RemoteAppsUpgrade.assertRemoteAppEntry(
+			ClientExtensionUpgrade.assertRemoteAppEntry(
 				upgradeName = "Vanilla Counter",
 				upgradeType = "Custom Element");
 		}
 
 		task ("Assert custom remote app fields are saved after upgrade") {
-			RemoteAppsUpgrade.assertCustomRemoteAppEntryFields(
+			ClientExtensionUpgrade.assertCustomRemoteAppEntryFields(
 				upgradeCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				upgradeHtmlName = "vanilla-counter",
 				upgradeName = "Vanilla Counter",
@@ -67,13 +67,13 @@ definition {
 		var remoteAppURL = "http://www.liferay.com";
 
 		task ("Assert remote app is present after upgrade") {
-			RemoteAppsUpgrade.assertRemoteAppEntry(
+			ClientExtensionUpgrade.assertRemoteAppEntry(
 				upgradeName = "${remoteAppName}",
 				upgradeType = "${remoteAppType}");
 		}
 
 		task ("Assert remote app fields are saved after upgrade") {
-			RemoteAppsUpgrade.assertRemoteAppEntryFields(
+			ClientExtensionUpgrade.assertRemoteAppEntryFields(
 				upgradeName = "${remoteAppName}",
 				upgradeURL = "${remoteAppURL}");
 		}

@@ -23,7 +23,7 @@ import {
 	userConfigCookieName,
 } from '../../js/CookiesUtil';
 
-let openCookieConfigurationModal;
+let openCookieConsentModal;
 
 export default function ({
 	configurationNamespace,
@@ -73,7 +73,7 @@ export default function ({
 			setUserConfigCookie();
 		});
 
-		openCookieConfigurationModal = ({
+		openCookieConsentModal = ({
 			alertDisplayType,
 			alertMessage,
 			customTitle,
@@ -160,7 +160,7 @@ export default function ({
 		};
 
 		configurationButton.addEventListener('click', () => {
-			openCookieConfigurationModal({});
+			openCookieConsentModal({});
 		});
 
 		declineAllButton.addEventListener('click', () => {

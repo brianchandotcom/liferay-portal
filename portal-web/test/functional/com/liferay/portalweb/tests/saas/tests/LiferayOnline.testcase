@@ -281,7 +281,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a New Remote App with JSON") {
-			JSONRemoteApp.addIFrameRemoteAppEntry(
+			JSONClientExtension.addIFrameRemoteAppEntry(
 				iFrameURL = "http://www.liferay.com/my_new_remote_app",
 				name = "My New Remote App");
 		}

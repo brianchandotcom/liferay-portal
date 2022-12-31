@@ -11,7 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given a created Remote App > Custom Element with Use ES modules checked") {
-			JSONRemoteApp.addCustomElementRemoteAppEntry(
+			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
 				customElementURL = "https://localhost:8081/runtime.js",

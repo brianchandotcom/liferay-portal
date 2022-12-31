@@ -17,12 +17,12 @@ definition {
 		}
 
 		task ("Add two remote apps for favicon extension") {
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "Google Favicon",
 				type = "themeFavicon",
 				url = "https://www.google.com/favicon.ico");
 
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "NBA Favicon",
 				type = "themeFavicon",
 				url = "https://www.nba.com/favicon.ico");

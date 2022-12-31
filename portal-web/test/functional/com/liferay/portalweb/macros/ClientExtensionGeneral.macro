@@ -11,7 +11,7 @@ definition {
 	}
 
 	macro addApp {
-		RemoteAppsEntry.addEntry(
+		ClientExtensionEntry.addEntry(
 			entryName = "${entryName}",
 			entryURL = "${entryURL}",
 			mainURL = "${mainURL}");
@@ -22,7 +22,7 @@ definition {
 	macro addCustomElement {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
-		RemoteAppsEntry.addCustomElement(
+		ClientExtensionEntry.addCustomElement(
 			entryHtmlName = "${entryHtmlName}",
 			entryName = "${entryName}",
 			entryURL = "${entryURL}");
@@ -33,7 +33,7 @@ definition {
 	macro addCustomElementAllFields {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
-		RemoteAppsEntry.addCustomElementAllFields(
+		ClientExtensionEntry.addCustomElementAllFields(
 			entryCssurl = "${entryCssurl}",
 			entryHtmlName = "${entryHtmlName}",
 			entryName = "${entryName}",
@@ -50,7 +50,7 @@ definition {
 	macro addCustomElementMultipleURLs {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
-		RemoteAppsEntry.addCustomElementMultipleURLs(
+		ClientExtensionEntry.addCustomElementMultipleURLs(
 			entryCssurl1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
 			entryCssurl2 = "https://liferay.github.io/liferay-frontend-projects/index2.css",
 			entryHtmlName = "vanilla-counter",
@@ -64,11 +64,11 @@ definition {
 	macro addEntryWithPortletCategory {
 		ClientExtensionGeneral.addType(type = "IFrame");
 
-		RemoteAppsEntry.addEntry(
+		ClientExtensionEntry.addEntry(
 			entryName = "Test Remote App",
 			entryURL = "http://www.liferay.com");
 
-		RemoteAppsEntry.addPortletCategory(categoryName = "Collaboration");
+		ClientExtensionEntry.addPortletCategory(categoryName = "Collaboration");
 
 		PortletEntry.publish();
 	}

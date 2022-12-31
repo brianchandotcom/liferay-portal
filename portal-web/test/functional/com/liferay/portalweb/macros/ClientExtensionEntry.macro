@@ -60,9 +60,9 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${entryHtmlName}");
 
-		RemoteAppsEntry.addURLRow();
+		ClientExtensionEntry.addURLRow();
 
-		RemoteAppsEntry.addCSSURLRow();
+		ClientExtensionEntry.addCSSURLRow();
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",

@@ -67,7 +67,7 @@ definition {
 		}
 
 		task ("Go to Remote Apps Portlet") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("Assert if Remote Apps is Present") {

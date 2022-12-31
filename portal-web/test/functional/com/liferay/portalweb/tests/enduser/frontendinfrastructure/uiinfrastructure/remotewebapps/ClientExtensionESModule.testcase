@@ -19,7 +19,7 @@ definition {
 		}
 
 		task ("And Given a Remote App portlet added to widget page") {
-			var remoteAppEntryId = RemoteApps.getRemoteAppEntryId(remoteAppName = "Vanilla Counter");
+			var remoteAppEntryId = ClientExtensionGeneral.getRemoteAppEntryId(remoteAppName = "Vanilla Counter");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -40,7 +40,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			RemoteApps.tearDown();
+			ClientExtensionGeneral.tearDown();
 
 			Navigator.gotoPage(pageName = "Home");
 

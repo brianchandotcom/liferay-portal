@@ -31,9 +31,9 @@ definition {
 	}
 
 	macro assertRemoteAppEntry {
-		RemoteApps.goToRemoteAppsPortlet();
+		ClientExtensionGeneral..goToRemoteAppsPortlet();
 
-		RemoteApps.viewTableEntries(
+		ClientExtensionGeneral..viewTableEntries(
 			entryName = "${upgradeName}",
 			entryType = "${upgradeType}");
 	}

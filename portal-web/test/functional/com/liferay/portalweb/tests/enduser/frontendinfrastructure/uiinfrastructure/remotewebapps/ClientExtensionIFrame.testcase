@@ -20,7 +20,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			RemoteApps.tearDown();
+			ClientExtensionGeneral.tearDown();
 
 			Navigator.gotoPage(pageName = "Home");
 		}
@@ -30,9 +30,9 @@ definition {
 	@priority = "3"
 	test HasPortletCategoryNameClientExtension {
 		task ("When access IFrame type client extension") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "IFrame");
+			ClientExtensionGeneral.addType(type = "IFrame");
 		}
 
 		task ("Then portal category name 'Client Extensions' is set by default") {

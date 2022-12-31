@@ -204,7 +204,7 @@ definition {
 	@priority = "4"
 	test RemoteAppsAreCreatedForCP20 {
 		task ("Assert that when the Customer Portal is created, remote applications are also created") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#OBJECTS_TABLE",

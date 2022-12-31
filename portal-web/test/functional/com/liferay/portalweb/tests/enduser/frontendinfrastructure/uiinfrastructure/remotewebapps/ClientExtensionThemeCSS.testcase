@@ -19,7 +19,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			RemoteApps.tearDown();
+			ClientExtensionGeneral.tearDown();
 		}
 	}
 
@@ -39,19 +39,19 @@ definition {
 				dmDocumentTitle = "Text Color",
 				groupName = "Test Site Name");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("When the site administrator creates a JS remote app") {
-			RemoteApps.addType(type = "Add JS");
+			ClientExtensionGeneral.addType(type = "Add JS");
 
-			RemoteApps.addApp(
+			ClientExtensionGeneral.addApp(
 				entryName = "Text Color",
 				entryURL = "${url}");
 		}
 
 		task ("Then the site administrator sees the created JS remote app") {
-			RemoteApps.viewTableEntryName(entryName = "Text Color");
+			ClientExtensionGeneral.viewTableEntryName(entryName = "Text Color");
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
@@ -73,19 +73,19 @@ definition {
 				dmDocumentTitle = "Font Family",
 				groupName = "Test Site Name");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("When the site administrator create a Theme CSS remote app") {
-			RemoteApps.addType(type = "Add Theme CSS");
+			ClientExtensionGeneral.addType(type = "Add Theme CSS");
 
-			RemoteApps.addApp(
+			ClientExtensionGeneral.addApp(
 				entryName = "Font Family",
 				mainURL = "${url}");
 		}
 
 		task ("Then the site administrator sees the created Theme CSS remote app") {
-			RemoteApps.viewTableEntryName(entryName = "Font Family");
+			ClientExtensionGeneral.viewTableEntryName(entryName = "Font Family");
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}

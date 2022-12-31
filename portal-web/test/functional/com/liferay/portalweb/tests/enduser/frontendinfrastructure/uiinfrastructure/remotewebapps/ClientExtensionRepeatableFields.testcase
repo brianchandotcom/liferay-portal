@@ -18,7 +18,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			RemoteApps.tearDown();
+			ClientExtensionGeneral.tearDown();
 
 			Navigator.gotoPage(pageName = "Home");
 
@@ -42,9 +42,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Remote Application > Custom Elements create page") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("And Given required fields are filled out") {
@@ -104,9 +104,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Custom Element with two valid JS URLs") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 
 			RemoteAppsEntry.addURLRow();
 
@@ -160,9 +160,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Remote Application > Custom Elements create page") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("When click repeatable button for CSS URL") {
@@ -205,9 +205,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Remote Application > Custom Elements create page") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("When click repeatable button for JS URL") {
@@ -250,9 +250,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Remote Application > Custom Elements create page") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("When click repeatable button 3 times for JS URL") {

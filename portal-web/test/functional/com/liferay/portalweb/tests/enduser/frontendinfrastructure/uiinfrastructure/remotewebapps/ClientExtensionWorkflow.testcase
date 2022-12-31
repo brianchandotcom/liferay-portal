@@ -25,7 +25,7 @@ definition {
 	@priority = "4"
 	test AdminCanApproveRemotePortlet {
 		task ("Apply workflow approval process to remote apps") {
-			RemoteAppsWorkflow.applyWorkflow();
+			ClientExtensionWorkflow.applyWorkflow();
 		}
 
 		task ("Add user with permissions to create remote app") {
@@ -36,7 +36,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			RemoteAppsWorkflow.addUserPermissions();
+			ClientExtensionWorkflow.addUserPermissions();
 		}
 
 		task ("Create remote app as user with permissions") {
@@ -46,7 +46,7 @@ definition {
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteAppsWorkflow.addApp(
+			ClientExtensionWorkflow.addApp(
 				entryName = "Test Remote App",
 				entryURL = "http://www.liferay.com");
 		}
@@ -75,7 +75,7 @@ definition {
 		task ("Assert remote app approved status") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteAppsWorkflow.assertTableStatus(
+			ClientExtensionWorkflow.assertTableStatus(
 				entryName = "Test Remote App",
 				entryStatus = "Approved");
 		}
@@ -101,7 +101,7 @@ definition {
 	@priority = "5"
 	test AdminCanRejectRemotePortlet {
 		task ("Given workflow approval process applied to remote apps") {
-			RemoteAppsWorkflow.applyWorkflow();
+			ClientExtensionWorkflow.applyWorkflow();
 		}
 
 		task ("And given a user with permissions to create remote app") {
@@ -112,7 +112,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			RemoteAppsWorkflow.addUserPermissions();
+			ClientExtensionWorkflow.addUserPermissions();
 		}
 
 		task ("And given a remote app created as user with permissions") {
@@ -122,7 +122,7 @@ definition {
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteAppsWorkflow.addApp(
+			ClientExtensionWorkflow.addApp(
 				entryName = "Test Remote App",
 				entryURL = "http://www.liferay.com");
 		}
@@ -151,7 +151,7 @@ definition {
 		task ("Then Assert remote app pending status") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteAppsWorkflow.assertTableStatus(
+			ClientExtensionWorkflow.assertTableStatus(
 				entryName = "Test Remote App",
 				entryStatus = "Pending");
 		}
@@ -203,7 +203,7 @@ definition {
 	@priority = "4"
 	test CanSendWorkflowNotification {
 		task ("Apply workflow approval process to remote apps") {
-			RemoteAppsWorkflow.applyWorkflow();
+			ClientExtensionWorkflow.applyWorkflow();
 		}
 
 		task ("Add user with permissions to create remote app") {
@@ -214,7 +214,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			RemoteAppsWorkflow.addUserPermissions();
+			ClientExtensionWorkflow.addUserPermissions();
 		}
 
 		task ("Create remote app as user with permissions") {
@@ -224,7 +224,7 @@ definition {
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteAppsWorkflow.addApp(
+			ClientExtensionWorkflow.addApp(
 				entryName = "Test Remote App",
 				entryURL = "http://www.liferay.com");
 		}
@@ -246,7 +246,7 @@ definition {
 	@priority = "4"
 	test PendingRemoteAppCannotBeAddedToPage {
 		task ("Apply workflow approval process to remote apps") {
-			RemoteAppsWorkflow.applyWorkflow();
+			ClientExtensionWorkflow.applyWorkflow();
 		}
 
 		task ("Add user with permissions to create remote app") {
@@ -257,7 +257,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			RemoteAppsWorkflow.addUserPermissions();
+			ClientExtensionWorkflow.addUserPermissions();
 		}
 
 		task ("Create remote app as user with permissions") {
@@ -267,7 +267,7 @@ definition {
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteAppsWorkflow.addApp(
+			ClientExtensionWorkflow.addApp(
 				entryName = "Test Remote App",
 				entryURL = "http://www.liferay.com");
 		}
@@ -279,7 +279,7 @@ definition {
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteAppsWorkflow.assertTableStatus(
+			ClientExtensionWorkflow.assertTableStatus(
 				entryName = "Test Remote App",
 				entryStatus = "Pending");
 		}

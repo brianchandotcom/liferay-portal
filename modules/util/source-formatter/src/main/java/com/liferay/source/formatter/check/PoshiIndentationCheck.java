@@ -81,12 +81,10 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			StringBundler sb = new StringBundler(lines.length * 2);
 
 			for (String line : lines) {
-				if (Validator.isNull(line.trim())) {
-					continue;
+				if (Validator.isNotNull(line.trim())) {
+					sb.append(line);
+					sb.append(CharPool.NEW_LINE);
 				}
-
-				sb.append(line);
-				sb.append(CharPool.NEW_LINE);
 			}
 
 			sb.setIndex(sb.index() - 1);

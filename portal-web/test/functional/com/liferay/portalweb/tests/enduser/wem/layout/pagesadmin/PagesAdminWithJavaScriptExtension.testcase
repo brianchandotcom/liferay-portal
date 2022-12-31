@@ -76,32 +76,32 @@ definition {
 		}
 
 		task ("Add six remote apps for JavaScript extension") {
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "TextColor",
 				type = "globalJS",
 				url = "${firstURL}");
 
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "InnerText",
 				type = "globalJS",
 				url = "${secondURL}");
 
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "FontFamily",
 				type = "globalJS",
 				url = "${thirdURL}");
 
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "FontSize",
 				type = "globalJS",
 				url = "${fourthURL}");
 
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "FontWeight",
 				type = "globalJS",
 				url = "${fifthURL}");
 
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				name = "MarginTop",
 				type = "globalJS",
 				url = "${sixthURL}");

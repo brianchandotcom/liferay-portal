@@ -40,12 +40,12 @@ definition {
 		}
 
 		task ("Add two remote apps for CSS extension") {
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				mainURL = "${firstURL}",
 				name = "FontFamily",
 				type = "themeCSS");
 
-			JSONRemoteApp.addRemoteAppEntry(
+			JSONClientExtension.addRemoteAppEntry(
 				mainURL = "${secondURL}",
 				name = "BackgroundColor",
 				type = "themeCSS");

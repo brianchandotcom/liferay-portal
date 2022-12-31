@@ -85,7 +85,7 @@ definition {
 
 		var remoteAppName = "My New Remote App To Delete";
 
-		JSONRemoteApp.addIFrameRemoteAppEntry(
+		JSONClientExtension.addIFrameRemoteAppEntry(
 			iFrameURL = "http://www.liferay.com/my_new_remote_app",
 			name = "${remoteAppName}");
 
@@ -209,7 +209,7 @@ definition {
 			}
 
 			task ("create custom element") {
-				JSONRemoteApp.addCustomElementRemoteAppEntry(
+				JSONClientExtension.addCustomElementRemoteAppEntry(
 					customElementCssurl = "/documents/d/guest/main",
 					customElementHtmlName = "es-element",
 					customElementName = "ES Element",
@@ -248,7 +248,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create Vanilla Counter as a Custom Element") {
-			JSONRemoteApp.addCustomElementRemoteAppEntry(
+			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
 				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
@@ -315,7 +315,7 @@ definition {
 		var remoteAppName = "New Counter";
 
 		task ("Create a Custom Element") {
-			JSONRemoteApp.addCustomElementRemoteAppEntry(
+			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "new-counter",
 				customElementName = "New Counter",
 				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
@@ -370,7 +370,7 @@ definition {
 		}
 
 		task ("Create Vanilla Counter as a Custom Element") {
-			JSONRemoteApp.addCustomElementRemoteAppEntry(
+			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
 				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
@@ -480,7 +480,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When create custom element remote application with property QAuser") {
-			JSONRemoteApp.addCustomElementRemoteAppEntry(
+			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementCssurl = "http://remote-component-test.wincent.com/index.css",
 				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
@@ -533,7 +533,7 @@ definition {
 		property testray.component.names = "Remote Apps";
 
 		task ("Given a custom element with "Use ES Modules" option created") {
-			JSONRemoteApp.addCustomElementRemoteAppEntry(
+			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",

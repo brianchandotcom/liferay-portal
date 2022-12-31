@@ -3,7 +3,7 @@ definition {
 	macro addCustomElementRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
-		JSONRemoteAppAPI._addCustomElementRemoteAppEntry(
+		JSONClientExtensionAPI._addCustomElementRemoteAppEntry(
 			customElementCssurl = "${customElementCssurl}",
 			customElementHtmlName = "${customElementHtmlName}",
 			customElementName = "${customElementName}",
@@ -15,7 +15,7 @@ definition {
 	macro addIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
-		JSONRemoteAppAPI._addIFrameRemoteAppEntry(
+		JSONClientExtensionAPI._addIFrameRemoteAppEntry(
 			iFrameURL = "${iFrameURL}",
 			name = "${name}");
 	}
@@ -31,12 +31,12 @@ definition {
 			var properties = "";
 		}
 
-		var nameMap = JSONRemoteAppSetter.setNameMap(name = "${name}");
-		var typeSettings = JSONRemoteAppSetter.setTypeSettings(
+		var nameMap = JSONClientExtensionSetter.setNameMap(name = "${name}");
+		var typeSettings = JSONClientExtensionSetter.setTypeSettings(
 			mainURL = "${mainURL}",
 			url = "${url}");
 
-		JSONRemoteAppAPI._addRemoteAppEntry(
+		JSONClientExtensionAPI._addRemoteAppEntry(
 			description = "${description}",
 			nameMap = "${nameMap}",
 			properties = "${properties}",
@@ -47,7 +47,7 @@ definition {
 	macro deleteIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${externalReferenceCode}");
 
-		JSONRemoteAppAPI._deleteIFrameRemoteAppEntry(externalReferenceCode = "${externalReferenceCode}");
+		JSONClientExtensionAPI._deleteIFrameRemoteAppEntry(externalReferenceCode = "${externalReferenceCode}");
 	}
 
 }

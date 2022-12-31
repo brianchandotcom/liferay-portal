@@ -3,7 +3,7 @@ definition {
 	macro addApp {
 		ClientExtensionGeneral.addType(type = "IFrame");
 
-		RemoteAppsEntry.addEntry(
+		ClientExtensionEntry.addEntry(
 			entryName = "${entryName}",
 			entryURL = "${entryURL}");
 

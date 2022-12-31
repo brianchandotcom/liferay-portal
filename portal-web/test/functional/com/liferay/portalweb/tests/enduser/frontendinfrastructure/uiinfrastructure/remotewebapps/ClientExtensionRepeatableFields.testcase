@@ -60,7 +60,7 @@ definition {
 		}
 
 		task ("When click repeatable button for JS URL and a new JS URL field is added") {
-			RemoteAppsEntry.addURLRow();
+			ClientExtensionEntry.addURLRow();
 		}
 
 		task ("And When input valid value for JS URL 1 and JS URL 2") {
@@ -108,7 +108,7 @@ definition {
 
 			ClientExtensionGeneral.addType(type = "Custom Element");
 
-			RemoteAppsEntry.addURLRow();
+			ClientExtensionEntry.addURLRow();
 
 			Type(
 				key_id = "ClientExtensionAdminPortlet_url",
@@ -124,7 +124,7 @@ definition {
 		}
 
 		task ("When delete first repeatable field") {
-			RemoteAppsEntry.removeURLRow(key_index = "1");
+			ClientExtensionEntry.removeURLRow(key_index = "1");
 		}
 
 		task ("Then only 1 JS URL field is present") {
@@ -166,7 +166,7 @@ definition {
 		}
 
 		task ("When click repeatable button for CSS URL") {
-			RemoteAppsEntry.addCSSURLRow();
+			ClientExtensionEntry.addCSSURLRow();
 		}
 
 		task ("Then new CSS URL field is added") {
@@ -211,7 +211,7 @@ definition {
 		}
 
 		task ("When click repeatable button for JS URL") {
-			RemoteAppsEntry.addURLRow();
+			ClientExtensionEntry.addURLRow();
 		}
 
 		task ("Then new JS URL field is added") {
@@ -256,11 +256,11 @@ definition {
 		}
 
 		task ("When click repeatable button 3 times for JS URL") {
-			RemoteAppsEntry.addURLRow();
+			ClientExtensionEntry.addURLRow();
 
-			RemoteAppsEntry.addURLRow();
+			ClientExtensionEntry.addURLRow();
 
-			RemoteAppsEntry.addURLRow();
+			ClientExtensionEntry.addURLRow();
 		}
 
 		task ("Then 3 new JS URL field are added") {

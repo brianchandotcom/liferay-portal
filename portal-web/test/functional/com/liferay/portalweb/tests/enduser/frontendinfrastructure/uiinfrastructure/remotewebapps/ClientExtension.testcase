@@ -32,7 +32,7 @@ definition {
 				PortalInstances.tearDownCP();
 			}
 
-			RemoteApps.tearDown();
+			ClientExtensionGeneral.tearDown();
 		}
 	}
 
@@ -42,9 +42,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create remote app entry with portlet category") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addEntryWithPortletCategory();
+			ClientExtensionGeneral.addEntryWithPortletCategory();
 		}
 
 		task ("Add a public widget page with JSON") {
@@ -89,11 +89,11 @@ definition {
 			iFrameURL = "http://www.liferay.com/my_new_remote_app",
 			name = "${remoteAppName}");
 
-		RemoteApps.goToRemoteAppsPortlet();
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		RemoteApps.deleteRemoteApp(tableEntry = "${remoteAppName}");
+		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "${remoteAppName}");
 
-		RemoteApps.viewEmptyRemoteTable();
+		ClientExtensionGeneral.viewEmptyRemoteTable();
 	}
 
 	@description = "This is a test for LPS-162031. The site administrator could add a CSS remote app."
@@ -112,19 +112,19 @@ definition {
 				dmDocumentTitle = "Font Family",
 				groupName = "Test Site Name");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("When the site administrator creates a CSS remote app") {
-			RemoteApps.addType(type = "Add CSS");
+			ClientExtensionGeneral.addType(type = "Add CSS");
 
-			RemoteApps.addApp(
+			ClientExtensionGeneral.addApp(
 				entryName = "Font Family",
 				entryURL = "${url}");
 		}
 
 		task ("Then the site administrator sees the created CSS remote app") {
-			RemoteApps.viewTableEntryName(entryName = "Font Family");
+			ClientExtensionGeneral.viewTableEntryName(entryName = "Font Family");
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
@@ -141,9 +141,9 @@ definition {
 		property testray.component.names = "Frontend Dataset,Remote Apps";
 
 		task ("Create Vanilla Counter as a Custom Element") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addCustomElementAllFields(
+			ClientExtensionGeneral.addCustomElementAllFields(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",
@@ -152,7 +152,7 @@ definition {
 		}
 
 		task ("Assert that the Vanilla Counter is listed") {
-			RemoteApps.viewTableEntries(
+			ClientExtensionGeneral.viewTableEntries(
 				entryName = "Vanilla Counter",
 				entryType = "Custom Element");
 		}
@@ -162,7 +162,7 @@ definition {
 				key_tableEntryName = "Vanilla Counter",
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
-			RemoteApps.assertCustomElementFields(
+			ClientExtensionGeneral.assertCustomElementFields(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",
@@ -255,13 +255,13 @@ definition {
 		}
 
 		task ("Delete Vanilla Counter") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.deleteRemoteApp(tableEntry = "${customElementName}");
+			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "${customElementName}");
 		}
 
 		task ("Assert that Vanilla Counter has been deleted") {
-			RemoteApps.assertTableEntryNameNotPresent(entryName = "${customElementName}");
+			ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = "${customElementName}");
 		}
 	}
 
@@ -282,9 +282,9 @@ definition {
 		}
 
 		task ("Create Vanilla Counter as a Custom Element") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addCustomElement(
+			ClientExtensionGeneral.addCustomElement(
 				entryHtmlName = "${customElementHtmlName}",
 				entryName = "${customElementName}",
 				entryURL = "${customElementURL}");
@@ -322,13 +322,13 @@ definition {
 		}
 
 		task ("Edit the fields of the Custom Element") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			Click(
 				key_tableEntryName = "${remoteAppName}",
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
-			RemoteApps.editCustomElement(
+			ClientExtensionGeneral.editCustomElement(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHtmlName = "vanilla-counter-edited",
 				entryName = "Vanilla Counter Edited",
@@ -336,7 +336,7 @@ definition {
 		}
 
 		task ("Assert that the Custom Element is listed") {
-			RemoteApps.viewTableEntryName(entryName = "Vanilla Counter Edited");
+			ClientExtensionGeneral.viewTableEntryName(entryName = "Vanilla Counter Edited");
 		}
 
 		task ("Assert that the fields have been updated") {
@@ -344,7 +344,7 @@ definition {
 				key_tableEntryName = "Vanilla Counter Edited",
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
-			RemoteApps.assertCustomElementFields(
+			ClientExtensionGeneral.assertCustomElementFields(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHtmlName = "vanilla-counter-edited",
 				entryName = "Vanilla Counter Edited",
@@ -433,7 +433,7 @@ definition {
 		}
 
 		task ("Change Vanilla Counter portlet name") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			Click(
 				key_tableEntryName = "Vanilla Counter",
@@ -510,9 +510,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create Vanilla Counter as a Custom Element") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addCustomElementMultipleURLs();
+			ClientExtensionGeneral.addCustomElementMultipleURLs();
 		}
 
 		task ("Go to edit entry") {
@@ -522,7 +522,7 @@ definition {
 		}
 
 		task ("Assert multiple URL fields are saved") {
-			RemoteApps.assertCustomElementMultipleURLFields();
+			ClientExtensionGeneral.assertCustomElementMultipleURLFields();
 		}
 	}
 
@@ -575,9 +575,9 @@ definition {
 	@priority = "3"
 	test ErrorAppearsWhenHTMLBlank {
 		task ("Given Add Custom Element Client Extensions admin page") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("When required fields Name, HTML Element Name, and JS URL are blank and When attempt to save remote app") {
@@ -608,11 +608,11 @@ definition {
 				panel = "Applications",
 				portlet = "Client Extensions");
 
-			RemoteApps.addType(type = "IFrame");
+			ClientExtensionGeneral.addType(type = "IFrame");
 		}
 
 		task ("When type testurl in URL field and a valid name is entered") {
-			RemoteApps.addApp(
+			ClientExtensionGeneral.addApp(
 				entryName = "Test Name",
 				entryURL = "$testurl");
 		}
@@ -638,7 +638,7 @@ definition {
 				panel = "Applications",
 				portlet = "Client Extensions");
 
-			RemoteApps.addType(type = "IFrame");
+			ClientExtensionGeneral.addType(type = "IFrame");
 		}
 
 		task ("When attempt to save remote app") {
@@ -664,9 +664,9 @@ definition {
 	@priority = "3"
 	test HTMLElementConatinsInvlaidCharacters {
 		task ("Given Add Custom Element Client Extensions") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("When type 'vanilla counter' in HTML Element field") {
@@ -691,9 +691,9 @@ definition {
 	@priority = "3"
 	test HTMLElementMustHaveOneHyphen {
 		task ("Given Add Custom Element Client Extensions") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("When type 'vanilla.counter' in HTML Element Name field") {
@@ -718,9 +718,9 @@ definition {
 	@priority = "3"
 	test HTMLElementMustStartWithLowercase {
 		task ("Given Add Custom Element Client Extensions") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addType(type = "Custom Element");
+			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
 		task ("When type 'Vanilla counter' in HTML Element Name field") {
@@ -749,15 +749,15 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Frontend Dataset,Remote Apps";
 
-		RemoteApps.goToRemoteAppsPortlet();
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		RemoteApps.addType(type = "IFrame");
+		ClientExtensionGeneral.addType(type = "IFrame");
 
-		RemoteApps.addApp(
+		ClientExtensionGeneral.addApp(
 			entryName = "Test Remote App",
 			entryURL = "http://www.liferay.com");
 
-		RemoteApps.viewTableEntryName(entryName = "Test Remote App");
+		ClientExtensionGeneral.viewTableEntryName(entryName = "Test Remote App");
 	}
 
 	@description = "Verify that remote app type IFrame can display property fields"
@@ -765,9 +765,9 @@ definition {
 	test IframeTypeCanDisplayProperFields {
 		property portal.acceptance = "true";
 
-		RemoteApps.goToRemoteAppsPortlet();
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		RemoteApps.addType(type = "Custom Element");
+		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		AssertVisible(
 			key_text = "HTML Element Name",
@@ -779,7 +779,7 @@ definition {
 
 		Click(locator1 = "Button#BACK");
 
-		RemoteApps.addType(type = "IFrame");
+		ClientExtensionGeneral.addType(type = "IFrame");
 
 		AssertElementNotPresent(
 			key_text = "HTML Element Name",

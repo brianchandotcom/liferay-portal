@@ -20,7 +20,7 @@ definition {
 		else {
 			Navigator.gotoPage(pageName = "Home");
 
-			RemoteApps.tearDown();
+			ClientExtensionGeneral.tearDown();
 		}
 	}
 
@@ -34,9 +34,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When client extension has portal category 'Client Extensions'") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			RemoteApps.addCustomElementAllFields(
+			ClientExtensionGeneral.addCustomElementAllFields(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",

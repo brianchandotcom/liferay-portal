@@ -386,7 +386,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet");
 
-		RemoteApps.deleteRemoteApp();
+		ClientExtensionGeneral.deleteRemoteApp();
 	}
 
 	macro customerPortalTearDown {

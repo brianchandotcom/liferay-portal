@@ -32,7 +32,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			RemoteApps.tearDown();
+			ClientExtensionGeneral.tearDown();
 
 			Navigator.gotoPage(pageName = "Home");
 

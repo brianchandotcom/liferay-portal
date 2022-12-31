@@ -44,7 +44,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			RemoteAppsWorkflow.addApp(
 				entryName = "Test Remote App",
@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("Assert remote app approved status") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			RemoteAppsWorkflow.assertTableStatus(
 				entryName = "Test Remote App",
@@ -120,7 +120,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			RemoteAppsWorkflow.addApp(
 				entryName = "Test Remote App",
@@ -149,7 +149,7 @@ definition {
 		}
 
 		task ("Then Assert remote app pending status") {
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			RemoteAppsWorkflow.assertTableStatus(
 				entryName = "Test Remote App",
@@ -222,7 +222,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			RemoteAppsWorkflow.addApp(
 				entryName = "Test Remote App",
@@ -265,7 +265,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			RemoteAppsWorkflow.addApp(
 				entryName = "Test Remote App",
@@ -277,7 +277,7 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			RemoteAppsWorkflow.assertTableStatus(
 				entryName = "Test Remote App",

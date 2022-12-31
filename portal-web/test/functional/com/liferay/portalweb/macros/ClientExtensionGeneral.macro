@@ -20,7 +20,7 @@ definition {
 	}
 
 	macro addCustomElement {
-		RemoteApps.addType(type = "Custom Element");
+		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		RemoteAppsEntry.addCustomElement(
 			entryHtmlName = "${entryHtmlName}",
@@ -31,7 +31,7 @@ definition {
 	}
 
 	macro addCustomElementAllFields {
-		RemoteApps.addType(type = "Custom Element");
+		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementAllFields(
 			entryCssurl = "${entryCssurl}",
@@ -48,7 +48,7 @@ definition {
 	}
 
 	macro addCustomElementMultipleURLs {
-		RemoteApps.addType(type = "Custom Element");
+		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementMultipleURLs(
 			entryCssurl1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
@@ -62,7 +62,7 @@ definition {
 	}
 
 	macro addEntryWithPortletCategory {
-		RemoteApps.addType(type = "IFrame");
+		ClientExtensionGeneral.addType(type = "IFrame");
 
 		RemoteAppsEntry.addEntry(
 			entryName = "Test Remote App",
@@ -224,13 +224,13 @@ definition {
 	macro deleteRemoteAppAPI {
 		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
 
-		var remoteAppNameToBeRemoved = RemoteApps.getRemoteAppEntryName();
+		var remoteAppNameToBeRemoved = ClientExtensionGeneral.getRemoteAppEntryName();
 
-		RemoteApps._deleteRemoteAppAPI();
+		ClientExtensionGeneral._deleteRemoteAppAPI();
 
-		RemoteApps.goToRemoteAppsPortlet();
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		RemoteApps.assertTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
+		ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
 	}
 
 	macro editCustomElement {
@@ -260,7 +260,7 @@ definition {
 	macro getExternalReferenceCodeValue {
 		WaitForSPARefresh();
 
-		RemoteApps.goToRemoteAppsPortlet();
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		Click(
 			key_tableEntryName = "Vanilla Counter",
@@ -279,7 +279,7 @@ definition {
 
 	macro getRemoteAppEntryId {
 		var companyId = JSONCompany.getCompanyId();
-		var externalReferenceCodeValue = RemoteApps.getExternalReferenceCodeValue();
+		var externalReferenceCodeValue = ClientExtensionGeneral.getExternalReferenceCodeValue();
 
 		return "${companyId}_${externalReferenceCodeValue}";
 	}
@@ -302,13 +302,13 @@ definition {
 	}
 
 	macro tearDown {
-		RemoteApps.goToRemoteAppsPortlet();
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		while (IsElementNotPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE")) {
-			RemoteApps.deleteRemoteApp();
+			ClientExtensionGeneral.deleteRemoteApp();
 		}
 
-		RemoteApps.viewEmptyRemoteTable();
+		ClientExtensionGeneral.viewEmptyRemoteTable();
 	}
 
 	macro viewEmptyRemoteTable {

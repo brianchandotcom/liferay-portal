@@ -14,7 +14,10 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +35,12 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public ObjectDefinition getObjectDefinition() throws PortalException {
+		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+			getObjectDefinitionId());
 	}
 
 	@Override

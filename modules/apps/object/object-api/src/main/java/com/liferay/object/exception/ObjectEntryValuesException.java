@@ -15,12 +15,26 @@
 package com.liferay.object.exception;
 
 import com.liferay.object.model.ObjectState;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
  */
 public class ObjectEntryValuesException extends PortalException {
+
+	public static class AccountEntryObjectFieldUnmodifiable
+		extends ObjectEntryValuesException {
+
+		public AccountEntryObjectFieldUnmodifiable(String objectFieldName) {
+			super(
+				StringBundler.concat(
+					"The object field ", objectFieldName,
+					" is unmodifiable because it is the account entry ",
+					"restrictor."));
+		}
+
+	}
 
 	public static class ExceedsIntegerSize extends ObjectEntryValuesException {
 

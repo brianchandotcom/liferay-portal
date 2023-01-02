@@ -104,14 +104,6 @@ import org.json.JSONObject;
 public class Main {
 
 	public static void main(String[] arguments) throws Exception {
-		Properties mainProperties = new Properties();
-
-		try (InputStream inputStream = Main.class.getResourceAsStream(
-				"dependencies/main.properties")) {
-
-			mainProperties.load(inputStream);
-		}
-
 		Properties tokenProperties = new Properties();
 
 		try (InputStream inputStream = Main.class.getResourceAsStream(
@@ -121,15 +113,14 @@ public class Main {
 		}
 
 		File markdownImportDirFile = new File(
-			mainProperties.getProperty("markdown.import.dir"));
+			System.getenv("MARKDOWN_IMPORT_DIR"));
 
 		Main main = new Main(
-			GetterUtil.getLong(
-				mainProperties.getProperty("liferay.content.structure.id")),
-			GetterUtil.getLong(mainProperties.getProperty("liferay.group.id")),
-			mainProperties.getProperty("liferay.oauth.client.id"),
-			mainProperties.getProperty("liferay.oauth.client.secret"),
-			new URL(mainProperties.getProperty("liferay.url")),
+			GetterUtil.getLong(System.getenv("LIFERAY_CONTENT_STRUCTURE_ID")),
+			GetterUtil.getLong(System.getenv("LIFERAY_GROUP_ID")),
+			System.getenv("LIFERAY_OAUTH_CLIENT_ID"),
+			System.getenv("LIFERAY_OAUTH_CLIENT_SECRET"),
+			new URL(System.getenv("LIFERAY_URL")),
 			markdownImportDirFile.getCanonicalPath(), tokenProperties);
 
 		main.uploadToLiferay();

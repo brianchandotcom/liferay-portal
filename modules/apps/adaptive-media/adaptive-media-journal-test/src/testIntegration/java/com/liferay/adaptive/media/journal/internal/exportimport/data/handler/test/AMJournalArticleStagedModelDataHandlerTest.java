@@ -19,6 +19,7 @@ import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -260,7 +261,8 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		).build();
 
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
-			"content", "string", "text", true, "textarea",
+			"content", "string", "text", true,
+			DDMFormFieldTypeConstants.RICH_TEXT,
 			new Locale[] {LocaleUtil.getSiteDefault()},
 			LocaleUtil.getSiteDefault());
 

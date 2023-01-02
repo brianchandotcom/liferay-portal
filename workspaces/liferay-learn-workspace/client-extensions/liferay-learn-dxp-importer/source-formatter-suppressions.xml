@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ExceptionPrintStackTraceCheck" files=".*" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
+	</source-check>
+</suppressions>

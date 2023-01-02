@@ -148,6 +148,19 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</c:if>
 
+		<c:if test='<%= portletTitleBasedNavigation && GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
+
+			<%
+			KBAdminViewDisplayContext kbAdminViewDisplayContext = new KBAdminViewDisplayContext(kbArticle.getParentResourceClassNameId(), kbArticle.getParentResourcePrimKey(), request, liferayPortletResponse);
+
+			kbAdminViewDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
+			%>
+
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, false, true) %>"
+			/>
+		</c:if>
+
 		<div class="kb-tools">
 			<liferay-util:include page="/admin/common/kb_article_tools.jsp" servletContext="<%= application %>" />
 		</div>

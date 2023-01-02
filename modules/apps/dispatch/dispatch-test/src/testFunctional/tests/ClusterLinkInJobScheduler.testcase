@@ -30,6 +30,7 @@ definition {
 	@priority = "4"
 	test CanTriggerJobWithClusterMode {
 		property portal.acceptance = "true";
+		property portal.release = "true";
 
 		task ("Given cluster.link.enabled") {
 			AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface");
@@ -71,6 +72,7 @@ definition {
 	@priority = "4"
 	test ClusterModeTaskExecutionIsAvailable {
 		property portal.acceptance = "true";
+		property portal.release = "true";
 
 		task ("Given cluster.link.enabled") {
 			AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface");

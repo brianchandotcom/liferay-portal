@@ -28,7 +28,6 @@ window.addEventListener('load', () => {
 		true
 	);
 
-
 	new navigation.default.DropdownProvider(
 		'.menu-button-group',
 		'.menu-button-group',

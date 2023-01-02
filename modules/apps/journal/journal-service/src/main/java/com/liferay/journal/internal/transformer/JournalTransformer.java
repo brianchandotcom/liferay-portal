@@ -406,16 +406,16 @@ public class JournalTransformer {
 				continue;
 			}
 
-			TemplateNode mainChildTemplateNode = null;
-
 			String fieldSetName = templateNode.getName();
 
-			if (fieldSetName.endsWith("FieldSet")) {
-				String name = fieldSetName.substring(
-					0, fieldSetName.indexOf("FieldSet"));
-
-				mainChildTemplateNode = templateNode.getChild(name);
+			if (!fieldSetName.endsWith("FieldSet")) {
+				continue;
 			}
+
+			String name = fieldSetName.substring(
+				0, fieldSetName.indexOf("FieldSet"));
+
+			TemplateNode mainChildTemplateNode = templateNode.getChild(name);
 
 			if (mainChildTemplateNode == null) {
 				mainChildTemplateNode = childTemplateNodes.get(0);

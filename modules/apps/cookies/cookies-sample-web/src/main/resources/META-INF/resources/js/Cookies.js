@@ -13,7 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import {openCookieConfigurationModal} from '@liferay/cookies-banner-web';
+import {
+	checkCookieConsentForTypes,
+	openCookieConsentModal,
+} from '@liferay/cookies-banner-web';
+import {COOKIE_TYPES, openAlertModal} from 'frontend-js-web';
 import React from 'react';
 
 const Cookie = () => {
@@ -22,7 +26,7 @@ const Cookie = () => {
 			<ClayButton
 				displayType="secondary"
 				onClick={() => {
-					openCookieConfigurationModal({});
+					openCookieConsentModal({});
 				}}
 			>
 				Default Modal
@@ -30,17 +34,44 @@ const Cookie = () => {
 
 			<ClayButton
 				onClick={() => {
-					openCookieConfigurationModal({
+					openCookieConsentModal({
 						alertDisplayType: 'info',
 						alertMessage:
-							'the-compare-function-requires-acceptance-of-functional-cookies',
-						customTitle: Liferay.Language.get(
-							'product-comparison-uses-non-essential-cookies'
-						),
+							'This feature requires functional cookies to be accepted',
+						customTitle: 'This feature uses non-essential cookies',
 					});
 				}}
 			>
 				Modified Modal
+			</ClayButton>
+			<ClayButton
+				onClick={() => {
+					checkCookieConsentForTypes(
+						[COOKIE_TYPES.FUNCTIONAL, COOKIE_TYPES.PERFORMANCE],
+						{
+							alertMessage:
+								'This feature requires functional and performance cookies to be accepted',
+							customTitle:
+								'This feature uses non-essential cookies',
+						}
+					)
+						.then(() => {
+							openAlertModal({
+								message:
+									'All needed cookies are accepted, thank you!',
+								onConfirm: () => {},
+							});
+						})
+						.catch(() => {
+							openAlertModal({
+								message:
+									'Seems that you still need to accept some cookies...',
+								onConfirm: () => {},
+							});
+						});
+				}}
+			>
+				Check consent for functional and personalization cookies
 			</ClayButton>
 		</>
 	);

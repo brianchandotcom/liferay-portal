@@ -406,7 +406,7 @@ public class JournalTransformer {
 				continue;
 			}
 
-			TemplateNode firstChildTemplateNode = null;
+			TemplateNode mainChildTemplateNode = null;
 
 			String fieldSetName = templateNode.getName();
 
@@ -414,20 +414,20 @@ public class JournalTransformer {
 				String name = fieldSetName.substring(
 					0, fieldSetName.indexOf("FieldSet"));
 
-				firstChildTemplateNode = templateNode.getChild(name);
+				mainChildTemplateNode = templateNode.getChild(name);
 			}
 
-			if (firstChildTemplateNode == null) {
-				firstChildTemplateNode = childTemplateNodes.get(0);
+			if (mainChildTemplateNode == null) {
+				mainChildTemplateNode = childTemplateNodes.get(0);
 			}
 
 			if (Objects.equals(
-					firstChildTemplateNode.getType(),
+					mainChildTemplateNode.getType(),
 					DDMFormFieldTypeConstants.FIELDSET)) {
 
 				backwardsCompatibilityTemplateNodes.addAll(
 					includeBackwardsCompatibilityTemplateNodes(
-						Arrays.asList(firstChildTemplateNode), parentOffset));
+						Arrays.asList(mainChildTemplateNode), parentOffset));
 
 				continue;
 			}
@@ -435,19 +435,18 @@ public class JournalTransformer {
 			List<TemplateNode> newChildTemplateNodes = new ArrayList<>(
 				childTemplateNodes);
 
-			newChildTemplateNodes.remove(firstChildTemplateNode);
+			newChildTemplateNodes.remove(mainChildTemplateNode);
 
 			List<TemplateNode> newSiblingsTemplateNodes = new ArrayList<>(
-				firstChildTemplateNode.getSiblings());
+				mainChildTemplateNode.getSiblings());
 
 			if (!newSiblingsTemplateNodes.isEmpty()) {
-				newSiblingsTemplateNodes.remove(firstChildTemplateNode);
+				newSiblingsTemplateNodes.remove(mainChildTemplateNode);
 			}
 
-			firstChildTemplateNode =
-				(TemplateNode)firstChildTemplateNode.clone();
+			mainChildTemplateNode = (TemplateNode)mainChildTemplateNode.clone();
 
-			firstChildTemplateNode.appendChildren(
+			mainChildTemplateNode.appendChildren(
 				includeBackwardsCompatibilityTemplateNodes(
 					newChildTemplateNodes, parentOffset));
 
@@ -461,18 +460,18 @@ public class JournalTransformer {
 						siblingsTemplateNodes.size()));
 			}
 
-			List<TemplateNode> firstChildSiblingsTemplateNodes =
-				firstChildTemplateNode.getSiblings();
+			List<TemplateNode> mainChildSiblingsTemplateNodes =
+				mainChildTemplateNode.getSiblings();
 
-			firstChildSiblingsTemplateNodes.clear();
+			mainChildSiblingsTemplateNodes.clear();
 
-			firstChildSiblingsTemplateNodes.add(firstChildTemplateNode);
+			mainChildSiblingsTemplateNodes.add(mainChildTemplateNode);
 
-			firstChildSiblingsTemplateNodes.addAll(
+			mainChildSiblingsTemplateNodes.addAll(
 				includeBackwardsCompatibilityTemplateNodes(
 					newSiblingsTemplateNodes, parentOffset));
 
-			backwardsCompatibilityTemplateNodes.add(firstChildTemplateNode);
+			backwardsCompatibilityTemplateNodes.add(mainChildTemplateNode);
 		}
 
 		return backwardsCompatibilityTemplateNodes;

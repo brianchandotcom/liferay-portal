@@ -14,4 +14,4 @@
 
 // Cookies API
 
-export {openCookieConsentModal} from '../cookies_banner/js/CookiesBanner';
+export {openCookieConsentModal, checkCookieConsentForTypes} from '../cookies_banner/js/CookiesBanner';

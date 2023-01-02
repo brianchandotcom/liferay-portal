@@ -406,7 +406,20 @@ public class JournalTransformer {
 				continue;
 			}
 
-			TemplateNode firstChildTemplateNode = childTemplateNodes.get(0);
+			TemplateNode firstChildTemplateNode = null;
+
+			String fieldSetName = templateNode.getName();
+
+			if (fieldSetName.endsWith("FieldSet")) {
+				String name = fieldSetName.substring(
+					0, fieldSetName.indexOf("FieldSet"));
+
+				firstChildTemplateNode = templateNode.getChild(name);
+			}
+
+			if (firstChildTemplateNode == null) {
+				firstChildTemplateNode = childTemplateNodes.get(0);
+			}
 
 			if (Objects.equals(
 					firstChildTemplateNode.getType(),

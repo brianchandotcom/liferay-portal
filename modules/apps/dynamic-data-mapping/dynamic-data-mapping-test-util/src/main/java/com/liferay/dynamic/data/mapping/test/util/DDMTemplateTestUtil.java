@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -35,27 +32,6 @@ import java.util.Map;
  * @author Eudaldo Alonso
  */
 public class DDMTemplateTestUtil {
-
-	public static void addDynamicContentElement(
-		Element dynamicElementElement, String languageId, String value) {
-
-		Element dynamicContentElement = dynamicElementElement.addElement(
-			"dynamic-content");
-
-		dynamicContentElement.addAttribute("language-id", languageId);
-		dynamicContentElement.setText(value);
-	}
-
-	public static Element addDynamicElementElement(
-		Element element, String type, String name) {
-
-		Element dynamicElementElement = element.addElement("dynamic-element");
-
-		dynamicElementElement.addAttribute("name", name);
-		dynamicElementElement.addAttribute("type", type);
-
-		return dynamicElementElement;
-	}
 
 	public static DDMTemplate addTemplate(
 			long structureId, long resourceClassNameId)
@@ -168,20 +144,6 @@ public class DDMTemplateTestUtil {
 		return addTemplate(
 			TestPropsValues.getGroupId(), structureId, resourceClassNameId,
 			language, script, defaultLocale);
-	}
-
-	public static Document createDocument(
-		String availableLocales, String defaultLocale) {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute("available-locales", availableLocales);
-		rootElement.addAttribute("default-locale", defaultLocale);
-		rootElement.addElement("request");
-
-		return document;
 	}
 
 	public static String getSampleTemplateVM() {

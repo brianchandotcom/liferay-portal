@@ -15,6 +15,7 @@
 package com.liferay.adaptive.media.journal.internal.exportimport.data.handler.test;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -52,9 +53,12 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -123,7 +127,9 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		JournalArticle importedJournalArticle = (JournalArticle)getStagedModel(
 			journalArticle.getUuid(), liveGroup);
 
-		_assertContentEquals(journalArticle, importedJournalArticle);
+		_assertXMLEquals(
+			_getExpectedDynamicContent(fileEntry1, fileEntry2),
+			importedJournalArticle.getContent());
 	}
 
 	@Test
@@ -145,7 +151,9 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		JournalArticle importedJournalArticle = (JournalArticle)getStagedModel(
 			journalArticle.getUuid(), liveGroup);
 
-		_assertContentEquals(journalArticle, importedJournalArticle);
+		_assertXMLEquals(
+			_getExpectedStaticContent(fileEntry1, fileEntry2),
+			importedJournalArticle.getContent());
 	}
 
 	@Test
@@ -293,6 +301,17 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		AssertUtils.assertEqualsIgnoreCase(expectedContent, actualContent);
 	}
 
+	private void _assertXMLEquals(String expectedXML, String actualXML)
+		throws Exception {
+
+		Document actualDocument = SAXReaderUtil.read(actualXML);
+		Document expectedDocument = SAXReaderUtil.read(expectedXML);
+
+		AssertUtils.assertEqualsIgnoreCase(
+			expectedDocument.formattedString(),
+			actualDocument.formattedString());
+	}
+
 	private String _getContent(String html) throws Exception {
 		return StringUtil.replace(
 			new String(
@@ -308,6 +327,41 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 		for (FileEntry fileEntry : fileEntries) {
 			sb.append(_getImgTag(fileEntry));
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return _getContent(sb.toString());
+	}
+
+	private String _getExpectedDynamicContent(FileEntry... fileEntries)
+		throws Exception {
+
+		List<FileEntry> importedFileEntries = new ArrayList<>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			importedFileEntries.add(
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), liveGroup.getGroupId()));
+		}
+
+		return _getDynamicContent(
+			importedFileEntries.toArray(new FileEntry[0]));
+	}
+
+	private String _getExpectedStaticContent(FileEntry... fileEntries)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(fileEntries.length * 2);
+
+		for (FileEntry fileEntry : fileEntries) {
+			FileEntry importedFileEntry =
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), liveGroup.getGroupId());
+
+			sb.append(
+				_amImageHTMLTagFactory.create(
+					_getImgTag(importedFileEntry), importedFileEntry));
+
 			sb.append(StringPool.NEW_LINE);
 		}
 
@@ -360,6 +414,9 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
+
+	@Inject
+	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

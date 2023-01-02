@@ -12,35 +12,38 @@
  * details.
  */
 
+import {COOKIE_TYPES, getCookie, setCookie} from 'frontend-js-web';
+
 class CommerceCookie {
-	constructor(scope = null) {
+	constructor(scope = null, cookieType) {
 		if (!scope) {
 			throw new Error('Scope must be defined');
 		}
 
 		this.scope = scope;
+		this.cookieType = cookieType || COOKIE_TYPES.NECESSARY;
 	}
 
 	getValue(key) {
-		const [, value] = document.cookie.split(`${this.scope}${key}=`);
-
-		return !value ? null : value.split(';')[0];
+		return getCookie(this.scope + key, this.cookieType);
 	}
 
 	setValue(key, value, expires, path = '/') {
-		const cookieValue = `${this.scope}${key}=${value};`;
-		const cookiePath = `path=${path};`;
-
-		let cookieExp = '';
+		const options = {path};
 
 		if (expires) {
 			const expirationDate =
 				expires instanceof Date ? expires : new Date(expires);
 
-			cookieExp = `expires=${expirationDate.toUTCString()};`;
+			options.expires = expirationDate.toUTCString();
 		}
 
-		document.cookie = `${cookieValue}${cookieExp}${cookiePath}`;
+		return setCookie(
+			`${this.scope}${key}`,
+			value,
+			this.cookieType,
+			options
+		);
 	}
 }
 

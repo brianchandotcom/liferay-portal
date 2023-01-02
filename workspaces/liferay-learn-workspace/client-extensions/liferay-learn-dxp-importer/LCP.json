@@ -1,0 +1,12 @@
+{
+	"cpu": 4,
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferaylearndxpimporter",
+	"kind": "Job",
+	"memory": 3000,
+	"scale": 1
+}

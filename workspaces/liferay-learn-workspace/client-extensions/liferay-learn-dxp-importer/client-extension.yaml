@@ -1,0 +1,28 @@
+liferay-learn-dxp-importer:
+    name: Liferay Learn DXP Importer
+    scopes:
+        - Liferay.Data.Engine.REST.everything
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Headless.Delivery.everything
+        - liferay-json-web-services.everything.write
+        - liferay-json-web-services.everything
+        - liferay-json-web-services.everything.read
+    type: oAuthApplicationHeadlessServer
+    userAccountEmailAddress: test@$[conf:dxp.lxc.liferay.com.virtualInstanceId]
+runtime:
+    cpu: 2000m
+    env:
+        - name: OAUTH2_JOB_PROFILE
+          value: liferay-learn-dxp-importer
+        - name: LIFERAY_DATA_DEFINITION_KEY
+          value: LEARN-ARTICLE
+        - name: LIFERAY_GROUP_FRIENDLY_URL_PATH
+          value: guest
+        - name: MARKDOWN_IMPORT_DIR
+          value: ../docs
+        - name: SKIP_UPDATE_EXAMPLES
+          value: true
+    memory: 3000Mi
+    type: configuration
+    workload: job

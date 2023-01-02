@@ -354,6 +354,8 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			sb.append(StringPool.NEW_LINE);
 		}
 
+		sb.setIndex(sb.index() - 1);
+
 		return _getContent(sb.toString());
 	}
 
@@ -388,6 +390,8 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 			sb.append(StringPool.NEW_LINE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return _getContent(sb.toString());
 	}
@@ -430,6 +434,8 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			sb.append(_getPictureTag(fileEntry));
 			sb.append(StringPool.NEW_LINE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return _getContent(sb.toString());
 	}

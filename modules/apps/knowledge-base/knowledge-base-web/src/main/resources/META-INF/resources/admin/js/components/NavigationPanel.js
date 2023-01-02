@@ -17,9 +17,8 @@ import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import {fetch, navigate, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React from 'react';
 
-import normalizeDropdownItems from '../utils/normalizeDropdownItems';
 import ActionsDropdown from './ActionsDropdown';
 
 const ITEM_TYPES_SYMBOL = {
@@ -33,15 +32,11 @@ const ITEM_TYPES = {
 };
 
 export default function NavigationPanel({
-	items: initialItems,
+	items,
 	moveKBObjectURL,
 	portletNamespace,
 	selectedItemId,
 }) {
-	const items = useMemo(() => normalizeDropdownItems(initialItems), [
-		initialItems,
-	]);
-
 	const handleClickItem = (event, item) => {
 		if (event.defaultPrevented) {
 			return;

@@ -75,6 +75,25 @@ export default function _JournalPortlet({
 
 	const editingDefaultValues = classNameId && classNameId !== '0';
 
+	if (editingDefaultValues) {
+		const resetInput = (inputName) => {
+			const input = document.getElementById(`${namespace}${inputName}`);
+
+			if (input) {
+				input.value = '';
+			}
+		};
+
+		resetInput('displayDate');
+		resetInput('displayDateTime');
+		resetInput('displayDateMonth');
+		resetInput('displayDateDay');
+		resetInput('displayDateYear');
+		resetInput('displayDateHour');
+		resetInput('displayDateMinute');
+		resetInput('displayDateAmPm');
+	}
+
 	const handleContextualSidebarButton = () => {
 		contextualSidebarContainer?.classList.toggle(
 			'contextual-sidebar-visible'

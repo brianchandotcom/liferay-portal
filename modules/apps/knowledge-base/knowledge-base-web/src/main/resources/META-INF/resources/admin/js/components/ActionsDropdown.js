@@ -26,6 +26,7 @@ export default function ActionsDropdown({actions}) {
 			renderMenuOnClick
 			trigger={
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('actions')}
 					displayType="unstyled"
 					small
 					symbol="ellipsis-v"

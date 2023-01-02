@@ -144,6 +144,7 @@ const VerticalNavigationBar = ({
 				{(item) => (
 					<VerticalBar.Item key={item.key}>
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get(item.title)}
 							data-tooltip-align="right"
 							displayType="unstyled"
 							symbol={item.icon}

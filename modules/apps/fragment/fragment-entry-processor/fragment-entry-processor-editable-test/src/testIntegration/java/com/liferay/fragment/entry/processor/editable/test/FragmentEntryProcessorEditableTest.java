@@ -47,10 +47,10 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -91,7 +91,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -100,10 +99,8 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.io.InputStream;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.Portlet;
 
@@ -615,20 +612,6 @@ public class FragmentEntryProcessorEditableTest {
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-		String dynamicContent = _readJSONFileToString("dynamic_content.json");
-
-		dynamicContent = StringUtil.replace(
-			dynamicContent,
-			new String[] {
-				"FILE_ENTRY_ID", "GROUP_ID", "RESOURCE_PRIM_KEY", "UUID"
-			},
-			new String[] {
-				String.valueOf(fileEntry.getFileEntryId()),
-				String.valueOf(fileEntry.getGroupId()),
-				String.valueOf(fileEntry.getPrimaryKey()),
-				String.valueOf(fileEntry.getUuid())
-			});
-
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			_portal.getClassNameId(JournalArticle.class));
@@ -649,13 +632,10 @@ public class FragmentEntryProcessorEditableTest {
 			HashMapBuilder.put(
 				defaultLocale, RandomTestUtil.randomString()
 			).build(),
-			_getStructuredContent(
-				fieldId,
-				Collections.singletonList(
-					HashMapBuilder.put(
-						defaultLocale, dynamicContent
-					).build()),
-				LocaleUtil.toLanguageId(defaultLocale)),
+			StringUtil.replace(
+				_readFileToString("dynamic_content.xml"),
+				new String[] {"[$FIELD_ID$]", "[$IMAGE_JSON$]"},
+				new String[] {fieldId, _toJSON(fileEntry)}),
 			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(), null,
 			displayCalendar.get(Calendar.MONTH),
 			displayCalendar.get(Calendar.DATE),
@@ -664,22 +644,6 @@ public class FragmentEntryProcessorEditableTest {
 			displayCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
 			0, 0, true, true, false, null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	private com.liferay.portal.kernel.xml.Document _createDocumentContent(
-		String availableLocales, String defaultLocale) {
-
-		com.liferay.portal.kernel.xml.Document document =
-			SAXReaderUtil.createDocument();
-
-		com.liferay.portal.kernel.xml.Element rootElement = document.addElement(
-			"root");
-
-		rootElement.addAttribute("available-locales", availableLocales);
-		rootElement.addAttribute("default-locale", defaultLocale);
-		rootElement.addElement("request");
-
-		return document;
 	}
 
 	private DDMForm _deserialize(String content) {
@@ -837,47 +801,6 @@ public class FragmentEntryProcessorEditableTest {
 		return bodyElement.html();
 	}
 
-	private String _getStructuredContent(
-		String name, List<Map<Locale, String>> contents, String defaultLocale) {
-
-		StringBundler sb = new StringBundler();
-
-		for (Map<Locale, String> map : contents) {
-			for (Locale locale : map.keySet()) {
-				sb.append(LocaleUtil.toLanguageId(locale));
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.setIndex(sb.index() - 1);
-		}
-
-		com.liferay.portal.kernel.xml.Document document =
-			_createDocumentContent(sb.toString(), defaultLocale);
-
-		com.liferay.portal.kernel.xml.Element rootElement =
-			document.getRootElement();
-
-		for (Map<Locale, String> map : contents) {
-			com.liferay.portal.kernel.xml.Element dynamicElementElement =
-				rootElement.addElement("dynamic-element");
-
-			dynamicElementElement.addAttribute("index-type", "keyword");
-			dynamicElementElement.addAttribute("name", name);
-			dynamicElementElement.addAttribute("type", "image");
-
-			for (Map.Entry<Locale, String> entry : map.entrySet()) {
-				com.liferay.portal.kernel.xml.Element element =
-					dynamicElementElement.addElement("dynamic-content");
-
-				element.addAttribute(
-					"language-id", LocaleUtil.toLanguageId(entry.getKey()));
-				element.addCDATA(entry.getValue());
-			}
-		}
-
-		return document.asXML();
-	}
-
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -917,6 +840,26 @@ public class FragmentEntryProcessorEditableTest {
 			_readFileToString(jsonFileName));
 
 		return jsonObject.toString();
+	}
+
+	private String _toJSON(FileEntry fileEntry) {
+		return JSONUtil.put(
+			"alt", StringPool.BLANK
+		).put(
+			"description", StringPool.BLANK
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"name", fileEntry.getFileName()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", "journal"
+		).put(
+			"uuid", fileEntry.getUuid()
+		).toString();
 	}
 
 	@Inject

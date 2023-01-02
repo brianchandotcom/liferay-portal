@@ -52,9 +52,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -297,33 +294,11 @@ public class AMJournalArticleStagedModelDataHandlerTest
 	}
 
 	private String _getContent(String html) throws Exception {
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute(
-			"available-locales",
-			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
-		rootElement.addAttribute(
-			"default-locale",
-			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
-		rootElement.addElement("request");
-
-		Element dynamicElementElement = rootElement.addElement(
-			"dynamic-element");
-
-		dynamicElementElement.addAttribute("index-type", "text");
-		dynamicElementElement.addAttribute("name", "content");
-		dynamicElementElement.addAttribute("type", "rich_text");
-
-		Element element = dynamicElementElement.addElement("dynamic-content");
-
-		element.addAttribute(
-			"language-id",
-			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
-		element.addCDATA(html);
-
-		return document.asXML();
+		return StringUtil.replace(
+			new String(
+				FileUtil.getBytes(
+					getClass(), "dependencies/dynamic_content.xml")),
+			"[$CONTENT$]", html);
 	}
 
 	private String _getDynamicContent(FileEntry... fileEntries)

@@ -68,9 +68,6 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -78,11 +75,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.InputStream;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -390,20 +384,6 @@ public class FragmentEntryProcessorHelperTest {
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-		String dynamicContent = _readJSONFileToString("dynamic_content.json");
-
-		dynamicContent = StringUtil.replace(
-			dynamicContent,
-			new String[] {
-				"FILE_ENTRY_ID", "GROUP_ID", "RESOURCE_PRIM_KEY", "UUID"
-			},
-			new String[] {
-				String.valueOf(fileEntry.getFileEntryId()),
-				String.valueOf(fileEntry.getGroupId()),
-				String.valueOf(fileEntry.getPrimaryKey()),
-				String.valueOf(fileEntry.getUuid())
-			});
-
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			_portal.getClassNameId(JournalArticle.class));
@@ -429,13 +409,10 @@ public class FragmentEntryProcessorHelperTest {
 			HashMapBuilder.put(
 				defaultLocale, RandomTestUtil.randomString()
 			).build(),
-			_getJournalArticleStructuredContent(
-				fieldId,
-				Collections.singletonList(
-					HashMapBuilder.put(
-						defaultLocale, dynamicContent
-					).build()),
-				LocaleUtil.toLanguageId(defaultLocale)),
+			StringUtil.replace(
+				_readFileToString("dynamic_content.xml"),
+				new String[] {"[$FIELD_ID$]", "[$IMAGE_JSON$]"},
+				new String[] {fieldId, _toJSON(fileEntry)}),
 			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(), null,
 			displayCalendar.get(Calendar.MONTH),
 			displayCalendar.get(Calendar.DATE),
@@ -479,20 +456,6 @@ public class FragmentEntryProcessorHelperTest {
 		return ddmFormField;
 	}
 
-	private Document _createDocument(
-		String availableLocales, String defaultLocale) {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute("available-locales", availableLocales);
-		rootElement.addAttribute("default-locale", defaultLocale);
-		rootElement.addElement("request");
-
-		return document;
-	}
-
 	private DDMForm _deserialize(String content) {
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
@@ -516,45 +479,6 @@ public class FragmentEntryProcessorHelperTest {
 			fragmentEntryProcessorContext);
 	}
 
-	private String _getJournalArticleStructuredContent(
-		String name, List<Map<Locale, String>> contents, String defaultLocale) {
-
-		StringBundler sb = new StringBundler();
-
-		for (Map<Locale, String> map : contents) {
-			for (Locale locale : map.keySet()) {
-				sb.append(LocaleUtil.toLanguageId(locale));
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.setIndex(sb.index() - 1);
-		}
-
-		Document document = _createDocument(sb.toString(), defaultLocale);
-
-		Element rootElement = document.getRootElement();
-
-		for (Map<Locale, String> map : contents) {
-			Element dynamicElementElement = rootElement.addElement(
-				"dynamic-element");
-
-			dynamicElementElement.addAttribute("index-type", "keyword");
-			dynamicElementElement.addAttribute("name", name);
-			dynamicElementElement.addAttribute("type", "image");
-
-			for (Map.Entry<Locale, String> entry : map.entrySet()) {
-				Element element = dynamicElementElement.addElement(
-					"dynamic-content");
-
-				element.addAttribute(
-					"language-id", LocaleUtil.toLanguageId(entry.getKey()));
-				element.addCDATA(entry.getValue());
-			}
-		}
-
-		return document.asXML();
-	}
-
 	private String _readFileToString(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -569,6 +493,26 @@ public class FragmentEntryProcessorHelperTest {
 			_readFileToString(jsonFileName));
 
 		return jsonObject.toString();
+	}
+
+	private String _toJSON(FileEntry fileEntry) {
+		return JSONUtil.put(
+			"alt", StringPool.BLANK
+		).put(
+			"description", StringPool.BLANK
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"name", fileEntry.getFileName()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", "journal"
+		).put(
+			"uuid", fileEntry.getUuid()
+		).toString();
 	}
 
 	@Inject

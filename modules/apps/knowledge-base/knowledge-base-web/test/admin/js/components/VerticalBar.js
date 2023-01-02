@@ -55,6 +55,7 @@ const defaultProps = {
 		},
 	],
 	parentContainerId: PARENT_CONTAINER_ID,
+	portletNamespace: '_portletNamespace_',
 	productMenuOpen: true,
 };
 

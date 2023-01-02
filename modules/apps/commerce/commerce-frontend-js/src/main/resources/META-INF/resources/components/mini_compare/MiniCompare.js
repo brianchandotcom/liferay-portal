@@ -53,15 +53,14 @@ function toggleStatus(commerceChannelGroupId, id, toggle) {
 	compareCookie.setValue(commerceChannelGroupId, cpDefinitionIds.join(':'));
 }
 
-function alertCookies() {
+function alertCookies(alertType, alertTitle, alertMessage) {
 	Liferay.Util.openToast({
-		message: Liferay.Language.get(
-			'the-compare-function-requires-acceptance-of-functional-cookies'
-		),
+		message: alertMessage,
+		title: alertTitle,
 		toastProps: {
 			autoClose: 5000,
 		},
-		type: 'info',
+		type: alertType,
 	});
 }
 
@@ -93,8 +92,8 @@ function MiniCompare(props) {
 	);
 
 	const triggerCheckCookieConsent = () => {
-	  return !functionalCookiesConsent && items?.length > 0;
-  }
+		return !functionalCookiesConsent && items?.length > 0;
+	};
 
 	useEffect(() => {
 		if (triggerCheckCookieConsent()) {
@@ -112,9 +111,22 @@ function MiniCompare(props) {
 						items.map((item) => item.id).join(':')
 					);
 					setFunctionalCookiesConsent(true);
+					alertCookies(
+						'success',
+						Liferay.Language.get('cookies-accepted'),
+						Liferay.Language.get(
+							'now-it-is-possible-to-use-the-compare-function'
+						)
+					);
 				})
 				.catch(() => {
-					alertCookies();
+					alertCookies(
+						'warning',
+						Liferay.Language.get('cookies-declined'),
+						Liferay.Language.get(
+							'the-compare-function-requires-acceptance-of-functional-cookies'
+						)
+					);
 				});
 		}
 	}, [functionalCookiesConsent, items, props.commerceChannelGroupId]);

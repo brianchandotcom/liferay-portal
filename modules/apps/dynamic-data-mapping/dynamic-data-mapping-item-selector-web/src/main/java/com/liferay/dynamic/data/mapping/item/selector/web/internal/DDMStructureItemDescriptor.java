@@ -60,7 +60,7 @@ public class DDMStructureItemDescriptor
 				WebKeys.THEME_DISPLAY);
 
 		return JSONUtil.put(
-			"ddmstructureid", _ddmStructure.getStructureId()
+			"ddmstructureid", String.valueOf(_ddmStructure.getStructureId())
 		).put(
 			"ddmstructurekey", _ddmStructure.getStructureKey()
 		).put(

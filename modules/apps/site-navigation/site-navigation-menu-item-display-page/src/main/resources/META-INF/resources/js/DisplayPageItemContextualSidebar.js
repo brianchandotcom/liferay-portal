@@ -206,7 +206,7 @@ function DisplayPageItemContextualSidebar({
 					{Liferay.Language.get('item')}
 				</label>
 
-				<ClayInput.Group className="site-navigation-item-selector">
+				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
 							className="text-secondary"

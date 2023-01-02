@@ -24,6 +24,7 @@
 	action="<%= configurationActionURL %>"
 	method="post"
 	name="fm"
+	onSubmit='<%= "if (" + liferayPortletResponse.getNamespace() + "saveConfiguration) {event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveConfiguration();}" %>'
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="tabs2" type="hidden" value='<%= ParamUtil.getString(request, "tabs2") %>' />

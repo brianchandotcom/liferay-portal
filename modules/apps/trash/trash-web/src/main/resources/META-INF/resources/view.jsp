@@ -231,11 +231,9 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 									<liferay-util:buffer
 										var="rootEntryIcon"
 									>
-										<liferay-ui:icon
-											label="<%= true %>"
-											message="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
-											method="get"
-											url="<%= viewRootContentURLString %>"
+										<clay:link
+											href="<%= viewRootContentURLString %>"
+											label="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
 										/>
 									</liferay-util:buffer>
 

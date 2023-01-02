@@ -1,0 +1,78 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "application"
+apply plugin: "com.liferay.css.builder"
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "java"
+
+buildCSS {
+	outputDirName = "."
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.data.engine.rest.client", version: "latest.release"
+	compile group: "com.liferay", name: "com.liferay.petra.io", version: "latest.release"
+	compile group: "com.liferay", name: "com.liferay.petra.lang", version: "latest.release"
+	compile group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
+	compile group: "commons-io", name: "commons-io", version: "2.11.0"
+	compile group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	compile group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.13"
+	compile group: "org.json", name: "json", version: "20220320"
+}
+
+mainClassName = "com.liferay.liferay.learn.web.importer.Main"
+
+jar {
+	manifest {
+		attributes "Main-Class": "$mainClassName"
+
+	}
+
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+
+	}
+}
+
+assembleClientExtension {
+	doLast {
+		copy {
+			from "."
+			into "build/clientExtension"
+			include "app.sh"
+		}
+	}
+}
+
+task wrapper
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+try {
+	tasks.named("assembleClientExtension") {
+		from jar
+
+	}
+} catch (Exception e) {
+}

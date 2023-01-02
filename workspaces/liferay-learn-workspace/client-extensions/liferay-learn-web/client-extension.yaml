@@ -1,0 +1,18 @@
+liferay-learn-web:
+    name: Liferay Learn Web
+    scopes:
+        - liferay-json-web-services.everything.write
+        - liferay-json-web-services.everything
+        - Liferay.Data.Engine.REST.everything
+    type: oAuthApplicationHeadlessServer
+    userAccountEmailAddress: test@$[conf:dxp.lxc.liferay.com.virtualInstanceId]
+runtime:
+    cpu: 2000m
+    env:
+        - name: OAUTH2_JOB_PROFILE
+          value: liferay-learn-web
+        - name: LIFERAY_GROUP_ID
+          value: 20121
+    memory: 500Mi
+    type: configuration
+    workload: job

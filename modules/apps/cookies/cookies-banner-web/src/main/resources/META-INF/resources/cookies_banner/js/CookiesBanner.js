@@ -23,7 +23,11 @@ import {
 	userConfigCookieName,
 } from '../../js/CookiesUtil';
 
-let openCookieConsentModal;
+let openCookieConsentModal = () => {
+	console.warn(
+		'OpenCookieConsentModal was called, but cookie feature is not enabled'
+	);
+};
 
 export default function ({
 	configurationNamespace,
@@ -216,4 +220,4 @@ function checkCookieConsentForTypes(cookieTypes, modalOptions) {
 	});
 }
 
-export {openCookieConsentModal, checkCookieConsentForTypes};
+export {checkCookieConsentForTypes, openCookieConsentModal};

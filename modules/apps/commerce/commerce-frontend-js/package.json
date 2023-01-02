@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/loading-indicator": "3.60.0",
+    "@liferay/cookies-banner-web": "*",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/frontend-js-state-web": "*",
@@ -36,5 +37,5 @@
 		"test": "liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "4.0.68"
+	"version": "4.0.67"
 }

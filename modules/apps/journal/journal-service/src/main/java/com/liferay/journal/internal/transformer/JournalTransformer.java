@@ -418,7 +418,11 @@ public class JournalTransformer {
 			TemplateNode mainChildTemplateNode = templateNode.getChild(name);
 
 			if (mainChildTemplateNode == null) {
-				mainChildTemplateNode = childTemplateNodes.get(0);
+				backwardsCompatibilityTemplateNodes.addAll(
+					includeBackwardsCompatibilityTemplateNodes(
+						childTemplateNodes, parentOffset));
+
+				continue;
 			}
 
 			if (Objects.equals(

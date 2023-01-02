@@ -18,7 +18,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import './ModalAddFilter.scss';
 interface IProps {
 	aggregationFilter?: boolean;
-	creationLanguageId?: Locale;
+	creationLanguageId?: Liferay.Language.Locale;
 	currentFilters: CurrentFilter[];
 	disableAutoClose?: boolean;
 	disableDateValues?: boolean;

@@ -27,7 +27,7 @@ export default function PredefinedValuesTable({
 	values,
 }: IProps): JSX.Element;
 interface IProps {
-	creationLanguageId: Locale;
+	creationLanguageId: Liferay.Language.Locale;
 	currentObjectDefinitionFields: ObjectField[];
 	disableRequiredChecked?: boolean;
 	errors: {

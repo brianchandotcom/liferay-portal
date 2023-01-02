@@ -15,8 +15,8 @@
 import ClayBadge from '@clayui/badge';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
+import {format, sub as dateSub} from 'date-fns';
 import {createResourceURL, fetch, sub} from 'frontend-js-web';
-import moment from 'moment';
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -59,38 +59,23 @@ const FILTERS = [
 		items: [
 			{
 				label: sub(Liferay.Language.get('last-x-months'), 12),
-				value: moment()
-					.subtract(12, 'months')
-					.format('YYYY-MM-DD')
-					.toString(),
+				value: format(dateSub(new Date(), {months: 12}), 'yyyy-MM-dd'),
 			},
 			{
 				label: sub(Liferay.Language.get('last-x-months'), 6),
-				value: moment()
-					.subtract(6, 'months')
-					.format('YYYY-MM-DD')
-					.toString(),
+				value: format(dateSub(new Date(), {months: 6}), 'yyyy-MM-dd'),
 			},
 			{
 				label: sub(Liferay.Language.get('last-x-days'), 30),
-				value: moment()
-					.subtract(1, 'months')
-					.format('YYYY-MM-DD')
-					.toString(),
+				value: format(dateSub(new Date(), {months: 1}), 'yyyy-MM-dd'),
 			},
 			{
 				label: Liferay.Language.get('last-week'),
-				value: moment()
-					.subtract(7, 'days')
-					.format('YYYY-MM-DD')
-					.toString(),
+				value: format(dateSub(new Date(), {days: 7}), 'yyyy-MM-dd'),
 			},
 			{
 				label: sub(Liferay.Language.get('last-x-hours'), 24),
-				value: moment()
-					.subtract(1, 'days')
-					.format('YYYY-MM-DD')
-					.toString(),
+				value: format(dateSub(new Date(), {days: 1}), 'yyyy-MM-dd'),
 			},
 		],
 		key: 'from_date',

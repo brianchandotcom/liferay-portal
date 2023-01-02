@@ -16,7 +16,7 @@
  * Get the label according to the locale
  */
 export declare function getLocalizableLabel(
-	creationLanguageId: Locale,
+	creationLanguageId: Liferay.Language.Locale,
 	labels: LocalizedValue<string> | undefined,
 	fallback?: string
 ): string;

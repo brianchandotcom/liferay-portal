@@ -66,7 +66,9 @@ export function ActionContainer({
 		ObjectDefinitionsRelationship[]
 	>([]);
 
-	const [creationLanguageId, setCreationLanguageId] = useState<Locale>();
+	const [creationLanguageId, setCreationLanguageId] = useState<
+		Liferay.Language.Locale
+	>();
 
 	const isValidField = ({
 		businessType,
@@ -226,7 +228,9 @@ export function ActionContainer({
 				values.objectActionExecutorKey === 'update-object-entry') &&
 				values.parameters?.objectDefinitionExternalReferenceCode && (
 					<PredefinedValuesTable
-						creationLanguageId={creationLanguageId as Locale}
+						creationLanguageId={
+							creationLanguageId as Liferay.Language.Locale
+						}
 						currentObjectDefinitionFields={
 							currentObjectDefinitionFields
 						}

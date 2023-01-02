@@ -53,7 +53,7 @@ declare type TBuilderScreenColumn = {
 	valueList?: TLabelValueObject[];
 };
 interface IProps {
-	creationLanguageId?: Locale;
+	creationLanguageId?: Liferay.Language.Locale;
 	defaultSort?: boolean;
 	disableEdit?: boolean;
 	emptyState: {

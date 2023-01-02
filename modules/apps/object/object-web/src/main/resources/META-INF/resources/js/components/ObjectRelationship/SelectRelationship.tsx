@@ -34,7 +34,9 @@ export default function SelectRelationship({
 	value,
 	...otherProps
 }: IProps) {
-	const [creationLanguageId, setCreationLanguageId] = useState<Locale>();
+	const [creationLanguageId, setCreationLanguageId] = useState<
+		Liferay.Language.Locale
+	>();
 	const [fields, setFields] = useState<ObjectField[]>([]);
 	const [query, setQuery] = useState<string>('');
 	const options = useMemo(
@@ -42,7 +44,7 @@ export default function SelectRelationship({
 			fields.map(({label, name}) => {
 				return {
 					label: getLocalizableLabel(
-						creationLanguageId as Locale,
+						creationLanguageId as Liferay.Language.Locale,
 						label,
 						name
 					),
@@ -113,7 +115,7 @@ export default function SelectRelationship({
 				'choose-a-relationship-field-from-the-selected-object'
 			)}
 			value={getLocalizableLabel(
-				creationLanguageId as Locale,
+				creationLanguageId as Liferay.Language.Locale,
 				selectedValue?.label,
 				selectedValue?.name
 			)}

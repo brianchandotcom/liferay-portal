@@ -17,7 +17,7 @@
  */
 interface FilterArrayByQueryProps<T> {
 	array: T[];
-	creationLanguageId?: Locale;
+	creationLanguageId?: Liferay.Language.Locale;
 	query: string;
 	str: string;
 }

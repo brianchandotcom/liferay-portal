@@ -12,7 +12,6 @@
  * details.
  */
 
-type Locale = Liferay.Language.Locale;
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 interface ObjectDefinition {
 	active: boolean;
@@ -50,7 +49,7 @@ interface ObjectField {
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
-	indexedLanguageId: Locale | null;
+	indexedLanguageId: Liferay.Language.Locale | null;
 	label: LocalizedValue<string>;
 	listTypeDefinitionId: number;
 	name: string;

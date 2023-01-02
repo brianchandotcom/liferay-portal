@@ -57,7 +57,7 @@ class DateTimeInput extends React.Component {
 
 			this.setState(
 				{
-					value: date,
+					value: event.target.value,
 				},
 				() => {
 					this.props.onChange({

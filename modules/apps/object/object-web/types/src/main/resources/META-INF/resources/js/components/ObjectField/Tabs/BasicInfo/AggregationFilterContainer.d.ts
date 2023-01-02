@@ -30,11 +30,11 @@ interface AggregationFilters {
 }
 interface AggregationFilterProps {
 	aggregationFilters: AggregationFilters[];
-	creationLanguageId2?: Locale;
+	creationLanguageId2?: Liferay.Language.Locale;
 	filterOperators: TFilterOperators;
 	objectDefinitionExternalReferenceCode2?: string;
 	setAggregationFilters: (values: AggregationFilters[]) => void;
-	setCreationLanguageId2: (values: Locale) => void;
+	setCreationLanguageId2: (values: Liferay.Language.Locale) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];

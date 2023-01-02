@@ -13,7 +13,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import moment from 'moment';
+import {getYear} from 'date-fns';
 import React, {useState} from 'react';
 
 import {FieldBase} from './FieldBase';
@@ -72,8 +72,8 @@ export function DatePicker({
 				range={range}
 				value={value}
 				years={{
-					end: moment().year() + 5,
-					start: moment().year() - 5,
+					end: getYear(new Date()) + 5,
+					start: getYear(new Date()) - 5,
 				}}
 			/>
 		</FieldBase>

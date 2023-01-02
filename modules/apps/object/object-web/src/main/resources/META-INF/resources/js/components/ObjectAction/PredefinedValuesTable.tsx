@@ -358,7 +358,7 @@ export default function PredefinedValuesTable({
 }
 
 interface IProps {
-	creationLanguageId: Locale;
+	creationLanguageId: Liferay.Language.Locale;
 	currentObjectDefinitionFields: ObjectField[];
 	disableRequiredChecked?: boolean;
 	errors: {[key: string]: string};

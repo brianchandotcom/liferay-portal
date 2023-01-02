@@ -28,7 +28,7 @@ import {
 } from './types';
 
 type TState = {
-	creationLanguageId: Locale;
+	creationLanguageId: Liferay.Language.Locale;
 	enableCategorization: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
@@ -41,7 +41,7 @@ type TState = {
 type TAction =
 	| {
 			payload: {
-				creationLanguageId: Locale;
+				creationLanguageId: Liferay.Language.Locale;
 				enableCategorization: boolean;
 				objectLayout: TObjectLayout;
 				objectRelationships: TObjectRelationship[];

@@ -17,7 +17,7 @@ import {ChangeEventHandler, ReactNode} from 'react';
 import './ObjectFieldFormBase.scss';
 interface IProps {
 	children?: ReactNode;
-	creationLanguageId2?: Locale;
+	creationLanguageId2?: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;

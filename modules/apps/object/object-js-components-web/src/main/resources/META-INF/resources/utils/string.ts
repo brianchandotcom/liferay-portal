@@ -20,7 +20,7 @@ const userLanguageId = Liferay.ThemeDisplay.getLanguageId();
  */
 
 export function getLocalizableLabel(
-	creationLanguageId: Locale,
+	creationLanguageId: Liferay.Language.Locale,
 	labels: LocalizedValue<string> | undefined,
 	fallback?: string
 ) {

@@ -37,13 +37,13 @@ interface CodeEditorLocalizedProps {
 	onSelectedLocaleChange: (val: IItem) => void;
 	onTranslationsChange: (val: LocalizedValue<string>) => void;
 	placeholder?: string;
-	selectedLocale: Locale;
+	selectedLocale: Liferay.Language.Locale;
 	sidebarElements: SidebarCategory[];
 	translations: LocalizedValue<string>;
 }
 
 interface IItem {
-	label: Locale;
+	label: Liferay.Language.Locale;
 	symbol: string;
 }
 
@@ -52,7 +52,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const availableLocales = Object.keys(Liferay.Language.available)
 	.sort((languageId) => (languageId === defaultLanguageId ? -1 : 1))
 	.map((language) => ({
-		label: language as Locale,
+		label: language as Liferay.Language.Locale,
 		symbol: language.replace('_', '-').toLowerCase(),
 	}));
 
@@ -128,7 +128,10 @@ export function CodeEditorLocalized({
 			>
 				<ClayDropDown.ItemList>
 					{availableLocales.map((locale) => {
-						const value = translations[locale.label as Locale];
+						const value =
+							translations[
+								locale.label as Liferay.Language.Locale
+							];
 
 						return (
 							<ClayDropDown.Item

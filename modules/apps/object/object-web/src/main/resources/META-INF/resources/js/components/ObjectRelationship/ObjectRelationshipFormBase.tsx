@@ -110,7 +110,9 @@ export function ObjectRelationshipFormBase({
 	setValues,
 	values,
 }: IPros) {
-	const [creationLanguageId, setCreationLanguageId] = useState<Locale>();
+	const [creationLanguageId, setCreationLanguageId] = useState<
+		Liferay.Language.Locale
+	>();
 
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		ObjectDefinition[]
@@ -234,7 +236,7 @@ export function ObjectRelationshipFormBase({
 					<div className="d-flex justify-content-between">
 						<div>
 							{getLocalizableLabel(
-								creationLanguageId as Locale,
+								creationLanguageId as Liferay.Language.Locale,
 								label,
 								name
 							)}

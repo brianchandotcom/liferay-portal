@@ -36,7 +36,10 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	if (
 		invalidateRequired(
-			getLocalizableLabel(creationLanguageId as Locale, objectLayout.name)
+			getLocalizableLabel(
+				creationLanguageId as Liferay.Language.Locale,
+				objectLayout.name
+			)
 		)
 	) {
 		error = REQUIRED_MSG;
@@ -57,7 +60,7 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				}}
 				required
 				value={getLocalizableLabel(
-					creationLanguageId as Locale,
+					creationLanguageId as Liferay.Language.Locale,
 					objectLayout.name
 				)}
 			/>

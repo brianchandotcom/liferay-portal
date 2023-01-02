@@ -50,7 +50,7 @@ declare type TSortOptions = {
 export declare type TAction =
 	| {
 			payload: {
-				creationLanguageId: Locale;
+				creationLanguageId: Liferay.Language.Locale;
 				objectFields: ObjectField[];
 				objectView: TObjectView;
 			};
@@ -58,14 +58,14 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
-				creationLanguageId: Locale;
+				creationLanguageId: Liferay.Language.Locale;
 				selectedObjectFields: ObjectField[];
 			};
 			type: TYPES.ADD_OBJECT_VIEW_COLUMN;
 	  }
 	| {
 			payload: {
-				creationLanguageId: Locale;
+				creationLanguageId: Liferay.Language.Locale;
 				filterType?: string;
 				objectFieldName: string;
 				valueList?: IItem[];
@@ -74,7 +74,7 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
-				creationLanguageId: Locale;
+				creationLanguageId: Liferay.Language.Locale;
 				objectFieldName: string;
 				objectFields: ObjectField[];
 				objectViewSortColumns?: TObjectViewSortColumn[];

@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
+import { Observer } from '@clayui/modal/lib/types';
 import {
 	API,
 	AutoComplete,
@@ -43,7 +43,7 @@ import {
 import './ModalAddFilter.scss';
 interface IProps {
 	aggregationFilter?: boolean;
-	creationLanguageId?: Locale;
+	creationLanguageId?: Liferay.Language.Locale;
 	currentFilters: CurrentFilter[];
 	disableAutoClose?: boolean;
 	disableDateValues?: boolean;
@@ -160,7 +160,7 @@ export function ModalAddFilter({
 	const filteredAvailableFields = useMemo(() => {
 		return filterArrayByQuery({
 			array: objectFields,
-			creationLanguageId: creationLanguageId as Locale,
+			creationLanguageId: creationLanguageId as Liferay.Language.Locale,
 			query,
 			str: 'label',
 		});
@@ -250,9 +250,9 @@ export function ModalAddFilter({
 			}
 			else if (objectField.businessType === 'Relationship') {
 				const makeFetch = async () => {
-					const {objectFieldSettings} = objectField;
+					const { objectFieldSettings } = objectField;
 
-					const [{value}] = objectFieldSettings as NameValueObject[];
+					const [{ value }] = objectFieldSettings as NameValueObject[];
 
 					const [
 						{
@@ -344,7 +344,7 @@ export function ModalAddFilter({
 			}
 			else {
 				const objectField = objectFields.find(
-					({name}) => name === editingObjectFieldName
+					({ name }) => name === editingObjectFieldName
 				);
 
 				objectField && setFieldValues(objectField);
@@ -417,8 +417,8 @@ export function ModalAddFilter({
 					selectedFilterBy?.businessType === 'Relationship'
 					? checkedItems
 					: selectedFilterBy?.businessType === 'Date'
-					? items
-					: undefined,
+						? items
+						: undefined,
 				value ?? undefined
 			);
 		}
@@ -467,7 +467,7 @@ export function ModalAddFilter({
 						onChangeQuery={setQuery}
 						onSelectItem={(item) => {
 							const userRelationship = !!item.objectFieldSettings?.find(
-								({name, value}) =>
+								({ name, value }) =>
 									name === 'objectDefinition1ShortName' &&
 									value === 'User'
 							);
@@ -491,15 +491,15 @@ export function ModalAddFilter({
 						query={query}
 						required
 						value={getLocalizableLabel(
-							creationLanguageId as Locale,
+							creationLanguageId as Liferay.Language.Locale,
 							selectedFilterBy?.label
 						)}
 					>
-						{({label, name}) => (
+						{({ label, name }) => (
 							<div className="d-flex justify-content-between">
 								<div>
 									{getLocalizableLabel(
-										creationLanguageId as Locale,
+										creationLanguageId as Liferay.Language.Locale,
 										label,
 										name
 									)}
@@ -519,7 +519,7 @@ export function ModalAddFilter({
 							}
 							options={
 								selectedFilterBy?.businessType === 'Integer' ||
-								selectedFilterBy?.businessType === 'LongInteger'
+									selectedFilterBy?.businessType === 'LongInteger'
 									? filterOperators.numericOperators
 									: filterOperators.picklistOperators
 							}
@@ -549,7 +549,7 @@ export function ModalAddFilter({
 						<Input
 							error={errors.value}
 							label={Liferay.Language.get('value')}
-							onChange={({target: {value}}) => {
+							onChange={({ target: { value } }) => {
 								const newValue = value.replace(/[\D]/g, '');
 								setValue(newValue);
 							}}

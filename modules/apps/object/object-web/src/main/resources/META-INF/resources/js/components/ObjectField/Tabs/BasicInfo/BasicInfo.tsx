@@ -12,18 +12,18 @@
  * details.
  */
 
-import {Card, Input, InputLocalized} from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import { Card, Input, InputLocalized } from '@liferay/object-js-components-web';
+import React, { useState } from 'react';
 
-import {updateFieldSettings} from '../../../../utils/fieldSettings';
+import { updateFieldSettings } from '../../../../utils/fieldSettings';
 import ObjectFieldFormBase, {
 	ObjectFieldErrors,
 } from '../../ObjectFieldFormBase';
-import {AggregationFilterContainer} from './AggregationFilterContainer';
-import {AttachmentProperties} from './AttachmentProperties';
-import {FormulaContainer} from './FormulaContainer';
-import {MaxLengthProperties} from './MaxLengthProperties';
-import {SearchableContainer} from './SearchableContainer';
+import { AggregationFilterContainer } from './AggregationFilterContainer';
+import { AttachmentProperties } from './AttachmentProperties';
+import { FormulaContainer } from './FormulaContainer';
+import { MaxLengthProperties } from './MaxLengthProperties';
+import { SearchableContainer } from './SearchableContainer';
 
 interface AggregationFilters {
 	defaultSort?: boolean;
@@ -79,7 +79,7 @@ export function BasicInfo({
 		AggregationFilters[]
 	>([]);
 
-	const [creationLanguageId2, setCreationLanguageId2] = useState<Locale>();
+	const [creationLanguageId2, setCreationLanguageId2] = useState<Liferay.Language.Locale>();
 
 	const disableFieldFormBase = !!(
 		isApproved ||
@@ -87,11 +87,11 @@ export function BasicInfo({
 		values.relationshipType
 	);
 
-	const handleSettingsChange = ({name, value}: ObjectFieldSetting) =>
+	const handleSettingsChange = ({ name, value }: ObjectFieldSetting) =>
 		setValues({
 			objectFieldSettings: updateFieldSettings(
 				values.objectFieldSettings,
-				{name, value}
+				{ name, value }
 			),
 		});
 
@@ -103,13 +103,13 @@ export function BasicInfo({
 					disabled={readOnly}
 					error={errors.label}
 					label={Liferay.Language.get('label')}
-					onChange={(label) => setValues({label})}
+					onChange={(label) => setValues({ label })}
 					required
 					translations={values.label as LocalizedValue<string>}
 				/>
 
 				<ObjectFieldFormBase
-					creationLanguageId2={creationLanguageId2 as Locale}
+					creationLanguageId2={creationLanguageId2 as Liferay.Language.Locale}
 					disabled={disableFieldFormBase}
 					editingField
 					errors={errors}
@@ -139,17 +139,17 @@ export function BasicInfo({
 
 					{(values.businessType === 'Text' ||
 						values.businessType === 'LongText') && (
-						<MaxLengthProperties
-							disabled={values.system}
-							errors={errors}
-							objectField={values}
-							objectFieldSettings={
-								values.objectFieldSettings as ObjectFieldSetting[]
-							}
-							onSettingsChange={handleSettingsChange}
-							setValues={setValues}
-						/>
-					)}
+							<MaxLengthProperties
+								disabled={values.system}
+								errors={errors}
+								objectField={values}
+								objectFieldSettings={
+									values.objectFieldSettings as ObjectFieldSetting[]
+								}
+								onSettingsChange={handleSettingsChange}
+								setValues={setValues}
+							/>
+						)}
 				</ObjectFieldFormBase>
 			</Card>
 

@@ -16,7 +16,7 @@
 
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 interface IAggregationSourcePropertyProps {
-	creationLanguageId2: Locale;
+	creationLanguageId2: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;

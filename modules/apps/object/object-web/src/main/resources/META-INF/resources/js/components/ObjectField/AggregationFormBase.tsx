@@ -19,13 +19,13 @@ import {
 	filterArrayByQuery,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import {normalizeFieldSettings} from '../../utils/fieldSettings';
-import {ObjectFieldErrors} from './ObjectFieldFormBase';
+import { normalizeFieldSettings } from '../../utils/fieldSettings';
+import { ObjectFieldErrors } from './ObjectFieldFormBase';
 
 interface IAggregationSourcePropertyProps {
-	creationLanguageId2: Locale;
+	creationLanguageId2: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
@@ -92,7 +92,7 @@ export function AggregationFormBase({
 	const [
 		selectedAggregationFunction,
 		setSelectedAggregationFunction,
-	] = useState<{label: string; value: string}>();
+	] = useState<{ label: string; value: string }>();
 	const [objectRelationships, setObjectRelationships] = useState<
 		TObjectRelationship[]
 	>();
@@ -133,7 +133,7 @@ export function AggregationFormBase({
 							objectRelationship.type === 'manyToMany' &&
 							objectRelationship.reverse &&
 							objectRelationship.objectDefinitionExternalReferenceCode1 ===
-								objectRelationship.objectDefinitionExternalReferenceCode2
+							objectRelationship.objectDefinitionExternalReferenceCode2
 						)
 				)
 			);
@@ -191,7 +191,7 @@ export function AggregationFormBase({
 				if (currentSummarizeField) {
 					setSelectedSummarizeField(
 						getLocalizableLabel(
-							creationLanguageId2 as Locale,
+							creationLanguageId2 as Liferay.Language.Locale,
 							currentSummarizeField.label,
 							currentSummarizeField.name
 						)
@@ -270,7 +270,7 @@ export function AggregationFormBase({
 		label: string;
 		value: string;
 	}) => {
-		setSelectedAggregationFunction({label, value});
+		setSelectedAggregationFunction({ label, value });
 
 		let newObjectFieldSettings: ObjectFieldSetting[] | undefined;
 
@@ -316,7 +316,7 @@ export function AggregationFormBase({
 	const handleSummarizeFieldChange = (objectField: ObjectField) => {
 		setSelectedSummarizeField(
 			getLocalizableLabel(
-				creationLanguageId2 as Locale,
+				creationLanguageId2 as Liferay.Language.Locale,
 				objectField.label,
 				objectField.name
 			)
@@ -354,16 +354,16 @@ export function AggregationFormBase({
 				query={relationshipsQuery}
 				required
 				value={getLocalizableLabel(
-					creationLanguageId2 as Locale,
+					creationLanguageId2 as Liferay.Language.Locale,
 					selectedRelatedObjectRelationship?.label,
 					selectedRelatedObjectRelationship?.name
 				)}
 			>
-				{({label, name}) => (
+				{({ label, name }) => (
 					<div className="d-flex justify-content-between">
 						<div>
 							{getLocalizableLabel(
-								creationLanguageId2 as Locale,
+								creationLanguageId2 as Liferay.Language.Locale,
 								label,
 								name
 							)}
@@ -399,11 +399,11 @@ export function AggregationFormBase({
 					required
 					value={selectedSummarizeField}
 				>
-					{({label, name}) => (
+					{({ label, name }) => (
 						<div className="d-flex justify-content-between">
 							<div>
 								{getLocalizableLabel(
-									creationLanguageId2 as Locale,
+									creationLanguageId2 as Liferay.Language.Locale,
 									label,
 									name
 								)}

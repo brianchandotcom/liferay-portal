@@ -42,9 +42,9 @@ export function ObjectDataContainer({
 	setValues,
 	values,
 }: ObjectDataContainerProps) {
-	const [selectedLocale, setSelectedLocale] = useState<Locale>(
-		defaultLanguageId
-	);
+	const [selectedLocale, setSelectedLocale] = useState<
+		Liferay.Language.Locale
+	>(defaultLanguageId);
 
 	return (
 		<ClayPanel

@@ -9,18 +9,18 @@
  * distribution rights of the Software.
  */
 
-import moment from 'moment';
+import {
+	hoursToMilliseconds,
+	intervalToDuration,
+	minutesToMilliseconds,
+} from 'date-fns';
 
-export function durationAsMilliseconds(days, fullHours) {
+export function durationAsMilliseconds(days = 0, fullHours) {
 	const [hours, minutes] = fullHours.split(':');
 
-	return moment
-		.duration({
-			days,
-			hours,
-			minutes,
-		})
-		.asMilliseconds();
+	return (
+		hoursToMilliseconds(days * 24 + hours) + minutesToMilliseconds(minutes)
+	);
 }
 
 export function formatDuration(millisecondsDuration) {
@@ -62,31 +62,30 @@ export function formatHours(hours, minutes) {
 }
 
 export function getDurationValues(durationValue) {
-	const fullDuration = moment.duration(durationValue);
+	const fullDuration = intervalToDuration({
+		end: new Date(durationValue),
+		start: new Date(0),
+	});
 
 	return {
-		// eslint-disable-next-line radix
-		days: parseInt(fullDuration.asDays()) || null,
-		hours: fullDuration.hours() || null,
-		minutes: fullDuration.minutes() || null,
-		seconds: fullDuration.seconds() || null,
+		days: fullDuration.days || null,
+		hours: fullDuration.hours || null,
+		minutes: fullDuration.minutes || null,
+		seconds: fullDuration.seconds || null,
 	};
 }
 
 export function remainingTimeFormat(
 	onTime,
-	remainingTime,
+	remainingTime = 0,
 	ignoreZeros = false
 ) {
 	const remainingTimePositive = onTime ? remainingTime : remainingTime * -1;
 
-	const remainingTimeUTC = moment.utc(remainingTimePositive);
-
-	const days = remainingTimeUTC.format('D') - 1;
-
-	const hours = remainingTimeUTC.format('HH');
-
-	const minutes = remainingTimeUTC.format('mm');
+	const {days, hours, minutes, seconds} = intervalToDuration({
+		end: new Date(0, 0, 0, 0, 0, 0, remainingTimePositive),
+		start: new Date(0, 0, 0, 0, 0, 0, 0),
+	});
 
 	let durationText = '';
 
@@ -104,8 +103,6 @@ export function remainingTimeFormat(
 		}
 
 		if (!durationText) {
-			const seconds = remainingTimeUTC.format('ss');
-
 			durationText += `${seconds}sec`;
 		}
 

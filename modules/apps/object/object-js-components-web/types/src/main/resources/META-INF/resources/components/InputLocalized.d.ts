@@ -24,14 +24,14 @@ interface InputLocalizedProps {
 	label: string;
 	name?: string;
 	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
-	onSelectedLocaleChange?: (locale: Locale) => void;
+	onSelectedLocaleChange?: (locale: Liferay.Language.Locale) => void;
 	placeholder?: string;
 	required?: boolean;
-	selectedLocale?: Locale;
+	selectedLocale?: Liferay.Language.Locale;
 	translations: LocalizedValue<string>;
 }
 interface InputLocale {
-	label: Locale;
+	label: Liferay.Language.Locale;
 	symbol: string;
 }
 export declare function InputLocalized({

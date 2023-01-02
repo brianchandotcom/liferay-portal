@@ -114,7 +114,7 @@ export function SearchableContainer({
 						const [indexedLanguageId] = Object.entries(
 							languages
 						).find(([, label]) => value.label === label) as [
-							Locale,
+							Liferay.Language.Locale,
 							string
 						];
 

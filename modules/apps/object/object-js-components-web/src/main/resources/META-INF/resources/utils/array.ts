@@ -20,7 +20,7 @@ import {getLocalizableLabel, stringIncludesQuery} from './string';
 
 interface FilterArrayByQueryProps<T> {
 	array: T[];
-	creationLanguageId?: Locale;
+	creationLanguageId?: Liferay.Language.Locale;
 	query: string;
 	str: string;
 }
@@ -44,14 +44,15 @@ export function filterArrayByQuery<T>({
 			const localizedLabels = localizedValue as LocalizedValue<string>;
 
 			let label = getLocalizableLabel(
-				creationLanguageId as Locale,
+				creationLanguageId as Liferay.Language.Locale,
 				localizedLabels
 			);
 
 			if (!label) {
 				label = localizedLabels[
-					((item as unknown) as LocalizedObject<Locale>)
-						.defaultLanguageId as Locale
+					((item as unknown) as LocalizedObject<
+						Liferay.Language.Locale
+					>).defaultLanguageId as Liferay.Language.Locale
 				] as string;
 			}
 

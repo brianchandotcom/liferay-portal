@@ -29,15 +29,15 @@ interface InputLocalizedProps {
 	label: string;
 	name?: string;
 	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
-	onSelectedLocaleChange?: (locale: Locale) => void;
+	onSelectedLocaleChange?: (locale: Liferay.Language.Locale) => void;
 	placeholder?: string;
 	required?: boolean;
-	selectedLocale?: Locale;
+	selectedLocale?: Liferay.Language.Locale;
 	translations: LocalizedValue<string>;
 }
 
 interface InputLocale {
-	label: Locale;
+	label: Liferay.Language.Locale;
 	symbol: string;
 }
 
@@ -46,7 +46,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const availableLocales = Object.keys(Liferay.Language.available)
 	.sort((languageId) => (languageId === defaultLanguageId ? -1 : 1))
 	.map((language) => ({
-		label: language as Locale,
+		label: language as Liferay.Language.Locale,
 		symbol: language.replace('_', '-').toLowerCase(),
 	}));
 

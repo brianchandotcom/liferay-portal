@@ -92,8 +92,12 @@ function MiniCompare(props) {
 		checkConsent(COOKIE_TYPES.FUNCTIONAL)
 	);
 
+	const triggerCheckCookieConsent = () => {
+	  return !functionalCookiesConsent && items?.length > 0;
+  }
+
 	useEffect(() => {
-		if (!functionalCookiesConsent) {
+		if (triggerCheckCookieConsent()) {
 			checkCookieConsentForTypes(COOKIE_TYPES.FUNCTIONAL, {
 				alertMessage: Liferay.Language.get(
 					'the-compare-function-requires-acceptance-of-functional-cookies'
@@ -150,7 +154,7 @@ function MiniCompare(props) {
 		});
 	}, [items, props.itemsLimit]);
 
-	return !functionalCookiesConsent && items?.length > 0 ? null : (
+	return triggerCheckCookieConsent() ? null : (
 		<div className={classnames('mini-compare', !!items.length && 'active')}>
 			{Array(props.itemsLimit)
 				.fill(null)

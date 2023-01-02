@@ -72,6 +72,7 @@ import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
+import {formHasPermissions} from '../../../../../app/utils/formHasPermissions';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import {
@@ -435,6 +436,11 @@ function StructureTreeNodeContent({
 				nameInfo={node.nameInfo}
 				onEditName={onEditName}
 				ref={nodeRef}
+				showPermissionRestriction={
+					Liferay.FeatureFlags['LPS-169923'] &&
+					node.type === LAYOUT_DATA_ITEM_TYPES.form &&
+					!formHasPermissions(item)
+				}
 			/>
 
 			{!editingName && (
@@ -480,6 +486,7 @@ const NameLabel = React.forwardRef(
 			name: defaultName,
 			nameInfo,
 			onEditName,
+			showPermissionRestriction,
 		},
 		ref
 	) => {
@@ -546,6 +553,20 @@ const NameLabel = React.forwardRef(
 						{nameInfo}
 					</span>
 				)}
+
+				{showPermissionRestriction ? (
+					<>
+						<ClayIcon
+							className="ml-2 mt-0 text-secondary"
+							symbol="password-policies"
+						/>
+						<span className="sr-only">
+							{Liferay.Language.get(
+								'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+							)}
+						</span>
+					</>
+				) : null}
 			</div>
 		);
 	}

@@ -94,7 +94,6 @@ export default {
 
 	createLayoutPageTemplateEntry({
 		segmentsExperienceId,
-		templateName,
 		templateSetDescription,
 		templateSetId,
 		templateSetName,
@@ -106,7 +105,6 @@ export default {
 					layoutPageTemplateCollectionDescription: templateSetDescription,
 					layoutPageTemplateCollectionId: templateSetId,
 					layoutPageTemplateCollectionName: templateSetName,
-					name: templateName,
 					segmentsExperienceId,
 				},
 			},

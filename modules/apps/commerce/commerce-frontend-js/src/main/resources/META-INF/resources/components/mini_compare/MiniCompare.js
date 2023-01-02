@@ -14,11 +14,11 @@
 
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
 import classnames from 'classnames';
+import {COOKIE_TYPES, checkConsent} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
-import {COOKIE_TYPES, checkConsent} from 'frontend-js-web';
 
 import CommerceCookie from '../../utilities/cookies';
 import {
@@ -89,35 +89,31 @@ function Item(props) {
 function MiniCompare(props) {
 	const [items, setItems] = useState(props.items);
 	const [functionalCookiesConsent, setFunctionalCookiesConsent] = useState(
-		false
+		checkConsent(COOKIE_TYPES.FUNCTIONAL)
 	);
 
 	useEffect(() => {
-		setFunctionalCookiesConsent(checkConsent(COOKIE_TYPES.FUNCTIONAL));
-	});
-
-	const CheckProductComparisonCookieAcceptance = () => {
-		const modalOptions = {
-			alertMessage: Liferay.Language.get(
-				'the-compare-function-requires-acceptance-of-functional-cookies'
-			),
-			customTitle: Liferay.Language.get(
-				'product-comparison-uses-non-essential-cookies'
-			),
-		};
-		checkCookieConsentForTypes(COOKIE_TYPES.FUNCTIONAL, modalOptions)
-			.then(() => {
-				compareCookie.setValue(
-					props.commerceChannelGroupId,
-					items.map((item) => item.id).join(':')
-				);
-				setFunctionalCookiesConsent(true);
+		if (!functionalCookiesConsent) {
+			checkCookieConsentForTypes(COOKIE_TYPES.FUNCTIONAL, {
+				alertMessage: Liferay.Language.get(
+					'the-compare-function-requires-acceptance-of-functional-cookies'
+				),
+				customTitle: Liferay.Language.get(
+					'product-comparison-uses-non-essential-cookies'
+				),
 			})
-			.catch(() => {
-				alertCookies();
-			});
-		return null;
-	};
+				.then(() => {
+					compareCookie.setValue(
+						props.commerceChannelGroupId,
+						items.map((item) => item.id).join(':')
+					);
+					setFunctionalCookiesConsent(true);
+				})
+				.catch(() => {
+					alertCookies();
+				});
+		}
+	}, [functionalCookiesConsent, items, props.commerceChannelGroupId]);
 
 	useEffect(() => {
 		function toggleItem({id, thumbnail}) {
@@ -154,10 +150,7 @@ function MiniCompare(props) {
 		});
 	}, [items, props.itemsLimit]);
 
-	if (!functionalCookiesConsent && items?.length > 0) {
-		return <CheckProductComparisonCookieAcceptance />;
-	}
-	return (
+	return !functionalCookiesConsent && items?.length > 0 ? null : (
 		<div className={classnames('mini-compare', !!items.length && 'active')}>
 			{Array(props.itemsLimit)
 				.fill(null)

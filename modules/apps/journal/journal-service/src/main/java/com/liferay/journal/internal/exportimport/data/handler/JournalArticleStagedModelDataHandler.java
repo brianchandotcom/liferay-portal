@@ -1036,8 +1036,9 @@ public class JournalArticleStagedModelDataHandler
 			String newContent = _journalCreationStrategy.getTransformedContent(
 				portletDataContext, article);
 
-			if (newContent !=
-					JournalCreationStrategy.ARTICLE_CONTENT_UNCHANGED) {
+			if (!Objects.equals(
+					newContent,
+					JournalCreationStrategy.ARTICLE_CONTENT_UNCHANGED)) {
 
 				replacedContent = newContent;
 			}

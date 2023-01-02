@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getOpener, openModal} from 'frontend-js-web';
+import {checkConsent, getOpener, openModal} from 'frontend-js-web';
 
 import {
 	acceptAllCookies,
@@ -187,4 +187,33 @@ function setBannerVisibility(cookieBanner) {
 	}
 }
 
-export {openCookieConfigurationModal};
+function checkCookieConsentForTypes(cookieTypes, modalOptions) {
+	function areAccepted(cookieTypes) {
+		if (Array.isArray(cookieTypes)) {
+			return cookieTypes.reduce(
+				(acc, cur) => acc && checkConsent(cur),
+				true
+			);
+		}
+		else {
+			return checkConsent(cookieTypes);
+		}
+	}
+
+	return new Promise((resolve, reject) => {
+		if (areAccepted(cookieTypes)) {
+			resolve();
+		}
+		else {
+			openCookieConsentModal({
+				alertDisplayType: modalOptions?.alertDisplayType || 'info',
+				alertMessage: modalOptions?.alertMessage || null,
+				customTitle: modalOptions?.customTitle || null,
+				onCloseFunction: () =>
+					areAccepted(cookieTypes) ? resolve() : reject(),
+			});
+		}
+	});
+}
+
+export {openCookieConsentModal, checkCookieConsentForTypes};

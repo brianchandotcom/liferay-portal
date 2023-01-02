@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -123,7 +124,14 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		JournalArticle journalArticle = _addJournalArticle(
 			content, _getServiceContext());
 
-		exportImportStagedModel(journalArticle);
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(journalArticle);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
 
 		JournalArticle importedJournalArticle = (JournalArticle)getStagedModel(
 			journalArticle.getUuid(), liveGroup);
@@ -147,7 +155,14 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		JournalArticle journalArticle = _addJournalArticle(
 			content, serviceContext);
 
-		exportImportStagedModel(journalArticle);
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(journalArticle);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
 
 		JournalArticle importedJournalArticle = (JournalArticle)getStagedModel(
 			journalArticle.getUuid(), liveGroup);
@@ -162,7 +177,14 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		JournalArticle journalArticle = _addJournalArticle(
 			_getContent(StringPool.BLANK), _getServiceContext());
 
-		exportImportStagedModel(journalArticle);
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(journalArticle);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
 
 		JournalArticle importedJournalArticle = (JournalArticle)getStagedModel(
 			journalArticle.getUuid(), liveGroup);

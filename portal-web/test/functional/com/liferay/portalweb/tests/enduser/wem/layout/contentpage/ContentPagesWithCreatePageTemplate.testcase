@@ -32,8 +32,6 @@ definition {
 	@description = "This is a test for LPS-166207. The site designer could add a page template set during convert to page template when the site doesn't have a page template set."
 	@priority = "5"
 	test AddFirstPageTemplateSetWhenCreatePageTemplate {
-		property custom.properties = "feature.flag.LPS-166201=true";
-
 		task ("Given a site designer has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -86,8 +84,6 @@ definition {
 	@description = "This is a test for LPS-166207. The site designer could save in a new set during convert to page template when the site has page template sets."
 	@priority = "5"
 	test AddNewPageTemplateSetWhenCreatePageTemplate {
-		property custom.properties = "feature.flag.LPS-166201=true";
-
 		task ("Given a site designer has a page template set and content page") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",
@@ -182,7 +178,6 @@ definition {
 	@description = "This is a test for LPS-140483 and LPS-166207. The site admin could create page template from a content page with elements."
 	@priority = "5"
 	test CreatePageTemplateFromContentPage {
-		property custom.properties = "feature.flag.LPS-166201=true";
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment and an Asset Publisher widget to content page then publish") {

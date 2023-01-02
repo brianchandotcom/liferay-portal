@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ConvertToPageTemplateModal from '../../plugins/convert-to-page-template-modal/components/ConvertToPageTemplateModal';
-import OldConvertToPageTemplateModal from '../../plugins/convert-to-page-template-modal/components/OldConvertToPageTemplateModal';
 import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
 import {CollectionActiveItemContextProvider} from '../contexts/CollectionActiveItemContext';
@@ -52,11 +51,7 @@ export default function App({state}) {
 
 	return (
 		<StoreContextProvider initialState={initialState} reducer={reducer}>
-			{Liferay.FeatureFlags['LPS-166201'] ? (
-				<ConvertToPageTemplateModal />
-			) : (
-				<OldConvertToPageTemplateModal />
-			)}
+			<ConvertToPageTemplateModal />
 
 			<ControlsProvider>
 				<CollectionActiveItemContextProvider>

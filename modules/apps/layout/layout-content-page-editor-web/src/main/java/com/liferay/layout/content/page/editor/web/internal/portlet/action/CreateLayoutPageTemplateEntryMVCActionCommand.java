@@ -40,10 +40,8 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -81,36 +79,30 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		Layout sourceLayout = _layoutLocalService.getLayout(
 			themeDisplay.getPlid());
-		String name = ParamUtil.getString(actionRequest, "name");
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			LayoutPageTemplateEntry.class.getName(), actionRequest);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166201"))) {
-			name = _getUniqueName(sourceLayout, themeDisplay.getLocale());
+		if (layoutPageTemplateCollectionId <= 0) {
+			String layoutPageTemplateCollectionName = ParamUtil.getString(
+				actionRequest, "layoutPageTemplateCollectionName");
+			String layoutPageTemplateCollectionDescription =
+				ParamUtil.getString(
+					actionRequest, "layoutPageTemplateCollectionDescription");
 
-			if (layoutPageTemplateCollectionId <= 0) {
-				String layoutPageTemplateCollectionName = ParamUtil.getString(
-					actionRequest, "layoutPageTemplateCollectionName");
-				String layoutPageTemplateCollectionDescription =
-					ParamUtil.getString(
-						actionRequest,
-						"layoutPageTemplateCollectionDescription");
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionService.
+					addLayoutPageTemplateCollection(
+						themeDisplay.getScopeGroupId(),
+						layoutPageTemplateCollectionName,
+						layoutPageTemplateCollectionDescription,
+						serviceContext);
 
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					_layoutPageTemplateCollectionService.
-						addLayoutPageTemplateCollection(
-							themeDisplay.getScopeGroupId(),
-							layoutPageTemplateCollectionName,
-							layoutPageTemplateCollectionDescription,
-							serviceContext);
-
-				layoutPageTemplateCollectionId =
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId();
-			}
+			layoutPageTemplateCollectionId =
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId();
 		}
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
@@ -119,7 +111,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.
 					createLayoutPageTemplateEntryFromLayout(
-						segmentsExperienceId, sourceLayout, name,
+						segmentsExperienceId, sourceLayout,
+						_getUniqueName(sourceLayout, themeDisplay.getLocale()),
 						layoutPageTemplateCollectionId, serviceContext);
 
 			jsonObject.put(

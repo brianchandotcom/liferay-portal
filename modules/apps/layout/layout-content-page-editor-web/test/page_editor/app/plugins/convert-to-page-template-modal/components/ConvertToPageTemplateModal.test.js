@@ -56,10 +56,6 @@ function renderConvertToPageTemplateModal() {
 }
 
 describe('ConvertToPageTemplateModal', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-166201'] = true;
-	});
-
 	afterEach(() => {
 		LayoutService.createLayoutPageTemplateEntry.mockClear();
 	});

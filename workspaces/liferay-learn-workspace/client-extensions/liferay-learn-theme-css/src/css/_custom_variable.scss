@@ -53,10 +53,7 @@ $danger-l2: lighten(saturate($danger, 5.04), 50); // #FEEFEF
 $light: #f1f2f5;
 $light-d1: darken($light, 5.1); // #E2E4EA
 $light-d2: darken($light, 10); // #D3D6E0
-$light-l1: lighten(
-	desaturate(adjust-hue($light, -15), 2.38),
-	1.96
-); // #F7F8F9
+$light-l1: lighten(desaturate(adjust-hue($light, -15), 2.38), 1.96); // #F7F8F9
 $light-l2: lighten(desaturate(adjust-hue($light, -225), 16.67), 4.71);
 
 $dark: #272833;
@@ -144,10 +141,7 @@ $blockquote-color: $nav-color;
 $blockquote-font-weight: 300;
 $blockquote-line-height: 30px;
 
-$breadcrumb-divider-svg-icon: clay-icon(
-	angle-right,
-	$breadcrumb-divider-color
-);
+$breadcrumb-divider-svg-icon: clay-icon(angle-right, $breadcrumb-divider-color);
 $breadcrumb-divider-svg-icon-height: 0.75em; // 12px
 $breadcrumb-divider-svg-icon-width: $breadcrumb-divider-svg-icon-height;
 

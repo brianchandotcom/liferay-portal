@@ -13,7 +13,6 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
-import {openSelectionModal} from 'frontend-js-web';
 
 import CopyFragmentModal from './CopyFragmentModal';
 
@@ -23,44 +22,17 @@ const ACTIONS = {
 		portletNamespace,
 		fragmentCollections
 	) {
-		if (Liferay.FeatureFlags['LPS-166203']) {
-			render(
-				CopyFragmentModal,
-				{
-					addFragmentCollectionURL: itemData.addFragmentCollectionURL,
-					contributedEntryKeys: [itemData.contributedEntryKey],
-					copyFragmentEntriesURL: itemData.copyContributedEntryURL,
-					fragmentCollections,
-					portletNamespace,
-				},
-				document.createElement('div')
-			);
-		}
-		else {
-			openSelectionModal({
-				id: `${portletNamespace}selectFragmentCollection`,
-				onSelect: (selectedItem) => {
-					if (selectedItem) {
-						document.getElementById(
-							`${portletNamespace}contributedEntryKeys`
-						).value = itemData.contributedEntryKey;
-						document.getElementById(
-							`${portletNamespace}fragmentCollectionId`
-						).value = selectedItem.id;
-
-						submitForm(
-							document.getElementById(
-								`${portletNamespace}fragmentEntryFm`
-							),
-							itemData.copyContributedEntryURL
-						);
-					}
-				},
-				selectEventName: `${portletNamespace}selectFragmentCollection`,
-				title: Liferay.Language.get('select-fragment-set'),
-				url: itemData.selectFragmentCollectionURL,
-			});
-		}
+		render(
+			CopyFragmentModal,
+			{
+				addFragmentCollectionURL: itemData.addFragmentCollectionURL,
+				contributedEntryKeys: [itemData.contributedEntryKey],
+				copyFragmentEntriesURL: itemData.copyContributedEntryURL,
+				fragmentCollections,
+				portletNamespace,
+			},
+			document.createElement('div')
+		);
 	},
 };
 

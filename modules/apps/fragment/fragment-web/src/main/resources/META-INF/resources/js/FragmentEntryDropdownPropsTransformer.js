@@ -43,45 +43,20 @@ const ACTIONS = {
 	},
 
 	copyToFragmentEntry(
-		{copyFragmentEntryURL, fragmentEntryId, selectFragmentCollectionURL},
+		{copyFragmentEntryURL, fragmentEntryId},
 		portletNamespace,
 		fragmentCollections
 	) {
-		if (Liferay.FeatureFlags['LPS-166203']) {
-			render(
-				CopyFragmentModal,
-				{
-					copyFragmentEntriesURL: copyFragmentEntryURL,
-					fragmentCollections,
-					fragmentEntryIds: [fragmentEntryId],
-					portletNamespace,
-				},
-				document.createElement('div')
-			);
-		}
-		else {
-			openSelectionModal({
-				onSelect: (selectedItem) => {
-					if (selectedItem) {
-						const form = document.getElementById(
-							`${portletNamespace}fragmentEntryFm`
-						);
-
-						if (form) {
-							setFormValues(form, {
-								fragmentCollectionId: selectedItem.id,
-								fragmentEntryIds: fragmentEntryId,
-							});
-						}
-
-						submitForm(form, copyFragmentEntryURL);
-					}
-				},
-				selectEventName: `${portletNamespace}selectFragmentCollection`,
-				title: Liferay.Language.get('select-fragment-set'),
-				url: selectFragmentCollectionURL,
-			});
-		}
+		render(
+			CopyFragmentModal,
+			{
+				copyFragmentEntriesURL: copyFragmentEntryURL,
+				fragmentCollections,
+				fragmentEntryIds: [fragmentEntryId],
+				portletNamespace,
+			},
+			document.createElement('div')
+		);
 	},
 
 	deleteDraftFragmentEntry({deleteDraftFragmentEntryURL}) {

@@ -62,7 +62,13 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 
 			<aui:input helpMessage="multi-valued-help" inlineLabel="right" label="allow-multiple-categories" labelCssClass="simple-toggle-switch" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
 
-			<label><liferay-ui:message key="visibility" /> <liferay-ui:icon-help message="visibility-help" /></label>
+			<label><liferay-ui:message key="visibility" />
+				<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "visibility-help") %>">
+					<clay:icon
+						symbol="info-circle"
+					/>
+				</span>
+			</label>
 
 			<div class="form-group" id="<portlet:namespace />visibilityOptions">
 				<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= !(vocabulary == null) %>" id="visibilityTypePublic" label="public" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC %>" />

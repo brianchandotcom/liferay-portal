@@ -432,24 +432,24 @@ public class JournalTransformer {
 				continue;
 			}
 
-			firstChildTemplateNode =
-				(TemplateNode)firstChildTemplateNode.clone();
-
 			List<TemplateNode> newChildTemplateNodes = new ArrayList<>(
 				childTemplateNodes);
 
-			newChildTemplateNodes.remove(0);
-
-			firstChildTemplateNode.appendChildren(
-				includeBackwardsCompatibilityTemplateNodes(
-					newChildTemplateNodes, parentOffset));
+			newChildTemplateNodes.remove(firstChildTemplateNode);
 
 			List<TemplateNode> newSiblingsTemplateNodes = new ArrayList<>(
 				firstChildTemplateNode.getSiblings());
 
 			if (!newSiblingsTemplateNodes.isEmpty()) {
-				newSiblingsTemplateNodes.remove(0);
+				newSiblingsTemplateNodes.remove(firstChildTemplateNode);
 			}
+
+			firstChildTemplateNode =
+				(TemplateNode)firstChildTemplateNode.clone();
+
+			firstChildTemplateNode.appendChildren(
+				includeBackwardsCompatibilityTemplateNodes(
+					newChildTemplateNodes, parentOffset));
 
 			List<TemplateNode> siblingsTemplateNodes =
 				templateNode.getSiblings();

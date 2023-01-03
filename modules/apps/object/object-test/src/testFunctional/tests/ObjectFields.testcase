@@ -2321,6 +2321,93 @@ definition {
 			viewHomeFolder = "${siteName}");
 	}
 
+	@description = "LPS-156704 - Verify that the Excludes to operator is available when adding filters for the picklist fields to select data from the object"
+	@priority = "4"
+	test ExcludesIsAvailableForPicklistFields {
+		task ("Add a Custom Picklist and Item (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "PicklistItemTest",
+				itemName = "Picklist Item Test",
+				picklistName = "Picklist Test");
+		}
+
+		task ("Add a Custom Object and Custom Picklist (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 165981",
+				objectName = "CustomObject165981",
+				pluralLabelName = "Custom Objects 165981");
+		}
+
+		task ("Go to Custom Object and create a Custom Picklist Field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 165981");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "Picklist Test",
+				fieldType = "Picklist",
+				itemName = "Picklist Item Test");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Field Picklist",
+				fieldType = "Picklist");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark as default and add columns for Custom View") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Field Picklist");
+		}
+
+		task ("Go to Filters tab and add new Filter") {
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(
+				filterBy = "Field Picklist",
+				filterType = "Excludes",
+				filterValue = "Picklist Item Test");
+
+			ObjectCustomViews.assertPresentEntriesOnFilters(
+				filterBy = "Field Picklist",
+				filterValue = "Picklist Item Test");
+
+			PortletEntry.save();
+		}
+
+		task ("Assert that the filter option is on Custom Object") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject165981");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject165981");
+
+			AssertElementPresent(
+				key_buttonName = "Filter",
+				locator1 = "ObjectCustomViews#DROPDOWN_BUTTON_ON_OBJECT_VIEW");
+
+			Click(
+				key_filter = "Picklist Test",
+				locator1 = "ObjectCustomViews#LABEL_SECTION_FILTER_ENTRY");
+
+			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectCustomViews#TOGGLE_SWITCH_EXCLUDE_STATUS");
+		}
+	}
+
 	@description = "LPS-146523 - Verify if the default folder will be the Global Documents and Media Home Folder"
 	@priority = "4"
 	test GlobalDocumentsAndMediaHomeFolderIsDefaultWhenScopedByCompany {

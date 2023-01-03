@@ -52,6 +52,7 @@ export default function ObjectManagementToolbar({
 					: Liferay.Language.get('custom')
 			}
 			className="border-bottom"
+			enableBoxShadow={false}
 			entityId={objectDefinitionId}
 			externalReferenceCode={externalReferenceCode}
 			externalReferenceCodeSaveURL={`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`}

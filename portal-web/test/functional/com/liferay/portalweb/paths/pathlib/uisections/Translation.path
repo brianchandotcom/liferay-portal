@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ADD_MENULIST_LANGUAGE</td>
-	<td>//div[contains(@class,'dropdown-menu')]//button[contains(text(),'${key_localizedLanguage}')] | //span[contains(text(),'${key_localizedLanguage}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(text(),'${key_localizedLanguage}')] | //span[contains(text(),' ${key_localizedLanguage} ')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,7 +153,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION_NAME</td>
-	<td>//div[contains(@class,'menu-open')]//a[@data-languageid]//span[contains(@class,'text')][normalize-space(text())='${key_locale}']</td>
+	<td>//div[contains(@class,'menu-open')]//a[@data-languageid]//span[contains(@class,'text')]//span[normalize-space(text())='${key_locale}']</td>
 	<td></td>
 </tr>
 </tbody>

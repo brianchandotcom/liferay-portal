@@ -474,6 +474,11 @@ public interface UserGroupLocalService
 	public List<UserGroup> getUserGroups(
 		long companyId, String name, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroup> getUserGroups(
+		long companyId, String name, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator);
+
 	/**
 	 * Returns all the user groups with the primary keys.
 	 *

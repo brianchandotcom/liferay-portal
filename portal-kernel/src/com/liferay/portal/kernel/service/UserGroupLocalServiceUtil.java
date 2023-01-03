@@ -608,6 +608,14 @@ public class UserGroupLocalServiceUtil {
 		return getService().getUserGroups(companyId, name, start, end);
 	}
 
+	public static List<UserGroup> getUserGroups(
+		long companyId, String name, int start, int end,
+		OrderByComparator<UserGroup> orderByComparator) {
+
+		return getService().getUserGroups(
+			companyId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the user groups with the primary keys.
 	 *

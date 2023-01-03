@@ -765,6 +765,16 @@ public class OrganizationLocalServiceWrapper
 		return _organizationLocalService.getOrganizations(companyId, treePath);
 	}
 
+	@Override
+	public java.util.List<Organization> getOrganizations(
+		long companyId, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Organization>
+			orderByComparator) {
+
+		return _organizationLocalService.getOrganizations(
+			companyId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the organizations with the primary keys.
 	 *
@@ -856,6 +866,11 @@ public class OrganizationLocalServiceWrapper
 
 		return _organizationLocalService.getOrganizationsCount(
 			companyId, parentOrganizationId, name);
+	}
+
+	@Override
+	public int getOrganizationsCount(long companyId, String name) {
+		return _organizationLocalService.getOrganizationsCount(companyId, name);
 	}
 
 	/**

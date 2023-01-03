@@ -687,6 +687,16 @@ public class UserGroupLocalServiceWrapper
 			companyId, name, start, end);
 	}
 
+	@Override
+	public java.util.List<UserGroup> getUserGroups(
+		long companyId, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator) {
+
+		return _userGroupLocalService.getUserGroups(
+			companyId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the user groups with the primary keys.
 	 *

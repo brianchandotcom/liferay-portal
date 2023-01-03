@@ -695,6 +695,14 @@ public class OrganizationLocalServiceUtil {
 		return getService().getOrganizations(companyId, treePath);
 	}
 
+	public static List<Organization> getOrganizations(
+		long companyId, String name, int start, int end,
+		OrderByComparator<Organization> orderByComparator) {
+
+		return getService().getOrganizations(
+			companyId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the organizations with the primary keys.
 	 *
@@ -779,6 +787,10 @@ public class OrganizationLocalServiceUtil {
 
 		return getService().getOrganizationsCount(
 			companyId, parentOrganizationId, name);
+	}
+
+	public static int getOrganizationsCount(long companyId, String name) {
+		return getService().getOrganizationsCount(companyId, name);
 	}
 
 	/**

@@ -339,7 +339,9 @@ public class LayoutsTreeDisplayContext {
 				() -> {
 					Group scopeGroup = _themeDisplay.getScopeGroup();
 
-					if (scopeGroup.hasLocalOrRemoteStagingGroup()) {
+					if (scopeGroup.hasLocalOrRemoteStagingGroup() ||
+						scopeGroup.isStagingGroup()) {
+
 						return true;
 					}
 

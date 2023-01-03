@@ -159,8 +159,9 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				facetValueName = "${categories}",
-				locator1 = "Search#FACET_CLOUD_LAYOUT");
+				facetName = "Category Facet",
+				facetValue = "${categories}",
+				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -171,8 +172,9 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				facetValueName = "${categories}",
-				locator1 = "Search#FACET_COMPACT_LAYOUT");
+				facetName = "Category Facet",
+				facetValue = "${categories}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -183,8 +185,9 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				facetValueName = "${categories}",
-				locator1 = "Search#FACET_LABEL_LAYOUT");
+				facetName = "Category Facet",
+				facetValue = "${categories}",
+				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -244,8 +247,9 @@ definition {
 
 		for (var Document : list "dm title 1,dm title 2,dm title 3") {
 			AssertElementPresent(
-				facetValueName = "${Document}",
-				locator1 = "Search#FACET_COMPACT_LAYOUT");
+				facetName = "Custom Facet",
+				facetValue = "${Document}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -256,8 +260,9 @@ definition {
 
 		for (var Document : list "dm title 1,dm title 2,dm title 3") {
 			AssertElementPresent(
-				facetValueName = "${Document}",
-				locator1 = "Search#FACET_LABEL_LAYOUT");
+				facetName = "Custom Facet",
+				facetValue = "${Document}",
+				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
 
@@ -355,8 +360,9 @@ definition {
 
 			for (var folders : list "Company,Engineering,Product") {
 				AssertElementPresent(
-					facetValueName = "${folders}",
-					locator1 = "Search#FACET_COMPACT_LAYOUT");
+					facetName = "Folder Facet",
+					facetValue = "${folders}",
+					locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 			}
 		}
 
@@ -369,8 +375,9 @@ definition {
 
 			for (var folders : list "Company,Engineering,Product") {
 				AssertElementPresent(
-					facetValueName = "${folders}",
-					locator1 = "Search#FACET_LABEL_LAYOUT");
+					facetName = "Folder Facet",
+					facetValue = "${folders}",
+					locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 			}
 		}
 	}
@@ -774,8 +781,9 @@ definition {
 
 		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
-				facetValueName = "${siteName}",
-				locator1 = "Search#FACET_COMPACT_LAYOUT");
+				facetName = "Site Facet",
+				facetValue = "${siteName}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -786,8 +794,9 @@ definition {
 
 		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
-				facetValueName = "${siteName}",
-				locator1 = "Search#FACET_LABEL_LAYOUT");
+				facetName = "Site Facet",
+				facetValue = "${siteName}",
+				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
 
@@ -901,8 +910,9 @@ definition {
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetValueName = "${tagName}",
-				locator1 = "Search#FACET_CLOUD_LAYOUT");
+				facetName = "Tag Facet",
+				facetValue = "${tagName}",
+				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -913,8 +923,9 @@ definition {
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetValueName = "${tagName}",
-				locator1 = "Search#FACET_COMPACT_LAYOUT");
+				facetName = "Tag Facet",
+				facetValue = "${tagName}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -925,8 +936,9 @@ definition {
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetValueName = "${tagName}",
-				locator1 = "Search#FACET_LABEL_LAYOUT");
+				facetName = "Tag Facet",
+				facetValue = "${tagName}",
+				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
 
@@ -957,8 +969,9 @@ definition {
 
 		for (var Document : list "Web Content Article,Document,Blogs Entry") {
 			AssertElementPresent(
-				facetValueName = "${Document}",
-				locator1 = "Search#FACET_COMPACT_LAYOUT");
+				facetName = "Type Facet",
+				facetValue = "${Document}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -969,8 +982,9 @@ definition {
 
 		for (var Document : list "Web Content Article,Document,Blogs Entry") {
 			AssertElementPresent(
-				facetValueName = "${Document}",
-				locator1 = "Search#FACET_LABEL_LAYOUT");
+				facetName = "Type Facet",
+				facetValue = "${Document}",
+				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
 
@@ -998,8 +1012,9 @@ definition {
 
 		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
 			AssertElementPresent(
-				facetValueName = "${users}",
-				locator1 = "Search#FACET_COMPACT_LAYOUT");
+				facetName = "User Facet",
+				facetValue = "${users}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -1010,8 +1025,9 @@ definition {
 
 		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
 			AssertElementPresent(
-				facetValueName = "${users}",
-				locator1 = "Search#FACET_LABEL_LAYOUT");
+				facetName = "User Facet",
+				facetValue = "${users}",
+				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
 
@@ -2169,8 +2185,9 @@ definition {
 		Refresh();
 
 		AssertElementPresent(
-			facetValueName = "Category Name",
-			locator1 = "Search#FACET_CLOUD_LAYOUT");
+			facetName = "Category Facet",
+			facetValue = "Category Name",
+			locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Category");
 

@@ -146,7 +146,7 @@ public class TestrayProject {
 		return _jsonObject.getString("description");
 	}
 
-	public int getID() {
+	public long getID() {
 		return _jsonObject.getInt("testrayProjectId");
 	}
 

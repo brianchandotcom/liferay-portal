@@ -1,0 +1,98 @@
+.edit-sxp-blueprint-root {
+	.layout-section-main {
+		padding-bottom: 40px;
+		padding-top: $pageToolbarHeight + 40px;
+
+		.layout-section-main-shift {
+			margin-left: auto;
+			margin-right: calc(50% - #{$layoutSectionMainMaxWidth} / 2);
+			max-width: $layoutSectionMainMaxWidth;
+			transition: margin-right ease 0.2s;
+		}
+
+		.configuration-header {
+			font-weight: bold;
+			margin-bottom: 1.25rem;
+
+			.builder-actions {
+				float: right;
+
+				.collapse-button {
+					color: $secondary;
+					font-size: 0.875rem;
+					margin: 0.125rem 1rem 0 0;
+				}
+			}
+		}
+
+		.help-text + .learn-message {
+			margin-left: 4px;
+		}
+
+		.learn-message {
+			color: $primary;
+		}
+
+		.sheet + .sheet {
+			margin-top: 0;
+		}
+
+		.sheet-text {
+			font-size: 14px;
+		}
+
+		.form-group {
+			label {
+				margin-bottom: 0;
+			}
+
+			.sheet-text {
+				margin-bottom: 0.5rem;
+			}
+		}
+
+		.has-error {
+			.codemirror-editor-wrapper {
+				border: 1px solid $errorL1;
+
+				.CodeMirror {
+					background-color: $errorL2;
+				}
+
+				.CodeMirror-gutters {
+					background-color: $errorL2;
+				}
+			}
+		}
+	}
+
+	@mixin shifted($width) {
+		margin-right: calc(
+			max(
+				50% - (#{$layoutSectionMainMaxWidth} / 2),
+				#{$width} - (50vw - 50%) + 24px
+			)
+		);
+	}
+
+	@media (min-width: calc(#{$layoutSectionMainMinWidth} + #{$sidebarWidth})) {
+		.open-add-sxp-element,
+		.open-info {
+			.layout-section-main-shift {
+				@include shifted($sidebarWidth);
+			}
+		}
+	}
+
+	@media (min-width: calc(#{$layoutSectionMainMinWidth} + #{$previewSidebarWidth})) {
+		.open-preview .layout-section-main-shift {
+			@include shifted($previewSidebarWidth);
+		}
+	}
+
+	@media (min-width: calc(#{$layoutSectionMainMinWidth} + #{$clauseContributorsSidebarWidth})) {
+		.open-clause-contributors .layout-section-main-shift {
+			@include shifted($clauseContributorsSidebarWidth);
+		}
+	}
+}

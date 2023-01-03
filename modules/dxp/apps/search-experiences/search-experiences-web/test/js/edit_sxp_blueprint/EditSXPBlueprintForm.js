@@ -99,7 +99,9 @@ describe('EditSXPBlueprintForm', () => {
 
 		await findByText('query-settings');
 
-		const {getByText} = within(container.querySelector('.builder'));
+		const {getByText} = within(
+			container.querySelector('.layout-section-main')
+		);
 
 		QUERY_SXP_ELEMENTS.map((sxpElement) =>
 			getByText(sxpElement.title_i18n['en_US'])

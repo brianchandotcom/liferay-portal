@@ -104,10 +104,10 @@ function QueryBuilderTab({
 
 	return (
 		<ClayLayout.ContainerFluid
-			className="builder query-builder-tab"
+			className="layout-section-main query-builder-tab"
 			size="xl"
 		>
-			<div className="builder-content-shift">
+			<div className="layout-section-main-shift">
 				<ClayLayout.Row>
 					<ClayLayout.Col md={3} sm={12}>
 						<ClayVerticalNav

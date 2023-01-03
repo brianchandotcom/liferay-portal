@@ -28,7 +28,9 @@ export default function FormMappingOptions({
 			label: Liferay.Language.get('none'),
 			value: '0',
 		},
-		...config.formTypes,
+		...(Liferay.FeatureFlags['LPS-169923']
+			? config.formTypes.filter((formType) => formType.hasPermission)
+			: config.formTypes),
 	];
 
 	const {classNameId, classTypeId} = item.config;

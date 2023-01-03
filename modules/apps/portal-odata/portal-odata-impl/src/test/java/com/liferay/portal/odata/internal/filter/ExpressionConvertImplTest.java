@@ -19,12 +19,16 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
@@ -34,6 +38,7 @@ import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
 import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
+import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.internal.filter.expression.BinaryExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.CollectionPropertyExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.LambdaFunctionExpressionImpl;
@@ -41,11 +46,18 @@ import com.liferay.portal.odata.internal.filter.expression.LambdaVariableExpress
 import com.liferay.portal.odata.internal.filter.expression.ListExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
+import com.liferay.portal.odata.internal.filter.expression.MethodExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
 import com.liferay.portal.search.internal.query.NestedFieldQueryHelperImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.time.Instant;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -74,13 +86,25 @@ public class ExpressionConvertImplTest {
 
 	@Before
 	public void setUp() {
-		PropsTestUtil.setProps(Collections.emptyMap());
+		PropsTestUtil.setProps(
+			Collections.singletonMap(
+				PropsKeys.INDEX_DATE_FORMAT_PATTERN, "yyyyMMddHHmmss"));
 
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
+		FastDateFormatFactory fastDateFormatFactory = Mockito.mock(
+			FastDateFormatFactory.class);
+
+		Mockito.when(
+			fastDateFormatFactory.getSimpleDateFormat(
+				PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN))
+		).thenReturn(
+			_simpleDateFormat
+		);
+
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			Mockito.mock(FastDateFormatFactory.class));
+			fastDateFormatFactory);
 	}
 
 	@Test
@@ -102,6 +126,77 @@ public class ExpressionConvertImplTest {
 
 		Assert.assertEquals("title", queryTerm.getField());
 		Assert.assertEquals("test", queryTerm.getValue());
+	}
+
+	@Test
+	public void testConvertBinaryExpressionWithGtOnPrimitiveFieldAndLiteralField()
+		throws ExpressionVisitException {
+
+		BinaryExpression binaryExpression = new BinaryExpressionImpl(
+			new MemberExpressionImpl(
+				new PrimitivePropertyExpressionImpl("dateTime")),
+			BinaryExpression.Operation.GT,
+			new LiteralExpressionImpl(
+				"2012-05-29T09:13:28Z", LiteralExpression.Type.DATE_TIME));
+
+		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
+			binaryExpression, LocaleUtil.getDefault(), _entityModel);
+
+		TermRangeQuery termRangeQuery = (TermRangeQuery)queryFilter.getQuery();
+
+		Assert.assertEquals("dateTime", termRangeQuery.getField());
+		Assert.assertEquals("20120529091328", termRangeQuery.getLowerTerm());
+		Assert.assertFalse(termRangeQuery.includesLower());
+		Assert.assertNull(termRangeQuery.getUpperTerm());
+		Assert.assertTrue(termRangeQuery.includesUpper());
+	}
+
+	@Test
+	public void testConvertBinaryExpressionWithGtOnPrimitiveFieldAndNowMethod()
+		throws ExpressionVisitException, ParseException {
+
+		Date initialDate = new Date();
+
+		Instant initialInstant = initialDate.toInstant();
+
+		BinaryExpression binaryExpression = new BinaryExpressionImpl(
+			new MemberExpressionImpl(
+				new PrimitivePropertyExpressionImpl("dateTime")),
+			BinaryExpression.Operation.GT,
+			new MethodExpressionImpl(
+				Collections.emptyList(), MethodExpression.Type.NOW));
+
+		ExpressionConvertImpl expressionConvertImpl =
+			new ExpressionConvertImpl() {
+				{
+					nestedFieldQueryHelper = new NestedFieldQueryHelperImpl();
+				}
+			};
+
+		QueryFilter queryFilter = (QueryFilter)expressionConvertImpl.convert(
+			binaryExpression, LocaleUtil.getDefault(), _entityModel);
+
+		TermRangeQuery termRangeQuery = (TermRangeQuery)queryFilter.getQuery();
+
+		Assert.assertEquals("dateTime", termRangeQuery.getField());
+		Assert.assertFalse(termRangeQuery.includesLower());
+		Assert.assertNull(termRangeQuery.getUpperTerm());
+		Assert.assertTrue(termRangeQuery.includesUpper());
+
+		Date lowerTermDate = _simpleDateFormat.parse(
+			termRangeQuery.getLowerTerm());
+
+		Instant lowerTermInstant = lowerTermDate.toInstant();
+
+		Date finalDate = new Date();
+
+		Instant finalInstant = finalDate.toInstant();
+
+		Assert.assertTrue(
+			lowerTermInstant.getEpochSecond() >=
+				initialInstant.getEpochSecond());
+		Assert.assertTrue(
+			lowerTermInstant.getEpochSecond() <= finalInstant.getEpochSecond());
 	}
 
 	@Test
@@ -172,7 +267,9 @@ public class ExpressionConvertImplTest {
 				new CollectionEntityField(
 					new StringEntityField(
 						"keywords", locale -> "keywords.raw")),
-				new StringEntityField("title", locale -> "title")
+				new StringEntityField("title", locale -> "title"),
+				new DateTimeEntityField(
+					"dateTime", locale -> "dateTime", locale -> "dateTime")
 			).collect(
 				Collectors.toMap(EntityField::getName, Function.identity())
 			);
@@ -191,5 +288,7 @@ public class ExpressionConvertImplTest {
 				nestedFieldQueryHelper = new NestedFieldQueryHelperImpl();
 			}
 		};
+	private final SimpleDateFormat _simpleDateFormat = new SimpleDateFormat(
+		"yyyyMMddHHmmss");
 
 }

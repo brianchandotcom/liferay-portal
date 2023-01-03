@@ -52,9 +52,13 @@ import com.liferay.portal.search.internal.query.NestedFieldQueryHelperImpl;
 import com.liferay.portal.search.query.NestedFieldQueryHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.time.Instant;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -685,6 +689,35 @@ public class ExpressionVisitorImplTest {
 		Assert.assertEquals("keywords", entityField2.getName());
 		Assert.assertEquals(
 			EntityField.Type.COLLECTION, entityField2.getType());
+	}
+
+	@Test
+	public void testVisitMethodExpressionWithNow() throws ParseException {
+		Date initialDate = new Date();
+
+		Instant initialInstant = initialDate.toInstant();
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"yyyyMMddHHmmss");
+
+		ExpressionVisitorImpl expressionVisitorImpl = new ExpressionVisitorImpl(
+			simpleDateFormat, LocaleUtil.getDefault(), _entityModel,
+			nestedFieldQueryHelper);
+
+		Date actualDate = simpleDateFormat.parse(
+			(String)expressionVisitorImpl.visitMethodExpression(
+				Collections.emptyList(), MethodExpression.Type.NOW));
+
+		Instant actualInstant = Instant.ofEpochMilli(actualDate.getTime());
+
+		Date finalDate = new Date();
+
+		Instant finalInstant = finalDate.toInstant();
+
+		Assert.assertTrue(
+			actualInstant.getEpochSecond() >= initialInstant.getEpochSecond());
+		Assert.assertTrue(
+			actualInstant.getEpochSecond() <= finalInstant.getEpochSecond());
 	}
 
 	@Test

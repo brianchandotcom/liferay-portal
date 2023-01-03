@@ -417,17 +417,16 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return layoutDisplayPageProvider;
 	}
 
-	private Optional<String> _getMappedValueOptional(
+	private String _getMappedValue(
 		String template, InfoItemFieldValues infoItemFieldValues,
 		Locale locale) {
 
 		if ((infoItemFieldValues == null) || Validator.isNull(template)) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.ofNullable(
-			layoutSEOTemplateProcessor.processTemplate(
-				template, infoItemFieldValues, locale));
+		return layoutSEOTemplateProcessor.processTemplate(
+			template, infoItemFieldValues, locale);
 	}
 
 	private String _getOriginalFriendlyURL(String friendlyURL) {

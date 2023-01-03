@@ -802,6 +802,109 @@ definition {
 			value1 = "Error:There can only be one default object layout");
 	}
 
+	@description = "LPS-165850 - Verify if you can 'select existing one' and add existing entries"
+	@priority = "5"
+	test CanSelectExistingEntriesOnRelationshipTab {
+		property portal.acceptance = "true";
+
+		task ("Given a related object with Custom Layout and Relationship tab") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 171628",
+				objectName = "CustomObject171628",
+				pluralLabelName = "Custom Objects 171628");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject171628");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject171628",
+				objectName_2 = "CustomObject171628",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Custom Layout",
+				objectName = "CustomObject171628");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171628");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 171628");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			PortletEntry.save();
+
+			for (var letter : list "A,B,C,D,E") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customField",
+					objectName = "CustomObject171628",
+					value = "Entry Test ${letter}");
+			}
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject171628");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
+		}
+
+		task ("When selecting existing entries from the Relationship Tab") {
+			ObjectAdmin.gotoRelationshipsTab();
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_kebabOption = "Select Existing One",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then all entries created show on Select Existing One and the entry selected is saved on the Relationship Tab") {
+			for (var letter : list "B,C,D,E") {
+				AssertElementPresent(
+					key_titleFieldName = "Entry Test ${letter}",
+					locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
+			}
+
+			ClickNoError(
+				key_titleFieldName = "Entry Test C",
+				locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
+
+			AssertElementPresent(
+				key_fieldLabel = "Entry Test C",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
+	}
+
 	@description = "LPS-146808 - Verify it is possibel to view a Date entry and label"
 	@priority = "4"
 	test CanViewDateEntry {

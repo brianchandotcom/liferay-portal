@@ -50,6 +50,21 @@ public class CPDefinitionGroupedEntryServiceWrapper
 	@Override
 	public
 		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
+				addCPDefinitionGroupedEntry(
+					long cpDefinitionId, long entryCProductId, double priority,
+					int quantity,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryService.addCPDefinitionGroupedEntry(
+			cpDefinitionId, entryCProductId, priority, quantity,
+			serviceContext);
+	}
+
+	@Override
+	public
+		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
 				deleteCPDefinitionGroupedEntry(long cpDefinitionGroupedEntryId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 

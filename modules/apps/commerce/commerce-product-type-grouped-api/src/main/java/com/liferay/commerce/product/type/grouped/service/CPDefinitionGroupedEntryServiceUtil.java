@@ -48,6 +48,17 @@ public class CPDefinitionGroupedEntryServiceUtil {
 			cpDefinitionId, entryCPDefinitionIds, serviceContext);
 	}
 
+	public static CPDefinitionGroupedEntry addCPDefinitionGroupedEntry(
+			long cpDefinitionId, long entryCProductId, double priority,
+			int quantity,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCPDefinitionGroupedEntry(
+			cpDefinitionId, entryCProductId, priority, quantity,
+			serviceContext);
+	}
+
 	public static CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
 			long cpDefinitionGroupedEntryId)
 		throws PortalException {

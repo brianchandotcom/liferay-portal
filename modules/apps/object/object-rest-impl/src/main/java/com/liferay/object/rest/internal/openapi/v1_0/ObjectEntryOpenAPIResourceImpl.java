@@ -81,7 +81,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		Map<String, Schema> schemas = components.getSchemas();
 
-		Schema schema = schemas.get(_objectDefinition.getShortName());
+		Schema schema = schemas.get(objectDefinition.getShortName());
 
 		if (schema == null) {
 			return Collections.emptyMap();
@@ -138,16 +138,14 @@ public class ObjectEntryOpenAPIResourceImpl
 			ObjectDefinition objectDefinition, String type, UriInfo uriInfo)
 		throws Exception {
 
-		_objectDefinition = objectDefinition;
-
 		return _openAPIResource.getOpenAPI(
 			new ObjectEntryOpenAPIContributor(
 				_bundleContext, _dtoConverterRegistry,
-				_objectActionLocalService, _objectDefinition,
+				_objectActionLocalService, objectDefinition,
 				_objectDefinitionLocalService, this,
 				_objectRelationshipLocalService, _openAPIResource,
 				_systemObjectDefinitionMetadataRegistry),
-			_getOpenAPISchemaFilter(_objectDefinition.getRESTContextPath()),
+			_getOpenAPISchemaFilter(objectDefinition),
 			new HashSet<Class<?>>() {
 				{
 					add(ObjectEntryRelatedObjectsResourceImpl.class);
@@ -214,11 +212,12 @@ public class ObjectEntryOpenAPIResourceImpl
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
-		String applicationPath) {
+		ObjectDefinition objectDefinition) {
 
 		OpenAPISchemaFilter openAPISchemaFilter = new OpenAPISchemaFilter();
 
-		openAPISchemaFilter.setApplicationPath(applicationPath);
+		openAPISchemaFilter.setApplicationPath(
+			objectDefinition.getRESTContextPath());
 
 		DTOProperty dtoProperty = new DTOProperty(
 			new HashMap<>(), "ObjectEntry", "Object");
@@ -227,7 +226,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId())) {
+					objectDefinition.getObjectDefinitionId())) {
 
 			dtoProperties.add(_getDTOProperty(objectField));
 
@@ -274,11 +273,11 @@ public class ObjectEntryOpenAPIResourceImpl
 			TreeMapBuilder.<String, String>create(
 				Collections.reverseOrder()
 			).put(
-				"ObjectEntry", _objectDefinition.getShortName()
+				"ObjectEntry", objectDefinition.getShortName()
 			).put(
-				"PageObject", "Page" + _objectDefinition.getShortName()
+				"PageObject", "Page" + objectDefinition.getShortName()
 			).put(
-				"PageObjectEntry", "Page" + _objectDefinition.getShortName()
+				"PageObjectEntry", "Page" + objectDefinition.getShortName()
 			).build());
 
 		return openAPISchemaFilter;
@@ -301,8 +300,6 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;
-
-	private ObjectDefinition _objectDefinition;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

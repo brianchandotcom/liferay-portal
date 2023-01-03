@@ -19,8 +19,6 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -46,10 +44,8 @@ public class AccessTokenStoreUtilTest {
 
 		AccessTokenStoreUtil.add(companyId, userId, initialAccessToken);
 
-		Optional<AccessToken> accessTokenOptional =
-			AccessTokenStoreUtil.getAccessTokenOptional(companyId, userId);
-
-		AccessToken actualAccessToken = accessTokenOptional.get();
+		AccessToken actualAccessToken = AccessTokenStoreUtil.getAccessToken(
+			companyId, userId);
 
 		Assert.assertEquals(
 			initialAccessToken.getAccessToken(),
@@ -68,19 +64,18 @@ public class AccessTokenStoreUtilTest {
 
 		AccessTokenStoreUtil.delete(companyId, userId);
 
-		Optional<AccessToken> accessTokenOptional =
-			AccessTokenStoreUtil.getAccessTokenOptional(companyId, userId);
+		AccessToken accessToken = AccessTokenStoreUtil.getAccessToken(
+			companyId, userId);
 
-		Assert.assertTrue(!accessTokenOptional.isPresent());
+		Assert.assertTrue(accessToken == null);
 	}
 
 	@Test
 	public void testGetWithEmptyAccessTokenStore() {
-		Optional<AccessToken> accessTokenOptional =
-			AccessTokenStoreUtil.getAccessTokenOptional(
-				RandomTestUtil.randomInt(), RandomTestUtil.randomInt());
+		AccessToken accessToken = AccessTokenStoreUtil.getAccessToken(
+			RandomTestUtil.randomInt(), RandomTestUtil.randomInt());
 
-		Assert.assertTrue(!accessTokenOptional.isPresent());
+		Assert.assertTrue(accessToken == null);
 	}
 
 }

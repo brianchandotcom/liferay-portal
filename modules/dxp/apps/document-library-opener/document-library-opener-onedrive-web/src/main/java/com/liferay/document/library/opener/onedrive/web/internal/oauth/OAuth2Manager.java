@@ -63,14 +63,12 @@ public class OAuth2Manager {
 			long companyId, long userId)
 		throws PortalException {
 
-		Optional<AccessToken> accessTokenOptional =
-			AccessTokenStoreUtil.getAccessTokenOptional(companyId, userId);
+		AccessToken accessToken = AccessTokenStoreUtil.getAccessToken(
+			companyId, userId);
 
-		if (!accessTokenOptional.isPresent()) {
+		if (accessToken == null) {
 			return Optional.empty();
 		}
-
-		AccessToken accessToken = accessTokenOptional.get();
 
 		if (!accessToken.isValid()) {
 			return _refreshOAuth2AccessToken(companyId, userId, accessToken);
@@ -103,10 +101,10 @@ public class OAuth2Manager {
 	}
 
 	public void revokeOAuth2AccessToken(long companyId, long userId) {
-		Optional<AccessToken> accessTokenOptional =
-			AccessTokenStoreUtil.getAccessTokenOptional(companyId, userId);
+		AccessToken accessToken = AccessTokenStoreUtil.getAccessToken(
+			companyId, userId);
 
-		if (!accessTokenOptional.isPresent()) {
+		if (accessToken == null) {
 			return;
 		}
 

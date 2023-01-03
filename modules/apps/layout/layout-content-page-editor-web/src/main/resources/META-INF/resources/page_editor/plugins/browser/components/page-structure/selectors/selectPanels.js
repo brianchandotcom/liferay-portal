@@ -24,6 +24,7 @@ import selectCanUpdateCSSAdvancedOptions from '../../../../../app/selectors/sele
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
+import {formHasPermissions} from '../../../../../app/utils/formHasPermissions';
 import getFragmentItem from '../../../../../app/utils/getFragmentItem';
 import isEditableSubmit from '../../../../../app/utils/isEditableSubmit';
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item-configuration-panels/CollectionAppliedFiltersGeneralPanel';
@@ -268,15 +269,25 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
-		panelsIds = {
-			[PANEL_IDS.formAdvancedPanel]:
-				(canUpdateItemAdvancedConfiguration &&
-					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
-				canUpdateCSSAdvancedOptions,
-			[PANEL_IDS.formGeneral]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
-			[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
-		};
+		panelsIds =
+			Liferay.FeatureFlags['LPS-169923'] &&
+			!formHasPermissions(activeItem)
+				? {
+						[PANEL_IDS.formGeneral]:
+							state.selectedViewportSize ===
+							VIEWPORT_SIZES.desktop,
+				  }
+				: {
+						[PANEL_IDS.formAdvancedPanel]:
+							(canUpdateItemAdvancedConfiguration &&
+								state.selectedViewportSize ===
+									VIEWPORT_SIZES.desktop) ||
+							canUpdateCSSAdvancedOptions,
+						[PANEL_IDS.formGeneral]:
+							state.selectedViewportSize ===
+							VIEWPORT_SIZES.desktop,
+						[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
+				  };
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 		const {fragmentEntryKey, fragmentEntryType} = state.fragmentEntryLinks[

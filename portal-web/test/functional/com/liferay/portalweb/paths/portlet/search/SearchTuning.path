@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>RESULT_RANKINGS_ALIAS_REMOVE</td>
-	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_alias}')]//button[contains(@class,'close')]</td>
+	<td>//span[contains(@class,'label-secondary') and contains(.,'${key_alias}')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>

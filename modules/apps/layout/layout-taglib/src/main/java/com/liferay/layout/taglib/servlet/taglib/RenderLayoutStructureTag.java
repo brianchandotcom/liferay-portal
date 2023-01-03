@@ -23,6 +23,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
@@ -34,6 +35,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
@@ -216,6 +218,35 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			layout.getUserId(), PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
 		return layoutTypePortlet;
+	}
+
+	private boolean _hasAddPermission(String className) {
+		InfoItemServiceRegistry infoItemServiceRegistry =
+			ServletContextUtil.getInfoItemServiceRegistry();
+
+		InfoPermissionProvider infoPermissionProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoPermissionProvider.class, className);
+
+		if (infoPermissionProvider == null) {
+			return true;
+		}
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if ((themeDisplay == null) ||
+			infoPermissionProvider.hasAddPermission(
+				themeDisplay.getScopeGroupId(),
+				themeDisplay.getPermissionChecker())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _renderCollectionStyledLayoutStructureItem(
@@ -816,6 +847,43 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			return;
 		}
 
+		HttpServletRequest httpServletRequest = getRequest();
+
+		String mode = ParamUtil.getString(
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
+			"p_l_mode", Constants.VIEW);
+
+		if (Objects.equals(mode, Constants.VIEW) &&
+			!_hasAddPermission(
+				PortalUtil.getClassName(
+					formStyledLayoutStructureItem.getClassNameId()))) {
+
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.write(
+				"<div class=\"p-3 bg-light text-secondary rounded\" style=" +
+					"\"border: 1px solid #d3d6e0;\">" +
+						"<span class=\"mr-2 alert-indicator\">");
+
+			IconTag iconTag = new IconTag();
+
+			iconTag.setCssClass("lexicon-icon lexicon-icon-password-policies");
+
+			iconTag.setSymbol("password-policies");
+
+			iconTag.doTag(pageContext);
+
+			jspWriter.write("</span>");
+			jspWriter.write(
+				LanguageUtil.get(
+					getRequest(),
+					"due-to-permission-restrictions,-this-content-cannot-be-" +
+						"displayed"));
+			jspWriter.write("</div>");
+
+			return;
+		}
+
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<form action=\"");
@@ -884,8 +952,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					formStyledLayoutStructureItem));
 		jspWriter.write("\"><input name=\"backURL\" type=\"hidden\" value=\"");
 
-		HttpServletRequest httpServletRequest = getRequest();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -906,10 +972,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("\"><input name=\"groupId\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getScopeGroupId()));
 		jspWriter.write("\"><input name=\"p_l_mode\" type=\"hidden\" value=\"");
-		jspWriter.write(
-			ParamUtil.getString(
-				PortalUtil.getOriginalServletRequest(httpServletRequest),
-				"p_l_mode", Constants.VIEW));
+		jspWriter.write(mode);
 		jspWriter.write("\"><input name=\"plid\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
 		jspWriter.write(

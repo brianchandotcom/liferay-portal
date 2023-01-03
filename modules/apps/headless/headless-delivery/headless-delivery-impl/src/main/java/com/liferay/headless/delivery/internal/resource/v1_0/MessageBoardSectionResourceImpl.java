@@ -136,6 +136,15 @@ public class MessageBoardSectionResourceImpl
 			sorts);
 	}
 
+	public MessageBoardSection getSiteMessageBoardSectionByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toMessageBoardSection(
+			_mbCategoryService.fetchMBMessageByUrlCategory(
+				siteId, friendlyUrlPath));
+	}
+
 	@Override
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
 			Long siteId, Boolean flatten, String search,

@@ -16,7 +16,7 @@ definition {
 
 			ClientExtension.checkConfigFileCreatedProperly();
 
-			RemoteApps.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 	}
 
@@ -41,7 +41,7 @@ definition {
 		}
 
 		task ("Then field information is displayed correctly") {
-			RemoteApps.assertMultipleFields(
+			ClientExtensionGeneral.assertMultipleFields(
 				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
 				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entrydescription = "Custom Element Description",
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.assertFieldDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category,Name,description,CSS URLs,_URLs,properties");
+			ClientExtensionGeneral.assertFieldDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category,Name,description,CSS URLs,_URLs,properties");
 		}
 	}
 
@@ -93,7 +93,7 @@ definition {
 		}
 
 		task ("Then field information is displayed correctly") {
-			RemoteApps.assertMultipleFields(
+			ClientExtensionGeneral.assertMultipleFields(
 				entry_URLs = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js",
 				entryCSSURLs = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entrydescription = "Custom Element Description",
@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("And Then fields are not editable") {
-			RemoteApps.assertFieldDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category,Name,description,CSS URLs,_URLs,properties");
+			ClientExtensionGeneral.assertFieldDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category,Name,description,CSS URLs,_URLs,properties");
 		}
 	}
 

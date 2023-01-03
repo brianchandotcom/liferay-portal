@@ -167,43 +167,43 @@ definition {
 	}
 
 	macro assertMultipleFields {
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "Name",
 			entryInformation = "${entryName}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "Source Code URL",
 			entryInformation = "${entrySourceCodeURL}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "Type",
 			entryInformation = "${entryType}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "Friendly URL Mapping",
 			entryInformation = "${entryFriendlyURLMapping}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "HTML Element Name",
 			entryInformation = "${entryHTMLElementName}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "Portlet Category Name",
 			entryInformation = "${entryPortletCategoryName}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "description",
 			entryInformation = "${entrydescription}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "CSS URLs",
 			entryInformation = "${entryCSSURLs}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "_URLs",
 			entryInformation = "${entry_URLs}");
 
-		RemoteApps.assertContentField(
+		ClientExtensionGeneral.assertContentField(
 			entryField = "properties",
 			entryInformation = "${entryproperties}");
 	}

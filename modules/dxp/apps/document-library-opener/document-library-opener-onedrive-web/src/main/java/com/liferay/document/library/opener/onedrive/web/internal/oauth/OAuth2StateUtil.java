@@ -19,8 +19,6 @@ import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpe
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -36,14 +34,13 @@ public class OAuth2StateUtil {
 		httpSession.removeAttribute(DLOpenerOneDriveWebKeys.OAUTH2_STATE);
 	}
 
-	public static Optional<OAuth2State> getOAuth2StateOptional(
+	public static OAuth2State getOAuth2State(
 		HttpServletRequest httpServletRequest) {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		return Optional.ofNullable(
-			(OAuth2State)httpSession.getAttribute(
-				DLOpenerOneDriveWebKeys.OAUTH2_STATE));
+		return (OAuth2State)httpSession.getAttribute(
+			DLOpenerOneDriveWebKeys.OAUTH2_STATE);
 	}
 
 	public static boolean isValid(

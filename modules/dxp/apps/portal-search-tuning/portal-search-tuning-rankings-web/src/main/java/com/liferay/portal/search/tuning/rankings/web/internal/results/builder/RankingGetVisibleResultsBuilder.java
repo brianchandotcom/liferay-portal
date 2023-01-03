@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
@@ -129,13 +131,9 @@ public class RankingGetVisibleResultsBuilder {
 	protected JSONArray buildDocuments(
 		Ranking ranking, SearchResponse searchResponse) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (Document document : searchResponse.getDocuments()) {
-			jsonArray.put(translate(document, ranking));
-		}
-
-		return jsonArray;
+		return JSONUtil.toJSONArray(
+			searchResponse.getDocuments(),
+			document -> translate(document, ranking), _log);
 	}
 
 	protected SearchRequest buildSearchRequest(Ranking ranking) {
@@ -198,6 +196,9 @@ public class RankingGetVisibleResultsBuilder {
 	private boolean _isAssetDeleted(Document document) {
 		return RankingResultUtil.isAssetDeleted(document);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RankingGetVisibleResultsBuilder.class.getName());
 
 	private long _companyId;
 	private final ComplexQueryPartBuilderFactory

@@ -16,9 +16,10 @@ package com.liferay.portal.search.tuning.rankings.web.internal.results.builder;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.search.document.Document;
@@ -95,13 +96,8 @@ public class RankingGetSearchResultsBuilder {
 	}
 
 	protected JSONArray buildDocuments(SearchResponse searchResponse) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (Document document : searchResponse.getDocuments()) {
-			jsonArray.put(translate(document));
-		}
-
-		return jsonArray;
+		return JSONUtil.toJSONArray(
+			searchResponse.getDocuments(), this::translate, _log);
 	}
 
 	protected SearchRequest buildSearchRequest() {
@@ -144,6 +140,9 @@ public class RankingGetSearchResultsBuilder {
 	private boolean _isAssetDeleted(Document document) {
 		return RankingResultUtil.isAssetDeleted(document);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RankingGetSearchResultsBuilder.class.getName());
 
 	private long _companyId;
 	private final ComplexQueryPartBuilderFactory

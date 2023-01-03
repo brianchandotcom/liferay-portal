@@ -32,7 +32,7 @@
 
 			<div class="h5"><liferay-ui:message key="order-by" /></div>
 
-			<aui:select label="" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="d-inline-flex">
+			<aui:select aria-label='<%= LanguageUtil.get(request, "order-by") %>' label="" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="d-inline-flex">
 				<aui:option label="title" selected='<%= Objects.equals(orderByColumn1, "title") %>' value="title" />
 				<aui:option label="create-date" selected='<%= Objects.equals(orderByColumn1, "createDate") %>' value="createDate" />
 				<aui:option label="modified-date" selected='<%= Objects.equals(orderByColumn1, "modifiedDate") %>' value="modifiedDate" />
@@ -78,7 +78,7 @@
 
 			<div class="h5"><liferay-ui:message key="and-then-by" /></div>
 
-			<aui:select label="" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="d-inline-flex">
+			<aui:select aria-label='<%= LanguageUtil.get(request, "and-then-by") %>' label="" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="d-inline-flex">
 				<aui:option label="title" selected='<%= Objects.equals(orderByColumn2, "title") %>' value="title" />
 				<aui:option label="create-date" selected='<%= Objects.equals(orderByColumn2, "createDate") %>' value="createDate" />
 				<aui:option label="modified-date" selected='<%= Objects.equals(orderByColumn2, "modifiedDate") %>' value="modifiedDate" />

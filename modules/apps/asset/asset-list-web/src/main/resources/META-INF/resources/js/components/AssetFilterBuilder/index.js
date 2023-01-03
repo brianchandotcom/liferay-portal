@@ -158,6 +158,7 @@ function Rule({
 				<div className="panel-body">
 					<ClayForm.Group>
 						<ClaySelectWithOption
+							aria-label={Liferay.Language.get('query-contains')}
 							data-index={index}
 							data-property="queryContains"
 							id={`${namespace}queryContains${index}`}
@@ -171,6 +172,7 @@ function Rule({
 
 					<ClayForm.Group>
 						<ClaySelectWithOption
+							aria-label={Liferay.Language.get('and-operator')}
 							data-index={index}
 							data-property="queryAndOperator"
 							id={`${namespace}queryAndOperator${index}`}

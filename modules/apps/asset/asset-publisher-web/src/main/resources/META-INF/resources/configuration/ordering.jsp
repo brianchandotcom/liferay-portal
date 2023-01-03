@@ -24,7 +24,7 @@
 	>
 		<div class="h5"><liferay-ui:message key="order-by" /></div>
 
-		<aui:select label="" name="preferences--orderByColumn1--" value="<%= assetPublisherDisplayContext.getOrderByColumn1() %>" wrapperCssClass="d-inline-flex">
+		<aui:select aria-label='<%= LanguageUtil.get(request, "order-by") %>' label="" name="preferences--orderByColumn1--" value="<%= assetPublisherDisplayContext.getOrderByColumn1() %>" wrapperCssClass="d-inline-flex">
 			<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
 				<aui:option label="title" />
 			</c:if>
@@ -78,7 +78,7 @@
 
 		<div class="h5"><liferay-ui:message key="and-then-by" /></div>
 
-		<aui:select label="" name="preferences--orderByColumn2--" wrapperCssClass="d-inline-flex">
+		<aui:select aria-label='<%= LanguageUtil.get(request, "and-then-by") %>' label="" name="preferences--orderByColumn2--" wrapperCssClass="d-inline-flex">
 			<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
 			<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
 			<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />

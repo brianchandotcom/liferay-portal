@@ -239,7 +239,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((themeDisplay == null) ||
+		if ((themeDisplay != null) &&
 			infoPermissionProvider.hasAddPermission(
 				themeDisplay.getScopeGroupId(),
 				themeDisplay.getPermissionChecker())) {
@@ -268,7 +268,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((themeDisplay == null) ||
+		if ((themeDisplay != null) &&
 			infoPermissionProvider.hasViewPermission(
 				themeDisplay.getPermissionChecker())) {
 

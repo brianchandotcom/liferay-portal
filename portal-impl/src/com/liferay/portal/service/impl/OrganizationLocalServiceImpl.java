@@ -816,6 +816,21 @@ public class OrganizationLocalServiceImpl
 		return organizationPersistence.findByC_LikeT(companyId, treePath);
 	}
 
+	@Override
+	public List<Organization> getOrganizations(
+		long companyId, String name, int start, int end,
+		OrderByComparator<Organization> orderByComparator) {
+
+		if (Validator.isNull(name)) {
+			return organizationPersistence.findByCompanyId(
+				companyId, start, end, orderByComparator);
+		}
+
+		return organizationPersistence.findByC_LikeN(
+			companyId, StringUtil.quote(name, StringPool.PERCENT), start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * Returns the organizations with the primary keys.
 	 *
@@ -921,6 +936,16 @@ public class OrganizationLocalServiceImpl
 
 		return organizationPersistence.countByC_P_LikeN(
 			companyId, parentOrganizationId, name);
+	}
+
+	@Override
+	public int getOrganizationsCount(long companyId, String name) {
+		if (Validator.isNull(name)) {
+			return organizationPersistence.countByCompanyId(companyId);
+		}
+
+		return organizationPersistence.countByC_LikeN(
+			companyId, StringUtil.quote(name, StringPool.PERCENT));
 	}
 
 	/**

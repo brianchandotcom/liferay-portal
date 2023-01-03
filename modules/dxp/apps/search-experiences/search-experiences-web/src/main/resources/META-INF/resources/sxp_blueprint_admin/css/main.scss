@@ -1,35 +1,35 @@
 @import '_variables';
 
-@import '_code_mirror';
+@import 'shared/_code_mirror';
 
 // Components Rendered On Document Body
 
-@import '_category_selector_modal';
-@import '_edit_title_modal';
-@import '_field_row_dropdown';
-@import '_preview_attributes_modal';
-@import '_preview_modal';
-@import '_searchable_types_modal';
+@import 'edit-sxp-blueprint/_preview_attributes_modal';
+@import 'edit-sxp-blueprint/_preview_modal';
+@import 'edit-sxp-blueprint/_searchable_types_modal';
+@import 'shared/_edit_title_modal';
+@import 'shared/sxp-element/_category_selector_modal';
+@import 'shared/sxp-element/_field_row_dropdown';
 
 // Components Used In Modals
 
-@import '_error_list_item';
+@import 'shared/_error_list_item';
 
 .portlet-sxp-blueprint-admin {
 	// Shared
 
-	@import '_builder';
-	@import '_sidebar';
+	@import 'edit-sxp-blueprint/_builder';
+	@import 'shared/_sidebar';
 
 	// Components
 
-	@import '_add_sxp_element_sidebar';
-	@import '_clause_contributors_sidebar';
-	@import '_edit_sxp_element';
-	@import '_import_sxp_blueprint';
-	@import '_page_toolbar';
-	@import '_preview_sidebar';
-	@import '_query_builder_tab';
-	@import '_result_list_item';
-	@import '_sxp_element';
+	@import 'edit-sxp-blueprint/_add_sxp_element_sidebar';
+	@import 'edit-sxp-blueprint/_clause_contributors_sidebar';
+	@import 'edit-sxp-blueprint/_preview_sidebar';
+	@import 'edit-sxp-blueprint/_query_builder_tab';
+	@import 'edit-sxp-blueprint/_result_list_item';
+	@import 'edit-sxp-element/_edit_sxp_element';
+	@import 'shared/_page_toolbar';
+	@import 'shared/sxp-element/_sxp_element';
+	@import 'view-sxp-blueprints/_import_sxp_blueprint';
 }

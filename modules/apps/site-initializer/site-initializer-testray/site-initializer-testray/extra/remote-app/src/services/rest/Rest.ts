@@ -18,10 +18,14 @@ import {APIResponse} from './types';
 type Adapter<T = any> = (data: T) => Partial<T>;
 type TransformData<T = any> = (data: T) => T;
 
-type APIParametersOptions = {
+export type APIParametersOptions = {
+	aggregationTerms?: string;
+	fields?: string;
 	filter?: string;
-	page?: number;
-	pageSize?: number;
+	nestedFields?: string;
+	nestedFieldsDepth?: number | string;
+	page?: number | string;
+	pageSize?: number | string;
 	sort?: string;
 };
 
@@ -65,10 +69,14 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		transformData,
 		uri,
 	}: RestContructor<YupModel, ObjectModel, NestedObjectOptions>) {
-		this.nestedFields = `nestedFields=${nestedFields}`;
 		this.uri = uri;
-		this.nestedFieldsDepth = getNestedFieldDepth(nestedFields);
-		this.resource = `/${uri}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
+		this.resource = `/${uri}`;
+
+		if (nestedFields) {
+			this.nestedFields = `nestedFields=${nestedFields}`;
+			this.nestedFieldsDepth = getNestedFieldDepth(nestedFields);
+			this.resource = `/${uri}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
+		}
 
 		if (adapter) {
 			this.adapter = adapter;
@@ -77,6 +85,32 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		if (transformData) {
 			this.transformData = transformData;
 		}
+	}
+
+	static getPageParameter(
+		parameters: APIParametersOptions = {},
+		baseURL?: string
+	) {
+		const getBaseSearchParams = (resource?: string) => {
+			if (resource && resource.includes('?')) {
+				return resource.slice(resource.indexOf('?'));
+			}
+		};
+
+		const searchParams = new URLSearchParams(getBaseSearchParams(baseURL));
+
+		for (const key in parameters) {
+			const value = (parameters as any)[key] as
+				| string
+				| number
+				| undefined;
+
+			if (value) {
+				searchParams.set(key, value.toString());
+			}
+		}
+
+		return searchParams.toString();
 	}
 
 	protected async beforeCreate(_data: YupModel) {}
@@ -100,28 +134,12 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		await Promise.allSettled(data.map((item) => this.create(item)));
 	}
 
-	public getAll({
-		filter,
-		page = 1,
-		pageSize = 20,
-		sort = '',
-	}: APIParametersOptions = {}): Promise<
-		APIResponse<ObjectModel> | undefined
-	> {
-		const searchParams = new URLSearchParams();
+	public getAll(
+		options: APIParametersOptions = {}
+	): Promise<APIResponse<ObjectModel> | undefined> {
+		const searchParams = Rest.getPageParameter(options);
 
-		searchParams.set('page', page.toString());
-		searchParams.set('pageSize', pageSize.toString());
-
-		if (filter) {
-			searchParams.set('filter', filter);
-		}
-
-		if (sort) {
-			searchParams.set('sort', sort.toString());
-		}
-
-		return this.fetcher(`${this.resource}${searchParams.toString()}`);
+		return this.fetcher(`${this.resource}${searchParams}`);
 	}
 
 	public getOne(id: number): Promise<ObjectModel | undefined> {

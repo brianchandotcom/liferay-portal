@@ -15,11 +15,41 @@
 import {useMemo} from 'react';
 import useSWR from 'swr';
 
+import Rest, {APIParametersOptions} from '../services/rest/Rest';
+
+type FetchOptions<Data> = {
+	transformData?: (data: Data) => Data;
+} & APIParametersOptions;
+
+const getBaseURL = (url: string | null, options: APIParametersOptions) => {
+	if (!url) {
+		return null;
+	}
+
+	const searchParams = Rest.getPageParameter(options, url);
+
+	let baseURL = url;
+
+	if (url.includes('?')) {
+		baseURL = url.slice(0, url.indexOf('?'));
+	}
+
+	if (searchParams.length) {
+		baseURL += `?${searchParams}`;
+	}
+
+	return baseURL;
+};
+
 export function useFetch<Data = any, Error = any>(
 	url: string | null,
-	transformData?: (data: Data) => Data
+	fetchParameters?: FetchOptions<Data>
 ) {
-	const {data, error, isValidating, mutate} = useSWR<Data, Error>(url);
+	const {transformData, ...options} = fetchParameters ?? {};
+
+	const {data, error, isValidating, mutate} = useSWR<Data, Error>(() =>
+		getBaseURL(url, options)
+	);
 
 	const memoizedData = useMemo(() => {
 		if (data && transformData) {

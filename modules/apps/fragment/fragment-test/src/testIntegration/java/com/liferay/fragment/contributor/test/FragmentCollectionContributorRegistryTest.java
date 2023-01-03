@@ -278,7 +278,7 @@ public class FragmentCollectionContributorRegistryTest {
 
 		@Override
 		public String getName() {
-			return RandomTestUtil.randomString();
+			return "Test Fragment Collection Contributor";
 		}
 
 		@Override

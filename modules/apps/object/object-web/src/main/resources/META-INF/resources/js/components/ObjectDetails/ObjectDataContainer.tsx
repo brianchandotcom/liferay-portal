@@ -19,7 +19,7 @@ import {
 	Input,
 	InputLocalized,
 } from '@liferay/object-js-components-web';
-import React, {ChangeEventHandler} from 'react';
+import React, {ChangeEventHandler, useState} from 'react';
 
 interface ObjectDataContainerProps {
 	DBTableName: string;
@@ -31,6 +31,8 @@ interface ObjectDataContainerProps {
 	values: Partial<ObjectDefinition>;
 }
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 export function ObjectDataContainer({
 	DBTableName,
 	errors,
@@ -40,6 +42,10 @@ export function ObjectDataContainer({
 	setValues,
 	values,
 }: ObjectDataContainerProps) {
+	const [selectedLocale, setSelectedLocale] = useState<Locale>(
+		defaultLanguageId
+	);
+
 	return (
 		<ClayPanel
 			displayTitle={Liferay.Language.get('object-definition-data')}
@@ -65,7 +71,9 @@ export function ObjectDataContainer({
 					error={errors.label}
 					label={Liferay.Language.get('label')}
 					onChange={(label) => setValues({label})}
+					onSelectedLocaleChange={setSelectedLocale}
 					required
+					selectedLocale={selectedLocale}
 					translations={values.label as LocalizedValue<string>}
 				/>
 
@@ -76,7 +84,9 @@ export function ObjectDataContainer({
 					error={errors.pluralLabel}
 					label={Liferay.Language.get('plural-label')}
 					onChange={(pluralLabel) => setValues({pluralLabel})}
+					onSelectedLocaleChange={setSelectedLocale}
 					required
+					selectedLocale={selectedLocale}
 					translations={values.pluralLabel as LocalizedValue<string>}
 				/>
 

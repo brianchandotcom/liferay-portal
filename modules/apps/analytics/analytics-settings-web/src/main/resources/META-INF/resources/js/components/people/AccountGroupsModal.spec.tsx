@@ -134,6 +134,7 @@ const ComponentWithEmptyState: React.FC<IComponentWithEmptyStateProps> = ({
 
 describe('Account Groups Modal', () => {
 	beforeAll(() => {
+
 		// @ts-ignore
 
 		ReactDOM.createPortal = jest.fn((element) => {

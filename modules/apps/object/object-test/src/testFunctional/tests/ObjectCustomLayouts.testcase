@@ -180,7 +180,7 @@ definition {
 					tabName = "Relationship Tab ${letter}");
 			}
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("When add the entry on Relationship tab") {
@@ -407,7 +407,7 @@ definition {
 				relationshipsLabelName = "Relationship",
 				tabName = "Relationship Tab");
 
-			Button.clickSave();
+			PortletEntry.save();
 
 			for (var letter : list "A,B") {
 				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
@@ -702,7 +702,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		SelectFrame(locator1 = "Message#ERROR");
 

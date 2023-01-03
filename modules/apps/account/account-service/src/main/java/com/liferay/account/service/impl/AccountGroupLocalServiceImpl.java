@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
@@ -183,8 +184,8 @@ public class AccountGroupLocalServiceImpl
 		}
 
 		return accountGroupPersistence.findByC_LikeN(
-			companyId, StringPool.PERCENT + name + StringPool.PERCENT, start,
-			end, orderByComparator);
+			companyId, StringUtil.quote(name, StringPool.PERCENT), start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -206,7 +207,7 @@ public class AccountGroupLocalServiceImpl
 		}
 
 		return accountGroupPersistence.countByC_LikeN(
-			companyId, StringPool.PERCENT + name + StringPool.PERCENT);
+			companyId, StringUtil.quote(name, StringPool.PERCENT));
 	}
 
 	@Override

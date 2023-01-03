@@ -81,7 +81,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -187,7 +186,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
 
-		Optional<StagedLayoutSet> existingLayoutSetOptional =
+		StagedLayoutSet existingStagedLayoutSet =
 			_stagedLayoutSetStagedModelRepository.fetchExistingLayoutSet(
 				portletDataContext.getScopeGroupId(),
 				layoutSet.isPrivateLayout());
@@ -205,13 +204,10 @@ public class StagedLayoutSetStagedModelDataHandler
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID);
 
-		if (existingLayoutSetOptional.isPresent() &&
+		if ((existingStagedLayoutSet != null) &&
 			!layoutsImportMode.equals(
 				PortletDataHandlerKeys.
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
-
-			StagedLayoutSet existingStagedLayoutSet =
-				existingLayoutSetOptional.get();
 
 			LayoutSet existingLayoutSet =
 				existingStagedLayoutSet.getLayoutSet();

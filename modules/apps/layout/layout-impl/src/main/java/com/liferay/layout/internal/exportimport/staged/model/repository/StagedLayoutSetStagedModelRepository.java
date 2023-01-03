@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -110,7 +109,7 @@ public class StagedLayoutSetStagedModelRepository
 		);
 	}
 
-	public Optional<StagedLayoutSet> fetchExistingLayoutSet(
+	public StagedLayoutSet fetchExistingLayoutSet(
 		long groupId, boolean privateLayout) {
 
 		StagedLayoutSet stagedLayoutSet = null;
@@ -129,7 +128,7 @@ public class StagedLayoutSetStagedModelRepository
 			}
 		}
 
-		return Optional.ofNullable(stagedLayoutSet);
+		return stagedLayoutSet;
 	}
 
 	@Override

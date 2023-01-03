@@ -147,7 +147,7 @@ public class LayoutsTreeDisplayContext {
 			}
 
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				_groupId, false, layoutId);
+				_groupId, _privateLayout, layoutId);
 
 			if (layout != null) {
 				plids.add(layout.getPlid());

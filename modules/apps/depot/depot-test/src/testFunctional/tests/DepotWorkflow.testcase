@@ -306,12 +306,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ApproveWCArticleWithinDepot {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			category = "Configuration",
-			depotName = "Test Depot Name",
-			portlet = "Workflow");
+		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -690,11 +685,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test RejectandResubmitWCArticleWithinDepot {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Workflow");
+		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

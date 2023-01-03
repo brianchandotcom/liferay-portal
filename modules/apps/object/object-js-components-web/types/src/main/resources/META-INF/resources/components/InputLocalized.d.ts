@@ -15,21 +15,7 @@
 /// <reference types="react" />
 
 import './InputLocalized.scss';
-export declare function InputLocalized({
-	disableFlag,
-	disabled,
-	error,
-	id,
-	label,
-	name,
-	onChange,
-	placeholder,
-	required,
-	selectedLocale,
-	translations,
-	...otherProps
-}: IProps): JSX.Element;
-interface IProps {
+interface InputLocalizedProps {
 	className?: string;
 	disableFlag?: boolean;
 	disabled?: boolean;
@@ -38,6 +24,7 @@ interface IProps {
 	label: string;
 	name?: string;
 	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
+	onSelectedLocaleChange?: (locale: Locale) => void;
 	placeholder?: string;
 	required?: boolean;
 	selectedLocale?: Locale;
@@ -47,4 +34,19 @@ interface InputLocale {
 	label: Locale;
 	symbol: string;
 }
+export declare function InputLocalized({
+	disableFlag,
+	disabled,
+	error,
+	id,
+	label,
+	name,
+	onChange,
+	onSelectedLocaleChange,
+	placeholder,
+	required,
+	selectedLocale,
+	translations,
+	...otherProps
+}: InputLocalizedProps): JSX.Element;
 export {};

@@ -20,6 +20,27 @@ import {FieldBase} from './FieldBase';
 
 import './InputLocalized.scss';
 
+interface InputLocalizedProps {
+	className?: string;
+	disableFlag?: boolean;
+	disabled?: boolean;
+	error?: string;
+	id?: string;
+	label: string;
+	name?: string;
+	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
+	onSelectedLocaleChange?: (locale: Locale) => void;
+	placeholder?: string;
+	required?: boolean;
+	selectedLocale?: Locale;
+	translations: LocalizedValue<string>;
+}
+
+interface InputLocale {
+	label: Locale;
+	symbol: string;
+}
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const availableLocales = Object.keys(Liferay.Language.available)
@@ -37,12 +58,13 @@ export function InputLocalized({
 	label,
 	name,
 	onChange,
+	onSelectedLocaleChange,
 	placeholder,
 	required,
 	selectedLocale,
 	translations,
 	...otherProps
-}: IProps) {
+}: InputLocalizedProps) {
 	const [locale, setLocale] = useState<InputLocale>(availableLocales[0]);
 
 	useEffect(() => {
@@ -83,6 +105,9 @@ export function InputLocalized({
 				onSelectedLocaleChange={(locale) => {
 					setLocale(locale as InputLocale);
 					onChange(translations, locale as InputLocale);
+					if (onSelectedLocaleChange) {
+						onSelectedLocaleChange((locale as InputLocale).label);
+					}
 				}}
 				onTranslationsChange={(value) => onChange(value, locale)}
 				placeholder={placeholder}
@@ -91,24 +116,4 @@ export function InputLocalized({
 			/>
 		</FieldBase>
 	);
-}
-
-interface IProps {
-	className?: string;
-	disableFlag?: boolean;
-	disabled?: boolean;
-	error?: string;
-	id?: string;
-	label: string;
-	name?: string;
-	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
-	placeholder?: string;
-	required?: boolean;
-	selectedLocale?: Locale;
-	translations: LocalizedValue<string>;
-}
-
-interface InputLocale {
-	label: Locale;
-	symbol: string;
 }

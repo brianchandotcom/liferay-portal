@@ -64,7 +64,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -144,30 +143,32 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			infoItemFieldValuesProvider.getInfoItemFieldValues(
 				layoutDisplayPageObjectProvider.getDisplayObject());
 
-		Optional<String> descriptionOptional = _getMappedValueOptional(
+		String description = _getMappedValue(
 			layout.getTypeSettingsProperty("mapped-description"),
 			infoItemFieldValues, locale);
 
+		if (description == null) {
+			description = layoutDisplayPageObjectProvider.getDescription(
+				locale);
+		}
+
 		portal.setPageDescription(
-			HtmlUtil.unescape(
-				HtmlUtil.stripHtml(
-					descriptionOptional.orElseGet(
-						() -> layoutDisplayPageObjectProvider.getDescription(
-							locale)))),
+			HtmlUtil.unescape(HtmlUtil.stripHtml(description)),
 			httpServletRequest);
 
 		portal.setPageKeywords(
 			layoutDisplayPageObjectProvider.getKeywords(locale),
 			httpServletRequest);
 
-		Optional<String> titleOptional = _getMappedValueOptional(
+		String title = _getMappedValue(
 			layout.getTypeSettingsProperty("mapped-title"), infoItemFieldValues,
 			locale);
 
-		portal.setPageTitle(
-			titleOptional.orElseGet(
-				() -> layoutDisplayPageObjectProvider.getTitle(locale)),
-			httpServletRequest);
+		if (title == null) {
+			title = layoutDisplayPageObjectProvider.getTitle(locale);
+		}
+
+		portal.setPageTitle(title, httpServletRequest);
 
 		return portal.getLayoutActualURL(layout, mainPath) +
 			layoutQueryStringComposite.getQueryString();

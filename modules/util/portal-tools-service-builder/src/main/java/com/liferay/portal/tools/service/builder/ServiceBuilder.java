@@ -20,16 +20,17 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
@@ -127,7 +128,11 @@ import org.dom4j.DocumentType;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.XPath;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
+
+import org.xml.sax.XMLReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -4791,7 +4796,36 @@ public class ServiceBuilder {
 		}
 
 		xml = StringUtil.replace(xml, '\r', "");
-		xml = Dom4jUtil.toString(xml);
+
+		XMLReader xmlReader = null;
+
+		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider() !=
+				null) {
+
+			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
+		}
+
+		SAXReader saxReader = new SAXReader(xmlReader);
+
+		Document document = saxReader.read(new UnsyncStringReader(xml));
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
+
+		outputFormat.setIndent(StringPool.TAB);
+		outputFormat.setPadText(false);
+		outputFormat.setOmitEncoding(true);
+
+		XMLWriter xmlWriter = new XMLWriter(
+			unsyncByteArrayOutputStream, outputFormat);
+
+		xmlWriter.write(document);
+
+		xml = StringUtil.trim(
+			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
+
 		xml = StringUtil.replace(xml, "\"/>", "\" />");
 
 		if (Validator.isNotNull(doctype)) {

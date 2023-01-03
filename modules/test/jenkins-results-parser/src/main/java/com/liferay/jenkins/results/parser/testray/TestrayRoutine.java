@@ -176,7 +176,7 @@ public class TestrayRoutine {
 		return getTestrayBuildByName(buildName);
 	}
 
-	public int getID() {
+	public long getID() {
 		return _jsonObject.getInt("testrayRoutineId");
 	}
 

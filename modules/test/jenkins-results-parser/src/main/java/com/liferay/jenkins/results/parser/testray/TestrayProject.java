@@ -301,7 +301,7 @@ public class TestrayProject {
 	private final JSONObject _jsonObject;
 	private Map<Long, TestrayProductVersion> _testrayProductVersionsByID;
 	private Map<String, TestrayProductVersion> _testrayProductVersionsByName;
-	private Map<Integer, TestrayRoutine> _testrayRoutinesByID;
+	private Map<Long, TestrayRoutine> _testrayRoutinesByID;
 	private Map<String, TestrayRoutine> _testrayRoutinesByName;
 	private final TestrayServer _testrayServer;
 	private final URL _url;

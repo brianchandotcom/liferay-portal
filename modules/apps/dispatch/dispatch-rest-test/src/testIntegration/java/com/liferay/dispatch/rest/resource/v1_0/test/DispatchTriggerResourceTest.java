@@ -15,9 +15,12 @@
 package com.liferay.dispatch.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
+import com.liferay.dispatch.rest.client.dto.v1_0.DispatchTrigger;
+import com.liferay.portal.kernel.service.ServiceContext;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Nilton Vieira
@@ -59,6 +62,14 @@ public class DispatchTriggerResourceTest
 		return _addDispatchTrigger(dispatchTrigger);
 	}
 
+	@Override
+	protected DispatchTrigger
+			testGraphQLDispatchTriggersPage_addDispatchTriggersPage()
+		throws Exception {
+
+		return _addDispatchTriggersPage(randomDispatchTriggersPage());
+	}
+
 
 	private DispatchTrigger _addDispatchTrigger(
 		DispatchTrigger dispatchTrigger)
@@ -67,5 +78,30 @@ public class DispatchTriggerResourceTest
 		return dispatchTriggerResource.postDispatchTrigger(
 			dispatchTrigger);
 	}
+
+	@Override
+	protected DispatchTrigger randomDispatchTrigger()
+	throws Exception {
+
+	DispatchTrigger dispatchTrigger =
+		super.randomDispatchTrigger();
+
+	dispatchTrigger.setExternalReferenceCode(StringUtil.toLowerCase(
+		RandomTestUtil.randomString()));
+	dispatchTrigger.setCompanyId(RandomTestUtil.randomLong());
+	dispatchTrigger.setActive(RandomTestUtil.randomBoolean());
+	dispatchTrigger.setCronExpression(StringUtil.toLowerCase(
+		RandomTestUtil.randomString()));
+	dispatchTrigger.setDispatchTaskClusterMode(RandomTestUtil.randomInt());
+	dispatchTrigger.setDispatchTaskExecutorType(StringUtil.toLowerCase(
+		RandomTestUtil.randomString()));
+	dispatchTrigger.setEndDate(RandomTestUtil.nextDate());
+	dispatchTrigger.setId(RandomTestUtil.randomLong());
+	dispatchTrigger.setName(StringUtil.toLowerCase(RandomTestUtil.randomString()));
+	dispatchTrigger.setTimeZoneId(StringUtil.toLowerCase(
+		RandomTestUtil.randomString()));
+
+	return dispatchTrigger;
+}
 
 }

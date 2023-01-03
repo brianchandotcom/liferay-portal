@@ -305,6 +305,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		mbCategoryLocalService.deleteMBCategory(category);
 	}
 
+	public MBCategory fetchMBCategoryByUrlSubject(
+		long groupId, String urlCategory) {
+
+		return mbCategoryPersistence.fetchByG_UC(groupId, urlCategory);
+	}
+
 	@Override
 	public List<MBCategory> getCategories(long groupId) {
 		return mbCategoryPersistence.findByGroupId(groupId);

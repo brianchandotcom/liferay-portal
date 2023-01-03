@@ -102,6 +102,22 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		mbCategoryLocalService.deleteCategory(categoryId);
 	}
 
+	public MBCategory fetchMBMessageByUrlCategory(long groupId, String name)
+		throws PortalException {
+
+		MBCategory mbCategory =
+			mbCategoryLocalService.fetchMBCategoryByUrlSubject(groupId, name);
+
+		if (mbCategory == null) {
+			return null;
+		}
+
+		_categoryModelResourcePermission.check(
+			getPermissionChecker(), mbCategory, ActionKeys.VIEW);
+
+		return mbCategory;
+	}
+
 	@Override
 	public List<MBCategory> getCategories(long groupId) {
 		return mbCategoryPersistence.filterFindByGroupId(groupId);

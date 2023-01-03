@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  */
 public interface InfoPermissionProvider<T> {
 
+	public boolean hasAddPermission(
+		long groupId, PermissionChecker permissionChecker);
+
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws InfoPermissionException;
 

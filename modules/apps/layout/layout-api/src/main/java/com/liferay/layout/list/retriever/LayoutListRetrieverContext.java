@@ -18,7 +18,6 @@ import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.pagination.Pagination;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -28,17 +27,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutListRetrieverContext {
 
-	public Optional<Map<String, String[]>> getConfigurationOptional();
+	public Map<String, String[]> getConfiguration();
 
-	public Optional<Object> getContextObjectOptional();
+	public Object getContextObject();
 
-	public <T> Optional<T> getInfoFilterOptional(
-		Class<? extends InfoFilter> clazz);
+	public <T> T getInfoFilter(Class<? extends InfoFilter> clazz);
 
-	public Optional<Map<String, InfoFilter>> getInfoFiltersOptional();
+	public Map<String, InfoFilter> getInfoFilters();
 
-	public Optional<Pagination> getPaginationOptional();
+	public Pagination getPagination();
 
-	public Optional<long[]> getSegmentsEntryIdsOptional();
+	public long[] getSegmentsEntryIds();
 
 }

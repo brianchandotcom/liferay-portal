@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_PANEL_CHECKBOX</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]</td>
+	<td>//li[contains(@class,'treeview-item')][*//span[normalize-space(text())='${key_componentOrPortletName}']]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TYPE_PANEL_CHECKBOX_INPUT</td>
-	<td>//input[@type="hidden"][contains(@id,'panelSelectedPortlets')][contains(@value,'${key_componentOrPortletName}')]</td>
+	<td>//input[@type="hidden"][contains(@name,'panelSelectedPortlets')][contains(@value,'${key_componentOrPortletName}')]</td>
 	<td></td>
 </tr>
 
@@ -38,12 +38,12 @@
 
 <tr>
 	<td>DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
-	<td>//div[contains(@id,'selectPortletsTree')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea')]</td>
+	<td>//li[contains(@class,'treeview-item')][*//span[normalize-space(text())='${key_componentName}']]//button[contains(@class,'collapsed')][@aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED</td>
-	<td>//div[contains(@class,'tree-expanded')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea')]</td>
+	<td>//li[contains(@class,'treeview-item')][*//span[normalize-space(text())='${key_componentName}']]//button[contains(@class,'collapsed')][@aria-expanded='true']</td>
 	<td></td>
 </tr>
 

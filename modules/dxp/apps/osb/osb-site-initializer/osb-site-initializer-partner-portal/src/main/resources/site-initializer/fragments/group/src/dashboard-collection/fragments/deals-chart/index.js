@@ -12,11 +12,12 @@
 import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
 import getChartValues from './utils/getChartValues';
-import getQuarter from './utils/getQuarter';
+import getDealsByQuarter from './utils/getDealsByQuarter';
+import getDealsByType from './utils/getDealsByType';
 
 const colors = {
 	approved: '#8FB5FF',
@@ -28,6 +29,7 @@ const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 	.split('/')
 	.slice(0, 3)
 	.join('/');
+
 export default function () {
 	const [opportunities, setOpportunities] = useState();
 	const [leads, setLeads] = useState();
@@ -75,56 +77,8 @@ export default function () {
 		getLeads();
 	}, []);
 
-	const filteredDealsByType = useMemo(() => {
-		return {
-			approvedDeals: opportunities?.filter(
-				(item) => item.stage === 'Open'
-			),
-			closedWonDeals: opportunities?.filter(
-				(item) => item.stage === 'Closed Won'
-			),
-			rejectedDeals:
-				leads?.filter((item) => item.leadStatus === 'CAM rejected') ||
-				opportunities?.filter((item) => item.stage === 'Rejected'),
-			submitedDeals: leads?.filter(
-				(item) =>
-					item.leadType === 'Partner Prospect Lead (PPL)' &&
-					(item.leadStatus !== 'Sales Qualified Opportunity' ||
-						item.leadStatus !== 'CAM rejected')
-			),
-		};
-	}, [leads, opportunities]);
-
-	const filteredDealsByQuarter = useMemo(() => {
-		const quarters = ['quarter1', 'quarter2', 'quarter3', 'quarter4'];
-
-		getQuarter();
-
-		return quarters.map((quarter) => {
-			const quarterData = {
-				approved: filteredDealsByType?.approvedDeals?.filter(
-					getQuarter(quarter)
-				).length,
-				closedwon: filteredDealsByType?.closedWonDeals?.filter(
-					getQuarter(quarter)
-				).length,
-				rejected: filteredDealsByType?.rejectedDeals?.filter(
-					getQuarter(quarter)
-				).length,
-				submited: filteredDealsByType?.submitedDeals?.filter(
-					getQuarter(quarter)
-				).length,
-			};
-
-			return quarterData;
-		});
-	}, [
-		filteredDealsByType?.approvedDeals,
-		filteredDealsByType?.closedWonDeals,
-		filteredDealsByType?.rejectedDeals,
-		filteredDealsByType?.submitedDeals,
-	]);
-
+	const filteredDealsByType = getDealsByType({leads, opportunities});
+	const filteredDealsByQuarter = getDealsByQuarter({filteredDealsByType});
 	const [
 		approvedChartValues,
 		closedWonChartValues,

@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
-import com.liferay.commerce.account.exception.NoSuchAccountException;
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountService;
@@ -68,7 +68,7 @@ public class AccountMemberResourceImpl
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -102,7 +102,7 @@ public class AccountMemberResourceImpl
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -129,7 +129,7 @@ public class AccountMemberResourceImpl
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -185,7 +185,7 @@ public class AccountMemberResourceImpl
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -222,7 +222,7 @@ public class AccountMemberResourceImpl
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}

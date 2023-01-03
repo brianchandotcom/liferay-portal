@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
-import com.liferay.commerce.account.exception.NoSuchAccountException;
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
@@ -60,7 +60,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}

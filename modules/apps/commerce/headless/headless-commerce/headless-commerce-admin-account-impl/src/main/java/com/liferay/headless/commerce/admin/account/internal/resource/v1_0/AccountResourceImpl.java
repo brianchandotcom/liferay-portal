@@ -14,10 +14,10 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
@@ -109,7 +109,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -142,7 +142,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				contextCompany.getCompanyId(), accountExternalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find Account with external reference code: " +
 					accountExternalReferenceCode);
 		}
@@ -182,7 +182,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -238,7 +238,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -308,7 +308,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
@@ -349,7 +349,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		}
 
 		if (commerceAccount == null) {
-			throw new NoSuchAccountException(
+			throw new NoSuchEntryException(
 				"Unable to find Account with external reference code: " +
 					account.getExternalReferenceCode());
 		}

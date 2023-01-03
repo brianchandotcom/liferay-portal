@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.exception.DuplicateCommerceShippingOptionAccountEntryRelException;
 import com.liferay.commerce.exception.NoSuchShippingMethodException;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -78,7 +78,7 @@ public class AccountChannelShippingOptionResourceImpl
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
-			throw new NoSuchAccountException();
+			throw new NoSuchEntryException();
 		}
 
 		return _getPage(
@@ -120,7 +120,7 @@ public class AccountChannelShippingOptionResourceImpl
 			id);
 
 		if (accountEntry == null) {
-			throw new NoSuchAccountException();
+			throw new NoSuchEntryException();
 		}
 
 		return _getPage(
@@ -227,7 +227,7 @@ public class AccountChannelShippingOptionResourceImpl
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
-			throw new NoSuchAccountException();
+			throw new NoSuchEntryException();
 		}
 
 		return postAccountIdAccountChannelShippingOption(
@@ -246,7 +246,7 @@ public class AccountChannelShippingOptionResourceImpl
 			id);
 
 		if (accountEntry == null) {
-			throw new NoSuchAccountException();
+			throw new NoSuchEntryException();
 		}
 
 		CommerceChannel commerceChannel =

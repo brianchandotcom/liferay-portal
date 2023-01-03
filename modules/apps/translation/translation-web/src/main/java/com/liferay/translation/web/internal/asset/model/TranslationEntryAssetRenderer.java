@@ -111,11 +111,14 @@ public class TranslationEntryAssetRenderer
 		String infoItemTitle = infoItemHelper.getInfoItemTitle(
 			_translationEntry.getClassPK(), locale);
 
+		if (infoItemTitle == null) {
+			infoItemTitle = _getAssetRendererTitle(locale);
+		}
+
 		return LanguageUtil.format(
 			locale, "translation-of-x-to-x",
 			new Object[] {
-				(infoItemTitle != null) ? infoItemTitle :
-					_getAssetRendererTitle(locale),
+				infoItemTitle,
 				StringUtil.replace(
 					_translationEntry.getLanguageId(), CharPool.UNDERLINE,
 					CharPool.DASH)

@@ -227,6 +227,16 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return _contains(
 				(EntityField)expressions.get(0), expressions.get(1), _locale);
 		}
+		else if (type == MethodExpression.Type.NOW) {
+			if (!expressions.isEmpty()) {
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unsupported method visitMethodExpression with method",
+						"type ", type, " and ", expressions.size(), "params"));
+			}
+
+			return _normalizeDateLiteral(ISO8601Utils.format(_now));
+		}
 		else if (type == MethodExpression.Type.STARTS_WITH) {
 			if (expressions.size() != 2) {
 				throw new UnsupportedOperationException(
@@ -590,5 +600,6 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private final Format _format;
 	private final Locale _locale;
 	private final NestedFieldQueryHelper _nestedFieldQueryHelper;
+	private final Date _now = new Date();
 
 }

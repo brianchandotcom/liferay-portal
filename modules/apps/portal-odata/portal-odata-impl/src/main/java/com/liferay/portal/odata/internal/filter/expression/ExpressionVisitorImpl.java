@@ -196,6 +196,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 			return new MethodExpressionImpl(
 				expressions, MethodExpression.Type.CONTAINS);
 		}
+		else if (methodKind == MethodKind.NOW) {
+			return new MethodExpressionImpl(
+				expressions, MethodExpression.Type.NOW);
+		}
 		else if (methodKind == MethodKind.STARTSWITH) {
 			return new MethodExpressionImpl(
 				expressions, MethodExpression.Type.STARTS_WITH);

@@ -16,9 +16,11 @@ definition {
 		}
 
 		if (isSet(selectEntry)) {
-			Click(
-				key_kebabOption = "Select Existing One",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+			if (IsElementPresent(locator1 = "ObjectAdmin#KEBAB_MENU_OPTION",key_kebabOption = "Select Existing One")) {
+				Click(
+					key_kebabOption = "Select Existing One",
+					locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

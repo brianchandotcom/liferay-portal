@@ -15,7 +15,6 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.results.builder;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -92,7 +91,10 @@ public class RankingGetVisibleResultsBuilder {
 		SearchResponse searchResponse = _getSearchResponse(ranking);
 
 		return JSONUtil.put(
-			"documents", buildDocuments(ranking, searchResponse)
+			"documents",
+			JSONUtil.toJSONArray(
+				searchResponse.getDocuments(),
+				document -> translate(document, ranking), _log)
 		).put(
 			"total", searchResponse.getTotalHits()
 		);
@@ -126,14 +128,6 @@ public class RankingGetVisibleResultsBuilder {
 		_size = size;
 
 		return this;
-	}
-
-	protected JSONArray buildDocuments(
-		Ranking ranking, SearchResponse searchResponse) {
-
-		return JSONUtil.toJSONArray(
-			searchResponse.getDocuments(),
-			document -> translate(document, ranking), _log);
 	}
 
 	protected SearchRequest buildSearchRequest(Ranking ranking) {

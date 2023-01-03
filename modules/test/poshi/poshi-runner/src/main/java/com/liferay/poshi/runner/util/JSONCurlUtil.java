@@ -203,7 +203,7 @@ public class JSONCurlUtil {
 		private String _getRequestURL(List<String> tokens) {
 			String token = tokens.get(0);
 
-			if (token.startsWith("http")) {
+			if (token.startsWith("file") || token.startsWith("http")) {
 				return token;
 			}
 
@@ -300,8 +300,8 @@ public class JSONCurlUtil {
 		private static Pattern _escapePattern = Pattern.compile(
 			"<CURL_DATA\\[([\\s\\S]*?)\\]CURL_DATA>");
 		private static Pattern _requestPattern = Pattern.compile(
-			"(-[\\w#:\\.]|--[\\w#:\\.-]{2,}|(?:[\\s]|^)https?:[^\\s]+)" +
-				"(\\s+|\\Z)");
+			"(-[\\w#:\\.]|--[\\w#:\\.-]{2,}|(?:[\\s]|^)(?:file|https?)" +
+				":[^\\s]+)(\\s+|\\Z)");
 
 		private Map<String, String> _curlDataMap = new HashMap<>();
 		private final int _maxPrintLineLength = 2500;

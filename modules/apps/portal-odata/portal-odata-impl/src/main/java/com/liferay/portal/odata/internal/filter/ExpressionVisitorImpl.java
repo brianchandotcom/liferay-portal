@@ -227,8 +227,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return _contains(
 				(EntityField)expressions.get(0), expressions.get(1), _locale);
 		}
-
-		if (type == MethodExpression.Type.STARTS_WITH) {
+		else if (type == MethodExpression.Type.STARTS_WITH) {
 			if (expressions.size() != 2) {
 				throw new UnsupportedOperationException(
 					StringBundler.concat(

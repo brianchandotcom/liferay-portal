@@ -23,7 +23,7 @@ definition {
 	function openInTheNewTab {
 		WaitForSPARefresh();
 
-		selenium.executeJavaScript("window.open()");
+		selenium.executeJavaScript("sessionStorage.clear(); window.open();");
 
 		SelectWindow.selectPopUp(locator1 = "null");
 

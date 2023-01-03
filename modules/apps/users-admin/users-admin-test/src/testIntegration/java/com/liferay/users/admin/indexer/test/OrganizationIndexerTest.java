@@ -15,6 +15,7 @@
 package com.liferay.users.admin.indexer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Organization;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -156,13 +156,9 @@ public class OrganizationIndexerTest {
 	protected List<String> getNames(String keywords) throws Exception {
 		SearchResponse searchResponse = search(keywords);
 
-		List<String> names = new ArrayList<>();
-
-		for (Document document : searchResponse.getDocuments()) {
-			names.add(document.getString(Field.NAME));
-		}
-
-		return names;
+		return TransformUtil.transform(
+			searchResponse.getDocuments(),
+			document -> document.getString(Field.NAME));
 	}
 
 	protected SearchResponse search(String keywords) throws Exception {

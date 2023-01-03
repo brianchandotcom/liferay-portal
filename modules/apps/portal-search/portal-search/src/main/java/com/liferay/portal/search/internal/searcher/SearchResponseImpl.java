@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.searcher;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -83,13 +84,8 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 			return Collections.emptyList();
 		}
 
-		List<Document> documents = new ArrayList<>();
-
-		for (SearchHit searchHit : _searchHits.getSearchHits()) {
-			documents.add(searchHit.getDocument());
-		}
-
-		return documents;
+		return TransformUtil.transform(
+			_searchHits.getSearchHits(), SearchHit::getDocument);
 	}
 
 	@Override

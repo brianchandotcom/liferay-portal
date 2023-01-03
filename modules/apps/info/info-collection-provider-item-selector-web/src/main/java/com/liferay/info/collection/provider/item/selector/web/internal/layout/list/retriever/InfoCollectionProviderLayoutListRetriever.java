@@ -30,7 +30,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -40,9 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,20 +77,14 @@ public class InfoCollectionProviderLayoutListRetriever
 		if (infoCollectionProvider instanceof
 				ConfigurableInfoCollectionProvider) {
 
-			Optional<Map<String, String[]>> configurationOptional =
-				layoutListRetrieverContext.getConfigurationOptional();
-
 			collectionQuery.setConfiguration(
-				configurationOptional.orElse(null));
+				layoutListRetrieverContext.getConfiguration());
 		}
 
 		if (infoCollectionProvider instanceof
 				RelatedInfoItemCollectionProvider) {
 
-			Optional<Object> contextObjectOptional =
-				layoutListRetrieverContext.getContextObjectOptional();
-
-			Object relatedItem = contextObjectOptional.orElse(null);
+			Object relatedItem = layoutListRetrieverContext.getContextObject();
 
 			if (relatedItem == null) {
 				return Collections.emptyList();
@@ -114,16 +105,12 @@ public class InfoCollectionProviderLayoutListRetriever
 			collectionQuery.setRelatedItemObject(relatedItem);
 		}
 
-		Optional<Pagination> paginationOptional =
-			layoutListRetrieverContext.getPaginationOptional();
-
-		collectionQuery.setPagination(paginationOptional.orElse(null));
+		collectionQuery.setPagination(
+			layoutListRetrieverContext.getPagination());
 
 		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			Optional<Map<String, InfoFilter>> infoFiltersOptional =
-				layoutListRetrieverContext.getInfoFiltersOptional();
-
-			collectionQuery.setInfoFilters(infoFiltersOptional.orElse(null));
+			collectionQuery.setInfoFilters(
+				layoutListRetrieverContext.getInfoFilters());
 		}
 
 		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
@@ -157,20 +144,14 @@ public class InfoCollectionProviderLayoutListRetriever
 		if (infoCollectionProvider instanceof
 				ConfigurableInfoCollectionProvider) {
 
-			Optional<Map<String, String[]>> configurationOptional =
-				layoutListRetrieverContext.getConfigurationOptional();
-
 			collectionQuery.setConfiguration(
-				configurationOptional.orElse(null));
+				layoutListRetrieverContext.getConfiguration());
 		}
 
 		if (infoCollectionProvider instanceof
 				RelatedInfoItemCollectionProvider) {
 
-			Optional<Object> contextObjectOptional =
-				layoutListRetrieverContext.getContextObjectOptional();
-
-			Object relatedItem = contextObjectOptional.orElse(null);
+			Object relatedItem = layoutListRetrieverContext.getContextObject();
 
 			if (relatedItem == null) {
 				return 0;
@@ -192,10 +173,8 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			Optional<Map<String, InfoFilter>> infoFiltersOptional =
-				layoutListRetrieverContext.getInfoFiltersOptional();
-
-			collectionQuery.setInfoFilters(infoFiltersOptional.orElse(null));
+			collectionQuery.setInfoFilters(
+				layoutListRetrieverContext.getInfoFilters());
 		}
 
 		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(

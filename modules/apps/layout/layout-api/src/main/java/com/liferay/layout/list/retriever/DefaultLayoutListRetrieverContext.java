@@ -19,7 +19,6 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Eudaldo Alonso
@@ -28,46 +27,44 @@ public class DefaultLayoutListRetrieverContext
 	implements LayoutListRetrieverContext {
 
 	@Override
-	public Optional<Map<String, String[]>> getConfigurationOptional() {
-		return Optional.ofNullable(_configuration);
+	public Map<String, String[]> getConfiguration() {
+		return _configuration;
 	}
 
 	@Override
-	public Optional<Object> getContextObjectOptional() {
-		return Optional.ofNullable(_contextObject);
+	public Object getContextObject() {
+		return _contextObject;
 	}
 
 	@Override
-	public <T> Optional<T> getInfoFilterOptional(
-		Class<? extends InfoFilter> clazz) {
-
+	public <T> T getInfoFilter(Class<? extends InfoFilter> clazz) {
 		if (MapUtil.isEmpty(_infoFilters)) {
-			return Optional.empty();
+			return null;
 		}
 
 		InfoFilter infoFilter = _infoFilters.getOrDefault(
 			clazz.getName(), null);
 
 		if (infoFilter != null) {
-			return Optional.of((T)infoFilter);
+			return (T)infoFilter;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	@Override
-	public Optional<Map<String, InfoFilter>> getInfoFiltersOptional() {
-		return Optional.ofNullable(_infoFilters);
+	public Map<String, InfoFilter> getInfoFilters() {
+		return _infoFilters;
 	}
 
 	@Override
-	public Optional<Pagination> getPaginationOptional() {
-		return Optional.ofNullable(_pagination);
+	public Pagination getPagination() {
+		return _pagination;
 	}
 
 	@Override
-	public Optional<long[]> getSegmentsEntryIdsOptional() {
-		return Optional.ofNullable(_segmentsEntryIds);
+	public long[] getSegmentsEntryIds() {
+		return _segmentsEntryIds;
 	}
 
 	public void setConfiguration(Map<String, String[]> configuration) {

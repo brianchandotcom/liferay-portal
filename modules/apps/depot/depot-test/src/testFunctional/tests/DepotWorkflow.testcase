@@ -226,8 +226,6 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
 
-		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
-
 		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
 			userEmailAddress = "user1@liferay.com");

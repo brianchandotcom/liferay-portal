@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -259,6 +260,8 @@ public class LayoutActionsDisplayContext {
 
 		getPreviewLayoutURL.setResourceID(
 			"/layout_content_page_editor/get_page_preview");
+
+		getPreviewLayoutURL.setParameter("p_l_mode", Constants.PREVIEW);
 
 		Layout draftLayout = layout;
 

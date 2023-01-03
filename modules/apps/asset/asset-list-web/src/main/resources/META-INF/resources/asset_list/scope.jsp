@@ -25,11 +25,11 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 <liferay-util:buffer
 	var="removeLinkIcon"
 >
-	<liferay-ui:icon
-		icon="times-circle"
-		markupView="lexicon"
-		message="remove"
-	/>
+	<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "remove") %>">
+		<clay:icon
+			symbol="times-circle"
+		/>
+	</span>
 </liferay-util:buffer>
 
 <liferay-ui:search-container

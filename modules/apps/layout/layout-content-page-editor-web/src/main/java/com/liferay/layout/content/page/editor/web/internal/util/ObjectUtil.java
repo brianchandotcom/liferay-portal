@@ -14,14 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
-import com.liferay.info.exception.InfoPermissionException;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -92,19 +89,10 @@ public class ObjectUtil {
 			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoPermissionProvider.class, objectDefinition.getClassName());
 
-		if (infoPermissionProvider == null) {
-			return true;
-		}
+		if ((infoPermissionProvider == null) ||
+			infoPermissionProvider.hasViewPermission(permissionChecker)) {
 
-		try {
-			if (infoPermissionProvider.hasViewPermission(permissionChecker)) {
-				return true;
-			}
-		}
-		catch (InfoPermissionException infoPermissionException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(infoPermissionException);
-			}
+			return true;
 		}
 
 		return false;
@@ -132,7 +120,5 @@ public class ObjectUtil {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(ObjectUtil.class);
 
 }

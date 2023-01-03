@@ -19,7 +19,6 @@ import com.liferay.friendly.url.info.item.updater.InfoItemFriendlyURLUpdater;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.exception.CapabilityVerificationException;
-import com.liferay.info.exception.InfoPermissionException;
 import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.filter.InfoRequestItemProvider;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
@@ -53,8 +52,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -240,23 +237,10 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 					InfoPermissionProvider.class,
 					infoItemClassDetail.getClassName());
 
-			if (infoPermissionProvider == null) {
+			if ((infoPermissionProvider == null) ||
+				infoPermissionProvider.hasViewPermission(permissionChecker)) {
+
 				infoItemClassDetails.add(infoItemClassDetail);
-
-				continue;
-			}
-
-			try {
-				if (infoPermissionProvider.hasViewPermission(
-						permissionChecker)) {
-
-					infoItemClassDetails.add(infoItemClassDetail);
-				}
-			}
-			catch (InfoPermissionException infoPermissionException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(infoPermissionException);
-				}
 			}
 		}
 
@@ -421,9 +405,6 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 					}),
 				new PropertyServiceReferenceComparator<>("service.ranking")));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		InfoItemServiceRegistryImpl.class);
 
 	private static final Set<Class<?>> _validInfoClasses = new HashSet<>(
 		Arrays.asList(

@@ -14,7 +14,6 @@
 
 package com.liferay.object.web.internal.item.selector;
 
-import com.liferay.info.exception.InfoPermissionException;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -130,7 +129,7 @@ public class ObjectEntryItemSelectorView
 			return _infoPermissionProvider.hasViewPermission(
 				GuestOrUserUtil.getPermissionChecker());
 		}
-		catch (InfoPermissionException | PrincipalException exception) {
+		catch (PrincipalException exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}

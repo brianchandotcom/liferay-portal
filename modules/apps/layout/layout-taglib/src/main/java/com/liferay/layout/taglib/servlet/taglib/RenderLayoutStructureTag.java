@@ -28,7 +28,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.exception.InfoPermissionException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
@@ -64,8 +63,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -270,21 +267,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay == null) {
+		if ((themeDisplay == null) ||
+			infoPermissionProvider.hasViewPermission(
+				themeDisplay.getPermissionChecker())) {
+
 			return true;
-		}
-
-		try {
-			if (infoPermissionProvider.hasViewPermission(
-					themeDisplay.getPermissionChecker())) {
-
-				return true;
-			}
-		}
-		catch (InfoPermissionException infoPermissionException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(infoPermissionException);
-			}
 		}
 
 		return false;
@@ -1400,9 +1387,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RenderLayoutStructureTag.class);
 
 	private LayoutStructure _layoutStructure;
 	private String _mainItemId;

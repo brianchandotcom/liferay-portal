@@ -54,7 +54,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			throw new NullPointerException("Testray build is null");
 		}
 
-		Integer id = testrayBuild.getID();
+		Long id = testrayBuild.getID();
 
 		return id.compareTo(getID());
 	}
@@ -63,8 +63,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return _jsonObject.getString("description");
 	}
 
-	public int getID() {
-		return _jsonObject.getInt("testrayBuildId");
+	public long getID() {
+		return _jsonObject.getLong("testrayBuildId");
 	}
 
 	public String getName() {

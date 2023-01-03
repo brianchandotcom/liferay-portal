@@ -127,7 +127,7 @@ public class TestrayImporter {
 					pullRequest.getHtmlURL()));
 		}
 
-		Map<Integer, TestrayBuild> testrayBuildMap = new HashMap<>();
+		Map<Long, TestrayBuild> testrayBuildMap = new HashMap<>();
 
 		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
 			testrayBuildMap.put(testrayBuild.getID(), testrayBuild);
@@ -135,7 +135,7 @@ public class TestrayImporter {
 
 		int i = 0;
 
-		for (Map.Entry<Integer, TestrayBuild> testrayBuildEntry :
+		for (Map.Entry<Long, TestrayBuild> testrayBuildEntry :
 				testrayBuildMap.entrySet()) {
 
 			String testrayBuildTitle = "Testray Build";
@@ -883,7 +883,7 @@ public class TestrayImporter {
 	}
 
 	public void postSlackNotification() {
-		List<Integer> testrayBuildIDs = new ArrayList<>();
+		List<Long> testrayBuildIDs = new ArrayList<>();
 
 		for (Map.Entry<File, TestrayBuild> testrayBuildEntry :
 				_testrayBuilds.entrySet()) {
@@ -1176,7 +1176,7 @@ public class TestrayImporter {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		List<Integer> testrayBuildIDs = new ArrayList<>();
+		List<Long> testrayBuildIDs = new ArrayList<>();
 
 		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
 			if (testrayBuildIDs.contains(testrayBuild.getID())) {

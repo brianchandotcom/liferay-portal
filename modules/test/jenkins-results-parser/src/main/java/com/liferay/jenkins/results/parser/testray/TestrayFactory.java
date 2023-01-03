@@ -184,7 +184,7 @@ public class TestrayFactory {
 		newTopLevelBuildTestrayCaseResult(
 			TestrayBuild testrayBuild, TopLevelBuild topLevelBuild) {
 
-		Integer testrayBuildID = testrayBuild.getID();
+		Long testrayBuildID = testrayBuild.getID();
 
 		if (_topLevelBuildTestrayCaseResults.containsKey(testrayBuildID)) {
 			return _topLevelBuildTestrayCaseResults.get(testrayBuildID);
@@ -215,7 +215,7 @@ public class TestrayFactory {
 		new HashMap<>();
 	private static final Map<String, TestrayServer> _testrayServers =
 		new HashMap<>();
-	private static final Map<Integer, TopLevelBuildTestrayCaseResult>
+	private static final Map<Long, TopLevelBuildTestrayCaseResult>
 		_topLevelBuildTestrayCaseResults = new HashMap<>();
 
 }

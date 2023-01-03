@@ -399,7 +399,7 @@ public class TestrayRoutine {
 			"testrayRoutineId=(?<routineID>\\d+)"));
 
 	private final JSONObject _jsonObject;
-	private final Map<Integer, TestrayBuild> _testrayBuildsByID = new TreeMap<>(
+	private final Map<Long, TestrayBuild> _testrayBuildsByID = new TreeMap<>(
 		Collections.reverseOrder());
 	private final Map<String, TestrayBuild> _testrayBuildsByName =
 		new HashMap<>();

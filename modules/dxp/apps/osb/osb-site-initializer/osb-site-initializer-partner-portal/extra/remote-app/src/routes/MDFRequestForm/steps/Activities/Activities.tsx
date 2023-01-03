@@ -53,7 +53,8 @@ const Activities = ({
 	>();
 
 	const activityErrors =
-		currentActivityIndex && errors.activities?.[currentActivityIndex];
+		currentActivityIndex !== undefined &&
+		errors.activities?.[currentActivityIndex];
 
 	const onAdd = () => setCurrentActivityIndex(values.activities.length);
 

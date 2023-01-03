@@ -16,153 +16,168 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="<portlet:namespace />simulationDeviceContainer">
-	<div class="list-group-panel">
-		<clay:container-fluid
-			cssClass="devices"
-		>
-			<clay:row
-				cssClass="default-devices mb-2"
-			>
-				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 selected text-center" data-device="desktop" type="button">
-					<div class="c-inner px-0" tabindex="-1">
-						<span class="icon icon-monospaced">
-							<clay:icon
-								symbol="desktop"
-							/>
-						</span>
-						<span class="d-block mb-3 mt-1"><liferay-ui:message key="desktop" /></span>
-					</div>
-				</button>
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135863")) %>'>
+		<div id="<portlet:namespace />simulationDeviceContainer">
+			<div class="inline-item my-5 p-5 w-100">
+				<span aria-hidden="true" class="loading-animation"></span>
+			</div>
 
-				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 text-center" data-device="tablet" type="button">
-					<div class="c-inner px-0" tabindex="-1">
-						<span class="icon icon-monospaced">
-							<clay:icon
-								symbol="tablet-portrait"
-							/>
-						</span>
-						<span class="hide icon icon-monospaced icon-rotate">
-							<clay:icon
-								symbol="tablet-landscape"
-							/>
-						</span>
-						<span class="d-block mb-3 mt-1"><liferay-ui:message key="tablet" /></span>
-					</div>
-				</button>
+			<react:component
+				module="js/components/App"
+			/>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div id="<portlet:namespace />simulationDeviceContainer">
+			<div class="list-group-panel">
+				<clay:container-fluid
+					cssClass="devices"
+				>
+					<clay:row
+						cssClass="default-devices mb-2"
+					>
+						<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 selected text-center" data-device="desktop" type="button">
+							<div class="c-inner px-0" tabindex="-1">
+								<span class="icon icon-monospaced">
+									<clay:icon
+										symbol="desktop"
+									/>
+								</span>
+								<span class="d-block mb-3 mt-1"><liferay-ui:message key="desktop" /></span>
+							</div>
+						</button>
 
-				<button class="btn btn-unstyled col-4 lfr-device-item mb-3 text-center" data-device="smartphone" type="button">
-					<div class="c-inner px-0" tabindex="-1">
-						<span class="icon icon-monospaced">
-							<clay:icon
-								symbol="mobile-portrait"
-							/>
-						</span>
-						<span class="hide icon icon-monospaced icon-rotate">
-							<clay:icon
-								symbol="mobile-landscape"
-							/>
-						</span>
-						<span class="d-block mb-3 mt-1"><liferay-ui:message key="mobile" /></span>
-					</div>
-				</button>
+						<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 text-center" data-device="tablet" type="button">
+							<div class="c-inner px-0" tabindex="-1">
+								<span class="icon icon-monospaced">
+									<clay:icon
+										symbol="tablet-portrait"
+									/>
+								</span>
+								<span class="hide icon icon-monospaced icon-rotate">
+									<clay:icon
+										symbol="tablet-landscape"
+									/>
+								</span>
+								<span class="d-block mb-3 mt-1"><liferay-ui:message key="tablet" /></span>
+							</div>
+						</button>
 
-				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize" type="button">
-					<div class="c-inner px-0" tabindex="-1">
-						<span class="icon icon-monospaced">
-							<clay:icon
-								symbol="autosize"
-							/>
-						</span>
-						<span class="d-block mb-3 mt-1"><liferay-ui:message key="autosize" /></span>
-					</div>
-				</button>
+						<button class="btn btn-unstyled col-4 lfr-device-item mb-3 text-center" data-device="smartphone" type="button">
+							<div class="c-inner px-0" tabindex="-1">
+								<span class="icon icon-monospaced">
+									<clay:icon
+										symbol="mobile-portrait"
+									/>
+								</span>
+								<span class="hide icon icon-monospaced icon-rotate">
+									<clay:icon
+										symbol="mobile-landscape"
+									/>
+								</span>
+								<span class="d-block mb-3 mt-1"><liferay-ui:message key="mobile" /></span>
+							</div>
+						</button>
 
-				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom" type="button">
-					<div class="c-inner px-0" tabindex="-1">
-						<span class="icon icon-monospaced">
-							<clay:icon
-								symbol="custom-size"
-							/>
-						</span>
-						<span class="d-block mb-3 mt-1"><liferay-ui:message key="custom" /></span>
-					</div>
-				</button>
-			</clay:row>
+						<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize" type="button">
+							<div class="c-inner px-0" tabindex="-1">
+								<span class="icon icon-monospaced">
+									<clay:icon
+										symbol="autosize"
+									/>
+								</span>
+								<span class="d-block mb-3 mt-1"><liferay-ui:message key="autosize" /></span>
+							</div>
+						</button>
 
-			<clay:row
-				cssClass="custom-devices flex-nowrap hide mt-3"
-				hidden="hidden"
-				id='<%= liferayPortletResponse.getNamespace() + "customDeviceContainer" %>'
-			>
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" type="number" value="600" wrapperCssClass="flex-grow-1 mr-3" />
+						<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom" type="button">
+							<div class="c-inner px-0" tabindex="-1">
+								<span class="icon icon-monospaced">
+									<clay:icon
+										symbol="custom-size"
+									/>
+								</span>
+								<span class="d-block mb-3 mt-1"><liferay-ui:message key="custom" /></span>
+							</div>
+						</button>
+					</clay:row>
 
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" type="number" value="600" wrapperCssClass="flex-grow-1" />
-			</clay:row>
-		</clay:container-fluid>
-	</div>
-</div>
+					<clay:row
+						cssClass="custom-devices flex-nowrap hide mt-3"
+						hidden="hidden"
+						id='<%= liferayPortletResponse.getNamespace() + "customDeviceContainer" %>'
+					>
+						<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" type="number" value="600" wrapperCssClass="flex-grow-1 mr-3" />
 
-<aui:script use="liferay-product-navigation-simulation-device">
-	var simulationDevice = new Liferay.SimulationDevice({
-		devices: {
-			autosize: {
-				skin: 'autosize',
-			},
-			custom: {
-				height: '#<portlet:namespace />height',
-				resizable: true,
-				skin: 'custom',
-				width: '#<portlet:namespace />width',
-			},
-			desktop: {
-				height: 1050,
-				selected: true,
-				skin: 'desktop',
-				width: 1300,
-			},
-			smartphone: {
-				height: 640,
-				preventTransition: true,
-				rotation: true,
-				skin: 'smartphone',
-				width: 400,
-			},
-			tablet: {
-				height: 900,
-				preventTransition: true,
-				rotation: true,
-				skin: 'tablet',
-				width: 760,
-			},
-		},
-		inputHeight: '#<portlet:namespace />height',
-		inputWidth: '#<portlet:namespace />width',
-		namespace: '<portlet:namespace />',
-	});
+						<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" type="number" value="600" wrapperCssClass="flex-grow-1" />
+					</clay:row>
+				</clay:container-fluid>
+			</div>
+		</div>
 
-	Liferay.once('screenLoad', () => {
-		simulationDevice.destroy();
-	});
+		<aui:script use="liferay-product-navigation-simulation-device">
+			var simulationDevice = new Liferay.SimulationDevice({
+				devices: {
+					autosize: {
+						skin: 'autosize',
+					},
+					custom: {
+						height: '#<portlet:namespace />height',
+						resizable: true,
+						skin: 'custom',
+						width: '#<portlet:namespace />width',
+					},
+					desktop: {
+						height: 1050,
+						selected: true,
+						skin: 'desktop',
+						width: 1300,
+					},
+					smartphone: {
+						height: 640,
+						preventTransition: true,
+						rotation: true,
+						skin: 'smartphone',
+						width: 400,
+					},
+					tablet: {
+						height: 900,
+						preventTransition: true,
+						rotation: true,
+						skin: 'tablet',
+						width: 760,
+					},
+				},
+				inputHeight: '#<portlet:namespace />height',
+				inputWidth: '#<portlet:namespace />width',
+				namespace: '<portlet:namespace />',
+			});
 
-	A.one('.devices').delegate(
-		'click',
-		(event) => {
-			var currentTarget = event.currentTarget;
+			Liferay.once('screenLoad', () => {
+				simulationDevice.destroy();
+			});
 
-			var dataDevice = currentTarget.attr('data-device');
+			A.one('.devices').delegate(
+				'click',
+				(event) => {
+					var currentTarget = event.currentTarget;
 
-			var customDeviceContainer = A.one(
-				'#<portlet:namespace />customDeviceContainer'
+					var dataDevice = currentTarget.attr('data-device');
+
+					var customDeviceContainer = A.one(
+						'#<portlet:namespace />customDeviceContainer'
+					);
+
+					if (dataDevice === 'custom') {
+						customDeviceContainer.show();
+					}
+					else {
+						customDeviceContainer.hide();
+					}
+				},
+				'.lfr-device-item'
 			);
-
-			if (dataDevice === 'custom') {
-				customDeviceContainer.show();
-			}
-			else {
-				customDeviceContainer.hide();
-			}
-		},
-		'.lfr-device-item'
-	);
-</aui:script>
+		</aui:script>
+	</c:otherwise>
+</c:choose>

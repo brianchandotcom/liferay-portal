@@ -139,7 +139,7 @@ definition {
 	macro _addPageTypePanel {
 		var key_componentOrPortletName = "${componentName}";
 
-		Click(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX");
+		Check.checkNotVisible(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX");
 
 		var key_componentOrPortletName = StringUtil.lowerCase("${componentName}");
 

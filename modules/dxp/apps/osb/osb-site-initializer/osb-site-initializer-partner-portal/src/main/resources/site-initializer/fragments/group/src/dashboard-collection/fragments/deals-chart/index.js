@@ -15,6 +15,8 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
+import getQuarter from './utils/getQuarter';
+
 const colors = {
 	approved: '#8FB5FF',
 	closedwon: '#002C62',
@@ -25,7 +27,6 @@ const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 	.split('/')
 	.slice(0, 3)
 	.join('/');
-
 export default function () {
 	const [opportunities, setOpportunities] = useState();
 	const [leads, setLeads] = useState();
@@ -73,7 +74,7 @@ export default function () {
 		getLeads();
 	}, []);
 
-	const getDealsByType = useMemo(() => {
+	const filteredDealsByType = useMemo(() => {
 		return {
 			approvedDeals: opportunities?.filter(
 				(item) => item.stage === 'Open'
@@ -88,86 +89,53 @@ export default function () {
 				(item) =>
 					item.leadType === 'Partner Prospect Lead (PPL)' &&
 					(item.leadStatus !== 'Sales Qualified Opportunity' ||
-						'CAM rejected')
+						item.leadStatus !== 'CAM rejected')
 			),
 		};
 	}, [leads, opportunities]);
 
-	const getFilteredDealsByQuarter = useMemo(() => {
-		const q1 = (item) =>
-			item?.dateCreated?.slice(5, 7) === '01' ||
-			item?.dateCreated?.slice(5, 7) === '02' ||
-			item?.dateCreated?.slice(5, 7) === '03';
-		const q2 = (item) =>
-			item?.dateCreated?.slice(5, 7) === '04' ||
-			item?.dateCreated?.slice(5, 7) === '05' ||
-			item?.dateCreated?.slice(5, 7) === '06';
-		const q3 = (item) =>
-			item?.dateCreated?.slice(5, 7) === '07' ||
-			item?.dateCreated?.slice(5, 7) === '08' ||
-			item?.dateCreated?.slice(5, 7) === '09';
-		const q4 = (item) =>
-			item?.dateCreated?.slice(5, 7) === '10' ||
-			item?.dateCreated?.slice(5, 7) === '11' ||
-			item?.dateCreated?.slice(5, 7) === '12';
+	const filteredDealsByQuarter = useMemo(() => {
+		const quarters = ['quarter1', 'quarter2', 'quarter3', 'quarter4'];
 
-		return {
-			q1: {
-				approved: getDealsByType?.approvedDeals?.filter(q1).length,
-				closedwon: getDealsByType?.closedWonDeals?.filter(q1).length,
-				rejected: getDealsByType?.rejectedDeals?.filter(q1).length,
-				submited: getDealsByType?.submitedDeals?.filter(q1).length,
-			},
-			q2: {
-				approved: getDealsByType?.approvedDeals?.filter(q2).length,
-				closedwon: getDealsByType?.closedWonDeals?.filter(q2).length,
-				rejected: getDealsByType?.rejectedDeals?.filter(q2).length,
-				submited: getDealsByType?.submitedDeals?.filter(q2).length,
-			},
-			q3: {
-				approved: getDealsByType?.approvedDeals?.filter(q3).length,
-				closedwon: getDealsByType?.closedWonDeals?.filter(q3).length,
-				rejected: getDealsByType?.rejectedDeals?.filter(q3).length,
-				submited: getDealsByType?.submitedDeals?.filter(q3).length,
-			},
-			q4: {
-				approved: getDealsByType?.approvedDeals?.filter(q4).length,
-				closedwon: getDealsByType?.closedWonDeals?.filter(q4).length,
-				rejected: getDealsByType?.rejectedDeals?.filter(q4).length,
-				submited: getDealsByType?.submitedDeals?.filter(q4).length,
-			},
-		};
+		getQuarter();
+
+		return quarters.map((quarter) => {
+			const quarterData = {
+				approved: filteredDealsByType?.approvedDeals?.filter(
+					getQuarter(quarter)
+				).length,
+				closedwon: filteredDealsByType?.closedWonDeals?.filter(
+					getQuarter(quarter)
+				).length,
+				rejected: filteredDealsByType?.rejectedDeals?.filter(
+					getQuarter(quarter)
+				).length,
+				submited: filteredDealsByType?.submitedDeals?.filter(
+					getQuarter(quarter)
+				).length,
+			};
+
+			return quarterData;
+		});
 	}, [
-		getDealsByType?.approvedDeals,
-		getDealsByType?.closedWonDeals,
-		getDealsByType?.rejectedDeals,
-		getDealsByType?.submitedDeals,
+		filteredDealsByType?.approvedDeals,
+		filteredDealsByType?.closedWonDeals,
+		filteredDealsByType?.rejectedDeals,
+		filteredDealsByType?.submitedDeals,
 	]);
 
-	const approvedChartValues = [
-		getFilteredDealsByQuarter?.q1.approved,
-		getFilteredDealsByQuarter?.q2.approved,
-		getFilteredDealsByQuarter?.q3.approved,
-		getFilteredDealsByQuarter?.q4.approved,
-	];
-	const closedWonChartValues = [
-		getFilteredDealsByQuarter?.q1.closedwon,
-		getFilteredDealsByQuarter?.q2.closedwon,
-		getFilteredDealsByQuarter?.q3.closedwon,
-		getFilteredDealsByQuarter?.q4.closedwon,
-	];
-	const rejectedChartValues = [
-		getFilteredDealsByQuarter?.q1.rejected,
-		getFilteredDealsByQuarter?.q2.rejected,
-		getFilteredDealsByQuarter?.q3.rejected,
-		getFilteredDealsByQuarter?.q4.rejected,
-	];
-	const submitedChartValues = [
-		getFilteredDealsByQuarter?.q1.submited,
-		getFilteredDealsByQuarter?.q2.submited,
-		getFilteredDealsByQuarter?.q3.submited,
-		getFilteredDealsByQuarter?.q4.submited,
-	];
+	const approvedChartValues = filteredDealsByQuarter?.map((item) => {
+		return item?.approved;
+	});
+	const closedWonChartValues = filteredDealsByQuarter?.map((item) => {
+		return item?.closedwon;
+	});
+	const rejectedChartValues = filteredDealsByQuarter?.map((item) => {
+		return item?.rejected;
+	});
+	const submitedChartValues = filteredDealsByQuarter?.map((item) => {
+		return item?.submited;
+	});
 
 	const chart = {
 		bar: {

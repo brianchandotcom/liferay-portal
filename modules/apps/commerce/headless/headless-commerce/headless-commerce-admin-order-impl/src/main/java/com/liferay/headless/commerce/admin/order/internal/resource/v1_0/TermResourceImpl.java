@@ -94,7 +94,7 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 
 	@Override
 	public Term getTerm(Long id) throws Exception {
-		return _toTerm(GetterUtil.getLong(id));
+		return _toTerm(_commerceTermEntryService.getCommerceTermEntry(id));
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 					externalReferenceCode);
 		}
 
-		return _toTerm(commerceTermEntry.getCommerceTermEntryId());
+		return _toTerm(commerceTermEntry);
 	}
 
 	@Override
@@ -161,9 +161,7 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 
 	@Override
 	public Term postTerm(Term term) throws Exception {
-		CommerceTermEntry commerceTermEntry = _addCommerceTermEntry(term);
-
-		return _toTerm(commerceTermEntry.getCommerceTermEntryId());
+		return _toTerm(_addCommerceTermEntry(term));
 	}
 
 	private CommerceTermEntry _addCommerceTermEntry(Term term)
@@ -224,19 +222,19 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 	}
 
 	private Term _toTerm(CommerceTermEntry commerceTermEntry) throws Exception {
-		return _toTerm(commerceTermEntry.getCommerceTermEntryId());
-	}
-
-	private Term _toTerm(Long commerceTermEntryId) throws Exception {
-		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.getCommerceTermEntry(commerceTermEntryId);
-
 		return _termDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				_getActions(commerceTermEntry), _dtoConverterRegistry,
-				commerceTermEntryId, contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser));
+				commerceTermEntry.getCommerceTermEntryId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
+	}
+
+	private Term _toTerm(Long commerceTermEntryId) throws Exception {
+		return _toTerm(
+			_commerceTermEntryService.getCommerceTermEntry(
+				commerceTermEntryId));
 	}
 
 	private CommerceTermEntry _updateNestedResources(

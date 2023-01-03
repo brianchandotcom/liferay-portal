@@ -20,7 +20,7 @@ import org.junit.Test;
 /**
  * @author Calum Ragan
  */
-public class PoshiTestFunctionalTest extends PoshiRunnerTestCase {
+public class PoshiRunnerFunctionalTest extends PoshiRunnerTestCase {
 
 	@Before
 	@Override
@@ -29,34 +29,58 @@ public class PoshiTestFunctionalTest extends PoshiRunnerTestCase {
 	}
 
 	@Test
-	public void testExternalMethod() throws Exception {
+	public void testExternalMethodExecuteMethodStringArguments()
+		throws Exception {
+
 		runPoshiTest("ExternalMethod#ExecuteMethodStringArguments");
+	}
+
+	@Test
+	public void testExternalMethodExecuteMethodVariableArguments()
+		throws Exception {
 
 		runPoshiTest("ExternalMethod#ExecuteMethodVariableArguments");
+	}
+
+	@Test
+	public void testExternalMethodExecuteMethodVariableReturn()
+		throws Exception {
 
 		runPoshiTest("ExternalMethod#ExecuteMethodVariableReturn");
 	}
 
 	@Test
-	public void testJSONCurlUtil() throws Exception {
+	public void testJSONCurlUtilAvailablePhysicalMemory() throws Exception {
 		runPoshiTest("JSONCurlUtil#AvailablePhysicalMemory");
+	}
 
+	@Test
+	public void testJSONCurlUtilBusyExecutors() throws Exception {
 		runPoshiTest("JSONCurlUtil#BusyExecutors");
+	}
 
+	@Test
+	public void testJSONCurlUtilDisplayName() throws Exception {
 		runPoshiTest("JSONCurlUtil#DisplayName");
 	}
 
 	@Test
-	public void testReturn() throws Exception {
+	public void testReturnInMacro() throws Exception {
 		runPoshiTest("Return#ReturnInMacro");
+	}
 
+	@Test
+	public void testReturnInTestCase() throws Exception {
 		runPoshiTest("Return#ReturnInTestCase");
 	}
 
 	@Test
-	public void testStaticVariables() throws Exception {
+	public void testStaticVariables1() throws Exception {
 		runPoshiTest("StaticVariables#StaticVariables1");
+	}
 
+	@Test
+	public void testStaticVariables2() throws Exception {
 		runPoshiTest("StaticVariables#StaticVariables2");
 	}
 

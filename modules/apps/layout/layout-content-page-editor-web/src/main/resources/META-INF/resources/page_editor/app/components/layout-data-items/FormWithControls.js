@@ -16,6 +16,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback} from 'react';
 
+import {PermissionRestrictionMessage} from '../../../common/components/PermissionRestrictionMessage';
 import FormMappingOptions from '../../../plugins/browser/components/page-structure/components/item-configuration-panels/FormMappingOptions';
 import {
 	useDispatch,
@@ -24,6 +25,7 @@ import {
 } from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import updateFormItemConfig from '../../thunks/updateFormItemConfig';
+import {formHasPermissions} from '../../utils/formHasPermissions';
 import {formIsMapped} from '../../utils/formIsMapped';
 import {getEditableLocalizedValue} from '../../utils/getEditableLocalizedValue';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -54,6 +56,9 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 					<FormLoadingState />
 				) : isEmpty || !isMapped ? (
 					<FormEmptyState isMapped={isMapped} item={item} />
+				) : Liferay.FeatureFlags['LPS-169923'] &&
+				  !formHasPermissions(item) ? (
+					<PermissionRestrictionMessage />
 				) : (
 					<FormWrapper item={item}>{children}</FormWrapper>
 				)}

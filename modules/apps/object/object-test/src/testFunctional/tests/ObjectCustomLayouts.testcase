@@ -349,6 +349,95 @@ definition {
 		}
 	}
 
+	@description = "LPS-165850 - Verify when a new entry is created, it is possible to delete this entry"
+	@priority = "4"
+	test CanDeleteNewEntryAddedOnRelationshipTab {
+		task ("Given a related object with Custom Layout and Relationship tab") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 171632",
+				objectName = "CustomObject171632",
+				pluralLabelName = "Custom Objects 171632");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject171632");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject171632",
+				objectName_2 = "CustomObject171632",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Custom Layout",
+				objectName = "CustomObject171632");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171632");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 171632");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			Button.clickSave();
+
+			for (var letter : list "A,B") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customField",
+					objectName = "CustomObject171632",
+					value = "Entry Test ${letter}");
+			}
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject171632");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectCustomLayouts.addEntryOnRelationshipTab(selectEntry = "Entry Test B");
+		}
+
+		task ("When delete the entry on Relationship Tab") {
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "Delete",
+				objectLabel = "Entry Test B");
+		}
+
+		task ("Then the entry is no longer present") {
+			AssertElementNotPresent(
+				key_fieldLabel = "Entry Test B",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
+	}
+
 	@description = "LPS-161885 - Verify that it's possible to edit a categorization section"
 	@priority = "3"
 	test CanEditCategorizationSection {

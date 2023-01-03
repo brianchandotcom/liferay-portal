@@ -16,11 +16,7 @@ definition {
 		for (var pageName : list "${checkPageName}") {
 			var key_pageName = "${pageName}";
 
-			if (IsElementNotPresent(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED")) {
-				var key_pageName = "${pageName}";
-
-				Click(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
-			}
+			Check.checkNotVisible(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}
 	}
 
@@ -29,16 +25,12 @@ definition {
 			Click(locator1 = "PagesConfiguration#CHANGE_TO_PRIVATE_PAGES");
 		}
 
-		Click(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
-
-		Click(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
+		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
 
 		for (var pageName : list "${checkPrivatePages}") {
 			var key_pageName = "${pageName}";
 
-			if (IsElementNotPresent(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED")) {
-				Click(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
-			}
+			Check.checkNotVisible(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}
 	}
 
@@ -127,30 +119,16 @@ definition {
 	}
 
 	macro uncheckAllPages {
-		if ((IsElementNotPresent(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKED")) && (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ANY_PAGE_CHECKED"))) {
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
-
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
-		}
-		else {
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
-		}
+		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
 	}
 
 	macro uncheckAllPublicPages {
-		if ((IsElementNotPresent(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKED")) && (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ANY_PAGE_CHECKED"))) {
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
-
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
-		}
-		else {
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
-		}
+		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
 	}
 
 	macro uncheckChildPagesNameList {
 		for (var childPagesName : list "${uncheckChildPagesNameList}") {
-			Click(
+			Check.checkNotVisible(
 				key_pageName = "${childPagesName}",
 				locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}

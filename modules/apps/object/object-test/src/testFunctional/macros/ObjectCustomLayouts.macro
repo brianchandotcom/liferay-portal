@@ -16,7 +16,7 @@ definition {
 		}
 
 		if (isSet(selectEntry)) {
-			if (IsElementPresent(locator1 = "ObjectAdmin#KEBAB_MENU_OPTION",key_kebabOption = "Select Existing One")) {
+			if (IsElementPresent(key_kebabOption = "Select Existing One", locator1 = "ObjectAdmin#KEBAB_MENU_OPTION")) {
 				Click(
 					key_kebabOption = "Select Existing One",
 					locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");

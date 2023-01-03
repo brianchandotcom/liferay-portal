@@ -118,6 +118,111 @@ definition {
 		}
 	}
 
+	@description = "LPS-165850 - Verify it's possible to add a new entry in the related object without leaving the current context (ManyToMany)"
+	@priority = "5"
+	test CanAddEntryOnRelationshipTabForMtoM {
+		property portal.acceptance = "true";
+
+		task ("Given a related object with Custom Layout and Relationship tab (Many to Many)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 171597",
+				objectName = "CustomObject171597",
+				pluralLabelName = "Custom Objects 171597");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject171597");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject171597",
+				objectName_2 = "CustomObject171597",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Custom Layout",
+				objectName = "CustomObject171597");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171597");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 171597");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			for (var letter : list "Parent,Child") {
+				ObjectAdmin.addTabRelationshipsOnLayout(
+					relationshipsLabelName = "Relationship",
+					tabName = "Relationship Tab ${letter}");
+			}
+
+			Button.clickSave();
+		}
+
+		task ("When add the entry on Relationship tab") {
+			for (var letter : list "A,B") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customField",
+					objectName = "CustomObject171597",
+					value = "Entry Test ${letter}");
+			}
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject171597");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
+
+			Click(
+				key_tabName = "Relationship Tab Parent",
+				locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+
+			ObjectCustomLayouts.addEntryOnRelationshipTab(selectEntry = "Entry Test B");
+		}
+
+		task ("Then the new entry is saved on the Relationship Tab Parent") {
+			AssertElementPresent(
+				key_fieldLabel = "Entry Test B",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
+
+		task ("And the entry is present on Relationship Tab Child") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject171597");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test B");
+
+			Click(
+				key_tabName = "Relationship Tab Child",
+				locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+
+			AssertElementPresent(
+				key_fieldLabel = "Entry Test A",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
+	}
+
 	@description = "LPS-161884 - Verify that it's possible to create an object with a categorization section in the layout"
 	@priority = "3"
 	test CanCreateObjectWithCategorizationSection {

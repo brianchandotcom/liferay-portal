@@ -285,6 +285,12 @@ public class MBCategoryLocalServiceUtil {
 		return getService().fetchMBCategory(categoryId);
 	}
 
+	public static MBCategory fetchMBCategoryByUrlSubject(
+		long groupId, String urlCategory) {
+
+		return getService().fetchMBCategoryByUrlSubject(groupId, urlCategory);
+	}
+
 	/**
 	 * Returns the message boards category matching the UUID and group.
 	 *

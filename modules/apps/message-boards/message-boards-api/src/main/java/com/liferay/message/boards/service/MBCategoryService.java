@@ -70,6 +70,10 @@ public interface MBCategoryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBCategory fetchMBMessageByUrlCategory(long groupId, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

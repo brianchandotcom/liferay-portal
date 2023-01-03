@@ -72,6 +72,13 @@ public class MBCategoryServiceWrapper
 	}
 
 	@Override
+	public MBCategory fetchMBMessageByUrlCategory(long groupId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbCategoryService.fetchMBMessageByUrlCategory(groupId, name);
+	}
+
+	@Override
 	public java.util.List<MBCategory> getCategories(long groupId) {
 		return _mbCategoryService.getCategories(groupId);
 	}

@@ -321,6 +321,14 @@ public class MBCategoryLocalServiceWrapper
 		return _mbCategoryLocalService.fetchMBCategory(categoryId);
 	}
 
+	@Override
+	public MBCategory fetchMBCategoryByUrlSubject(
+		long groupId, String urlCategory) {
+
+		return _mbCategoryLocalService.fetchMBCategoryByUrlSubject(
+			groupId, urlCategory);
+	}
+
 	/**
 	 * Returns the message boards category matching the UUID and group.
 	 *

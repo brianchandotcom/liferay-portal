@@ -86,9 +86,11 @@ public class CommerceAccountOrganizationRelLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccountOrganizationRel
-		deleteCommerceAccountOrganizationRel(
-			com.liferay.commerce.account.model.CommerceAccountOrganizationRel
-				commerceAccountOrganizationRel) {
+			deleteCommerceAccountOrganizationRel(
+				com.liferay.commerce.account.model.
+					CommerceAccountOrganizationRel
+						commerceAccountOrganizationRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAccountOrganizationRelLocalService.
 			deleteCommerceAccountOrganizationRel(

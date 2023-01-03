@@ -76,8 +76,9 @@ public class CommerceAccountOrganizationRelLocalServiceUtil {
 	}
 
 	public static CommerceAccountOrganizationRel
-		deleteCommerceAccountOrganizationRel(
-			CommerceAccountOrganizationRel commerceAccountOrganizationRel) {
+			deleteCommerceAccountOrganizationRel(
+				CommerceAccountOrganizationRel commerceAccountOrganizationRel)
+		throws PortalException {
 
 		return getService().deleteCommerceAccountOrganizationRel(
 			commerceAccountOrganizationRel);

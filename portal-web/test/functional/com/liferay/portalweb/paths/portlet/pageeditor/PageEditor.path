@@ -868,7 +868,7 @@
 
 <tr>
 	<td>AUTOSAVE_MESSAGE</td>
-	<td>//div[contains(@class,'management-bar')]//span[contains(@class,'text-success')]</td>
+	<td>//div[contains(@class,'management-bar')]//*[name()='svg'][contains(@class,'text-success')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -93,7 +93,8 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 
 	@Override
 	public CommerceAccountOrganizationRel deleteCommerceAccountOrganizationRel(
-		CommerceAccountOrganizationRel commerceAccountOrganizationRel) {
+			CommerceAccountOrganizationRel commerceAccountOrganizationRel)
+		throws PortalException {
 
 		AccountEntryOrganizationRel accountEntryOrganizationRel =
 			_accountEntryOrganizationRelLocalService.
@@ -102,7 +103,9 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 					commerceAccountOrganizationRel.getOrganizationId());
 
 		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(accountEntryOrganizationRel);
+			deleteAccountEntryOrganizationRel(
+				accountEntryOrganizationRel.getAccountEntryId(),
+				accountEntryOrganizationRel.getOrganizationId());
 
 		return CommerceAccountOrganizationRelImpl.
 			fromAccountEntryOrganizationRel(accountEntryOrganizationRel);
@@ -120,7 +123,9 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 					commerceAccountOrganizationRelPK.getOrganizationId());
 
 		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(accountEntryOrganizationRel);
+			deleteAccountEntryOrganizationRel(
+				accountEntryOrganizationRel.getAccountEntryId(),
+				accountEntryOrganizationRel.getOrganizationId());
 
 		return CommerceAccountOrganizationRelImpl.
 			fromAccountEntryOrganizationRel(accountEntryOrganizationRel);

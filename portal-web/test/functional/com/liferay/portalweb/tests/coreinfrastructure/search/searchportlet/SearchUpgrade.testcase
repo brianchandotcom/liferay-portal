@@ -413,6 +413,79 @@ definition {
 		Upgrade.viewSearchPortletsConfiguration();
 	}
 
+	test ViewSearchWidgetTemplatesArchive7413U43 {
+		property data.archive.type = "data-archive-search-widget-templates";
+		property portal.version = "7.4.13.u43";
+		property test.assert.warning.exceptions = "true";
+
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+
+		for (var facetType : list "Category,Custom,Folder,Modified,Site,Tag,Type,User") {
+			AssertVisible(
+				key_tableEntry = "U43 ${facetType} Facet Template",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+		}
+
+		Search.openSearchPage();
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		for (var facetType : list "Category,Custom,Folder,Modified,Site,Tag,Type,User") {
+			Portlet.gotoPortletOptions(
+				portletName = "${facetType} Facet",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			AssertSelectedLabel(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "U43 ${facetType} Facet Template");
+
+			IFrame.closeFrame();
+		}
+
+		AssertElementPresent(
+			facetName = "Category Facet",
+			facetValue = "fruit",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+
+		AssertElementPresent(
+			facetName = "Custom Facet",
+			facetValue = "test",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		AssertElementPresent(
+			facetName = "Folder Facet",
+			facetValue = "WC Folder",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		AssertElementPresent(
+			locator1 = "Search#MODIFIED_FACET_SELECTION",
+			range = "Past Hour");
+
+		AssertElementPresent(
+			facetName = "Site Facet",
+			facetValue = "Test Test",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+
+		AssertElementPresent(
+			facetName = "Tag Facet",
+			facetValue = "food",
+			locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
+
+		AssertElementPresent(
+			facetName = "Type Facet",
+			facetValue = "Web Content Article",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		AssertElementPresent(
+			facetName = "User Facet",
+			facetValue = "test test",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+	}
+
 	test ViewSXPBlueprintsAndElementsArchive7310U6 {
 		property data.archive.type = "data-archive-sxp";
 		property portal.version = "7.3.10.u6";

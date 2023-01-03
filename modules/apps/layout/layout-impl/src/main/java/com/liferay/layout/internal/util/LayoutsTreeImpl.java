@@ -404,6 +404,30 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			end = loadedLayoutsCount;
 		}
 
+		long loadMoreParentLayoutId = GetterUtil.getLong(
+			httpServletRequest.getAttribute(
+				ProductNavigationProductMenuWebKeys.LOAD_MORE_PARENT_LAYOUT_ID),
+			-1);
+
+		if (loadMoreParentLayoutId == parentLayoutId) {
+			String key = StringBundler.concat(
+				treeId, StringPool.COLON, groupId, StringPool.COLON,
+				privateLayout, ":Pagination");
+
+			String paginationJSON = SessionClicks.get(
+				httpServletRequest.getSession(), key,
+				_jsonFactory.getNullJSON());
+
+			JSONObject paginationJSONObject = _jsonFactory.createJSONObject(
+				paginationJSON);
+
+			paginationJSONObject.put(String.valueOf(parentLayoutId), end);
+
+			SessionClicks.put(
+				httpServletRequest.getSession(), key,
+				paginationJSONObject.toString());
+		}
+
 		end = Math.max(start, Math.min(end, count));
 
 		if (_log.isDebugEnabled()) {

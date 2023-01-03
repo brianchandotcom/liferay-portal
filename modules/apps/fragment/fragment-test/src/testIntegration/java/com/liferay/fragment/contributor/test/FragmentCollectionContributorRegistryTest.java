@@ -214,7 +214,7 @@ public class FragmentCollectionContributorRegistryTest {
 
 	private static final int _FRAGMENT_ENTRY_LINK_SIZE = 3000;
 
-	private static final int _FRAGMENT_ENTRY_LINKS_COUNT = 10;
+	private static final int _FRAGMENT_ENTRY_LINKS_COUNT = 100000;
 
 	@Inject
 	private static ServiceComponentRuntime _serviceComponentRuntime;

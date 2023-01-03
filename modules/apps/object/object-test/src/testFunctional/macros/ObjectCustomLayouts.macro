@@ -12,7 +12,7 @@ definition {
 				locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 				value1 = "${newEntry}");
 
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		if (isSet(selectEntry)) {

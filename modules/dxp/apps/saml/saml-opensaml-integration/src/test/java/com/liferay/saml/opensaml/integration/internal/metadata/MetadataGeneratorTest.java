@@ -16,14 +16,14 @@ package com.liferay.saml.opensaml.integration.internal.metadata;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,9 +31,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.opensaml.core.xml.ElementExtensibleXMLObject;
+import org.opensaml.core.xml.XMLObject;
 import org.opensaml.saml.ext.saml2alg.SigningMethod;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.Extensions;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 
 /**
@@ -68,32 +69,11 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 
 		prepareServiceProvider(SP_ENTITY_ID);
 
-		EntityDescriptor entityDescriptor =
-			metadataManagerImpl.getEntityDescriptor(
-				getMockHttpServletRequest(
-					"http://localhost:8080/c/portal/saml/metadata"));
-
-		List<RoleDescriptor> roleDescriptors =
-			entityDescriptor.getRoleDescriptors();
-
-		Stream<RoleDescriptor> stream = roleDescriptors.stream();
-
 		Assert.assertTrue(
-			stream.map(
-				RoleDescriptor::getExtensions
-			).map(
-				ElementExtensibleXMLObject::getUnknownXMLObjects
-			).flatMap(
-				Collection::stream
-			).filter(
-				SigningMethod.class::isInstance
-			).map(
-				SigningMethod.class::cast
-			).map(
-				SigningMethod::getAlgorithm
-			).anyMatch(
-				"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"::equals
-			));
+			_checkMatch(
+				metadataManagerImpl.getEntityDescriptor(
+					getMockHttpServletRequest(
+						"http://localhost:8080/c/portal/saml/metadata"))));
 	}
 
 	@Test
@@ -112,32 +92,41 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 				}
 			).build());
 
-		EntityDescriptor entityDescriptor =
-			metadataManagerImpl.getEntityDescriptor(
-				getMockHttpServletRequest(
-					"http://localhost:8080/c/portal/saml/metadata"));
+		Assert.assertFalse(
+			_checkMatch(
+				metadataManagerImpl.getEntityDescriptor(
+					getMockHttpServletRequest(
+						"http://localhost:8080/c/portal/saml/metadata"))));
+	}
 
+	private boolean _checkMatch(EntityDescriptor entityDescriptor) {
 		List<RoleDescriptor> roleDescriptors =
 			entityDescriptor.getRoleDescriptors();
 
-		Stream<RoleDescriptor> stream = roleDescriptors.stream();
+		List<XMLObject> xmlObjects = new ArrayList<>();
 
-		Assert.assertFalse(
-			stream.map(
-				RoleDescriptor::getExtensions
-			).map(
-				ElementExtensibleXMLObject::getUnknownXMLObjects
-			).flatMap(
-				Collection::stream
-			).filter(
-				SigningMethod.class::isInstance
-			).map(
-				SigningMethod.class::cast
-			).map(
-				SigningMethod::getAlgorithm
-			).anyMatch(
-				"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"::equals
-			));
+		for (RoleDescriptor roleDescriptor : roleDescriptors) {
+			Extensions extensions = roleDescriptor.getExtensions();
+
+			xmlObjects.addAll(extensions.getUnknownXMLObjects());
+		}
+
+		for (XMLObject xmlObject : xmlObjects) {
+			if (!SigningMethod.class.isInstance(xmlObject)) {
+				continue;
+			}
+
+			SigningMethod signingMethod = (SigningMethod)xmlObject;
+
+			if (StringUtil.equals(
+					signingMethod.getAlgorithm(),
+					"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

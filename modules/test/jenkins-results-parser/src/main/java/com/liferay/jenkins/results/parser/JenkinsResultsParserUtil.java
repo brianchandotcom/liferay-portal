@@ -218,7 +218,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void cancelQueuedItem(
-		int itemID, JenkinsMaster jenkinsMaster) {
+		long itemID, JenkinsMaster jenkinsMaster) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -3556,7 +3556,7 @@ public class JenkinsResultsParserUtil {
 
 			toString(sb.toString());
 
-			cancelQueuedItem(itemJSONObject.getInt("id"), jenkinsMaster);
+			cancelQueuedItem(itemJSONObject.getLong("id"), jenkinsMaster);
 		}
 	}
 

@@ -62,7 +62,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -299,14 +298,17 @@ public class DLOpenerOneDriveManager {
 	private AccessToken _getAccessToken(long companyId, long userId)
 		throws PortalException {
 
-		Optional<AccessToken> accessTokenOptional =
-			_oAuth2Manager.getAccessTokenOptional(companyId, userId);
+		AccessToken accessToken = _oAuth2Manager.getAccessToken(
+			companyId, userId);
 
-		return accessTokenOptional.orElseThrow(
-			() -> new PrincipalException(
+		if (accessToken == null) {
+			throw new PrincipalException(
 				StringBundler.concat(
 					"User ", userId,
-					" does not have a valid OneDrive access token")));
+					" does not have a valid OneDrive access token"));
+		}
+
+		return accessToken;
 	}
 
 	private File _getContentFile(long userId, FileEntry fileEntry)

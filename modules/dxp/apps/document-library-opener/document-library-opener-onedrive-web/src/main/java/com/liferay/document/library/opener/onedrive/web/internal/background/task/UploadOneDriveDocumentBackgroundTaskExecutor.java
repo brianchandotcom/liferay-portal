@@ -66,7 +66,6 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -176,14 +175,17 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 	private AccessToken _getAccessToken(long companyId, long userId)
 		throws Exception {
 
-		Optional<AccessToken> accessTokenOptional =
-			_oAuth2Manager.getAccessTokenOptional(companyId, userId);
+		AccessToken accessToken = _oAuth2Manager.getAccessToken(
+			companyId, userId);
 
-		return accessTokenOptional.orElseThrow(
-			() -> new PrincipalException(
+		if (accessToken == null) {
+			throw new PrincipalException(
 				StringBundler.concat(
 					"User ", userId,
-					" does not have a valid OneDrive access token")));
+					" does not have a valid OneDrive access token"));
+		}
+
+		return accessToken;
 	}
 
 	private void _sendStatusMessage(

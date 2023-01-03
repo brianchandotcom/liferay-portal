@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -48,56 +47,54 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 			return null;
 		}
 
-		Optional<AccessToken> accessTokenOptional =
-			_oAuth2Manager.getAccessTokenOptional(
-				user.getCompanyId(), user.getUserId());
+		AccessToken accessToken = _oAuth2Manager.getAccessToken(
+			user.getCompanyId(), user.getUserId());
 
-		return accessTokenOptional.map(
-			accessToken -> new ConnectedApp() {
+		if (accessToken == null) {
+			return null;
+		}
 
-				@Override
-				public String getImageURL() {
-					return _servletContext.getContextPath() +
-						"/images/onedrive.png";
-				}
+		return new ConnectedApp() {
 
-				@Override
-				public String getKey() {
-					return "onedrive";
-				}
-
-				@Override
-				public String getName(Locale locale) {
-					ResourceBundle resourceBundle =
-						ResourceBundleUtil.getBundle(locale, getClass());
-
-					StringBundler sb = new StringBundler(5);
-
-					sb.append(_language.get(resourceBundle, "onedrive"));
-
-					String emailAddress = _getOneDriveUserEmailAddress(
-						accessToken);
-
-					if (Validator.isNotNull(emailAddress)) {
-						sb.append(StringPool.SPACE);
-						sb.append(StringPool.OPEN_PARENTHESIS);
-						sb.append(emailAddress);
-						sb.append(StringPool.CLOSE_PARENTHESIS);
-					}
-
-					return sb.toString();
-				}
-
-				@Override
-				public void revoke() {
-					_oAuth2Manager.revokeOAuth2AccessToken(
-						user.getCompanyId(), user.getUserId());
-				}
-
+			@Override
+			public String getImageURL() {
+				return _servletContext.getContextPath() +
+					"/images/onedrive.png";
 			}
-		).orElse(
-			null
-		);
+
+			@Override
+			public String getKey() {
+				return "onedrive";
+			}
+
+			@Override
+			public String getName(Locale locale) {
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					locale, getClass());
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(_language.get(resourceBundle, "onedrive"));
+
+				String emailAddress = _getOneDriveUserEmailAddress(accessToken);
+
+				if (Validator.isNotNull(emailAddress)) {
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(emailAddress);
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+				}
+
+				return sb.toString();
+			}
+
+			@Override
+			public void revoke() {
+				_oAuth2Manager.revokeOAuth2AccessToken(
+					user.getCompanyId(), user.getUserId());
+			}
+
+		};
 	}
 
 	private String _getOneDriveUserEmailAddress(AccessToken accessToken) {

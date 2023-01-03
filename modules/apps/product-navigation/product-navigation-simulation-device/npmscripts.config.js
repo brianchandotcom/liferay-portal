@@ -15,7 +15,11 @@
 module.exports = {
 	build: {
 		bundler: {
-			ignore: ['**/*'],
+			ignore: [
+				'**/config.js',
+				'**/product_navigation_simulation_device.js',
+				'**/simulation_device_dynamic_include.js',
+			],
 		},
 	},
 };

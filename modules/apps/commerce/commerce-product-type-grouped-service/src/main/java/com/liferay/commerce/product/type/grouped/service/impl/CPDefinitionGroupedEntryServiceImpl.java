@@ -16,8 +16,10 @@ package com.liferay.commerce.product.type.grouped.service.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.base.CPDefinitionGroupedEntryServiceBaseImpl;
@@ -36,6 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	property = {
@@ -57,10 +60,33 @@ public class CPDefinitionGroupedEntryServiceImpl
 
 		for (long entryCPDefinitionId : entryCPDefinitionIds) {
 			_checkCommerceCatalog(entryCPDefinitionId, ActionKeys.VIEW);
-		}
 
-		cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntries(
-			cpDefinitionId, entryCPDefinitionIds, serviceContext);
+			CPDefinition cpDefinition =
+				cpDefinitionLocalService.getCPDefinition(entryCPDefinitionId);
+
+			cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(
+				cpDefinitionId, cpDefinition.getCProductId(), 0, 1,
+				serviceContext);
+		}
+	}
+
+	@Override
+	public CPDefinitionGroupedEntry addCPDefinitionGroupedEntry(
+			long cpDefinitionId, long entryCProductId, double priority,
+			int quantity, ServiceContext serviceContext)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
+
+		CProduct entryCProduct = cProductLocalService.getCProduct(
+			entryCProductId);
+
+		_checkCommerceCatalog(
+			entryCProduct.getPublishedCPDefinitionId(), ActionKeys.VIEW);
+
+		return cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(
+			cpDefinitionId, entryCProductId, priority, quantity,
+			serviceContext);
 	}
 
 	@Override
@@ -143,6 +169,9 @@ public class CPDefinitionGroupedEntryServiceImpl
 
 	@Reference
 	protected CPDefinitionLocalService cpDefinitionLocalService;
+
+	@Reference
+	protected CProductLocalService cProductLocalService;
 
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {

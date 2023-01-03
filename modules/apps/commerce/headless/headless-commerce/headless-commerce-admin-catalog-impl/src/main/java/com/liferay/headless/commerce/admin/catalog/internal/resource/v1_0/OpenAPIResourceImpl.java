@@ -106,6 +106,8 @@ public class OpenAPIResourceImpl {
 
 			add(DiagramResourceImpl.class);
 
+			add(GroupedProductResourceImpl.class);
+
 			add(MappedProductResourceImpl.class);
 
 			add(OptionResourceImpl.class);

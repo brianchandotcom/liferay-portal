@@ -18,6 +18,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
@@ -42,6 +43,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResou
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
@@ -124,6 +126,14 @@ public class Query {
 
 		_diagramResourceComponentServiceObjects =
 			diagramResourceComponentServiceObjects;
+	}
+
+	public static void setGroupedProductResourceComponentServiceObjects(
+		ComponentServiceObjects<GroupedProductResource>
+			groupedProductResourceComponentServiceObjects) {
+
+		_groupedProductResourceComponentServiceObjects =
+			groupedProductResourceComponentServiceObjects;
 	}
 
 	public static void setMappedProductResourceComponentServiceObjects(
@@ -533,6 +543,47 @@ public class Query {
 			_diagramResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			diagramResource -> diagramResource.getProductIdDiagram(productId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeGroupedProducts(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public GroupedProductPage productByExternalReferenceCodeGroupedProducts(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_groupedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			groupedProductResource -> new GroupedProductPage(
+				groupedProductResource.
+					getProductByExternalReferenceCodeGroupedProductsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdGroupedProducts(page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public GroupedProductPage productIdGroupedProducts(
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_groupedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			groupedProductResource -> new GroupedProductPage(
+				groupedProductResource.getProductIdGroupedProductsPage(
+					productId, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -1686,6 +1737,36 @@ public class Query {
 
 	@GraphQLTypeExtension(Catalog.class)
 	public class
+		GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension(
+			Catalog catalog) {
+
+			_catalog = catalog;
+		}
+
+		@GraphQLField
+		public GroupedProductPage productByExternalReferenceCodeGroupedProducts(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_groupedProductResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				groupedProductResource -> new GroupedProductPage(
+					groupedProductResource.
+						getProductByExternalReferenceCodeGroupedProductsPage(
+							_catalog.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Catalog _catalog;
+
+	}
+
+	@GraphQLTypeExtension(Catalog.class)
+	public class
 		GetProductByExternalReferenceCodeProductChannelsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeProductChannelsPageTypeExtension(
@@ -2092,6 +2173,32 @@ public class Query {
 		}
 
 		private Sku _sku;
+
+	}
+
+	@GraphQLTypeExtension(Diagram.class)
+	public class GetProductIdGroupedProductsPageTypeExtension {
+
+		public GetProductIdGroupedProductsPageTypeExtension(Diagram diagram) {
+			_diagram = diagram;
+		}
+
+		@GraphQLField
+		public GroupedProductPage productIdGroupedProducts(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_groupedProductResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				groupedProductResource -> new GroupedProductPage(
+					groupedProductResource.getProductIdGroupedProductsPage(
+						_diagram.getProductId(),
+						Pagination.of(page, pageSize))));
+		}
+
+		private Diagram _diagram;
 
 	}
 
@@ -2529,6 +2636,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Diagram> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("GroupedProductPage")
+	public class GroupedProductPage {
+
+		public GroupedProductPage(Page groupedProductPage) {
+			actions = groupedProductPage.getActions();
+
+			items = groupedProductPage.getItems();
+			lastPage = groupedProductPage.getLastPage();
+			page = groupedProductPage.getPage();
+			pageSize = groupedProductPage.getPageSize();
+			totalCount = groupedProductPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<GroupedProduct> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -3280,6 +3420,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			GroupedProductResource groupedProductResource)
+		throws Exception {
+
+		groupedProductResource.setContextAcceptLanguage(_acceptLanguage);
+		groupedProductResource.setContextCompany(_company);
+		groupedProductResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		groupedProductResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		groupedProductResource.setContextUriInfo(_uriInfo);
+		groupedProductResource.setContextUser(_user);
+		groupedProductResource.setGroupLocalService(_groupLocalService);
+		groupedProductResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			MappedProductResource mappedProductResource)
 		throws Exception {
 
@@ -3599,6 +3755,8 @@ public class Query {
 		_categoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DiagramResource>
 		_diagramResourceComponentServiceObjects;
+	private static ComponentServiceObjects<GroupedProductResource>
+		_groupedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MappedProductResource>
 		_mappedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OptionResource>

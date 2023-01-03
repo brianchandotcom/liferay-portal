@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Attach
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.CatalogResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.CategoryResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.DiagramResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.GroupedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.MappedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.OptionCategoryResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.OptionResourceImpl;
@@ -44,6 +45,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResou
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
@@ -97,6 +99,8 @@ public class ServletDataImpl implements ServletData {
 			_categoryResourceComponentServiceObjects);
 		Mutation.setDiagramResourceComponentServiceObjects(
 			_diagramResourceComponentServiceObjects);
+		Mutation.setGroupedProductResourceComponentServiceObjects(
+			_groupedProductResourceComponentServiceObjects);
 		Mutation.setMappedProductResourceComponentServiceObjects(
 			_mappedProductResourceComponentServiceObjects);
 		Mutation.setOptionResourceComponentServiceObjects(
@@ -147,6 +151,8 @@ public class ServletDataImpl implements ServletData {
 			_categoryResourceComponentServiceObjects);
 		Query.setDiagramResourceComponentServiceObjects(
 			_diagramResourceComponentServiceObjects);
+		Query.setGroupedProductResourceComponentServiceObjects(
+			_groupedProductResourceComponentServiceObjects);
 		Query.setMappedProductResourceComponentServiceObjects(
 			_mappedProductResourceComponentServiceObjects);
 		Query.setOptionResourceComponentServiceObjects(
@@ -342,6 +348,31 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createProductIdDiagram",
 						new ObjectValuePair<>(
 							DiagramResourceImpl.class, "postProductIdDiagram"));
+					put(
+						"mutation#deleteGroupedProduct",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"deleteGroupedProduct"));
+					put(
+						"mutation#deleteGroupedProductBatch",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"deleteGroupedProductBatch"));
+					put(
+						"mutation#patchGroupedProduct",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"patchGroupedProduct"));
+					put(
+						"mutation#createProductByExternalReferenceCodeGroupedProduct",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"postProductByExternalReferenceCodeGroupedProduct"));
+					put(
+						"mutation#createProductIdGroupedProduct",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"postProductIdGroupedProduct"));
 					put(
 						"mutation#deleteMappedProduct",
 						new ObjectValuePair<>(
@@ -844,6 +875,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DiagramResourceImpl.class, "getProductIdDiagram"));
 					put(
+						"query#productByExternalReferenceCodeGroupedProducts",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"getProductByExternalReferenceCodeGroupedProductsPage"));
+					put(
+						"query#productIdGroupedProducts",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"getProductIdGroupedProductsPage"));
+					put(
 						"query#productByExternalReferenceCodeMappedProducts",
 						new ObjectValuePair<>(
 							MappedProductResourceImpl.class,
@@ -1119,6 +1160,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DiagramResource>
 		_diagramResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<GroupedProductResource>
+		_groupedProductResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<MappedProductResource>

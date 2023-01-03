@@ -20,36 +20,38 @@ import {API, Input} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useRef, useState} from 'react';
 
-import {openImportWarningModal} from '../utils/openImportWarningModal';
-interface IProps {
+import {ModalImportWarning} from './ModalImportWarning';
+interface ModalImportObjectDefinitionProps {
 	importObjectDefinitionURL: string;
 	nameMaxLength: string;
 	portletNamespace: string;
 }
 
-interface IFile {
+type TFile = {
 	fileName?: string;
 	inputFile?: File | null;
 	inputFileValue?: string;
-}
+};
 
-const ModalImportObjectDefinition: React.FC<IProps> = ({
+export default function ModalImportObjectDefinition({
 	importObjectDefinitionURL,
 	nameMaxLength,
 	portletNamespace,
-}) => {
+}: ModalImportObjectDefinitionProps) {
 	const [error, setError] = useState<string>('');
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		''
 	);
+	const [importFormData, setImportFormData] = useState<FormData>();
 	const [visible, setVisible] = useState(false);
+	const [warningModalVisible, setWarningModalVisible] = useState(false);
 	const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const [name, setName] = useState('');
 	const importObjectDefinitionModalComponentId = `${portletNamespace}importObjectDefinitionModal`;
 	const importObjectDefinitionFormId = `${portletNamespace}importObjectDefinitionForm`;
 	const nameInputId = `${portletNamespace}name`;
 	const objectDefinitionJSONInputId = `${portletNamespace}objectDefinitionJSON`;
-	const [{fileName, inputFile, inputFileValue}, setFile] = useState<IFile>(
+	const [{fileName, inputFile, inputFileValue}, setFile] = useState<TFile>(
 		{}
 	);
 	const {observer, onClose} = useModal({
@@ -62,6 +64,7 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 				inputFileValue: '',
 			});
 			setName('');
+			setImportFormData(undefined);
 		},
 	});
 
@@ -88,10 +91,9 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 			handleImport(formData);
 		}
 		else {
+			setImportFormData(formData);
 			setVisible(false);
-			openImportWarningModal({
-				handleImport: () => handleImport(formData),
-			});
+			setWarningModalVisible(true);
 		}
 	};
 
@@ -268,7 +270,13 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 				}
 			/>
 		</ClayModal>
+	) : warningModalVisible ? (
+		<ModalImportWarning
+			handleImport={() => handleImport(importFormData as FormData)}
+			onClose={() => {
+				setWarningModalVisible(false);
+				setImportFormData(undefined);
+			}}
+		/>
 	) : null;
-};
-
-export default ModalImportObjectDefinition;
+}

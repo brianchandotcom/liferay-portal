@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -50,13 +49,11 @@ public class AccessTokenStoreUtil {
 		}
 	}
 
-	public static Optional<AccessToken> getAccessTokenOptional(
-		long companyId, long userId) {
-
+	public static AccessToken getAccessToken(long companyId, long userId) {
 		Map<Long, AccessToken> accessTokens = _accessTokens.getOrDefault(
 			companyId, new HashMap<>());
 
-		return Optional.ofNullable(accessTokens.get(userId));
+		return accessTokens.get(userId);
 	}
 
 	private static void _add(

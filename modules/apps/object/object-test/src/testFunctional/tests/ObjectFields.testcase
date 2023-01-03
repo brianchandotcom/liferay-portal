@@ -122,6 +122,62 @@ definition {
 		ObjectField.addAnyFolder(folderName = "Folder 151566");
 	}
 
+	@description = "LPS-159151 - Verify that it's possible to create an Action with a custom field in a System Object"
+	@priority = "4"
+	test CanCreateActionWithCustomFieldInSystemObjects {
+		task ("Add a Custom Object and Custom Field (API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162194",
+				objectName = "CustomObject162194",
+				pluralLabelName = "Custom Objects 162194");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field A",
+				fieldName = "customObjectFieldA",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject162194");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162194");
+		}
+
+		task ("Add a Custom Field and Action to the System Object Account") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field B",
+				fieldName = "customObjectFieldB",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "AccountEntry");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Account");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Custom Action",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Action shot on add",
+				objectLabel = "Custom Object 162194",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("Add an entry and assert if the action was triggered") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162194");
+
+			ObjectPortlet.viewEntry(entry = "Action shot on add");
+		}
+	}
+
 	@description = "LPS-142659 - Verify it is possible to create a Clob field"
 	@priority = "4"
 	test CanCreateClobField {

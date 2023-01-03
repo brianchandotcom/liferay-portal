@@ -15,19 +15,21 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Define Permissions");
 
-		if (isSet(portlet)) {
+		if (isSet(permissionNavItem)) {
 			Type(
 				locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
-				value1 = "${portlet}");
+				value1 = "${permissionNavItem}");
 
 			AssertClick(
-				locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}",
-				value1 = "${portlet}");
+				key_permissionNavHeader = "${permissionNavHeader}",
+				key_permissionNavItem = "${permissionNavItem}",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION",
+				value1 = "${permissionNavItem}");
 
 			AssertTextEquals(
+				key_title = "${permissionNavItem}",
 				locator1 = "Header#H3_TITLE",
-				permissionNavigationValue = "${portlet}",
-				value1 = "${portlet}");
+				value1 = "${permissionNavItem}");
 		}
 	}
 

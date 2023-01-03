@@ -173,7 +173,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 	private long _getRefererClassPK(HttpServletRequest httpServletRequest) {
 		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
 
-		if (Validator.isNotNull(articleId)) {
+		if (Validator.isNull(articleId)) {
 			return 0;
 		}
 

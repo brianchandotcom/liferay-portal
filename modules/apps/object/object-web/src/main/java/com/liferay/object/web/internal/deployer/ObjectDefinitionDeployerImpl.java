@@ -137,9 +137,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_restContextPathResolverRegistry,
 				_templateInfoItemFieldSetProvider, _userLocalService);
+
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission(objectDefinition.getResourceName());
+
 		InfoPermissionProvider infoPermissionProvider =
 			new ObjectEntryInfoPermissionProvider(
-				objectDefinition, _portletLocalService, _portletPermission);
+				objectDefinition, _portletLocalService, _portletPermission,
+				portletResourcePermission);
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
@@ -297,8 +302,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectFieldFDSFilterFactoryRegistry,
 					_objectFieldLocalService, _objectScopeProviderRegistry,
 					_objectViewLocalService, _portal,
-					_getPortletResourcePermission(
-						objectDefinition.getResourceName())),
+					portletResourcePermission),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.company",
 					objectDefinition.getCompanyId()

@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.info.permission.provider;
 
 import com.liferay.info.permission.provider.InfoPermissionProvider;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 
@@ -34,11 +36,27 @@ public class ObjectEntryInfoPermissionProvider
 	public ObjectEntryInfoPermissionProvider(
 		ObjectDefinition objectDefinition,
 		PortletLocalService portletLocalService,
-		PortletPermission portletPermission) {
+		PortletPermission portletPermission,
+		PortletResourcePermission portletResourcePermission) {
 
 		_objectDefinition = objectDefinition;
 		_portletLocalService = portletLocalService;
 		_portletPermission = portletPermission;
+		_portletResourcePermission = portletResourcePermission;
+	}
+
+	@Override
+	public boolean hasAddPermission(
+		long groupId, PermissionChecker permissionChecker) {
+
+		if (_portletResourcePermission.contains(
+				permissionChecker, groupId,
+				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -69,5 +87,6 @@ public class ObjectEntryInfoPermissionProvider
 	private final ObjectDefinition _objectDefinition;
 	private final PortletLocalService _portletLocalService;
 	private final PortletPermission _portletPermission;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

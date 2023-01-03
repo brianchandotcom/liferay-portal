@@ -2169,6 +2169,65 @@ definition {
 		ObjectAdmin.viewDescriptionForEachFieldType();
 	}
 
+	@description = "LPS-145661 - Verify that the field type names are displayed on the Layout Builder when a field is added"
+	@priority = "4"
+	test DisplayFieldTypesOnLayoutBuilder {
+		task ("Given that an object and fields are created for that object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161905",
+				objectName = "CustomObject161905",
+				pluralLabelName = "Custom Objects 161905");
+
+			for (var valueField : list "A,B") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Custom Field ${valueField}",
+					fieldName = "customObjectField${valueField}",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "CustomObject161905");
+			}
+		}
+
+		task ("When a Layout is added to the object") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Test",
+				objectName = "CustomObject161905");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161905");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161905");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Layout Test");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			for (var valueField : list "A,B") {
+				ObjectAdmin.addTabFieldsOnLayout(
+					blockName = "Block Test",
+					columnsNumber = "1",
+					fieldList = "Custom Field ${valueField}",
+					tabName = "Tab Test");
+			}
+		}
+
+		task ("Then the field type names are displayed on the Layout Builder when a field is added") {
+			for (var fieldLabelName : list "Custom Field A,Custom Field B") {
+				AssertElementPresent(
+					key_fieldLabelName = "${fieldLabelName}",
+					locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
+			}
+		}
+	}
+
 	@description = "LPS-146523 - Verify if the default folder will be the Documents and Media Home Folder of that specific site"
 	@priority = "4"
 	test DocumentsAndMediaHomeFolderIsDefaultWhenScopedBySite {

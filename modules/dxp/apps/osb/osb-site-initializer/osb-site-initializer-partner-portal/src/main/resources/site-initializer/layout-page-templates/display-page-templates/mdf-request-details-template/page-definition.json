@@ -1099,7 +1099,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "ObjectField_r_accountToMDFRequests_accountEntryId",
+																				"fieldKey": "ObjectField_companyName",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}

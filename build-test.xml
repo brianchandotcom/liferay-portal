@@ -15138,6 +15138,14 @@ mail.send.blacklist=</echo>
 
 		<antcall target="deploy-osgi-modules" />
 
+		<get-testcase-property property.name="oauth2.local.enabled" />
+		<if>
+			<istrue value="${oauth2.local.enabled}" />
+			<then>
+				<ant antfile="build-test-oauth2.xml" target="prepare-oauth2-tester" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="liferay.data.guard.enabled" />
 
 		<if>

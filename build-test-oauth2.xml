@@ -22,4 +22,24 @@
 			todir="${liferay.home}/osgi/configs"
 		/>
 	</target>
+
+	<target name="prepare-oauth2-tester">
+		<property name="liferay.oauth2.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/liferay-oauth2" />
+		<copy
+			todir="${app.server.dir}/webapps/liferay-oauth2"
+		>
+			<fileset
+				dir="${liferay.oauth2.dependency.dir}"
+				includes="**"
+			/>
+		</copy>
+		<replace
+			file="${app.server.dir}/conf/server.xml"
+			token="&lt;Service name=&quot;Catalina&quot;&gt;"
+			value="&lt;Service name= &quot;Catalina&quot;&gt;${line.separator}    &lt;Connector port=&quot;3000&quot; protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot;${line.separator} connectionTimeout=&quot;20000&quot;${line.separator} edirectPort=&quot;3443&quot; URIEncoding=&quot;UTF-8&quot; /&gt;"
+		/>
+		<waitfor maxwait="60" maxwaitunit="second">
+			<http url="http://localhost:3000/liferay-oauth2" />
+		</waitfor>
+	</target>
 </project>

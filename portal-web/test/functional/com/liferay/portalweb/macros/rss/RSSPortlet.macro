@@ -23,9 +23,16 @@ definition {
 			var projectDir = PropsUtil.get("project.dir");
 			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${feedURLLink}");
 
-			Type(
-				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-				value1 = "file:////${projectDir}/portal-web/${dependencyFilePath}");
+			if (contains("${dependencyFilePath}", "tests")) {
+				Type(
+					locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
+					value1 = "file:////${dependencyFilePath}");
+			}
+			else {
+				Type(
+					locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
+					value1 = "file:////${projectDir}/portal-web/${dependencyFilePath}");
+			}
 		}
 		else {
 			Type(

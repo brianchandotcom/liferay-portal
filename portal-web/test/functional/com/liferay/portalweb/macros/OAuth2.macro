@@ -189,10 +189,10 @@ definition {
 
 	macro authorizeMyApplication {
 		if ("${newTab}" == "true") {
-			Open.openInTheNewTab(locator1 = "https://localhost:8443/oauth2-tester/");
+			Open.openInTheNewTab(locator1 = "http://localhost:3000/liferay-oauth2");
 		}
 		else {
-			Navigator.openSpecificURL(url = "https://localhost:8443/oauth2-tester/");
+			Navigator.openSpecificURL(url = "http://localhost:3000/liferay-oauth2");
 		}
 
 		if (isSet(portalURL)) {
@@ -203,14 +203,14 @@ definition {
 		else {
 			Type(
 				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
-				value1 = "https://localhost:8443");
+				value1 = "http://localhost:8080/o/oauth2/authorize");
 		}
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
 			value1 = "${clientId}");
 
-		Button.click(button = "Authorize My Application");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 
 		if (IsElementPresent(locator1 = "Button#SIGN_IN")) {
 			Type(
@@ -234,8 +234,14 @@ definition {
 			WaitForElementPresent(locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET");
 		}
 		else {
-			Button.click(button = "Authorize");
+			Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 		}
+
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_COPY_AUTHORIZATION_CODE");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID_2",
+			value1 = "${clientId}");
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
@@ -243,7 +249,11 @@ definition {
 
 		SelectFrameTop();
 
-		Button.click(button = "Obtain OAuth2 Access");
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_TOKEN_URL",
+			value1 = "http://localhost:8080/o/oauth2/token");
+
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_TOKEN");
 	}
 
 	macro authorizePKCEApplication {
@@ -270,7 +280,7 @@ definition {
 
 		Button.click(button = "Authorize My Application (PKCE)");
 
-		Button.click(button = "Authorize");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_EXCHANGE_CODE",
@@ -470,7 +480,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
 
-		Button.click(button = "Authorize");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 
 		WaitForSPARefresh();
 
@@ -665,8 +675,13 @@ definition {
 				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
 				value1 = "${requestURL}");
 		}
+		else {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
+				value1 = "http://localhost:8080/api/jsonws/user/get-current-user");
+		}
 
-		Button.click(button = "Launch Request");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_USER");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
@@ -676,17 +691,17 @@ definition {
 	macro launchRequestNotAuthorized {
 		Pause(locator1 = "8000");
 
-		Button.click(button = "Launch Request");
-
-		AssertConfirm.assertConfirmationNoError(value1 = "403 - Unauthorized!");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_USER");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "");
+			value1 = "[]");
 	}
 
 	macro obtainOAuth2AccessNotAuthorized {
-		AssertConfirm.assertConfirmationNoError(value1 = "There's a problem with your authorization access");
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "[]");
 	}
 
 	macro openOAuth2Admin {
@@ -1183,15 +1198,33 @@ definition {
 	}
 
 	macro viewValidOAuth2LaunchRequest {
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_COPY_AUTHORIZATION_CODE");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID_2",
+			value1 = "${clientId}");
+
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = "${clientSecret}");
 
-		Button.click(button = "Obtain OAuth2 Access");
+		SelectFrameTop();
 
-		AssertElementPresent(
-			key_text = "Launch Request",
-			locator1 = "Button#ANY");
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_TOKEN_URL",
+			value1 = "http://localhost:8080/o/oauth2/token");
+
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_TOKEN");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
+			value1 = "http://localhost:8080/api/jsonws/user/get-current-user");
+
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_USER");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "@liferay.com");
 	}
 
 }

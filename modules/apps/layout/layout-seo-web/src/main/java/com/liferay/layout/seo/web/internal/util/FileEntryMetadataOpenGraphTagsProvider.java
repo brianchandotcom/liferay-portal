@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Adolfo Pérez
@@ -92,38 +91,38 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 				ddmFormValues.getDDMFormFieldValuesMap();
 
-			Optional<String> tiffImageLengthOptional =
-				_getDDMFormFieldsValueValue(
-					ddmFormFieldValuesMap.get("TIFF_IMAGE_LENGTH"));
+			String tiffImageLength = _getDDMFormFieldsValueValue(
+				ddmFormFieldValuesMap.get("TIFF_IMAGE_LENGTH"));
 
-			tiffImageLengthOptional.ifPresent(
-				tiffImageLength -> keyValuePairs.add(
-					new KeyValuePair("og:image:height", tiffImageLength)));
+			if (tiffImageLength != null) {
+				keyValuePairs.add(
+					new KeyValuePair("og:image:height", tiffImageLength));
+			}
 
-			Optional<String> tiffImageWidthOptional =
-				_getDDMFormFieldsValueValue(
-					ddmFormFieldValuesMap.get("TIFF_IMAGE_WIDTH"));
+			String tiffImageWidth = _getDDMFormFieldsValueValue(
+				ddmFormFieldValuesMap.get("TIFF_IMAGE_WIDTH"));
 
-			tiffImageWidthOptional.ifPresent(
-				tiffImageWidth -> keyValuePairs.add(
-					new KeyValuePair("og:image:width", tiffImageWidth)));
+			if (tiffImageWidth != null) {
+				keyValuePairs.add(
+					new KeyValuePair("og:image:width", tiffImageWidth));
+			}
 		}
 
 		return keyValuePairs;
 	}
 
-	private Optional<String> _getDDMFormFieldsValueValue(
+	private String _getDDMFormFieldsValueValue(
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
 		if (ListUtil.isEmpty(ddmFormFieldValues)) {
-			return Optional.empty();
+			return null;
 		}
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
 		Value value = ddmFormFieldValue.getValue();
 
-		return Optional.ofNullable(value.getString(value.getDefaultLocale()));
+		return value.getString(value.getDefaultLocale());
 	}
 
 	private final DDMStructureLocalService _ddmStructureLocalService;

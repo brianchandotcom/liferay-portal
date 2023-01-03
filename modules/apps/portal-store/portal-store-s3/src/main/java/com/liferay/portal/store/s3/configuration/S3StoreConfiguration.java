@@ -88,7 +88,7 @@ public interface S3StoreConfiguration {
 	public int connectionTimeout();
 
 	@Meta.AD(
-		deflt = "50", description = "http-client-max-connections-help",
+		deflt = "5000", description = "http-client-max-connections-help",
 		name = "http-client-max-connections", required = false
 	)
 	public int httpClientMaxConnections();

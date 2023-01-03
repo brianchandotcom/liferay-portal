@@ -23,12 +23,9 @@ import com.liferay.analytics.settings.rest.resource.v1_0.ContactUserGroupResourc
 import com.liferay.portal.kernel.model.UserGroupTable;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.LinkedHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,8 +58,8 @@ public class ContactUserGroupResourceImpl
 
 		return Page.of(
 			transform(
-				_userGroupLocalService.search(
-					contextCompany.getCompanyId(), keywords, _getParams(),
+				_userGroupLocalService.getUserGroups(
+					contextCompany.getCompanyId(), keywords,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					OrderByComparatorFactoryUtil.create(
 						UserGroupTable.INSTANCE.getTableName(),
@@ -74,14 +71,8 @@ public class ContactUserGroupResourceImpl
 						analyticsConfiguration.syncedUserGroupIds()),
 					userGroup)),
 			pagination,
-			_userGroupLocalService.searchCount(
-				contextCompany.getCompanyId(), keywords, _getParams()));
-	}
-
-	private LinkedHashMap<String, Object> _getParams() {
-		return LinkedHashMapBuilder.<String, Object>put(
-			"active", Boolean.TRUE
-		).build();
+			_userGroupLocalService.getUserGroupsCount(
+				contextCompany.getCompanyId(), keywords));
 	}
 
 	@Reference

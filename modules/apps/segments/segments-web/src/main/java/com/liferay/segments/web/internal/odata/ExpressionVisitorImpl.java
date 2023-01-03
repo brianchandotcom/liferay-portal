@@ -223,6 +223,16 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return _getOperationJSONObject(
 				String.valueOf(type), expressions.get(0), expressions.get(1));
 		}
+		else if (type == MethodExpression.Type.NOW) {
+			if (!expressions.isEmpty()) {
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unsupported method visitMethodExpression with method ",
+						"type ", type, " and ", expressions.size(), "params"));
+			}
+
+			return String.valueOf(type);
+		}
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitMethodExpression with method type " +

@@ -146,7 +146,8 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			await liferayDispatchTriggerImpl.run(
 				dispatchTrigger.liferayDispatchTrigger.id
 			);
-		} catch (error) {
+		}
+		catch (error) {
 			body.dueStatus = DispatchTriggerStatuses.FAILED;
 			body.output = (error as TestrayError)?.message;
 		}

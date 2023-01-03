@@ -1613,12 +1613,14 @@ definition {
 		Role.openRolesAdmin();
 
 		RoleNavigator.gotoDefineRolePermissions(
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
-			portlet = "Blogs",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Blogs",
 			roleTitle = "Depot Regrole Name");
 
 		AssertClick(
-			locator1 = "RolesPermissions#SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_VIEW_CHANGE_LINK",
+			key_permissionSheetSubtitle = "Blogs Entry",
+			key_permissionValue = "View",
+			locator1 = "RolesPermissions#PERMISSION_CHANGE_SCOPE",
 			value1 = "Change");
 
 		SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");

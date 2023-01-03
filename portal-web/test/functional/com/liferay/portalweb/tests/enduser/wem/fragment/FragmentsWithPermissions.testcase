@@ -657,8 +657,8 @@ definition {
 			Role.openRolesAdmin();
 
 			RoleNavigator.gotoDefineRolePermissions(
-				permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES",
-				portlet = "Pages",
+				permissionNavHeader = "Site Builder",
+				permissionNavItem = "Pages",
 				roleTitle = "Page Builder",
 				roleType = "Site");
 

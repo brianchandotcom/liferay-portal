@@ -33,11 +33,14 @@ definition {
 			portlet = "Roles");
 
 		RoleNavigator.gotoDefineRolePermissions(
-			permissionNavigationKey = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS",
-			portlet = "Users and Organizations",
+			permissionNavHeader = "Users",
+			permissionNavItem = "Users and Organizations",
 			roleTitle = "Guest");
 
-		AssertElementPresent.assertVisible(locator1 = "RolesPermissions#CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACTION_CHECKBOX");
+		AssertElementPresent.assertVisible(
+			key_permissionSheetSubtitle = "Application Permissions",
+			key_permissionValue = "Action",
+			locator1 = "RolesPermissions#PERMISSION_CHECKBOX");
 	}
 
 	@priority = "3"

@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -881,14 +882,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			PortalUtil.getOriginalServletRequest(httpServletRequest),
 			"p_l_mode", Constants.VIEW);
 
-		if ((!Objects.equals(mode, Constants.VIEW) &&
-			 !_hasViewPermission(
-				 PortalUtil.getClassName(
-					 formStyledLayoutStructureItem.getClassNameId()))) ||
-			(Objects.equals(mode, Constants.VIEW) &&
-			 !_hasAddPermission(
-				 PortalUtil.getClassName(
-					 formStyledLayoutStructureItem.getClassNameId())))) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169923")) &&
+			((!Objects.equals(mode, Constants.VIEW) &&
+			  !_hasViewPermission(
+				  PortalUtil.getClassName(
+					  formStyledLayoutStructureItem.getClassNameId()))) ||
+			 (Objects.equals(mode, Constants.VIEW) &&
+			  !_hasAddPermission(
+				  PortalUtil.getClassName(
+					  formStyledLayoutStructureItem.getClassNameId()))))) {
 
 			JspWriter jspWriter = pageContext.getOut();
 

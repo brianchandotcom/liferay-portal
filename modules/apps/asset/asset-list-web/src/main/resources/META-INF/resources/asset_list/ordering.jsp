@@ -46,22 +46,20 @@
 			%>
 
 			<div class="d-inline-flex order-by-type-container">
-				<liferay-ui:icon
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
+				<clay:button
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					displayType="secondary"
 					icon="order-list-up"
-					linkCssClass="btn btn-outline-borderless btn-outline-secondary"
-					markupView="lexicon"
-					message="descending"
-					url="javascript:void(0);"
+					monospaced="<%= true %>"
+					title="descending"
 				/>
 
-				<liferay-ui:icon
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
+				<clay:button
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					displayType="secondary"
 					icon="order-list-down"
-					linkCssClass="btn btn-outline-borderless btn-outline-secondary"
-					markupView="lexicon"
-					message="ascending"
-					url="javascript:void(0);"
+					monospaced="<%= true %>"
+					title="ascending"
 				/>
 
 				<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
@@ -92,22 +90,20 @@
 			%>
 
 			<div class="d-inline-flex order-by-type-container">
-				<liferay-ui:icon
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
+				<clay:button
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					displayType="secondary"
 					icon="order-list-up"
-					linkCssClass="btn btn-outline-borderless btn-outline-secondary"
-					markupView="lexicon"
-					message="descending"
-					url="javascript:void(0);"
+					monospaced="<%= true %>"
+					title="descending"
 				/>
 
-				<liferay-ui:icon
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
+				<clay:button
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					displayType="secondary"
 					icon="order-list-down"
-					linkCssClass="btn btn-outline-borderless btn-outline-secondary"
-					markupView="lexicon"
-					message="ascending"
-					url="javascript:void(0);"
+					monospaced="<%= true %>"
+					title="ascending"
 				/>
 
 				<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType2--" type="hidden" value="<%= orderByType2 %>" />

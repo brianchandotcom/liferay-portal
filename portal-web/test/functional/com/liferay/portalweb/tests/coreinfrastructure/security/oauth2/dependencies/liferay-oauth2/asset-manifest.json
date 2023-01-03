@@ -1,0 +1,10 @@
+{
+	"entrypoints": [
+		"static/js/main.51895488.js"
+	],
+	"files": {
+		"index.html": "/liferay-oauth2/index.html",
+		"main.51895488.js.map": "/liferay-oauth2/static/js/main.51895488.js.map",
+		"main.js": "/liferay-oauth2/static/js/main.51895488.js"
+	}
+}

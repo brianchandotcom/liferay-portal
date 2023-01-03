@@ -22,6 +22,7 @@ interface ManagementToolbarProps {
 	badgeClassName?: string;
 	badgeLabel?: string;
 	className?: string;
+	enableBoxShadow?: boolean;
 	entityId: number;
 	externalReferenceCode: string;
 	externalReferenceCodeSaveURL: string;
@@ -42,6 +43,7 @@ export declare function ManagementToolbar({
 	badgeClassName,
 	badgeLabel,
 	className,
+	enableBoxShadow,
 	entityId,
 	externalReferenceCode: initialExternalReferenceCode,
 	externalReferenceCodeSaveURL,

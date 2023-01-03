@@ -31,7 +31,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
@@ -89,24 +88,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			Constants.SYSTEM_BUNDLE_LOCATION);
 
 		for (String dir : PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS) {
-			File file = new File(dir);
+			String filePath = Util.getFilePath(dir);
 
-			try {
-				file = file.getCanonicalFile();
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
-			}
-
-			_watchedDirs.add(file);
-
-			URI uri = file.toURI();
-
-			uri = uri.normalize();
-
-			_watchedDirPaths.add(uri.getPath());
+			_watchedDirPaths.add(filePath);
+			_watchedDirs.add(new File(filePath));
 		}
 
 		_fileInstallers = ServiceTrackerListFactory.open(

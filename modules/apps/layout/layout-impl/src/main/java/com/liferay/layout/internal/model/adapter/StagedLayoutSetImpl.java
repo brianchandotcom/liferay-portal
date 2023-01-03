@@ -37,7 +37,6 @@ import java.time.Instant;
 
 import java.util.Date;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.TreeMap;
 
 /**
@@ -124,8 +123,8 @@ public class StagedLayoutSetImpl
 	}
 
 	@Override
-	public Optional<String> getLayoutSetPrototypeName() {
-		return Optional.ofNullable(_layoutSetPrototypeName);
+	public String getLayoutSetPrototypeName() {
+		return _layoutSetPrototypeName;
 	}
 
 	@Override

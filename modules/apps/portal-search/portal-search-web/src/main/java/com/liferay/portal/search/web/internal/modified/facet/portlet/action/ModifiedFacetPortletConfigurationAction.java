@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -109,7 +110,19 @@ public class ModifiedFacetPortletConfigurationAction
 		_createModifiedFacetDisplayContextBuilder(RenderRequest renderRequest) {
 
 		try {
-			return new ModifiedFacetDisplayContextBuilder(null, renderRequest);
+			ModifiedFacetDisplayContextBuilder
+				modifiedFacetDisplayContextBuilder =
+					new ModifiedFacetDisplayContextBuilder(null, renderRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			modifiedFacetDisplayContextBuilder.setLocale(
+				themeDisplay.getLocale());
+			modifiedFacetDisplayContextBuilder.setTimeZone(
+				themeDisplay.getTimeZone());
+
+			return modifiedFacetDisplayContextBuilder;
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

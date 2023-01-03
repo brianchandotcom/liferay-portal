@@ -25,9 +25,9 @@ const UserOutlet = () => {
 	const {userId} = useParams();
 
 	const [{myUserAccount}, , mutateMyUserAccount] = useContext(TestrayContext);
+
 	const {data, mutate} = useFetch(
-		userId ? liferayUserAccountsRest.getResource(userId as string) : null,
-		undefined
+		userId ? liferayUserAccountsRest.getResource(userId as string) : null
 	);
 
 	const context = {

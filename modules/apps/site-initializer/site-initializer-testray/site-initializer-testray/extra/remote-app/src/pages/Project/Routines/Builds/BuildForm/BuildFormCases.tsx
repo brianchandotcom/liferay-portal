@@ -44,12 +44,11 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 }) => {
 	const {projectId} = useParams();
 
-	const {data: casesResponse} = useFetch<APIResponse<TestrayCase>>(
-		`/cases?filter=${searchUtil.eq(
-			'projectId',
-			projectId as string
-		)}&pageSize=1&fields=id`
-	);
+	const {data: casesResponse} = useFetch<APIResponse<TestrayCase>>('/cases', {
+		fields: 'id',
+		filter: searchUtil.eq('projectId', projectId as string),
+		pageSize: 1,
+	});
 
 	const [modalType, setModalType] = useState<ModalType>({
 		type: 'select-cases',

@@ -37,7 +37,8 @@ const ProjectOutlet = () => {
 	);
 
 	const {data: dataTestrayProjects} = useFetch<APIResponse<TestrayProject>>(
-		'/projects?pageSize=100&fields=id,name'
+		'/projects',
+		{fields: 'id,name', pageSize: 100}
 	);
 
 	const testrayProjects = dataTestrayProjects?.items;

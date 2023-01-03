@@ -66,11 +66,12 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 	>(`/factorcategories`);
 
 	const {data: factorResponse, mutate} = useFetch<APIResponse<TestrayFactor>>(
-		`${testrayFactorRest.resource}&filter=${searchUtil.eq(
-			'routineId',
-			routineId
-		)}`,
-		(response) => testrayFactorRest.transformDataFromList(response)
+		testrayFactorRest.resource,
+		{
+			filter: searchUtil.eq('routineId', routineId),
+			transformData: (response) =>
+				testrayFactorRest.transformDataFromList(response),
+		}
 	);
 
 	const factors = useMemo(() => factorResponse?.items || [], [

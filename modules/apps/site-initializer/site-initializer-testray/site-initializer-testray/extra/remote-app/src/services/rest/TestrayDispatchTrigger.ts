@@ -16,7 +16,7 @@ import Rest from './Rest';
 import {PickList, TestrayDispatchTrigger} from './types';
 
 class TestrayDispatchTriggerImpl extends Rest<
-	Partial<TestrayDispatchTrigger & {dueStatus: string}>,
+	Partial<Omit<TestrayDispatchTrigger, 'dueStatus'> & {dueStatus: string}>,
 	TestrayDispatchTrigger & {dueStatus: PickList}
 > {
 	constructor() {

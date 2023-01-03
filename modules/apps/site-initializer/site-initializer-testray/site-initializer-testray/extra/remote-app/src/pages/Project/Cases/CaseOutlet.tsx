@@ -41,9 +41,13 @@ const CaseOutlet = () => {
 	const {
 		testrayProject,
 	}: {testrayProject: TestrayProject} = useOutletContext();
+
 	const {data: testrayCase, mutate} = useFetch<TestrayCase>(
 		testrayCaseRest.getResource(caseId as string),
-		(response) => testrayCaseRest.transformData(response)
+		{
+			transformData: (response) =>
+				testrayCaseRest.transformData(response),
+		}
 	);
 
 	const hasOtherParams = !!Object.values(otherParams).length;

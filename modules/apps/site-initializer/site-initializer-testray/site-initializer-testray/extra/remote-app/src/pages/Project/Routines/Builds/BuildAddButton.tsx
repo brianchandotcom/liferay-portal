@@ -38,7 +38,6 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 	const [searchTemplate, setSearchTemplate] = useState('');
 
 	const debouncedValue = useDebounce(searchTemplate, 1000);
-
 	const searchBuilder = new SearchBuilder();
 
 	const baseFilter = searchBuilder
@@ -54,11 +53,16 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 	const searchFilter = baseFilter.contains('name', debouncedValue).build();
 
 	const {data: buildResponseWithSearch} = useFetch<APIResponse<TestrayBuild>>(
-		`${testrayBuildImpl.resource}&filter=${searchFilter}`
+		testrayBuildImpl.resource,
+		{filter: searchFilter}
 	);
 
 	const {data: buildResponse} = useFetch<APIResponse<TestrayBuild>>(
-		`${testrayBuildImpl.resource}&filter=${totalFilter}&fields=id`
+		testrayBuildImpl.resource,
+		{
+			fields: 'id',
+			filter: totalFilter,
+		}
 	);
 
 	const buildTemplates = buildResponseWithSearch?.items || [];
@@ -76,7 +80,6 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 					path: './create/template/true',
 				},
 			],
-
 			title: i18n.translate('create'),
 		},
 	];

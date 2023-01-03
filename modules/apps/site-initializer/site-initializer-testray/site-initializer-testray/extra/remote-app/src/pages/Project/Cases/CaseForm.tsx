@@ -74,10 +74,17 @@ const CaseForm = () => {
 
 	const {data: testrayComponentsData} = useFetch<
 		APIResponse<TestrayComponent>
-	>('/components?fields=id,name&pageSize=1000');
+	>('/components', {
+		fields: 'id,name',
+		pageSize: 1000,
+	});
 
 	const {data: testrayCaseTypesData} = useFetch<APIResponse<TestrayCaseType>>(
-		'/casetypes?fields=id,name&pageSize=1000'
+		'/casetypes',
+		{
+			fields: 'id,name',
+			pageSize: 1000,
+		}
 	);
 
 	const testrayCaseTypes = testrayCaseTypesData?.items || [];
@@ -115,8 +122,8 @@ const CaseForm = () => {
 		onSubmit(
 			{...form, projectId},
 			{
-				create: (...params) => testrayCaseRest.create(...params),
-				update: (...params) => testrayCaseRest.update(...params),
+				create: (data) => testrayCaseRest.create(data),
+				update: (id, data) => testrayCaseRest.update(id, data),
 			}
 		)
 			.then(mutateTestrayCase)

@@ -20,7 +20,6 @@ import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {HeaderContext} from '../../context/HeaderContext';
-import {TestrayDyspatchTrigger} from '../../services/rest';
 import {Permission} from '../../util/permission';
 import BreadcrumbFinder from '../BreadcrumbFinder';
 import DropDown from '../DropDown';
@@ -35,12 +34,17 @@ type BreadCrumbTriggerProps = {
 };
 
 const Header = () => {
-	const [{dropdown, headerActions, heading, symbol, tabs}] = useContext(
-		HeaderContext
-	);
+	const [
+		{
+			dropdown,
+			headerActions,
+			heading,
+			symbol,
+			tabs,
+			testrayDispatchTriggers,
+		},
+	] = useContext(HeaderContext);
 	const navigate = useNavigate();
-
-	const notifications: TestrayDyspatchTrigger[] = [];
 
 	const filteredHeaderActions = Permission.filterActions(
 		headerActions.actions,
@@ -146,7 +150,9 @@ const Header = () => {
 							/>
 						)}
 
-						<NotificationPopover notifications={notifications} />
+						<NotificationPopover
+							testrayDispatchTriggers={testrayDispatchTriggers}
+						/>
 					</div>
 				</div>
 			</div>

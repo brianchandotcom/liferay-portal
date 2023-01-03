@@ -27,14 +27,7 @@ import {SubTaskStatuses} from '../util/statuses';
 import {useFetch} from './useFetch';
 
 export function useSidebarTask() {
-	const taskSearchBuilder = new SearchBuilder();
-	const subTaskSearchBuilder = new SearchBuilder();
-
-	const taskFilters = taskSearchBuilder
-		.eq('userId', Liferay.ThemeDisplay.getUserId())
-		.build();
-
-	const subTasksFilter = subTaskSearchBuilder
+	const subTasksFilter = new SearchBuilder()
 		.eq('userId', Liferay.ThemeDisplay.getUserId())
 		.and()
 		.ne('dueStatus', SubTaskStatuses.MERGED)
@@ -42,14 +35,26 @@ export function useSidebarTask() {
 		.ne('dueStatus', SubTaskStatuses.COMPLETE)
 		.build();
 
+	const taskFilters = new SearchBuilder()
+		.eq('userId', Liferay.ThemeDisplay.getUserId())
+		.build();
+
 	const {data: tasksUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
-		`${testrayTaskUsersImpl.resource}&filter=${taskFilters}`,
-		(response) => testrayTaskUsersImpl.transformDataFromList(response)
+		testrayTaskUsersImpl.resource,
+		{
+			filter: taskFilters,
+			transformData: (response) =>
+				testrayTaskUsersImpl.transformDataFromList(response),
+		}
 	);
 
 	const {data: subtasksResponse} = useFetch<APIResponse<TestraySubTask>>(
-		`${testraySubTaskImpl.resource}&filter=${subTasksFilter}`,
-		(response) => testraySubTaskImpl.transformDataFromList(response)
+		testraySubTaskImpl.resource,
+		{
+			filter: subTasksFilter,
+			transformData: (response) =>
+				testraySubTaskImpl.transformDataFromList(response),
+		}
 	);
 
 	const subTasks = useMemo(() => subtasksResponse?.items || [], [

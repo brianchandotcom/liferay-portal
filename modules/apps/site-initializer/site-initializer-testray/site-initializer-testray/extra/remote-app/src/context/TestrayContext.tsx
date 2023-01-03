@@ -114,9 +114,8 @@ const TestrayContextProvider: React.FC<{
 		compareRuns: storageValue?.compareRuns,
 	});
 
-	const {data: myUserAccount, mutate} = useFetch(
-		'/my-user-account',
-		(user: UserAccount) => ({
+	const {data: myUserAccount, mutate} = useFetch('/my-user-account', {
+		transformData: (user: UserAccount) => ({
 			additionalName: user?.additionalName,
 			alternateName: user?.alternateName,
 			emailAddress: user?.emailAddress,
@@ -127,8 +126,8 @@ const TestrayContextProvider: React.FC<{
 			roleBriefs: user?.roleBriefs,
 			userGroupBriefs: user?.userGroupBriefs,
 			uuid: user?.uuid,
-		})
-	);
+		}),
+	});
 
 	const compareRuns = useMemo(() => state.compareRuns, [state.compareRuns]);
 

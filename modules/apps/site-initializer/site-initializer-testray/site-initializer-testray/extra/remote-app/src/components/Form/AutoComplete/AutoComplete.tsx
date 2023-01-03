@@ -39,10 +39,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 	const debouncedValue = useDebounce(value, 1000);
 
 	const {called, data, error, isValidating} = useFetch(
-		debouncedValue
-			? `${resource}/?filter=${onSearch(debouncedValue)}`
-			: null,
-		transformData
+		debouncedValue ? resource : null,
+		{
+			filter: onSearch(debouncedValue),
+			transformData,
+		}
 	);
 
 	const items = data?.items || [];

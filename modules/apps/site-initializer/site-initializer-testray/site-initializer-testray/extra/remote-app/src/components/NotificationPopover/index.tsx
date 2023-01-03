@@ -18,35 +18,54 @@ import classNames from 'classnames';
 import {useState} from 'react';
 
 import i18n from '../../i18n';
-import {TestrayDyspatchTrigger} from '../../services/rest';
+import {APIResponse, TestrayDispatchTrigger} from '../../services/rest';
+import {getTimeFromNow} from '../../util/date';
+import {DispatchTriggerStatuses} from '../../util/statuses';
 import Avatar from '../Avatar';
 import EmptyState from '../EmptyState';
 import Form from '../Form';
 import StatusBadge from '../StatusBadge';
 
 type NotificationPopoverProps = {
-	notifications: TestrayDyspatchTrigger[];
+	testrayDispatchTriggers: APIResponse<TestrayDispatchTrigger>;
 };
 
 const NotificationPopover: React.FC<NotificationPopoverProps> = ({
-	notifications,
+	testrayDispatchTriggers,
 }) => {
 	const [visible, setVisible] = useState<boolean>(false);
-	const notCompleted = notifications.filter(
-		({status}) => status !== 'complete'
-	);
+
+	const notifications = testrayDispatchTriggers?.items ?? [];
+
+	const jobsInProgress =
+		testrayDispatchTriggers?.facets[0].facetValues
+			.filter((facetValue) =>
+				([
+					DispatchTriggerStatuses.INPROGRESS,
+					DispatchTriggerStatuses.SCHEDULED,
+				] as string[]).includes(facetValue.term)
+			)
+			.map((facetValue) => facetValue.numberOfOccurrences)
+			.reduce(
+				(previousValue, currentValue) => previousValue + currentValue,
+				0
+			) ?? 0;
 
 	return (
 		<>
 			<div
 				className="align-items-center cursor-pointer d-flex mx-2"
-				onClick={() => setVisible((visible: boolean) => !visible)}
+				onClick={() => setVisible((visible) => !visible)}
+				title={i18n.sub(
+					'x-jobs-in-progress',
+					jobsInProgress.toString()
+				)}
 			>
 				<ClayIcon fontSize={22} symbol="bell-on" />
 
-				{notCompleted && !!notCompleted.length && (
-					<span className={classNames('header-notification show ')}>
-						{notCompleted.length}
+				{jobsInProgress > 0 && (
+					<span className="header-notification show">
+						{jobsInProgress}
 					</span>
 				)}
 			</div>
@@ -86,43 +105,47 @@ const NotificationPopover: React.FC<NotificationPopoverProps> = ({
 									</ClayTable.Cell>
 
 									<ClayTable.Cell headingCell>
+										{i18n.translate('created')}
+									</ClayTable.Cell>
+
+									<ClayTable.Cell headingCell>
 										{i18n.translate('creator')}
 									</ClayTable.Cell>
 								</ClayTable.Row>
 							</ClayTable.Head>
 
 							<ClayTable.Body>
-								{notifications.map(
-									(notification: any, index) => (
-										<ClayTable.Row key={index}>
-											<ClayTable.Cell headingTitle>
-												{notification.type}
-											</ClayTable.Cell>
+								{notifications.map((notification, index) => (
+									<ClayTable.Row key={index}>
+										<ClayTable.Cell headingTitle>
+											{notification.type}
+										</ClayTable.Cell>
 
-											<ClayTable.Cell>
-												<StatusBadge
-													type={notification.status}
-												>
-													{notification.status}
-												</StatusBadge>
-											</ClayTable.Cell>
+										<ClayTable.Cell>
+											<StatusBadge
+												type={
+													notification.dueStatus.key.toLowerCase() as any
+												}
+											>
+												{notification.dueStatus.name}
+											</StatusBadge>
+										</ClayTable.Cell>
 
-											<ClayTable.Cell>
-												<Avatar
-													displayName={true}
-													name={
-														notification.creator
-															.name
-													}
-													url={
-														notification.creator
-															.urlImage
-													}
-												/>
-											</ClayTable.Cell>
-										</ClayTable.Row>
-									)
-								)}
+										<ClayTable.Cell headingCell>
+											{getTimeFromNow(
+												notification.dateCreated
+											)}
+										</ClayTable.Cell>
+
+										<ClayTable.Cell>
+											<Avatar
+												displayName={true}
+												name={notification.creator.name}
+												url={notification.creator.image}
+											/>
+										</ClayTable.Cell>
+									</ClayTable.Row>
+								))}
 							</ClayTable.Body>
 						</ClayTable>
 					) : (

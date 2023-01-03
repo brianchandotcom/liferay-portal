@@ -78,18 +78,16 @@ const TestflowOutlet = () => {
 
 	const {data: testrayTask, mutate: mutateTask} = useFetch<TestrayTask>(
 		testrayTaskImpl.getResource(taskId),
-		(response) => testrayTaskImpl.transformData(response)
+		{transformData: (response) => testrayTaskImpl.transformData(response)}
 	);
 
 	const {data: testrayTaskCaseTypes} = useFetch<
 		APIResponse<TestrayTaskCaseTypes>
-	>(
-		`${testrayTaskCaseTypesImpl.resource}&filter=${searchUtil.eq(
-			'taskId',
-			taskId
-		)}`,
-		(response) => testrayTaskCaseTypesImpl.transformDataFromList(response)
-	);
+	>(testrayTaskCaseTypesImpl.resource, {
+		filter: searchUtil.eq('taskId', taskId),
+		transformData: (response) =>
+			testrayTaskCaseTypesImpl.transformDataFromList(response),
+	});
 
 	const {data: testrayTaskUser, revalidate: revalidateTaskUser} = useFetch<
 		APIResponse<TestrayTaskUser>
@@ -97,8 +95,12 @@ const TestflowOutlet = () => {
 		`${testrayTaskImpl.getNestedObject(
 			'taskToTasksUsers',
 			Number(taskId)
-		)}?nestedFields=task,user`,
-		(response) => testrayTaskUsersImpl.transformDataFromList(response)
+		)}`,
+		{
+			nestedFields: 'task,user',
+			transformData: (response) =>
+				testrayTaskUsersImpl.transformDataFromList(response),
+		}
 	);
 
 	const searchBuilder = useSearchBuilder({useURIEncode: false});
@@ -115,9 +117,11 @@ const TestflowOutlet = () => {
 
 	const {data: testraySubtasks, revalidate: revalidateSubtask} = useFetch<
 		APIResponse<TestraySubTask>
-	>(
-		`${testraySubTaskImpl.resource}&fields=id&filter=${subTaskFilter}&pageSize=1`
-	);
+	>(`${testraySubTaskImpl.resource}`, {
+		fields: 'id',
+		filter: subTaskFilter,
+		pageSize: 1,
+	});
 
 	if (!testrayTask) {
 		return null;

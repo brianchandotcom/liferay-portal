@@ -35,7 +35,9 @@ const RequirementsOutlet = () => {
 
 	const {data: testrayRequirement, mutate} = useFetch<TestrayRequirement>(
 		getRequirementQuery(requirementId),
-		getRequirementTransformData
+		{
+			transformData: getRequirementTransformData,
+		}
 	);
 
 	const {setHeaderActions, setHeading} = useHeader({

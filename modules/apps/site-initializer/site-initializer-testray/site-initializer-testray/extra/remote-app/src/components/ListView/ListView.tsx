@@ -97,34 +97,17 @@ const ListView: React.FC<ListViewProps> = ({
 	} = listViewContext;
 
 	const getURLSearchParams = useCallback(
-		(url: string) => {
-			const urlSearchParams = new URLSearchParams();
-
-			urlSearchParams.set(
-				'sort',
-				sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : ''
-			);
-			urlSearchParams.set('page', listViewContext.page.toString());
-			urlSearchParams.set(
-				'pageSize',
-				listViewContext.pageSize.toString()
-			);
-			urlSearchParams.set(
-				'filter',
+		() => ({
+			filter:
 				SearchBuilder.createFilter(
 					filters.filter,
 					_variables?.filter
-				) || ''
-			);
-
-			if (forceRefetch) {
-				urlSearchParams.set('ts', forceRefetch.toString());
-			}
-
-			const operator = url.includes('?') ? '&' : '?';
-
-			return `${url}${operator}${urlSearchParams.toString()}`;
-		},
+				) || '',
+			forceRefetch,
+			page: listViewContext.page,
+			pageSize: listViewContext.pageSize,
+			sort: sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : '',
+		}),
 		[
 			forceRefetch,
 			_variables?.filter,
@@ -136,10 +119,10 @@ const ListView: React.FC<ListViewProps> = ({
 		]
 	);
 
-	const {data: response, error, loading, mutate} = useFetch(
-		getURLSearchParams(resource),
-		transformData
-	);
+	const {data: response, error, loading, mutate} = useFetch(resource, {
+		transformData,
+		...getURLSearchParams(),
+	});
 
 	const {actions = {}, items = [], page, pageSize, totalCount = 0} =
 		response || {};

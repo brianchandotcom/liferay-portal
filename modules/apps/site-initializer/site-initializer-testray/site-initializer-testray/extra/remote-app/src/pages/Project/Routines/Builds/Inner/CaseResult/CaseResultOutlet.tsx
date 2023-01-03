@@ -53,9 +53,10 @@ const CaseResultOutlet = () => {
 
 	const {data: testrayCaseResult, mutate: mutateCaseResult} = useFetch<
 		TestrayCaseResult
-	>(testrayCaseResultImpl.getResource(caseResultId as string), (response) =>
-		testrayCaseResultImpl.transformData(response)
-	);
+	>(testrayCaseResultImpl.getResource(caseResultId as string), {
+		transformData: (response) =>
+			testrayCaseResultImpl.transformData(response),
+	});
 
 	const {data: mbMessage} = useFetch(
 		testrayCaseResult?.mbMessageId
@@ -66,12 +67,12 @@ const CaseResultOutlet = () => {
 	);
 
 	const {data, mutate: mutateCaseResultIssues} = useFetch(
-		`${testrayCaseResultsIssuesImpl.resource}&filter=${searchUtil.eq(
-			'caseResultId',
-			caseResultId as string
-		)}`,
-		(response) =>
-			testrayCaseResultsIssuesImpl.transformDataFromList(response)
+		testrayCaseResultsIssuesImpl.resource,
+		{
+			filter: searchUtil.eq('caseResultId', caseResultId as string),
+			transformData: (response) =>
+				testrayCaseResultsIssuesImpl.transformDataFromList(response),
+		}
 	);
 
 	const caseResultsIssues = data?.items || [];

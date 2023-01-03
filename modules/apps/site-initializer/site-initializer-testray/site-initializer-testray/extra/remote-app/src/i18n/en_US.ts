@@ -419,6 +419,7 @@ export default {
 	'x-is-a-required-field': '{0} is a required field.',
 	'x-items': '{0} Items',
 	'x-items-cannot-be-deleted': '{0} items cannot be deleted',
+	'x-jobs-in-progress': '{0} Jobs in Progress',
 	'x-minutes': '{0} Minutes',
 	'x-results-for-x': '{0} Results for {1}',
 	'x-tests-were-split-into-x-successfully-view-x':

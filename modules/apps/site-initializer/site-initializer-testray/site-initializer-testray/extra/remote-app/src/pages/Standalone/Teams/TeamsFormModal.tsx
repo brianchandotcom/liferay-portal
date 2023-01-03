@@ -29,7 +29,7 @@ import {
 	testrayComponentImpl,
 	testrayTeamImpl,
 } from '../../../services/rest';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 
 type TeamForm = typeof yupSchema.team.__outputType;
 
@@ -51,8 +51,6 @@ export type SelectComponentsProps = {
 	teamId: number;
 };
 
-const UNASSIGNED_TEAM_ID = 0;
-
 const SelectComponents: React.FC<SelectComponentsProps> = ({
 	projectId,
 	setState,
@@ -60,20 +58,23 @@ const SelectComponents: React.FC<SelectComponentsProps> = ({
 }) => {
 	const {data: unassigned, isValidating} = useFetch<
 		APIResponse<TestrayComponent>
-	>(
-		`/components?filter=${searchUtil.eq(
-			'projectId',
-			projectId
-		)} and ${searchUtil.eq('teamId', UNASSIGNED_TEAM_ID)}`
-	);
+	>('/components', {
+		filter: new SearchBuilder()
+			.eq('projectId', projectId)
+			.and()
+			.eq('teamId', testrayComponentImpl.UNASSIGNED_TEAM_ID)
+			.build(),
+	});
 
 	const {data: current} = useFetch<APIResponse<TestrayComponent>>(
-		teamId && !isValidating
-			? `/components?filter=${searchUtil.eq(
-					'projectId',
-					projectId
-			  )} and ${searchUtil.eq('teamId', teamId)}`
-			: null
+		teamId && !isValidating ? '/components' : null,
+		{
+			filter: new SearchBuilder()
+				.eq('projectId', projectId)
+				.and()
+				.eq('teamId', teamId)
+				.build(),
+		}
 	);
 
 	const getComponentsDualBox = useCallback(() => {

@@ -24,10 +24,8 @@ import {searchUtil} from '../../../util/search';
 import useRoutineActions from './useRoutineActions';
 
 const Routines = () => {
-	const {projectId: _projectId} = useParams();
+	const {projectId} = useParams();
 	const {actions, navigate} = useRoutineActions();
-
-	const projectId = Number(_projectId);
 
 	return (
 		<Container>
@@ -87,10 +85,10 @@ const Routines = () => {
 							value: i18n.translate('metrics'),
 						},
 					],
-					navigateTo: ({id}) => id?.toString(),
+					navigateTo: ({id}) => id.toString(),
 				}}
 				variables={{
-					filter: searchUtil.eq('projectId', projectId),
+					filter: searchUtil.eq('projectId', projectId as string),
 				}}
 			/>
 		</Container>

@@ -50,13 +50,11 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	const {
 		data: subTaskIssuesResponse,
 		revalidate: revalidateSubtaskIssues,
-	} = useFetch(
-		`${testraySubtaskIssuesImpl.resource}&filter=${searchUtil.eq(
-			'subtaskId',
-			subtask.id
-		)}`,
-		(response) => testraySubtaskIssuesImpl.transformDataFromList(response)
-	);
+	} = useFetch(testraySubtaskIssuesImpl.resource, {
+		filter: searchUtil.eq('subtaskId', subtask.id),
+		transformData: (response) =>
+			testraySubtaskIssuesImpl.transformDataFromList(response),
+	});
 
 	const {data: mbMessage} = useFetch(
 		liferayMessageBoardImpl.getMessagesIdURL(subtask.mbMessageId)

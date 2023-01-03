@@ -24,6 +24,7 @@ const statusBarClassNames = {
 	inprogress: 'in-progress',
 	other: 'primary',
 	passed: 'passed',
+	scheduled: 'untested',
 	self: 'info',
 	testfix: 'test-fix',
 	untested: 'untested',

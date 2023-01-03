@@ -60,18 +60,21 @@ const useBreadcrumb = (entities: Entity[]) => {
 
 	const [breadCrumb, setBreadCrumb] = useState<BreadCrumb[]>([]);
 	const [search, setSearch] = useState('');
-
 	const debouncedSearch = useDebounce(search, 500);
 
 	const currentEntity = entities[breadCrumb.length];
+
 	const ids = breadCrumb.map(({value}) => value);
+
 	const {transformer, url} = getEntityUrlAndNormalizer(
 		currentEntity,
 		ids,
 		debouncedSearch
 	);
 
-	const {data} = useFetch<APIResponse<any>>(url, transformer);
+	const {data} = useFetch<APIResponse<any>>(url, {
+		transformData: transformer,
+	});
 
 	const items = useMemo(() => data?.items || [], [data?.items]);
 

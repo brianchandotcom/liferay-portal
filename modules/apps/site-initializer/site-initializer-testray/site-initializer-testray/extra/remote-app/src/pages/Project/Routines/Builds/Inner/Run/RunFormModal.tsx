@@ -72,17 +72,21 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		: searchUtil.eq('routineId', routineId as string);
 
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
-		`${testrayFactorRest.resource}&filter=${filter}&pageSize=1000`,
-		(response) => testrayFactorRest.transformDataFromList(response)
+		testrayFactorRest.resource,
+		{
+			filter,
+			pageSize: 1000,
+			transformData: (response) =>
+				testrayFactorRest.transformDataFromList(response),
+		}
 	);
 
 	const {data: runResponse} = useFetch<APIResponse<RunForm>>(
-		selectedRun
-			? null
-			: `${testrayRunImpl.resource}&filter=${searchUtil.eq(
-					'buildId',
-					buildId as string
-			  )}&pageSize=1000`
+		selectedRun ? null : testrayRunImpl.resource,
+		{
+			filter: searchUtil.eq('buildId', buildId as string),
+			pageSize: 1000,
+		}
 	);
 
 	const getLastRunNumber = () => {

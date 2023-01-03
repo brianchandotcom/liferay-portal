@@ -65,11 +65,13 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 	>([[] as any]);
 
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
-		`${testrayFactorRest.resource}&filter=${searchUtil.eq(
-			'routineId',
-			routineId as string
-		)}&pageSize=100`,
-		(response) => testrayFactorRest.transformDataFromList(response)
+		testrayFactorRest.resource,
+		{
+			filter: searchUtil.eq('routineId', routineId as string),
+			pageSize: 100,
+			transformData: (response) =>
+				testrayFactorRest.transformDataFromList(response),
+		}
 	);
 
 	const factorItems = useMemo(() => factorsData?.items || [], [

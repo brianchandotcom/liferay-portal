@@ -163,12 +163,68 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the user with Account role can view the order details through the My Workflow Tasks page"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AccountUserCanViewOrderDetails {
+		task ("Given a Minium site with a Account Administrator user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		// TODO LRQA-69109 AccountUserCanViewOrderDetails pending implementation
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "account@liferay.com",
+				userFirstName = "Account",
+				userLastName = "Administrator",
+				userRole = "Account Administrator",
+				userScreenName = "accountadmin",
+				userSiteMembership = "Minium");
+		}
 
+		task ("And the admin enabled the 'Buyer Order Approval Workflow' for Minium Portal") {
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Workflow.setWorkflowToMiniumChannel(workflowDefinition = "Single Approver (Version 1)");
+		}
+
+		task ("When the default Test user reviews and submits an order") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Review Order");
+
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then assert the account user can see the active order in Pending Orders page through the My Workflow Tasks page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "account@liferay.com",
+				userLoginFullName = "Account Administrator");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+			Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Order ${activeOrderId}");
+
+			ClickNoError(
+				key_text = "view",
+				locator1 = "Icon#ANY_LAST");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
+		}
 	}
 
 	@priority = "4"

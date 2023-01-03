@@ -15,11 +15,14 @@ const getQuarter = (quarter) => {
 
 		if (quarter === 'quarter1') {
 			return month === 1 || month === 2 || month === 3;
-		} else if (quarter === 'quarter2') {
+		}
+		else if (quarter === 'quarter2') {
 			return month === 4 || month === 5 || month === 6;
-		} else if (quarter === 'quarter3') {
+		}
+		else if (quarter === 'quarter3') {
 			return month === 7 || month === 8 || month === 9;
-		} else if (quarter === 'quarter4') {
+		}
+		else if (quarter === 'quarter4') {
 			return month === 10 || month === 11 || month === 12;
 		}
 	};

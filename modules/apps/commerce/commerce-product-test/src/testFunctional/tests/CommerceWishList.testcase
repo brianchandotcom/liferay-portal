@@ -1137,6 +1137,8 @@ definition {
 
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
 			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
 
 			SelectFrameTop();
@@ -1165,7 +1167,7 @@ definition {
 		}
 
 		task ("And when the user go to next page") {
-			Click(locator1 = "Pagination#NEXT_LINK");
+			Click(locator1 = "ACUtils#NEXT_PAGES");
 		}
 
 		task ("Then only two wish lists are displayed") {
@@ -1187,23 +1189,23 @@ definition {
 		}
 
 		task ("And when the user go to first page") {
-			Click(locator1 = "Pagination#PREVIOUS_LINK");
+			Click(locator1 = "ACUtils#PREVIOUS_PAGES");
 		}
 
 		task ("Then the first page is displayed") {
 			AssertElementPresent(
 				key_pageNumber = "1",
-				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_PAGINATION");
 		}
 
 		task ("And when the user go to second page") {
-			Click(locator1 = "Pagination#NEXT_LINK");
+			Click(locator1 = "ACUtils#NEXT_PAGES");
 		}
 
 		task ("Then the first page is displayed") {
 			AssertElementPresent(
 				key_pageNumber = "2",
-				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_PAGINATION");
 		}
 	}
 

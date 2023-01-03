@@ -2321,7 +2321,7 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		Click(locator1 = "Pagination#NEXT_LINK");
+		Click(locator1 = "ACUtils#NEXT_PAGES");
 
 		AssertTextEquals(
 			locator1 = "Pagination#PAGINATION_ITEMS_PER_PAGE",
@@ -2351,7 +2351,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		Click(locator1 = "Pagination#NEXT_LINK");
+		Click(locator1 = "ACUtils#NEXT_PAGES");
 
 		CommerceEntry.viewPaginationResults(results = "Showing 11 to 20 of 54");
 

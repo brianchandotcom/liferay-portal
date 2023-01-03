@@ -736,7 +736,7 @@ definition {
 							locator1 = "LexiconTable#TABLE_ENTRY");
 					}
 
-					Click(locator1 = "Pagination#NEXT_LINK");
+					Click(locator1 = "ACUtils#NEXT_PAGES");
 
 					CommerceEntry.viewPaginationResults(results = "Showing 5 to 8 of 247");
 
@@ -750,7 +750,7 @@ definition {
 							locator1 = "LexiconTable#TABLE_ENTRY");
 					}
 
-					Click(locator1 = "Pagination#PREVIOUS_LINK");
+					Click(locator1 = "ACUtils#PREVIOUS_PAGES");
 
 					AssertElementNotPresent(
 						key_rowNumber = "5",

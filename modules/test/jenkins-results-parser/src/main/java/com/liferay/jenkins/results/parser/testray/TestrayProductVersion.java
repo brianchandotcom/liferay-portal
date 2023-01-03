@@ -47,8 +47,8 @@ public class TestrayProductVersion {
 		}
 	}
 
-	public int getID() {
-		return _jsonObject.getInt("testrayProductVersionId");
+	public long getID() {
+		return _jsonObject.getLong("testrayProductVersionId");
 	}
 
 	public String getName() {

@@ -88,7 +88,7 @@ public class TestrayProject {
 						this, jsonObject.getJSONObject("data"));
 
 				_testrayProductVersionsByID.put(
-					getID(), newTestrayProductVersion);
+					newTestrayProductVersion.getID(), newTestrayProductVersion);
 				_testrayProductVersionsByName.put(
 					testrayProductVersionName, newTestrayProductVersion);
 
@@ -299,7 +299,7 @@ public class TestrayProject {
 	private static final int _DELTA = 25;
 
 	private final JSONObject _jsonObject;
-	private Map<Integer, TestrayProductVersion> _testrayProductVersionsByID;
+	private Map<Long, TestrayProductVersion> _testrayProductVersionsByID;
 	private Map<String, TestrayProductVersion> _testrayProductVersionsByName;
 	private Map<Integer, TestrayRoutine> _testrayRoutinesByID;
 	private Map<String, TestrayRoutine> _testrayRoutinesByName;

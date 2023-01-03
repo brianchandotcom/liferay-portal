@@ -99,7 +99,7 @@ public class DispatchTaskExecutorRegistryImpl
 		Set<String> disabledFeatureFlags = new HashSet<>();
 
 		for (String propertyName : properties.stringPropertyNames()) {
-			if (GetterUtil.getBoolean(properties.getProperty(propertyName))) {
+			if (!GetterUtil.getBoolean(properties.getProperty(propertyName))) {
 				disabledFeatureFlags.add(propertyName);
 			}
 		}

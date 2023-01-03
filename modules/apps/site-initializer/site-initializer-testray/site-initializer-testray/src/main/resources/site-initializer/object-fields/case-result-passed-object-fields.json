@@ -1,0 +1,39 @@
+{
+	"DBType": "String",
+	"businessType": "Aggregation",
+	"externalReferenceCode": "CASE-RESULTS-PASSED",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"label": {
+		"en_US": "Case Results Passed"
+	},
+	"name": "caseResultPassed",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectFieldSettings": [
+		{
+			"name": "objectRelationshipName",
+			"value": "buildToCaseResult"
+		},
+		{
+			"name": "filters",
+			"value": [
+				{
+					"filterBy": "dueStatus",
+					"filterType": "includes",
+					"json": {
+						"in": [
+							"PASSED"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "function",
+			"value": "COUNT"
+		}
+	],
+	"required": false,
+	"state": false,
+	"system": false
+}

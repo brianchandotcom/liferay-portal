@@ -1,0 +1,40 @@
+{
+	"DBType": "String",
+	"businessType": "Aggregation",
+	"externalReferenceCode": "CASE-RESULTS-INCOMPLETE",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"label": {
+		"en_US": "Case Results Incomplete"
+	},
+	"name": "caseResultIncomplete",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectFieldSettings": [
+		{
+			"name": "objectRelationshipName",
+			"value": "buildToCaseResult"
+		},
+		{
+			"name": "filters",
+			"value": [
+				{
+					"filterBy": "dueStatus",
+					"filterType": "includes",
+					"json": {
+						"in": [
+							"INCOMPLETE",
+							"UNTESTED"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "function",
+			"value": "COUNT"
+		}
+	],
+	"required": false,
+	"state": false,
+	"system": false
+}

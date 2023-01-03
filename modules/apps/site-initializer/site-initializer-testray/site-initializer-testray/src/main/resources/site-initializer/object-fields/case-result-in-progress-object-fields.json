@@ -1,0 +1,39 @@
+{
+	"DBType": "String",
+	"businessType": "Aggregation",
+	"externalReferenceCode": "CASE-RESULTS-IN-PROGRESS",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"label": {
+		"en_US": "Case Results In Progress"
+	},
+	"name": "caseResultInProgress",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectFieldSettings": [
+		{
+			"name": "objectRelationshipName",
+			"value": "buildToCaseResult"
+		},
+		{
+			"name": "filters",
+			"value": [
+				{
+					"filterBy": "dueStatus",
+					"filterType": "includes",
+					"json": {
+						"in": [
+							"INPROGRESS"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "function",
+			"value": "COUNT"
+		}
+	],
+	"required": false,
+	"state": false,
+	"system": false
+}

@@ -1527,6 +1527,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			end = filteredLayouts.size();
 		}
 
+		if (end <= start) {
+			return Collections.emptyList();
+		}
+
 		return filteredLayouts.subList(start, end);
 	}
 

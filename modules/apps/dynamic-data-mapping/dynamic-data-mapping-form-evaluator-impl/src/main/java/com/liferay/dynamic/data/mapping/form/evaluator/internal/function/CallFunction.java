@@ -211,10 +211,14 @@ public class CallFunction
 					output = ddmDataProviderResponse.getOutput(
 						outputName, Number.class);
 
-					output = new BigDecimal(output.toString());
+					if (output != null) {
+						output = new BigDecimal(output.toString());
+					}
 				}
 
-				_setDDMFormFieldValue(ddmFormFieldName, output);
+				if (Validator.isNotNull(output)) {
+					_setDDMFormFieldValue(ddmFormFieldName, output);
+				}
 			}
 		}
 	}

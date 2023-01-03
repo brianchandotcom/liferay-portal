@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	immediate = true,
 	service = {
 		DummyFolderWithMissingLayoutPortletDataHandler.class,
 		PortletDataHandler.class

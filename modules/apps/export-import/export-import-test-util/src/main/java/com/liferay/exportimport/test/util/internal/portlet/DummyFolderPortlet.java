@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.preferences-unique-per-layout=false",
 		"javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER,

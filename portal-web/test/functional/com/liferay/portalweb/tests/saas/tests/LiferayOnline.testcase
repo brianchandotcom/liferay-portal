@@ -515,7 +515,7 @@ definition {
 
 		task ("Assert the Remote Apps Header Presence") {
 			AssertElementPresent(
-				key_header = "Remote Apps",
+				key_header = "Client Extensions",
 				locator1 = "WorkflowSubmissions#DETAIL_PAGE_HEADER");
 		}
 	}

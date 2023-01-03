@@ -776,33 +776,17 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			category = "People",
+		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
-			portlet = "Memberships");
+			userEmailAddress = "user1@liferay.com");
 
-		Depot.assignUserAsMember(
-			depotName = "Test Depot Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignAssetLibraryRole(
 			roleTitle = "Asset Library Content Reviewer",
 			userScreenName = "usersn");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Workflow");
+		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

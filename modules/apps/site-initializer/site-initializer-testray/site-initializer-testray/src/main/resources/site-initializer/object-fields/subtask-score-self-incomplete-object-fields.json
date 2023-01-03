@@ -1,0 +1,44 @@
+{
+	"DBType": "String",
+	"businessType": "Aggregation",
+	"externalReferenceCode": "SUBTASK-SCORE-SELF-INCOMPLETE",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"label": {
+		"en_US": "Subtask Score Self Incomplete"
+	},
+	"name": "subTaskScoreSelfIncomplete",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Task$]",
+	"objectFieldSettings": [
+		{
+			"name": "objectRelationshipName",
+			"value": "taskToSubtasks"
+		},
+		{
+			"name": "filters",
+			"value": [
+				{
+					"filterBy": "dueStatus",
+					"filterType": "includes",
+					"json": {
+						"in": [
+							"OPEN",
+							"INANALYSIS"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "function",
+			"value": "SUM"
+		},
+		{
+			"name": "objectFieldName",
+			"value": "score"
+		}
+	],
+	"required": false,
+	"state": false,
+	"system": false
+}

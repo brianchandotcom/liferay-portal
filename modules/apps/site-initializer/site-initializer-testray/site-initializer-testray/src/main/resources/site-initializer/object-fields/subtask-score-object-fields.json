@@ -1,0 +1,29 @@
+{
+	"DBType": "String",
+	"businessType": "Aggregation",
+	"externalReferenceCode": "SUBTASK-SCORE",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"label": {
+		"en_US": "Subtask Score"
+	},
+	"name": "subTaskScore",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Task$]",
+	"objectFieldSettings": [
+		{
+			"name": "objectRelationshipName",
+			"value": "taskToSubtasks"
+		},
+		{
+			"name": "function",
+			"value": "SUM"
+		},
+		{
+			"name": "objectFieldName",
+			"value": "score"
+		}
+	],
+	"required": false,
+	"state": false,
+	"system": false
+}

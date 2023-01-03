@@ -24,11 +24,13 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import updateFormItemConfig from '../../../../../../app/thunks/updateFormItemConfig';
+import {formHasPermissions} from '../../../../../../app/utils/formHasPermissions';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
+import {PermissionRestrictionMessage} from '../../../../../../common/components/PermissionRestrictionMessage';
 import useControlledState from '../../../../../../core/hooks/useControlledState';
 import {useId} from '../../../../../../core/hooks/useId';
 import {CommonStyles} from './CommonStyles';
@@ -48,6 +50,10 @@ export function FormGeneralPanel({item}) {
 			),
 		[dispatch, item.itemId]
 	);
+
+	if (Liferay.FeatureFlags['LPS-169923'] && !formHasPermissions(item)) {
+		return <PermissionRestrictionMessage />;
+	}
 
 	return (
 		<>

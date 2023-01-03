@@ -55,48 +55,34 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 
 	@Override
 	public void connect() {
-		Thread currentThread = Thread.currentThread();
+		for (Map.Entry<String, List<MessageListener>> messageListeners :
+				_messageListeners.entrySet()) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+			String destinationName = messageListeners.getKey();
 
-		try {
-			currentThread.setContextClassLoader(getOperatingClassLoader());
+			ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
-			for (Map.Entry<String, List<MessageListener>> messageListeners :
-					_messageListeners.entrySet()) {
+			serviceLatch.waitFor(
+				StringBundler.concat(
+					"(&(destination.name=", destinationName, ")(objectClass=",
+					Destination.class.getName(), "))"));
 
-				String destinationName = messageListeners.getKey();
+			serviceLatch.openOn(
+				bundleContext -> {
+					Dictionary<String, Object> properties =
+						HashMapDictionaryBuilder.<String, Object>put(
+							"destination.name", destinationName
+						).build();
 
-				ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
+					for (MessageListener messageListener :
+							messageListeners.getValue()) {
 
-				serviceLatch.waitFor(
-					StringBundler.concat(
-						"(&(destination.name=", destinationName,
-						")(objectClass=", Destination.class.getName(), "))"));
-
-				serviceLatch.openOn(
-					bundleContext -> {
-						Dictionary<String, Object> properties =
-							HashMapDictionaryBuilder.<String, Object>put(
-								"destination.name", destinationName
-							).put(
-								"message.listener.operating.class.loader",
-								getOperatingClassLoader()
-							).build();
-
-						for (MessageListener messageListener :
-								messageListeners.getValue()) {
-
-							_serviceRegistrations.add(
-								bundleContext.registerService(
-									MessageListener.class, messageListener,
-									properties));
-						}
-					});
-			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+						_serviceRegistrations.add(
+							bundleContext.registerService(
+								MessageListener.class, messageListener,
+								properties));
+					}
+				});
 		}
 	}
 
@@ -169,12 +155,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		Map<String, List<MessageListener>> messageListeners) {
 
 		_messageListeners.putAll(messageListeners);
-	}
-
-	protected ClassLoader getOperatingClassLoader() {
-		Thread currentThread = Thread.currentThread();
-
-		return currentThread.getContextClassLoader();
 	}
 
 	protected void initialize() {

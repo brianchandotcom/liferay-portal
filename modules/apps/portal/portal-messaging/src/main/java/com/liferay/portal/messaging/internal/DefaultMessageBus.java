@@ -292,27 +292,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 					MessageListener messageListener = bundleContext.getService(
 						serviceReference);
 
-					Thread currentThread = Thread.currentThread();
-
-					ClassLoader contextClassLoader =
-						currentThread.getContextClassLoader();
-
-					try {
-						ClassLoader operatingClassLoader =
-							(ClassLoader)serviceReference.getProperty(
-								"message.listener.operating.class.loader");
-
-						if (operatingClassLoader != null) {
-							currentThread.setContextClassLoader(
-								operatingClassLoader);
-						}
-
-						registerMessageListener(
-							destinationName, messageListener);
-					}
-					finally {
-						currentThread.setContextClassLoader(contextClassLoader);
-					}
+					registerMessageListener(destinationName, messageListener);
 
 					return new ObjectValuePair<>(
 						destinationName, messageListener);

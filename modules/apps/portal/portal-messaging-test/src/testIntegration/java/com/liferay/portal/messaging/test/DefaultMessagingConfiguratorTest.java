@@ -72,94 +72,6 @@ public class DefaultMessagingConfiguratorTest {
 	}
 
 	@Test
-	public void testCustomClassLoaderDestinationConfiguration()
-		throws InterruptedException, InvalidSyntaxException {
-
-		final ClassLoader testClassLoader = new ClassLoader() {
-		};
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		_defaultMessagingConfigurator = new DefaultMessagingConfigurator() {
-
-			@Override
-			protected ClassLoader getOperatingClassLoader() {
-				return testClassLoader;
-			}
-
-			protected void initialize() {
-				super.initialize();
-
-				countDownLatch.countDown();
-			}
-
-		};
-
-		Set<DestinationConfiguration> destinationConfigurations =
-			new HashSet<>();
-
-		destinationConfigurations.add(
-			DestinationConfiguration.createSynchronousDestinationConfiguration(
-				"liferay/plugintest1"));
-		destinationConfigurations.add(
-			DestinationConfiguration.createParallelDestinationConfiguration(
-				"liferay/plugintest2"));
-
-		_defaultMessagingConfigurator.setDestinationConfigurations(
-			destinationConfigurations);
-
-		List<MessageListener> messageListenersList = new ArrayList<>();
-
-		Map<String, List<MessageListener>> messageListeners =
-			HashMapBuilder.<String, List<MessageListener>>put(
-				"liferay/plugintest1", messageListenersList
-			).build();
-
-		messageListenersList.add(
-			new TestClassLoaderMessageListener(testClassLoader));
-
-		_defaultMessagingConfigurator.setMessageListeners(messageListeners);
-
-		_defaultMessagingConfigurator.afterPropertiesSet();
-
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext,
-			_bundleContext.createFilter(
-				"(&(destination.name=*plugintest*)(objectClass=com.liferay." +
-					"portal.kernel.messaging.Destination))"),
-			null);
-
-		_serviceTracker.open();
-
-		countDownLatch.await();
-
-		Object[] services = _serviceTracker.getServices();
-
-		Assert.assertEquals(Arrays.toString(services), 2, services.length);
-
-		for (Object service : services) {
-			Destination destination = (Destination)service;
-
-			String destinationName = destination.getName();
-
-			Assert.assertTrue(
-				destinationName, destinationName.contains("plugintest"));
-
-			if (destinationName.equals("liferay/plugintest1")) {
-				Assert.assertEquals(1, destination.getMessageListenerCount());
-			}
-
-			if (destination.getMessageListenerCount() > 0) {
-				Message message = new Message();
-
-				message.setDestinationName(destinationName);
-
-				destination.send(message);
-			}
-		}
-	}
-
-	@Test
 	public void testPortalClassLoaderDestinationConfiguration()
 		throws InterruptedException, InvalidSyntaxException {
 
@@ -250,27 +162,6 @@ public class DefaultMessagingConfiguratorTest {
 
 	private DefaultMessagingConfigurator _defaultMessagingConfigurator;
 	private ServiceTracker<Destination, Destination> _serviceTracker;
-
-	private static class TestClassLoaderMessageListener
-		implements MessageListener {
-
-		public TestClassLoaderMessageListener(ClassLoader testClassLoader) {
-			_testClassLoader = testClassLoader;
-		}
-
-		@Override
-		public void receive(Message message) {
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader currentClassLoader =
-				currentThread.getContextClassLoader();
-
-			Assert.assertEquals(_testClassLoader, currentClassLoader);
-		}
-
-		private final ClassLoader _testClassLoader;
-
-	}
 
 	private static class TestMessageListener implements MessageListener {
 

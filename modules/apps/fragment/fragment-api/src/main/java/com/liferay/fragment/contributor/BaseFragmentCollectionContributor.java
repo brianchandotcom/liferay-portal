@@ -319,7 +319,7 @@ public abstract class BaseFragmentCollectionContributor
 						fragmentComposition.getName())));
 		}
 
-		return new ArrayList<>(fragmentCompositions);
+		return fragmentCompositions;
 	}
 
 	private List<FragmentEntry> _getFragmentEntries(
@@ -337,7 +337,7 @@ public abstract class BaseFragmentCollectionContributor
 						fragmentEntry.getName())));
 		}
 
-		return new ArrayList<>(fragmentEntries);
+		return fragmentEntries;
 	}
 
 	private FragmentEntry _getFragmentEntry(URL url) throws Exception {

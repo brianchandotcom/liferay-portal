@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -163,7 +162,7 @@ public class FragmentCollectionContributorRegistryTest {
 
 		ServiceRegistration<?> serviceRegistration = null;
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try {
 			serviceRegistration = _bundleContext.registerService(
 				FragmentCollectionContributor.class,
 				testFragmentCollectionContributor,

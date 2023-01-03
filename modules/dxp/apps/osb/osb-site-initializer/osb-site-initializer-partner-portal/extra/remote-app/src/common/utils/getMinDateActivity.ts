@@ -12,7 +12,7 @@
 export default function getMinDateActivity(dates: string[]) {
 	if (dates.length) {
 		const endDate = dates.reduce((dateAccumulator, endDate) =>
-			dateAccumulator > endDate ? dateAccumulator : endDate
+			dateAccumulator < endDate ? dateAccumulator : endDate
 		);
 
 		return endDate;

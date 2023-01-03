@@ -4355,6 +4355,269 @@ public class MBCategoryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_7 =
 		"mbCategory.parentCategoryId IN (";
 
+	private FinderPath _finderPathFetchByG_UC;
+	private FinderPath _finderPathCountByG_UC;
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and urlCategory = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory findByG_UC(long groupId, String urlCategory)
+		throws NoSuchCategoryException {
+
+		MBCategory mbCategory = fetchByG_UC(groupId, urlCategory);
+
+		if (mbCategory == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", urlCategory=");
+			sb.append(urlCategory);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCategoryException(sb.toString());
+		}
+
+		return mbCategory;
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and urlCategory = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByG_UC(long groupId, String urlCategory) {
+		return fetchByG_UC(groupId, urlCategory, true);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and urlCategory = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByG_UC(
+		long groupId, String urlCategory, boolean useFinderCache) {
+
+		urlCategory = Objects.toString(urlCategory, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBCategory.class);
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {groupId, urlCategory};
+		}
+
+		Object result = null;
+
+		if (useFinderCache && productionMode) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_UC, finderArgs, this);
+		}
+
+		if (result instanceof MBCategory) {
+			MBCategory mbCategory = (MBCategory)result;
+
+			if ((groupId != mbCategory.getGroupId()) ||
+				!Objects.equals(urlCategory, mbCategory.getUrlCategory())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_UC_GROUPID_2);
+
+			boolean bindUrlCategory = false;
+
+			if (urlCategory.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_UC_URLCATEGORY_3);
+			}
+			else {
+				bindUrlCategory = true;
+
+				sb.append(_FINDER_COLUMN_G_UC_URLCATEGORY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindUrlCategory) {
+					queryPos.add(urlCategory);
+				}
+
+				List<MBCategory> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						finderCache.putResult(
+							_finderPathFetchByG_UC, finderArgs, list);
+					}
+				}
+				else {
+					MBCategory mbCategory = list.get(0);
+
+					result = mbCategory;
+
+					cacheResult(mbCategory);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (MBCategory)result;
+		}
+	}
+
+	/**
+	 * Removes the message boards category where groupId = &#63; and urlCategory = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the message boards category that was removed
+	 */
+	@Override
+	public MBCategory removeByG_UC(long groupId, String urlCategory)
+		throws NoSuchCategoryException {
+
+		MBCategory mbCategory = findByG_UC(groupId, urlCategory);
+
+		return remove(mbCategory);
+	}
+
+	/**
+	 * Returns the number of message boards categories where groupId = &#63; and urlCategory = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the number of matching message boards categories
+	 */
+	@Override
+	public int countByG_UC(long groupId, String urlCategory) {
+		urlCategory = Objects.toString(urlCategory, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBCategory.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_UC;
+
+			finderArgs = new Object[] {groupId, urlCategory};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_UC_GROUPID_2);
+
+			boolean bindUrlCategory = false;
+
+			if (urlCategory.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_UC_URLCATEGORY_3);
+			}
+			else {
+				bindUrlCategory = true;
+
+				sb.append(_FINDER_COLUMN_G_UC_URLCATEGORY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindUrlCategory) {
+					queryPos.add(urlCategory);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_UC_GROUPID_2 =
+		"mbCategory.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_UC_URLCATEGORY_2 =
+		"mbCategory.urlCategory = ?";
+
+	private static final String _FINDER_COLUMN_G_UC_URLCATEGORY_3 =
+		"(mbCategory.urlCategory IS NULL OR mbCategory.urlCategory = '')";
+
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
 	private FinderPath _finderPathCountByG_S;
@@ -11611,6 +11874,11 @@ public class MBCategoryPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {mbCategory.getUuid(), mbCategory.getGroupId()},
 			mbCategory);
+
+		finderCache.putResult(
+			_finderPathFetchByG_UC,
+			new Object[] {mbCategory.getGroupId(), mbCategory.getUrlCategory()},
+			mbCategory);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -11694,6 +11962,15 @@ public class MBCategoryPersistenceImpl
 		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, mbCategoryModelImpl);
+
+		args = new Object[] {
+			mbCategoryModelImpl.getGroupId(),
+			mbCategoryModelImpl.getUrlCategory()
+		};
+
+		finderCache.putResult(_finderPathCountByG_UC, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByG_UC, args, mbCategoryModelImpl);
 	}
 
 	/**
@@ -12346,6 +12623,7 @@ public class MBCategoryPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("parentCategoryId");
 		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("urlCategory");
 		ctStrictColumnNames.add("description");
 		ctStrictColumnNames.add("displayStyle");
 		ctStrictColumnNames.add("lastPublishDate");
@@ -12364,6 +12642,8 @@ public class MBCategoryPersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"groupId", "urlCategory"});
 	}
 
 	/**
@@ -12492,6 +12772,16 @@ public class MBCategoryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentCategoryId"}, false);
+
+		_finderPathFetchByG_UC = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_UC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "urlCategory"}, true);
+
+		_finderPathCountByG_UC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "urlCategory"}, false);
 
 		_finderPathWithPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",

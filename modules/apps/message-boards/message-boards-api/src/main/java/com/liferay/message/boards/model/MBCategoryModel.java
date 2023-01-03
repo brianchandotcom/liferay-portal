@@ -264,6 +264,21 @@ public interface MBCategoryModel
 	public void setName(String name);
 
 	/**
+	 * Returns the url category of this message boards category.
+	 *
+	 * @return the url category of this message boards category
+	 */
+	@AutoEscape
+	public String getUrlCategory();
+
+	/**
+	 * Sets the url category of this message boards category.
+	 *
+	 * @param urlCategory the url category of this message boards category
+	 */
+	public void setUrlCategory(String urlCategory);
+
+	/**
 	 * Returns the description of this message boards category.
 	 *
 	 * @return the description of this message boards category

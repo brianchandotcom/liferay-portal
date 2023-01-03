@@ -137,6 +137,8 @@ public class MBCategoryPersistenceTest {
 
 		newMBCategory.setName(RandomTestUtil.randomString());
 
+		newMBCategory.setUrlCategory(RandomTestUtil.randomString());
+
 		newMBCategory.setDescription(RandomTestUtil.randomString());
 
 		newMBCategory.setDisplayStyle(RandomTestUtil.randomString());
@@ -185,6 +187,9 @@ public class MBCategoryPersistenceTest {
 			newMBCategory.getParentCategoryId());
 		Assert.assertEquals(
 			existingMBCategory.getName(), newMBCategory.getName());
+		Assert.assertEquals(
+			existingMBCategory.getUrlCategory(),
+			newMBCategory.getUrlCategory());
 		Assert.assertEquals(
 			existingMBCategory.getDescription(),
 			newMBCategory.getDescription());
@@ -261,6 +266,15 @@ public class MBCategoryPersistenceTest {
 		_persistence.countByG_P(
 			RandomTestUtil.nextLong(),
 			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
+	public void testCountByG_UC() throws Exception {
+		_persistence.countByG_UC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_UC(0L, "null");
+
+		_persistence.countByG_UC(0L, (String)null);
 	}
 
 	@Test
@@ -383,9 +397,9 @@ public class MBCategoryPersistenceTest {
 			true, "categoryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentCategoryId", true, "name", true,
-			"description", true, "displayStyle", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"urlCategory", true, "description", true, "displayStyle", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -658,6 +672,17 @@ public class MBCategoryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				mbCategory, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			Long.valueOf(mbCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			mbCategory.getUrlCategory(),
+			ReflectionTestUtil.invoke(
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "urlCategory"));
 	}
 
 	protected MBCategory addMBCategory() throws Exception {
@@ -686,6 +711,8 @@ public class MBCategoryPersistenceTest {
 		mbCategory.setParentCategoryId(RandomTestUtil.nextLong());
 
 		mbCategory.setName(RandomTestUtil.randomString());
+
+		mbCategory.setUrlCategory(RandomTestUtil.randomString());
 
 		mbCategory.setDescription(RandomTestUtil.randomString());
 

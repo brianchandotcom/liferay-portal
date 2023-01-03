@@ -27,6 +27,7 @@ create table MBCategory (
 	modifiedDate DATE null,
 	parentCategoryId LONG,
 	name VARCHAR(75) null,
+	urlCategory VARCHAR(75) null,
 	description STRING null,
 	displayStyle VARCHAR(75) null,
 	lastPublishDate DATE null,

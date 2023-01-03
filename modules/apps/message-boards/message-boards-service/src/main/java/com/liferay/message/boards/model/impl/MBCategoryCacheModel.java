@@ -68,7 +68,7 @@ public class MBCategoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -94,6 +94,8 @@ public class MBCategoryCacheModel
 		sb.append(parentCategoryId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", urlCategory=");
+		sb.append(urlCategory);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", displayStyle=");
@@ -162,6 +164,13 @@ public class MBCategoryCacheModel
 			mbCategoryImpl.setName(name);
 		}
 
+		if (urlCategory == null) {
+			mbCategoryImpl.setUrlCategory("");
+		}
+		else {
+			mbCategoryImpl.setUrlCategory(urlCategory);
+		}
+
 		if (description == null) {
 			mbCategoryImpl.setDescription("");
 		}
@@ -225,6 +234,7 @@ public class MBCategoryCacheModel
 
 		parentCategoryId = objectInput.readLong();
 		name = objectInput.readUTF();
+		urlCategory = objectInput.readUTF();
 		description = objectInput.readUTF();
 		displayStyle = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
@@ -276,6 +286,13 @@ public class MBCategoryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (urlCategory == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(urlCategory);
+		}
+
 		if (description == null) {
 			objectOutput.writeUTF("");
 		}
@@ -318,6 +335,7 @@ public class MBCategoryCacheModel
 	public long modifiedDate;
 	public long parentCategoryId;
 	public String name;
+	public String urlCategory;
 	public String description;
 	public String displayStyle;
 	public long lastPublishDate;

@@ -47,6 +47,8 @@ public class MBCategoryTable extends BaseTable<MBCategoryTable> {
 		"parentCategoryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<MBCategoryTable, String> urlCategory = createColumn(
+		"urlCategory", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, String> displayStyle = createColumn(

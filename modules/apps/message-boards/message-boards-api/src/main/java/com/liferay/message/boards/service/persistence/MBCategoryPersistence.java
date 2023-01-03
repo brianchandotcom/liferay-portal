@@ -1089,6 +1089,56 @@ public interface MBCategoryPersistence
 	public int filterCountByG_P(long groupId, long[] parentCategoryIds);
 
 	/**
+	 * Returns the message boards category where groupId = &#63; and urlCategory = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	public MBCategory findByG_UC(long groupId, String urlCategory)
+		throws NoSuchCategoryException;
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and urlCategory = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	public MBCategory fetchByG_UC(long groupId, String urlCategory);
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and urlCategory = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	public MBCategory fetchByG_UC(
+		long groupId, String urlCategory, boolean useFinderCache);
+
+	/**
+	 * Removes the message boards category where groupId = &#63; and urlCategory = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the message boards category that was removed
+	 */
+	public MBCategory removeByG_UC(long groupId, String urlCategory)
+		throws NoSuchCategoryException;
+
+	/**
+	 * Returns the number of message boards categories where groupId = &#63; and urlCategory = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param urlCategory the url category
+	 * @return the number of matching message boards categories
+	 */
+	public int countByG_UC(long groupId, String urlCategory);
+
+	/**
 	 * Returns all the message boards categories where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID

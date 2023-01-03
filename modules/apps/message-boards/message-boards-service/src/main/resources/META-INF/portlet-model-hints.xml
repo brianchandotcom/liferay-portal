@@ -30,6 +30,7 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field name="urlCategory" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

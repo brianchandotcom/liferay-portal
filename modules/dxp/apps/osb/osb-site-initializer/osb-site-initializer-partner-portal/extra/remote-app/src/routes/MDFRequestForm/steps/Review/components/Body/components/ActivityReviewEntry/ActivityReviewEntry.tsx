@@ -44,6 +44,8 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 		),
 	};
 
+	const options = {timeZone: 'UTC'};
+
 	return (
 		<>
 			<Table<Item>
@@ -82,7 +84,8 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 							new Date(
 								mdfRequestActivity.startDate
 							).toLocaleDateString(
-								Liferay.ThemeDisplay.getBCP47LanguageId()
+								Liferay.ThemeDisplay.getBCP47LanguageId(),
+								options
 							),
 					},
 					{
@@ -92,7 +95,8 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 							new Date(
 								mdfRequestActivity.endDate
 							).toLocaleDateString(
-								Liferay.ThemeDisplay.getBCP47LanguageId()
+								Liferay.ThemeDisplay.getBCP47LanguageId(),
+								options
 							),
 					},
 				]}

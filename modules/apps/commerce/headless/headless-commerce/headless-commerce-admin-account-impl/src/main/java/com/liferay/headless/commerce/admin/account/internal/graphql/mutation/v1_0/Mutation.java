@@ -527,6 +527,36 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteAccountChannelPaymentMethodId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.deleteAccountChannelPaymentMethodId(
+					id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public AccountChannelEntry patchAccountChannelPaymentMethodId(
+			@GraphQLName("id") Long id,
+			@GraphQLName("accountChannelEntry") AccountChannelEntry
+				accountChannelEntry)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.patchAccountChannelPaymentMethodId(
+					id, accountChannelEntry));
+	}
+
+	@GraphQLField
 	public boolean deleteAccountChannelPaymentTermId(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -717,6 +747,24 @@ public class Mutation {
 
 	@GraphQLField
 	public AccountChannelEntry
+			createAccountByExternalReferenceCodeAccountChannelPaymentMethod(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("accountChannelEntry") AccountChannelEntry
+					accountChannelEntry)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.
+					postAccountByExternalReferenceCodeAccountChannelPaymentMethod(
+						externalReferenceCode, accountChannelEntry));
+	}
+
+	@GraphQLField
+	public AccountChannelEntry
 			createAccountByExternalReferenceCodeAccountChannelPaymentTerm(
 				@GraphQLName("externalReferenceCode") String
 					externalReferenceCode,
@@ -847,6 +895,22 @@ public class Mutation {
 			accountChannelEntryResource ->
 				accountChannelEntryResource.postAccountIdAccountChannelDiscount(
 					id, accountChannelEntry));
+	}
+
+	@GraphQLField
+	public AccountChannelEntry createAccountIdAccountChannelPaymentMethod(
+			@GraphQLName("id") Long id,
+			@GraphQLName("accountChannelEntry") AccountChannelEntry
+				accountChannelEntry)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.
+					postAccountIdAccountChannelPaymentMethod(
+						id, accountChannelEntry));
 	}
 
 	@GraphQLField

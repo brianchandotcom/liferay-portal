@@ -80,6 +80,16 @@ public class AccountChannelEntrySerDes {
 			sb.append(accountChannelEntry.getAccountId());
 		}
 
+		if (accountChannelEntry.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(accountChannelEntry.getActions()));
+		}
+
 		if (accountChannelEntry.getChannelExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -200,6 +210,14 @@ public class AccountChannelEntrySerDes {
 				String.valueOf(accountChannelEntry.getAccountId()));
 		}
 
+		if (accountChannelEntry.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put(
+				"actions", String.valueOf(accountChannelEntry.getActions()));
+		}
+
 		if (accountChannelEntry.getChannelExternalReferenceCode() == null) {
 			map.put("channelExternalReferenceCode", null);
 		}
@@ -294,6 +312,13 @@ public class AccountChannelEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					accountChannelEntry.setAccountId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					accountChannelEntry.setActions(
+						(Map)AccountChannelEntrySerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

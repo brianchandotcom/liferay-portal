@@ -264,6 +264,16 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelEntryResourceImpl.class,
 							"patchAccountChannelDiscountId"));
 					put(
+						"mutation#deleteAccountChannelPaymentMethodId",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"deleteAccountChannelPaymentMethodId"));
+					put(
+						"mutation#patchAccountChannelPaymentMethodId",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"patchAccountChannelPaymentMethodId"));
+					put(
 						"mutation#deleteAccountChannelPaymentTermId",
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
@@ -324,6 +334,11 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelEntryResourceImpl.class,
 							"postAccountByExternalReferenceCodeAccountChannelDiscount"));
 					put(
+						"mutation#createAccountByExternalReferenceCodeAccountChannelPaymentMethod",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"postAccountByExternalReferenceCodeAccountChannelPaymentMethod"));
+					put(
 						"mutation#createAccountByExternalReferenceCodeAccountChannelPaymentTerm",
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
@@ -363,6 +378,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
 							"postAccountIdAccountChannelDiscount"));
+					put(
+						"mutation#createAccountIdAccountChannelPaymentMethod",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"postAccountIdAccountChannelPaymentMethod"));
 					put(
 						"mutation#createAccountIdAccountChannelPaymentTerm",
 						new ObjectValuePair<>(
@@ -568,6 +588,11 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelEntryResourceImpl.class,
 							"getAccountChannelDiscountId"));
 					put(
+						"query#accountChannelPaymentMethodId",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountChannelPaymentMethodId"));
+					put(
 						"query#accountChannelPaymentTermId",
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
@@ -608,6 +633,11 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelEntryResourceImpl.class,
 							"getAccountByExternalReferenceCodeAccountChannelDiscountsPage"));
 					put(
+						"query#accountByExternalReferenceCodeAccountChannelPaymentMethods",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage"));
+					put(
 						"query#accountByExternalReferenceCodeAccountChannelPaymentTerms",
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
@@ -647,6 +677,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountChannelEntryResourceImpl.class,
 							"getAccountIdAccountChannelDiscountsPage"));
+					put(
+						"query#accountIdAccountChannelPaymentMethods",
+						new ObjectValuePair<>(
+							AccountChannelEntryResourceImpl.class,
+							"getAccountIdAccountChannelPaymentMethodsPage"));
 					put(
 						"query#accountIdAccountChannelPaymentTerms",
 						new ObjectValuePair<>(

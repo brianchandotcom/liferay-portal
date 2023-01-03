@@ -154,8 +154,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}
@@ -317,7 +316,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			score: newSubtaskScore,
 			splitFromSubtaskId: selectedSubTask.id,
 			taskId,
-			userId: selectedSubTask.user.id,
+			userId: selectedSubTask.user?.id,
 		} as SubtaskForm);
 
 		for (const {id} of selectedSubTaskCaseResults) {

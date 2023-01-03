@@ -137,7 +137,11 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 	public getAll(
 		options: APIParametersOptions = {}
 	): Promise<APIResponse<ObjectModel> | undefined> {
-		const searchParams = Rest.getPageParameter(options);
+		let searchParams = Rest.getPageParameter(options);
+
+		if (searchParams) {
+			searchParams = `?${searchParams}`;
+		}
 
 		return this.fetcher(`${this.resource}${searchParams}`);
 	}

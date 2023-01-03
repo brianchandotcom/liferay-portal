@@ -14,15 +14,268 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.rule.constants.COREntryConstants;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.model.COREntryRel;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
+import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
+import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.AccountSerDes;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 
-import org.junit.Ignore;
+import java.math.BigDecimal;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class AccountResourceTest extends BaseAccountResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_user = UserTestUtil.addUser(testCompany);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testCompany.getCompanyId(), testGroup.getGroupId(),
+				_user.getUserId());
+
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			_user.getUserId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, serviceContext);
+
+		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), BigDecimal.ONE,
+			RandomTestUtil.randomLocaleStringMap(), 2, 2, "HALF_EVEN", false,
+			RandomTestUtil.nextDouble(), true);
+
+		_corEntry = _corEntryLocalService.addCOREntry(
+			RandomTestUtil.randomString(), _user.getUserId(), true,
+			RandomTestUtil.randomString(), 1, 1, 2022, 12, 0, 0, 0, 0, 0, 0,
+			true, RandomTestUtil.randomString(), RandomTestUtil.nextInt(),
+			COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT, null, serviceContext);
+
+		_corEntryRel = _corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountEntry.class.getName(),
+			_accountEntry.getAccountEntryId(), _corEntry.getCOREntryId());
+
+		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
+			_user.getUserId(), testGroup.getGroupId(),
+			_accountEntry.getAccountEntryId(),
+			_commerceCurrency.getCommerceCurrencyId(),
+			CommerceOrderConstants.TYPE_PK_FULFILLMENT);
+	}
+
+	@Override
+	@Test
+	public void testGetOrderByExternalReferenceCodeAccount() throws Exception {
+		Account postAccount =
+			testGetOrderByExternalReferenceCodeAccount_addAccount();
+
+		Account getAccount =
+			accountResource.getOrderByExternalReferenceCodeAccount(
+				_commerceOrder.getExternalReferenceCode());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	@Override
+	@Test
+	public void testGetOrderIdAccount() throws Exception {
+		Account postAccount = testGetOrderIdAccount_addAccount();
+
+		Account getAccount = accountResource.getOrderIdAccount(
+			_commerceOrder.getCommerceOrderId());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetOrderByExternalReferenceCodeAccount()
+		throws Exception {
+
+		Account account =
+			testGraphQLGetOrderByExternalReferenceCodeAccount_addAccount();
+
+		String externalReferenceCode =
+			"\"" + _commerceOrder.getExternalReferenceCode() + "\"";
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderByExternalReferenceCodeAccount",
+								HashMapBuilder.<String, Object>put(
+									"externalReferenceCode",
+									externalReferenceCode
+								).build(),
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderByExternalReferenceCodeAccount"))));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetOrderIdAccount() throws Exception {
+		Account account = testGraphQLGetOrderIdAccount_addAccount();
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderIdAccount",
+								HashMapBuilder.<String, Object>put(
+									"id", _commerceOrder.getCommerceOrderId()
+								).build(),
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderIdAccount"))));
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"emailAddress", "name"};
+	}
+
+	@Override
+	protected Account randomAccount() throws Exception {
+		return new Account() {
+			{
+				emailAddress =
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						"@liferay.com";
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				logoId = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				root = true;
+				type = CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+			}
+		};
+	}
+
+	@Override
+	protected Account testGetOrderByExternalReferenceCodeAccount_addAccount()
+		throws Exception {
+
+		return _toAccount();
+	}
+
+	@Override
+	protected Account testGetOrderIdAccount_addAccount() throws Exception {
+		return _toAccount();
+	}
+
+	@Override
+	protected Account testGetOrderRuleAccountAccount_addAccount()
+		throws Exception {
+
+		return _toAccount();
+	}
+
+	@Override
+	protected Long testGetOrderRuleAccountAccount_getOrderRuleAccountId()
+		throws Exception {
+
+		return _corEntryRel.getCOREntryRelId();
+	}
+
+	@Override
+	protected Account testGraphQLAccount_addAccount() throws Exception {
+		return _toAccount();
+	}
+
+	@Override
+	protected Long testGraphQLGetOrderRuleAccountAccount_getOrderRuleAccountId()
+		throws Exception {
+
+		return _corEntryRel.getCOREntryRelId();
+	}
+
+	private Account _toAccount() throws Exception {
+		return new Account() {
+			{
+				emailAddress = _accountEntry.getEmailAddress();
+				externalReferenceCode =
+					_accountEntry.getExternalReferenceCode();
+				id = _accountEntry.getAccountEntryId();
+				name = _accountEntry.getName();
+				root = true;
+				type = CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+			}
+		};
+	}
+
+	@Inject
+	private static AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private static CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Inject
+	private static CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private static COREntryLocalService _corEntryLocalService;
+
+	@Inject
+	private static COREntryRelLocalService _corEntryRelLocalService;
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
+	@DeleteAfterTestRun
+	private CommerceCurrency _commerceCurrency;
+
+	@DeleteAfterTestRun
+	private CommerceOrder _commerceOrder;
+
+	@DeleteAfterTestRun
+	private COREntry _corEntry;
+
+	@DeleteAfterTestRun
+	private COREntryRel _corEntryRel;
+
+	@DeleteAfterTestRun
+	private User _user;
+
 }

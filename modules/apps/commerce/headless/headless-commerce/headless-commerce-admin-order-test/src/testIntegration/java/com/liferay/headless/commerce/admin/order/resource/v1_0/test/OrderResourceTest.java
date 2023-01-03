@@ -14,25 +14,28 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
-import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
-import com.liferay.headless.commerce.admin.order.client.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -40,10 +43,13 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.math.BigDecimal;
+
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -61,29 +67,53 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 
 		_user = UserTestUtil.addUser(testCompany);
 
-		_commerceAccount = CommerceTestUtil.addAccount(
-			testGroup.getGroupId(), _user.getUserId());
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_user.getCompanyId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testCompany.getCompanyId(), testGroup.getGroupId(),
+				_user.getUserId());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testCompany.getCompanyId(), testGroup.getGroupId(),
-			_user.getUserId());
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			_user.getUserId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, serviceContext);
+
+		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), BigDecimal.ONE,
+			RandomTestUtil.randomLocaleStringMap(), 2, 2, "HALF_EVEN", false,
+			RandomTestUtil.nextDouble(), true);
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			StringPool.BLANK, testGroup.getGroupId(),
-			testGroup.getName(_serviceContext.getLanguageId()) + " Portal",
+			RandomTestUtil.randomString(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			_commerceCurrency.getCode(), _serviceContext);
+			_commerceCurrency.getCode(), serviceContext);
+
+		_country = _countryLocalService.addCountry(
+			"XY", "XYZ", true, true, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.nextDouble(), true, true, false, serviceContext);
+
+		_region = _regionLocalService.addRegion(
+			_country.getCountryId(), true, RandomTestUtil.randomString(),
+			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		_orderAddress = _addressLocalService.addAddress(
+			RandomTestUtil.randomString(), _user.getUserId(),
+			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), _region.getRegionId(),
+			_country.getCountryId(), 0, false, true,
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	@Override
 	@Test
-	public void testGetOrder() throws Exception {
-		super.testGetOrder();
-
-		// Nested fields
-
+	public void testGetOrderWithNestedFields() throws Exception {
 		OrderResource orderResource = OrderResource.builder(
 		).authentication(
 			"test@liferay.com", "test"
@@ -93,7 +123,8 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 			"nestedFields", "orderItems,orderItems.shippingAddress"
 		).build();
 
-		Order expectedOrder = orderResource.postOrder(_randomOrder());
+		Order expectedOrder = orderResource.postOrder(
+			_randomOrderWithNestedFields());
 
 		Order actualOrder = orderResource.getOrder(expectedOrder.getId());
 
@@ -109,81 +140,95 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		Assert.assertNotNull(actualOrderItems[0].getShippingAddress());
 	}
 
-	@Override
-	@Test
-	public void testGetOrdersPage() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGetOrdersPageWithFilterDateTimeEquals() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGetOrdersPageWithPagination() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGetOrdersPageWithSortDateTime() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGetOrdersPageWithSortInteger() throws Exception {
-	}
-
+	@Ignore
 	@Override
 	@Test
 	public void testGraphQLDeleteOrder() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetOrder() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetOrderByExternalReferenceCode() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetOrderByExternalReferenceCodeNotFound()
-		throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetOrderNotFound() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetOrdersPage() throws Exception {
+		super.testGraphQLDeleteOrder();
 	}
 
 	@Override
 	@Test
 	public void testPatchOrder() throws Exception {
+		Order postOrder = orderResource.postOrder(randomOrder());
+
+		Order randomPatchOrder = randomPatchOrder();
+
+		orderResource.patchOrder(postOrder.getId(), randomPatchOrder);
+
+		Order expectedOrder = postOrder.clone();
+
+		BeanTestUtil.copyProperties(randomPatchOrder, expectedOrder);
+
+		Order getOrder = orderResource.getOrder(postOrder.getId());
+
+		assertEquals(expectedOrder, getOrder);
+		assertValid(getOrder);
 	}
 
 	@Override
 	@Test
 	public void testPatchOrderByExternalReferenceCode() throws Exception {
+		Order postOrder = orderResource.postOrder(randomOrder());
+
+		Order randomPatchOrder = randomPatchOrder();
+
+		orderResource.patchOrderByExternalReferenceCode(
+			postOrder.getExternalReferenceCode(), randomPatchOrder);
+
+		Order expectedOrder = postOrder.clone();
+
+		BeanTestUtil.copyProperties(randomPatchOrder, expectedOrder);
+
+		Order getOrder = orderResource.getOrderByExternalReferenceCode(
+			randomPatchOrder.getExternalReferenceCode());
+
+		assertEquals(expectedOrder, getOrder);
+		assertValid(getOrder);
+	}
+
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"currencyCode", "paymentMethod", "printedNote",
+			"purchaseOrderNumber"
+		};
+	}
+
+	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"channelId", "orderId"};
 	}
 
 	@Override
 	protected Order randomOrder() throws Exception {
-		Order order = super.randomOrder();
-
-		order.setAccountId(_commerceAccount.getCommerceAccountId());
-		order.setChannelId(_commerceChannel.getCommerceChannelId());
-		order.setCurrencyCode(_commerceCurrency.getCode());
-
-		return order;
+		return new Order() {
+			{
+				accountExternalReferenceCode =
+					_accountEntry.getExternalReferenceCode();
+				accountId = _accountEntry.getAccountEntryId();
+				advanceStatus = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				billingAddressId = _orderAddress.getAddressId();
+				channelExternalReferenceCode =
+					_commerceChannel.getExternalReferenceCode();
+				channelId = _commerceChannel.getCommerceChannelId();
+				couponCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				createDate = RandomTestUtil.nextDate();
+				currencyCode = _commerceCurrency.getCode();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				modifiedDate = RandomTestUtil.nextDate();
+				paymentMethod = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				printedNote = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				purchaseOrderNumber = RandomTestUtil.randomString();
+				requestedDeliveryDate = RandomTestUtil.nextDate();
+				shippingAddressId = _orderAddress.getAddressId();
+			}
+		};
 	}
 
 	@Override
@@ -211,28 +256,22 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	}
 
 	@Override
+	protected Order testGetOrdersPage_addOrder(Order order) throws Exception {
+		return orderResource.postOrder(order);
+	}
+
+	@Override
+	protected Order testGraphQLOrder_addOrder() throws Exception {
+		return orderResource.postOrder(randomOrder());
+	}
+
+	@Override
 	protected Order testPostOrder_addOrder(Order order) throws Exception {
 		return orderResource.postOrder(order);
 	}
 
-	private Order _randomOrder() throws Exception {
-		Order order = randomOrder();
-
-		ShippingAddress shippingAddress = _randomShippingAddress();
-
-		OrderItem orderItem = _randomOrderItem(shippingAddress);
-
-		orderItem.setOrderId(order.getId());
-
-		order.setOrderItems(new OrderItem[] {orderItem});
-
-		return order;
-	}
-
-	private OrderItem _randomOrderItem(ShippingAddress shippingAddress)
-		throws Exception {
-
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+	private OrderItem _randomOrderItem() throws Exception {
+		_cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
 			testGroup.getGroupId());
 
 		return new OrderItem() {
@@ -250,64 +289,65 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				quantity = RandomTestUtil.randomInt();
 				shippedQuantity = RandomTestUtil.randomInt();
-				skuId = cpInstance.getCPInstanceId();
+				shippingAddressId = _orderAddress.getAddressId();
+				skuId = _cpInstance.getCPInstanceId();
 				subscription = RandomTestUtil.randomBoolean();
-
-				setShippingAddress(
-					() -> {
-						if (shippingAddress == null) {
-							return null;
-						}
-
-						return shippingAddress;
-					});
-				setShippingAddressId(
-					() -> {
-						if (shippingAddress == null) {
-							return null;
-						}
-
-						return shippingAddress.getId();
-					});
 			}
 		};
 	}
 
-	private ShippingAddress _randomShippingAddress() throws Exception {
-		CommerceAddress commerceAddress =
-			CommerceTestUtil.addUserCommerceAddress(
-				testGroup.getGroupId(), _user.getUserId());
+	private Order _randomOrderWithNestedFields() throws Exception {
+		Order order = randomOrder();
 
-		Country country = commerceAddress.getCountry();
+		OrderItem orderItem = _randomOrderItem();
 
-		return new ShippingAddress() {
-			{
-				city = commerceAddress.getCity();
-				countryISOCode = country.getA2();
-				description = commerceAddress.getDescription();
-				externalReferenceCode =
-					commerceAddress.getExternalReferenceCode();
-				id = commerceAddress.getCommerceAddressId();
-				latitude = commerceAddress.getLatitude();
-				longitude = commerceAddress.getLongitude();
-				name = commerceAddress.getName();
-				phoneNumber = commerceAddress.getPhoneNumber();
-				street1 = commerceAddress.getStreet1();
-				street2 = commerceAddress.getStreet2();
-				street3 = commerceAddress.getStreet3();
-				zip = commerceAddress.getZip();
-			}
-		};
+		orderItem.setOrderId(order.getId());
+
+		order.setOrderItems(new OrderItem[] {orderItem});
+
+		return order;
 	}
-
-	private CommerceAccount _commerceAccount;
-	private CommerceChannel _commerceChannel;
 
 	@Inject
-	private CommerceChannelLocalService _commerceChannelLocalService;
+	private static AccountEntryLocalService _accountEntryLocalService;
 
+	@Inject
+	private static AddressLocalService _addressLocalService;
+
+	@Inject
+	private static CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Inject
+	private static CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Inject
+	private static CountryLocalService _countryLocalService;
+
+	@Inject
+	private static RegionLocalService _regionLocalService;
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
+
+	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
-	private ServiceContext _serviceContext;
+
+	@DeleteAfterTestRun
+	private Country _country;
+
+	@DeleteAfterTestRun
+	private CPInstance _cpInstance;
+
+	@DeleteAfterTestRun
+	private Address _orderAddress;
+
+	@DeleteAfterTestRun
+	private Region _region;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

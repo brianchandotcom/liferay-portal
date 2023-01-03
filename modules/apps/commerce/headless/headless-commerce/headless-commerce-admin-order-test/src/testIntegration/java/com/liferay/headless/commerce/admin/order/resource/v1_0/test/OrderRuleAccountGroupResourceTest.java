@@ -15,27 +15,33 @@
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupLocalServiceUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderRuleAccountGroup;
-import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,57 +60,100 @@ public class OrderRuleAccountGroupResourceTest
 
 		_user = UserTestUtil.addUser(testCompany);
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testCompany.getCompanyId(), testGroup.getGroupId(),
-			_user.getUserId());
-
-		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-
 		_corEntry = _corEntryLocalService.addCOREntry(
 			RandomTestUtil.randomString(), _user.getUserId(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			displayDateConfig.getMonth(), displayDateConfig.getDay(),
-			displayDateConfig.getYear(), displayDateConfig.getHour(),
-			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
-			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
-			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
-			true, RandomTestUtil.randomString(), 0,
-			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(), 1, 1,
+			2022, 12, 0, 0, 0, 0, 0, 0, true, RandomTestUtil.randomString(), 0,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				testCompany.getCompanyId(), testGroup.getGroupId(),
+				_user.getUserId()));
 	}
 
 	@Override
 	@Test
 	public void testDeleteOrderRuleAccountGroup() throws Exception {
+		OrderRuleAccountGroup orderRuleAccountGroup = _addCOREntryRel(
+			randomOrderRuleAccountGroup());
+
+		assertHttpResponseStatusCode(
+			204,
+			orderRuleAccountGroupResource.
+				deleteOrderRuleAccountGroupHttpResponse(
+					orderRuleAccountGroup.getOrderRuleAccountGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleAccountGroupResource.
+				deleteOrderRuleAccountGroupHttpResponse(
+					orderRuleAccountGroup.getOrderRuleAccountGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleAccountGroupResource.
+				deleteOrderRuleAccountGroupHttpResponse(
+					orderRuleAccountGroup.getOrderRuleAccountGroupId()));
 	}
 
 	@Override
 	@Test
 	public void testGraphQLDeleteOrderRuleAccountGroup() throws Exception {
+		OrderRuleAccountGroup orderRuleAccountGroup = _addCOREntryRel(
+			randomOrderRuleAccountGroup());
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderRuleAccountGroup",
+						HashMapBuilder.<String, Object>put(
+							"orderRuleAccountGroupId",
+							orderRuleAccountGroup.getOrderRuleAccountGroupId()
+						).build())),
+				"JSONObject/data", "Object/deleteOrderRuleAccountGroup"));
+
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"orderRuleAccountGroup",
+					HashMapBuilder.<String, Object>put(
+						"orderRuleAccountGroupId",
+						orderRuleAccountGroup.getOrderRuleAccountGroupId()
+					).build(),
+					new GraphQLField("orderRuleAccountGroupId"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
 	@Override
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		return new ArrayList<>();
+		try {
+			return super.getEntityFields();
+		}
+		catch (NullPointerException nullPointerException) {
+			Map<String, EntityField> entityFieldsMap = new HashMap<>();
+
+			return entityFieldsMap.values();
+		}
 	}
 
 	@Override
 	protected OrderRuleAccountGroup randomOrderRuleAccountGroup()
 		throws Exception {
 
-		CommerceAccountGroup commerceAccountGroup =
-			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
-				null, _serviceContext);
+		AccountGroup localAccountGroup =
+			AccountGroupLocalServiceUtil.addAccountGroup(
+				_user.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+		_accountGroups.add(localAccountGroup);
 
 		return new OrderRuleAccountGroup() {
 			{
 				accountGroupExternalReferenceCode =
-					commerceAccountGroup.getExternalReferenceCode();
-				accountGroupId =
-					commerceAccountGroup.getCommerceAccountGroupId();
+					localAccountGroup.getExternalReferenceCode();
+				accountGroupId = localAccountGroup.getAccountGroupId();
 				orderRuleAccountGroupId = RandomTestUtil.randomLong();
 				orderRuleExternalReferenceCode =
 					_corEntry.getExternalReferenceCode();
@@ -120,7 +169,7 @@ public class OrderRuleAccountGroupResourceTest
 				OrderRuleAccountGroup orderRuleAccountGroup)
 		throws Exception {
 
-		return _addOrderRuleAccountGroup(orderRuleAccountGroup);
+		return _addCOREntryRel(orderRuleAccountGroup);
 	}
 
 	@Override
@@ -137,7 +186,7 @@ public class OrderRuleAccountGroupResourceTest
 				Long id, OrderRuleAccountGroup orderRuleAccountGroup)
 		throws Exception {
 
-		return _addOrderRuleAccountGroup(orderRuleAccountGroup);
+		return _addCOREntryRel(orderRuleAccountGroup);
 	}
 
 	@Override
@@ -153,7 +202,7 @@ public class OrderRuleAccountGroupResourceTest
 				OrderRuleAccountGroup orderRuleAccountGroup)
 		throws Exception {
 
-		return _addOrderRuleAccountGroup(orderRuleAccountGroup);
+		return _addCOREntryRel(orderRuleAccountGroup);
 	}
 
 	@Override
@@ -162,56 +211,50 @@ public class OrderRuleAccountGroupResourceTest
 				OrderRuleAccountGroup orderRuleAccountGroup)
 		throws Exception {
 
-		return _addOrderRuleAccountGroup(orderRuleAccountGroup);
+		return _addCOREntryRel(orderRuleAccountGroup);
 	}
 
-	private OrderRuleAccountGroup _addOrderRuleAccountGroup(
+	private OrderRuleAccountGroup _addCOREntryRel(
 			OrderRuleAccountGroup orderRuleAccountGroup)
 		throws Exception {
 
-		return _toOrderRuleAccountGroup(
-			_corEntryRelLocalService.addCOREntryRel(
-				_user.getUserId(), AccountGroup.class.getName(),
-				orderRuleAccountGroup.getAccountGroupId(),
-				orderRuleAccountGroup.getOrderRuleId()));
-	}
+		COREntryRel corEntryRel = _corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountGroup.class.getName(),
+			orderRuleAccountGroup.getAccountGroupId(),
+			orderRuleAccountGroup.getOrderRuleId());
 
-	private OrderRuleAccountGroup _toOrderRuleAccountGroup(
-			COREntryRel corEntryRel)
-		throws Exception {
-
-		CommerceAccountGroup commerceAccountGroup =
-			_commerceAccountGroupLocalService.getCommerceAccountGroup(
-				corEntryRel.getClassPK());
-		COREntry corEntry = _corEntryLocalService.fetchCOREntry(
-			corEntryRel.getCOREntryId());
+		AccountGroup localAccountGroup =
+			_accountGroupLocalService.getAccountGroup(corEntryRel.getClassPK());
 
 		return new OrderRuleAccountGroup() {
 			{
 				accountGroupExternalReferenceCode =
-					commerceAccountGroup.getExternalReferenceCode();
-				accountGroupId =
-					commerceAccountGroup.getCommerceAccountGroupId();
+					localAccountGroup.getExternalReferenceCode();
+				accountGroupId = localAccountGroup.getAccountGroupId();
 				orderRuleAccountGroupId = corEntryRel.getCOREntryRelId();
 				orderRuleExternalReferenceCode =
-					corEntry.getExternalReferenceCode();
-				orderRuleId = corEntry.getCOREntryId();
+					_corEntry.getExternalReferenceCode();
+				orderRuleId = _corEntry.getCOREntryId();
 			}
 		};
 	}
 
 	@Inject
-	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
+	private static AccountGroupLocalService _accountGroupLocalService;
 
+	@Inject
+	private static COREntryLocalService _corEntryLocalService;
+
+	@Inject
+	private static COREntryRelLocalService _corEntryRelLocalService;
+
+	@DeleteAfterTestRun
+	private final List<AccountGroup> _accountGroups = new ArrayList<>();
+
+	@DeleteAfterTestRun
 	private COREntry _corEntry;
 
-	@Inject
-	private COREntryLocalService _corEntryLocalService;
-
-	@Inject
-	private COREntryRelLocalService _corEntryRelLocalService;
-
-	private ServiceContext _serviceContext;
+	@DeleteAfterTestRun
 	private User _user;
 
 }

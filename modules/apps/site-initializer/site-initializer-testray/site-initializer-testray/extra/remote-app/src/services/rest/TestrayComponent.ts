@@ -22,7 +22,7 @@ import {APIResponse, TestrayComponent} from './types';
 
 type Component = typeof yupSchema.component.__outputType;
 class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
-	private UNASSIGNED_TEAM_ID = '0';
+	public UNASSIGNED_TEAM_ID = '0';
 
 	constructor() {
 		super({

@@ -27,7 +27,8 @@ import {
 type FactorCategory = typeof yupSchema.factorCategory.__outputType;
 class TestrayFactorCategoryRest extends Rest<
 	FactorCategory,
-	TestrayFactorCategory
+	TestrayFactorCategory,
+	'factorCategoryToOptions'
 > {
 	constructor() {
 		super({

@@ -424,9 +424,7 @@ public class ExpressionVisitorImplTest {
 	}
 
 	@Test
-	public void testVisitMethodExpressionWithContains()
-		throws ExpressionVisitException {
-
+	public void testVisitMethodExpressionWithContains() {
 		Map<String, EntityField> entityFieldsMap =
 			_entityModel.getEntityFieldsMap();
 
@@ -446,6 +444,17 @@ public class ExpressionVisitorImplTest {
 				"value", "title1"
 			).toString(),
 			jsonObject.toString());
+	}
+
+	@Test
+	public void testVisitMethodExpressionWithNow() {
+		String visitNowMethodExpression =
+			(String)_expressionVisitorImpl.visitMethodExpression(
+				Collections.emptyList(), MethodExpression.Type.NOW);
+
+		Assert.assertEquals(
+			String.valueOf(MethodExpression.Type.NOW),
+			visitNowMethodExpression);
 	}
 
 	@Test

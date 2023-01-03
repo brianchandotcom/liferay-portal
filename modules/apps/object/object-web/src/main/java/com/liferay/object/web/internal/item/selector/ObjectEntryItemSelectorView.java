@@ -129,9 +129,9 @@ public class ObjectEntryItemSelectorView
 			return _infoPermissionProvider.hasViewPermission(
 				GuestOrUserUtil.getPermissionChecker());
 		}
-		catch (PrincipalException exception) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(principalException);
 			}
 		}
 

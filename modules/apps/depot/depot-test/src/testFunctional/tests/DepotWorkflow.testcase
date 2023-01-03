@@ -42,8 +42,8 @@ definition {
 
 	@description = "This ensures that the approved image from a depot is available to use in its connected site."
 	@priority = "5"
-	@refactorneeded
-	test ApproveImage {
+	@refactordone
+	test CanApproveImage {
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
@@ -115,8 +115,8 @@ definition {
 
 	@description = "This ensures that the approved WC article from a depot is available to use in its connected site."
 	@priority = "5"
-	@refactorneeded
-	test ApproveWCArticle {
+	@refactordone
+	test CanApproveWCArticle {
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -211,8 +211,8 @@ definition {
 
 	@description = "This test covers LPS-113392. It ensures that an asset library WC article can be approved by the content reviewer."
 	@priority = "5"
-	@refactorneeded
-	test ApproveWCArticleByContentReviewer {
+	@refactordone
+	test CanApproveWCArticleByContentReviewer {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -302,8 +302,8 @@ definition {
 
 	@description = "This ensures that a single approver workflow of web content can be defined for the asset library."
 	@priority = "5"
-	@refactorneeded
-	test ApproveWCArticleWithinDepot {
+	@refactordone
+	test CanApproveWCArticleWithinDepot {
 		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
 
 		Workflow.configureWorkflow(
@@ -347,8 +347,8 @@ definition {
 
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
 	@priority = "5"
-	@refactorneeded
-	test ApproveWCInFolder {
+	@refactordone
+	test CanApproveWCInFolder {
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
 			groupName = "Test Depot Name",
@@ -450,8 +450,8 @@ definition {
 
 	@description = "This ensures that the resubmitted image from a depot is available to use in its connected site."
 	@priority = "5"
-	@refactorneeded
-	test RejectAndResubmitImage {
+	@refactordone
+	test CanRejectAndResubmitImage {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -566,8 +566,8 @@ definition {
 
 	@description = "This ensures that the resubmitted WC article from a depot is available to use in its connected site."
 	@priority = "5"
-	@refactorneeded
-	test RejectAndResubmitWC {
+	@refactordone
+	test CanRejectAndResubmitWC {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -681,8 +681,8 @@ definition {
 
 	@description = "This ensures that the resubmitted web content can be approved in an asset library."
 	@priority = "5"
-	@refactorneeded
-	test RejectandResubmitWCArticleWithinDepot {
+	@refactordone
+	test CanRejectAndResubmitWCArticleWithinDepot {
 		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
 
 		Workflow.configureWorkflow(
@@ -759,8 +759,8 @@ definition {
 
 	@description = "This ensures that an asset library WC article can be rejected by the content reviewer."
 	@priority = "5"
-	@refactorneeded
-	test RejectWCArticleByContentReviewer {
+	@refactordone
+	test CanRejectWCArticleByContentReviewer {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -834,8 +834,8 @@ definition {
 
 	@description = "This ensures that a DM folder workflow can be restored to default from other settings."
 	@priority = "4"
-	@refactorneeded
-	test RestoreDMFolderWorkflowToDefault {
+	@refactordone
+	test CanRestoreDMFolderWorkflowToDefault {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -880,8 +880,8 @@ definition {
 
 	@description = "This ensures that a WC folder workflow can be restored to default from other settings."
 	@priority = "4"
-	@refactorneeded
-	test RestoreWCFolderWorkflowToDefault {
+	@refactordone
+	test CanRestoreWCFolderWorkflowToDefault {
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
 			groupName = "Test Depot Name",
@@ -923,8 +923,8 @@ definition {
 
 	@description = "This ensures that the workflow can be set in an asset library."
 	@priority = "5"
-	@refactorneeded
-	test Smoke {
+	@refactordone
+	test WorkflowCanBeSetInDepot {
 		property portal.acceptance = "true";
 
 		DepotNavigator.openDepotAdmin();

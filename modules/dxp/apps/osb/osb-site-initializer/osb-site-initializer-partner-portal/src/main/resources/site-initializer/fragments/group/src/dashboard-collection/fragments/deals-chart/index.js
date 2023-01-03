@@ -15,6 +15,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
+import getChartValues from './utils/getChartValues';
 import getQuarter from './utils/getQuarter';
 
 const colors = {
@@ -124,18 +125,12 @@ export default function () {
 		filteredDealsByType?.submitedDeals,
 	]);
 
-	const approvedChartValues = filteredDealsByQuarter?.map((item) => {
-		return item?.approved;
-	});
-	const closedWonChartValues = filteredDealsByQuarter?.map((item) => {
-		return item?.closedwon;
-	});
-	const rejectedChartValues = filteredDealsByQuarter?.map((item) => {
-		return item?.rejected;
-	});
-	const submitedChartValues = filteredDealsByQuarter?.map((item) => {
-		return item?.submited;
-	});
+	const [
+		approvedChartValues,
+		closedWonChartValues,
+		rejectedChartValues,
+		submitedChartValues,
+	] = getChartValues({filteredDealsByQuarter});
 
 	const chart = {
 		bar: {

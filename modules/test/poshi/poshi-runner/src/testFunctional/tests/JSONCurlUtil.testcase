@@ -10,10 +10,12 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		var jsonURL = "file://${testBaseDirName}/${testDependenciesDirName}/sample.json";
+		var jsonFilePath = FileUtil.getCanonicalPath("${testBaseDirName}/${testDependenciesDirName}/sample.json");
+
+		var curl = "file://${jsonFilePath}";
 		var jsonPath = "$.computer[0].monitorData.['hudson.node_monitors.SwapSpaceMonitor'].availablePhysicalMemory";
 
-		var actual = JSONCurlUtil.get("${jsonURL}", "${jsonPath}");
+		var actual = JSONCurlUtil.get("${curl}", "${jsonPath}");
 		var expected = "2054144000";
 
 		if ("${actual}" == "${expected}") {
@@ -40,10 +42,12 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		var jsonURL = "file://${testBaseDirName}/${testDependenciesDirName}/sample.json";
+		var jsonFilePath = FileUtil.getCanonicalPath("${testBaseDirName}/${testDependenciesDirName}/sample.json");
+
+		var curl = "file://${jsonFilePath}";
 		var jsonPath = "$.busyExecutors";
 
-		var actual = JSONCurlUtil.get("${jsonURL}", "${jsonPath}");
+		var actual = JSONCurlUtil.get("${curl}", "${jsonPath}");
 		var expected = "25";
 
 		if ("${actual}" == "${expected}") {
@@ -70,10 +74,12 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		var jsonURL = "file://${testBaseDirName}/${testDependenciesDirName}/sample.json";
+		var jsonFilePath = FileUtil.getCanonicalPath("${testBaseDirName}/${testDependenciesDirName}/sample.json");
+
+		var curl = "file://${jsonFilePath}";
 		var jsonPath = "$.computer[2].displayName";
 
-		var actual = JSONCurlUtil.get("${jsonURL}", "${jsonPath}");
+		var actual = JSONCurlUtil.get("${curl}", "${jsonPath}");
 		var expected = "cloud-10-0-12-172";
 
 		if ("${actual}" == "${expected}") {

@@ -223,6 +223,97 @@ definition {
 		}
 	}
 
+	@description = "LPS-165850 - Verify it's possible to cancel a new entry"
+	@priority = "3"
+	test CanCancelNewEntryOnRelationshipTab {
+		task ("Given a related object with Custom Layout and Relationship tab") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 171629",
+				objectName = "CustomObject171629",
+				pluralLabelName = "Custom Objects 171629");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject171629");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject171629",
+				objectName_2 = "CustomObject171629",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Custom Layout",
+				objectName = "CustomObject171629");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171629");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 171629");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			PortletEntry.save();
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject171629",
+				value = "Entry Test");
+		}
+
+		task ("When a user cancels a new entry on the Relationship Tab") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject171629");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_kebabOption = "Create New",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+
+			Type.type(
+				locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
+				value1 = "Entry Test");
+
+			Button.clickCancel();
+		}
+
+		task ("Then that entry is not present on the relationship tab") {
+			AssertElementNotPresent(
+				key_fieldLabel = "Entry Test",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+
+			ObjectAdmin.assertNoResultsWereFound();
+		}
+	}
+
 	@description = "LPS-161884 - Verify that it's possible to create an object with a categorization section in the layout"
 	@priority = "3"
 	test CanCreateObjectWithCategorizationSection {

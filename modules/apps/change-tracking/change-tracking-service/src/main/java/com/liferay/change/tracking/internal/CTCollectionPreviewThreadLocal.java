@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 
 /**
  * @author David Truong
@@ -27,6 +28,8 @@ public class CTCollectionPreviewThreadLocal {
 
 	public static void setCTCollectionId(long collectionId) {
 		_ctCollectionId.set(collectionId);
+
+		CTCollectionThreadLocal.removeCTCollectionId();
 	}
 
 	private CTCollectionPreviewThreadLocal() {

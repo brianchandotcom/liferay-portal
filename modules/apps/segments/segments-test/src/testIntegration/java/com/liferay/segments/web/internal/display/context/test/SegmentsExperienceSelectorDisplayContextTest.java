@@ -39,6 +39,8 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -184,7 +186,7 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		long selectedSegmentsExperienceId =
 			segmentsExperience.getSegmentsExperienceId();
 
-		JSONObject jsonObject = _getSegmentsExperienceSelectedJSONObject(
+		JSONObject jsonObject = _getSelectedSegmentsExperienceJSONObject(
 			selectedSegmentsExperienceId);
 
 		Assert.assertEquals(
@@ -193,7 +195,7 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 
 		selectedSegmentsExperienceId = -1;
 
-		jsonObject = _getSegmentsExperienceSelectedJSONObject(
+		jsonObject = _getSelectedSegmentsExperienceJSONObject(
 			selectedSegmentsExperienceId);
 
 		Assert.assertEquals(
@@ -216,7 +218,14 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		return mockHttpServletRequest;
 	}
 
-	private JSONObject _getSegmentsExperienceSelectedJSONObject(
+	private JSONArray _getSegmentsExperiencesJSONArray() throws Exception {
+		Map<String, Object> data = _invokeMethod(
+			"getData", _getMockHttpServletRequest());
+
+		return (JSONArray)data.get("experiences");
+	}
+
+	private JSONObject _getSelectedSegmentsExperienceJSONObject(
 			long selectedSegmentsExperienceId)
 		throws Exception {
 
@@ -227,13 +236,10 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 			"segmentsExperienceId",
 			String.valueOf(selectedSegmentsExperienceId));
 
-		return _invokeMethod(
-			"getSegmentsExperienceSelectedJSONObject", mockHttpServletRequest);
-	}
+		Map<String, Object> data = _invokeMethod(
+			"getData", mockHttpServletRequest);
 
-	private JSONArray _getSegmentsExperiencesJSONArray() throws Exception {
-		return _invokeMethod(
-			"getSegmentsExperiencesJSONArray", _getMockHttpServletRequest());
+		return (JSONObject)data.get("selectedExperience");
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

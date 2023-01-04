@@ -1300,9 +1300,11 @@ definition {
 	}
 
 	macro selectObjectScope {
-		Select(
-			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
-			value1 = "${fieldOption}");
+		Click(locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE");
+
+		Click(
+			key_menuItem = "${fieldOption}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro selectSpecificKebabMenuOption {

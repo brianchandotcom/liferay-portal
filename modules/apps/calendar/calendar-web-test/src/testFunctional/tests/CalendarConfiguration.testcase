@@ -128,8 +128,8 @@ definition {
 		CalendarEvent.setDatesToday();
 
 		CalendarEvent.setTimes(
-			endDateTime = "03:00 PM",
-			startDateTime = "02:00 PM");
+			endDateTime = " 3:00 PM",
+			startDateTime = " 2:00 PM");
 
 		CalendarEvent.publish();
 
@@ -144,16 +144,16 @@ definition {
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewTimesViaDetails(
-			endDateTime = "03:00 PM",
-			startDateTime = "02:00 PM");
+			endDateTime = "January 4, 2023, 03:00 PM",
+			startDateTime = "January 4, 2023, 02:00 PM");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
 		CalendarEvent.viewTimes(
-			endDateTime = "03:00 PM",
-			startDateTime = "02:00 PM");
+			endDateTime = " 3:00 PM",
+			startDateTime = " 2:00 PM");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -168,14 +168,14 @@ definition {
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
 		CalendarScheduler.viewEventTimesViaDialogBox(
-			endDateTime = "am",
-			startDateTime = "am");
+			endDateTime = "Wed, January 04, 2:00pm - 3:00pm",
+			startDateTime = "Wed, January 04, 2:00pm - 3:00pm");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewTimesViaDetails(
-			endDateTime = "AM",
-			startDateTime = "AM");
+			endDateTime = "January 4, 2023, 03:00 PM",
+			startDateTime = "January 4, 2023, 02:00 PM");
 	}
 
 	@priority = "4"
@@ -230,7 +230,7 @@ definition {
 
 		CalendarEvent.setTimes(
 			endDateTime = "11:00 PM",
-			startDateTime = "09:00 PM");
+			startDateTime = " 9:00 PM");
 
 		CalendarEvent.publish();
 
@@ -292,7 +292,7 @@ definition {
 
 		CalendarEvent.viewTimesViaDetails(
 			endDateTime = "11:00 PM",
-			startDateTime = "09:00 PM");
+			startDateTime = "January 4, 2023, 09:00 PM");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -300,7 +300,7 @@ definition {
 
 		CalendarEvent.viewTimes(
 			endDateTime = "11:00 PM",
-			startDateTime = "09:00 PM");
+			startDateTime = " 9:00 PM");
 	}
 
 	@priority = "5"

@@ -907,11 +907,13 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "Default Display Page Name");
 
-			AssertAttributeValue(
-				attribute1 = "title",
+			MouseOver.javaScriptFocus(
 				key_text = "Preview",
-				locator1 = "Button#ANY_SECONDARY",
-				value1 = "A draft will be saved before displaying the preview.");
+				locator1 = "Button#ANY_SECONDARY");
+
+			AssertVisible(
+				key_content = "A draft will be saved before displaying the preview.",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 
 			Click(
 				key_text = "Preview",
@@ -1049,11 +1051,13 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "Default Display Page Name");
 
-			AssertAttributeValue(
-				attribute1 = "title",
+			MouseOver.javaScriptFocus(
 				key_text = "Preview",
-				locator1 = "Button#ANY_SECONDARY",
-				value1 = "A draft will be saved before displaying the preview.");
+				locator1 = "Button#ANY_SECONDARY");
+
+			AssertVisible(
+				key_content = "A draft will be saved before displaying the preview.",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 
 			Click(
 				key_text = "Preview",

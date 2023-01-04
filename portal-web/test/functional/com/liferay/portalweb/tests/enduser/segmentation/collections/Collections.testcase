@@ -3868,75 +3868,57 @@ definition {
 		task ("When the site designer hovers on the dynamic collection icon under table style") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			MouseOver(
+			MouseOver.javaScriptFocus(
 				key_tableEntry = "Dynamic Collection",
 				key_text = "bolt",
 				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
 		}
 
 		task ("Then the site designer sees the tooltip") {
-			AssertAttributeValue(
-				attribute1 = "title",
-				key_tableEntry = "Dynamic Collection",
-				key_text = "bolt",
-				locator1 = "LexiconTable#TABLE_ENTRY_ICON_TOOLTIP",
-				value1 = "Dynamic Collection");
+			AssertVisible(
+				key_content = "Dynamic Collection",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 
 		task ("When the site designer hovers on the manual collection icon under table style") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			MouseOver(
+			MouseOver.javaScriptFocus(
 				key_tableEntry = "Manual Collection",
 				key_text = "list",
 				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
 		}
 
 		task ("Then the site designer sees the tooltip") {
-			AssertAttributeValue(
-				attribute1 = "title",
-				key_tableEntry = "Manual Collection",
-				key_text = "list",
-				locator1 = "LexiconTable#TABLE_ENTRY_ICON_TOOLTIP",
-				value1 = "Manual Collection");
+			AssertVisible(
+				key_content = "Manual Collection",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 
 		task ("When the site designer hovers on the dynamic collection icon under list style") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			MouseOver(
+			MouseOver.javaScriptFocus(
 				key_listEntry = "Dynamic Collection",
 				key_text = "bolt",
 				locator1 = "LexiconList#ANY_ICON");
 		}
 
 		task ("Then the site designer sees the tooltip") {
-			AssertAttributeValue(
-				attribute1 = "title",
-				key_listEntry = "Dynamic Collection",
-				key_text = "bolt",
-				locator1 = "LexiconList#LIST_ENTRY_ICON_TOOLTIP",
-				value1 = "Dynamic Collection");
+			AssertVisible(
+				key_content = "Dynamic Collection",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 
 		task ("When the site designer hovers on the dynamic collection icon under list style") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			MouseOver(
+			MouseOver.javaScriptFocus(
 				key_listEntry = "Manual Collection",
 				key_text = "list",
 				locator1 = "LexiconList#ANY_ICON");
 		}
 
 		task ("Then the site designer sees the tooltip") {
-			AssertAttributeValue(
-				attribute1 = "title",
-				key_listEntry = "Manual Collection",
-				key_text = "list",
-				locator1 = "LexiconList#LIST_ENTRY_ICON_TOOLTIP",
-				value1 = "Manual Collection");
+			AssertVisible(
+				key_content = "Manual Collection",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
 

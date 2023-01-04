@@ -68,9 +68,9 @@ components:
             properties:
                 authenticationMethod:
                     type: string
-                clientUserId:
+                dsClientUserId:
                     type: string
-                email:
+                emailAddress:
                     type: string
                 returnUrl:
                     type: string
@@ -173,7 +173,7 @@ paths:
             tags: ["DSEnvelope"]
     "/sites/{siteId}/ds-recipient-view-definition/{dsEnvelopeId}":
         post:
-            operationId: postSiteDSEnvelopeDsRecipientViewDefinition
+            operationId: postSiteDSRecipientViewDefinition
             parameters:
                 - in: path
                   name: siteId

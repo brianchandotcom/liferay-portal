@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"dispatcher=ERROR", "dispatcher=FORWARD", "dispatcher=INCLUDE",
 		"dispatcher=REQUEST", "servlet-context-name=",

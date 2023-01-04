@@ -37,7 +37,7 @@ definition {
 
 		task ("Then portal category name 'Client Extensions' is set by default") {
 			AssertSelectedLabel(
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
 				value1 = "Client Extensions");
 		}
 	}

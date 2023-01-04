@@ -67,13 +67,13 @@ definition {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 				value1 = "https://www.liferay.com/");
 
 			Type(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 				value1 = "https://www.liferay.com/company/our-story");
 		}
 
@@ -88,13 +88,13 @@ definition {
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "1",
 				key_text = "https://www.liferay.com/",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 
 			AssertElementPresent(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "2",
 				key_text = "https://www.liferay.com/company/our-story",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 		}
 	}
 
@@ -113,13 +113,13 @@ definition {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 				value1 = "https://www.liferay.com/");
 
 			Type(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 				value1 = "https://www.liferay.com/company/our-story");
 		}
 
@@ -131,12 +131,12 @@ definition {
 			AssertElementNotPresent(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 
 			AssertElementPresent(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 		}
 
 		task ("And Then the JS URL value matches the 2nd JS URL value (prior to deletion)") {
@@ -144,13 +144,13 @@ definition {
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "1",
 				key_text = "https://www.liferay.com/company/our-story",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 		}
 
 		task ("And Then repeatable button - (minus) is not present") {
 			AssertNotVisible(
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#REMOVE_URL_ROW");
+				locator1 = "ClientExtensionEntry#REMOVE_URL_ROW");
 		}
 	}
 
@@ -173,29 +173,29 @@ definition {
 			AssertElementPresent(
 				key_id = "cssURLs",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 		}
 
 		task ("And Then repeatable button + and - are present for both CSS URL fields") {
 			AssertElementPresent(
 				key_fieldLabelName = "CSS URL",
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
 				key_fieldLabelName = "CSS URL",
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
 				key_fieldLabelName = "CSS URL",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
 				key_fieldLabelName = "CSS URL",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
 		}
 	}
 
@@ -218,29 +218,29 @@ definition {
 			AssertElementPresent(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 		}
 
 		task ("And Then repeatable button + and - are present for both CSS URL fields") {
 			AssertElementPresent(
 				key_fieldLabelName = "URL",
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
 				key_fieldLabelName = "URL",
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
 				key_fieldLabelName = "URL",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
 				key_fieldLabelName = "URL",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "ClientExtensionEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
 		}
 	}
 
@@ -267,17 +267,17 @@ definition {
 			AssertElementPresent(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 
 			AssertElementPresent(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "3",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 
 			AssertElementPresent(
 				key_id = "ClientExtensionAdminPortlet_url",
 				key_index = "4",
-				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+				locator1 = "ClientExtensionEntry#URL_ROW_INDEX");
 		}
 	}
 

@@ -2359,6 +2359,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-168141 Given a segment entry is scoped to a site
+	When user navigates to that site
+	Then the segment can be used"
+	@priority = "4"
+	test CanUseSegmentScopedIndividualSite {
+		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
+
+		task ("Add a segment scoped by Test Site Name") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(criterionValue = "Test");
+
+			Segmentation.fillTitle(titleField = "CanUseSegmentScopedIndividualSite Test");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to Test Site Name site and go to edit Content Page") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add an experience using the segment created") {
+			PageEditor.addExperience(
+				experienceName = "CanUseSegmentScopedIndividualSite Experience",
+				segmentName = "CanUseSegmentScopedIndividualSite Test");
+
+			PageEditor.prioritizeExperience(experienceName = "CanUseSegmentScopedIndividualSite Experience");
+
+			PageEditor.publish();
+
+			PageEditor.viewExperienceActiveInEditMode(experienceName = "CanUseSegmentScopedIndividualSite Experience");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = "3"
 	test CheckDefaultLanguageTag {

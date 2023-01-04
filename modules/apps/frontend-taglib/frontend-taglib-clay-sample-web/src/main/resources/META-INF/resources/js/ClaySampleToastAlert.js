@@ -37,6 +37,14 @@ export default function ClaySampleToastAlert() {
 		});
 	};
 
+	const onClick5Seconds = () => {
+		openToast({
+			autoClose: 5000,
+			message: Liferay.Language.get('your-request-completed-successfully'),
+			type: 'info',
+		})
+	};
+
 	return (
 		<div data-qa-id="claySampleToastAlert">
 			<h3>TOAST ALERT MESSAGE</h3>
@@ -53,6 +61,9 @@ export default function ClaySampleToastAlert() {
 						type="submit"
 					>
 						{Liferay.Language.get('fail-submit')}
+					</ClayButton>
+					<ClayButton onClick={onClick5Seconds} type="submit" _dismissible='false'>
+						{Liferay.Language.get('disappear-after-5-secs')}
 					</ClayButton>
 				</ClayButton.Group>
 			</div>

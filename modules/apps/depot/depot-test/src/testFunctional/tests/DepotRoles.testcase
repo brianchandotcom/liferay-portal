@@ -72,9 +72,10 @@ definition {
 			depotName = "Test Depot Name",
 			userEmailAddress = "userea@liferay.com");
 
-		Depot.assignAssetLibraryRole(
-			resourceName = "userfn userln",
-			roleTitle = "Asset Library Administrator");
+		JSONRole.assignDepotRoleToUser(
+			depotName = "Test Depot Name",
+			roleTitle = "Asset Library Administrator",
+			userEmailAddress = "userea@liferay.com");
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 

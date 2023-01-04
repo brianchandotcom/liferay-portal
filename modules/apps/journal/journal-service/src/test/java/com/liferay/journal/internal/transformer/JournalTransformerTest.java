@@ -112,10 +112,15 @@ public class JournalTransformerTest {
 			journalTransformer.includeBackwardsCompatibilityTemplateNodes(
 				templateNodes, 0);
 
+		Assert.assertFalse(
+			includeBackwardsCompatibilityTemplateNodes.isEmpty());
+
 		TemplateNode templateNode =
 			includeBackwardsCompatibilityTemplateNodes.get(0);
 
 		List<TemplateNode> childrenTemplateNodes = templateNode.getChildren();
+
+		Assert.assertFalse(templateNodes.isEmpty());
 
 		TemplateNode firstChildTemplateNode = childrenTemplateNodes.get(0);
 
@@ -143,9 +148,13 @@ public class JournalTransformerTest {
 		List<TemplateNode> nestedRepeatableFieldsTemplateNodes =
 			_getNestedRepeatableFieldsTemplateNodes();
 
+		Assert.assertFalse(nestedRepeatableFieldsTemplateNodes.isEmpty());
+
 		TemplateNode templateNode = nestedRepeatableFieldsTemplateNodes.get(0);
 
 		List<TemplateNode> childrenTemplateNodes = templateNode.getChildren();
+
+		Assert.assertFalse(childrenTemplateNodes.isEmpty());
 
 		TemplateNode firstChildTemplateNode = childrenTemplateNodes.get(0);
 
@@ -173,6 +182,9 @@ public class JournalTransformerTest {
 		TemplateNode expectedNestedRepeatableFieldsTemplateNode =
 			_getExpectedNestedRepeatableFieldsTemplateNode();
 
+		Assert.assertFalse(
+			expectedNestedRepeatableFieldsTemplateNode.isEmpty());
+
 		TemplateNode firstIncludeBackwardsCompatibilityTemplateNode =
 			includeBackwardsCompatibilityTemplateNodes.get(0);
 
@@ -189,11 +201,16 @@ public class JournalTransformerTest {
 			journalTransformer.includeBackwardsCompatibilityTemplateNodes(
 				_getInitTemplateNodesWithSiblings(), 0);
 
+		Assert.assertFalse(
+			includeBackwardsCompatibilityTemplateNodes.isEmpty());
+
 		TemplateNode separatorTemplateNode =
 			includeBackwardsCompatibilityTemplateNodes.get(0);
 
 		List<TemplateNode> separatorChildrenTemplateNodes =
 			separatorTemplateNode.getChildren();
+
+		Assert.assertFalse(separatorChildrenTemplateNodes.isEmpty());
 
 		TemplateNode bookmarksTitleTemplateNode =
 			separatorChildrenTemplateNodes.get(0);

@@ -17,6 +17,12 @@ definition {
 			value1 = "prepare-database-upgrade-configuration");
 	}
 
+	tearDown {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "clean-database-upgrade-client");
+	}
+
 	@description = "LPS-158522: Upgrade client can run with additional settings"
 	@priority = "3"
 	test CheckUpgradeClientAdditionalSettings {

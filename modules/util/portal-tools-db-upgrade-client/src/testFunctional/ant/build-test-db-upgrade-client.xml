@@ -117,8 +117,6 @@
 				</if>
 			</sequential>
 		</parallel>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-custom-log">
@@ -155,8 +153,6 @@
 		<echo>The upgrade client custom log file was created successfully.</echo>
 
 		<delete file="${db.upgrade.client.home}/logs/log_file.txt" />
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-gogoshell">
@@ -203,8 +199,6 @@
 		</parallel>
 
 		<stop-one-java-process process.name="jar" />
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-command-output">
@@ -226,8 +220,6 @@
 				</not>
 			</condition>
 		</fail>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-failed-upgrade">
@@ -252,8 +244,6 @@
 			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-client-gogoshell-help-output.expect"
 		/>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-help">
@@ -283,8 +273,6 @@
 		</if>
 
 		<delete file="help.output" />
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-home-ext-properties">
@@ -317,8 +305,6 @@
 			</try>
 			<finally>
 				<delete file="${user.home}/portal-ext.properties" />
-
-				<clean-database-upgrade-client />
 			</finally>
 		</trycatch>
 	</target>
@@ -357,8 +343,6 @@
 				<echo>${java.error.available}: Unsupported major.minor version</echo>
 			</sequential>
 		</parallel>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-second-process">
@@ -398,8 +382,6 @@
 				</if>
 			</sequential>
 		</parallel>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-sh-disconnect">
@@ -433,8 +415,6 @@
 				<fail if="upgrade.failed" message="Upgrade has failed." />
 			</sequential>
 		</parallel>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-upgrade-core-only">
@@ -486,8 +466,6 @@ upgrade.database.auto.run=false</echo>
 				</sequential>
 			</for>
 		</sequential>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-properties-app-db-set">
@@ -511,8 +489,6 @@ upgrade.database.auto.run=false</echo>
 				/>
 			</condition>
 		</fail>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-properties-app-ext-set">
@@ -536,8 +512,6 @@ upgrade.database.auto.run=false</echo>
 				/>
 			</condition>
 		</fail>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-properties-db-ext-set">
@@ -561,8 +535,6 @@ upgrade.database.auto.run=false</echo>
 				/>
 			</condition>
 		</fail>
-
-		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-properties-none-set">
@@ -590,7 +562,9 @@ upgrade.database.auto.run=false</echo>
 				/>
 			</condition>
 		</fail>
+	</target>
 
+	<target name="clean-database-upgrade-client">
 		<clean-database-upgrade-client />
 	</target>
 </project>

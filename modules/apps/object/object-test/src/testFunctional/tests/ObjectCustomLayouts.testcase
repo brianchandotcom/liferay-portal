@@ -221,6 +221,78 @@ definition {
 		}
 	}
 
+	@description = "LPS-168228 - Verify it's possible to add many custom fields in the custom layout"
+	@priority = "4"
+	test CanAddManyFieldsOnLayout {
+		task ("Given an object with 20 fields is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 168228",
+				objectName = "CustomObject168228",
+				pluralLabelName = "Custom Objects 168228");
+
+			for (var n : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Custom Field${n}",
+					fieldName = "customField${n}",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "CustomObject168228");
+			}
+		}
+
+		task ("And given a layout is created with all custom fields added") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject168228");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 168228");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field1,Custom Field2,Custom Field3,Custom Field4,Custom Field5,Custom Field6,Custom Field7,Custom Field8,Custom Field9,Custom Field10,Custom Field11,Custom Field12,Custom Field13,Custom Field14,Custom Field15,Custom Field16,Custom Field17,Custom Field18,Custom Field19,Custom Field20",
+				tabName = "Field Tab");
+
+			PortletEntry.save();
+		}
+
+		task ("When the Object is published and entries are added in all fields") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject168228");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject168228");
+
+			LexiconEntry.gotoAdd();
+
+			for (var k : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
+				Type.type(
+					key_customField = "Custom Field${k}",
+					locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC",
+					value1 = "Can Add Many Fields On Layout${k}");
+			}
+
+			PortletEntry.save();
+		}
+
+		task ("Then all the entries of the custom fields are added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject168228");
+
+			for (var j : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
+				ObjectPortlet.viewEntry(entry = "Can Add Many Fields On Layout${j}");
+			}
+		}
+	}
+
 	@description = "LPS-165850 - Verify it's possible to cancel a new entry"
 	@priority = "3"
 	test CanCancelNewEntryOnRelationshipTab {

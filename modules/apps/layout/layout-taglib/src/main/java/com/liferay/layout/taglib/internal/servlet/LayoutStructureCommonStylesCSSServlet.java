@@ -69,7 +69,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
@@ -307,6 +306,20 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 				continue;
 			}
 
+			String value = null;
+
+			JSONObject valueJSONObject =
+				frontendTokenValuesJSONObject.getJSONObject(
+					frontendToken.getName());
+
+			if (valueJSONObject != null) {
+				value = valueJSONObject.getString("value");
+			}
+
+			if (value == null) {
+				value = frontendToken.getDefaultValue();
+			}
+
 			frontendTokensJSONObject.put(
 				frontendToken.getName(),
 				JSONUtil.put(
@@ -318,15 +331,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 						return frontendTokenMapping.getValue();
 					}
 				).put(
-					"value",
-					Optional.ofNullable(
-						frontendTokenValuesJSONObject.getJSONObject(
-							frontendToken.getName())
-					).map(
-						valueJSONObject -> valueJSONObject.getString("value")
-					).orElse(
-						frontendToken.getDefaultValue()
-					)
+					"value", value
 				));
 		}
 
@@ -403,13 +408,18 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			return itemConfigJSONObject.getJSONObject("styles");
 		}
 
-		return Optional.ofNullable(
-			itemConfigJSONObject.getJSONObject(viewportSize.getViewportSizeId())
-		).map(
-			viewportJSONObject -> viewportJSONObject.getJSONObject("styles")
-		).orElse(
-			_jsonFactory.createJSONObject()
-		);
+		JSONObject viewportJSONObject = itemConfigJSONObject.getJSONObject(
+			viewportSize.getViewportSizeId());
+
+		if (viewportJSONObject != null) {
+			JSONObject jsonObject = viewportJSONObject.getJSONObject("styles");
+
+			if (jsonObject != null) {
+				return jsonObject;
+			}
+		}
+
+		return _jsonFactory.createJSONObject();
 	}
 
 	private String _getStyleValue(

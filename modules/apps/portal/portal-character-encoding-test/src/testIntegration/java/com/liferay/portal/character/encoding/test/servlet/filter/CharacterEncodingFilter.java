@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Matthew Tambara
  */
 @Component(
-	enabled = true, immediate = true,
+	enabled = true,
 	property = {
 		"after-filter=Absolute Redirects Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",

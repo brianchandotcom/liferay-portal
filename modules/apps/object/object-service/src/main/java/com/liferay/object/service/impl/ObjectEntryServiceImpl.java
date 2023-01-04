@@ -191,7 +191,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		return _modelResourcePermissionsServiceTrackerMap.getService(
+		return ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 			objectDefinition.getClassName());
 	}
 
@@ -354,7 +354,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				objectEntry.getObjectDefinitionId());
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_modelResourcePermissionsServiceTrackerMap.getService(
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
 		modelResourcePermission.check(

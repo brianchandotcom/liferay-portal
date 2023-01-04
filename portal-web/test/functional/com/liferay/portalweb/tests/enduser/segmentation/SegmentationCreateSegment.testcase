@@ -2329,6 +2329,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-168141 Given a site is already selected as site scope
+	When the user selects another site as scope
+	Then the new site should replace the previous one"
+	@priority = "3"
+	test CanSelectSiteScope {
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Add segment with site scope selected") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "CanSelectSiteScope Test");
+
+			AssertTextEquals(
+				locator1 = "Segmentation#SCOPE_CARD_SITE",
+				siteName = "Test Site Name",
+				value1 = "Test Site Name");
+		}
+
+		task ("Configure the site scope to the global site") {
+			Segmentation.configureScope(site = "Global");
+		}
+
+		task ("Assert the new site replaced the previous one") {
+			AssertTextEquals(
+				locator1 = "Segmentation#SCOPE_CARD_SITE",
+				siteName = "Global",
+				value1 = "Global");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = "3"
 	test CheckDefaultLanguageTag {

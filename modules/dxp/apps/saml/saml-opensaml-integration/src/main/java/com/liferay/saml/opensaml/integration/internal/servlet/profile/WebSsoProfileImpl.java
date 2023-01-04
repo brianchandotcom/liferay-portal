@@ -84,7 +84,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -222,20 +221,22 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 				if (samlPeerEntityContext != null) {
-					String nameIdValue = Optional.ofNullable(
+					SAMLSubjectNameIdentifierContext subcontext =
 						messageContext.getSubcontext(
-							SAMLSubjectNameIdentifierContext.class)
-					).map(
-						SAMLSubjectNameIdentifierContext::getSAML2SubjectNameID
-					).map(
-						NameID::getValue
-					).orElse(
-						null
-					);
+							SAMLSubjectNameIdentifierContext.class);
 
-					throw new EntityInteractionException(
-						samlPeerEntityContext.getEntityId(), nameIdValue,
-						exception);
+					if (subcontext != null) {
+						NameID saml2SubjectNameID =
+							subcontext.getSAML2SubjectNameID();
+
+						if (saml2SubjectNameID != null) {
+							String nameIdValue = saml2SubjectNameID.getValue();
+
+							throw new EntityInteractionException(
+								samlPeerEntityContext.getEntityId(),
+								nameIdValue, exception);
+						}
+					}
 				}
 			}
 

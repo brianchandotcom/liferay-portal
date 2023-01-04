@@ -957,7 +957,7 @@ definition {
 		}
 
 		task ("View the token name shown in tooltip when hover on color swatch item") {
-			MouseOver(
+			MouseOver.javaScriptFocus(
 				category = "Grays",
 				index = "1",
 				locator1 = "PageEditor#COLOR_SWATCH_ITEM",

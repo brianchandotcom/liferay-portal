@@ -22,7 +22,7 @@ import {
 import React, {ChangeEventHandler, useState} from 'react';
 
 interface ObjectDataContainerProps {
-	DBTableName: string;
+	dbTableName: string;
 	errors: FormError<ObjectDefinition>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -34,7 +34,7 @@ interface ObjectDataContainerProps {
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function ObjectDataContainer({
-	DBTableName,
+	dbTableName,
 	errors,
 	handleChange,
 	hasUpdateObjectDefinitionPermission,
@@ -94,7 +94,7 @@ export function ObjectDataContainer({
 					disabled
 					label={Liferay.Language.get('object-definition-table-name')}
 					name="name"
-					value={DBTableName}
+					value={dbTableName}
 				/>
 
 				<ClayToggle

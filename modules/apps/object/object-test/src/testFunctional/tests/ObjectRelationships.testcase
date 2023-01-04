@@ -1493,7 +1493,6 @@ definition {
 	}
 
 	@description = "LPS-151676 - Verify that it's possible to relate a Custom Object entry with many Native Object entries (One-to-Many)"
-	@ignore = "true"
 	@priority = "5"
 	test CanRelateOneToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
@@ -1501,40 +1500,35 @@ definition {
 		task ("Add 3 users entries to relate to custom object entries") {
 			for (var userNum : list "1,2,3") {
 				JSONUser.addUser(
-					userEmailAddress = "user_${userNum}@liferay.com",
-					userFirstName = "userfn_${userNum}",
-					userLastName = "userln",
-					userScreenName = "user_${userNum}");
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = "user_${userNum}@liferay.com");
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
 			}
 		}
 
 		task ("Add a custom object, a field, and create a one-to-many relationship with the User object") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object",
-				objectName = "CustomObject",
-				pluralLabelName = "Custom Objects");
+				labelName = "Custom Object 156668",
+				objectName = "CustomObject156668",
+				pluralLabelName = "Custom Objects 156668");
 
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
 				fieldLabelName = "Custom Field",
-				fieldName = "customObjectField",
+				fieldName = "customField",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "CustomObject");
+				objectName = "CustomObject156668");
 
 			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "CustomObject",
+				objectName_1 = "CustomObject156668",
 				objectName_2 = "User",
 				relationshipLabel = "Relationship",
 				relationshipName = "relationship",
 				relationshipType = "oneToMany");
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156668");
 		}
 
 		task ("Define First Name as a title field on the native object") {
@@ -1550,11 +1544,11 @@ definition {
 		task ("Add layout with relationship tab") {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Custom Layout",
-				objectName = "CustomObject");
+				objectName = "CustomObject156668");
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156668");
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -1579,22 +1573,23 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Add a custom object entry per UI and relate the entries to the native object") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		task ("Add a custom object entry and relate the entries to the native object") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject156668",
+				value = "Entry A");
 
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry A");
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156668");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
 			ObjectAdmin.gotoRelationshipsTab();
 
-			for (var entryName : list "userfn_1,userfn_2,userfn_3") {
-				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "${entryName}");
+			for (var userNum : list "1,2,3") {
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn${userNum}");
+
+				ObjectPortlet.viewEntry(entry = "userfn${userNum}");
 			}
-
-			ObjectPortlet.viewEntry(entry = "userfn_1");
-
-			ObjectPortlet.viewEntry(entry = "userfn_2");
-
-			ObjectPortlet.viewEntry(entry = "userfn_3");
 		}
 	}
 

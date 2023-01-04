@@ -225,6 +225,8 @@ public class LayoutSetPrototypePropagationTest
 		Assert.assertEquals(
 			_initialPrototypeLayoutsCount, getGroupLayoutCount());
 
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
+
 		LayoutServiceUtil.getLayouts(
 			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -883,6 +885,8 @@ public class LayoutSetPrototypePropagationTest
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), false);
+
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 

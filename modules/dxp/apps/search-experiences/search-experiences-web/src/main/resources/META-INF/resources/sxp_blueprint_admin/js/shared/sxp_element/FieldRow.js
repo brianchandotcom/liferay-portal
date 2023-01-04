@@ -231,7 +231,7 @@ function FieldRow({
 								}
 								onSetActive={setShowDropDown}
 							>
-								<ClayDropDown.ItemList className="sxp-blueprint-field-row-dropdown">
+								<ClayDropDown.ItemList className="sxp-field-row-dropdown-root">
 									{filteredIndexFields.map(
 										(indexField, index) => (
 											<AutocompleteItem

@@ -29,7 +29,7 @@ const PreviewModal = ({body, children, size = 'md', title}) => {
 		<>
 			{visible && (
 				<ClayModal
-					className="preview-modal"
+					className="sxp-preview-modal-root"
 					observer={observer}
 					size={size}
 				>

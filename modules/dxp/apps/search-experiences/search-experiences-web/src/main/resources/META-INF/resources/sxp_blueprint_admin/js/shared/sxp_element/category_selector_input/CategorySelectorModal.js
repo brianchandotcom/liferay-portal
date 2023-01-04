@@ -308,7 +308,7 @@ function CategorySelectorModal({
 
 	return (
 		<ClayModal
-			className="category-selector-modal"
+			className="sxp-category-selector-modal-root"
 			observer={observer}
 			size="md"
 		>

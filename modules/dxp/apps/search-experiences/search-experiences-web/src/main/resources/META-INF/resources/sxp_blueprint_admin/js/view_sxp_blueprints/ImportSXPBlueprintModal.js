@@ -137,7 +137,7 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 
 	return visible ? (
 		<ClayModal
-			className="import-sxp-blueprint-form"
+			className="sxp-import-modal-root"
 			observer={observer}
 			size="full-screen"
 		>

@@ -120,7 +120,7 @@ const PreviewAttributesModal = ({
 		<>
 			{visible && (
 				<ClayModal
-					className="preview-attributes-modal"
+					className="sxp-preview-attributes-modal-root"
 					observer={observer}
 					size="md"
 				>

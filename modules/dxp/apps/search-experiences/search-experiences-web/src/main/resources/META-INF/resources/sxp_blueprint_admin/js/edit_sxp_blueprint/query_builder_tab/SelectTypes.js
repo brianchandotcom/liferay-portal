@@ -117,7 +117,7 @@ function SelectTypes({
 
 			{visible && (
 				<ClayModal
-					className="modal-height-xl sxp-blueprint-searchable-types-modal"
+					className="modal-height-xl sxp-searchable-types-modal-root"
 					observer={observer}
 					size="lg"
 				>

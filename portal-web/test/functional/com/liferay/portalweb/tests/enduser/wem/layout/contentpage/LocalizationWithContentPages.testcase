@@ -126,9 +126,7 @@ definition {
 		}
 
 		task ("Create a content page template from the content page under page template collection") {
-			PageEditor.createPageTemplate(
-				collectionName = "Page Template Collection",
-				pageTemplateName = "Content Page Template Name");
+			PageEditor.createPageTemplate(collectionName = "Page Template Collection");
 		}
 
 		task ("View the content page template shown in Page Templates admin") {
@@ -136,15 +134,15 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Template Name");
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Test Page Name - Page Template");
 
 			PageTemplatesAdmin.viewEntryWorkflowStatus(
-				entry = "Content Page Template Name",
+				entry = "Test Page Name - Page Template",
 				workflowStatus = "Draft");
 		}
 
 		task ("View the default inline text shown in content page template in en-US") {
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Heading Example",

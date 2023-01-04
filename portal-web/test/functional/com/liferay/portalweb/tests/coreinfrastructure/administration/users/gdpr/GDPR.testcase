@@ -731,6 +731,61 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-169408. It ensures that changing the password minimum upper case does not affect anonymization"
+	@priority = "3"
+	test CanAnonymizeWithPasswordMinimumUpperCaseChange {
+		task ("Given publish the document entry as the new admin user") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("And add an initial password for usersn and change the password minimum upper in the Default Password Policy") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			User.editPassword(newPassword = "test");
+
+			PasswordPolicies.openPasswordPoliciesAdmin();
+
+			PasswordPolicies.enableSyntaxChecking(
+				minimumUpperCase = "2",
+				passwordPolicyName = "Default Password Policy");
+		}
+
+		task ("When sign in as Test Test and deactivate the user usersn") {
+			User.openUsersAdmin();
+
+			User.deletePersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			GDPR.anonymizeDataViaReviewData(application = "Documents and Media");
+		}
+
+		task ("Then the document published by user usersn is successfully anonymized") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+			DMDocument.expandInfo();
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
+				value1 = "Anonymous Anonymous");
+		}
+	}
+
 	@description = "This test deletes multiple staged data from an application, tests with Blogs and DM entries."
 	@priority = "3"
 	test CanDeleteAllStagedDataFromAnApplication {

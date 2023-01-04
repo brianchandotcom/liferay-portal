@@ -186,12 +186,15 @@ public class LayoutAnalyticsReportsInfoItem
 		}
 	}
 
-	private Optional<ThemeDisplay> _getThemeDisplayOptional() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getThemeDisplay
-		);
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return null;
+		}
+
+		return serviceContext.getThemeDisplay();
 	}
 
 	private boolean _hasEditPermission(

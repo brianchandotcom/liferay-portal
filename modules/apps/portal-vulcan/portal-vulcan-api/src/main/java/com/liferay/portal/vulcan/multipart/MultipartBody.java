@@ -22,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
@@ -67,17 +66,16 @@ public class MultipartBody {
 		return _parseValue(valueAsString, clazz);
 	}
 
-	public <T> Optional<T> getValueAsInstanceOptional(
-			String key, Class<T> clazz)
+	public <T> T getValueAsNullableInstance(String key, Class<T> clazz)
 		throws IOException {
 
 		String valueAsString = getValueAsString(key);
 
 		if (valueAsString == null) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.ofNullable(_parseValue(valueAsString, clazz));
+		return _parseValue(valueAsString, clazz);
 	}
 
 	public String getValueAsString(String key) {

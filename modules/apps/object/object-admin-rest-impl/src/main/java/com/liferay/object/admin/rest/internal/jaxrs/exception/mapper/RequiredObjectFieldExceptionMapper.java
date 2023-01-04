@@ -16,10 +16,11 @@ package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -47,14 +48,17 @@ public class RequiredObjectFieldExceptionMapper
 		return new Problem(
 			Response.Status.BAD_REQUEST,
 			_language.get(
-				LocaleUtil.getDefault(),
-				"at-least-one-custom-field-must-be-added"));
+				_acceptLanguage.getPreferredLocale(),
+				requiredObjectFieldException.getMessageKey()));
 	}
 
 	@Override
 	protected boolean isSanitize() {
 		return false;
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
 
 	@Reference
 	private Language _language;

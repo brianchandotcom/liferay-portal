@@ -68,21 +68,15 @@ definition {
 			resourceName = "com.liferay.depot.model.DepotEntry",
 			roleTitle = "Depot Regrole Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
-			portlet = "Memberships");
-
-		Depot.assignUserAsMember(
-			depotName = "Test Depot Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		Depot.assignAssetLibraryRole(
 			resourceName = "userfn userln",
 			roleTitle = "Asset Library Administrator");
+
+		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
 		Depot.removeMember(
 			userFirstName = "userfn",

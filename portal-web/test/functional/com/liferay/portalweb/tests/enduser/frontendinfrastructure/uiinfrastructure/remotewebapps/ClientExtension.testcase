@@ -586,7 +586,7 @@ definition {
 
 		task ("Then error message 'HTML element name is empty'") {
 			AssertElementPresent(
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
 				text = "HTML element name is empty.");
 		}
 
@@ -682,7 +682,7 @@ definition {
 
 		task ("Then error message 'HTML Element name contains invalid character' with empty/white space appears under HTML Element field") {
 			AssertElementPresent(
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
 				text = "HTML element name contains invalid character");
 		}
 	}
@@ -709,7 +709,7 @@ definition {
 
 		task ("Then error message 'HTML element name must contain at least one hyphen' appears under HTML Element field") {
 			AssertElementPresent(
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
 				text = "HTML element name must contain at least one hyphen");
 		}
 	}
@@ -738,7 +738,7 @@ definition {
 
 		task ("Then error message 'HTML element name must start with a lowercase letter' appears under HTML Element field") {
 			AssertElementPresent(
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
 				text = "HTML element name must start with a lowercase letter");
 		}
 	}

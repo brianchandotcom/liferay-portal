@@ -40,9 +40,9 @@ definition {
 			entryProperties = "${entryProperties}",
 			entryURL = "${entryURL}");
 
-		Click(locator1 = "RemoteAppsEntry#USE_ES_MODULES");
+		Click(locator1 = "ClientExtensionEntry#USE_ES_MODULES");
 
-		Click(locator1 = "RemoteAppsEntry#REMOTE_APPS_INSTANCEABLE");
+		Click(locator1 = "ClientExtensionEntry#REMOTE_APPS_INSTANCEABLE");
 
 		PortletEntry.publish();
 	}
@@ -104,7 +104,7 @@ definition {
 		AssertTextEquals(
 			custom_entryURL = "${entryURL}",
 			key_id = "ClientExtensionAdminPortlet_url",
-			locator1 = "RemoteAppsEntry#URL",
+			locator1 = "ClientExtensionEntry#URL",
 			value1 = "${entryURL}");
 
 		AssertTextEquals(
@@ -116,7 +116,7 @@ definition {
 		AssertTextEquals(
 			custom_entryProperties = "${entryProperties}",
 			key_text = "Properties",
-			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+			locator1 = "ClientExtensionEntry#REMOTE_APPS_PROPERTIES",
 			value1 = "${entryProperties}");
 	}
 
@@ -136,25 +136,25 @@ definition {
 		AssertTextEquals(
 			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js");
 
 		AssertTextEquals(
 			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
 
 		AssertTextEquals(
 			key_id = "cssURLs",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index1.css");
 
 		AssertTextEquals(
 			key_id = "cssURLs",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index2.css");
 	}
 
@@ -251,7 +251,7 @@ definition {
 
 		Type(
 			key_text = "Properties",
-			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+			locator1 = "ClientExtensionEntry#REMOTE_APPS_PROPERTIES",
 			value1 = "${entryProperties}");
 
 		PortletEntry.publish();

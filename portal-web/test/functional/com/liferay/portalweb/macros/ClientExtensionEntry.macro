@@ -3,7 +3,7 @@ definition {
 	macro addCSSURLRow {
 		Click(
 			key_id = "cssURLs",
-			locator1 = "RemoteAppsEntry#ADD_URL_ROW");
+			locator1 = "ClientExtensionEntry#ADD_URL_ROW");
 	}
 
 	macro addCustomElement {
@@ -19,7 +19,7 @@ definition {
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
-			locator1 = "RemoteAppsEntry#URL",
+			locator1 = "ClientExtensionEntry#URL",
 			value1 = "${entryURL}");
 	}
 
@@ -36,7 +36,7 @@ definition {
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
-			locator1 = "RemoteAppsEntry#URL",
+			locator1 = "ClientExtensionEntry#URL",
 			value1 = "${entryURL}");
 
 		Type(
@@ -45,7 +45,7 @@ definition {
 			value1 = "${entryCssurl}");
 
 		Type(
-			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+			locator1 = "ClientExtensionEntry#REMOTE_APPS_PROPERTIES",
 			value1 = "${entryProperties}");
 	}
 
@@ -67,25 +67,25 @@ definition {
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "${entryUrl1}");
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "${entryUrl2}");
 
 		Type(
 			key_id = "cssURLs",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "${entryCssurl1}");
 
 		Type(
 			key_id = "cssURLs",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "${entryCssurl2}");
 	}
 
@@ -98,33 +98,33 @@ definition {
 		if (isSet(mainURL)) {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_mainURL",
-				locator1 = "RemoteAppsEntry#URL",
+				locator1 = "ClientExtensionEntry#URL",
 				value1 = "${mainURL}");
 		}
 		else {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_url",
-				locator1 = "RemoteAppsEntry#URL",
+				locator1 = "ClientExtensionEntry#URL",
 				value1 = "${entryURL}");
 		}
 	}
 
 	macro addPortletCategory {
 		Select(
-			locator1 = "RemoteAppsEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
+			locator1 = "ClientExtensionEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
 			value1 = "${categoryName}");
 	}
 
 	macro addURLRow {
 		Click(
 			key_id = "ClientExtensionAdminPortlet__urls",
-			locator1 = "RemoteAppsEntry#ADD_URL_ROW");
+			locator1 = "ClientExtensionEntry#ADD_URL_ROW");
 	}
 
 	macro removeURLRow {
 		Click(
 			key_id = "${key_id}",
-			locator1 = "RemoteAppsEntry#REMOVE_URL_ROW");
+			locator1 = "ClientExtensionEntry#REMOVE_URL_ROW");
 	}
 
 }

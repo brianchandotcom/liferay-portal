@@ -145,9 +145,8 @@ public class FileEntryAnalyticsReportsInfoItem
 					FileEntry.class.getName(), fileEntry.getPrimaryKey()));
 	}
 
-	private Optional<User> _getUser(FileEntry fileEntry) {
-		return Optional.ofNullable(
-			_userLocalService.fetchUser(fileEntry.getUserId()));
+	private User _getUser(FileEntry fileEntry) {
+		return _userLocalService.fetchUser(fileEntry.getUserId());
 	}
 
 	@Reference

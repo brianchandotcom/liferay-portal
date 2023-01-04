@@ -4513,42 +4513,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			com.liferay.object.model.ObjectDefinition
 				serviceBuilderObjectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						serviceContext.getCompanyId(), "C_" + entry.getKey());
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_" + entry.getKey());
 
-			ObjectDefinition accountEntryRestrictedObjectField =
-				entry.getValue();
-
-			com.liferay.object.model.ObjectField
-				accountEntryRestrictedServiceBuilderObjectField =
-					_objectFieldLocalService.fetchObjectField(
-						serviceBuilderObjectDefinition.getObjectDefinitionId(),
-						accountEntryRestrictedObjectField.
-							getAccountEntryRestrictedObjectFieldName());
-
-			if (accountEntryRestrictedServiceBuilderObjectField == null) {
-				return;
-			}
-
-			Long accountEntryRestrictedObjectFieldId =
-				accountEntryRestrictedServiceBuilderObjectField.
-					getObjectFieldId();
-
-			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				serviceBuilderObjectDefinition.getExternalReferenceCode(),
-				serviceBuilderObjectDefinition.getObjectDefinitionId(),
-				accountEntryRestrictedObjectFieldId,
-				serviceBuilderObjectDefinition.getDescriptionObjectFieldId(),
-				serviceBuilderObjectDefinition.getTitleObjectFieldId(), true,
-				true, true, false,
-				serviceBuilderObjectDefinition.getEnableObjectEntryHistory(),
-				serviceBuilderObjectDefinition.getLabelMap(),
-				serviceBuilderObjectDefinition.getName(),
-				serviceBuilderObjectDefinition.getPanelAppOrder(),
-				serviceBuilderObjectDefinition.getPanelCategoryKey(),
-				serviceBuilderObjectDefinition.getPortlet(),
-				serviceBuilderObjectDefinition.getPluralLabelMap(),
-				serviceBuilderObjectDefinition.getScope());
+			_objectDefinitionLocalService.restrictObjectDefinitionByAccountEntry(
+				serviceBuilderObjectDefinition, serviceContext.getUserId());
 		}
 	}
 

@@ -31,7 +31,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -72,11 +71,14 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public JSONObject getBackgroundImageJSONObject() {
-		return Optional.ofNullable(
-			stylesJSONObject.getJSONObject("backgroundImage")
-		).orElse(
-			JSONFactoryUtil.createJSONObject()
-		);
+		JSONObject jsonObject = stylesJSONObject.getJSONObject(
+			"backgroundImage");
+
+		if (jsonObject == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return jsonObject;
 	}
 
 	public String getCssClass() {

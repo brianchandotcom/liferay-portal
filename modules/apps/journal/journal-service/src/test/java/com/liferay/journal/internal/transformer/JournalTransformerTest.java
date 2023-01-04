@@ -78,13 +78,13 @@ public class JournalTransformerTest {
 		List<TemplateNode> templateNodes = new ArrayList<>();
 
 		TemplateNode logoTitleFieldSetTemplateNode = _createTemplateNode(
-			"logoTitleFieldSet", DDMFormFieldTypeConstants.FIELDSET);
+			"logoTitleTextFieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode logoTitleTextTemplateNode = _createTemplateNode(
 			"logoTitleText", DDMFormFieldTypeConstants.TEXT);
 
 		TemplateNode logoFieldSetTemplateNode = _createTemplateNode(
-			"logoFieldSet", DDMFormFieldTypeConstants.FIELDSET);
+			"logoFieldFieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode logoFieldTemplateNode = _createTemplateNode(
 			"logoField", DDMFormFieldTypeConstants.IMAGE);
@@ -239,16 +239,16 @@ public class JournalTransformerTest {
 
 	private TemplateNode _getExpectedNestedRepeatableFieldsTemplateNode() {
 		TemplateNode templateNode = _createTemplateNode(
-			"Group 1 Field 1", DDMFormFieldTypeConstants.TEXT);
+			"Group1Field1", DDMFormFieldTypeConstants.TEXT);
 
 		templateNode.appendSibling(templateNode);
 
 		templateNode.appendSibling(
 			_createTemplateNode(
-				"Group 1 Field 2", DDMFormFieldTypeConstants.TEXT));
+				"Group1Field2", DDMFormFieldTypeConstants.TEXT));
 		templateNode.appendSibling(
 			_createTemplateNode(
-				"Group 2 Field 1", DDMFormFieldTypeConstants.TEXT));
+				"Group2Field1", DDMFormFieldTypeConstants.TEXT));
 
 		return templateNode;
 	}
@@ -257,10 +257,10 @@ public class JournalTransformerTest {
 		_getExpectedParentStructureWithFieldSetTemplateNodes() {
 
 		TemplateNode textTemplateNode1 = _createTemplateNode(
-			"TextField1", DDMFormFieldTypeConstants.TEXT, "TextField1");
+			"textField1", DDMFormFieldTypeConstants.TEXT, "TextField1");
 
 		TemplateNode textTemplateNode2 = _createTemplateNode(
-			"TextField2", DDMFormFieldTypeConstants.TEXT, "TextField2");
+			"textField2", DDMFormFieldTypeConstants.TEXT, "TextField2");
 
 		textTemplateNode1.appendChild(textTemplateNode2);
 
@@ -468,7 +468,8 @@ public class JournalTransformerTest {
 
 	private List<TemplateNode> _getInitTemplateNodesFirstChildWithSiblings() {
 		TemplateNode textFieldSetTemplateNode1 = _createTemplateNode(
-			_TEXT_FIELD_SET_NAME, DDMFormFieldTypeConstants.FIELDSET);
+			_REPEATABLE_TEXT_FIELD_FIELD_SET_NAME,
+			DDMFormFieldTypeConstants.FIELDSET);
 
 		textFieldSetTemplateNode1.appendSibling(textFieldSetTemplateNode1);
 
@@ -498,7 +499,8 @@ public class JournalTransformerTest {
 		textFieldSetTemplateNode1.appendChild(textTemplateNode1);
 
 		TemplateNode textFieldSetTemplateNode2 = _createTemplateNode(
-			_TEXT_FIELD_SET_NAME, DDMFormFieldTypeConstants.FIELDSET);
+			_REPEATABLE_TEXT_FIELD_FIELD_SET_NAME,
+			DDMFormFieldTypeConstants.FIELDSET);
 
 		textFieldSetTemplateNode1.appendSibling(textFieldSetTemplateNode2);
 
@@ -528,21 +530,21 @@ public class JournalTransformerTest {
 		_getInitTemplateNodesParentStructureWithFieldSet() {
 
 		TemplateNode parentStructureFieldSetTemplateNode = _createTemplateNode(
-			"parentStructureFieldSet", DDMFormFieldTypeConstants.FIELDSET);
+			"textFieldFieldSetFieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode parentFieldSetTemplateNode = _createTemplateNode(
-			_TEXT_FIELD_SET_NAME, DDMFormFieldTypeConstants.FIELDSET);
+			"textField1FieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		parentStructureFieldSetTemplateNode.appendChild(
 			parentFieldSetTemplateNode);
 
 		TemplateNode textTemplateNode1 = _createTemplateNode(
-			"TextField1", DDMFormFieldTypeConstants.TEXT, "TextField1");
+			"textField1", DDMFormFieldTypeConstants.TEXT, "TextField1");
 
 		parentFieldSetTemplateNode.appendChild(textTemplateNode1);
 
 		TemplateNode textTemplateNode2 = _createTemplateNode(
-			"TextField2", DDMFormFieldTypeConstants.TEXT, "TextField2");
+			"textField2", DDMFormFieldTypeConstants.TEXT, "TextField2");
 
 		parentFieldSetTemplateNode.appendChild(textTemplateNode2);
 
@@ -561,7 +563,7 @@ public class JournalTransformerTest {
 		separatorFieldSetTemplateNode.appendChild(separatorTemplateNode);
 
 		TemplateNode bookmarksTitleFieldSetTemplateNode1 = _createTemplateNode(
-			"BookmarksTitleFieldSet1", DDMFormFieldTypeConstants.FIELDSET);
+			"BookmarksTitle1FieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode bookmarksTitleTemplateNode1 = _createTemplateNode(
 			"BookmarksTitle1", DDMFormFieldTypeConstants.TEXT);
@@ -578,7 +580,7 @@ public class JournalTransformerTest {
 			bookmarksTitleFieldSetTemplateNode1);
 
 		TemplateNode bookmarksTitleFieldSetTemplateNode2 = _createTemplateNode(
-			"BookmarksTitleFieldSet", DDMFormFieldTypeConstants.FIELDSET);
+			"BookmarksTitle2FieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode bookmarksTitleTemplateNode2 = _createTemplateNode(
 			"BookmarksTitle2", DDMFormFieldTypeConstants.TEXT);
@@ -595,7 +597,7 @@ public class JournalTransformerTest {
 			bookmarksTitleFieldSetTemplateNode2);
 
 		TemplateNode bookmarksTitleFieldSetTemplateNode3 = _createTemplateNode(
-			"BookmarksTitleFieldSet3", DDMFormFieldTypeConstants.FIELDSET);
+			"BookmarksTitle3FieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode bookmarksTitleTemplateNode3 = _createTemplateNode(
 			"BookmarksTitle3", DDMFormFieldTypeConstants.TEXT);
@@ -623,30 +625,30 @@ public class JournalTransformerTest {
 		List<TemplateNode> templateNodes = new ArrayList<>();
 
 		TemplateNode group1TemplateNode = _createTemplateNode(
-			"Group 1", DDMFormFieldTypeConstants.FIELDSET);
+			"Group1Field1FieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode group1Field1TemplateNode = _createTemplateNode(
-			"Group 1 Field 1", DDMFormFieldTypeConstants.TEXT);
+			"Group1Field1", DDMFormFieldTypeConstants.TEXT);
 
 		group1Field1TemplateNode.appendSibling(group1Field1TemplateNode);
 		group1Field1TemplateNode.appendSibling(
 			_createTemplateNode(
-				"Group 1 Field 2", DDMFormFieldTypeConstants.TEXT));
+				"Group1Field2", DDMFormFieldTypeConstants.TEXT));
 
 		group1TemplateNode.appendChild(group1Field1TemplateNode);
 
 		group1TemplateNode.appendSibling(group1TemplateNode);
 
 		TemplateNode group2TemplateNode = _createTemplateNode(
-			"Group 2", DDMFormFieldTypeConstants.FIELDSET);
+			"Group2Field1FieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode group2Field1TemplateNode = _createTemplateNode(
-			"Group 2 Field 1", DDMFormFieldTypeConstants.TEXT);
+			"Group2Field1", DDMFormFieldTypeConstants.TEXT);
 
 		group2Field1TemplateNode.appendSibling(group2Field1TemplateNode);
 		group2Field1TemplateNode.appendSibling(
 			_createTemplateNode(
-				"Group 2 Field 2", DDMFormFieldTypeConstants.TEXT));
+				"Group1Field2", DDMFormFieldTypeConstants.TEXT));
 
 		group2TemplateNode.appendChild(group2Field1TemplateNode);
 
@@ -659,6 +661,9 @@ public class JournalTransformerTest {
 
 	private static final String _IMAGE_FIELD_DATA =
 		"{\"url\": \"/documents/d/site/logo-jpg?download=true\"}";
+
+	private static final String _REPEATABLE_TEXT_FIELD_FIELD_SET_NAME =
+		"RepeatableTextFieldFieldSet";
 
 	private static final String _REPEATABLE_TEXT_FIELD_NAME =
 		"RepeatableTextField";

@@ -100,6 +100,16 @@ definition {
 		Click(locator1 = "Icon#CLOSE_ALERT");
 	}
 
+	macro configureScope {
+		Click(locator1 = "Button#SELECT");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Navigator.gotoNavItem(navItem = "All Sites");
+
+		SiteSelector.selectSite(site = "${site}");
+	}
+
 	macro createExperienceWithSegment {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 

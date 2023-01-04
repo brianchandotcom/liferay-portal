@@ -1270,9 +1270,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			return;
 		}
 
-		List<Object> userGroupAttributes = Collections.emptyList();
-
 		Attribute userGroupAttribute = userAttributes.get(userMappingsGroup);
+
+		List<Object> userGroupAttributes = Collections.emptyList();
 
 		if (userGroupAttribute != null) {
 			userGroupAttributes = new ArrayList<>(userGroupAttribute.size());

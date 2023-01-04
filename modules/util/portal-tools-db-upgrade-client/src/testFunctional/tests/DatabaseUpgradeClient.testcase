@@ -61,10 +61,13 @@ definition {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 		property test.name.skip.portal.instance = "DatabaseUpgradeClient#CheckUpgradeClientGogoShellFailedUpgrade";
+		property timeout.explicit.wait = "490";
 
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-gogoshell-failed-upgrade");
+
+		WaitForConsoleTextPresent(value1 = "Failed upgrade process for module com.liferay.journal.service");
 
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -125,6 +128,7 @@ definition {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 		property test.name.skip.portal.instance = "DatabaseUpgradeClient#CheckUpgradeClientUpgradeCoreOnly";
+		property timeout.explicit.wait = "490";
 
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",

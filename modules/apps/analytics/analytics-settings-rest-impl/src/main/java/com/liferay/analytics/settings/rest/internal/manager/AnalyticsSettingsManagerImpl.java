@@ -418,7 +418,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	).put(
 		"syncedProductFieldNames", FieldProductConstants.FIELD_PRODUCT_NAMES
 	).put(
-		"syncedUserFieldNames", FieldPeopleConstants.FILED_USER_DEFAULTS
+		"syncedUserFieldNames", FieldPeopleConstants.FIELD_USER_DEFAULTS
 	).build();
 
 	private long _commerceChannelClassNameId;

@@ -48,6 +48,13 @@ public class FieldPeopleConstants {
 		"Long", "String"
 	};
 
+	public static final String[] FIELD_USER_DEFAULTS = {
+		"agreedToTermsOfUse", "companyId", "contactId", "createDate",
+		"defaultUser", "emailAddress", "emailAddressVerified", "firstName",
+		"jobTitle", "languageId", "lastName", "middleName", "modifiedDate",
+		"status", "timeZoneId", "userId", "uuid"
+	};
+
 	public static final String[] FIELD_USER_EXAMPLES = {
 		"True", "lorem ipsum", "12345", "12345", "31st Oct 2008", "True",
 		"test@liferay.com", "True", "key=value,...", "external12345", "12345",
@@ -75,13 +82,6 @@ public class FieldPeopleConstants {
 		"Boolean", "String", "String", "Long", "String", "String", "String",
 		"String", "String", "String", "Long", "String", "String", "Date",
 		"String", "Long", "String", "Integer", "Long", "Long", "String"
-	};
-
-	public static final String[] FILED_USER_DEFAULTS = {
-		"agreedToTermsOfUse", "companyId", "contactId", "createDate",
-		"defaultUser", "emailAddress", "emailAddressVerified", "firstName",
-		"jobTitle", "languageId", "lastName", "middleName", "modifiedDate",
-		"status", "timeZoneId", "userId", "uuid"
 	};
 
 }

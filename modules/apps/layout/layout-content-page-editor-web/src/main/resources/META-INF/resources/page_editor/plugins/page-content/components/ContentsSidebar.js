@@ -21,6 +21,8 @@ import selectLanguageId from '../../../app/selectors/selectLanguageId';
 import {selectPageContents} from '../../../app/selectors/selectPageContents';
 import isMapped from '../../../app/utils/editable-value/isMapped';
 import {getEditableLocalizedValue} from '../../../app/utils/getEditableLocalizedValue';
+import getFragmentItem from '../../../app/utils/getFragmentItem';
+import {hasFormParentWithPermissions} from '../../../app/utils/hasFormParentWithPermissions';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
@@ -33,15 +35,31 @@ const getEditableTitle = (editable, languageId) => {
 	return div.textContent.trim();
 };
 
-const getEditableValues = (fragmentEntryLinks, segmentsExperienceId) =>
+const getEditableValues = (
+	fragmentEntryLinks,
+	segmentsExperienceId,
+	layoutData
+) =>
 	Object.values(fragmentEntryLinks)
-		.filter(
-			(fragmentEntryLink) =>
+		.filter((fragmentEntryLink) => {
+			if (Liferay.FeatureFlags['LPS-169923']) {
+				const item = getFragmentItem(
+					layoutData,
+					fragmentEntryLink.fragmentEntryLinkId
+				);
+
+				if (item && !hasFormParentWithPermissions(item, layoutData)) {
+					return;
+				}
+			}
+
+			return (
 				!fragmentEntryLink.masterLayout &&
 				fragmentEntryLink.editableValues &&
 				!fragmentEntryLink.removed &&
 				fragmentEntryLink.segmentsExperienceId === segmentsExperienceId
-		)
+			);
+		})
 		.map((fragmentEntryLink) => {
 			const editableValues = Object.entries(
 				fragmentEntryLink.editableValues[
@@ -92,6 +110,7 @@ const normalizePageContents = (pageContents) =>
 export default function ContentsSidebar() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
+	const layoutData = useSelector((state) => state.layoutData);
 	const pageContents = useSelector(selectPageContents);
 	const segmentsExperienceId = useSelector(
 		(state) => state.segmentsExperienceId
@@ -99,12 +118,16 @@ export default function ContentsSidebar() {
 
 	const inlineTextContents = useMemo(
 		() =>
-			getEditableValues(fragmentEntryLinks, segmentsExperienceId)
+			getEditableValues(
+				fragmentEntryLinks,
+				segmentsExperienceId,
+				layoutData
+			)
 				.map((editable) =>
 					normalizeEditableValues(editable, languageId)
 				)
 				.filter((editable) => editable.title),
-		[fragmentEntryLinks, languageId, segmentsExperienceId]
+		[fragmentEntryLinks, languageId, segmentsExperienceId, layoutData]
 	);
 
 	const contents = normalizePageContents(pageContents);

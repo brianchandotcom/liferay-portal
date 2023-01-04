@@ -282,7 +282,6 @@ definition {
 	}
 
 	@description = "LPS-149625 - Verify that it's possible to create an object entry with aggregation field"
-	@ignore = "true"
 	@priority = "5"
 	test CanCreateEntryWithAggregationField {
 		property portal.acceptance = "true";

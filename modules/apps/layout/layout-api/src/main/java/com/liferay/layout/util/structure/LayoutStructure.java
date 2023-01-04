@@ -38,7 +38,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -82,11 +81,13 @@ public class LayoutStructure {
 					fragmentLayoutStructureItems);
 			}
 
-			JSONArray deletedLayoutStructureItemJSONArray = Optional.ofNullable(
-				layoutStructureJSONObject.getJSONArray("deletedItems")
-			).orElse(
-				JSONFactoryUtil.createJSONArray()
-			);
+			JSONArray deletedLayoutStructureItemJSONArray =
+				layoutStructureJSONObject.getJSONArray("deletedItems");
+
+			if (deletedLayoutStructureItemJSONArray == null) {
+				deletedLayoutStructureItemJSONArray =
+					JSONFactoryUtil.createJSONArray();
+			}
 
 			Map<String, DeletedLayoutStructureItem>
 				deletedLayoutStructureItems = new HashMap<>(

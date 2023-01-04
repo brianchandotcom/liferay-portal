@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class PortalSecurityAuditWebUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

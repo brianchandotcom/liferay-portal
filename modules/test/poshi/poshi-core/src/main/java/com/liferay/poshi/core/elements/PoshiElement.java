@@ -420,6 +420,30 @@ public abstract class PoshiElement
 		return "\"" + content + "\"";
 	}
 
+	protected boolean evaluateVariableBoundary(String content) {
+		int counter = 0;
+		Stack<Integer> stack = new Stack<>();
+
+		for (int i = 0; i < content.length(); i++) {
+			char c = content.charAt(i);
+
+			if (c == '{') {
+				stack.push(i);
+			}
+
+			if (!stack.isEmpty() && (c == '}')) {
+				stack.pop();
+				counter++;
+			}
+		}
+
+		if (counter == 1) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected String getBlockContent(String poshiScriptBlock) {
 		String blockName = getBlockName(poshiScriptBlock);
 
@@ -805,6 +829,10 @@ public abstract class PoshiElement
 
 	protected boolean isQuotedContent(String content) {
 		if (content.matches(NONQUOTED_REGEX)) {
+			if (content.contains("{")) {
+				return evaluateVariableBoundary(content);
+			}
+
 			return false;
 		}
 

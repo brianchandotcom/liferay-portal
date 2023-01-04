@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -89,13 +87,17 @@ public class OpenGraphSettingsDisplayContext {
 	}
 
 	public long getOpenGraphImageFileEntryId() {
-		return Optional.ofNullable(
-			getLayoutSEOSite()
-		).map(
-			LayoutSEOSite::getOpenGraphImageFileEntryId
-		).orElse(
-			0L
-		);
+		LayoutSEOSite layoutSEOSite = getLayoutSEOSite();
+
+		if (layoutSEOSite != null) {
+			Long id = layoutSEOSite.getOpenGraphImageFileEntryId();
+
+			if (id != null) {
+				return id;
+			}
+		}
+
+		return 0L;
 	}
 
 	public String getOpenGraphImageTitle() {

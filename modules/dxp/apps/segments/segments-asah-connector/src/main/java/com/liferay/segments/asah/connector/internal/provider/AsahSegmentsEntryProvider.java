@@ -14,7 +14,6 @@
 
 package com.liferay.segments.asah.connector.internal.provider;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -38,6 +37,8 @@ import com.liferay.segments.asah.connector.internal.context.contributor.Segments
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryModel;
+import com.liferay.segments.model.SegmentsEntryRelModel;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
@@ -70,11 +71,10 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 			long segmentsEntryId, int start, int end)
 		throws PortalException {
 
-		return ArrayUtil.toLongArray(
-			TransformUtil.transform(
-				_segmentsEntryRelLocalService.getSegmentsEntryRels(
-					segmentsEntryId, start, end, null),
-				segmentsEntryRel -> segmentsEntryRel.getClassPK()));
+		return ListUtil.toLongArray(
+			_segmentsEntryRelLocalService.getSegmentsEntryRels(
+				segmentsEntryId, start, end, null),
+			SegmentsEntryRelModel::getClassPK);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 				return new long[0];
 			}
 
-			List<SegmentsEntry> segmentsEntryList = ListUtil.filter(
+			segmentsEntries = ListUtil.filter(
 				segmentsEntries,
 				segmentsEntry ->
 					(ArrayUtil.isEmpty(filterSegmentsEntryIds) ||
@@ -125,7 +125,7 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 						segmentsEntry.getSegmentsEntryId(),
 						_portal.getClassNameId(className), classPK));
 
-			segmentsEntryList.sort(
+			segmentsEntries.sort(
 				(segmentsEntry1, segmentsEntry2) -> {
 					Date modifiedDate = segmentsEntry2.getModifiedDate();
 
@@ -133,10 +133,8 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 						segmentsEntry1.getModifiedDate());
 				});
 
-			return ArrayUtil.toLongArray(
-				TransformUtil.transform(
-					segmentsEntryList,
-					segmentsEntry -> segmentsEntry.getSegmentsEntryId()));
+			return ListUtil.toLongArray(
+				segmentsEntries, SegmentsEntryModel::getSegmentsEntryId);
 		}
 
 		String userId = GetterUtil.getString(

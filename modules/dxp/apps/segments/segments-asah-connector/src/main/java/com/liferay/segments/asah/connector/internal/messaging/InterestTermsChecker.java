@@ -81,7 +81,7 @@ public class InterestTermsChecker {
 		topics.forEach(
 			topic -> termList.addAll(
 				TransformUtil.transform(
-					topic.getTerms(), term -> term.getKeyword())));
+					topic.getTerms(), Topic.TopicTerm::getKeyword)));
 
 		String[] terms = termList.toArray(new String[0]);
 

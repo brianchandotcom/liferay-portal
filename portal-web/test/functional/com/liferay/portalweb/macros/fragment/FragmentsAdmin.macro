@@ -266,11 +266,12 @@ definition {
 	}
 
 	macro selectCollection {
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		Select(
+			key_fieldLabel = "Fragment Sets",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${collectionName}");
 
-		LexiconCard.clickCard(card = "${collectionName}");
-
-		SelectFrameTop();
+		Modal.save();
 	}
 
 	macro viewEntryNotPresent {

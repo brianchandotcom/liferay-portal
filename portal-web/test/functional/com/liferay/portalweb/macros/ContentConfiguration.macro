@@ -122,6 +122,10 @@ definition {
 		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
 	}
 
+	macro uncheckAllPrivatePages {
+		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
+	}
+
 	macro uncheckAllPublicPages {
 		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
 	}
@@ -150,8 +154,11 @@ definition {
 		if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX")) {
 			ContentConfiguration.uncheckAllPages();
 		}
-		else {
+		else if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX")) {
 			ContentConfiguration.uncheckAllPublicPages();
+		}
+		else {
+			ContentConfiguration.uncheckAllPrivatePages();
 		}
 	}
 

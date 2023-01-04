@@ -42,17 +42,17 @@
 </tr>
 <tr>
 	<td>PAGES_ALL_PAGES_CHECKBOX</td>
-	<td>xpath=(//div[normalize-space()='Pages']//input[contains(@type,'checkbox')])[1]</td>
+	<td>//span[normalize-space()='Pages']//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
-	<td>xpath=(//div[contains(.,'Public Pages')]//input[contains(@type,'checkbox')])[1]</td>
+	<td>//span[contains(.,'Public Pages')]//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_ALL_PRIVATE_PAGES_CHECKBOX</td>
-	<td>xpath=(//div[contains(.,'Private Pages')]//input[contains(@type,'checkbox')])[1]</td>
+	<td>//span[contains(.,'Private Pages')]//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

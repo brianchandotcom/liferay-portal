@@ -21,7 +21,7 @@ long companyId = ParamUtil.getLong(request, "preferencesCompanyId");
 
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(companyId);
 
-PortletPreferences systemPortletPreferences = PrefsPropsUtil.getPreferences(0L);
+PortletPreferences systemPortletPreferences = PrefsPropsUtil.getPreferences();
 
 Function<Boolean, Function<String, String>> basePreferenceFunctionFunction = showPropsValues -> key -> companyPortletPreferences.getValue(key, systemPortletPreferences.getValue(key, showPropsValues ? PropsUtil.get(key) : StringPool.BLANK));
 

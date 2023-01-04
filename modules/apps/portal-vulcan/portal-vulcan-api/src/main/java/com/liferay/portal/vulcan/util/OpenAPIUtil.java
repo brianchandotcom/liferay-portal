@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Javier de Arcos
@@ -183,17 +182,21 @@ public class OpenAPIUtil {
 
 				Content content = contentEntry.getValue();
 
-				if (Optional.ofNullable(
-						content.getSchema()
-					).map(
-						Schema::getReference
-					).map(
-						reference -> StringUtil.equals(
-							name,
-							reference.substring(reference.lastIndexOf('/') + 1))
-					).orElse(
-						false
-					)) {
+				Schema schema = content.getSchema();
+
+				if (schema == null) {
+					continue;
+				}
+
+				String reference = schema.getReference();
+
+				if (reference == null) {
+					continue;
+				}
+
+				if (StringUtil.equals(
+						name,
+						reference.substring(reference.lastIndexOf('/') + 1))) {
 
 					return true;
 				}

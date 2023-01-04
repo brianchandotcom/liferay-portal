@@ -108,16 +108,20 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	}
 
 	private void _filterExcludedOperationIds(
-		ContainerRequestContext containerRequestContext, Message message) {
+			ContainerRequestContext containerRequestContext,
+			HttpServletRequest httpServletRequest, Message message)
+		throws Exception {
 
-		String path = StringUtil.removeSubstring(
+		String path = StringUtil.removeFirst(
 			(String)message.get(Message.BASE_PATH), "/o");
 
 		path = StringUtil.replaceLast(path, '/', "");
 
+		Company company = _portal.getCompany(httpServletRequest);
+
 		Set<String> excludedOperationIds =
 			ConfigurationUtil.getExcludedOperationIds(
-				_configurationAdmin, path);
+				company.getCompanyId(), _configurationAdmin, path);
 
 		Method method = (Method)message.get("org.apache.cxf.resource.method");
 
@@ -144,7 +148,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		HttpServletRequest httpServletRequest =
 			ContextProviderUtil.getHttpServletRequest(message);
 
-		_filterExcludedOperationIds(containerRequestContext, message);
+		_filterExcludedOperationIds(
+			containerRequestContext, httpServletRequest, message);
 
 		Class<?> clazz = instance.getClass();
 

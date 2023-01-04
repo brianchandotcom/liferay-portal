@@ -554,7 +554,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 				Set<String> excludedOperationIds =
 					ConfigurationUtil.getExcludedOperationIds(
-						_configurationAdmin,
+						CompanyThreadLocal.getCompanyId(), _configurationAdmin,
 						openAPISchemaFilter.getApplicationPath());
 
 				if (excludedOperationIds.contains(operationId)) {

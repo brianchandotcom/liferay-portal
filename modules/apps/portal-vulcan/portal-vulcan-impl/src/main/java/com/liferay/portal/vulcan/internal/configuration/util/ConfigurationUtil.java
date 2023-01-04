@@ -14,10 +14,12 @@
 
 package com.liferay.portal.vulcan.internal.configuration.util;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.vulcan.internal.configuration.VulcanCompanyConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 
 import java.util.Dictionary;
@@ -33,12 +35,16 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationUtil {
 
 	public static Set<String> getExcludedOperationIds(
-		ConfigurationAdmin configurationAdmin, String path) {
+		long companyId, ConfigurationAdmin configurationAdmin, String path) {
 
 		try {
 			String filterString = String.format(
-				"(&(path=%s)(service.factoryPid=%s))", path,
-				VulcanConfiguration.class.getName());
+				"(&(path=%s)(|(service.factoryPid=%s)" +
+					"(&(service.factoryPid=%s)(%s=%d))))",
+				path, VulcanConfiguration.class.getName(),
+				VulcanCompanyConfiguration.class.getName(),
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				companyId);
 
 			Configuration[] configurations =
 				configurationAdmin.listConfigurations(filterString);

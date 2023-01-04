@@ -25,6 +25,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.graphql.dto.v1_0.Creator;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContextValidator;
+import com.liferay.portal.vulcan.internal.configuration.VulcanCompanyConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.internal.graphql.constants.GraphQLConstants;
@@ -1082,10 +1084,15 @@ public class GraphQLServletExtender {
 	}
 
 	private boolean _isGraphQLEnabled(String path) throws Exception {
+		path = path.substring(0, path.indexOf("-graphql"));
+
 		String filterString = String.format(
-			"(&(path=%s)(service.factoryPid=%s))",
-			path.substring(0, path.indexOf("-graphql")),
-			VulcanConfiguration.class.getName());
+			"(&(path=%s)(|(service.factoryPid=%s)" +
+				"(&(service.factoryPid=%s)(%s=%d))))",
+			path, VulcanConfiguration.class.getName(),
+			VulcanCompanyConfiguration.class.getName(),
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+			_companyId);
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);
@@ -1101,10 +1108,11 @@ public class GraphQLServletExtender {
 	}
 
 	private boolean _isMethodEnabled(Method method, String path) {
+		path = path.substring(0, path.indexOf("-graphql"));
+
 		Set<String> excludedOperationIds =
 			ConfigurationUtil.getExcludedOperationIds(
-				_configurationAdmin,
-				path.substring(0, path.indexOf("-graphql")));
+				_companyId, _configurationAdmin, path);
 
 		if (excludedOperationIds.contains(method.getName())) {
 			return false;

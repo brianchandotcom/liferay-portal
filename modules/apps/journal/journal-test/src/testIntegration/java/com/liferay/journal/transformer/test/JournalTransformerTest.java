@@ -105,6 +105,35 @@ public class JournalTransformerTest {
 	}
 
 	@Test
+	public void testIncludeNestedFieldBackwardsCompatibility()
+		throws Exception {
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				StringUtil.replace(
+					_read("data_definition.json"),
+					new String[] {"$FIELD_SET_NAME"},
+					new String[] {"birthdayFieldSet"}),
+				TestPropsValues.getUser());
+
+		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
+			_group.getGroupId(),
+			StringUtil.replace(
+				_read("journal_content.xml"), new String[] {"$FIELD_SET_NAME"},
+				new String[] {"birthdayFieldSet"}),
+			dataDefinition.getDataDefinitionKey(), null);
+
+		Assert.assertEquals(
+			"2022-11-26",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${birthday.getData()}", null, Constants.VIEW));
+	}
+
+	@Test
 	public void testLocaleTransformerListener() throws Exception {
 		Assert.assertEquals(
 			"Joe Bloggs",

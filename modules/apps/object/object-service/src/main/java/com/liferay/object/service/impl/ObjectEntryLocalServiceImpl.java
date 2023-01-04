@@ -3056,6 +3056,10 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.setExternalReferenceCode(externalReferenceCode);
 			}
 		}
+
+		if (Validator.isNull(objectEntry.getExternalReferenceCode())) {
+			objectEntry.setExternalReferenceCode(objectEntry.getUuid());
+		}
 	}
 
 	private void _startWorkflowInstance(

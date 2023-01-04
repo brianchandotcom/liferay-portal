@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -104,7 +106,15 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		kaleoDefinitionVersion.setStatusByUserName(user.getFullName());
 		kaleoDefinitionVersion.setStatusDate(modifiedDate);
 
-		return kaleoDefinitionVersionPersistence.update(kaleoDefinitionVersion);
+		kaleoDefinitionVersion = kaleoDefinitionVersionPersistence.update(
+			kaleoDefinitionVersion);
+
+		// Resources
+
+		_resourceLocalService.addModelResources(
+			kaleoDefinitionVersion, serviceContext);
+
+		return kaleoDefinitionVersion;
 	}
 
 	@Override
@@ -150,6 +160,11 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		_kaleoTransitionLocalService.
 			deleteKaleoDefinitionVersionKaleoTransitions(
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId());
+
+		// Resources
+
+		_resourceLocalService.deleteResource(
+			kaleoDefinitionVersion, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return kaleoDefinitionVersion;
 	}
@@ -429,6 +444,9 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 	@Reference
 	private KaleoTransitionLocalService _kaleoTransitionLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private Staging _staging;

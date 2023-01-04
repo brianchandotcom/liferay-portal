@@ -84,6 +84,31 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-85145. The focus should go to the Product Menu when open it."
+	@priority = "3"
+	test FocusOnProductMenuWhenOpenIt {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Page Name");
+		}
+
+		task ("When the page creator opens the Product Menu") {
+			ProductMenuHelper.openProductMenu();
+		}
+
+		task ("Then the focus goes to the Product Menu") {
+			TestUtils.assertElementFocused(element = "//div[contains(@id,'productMenuSidebar')]//button[contains(@aria-label,'Close')]");
+		}
+	}
+
 	@description = "This is a test for LPS-166296. The sidebar buttons should be on focus after close the panel."
 	@priority = "3"
 	test FocusOnSidebarButtonAfterClosePanel {
@@ -108,57 +133,6 @@ definition {
 
 		task ("Then the browser button should be on focus") {
 			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__sidebar__buttons')]//*[@*='Browser']");
-		}
-	}
-
-	@description = "This is a test for LPS-165356. The Skip to Product Menu link only be focusable when the Product Menu is open."
-	@priority = "3"
-	test FocusOnSkipToProductMenuWhenProductMenuOpen {
-		task ("Given a page creator has a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Edit",
-				pageName = "Test Page Name");
-		}
-
-		task ("When the page creator opens the Product Menu") {
-			ProductMenuHelper.openProductMenu();
-		}
-
-		task ("Then the page creator can focus on the Skip to Product Menu link") {
-			KeyPress(
-				locator1 = "//body",
-				value1 = "\TAB");
-
-			KeyPress(
-				locator1 = "ProductMenu#TOGGLE",
-				value1 = "\TAB");
-
-			TestUtils.assertElementFocused(element = "//a[contains(.,'Skip to Product Menu')]");
-		}
-
-		task ("When the page creator closes the Product Menu") {
-			ProductMenuHelper.closeProductMenu();
-		}
-
-		task ("Then the page creator cannot focus on the Skip to Product Menu link") {
-			KeyPress(
-				locator1 = "//body",
-				value1 = "\TAB");
-
-			KeyPress(
-				locator1 = "ProductMenu#TOGGLE",
-				value1 = "\TAB");
-
-			TestUtils.assertElementNotFocused(element = "//a[contains(.,'Skip to Product Menu')]");
-
-			TestUtils.assertElementFocused(element = "//a[span//*[name()='svg'][contains(@class,'icon-angle-left')]]");
 		}
 	}
 

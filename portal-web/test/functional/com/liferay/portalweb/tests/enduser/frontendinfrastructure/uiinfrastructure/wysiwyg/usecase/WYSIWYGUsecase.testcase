@@ -230,6 +230,7 @@ definition {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		Open(locator1 = "http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm");
@@ -442,6 +443,7 @@ definition {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

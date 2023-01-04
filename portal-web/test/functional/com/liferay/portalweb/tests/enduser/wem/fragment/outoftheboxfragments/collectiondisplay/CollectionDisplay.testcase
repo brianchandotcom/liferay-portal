@@ -1937,6 +1937,7 @@ definition {
 	@uitest
 	test ViewTitleListItemStyleInDifferentListStyles {
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		task ("Add a Web Content Article,a Blogs Entry and a document") {

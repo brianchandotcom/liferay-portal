@@ -238,6 +238,7 @@ definition {
 		property delete.sidecar.bundle = "true";
 		property embedded.elasticsearch.only = "true";
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";

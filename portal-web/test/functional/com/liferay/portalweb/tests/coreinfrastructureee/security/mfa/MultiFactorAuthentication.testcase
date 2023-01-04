@@ -882,6 +882,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property portal.acceptance = "true";

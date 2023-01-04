@@ -144,6 +144,7 @@ definition {
 
 	test ViewInstanceCurrenciesAvailable {
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(

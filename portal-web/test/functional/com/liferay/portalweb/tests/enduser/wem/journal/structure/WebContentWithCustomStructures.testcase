@@ -711,6 +711,7 @@ definition {
 	@priority = "4"
 	test AddWebContentWithRepeatableRichTextField {
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		task ("Add a web content structure with a repeatable Rich Text field") {

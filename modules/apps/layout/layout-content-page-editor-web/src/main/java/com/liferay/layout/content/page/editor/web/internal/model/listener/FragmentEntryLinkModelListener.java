@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -265,11 +264,12 @@ public class FragmentEntryLinkModelListener
 				continue;
 			}
 
-			ServiceContext serviceContext = Optional.ofNullable(
-				ServiceContextThreadLocal.getServiceContext()
-			).orElse(
-				new ServiceContext()
-			);
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext == null) {
+				serviceContext = new ServiceContext();
+			}
 
 			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 				fragmentEntryLink.getGroupId(),

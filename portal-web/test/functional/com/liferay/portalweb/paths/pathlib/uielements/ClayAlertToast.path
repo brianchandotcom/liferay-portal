@@ -15,6 +15,11 @@
 	<td>//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-${key_icon}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ALERT_TOAST</td>
+	<td>//*[@id='ToastAlertContainer']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

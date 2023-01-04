@@ -383,15 +383,10 @@ definition {
 				entry = "Button",
 				item = "Copy To");
 
-			Select(
-				key_fieldLabel = "Fragment Sets",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Fragment Set Name");
+			FragmentsAdmin.selectCollection(collectionName = "Fragment Set Name");
 		}
 
 		task ("View the copied fragment") {
-			Modal.save();
-
 			MenuBar.viewActive(menuBar = "Fragment Set Name");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");

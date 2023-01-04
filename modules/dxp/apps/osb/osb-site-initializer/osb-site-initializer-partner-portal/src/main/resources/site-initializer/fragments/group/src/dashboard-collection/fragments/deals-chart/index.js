@@ -12,12 +12,9 @@
 import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
-
-// REMOVER O INCLUDE
-// COLOCAR AS 3 FUNÇCOES EM USEMEMO
 
 const colors = {
 	approved: '#8FB5FF',
@@ -105,17 +102,6 @@ export default function () {
 	const STATUS_SALES_QUALIFIED_OPPORTUNITY = 'Sales Qualified Opportunity';
 	const TYPE_PARTNER_PROSPECT_LEAD = 'Partner Prospect Lead (PPL)';
 
-	const INITIAL_OPPORTUNITIES_CHART_VALUES = {
-		approved: [0, 0, 0, 0],
-		closedWon: [0, 0, 0, 0],
-		rejected: [0, 0, 0, 0],
-	};
-
-	const INITIAL_LEADS_CHART_VALUES = {
-		rejected: [0, 0, 0, 0],
-		submitted: [0, 0, 0, 0],
-	};
-
 	const getChartQuarterCount = (values, dateCreated) => {
 		const month = new Date(dateCreated).getMonth() + 1;
 
@@ -135,57 +121,76 @@ export default function () {
 		return values;
 	};
 
-	const opportunitiesChartValues = opportunities?.reduce(
-		(accumulatedChartValues, currentOpportunity) => {
-			if (currentOpportunity.stage === STAGE_OPEN) {
-				accumulatedChartValues.approved = getChartQuarterCount(
-					accumulatedChartValues.approved,
-					currentOpportunity.dateCreated
-				);
-			}
-			if (currentOpportunity.stage === STAGE_CLOSEDWON) {
-				accumulatedChartValues.closedWon = getChartQuarterCount(
-					accumulatedChartValues.closedWon,
-					currentOpportunity.dateCreated
-				);
-			}
-			if (currentOpportunity.stage === STAGE_REJECTED) {
+	const opportunitiesChartValues = useMemo(() => {
+		const INITIAL_OPPORTUNITIES_CHART_VALUES = {
+			approved: [0, 0, 0, 0],
+			closedWon: [0, 0, 0, 0],
+			rejected: [0, 0, 0, 0],
+		};
+
+		return opportunities?.reduce(
+			(accumulatedChartValues, currentOpportunity) => {
+				if (currentOpportunity.stage === STAGE_OPEN) {
+					accumulatedChartValues.approved = getChartQuarterCount(
+						accumulatedChartValues.approved,
+						currentOpportunity.dateCreated
+					);
+				}
+				if (currentOpportunity.stage === STAGE_CLOSEDWON) {
+					accumulatedChartValues.closedWon = getChartQuarterCount(
+						accumulatedChartValues.closedWon,
+						currentOpportunity.dateCreated
+					);
+				}
+				if (currentOpportunity.stage === STAGE_REJECTED) {
+					accumulatedChartValues.rejected = getChartQuarterCount(
+						accumulatedChartValues.rejected,
+						currentOpportunity.dateCreated
+					);
+				}
+
+				return accumulatedChartValues;
+			},
+			INITIAL_OPPORTUNITIES_CHART_VALUES
+		);
+	}, [opportunities]);
+
+	const leadsChartValues = useMemo(() => {
+		const INITIAL_LEADS_CHART_VALUES = {
+			rejected: [0, 0, 0, 0],
+			submitted: [0, 0, 0, 0],
+		};
+
+		return leads?.reduce((accumulatedChartValues, item) => {
+			if (item.leadStatus === STATUS_CAMREJECTED) {
 				accumulatedChartValues.rejected = getChartQuarterCount(
 					accumulatedChartValues.rejected,
-					currentOpportunity.dateCreated
+					item.dateCreated
+				);
+			}
+			if (
+				item.leadType === TYPE_PARTNER_PROSPECT_LEAD &&
+				(item.leadStatus !== STATUS_SALES_QUALIFIED_OPPORTUNITY ||
+					item.leadStatus !== STATUS_CAMREJECTED)
+			) {
+				accumulatedChartValues.submitted = getChartQuarterCount(
+					accumulatedChartValues.submitted,
+					item.dateCreated
 				);
 			}
 
 			return accumulatedChartValues;
-		},
-		INITIAL_OPPORTUNITIES_CHART_VALUES
-	);
+		}, INITIAL_LEADS_CHART_VALUES);
+	}, [leads]);
 
-	const leadsChartValues = leads?.reduce((accumulatedChartValues, item) => {
-		if (item.leadStatus === STATUS_CAMREJECTED) {
-			accumulatedChartValues.rejected = getChartQuarterCount(
-				accumulatedChartValues.rejected,
-				item.dateCreated
-			);
-		}
-		if (
-			item.leadType === TYPE_PARTNER_PROSPECT_LEAD &&
-			(item.leadStatus !== STATUS_SALES_QUALIFIED_OPPORTUNITY ||
-				item.leadStatus !== STATUS_CAMREJECTED)
-		) {
-			accumulatedChartValues.submitted = getChartQuarterCount(
-				accumulatedChartValues.submitted,
-				item.dateCreated
-			);
-		}
-
-		return accumulatedChartValues;
-	}, INITIAL_LEADS_CHART_VALUES);
-
-	const totalRejectedChartValues =
-		opportunitiesChartValues?.rejected.map(
-			(chartValue, index) => chartValue + leadsChartValues.rejected[index]
-		) || [];
+	const totalRejectedChartValues = useMemo(() => {
+		return (
+			opportunitiesChartValues?.rejected.map(
+				(chartValue, index) =>
+					chartValue + leadsChartValues.rejected[index]
+			) || []
+		);
+	}, [leadsChartValues?.rejected, opportunitiesChartValues?.rejected]);
 
 	const getChart = () => {
 		const chart = {

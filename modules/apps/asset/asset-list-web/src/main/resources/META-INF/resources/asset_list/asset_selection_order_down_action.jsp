@@ -28,24 +28,16 @@ int position = assetListEntryAssetEntryRel.getPosition();
 boolean last = position == (searchContainer.getTotal() - 1);
 %>
 
-<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
-	<portlet:param name="segmentsEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getSegmentsEntryId()) %>" />
-	<portlet:param name="position" value="<%= String.valueOf(position) %>" />
-	<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
-</portlet:actionURL>
-
 <c:choose>
-	<c:when test="<%= (position > 0) && !last %>">
-		<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "down") %>">
-			<clay:link
-				href="<%= moveAssetEntrySelectionDownURL %>"
-				icon="angle-down"
-			/>
-		</span>
-	</c:when>
-	<c:when test="<%= (position == 0) && (searchContainer.getTotal() > 1) %>">
+	<c:when test="<%= ((position > 0) && !last) || ((position == 0) && (searchContainer.getTotal() > 1)) %>">
+		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
+			<portlet:param name="segmentsEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getSegmentsEntryId()) %>" />
+			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
+			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
+		</portlet:actionURL>
+
 		<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "down") %>">
 			<clay:link
 				href="<%= moveAssetEntrySelectionDownURL %>"

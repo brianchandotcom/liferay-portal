@@ -53,14 +53,11 @@ public class CreatorStatisticsUtil {
 							MultivaluedMap<String, String> parameters =
 								uriInfo.getQueryParameters();
 
-							if (parameters != null) {
-								String fields = parameters.getFirst(
-									"nestedFields");
+							String fields = parameters.getFirst("nestedFields");
 
-								if (fields != null) {
-									hasLastPostDateField = fields.contains(
-										"lastPostDate");
-								}
+							if (fields != null) {
+								hasLastPostDateField = fields.contains(
+									"lastPostDate");
 							}
 						}
 

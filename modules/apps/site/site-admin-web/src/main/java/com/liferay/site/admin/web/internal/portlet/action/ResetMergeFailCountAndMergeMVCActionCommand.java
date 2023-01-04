@@ -14,6 +14,7 @@
 
 package com.liferay.site.admin.web.internal.portlet.action;
 
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -77,6 +78,8 @@ public class ResetMergeFailCountAndMergeMVCActionCommand
 			groupId, privateLayoutSet);
 
 		_sites.resetPrototype(layoutSet);
+
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		_sites.mergeLayoutSetPrototypeLayouts(
 			_groupLocalService.getGroup(groupId), layoutSet);

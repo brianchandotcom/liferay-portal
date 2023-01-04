@@ -86,6 +86,9 @@ definition {
 		}
 
 		task ("Then the alert disappears after 5 secs") {
+
+			// For LPS-170575, need this pause to see if after 5 seconds, the alert is not showing anymore
+
 			Pause(locator1 = "5000");
 
 			AssertNotVisible(locator1 = "ClayAlertToast#ALERT_TOAST");

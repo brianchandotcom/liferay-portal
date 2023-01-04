@@ -2333,20 +2333,11 @@ public class SitesImpl implements Sites {
 
 		// Force propagation from site template to site. See LPS-48206.
 
-		boolean mergeLayoutPrototypesThreadLocalSkipMerge =
-			MergeLayoutPrototypesThreadLocal.isSkipMerge();
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
-		try {
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-			mergeLayoutSetPrototypeLayouts(
-				GroupLocalServiceUtil.getGroup(groupId),
-				LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout));
-		}
-		finally {
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(
-				mergeLayoutPrototypesThreadLocalSkipMerge);
-		}
+		mergeLayoutSetPrototypeLayouts(
+			GroupLocalServiceUtil.getGroup(groupId),
+			LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout));
 	}
 
 	private String _acquireLock(

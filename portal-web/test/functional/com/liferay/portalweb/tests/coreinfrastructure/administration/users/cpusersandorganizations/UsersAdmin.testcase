@@ -2727,8 +2727,6 @@ definition {
 
 	@priority = "4"
 	test ViewUpdateUserViaJSONWS {
-		SearchAdministration.executeReindex();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

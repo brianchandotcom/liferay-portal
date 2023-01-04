@@ -22,22 +22,17 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LABEL</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label'] | //div[@class='input-group-item']//input[@class='form-control']</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label'] | //div[@class='input-group-item']//input[@class='form-control'] | //label[text()='Label']/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_PLURAL_LABEL</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_pluralLabel']</td>
+		<td>//label[text()='Plural Label']/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>PANEL_CATEGORY_KEY</td>
-		<td>//select[contains(@id,'_panelCategoryKey')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>PANEL_CATEGORY_KEY_SELECTED</td>
-		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_panelCategoryKey']</td>
+		<td>//label[contains(.,'Panel Category Key')]/following-sibling::div//span</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -47,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_FIELD_NAME</td>
-		<td>//input[@class='form-control' and @name='name' and @value='${key_fieldName}']</td>
+		<td>//input[@class='form-control' and @name='name' and @value='${key_fieldName}'] | //label[text()='Name']/following-sibling::input[@name='name' and @value='${key_fieldName}']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -57,7 +52,7 @@
 	</tr>
 	<tr>
 		<td>TITLE_FIELD</td>
-		<td>//select[contains(@id,'_titleObjectFieldId')]</td>
+		<td>//label[contains(.,'Title Field')]/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -71,13 +66,18 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>VIEW_OBJECT_SCOPE_DISABLED</td>
-		<td>//label[contains(text(),'Scope')]/..//select[@class = 'form-control disabled']</td>
+		<td>VIEW_OBJECT_SCOPE</td>
+		<td>//label[contains(.,'Scope')]/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>DISABLED_OBJECT_NAME</td>
-		<td>//input[(@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_shortName') and (@disabled)]</td>
+		<td>//label[text()='Name']/following-sibling::input[@disabled='']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT_SCOPE_DISABLED</td>
+		<td>//label[contains(.,'Scope')]/following-sibling::div//input[@disabled='']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -182,7 +182,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_DATA_DISABLED</td>
-		<td>//label[contains(text(),'${key_nameDisabled}')]/..//*[contains(@class,'disabled form-control')]</td>
+		<td>//label[text()='${key_nameDisabled}' and @class='disabled']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -202,22 +202,22 @@
 	</tr>
 	<tr>
 		<td>ACCOUNT_RESTRICTED_FIELD</td>
-		<td>//select[contains(@id,'accountEntryRestrictedObjectFieldId')]</td>
+		<td>//label[text()='Account Restricted Field']/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>TOGGLE_ACCOUNT_RESTRICTION</td>
-		<td>//input[contains(@class,'field toggle-switch-check') and contains(@id,'accountEntryRestricted')]</td>
+		<td>//input[contains(@name,'accountEntryRestricted')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>TOGGLE_ACCOUNT_RESTRICTION_DISABLED</td>
-		<td>//input[contains(@class,'field disabled toggle-switch-check') and contains(@id,'accountEntryRestricted')]</td>
+		<td>//input[contains(@name,'accountEntryRestricted') and @disabled='']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ACCOUNT_RESTRICTED_FIELD_DISABLED</td>
-		<td>//select[contains(@id,'accountEntryRestrictedObjectFieldId') and contains(@class,'disabled') and contains(.,'${key_valueName}')]</td>
+		<td>//label[text()='Account Restricted Field']/following-sibling::div//input[@disabled='']</td>
 		<td></td>
 	</tr>
 </tbody>

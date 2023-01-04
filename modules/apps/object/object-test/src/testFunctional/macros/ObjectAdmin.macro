@@ -702,8 +702,8 @@ definition {
 		Click(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM");
 
 		Click(
-			key_newLanguage = "${newLanguage}",
-			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
+			key_menuItem = "${newLanguage}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro changePicklistFieldEntry {
@@ -722,8 +722,8 @@ definition {
 		Click(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM_PLURAL_LABEL");
 
 		Click(
-			key_newLanguage = "${newLanguage}",
-			locator1 = "ObjectAdmin#SELECT_LANGUAGE");
+			key_menuItem = "${newLanguage}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro changeScopeOnDefinePermissions {

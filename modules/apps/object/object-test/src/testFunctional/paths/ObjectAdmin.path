@@ -57,7 +57,7 @@
 	</tr>
 	<tr>
 		<td>DETAILS_NAME_CUSTOM_OBJECT</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_shortName']</td>
+		<td>//label[text()='Name']/following-sibling::input[@name='name']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -67,22 +67,22 @@
 	</tr>
 	<tr>
 		<td>DETAILS_LABEL_CUSTOM_OBJECT</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label']</td>
+		<td>//label[text()='Label']/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>DETAILS_PLURAL_LABEL_CUSTOM_OBJECT</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_pluralLabel']</td>
+		<td>//label[text()='Plural Label']/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>DROPDOWN_LANGUAGEM</td>
-		<td>//button[contains(@class,'input-localized-trigger') and contains(@id,'labelMenu')] | //button[contains(@class,'dropdown-toggle btn btn-monospaced btn-secondary')]</td>
+		<td>//label[text()='Label']/following-sibling::div//button | //button[@title='Open Localizations']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>DROPDOWN_LANGUAGEM_PLURAL_LABEL</td>
-		<td>//button[contains(@class,'input-localized-trigger') and contains(@id,'pluralLabelMenu')]</td>
+		<td>//label[text()='Plural Label']/following-sibling::div//button</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -347,12 +347,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT_SCOPE</td>
-		<td>//select[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_scope']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>SELECT_LANGUAGE</td>
-		<td>//span[contains(text(),'${key_newLanguage}')] | //button[contains(@class,'dropdown-item')]//div[text()='${key_newLanguage}']</td>
+		<td>//label[contains(.,'Scope')]/following-sibling::div//input</td>
 		<td></td>
 	</tr>
 	<tr>

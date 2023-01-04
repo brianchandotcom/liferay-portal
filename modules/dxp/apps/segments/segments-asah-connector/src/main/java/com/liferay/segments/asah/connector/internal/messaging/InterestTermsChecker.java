@@ -75,15 +75,15 @@ public class InterestTermsChecker {
 			return;
 		}
 
-		List<String> termList = new ArrayList<>();
+		List<String> termsList = new ArrayList<>();
 
 		for (Topic topic : topics) {
 			for (Topic.TopicTerm topicTerm : topic.getTerms()) {
-				termList.add(topicTerm.getKeyword());
+				termsList.add(topicTerm.getKeyword());
 			}
 		}
 
-		String[] terms = termList.toArray(new String[0]);
+		String[] terms = termsList.toArray(new String[0]);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

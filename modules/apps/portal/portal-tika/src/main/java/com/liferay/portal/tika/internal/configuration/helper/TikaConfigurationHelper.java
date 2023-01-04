@@ -15,6 +15,9 @@
 package com.liferay.portal.tika.internal.configuration.helper;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.tika.internal.configuration.TikaConfiguration;
 
@@ -40,13 +43,28 @@ public class TikaConfigurationHelper {
 		return _tikaConfig;
 	}
 
+	public boolean useForkProcess(String mimeType) {
+		if (_tikaConfiguration.textExtractionForkProcessEnabled() &&
+			ArrayUtil.contains(
+				_tikaConfiguration.textExtractionForkProcessMimeTypes(),
+				mimeType)) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Fork process is enabled for " + mimeType);
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		TikaConfiguration tikaConfiguration =
-			ConfigurableUtil.createConfigurable(
-				TikaConfiguration.class, properties);
+		_tikaConfiguration = ConfigurableUtil.createConfigurable(
+			TikaConfiguration.class, properties);
 
-		String tikaConfigXml = tikaConfiguration.tikaConfigXml();
+		String tikaConfigXml = _tikaConfiguration.tikaConfigXml();
 
 		Class<?> clazz = TikaConfigurationHelper.class;
 
@@ -78,6 +96,10 @@ public class TikaConfigurationHelper {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		TikaConfigurationHelper.class);
+
 	private TikaConfig _tikaConfig;
+	private TikaConfiguration _tikaConfiguration;
 
 }

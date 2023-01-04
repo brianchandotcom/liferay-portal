@@ -28,14 +28,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tika.internal.configuration.helper.TikaConfigurationHelper;
 import com.liferay.portal.tika.internal.util.ProcessConfigUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -206,17 +204,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	private Metadata _extractMetadata(
 		String mimeType, InputStream inputStream) {
 
-		boolean forkProcess = false;
-
-		if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED &&
-			ArrayUtil.contains(
-				PropsValues.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES,
-				mimeType)) {
-
-			forkProcess = true;
-		}
-
-		if (forkProcess) {
+		if (_tikaConfigurationHelper.useForkProcess(mimeType)) {
 			File file = FileUtil.createTempFile();
 
 			try {

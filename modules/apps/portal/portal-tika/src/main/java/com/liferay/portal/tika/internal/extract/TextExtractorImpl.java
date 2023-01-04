@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.tika.internal.configuration.helper.TikaConfigurationHelper;
 import com.liferay.portal.tika.internal.util.ProcessConfigUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,24 +78,13 @@ public class TextExtractorImpl implements TextExtractor {
 
 			tika.setMaxStringLength(maxStringLength);
 
-			boolean forkProcess = false;
-
 			if (!inputStream.markSupported()) {
 				inputStream = new UnsyncBufferedInputStream(inputStream);
 			}
 
-			if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED) {
-				String mimeType = tika.detect(inputStream);
+			if (_tikaConfigurationHelper.useForkProcess(
+					tika.detect(inputStream))) {
 
-				if (ArrayUtil.contains(
-						PropsValues.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES,
-						mimeType)) {
-
-					forkProcess = true;
-				}
-			}
-
-			if (forkProcess) {
 				InputStream finalInputStream = inputStream;
 
 				ProcessChannel<String> processChannel =

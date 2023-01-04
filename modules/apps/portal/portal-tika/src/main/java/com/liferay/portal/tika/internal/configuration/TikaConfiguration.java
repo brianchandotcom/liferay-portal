@@ -29,6 +29,20 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface TikaConfiguration {
 
 	@Meta.AD(
+		deflt = "false",
+		description = "text-extraction-fork-process-enabled-description",
+		name = "text-extraction-fork-process-enabled", required = false
+	)
+	public boolean textExtractionForkProcessEnabled();
+
+	@Meta.AD(
+		deflt = "application/x-tika-ooxml",
+		description = "text-extraction-fork-process-mime-types-description",
+		name = "text-extraction-fork-process-mime-types", required = false
+	)
+	public String[] textExtractionForkProcessMimeTypes();
+
+	@Meta.AD(
 		deflt = "dependencies/tika.xml",
 		description = "tika-config-xml-description", name = "tika-config-xml",
 		required = false

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -157,10 +156,10 @@ public class AccountEntryUserRelServiceImpl
 			accountEntryId, userId);
 	}
 
-	private static volatile ModelResourcePermission<AccountEntry>
-		_modelResourcePermission = ModelResourcePermissionFactory.getInstance(
-			AccountEntryUserRelServiceImpl.class, "_modelResourcePermission",
-			AccountEntry.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry> _modelResourcePermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

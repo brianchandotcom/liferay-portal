@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -341,12 +340,11 @@ public class BatchPlannerPlanServiceImpl
 
 	private static final String _AMBIGUOUS_SEARCH_KEYWORDS = "com.liferay";
 
-	private static volatile ModelResourcePermission<BatchPlannerPlan>
-		_batchPlannerPlanModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				BatchPlannerPlanServiceImpl.class,
-				"_batchPlannerPlanModelResourcePermission",
-				BatchPlannerPlan.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.batch.planner.model.BatchPlannerPlan)"
+	)
+	private ModelResourcePermission<BatchPlannerPlan>
+		_batchPlannerPlanModelResourcePermission;
 
 	@Reference
 	private InlineSQLHelper _inlineSQLHelper;

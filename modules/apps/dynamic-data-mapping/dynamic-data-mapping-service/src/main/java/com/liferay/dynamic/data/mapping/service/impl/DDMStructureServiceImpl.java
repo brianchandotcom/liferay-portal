@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -730,16 +729,16 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureServiceImpl.class);
 
-	private static volatile ModelResourcePermission<DDMStructure>
-		_ddmStructureModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDMStructureServiceImpl.class,
-				"_ddmStructureModelResourcePermission", DDMStructure.class);
-
 	@Reference
 	private DDMPermissionSupport _ddmPermissionSupport;
 
 	@Reference
 	private DDMSearchHelper _ddmSearchHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
+	)
+	private ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission;
 
 }

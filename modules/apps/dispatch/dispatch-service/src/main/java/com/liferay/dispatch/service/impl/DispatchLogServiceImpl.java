@@ -21,12 +21,12 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -101,11 +101,10 @@ public class DispatchLogServiceImpl extends DispatchLogServiceBaseImpl {
 		return dispatchLogLocalService.getDispatchLogsCount(dispatchTriggerId);
 	}
 
-	private static volatile ModelResourcePermission<DispatchTrigger>
-		_dispatchTriggerModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DispatchLogServiceImpl.class,
-				"_dispatchTriggerModelResourcePermission",
-				DispatchTrigger.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)"
+	)
+	private ModelResourcePermission<DispatchTrigger>
+		_dispatchTriggerModelResourcePermission;
 
 }

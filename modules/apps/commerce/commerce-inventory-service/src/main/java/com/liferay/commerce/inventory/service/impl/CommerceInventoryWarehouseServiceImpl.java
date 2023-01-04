@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -33,6 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -347,11 +347,10 @@ public class CommerceInventoryWarehouseServiceImpl
 				externalReferenceCode, commerceInventoryWarehouseId);
 	}
 
-	private static volatile ModelResourcePermission<CommerceInventoryWarehouse>
-		_commerceInventoryWarehouseModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceInventoryWarehouseServiceImpl.class,
-				"_commerceInventoryWarehouseModelResourcePermission",
-				CommerceInventoryWarehouse.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse)"
+	)
+	private ModelResourcePermission<CommerceInventoryWarehouse>
+		_commerceInventoryWarehouseModelResourcePermission;
 
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -147,12 +146,11 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 	}
 
-	private static volatile ModelResourcePermission<DispatchTrigger>
-		_dispatchTriggerModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DispatchTriggerServiceImpl.class,
-				"_dispatchTriggerModelResourcePermission",
-				DispatchTrigger.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)"
+	)
+	private ModelResourcePermission<DispatchTrigger>
+		_dispatchTriggerModelResourcePermission;
 
 	@Reference(
 		target = "(resource.name=" + DispatchConstants.RESOURCE_NAME + ")"

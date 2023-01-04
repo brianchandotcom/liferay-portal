@@ -21,11 +21,11 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -111,11 +111,10 @@ public class BatchPlannerPolicyServiceImpl
 			batchPlannerPlanId, name, value);
 	}
 
-	private static volatile ModelResourcePermission<BatchPlannerPlan>
-		_batchPlannerPlanModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				BatchPlannerPolicyServiceImpl.class,
-				"_batchPlannerPlanModelResourcePermission",
-				BatchPlannerPlan.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.batch.planner.model.BatchPlannerPlan)"
+	)
+	private ModelResourcePermission<BatchPlannerPlan>
+		_batchPlannerPlanModelResourcePermission;
 
 }

@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -392,12 +391,6 @@ public class ScreensAssetEntryServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScreensAssetEntryServiceImpl.class);
 
-	private static volatile ModelResourcePermission<JournalArticle>
-		_journalArticleModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ScreensAssetEntryServiceImpl.class,
-				"_journalArticleModelResourcePermission", JournalArticle.class);
-
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -412,6 +405,12 @@ public class ScreensAssetEntryServiceImpl
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 	@Reference
 	private JournalArticleResourceLocalService

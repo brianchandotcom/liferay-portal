@@ -22,7 +22,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -197,17 +197,17 @@ public class CommerceTermEntryServiceImpl
 				externalReferenceCode, commerceTermEntryId);
 	}
 
-	private static volatile ModelResourcePermission<CommerceTermEntry>
-		_commerceTermEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceTermEntryServiceImpl.class,
-				"_commerceTermEntryModelResourcePermission",
-				CommerceTermEntry.class);
 	private static volatile PortletResourcePermission
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CommerceTermEntryServiceImpl.class,
 				"_portletResourcePermission",
 				CommerceTermEntryConstants.RESOURCE_NAME);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.term.model.CommerceTermEntry)"
+	)
+	private ModelResourcePermission<CommerceTermEntry>
+		_commerceTermEntryModelResourcePermission;
 
 }

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -1094,17 +1093,17 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateServiceImpl.class);
 
-	private static volatile ModelResourcePermission<DDMTemplate>
-		_ddmTemplateModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDMTemplateServiceImpl.class,
-				"_ddmTemplateModelResourcePermission", DDMTemplate.class);
-
 	@Reference
 	private DDMPermissionSupport _ddmPermissionSupport;
 
 	@Reference
 	private DDMSearchHelper _ddmSearchHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)"
+	)
+	private ModelResourcePermission<DDMTemplate>
+		_ddmTemplateModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

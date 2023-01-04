@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
+import com.liferay.portal.file.install.internal.Util;
 import com.liferay.portal.file.install.properties.ConfigurationProperties;
 import com.liferay.portal.file.install.properties.ConfigurationPropertiesFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -50,10 +51,24 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 		_configurationAdmin = configurationAdmin;
 		_encoding = encoding;
+
+		String configsDirPath = Util.getFilePath(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+
+		if (configsDirPath.endsWith(StringPool.SLASH)) {
+			configsDirPath = configsDirPath.substring(
+				0, configsDirPath.length() - 1);
+		}
+
+		_configsDirPath = configsDirPath;
 	}
 
 	@Override
 	public boolean canTransformURL(File file) {
+		if (!Objects.equals(_configsDirPath, file.getParent())) {
+			return false;
+		}
+
 		String name = file.getName();
 
 		if (name.endsWith(".config")) {
@@ -309,6 +324,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationFileInstaller.class);
 
+	private final String _configsDirPath;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final String _encoding;
 

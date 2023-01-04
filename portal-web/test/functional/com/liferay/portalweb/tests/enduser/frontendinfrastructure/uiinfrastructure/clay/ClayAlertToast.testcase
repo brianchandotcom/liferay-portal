@@ -72,6 +72,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-170575 - Verify toast alert with no actions disappears after 5 seconds"
+	@priority = "5"
+	test DisappearsAfter5SecsWithoutActions {
+		task ("When a toast alert appears") {
+			Click(
+				key_text = "DisappearsAfter5Secs",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And no actions on alert") {
+			VerifyElementNotPresent(locator1 = "//*[@id='ToastAlertContainer']//a");
+		}
+
+		task ("Then the alert disappears after 5 secs") {
+			Pause(locator1 = "5000");
+
+			AssertNotVisible(locator1 = "ClayAlertToast#ALERT_TOAST");
+		}
+	}
+
 	@description = "LPS-170578 Validate alert toast message does not disapear when mouse hovers over it."
 	@priority = "5"
 	test DoesNotAutocloseWhenHoveredOver {

@@ -406,7 +406,7 @@ definition {
 	}
 
 	macro viewEmptyFieldTable {
-		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
+		AssertElementPresent(locator1 = "ClientExtension#EMPTY_REMOTE_TABLE_MESSAGE");
 	}
 
 	macro viewErrorValueInvalid {

@@ -45,11 +45,11 @@ definition {
 	macro assertTableStatus {
 		AssertElementPresent(
 			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 		AssertElementPresent(
 			key_tableEntryStatus = "${entryStatus}",
-			locator1 = "RemoteApps#TABLE_ENTRY_STATUS_REMOTE_TABLE");
+			locator1 = "ClientExtension#TABLE_ENTRY_STATUS_REMOTE_TABLE");
 	}
 
 }

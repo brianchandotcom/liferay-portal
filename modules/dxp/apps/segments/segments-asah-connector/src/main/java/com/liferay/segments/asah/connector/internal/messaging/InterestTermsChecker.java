@@ -14,7 +14,6 @@
 
 package com.liferay.segments.asah.connector.internal.messaging;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -78,10 +77,11 @@ public class InterestTermsChecker {
 
 		List<String> termList = new ArrayList<>();
 
-		topics.forEach(
-			topic -> termList.addAll(
-				TransformUtil.transform(
-					topic.getTerms(), Topic.TopicTerm::getKeyword)));
+		for (Topic topic : topics) {
+			for (Topic.TopicTerm topicTerm : topic.getTerms()) {
+				termList.add(topicTerm.getKeyword());
+			}
+		}
 
 		String[] terms = termList.toArray(new String[0]);
 

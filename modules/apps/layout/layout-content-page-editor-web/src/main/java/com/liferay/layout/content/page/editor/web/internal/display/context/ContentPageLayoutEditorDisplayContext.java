@@ -82,8 +82,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -214,14 +212,23 @@ public class ContentPageLayoutEditorDisplayContext
 			"segmentsExperienceId", -1);
 
 		if (_segmentsExperienceId != -1) {
-			_segmentsExperienceId = Optional.ofNullable(
+			SegmentsExperience segmentsExperience =
 				SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-					_segmentsExperienceId)
-			).map(
-				SegmentsExperience::getSegmentsExperienceId
-			).orElseGet(
-				super::getSegmentsExperienceId
-			);
+					_segmentsExperienceId);
+
+			if (segmentsExperience != null) {
+				Long id = segmentsExperience.getSegmentsExperienceId();
+
+				if (id != null) {
+					_segmentsExperienceId = id;
+				}
+				else {
+					_segmentsExperienceId = super.getSegmentsExperienceId();
+				}
+			}
+			else {
+				_segmentsExperienceId = super.getSegmentsExperienceId();
+			}
 		}
 		else {
 			_segmentsExperienceId = super.getSegmentsExperienceId();
@@ -376,22 +383,14 @@ public class ContentPageLayoutEditorDisplayContext
 	private InfoCollectionProvider<?> _getInfoCollectionProvider(
 		String collectionPK) {
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			(List<InfoCollectionProvider<?>>)
-				(List<?>)infoItemServiceRegistry.getAllInfoItemServices(
-					InfoCollectionProvider.class);
+		for (InfoCollectionProvider<?> infoCollectionProvider :
+				(List<InfoCollectionProvider<?>>)
+					(List<?>)infoItemServiceRegistry.getAllInfoItemServices(
+						InfoCollectionProvider.class)) {
 
-		Stream<InfoCollectionProvider<?>> stream =
-			infoCollectionProviders.stream();
-
-		Optional<InfoCollectionProvider<?>> infoCollectionProviderOptional =
-			stream.filter(
-				infoCollectionProvider -> Objects.equals(
-					infoCollectionProvider.getKey(), collectionPK)
-			).findFirst();
-
-		if (infoCollectionProviderOptional.isPresent()) {
-			return infoCollectionProviderOptional.get();
+			if (Objects.equals(infoCollectionProvider.getKey(), collectionPK)) {
+				return infoCollectionProvider;
+			}
 		}
 
 		return null;

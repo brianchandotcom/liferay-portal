@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -78,10 +79,17 @@ public class JournalTransformerTest {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
 				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
-				_read("data_definition.json"), TestPropsValues.getUser());
+				StringUtil.replace(
+					_read("data_definition.json"),
+					new String[] {"$FIELD_SET_NAME"},
+					new String[] {"FieldsGroup19507604"}),
+				TestPropsValues.getUser());
 
 		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
-			_group.getGroupId(), _read("journal_content.xml"),
+			_group.getGroupId(),
+			StringUtil.replace(
+				_read("journal_content.xml"), new String[] {"$FIELD_SET_NAME"},
+				new String[] {"FieldsGroup19507604"}),
 			dataDefinition.getDataDefinitionKey(), null);
 	}
 

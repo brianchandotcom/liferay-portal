@@ -63,7 +63,7 @@
 				"collapsible": false,
 				"ddmStructureId": "",
 				"ddmStructureLayoutId": "",
-				"fieldReference": "FieldsGroup19507604",
+				"fieldReference": "$FIELD_SET_NAME",
 				"labelAtStructureLevel": true,
 				"rows": [
 					{
@@ -93,7 +93,7 @@
 				"en_US": "Fields Group"
 			},
 			"localizable": false,
-			"name": "FieldsGroup19507604",
+			"name": "$FIELD_SET_NAME",
 			"nestedDataDefinitionFields": [
 				{
 					"customProperties": {
@@ -225,7 +225,7 @@
 							{
 								"columnSize": 12,
 								"fieldNames": [
-									"FieldsGroup19507604"
+									"$FIELD_SET_NAME"
 								]
 							}
 						]

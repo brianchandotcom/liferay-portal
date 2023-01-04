@@ -157,6 +157,16 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					"layout.instanceable.allowed", Boolean.TRUE);
 			}
 
+			if (layout.isDraftLayout()) {
+				UnicodeProperties layoutTypeSettingsUnicodeProperties =
+					layout.getTypeSettingsProperties();
+
+				serviceContext.setAttribute(
+					Sites.LAYOUT_UPDATEABLE,
+					layoutTypeSettingsUnicodeProperties.get(
+						Sites.LAYOUT_UPDATEABLE));
+			}
+
 			layout = _layoutService.updateLayout(
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, layout.getTitleMap(), layout.getDescriptionMap(),

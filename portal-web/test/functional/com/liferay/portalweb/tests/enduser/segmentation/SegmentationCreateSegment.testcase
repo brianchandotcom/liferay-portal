@@ -2755,7 +2755,9 @@ definition {
 				locator1 = "Segmentation#CARD_HEADING",
 				panelHeader = "Scope");
 
-			AssertNotVisible(locator1 = "Segmentation#SCOPE_CARD_SITE");
+			AssertNotVisible(
+				locator1 = "Segmentation#SCOPE_CARD_SITE",
+				siteName = "Test Site Name");
 		}
 	}
 

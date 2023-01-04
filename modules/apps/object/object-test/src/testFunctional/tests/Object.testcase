@@ -438,7 +438,7 @@ definition {
 
 			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
 
-			ObjectAdmin.saveCustomObject();
+			Button.clickSave();
 		}
 
 		task ("Create an Entry (via API)") {

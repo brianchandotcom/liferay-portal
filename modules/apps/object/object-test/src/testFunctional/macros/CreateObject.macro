@@ -348,11 +348,7 @@ definition {
 	}
 
 	macro saveObject {
-		Click(locator1 = "CreateObject#SAVE_BUTTON");
-
-		WaitForSPARefresh();
-
-		WaitForPageLoad();
+		Button.clickSave();
 	}
 
 	macro selectAccountRestrictedField {

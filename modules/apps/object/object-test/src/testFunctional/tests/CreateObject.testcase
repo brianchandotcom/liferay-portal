@@ -142,7 +142,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject2");
 
@@ -421,7 +421,7 @@ definition {
 			fieldLabelName = "Custom Object 9",
 			pluralLabelName = "Custom Objects 9");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		CreateObject.assertCustomObject(labelName = "Custom Object 9");
 	}
@@ -488,7 +488,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -508,7 +508,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -516,7 +516,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -603,7 +603,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -833,7 +833,7 @@ definition {
 			isCollapsible = "Yes",
 			tabName = "Field Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -909,7 +909,7 @@ definition {
 			fieldLabelName = "Custom Object 19",
 			pluralLabelName = "Custom Objects 19");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		CreateObject.assertCustomObject(labelName = "Custom Object 19");
 	}
@@ -1375,7 +1375,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -1397,7 +1397,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -1667,7 +1667,7 @@ definition {
 			fieldName = "CustomObject40",
 			pluralLabelName = "Custom Objects 40");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
@@ -1812,7 +1812,7 @@ definition {
 			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
 			value1 = "CustomObject47");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Label");
 	}
@@ -1827,7 +1827,7 @@ definition {
 			fieldName = "",
 			pluralLabelName = "Custom Objects");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Object Name");
 	}
@@ -1850,7 +1850,7 @@ definition {
 			fieldLabel = "Custom Field",
 			fieldType = "Picklist");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Picklist");
 	}
@@ -2005,7 +2005,7 @@ definition {
 			fieldName = "customObject54",
 			pluralLabelName = "Custom Objects 54");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
@@ -2075,7 +2075,7 @@ definition {
 			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
 			value1 = "ObjectTest@");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		Alert.viewErrorMessage(errorMessage = "Name must only contain letters and digits");
 	}
@@ -2243,7 +2243,7 @@ definition {
 
 		ObjectPortlet.searchEntryRelationshipField(entryValue = "!@#$%");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		CreateObject.viewErrorValueInvalid(
 			className = "feedback",
@@ -2661,7 +2661,7 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Public Account");
 
-			PortletEntry.save();
+			CreateObject.saveObject();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -2685,7 +2685,7 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Private Account");
 
-			PortletEntry.save();
+			CreateObject.saveObject();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -2841,7 +2841,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
 
-			PortletEntry.save();
+			PortletEntry.publish();
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -2955,7 +2955,7 @@ definition {
 
 			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
 
-			PortletEntry.save();
+			CreateObject.saveObject();
 		}
 	}
 
@@ -3221,7 +3221,7 @@ definition {
 
 		CreateObject.editLabel(labelName = "Campo Customizado");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject81");
 
@@ -3455,7 +3455,7 @@ definition {
 			locator1 = "ObjectAdmin#LAYOUT_BASIC_INFO_NAME_FIELD",
 			value1 = "Layout Updated");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Refresh();
 
@@ -3874,7 +3874,7 @@ definition {
 
 		ObjectAdmin.selectObjectScope(fieldOption = "Site");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.gotoBack();
 
@@ -3995,7 +3995,7 @@ definition {
 
 		CreateObject.editLabel(labelName = "Relationship Updated");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Refresh();
 
@@ -4057,7 +4057,7 @@ definition {
 			fieldName = "CustomObject103",
 			pluralLabelName = "Custom Objects 103");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		CreateObject.assertCustomObject(labelName = "Custom Object 103");
 
@@ -4125,7 +4125,7 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject104");
 
@@ -4199,7 +4199,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -4256,7 +4256,7 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject106");
 
@@ -4323,7 +4323,7 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject107");
 
@@ -4501,7 +4501,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Boolean");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.addObjectBooleanFieldEntryViaUI(
 			objectName = "CustomObject112",
@@ -4586,7 +4586,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Double");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		WaitForPageLoad();
 
@@ -4633,7 +4633,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Integer");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		WaitForPageLoad();
 
@@ -4680,7 +4680,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Long");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
@@ -4799,7 +4799,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -5212,7 +5212,7 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject121");
 
@@ -5274,7 +5274,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
-		CreateObject.saveObject();
+		PortletEntry.publish();
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -5304,7 +5304,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
-		CreateObject.saveObject();
+		PortletEntry.publish();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA122");
 
@@ -5372,7 +5372,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
@@ -5396,7 +5396,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -5406,7 +5406,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA123");
 
@@ -5480,7 +5480,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -5501,7 +5501,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		WaitForSPARefresh();
 
@@ -5560,7 +5560,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
 
-			CreateObject.saveObject();
+			PortletEntry.publish();
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -5749,7 +5749,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
-		PortletEntry.save();
+		PortletEntry.publish();
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -5779,7 +5779,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
-		PortletEntry.save();
+		PortletEntry.publish();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA127");
 
@@ -5877,7 +5877,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -5908,7 +5908,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -5967,7 +5967,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA129");
 
@@ -5988,7 +5988,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -7268,7 +7268,7 @@ definition {
 
 		CreateObject.checkToggleInactive();
 
-		CreateObject.saveObject();
+		PortletEntry.save();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -7276,7 +7276,7 @@ definition {
 
 		CreateObject.checkToggleActive();
 
-		CreateObject.saveObject();
+		PortletEntry.save();
 
 		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
 
@@ -7632,7 +7632,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
-		CreateObject.saveObject();
+		PortletEntry.publish();
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -7660,7 +7660,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
-		CreateObject.saveObject();
+		PortletEntry.publish();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA163");
 
@@ -7753,7 +7753,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -7784,7 +7784,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -7838,7 +7838,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA165");
 
@@ -7859,7 +7859,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA165");
 
@@ -8025,7 +8025,7 @@ definition {
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -8258,7 +8258,7 @@ definition {
 
 		CreateObject.checkToggleInactive();
 
-		CreateObject.saveObject();
+		PortletEntry.save();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -8266,7 +8266,7 @@ definition {
 
 		CreateObject.checkToggleActive();
 
-		CreateObject.saveObject();
+		PortletEntry.save();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -8456,7 +8456,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 
@@ -8636,7 +8636,7 @@ definition {
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140873A");
 
@@ -8768,7 +8768,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Name");
 
-			CreateObject.saveObject();
+			PortletEntry.save();
 		}
 
 		task ("Go to Custom Object, active account restriction, and select relationship related to Account") {

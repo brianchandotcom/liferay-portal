@@ -626,7 +626,7 @@ definition {
 			fieldLabelName = "Custom Object 153572",
 			pluralLabelName = "Custom Objects 153572");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 

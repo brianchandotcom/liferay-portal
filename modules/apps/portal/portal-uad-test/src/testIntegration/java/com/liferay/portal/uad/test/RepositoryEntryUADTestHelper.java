@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = RepositoryEntryUADTestHelper.class)
+@Component(service = RepositoryEntryUADTestHelper.class)
 public class RepositoryEntryUADTestHelper {
 
 	public RepositoryEntry addRepositoryEntry(long userId) throws Exception {

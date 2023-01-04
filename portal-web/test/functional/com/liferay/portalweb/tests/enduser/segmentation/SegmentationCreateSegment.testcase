@@ -3421,6 +3421,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-168141 Given the scope card at the segment editor
+    When the user selects a site
+    And saves the segment
+    Then the select button disappears"
+    @priority = "3"
+    test ViewSelectButtonIsNotPresentAfterSaveSegment {
+        property custom.properties = "feature.flag.LPS-166954=true";
+
+        task ("Add a segment and assert the information message") {
+            LexiconEntry.gotoAdd();
+
+            Segmentation.addProperties(propertyOption = "First Name");
+
+            Segmentation.fillProperty(criterionValue = "Test");
+
+            Segmentation.fillTitle(titleField = "ViewSelectButtonIsNotPresentAfterSaveSegment Test");
+
+            AssertTextEquals(
+                locator1 = "Segmentation#SCOPE_CARD_MESSAGE",
+                value1 = "Select the scope of your segment to specify where it can be used. It will not be possible to modify the scope after the segment is saved.");
+
+            AssertElementPresent(locator1 = "Button#SELECT");
+        }
+
+        task ("Configure the segment to be scoped by the global site") {
+            Segmentation.configureScope(site = "Global");
+        }
+
+        task ("Saves the segment") {
+            Button.clickSave();
+
+            Alert.viewSuccessMessage();
+        }
+
+        task ("Assert that the Select button has disappeared") {
+            Segmentation.editSegment(entry = "ViewSelectButtonIsNotPresentAfterSaveSegment Test");
+
+            AssertTextEquals(
+                locator1 = "Segmentation#SCOPE_CARD_SITE",
+                siteName = "Global",
+                value1 = "Global");
+
+            AssertElementNotPresent(locator1 = "Button#SELECT");
+        }
+    }
+
 	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
 	@priority = "4"
 	test VocabulariesListedInSystemSettingsSegments {

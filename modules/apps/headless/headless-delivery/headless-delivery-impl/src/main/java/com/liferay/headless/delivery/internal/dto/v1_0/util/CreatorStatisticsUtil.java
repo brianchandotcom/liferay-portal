@@ -47,24 +47,19 @@ public class CreatorStatisticsUtil {
 
 				setLastPostDate(
 					() -> {
-						boolean hasLastPostDateField = false;
-
 						if (uriInfo != null) {
 							MultivaluedMap<String, String> parameters =
 								uriInfo.getQueryParameters();
 
 							String fields = parameters.getFirst("nestedFields");
 
-							if (fields != null) {
-								hasLastPostDateField = fields.contains(
-									"lastPostDate");
-							}
-						}
+							if ((fields != null) &&
+								fields.contains("lastPostDate")) {
 
-						if (hasLastPostDateField) {
-							return mbStatsUserLocalService.
-								getLastPostDateByUserId(
-									user.getGroupId(), user.getUserId());
+								return mbStatsUserLocalService.
+									getLastPostDateByUserId(
+										user.getGroupId(), user.getUserId());
+							}
 						}
 
 						return null;

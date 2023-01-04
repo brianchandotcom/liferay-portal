@@ -177,6 +177,8 @@ definition {
 			checkboxName = "Required Field",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
+		WaitForVisible(locator1 = "Icon#ASTERISK");
+
 		WebContentStructures.saveCP();
 
 		NavItem.gotoWebContent();

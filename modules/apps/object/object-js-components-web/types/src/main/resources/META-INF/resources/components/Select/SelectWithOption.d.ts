@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import './Select/index.scss';
+import './index.scss';
 interface SelectWithOptionProps
 	extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	ariaLabel?: string;

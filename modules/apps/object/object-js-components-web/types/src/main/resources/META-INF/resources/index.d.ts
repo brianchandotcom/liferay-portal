@@ -37,7 +37,7 @@ export {CustomItem} from './components/Select/BaseSelect';
 export {CheckboxItem} from './components/Select/CheckBoxItem';
 export {MultipleSelect} from './components/Select/MultipleSelect';
 export {SingleSelect} from './components/Select/SingleSelect';
-export {SelectWithOption} from './components/SelectWithOption';
+export {SelectWithOption} from './components/Select/SelectWithOption';
 export {
 	closeSidePanel,
 	openToast,

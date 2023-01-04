@@ -18,9 +18,9 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
-import {FieldBase} from './FieldBase';
+import {FieldBase} from '../FieldBase';
 
-import './Select/index.scss';
+import './index.scss';
 
 interface SelectWithOptionProps
 	extends React.SelectHTMLAttributes<HTMLSelectElement> {
@@ -84,7 +84,7 @@ export function SelectWithOption({
 					aria-label={ariaLabel}
 					disabled={disabled}
 					onClick={() => setDropdownActive((active) => !active)}
-					placeholder= {Liferay.Language.get("choose-an-option")}
+					placeholder={Liferay.Language.get('choose-an-option')}
 					ref={inputRef}
 					value={value}
 				/>

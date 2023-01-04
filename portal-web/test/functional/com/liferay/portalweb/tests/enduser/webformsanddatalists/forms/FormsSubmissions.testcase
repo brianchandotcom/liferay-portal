@@ -642,7 +642,6 @@ definition {
 	test CanRequireCAPTCHA {
 		property captcha.enabled = "true";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormsSubmissions#CanRequireCAPTCHA";
 
 		FormsAdmin.addForm();

@@ -133,7 +133,8 @@ public class JournalTransformerTest {
 				null, _journalArticle, null, _journalHelper,
 				LocaleUtil.toLanguageId(LocaleUtil.US),
 				_layoutDisplayPageProviderRegistry, null, false,
-				"${birthday.getData()}", null, Constants.VIEW));
+				"${FieldsGroup19507604.birthday.getData()}", null,
+				Constants.VIEW));
 
 		Assert.assertEquals(
 			"2022-11-26",
@@ -141,7 +142,8 @@ public class JournalTransformerTest {
 				null, _journalArticle, null, _journalHelper,
 				LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
 				_layoutDisplayPageProviderRegistry, null, false,
-				"${birthday.getData()}", null, Constants.VIEW));
+				"${FieldsGroup19507604.birthday.getData()}", null,
+				Constants.VIEW));
 	}
 
 	@Test

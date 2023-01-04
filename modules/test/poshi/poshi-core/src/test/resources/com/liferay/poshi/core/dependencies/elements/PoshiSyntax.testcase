@@ -17,6 +17,7 @@
     <var name="testRef" value="test"/>
     <echo message="${test}"/>
     <var name="reference" value="${testRef}"/>
+    <var name="test" method="StringUtil#replace('${test}', '${test}', '${test} ${test2}')"/>
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

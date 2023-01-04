@@ -3745,9 +3745,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 95");
 
-		AssertTextEquals(
-			locator1 = "ObjectAdmin#DETAILS_NAME_CUSTOM_OBJECT",
-			value1 = "CustomObject295");
+		AssertElementPresent(
+			key_fieldName = "CustomObject295",
+			locator1 = "CreateObject#VIEW_OBJECT_FIELD_NAME");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key before it is published"

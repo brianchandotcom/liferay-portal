@@ -64,10 +64,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ReadOnlyException;
 
@@ -135,11 +132,12 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				"Layout with PLID " + layout.getPlid() + " is not convertible");
 		}
 
-		ServiceContext serviceContext = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).orElse(
-			new ServiceContext()
-		);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
 
 		serviceContext.setScopeGroupId(layout.getGroupId());
 
@@ -301,17 +299,9 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 		Theme theme = layout.getTheme();
 
-		List<PortletDecorator> portletDecorators = theme.getPortletDecorators();
-
-		Stream<PortletDecorator> portletDecoratorsStream =
-			portletDecorators.stream();
-
-		List<PortletDecorator> filteredPortletDecorators =
-			portletDecoratorsStream.filter(
-				PortletDecorator::isDefaultPortletDecorator
-			).collect(
-				Collectors.toList()
-			);
+		List<PortletDecorator> filteredPortletDecorators = ListUtil.filter(
+			theme.getPortletDecorators(),
+			portletDecorator -> portletDecorator.isDefaultPortletDecorator());
 
 		if (ListUtil.isEmpty(filteredPortletDecorators)) {
 			return StringPool.BLANK;

@@ -92,7 +92,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1272,18 +1271,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		Attribute userGroupAttribute = userAttributes.get(userMappingsGroup);
 
-		List<Object> userGroupAttributes = Collections.emptyList();
-
-		if (userGroupAttribute != null) {
-			userGroupAttributes = new ArrayList<>(userGroupAttribute.size());
-
-			for (int i = 0; i < userGroupAttribute.size(); i++) {
-				Object object = userGroupAttribute.get(i);
-
-				userGroupAttributes.add(
-					StringUtil.lowerCase(object.toString()));
-			}
-		}
+		String userGroupAttributeString = StringUtil.lowerCase(
+			userGroupAttribute.toString());
 
 		Properties groupMappings = ldapImportContext.getGroupMappings();
 
@@ -1319,9 +1308,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 				ldapServerGroupIds.add(userGroup.getUserGroupId());
 
-				if (userGroupAttributes.contains(
-						StringUtil.lowerCase(
-							searchResult.getNameInNamespace()))) {
+				String fullUserDN = StringUtil.lowerCase(
+					searchResult.getNameInNamespace());
+
+				if ((userGroupAttribute != null) &&
+					userGroupAttributeString.contains(fullUserDN)) {
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(

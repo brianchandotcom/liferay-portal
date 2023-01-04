@@ -92,7 +92,11 @@ const Content: React.FC<IContentProps> = ({
 							key={rowId}
 						>
 							{showCheckbox && (
-								<ClayTable.Cell>
+								<ClayTable.Cell
+									className={classNames({
+										'text-muted': disabled || disabledItem,
+									})}
+								>
 									<ClayCheckbox
 										checked={checked}
 										disabled={disabled || disabledItem}

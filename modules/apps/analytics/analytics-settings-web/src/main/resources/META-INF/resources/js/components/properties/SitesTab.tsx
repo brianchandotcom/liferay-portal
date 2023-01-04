@@ -32,12 +32,10 @@ const columns: TColumn[] = [
 		label: Liferay.Language.get('site-name'),
 	},
 	{
-		expanded: true,
 		id: EColumn.FriendlyURL,
 		label: Liferay.Language.get('friendly-url'),
 	},
 	{
-		expanded: true,
 		id: EColumn.ChannelName,
 		label: Liferay.Language.get('assigned-property'),
 		sortable: false,

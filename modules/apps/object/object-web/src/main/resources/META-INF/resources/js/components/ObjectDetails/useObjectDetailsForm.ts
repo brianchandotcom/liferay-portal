@@ -18,6 +18,7 @@ import {
 	useForm,
 } from '@liferay/object-js-components-web';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {
 	checkIfFirstLetterIsUppercase,
 	specialCharactersInString,
@@ -30,12 +31,11 @@ interface UseObjectDetailsFormProps {
 
 export type ObjectDetailsErrors = FormError<Partial<ObjectDefinition>>;
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const REQUIRED_MSG = Liferay.Language.get('required');
 
 const getNameErrors = (
-	name: string,
-	errors: FormError<Partial<ObjectDefinition>>
+	errors: FormError<Partial<ObjectDefinition>>,
+	name: string
 ) => {
 	if (invalidateRequired(name)) {
 		errors.name = REQUIRED_MSG;
@@ -96,7 +96,7 @@ export function useObjectDetailsForm({
 			);
 		}
 
-		getNameErrors(objectDefinition.name as string, errors);
+		getNameErrors(errors, objectDefinition.name as string);
 
 		return errors;
 	};

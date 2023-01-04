@@ -316,7 +316,7 @@ definition {
 			fieldLabelName = "Custom Object 235",
 			pluralLabelName = "Custom Objects 235");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 235");
 
@@ -504,7 +504,7 @@ definition {
 			fieldLabelName = "Custom Object 239",
 			pluralLabelName = "Custom Objects 239");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 239");
 

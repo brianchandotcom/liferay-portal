@@ -456,7 +456,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		Navigator.openURL();
 

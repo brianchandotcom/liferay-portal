@@ -753,7 +753,7 @@ definition {
 			fieldLabelName = "Custom Object 148934",
 			pluralLabelName = "Custom Objects 148934");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		Refresh();
 
@@ -1110,7 +1110,7 @@ definition {
 			fieldLabelName = "Custom Object 148937",
 			pluralLabelName = "Custom Objects 148937");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		Refresh();
 
@@ -1190,7 +1190,7 @@ definition {
 			fieldLabelName = "Custom Object 148935",
 			pluralLabelName = "Custom Objects 148935");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		Refresh();
 
@@ -1438,7 +1438,7 @@ definition {
 			fieldLabelName = "Custom Object 148936",
 			pluralLabelName = "Custom Objects 148936");
 
-		ObjectAdmin.saveCustomObject();
+		CreateObject.saveObject();
 
 		Refresh();
 

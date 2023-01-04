@@ -913,7 +913,7 @@ definition {
 				value1 = "${pluralLabelName}");
 		}
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 	}
 
 	macro editEntryName {
@@ -1236,7 +1236,9 @@ definition {
 	}
 
 	macro publishObjectViaUI {
-		PortletEntry.publish();
+		Button.clickPublish();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro saveCustomObject {

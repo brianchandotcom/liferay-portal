@@ -717,7 +717,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
-			PortletEntry.save();
+			CreateObject.saveObject();
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -845,7 +845,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
-			PortletEntry.save();
+			CreateObject.saveObject();
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -994,7 +994,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		PortletEntry.save();
+		CreateObject.saveObject();
 
 		SelectFrame(locator1 = "Message#ERROR");
 

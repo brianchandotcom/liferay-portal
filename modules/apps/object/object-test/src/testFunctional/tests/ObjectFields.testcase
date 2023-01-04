@@ -419,7 +419,7 @@ definition {
 				fieldLabelName = "Custom Object 162140",
 				pluralLabelName = "Custom Objects 162140");
 
-			ObjectAdmin.saveCustomObject();
+			CreateObject.saveObject();
 		}
 
 		task ("Go to Custom Object > Fields") {

@@ -77,7 +77,8 @@ public class SegmentsExperienceSelectorDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"segmentsExperiences", _getSegmentsExperiencesJSONArray()
 		).put(
-			"selectedSegmentsExperience", _getSegmentsExperienceSelectedJSONObject()
+			"selectedSegmentsExperience",
+			_getSegmentsExperienceSelectedJSONObject()
 		).build();
 	}
 

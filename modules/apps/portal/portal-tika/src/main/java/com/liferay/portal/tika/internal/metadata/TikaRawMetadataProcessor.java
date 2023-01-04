@@ -27,6 +27,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -247,24 +249,27 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	private Metadata _postProcessMetadata(String mimeType, Metadata metadata) {
-		if (!mimeType.equals(ContentTypes.IMAGE_SVG_XML) ||
-			(metadata == null)) {
+		if (mimeType.equals(ContentTypes.IMAGE_SVG_XML) && (metadata != null)) {
+			String contentType = metadata.get(HttpHeaders.CONTENT_TYPE);
 
-			return metadata;
+			if (contentType.startsWith(ContentTypes.TEXT_PLAIN)) {
+				metadata.set(
+					HttpHeaders.CONTENT_TYPE,
+					StringUtil.replace(
+						mimeType, ContentTypes.TEXT_PLAIN,
+						ContentTypes.IMAGE_SVG_XML));
+			}
 		}
 
-		String contentType = metadata.get("Content-Type");
-
-		if (contentType.startsWith(ContentTypes.TEXT_PLAIN)) {
-			metadata.set(
-				"Content-Type",
-				StringUtil.replace(
-					mimeType, ContentTypes.TEXT_PLAIN,
-					ContentTypes.IMAGE_SVG_XML));
+		if (_log.isDebugEnabled()) {
+			_log.debug("Extracted metadata: " + metadata);
 		}
 
 		return metadata;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TikaRawMetadataProcessor.class);
 
 	private static final Map<String, String> _fields;
 

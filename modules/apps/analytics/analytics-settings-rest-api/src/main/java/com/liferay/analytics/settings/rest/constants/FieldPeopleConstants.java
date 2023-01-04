@@ -22,20 +22,21 @@ public class FieldPeopleConstants {
 	public static final String[] FIELD_CONTACT_DEFAULTS = {
 		"birthday", "classNameId", "classPK", "employeeNumber",
 		"employeeStatusId", "facebookSn", "hoursOfOperation", "jabberSn",
-		"jobClass", "male", "parentContactId", "skypeSn", "smsSn", "twitterSn"
+		"jobClass", "male", "parentContactId", "skypeSn", "smsSn", "twitterSn",
+		"userName"
 	};
 
 	public static final String[] FIELD_CONTACT_EXAMPLES = {
 		"31st Oct 2008", "12345", "12345", "12346-A", "0", "12345",
 		"9:00 AM - 5:00 PM", "johndoe", "Manager", "True", "12345", "12345",
-		"johndoe", "johndoe", "12345", "@johndoe"
+		"johndoe", "johndoe", "12345", "@johndoe", "John User"
 	};
 
 	public static final String[] FIELD_CONTACT_NAMES = {
 		"birthday", "classNameId", "classPK", "employeeNumber",
 		"employeeStatusId", "facebookSn", "hoursOfOperation", "jabberSn",
 		"jobClass", "male", "parentContactId", "prefixListTypeId", "skypeSn",
-		"smsSn", "suffixListTypeId", "twitterSn"
+		"smsSn", "suffixListTypeId", "twitterSn", "userName"
 	};
 
 	public static final String[] FIELD_CONTACT_REQUIRED_NAMES = {
@@ -45,7 +46,7 @@ public class FieldPeopleConstants {
 	public static final String[] FIELD_CONTACT_TYPES = {
 		"Date", "Long", "Long", "String", "String", "String", "String",
 		"String", "String", "Boolean", "Long", "Long", "String", "String",
-		"Long", "String"
+		"Long", "String", "String"
 	};
 
 	public static final String[] FIELD_USER_EXAMPLES = {

@@ -321,6 +321,8 @@ public class FieldDisplayContext {
 			"suffixListTypeId", "Long"
 		).put(
 			"twitterSn", "String"
+		).put(
+			"userName", "String"
 		).build();
 	private static final Map<String, String> _userFieldNames =
 		TreeMapBuilder.put(

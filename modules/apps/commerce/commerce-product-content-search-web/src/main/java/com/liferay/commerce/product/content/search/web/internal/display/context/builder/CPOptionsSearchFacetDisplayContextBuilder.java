@@ -20,7 +20,6 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -134,7 +133,7 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		buildTermDisplayContexts() {
 
 		if (ListUtil.isEmpty(_tuples)) {
-			return getEmptyTermDisplayContexts();
+			return Collections.emptyList();
 		}
 
 		List<CPOptionsSearchFacetTermDisplayContext>
@@ -208,15 +207,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		return cpOptionsSearchFacetTermDisplayContexts;
 	}
 
-	protected List<CPOptionsSearchFacetTermDisplayContext>
-		getEmptyTermDisplayContexts() {
-
-		return TransformUtil.transform(
-			TransformUtil.transform(
-				_selectedCategoryIds, this::_getEmptyTermDisplayContext),
-			contextOptional -> contextOptional.orElse(null));
-	}
-
 	protected double getPopularity(
 		int frequency, int maxCount, int minCount, double multiplier) {
 
@@ -252,16 +242,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
 		}
-	}
-
-	private Optional<CPOptionsSearchFacetTermDisplayContext>
-		_getEmptyTermDisplayContext(long cpOptionId) {
-
-		return Optional.ofNullable(
-			_cpOptionLocalService.fetchCPOption(cpOptionId)
-		).map(
-			cpOption -> buildTermDisplayContext(0, 1, true, StringPool.BLANK)
-		);
 	}
 
 	private List<Facet> _getFacets() {
@@ -333,7 +313,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	private Portal _portal;
 	private PortletSharedSearchRequest _portletSharedSearchRequest;
 	private final RenderRequest _renderRequest;
-	private final List<Long> _selectedCategoryIds = Collections.emptyList();
 	private List<Tuple> _tuples;
 
 }

@@ -36,15 +36,18 @@ import java.io.InputStream;
 
 import java.nio.charset.Charset;
 
+import java.util.Objects;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.tika.Tika;
+import org.apache.tika.detect.Detector;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.extractor.EmbeddedDocumentExtractor;
 import org.apache.tika.extractor.ParsingEmbeddedDocumentExtractor;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.parser.txt.UniversalEncodingDetector;
@@ -173,9 +176,14 @@ public class TextExtractorImpl implements TextExtractor {
 							boolean outputHtml)
 						throws IOException, SAXException {
 
-						String mimeType = tika.detect(inputStream);
+						Detector detector = tika.getDetector();
 
-						if (mimeType.equals(ContentTypes.IMAGE_PNG)) {
+						MediaType mediaType = detector.detect(
+							inputStream, new Metadata());
+
+						if (Objects.equals(
+								ContentTypes.IMAGE_PNG, mediaType.toString())) {
+
 							return;
 						}
 

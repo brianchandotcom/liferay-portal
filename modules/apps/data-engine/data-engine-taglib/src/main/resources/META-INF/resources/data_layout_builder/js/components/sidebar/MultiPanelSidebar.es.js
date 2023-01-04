@@ -113,6 +113,41 @@ export default function MultiPanelSidebar({
 			sidebarPanelId,
 		});
 
+	const handleKeyDown = (event) => {
+		if (event.keyCode === 38) {
+			let arrayIndex = 0;
+			const panelArr = [...panels[0]];
+
+			panelArr.map((panelId, index) => {
+				if (panelId === event.target.id) {
+					arrayIndex = index - 1;
+
+					if (arrayIndex >= 0) {
+						const button = panels[0][arrayIndex];
+
+						document.querySelector('#' + button).focus();
+					}
+				}
+			});
+		}
+		else if (event.keyCode === 40) {
+			let arrayIndex = 0;
+			const panelArr = [...panels[0]];
+
+			panelArr.map((panelId, index) => {
+				if (panelId === event.target.id) {
+					arrayIndex = index + 1;
+
+					if (arrayIndex <= panels[0].length - 1) {
+						const button = panels[0][arrayIndex];
+
+						document.querySelector('#' + button).focus();
+					}
+				}
+			});
+		}
+	};
+
 	return (
 		<ClayTooltipProvider>
 			<div
@@ -188,6 +223,7 @@ export default function MultiPanelSidebar({
 													handlePanelClick(panel)
 												}
 												onFocus={prefetch}
+												onKeyDown={handleKeyDown}
 												onMouseEnter={prefetch}
 												symbol={icon}
 												tabIndex={

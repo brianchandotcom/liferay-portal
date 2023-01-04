@@ -235,21 +235,25 @@ class AddOrCreateBase extends Component {
 											))}
 										</ClayTable.Body>
 									</ClayTable>
-									<ClayPaginationBarWithBasicItems
-										activeDelta={this.props.pageSize}
-										activePage={this.props.currentPage}
-										className="mt-3"
-										deltas={this.props.deltas}
-										ellipsisBuffer={3}
-										onDeltaChange={(deltaVal) => {
-											this.props.updateCurrentPage(1);
-											this.props.updatePageSize(deltaVal);
-										}}
-										onPageChange={
-											this.props.updateCurrentPage
-										}
-										totalItems={this.props.itemsCount}
-									/>
+									{this.props.itemsCount > 0 && (
+										<ClayPaginationBarWithBasicItems
+											activeDelta={this.props.pageSize}
+											activePage={this.props.currentPage}
+											className="mt-3"
+											deltas={this.props.deltas}
+											ellipsisBuffer={3}
+											onDeltaChange={(deltaVal) => {
+												this.props.updateCurrentPage(1);
+												this.props.updatePageSize(
+													deltaVal
+												);
+											}}
+											onPageChange={
+												this.props.updateCurrentPage
+											}
+											totalItems={this.props.itemsCount}
+										/>
+									)}
 								</>
 							) : null}
 						</div>

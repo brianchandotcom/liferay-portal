@@ -2303,7 +2303,7 @@ definition {
 	@description = "This is a use case for LPS-104643."
 	@priority = "3"
 	test UpdateExistUserEmailAddressByScript {
-		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#UpdateExistUserEmailAddressByScript";
+		property test.name.skip.portal.instance = "UsersAdmin#UpdateExistUserEmailAddressByScript";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

@@ -733,6 +733,133 @@ definition {
 		}
 	}
 
+	@description = "LPS-165850 - Verify user cannot edit an entry without permissions"
+	@priority = "5"
+	test CannotEditEntryWhenNotAllowedToEdit {
+		property portal.acceptance = "true";
+
+		task ("Given a related object with Custom Layout and Relationship tab") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Custom Layout",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			PortletEntry.save();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			PortletEntry.save();
+		}
+
+		task ("When add user without update permission") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONRole.addRegularRole(roleTitle = "Regular Role");
+
+			var objectId = JSONObject.getObjectId(objectName = "CustomObject");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+				roleTitle = "Regular Role",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+				roleTitle = "Regular Role",
+				roleType = "regular");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role",
+				userEmailAddress = "userea@liferay.com");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject",
+				value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectCustomLayouts.addEntryOnRelationshipTab(newEntry = "New entry related");
+		}
+
+		task ("Then the user cannot edit an entry") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
+
+			AssertElementNotPresent(locator1 = "Button#SAVE");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectPortlet.viewEntryDetails(entry = "New entry related");
+
+			ObjectAdmin.viewFieldValueDisabled(fieldValue = "New entry related");
+
+			AssertElementNotPresent(locator1 = "Button#SAVE");
+		}
+	}
+
 	@description = "LPS-135397 - Verify that it is not possible to save another Layout as default"
 	@priority = "4"
 	test CannotSaveAnotherLayoutAsDefault {

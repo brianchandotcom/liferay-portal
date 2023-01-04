@@ -81,7 +81,7 @@ public class FieldPeopleConstants {
 		"agreedToTermsOfUse", "companyId", "contactId", "createDate",
 		"defaultUser", "emailAddress", "emailAddressVerified", "firstName",
 		"jobTitle", "languageId", "lastName", "middleName", "modifiedDate",
-		"status", "timeZoneId", "userId"
+		"status", "timeZoneId", "userId", "uuid"
 	};
 
 }

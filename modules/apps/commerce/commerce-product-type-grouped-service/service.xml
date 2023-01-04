@@ -47,5 +47,6 @@
 	</entity>
 	<exceptions>
 		<exception>CPDefinitionGroupedEntryQuantity</exception>
+		<exception>DuplicateCPDefinitionGroupedEntry</exception>
 	</exceptions>
 </service-builder>

@@ -24,6 +24,7 @@ export function getMDFRequestFromDTO(
 				const {
 					activityToBudgets,
 					endDate,
+					id,
 					mdfRequestAmount,
 					mdfRequestExternalReferenceCodeSF,
 					name,
@@ -46,6 +47,7 @@ export function getMDFRequestFromDTO(
 					},
 					budgets: activityToBudgets || [],
 					endDate: endDate?.split('T')[0],
+					id,
 					mdfRequestAmount,
 					mdfRequestExternalReferenceCodeSF,
 					mdfRequestId: r_mdfRequestToActivities_c_mdfRequestId,

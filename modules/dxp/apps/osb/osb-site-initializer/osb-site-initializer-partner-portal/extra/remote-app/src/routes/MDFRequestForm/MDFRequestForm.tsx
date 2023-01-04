@@ -101,6 +101,7 @@ const MDFRequestForm = () => {
 		[StepType.ACTIVITIES]: (
 			<PRMFormik.Array
 				component={Activities}
+				isEdit={mdfRequestId !== undefined}
 				name="activities"
 				onCancel={onCancel}
 				onContinue={onContinue}

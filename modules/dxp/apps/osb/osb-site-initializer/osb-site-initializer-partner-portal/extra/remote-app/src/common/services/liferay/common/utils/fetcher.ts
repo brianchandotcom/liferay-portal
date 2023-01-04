@@ -28,7 +28,11 @@ export default async function liferayFetcher<T>(
 		throw new Error(String(response.status));
 	}
 
-	return response.json();
+	if (response.status !== 204) {
+		return response.json();
+	}
+
+	return response as T;
 }
 
 liferayFetcher.post = <T>(
@@ -77,4 +81,18 @@ liferayFetcher.patch = <T>(
 			'Content-Type': 'application/json',
 		},
 		method: 'PATCH',
+	});
+
+liferayFetcher.delete = <T>(
+	url: string,
+	token: string,
+	options?: RequestInit
+) =>
+	liferayFetcher<T>(url, token, {
+		...options,
+		headers: {
+			...options?.headers,
+			'Content-Type': 'application/json',
+		},
+		method: 'DELETE',
 	});

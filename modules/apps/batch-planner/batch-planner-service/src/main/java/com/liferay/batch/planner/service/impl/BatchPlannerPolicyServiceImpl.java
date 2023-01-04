@@ -114,7 +114,7 @@ public class BatchPlannerPolicyServiceImpl
 	private static volatile ModelResourcePermission<BatchPlannerPlan>
 		_batchPlannerPlanModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(
-				BatchPlannerPlanServiceImpl.class,
+				BatchPlannerPolicyServiceImpl.class,
 				"_batchPlannerPlanModelResourcePermission",
 				BatchPlannerPlan.class);
 

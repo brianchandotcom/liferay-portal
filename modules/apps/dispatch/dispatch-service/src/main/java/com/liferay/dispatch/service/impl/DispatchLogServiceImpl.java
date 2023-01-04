@@ -104,7 +104,7 @@ public class DispatchLogServiceImpl extends DispatchLogServiceBaseImpl {
 	private static volatile ModelResourcePermission<DispatchTrigger>
 		_dispatchTriggerModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(
-				DispatchTriggerServiceImpl.class,
+				DispatchLogServiceImpl.class,
 				"_dispatchTriggerModelResourcePermission",
 				DispatchTrigger.class);
 

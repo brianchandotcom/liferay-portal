@@ -54,7 +54,7 @@ components:
                     type: string
         DSRecipient:
             properties:
-                clientUserId:
+                dsClientUserId:
                     type: string
                 emailAddress:
                     type: string

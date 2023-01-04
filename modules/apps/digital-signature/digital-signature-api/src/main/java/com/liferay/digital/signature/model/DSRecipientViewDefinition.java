@@ -26,12 +26,12 @@ public class DSRecipientViewDefinition {
 		return authenticationMethod;
 	}
 
-	public String getClientUserId() {
-		return clientUserId;
+	public String getDSClientUserId() {
+		return dsClientUserId;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
 	public String getReturnUrl() {
@@ -46,12 +46,12 @@ public class DSRecipientViewDefinition {
 		this.authenticationMethod = authenticationMethod;
 	}
 
-	public void setClientUserId(String clientUserId) {
-		this.clientUserId = clientUserId;
+	public void setDSClientUserId(String dsClientUserId) {
+		this.dsClientUserId = dsClientUserId;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	public void setReturnUrl(String returnUrl) {
@@ -66,9 +66,9 @@ public class DSRecipientViewDefinition {
 		return JSONUtil.put(
 			"authenticationMethod", getAuthenticationMethod()
 		).put(
-			"clientUserId", getClientUserId()
+			"clientUserId", getDSClientUserId()
 		).put(
-			"email", getEmail()
+			"email", getEmailAddress()
 		).put(
 			"returnUrl", getReturnUrl()
 		).put(
@@ -82,8 +82,8 @@ public class DSRecipientViewDefinition {
 	}
 
 	protected String authenticationMethod;
-	protected String clientUserId;
-	protected String email;
+	protected String dsClientUserId;
+	protected String emailAddress;
 	protected String returnUrl;
 	protected String userName;
 

@@ -57,20 +57,20 @@ public class DSRecipient implements Serializable {
 	}
 
 	@Schema
-	public String getClientUserId() {
-		return clientUserId;
+	public String getDsClientUserId() {
+		return dsClientUserId;
 	}
 
-	public void setClientUserId(String clientUserId) {
-		this.clientUserId = clientUserId;
+	public void setDsClientUserId(String dsClientUserId) {
+		this.dsClientUserId = dsClientUserId;
 	}
 
 	@JsonIgnore
-	public void setClientUserId(
-		UnsafeSupplier<String, Exception> clientUserIdUnsafeSupplier) {
+	public void setDsClientUserId(
+		UnsafeSupplier<String, Exception> dsClientUserIdUnsafeSupplier) {
 
 		try {
-			clientUserId = clientUserIdUnsafeSupplier.get();
+			dsClientUserId = dsClientUserIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -82,7 +82,7 @@ public class DSRecipient implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String clientUserId;
+	protected String dsClientUserId;
 
 	@Schema
 	public String getEmailAddress() {
@@ -219,16 +219,16 @@ public class DSRecipient implements Serializable {
 
 		sb.append("{");
 
-		if (clientUserId != null) {
+		if (dsClientUserId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clientUserId\": ");
+			sb.append("\"dsClientUserId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(clientUserId));
+			sb.append(_escape(dsClientUserId));
 
 			sb.append("\"");
 		}

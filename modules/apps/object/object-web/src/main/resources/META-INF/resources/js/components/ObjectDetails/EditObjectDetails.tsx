@@ -32,9 +32,9 @@ export type KeyValuePair = {
 	value: string;
 };
 interface EditObjectDetailsProps {
-	DBTableName: string;
 	backURL: string;
 	companyKeyValuePair: KeyValuePair[];
+	dbTableName: string;
 	externalReferenceCode: string;
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -52,9 +52,9 @@ interface EditObjectDetailsProps {
 }
 
 export default function EditObjectDetails({
-	DBTableName,
 	backURL,
 	companyKeyValuePair,
+	dbTableName,
 	externalReferenceCode,
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,
@@ -194,7 +194,7 @@ export default function EditObjectDetails({
 			<div className="lfr-objects__object-definition-details">
 				<Sheet title={Liferay.Language.get('basic-information')}>
 					<ObjectDataContainer
-						DBTableName={DBTableName}
+						dbTableName={dbTableName}
 						errors={errors}
 						handleChange={handleChange}
 						hasUpdateObjectDefinitionPermission={

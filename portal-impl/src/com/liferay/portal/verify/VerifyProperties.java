@@ -1625,6 +1625,12 @@ public class VerifyProperties {
 		{
 			"ical4j.validation.relaxed", "ical4j.validation.relaxed",
 			"com.liferay.calendar.service"
+		},
+
+		// Tika config
+
+		{
+			"tika.config", "tika-config-xml", "com.liferay.portal.tika"
 		}
 	};
 

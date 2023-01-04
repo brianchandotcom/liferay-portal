@@ -42,7 +42,7 @@ definition {
 	macro addPicklistItemViaUI {
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
-		WaitForPageLoad();
+		WaitForElementPresent(locator1 = "Picklist#ADD_ITEM_BUTTON");
 
 		Click.javaScriptClick(locator1 = "Picklist#ADD_ITEM_BUTTON");
 
@@ -95,6 +95,8 @@ definition {
 	}
 
 	macro addPicklistViaUI {
+		WaitForElementPresent(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
+
 		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
 
 		WaitForElementPresent(

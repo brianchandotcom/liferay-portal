@@ -841,7 +841,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Integer getDelta() {
-		return _assetPublisherCustomizer.getDelta(_httpServletRequest);
+		return _assetPublisherCustomizer.getDelta(_portletPreferences);
 	}
 
 	public String getDisplayStyle() {

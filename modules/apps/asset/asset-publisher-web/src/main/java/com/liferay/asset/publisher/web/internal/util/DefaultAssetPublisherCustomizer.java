@@ -60,6 +60,13 @@ public class DefaultAssetPublisherCustomizer
 	}
 
 	@Override
+	public Integer getDelta(PortletPreferences portletPreferences) {
+		return GetterUtil.getInteger(
+			portletPreferences.getValue("delta", null),
+			SearchContainer.DEFAULT_DELTA);
+	}
+
+	@Override
 	public String getPortletId() {
 		return AssetPublisherPortletKeys.ASSET_PUBLISHER;
 	}

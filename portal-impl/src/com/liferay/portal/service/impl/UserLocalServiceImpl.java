@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.PasswordPolicy;
@@ -112,6 +113,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -206,14 +208,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.mail.internet.InternetAddress;
@@ -338,13 +343,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addDefaultGroups(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		long[] userGroupIds = user.getGroupIds();
-
-		Set<Long> groupIdsSet = new HashSet<>();
-
 		String[] defaultGroupNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_DEFAULT_GROUP_NAMES);
+
+		Set<Group> defaultGroups = new TreeSet<>(
+			Comparator.comparing(GroupModel::getTreePath));
 
 		for (String defaultGroupName : defaultGroupNames) {
 			Company company = _companyPersistence.findByPrimaryKey(
@@ -360,13 +364,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getCompanyId(), defaultGroupName);
 
 			if (group != null) {
-				if (!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
-					groupIdsSet.add(group.getGroupId());
-				}
-				else {
-					addDefaultRolesAndTeams(
-						group.getGroupId(), new long[] {user.getUserId()});
-				}
+				defaultGroups.add(group);
 			}
 		}
 
@@ -386,26 +384,36 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getCompanyId(), defaultOrganizationGroupName);
 
 			if (group != null) {
-				if (!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
-					groupIdsSet.add(group.getGroupId());
-				}
-				else {
-					addDefaultRolesAndTeams(
-						group.getGroupId(), new long[] {user.getUserId()});
-				}
+				defaultGroups.add(group);
 			}
 		}
 
-		if (groupIdsSet.isEmpty()) {
+		long[] userGroupIds = user.getGroupIds();
+
+		Iterator<Group> groupIterator = defaultGroups.iterator();
+
+		while (groupIterator.hasNext()) {
+			Group group = groupIterator.next();
+
+			long groupId = group.getGroupId();
+
+			if (SiteMembershipPolicyUtil.isMembershipAllowed(userId, groupId)) {
+				if (!ArrayUtil.contains(userGroupIds, groupId)) {
+					userPersistence.addGroup(userId, groupId);
+				}
+			}
+			else {
+				groupIterator.remove();
+			}
+		}
+
+		if (defaultGroups.isEmpty()) {
 			return false;
 		}
 
-		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[0]));
-
-		userPersistence.addGroups(userId, groupIds);
-
-		for (long groupId : groupIds) {
-			addDefaultRolesAndTeams(groupId, new long[] {userId});
+		for (Group group : defaultGroups) {
+			addDefaultRolesAndTeams(
+				group.getGroupId(), new long[] {user.getUserId()});
 		}
 
 		return true;

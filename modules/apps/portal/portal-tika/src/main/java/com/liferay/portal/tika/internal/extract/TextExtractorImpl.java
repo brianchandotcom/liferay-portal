@@ -103,6 +103,8 @@ public class TextExtractorImpl implements TextExtractor {
 					_processExecutor.execute(
 						ProcessConfigUtil.getProcessConfig(),
 						new ExtractTextProcessCallable(
+							tika.getParser(), tika.getDetector(),
+							tika.getMaxStringLength(),
 							StreamUtil.toByteArray(finalInputStream)));
 
 				Future<String> future =
@@ -111,7 +113,9 @@ public class TextExtractorImpl implements TextExtractor {
 				text = future.get();
 			}
 			else {
-				text = _parseToString(tika, inputStream);
+				text = _parseToString(
+					tika.getParser(), tika.getDetector(),
+					tika.getMaxStringLength(), inputStream);
 			}
 		}
 		catch (Exception exception) {
@@ -123,7 +127,9 @@ public class TextExtractorImpl implements TextExtractor {
 		return text;
 	}
 
-	private static String _parseToString(Tika tika, InputStream inputStream)
+	private static String _parseToString(
+			Parser parser, Detector detector, int maxStringLength,
+			InputStream inputStream)
 		throws IOException, TikaException {
 
 		inputStream.mark(1);
@@ -158,11 +164,9 @@ public class TextExtractorImpl implements TextExtractor {
 		}
 
 		WriteOutContentHandler writeOutContentHandler =
-			new WriteOutContentHandler(tika.getMaxStringLength());
+			new WriteOutContentHandler(maxStringLength);
 
 		try {
-			Parser parser = tika.getParser();
-
 			ParseContext parseContext = new ParseContext();
 
 			parseContext.set(
@@ -175,8 +179,6 @@ public class TextExtractorImpl implements TextExtractor {
 							ContentHandler contentHandler, Metadata metadata,
 							boolean outputHtml)
 						throws IOException, SAXException {
-
-						Detector detector = tika.getDetector();
 
 						MediaType mediaType = detector.detect(
 							inputStream, new Metadata());
@@ -235,24 +237,32 @@ public class TextExtractorImpl implements TextExtractor {
 
 			logger.setLevel(Level.SEVERE);
 
-			Tika tika = new Tika(TikaConfigUtil.getTikaConfig());
-
 			try {
 				return _parseToString(
-					tika, new UnsyncByteArrayInputStream(_data));
+					_parser, _detector, _maxStringLength,
+					new UnsyncByteArrayInputStream(_data));
 			}
 			catch (Exception exception) {
 				throw new ProcessException(exception);
 			}
 		}
 
-		private ExtractTextProcessCallable(byte[] data) {
+		private ExtractTextProcessCallable(
+			Parser parser, Detector detector, int maxStringLength,
+			byte[] data) {
+
+			_parser = parser;
+			_detector = detector;
+			_maxStringLength = maxStringLength;
 			_data = data;
 		}
 
 		private static final long serialVersionUID = 1L;
 
 		private final byte[] _data;
+		private final Detector _detector;
+		private final int _maxStringLength;
+		private final Parser _parser;
 
 	}
 

@@ -18,21 +18,11 @@
 
 <%
 SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContext = (SegmentsExperienceSelectorDisplayContext)request.getAttribute(SegmentsExperienceSelectorDisplayContext.class.getName());
-
-JSONObject segmentsExperienceSelectedJSONObject = segmentsExperienceSelectorDisplayContext.getSegmentsExperienceSelectedJSONObject();
-
-JSONArray segmentsExperiencesJSONArray = segmentsExperienceSelectorDisplayContext.getSegmentsExperiencesJSONArray();
 %>
 
 <div class="border-left border-secondary control-menu-nav-item ml-3 pl-3">
 	<react:component
 		module="js/components/ExperiencePicker"
-		props='<%=
-				HashMapBuilder.<String, Object>put(
-					"selectedExperience", segmentsExperienceSelectedJSONObject
-				).put(
-					"experiences", segmentsExperiencesJSONArray
-				).build()
-			%>'
+		props="<%= segmentsExperienceSelectorDisplayContext.getData() %>"
 	/>
 </div>

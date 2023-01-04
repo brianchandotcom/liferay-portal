@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -40,6 +41,7 @@ import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,48 +73,12 @@ public class SegmentsExperienceSelectorDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public JSONObject getSegmentsExperienceSelectedJSONObject()
-		throws PortalException {
-
-		JSONObject segmentsExperienceSelectedJSONObject =
-			_jsonFactory.createJSONObject();
-
-		SegmentsExperience segmentsExperience =
-			_fetchSegmentsExperienceFromRequest();
-
-		if (segmentsExperience != null) {
-			segmentsExperienceSelectedJSONObject =
-				_getSegmentsExperienceJSONObject(
-					segmentsExperience.getSegmentsExperienceId());
-
-			segmentsExperienceSelectedJSONObject.put(
-				"segmentsExperienceName",
-				_getSelectedSegmentsExperienceName(segmentsExperience));
-		}
-
-		return segmentsExperienceSelectedJSONObject;
-	}
-
-	public JSONArray getSegmentsExperiencesJSONArray() throws PortalException {
-		if (_segmentsExperiencesJSONArray != null) {
-			return _segmentsExperiencesJSONArray;
-		}
-
-		JSONArray segmentsExperiencesJSONArray = _jsonFactory.createJSONArray();
-
-		List<SegmentsExperience> segmentsExperiences =
-			_segmentsExperienceLocalService.getSegmentsExperiences(
-				_themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				_themeDisplay.getPlid(), true);
-
-		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			segmentsExperiencesJSONArray.put(
-				_getSegmentsExperienceJSONObject(
-					segmentsExperience, segmentsExperiences));
-		}
-
-		return segmentsExperiencesJSONArray;
+	public Map<String, Object> getData() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"experiences", _getSegmentsExperiencesJSONArray()
+		).put(
+			"selectedExperience", _getSegmentsExperienceSelectedJSONObject()
+		).build();
 	}
 
 	private SegmentsExperience _fetchSegmentsExperienceFromRequest() {
@@ -164,7 +130,7 @@ public class SegmentsExperienceSelectorDisplayContext {
 		throws PortalException {
 
 		JSONArray segmentsExperiencesJSONArray =
-			getSegmentsExperiencesJSONArray();
+			_getSegmentsExperiencesJSONArray();
 
 		for (int i = 0; i < segmentsExperiencesJSONArray.length(); i++) {
 			JSONObject segmentsExperiencesJSONObject =
@@ -228,6 +194,52 @@ public class SegmentsExperienceSelectorDisplayContext {
 				"segmentsExperienceId",
 				segmentsExperience.getSegmentsExperienceId())
 		);
+	}
+
+	private JSONObject _getSegmentsExperienceSelectedJSONObject()
+		throws PortalException {
+
+		JSONObject segmentsExperienceSelectedJSONObject =
+			_jsonFactory.createJSONObject();
+
+		SegmentsExperience segmentsExperience =
+			_fetchSegmentsExperienceFromRequest();
+
+		if (segmentsExperience != null) {
+			segmentsExperienceSelectedJSONObject =
+				_getSegmentsExperienceJSONObject(
+					segmentsExperience.getSegmentsExperienceId());
+
+			segmentsExperienceSelectedJSONObject.put(
+				"segmentsExperienceName",
+				_getSelectedSegmentsExperienceName(segmentsExperience));
+		}
+
+		return segmentsExperienceSelectedJSONObject;
+	}
+
+	private JSONArray _getSegmentsExperiencesJSONArray()
+		throws PortalException {
+
+		if (_segmentsExperiencesJSONArray != null) {
+			return _segmentsExperiencesJSONArray;
+		}
+
+		JSONArray segmentsExperiencesJSONArray = _jsonFactory.createJSONArray();
+
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				_themeDisplay.getScopeGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				_themeDisplay.getPlid(), true);
+
+		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+			segmentsExperiencesJSONArray.put(
+				_getSegmentsExperienceJSONObject(
+					segmentsExperience, segmentsExperiences));
+		}
+
+		return segmentsExperiencesJSONArray;
 	}
 
 	private String _getSelectedSegmentsExperienceName(

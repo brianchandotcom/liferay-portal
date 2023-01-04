@@ -417,7 +417,7 @@ definition {
 		}
 
 		task ("Click next page") {
-			Click(locator1 = "ACDXPSettings#ASSING_MODAL_NEXT_PAGE");
+			Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_NEXT_PAGE");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
@@ -441,7 +441,7 @@ definition {
 		}
 
 		task ("Click next page") {
-			Click(locator1 = "ACDXPSettings#ASSING_MODAL_NEXT_PAGE");
+			Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_NEXT_PAGE");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
@@ -475,7 +475,7 @@ definition {
 		}
 
 		task ("Click next page") {
-			Click(locator1 = "ACDXPSettings#ASSING_MODAL_NEXT_PAGE");
+			Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_NEXT_PAGE");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
@@ -499,7 +499,7 @@ definition {
 		}
 
 		task ("Click next page") {
-			Click(locator1 = "ACDXPSettings#ASSING_MODAL_NEXT_PAGE");
+			Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_NEXT_PAGE");
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}

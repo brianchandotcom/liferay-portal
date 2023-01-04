@@ -62,7 +62,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration",
 	service = {ManagedServiceFactory.class, MessageBus.class}
 )

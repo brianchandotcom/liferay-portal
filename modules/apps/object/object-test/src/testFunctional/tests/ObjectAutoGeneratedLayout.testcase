@@ -167,7 +167,6 @@ definition {
 	@description = "LPS-146889 - Verify that it is not possible to add more characters than the limit set"
 	@priority = "5"
 	test CannotAddMoreThanLimitOfCharacters {
-		property custom.properties = "feature.flag.LPS-146889=true";
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -474,8 +473,6 @@ definition {
 	@description = "LPS-146889 - Verify that the character count is updated dynamically when the user is typing on the field"
 	@priority = "4"
 	test CharacterCountIsDynamic {
-		property custom.properties = "feature.flag.LPS-146889=true";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151583",
 			objectName = "CustomObject151583",

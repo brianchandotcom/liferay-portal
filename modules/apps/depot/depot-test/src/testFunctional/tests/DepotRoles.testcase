@@ -151,19 +151,13 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editUserSiteCP(
 			siteName = "Site Name",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -274,11 +268,7 @@ definition {
 	test AssignALRoleWithAllWCPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType(roleType = "Asset Library");
-
-		Role.add(roleTitle = "AL Role Name");
+		JSONRole.addDepotRole(roleTitle = "AL Role Name");
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
@@ -322,34 +312,20 @@ definition {
 			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 			roleTitle = "Depot Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserAssetLibraryCP(
+		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONRole.assignDepotRoleToUser(
 			depotName = "Test Depot Name",
-			portlet = "Memberships");
-
-		Depot.assignAssetLibraryRole(
-			resourceName = "userfn userln",
-			roleTitle = "AL Role Name");
+			roleTitle = "AL Role Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -395,11 +371,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType(roleType = "Asset Library");
-
-		Role.add(roleTitle = "AL Role Name");
+		JSONRole.addDepotRole(roleTitle = "AL Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
@@ -445,24 +417,14 @@ definition {
 			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 			roleTitle = "Depot Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserAssetLibraryCP(
+		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONRole.assignDepotRoleToUser(
 			depotName = "Test Depot Name",
-			portlet = "Memberships");
-
-		Depot.assignAssetLibraryRole(
-			resourceName = "userfn userln",
-			roleTitle = "AL Role Name");
+			roleTitle = "AL Role Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -491,11 +453,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteALRole {
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType(roleType = "Asset Library");
-
-		Role.add(roleTitle = "AL Role Name");
+		JSONRole.addDepotRole(roleTitle = "AL Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
@@ -525,8 +483,6 @@ definition {
 		RoleNavigator.gotoRoleType(roleType = "Asset Library");
 
 		Role.add(roleTitle = "AL Role Name");
-
-		Role.openRolesAdmin();
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
@@ -615,26 +571,14 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
-			portlet = "Memberships");
+			userEmailAddress = "userea@liferay.com");
 
-		Depot.assignUserAsMember(
+		JSONRole.assignDepotRoleToUser(
 			depotName = "Test Depot Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignAssetLibraryRole(
 			roleTitle = "Asset Library Administrator",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		Role.openRolesAdmin();
 
@@ -646,11 +590,9 @@ definition {
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX",
 			roleTitle = "Asset Library Administrator");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
@@ -678,45 +620,30 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewExistingSiteMemberAfterConnectingSite {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "user1@liferay.com",
-			userScreenName = "usersn");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserSiteCP(
-			siteName = "Site Name",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "user1@liferay.com");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -736,21 +663,13 @@ definition {
 			locator1 = "Message#EMPTY_INFO_TAGLIB",
 			value1 = "No asset libraries were found.");
 
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editUserAssetLibraryCP(
 			depotName = "Test Depot Name",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 

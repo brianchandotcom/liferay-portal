@@ -125,6 +125,17 @@ public class ListTypeEntryResourceImpl
 	}
 
 	@Override
+	public ListTypeEntry getListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return ListTypeEntryUtil.toListTypeEntry(
+			null, contextAcceptLanguage.getPreferredLocale(),
+			_listTypeEntryService.getListTypeEntryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId()));
+	}
+
+	@Override
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(
 			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
 		throws Exception {
@@ -167,6 +178,19 @@ public class ListTypeEntryResourceImpl
 				listTypeEntry.getExternalReferenceCode(), listTypeEntryId,
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeEntry.getName_i18n())));
+	}
+
+	@Override
+	public ListTypeEntry putListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode, ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderlistTypeEntry =
+			_listTypeEntryService.getListTypeEntryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return putListTypeEntry(
+			serviceBuilderlistTypeEntry.getListTypeEntryId(), listTypeEntry);
 	}
 
 	private Map<String, Map<String, String>> _getActions(

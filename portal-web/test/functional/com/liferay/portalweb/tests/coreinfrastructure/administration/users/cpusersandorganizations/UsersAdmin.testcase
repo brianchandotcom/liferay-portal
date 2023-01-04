@@ -1650,8 +1650,6 @@ definition {
 
 	@priority = "4"
 	test ImpersonatingAdministratorandOwner {
-		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#ImpersonatingAdministratorandOwner";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRole.addRegularRole(roleTitle = "Impersonating Role Name");
@@ -2729,8 +2727,6 @@ definition {
 
 	@priority = "4"
 	test ViewUpdateUserViaJSONWS {
-		property test.name.skip.portal.instance = "CPUsersandorganizations#ViewUpdateUserViaJSONWS";
-
 		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(

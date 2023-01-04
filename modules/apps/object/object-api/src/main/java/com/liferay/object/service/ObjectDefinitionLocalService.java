@@ -371,6 +371,10 @@ public interface ObjectDefinitionLocalService
 			long userId, long objectDefinitionId)
 		throws PortalException;
 
+	public ObjectDefinition restrictObjectDefinitionByAccountEntry(
+			ObjectDefinition objectDefinition, long userId)
+		throws PortalException;
+
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition);
 
 	@Indexable(type = IndexableType.REINDEX)

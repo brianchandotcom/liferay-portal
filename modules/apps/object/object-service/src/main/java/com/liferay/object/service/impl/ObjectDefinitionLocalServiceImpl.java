@@ -608,8 +608,8 @@ public class ObjectDefinitionLocalServiceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					accountEntryObjectDefinition.getName() +
 						objectDefinition.getName()),
-				accountEntryObjectDefinition.getName() +
-					objectDefinition.getName(),
+				accountEntryObjectDefinition.getShortName().toLowerCase()
+				+ objectDefinition.getShortName(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(

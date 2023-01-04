@@ -54,6 +54,9 @@ definition {
 		else if ("${roleType}" == "organization") {
 			var type = "3";
 		}
+		else if ("${roleType}" == "Depot") {
+			var type = "5";
+		}
 		else if ("${roleType}" == "account") {
 			var type = "6";
 		}

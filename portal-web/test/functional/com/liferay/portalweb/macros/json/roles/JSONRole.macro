@@ -1,5 +1,20 @@
 definition {
 
+	macro addDepotRole {
+		Variables.assertDefined(parameterList = "${roleTitle}");
+
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
+		var name = JSONRoleSetter.setName(name = "${roleTitle}");
+		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+		var type = JSONRoleSetter.setType(roleType = "Depot");
+
+		JSONRoleAPI._addRole(
+			descriptionMap = "${descriptionMap}",
+			name = "${name}",
+			titleMap = "${titleMap}",
+			type = "${type}");
+	}
+
 	macro addOrganizationRole {
 		Variables.assertDefined(parameterList = "${roleTitle}");
 

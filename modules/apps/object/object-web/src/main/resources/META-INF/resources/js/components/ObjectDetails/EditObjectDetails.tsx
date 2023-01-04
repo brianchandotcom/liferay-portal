@@ -109,7 +109,7 @@ export default function EditObjectDetails({
 			}
 
 			if (!draft) {
-				const publishResponse = await API.publishObjectDefinition(
+				const publishResponse = await API.publishObjectDefinitionById(
 					values.id as number
 				);
 
@@ -134,7 +134,7 @@ export default function EditObjectDetails({
 					type: 'success',
 				});
 
-				window.location.reload();
+				setTimeout(() => window.location.reload(), 1000);
 
 				return;
 			}
@@ -146,7 +146,7 @@ export default function EditObjectDetails({
 				type: 'success',
 			});
 
-			window.location.reload();
+			setTimeout(() => window.location.reload(), 1000);
 		}
 	};
 

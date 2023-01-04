@@ -227,13 +227,15 @@ export default function EditObjectDetails({
 						values={values}
 					/>
 
-					<AccountRestrictionContainer
-						errors={errors}
-						isApproved={isApproved}
-						objectFields={objectFields}
-						setValues={setValues}
-						values={values}
-					/>
+					{!values.system && (
+						<AccountRestrictionContainer
+							errors={errors}
+							isApproved={isApproved}
+							objectFields={objectFields}
+							setValues={setValues}
+							values={values}
+						/>
+					)}
 
 					<ConfigurationContainer
 						hasUpdateObjectDefinitionPermission={

@@ -147,7 +147,7 @@ definition {
 
 		AssertElementPresent(
 			key_tableEntryURL = "Grouped",
-			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE");
+			locator1 = "ClientExtension#TABLE_ENTRY_URL_REMOTE_TABLE");
 	}
 
 	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"

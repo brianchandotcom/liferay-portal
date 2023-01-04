@@ -84,7 +84,7 @@ definition {
 	macro assertContentField {
 		AssertTextEquals(
 			key_text = "${entryField}",
-			locator1 = "RemoteApps#REMOTE_APPS_FIELDS",
+			locator1 = "ClientExtension#REMOTE_APPS_FIELDS",
 			value1 = "${entryInformation}");
 	}
 
@@ -162,7 +162,7 @@ definition {
 		for (var entryField : list "${entryFieldList}") {
 			AssertNotEditable(
 				key_text = "${entryField}",
-				locator1 = "RemoteApps#REMOTE_APPS_FIELDS");
+				locator1 = "ClientExtension#REMOTE_APPS_FIELDS");
 		}
 	}
 
@@ -211,14 +211,14 @@ definition {
 	macro assertTableEntryNameNotPresent {
 		AssertElementNotPresent(
 			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
+			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = "${entryName}");
 	}
 
 	macro deleteRemoteApp {
-		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
+		Click(locator1 = "ClientExtension#REMOTE_TABLE_ELLIPSIS");
 
-		Click(locator1 = "RemoteApps#REMOTE_TABLE_DELETE");
+		Click(locator1 = "ClientExtension#REMOTE_TABLE_DELETE");
 	}
 
 	macro deleteRemoteAppAPI {
@@ -264,7 +264,7 @@ definition {
 
 		Click(
 			key_tableEntryName = "Vanilla Counter",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 		var currentURL = Navigator.getCurrentURL();
 
@@ -293,7 +293,7 @@ definition {
 	}
 
 	macro goToRemoteAppsPortlet {
-		if (IsElementNotPresent(locator1 = "RemoteApps#REMOTE_APPS_HEADER")) {
+		if (IsElementNotPresent(locator1 = "ClientExtension#REMOTE_APPS_HEADER")) {
 			ApplicationsMenu.gotoPortlet(
 				category = "Custom Apps",
 				panel = "Applications",
@@ -304,7 +304,7 @@ definition {
 	macro tearDown {
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		while (IsElementNotPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE")) {
+		while (IsElementNotPresent(locator1 = "ClientExtension#EMPTY_REMOTE_TABLE_MESSAGE")) {
 			ClientExtensionGeneral.deleteRemoteApp();
 		}
 
@@ -312,39 +312,39 @@ definition {
 	}
 
 	macro viewEmptyRemoteTable {
-		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
+		AssertElementPresent(locator1 = "ClientExtension#EMPTY_REMOTE_TABLE_MESSAGE");
 	}
 
 	macro viewTableEntries {
 		AssertTextEquals(
 			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
+			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = "${entryName}");
 
 		AssertTextEquals(
 			key_tableEntryType = "${entryType}",
-			locator1 = "RemoteApps#TABLE_ENTRY_TYPE_REMOTE_TABLE",
+			locator1 = "ClientExtension#TABLE_ENTRY_TYPE_REMOTE_TABLE",
 			value1 = "${entryType}");
 	}
 
 	macro viewTableEntryName {
 		AssertTextEquals(
 			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
+			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = "${entryName}");
 	}
 
 	macro viewTableEntryType {
 		AssertTextEquals(
 			key_tableEntryType = "${entryType}",
-			locator1 = "RemoteApps#TABLE_ENTRY_TYPE_REMOTE_TABLE",
+			locator1 = "ClientExtension#TABLE_ENTRY_TYPE_REMOTE_TABLE",
 			value1 = "${entryType}");
 	}
 
 	macro viewTableEntryURL {
 		AssertTextEquals(
 			key_tableEntryURL = "${entryURL}",
-			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE",
+			locator1 = "ClientExtension#TABLE_ENTRY_URL_REMOTE_TABLE",
 			value1 = "${entryURL}");
 	}
 

@@ -2,6 +2,24 @@
 @summary = "Mouse over '${locator1}'"
 definition {
 
+	function javaScriptFocus {
+		WaitForSPARefresh();
+
+		var javascript = '''
+var event = document.createEvent('FocusEvent');
+
+event.initEvent('focus', true, false);
+
+arguments[0].dispatchEvent(event);
+		''';
+
+		selenium.executeJavaScript("${javascript}", "${locator1}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function javaScriptMouseOver {
 		WaitForSPARefresh();
 

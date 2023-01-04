@@ -253,15 +253,13 @@ definition {
 	}
 
 	macro assertValuesOnScope {
-		AssertElementPresent(
-			key_fieldLabel = "Scope",
-			key_value = "${valueScope}",
-			locator1 = "CommerceEntry#SELECT_ASSERT_SELECTED_VALUE");
+		AssertTextEquals(
+			locator1 = "CreateObject#VIEW_OBJECT_SCOPE",
+			value1 = "${valueScope}");
 
-		AssertElementPresent(
-			key_fieldLabel = "Panel Category Key",
-			key_value = "${valuePanelCategory}",
-			locator1 = "CommerceEntry#SELECT_ASSERT_SELECTED_VALUE");
+		AssertTextEquals(
+			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			value1 = "${valuePanelCategory}");
 	}
 
 	macro checkToggleActive {

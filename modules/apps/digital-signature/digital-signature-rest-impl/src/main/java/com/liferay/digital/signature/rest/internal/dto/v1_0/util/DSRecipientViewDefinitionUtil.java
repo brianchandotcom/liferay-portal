@@ -41,7 +41,7 @@ public class DSRecipientViewDefinitionUtil {
 			{
 				authenticationMethod =
 					dsRecipientViewDefinition.getAuthenticationMethod();
-				clientUserId = dsRecipientViewDefinition.getClientUserId();
+				clientUserId = dsRecipientViewDefinition.getDSClientUserId();
 				email = dsRecipientViewDefinition.getEmail();
 				returnUrl = dsRecipientViewDefinition.getReturnUrl();
 				userName = dsRecipientViewDefinition.getUserName();
@@ -59,8 +59,8 @@ public class DSRecipientViewDefinitionUtil {
 			{
 				authenticationMethod =
 					dsRecipientViewDefinition.getAuthenticationMethod();
-				clientUserId = dsRecipientViewDefinition.getClientUserId();
-				email = dsRecipientViewDefinition.getEmail();
+				dsClientUserId = dsRecipientViewDefinition.getClientUserId();
+				emailAddress = dsRecipientViewDefinition.getEmailAddress();
 				returnUrl = dsRecipientViewDefinition.getReturnUrl();
 				userName = dsRecipientViewDefinition.getUserName();
 			}

@@ -189,8 +189,8 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 			randomDSRecipientViewDefinition();
 
 		dsRecipientViewDefinition.setAuthenticationMethod(regex);
-		dsRecipientViewDefinition.setClientUserId(regex);
-		dsRecipientViewDefinition.setEmail(regex);
+		dsRecipientViewDefinition.setDsClientUserId(regex);
+		dsRecipientViewDefinition.setEmailAddress(regex);
 		dsRecipientViewDefinition.setReturnUrl(regex);
 		dsRecipientViewDefinition.setUserName(regex);
 
@@ -203,8 +203,9 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 
 		Assert.assertEquals(
 			regex, dsRecipientViewDefinition.getAuthenticationMethod());
-		Assert.assertEquals(regex, dsRecipientViewDefinition.getClientUserId());
-		Assert.assertEquals(regex, dsRecipientViewDefinition.getEmail());
+		Assert.assertEquals(
+			regex, dsRecipientViewDefinition.getDsClientUserId());
+		Assert.assertEquals(regex, dsRecipientViewDefinition.getEmailAddress());
 		Assert.assertEquals(regex, dsRecipientViewDefinition.getReturnUrl());
 		Assert.assertEquals(regex, dsRecipientViewDefinition.getUserName());
 	}
@@ -350,16 +351,16 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("clientUserId", additionalAssertFieldName)) {
-				if (dsRecipientViewDefinition.getClientUserId() == null) {
+			if (Objects.equals("dsClientUserId", additionalAssertFieldName)) {
+				if (dsRecipientViewDefinition.getDsClientUserId() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
-				if (dsRecipientViewDefinition.getEmail() == null) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
+				if (dsRecipientViewDefinition.getEmailAddress() == null) {
 					valid = false;
 				}
 
@@ -516,10 +517,10 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("clientUserId", additionalAssertFieldName)) {
+			if (Objects.equals("dsClientUserId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dsRecipientViewDefinition1.getClientUserId(),
-						dsRecipientViewDefinition2.getClientUserId())) {
+						dsRecipientViewDefinition1.getDsClientUserId(),
+						dsRecipientViewDefinition2.getDsClientUserId())) {
 
 					return false;
 				}
@@ -527,10 +528,10 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dsRecipientViewDefinition1.getEmail(),
-						dsRecipientViewDefinition2.getEmail())) {
+						dsRecipientViewDefinition1.getEmailAddress(),
+						dsRecipientViewDefinition2.getEmailAddress())) {
 
 					return false;
 				}
@@ -700,18 +701,19 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("clientUserId")) {
+		if (entityFieldName.equals("dsClientUserId")) {
 			sb.append("'");
 			sb.append(
-				String.valueOf(dsRecipientViewDefinition.getClientUserId()));
+				String.valueOf(dsRecipientViewDefinition.getDsClientUserId()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("email")) {
+		if (entityFieldName.equals("emailAddress")) {
 			sb.append("'");
-			sb.append(String.valueOf(dsRecipientViewDefinition.getEmail()));
+			sb.append(
+				String.valueOf(dsRecipientViewDefinition.getEmailAddress()));
 			sb.append("'");
 
 			return sb.toString();
@@ -781,9 +783,9 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 			{
 				authenticationMethod = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				clientUserId = StringUtil.toLowerCase(
+				dsClientUserId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				email =
+				emailAddress =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
 				returnUrl = StringUtil.toLowerCase(

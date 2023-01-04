@@ -74,30 +74,30 @@ public class DSRecipientViewDefinitionSerDes {
 			sb.append("\"");
 		}
 
-		if (dsRecipientViewDefinition.getClientUserId() != null) {
+		if (dsRecipientViewDefinition.getDsClientUserId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clientUserId\": ");
+			sb.append("\"dsClientUserId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(dsRecipientViewDefinition.getClientUserId()));
+			sb.append(_escape(dsRecipientViewDefinition.getDsClientUserId()));
 
 			sb.append("\"");
 		}
 
-		if (dsRecipientViewDefinition.getEmail() != null) {
+		if (dsRecipientViewDefinition.getEmailAddress() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"email\": ");
+			sb.append("\"emailAddress\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(dsRecipientViewDefinition.getEmail()));
+			sb.append(_escape(dsRecipientViewDefinition.getEmailAddress()));
 
 			sb.append("\"");
 		}
@@ -162,21 +162,22 @@ public class DSRecipientViewDefinitionSerDes {
 					dsRecipientViewDefinition.getAuthenticationMethod()));
 		}
 
-		if (dsRecipientViewDefinition.getClientUserId() == null) {
-			map.put("clientUserId", null);
+		if (dsRecipientViewDefinition.getDsClientUserId() == null) {
+			map.put("dsClientUserId", null);
 		}
 		else {
 			map.put(
-				"clientUserId",
-				String.valueOf(dsRecipientViewDefinition.getClientUserId()));
+				"dsClientUserId",
+				String.valueOf(dsRecipientViewDefinition.getDsClientUserId()));
 		}
 
-		if (dsRecipientViewDefinition.getEmail() == null) {
-			map.put("email", null);
+		if (dsRecipientViewDefinition.getEmailAddress() == null) {
+			map.put("emailAddress", null);
 		}
 		else {
 			map.put(
-				"email", String.valueOf(dsRecipientViewDefinition.getEmail()));
+				"emailAddress",
+				String.valueOf(dsRecipientViewDefinition.getEmailAddress()));
 		}
 
 		if (dsRecipientViewDefinition.getReturnUrl() == null) {
@@ -224,15 +225,15 @@ public class DSRecipientViewDefinitionSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "clientUserId")) {
+			else if (Objects.equals(jsonParserFieldName, "dsClientUserId")) {
 				if (jsonParserFieldValue != null) {
-					dsRecipientViewDefinition.setClientUserId(
+					dsRecipientViewDefinition.setDsClientUserId(
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "email")) {
+			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
-					dsRecipientViewDefinition.setEmail(
+					dsRecipientViewDefinition.setEmailAddress(
 						(String)jsonParserFieldValue);
 				}
 			}

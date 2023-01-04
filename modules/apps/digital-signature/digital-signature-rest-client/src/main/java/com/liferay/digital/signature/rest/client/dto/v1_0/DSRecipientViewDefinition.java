@@ -55,47 +55,47 @@ public class DSRecipientViewDefinition implements Cloneable, Serializable {
 
 	protected String authenticationMethod;
 
-	public String getClientUserId() {
-		return clientUserId;
+	public String getDsClientUserId() {
+		return dsClientUserId;
 	}
 
-	public void setClientUserId(String clientUserId) {
-		this.clientUserId = clientUserId;
+	public void setDsClientUserId(String dsClientUserId) {
+		this.dsClientUserId = dsClientUserId;
 	}
 
-	public void setClientUserId(
-		UnsafeSupplier<String, Exception> clientUserIdUnsafeSupplier) {
+	public void setDsClientUserId(
+		UnsafeSupplier<String, Exception> dsClientUserIdUnsafeSupplier) {
 
 		try {
-			clientUserId = clientUserIdUnsafeSupplier.get();
+			dsClientUserId = dsClientUserIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String clientUserId;
+	protected String dsClientUserId;
 
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
-	public void setEmail(
-		UnsafeSupplier<String, Exception> emailUnsafeSupplier) {
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
 		try {
-			email = emailUnsafeSupplier.get();
+			emailAddress = emailAddressUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String email;
+	protected String emailAddress;
 
 	public String getReturnUrl() {
 		return returnUrl;

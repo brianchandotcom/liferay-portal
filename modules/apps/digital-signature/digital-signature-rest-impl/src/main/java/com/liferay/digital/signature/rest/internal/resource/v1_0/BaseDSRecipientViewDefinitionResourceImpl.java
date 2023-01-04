@@ -55,7 +55,7 @@ public abstract class BaseDSRecipientViewDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-recipient-view-definition/{dsEnvelopeId}' -d $'{"authenticationMethod": ___, "clientUserId": ___, "email": ___, "returnUrl": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-recipient-view-definition/{dsEnvelopeId}' -d $'{"authenticationMethod": ___, "dsClientUserId": ___, "emailAddress": ___, "returnUrl": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

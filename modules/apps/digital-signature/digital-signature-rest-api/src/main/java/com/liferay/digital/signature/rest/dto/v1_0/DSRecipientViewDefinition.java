@@ -87,20 +87,20 @@ public class DSRecipientViewDefinition implements Serializable {
 	protected String authenticationMethod;
 
 	@Schema
-	public String getClientUserId() {
-		return clientUserId;
+	public String getDsClientUserId() {
+		return dsClientUserId;
 	}
 
-	public void setClientUserId(String clientUserId) {
-		this.clientUserId = clientUserId;
+	public void setDsClientUserId(String dsClientUserId) {
+		this.dsClientUserId = dsClientUserId;
 	}
 
 	@JsonIgnore
-	public void setClientUserId(
-		UnsafeSupplier<String, Exception> clientUserIdUnsafeSupplier) {
+	public void setDsClientUserId(
+		UnsafeSupplier<String, Exception> dsClientUserIdUnsafeSupplier) {
 
 		try {
-			clientUserId = clientUserIdUnsafeSupplier.get();
+			dsClientUserId = dsClientUserIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -112,23 +112,23 @@ public class DSRecipientViewDefinition implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String clientUserId;
+	protected String dsClientUserId;
 
 	@Schema
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	@JsonIgnore
-	public void setEmail(
-		UnsafeSupplier<String, Exception> emailUnsafeSupplier) {
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
 		try {
-			email = emailUnsafeSupplier.get();
+			emailAddress = emailAddressUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -140,7 +140,7 @@ public class DSRecipientViewDefinition implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String email;
+	protected String emailAddress;
 
 	@Schema
 	public String getReturnUrl() {
@@ -240,30 +240,30 @@ public class DSRecipientViewDefinition implements Serializable {
 			sb.append("\"");
 		}
 
-		if (clientUserId != null) {
+		if (dsClientUserId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clientUserId\": ");
+			sb.append("\"dsClientUserId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(clientUserId));
+			sb.append(_escape(dsClientUserId));
 
 			sb.append("\"");
 		}
 
-		if (email != null) {
+		if (emailAddress != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"email\": ");
+			sb.append("\"emailAddress\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(email));
+			sb.append(_escape(emailAddress));
 
 			sb.append("\"");
 		}

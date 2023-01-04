@@ -45,6 +45,8 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -123,9 +125,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 			_objectDefinitionsMap.put(
 				objectDefinition.getRESTContextPath(), objectDefinitions);
-
-			_excludeScopedMethods(objectDefinition, objectScopeProvider);
 		}
+
+		_excludeScopedMethods(objectDefinition, objectScopeProvider);
 
 		_initCustomObjectDefinition(objectDefinition);
 
@@ -247,10 +249,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		try {
 			String factoryPid =
 				"com.liferay.portal.vulcan.internal.configuration." +
-					"VulcanConfiguration";
+					"VulcanCompanyConfiguration";
 
 			Configuration configuration =
-				_configurationAdmin.createFactoryConfiguration(factoryPid, "?");
+				_configurationAdmin.createFactoryConfiguration(
+					factoryPid, StringPool.QUESTION);
 
 			Method[] methods = BaseObjectEntryResourceImpl.class.getMethods();
 
@@ -278,6 +281,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 			configuration.update(
 				HashMapDictionaryBuilder.put(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey(),
+					String.valueOf(objectDefinition.getCompanyId())
+				).put(
 					"excludedOperationIds",
 					StringUtil.merge(excludedOperationIds, ",")
 				).put(

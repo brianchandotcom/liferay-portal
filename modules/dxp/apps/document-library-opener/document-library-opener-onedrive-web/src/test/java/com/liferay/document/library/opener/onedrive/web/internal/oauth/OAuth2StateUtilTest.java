@@ -90,10 +90,8 @@ public class OAuth2StateUtilTest {
 
 		mockHttpServletRequest.setSession(new MockHttpSession());
 
-		OAuth2State oAuth2State = OAuth2StateUtil.getOAuth2State(
-			mockHttpServletRequest);
-
-		Assert.assertFalse(oAuth2State != null);
+		Assert.assertNull(
+			OAuth2StateUtil.getOAuth2State(mockHttpServletRequest));
 	}
 
 	@Test

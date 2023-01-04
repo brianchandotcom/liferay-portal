@@ -64,18 +64,15 @@ public class AccessTokenStoreUtilTest {
 
 		AccessTokenStoreUtil.delete(companyId, userId);
 
-		AccessToken accessToken = AccessTokenStoreUtil.getAccessToken(
-			companyId, userId);
-
-		Assert.assertTrue(accessToken == null);
+		Assert.assertNull(
+			AccessTokenStoreUtil.getAccessToken(companyId, userId));
 	}
 
 	@Test
 	public void testGetWithEmptyAccessTokenStore() {
-		AccessToken accessToken = AccessTokenStoreUtil.getAccessToken(
-			RandomTestUtil.randomInt(), RandomTestUtil.randomInt());
-
-		Assert.assertTrue(accessToken == null);
+		Assert.assertNull(
+			AccessTokenStoreUtil.getAccessToken(
+				RandomTestUtil.randomInt(), RandomTestUtil.randomInt()));
 	}
 
 }

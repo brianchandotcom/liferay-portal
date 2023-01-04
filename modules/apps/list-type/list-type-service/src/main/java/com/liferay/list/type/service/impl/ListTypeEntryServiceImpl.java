@@ -113,6 +113,22 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 	}
 
 	@Override
+	public ListTypeEntry getListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		ListTypeEntry listTypeEntry =
+			listTypeEntryLocalService.getListTypeEntryByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(), listTypeEntry.getListTypeDefinitionId(),
+			ActionKeys.VIEW);
+
+		return listTypeEntry;
+	}
+
+	@Override
 	public ListTypeEntry updateListTypeEntry(
 			String externalReferenceCode, long listTypeEntryId,
 			Map<Locale, String> nameMap)

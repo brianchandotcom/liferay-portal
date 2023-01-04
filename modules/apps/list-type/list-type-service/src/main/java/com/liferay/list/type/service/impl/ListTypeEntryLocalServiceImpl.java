@@ -88,6 +88,14 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	@Override
+	public ListTypeEntry fetchListTypeEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return listTypeEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public List<ListTypeEntry> getListTypeEntries(long listTypeDefinitionId) {
 		return listTypeEntryPersistence.findByListTypeDefinitionId(
 			listTypeDefinitionId);
@@ -112,6 +120,15 @@ public class ListTypeEntryLocalServiceImpl
 		throws PortalException {
 
 		return listTypeEntryPersistence.findByLTDI_K(listTypeDefinitionId, key);
+	}
+
+	@Override
+	public ListTypeEntry getListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return listTypeEntryPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

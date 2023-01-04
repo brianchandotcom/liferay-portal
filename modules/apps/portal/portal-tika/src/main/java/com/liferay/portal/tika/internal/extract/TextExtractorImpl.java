@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.TextExtractor;
+import com.liferay.portal.tika.internal.configuration.helper.TikaConfigurationHelper;
 import com.liferay.portal.tika.internal.util.ProcessConfigUtil;
-import com.liferay.portal.tika.internal.util.TikaConfigUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class TextExtractorImpl implements TextExtractor {
 		String text = null;
 
 		try {
-			Tika tika = new Tika(TikaConfigUtil.getTikaConfig());
+			Tika tika = new Tika(_tikaConfigurationHelper.getTikaConfig());
 
 			tika.setMaxStringLength(maxStringLength);
 
@@ -218,6 +218,9 @@ public class TextExtractorImpl implements TextExtractor {
 
 	@Reference
 	private ProcessExecutor _processExecutor;
+
+	@Reference
+	private TikaConfigurationHelper _tikaConfigurationHelper;
 
 	private static class ExtractTextProcessCallable
 		implements ProcessCallable<String> {

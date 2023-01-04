@@ -192,8 +192,8 @@ definition {
 	}
 
 	macro assertPanelCategoryKey {
-		AssertSelectedLabel(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY_SELECTED",
+		AssertTextEquals(
+			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
 			value1 = "${panelCategoryKey}");
 	}
 
@@ -214,7 +214,7 @@ definition {
 	}
 
 	macro assertScopeFieldSelected {
-		AssertSelectedLabel(
+		AssertTextEquals(
 			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
 			value1 = "${fieldScope}");
 	}
@@ -235,7 +235,7 @@ definition {
 	}
 
 	macro assertTitleFieldIsSelected {
-		AssertSelectedLabel(
+		AssertElementPresent(
 			locator1 = "CreateObject#TITLE_FIELD",
 			value1 = "${fieldLabel}");
 	}
@@ -356,9 +356,11 @@ definition {
 	}
 
 	macro selectAccountRestrictedField {
-		Select(
-			locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD",
-			value1 = "${accountRestrictedField}");
+		Click(locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD");
+
+		Click(
+			key_menuItem = "${accountRestrictedField}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro selectDeletionType {
@@ -378,15 +380,19 @@ definition {
 	}
 
 	macro selectPanelCategoryKey {
-		Select(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
-			value1 = "${panelCategoryKey}");
+		Click(locator1 = "CreateObject#PANEL_CATEGORY_KEY");
+
+		Click(
+			key_menuItem = "${panelCategoryKey}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro selectTitleField {
-		Select(
-			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = "${fieldLabel}");
+		Click(locator1 = "CreateObject#TITLE_FIELD");
+
+		Click(
+			key_menuItem = "${fieldLabel}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewAccountRestrictedFieldIsRequiredOnEntries {

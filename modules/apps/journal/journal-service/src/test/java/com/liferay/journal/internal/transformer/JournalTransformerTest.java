@@ -676,6 +676,4 @@ public class JournalTransformerTest {
 
 	private static final String _TEXT_FIELD_NAME = "TextField";
 
-	private static final String _TEXT_FIELD_SET_NAME = "TextFieldSet";
-
 }

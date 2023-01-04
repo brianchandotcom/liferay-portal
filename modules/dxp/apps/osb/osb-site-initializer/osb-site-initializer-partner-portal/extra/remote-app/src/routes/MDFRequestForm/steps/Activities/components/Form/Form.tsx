@@ -10,15 +10,13 @@
  * distribution rights of the Software.
  */
 
-import {useFormikContext} from 'formik';
-import {useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
 import {TypeActivityKey} from '../../../../../../common/enums/TypeActivityKey';
 import {LiferayPicklistName} from '../../../../../../common/enums/liferayPicklistName';
 import {TacticKeys} from '../../../../../../common/enums/mdfRequestTactics';
-import MDFRequest from '../../../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../../../common/interfaces/mdfRequestActivity';
 import getNewActivity from '../../utils/getNewActivity';
 import BudgetBreakdownSection from './components/BudgetBreakdownSection';
@@ -51,7 +49,23 @@ const Form = ({
 	setFieldValue,
 }: IProps) => {
 	const {fieldEntries} = useDynamicFieldEntries();
-	const {values} = useFormikContext<MDFRequest>();
+
+	const handleClearForm = () => {
+		setFieldValue(
+			`activities[${currentActivityIndex}].activityDescription`,
+			getNewActivity().activityDescription
+		);
+
+		const displaySection =
+			currentActivity.typeActivity?.key === TypeActivityKey.EVENT
+				? 'true'
+				: '';
+
+		setFieldValue(
+			`activities[${currentActivityIndex}].activityDescription.leadGenerated`,
+			displaySection
+		);
+	};
 
 	const {
 		onTypeActivitySelected,
@@ -65,7 +79,8 @@ const Form = ({
 			);
 
 			setFieldValue(`activities[${currentActivityIndex}].tactic`, {});
-		}
+		},
+		handleClearForm
 	);
 
 	const {onTacticSelected, tacticsOptions} = useTacticsOptions(
@@ -82,31 +97,9 @@ const Form = ({
 			setFieldValue(
 				`activities[${currentActivityIndex}].tactic`,
 				selectedTactic
-			)
+			),
+		handleClearForm
 	);
-
-	useEffect(() => {
-		if (values.activities[currentActivityIndex].typeActivity) {
-			setFieldValue(
-				`activities[${currentActivityIndex}].activityDescription`,
-				getNewActivity().activityDescription
-			);
-
-			const displaySection =
-				currentActivity.typeActivity?.key === TypeActivityKey.EVENT
-					? 'true'
-					: '';
-
-			setFieldValue(
-				`activities[${currentActivityIndex}].activityDescription.leadGenerated`,
-				displaySection
-			);
-		}
-	}, [
-		values.activities[currentActivityIndex].typeActivity,
-		values.activities[currentActivityIndex].tactic,
-		setFieldValue,
-	]);
 
 	const typeActivityComponents: TypeActivityComponent = {
 		[TypeActivityKey.DIGITAL_MARKETING]: (

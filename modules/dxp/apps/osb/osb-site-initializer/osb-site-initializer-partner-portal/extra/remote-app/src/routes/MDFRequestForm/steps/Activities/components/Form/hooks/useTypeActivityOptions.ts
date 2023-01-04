@@ -15,7 +15,8 @@ import LiferayPicklist from '../../../../../../../common/interfaces/liferayPickl
 
 export default function useTypeActivityOptions(
 	typeActivities: OptionHTMLAttributes<HTMLOptionElement>[] | undefined,
-	handleSelected: (option: LiferayPicklist) => void
+	handleSelected: (option: LiferayPicklist) => void,
+	handleClearForm: () => void
 ) {
 	const onTypeActivitySelected = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -29,6 +30,8 @@ export default function useTypeActivityOptions(
 				key: optionSelected.value as string,
 				name: optionSelected.label,
 			});
+
+			handleClearForm();
 		}
 	};
 

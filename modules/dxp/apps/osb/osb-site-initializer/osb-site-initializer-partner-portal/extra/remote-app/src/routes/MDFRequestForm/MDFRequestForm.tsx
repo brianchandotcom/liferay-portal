@@ -38,7 +38,7 @@ const initialFormValues: MDFRequest = {
 	company: {},
 	country: {},
 	liferayBusinessSalesGoals: [],
-	mdfRequestStatus: Status.PENDING,
+	mdfRequestStatus: Status.DRAFT,
 	overallCampaignDescription: '',
 	overallCampaignName: '',
 	targetAudienceRoles: [],
@@ -138,14 +138,11 @@ const MDFRequestForm = () => {
 		<PRMFormik
 			initialValues={
 				mdfRequestId
-					? getMDFRequestFromDTO(
-							data as MDFRequestDTO,
-							Status.PENDING
-					  )
+					? getMDFRequestFromDTO(data as MDFRequestDTO, Status.DRAFT)
 					: initialFormValues
 			}
 			onSubmit={(values, formikHelpers) =>
-				submitForm(values, formikHelpers, siteURL)
+				submitForm(values, formikHelpers, siteURL, Status.PENDING)
 			}
 		>
 			{StepFormComponent[step]}

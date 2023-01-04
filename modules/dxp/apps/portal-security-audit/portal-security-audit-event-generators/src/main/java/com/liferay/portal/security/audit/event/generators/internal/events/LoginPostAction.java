@@ -37,10 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Stian Sigvartsen
  */
-@Component(
-	immediate = true, property = "key=login.events.post",
-	service = LifecycleAction.class
-)
+@Component(property = "key=login.events.post", service = LifecycleAction.class)
 public class LoginPostAction extends Action {
 
 	@Override

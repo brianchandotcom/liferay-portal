@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Stian Sigvartsen
  */
-@Component(
-	immediate = true, property = "key=auth.failure", service = AuthFailure.class
-)
+@Component(property = "key=auth.failure", service = AuthFailure.class)
 public class LoginFailure implements AuthFailure {
 
 	@Override

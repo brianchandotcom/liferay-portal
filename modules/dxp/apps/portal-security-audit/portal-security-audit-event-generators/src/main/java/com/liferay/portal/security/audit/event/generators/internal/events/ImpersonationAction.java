@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true, property = "key=servlet.service.events.pre",
-	service = LifecycleAction.class
+	property = "key=servlet.service.events.pre", service = LifecycleAction.class
 )
 public class ImpersonationAction extends Action {
 

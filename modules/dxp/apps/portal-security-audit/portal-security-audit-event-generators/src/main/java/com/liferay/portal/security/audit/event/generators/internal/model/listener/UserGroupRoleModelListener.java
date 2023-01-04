@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class UserGroupRoleModelListener
 	extends BaseModelListener<UserGroupRole> {
 

@@ -23,6 +23,7 @@ definition {
 	echo(${test});
 
 	var reference = ${testRef};
+	var test = StringUtil.replace(${test}, ${test}, "${test} ${test2}");
 
 	setUp {
 		TestCase.setUpPortalInstance();

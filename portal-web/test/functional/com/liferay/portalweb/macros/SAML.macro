@@ -32,7 +32,7 @@ definition {
 
 		MyAccount.openMyAccountAdmin(baseURL = "${spURL}");
 
-		User.viewUserInfomation(
+		User.viewUserInformation(
 			baseURL = "${spURL}",
 			userEmailAddress = "${newUserEmailAddress}",
 			userFirstName = "${newUserFirstName}",

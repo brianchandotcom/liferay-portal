@@ -650,7 +650,7 @@ definition {
 		task ("Then a success message should display and the user should be listed under the organization") {
 			Alert.viewSuccessMessageText(successMessage = "The user was created successfully. You can now add additional information about the user.");
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",

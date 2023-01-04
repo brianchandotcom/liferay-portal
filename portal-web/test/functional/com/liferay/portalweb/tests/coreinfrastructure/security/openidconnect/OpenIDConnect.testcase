@@ -132,7 +132,7 @@ definition {
 		task ("Then: Verify that administrator role is assigned to OIDC user") {
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomationRolesCP(roleTitle = "Administrator");
+			User.viewUserInformationRolesCP(roleTitle = "Administrator");
 		}
 	}
 
@@ -387,7 +387,7 @@ definition {
 		task ("Then: Multiple spaces role name can be assigned to OKTA user") {
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomationRolesCP(roleTitle = "My Custom Regular Role");
+			User.viewUserInformationRolesCP(roleTitle = "My Custom Regular Role");
 		}
 	}
 

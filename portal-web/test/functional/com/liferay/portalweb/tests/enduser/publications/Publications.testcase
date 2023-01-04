@@ -903,7 +903,7 @@ definition {
 
 		User.editUserInformation(userScreenNameEdit = "testscreen");
 
-		User.viewUserInfomation(
+		User.viewUserInformation(
 			userEmailAddress = "test@liferay.com",
 			userFirstName = "Test",
 			userLastName = "Test",
@@ -913,7 +913,7 @@ definition {
 
 		Navigator.gotoAccountSettings();
 
-		User.viewUserInfomation(
+		User.viewUserInformation(
 			userEmailAddress = "test@liferay.com",
 			userFirstName = "Test",
 			userLastName = "Test",

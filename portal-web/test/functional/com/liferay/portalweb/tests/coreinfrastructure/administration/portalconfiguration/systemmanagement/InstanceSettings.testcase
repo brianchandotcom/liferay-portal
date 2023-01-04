@@ -903,7 +903,7 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
-		User.viewUserInfomationRolesCP(roleTitle = "Roles Regrole Name");
+		User.viewUserInformationRolesCP(roleTitle = "Roles Regrole Name");
 	}
 
 	@priority = "4"

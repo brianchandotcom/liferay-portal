@@ -87,7 +87,7 @@ definition {
 
 			UserNavigator.gotoUser(userScreenName = "test");
 
-			User.viewUserInfomationRolesCP(
+			User.viewUserInformationRolesCP(
 				roleTitle = "TestSiteRole",
 				roleType = "Inherited Site Roles");
 		}
@@ -3321,7 +3321,7 @@ definition {
 		task ("View user information at able.com:8080") {
 			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1",
@@ -3436,7 +3436,7 @@ definition {
 		task ("View user information") {
 			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1",
@@ -3553,7 +3553,7 @@ definition {
 		task ("View user information") {
 			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1changed@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1_changed",
@@ -3688,7 +3688,7 @@ definition {
 		task ("Assert user information") {
 			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "userIDP1",
 				userJobTitle = "",
@@ -3719,7 +3719,7 @@ definition {
 		task ("Assert user information") {
 			MyAccount.openMyAccountAdmin(baseURL = "http://www.baker.com:8080");
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "userIDP2",
 				userJobTitle = "",
@@ -4651,7 +4651,7 @@ definition {
 
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1_changed",
@@ -4763,7 +4763,7 @@ definition {
 
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1changed@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1_changed",
@@ -5022,7 +5022,7 @@ definition {
 
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1changed@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1_changed",
@@ -5191,7 +5191,7 @@ definition {
 
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1_changed@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1_changed",
@@ -5212,7 +5212,7 @@ definition {
 
 			MyAccount.openMyAccountAdmin();
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "user1_changed@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1_changed",

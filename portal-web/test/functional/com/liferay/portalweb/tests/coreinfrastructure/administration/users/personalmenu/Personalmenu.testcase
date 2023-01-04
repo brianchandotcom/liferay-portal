@@ -283,7 +283,7 @@ definition {
 			userEmailAddressEdit = "testadmin@liferay.com",
 			userScreenNameEdit = "testscreen");
 
-		User.viewUserInfomation(
+		User.viewUserInformation(
 			userEmailAddress = "testadmin@liferay.com",
 			userFirstName = "Test",
 			userLastName = "Test",

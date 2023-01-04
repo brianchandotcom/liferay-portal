@@ -2749,7 +2749,7 @@ definition {
 		else {
 			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
-			User.viewUserInfomation(
+			User.viewUserInformation(
 				userEmailAddress = "${userEmailAddress}",
 				userFirstName = "${userFirstName}",
 				userLastName = "${userLastName}",

@@ -52,11 +52,7 @@ public class TaxonomyCategoryExceptionMapper
 			assetCategoryException.getVocabulary();
 
 		if (assetVocabulary != null) {
-			String name = assetVocabulary.getName();
-
-			if (name != null) {
-				vocabularyName = name;
-			}
+			vocabularyName = assetVocabulary.getName();
 		}
 
 		if (assetCategoryException.getType() ==

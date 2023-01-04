@@ -471,8 +471,8 @@ public class JournalTransformer {
 		Map<String, String> tokens) {
 
 		_addReservedEl(
-			article.getArticleId(), templateNodes, themeDisplay, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_ID);
+			JournalStructureConstants.RESERVED_ARTICLE_ID, templateNodes,
+			themeDisplay, tokens, article.getArticleId());
 
 		_addReservedEl(
 			JournalStructureConstants.RESERVED_ARTICLE_VERSION, templateNodes,

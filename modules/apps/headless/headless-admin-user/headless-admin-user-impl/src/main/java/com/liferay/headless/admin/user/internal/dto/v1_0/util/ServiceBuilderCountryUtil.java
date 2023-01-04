@@ -67,13 +67,7 @@ public class ServiceBuilderCountryUtil {
 			return 0;
 		}
 
-		Long id = country.getCountryId();
-
-		if (id != null) {
-			return id;
-		}
-
-		return 0;
+		return country.getCountryId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

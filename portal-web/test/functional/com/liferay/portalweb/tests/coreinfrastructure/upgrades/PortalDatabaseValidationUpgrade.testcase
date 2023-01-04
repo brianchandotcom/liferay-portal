@@ -8,9 +8,166 @@ definition {
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@priority = "4"
+	test CompareUpgradedAndFreshDatabaseSchemas6130 {
+		property custom.properties = "feature.flag.LPS-157670=true";
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.1.30";
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+
+		UpgradeSchema.validateSchemas();
+	}
+
+	@priority = "4"
+	test CompareUpgradedAndFreshDatabaseSchemas7210 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.2.10";
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+
+		UpgradeSchema.validateSchemas();
+	}
+
+	@priority = "4"
 	test CompareUpgradedAndFreshDatabaseSchemas7310 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.3.10";
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+
+		UpgradeSchema.validateSchemas();
+	}
+
+	@priority = "4"
+	test CompareUpgradedAndFreshDatabaseSchemas7413 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+
+		UpgradeSchema.validateSchemas();
+	}
+
+	@priority = "4"
+	test CompareUpgradedAndFreshDatabaseSchemas70106 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.0.10.6";
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+
+		UpgradeSchema.validateSchemas();
+	}
+
+	@priority = "4"
+	test CompareUpgradedAndFreshDatabaseSchemas71103 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.1.10.3";
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+		Portlet.startServer();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+
+		UpgradeSchema.validateSchemas();
+	}
+
+	@priority = "4"
+	test CompareUpgradedAndFreshDatabaseSchemas621015 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.15";
 
 		Portlet.shutdownServer();
 

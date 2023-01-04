@@ -20,7 +20,7 @@ definition {
 		AssertTextEquals(
 			custom_entryURL = "${upgradeURL}",
 			key_id = "ClientExtensionAdminPortlet_url",
-			locator1 = "RemoteAppsEntry#URL",
+			locator1 = "ClientExtensionEntry#URL",
 			value1 = "${upgradeURL}");
 
 		AssertTextEquals(
@@ -52,7 +52,7 @@ definition {
 		AssertTextEquals(
 			custom_entryURL = "${upgradeURL}",
 			key_id = "ClientExtensionAdminPortlet_url",
-			locator1 = "RemoteAppsEntry#URL",
+			locator1 = "ClientExtensionEntry#URL",
 			value1 = "${upgradeURL}");
 	}
 

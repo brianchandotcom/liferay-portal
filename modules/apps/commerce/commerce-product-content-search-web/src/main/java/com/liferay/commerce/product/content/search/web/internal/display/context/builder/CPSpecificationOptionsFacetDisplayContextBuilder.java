@@ -21,7 +21,6 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -46,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
@@ -80,10 +77,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	}
 
 	public void parameterValues(String... parameterValues) {
-		_selectedCPSpecificationOptionIds = ListUtil.filter(
-			TransformUtil.transformToList(
-				Objects.requireNonNull(parameterValues), GetterUtil::getLong),
-			cpSpecificationOptionId -> cpSpecificationOptionId > 0);
+		_parameterValues = parameterValues;
 	}
 
 	public void portal(Portal portal) {
@@ -331,11 +325,13 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	}
 
 	private String _getFirstParameterValueString() {
-		if (_selectedCPSpecificationOptionIds.isEmpty()) {
-			return StringPool.BLANK;
+		for (String parameterValue : _parameterValues) {
+			if (GetterUtil.getLong(parameterValue) > 0) {
+				return parameterValue;
+			}
 		}
 
-		return String.valueOf(_selectedCPSpecificationOptionIds.get(0));
+		return StringPool.BLANK;
 	}
 
 	private String _getPaginationStartParameterName(
@@ -400,12 +396,11 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private Locale _locale;
 	private int _maxTerms = 10;
 	private String _paginationStartParameterName;
+	private String[] _parameterValues;
 	private Portal _portal;
 	private PortletSharedSearchRequest _portletSharedSearchRequest;
 	private PortletSharedSearchResponse _portletSharedSearchResponse;
 	private RenderRequest _renderRequest;
-	private List<Long> _selectedCPSpecificationOptionIds =
-		Collections.emptyList();
 	private List<Tuple> _tuples;
 
 }

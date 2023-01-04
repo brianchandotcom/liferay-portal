@@ -47,7 +47,8 @@
 
 			<div class="d-inline-flex order-by-type-container">
 				<clay:button
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					borderless="<%= true %>"
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
 					displayType="secondary"
 					icon="order-list-up"
 					monospaced="<%= true %>"
@@ -55,7 +56,8 @@
 				/>
 
 				<clay:button
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					borderless="<%= true %>"
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
 					displayType="secondary"
 					icon="order-list-down"
 					monospaced="<%= true %>"
@@ -91,7 +93,8 @@
 
 			<div class="d-inline-flex order-by-type-container">
 				<clay:button
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					borderless="<%= true %>"
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
 					displayType="secondary"
 					icon="order-list-up"
 					monospaced="<%= true %>"
@@ -99,7 +102,8 @@
 				/>
 
 				<clay:button
-					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip hide icon" : "btn btn-outline-borderless btn-outline-secondary lfr-portal-tooltip icon" %>'
+					borderless="<%= true %>"
+					cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
 					displayType="secondary"
 					icon="order-list-down"
 					monospaced="<%= true %>"

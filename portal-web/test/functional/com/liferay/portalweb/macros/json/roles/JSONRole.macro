@@ -60,6 +60,21 @@ definition {
 			type = "${type}");
 	}
 
+	macro assignDepotRoleToUser {
+		Variables.assertDefined(parameterList = "${depotName},${roleTitle},${userEmailAddress}");
+
+		var depotId = JSONUserSetter.setGroupId(
+			groupName = "${depotName}",
+			site = "false");
+		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
+		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+
+		JSONRoleAPI._assignDepotRoleToUser(
+			groupId = "${depotId}",
+			roleId = "${roleId}",
+			userId = "${userId}");
+	}
+
 	macro assignRoleToGroup {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle}");
 

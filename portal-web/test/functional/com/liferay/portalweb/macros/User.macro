@@ -2951,7 +2951,7 @@ definition {
 		}
 	}
 
-	macro viewUserInfomation {
+	macro viewUserInformation {
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 			value1 = "${userScreenName}");
@@ -2987,7 +2987,7 @@ definition {
 		}
 	}
 
-	macro viewUserInfomationRolesCP {
+	macro viewUserInformationRolesCP {
 		UserNavigator.gotoRoles();
 
 		var key_roleTitle = "${roleTitle}";

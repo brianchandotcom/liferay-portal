@@ -55,6 +55,10 @@
 		<finder name="ListTypeDefinitionId" return-type="Collection">
 			<finder-column name="listTypeDefinitionId" />
 		</finder>
+		<finder name="ERC_C" return-type="ListTypeEntry">
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="LTDI_K" return-type="ListTypeEntry">
 			<finder-column name="listTypeDefinitionId" />
 			<finder-column name="key" />

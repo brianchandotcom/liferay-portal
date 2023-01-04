@@ -75,6 +75,9 @@ export function ThenContainer({
 		CustomItem<number>[]
 	>([]);
 
+	const [selectedObjectDefinition, setSelectedObjectDefinition] = useState(
+		''
+	);
 	const notificationTemplateLabel = useMemo(() => {
 		return notificationTemplates.find(
 			({value}) => value === values.parameters?.notificationTemplateId
@@ -184,16 +187,12 @@ export function ThenContainer({
 								'choose-an-object'
 							)}
 							error={errors.objectDefinitionExternalReferenceCode}
-							onChange={({target: {value}}) =>
-								updateParameters(value)
-							}
-							options={objectsOptions}
-							value={
-								values.parameters
-									?.objectDefinitionExternalReferenceCode
-									? `${values.parameters.objectDefinitionExternalReferenceCode},${values.parameters.objectDefinitionId}`
-									: ''
-							}
+							items={objectsOptions}
+							onSelectChange={(label, value) => {
+								updateParameters(value);
+								setSelectedObjectDefinition(label);
+							}}
+							value={selectedObjectDefinition}
 						/>
 						{values.parameters?.relatedObjectEntries !==
 							undefined && (

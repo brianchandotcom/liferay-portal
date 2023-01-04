@@ -59,7 +59,7 @@ interface ObjectField {
 	state: boolean;
 	system?: boolean;
 }
-
+type LabelValueObject = {label: string; value: string};
 type ObjectFieldBusinessType =
 	| 'Attachment'
 	| 'LongText'

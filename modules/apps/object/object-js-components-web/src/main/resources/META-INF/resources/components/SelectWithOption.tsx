@@ -12,10 +12,34 @@
  * details.
  */
 
-import {ClaySelect, ClaySelectWithOption} from '@clayui/form';
-import React from 'react';
+import ClayAutocomplete from '@clayui/autocomplete';
+import DropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import React, {useRef, useState} from 'react';
 
 import {FieldBase} from './FieldBase';
+
+import './Select/index.scss';
+
+interface SelectWithOptionProps
+	extends React.SelectHTMLAttributes<HTMLSelectElement> {
+	ariaLabel?: string;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	items: Item[];
+	label?: string;
+	onSelectChange: (label: string, value: string) => void;
+	required?: boolean;
+	tooltip?: string;
+}
+
+type Item = {
+	label: string;
+	options: LabelValueObject[];
+	type: string;
+};
 
 export function SelectWithOption({
 	ariaLabel,
@@ -24,11 +48,16 @@ export function SelectWithOption({
 	error,
 	feedbackMessage,
 	id,
+	items,
 	label,
+	onSelectChange,
 	required,
 	tooltip,
-	...otherProps
-}: IProps) {
+	value,
+}: SelectWithOptionProps) {
+	const [dropdownActive, setDropdownActive] = useState(false);
+	const inputRef = useRef(null);
+
 	return (
 		<FieldBase
 			className={className}
@@ -40,26 +69,56 @@ export function SelectWithOption({
 			required={required}
 			tooltip={tooltip}
 		>
-			<ClaySelectWithOption {...otherProps} aria-label={ariaLabel} />
+			<>
+				<ClayIcon
+					className={classNames('base-select__input-icon', {
+						'base-selec	t__input-icon--disabled': disabled,
+					})}
+					onClick={() =>
+						!disabled && setDropdownActive((active) => !active)
+					}
+					symbol="caret-double"
+				/>
+
+				<ClayAutocomplete.Input
+					aria-label={ariaLabel}
+					disabled={disabled}
+					onClick={() => setDropdownActive((active) => !active)}
+					placeholder= {Liferay.Language.get("choose-an-option")}
+					ref={inputRef}
+					value={value}
+				/>
+			</>
+
+			<DropDown.Menu
+				active={dropdownActive}
+				alignElementRef={inputRef}
+				alignmentByViewport
+				onActiveChange={() => setDropdownActive((active) => !active)}
+				triggerRef={inputRef}
+			>
+				<DropDown.ItemList items={items}>
+					{(item: Item) => (
+						<DropDown.Group
+							header={item.label}
+							items={item.options}
+							key={item.label}
+						>
+							{(item) => (
+								<DropDown.Item
+									key={item.value}
+									onClick={() => {
+										onSelectChange(item.label, item.value);
+										setDropdownActive(false);
+									}}
+								>
+									{item.label}
+								</DropDown.Item>
+							)}
+						</DropDown.Group>
+					)}
+				</DropDown.ItemList>
+			</DropDown.Menu>
 		</FieldBase>
 	);
-}
-
-interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-	ariaLabel?: string;
-	disabled?: boolean;
-	error?: string;
-	feedbackMessage?: string;
-	label?: string;
-	options: Array<
-		(
-			| React.ComponentProps<typeof ClaySelect.Option>
-			| React.ComponentProps<typeof ClaySelect.OptGroup>
-		) & {
-			options?: Array<React.ComponentProps<typeof ClaySelect.Option>>;
-			type?: 'group';
-		}
-	>;
-	required?: boolean;
-	tooltip?: string;
 }

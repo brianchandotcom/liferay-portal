@@ -669,16 +669,21 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				CKEDITOR.getUrl(path + 'Resizer.es.js'),
 			];
 
-			CKEDITOR.scriptLoader.load(dependencies, () => {
-				editor.resizer = new Liferay.ResizerCKEditor(editor, {
-					onComplete(element, width, height) {
-						resizeElement(element, width, height);
+			editor.on('dataReady', () => {
+				CKEDITOR.scriptLoader.load(dependencies, () => {
+					editor.resizer = new Liferay.ResizerCKEditor(editor, {
+						onComplete(element, width, height) {
+							resizeElement(element, width, height);
 
-						if (currentAlignment && currentElement) {
-							setEmbedAlignment(currentElement, currentAlignment);
-						}
-						selectWidget(editor);
-					},
+							if (currentAlignment && currentElement) {
+								setEmbedAlignment(
+									currentElement,
+									currentAlignment
+								);
+							}
+							selectWidget(editor);
+						},
+					});
 				});
 			});
 		},

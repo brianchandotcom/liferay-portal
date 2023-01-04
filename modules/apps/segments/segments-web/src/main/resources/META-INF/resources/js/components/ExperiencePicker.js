@@ -28,7 +28,11 @@ const TriggerLabel = React.forwardRef(({selectedItem, ...otherProps}, ref) => {
 			ref={ref}
 			tabIndex={0}
 		>
-			<div className="c-inner" tabIndex="-1">
+			<div
+				className="c-inner"
+				tabIndex="-1"
+				title={Liferay.Language.get('experience-selector')}
+			>
 				<Layout.ContentRow verticalAlign="center">
 					<Layout.ContentCol className="mr-2" expand>
 						<Text size={4} truncate>
@@ -83,6 +87,7 @@ const ExperiencePicker = ({
 
 	return (
 		<Picker
+			aria-label={Liferay.Language.get('experience-selector')}
 			as={TriggerLabel}
 			disabled={disabled}
 			id="experience-picker"

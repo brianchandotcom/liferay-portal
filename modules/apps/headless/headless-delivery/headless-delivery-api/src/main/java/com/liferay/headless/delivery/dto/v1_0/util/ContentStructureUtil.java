@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -167,29 +165,23 @@ public class ContentStructureUtil {
 					Map<String, LocalizedValue> localizedValueMap =
 						ddmFormFieldOptions.getOptions();
 
-					List<Option> optionList = new ArrayList<>();
+					options = TransformUtil.transformToArray(
+						localizedValueMap.entrySet(),
+						entry -> new Option() {
+							{
+								LocalizedValue localizedValue =
+									entry.getValue();
 
-					for (Map.Entry<String, LocalizedValue> entry :
-							localizedValueMap.entrySet()) {
+								setLabel(_toString(localizedValue, locale));
+								setLabel_i18n(
+									LocalizedMapUtil.getI18nMap(
+										acceptAllLanguage,
+										localizedValue.getValues()));
 
-						optionList.add(
-							new Option() {
-								{
-									LocalizedValue localizedValue =
-										entry.getValue();
-
-									setLabel(_toString(localizedValue, locale));
-									setLabel_i18n(
-										LocalizedMapUtil.getI18nMap(
-											acceptAllLanguage,
-											localizedValue.getValues()));
-
-									setValue(entry.getKey());
-								}
-							});
-					}
-
-					options = optionList.toArray(new Option[0]);
+								setValue(entry.getKey());
+							}
+						},
+						Option.class);
 				}
 
 				setOptions(options);

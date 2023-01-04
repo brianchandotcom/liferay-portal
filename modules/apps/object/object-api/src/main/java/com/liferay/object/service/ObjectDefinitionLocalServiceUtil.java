@@ -459,6 +459,14 @@ public class ObjectDefinitionLocalServiceUtil {
 			userId, objectDefinitionId);
 	}
 
+	public static ObjectDefinition restrictObjectDefinitionByAccountEntry(
+			ObjectDefinition objectDefinition, long userId)
+		throws PortalException {
+
+		return getService().restrictObjectDefinitionByAccountEntry(
+			objectDefinition, userId);
+	}
+
 	public static void undeployObjectDefinition(
 		ObjectDefinition objectDefinition) {
 

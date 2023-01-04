@@ -339,7 +339,9 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		Comparator<Field> fieldComparator = null;
 
 		for (Sort sort : sorts) {
-			if (!Objects.equals(sort.getFieldName(), "name")) {
+			if (!Objects.equals(sort.getFieldName(), "name") &&
+				!Objects.equals(sort.getFieldName(), "type")) {
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Skipping unsupported sort field: " +
@@ -349,7 +351,12 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				continue;
 			}
 
-			fieldComparator = Comparator.comparing(Field::getName);
+			if (Objects.equals(sort.getFieldName(), "name")) {
+				fieldComparator = Comparator.comparing(Field::getName);
+			}
+			else {
+				fieldComparator = Comparator.comparing(Field::getType);
+			}
 
 			if (sort.isReverse()) {
 				fieldComparator = fieldComparator.reversed();

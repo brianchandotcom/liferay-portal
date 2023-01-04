@@ -154,14 +154,16 @@ public class JournalArticleAnalyticsReportsInfoItem
 					journalArticle.getResourcePrimKey()));
 	}
 
-	private Optional<User> _getUser(JournalArticle journalArticle) {
-		return Optional.ofNullable(
+	private User _getUser(JournalArticle journalArticle) {
+		JournalArticle latestArticle =
 			_journalArticleLocalService.fetchLatestArticle(
-				journalArticle.getResourcePrimKey())
-		).map(
-			latestArticle -> _userLocalService.fetchUser(
-				latestArticle.getUserId())
-		);
+				journalArticle.getResourcePrimKey());
+
+		if (latestArticle == null) {
+			return null;
+		}
+
+		return _userLocalService.fetchUser(latestArticle.getUserId());
 	}
 
 	@Reference

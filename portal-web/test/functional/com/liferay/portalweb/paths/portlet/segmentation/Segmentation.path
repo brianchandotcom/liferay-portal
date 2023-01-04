@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>SCOPE_CARD_SITE</td>
-	<td>//*[contains(@role,'tablist')] //div[@role='tabpanel'] //p</td>
+	<td>//*[contains(@role,'tablist')]//div[@role='tabpanel']//p[contains(.,'${siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

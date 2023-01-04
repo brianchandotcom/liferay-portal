@@ -17,6 +17,8 @@ package com.liferay.digital.signature.rest.internal.resource.v1_0;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.rest.dto.v1_0.DSDocument;
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.digital.signature.rest.internal.dto.v1_0.util.DSEnvelopeUtil;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -55,6 +57,18 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 			_dsEnvelopeManager.addDSEnvelope(
 				contextCompany.getCompanyId(), siteId,
 				_getDSEnvelope(siteId, dsEnvelope)));
+	}
+
+	@Override
+	public DSEnvelopeSignUrl postSiteDSEnvelopeDsRecipientViewDefinition(
+			Long siteId, String dsEnvelopeId,
+			DSRecipientViewDefinition dsRecipientViewDefinition)
+		throws Exception {
+
+		return DSEnvelopeUtil.toDSEnvelopeSignUrl(
+			_dsEnvelopeManager.addDSRecipientViewDefinitionJSONObject(
+				contextCompany.getCompanyId(), siteId, dsEnvelopeId,
+				DSEnvelopeUtil.toJSONObject(dsRecipientViewDefinition)));
 	}
 
 	private com.liferay.digital.signature.model.DSEnvelope _getDSEnvelope(

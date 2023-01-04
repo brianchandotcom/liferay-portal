@@ -133,6 +133,8 @@ public class DSEnvelope {
 				JSONUtil.toJSONArray(
 					getDSRecipients(),
 					dsRecipient -> JSONUtil.put(
+						"clientUserId", dsRecipient.getDSClientUserId()
+					).put(
 						"email", dsRecipient.getEmailAddress()
 					).put(
 						"name", dsRecipient.getName()

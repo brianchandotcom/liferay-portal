@@ -15,6 +15,8 @@
 package com.liferay.digital.signature.rest.resource.v1_0;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
+import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelopeSignUrl;
+import com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -69,6 +71,11 @@ public interface DSEnvelopeResource {
 		throws Exception;
 
 	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
+		throws Exception;
+
+	public DSEnvelopeSignUrl postSiteDSEnvelopeDsRecipientViewDefinition(
+			Long siteId, String dsEnvelopeId,
+			DSRecipientViewDefinition dsRecipientViewDefinition)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

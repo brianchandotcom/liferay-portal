@@ -3383,6 +3383,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-168141 Given a segment entry is scoped to global site
+	When user navigates to any site
+	Then the segment can be used"
+	@priority = "5"
+	test ViewSegmentScopedGlobalDisplayedOnAnySite {
+		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
+
+		task ("Add a segment scoped by the global site") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(criterionValue = "Test");
+
+			Segmentation.fillTitle(titleField = "ViewSegmentScopedGlobalDisplayedOnAnySite Test");
+
+			Segmentation.configureScope(site = "Global");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to Segment Admin on Test Site Name") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Go to edit the segment and assert that it is scoped by the global site") {
+			Segmentation.editSegment(entry = "ViewSegmentScopedGlobalDisplayedOnAnySite Test");
+
+			AssertTextEquals(
+				locator1 = "Segmentation#SCOPE_CARD_SITE",
+				siteName = "Global",
+				value1 = "Global");
+		}
+	}
+
 	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
 	@priority = "4"
 	test VocabulariesListedInSystemSettingsSegments {

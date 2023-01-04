@@ -20,9 +20,9 @@ export declare type KeyValuePair = {
 	value: string;
 };
 interface EditObjectDetailsProps {
-	DBTableName: string;
 	backURL: string;
 	companyKeyValuePair: KeyValuePair[];
+	dbTableName: string;
 	externalReferenceCode: string;
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -39,9 +39,9 @@ interface EditObjectDetailsProps {
 	siteKeyValuePair: KeyValuePair[];
 }
 export default function EditObjectDetails({
-	DBTableName,
 	backURL,
 	companyKeyValuePair,
+	dbTableName,
 	externalReferenceCode,
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,

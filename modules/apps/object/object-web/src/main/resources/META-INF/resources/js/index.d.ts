@@ -109,13 +109,13 @@ interface ObjectFieldView extends ObjectField {
 }
 
 interface ObjectDefinition {
-	DBTableName?: string;
 	accountEntryRestricted: boolean;
 	accountEntryRestrictedObjectFieldId: string;
 	accountEntryRestrictedObjectFieldName: string;
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;
+	dbTableName?: string;
 	defaultLanguageId: Locale;
 	enableCategorization: boolean;
 	enableComments: boolean;

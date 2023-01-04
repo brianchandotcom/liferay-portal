@@ -38,7 +38,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"companyKeyValuePair", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("company")
 			).put(
-				"DBTableName", objectDefinition.getDBTableName()
+				"dbTableName", objectDefinition.getDBTableName()
 			).put(
 				"externalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(

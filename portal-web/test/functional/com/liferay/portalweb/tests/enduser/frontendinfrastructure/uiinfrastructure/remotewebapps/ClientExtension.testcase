@@ -420,7 +420,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Create Vanilla Counter as a Custom Element") {
-			JSONRemoteApp.addCustomElementRemoteAppEntry(
+			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
 				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");

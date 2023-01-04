@@ -37,7 +37,7 @@ definition {
 		task ("When access the osgi deployed custom element") {
 			Click(
 				key_tableEntryName = "Vanilla Counter",
-				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 		}
 
 		task ("Then field information is displayed correctly") {

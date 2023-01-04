@@ -48,7 +48,7 @@ definition {
 		}
 
 		task ("Assert Vanilla Counter is present on page") {
-			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
+			AssertElementPresent(locator1 = "ClientExtension#VANILLA_COUNTER_REMOTE_APP");
 		}
 	}
 

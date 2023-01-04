@@ -160,7 +160,7 @@ definition {
 		task ("Assert that the Vanilla Counter fields have been saved correctly") {
 			Click(
 				key_tableEntryName = "Vanilla Counter",
-				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			ClientExtensionGeneral.assertCustomElementFields(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
@@ -303,7 +303,7 @@ definition {
 		task ("Assert Vanilla Counter is displayed") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
+			AssertElementPresent(locator1 = "ClientExtension#VANILLA_COUNTER_REMOTE_APP");
 		}
 	}
 
@@ -326,7 +326,7 @@ definition {
 
 			Click(
 				key_tableEntryName = "${remoteAppName}",
-				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			ClientExtensionGeneral.editCustomElement(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
@@ -342,7 +342,7 @@ definition {
 		task ("Assert that the fields have been updated") {
 			Click(
 				key_tableEntryName = "Vanilla Counter Edited",
-				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			ClientExtensionGeneral.assertCustomElementFields(
 				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
@@ -409,7 +409,7 @@ definition {
 			for (var n : list "1,2") {
 				AssertElementPresent(
 					column_number = "${n}",
-					locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_N");
+					locator1 = "ClientExtension#VANILLA_COUNTER_PAGE_COLUMN_N");
 			}
 		}
 	}
@@ -437,7 +437,7 @@ definition {
 
 			Click(
 				key_tableEntryName = "Vanilla Counter",
-				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			Type(
 				key_text = "Name",
@@ -464,13 +464,13 @@ definition {
 
 			AssertElementPresent(
 				key_remoteAppName = "Vanilla Counter Modified",
-				locator1 = "RemoteApps#APPLICATION_SEARCH_FIELD_WIDGET_SEARCH_REMOTE_APP");
+				locator1 = "ClientExtension#APPLICATION_SEARCH_FIELD_WIDGET_SEARCH_REMOTE_APP");
 		}
 
 		task ("Assert Vanilla Counter continues displayed") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
+			AssertElementPresent(locator1 = "ClientExtension#VANILLA_COUNTER_REMOTE_APP");
 		}
 	}
 
@@ -500,7 +500,7 @@ definition {
 			AssertElementPresent(
 				key_customElementHtmlName = "vanilla-counter",
 				key_customElementProperty = "QAuser",
-				locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
+				locator1 = "ClientExtension#REMOTE_APP_PROPERTY_HTML");
 		}
 	}
 
@@ -518,7 +518,7 @@ definition {
 		task ("Go to edit entry") {
 			Click(
 				key_tableEntryName = "Vanilla Counter",
-				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 		}
 
 		task ("Assert multiple URL fields are saved") {

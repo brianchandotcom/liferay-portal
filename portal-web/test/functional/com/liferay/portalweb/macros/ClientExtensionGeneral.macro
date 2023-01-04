@@ -7,7 +7,7 @@ definition {
 
 		var externalReferenceCodeValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_redirect");
 
-		JSONRemoteApp.deleteIFrameRemoteAppEntry(externalReferenceCode = "${externalReferenceCodeValue}");
+		JSONClientExtension.deleteIFrameRemoteAppEntry(externalReferenceCode = "${externalReferenceCodeValue}");
 	}
 
 	macro addApp {

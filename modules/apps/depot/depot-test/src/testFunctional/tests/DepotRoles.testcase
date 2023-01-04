@@ -124,6 +124,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddSiteMemberWithPermissionsAfterConnectingSite {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -140,15 +142,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "user1@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

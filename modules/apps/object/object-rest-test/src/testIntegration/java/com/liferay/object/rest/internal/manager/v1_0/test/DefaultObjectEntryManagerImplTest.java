@@ -643,6 +643,22 @@ public class DefaultObjectEntryManagerImplTest {
 				String.valueOf(accountEntry2.getAccountEntryId())),
 			() -> _addObjectEntry(accountEntry2));
 
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), _user.getUserId());
+
+		_assertFailure(
+			StringBundler.concat(
+				"User ", String.valueOf(_user.getUserId()),
+				" must have ADD_OBJECT_ENTRY permission for ",
+				_objectDefinition3.getResourceName(), StringPool.SPACE),
+			() -> _addObjectEntry(accountEntry2));
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry2.getAccountEntryGroupId(),
+			_buyerRole.getRoleId());
+
+		Assert.assertNotNull(_addObjectEntry(accountEntry1));
+
 		// Organization scope
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();

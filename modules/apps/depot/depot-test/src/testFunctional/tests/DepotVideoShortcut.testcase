@@ -38,8 +38,8 @@ definition {
 
 	@description = "This ensures that a user is able to embed a depot external video in a blog entry on a connected site."
 	@priority = "5"
-	@refactorneeded
-	test AddBlogEntryWithEmbeddedVideo {
+	@refactordone
+	test CanAddBlogEntryWithEmbeddedVideo {
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Site Name",
@@ -80,8 +80,8 @@ definition {
 
 	@description = "This test ensures that a YouTube shortened URL video added via item selector can be embedded when adding a depot WC."
 	@priority = "4"
-	@refactorneeded
-	test AddWithShortenedURLToWCViaItemSelector {
+	@refactordone
+	test CanAddShortenedURLToWCViaItemSelector {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Shortened URL Depot Name");
@@ -103,6 +103,119 @@ definition {
 		WebContent.viewVideoPreview(
 			service = "youtube",
 			webContentTitle = "WC WebContent Title");
+	}
+
+	@description = "This ensures that a depot video shortcut associated with a tag cannot be searched on a connected site when searching is disabled."
+	@priority = "5"
+	@refactordone
+	test CannotSearchDepotVideoShortcutWhenSearchingIsDisabled {
+		property test.name.skip.portal.instance = "DepotVideoShortcut#CannotSearchDepotVideoShortcutWhenSearchingIsDisabled";
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			tagNameList = "depot",
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.configureSearch(
+			depotName = "Test Depot Name",
+			item = "Make Unsearchable",
+			siteList = "Site Name",
+			tableEntryText = "No");
+
+		Navigator.openSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "depot");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "depot");
+	}
+
+	@description = "This ensures that a depot external video cannot be viewed from the disconnected site."
+	@priority = "4"
+	@refactordone
+	test CannotViewExternalVideoFromDisconnectedSite {
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDepot.disconnectSite(groupName = "Site Name");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
+
+		ItemSelector.configureFilterViaSelectFile(
+			filterBy = "Everywhere",
+			navTab = "Documents and Media");
+
+		AssertElementNotPresent(
+			key_card = "Test YouTube Video",
+			locator1 = "Card#CARD_TITLE");
+	}
+
+	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."
+	@priority = "5"
+	@refactordone
+	test CanSearchVideoShortcutByTag {
+		property test.name.skip.portal.instance = "DepotVideoShortcut#CanSearchVideoShortcutByTag";
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			tagNameList = "depot",
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "depot");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test YouTube Video",
+			searchAssetType = "Document");
 	}
 
 	@description = "This ensures that a depot external video in an external video fragment can be rendered correctly on a connected site after moving it to a folder."
@@ -418,123 +531,10 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."
-	@priority = "5"
-	@refactorneeded
-	test SearchForTag {
-		property test.name.skip.portal.instance = "DepotVideoShortcut#SearchForTag";
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		VideoShortcut.addCP(
-			tagNameList = "depot",
-			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		Navigator.openSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Search.searchCP(searchTerm = "depot");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test YouTube Video",
-			searchAssetType = "Document");
-	}
-
-	@description = "This ensures that a depot video shortcut associated with a tag cannot be searched on a connected site when searching is disabled."
-	@priority = "5"
-	@refactorneeded
-	test SearchForUnsearchableTag {
-		property test.name.skip.portal.instance = "DepotVideoShortcut#SearchForUnsearchableTag";
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		VideoShortcut.addCP(
-			tagNameList = "depot",
-			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.configureSearch(
-			depotName = "Test Depot Name",
-			item = "Make Unsearchable",
-			siteList = "Site Name",
-			tableEntryText = "No");
-
-		Navigator.openSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Search.searchCP(searchTerm = "depot");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "depot");
-	}
-
-	@description = "This ensures that a depot external video cannot be viewed from the disconnected site."
-	@priority = "4"
-	@refactorneeded
-	test ViewFromDisconnectedSite {
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		VideoShortcut.addCP(
-			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONDepot.disconnectSite(groupName = "Site Name");
-
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
-
-		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
-
-		ItemSelector.configureFilterViaSelectFile(
-			filterBy = "Everywhere",
-			navTab = "Documents and Media");
-
-		AssertElementNotPresent(
-			key_card = "Test YouTube Video",
-			locator1 = "Card#CARD_TITLE");
-	}
-
 	@description = "This ensures that a depot video shortcut can be used through Related Assets on a connected site."
 	@priority = "3"
-	@refactorneeded
-	test ViewInRelatedAssets {
+	@refactordone
+	test CanViewVideoShortcutInRelatedAssets {
 		property test.name.skip.portal.instance = "DepotVideoShortcut#ViewInRelatedAssets";
 
 		JSONLayout.addWidgetToPublicLayout(

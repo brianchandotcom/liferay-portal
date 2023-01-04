@@ -32,8 +32,8 @@ definition {
 
 	@description = "This test covers LPS-113731. It ensures that roles and permissions from a library are removed after membership is revoked."
 	@priority = "5"
-	@refactorneeded
-	test AccessALAfterRevokingMembership {
+	@refactordone
+	test CanAccessALAfterRevokingMembership {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -122,8 +122,8 @@ definition {
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even after it is automatically assigned to a connected site member. This test also covers permissions and makes sure the library asset can be updated by the role."
 	@priority = "5"
-	@refactorneeded
-	test AddSiteMemberWithPermissionsAfterConnectingSite {
+	@refactordone
+	test CanAddSiteMemberWithPermissionsAfterConnectingSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -264,8 +264,8 @@ definition {
 
 	@description = "This ensures that the user can perform CRUD operations with an AL role that has all WC permissions."
 	@priority = "5"
-	@refactorneeded
-	test AssignALRoleWithAllWCPermissions {
+	@refactordone
+	test CanAssignALRoleWithAllWCPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONRole.addDepotRole(roleTitle = "AL Role Name");
@@ -362,8 +362,8 @@ definition {
 
 	@description = "This ensures that the user can edit documents with an AL role that has edit documents permissions."
 	@priority = "5"
-	@refactorneeded
-	test AssignALRoleWithDMEditPermissions {
+	@refactordone
+	test CanAssignALRoleWithDMEditPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONDocument.addFile(
@@ -451,8 +451,8 @@ definition {
 
 	@description = "This ensures that an asset library role can be deleted."
 	@priority = "5"
-	@refactorneeded
-	test DeleteALRole {
+	@refactordone
+	test CanDeleteALRole {
 		JSONRole.addDepotRole(roleTitle = "AL Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -476,8 +476,8 @@ definition {
 
 	@description = "This ensures that an asset library role can be edited."
 	@priority = "5"
-	@refactorneeded
-	test EditALRole {
+	@refactordone
+	test CanEditALRole {
 		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Asset Library");
@@ -512,52 +512,10 @@ definition {
 			permissionValues = "Add Document");
 	}
 
-	@description = "This ensures that a depot owner can assign specific roles to a user."
-	@priority = "5"
-	test OwnerCanAssignSpecificRolesToUser {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONUser.addUserToDepot(
-			depotName = "Test Depot Name",
-			userEmailAddress = "userea@liferay.com");
-
-		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
-
-		Depot.assignAssetLibraryRole(
-			checkAllRoles = "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer",
-			resourceName = "userfn userln",
-			roleTitle = "Asset Library Owner");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Roles");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var roleTitle : list "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer") {
-			LexiconEntry.viewEntryName(rowEntry = "${roleTitle}");
-		}
-
-		LexiconCard.clickCardTitle(card = "Asset Library Owner");
-
-		SelectFrameTop();
-
-		LexiconCard.viewCardTitle(card = "userfn userln");
-	}
-
 	@description = "This ensures that an asset library role can be edited."
 	@priority = "5"
-	@refactorneeded
-	test ViewALAdminRole {
+	@refactordone
+	test CanViewALAdminRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -618,8 +576,8 @@ definition {
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to an existing site member after connecting site."
 	@priority = "5"
-	@refactorneeded
-	test ViewExistingSiteMemberAfterConnectingSite {
+	@refactordone
+	test CanViewExistingSiteMemberAfterConnectingSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -684,6 +642,48 @@ definition {
 		AssertElementNotPresent(
 			key_roleTitle = "Asset Library Connected Site Member",
 			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_TITLE");
+	}
+
+	@description = "This ensures that a depot owner can assign specific roles to a user."
+	@priority = "5"
+	test OwnerCanAssignSpecificRolesToUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToDepot(
+			depotName = "Test Depot Name",
+			userEmailAddress = "userea@liferay.com");
+
+		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
+
+		Depot.assignAssetLibraryRole(
+			checkAllRoles = "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer",
+			resourceName = "userfn userln",
+			roleTitle = "Asset Library Owner");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Roles");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var roleTitle : list "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer") {
+			LexiconEntry.viewEntryName(rowEntry = "${roleTitle}");
+		}
+
+		LexiconCard.clickCardTitle(card = "Asset Library Owner");
+
+		SelectFrameTop();
+
+		LexiconCard.viewCardTitle(card = "userfn userln");
 	}
 
 }

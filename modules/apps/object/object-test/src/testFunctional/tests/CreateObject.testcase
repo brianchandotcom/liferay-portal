@@ -3248,7 +3248,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 82");
 
-		ObjectAdmin.changeLabelLanguage(newLanguage = "pt-BR");
+		ObjectAdmin.changeLabelLanguage(newLanguage = "pt_BR");
 
 		CreateObject.editLabel(labelName = "Objeto Costumizado 82");
 
@@ -3283,7 +3283,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 83");
 
-		ObjectAdmin.changePluralLabelLanguage(newLanguage = "pt-BR");
+		ObjectAdmin.changePluralLabelLanguage(newLanguage = "pt_BR");
 
 		CreateObject.editLabel(labelName = "Objeto Customizado 83");
 

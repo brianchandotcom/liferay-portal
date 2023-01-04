@@ -202,13 +202,11 @@ definition {
 			ObjectCustomLayouts.addEntryOnRelationshipTab(selectEntry = "Entry Test B");
 		}
 
-		task ("Then the new entry is saved on the Relationship Tab Parent") {
+		task ("Then the new entry is saved on the Relationship Tab Parent and the entry is present on Relationship Tab Child") {
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test B",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
-		}
 
-		task ("And the entry is present on Relationship Tab Child") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject171597");
 
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test B");
@@ -499,7 +497,9 @@ definition {
 				tabName = "Relationship Tab");
 
 			PortletEntry.save();
+		}
 
+		task ("And given an entry with a relationship in the Relationship Tab") {
 			for (var letter : list "A,B") {
 				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 					fieldName = "customField",

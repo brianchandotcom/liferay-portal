@@ -14,13 +14,11 @@
 
 package com.liferay.portal.search.solr8.internal;
 
-import java.util.Optional;
-
 /**
  * @author André de Oliveira
  */
 public interface FacetProcessorContext {
 
-	public Optional<String> getExcludeTagsStringOptional();
+	public String getExcludeTagsString();
 
 }

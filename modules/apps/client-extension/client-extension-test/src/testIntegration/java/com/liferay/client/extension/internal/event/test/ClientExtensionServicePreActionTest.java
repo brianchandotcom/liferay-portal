@@ -366,8 +366,12 @@ public class ClientExtensionServicePreActionTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay(layout);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockHttpServletRequest.setParameters(params);
 
@@ -381,6 +385,11 @@ public class ClientExtensionServicePreActionTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLifecycleRender(true);
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
+
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

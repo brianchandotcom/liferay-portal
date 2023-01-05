@@ -480,7 +480,6 @@ definition {
 	@priority = "3"
 	test StructruedContentFolderDeletionImpossibleByNonexistentErc {
 		property portal.acceptance = "true";
-		property portal.acceptance = "true";
 
 		task ("Given a structured content folder with a custom erc is created with a POST request") {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");

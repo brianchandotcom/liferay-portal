@@ -22,6 +22,8 @@ definition {
 	@description = "Validate if the user can change the configuration of the API explorer to disable, into the Liferay portal"
 	@priority = "5"
 	test disableApiEplorer {
+		property portal.acceptance = "true";
+
 		property test.name.skip.portal.instance = "GraphQLAPIsExplorer#disableApiEplorer";
 
 		Navigator.openURL();
@@ -46,6 +48,8 @@ definition {
 	@description = "Validate if the user can change the configuration of the API explorer to enable, into the Liferay portal"
 	@priority = "5"
 	test enableApiEplorer {
+		property portal.acceptance = "true";
+		
 		property test.name.skip.portal.instance = "GraphQLAPIsExplorer#enableApiEplorers";
 
 		Navigator.openURL();

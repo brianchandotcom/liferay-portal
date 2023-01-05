@@ -594,8 +594,10 @@ public class EditStyleBookEntryDisplayContext {
 	}
 
 	private String _getThemeName() {
+		Group group = _themeDisplay.getScopeGroup();
+
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			_themeDisplay.getSiteGroupId(), false);
+			_themeDisplay.getSiteGroupId(), group.isLayoutSetPrototype());
 
 		Theme theme = layoutSet.getTheme();
 

@@ -604,8 +604,8 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(
-					accountEntryObjectDefinition.getName() +
-						objectDefinition.getName()),
+					StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
+					objectDefinition.getShortName()),
 				StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
 					objectDefinition.getShortName(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);

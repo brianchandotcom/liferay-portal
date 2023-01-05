@@ -50,6 +50,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 import junit.framework.Assert;
@@ -129,7 +130,7 @@ public class ClientExtensionServicePreActionTest {
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
-		_assertThemeCSSURLs();
+		_assertThemeCSSURLs(_layout, Collections.emptyMap());
 	}
 
 	@Test
@@ -142,7 +143,7 @@ public class ClientExtensionServicePreActionTest {
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
-		_assertThemeCSSURLs();
+		_assertThemeCSSURLs(_layout, Collections.emptyMap());
 	}
 
 	@Test
@@ -198,7 +199,7 @@ public class ClientExtensionServicePreActionTest {
 
 		_layoutLocalService.updateLayout(_layout);
 
-		_assertThemeCSSURLs();
+		_assertThemeCSSURLs(_layout, Collections.emptyMap());
 	}
 
 	private void _addFaviconClientExtensionEntry() throws Exception {
@@ -237,7 +238,7 @@ public class ClientExtensionServicePreActionTest {
 
 	private void _assertFaviconURL() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest();
+			_getMockHttpServletRequest(_layout, Collections.emptyMap());
 
 		_processServicePreAction(mockHttpServletRequest);
 
@@ -248,9 +249,11 @@ public class ClientExtensionServicePreActionTest {
 		Assert.assertEquals(_URL_FAVICON, themeDisplay.getFaviconURL());
 	}
 
-	private void _assertThemeCSSURLs() throws Exception {
+	private void _assertThemeCSSURLs(Layout layout, Map<String, String> params)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest();
+			_getMockHttpServletRequest(layout, params);
 
 		_processServicePreAction(mockHttpServletRequest);
 
@@ -287,24 +290,27 @@ public class ClientExtensionServicePreActionTest {
 			"ClientExtensionsServicePreAction is not registered");
 	}
 
-	private MockHttpServletRequest _getMockHttpServletRequest()
+	private MockHttpServletRequest _getMockHttpServletRequest(
+			Layout layout, Map<String, String> params)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		mockHttpServletRequest.setParameters(params);
 
 		return mockHttpServletRequest;
 	}
 
-	private ThemeDisplay _getThemeDisplay() throws Exception {
+	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayout(layout);
 		themeDisplay.setLifecycleRender(true);
 		themeDisplay.setUser(TestPropsValues.getUser());
 

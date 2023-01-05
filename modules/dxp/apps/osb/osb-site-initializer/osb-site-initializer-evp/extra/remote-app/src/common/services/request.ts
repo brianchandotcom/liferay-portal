@@ -13,17 +13,10 @@ import dayjs from 'dayjs';
 
 import {FIELDSREPORT, RequestFilterType} from '../../types';
 import fetcher from './fetcher';
-import {
-	filteredOrganizationsERC,
-	getERCOrganization,
-	getGreaterOrEqualOrganizationId,
-	getLessOrEqualOrganizationId,
-	getOrganizationBetweenIds,
-} from './organization';
 
-const resource = 'o/c/evprequests';
+const resource = 'o/c/evprequests/';
 
-const nestedFields = '&nestedFields=r_organization_c_evpOrganization';
+const nestedFields = '?nestedFields=r_organization_c_evpOrganization';
 
 const formatArrayUrl = async (key: string, values: String[]) => {
 	let operator = `${key} in ({values})`;
@@ -48,26 +41,8 @@ const formattedFieldsUrl = (key: string, value: string[]) => {
 	return formatUrl;
 };
 
-const formattedFields = async (payload: any) => {
-	const externalReferenceCodeOrganization = await filteredOrganizationsERC(
-		payload
-	);
-
-	let formatUrl;
-
-	if (externalReferenceCodeOrganization.length !== 0) {
-		formatUrl = await formattedFieldsUrl(
-			'r_organization_c_evpOrganizationERC',
-			externalReferenceCodeOrganization
-		);
-	}
-
-	return formatUrl;
-};
-
 const createURLFilter = async (data: RequestFilterType) => {
-	let externalReferenceCodeOrganization;
-	const filter = '/?filter=';
+	const filter = '/&filter=';
 	const filterUrl = [];
 	let ISOFormattedInitialRequestDate;
 	let ISOFormattedFinalRequestDate;
@@ -96,36 +71,21 @@ const createURLFilter = async (data: RequestFilterType) => {
 	}
 
 	if (data.organizationName) {
-		externalReferenceCodeOrganization = await getERCOrganization(
-			data.organizationName
-		);
-
 		filterUrl.push(
-			`contains(r_organization_c_evpOrganizationERC,'${externalReferenceCodeOrganization}')`
+			`organization/organizationName eq '${data.organizationName}'`
 		);
 	}
 
 	if (data.initialCompanyId && data.finalCompanyId) {
-		const organizationsBetweenIds = await getOrganizationBetweenIds(
-			Number(data.initialCompanyId),
-			Number(data.finalCompanyId)
+		filterUrl.push(
+			`organization/idNumber ge ${data.initialCompanyId} and organization/idNumber le ${data.finalCompanyId}`
 		);
-
-		filterUrl.push(await formattedFields(organizationsBetweenIds));
 	}
 	else if (data.finalCompanyId) {
-		const organizationsLessOrEqual = await getLessOrEqualOrganizationId(
-			Number(data.finalCompanyId)
-		);
-
-		filterUrl.push(await formattedFields(organizationsLessOrEqual));
+		filterUrl.push(`organization/idNumber le ${data.finalCompanyId}`);
 	}
 	else if (data.initialCompanyId) {
-		const organizationsGreaterOrEqual = await getGreaterOrEqualOrganizationId(
-			Number(data.initialCompanyId)
-		);
-
-		filterUrl.push(await formattedFields(organizationsGreaterOrEqual));
+		filterUrl.push(`organization/idNumber ge ${data.initialCompanyId}`);
 	}
 
 	if (data.initialRequestDate && data.finalRequestDate) {
@@ -144,8 +104,7 @@ const createURLFilter = async (data: RequestFilterType) => {
 			`dateCreated ge ${ISOFormattedInitialRequestDate} and dateCreated le ${formattedTimeFinalRequestDate}`
 		);
 	}
-
-	if (data.initialRequestDate) {
+	else if (data.initialRequestDate) {
 		ISOFormattedInitialRequestDate = dayjs(
 			data.initialRequestDate
 		).toISOString();
@@ -170,7 +129,7 @@ const createURLFilter = async (data: RequestFilterType) => {
 export async function getRequestsByFilter(data: RequestFilterType) {
 	const filter = await createURLFilter(data);
 
-	const response = await fetcher(`${resource}${filter}${nestedFields}`);
+	const response = await fetcher(`${resource}${nestedFields}${filter}`);
 
 	return response;
 }

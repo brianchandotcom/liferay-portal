@@ -76,6 +76,10 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.test.util.TemplateTestUtil;
 
+import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -437,7 +441,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		Assert.assertEquals(
 			DateUtil.getDate(
-				_journalArticle.getCreateDate(), "MM/dd/yy H:mm a",
+				_journalArticle.getCreateDate(),
+				DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+					FormatStyle.SHORT, FormatStyle.SHORT,
+					IsoChronology.INSTANCE, LocaleUtil.US),
 				LocaleUtil.US),
 			value);
 	}
@@ -489,7 +496,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		Assert.assertEquals(
 			DateUtil.getDate(
-				_journalArticle.getCreateDate(), "dd/MM/yy H:mm",
+				_journalArticle.getCreateDate(),
+				DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+					FormatStyle.SHORT, FormatStyle.SHORT,
+					IsoChronology.INSTANCE, LocaleUtil.SPAIN),
 				LocaleUtil.SPAIN),
 			value);
 	}

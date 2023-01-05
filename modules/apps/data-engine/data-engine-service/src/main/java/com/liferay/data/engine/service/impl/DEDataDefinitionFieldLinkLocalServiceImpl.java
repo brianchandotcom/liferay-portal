@@ -173,6 +173,15 @@ public class DEDataDefinitionFieldLinkLocalServiceImpl
 			ddmStructureId, fieldNames);
 	}
 
+	@Override
+	public List<DEDataDefinitionFieldLink>
+		getDEDataDefinitionFieldLinksByClassNameIdAndClassPK(
+			long classNameId, long classPK) {
+
+		return deDataDefinitionFieldLinkPersistence.findByC_C(
+			classNameId, classPK);
+	}
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 

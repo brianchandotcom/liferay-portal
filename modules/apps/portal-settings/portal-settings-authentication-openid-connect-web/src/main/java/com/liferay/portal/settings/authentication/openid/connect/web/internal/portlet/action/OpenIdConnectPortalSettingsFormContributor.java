@@ -18,8 +18,6 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectCon
 import com.liferay.portal.settings.authentication.openid.connect.web.internal.constants.PortalSettingsOpenIdConnectConstants;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -34,8 +32,8 @@ public class OpenIdConnectPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
-	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/openid_connect_delete");
+	public String getDeleteMVCActionCommandName() {
+		return "/portal_settings/openid_connect_delete";
 	}
 
 	@Override
@@ -44,8 +42,8 @@ public class OpenIdConnectPortalSettingsFormContributor
 	}
 
 	@Override
-	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/openid_connect");
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/openid_connect";
 	}
 
 	@Override

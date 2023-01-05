@@ -14,8 +14,6 @@
 
 package com.liferay.portal.settings.portlet.action;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -28,11 +26,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PortalSettingsFormContributor {
 
-	public Optional<String> getDeleteMVCActionCommandNameOptional();
+	public String getDeleteMVCActionCommandName();
 
 	public String getParameterNamespace();
 
-	public Optional<String> getSaveMVCActionCommandNameOptional();
+	public String getSaveMVCActionCommandName();
 
 	public String getSettingsId();
 

@@ -18,8 +18,6 @@ import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.security.sso.ntlm.settings.authentication.web.internal.constants.PortalSettingsNtlmConstants;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -34,8 +32,8 @@ public class NtlmPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
-	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/ntlm_delete");
+	public String getDeleteMVCActionCommandName() {
+		return "/portal_settings/ntlm_delete";
 	}
 
 	@Override
@@ -44,8 +42,8 @@ public class NtlmPortalSettingsFormContributor
 	}
 
 	@Override
-	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/ntlm");
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/ntlm";
 	}
 
 	@Override

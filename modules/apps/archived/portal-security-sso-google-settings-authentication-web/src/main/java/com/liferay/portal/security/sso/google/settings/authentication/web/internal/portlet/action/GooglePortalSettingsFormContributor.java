@@ -21,8 +21,6 @@ import com.liferay.portal.security.sso.google.settings.authentication.web.intern
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -37,8 +35,8 @@ public class GooglePortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
-	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/google_delete");
+	public String getDeleteMVCActionCommandName() {
+		return "/portal_settings/google_delete";
 	}
 
 	@Override
@@ -47,8 +45,8 @@ public class GooglePortalSettingsFormContributor
 	}
 
 	@Override
-	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/google");
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/google";
 	}
 
 	@Override

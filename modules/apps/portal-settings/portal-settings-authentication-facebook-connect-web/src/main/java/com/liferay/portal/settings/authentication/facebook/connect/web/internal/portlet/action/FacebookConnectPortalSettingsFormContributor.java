@@ -21,8 +21,6 @@ import com.liferay.portal.settings.authentication.facebook.connect.web.internal.
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -38,8 +36,8 @@ public class FacebookConnectPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
-	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/facebook_connect_delete");
+	public String getDeleteMVCActionCommandName() {
+		return "/portal_settings/facebook_connect_delete";
 	}
 
 	@Override
@@ -48,8 +46,8 @@ public class FacebookConnectPortalSettingsFormContributor
 	}
 
 	@Override
-	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/facebook_connect");
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/facebook_connect";
 	}
 
 	@Override

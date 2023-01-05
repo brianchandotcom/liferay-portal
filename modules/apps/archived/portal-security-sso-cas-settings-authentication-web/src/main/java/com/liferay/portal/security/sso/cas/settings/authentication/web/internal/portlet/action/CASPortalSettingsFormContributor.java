@@ -21,8 +21,6 @@ import com.liferay.portal.security.sso.cas.settings.authentication.web.internal.
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -36,8 +34,8 @@ public class CASPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
-	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/cas_delete");
+	public String getDeleteMVCActionCommandName() {
+		return "/portal_settings/cas_delete";
 	}
 
 	@Override
@@ -46,8 +44,8 @@ public class CASPortalSettingsFormContributor
 	}
 
 	@Override
-	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/cas");
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/cas";
 	}
 
 	@Override

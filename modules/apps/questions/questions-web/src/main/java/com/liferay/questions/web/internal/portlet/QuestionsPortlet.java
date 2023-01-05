@@ -24,6 +24,7 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -264,6 +265,11 @@ public class QuestionsPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuestionsPortlet.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.questions.web.internal.configuration.QuestionsConfiguration)"
+	)
+	private ConfigurationModelListener _configurationModelListener;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

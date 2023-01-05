@@ -48,7 +48,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -57,8 +56,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  */
 @Component(
-	configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "model.class.name=com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
 	service = ConfigurationModelListener.class
 )

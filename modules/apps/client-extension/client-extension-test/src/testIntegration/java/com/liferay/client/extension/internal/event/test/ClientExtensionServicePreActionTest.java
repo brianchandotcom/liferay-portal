@@ -19,12 +19,14 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -41,6 +44,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -86,6 +91,60 @@ public class ClientExtensionServicePreActionTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(
 			TestPropsValues.getUserId(), _group);
+	}
+
+	@Test
+	public void testProcessServicePreActionControlPanelLayoutThemeCSS()
+		throws Exception {
+
+		_addThemeCSSClientExtensionEntry();
+
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class), _layout.getPlid(),
+			_clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
+
+		Group controlPanelGroup = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+		Layout controlPanelLayout = _layoutLocalService.fetchDefaultLayout(
+			controlPanelGroup.getGroupId(), true);
+
+		_assertThemeCSSURLs(controlPanelLayout, Collections.emptyMap(), false);
+
+		_assertThemeCSSURLs(
+			controlPanelLayout,
+			HashMapBuilder.put(
+				"p_l_mode", Constants.PREVIEW
+			).build(),
+			false);
+
+		_assertThemeCSSURLs(
+			controlPanelLayout,
+			HashMapBuilder.put(
+				"p_l_mode", Constants.PREVIEW
+			).put(
+				"p_p_id",
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET
+			).build(),
+			false);
+
+		_assertThemeCSSURLs(
+			controlPanelLayout,
+			HashMapBuilder.put(
+				"p_l_mode", Constants.PREVIEW
+			).put(
+				"p_p_id",
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET
+			).put(
+				StringBundler.concat(
+					StringPool.UNDERLINE,
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					"_selPlid"),
+				String.valueOf(_layout.getPlid())
+			).build(),
+			true);
 	}
 
 	@Test
@@ -361,6 +420,9 @@ public class ClientExtensionServicePreActionTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private Layout _layout;
 

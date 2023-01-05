@@ -1018,6 +1018,16 @@ public class DefaultObjectEntryManagerImpl
 				continue;
 			}
 
+			if (Objects.equals(
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
+					objectField.getBusinessType()) &&
+				Validator.isNull(value)) {
+
+				values.put(objectField.getName(), "");
+
+				continue;
+			}
+
 			if ((value == null) && !objectField.isRequired()) {
 				continue;
 			}

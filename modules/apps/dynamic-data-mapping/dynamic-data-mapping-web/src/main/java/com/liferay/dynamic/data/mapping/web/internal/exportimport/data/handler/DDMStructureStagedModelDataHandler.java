@@ -242,16 +242,9 @@ public class DDMStructureStagedModelDataHandler
 		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
 				deDataDefinitionFieldLinks) {
 
-			if (!StringUtil.equals(
-					deDataDefinitionFieldLink.getClassName(),
-					DDMStructureLayout.class.getName()) ||
-				(deDataDefinitionFieldLink.getClassPK() ==
-					structure.getDefaultDDMStructureLayoutId())) {
-
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, structure, deDataDefinitionFieldLink,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, structure, deDataDefinitionFieldLink,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
 		if (_isPreloadedStructure(

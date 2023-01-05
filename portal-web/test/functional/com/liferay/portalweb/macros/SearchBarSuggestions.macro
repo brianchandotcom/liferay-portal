@@ -42,12 +42,12 @@ definition {
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 		}
 
-		if (isSet(characterThreshold)){
-            Type(
-                locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-                ariaLabel = "Character Threshold",
-                value1 = "${characterThreshold}");
-        }
+		if (isSet(characterThreshold)) {
+			Type(
+				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_THRESHOLD",
+				value1 = "${characterThreshold}");
+		}
 
 		if (isSet(suggestionContributorDisplayGroupName)) {
 			Type(

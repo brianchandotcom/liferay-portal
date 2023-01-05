@@ -50,6 +50,11 @@
 	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//input[contains(@aria-label,'Size')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUGGESTION_CONTRIBUTOR_THRESHOLD</td>
+	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//input[contains(@aria-label,'Character Threshold')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

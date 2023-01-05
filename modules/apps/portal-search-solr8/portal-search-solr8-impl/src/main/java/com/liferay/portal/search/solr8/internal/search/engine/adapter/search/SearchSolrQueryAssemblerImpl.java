@@ -38,7 +38,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
@@ -227,13 +226,9 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 
 		List<Sort> sorts = searchSearchRequest.getSorts();
 
-		Stream<Sort> stream = sorts.stream();
-
-		stream.map(
-			_sortFieldTranslator::translate
-		).forEach(
-			solrQuery::addSort
-		);
+		for (Sort sort : sorts) {
+			solrQuery.addSort(_sortFieldTranslator.translate(sort));
+		}
 
 		com.liferay.portal.kernel.search.Sort[] sorts71 =
 			searchSearchRequest.getSorts71();

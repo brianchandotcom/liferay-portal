@@ -24,7 +24,6 @@ import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizerRegistry;
 
 import java.util.Locale;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -61,12 +60,10 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 		Locale locale = LocaleUtil.getDefault();
 
 		Mockito.doReturn(
-			Optional.of(
-				_createSegmentsFieldCustomizer(
-					fieldValue, fieldValueName, locale))
+			_createSegmentsFieldCustomizer(fieldValue, fieldValueName, locale)
 		).when(
 			_segmentsFieldCustomizerRegistry
-		).getSegmentsFieldCustomizerOptional(
+		).getSegmentsFieldCustomizer(
 			entityName, fieldName
 		);
 
@@ -88,10 +85,10 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 		String fieldName = RandomTestUtil.randomString();
 
 		Mockito.doReturn(
-			Optional.empty()
+			null
 		).when(
 			_segmentsFieldCustomizerRegistry
-		).getSegmentsFieldCustomizerOptional(
+		).getSegmentsFieldCustomizer(
 			entityName, fieldName
 		);
 

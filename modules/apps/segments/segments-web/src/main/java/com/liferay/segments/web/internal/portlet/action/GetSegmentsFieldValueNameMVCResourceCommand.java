@@ -26,7 +26,6 @@ import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizerRegistry;
 
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -67,29 +66,21 @@ public class GetSegmentsFieldValueNameMVCResourceCommand
 
 		return JSONUtil.put(
 			"fieldValueName",
-			_getFieldValueName(
-				entityName, fieldName, fieldValue, locale
-			).orElse(
-				null
-			));
+			_getFieldValueName(entityName, fieldName, fieldValue, locale));
 	}
 
-	private Optional<String> _getFieldValueName(
+	private String _getFieldValueName(
 		String entityName, String fieldName, String fieldValue, Locale locale) {
 
-		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
-			_segmentsFieldCustomizerRegistry.getSegmentsFieldCustomizerOptional(
+		SegmentsFieldCustomizer segmentsFieldCustomizer =
+			_segmentsFieldCustomizerRegistry.getSegmentsFieldCustomizer(
 				entityName, fieldName);
 
-		if (!segmentsFieldCustomizerOptional.isPresent()) {
-			return Optional.empty();
+		if (segmentsFieldCustomizer == null) {
+			return null;
 		}
 
-		SegmentsFieldCustomizer segmentsFieldCustomizer =
-			segmentsFieldCustomizerOptional.get();
-
-		return Optional.ofNullable(
-			segmentsFieldCustomizer.getFieldValueName(fieldValue, locale));
+		return segmentsFieldCustomizer.getFieldValueName(fieldValue, locale);
 	}
 
 	@Reference

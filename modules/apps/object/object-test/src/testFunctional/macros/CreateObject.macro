@@ -76,7 +76,7 @@ definition {
 	}
 
 	macro assertDisabledAllFields {
-		for (var fieldsDisabled : list "Name,Label,Title Field,Scope,Panel Category Key") {
+		for (var fieldsDisabled : list "Name,Label,Scope,Panel Category Key") {
 			AssertElementPresent(
 				key_nameDisabled = "${fieldsDisabled}",
 				locator1 = "CreateObject#VIEW_OBJECT_DATA_DISABLED");

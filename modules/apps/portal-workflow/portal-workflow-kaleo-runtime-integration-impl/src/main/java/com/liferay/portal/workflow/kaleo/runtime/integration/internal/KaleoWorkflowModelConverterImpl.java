@@ -59,6 +59,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -248,33 +249,32 @@ public class KaleoWorkflowModelConverterImpl
 
 	@Override
 	public WorkflowInstance toWorkflowInstance(
-		KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken,
+		KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken1,
 		Map<String, Serializable> workflowContext) {
 
 		DefaultWorkflowInstance defaultWorkflowInstance =
 			new DefaultWorkflowInstance();
 
 		defaultWorkflowInstance.setActive(kaleoInstance.isActive());
-		defaultWorkflowInstance.setCurrentWorkflowNodes(
-			Stream.of(
+
+		List<WorkflowNode> workflowNodes = new ArrayList<>();
+
+		for (KaleoInstanceToken instanceToken :
 				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
-					kaleoInstance.getKaleoInstanceId())
-			).flatMap(
-				List::stream
-			).map(
-				KaleoInstanceToken::getCurrentKaleoNodeId
-			).map(
-				_kaleoNodeLocalService::fetchKaleoNode
-			).filter(
-				Objects::nonNull
-			).filter(
-				kaleoNode -> !Objects.equals(
-					kaleoNode.getType(), NodeType.FORK.name())
-			).map(
-				this::_toWorkflowNode
-			).collect(
-				Collectors.toList()
-			));
+					kaleoInstance.getKaleoInstanceId())) {
+
+			long nodeId = instanceToken.getCurrentKaleoNodeId();
+
+			KaleoNode kaleoNode = _kaleoNodeLocalService.fetchKaleoNode(nodeId);
+
+			if ((kaleoNode != null) &&
+				!Objects.equals(kaleoNode.getType(), NodeType.FORK.name())) {
+
+				workflowNodes.add(_toWorkflowNode(kaleoNode));
+			}
+		}
+
+		defaultWorkflowInstance.setCurrentWorkflowNodes(workflowNodes);
 		defaultWorkflowInstance.setEndDate(kaleoInstance.getCompletionDate());
 		defaultWorkflowInstance.setStartDate(kaleoInstance.getCreateDate());
 

@@ -16,13 +16,12 @@ import ClayPanel from '@clayui/panel';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	AutoComplete,
+	getLocalizableLabel,
 	filterArrayByQuery,
 	onActionDropdownItemClick,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
-
-import {defaultLanguageId} from '../../util/constants';
 
 interface DefinitionOfTermsProps {
 	baseResourceURL: string;
@@ -100,11 +99,21 @@ export function DefinitionOfTerms({
 						setSelectedEntity(item);
 					}}
 					query={query}
-					value={selectedEntity?.label[defaultLanguageId]}
+					value={getLocalizableLabel(
+						selectedEntity?.defaultLanguageId as Locale,
+						selectedEntity?.label,
+						selectedEntity?.name as string
+					)}
 				>
-					{({label, name}) => (
+					{({defaultLanguageId, label, name}) => (
 						<div className="d-flex justify-content-between">
-							<div>{label[defaultLanguageId] ?? name}</div>
+							<div>
+								{getLocalizableLabel(
+									defaultLanguageId,
+									label,
+									name
+								)}
+							</div>
 						</div>
 					)}
 				</AutoComplete>

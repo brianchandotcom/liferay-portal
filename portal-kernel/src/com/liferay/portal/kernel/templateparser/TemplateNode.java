@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -460,6 +461,13 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
 			LocaleUtil.getMostRelevantLocale());
+
+		DecimalFormatSymbols decimalFormatSymbols =
+			decimalFormat.getDecimalFormatSymbols();
+
+		decimalFormatSymbols.setZeroDigit('0');
+
+		decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 
 		decimalFormat.setGroupingUsed(false);
 		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);

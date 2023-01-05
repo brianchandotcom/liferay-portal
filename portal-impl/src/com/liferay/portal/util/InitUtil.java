@@ -199,8 +199,7 @@ public class InitUtil {
 	}
 
 	public static synchronized void initWithSpring(
-		List<String> configLocations, boolean initModuleFramework,
-		boolean registerContext) {
+		List<String> configLocations, boolean initModuleFramework) {
 
 		if (_initialized) {
 			return;
@@ -265,7 +264,7 @@ public class InitUtil {
 
 			_appApplicationContext = configurableApplicationContext;
 
-			if (initModuleFramework && registerContext) {
+			if (initModuleFramework) {
 				registerContext();
 			}
 

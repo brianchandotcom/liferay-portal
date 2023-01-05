@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -227,8 +228,16 @@ public class DDMStructureStagedModelDataHandler
 		}
 
 		List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks =
-			_deDataDefinitionFieldLinkLocalService.
-				getDEDataDefinitionFieldLinks(structure.getStructureId());
+			ListUtil.concat(
+				_deDataDefinitionFieldLinkLocalService.
+					getDEDataDefinitionFieldLinksByClassNameIdAndClassPK(
+						_portal.getClassNameId(DDMStructure.class.getName()),
+						structure.getStructureId()),
+				_deDataDefinitionFieldLinkLocalService.
+					getDEDataDefinitionFieldLinksByClassNameIdAndClassPK(
+						_portal.getClassNameId(
+							DDMStructureLayout.class.getName()),
+						structure.getDefaultDDMStructureLayoutId()));
 
 		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
 				deDataDefinitionFieldLinks) {

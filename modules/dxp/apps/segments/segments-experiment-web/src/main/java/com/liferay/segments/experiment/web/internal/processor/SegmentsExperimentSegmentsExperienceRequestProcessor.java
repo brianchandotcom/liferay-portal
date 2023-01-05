@@ -38,12 +38,8 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -139,13 +135,14 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		_unsetCookie(httpServletRequest, httpServletResponse);
 
-		LongStream longStream = Arrays.stream(segmentsExperienceIds);
-
-		segmentsExperienceId = longStream.findFirst(
-		).orElse(
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				classPK)
-		);
+		if (ArrayUtil.isEmpty(segmentsExperienceIds)) {
+			segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(classPK);
+		}
+		else {
+			segmentsExperienceId = segmentsExperienceIds[0];
+		}
 
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentLocalService.
@@ -207,35 +204,33 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			classPK, segmentsExperienceIds);
 	}
 
-	private Optional<Cookie> _getCookieOptional(
-		HttpServletRequest httpServletRequest) {
-
+	private Cookie _getCookie(HttpServletRequest httpServletRequest) {
 		Cookie[] cookies = httpServletRequest.getCookies();
 
 		if (ArrayUtil.isEmpty(cookies)) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Stream.of(
-			cookies
-		).filter(
-			cookie -> Objects.equals(
-				cookie.getName(), _AB_TEST_VARIANT_ID_COOKIE_NAME)
-		).findFirst();
+		for (Cookie cookie : cookies) {
+			if (Objects.equals(
+					cookie.getName(), _AB_TEST_VARIANT_ID_COOKIE_NAME)) {
+
+				return cookie;
+			}
+		}
+
+		return null;
 	}
 
 	private long _getCurrentSegmentsExperienceId(
 		long groupId, long classNameId, long classPK,
 		HttpServletRequest httpServletRequest) {
 
-		Optional<Cookie> cookieOptional = _getCookieOptional(
-			httpServletRequest);
+		Cookie cookie = _getCookie(httpServletRequest);
 
-		if (!cookieOptional.isPresent()) {
+		if (cookie == null) {
 			return -1;
 		}
-
-		Cookie cookie = cookieOptional.get();
 
 		return _getSegmentsExperienceId(
 			groupId, cookie.getValue(), classNameId, classPK);
@@ -350,14 +345,11 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Optional<Cookie> cookieOptional = _getCookieOptional(
-			httpServletRequest);
+		Cookie cookie = _getCookie(httpServletRequest);
 
-		if (!cookieOptional.isPresent()) {
+		if (cookie == null) {
 			return;
 		}
-
-		Cookie cookie = cookieOptional.get();
 
 		CookiesManagerUtil.deleteCookies(
 			CookiesManagerUtil.getDomain(httpServletRequest),

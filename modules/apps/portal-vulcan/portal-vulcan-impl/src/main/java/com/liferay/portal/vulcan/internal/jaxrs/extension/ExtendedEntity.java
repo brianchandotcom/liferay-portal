@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -44,18 +43,16 @@ public class ExtendedEntity {
 		Object entity, Map<String, Serializable> extendedProperties,
 		Set<String> filteredPropertyKeys) {
 
+		if (extendedProperties == null) {
+			extendedProperties = Collections.emptyMap();
+		}
+
+		if (filteredPropertyKeys == null) {
+			filteredPropertyKeys = Collections.emptySet();
+		}
+
 		return new ExtendedEntity(
-			entity,
-			Optional.ofNullable(
-				extendedProperties
-			).orElse(
-				Collections.emptyMap()
-			),
-			Optional.ofNullable(
-				filteredPropertyKeys
-			).orElse(
-				Collections.emptySet()
-			));
+			entity, extendedProperties, filteredPropertyKeys);
 	}
 
 	@JsonUnwrapped

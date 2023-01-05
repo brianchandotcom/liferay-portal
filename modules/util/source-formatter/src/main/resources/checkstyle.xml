@@ -246,7 +246,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.AttributeOrderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that attributes in anonymous classes are ordered alphabetically." />
-			<message key="attribute.incorrect.order" value="Attribute ''{0}'' should come after attribute ''{1}''" />
+			<message key="assign.incorrect.order" value="The variable assignment for ''{0}'' should come before the variable assignment for ''{1}''" />
+			<message key="assign.move.before.method.call" value="The variable assignment for ''{0}'' shoud come before method calling ''{1}''" />
+			<message key="method.call.incorrect.order" value="The method calling ''{0}'' should come before the method calling ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CamelCaseNameCheck">
 			<property name="category" value="Naming Conventions" />

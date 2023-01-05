@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -60,30 +62,72 @@ public class AttributeOrderCheck extends BaseCheck {
 	}
 
 	private void _checkAttributeOrder(List<DetailAST> exprDetailASTList) {
-		String previousName = null;
+		String previousVariableName = null;
+		String previousMethodName = null;
 
 		for (DetailAST exprDetailAST : exprDetailASTList) {
 			DetailAST childDetailAST = exprDetailAST.getFirstChild();
 
-			if (childDetailAST.getType() != TokenTypes.ASSIGN) {
-				continue;
+			if (childDetailAST.getType() == TokenTypes.ASSIGN) {
+				String variableName = getName(childDetailAST);
+
+				if (Validator.isNotNull(
+						getTypeName(
+							getVariableTypeDetailAST(
+								childDetailAST, variableName, false),
+							false))) {
+
+					continue;
+				}
+
+				if ((previousVariableName != null) &&
+					(previousVariableName.compareToIgnoreCase(variableName) >
+						0)) {
+
+					log(
+						exprDetailAST, _MSG_ASSIGN_ORDER_INCORRECT,
+						variableName, previousVariableName,
+						childDetailAST.getLineNo());
+				}
+				else if (Validator.isNotNull(previousMethodName)) {
+					log(
+						exprDetailAST, _MSG_MOVE_ASSIGN_BEFORE_METHOD_CALL,
+						variableName, previousMethodName,
+						childDetailAST.getLineNo());
+				}
+
+				previousVariableName = variableName;
 			}
+			else if (childDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				String methodName = getName(childDetailAST);
 
-			String name = getName(childDetailAST);
+				if (Validator.isNull(methodName) ||
+					!methodName.matches("set[A-Z].+")) {
 
-			if ((previousName != null) &&
-				(previousName.compareToIgnoreCase(name) > 0)) {
+					continue;
+				}
 
-				log(
-					exprDetailAST, _MSG_ATTRIBUTE_INCORRECT_ORDER, previousName,
-					name);
+				if ((previousMethodName != null) &&
+					(previousMethodName.compareToIgnoreCase(methodName) > 0)) {
+
+					log(
+						exprDetailAST, _MSG_METHOD_CALL_ORDER_INCORRECT,
+						methodName, previousMethodName,
+						childDetailAST.getLineNo());
+				}
+
+				previousMethodName = methodName;
 			}
-
-			previousName = name;
 		}
 	}
 
-	private static final String _MSG_ATTRIBUTE_INCORRECT_ORDER =
-		"attribute.incorrect.order";
+	private static final String _MSG_ASSIGN_ORDER_INCORRECT =
+		"assign.incorrect.order";
+
+	private static final String _MSG_METHOD_CALL_ORDER_INCORRECT =
+		"method.call.incorrect.order";
+
+	private static final String _MSG_MOVE_ASSIGN_BEFORE_METHOD_CALL =
+		"assign.move.before.method.call";
 
 }

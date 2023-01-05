@@ -62,7 +62,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -503,7 +502,7 @@ public class SalesforceObjectEntryManagerImpl
 					"delete", Collections.<String, String>emptyMap()
 				).build();
 				creator = CreatorUtil.toCreator(
-					_portal, Optional.empty(),
+					_portal, null,
 					_userLocalService.fetchUserByExternalReferenceCode(
 						jsonObject.getString("OwnerId"), companyId));
 				dateCreated = dateFormat.parse(

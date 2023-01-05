@@ -357,7 +357,7 @@
 </tr>
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='colorPicker']/div/div/div/div[contains(@style,'${key_color}')]</td>
+	<td>//button[contains(@class,'simple-color-picker-item') and contains(@style,'${key_color}')]</td>
 	<td></td>
 </tr>
 <tr>

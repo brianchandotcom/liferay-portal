@@ -34,4 +34,6 @@ public interface ModifiedFacetPortletPreferences {
 
 	public String getRangesString();
 
+	public boolean isFrequenciesVisible();
+
 }

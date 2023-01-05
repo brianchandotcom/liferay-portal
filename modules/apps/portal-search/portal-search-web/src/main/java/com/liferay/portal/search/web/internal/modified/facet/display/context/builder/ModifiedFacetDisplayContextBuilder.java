@@ -113,6 +113,10 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		_facet = facet;
 	}
 
+	public void setFrequenciesVisible(boolean frequenciesVisible) {
+		_frequenciesVisible = frequenciesVisible;
+	}
+
 	public void setFromParameterValue(String from) {
 		_from = from;
 	}
@@ -230,6 +234,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		bucketDisplayContext.setFilterValue(_getCustomRangeURL());
 		bucketDisplayContext.setFrequency(
 			getFrequency(_getCustomRangeTermCollector(selected)));
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;
@@ -261,6 +266,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		bucketDisplayContext.setFilterValue(_getLabeledRangeURL(label));
 		bucketDisplayContext.setFrequency(
 			getFrequency(getTermCollector(range)));
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		bucketDisplayContext.setSelected(_selectedRanges.contains(label));
 
 		return bucketDisplayContext;
@@ -358,6 +364,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 	private final DateFormatFactory _dateFormatFactory;
 	private final DateRangeFactory _dateRangeFactory;
 	private Facet _facet;
+	private boolean _frequenciesVisible;
 	private String _from;
 	private Locale _locale;
 	private final ModifiedFacetPortletInstanceConfiguration

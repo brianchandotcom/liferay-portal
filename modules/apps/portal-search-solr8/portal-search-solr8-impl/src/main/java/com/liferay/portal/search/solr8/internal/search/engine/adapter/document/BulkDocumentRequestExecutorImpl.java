@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,8 +35,6 @@ import com.liferay.portal.search.solr8.internal.util.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrResponse;
@@ -133,14 +132,9 @@ public class BulkDocumentRequestExecutorImpl
 
 		UpdateRequest updateRequest = new UpdateRequest();
 
-		Stream<DeleteDocumentRequest> stream = deleteDocumentRequests.stream();
-
 		updateRequest.deleteById(
-			stream.map(
-				DeleteDocumentRequest::getUid
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transform(
+				deleteDocumentRequests, DeleteDocumentRequest::getUid));
 
 		if (refresh) {
 			updateRequest.setAction(UpdateRequest.ACTION.COMMIT, true, true);
@@ -156,15 +150,10 @@ public class BulkDocumentRequestExecutorImpl
 
 		modifiableSolrParams.set(CommonParams.QT, "/get");
 
-		Stream<GetDocumentRequest> stream = getDocumentRequests.stream();
-
 		modifiableSolrParams.set(
 			"ids",
-			stream.map(
-				GetDocumentRequest::getId
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transformToArray(
+				getDocumentRequests, GetDocumentRequest::getId, String.class));
 
 		return new QueryRequest(modifiableSolrParams);
 	}

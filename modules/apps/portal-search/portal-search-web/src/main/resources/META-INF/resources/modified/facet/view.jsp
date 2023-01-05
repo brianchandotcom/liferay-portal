@@ -98,9 +98,11 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 										<liferay-ui:message key="<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>" />
 									</span>
 
-									<small class="term-count">
-										(<%= bucketDisplayContext.getFrequency() %>)
-									</small>
+									<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
+										<small class="term-count">
+											(<%= bucketDisplayContext.getFrequency() %>)
+										</small>
+									</c:if>
 								</a>
 							</li>
 

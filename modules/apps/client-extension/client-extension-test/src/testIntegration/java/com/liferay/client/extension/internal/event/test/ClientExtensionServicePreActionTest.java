@@ -28,20 +28,18 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -81,16 +79,12 @@ public class ClientExtensionServicePreActionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-
 		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_layout = LayoutTestUtil.addTypeContentLayout(
-			_user.getUserId(), _group);
+			TestPropsValues.getUserId(), _group);
 	}
 
 	@Test
@@ -98,7 +92,7 @@ public class ClientExtensionServicePreActionTest {
 		_addFaviconClientExtensionEntry();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class), _layout.getPlid(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
@@ -113,7 +107,7 @@ public class ClientExtensionServicePreActionTest {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
@@ -130,7 +124,7 @@ public class ClientExtensionServicePreActionTest {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
@@ -143,7 +137,7 @@ public class ClientExtensionServicePreActionTest {
 		_addThemeCSSClientExtensionEntry();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class), _layout.getPlid(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
@@ -159,14 +153,14 @@ public class ClientExtensionServicePreActionTest {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_user.getUserId(), _group.getGroupId(), 0,
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class),
 			masterLayoutPageTemplateEntry.getPlid(),
 			_clientExtensionEntry.getExternalReferenceCode(),
@@ -187,14 +181,14 @@ public class ClientExtensionServicePreActionTest {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_user.getUserId(), _group.getGroupId(), 0,
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class),
 			masterLayoutPageTemplateEntry.getPlid(),
 			_clientExtensionEntry.getExternalReferenceCode(),
@@ -210,7 +204,7 @@ public class ClientExtensionServicePreActionTest {
 	private void _addFaviconClientExtensionEntry() throws Exception {
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				RandomTestUtil.randomString(), _user.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				StringPool.BLANK,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -226,7 +220,7 @@ public class ClientExtensionServicePreActionTest {
 	private void _addThemeCSSClientExtensionEntry() throws Exception {
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
-				RandomTestUtil.randomString(), _user.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				StringPool.BLANK,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -308,10 +302,11 @@ public class ClientExtensionServicePreActionTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLifecycleRender(true);
-		themeDisplay.setUser(_user);
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
@@ -345,8 +340,8 @@ public class ClientExtensionServicePreActionTest {
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
 
-	@DeleteAfterTestRun
-	private Company _company;
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -362,7 +357,5 @@ public class ClientExtensionServicePreActionTest {
 
 	@Inject
 	private Portal _portal;
-
-	private User _user;
 
 }

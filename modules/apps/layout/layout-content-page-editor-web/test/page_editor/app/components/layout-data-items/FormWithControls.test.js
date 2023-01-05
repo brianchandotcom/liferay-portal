@@ -35,14 +35,26 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
-					label: 'Type',
+					hasPermission: true,
+					label: 'Form Type 1',
 					subtypes: [
 						{
 							label: 'Subtype',
-							value: '1234',
+							value: '11111',
 						},
 					],
-					value: '1234',
+					value: '11111',
+				},
+				{
+					hasPermission: false,
+					label: 'Form Type 2',
+					subtypes: [
+						{
+							label: 'Subtype',
+							value: '22222',
+						},
+					],
+					value: '22222',
 				},
 			],
 		},
@@ -52,6 +64,14 @@ jest.mock(
 const DEFAULT_CONFIG = {classNameId: '0'};
 
 describe('FormWithControls', () => {
+	beforeAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = true;
+	});
+
+	afterAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = false;
+	});
+
 	it('renders a container inside a form', () => {
 		const {container} = render(
 			<StoreMother.Component>
@@ -96,8 +116,8 @@ describe('FormWithControls', () => {
 					item={{
 						children: [],
 						config: {
-							classNameId: '1234',
-							classTypeId: '1234',
+							classNameId: '11111',
+							classTypeId: '11111',
 						},
 						itemId: 'form',
 						type: LAYOUT_DATA_ITEM_TYPES.form,
@@ -116,8 +136,8 @@ describe('FormWithControls', () => {
 					item={{
 						children: ['child'],
 						config: {
-							classNameId: '1234',
-							classTypeId: '1234',
+							classNameId: '11111',
+							classTypeId: '11111',
 						},
 						itemId: 'form',
 						type: LAYOUT_DATA_ITEM_TYPES.form,
@@ -167,7 +187,52 @@ describe('FormWithControls', () => {
 			</StoreMother.Component>
 		);
 
-		expect(screen.getByText('Type')).toBeInTheDocument();
+		expect(screen.getByLabelText('content-type')).toBeInTheDocument();
 		expect(screen.getByText('map-your-form')).toBeInTheDocument();
+	});
+
+	it('only shows as options the form types that have permissions', () => {
+		render(
+			<StoreMother.Component>
+				<FormWithControls
+					item={{
+						children: [],
+						config: {
+							classNameId: '0',
+							classTypeId: '0',
+						},
+						itemId: 'form',
+						type: LAYOUT_DATA_ITEM_TYPES.form,
+					}}
+				/>
+			</StoreMother.Component>
+		);
+
+		expect(screen.getByText('Form Type 1')).toBeInTheDocument();
+		expect(screen.queryByText('Form Type 2')).not.toBeInTheDocument();
+	});
+
+	it('shows a permission restriction message when the form type does not have permissions', () => {
+		render(
+			<StoreMother.Component>
+				<FormWithControls
+					item={{
+						children: ['fragment'],
+						config: {
+							classNameId: '22222',
+							classTypeId: '0',
+						},
+						itemId: 'form',
+						type: LAYOUT_DATA_ITEM_TYPES.form,
+					}}
+				/>
+			</StoreMother.Component>
+		);
+
+		expect(
+			screen.getByText(
+				'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+			)
+		).toBeInTheDocument();
 	});
 });

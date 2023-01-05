@@ -69,6 +69,99 @@ export type ObjectFieldErrors = FormError<
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
+const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
+	[
+		'Attachment',
+		[
+			{
+				name: 'acceptedFileExtensions',
+				value: 'jpeg, jpg, pdf, png',
+			},
+			{
+				name: 'maximumFileSize',
+				value: 100,
+			},
+		],
+	],
+	[
+		'LongText' || 'Text',
+		[
+			{
+				name: 'showCounter',
+				value: false,
+			},
+		],
+	],
+]);
+
+async function getFieldSettingsByBusinessType(
+	objectRelationshipId: number,
+	setOneToManyRelationship: (value: TObjectRelationship) => void,
+	setPickListItems: (value: PickListItem[]) => void,
+	setPickLists: (value: PickList[]) => void,
+	setSelectedOutput: (value: string) => void,
+	setValues: (values: Partial<ObjectField>) => void,
+	values: Partial<ObjectField>
+) {
+	const {
+		businessType,
+		defaultValue,
+		listTypeDefinitionId,
+		objectFieldSettings,
+		state,
+	} = values;
+
+	if (businessType === 'Picklist' || businessType === 'MultiselectPicklist') {
+		const picklistData = await API.getPickLists();
+
+		setPickLists(picklistData);
+
+		if (state && listTypeDefinitionId) {
+			const picklistItemsData = await API.getPickListItems(
+				listTypeDefinitionId
+			);
+
+			setPickListItems(picklistItemsData);
+		}
+
+		if (businessType === 'Picklist' && objectFieldSettings?.length) {
+			const [{value}] = objectFieldSettings;
+			const {objectStates} = value as ObjectFieldPicklistSetting;
+			const defaultPicklistValue = objectStates.find(
+				({key}) => key === defaultValue
+			);
+
+			if (!defaultPicklistValue && defaultValue) {
+				setValues({defaultValue: undefined});
+			}
+		}
+	}
+
+	if (businessType === 'Formula') {
+		const output = objectFieldSettings?.find(
+			(fieldSetting) => fieldSetting.name === 'output'
+		);
+
+		if (output) {
+			setSelectedOutput(
+				FORMULA_OUTPUT_OPTIONS.find(
+					(formulaOption) => formulaOption.value === output?.value
+				)?.label as string
+			);
+		}
+	}
+
+	if (businessType === 'Relationship' && objectRelationshipId) {
+		const relationshipData = await API.getRelationship<TObjectRelationship>(
+			objectRelationshipId!
+		);
+
+		if (relationshipData.id) {
+			setOneToManyRelationship(relationshipData);
+		}
+	}
+}
+
 export default function ObjectFieldFormBase({
 	children,
 	creationLanguageId,
@@ -109,57 +202,9 @@ export default function ObjectFieldFormBase({
 		ObjectDefinition
 	>();
 
-	useEffect(() => {
-		const {businessType, defaultValue, objectFieldSettings} = values;
-
-		if (businessType === 'Picklist' && objectFieldSettings?.length) {
-			const [{value}] = objectFieldSettings;
-			const {objectStates} = value as ObjectFieldPicklistSetting;
-			const defaultPicklistValue = objectStates.find(
-				({key}) => key === defaultValue
-			);
-
-			if (!defaultPicklistValue && defaultValue) {
-				setValues({defaultValue: undefined});
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.defaultValue]);
-
 	const validListTypeDefinitionId =
 		values.listTypeDefinitionId !== undefined &&
 		values.listTypeDefinitionId !== 0;
-
-	useEffect(() => {
-		if (
-			values.businessType === 'Picklist' ||
-			values.businessType === 'MultiselectPicklist'
-		) {
-			API.getPickLists().then(setPickLists);
-
-			if (values.state && values.listTypeDefinitionId) {
-				API.getPickListItems(values.listTypeDefinitionId).then(
-					setPickListItems
-				);
-			}
-		}
-
-		if (values.businessType === 'Formula') {
-			const output = values.objectFieldSettings?.find(
-				(fieldSetting) => fieldSetting.name === 'output'
-			);
-
-			if (output) {
-				setSelectedOutput(
-					FORMULA_OUTPUT_OPTIONS.find(
-						(formulaOption) => formulaOption.value === output?.value
-					)?.label as string
-				);
-			}
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.businessType, values.listTypeDefinitionId]);
 
 	const filteredPicklistItems = useMemo(() => {
 		return pickListItems.filter(({name}) => {
@@ -178,42 +223,8 @@ export default function ObjectFieldFormBase({
 	}, [pickLists, values.listTypeDefinitionId]);
 
 	const handleTypeChange = async (option: ObjectFieldType) => {
-		if (
-			option.businessType === 'Picklist' ||
-			values.businessType === 'MultiselectPicklist'
-		) {
-			setPickLists(await API.getPickLists());
-		}
-
-		let objectFieldSettings: ObjectFieldSetting[] | undefined;
-
-		switch (option.businessType) {
-			case 'Attachment':
-				objectFieldSettings = [
-					{
-						name: 'acceptedFileExtensions',
-						value: 'jpeg, jpg, pdf, png',
-					},
-					{
-						name: 'maximumFileSize',
-						value: 100,
-					},
-				];
-				break;
-
-			case 'LongText':
-			case 'Text':
-				objectFieldSettings = [
-					{
-						name: 'showCounter',
-						value: false,
-					},
-				];
-				break;
-
-			default:
-				break;
-		}
+		const objectFieldSettings: ObjectFieldSetting[] =
+			fieldSettingsMap.get(option.businessType) || [];
 
 		const isSearchableByText =
 			option.businessType === 'Attachment' || option.dbType === 'String';
@@ -237,22 +248,6 @@ export default function ObjectFieldFormBase({
 			state: false,
 		});
 	};
-
-	useEffect(() => {
-		if (objectRelationshipId) {
-			const makeFetch = async () => {
-				const relationshipData = await API.getRelationship<
-					TObjectRelationship
-				>(objectRelationshipId!);
-
-				if (relationshipData.id) {
-					setOneToManyRelationship(relationshipData);
-				}
-			};
-
-			makeFetch();
-		}
-	}, [objectRelationshipId]);
 
 	const getMandatoryToggleDisabledState = () => {
 		if (
@@ -291,10 +286,21 @@ export default function ObjectFieldFormBase({
 			);
 
 			setObjectDefinition(objectDefinitionResponse);
+
+			await getFieldSettingsByBusinessType(
+				objectRelationshipId as number,
+				setOneToManyRelationship,
+				setPickListItems,
+				setPickLists,
+				setSelectedOutput,
+				setValues,
+				values
+			);
 		};
 
 		makeFetch();
-	}, [objectDefinitionExternalReferenceCode]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [objectDefinitionExternalReferenceCode, values.businessType]);
 
 	return (
 		<>

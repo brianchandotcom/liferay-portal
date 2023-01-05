@@ -81,8 +81,9 @@ interface PickListItem {
 
 interface PickList {
 	actions: Actions;
-	externalReferenceCode?: string;
+	externalReferenceCode: string;
 	id: number;
+	key: string;
 	listTypeEntries: PickListItem[];
 	name: string;
 	name_i18n: LocalizedValue<string>;

@@ -78,8 +78,7 @@ public class WorkflowPortletResourcePermission
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			groupId, WorkflowConstants.RESOURCE_NAME, 0, actionId);
+		return false;
 	}
 
 	@Override

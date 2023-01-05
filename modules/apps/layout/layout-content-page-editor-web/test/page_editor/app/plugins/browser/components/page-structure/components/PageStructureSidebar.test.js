@@ -38,8 +38,29 @@ jest.mock('frontend-js-web', () => ({
 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
 }));
 
+jest.mock(
+	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			formTypes: [
+				{
+					hasPermission: true,
+					label: 'Form Type 1',
+					value: '11111',
+				},
+				{
+					hasPermission: false,
+					label: 'Form Type 2',
+					value: '22222',
+				},
+			],
+		},
+	})
+);
+
 const renderComponent = ({
 	activeItemId = null,
+	formConfig,
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 	masterRootItemChildren = ['11-container'],
@@ -144,6 +165,26 @@ const renderComponent = ({
 									parentId: '03-column',
 									type: LAYOUT_DATA_ITEM_TYPES.fragment,
 								},
+								'06-form': {
+									children: ['07-row'],
+									config: {
+										classNameId: '11111',
+										classTypeId: '0',
+										...formConfig,
+									},
+									itemId: '06-form',
+									parentId: LAYOUT_DATA_ITEM_TYPES.root,
+									type: LAYOUT_DATA_ITEM_TYPES.form,
+								},
+								'07-row': {
+									children: [],
+									config: {
+										fragmentEntryLinkId: '001',
+									},
+									itemId: '07-row',
+									parentId: '06-form',
+									type: LAYOUT_DATA_ITEM_TYPES.fragment,
+								},
 							},
 
 							rootItems: {main: '00-main'},
@@ -220,6 +261,14 @@ const renderComponent = ({
 };
 
 describe('PageStructureSidebar', () => {
+	beforeAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = true;
+	});
+
+	afterAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = false;
+	});
+
 	it('has a warning message when there is no content', () => {
 		renderComponent({
 			masterRootItemChildren: [],
@@ -381,5 +430,42 @@ describe('PageStructureSidebar', () => {
 		);
 
 		updateItemConfig.mockClear();
+	});
+
+	describe('Form container without permissions', () => {
+		it('shows the form normally when it is mapped to an element with permissions', () => {
+			renderComponent({
+				activeItemId: '11-container',
+				rootItemChildren: ['06-form'],
+			});
+
+			expect(screen.getByText('form-container')).toBeInTheDocument();
+			expect(
+				screen.queryByText(
+					'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+				)
+			).not.toBeInTheDocument();
+		});
+
+		it('shows a permission restriction message when the form is mapped to an element without permissions and their children are not listed', () => {
+			const {baseElement} = renderComponent({
+				activeItemId: '11-container',
+				formConfig: {
+					classNameId: '22222',
+					classTypeId: '0',
+				},
+				rootItemChildren: ['06-form'],
+			});
+
+			expect(screen.getByText('form-container')).toBeInTheDocument();
+			expect(
+				screen.getByText(
+					'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+				)
+			).toBeInTheDocument();
+			expect(
+				baseElement.querySelector('.lexicon-icon-plus')
+			).not.toBeInTheDocument();
+		});
 	});
 });

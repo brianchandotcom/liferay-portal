@@ -14,8 +14,6 @@
 
 package com.liferay.segments.field.customizer;
 
-import java.util.Optional;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -27,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SegmentsFieldCustomizerRegistry {
 
-	public Optional<SegmentsFieldCustomizer> getSegmentsFieldCustomizerOptional(
+	public SegmentsFieldCustomizer getSegmentsFieldCustomizer(
 		String entityName, String fieldName);
 
 }

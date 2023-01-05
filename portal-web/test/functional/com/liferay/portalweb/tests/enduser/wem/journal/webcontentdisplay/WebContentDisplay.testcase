@@ -854,6 +854,47 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 	}
 
+	@description = "This is a test for LPS-169728. The site designer could search folders when select web content in Web Content Display."
+	@priority = "4"
+	test SearchWebContentFolder {
+		task ("Given a site designer has web content folders") {
+			JSONWebcontent.addFolder(
+				folderName = "Brake System",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addFolder(
+				folderName = "ABS Sensor",
+				groupName = "Test Site Name",
+				parentFolderName = "Brake System");
+
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Tesla ABS Wheel Speed Sensor",
+				folderName = "ABS Sensor",
+				groupName = "Test Site Name",
+				title = "Tesla ABS Wheel Speed Sensor");
+		}
+
+		task ("When the site designer select web content in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.gotoSelectWebContent();
+		}
+
+		task ("Then the site designer searches folder on modal") {
+			Search.searchCP(searchTerm = "ABS Sensor");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "2 Results for \"ABS Sensor\"");
+
+			for (var entryTitle : list "ABS Sensor,Tesla ABS Wheel Speed Sensor") {
+				LexiconList.viewListEntryTitle(listEntry = "${entryTitle}");
+			}
+		}
+	}
+
 	@description = "User can select a web content in Web Content Display widget."
 	@priority = "5"
 	test SelectWebContent {

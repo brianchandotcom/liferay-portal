@@ -258,7 +258,7 @@
 </tr>
 <tr>
 	<td>NAME_AUTHOR</td>
-	<td>//span[contains(@class, 'user-info') and contains(., '${key_nameAuthor}')]</td>
+	<td>//h4[(@class= 'component-title mt-0') and contains(., '${key_nameAuthor}')]</td>
 	<td></td>
 </tr>
 </tbody>

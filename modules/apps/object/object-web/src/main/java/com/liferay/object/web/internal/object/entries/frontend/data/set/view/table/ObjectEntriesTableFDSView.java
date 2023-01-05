@@ -103,11 +103,13 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 				if ((objectField == null) || objectField.isSystem()) {
 					_addNonbjectField(
-						fdsTableSchemaBuilder, label,
+						fdsTableSchemaBuilder, _filterLabel(label),
 						objectViewColumn.getObjectFieldName());
 				}
 				else {
-					_addObjectField(fdsTableSchemaBuilder, label, objectField);
+					_addObjectField(
+						fdsTableSchemaBuilder,
+						objectField.getLabel(locale, true), objectField);
 				}
 			}
 		);
@@ -118,26 +120,54 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	private void _addAllObjectFields(
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, Locale locale) {
 
-		if (_objectDefinition.isDefaultStorageType()) {
-			_addNonbjectField(fdsTableSchemaBuilder, "id", "id");
-		}
-		else {
-			_addNonbjectField(
-				fdsTableSchemaBuilder, "externalReferenceCode",
-				"externalReferenceCode");
-		}
-
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				_objectDefinition.getObjectDefinitionId());
+
+		String objectFieldId = null;
+		String objectFieldERC = null;
+		String objectFieldCreator = null;
+		String objectFieldStatus = null;
+
+		for (ObjectField objectField : objectFields) {
+			if (Objects.equals(objectField.getName(), "id")) {
+				objectFieldId = _filterLabel(
+					objectField.getLabel(locale, true));
+			}
+
+			if (Objects.equals(
+					objectField.getName(), "externalReferenceCode")) {
+
+				objectFieldERC = _filterLabel(
+					objectField.getLabel(locale, true));
+			}
+
+			if (Objects.equals(objectField.getName(), "creator")) {
+				objectFieldCreator = _filterLabel(
+					objectField.getLabel(locale, true));
+			}
+
+			if (Objects.equals(objectField.getName(), "status")) {
+				objectFieldStatus = _filterLabel(
+					objectField.getLabel(locale, true));
+			}
+		}
+
+		if (_objectDefinition.isDefaultStorageType()) {
+			_addNonbjectField(fdsTableSchemaBuilder, objectFieldId, "id");
+		}
+		else {
+			_addNonbjectField(
+				fdsTableSchemaBuilder, objectFieldERC, "externalReferenceCode");
+		}
 
 		objectFields.forEach(
 			objectField -> _addObjectField(
 				fdsTableSchemaBuilder, objectField.getLabel(locale, true),
 				objectField));
 
-		_addNonbjectField(fdsTableSchemaBuilder, "status", "status");
-		_addNonbjectField(fdsTableSchemaBuilder, "author", "creator");
+		_addNonbjectField(fdsTableSchemaBuilder, objectFieldStatus, "status");
+		_addNonbjectField(fdsTableSchemaBuilder, objectFieldCreator, "creator");
 	}
 
 	private void _addFDSTableSchemaField(
@@ -313,6 +343,34 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 					label, false, false);
 			}
 		}
+	}
+
+	private String _filterLabel(String label) {
+		if (label.equals("Id")) {
+			label = "id";
+		}
+
+		if (label.equals("External Reference Code")) {
+			label = "external-reference-code";
+		}
+
+		if (label.equals("Author")) {
+			label = "author";
+		}
+
+		if (label.equals("Status")) {
+			label = "status";
+		}
+
+		if (label.equals("Create Date")) {
+			label = "create-date";
+		}
+
+		if (label.equals("Modified Date")) {
+			label = "modified-date";
+		}
+
+		return label;
 	}
 
 	private String _getContentRenderer(String fieldName) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -20,6 +20,27 @@ import '@testing-library/jest-dom/extend-expect';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import ContentsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-content/components/ContentsSidebar';
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			formTypes: [
+				{
+					hasPermission: false,
+					label: 'Form Type 1',
+					subtypes: [
+						{
+							label: 'Subtype',
+							value: '111111',
+						},
+					],
+					value: '111111',
+				},
+			],
+		},
+	})
+);
 
 const PAGE_CONTENTS = [
 	{
@@ -77,17 +98,42 @@ const FRAGMENT_ENTRY_LINKS = {
 	},
 };
 
+const DEFAULT_LAYOUT_DATA = {
+	items: {
+		form: {
+			children: ['fragment'],
+			config: {
+				classNameId: '111111',
+				classTypeId: '0',
+			},
+			itemId: 'form',
+			parentId: '',
+			type: 'form',
+		},
+		fragment: {
+			children: [],
+			config: {
+				fragmentEntryLinkId: '39683',
+			},
+			itemId: 'fragment',
+			parentId: 'form',
+			type: 'fragment',
+		},
+	},
+};
+
 const renderPageContent = ({
 	fragmentEntryLinks = FRAGMENT_ENTRY_LINKS,
 	pageContents = PAGE_CONTENTS,
 	languageId = 'en_US',
 	segmentsExperienceId = '0',
-}) =>
+} = {}) =>
 	render(
 		<StoreContextProvider
 			initialState={{
 				fragmentEntryLinks,
 				languageId,
+				layoutData: DEFAULT_LAYOUT_DATA,
 				pageContents,
 				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
 				segmentsExperienceId,
@@ -98,23 +144,29 @@ const renderPageContent = ({
 	);
 
 describe('ContentsSidebar', () => {
-	afterEach(cleanup);
+	beforeAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = true;
+	});
+
+	afterAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = false;
+	});
 
 	it('shows the content list', () => {
-		const {getByText} = renderPageContent({});
+		renderPageContent();
 
-		expect(getByText('WC1')).toBeInTheDocument();
-		expect(getByText('WC2')).toBeInTheDocument();
+		expect(screen.getByText('WC1')).toBeInTheDocument();
+		expect(screen.getByText('WC2')).toBeInTheDocument();
 	});
 
 	it('shows inline text within the content list when the editable type is text', () => {
-		const {getByText} = renderPageContent({});
+		renderPageContent();
 
-		expect(getByText('Heading Example')).toBeInTheDocument();
+		expect(screen.getByText('Heading Example')).toBeInTheDocument();
 	});
 
 	it('shows inline text within the content list when the editable type is rich-text', () => {
-		const {getByText} = renderPageContent({
+		renderPageContent({
 			fragmentEntryLinks: {
 				39685: {
 					editableTypes: {'element-text': 'rich-text'},
@@ -134,34 +186,34 @@ describe('ContentsSidebar', () => {
 			pageContents: [],
 		});
 
-		expect(getByText('This is a title')).toBeInTheDocument();
+		expect(screen.getByText('This is a title')).toBeInTheDocument();
 	});
 
 	it('shows inline text corresponding to an experience', () => {
-		const {queryByText} = renderPageContent({
+		renderPageContent({
 			segmentsExperienceId: '1',
 		});
 
 		expect(
-			queryByText('Heading Example from another experience')
+			screen.queryByText('Heading Example from another experience')
 		).toBeInTheDocument();
-		expect(queryByText('Heading Example')).not.toBeInTheDocument();
-		expect(queryByText('A paragraph')).not.toBeInTheDocument();
+		expect(screen.queryByText('Heading Example')).not.toBeInTheDocument();
+		expect(screen.queryByText('A paragraph')).not.toBeInTheDocument();
 	});
 
 	it('shows an alert when there is no content', () => {
-		const {getByText} = renderPageContent({
+		renderPageContent({
 			fragmentEntryLinks: {},
 			pageContents: [],
 		});
 
 		expect(
-			getByText('there-is-no-content-on-this-page')
+			screen.getByText('there-is-no-content-on-this-page')
 		).toBeInTheDocument();
 	});
 
 	it('shows only text content for inline text (without html) when the editable type is text', () => {
-		const {queryByText} = renderPageContent({
+		renderPageContent({
 			fragmentEntryLinks: {
 				39685: {
 					editableTypes: {'element-text': 'text'},
@@ -181,11 +233,11 @@ describe('ContentsSidebar', () => {
 			pageContents: [],
 		});
 
-		expect(queryByText('This is a title')).toBeInTheDocument();
+		expect(screen.queryByText('This is a title')).toBeInTheDocument();
 	});
 
 	it('shows only text content for inline text (without html) when the editable type is rich text', () => {
-		const {queryByText} = renderPageContent({
+		renderPageContent({
 			fragmentEntryLinks: {
 				39685: {
 					editableTypes: {'element-text': 'rich-text'},
@@ -206,11 +258,11 @@ describe('ContentsSidebar', () => {
 			pageContents: [],
 		});
 
-		expect(queryByText('This is a paragraph')).toBeInTheDocument();
+		expect(screen.queryByText('This is a paragraph')).toBeInTheDocument();
 	});
 
 	it('does not show inline text within the content list when the editable type is rich-text and there are only images', () => {
-		const {getByText} = renderPageContent({
+		renderPageContent({
 			fragmentEntryLinks: {
 				39685: {
 					editableTypes: {'element-text': 'rich-text'},
@@ -232,7 +284,13 @@ describe('ContentsSidebar', () => {
 		});
 
 		expect(
-			getByText('there-is-no-content-on-this-page')
+			screen.getByText('there-is-no-content-on-this-page')
 		).toBeInTheDocument();
+	});
+
+	it('does not show the inline text belonging to a form without permissions', () => {
+		renderPageContent({});
+
+		expect(screen.queryByText('A paragraph')).not.toBeInTheDocument();
 	});
 });

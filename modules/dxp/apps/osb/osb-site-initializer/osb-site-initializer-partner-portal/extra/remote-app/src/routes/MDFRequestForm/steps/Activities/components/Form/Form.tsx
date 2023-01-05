@@ -57,7 +57,7 @@ const Form = ({
 		);
 
 		const displaySection =
-			currentActivity.typeActivity?.key === TypeActivityKey.EVENT
+			currentActivity?.typeActivity?.key === TypeActivityKey.EVENT
 				? 'true'
 				: '';
 
@@ -88,10 +88,10 @@ const Form = ({
 			() =>
 				fieldEntries[LiferayPicklistName.TACTIC]?.filter((tactic) =>
 					String(tactic.value).includes(
-						String(currentActivity.typeActivity?.key)
+						String(currentActivity?.typeActivity?.key)
 					)
 				),
-			[currentActivity.typeActivity?.key, fieldEntries]
+			[currentActivity?.typeActivity?.key, fieldEntries]
 		),
 		(selectedTactic) =>
 			setFieldValue(
@@ -105,7 +105,7 @@ const Form = ({
 		[TypeActivityKey.DIGITAL_MARKETING]: (
 			<DigitalMarketingFields
 				currentActivityIndex={currentActivityIndex}
-				tactic={currentActivity.tactic.key as TacticKeys}
+				tactic={currentActivity?.tactic?.key as TacticKeys}
 			/>
 		),
 		[TypeActivityKey.CONTENT_MARKETING]: (
@@ -116,13 +116,13 @@ const Form = ({
 		[TypeActivityKey.EVENT]: (
 			<EventFields
 				currentActivityIndex={currentActivityIndex}
-				tactic={currentActivity.tactic.key as TacticKeys}
+				tactic={currentActivity?.tactic?.key as TacticKeys}
 			/>
 		),
 		[TypeActivityKey.MISCELLANEOUS_MARKETING]: (
 			<MiscellaneousMarketingFields
 				currentActivityIndex={currentActivityIndex}
-				tactic={currentActivity.tactic.key as TacticKeys}
+				tactic={currentActivity?.tactic?.key as TacticKeys}
 			/>
 		),
 	};
@@ -160,7 +160,7 @@ const Form = ({
 
 				{
 					typeActivityComponents[
-						String(currentActivity.typeActivity?.key) || ''
+						String(currentActivity?.typeActivity?.key) || ''
 					]
 				}
 
@@ -168,7 +168,7 @@ const Form = ({
 					currentActivityIndex={currentActivityIndex}
 					fieldEntries={fieldEntries}
 					selectedTypeActivity={String(
-						currentActivity.typeActivity.key
+						currentActivity?.typeActivity?.key
 					)}
 				/>
 

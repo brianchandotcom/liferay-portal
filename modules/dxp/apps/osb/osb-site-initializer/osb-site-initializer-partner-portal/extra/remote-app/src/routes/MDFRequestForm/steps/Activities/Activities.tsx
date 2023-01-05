@@ -13,7 +13,7 @@ import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {ArrayHelpers, useFormikContext} from 'formik';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
@@ -128,9 +128,13 @@ const Activities = ({
 		setIsDraft(true);
 	};
 
-	if (isDraft) {
-		onSaveAsDraft?.(values, formikHelpers);
-	}
+	useEffect(() => {
+		if (isDraft) {
+			onSaveAsDraft?.(values, formikHelpers);
+			setIsDraft(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isDraft]);
 
 	return (
 		<PRMForm

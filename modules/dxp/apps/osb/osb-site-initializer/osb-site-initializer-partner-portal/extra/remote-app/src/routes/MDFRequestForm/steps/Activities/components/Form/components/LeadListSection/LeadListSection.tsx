@@ -36,14 +36,14 @@ const LeadListSection = ({
 	const onLeadListOutcomeSelected = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const value = event.target.value;
+		const leadListValue = event.target.value;
 
 		setFieldValue(
 			`activities[${currentActivityIndex}].activityDescription.leadGenerated`,
-			value
+			leadListValue
 		);
 
-		if (value) {
+		if (leadListValue) {
 			setFieldValue(
 				`activities[${currentActivityIndex}].activityDescription.targetOfLeads`,
 				''
@@ -73,7 +73,7 @@ const LeadListSection = ({
 				/>
 			)}
 
-			{values.activities[currentActivityIndex].activityDescription
+			{values.activities[currentActivityIndex]?.activityDescription
 				?.leadGenerated === 'true' && (
 				<>
 					<PRMFormik.Field

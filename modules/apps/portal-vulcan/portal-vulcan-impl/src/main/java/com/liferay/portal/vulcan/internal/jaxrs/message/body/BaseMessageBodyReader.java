@@ -39,7 +39,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -201,14 +200,17 @@ public abstract class BaseMessageBodyReader
 	}
 
 	private ObjectMapper _getObjectMapper(Class<?> clazz) {
-		return Optional.ofNullable(
-			_providers.getContextResolver(_contextType, _mediaType)
-		).map(
-			contextResolver -> contextResolver.getContext(clazz)
-		).orElseThrow(
-			() -> new InternalServerErrorException(
-				"Unable to generate object mapper for class " + clazz)
-		);
+		ContextResolver<? extends ObjectMapper> contextResolver =
+			_providers.getContextResolver(_contextType, _mediaType);
+
+		if ((contextResolver == null) ||
+			(contextResolver.getContext(clazz) == null)) {
+
+			throw new InternalServerErrorException(
+				"Unable to generate object mapper for class " + clazz);
+		}
+
+		return contextResolver.getContext(clazz);
 	}
 
 	private boolean _isCreateOrUpdateMethod(String method) {

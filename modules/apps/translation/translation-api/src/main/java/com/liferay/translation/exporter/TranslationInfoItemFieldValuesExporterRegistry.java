@@ -15,7 +15,6 @@
 package com.liferay.translation.exporter;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -36,8 +35,8 @@ public interface TranslationInfoItemFieldValuesExporterRegistry {
 		return getTranslationInfoItemFieldValuesExporters();
 	}
 
-	public Optional<TranslationInfoItemFieldValuesExporter>
-		getTranslationInfoItemFieldValuesExporterOptional(String mimeType);
+	public TranslationInfoItemFieldValuesExporter
+		getTranslationInfoItemFieldValuesExporter(String mimeType);
 
 	public Collection<TranslationInfoItemFieldValuesExporter>
 		getTranslationInfoItemFieldValuesExporters();

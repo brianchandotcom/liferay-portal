@@ -95,11 +95,7 @@ definition {
 			userLoginEmailAddress = "userea1@liferay.com",
 			userLoginFullName = "userfn1 userln1");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Memberships");
+		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
 		for (var i : list "1,2") {
 			Depot.viewMember(

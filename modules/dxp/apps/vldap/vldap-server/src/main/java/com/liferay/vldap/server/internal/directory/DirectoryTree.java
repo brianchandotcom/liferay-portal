@@ -546,11 +546,10 @@ public class DirectoryTree {
 
 			return toFilterConstraintsFromLeafNode(leafNode);
 		}
-		else {
-			BranchNode branchNode = (BranchNode)exprNode;
 
-			return toFilterConstraintsFromBranchNode(branchNode);
-		}
+		BranchNode branchNode = (BranchNode)exprNode;
+
+		return toFilterConstraintsFromBranchNode(branchNode);
 	}
 
 	protected List<FilterConstraint> toFilterConstraintsFromBranchNode(

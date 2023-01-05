@@ -41,10 +41,9 @@ public enum ExecutionType {
 		else if (Objects.equals(ON_TIMER.getValue(), value)) {
 			return ON_TIMER;
 		}
-		else {
-			throw new KaleoDefinitionValidationException.InvalidExecutionType(
-				value);
-		}
+
+		throw new KaleoDefinitionValidationException.InvalidExecutionType(
+			value);
 	}
 
 	public String getValue() {

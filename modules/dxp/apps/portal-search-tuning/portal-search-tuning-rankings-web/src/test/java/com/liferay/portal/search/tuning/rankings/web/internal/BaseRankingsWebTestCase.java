@@ -212,9 +212,8 @@ public abstract class BaseRankingsWebTestCase {
 				else if (argument.equals("userName")) {
 					return "theAuthor";
 				}
-				else {
-					return "undefined";
-				}
+
+				return "undefined";
 			}
 		);
 

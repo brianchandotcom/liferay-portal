@@ -513,12 +513,11 @@ public class ObjectEntryKeywordQueryContributor
 					quoteStart, keywords.indexOf(CharPool.QUOTE, quoteStart + 1)
 				};
 			}
-			else {
-				return new int[] {
-					rangeStart,
-					keywords.indexOf(CharPool.CLOSE_BRACKET, rangeStart + 1)
-				};
-			}
+
+			return new int[] {
+				rangeStart,
+				keywords.indexOf(CharPool.CLOSE_BRACKET, rangeStart + 1)
+			};
 		}
 
 		protected String[] split(String keywords) {

@@ -54,10 +54,9 @@ public enum DurationScale {
 		else if (Objects.equals(YEAR.getValue(), value)) {
 			return YEAR;
 		}
-		else {
-			throw new KaleoDefinitionValidationException.InvalidDurationScale(
-				value);
-		}
+
+		throw new KaleoDefinitionValidationException.InvalidDurationScale(
+			value);
 	}
 
 	public String getValue() {

@@ -318,9 +318,8 @@ public class ConfigurationHandler {
 		else if (code == _TOKEN_STRING) {
 			return _readQuoted(pushbackReader);
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	private static Object _readValue(PushbackReader pushbackReader)
@@ -354,9 +353,8 @@ public class ConfigurationHandler {
 
 			return value;
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	private static void _writeArray(Writer writer, Object arrayValue)

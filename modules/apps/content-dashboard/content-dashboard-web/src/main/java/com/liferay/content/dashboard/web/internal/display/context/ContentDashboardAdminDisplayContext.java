@@ -174,9 +174,8 @@ public class ContentDashboardAdminDisplayContext {
 			return ResourceBundleUtil.getString(
 				_resourceBundle, "content-per-x", vocabularyNames.get(0));
 		}
-		else {
-			return ResourceBundleUtil.getString(_resourceBundle, "content");
-		}
+
+		return ResourceBundleUtil.getString(_resourceBundle, "content");
 	}
 
 	public List<Long> getAuthorIds() {

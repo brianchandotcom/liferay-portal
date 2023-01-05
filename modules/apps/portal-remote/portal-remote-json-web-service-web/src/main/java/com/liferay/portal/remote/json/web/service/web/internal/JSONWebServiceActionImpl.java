@@ -363,47 +363,46 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 			return _generifyMap(map, genericParameterTypes);
 		}
-		else {
-			Object parameterValue = null;
 
-			try {
-				parameterValue = _convertType(value, parameterType);
-			}
-			catch (Exception exception1) {
-				if (value instanceof Map) {
-					try {
-						parameterValue = _createDefaultParameterValue(
-							null, parameterType);
-					}
-					catch (Exception exception2) {
-						ClassCastException classCastException =
-							new ClassCastException(exception1.getMessage());
+		Object parameterValue = null;
 
-						classCastException.addSuppressed(exception2);
-
-						throw classCastException;
-					}
-
-					BeanCopy beanCopy = new BeanCopy(value, parameterValue);
-
-					beanCopy.copy();
-				}
-				else {
-					String valueString = value.toString();
-
-					valueString = valueString.trim();
-
-					if (!valueString.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-						throw new ClassCastException(exception1.getMessage());
-					}
-
-					parameterValue = JSONFactoryUtil.looseDeserialize(
-						valueString, parameterType);
-				}
-			}
-
-			return parameterValue;
+		try {
+			parameterValue = _convertType(value, parameterType);
 		}
+		catch (Exception exception1) {
+			if (value instanceof Map) {
+				try {
+					parameterValue = _createDefaultParameterValue(
+						null, parameterType);
+				}
+				catch (Exception exception2) {
+					ClassCastException classCastException =
+						new ClassCastException(exception1.getMessage());
+
+					classCastException.addSuppressed(exception2);
+
+					throw classCastException;
+				}
+
+				BeanCopy beanCopy = new BeanCopy(value, parameterValue);
+
+				beanCopy.copy();
+			}
+			else {
+				String valueString = value.toString();
+
+				valueString = valueString.trim();
+
+				if (!valueString.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+					throw new ClassCastException(exception1.getMessage());
+				}
+
+				parameterValue = JSONFactoryUtil.looseDeserialize(
+					valueString, parameterType);
+			}
+		}
+
+		return parameterValue;
 	}
 
 	private Object _createDefaultParameterValue(

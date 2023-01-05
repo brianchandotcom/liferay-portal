@@ -501,15 +501,14 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			return ddmFormFieldOptions.getOptionReference(
 				value.getString(value.getDefaultLocale()));
 		}
-		else {
-			Map<Locale, String> values = value.getValues();
 
-			return String.valueOf(
-				_getValue(
-					ddmFormFieldValue, value.getDefaultLocale(),
-					objectFieldDBTypes.get(objectFieldName),
-					values.get(value.getDefaultLocale())));
-		}
+		Map<Locale, String> values = value.getValues();
+
+		return String.valueOf(
+			_getValue(
+				ddmFormFieldValue, value.getDefaultLocale(),
+				objectFieldDBTypes.get(objectFieldName),
+				values.get(value.getDefaultLocale())));
 	}
 
 	private Object _getValue(
@@ -544,9 +543,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			return GetterUtil.getDouble(numberFormat.parse(value));
 		}
-		else {
-			return value;
-		}
+
+		return value;
 	}
 
 	private Map<String, ObjectField> _toObjectFieldsMap(

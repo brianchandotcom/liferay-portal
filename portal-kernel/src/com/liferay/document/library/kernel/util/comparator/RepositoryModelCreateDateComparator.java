@@ -136,11 +136,10 @@ public class RepositoryModelCreateDateComparator<T>
 
 			return dlFolder.getCreateDate();
 		}
-		else {
-			RepositoryEntry repositoryEntry = (RepositoryEntry)object;
 
-			return repositoryEntry.getCreateDate();
-		}
+		RepositoryEntry repositoryEntry = (RepositoryEntry)object;
+
+		return repositoryEntry.getCreateDate();
 	}
 
 	private final boolean _ascending;

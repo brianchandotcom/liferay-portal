@@ -165,9 +165,8 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 
 			return JournalPortletKeys.JOURNAL;
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		return StringPool.BLANK;
 	}
 
 	private final String _className;

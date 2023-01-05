@@ -150,9 +150,8 @@ public class Validator {
 		else if ((object1 == null) || (object2 == null)) {
 			return false;
 		}
-		else {
-			return object1.equals(object2);
-		}
+
+		return object1.equals(object2);
 	}
 
 	/**
@@ -299,9 +298,8 @@ public class Validator {
 		else if (object == null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**

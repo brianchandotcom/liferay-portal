@@ -86,9 +86,8 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 				else if (_isPreviewFailure(fileVersion)) {
 					return "/embed/error.jsp";
 				}
-				else {
-					return "/embed/generating.jsp";
-				}
+
+				return "/embed/generating.jsp";
 			}
 		}
 		catch (PortalException portalException) {

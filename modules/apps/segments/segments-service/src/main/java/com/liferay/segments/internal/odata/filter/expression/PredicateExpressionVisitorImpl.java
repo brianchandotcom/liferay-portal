@@ -324,9 +324,8 @@ public class PredicateExpressionVisitorImpl<T extends Map>
 				_normalizeStringLiteral(
 					String.valueOf(p.get(entityField.getName()))));
 		}
-		else {
-			return p -> fieldValue.equals(p.get(entityField.getName()));
-		}
+
+		return p -> fieldValue.equals(p.get(entityField.getName()));
 	}
 
 	private Predicate<T> _getGEPredicate(

@@ -45,9 +45,8 @@ public class PreferencesValueUtil {
 			else if (actualValue.equals(_NULL_ELEMENT)) {
 				return new String[] {null};
 			}
-			else {
-				return new String[] {actualValue};
-			}
+
+			return new String[] {actualValue};
 		}
 
 		String[] actualValues = new String[values.length];

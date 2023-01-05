@@ -168,10 +168,9 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			return PortletPropsKeys.
 				SAML_KEYSTORE_ENCRYPTION_CREDENTIAL_PASSWORD;
 		}
-		else {
-			throw new UnsupportedBindingException(
-				"Unsupported certificate usage: " + certificateUsage.name());
-		}
+
+		throw new UnsupportedBindingException(
+			"Unsupported certificate usage: " + certificateUsage.name());
 	}
 
 	private void _importCertificate(ActionRequest actionRequest, User user)

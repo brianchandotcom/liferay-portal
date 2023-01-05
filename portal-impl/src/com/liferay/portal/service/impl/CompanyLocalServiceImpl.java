@@ -1583,22 +1583,20 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				throw new CompanyVirtualHostException(
 					"Virtual hostname is invalid");
 			}
-			else {
-				VirtualHost virtualHost =
-					_virtualHostLocalService.fetchVirtualHost(virtualHostname);
 
-				if (virtualHost == null) {
-					return;
-				}
+			VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
+				virtualHostname);
 
-				Company virtualHostnameCompany =
-					companyPersistence.findByPrimaryKey(
-						virtualHost.getCompanyId());
+			if (virtualHost == null) {
+				return;
+			}
 
-				if (!webId.equals(virtualHostnameCompany.getWebId())) {
-					throw new CompanyVirtualHostException(
-						"Duplicate virtual hostname " + virtualHostname);
-				}
+			Company virtualHostnameCompany =
+				companyPersistence.findByPrimaryKey(virtualHost.getCompanyId());
+
+			if (!webId.equals(virtualHostnameCompany.getWebId())) {
+				throw new CompanyVirtualHostException(
+					"Duplicate virtual hostname " + virtualHostname);
 			}
 		}
 		catch (CompanyVirtualHostException companyVirtualHostException) {

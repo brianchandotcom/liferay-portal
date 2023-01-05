@@ -44,9 +44,8 @@ public enum DDMFormFieldRuleType implements Serializable {
 		else if (Objects.equals(VISIBILITY.getValue(), value)) {
 			return VISIBILITY;
 		}
-		else {
-			throw new IllegalArgumentException("Invalid value " + value);
-		}
+
+		throw new IllegalArgumentException("Invalid value " + value);
 	}
 
 	public String getValue() {

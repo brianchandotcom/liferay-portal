@@ -46,10 +46,9 @@ public enum RecipientType {
 		else if (Objects.equals(USER.getValue(), value)) {
 			return USER;
 		}
-		else {
-			throw new KaleoDefinitionValidationException.InvalidRecipientType(
-				value);
-		}
+
+		throw new KaleoDefinitionValidationException.InvalidRecipientType(
+			value);
 	}
 
 	public String getValue() {

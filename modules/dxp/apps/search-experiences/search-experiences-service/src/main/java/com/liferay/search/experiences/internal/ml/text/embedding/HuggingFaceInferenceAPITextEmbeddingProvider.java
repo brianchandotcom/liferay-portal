@@ -110,12 +110,11 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 					"The selected model is not valid for creating text " +
 						"embedding");
 			}
-			else {
-				List<Double> list = JSONUtil.toDoubleList(
-					_getJSONArray(_jsonFactory.createJSONArray(responseJSON)));
 
-				return list.toArray(new Double[0]);
-			}
+			List<Double> list = JSONUtil.toDoubleList(
+				_getJSONArray(_jsonFactory.createJSONArray(responseJSON)));
+
+			return list.toArray(new Double[0]);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

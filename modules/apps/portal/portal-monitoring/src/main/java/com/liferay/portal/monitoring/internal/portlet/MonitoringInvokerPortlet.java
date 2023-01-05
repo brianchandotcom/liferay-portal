@@ -333,9 +333,8 @@ public class MonitoringInvokerPortlet
 		else if (exception instanceof PortletException) {
 			throw (PortletException)exception;
 		}
-		else {
-			throw new PortletException("Unable to process portlet", exception);
-		}
+
+		throw new PortletException("Unable to process portlet", exception);
 	}
 
 	private void _render(

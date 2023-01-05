@@ -163,11 +163,10 @@ public class RepositoryModelSizeComparator<T> extends OrderByComparator<T> {
 		else if (object instanceof DLFolder || object instanceof Folder) {
 			return 0;
 		}
-		else {
-			FileEntry fileEntry = (FileEntry)object;
 
-			return fileEntry.getSize();
-		}
+		FileEntry fileEntry = (FileEntry)object;
+
+		return fileEntry.getSize();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

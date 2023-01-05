@@ -137,11 +137,10 @@ public class RepositoryModelModifiedDateComparator<T>
 
 			return dlFolder.getModifiedDate();
 		}
-		else {
-			RepositoryEntry repositoryEntry = (RepositoryEntry)object;
 
-			return repositoryEntry.getModifiedDate();
-		}
+		RepositoryEntry repositoryEntry = (RepositoryEntry)object;
+
+		return repositoryEntry.getModifiedDate();
 	}
 
 	private final boolean _ascending;

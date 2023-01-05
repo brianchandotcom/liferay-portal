@@ -912,13 +912,11 @@ public class Recurrence implements Serializable {
 		else if (frequency == NO_RECURRENCE) {
 			return NO_RECURRENCE;
 		}
-		else {
 
-			// Shouldn't happen
+		// Shouldn't happen
 
-			throw new IllegalStateException(
-				"Internal error: Unknown frequency value");
-		}
+		throw new IllegalStateException(
+			"Internal error: Unknown frequency value");
 	}
 
 	/**

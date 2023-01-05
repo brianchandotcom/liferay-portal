@@ -160,10 +160,8 @@ public class MonitoringFilter
 			else if (exception instanceof ServletException) {
 				throw (ServletException)exception;
 			}
-			else {
-				throw new ServletException(
-					"Unable to execute request", exception);
-			}
+
+			throw new ServletException("Unable to execute request", exception);
 		}
 		finally {
 			if (portalRequestDataSample != null) {

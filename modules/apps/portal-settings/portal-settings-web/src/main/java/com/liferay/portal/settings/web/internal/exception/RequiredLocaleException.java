@@ -85,15 +85,14 @@ public class RequiredLocaleException extends PortalException {
 				group1.getDescriptiveName(), group2.getDescriptiveName()
 			};
 		}
-		else {
-			Group group1 = groups.get(0);
-			Group group2 = groups.get(1);
 
-			return new String[] {
-				group1.getDescriptiveName(), group2.getDescriptiveName(),
-				String.valueOf(groups.size() - 2)
-			};
-		}
+		Group group1 = groups.get(0);
+		Group group2 = groups.get(1);
+
+		return new String[] {
+			group1.getDescriptiveName(), group2.getDescriptiveName(),
+			String.valueOf(groups.size() - 2)
+		};
 	}
 
 	private static String _getRequiredLocaleMessageKey(List<Group> groups) {

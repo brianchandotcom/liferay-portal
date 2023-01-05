@@ -54,9 +54,8 @@ public final class AllowedIPAddressesValidatorFactory {
 						ipAddressAndNetmask[0]),
 					ipAddressAndNetmask);
 			}
-			else {
-				return _ALLOWED_IP_ADDRESSES_VALIDATOR;
-			}
+
+			return _ALLOWED_IP_ADDRESSES_VALIDATOR;
 		}
 		catch (Exception exception) {
 			_log.error("Invalid configured address: ", exception);

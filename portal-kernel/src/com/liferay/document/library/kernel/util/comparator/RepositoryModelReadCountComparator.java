@@ -165,11 +165,10 @@ public class RepositoryModelReadCountComparator<T>
 		else if (object instanceof DLFolder || object instanceof Folder) {
 			return 0;
 		}
-		else {
-			FileEntry fileEntry = (FileEntry)object;
 
-			return fileEntry.getReadCount();
-		}
+		FileEntry fileEntry = (FileEntry)object;
+
+		return fileEntry.getReadCount();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

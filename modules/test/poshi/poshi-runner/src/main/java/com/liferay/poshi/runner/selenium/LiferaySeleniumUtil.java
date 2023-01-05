@@ -299,9 +299,8 @@ public class LiferaySeleniumUtil {
 
 			return By.xpath(locator);
 		}
-		else {
-			return By.id(locator);
-		}
+
+		return By.id(locator);
 	}
 
 	public static String getEmailBody(String index) throws Exception {

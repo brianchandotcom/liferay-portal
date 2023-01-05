@@ -72,13 +72,12 @@ public class DDMFormFieldUtil {
 			else if (name.equals(ddmFormField.getFieldReference())) {
 				return ddmFormField;
 			}
-			else {
-				DDMFormField nestedDDMFormField = _getDDMFormField(
-					ddmFormField.getNestedDDMFormFields(), name);
 
-				if (nestedDDMFormField != null) {
-					return nestedDDMFormField;
-				}
+			DDMFormField nestedDDMFormField = _getDDMFormField(
+				ddmFormField.getNestedDDMFormFields(), name);
+
+			if (nestedDDMFormField != null) {
+				return nestedDDMFormField;
 			}
 		}
 

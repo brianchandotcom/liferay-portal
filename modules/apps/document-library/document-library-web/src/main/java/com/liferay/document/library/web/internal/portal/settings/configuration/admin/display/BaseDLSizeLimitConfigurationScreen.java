@@ -121,10 +121,8 @@ public abstract class BaseDLSizeLimitConfigurationScreen
 
 			return 0L;
 		}
-		else {
-			throw new IllegalArgumentException(
-				"Unsupported scope: " + getScope());
-		}
+
+		throw new IllegalArgumentException("Unsupported scope: " + getScope());
 	}
 
 }

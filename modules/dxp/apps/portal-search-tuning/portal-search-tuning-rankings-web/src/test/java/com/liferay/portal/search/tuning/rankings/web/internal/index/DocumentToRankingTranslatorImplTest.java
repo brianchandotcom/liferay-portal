@@ -76,9 +76,8 @@ public class DocumentToRankingTranslatorImplTest {
 				else if (argument.equals(RankingFields.BLOCKS)) {
 					return Arrays.asList("theBlock1", "theBlock2");
 				}
-				else {
-					return Collections.emptyList();
-				}
+
+				return Collections.emptyList();
 			}
 		);
 

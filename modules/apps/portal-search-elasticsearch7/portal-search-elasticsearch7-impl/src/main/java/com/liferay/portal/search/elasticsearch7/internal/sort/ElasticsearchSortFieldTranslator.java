@@ -209,10 +209,8 @@ public class ElasticsearchSortFieldTranslator
 		else if (sortMode == SortMode.SUM) {
 			return org.elasticsearch.search.sort.SortMode.SUM;
 		}
-		else {
-			throw new IllegalArgumentException(
-				"Invalid sort mode: " + sortMode);
-		}
+
+		throw new IllegalArgumentException("Invalid sort mode: " + sortMode);
 	}
 
 	protected org.elasticsearch.search.sort.SortOrder translate(
@@ -224,10 +222,8 @@ public class ElasticsearchSortFieldTranslator
 		else if (sortOrder == SortOrder.DESC) {
 			return org.elasticsearch.search.sort.SortOrder.DESC;
 		}
-		else {
-			throw new IllegalArgumentException(
-				"Invalid sort order: " + sortOrder);
-		}
+
+		throw new IllegalArgumentException("Invalid sort order: " + sortOrder);
 	}
 
 	private final DistanceUnitTranslator _distanceUnitTranslator =

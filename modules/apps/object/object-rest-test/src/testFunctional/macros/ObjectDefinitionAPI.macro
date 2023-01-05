@@ -823,6 +823,29 @@ definition {
 		return "${response}";
 	}
 
+	macro getObjectEntryById {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(parameter)) {
+			var api = "${en_US_plural_label_lowercase}/${objectEntryId}?${parameter}=${parameterValue}";
+		}
+		else {
+			var api = "${en_US_plural_label_lowercase}/${objectEntryId}";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/${api} \
+			-u test@liferay.com:test
+		''';
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
 	macro getObjectEntryRelation {
 		var getObjectEntryRelation = ObjectDefinitionAPI._getObjectEntryRelation(
 			en_US_plural_label = "${en_US_plural_label}",
@@ -924,12 +947,59 @@ definition {
 		return "${staticObjectEntryId4}";
 	}
 
+	macro setUpGlobalStudentId {
+		var studentId = ObjectDefinitionAPI.createObjectEntryWithName(
+			en_US_plural_label = "students",
+			name = "Student Name");
+
+		var response = ObjectDefinitionAPI.getObjectEntryById(
+			en_US_plural_label = "students",
+			objectEntryId = "${studentId}");
+
+		var studentErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+		static var staticStudentErc = "${studentErc}";
+		static var staticStudentId = "${studentId}";
+
+		return "${staticStudentErc}";
+
+		return "${staticStudentId}";
+	}
+
+	macro setUpGlobalSubjectId {
+		var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+			en_US_plural_label = "subjects",
+			name = "Subject Name");
+
+		var response = ObjectDefinitionAPI.getObjectEntryById(
+			en_US_plural_label = "subjects",
+			objectEntryId = "${subjectId}");
+
+		var subjectErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+		static var staticSubjectErc = "${subjectErc}";
+		static var staticSubjectId = "${subjectId}";
+
+		return "${staticSubjectErc}";
+
+		return "${staticSubjectId}";
+	}
+
 	macro setUpGlobalUniversityId {
 		var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "universities",
 			name = "University Name");
 
+		var response = ObjectDefinitionAPI.getObjectEntryById(
+			en_US_plural_label = "universities",
+			objectEntryId = "${universityId}");
+
+		var universityErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+		static var staticUniversityErc = "${universityErc}";
 		static var staticUniversityId = "${universityId}";
+
+		return "${staticUniversityErc}";
 
 		return "${staticUniversityId}";
 	}

@@ -130,7 +130,7 @@ public class ClientExtensionServicePreActionTest {
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
-		_assertThemeCSSURLs(_layout, Collections.emptyMap());
+		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true);
 	}
 
 	@Test
@@ -143,7 +143,7 @@ public class ClientExtensionServicePreActionTest {
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
-		_assertThemeCSSURLs(_layout, Collections.emptyMap());
+		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true);
 	}
 
 	@Test
@@ -199,7 +199,7 @@ public class ClientExtensionServicePreActionTest {
 
 		_layoutLocalService.updateLayout(_layout);
 
-		_assertThemeCSSURLs(_layout, Collections.emptyMap());
+		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true);
 	}
 
 	private void _addFaviconClientExtensionEntry() throws Exception {
@@ -249,20 +249,30 @@ public class ClientExtensionServicePreActionTest {
 		Assert.assertEquals(_URL_FAVICON, themeDisplay.getFaviconURL());
 	}
 
-	private void _assertThemeCSSURLs(Layout layout, Map<String, String> params)
+	private void _assertThemeCSSURLs(
+			Layout layout, Map<String, String> params,
+			boolean clientExtensionApplied)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout, params);
 
-		_processServicePreAction(mockHttpServletRequest);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Assert.assertEquals(_URL_CLAY_CSS, themeDisplay.getClayCSSURL());
-		Assert.assertEquals(_URL_MAIN_CSS, themeDisplay.getMainCSSURL());
+		String expectedClayCSSURL = _URL_CLAY_CSS;
+		String expectedMainCSSURL = _URL_MAIN_CSS;
+
+		if (!clientExtensionApplied) {
+			expectedClayCSSURL = themeDisplay.getClayCSSURL();
+			expectedMainCSSURL = themeDisplay.getMainCSSURL();
+		}
+
+		_processServicePreAction(mockHttpServletRequest);
+
+		Assert.assertEquals(expectedClayCSSURL, themeDisplay.getClayCSSURL());
+		Assert.assertEquals(expectedMainCSSURL, themeDisplay.getMainCSSURL());
 	}
 
 	private LifecycleAction _getLifecycleAction() {

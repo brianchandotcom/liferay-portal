@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * Represents a segment criteria as a composition of {@link Criterion} objects.
@@ -94,19 +92,13 @@ public final class Criteria implements Serializable {
 	}
 
 	public Conjunction getTypeConjunction(Type type) {
-		Collection<Criterion> criteria = _criteria.values();
+		for (Criterion criterion : _criteria.values()) {
+			if (Objects.equals(type.getValue(), criterion.getTypeValue())) {
+				return Conjunction.parse(criterion.getConjunction());
+			}
+		}
 
-		Stream<Criterion> stream = criteria.stream();
-
-		return stream.filter(
-			criterion -> Objects.equals(
-				type.getValue(), criterion.getTypeValue())
-		).map(
-			criterion -> Conjunction.parse(criterion.getConjunction())
-		).findFirst(
-		).orElse(
-			Conjunction.AND
-		);
+		return Conjunction.AND;
 	}
 
 	public static final class Criterion implements Serializable {

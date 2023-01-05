@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ALERT_TOAST</td>
-	<td>//*[@id='ToastAlertContainer']</td>
+	<td>//*[@id='ToastAlertContainer']//*[contains(@class, 'alert-${key_type}')]</td>
 	<td></td>
 </tr>
 </tbody>

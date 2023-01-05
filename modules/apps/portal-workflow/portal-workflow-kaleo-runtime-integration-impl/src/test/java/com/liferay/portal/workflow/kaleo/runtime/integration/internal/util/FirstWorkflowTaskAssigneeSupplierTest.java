@@ -21,8 +21,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -55,14 +53,14 @@ public class FirstWorkflowTaskAssigneeSupplierTest {
 		FirstWorkflowTaskAssigneeSupplier firstWorkflowTaskAssigneeSupplier =
 			new FirstWorkflowTaskAssigneeSupplier(kaleoTaskInstanceToken);
 
-		Optional<WorkflowTaskAssignee> firstWorkflowTaskAssigneeOptional =
+		WorkflowTaskAssignee firstWorkflowTaskAssignee =
 			firstWorkflowTaskAssigneeSupplier.get();
 
-		Assert.assertTrue(firstWorkflowTaskAssigneeOptional.isPresent());
+		Assert.assertNotNull(firstWorkflowTaskAssignee);
 
 		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			expectedAssigneeClassName, expectedAssigneeClassPK,
-			firstWorkflowTaskAssigneeOptional.get());
+			firstWorkflowTaskAssignee);
 	}
 
 	@Test
@@ -73,10 +71,10 @@ public class FirstWorkflowTaskAssigneeSupplierTest {
 		FirstWorkflowTaskAssigneeSupplier firstWorkflowTaskAssigneeSupplier =
 			new FirstWorkflowTaskAssigneeSupplier(kaleoTaskInstanceToken);
 
-		Optional<WorkflowTaskAssignee> firstWorkflowTaskAssigneeOptional =
+		WorkflowTaskAssignee firstWorkflowTaskAssignee =
 			firstWorkflowTaskAssigneeSupplier.get();
 
-		Assert.assertFalse(firstWorkflowTaskAssigneeOptional.isPresent());
+		Assert.assertNull(firstWorkflowTaskAssignee);
 	}
 
 }

@@ -32,7 +32,7 @@ export default async function liferayFetcher<T>(
 		return response.json();
 	}
 
-	return response as T;
+	return response as any;
 }
 
 liferayFetcher.post = <T>(

@@ -11,7 +11,6 @@
  */
 
 import {useFormikContext} from 'formik';
-import {useEffect} from 'react';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
@@ -34,11 +33,17 @@ const LeadListSection = ({
 }: IProps) => {
 	const {setFieldValue, values} = useFormikContext<MDFRequest>();
 
-	useEffect(() => {
-		if (
-			values.activities[currentActivityIndex].activityDescription
-				?.leadGenerated
-		) {
+	const onLeadListOutcomeSelected = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const value = event.target.value;
+
+		setFieldValue(
+			`activities[${currentActivityIndex}].activityDescription.leadGenerated`,
+			value
+		);
+
+		if (value) {
 			setFieldValue(
 				`activities[${currentActivityIndex}].activityDescription.targetOfLeads`,
 				''
@@ -52,10 +57,7 @@ const LeadListSection = ({
 				''
 			);
 		}
-	}, [
-		values.activities[currentActivityIndex].activityDescription
-			?.leadGenerated,
-	]);
+	};
 
 	return (
 		<PRMForm.Section title="Lead List">
@@ -65,6 +67,7 @@ const LeadListSection = ({
 					items={getBooleanEntries()}
 					label="Is a lead list an outcome of this activity?"
 					name={`activities[${currentActivityIndex}].activityDescription.leadGenerated`}
+					onChange={onLeadListOutcomeSelected}
 					required
 					small
 				/>

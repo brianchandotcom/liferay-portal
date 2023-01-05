@@ -598,16 +598,17 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionLocalService.fetchObjectDefinition(
 				objectDefinition.getCompanyId(), "AccountEntry");
 
+		String nameObjectRelationship =
+			StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
+				objectDefinition.getShortName();
+
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
 				userId, accountEntryObjectDefinition.getObjectDefinitionId(),
 				objectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(
-					StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
-					objectDefinition.getShortName()),
-				StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
-					objectDefinition.getShortName(),
+				LocalizedMapUtil.getLocalizedMap(nameObjectRelationship),
+				nameObjectRelationship,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(

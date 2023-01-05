@@ -929,6 +929,66 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 	}
 
+	@description = "This is a test for LPS-169728. The site designer could see folders hierarchy when select web content in Web Content Display."
+	@priority = "5"
+	test SelectWebContentUnderFolder {
+		task ("Given a site designer has web contents under different folders") {
+			JSONWebcontent.addFolder(
+				folderName = "Brake System",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addFolder(
+				folderName = "Exhaust System",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addFolder(
+				folderName = "ABS Sensor",
+				groupName = "Test Site Name",
+				parentFolderName = "Brake System");
+
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Tesla ABS Wheel Speed Sensor",
+				folderName = "ABS Sensor",
+				groupName = "Test Site Name",
+				title = "Tesla ABS Wheel Speed Sensor");
+
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Tesla Model 3",
+				groupName = "Test Site Name",
+				title = "Tesla Model 3");
+		}
+
+		task ("When the site designer select web content in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.gotoSelectWebContent();
+		}
+
+		task ("Then the site designer sees the folders hierachy on modal") {
+			for (var entryTitle : list "Brake System,Exhaust System,Tesla Model 3") {
+				LexiconList.viewListEntryTitle(listEntry = "${entryTitle}");
+			}
+
+			LexiconList.clickListEntryTitle(listEntry = "Brake System");
+
+			LexiconList.clickListEntryTitle(listEntry = "ABS Sensor");
+
+			LexiconList.viewListEntryTitle(listEntry = "Tesla ABS Wheel Speed Sensor");
+
+			Click(
+				key_breadcrumbName = "Test Site Name",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+
+			LexiconList.clickListEntryTitle(listEntry = "Exhaust System");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No web content was found.");
+		}
+	}
+
 	@description = "This is a use case for LPS-71941. Can deploy and undeploy a Web Content Display widget via Gogo Shell."
 	@priority = "5"
 	@uitest

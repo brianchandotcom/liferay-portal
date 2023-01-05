@@ -19,6 +19,7 @@ import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.media.query.Condition;
 import com.liferay.adaptive.media.image.media.query.MediaQuery;
 import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,8 +27,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,16 +106,9 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 	private List<String> _getSourceElements(FileEntry fileEntry)
 		throws PortalException {
 
-		List<MediaQuery> mediaQueries = _mediaQueryProvider.getMediaQueries(
-			fileEntry);
-
-		Stream<MediaQuery> mediaQueryStream = mediaQueries.stream();
-
-		return mediaQueryStream.map(
-			this::_getSourceElement
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			_mediaQueryProvider.getMediaQueries(fileEntry),
+			this::_getSourceElement);
 	}
 
 	@Reference

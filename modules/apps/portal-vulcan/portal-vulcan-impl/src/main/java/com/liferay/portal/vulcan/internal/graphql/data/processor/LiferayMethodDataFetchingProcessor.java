@@ -70,7 +70,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
@@ -754,11 +753,12 @@ public class LiferayMethodDataFetchingProcessor {
 			ServiceReference<GraphQLContributor> serviceReference,
 			GraphQLContributor graphQLContributor) {
 
-			Optional.ofNullable(
-				_servletDataServiceRegistrations.remove(graphQLContributor)
-			).ifPresent(
-				ServiceRegistration::unregister
-			);
+			ServiceRegistration<ServletData> serviceRegistration =
+				_servletDataServiceRegistrations.remove(graphQLContributor);
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
 
 			_bundleContext.ungetService(serviceReference);
 		}

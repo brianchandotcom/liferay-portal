@@ -27,6 +27,9 @@ public class ElseStatement1 {
 		if (x == -1) {
 			throw new FileNameException();
 		}
+		else if (x > 10) {
+			return "";
+		}
 
 		return fileName.substring(x + 1);
 	}

@@ -1200,4 +1200,35 @@ definition {
 		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
+	@description = "LPS-171802- Verify if the Condition card is hidden when using the trigger On Subscription Status Update"
+	@priority = "5"
+	test VerifyTheConditionCardAreHidden {
+		property portal.acceptance = "true";
+
+		task ("Given a object system") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Objects");
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Order");
+		}
+
+		task ("When an Action using the trigger On Subscription Status Update is created") {
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.gotoAddObjectAction();
+
+			ObjectAdmin.fillObjectAction(
+				actionName = "Action name",
+				whenAction = "On Subscription Status Update");
+		}
+
+		task ("Then the card titled Condition will not be present") {
+			AssertElementNotPresent(
+				key_title = "Condition",
+				locator1 = "ObjectAction#SECTION_TITLE");
+		}
+	}
+
 }

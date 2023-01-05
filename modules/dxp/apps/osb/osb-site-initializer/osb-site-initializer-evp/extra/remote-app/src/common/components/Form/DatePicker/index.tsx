@@ -17,6 +17,7 @@ import {generateReportsType} from '../../../../routes/reports/generateReport';
 import BaseWrapper from '../Base/BaseWrapper';
 
 type DatePickerTypes = {
+	clearErrors?: any;
 	errors?: any;
 	id?: string;
 	label?: string;
@@ -28,6 +29,7 @@ type DatePickerTypes = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const DatePicker: React.FC<DatePickerTypes> = ({
+	clearErrors = {},
 	errors = {},
 	label,
 	name,
@@ -38,8 +40,9 @@ const DatePicker: React.FC<DatePickerTypes> = ({
 	const [data, setData] = useState('');
 
 	useEffect(() => {
+		clearErrors(name);
 		setValue(name, data);
-	}, [data, name, setValue]);
+	}, [clearErrors, data, name, setValue]);
 
 	return (
 		<BaseWrapper

@@ -17,7 +17,11 @@ import Form from '../../../common/components/Form';
 import yupSchema, {yupResolver} from '../../../common/schema/yup';
 import {getPicklistByName} from '../../../common/services/picklist';
 import {getRequestsByFilter} from '../../../common/services/request';
-import {LiferayBranchType, Statustype} from '../../../types/index';
+import {
+	FIELDSREPORT,
+	LiferayBranchType,
+	Statustype,
+} from '../../../types/index';
 
 import './index.scss';
 
@@ -28,21 +32,69 @@ const GenerateReport = () => {
 	const [branches, setBranches] = useState<any>([]);
 
 	const {
+		clearErrors,
 		formState: {errors},
 		handleSubmit,
 		register,
+		setError,
 		setValue,
 		watch,
 	} = useForm<generateReportsType>({
 		defaultValues: {
-			finalRequestDate: '',
-			initialRequestDate: '',
 			liferayBranch: [],
 			requestStatus: [],
 		},
 		resolver: yupResolver(yupSchema.report),
 	});
+
+	const validateDate = (dateInitial: string, dateFinal: string) => {
+		const regexValidate = /^[\d]{4}-[\d]{2}-[\d]{2}$/;
+
+		if (dateInitial && dateFinal) {
+			if (dateInitial > dateFinal) {
+				setError('initialRequestDate', {
+					message:
+						'Initial Request Date cannot be greater than Final Request Date',
+					type: 'custom',
+				});
+
+				return false;
+			}
+		}
+
+		if (dateInitial && !regexValidate.test(dateInitial)) {
+			setError(FIELDSREPORT.INITIALREQUESTDATE, {
+				message:
+					'Initial Request Date is not recognized. Please enter a valid date',
+				type: 'custom',
+			});
+
+			return false;
+		}
+
+		if (dateFinal && !regexValidate.test(dateFinal)) {
+			setError(FIELDSREPORT.FINALREQUESTDATE, {
+				message:
+					'Final Request Date is not recognized. Please enter a valid date',
+				type: 'custom',
+			});
+
+			return false;
+		}
+
+		return true;
+	};
+
 	const onSubmit: SubmitHandler<generateReportsType> = (data: any) => {
+		const dateCheck = validateDate(
+			data.initialRequestDate,
+			data.finalRequestDate
+		);
+
+		if (dateCheck === false) {
+			return;
+		}
+
 		getRequestsByFilter(data).then((response) => response);
 	};
 
@@ -95,8 +147,11 @@ const GenerateReport = () => {
 				<div className="row">
 					<div className="col">
 						<Form.DatePicker
+							clearErrors={clearErrors}
+							errors={errors}
 							id="initialRequestDate"
 							label="Initial Request Date"
+							{...register('initialRequestDate')}
 							name="initialRequestDate"
 							placeholder="YYYY-MM-DD"
 							setValue={setValue}
@@ -105,8 +160,11 @@ const GenerateReport = () => {
 
 					<div className="col">
 						<Form.DatePicker
+							clearErrors={clearErrors}
+							errors={errors}
 							id="finalRequestDate"
 							label="Final Request Date"
+							{...register('finalRequestDate')}
 							name="finalRequestDate"
 							placeholder="YYYY-MM-DD"
 							setValue={setValue}
@@ -130,8 +188,10 @@ const GenerateReport = () => {
 						<Form.Input
 							{...formProps}
 							label="Initial Company ID"
+							min={0}
 							name="initialCompanyId"
 							placeholder="Company ID"
+							type="number"
 						/>
 					</div>
 
@@ -139,8 +199,10 @@ const GenerateReport = () => {
 						<Form.Input
 							{...formProps}
 							label="Final Company ID"
+							min={0}
 							name="finalCompanyId"
 							placeholder="Initial Company ID"
+							type="number"
 						/>
 					</div>
 				</div>

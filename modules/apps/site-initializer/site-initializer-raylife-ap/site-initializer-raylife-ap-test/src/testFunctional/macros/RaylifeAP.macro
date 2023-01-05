@@ -86,4 +86,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	// Workaround for LPS-172183
+
+	macro goToRaylifeAPSiteWithRefresh {
+		ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+		Refresh();
+	}
+
 }

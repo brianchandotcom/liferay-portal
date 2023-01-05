@@ -91,7 +91,9 @@ definition {
 
 			Pause(locator1 = "5000");
 
-			AssertNotVisible(locator1 = "ClayAlertToast#ALERT_TOAST");
+			AssertElementNotPresent(
+				key_type = "info",
+				locator1 = "ClayAlertToast#ALERT_TOAST");
 		}
 	}
 

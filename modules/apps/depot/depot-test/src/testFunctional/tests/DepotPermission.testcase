@@ -1007,10 +1007,6 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
@@ -1037,22 +1033,9 @@ definition {
 				roleTitle = "Depot Regrole Name");
 		}
 
-		DepotNavigator.openDepotAdmin();
-
-		AssertTextEquals(
-			key_card = "Test Depot Name",
-			locator1 = "Card#CARD_TITLE",
-			value1 = "Test Depot Name");
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		DepotNavigator.openDepotAdmin();
 

@@ -48,19 +48,13 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		for (var i : list "1,2") {
-			DepotNavigator.openDepotAdmin();
+		JSONUser.addUserToDepot(
+			depotName = "Test Depot Name",
+			userEmailAddress = "userea1@liferay.com");
 
-			DepotNavigator.gotoDepotPortlet(
-				depotName = "Test Depot Name",
-				portlet = "Memberships");
-
-			Depot.assignUserAsMember(
-				depotName = "Test Depot Name",
-				userFirstName = "userfn${i}",
-				userLastName = "userln${i}",
-				userScreenName = "usersn${i}");
-		}
+		JSONUser.addUserToDepot(
+			depotName = "Test Depot Name",
+			userEmailAddress = "userea2@liferay.com");
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",

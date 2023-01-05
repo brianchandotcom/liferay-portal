@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.segments.field.Field;
@@ -21,9 +22,6 @@ import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,17 +54,11 @@ public class LanguageSegmentsFieldCustomizer
 
 	@Override
 	public List<Field.Option> getOptions(Locale locale) {
-		Set<Locale> availableLocales = _language.getAvailableLocales();
-
-		Stream<Locale> stream = availableLocales.stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			_language.getAvailableLocales(),
 			availableLocale -> new Field.Option(
 				availableLocale.getDisplayName(locale),
-				_language.getLanguageId(availableLocale))
-		).collect(
-			Collectors.toList()
-		);
+				_language.getLanguageId(availableLocale)));
 	}
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(

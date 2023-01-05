@@ -290,14 +290,14 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getNavigationKeys() {
-		String[] navigationKeys = {"active", "inactive"};
+		String[] navigationKeys = {"all", "active", "inactive"};
 
 		if (_workflowEnabled) {
 			navigationKeys = ArrayUtil.append(
 				navigationKeys, new String[] {"pending", "draft"});
 		}
 
-		return ArrayUtil.append(navigationKeys, "all");
+		return navigationKeys;
 	}
 
 	@Override

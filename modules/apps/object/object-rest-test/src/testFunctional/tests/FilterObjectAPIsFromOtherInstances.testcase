@@ -1,0 +1,171 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given two new virtual instances www.able.com and www.baker.com are created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
+		}
+
+		task ("And Given objectDefinition University created and published in www.able.com instance") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "University",
+				en_US_plural_label = "Universities",
+				name = "University",
+				requiredStringFieldName = "firstname",
+				virtualHost = "www.able.com");
+		}
+
+		task ("And Given objectDefinition Subject created and published in www.baker.com instance") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Subject",
+				en_US_plural_label = "Subjects",
+				name = "Subject",
+				requiredStringFieldName = "name",
+				virtualHost = "www.baker.com");
+		}
+	}
+
+	tearDown {
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "3"
+	test CanGetObjectEndponitsFromCurrentInstance {
+		task ("When requesting GET "/o/c/subjects" from www.baker.com instance") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "subjects",
+				virtualHost = "www.baker.com");
+		}
+
+		task ("Then I can get a correct response with www.baker.com:8080/o/c/subjects href in actions") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.actions.create.href");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "http://www.baker.com:8080/o/c/subjects/");
+		}
+
+		task ("And Then the information of www.baker.com:8080/o/c/univeristies is not found") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "universities",
+				virtualHost = "www.baker.com");
+
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "NOT_FOUND");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CannotGetObjectEndponitsFromOtherInstance {
+		property portal.acceptance = "true";
+
+		task ("When requesting GET "/o/c/universities" from www.able.com instance") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "universities",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Then I can get a correct response with www.able.com:8080/o/c/universities href in actions") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.actions.create.href");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "http://www.able.com:8080/o/c/universities/");
+		}
+
+		task ("And Then the information of www.able.com:8080/o/c/subjects is not found") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "subjects",
+				virtualHost = "www.able.com");
+
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "NOT_FOUND");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CannotGetObjectEntryFromOtherInstance {
+		property portal.acceptance = "true";
+
+		task ("And Given objectDefinition Subject created and published with secondField in default instance") {
+			var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Subject",
+				en_US_plural_label = "Subjects",
+				name = "Subject",
+				requiredStringFieldName = "name");
+
+			ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
+				dbType = "String",
+				name = "secondField",
+				objectDefinitionId = "${objectDefinitionId}");
+		}
+
+		task ("And Given Subject entry created in default instance") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Object Entry in Default Instance",
+				secondFieldValue = "The other field in Default Instance");
+		}
+
+		task ("And Given Subject entry created in www.baker.com instances") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Object Entry in Second Instance",
+				virtualHost = "www.baker.com");
+		}
+
+		task ("When requesting GET www.baker.com/o/c/subjects") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "subjects",
+				virtualHost = "www.baker.com");
+		}
+
+		task ("Then I can see one Subject entry with its name correctly related") {
+			var actualName = JSONUtil.getWithJSONPath("${response}", "$.items[*].name");
+
+			TestUtils.assertEquals(
+				actual = "${actualName}",
+				expected = "Object Entry in Second Instance");
+
+			var totoalCount = JSONUtil.getWithJSONPath("${response}", "$.totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${totoalCount}",
+				expected = "1");
+		}
+
+		task ("And Then I can not see the Subject entry with secondField in default instance") {
+			var actualSecondFieldValue = JSONUtil.getWithJSONPath("${response}", "$..secondField");
+
+			TestUtils.assertPartialEquals(
+				actual = "${actualSecondFieldValue}",
+				expected = "");
+		}
+	}
+
+}

@@ -279,6 +279,33 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-150849."
+	@priority = "5"
+	test ChooseColumnTypeAndViewSelectedIcon {
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(
+			pageName = "Test Page Name",
+			sitePageType = "Widget Page");
+
+		Click(
+			key_card = "1 Column",
+			locator1 = "Card#CARD");
+
+		var backgroundColorStyle = Css.getPseudoElementCssValue(
+			attribute = "background-color",
+			element = "//div[contains(@class,'card') and contains(@class,'card-type-template active')]",
+			pseudo = "::after");
+
+		echo("background color: ${backgroundColorStyle} ");
+
+		if ("${backgroundColorStyle}" != "rgb(11, 95, 255)") {
+			fail("Select icon is not shown");
+		}
+	}
+
 	@description = "This is a test for LPS-145215. View alert message when delete a page."
 	@priority = "5"
 	@uitest

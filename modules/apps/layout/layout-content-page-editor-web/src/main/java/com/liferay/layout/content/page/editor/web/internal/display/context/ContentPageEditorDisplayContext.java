@@ -84,10 +84,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -96,7 +93,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -548,11 +544,6 @@ public class ContentPageEditorDisplayContext {
 				npmResolvedPackageName + "/page_editor/plugins"
 			).put(
 				"portletNamespace", getPortletNamespace()
-			).put(
-				"previewPageURL",
-				_getResourceURL(
-					"/layout_content_page_editor/get_page_preview",
-					_isPreviewPageAsGuestUser())
 			).put(
 				"publishURL", getPublishURL()
 			).put(
@@ -1634,30 +1625,6 @@ public class ContentPageEditorDisplayContext {
 			resourceURL.toString(), "p_l_mode", Constants.EDIT);
 	}
 
-	private String _getResourceURL(String resourceID, boolean doAsGuest)
-		throws Exception {
-
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_renderResponse);
-
-		LiferayPortletURL resourceURL =
-			liferayPortletResponse.createResourceURL(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
-
-		if (doAsGuest) {
-			User defaultUser = UserLocalServiceUtil.getDefaultUser(
-				themeDisplay.getCompanyId());
-
-			resourceURL.setDoAsUserId(defaultUser.getUserId());
-		}
-
-		resourceURL.setParameter("p_l_mode", Constants.PREVIEW);
-
-		resourceURL.setResourceID(resourceID);
-
-		return resourceURL.toString();
-	}
-
 	private String _getSegmentsCompanyConfigurationURL() {
 		try {
 			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
@@ -1801,20 +1768,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return false;
-	}
-
-	private boolean _isPreviewPageAsGuestUser() {
-		if (stagingGroupHelper.isLocalStagingGroup(
-				themeDisplay.getScopeGroupId()) ||
-			stagingGroupHelper.isRemoteStagingGroup(
-				themeDisplay.getScopeGroupId())) {
-
-			return false;
-		}
-
-		Layout publishedLayout = _getPublishedLayout();
-
-		return !publishedLayout.isPrivateLayout();
 	}
 
 	private boolean _isSegmentationEnabled() {

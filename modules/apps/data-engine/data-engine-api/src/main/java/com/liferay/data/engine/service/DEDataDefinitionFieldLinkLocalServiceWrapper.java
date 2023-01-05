@@ -446,6 +446,16 @@ public class DEDataDefinitionFieldLinkLocalServiceWrapper
 			getDEDataDefinitionFieldLinks(ddmStructureId, fieldNames);
 	}
 
+	@Override
+	public java.util.List<DEDataDefinitionFieldLink>
+		getDEDataDefinitionFieldLinksByClassNameIdAndClassPK(
+			long classNameId, long classPK) {
+
+		return _deDataDefinitionFieldLinkLocalService.
+			getDEDataDefinitionFieldLinksByClassNameIdAndClassPK(
+				classNameId, classPK);
+	}
+
 	/**
 	 * Returns all the de data definition field links matching the UUID and company.
 	 *

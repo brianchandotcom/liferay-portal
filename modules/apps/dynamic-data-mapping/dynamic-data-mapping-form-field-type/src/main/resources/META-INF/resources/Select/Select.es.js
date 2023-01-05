@@ -347,9 +347,14 @@ const Select = ({
 		}
 	};
 
-	const inputTrigger = document.querySelector(
-		'.lfr__ddm-select-input-trigger'
-	);
+	const inputTrigger =
+		document.querySelector(
+			'[data-field-name|="selectedObjectField"] > .lfr__ddm-select-input-trigger'
+		) ??
+		document.querySelector(
+			`[data-field-reference|='${otherProps.fieldReference}'] .lfr__ddm-select-input-trigger`
+		);
+
 	let leftRect;
 
 	if (inputTrigger) {

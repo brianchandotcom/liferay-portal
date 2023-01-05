@@ -43,7 +43,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -96,10 +95,13 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	protected String getExcludeTagsString(
 		String tag, FacetProcessorContext facetProcessorContext) {
 
-		Optional<String> optional =
-			facetProcessorContext.getExcludeTagsStringOptional();
+		String excludeTagsString = facetProcessorContext.getExcludeTagsString();
 
-		return optional.orElse(tag);
+		if (excludeTagsString == null) {
+			return tag;
+		}
+
+		return excludeTagsString;
 	}
 
 	protected Map<String, JSONObject> getFacetParameters(Facet facet) {

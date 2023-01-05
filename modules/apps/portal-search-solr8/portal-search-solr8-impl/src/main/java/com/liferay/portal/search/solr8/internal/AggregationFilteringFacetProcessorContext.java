@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author André de Oliveira
@@ -33,15 +32,15 @@ public class AggregationFilteringFacetProcessorContext
 
 		if (basicFacetSelection) {
 			return new AggregationFilteringFacetProcessorContext(
-				Optional.of(getAllNamesString(facets)));
+				getAllNamesString(facets));
 		}
 
-		return new AggregationFilteringFacetProcessorContext(Optional.empty());
+		return new AggregationFilteringFacetProcessorContext(null);
 	}
 
 	@Override
-	public Optional<String> getExcludeTagsStringOptional() {
-		return _excludeTagsStringOptional;
+	public String getExcludeTagsString() {
+		return _excludeTagsString;
 	}
 
 	protected static String getAllNamesString(Map<String, Facet> facets) {
@@ -51,11 +50,11 @@ public class AggregationFilteringFacetProcessorContext
 	}
 
 	private AggregationFilteringFacetProcessorContext(
-		Optional<String> excludeTagsStringOptional) {
+		String excludeTagsString) {
 
-		_excludeTagsStringOptional = excludeTagsStringOptional;
+		_excludeTagsString = excludeTagsString;
 	}
 
-	private final Optional<String> _excludeTagsStringOptional;
+	private final String _excludeTagsString;
 
 }

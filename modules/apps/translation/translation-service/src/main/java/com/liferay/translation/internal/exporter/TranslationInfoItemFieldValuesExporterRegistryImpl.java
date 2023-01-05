@@ -21,7 +21,6 @@ import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -36,10 +35,10 @@ public class TranslationInfoItemFieldValuesExporterRegistryImpl
 	implements TranslationInfoItemFieldValuesExporterRegistry {
 
 	@Override
-	public Optional<TranslationInfoItemFieldValuesExporter>
-		getTranslationInfoItemFieldValuesExporterOptional(String mimeType) {
+	public TranslationInfoItemFieldValuesExporter
+		getTranslationInfoItemFieldValuesExporter(String mimeType) {
 
-		return Optional.ofNullable(_serviceTrackerMap.getService(mimeType));
+		return _serviceTrackerMap.getService(mimeType);
 	}
 
 	@Override

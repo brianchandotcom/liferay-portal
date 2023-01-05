@@ -531,9 +531,86 @@ AUI.add(
 			},
 		});
 
+		const IntegerCellEditor = A.Component.create({
+			EXTENDS: A.TextCellEditor,
+
+			NAME: 'text-cell-editor',
+
+			prototype: {
+				ELEMENT_TEMPLATE: '<input type="text" />',
+
+				getElementsValue() {
+					const instance = this;
+
+					let retVal;
+
+					const input = instance.get('boundingBox').one('input');
+
+					if (input) {
+						const val = input.val();
+
+						if (/^[+-]?(\d+)*$/.test(val) || val === '') {
+							retVal = val;
+						}
+					}
+
+					if (retVal) {
+						return retVal;
+					}
+					else {
+						instance.fire('save', {
+							newVal: '',
+							prevVal: retVal,
+						});
+					}
+				},
+			},
+		});
+
+		const NumberCellEditor = A.Component.create({
+			EXTENDS: A.TextCellEditor,
+
+			NAME: 'text-cell-editor',
+
+			prototype: {
+				ELEMENT_TEMPLATE: '<input type="text" />',
+
+				getElementsValue() {
+					const instance = this;
+
+					let retVal;
+
+					const input = instance.get('boundingBox').one('input');
+
+					if (input) {
+						const val = input.val();
+
+						if (/^[+-]?(\d+)([.,]\d+)*$/.test(val) || val === '') {
+							retVal = val;
+						}
+					}
+
+					if (retVal) {
+						return retVal;
+					}
+					else {
+						instance.fire('save', {
+							newVal: '',
+							prevVal: retVal,
+						});
+					}
+				},
+			},
+		});
+
 		Liferay.FormBuilder.CUSTOM_CELL_EDITORS = {};
 
-		const customCellEditors = [ColorCellEditor, DLFileEntryCellEditor];
+		const customCellEditors = [
+			ColorCellEditor,
+			DLFileEntryCellEditor,
+			IntegerCellEditor,
+			NumberCellEditor,
+		];
 
 		customCellEditors.forEach((item) => {
 			Liferay.FormBuilder.CUSTOM_CELL_EDITORS[item.NAME] = item;
@@ -1451,6 +1528,33 @@ AUI.add(
 			EXTENDS: A.FormBuilderTextField,
 
 			NAME: 'ddm-decimal',
+
+			prototype: {
+				getPropertyModel() {
+					const instance = this;
+
+					const model = DDMDecimalField.superclass.getPropertyModel.apply(
+						instance,
+						arguments
+					);
+
+					model.forEach((item, index, collection) => {
+						const attributeName = item.attributeName;
+
+						if (attributeName === 'predefinedValue') {
+							collection[index] = {
+								attributeName,
+								editor: new NumberCellEditor({
+									strings: editorLocalizedStrings,
+								}),
+								name: Liferay.Language.get('predefined-value'),
+							};
+						}
+					});
+
+					return model;
+				},
+			},
 		});
 
 		const DDMDocumentLibraryField = A.Component.create({
@@ -1623,6 +1727,33 @@ AUI.add(
 			EXTENDS: A.FormBuilderTextField,
 
 			NAME: 'ddm-integer',
+
+			prototype: {
+				getPropertyModel() {
+					const instance = this;
+
+					const model = DDMIntegerField.superclass.getPropertyModel.apply(
+						instance,
+						arguments
+					);
+
+					model.forEach((item, index, collection) => {
+						const attributeName = item.attributeName;
+
+						if (attributeName === 'predefinedValue') {
+							collection[index] = {
+								attributeName,
+								editor: new IntegerCellEditor({
+									strings: editorLocalizedStrings,
+								}),
+								name: Liferay.Language.get('predefined-value'),
+							};
+						}
+					});
+
+					return model;
+				},
+			},
 		});
 
 		const DDMNumberField = A.Component.create({
@@ -1639,6 +1770,33 @@ AUI.add(
 			EXTENDS: A.FormBuilderTextField,
 
 			NAME: 'ddm-number',
+
+			prototype: {
+				getPropertyModel() {
+					const instance = this;
+
+					const model = DDMIntegerField.superclass.getPropertyModel.apply(
+						instance,
+						arguments
+					);
+
+					model.forEach((item, index, collection) => {
+						const attributeName = item.attributeName;
+
+						if (attributeName === 'predefinedValue') {
+							collection[index] = {
+								attributeName,
+								editor: new NumberCellEditor({
+									strings: editorLocalizedStrings,
+								}),
+								name: Liferay.Language.get('predefined-value'),
+							};
+						}
+					});
+
+					return model;
+				},
+			},
 		});
 
 		const DDMParagraphField = A.Component.create({

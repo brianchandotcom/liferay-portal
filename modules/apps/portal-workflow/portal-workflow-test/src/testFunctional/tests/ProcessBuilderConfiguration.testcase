@@ -182,7 +182,7 @@ definition {
 
 		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Resource");
 
-		ProcessBuilderConfiguration.viewSpecificOrder(resultsList = "Blogs Entry,Blueprint,Calendar Event");
+		ProcessBuilderConfiguration.viewSpecificOrder(resultsList = "Account,Blogs Entry,Blueprint,Calendar Event");
 	}
 
 	@description = "Verify that the user is able to order by Workflow"

@@ -306,7 +306,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 				continue;
 			}
 
-			String value = null;
+			String value = frontendToken.getDefaultValue();
 
 			JSONObject valueJSONObject =
 				frontendTokenValuesJSONObject.getJSONObject(
@@ -314,10 +314,6 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 			if (valueJSONObject != null) {
 				value = valueJSONObject.getString("value");
-			}
-
-			if (value == null) {
-				value = frontendToken.getDefaultValue();
 			}
 
 			frontendTokensJSONObject.put(

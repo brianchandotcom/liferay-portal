@@ -23,15 +23,21 @@ import com.liferay.client.extension.type.ThemeFaviconCET;
 import com.liferay.client.extension.type.ThemeJSCET;
 import com.liferay.client.extension.type.ThemeSpritemapCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,7 +64,29 @@ public class ClientExtensionsServicePreAction extends Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if ((layout == null) || layout.isTypeControlPanel()) {
+		if (layout.isTypeControlPanel()) {
+			String mode = ParamUtil.getString(
+				httpServletRequest, "p_l_mode", Constants.VIEW);
+
+			if (!Objects.equals(mode, Constants.PREVIEW)) {
+				return;
+			}
+
+			long selPlid = ParamUtil.getLong(
+				httpServletRequest,
+				StringBundler.concat(
+					StringPool.UNDERLINE,
+					ParamUtil.getString(httpServletRequest, "p_p_id"),
+					"_selPlid"));
+
+			if (selPlid <= 0) {
+				return;
+			}
+
+			layout = _layoutLocalService.fetchLayout(selPlid);
+		}
+
+		if (layout == null) {
 			return;
 		}
 

@@ -1214,6 +1214,53 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-156704 - Verify that the user cannot insert an invalid date in an object field."
+	@priority = "2"
+	test CannotInsertInvalidDate {
+		task ("Given an object is created with a date field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 165994",
+				objectName = "CustomObject165994",
+				pluralLabelName = "Custom Objects 165994");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 165994");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Field",
+				fieldType = "Date");
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Field",
+				fieldType = "Date");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject165994");
+		}
+
+		task ("When an entry is created and the date is invalid") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject165994");
+
+			LexiconEntry.gotoAdd();
+
+			WaitForPageLoad();
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+				value1 = "23/01/2020");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the entry date should be show as blank") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject165994");
+
+			ObjectPortlet.viewEntry(entry = "");
+		}
+	}
+
 	@description = "LPS-156704 - Verify that the user is not able to order the object entry's table by the aggregation field column"
 	@priority = "4"
 	test CanNotOrderByAggregationFieldColumn {

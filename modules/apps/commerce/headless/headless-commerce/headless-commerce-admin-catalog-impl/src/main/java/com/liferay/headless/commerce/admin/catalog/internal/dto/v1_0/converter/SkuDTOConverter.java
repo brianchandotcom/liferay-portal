@@ -80,20 +80,19 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				weight = cpInstance.getWeight();
 				width = cpInstance.getWidth();
 
-				setReplacementSkuId(
-					() -> {
-						if (replacementCPInstance != null) {
-							return replacementCPInstance.getCPInstanceId();
-						}
-
-						return null;
-					});
-
 				setReplacementSkuExternalReferenceCode(
 					() -> {
 						if (replacementCPInstance != null) {
 							return replacementCPInstance.
 								getExternalReferenceCode();
+						}
+
+						return null;
+					});
+				setReplacementSkuId(
+					() -> {
+						if (replacementCPInstance != null) {
+							return replacementCPInstance.getCPInstanceId();
 						}
 
 						return null;

@@ -231,8 +231,8 @@ public class DataDefinitionDDMFormUtilTest {
 						).put(
 							"pt_BR", "rótulo1"
 						).build());
-					setName("name1");
 					setLocalizable(true);
+					setName("name1");
 					setReadOnly(true);
 					setRepeatable(true);
 					setRequired(true);
@@ -287,8 +287,8 @@ public class DataDefinitionDDMFormUtilTest {
 						).put(
 							"pt_BR", "rótulo2"
 						).build());
-					setName("name2");
 					setLocalizable(false);
+					setName("name2");
 					setReadOnly(false);
 					setRepeatable(false);
 					setRequired(false);

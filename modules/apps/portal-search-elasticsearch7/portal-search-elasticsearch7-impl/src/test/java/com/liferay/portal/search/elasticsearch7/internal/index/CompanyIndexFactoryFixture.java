@@ -74,12 +74,12 @@ public class CompanyIndexFactoryFixture {
 	public CompanyIndexFactory getCompanyIndexFactory() {
 		return new CompanyIndexFactory() {
 			{
-				setIndexNameBuilder(new TestIndexNameBuilder());
-				setJsonFactory(new JSONFactoryImpl());
 				setElasticsearchConfigurationWrapper(
 					createElasticsearchConfigurationWrapper());
 				setElasticsearchConnectionManager(
 					_elasticsearchConnectionManager);
+				setIndexNameBuilder(new TestIndexNameBuilder());
+				setJsonFactory(new JSONFactoryImpl());
 			}
 		};
 	}

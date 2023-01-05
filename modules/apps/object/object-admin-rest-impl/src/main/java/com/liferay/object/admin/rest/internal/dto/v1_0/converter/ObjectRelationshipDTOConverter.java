@@ -84,6 +84,9 @@ public class ObjectRelationshipDTOConverter
 				parameterObjectFieldId =
 					serviceBuilderObjectRelationship.
 						getParameterObjectFieldId();
+				reverse = serviceBuilderObjectRelationship.isReverse();
+				type = ObjectRelationship.Type.create(
+					serviceBuilderObjectRelationship.getType());
 
 				setParameterObjectFieldName(
 					() -> {
@@ -101,9 +104,6 @@ public class ObjectRelationshipDTOConverter
 
 						return objectField.getName();
 					});
-				reverse = serviceBuilderObjectRelationship.isReverse();
-				type = ObjectRelationship.Type.create(
-					serviceBuilderObjectRelationship.getType());
 			}
 		};
 	}

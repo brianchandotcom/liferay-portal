@@ -65,10 +65,10 @@ public class SolrSearchEngineAdapterFixture {
 		DocumentRequestExecutorFixture documentRequestExecutorFixture =
 			new DocumentRequestExecutorFixture() {
 				{
+					setProperties(properties);
+					setQueryTranslator(queryTranslator);
 					setSolrClientManager(solrClientManager);
 					setSolrDocumentFactory(solrDocumentFactory);
-					setQueryTranslator(queryTranslator);
-					setProperties(properties);
 				}
 			};
 
@@ -83,8 +83,8 @@ public class SolrSearchEngineAdapterFixture {
 			new SearchRequestExecutorFixture() {
 				{
 					setFacetProcessor(facetProcessor);
-					setSolrClientManager(solrClientManager);
 					setQueryTranslator(queryTranslator);
+					setSolrClientManager(solrClientManager);
 				}
 			};
 

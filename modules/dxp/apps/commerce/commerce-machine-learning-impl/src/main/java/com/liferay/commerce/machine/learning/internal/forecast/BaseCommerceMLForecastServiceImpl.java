@@ -310,9 +310,9 @@ public abstract class BaseCommerceMLForecastServiceImpl
 			{
 				setIndexNames(new String[] {indexName});
 				setQuery(query);
-				setStart(Integer.valueOf(start));
 				setSize(Integer.valueOf(size));
 				setSorts(sorts);
+				setStart(Integer.valueOf(start));
 				setStats(Collections.emptyMap());
 			}
 		};

@@ -187,10 +187,10 @@ public class SolrIndexingFixture implements IndexingFixture {
 		return new SolrSearchEngineAdapterFixture() {
 			{
 				setFacetProcessor(facetProcessor);
+				setProperties(properties);
 				setQueryTranslator(createSolrQueryTranslator());
 				setSolrClientManager(solrClientManager);
 				setSolrDocumentFactory(new DefaultSolrDocumentFactory());
-				setProperties(properties);
 			}
 		};
 	}

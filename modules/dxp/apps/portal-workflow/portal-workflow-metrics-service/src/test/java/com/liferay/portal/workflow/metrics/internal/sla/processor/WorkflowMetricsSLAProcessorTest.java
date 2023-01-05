@@ -548,10 +548,10 @@ public class WorkflowMetricsSLAProcessorTest {
 				{
 					setElapsedTime(10000);
 					setModifiedLocalDateTime(nowLocalDateTime);
+					setOnTime(true);
 					setRemainingTime(0);
 					setWorkflowMetricsSLAStatus(
 						WorkflowMetricsSLAStatus.STOPPED);
-					setOnTime(true);
 				}
 			},
 			nowLocalDateTime, true, 0, 1, workflowMetricsSLADefinitionVersion,

@@ -452,8 +452,8 @@ public class WorkflowMetricsSLAProcessor {
 				setProcessId(workflowMetricsSLAInstanceResult.getProcessId());
 				setSLADefinitionId(
 					workflowMetricsSLAInstanceResult.getSLADefinitionId());
-				setTaskName(document.getString("name"));
 				setTaskId(document.getLong("taskId"));
+				setTaskName(document.getString("name"));
 				setWorkflowMetricsSLAStatus(
 					_getWorkflowMetricsSLAStatus(
 						document, workflowMetricsSLAInstanceResult));

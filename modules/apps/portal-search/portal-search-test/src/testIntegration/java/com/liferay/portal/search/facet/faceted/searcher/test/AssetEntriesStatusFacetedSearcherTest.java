@@ -122,8 +122,8 @@ public class AssetEntriesStatusFacetedSearcherTest
 					setJournalArticleContent(
 						new JournalArticleContent() {
 							{
-								setName("content");
 								setDefaultLocale(LocaleUtil.US);
+								setName("content");
 
 								put(
 									LocaleUtil.US,

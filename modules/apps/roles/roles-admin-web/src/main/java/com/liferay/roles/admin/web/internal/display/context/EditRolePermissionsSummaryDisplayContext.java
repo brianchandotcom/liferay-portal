@@ -146,8 +146,8 @@ public class EditRolePermissionsSummaryDisplayContext {
 				{
 					setCompanyId(_themeDisplay.getCompanyId());
 					setName(permission.getName());
-					setScope(permission.getScope());
 					setPrimKey(permission.getPrimKey());
+					setScope(permission.getScope());
 				}
 			};
 

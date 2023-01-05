@@ -130,6 +130,7 @@ public class BlogPostingDTOConverter
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
+				viewableBy = ViewableBy.ANYONE;
 
 				setDescription(
 					() -> {
@@ -154,7 +155,6 @@ public class BlogPostingDTOConverter
 						_layoutPageTemplateEntryService,
 						"getBlogPostingRenderedContentByDisplayPageDisplay" +
 							"PageKey"));
-				viewableBy = ViewableBy.ANYONE;
 			}
 		};
 	}

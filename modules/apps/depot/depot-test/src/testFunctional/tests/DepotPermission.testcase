@@ -48,6 +48,16 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
 		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
 			userEmailAddress = "userea1@liferay.com");
@@ -56,12 +66,11 @@ definition {
 			depotName = "Test Depot Name",
 			userEmailAddress = "userea2@liferay.com");
 
-		Permissions.setUpRegRoleLoginUserCP(
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		JSONRole.assignRoleToUser(
 			roleTitle = "Depot Regrole Name",
-			userEmailAddress = "userea1@liferay.com",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
+			userEmailAddress = "userea1@liferay.com");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",

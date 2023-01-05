@@ -147,7 +147,7 @@ public class TestrayProject {
 	}
 
 	public long getID() {
-		return _jsonObject.getInt("testrayProjectId");
+		return _jsonObject.getLong("testrayProjectId");
 	}
 
 	public String getName() {
@@ -155,7 +155,7 @@ public class TestrayProject {
 	}
 
 	public TestrayProductVersion getTestrayProductVersionByID(
-		int productVersionID) {
+		long productVersionID) {
 
 		_initTestrayProductVersions();
 
@@ -170,7 +170,7 @@ public class TestrayProject {
 		return _testrayProductVersionsByName.get(productVersionName);
 	}
 
-	public TestrayRoutine getTestrayRoutineByID(int routineID) {
+	public TestrayRoutine getTestrayRoutineByID(long routineID) {
 		_initTestrayRoutines();
 
 		return _testrayRoutinesByID.get(routineID);

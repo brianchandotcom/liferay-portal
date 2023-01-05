@@ -30,7 +30,7 @@ public interface TestrayServer {
 
 	public TestrayCaseType getTestrayCaseType(String testrayCaseTypeName);
 
-	public TestrayProject getTestrayProjectByID(int projectID);
+	public TestrayProject getTestrayProjectByID(long projectID);
 
 	public TestrayProject getTestrayProjectByName(String projectName);
 

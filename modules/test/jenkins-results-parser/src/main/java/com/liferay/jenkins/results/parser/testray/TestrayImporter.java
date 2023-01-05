@@ -273,7 +273,7 @@ public class TestrayImporter {
 
 			if ((testrayBuildID != null) && testrayBuildID.matches("\\d+")) {
 				testrayBuild = testrayRoutine.getTestrayBuildByID(
-					Integer.parseInt(testrayBuildID));
+					Long.parseLong(testrayBuildID));
 			}
 
 			String testrayBuildName = System.getenv("TESTRAY_BUILD_NAME");
@@ -292,7 +292,7 @@ public class TestrayImporter {
 				testrayBuildID.matches("\\d+")) {
 
 				testrayBuild = testrayRoutine.getTestrayBuildByID(
-					Integer.parseInt(testrayBuildID));
+					Long.parseLong(testrayBuildID));
 			}
 
 			testrayBuildName = _getBuildParameter("TESTRAY_BUILD_NAME");
@@ -315,7 +315,7 @@ public class TestrayImporter {
 					testrayBuildID.matches("\\d+")) {
 
 					testrayBuild = testrayRoutine.getTestrayBuildByID(
-						Integer.parseInt(testrayBuildID));
+						Long.parseLong(testrayBuildID));
 				}
 			}
 
@@ -511,7 +511,7 @@ public class TestrayImporter {
 
 				testrayProductVersion =
 					testrayProject.getTestrayProductVersionByID(
-						Integer.parseInt(testrayProductVersionID));
+						Long.parseLong(testrayProductVersionID));
 			}
 
 			String testrayProductVersionName = System.getenv(
@@ -535,7 +535,7 @@ public class TestrayImporter {
 
 				testrayProductVersion =
 					testrayProject.getTestrayProductVersionByID(
-						Integer.parseInt(testrayProductVersionID));
+						Long.parseLong(testrayProductVersionID));
 			}
 
 			testrayProductVersionName = _getBuildParameter(
@@ -561,7 +561,7 @@ public class TestrayImporter {
 
 					testrayProductVersion =
 						testrayProject.getTestrayProductVersionByID(
-							Integer.parseInt(testrayProductVersionID));
+							Long.parseLong(testrayProductVersionID));
 				}
 			}
 
@@ -636,7 +636,7 @@ public class TestrayImporter {
 				testrayProjectID.matches("\\d+")) {
 
 				testrayProject = testrayServer.getTestrayProjectByID(
-					Integer.parseInt(testrayProjectID));
+					Long.parseLong(testrayProjectID));
 			}
 
 			String testrayProjectName = System.getenv("TESTRAY_PROJECT_NAME");
@@ -654,7 +654,7 @@ public class TestrayImporter {
 				testrayProjectID.matches("\\d+")) {
 
 				testrayProject = testrayServer.getTestrayProjectByID(
-					Integer.parseInt(testrayProjectID));
+					Long.parseLong(testrayProjectID));
 			}
 
 			testrayProjectName = _getBuildParameter("TESTRAY_PROJECT_NAME");
@@ -676,7 +676,7 @@ public class TestrayImporter {
 					testrayProjectID.matches("\\d+")) {
 
 					testrayProject = testrayServer.getTestrayProjectByID(
-						Integer.parseInt(testrayProjectID));
+						Long.parseLong(testrayProjectID));
 				}
 			}
 
@@ -731,7 +731,7 @@ public class TestrayImporter {
 				testrayRoutineID.matches("\\d+")) {
 
 				testrayRoutine = testrayProject.getTestrayRoutineByID(
-					Integer.parseInt(testrayRoutineID));
+					Long.parseLong(testrayRoutineID));
 			}
 
 			String testrayRoutineName = System.getenv("TESTRAY_ROUTINE_NAME");
@@ -749,7 +749,7 @@ public class TestrayImporter {
 				testrayRoutineID.matches("\\d+")) {
 
 				testrayRoutine = testrayProject.getTestrayRoutineByID(
-					Integer.parseInt(testrayRoutineID));
+					Long.parseLong(testrayRoutineID));
 			}
 
 			testrayRoutineName = _getBuildParameter("TESTRAY_ROUTINE_NAME");
@@ -780,7 +780,7 @@ public class TestrayImporter {
 					testrayRoutineID.matches("\\d+")) {
 
 					testrayRoutine = testrayProject.getTestrayRoutineByID(
-						Integer.parseInt(testrayRoutineID));
+						Long.parseLong(testrayRoutineID));
 				}
 			}
 

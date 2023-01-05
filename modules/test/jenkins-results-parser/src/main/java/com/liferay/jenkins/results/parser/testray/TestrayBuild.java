@@ -45,7 +45,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		_testrayServer = _testrayRoutine.getTestrayServer();
 
 		_testrayProductVersion = _testrayProject.getTestrayProductVersionByID(
-			_jsonObject.getInt("testrayProductVersionId"));
+			_jsonObject.getLong("testrayProductVersionId"));
 	}
 
 	@Override
@@ -337,7 +337,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 			_testrayProductVersion =
 				_testrayProject.getTestrayProductVersionByID(
-					_jsonObject.getInt("testrayProductVersionId"));
+					_jsonObject.getLong("testrayProductVersionId"));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

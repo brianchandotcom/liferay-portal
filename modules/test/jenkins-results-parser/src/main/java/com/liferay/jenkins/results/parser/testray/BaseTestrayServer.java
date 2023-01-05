@@ -79,7 +79,7 @@ public abstract class BaseTestrayServer implements TestrayServer {
 	}
 
 	@Override
-	public TestrayProject getTestrayProjectByID(int projectID) {
+	public TestrayProject getTestrayProjectByID(long projectID) {
 		_initTestrayProjects();
 
 		return _testrayProjectsByID.get(projectID);

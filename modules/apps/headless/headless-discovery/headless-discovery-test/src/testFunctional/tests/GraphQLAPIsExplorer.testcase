@@ -23,7 +23,6 @@ definition {
 	@priority = "5"
 	test disableApiEplorer {
 		property portal.acceptance = "true";
-
 		property test.name.skip.portal.instance = "GraphQLAPIsExplorer#disableApiEplorer";
 
 		Navigator.openURL();
@@ -49,7 +48,6 @@ definition {
 	@priority = "5"
 	test enableApiEplorer {
 		property portal.acceptance = "true";
-		
 		property test.name.skip.portal.instance = "GraphQLAPIsExplorer#enableApiEplorers";
 
 		Navigator.openURL();

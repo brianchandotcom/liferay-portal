@@ -16,12 +16,11 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.Response;
 
@@ -39,16 +38,18 @@ public class JsonMappingExceptionMapper
 		List<JsonMappingException.Reference> references =
 			jsonMappingException.getPath();
 
-		Stream<JsonMappingException.Reference> stream = references.stream();
+		StringBundler sb = new StringBundler(references.size() * 2);
 
-		String path = stream.map(
-			JsonMappingException.Reference::getFieldName
-		).collect(
-			Collectors.joining(".")
-		);
+		for (JsonMappingException.Reference reference : references) {
+			sb.append(reference.getFieldName());
+			sb.append(".");
+		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Unable to map JSON path: " + path);
+			Response.Status.BAD_REQUEST,
+			"Unable to map JSON path: " + sb.toString());
 	}
 
 }

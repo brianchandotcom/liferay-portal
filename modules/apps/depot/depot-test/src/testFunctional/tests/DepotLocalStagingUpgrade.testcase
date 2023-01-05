@@ -160,7 +160,7 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test ViewDepotStagingArchive73101 {
 		property data.archive.type = "data-archive-depot-staging";
 		property portal.version = "7.3.10.1";

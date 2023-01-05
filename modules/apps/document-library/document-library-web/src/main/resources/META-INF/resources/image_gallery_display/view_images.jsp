@@ -36,6 +36,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			<c:when test="<%= fileEntry != null %>">
 
 				<%
+				row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
+
 				String dataOptions = StringPool.BLANK;
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
@@ -151,6 +153,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				<%
 				row.setCssClass("card-page-item card-page-item-directory");
+
+				row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
 
 				request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, row);
 				%>

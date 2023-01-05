@@ -20,6 +20,7 @@ import getNewActivity from '../../utils/getNewActivity';
 
 interface IProps {
 	activities: MDFRequestActivity[];
+	hasActivityErrorsByIndex: (index: number) => boolean;
 	onAdd: () => void;
 	onEdit: (index: number) => void;
 	onRemove: (index: number) => void;
@@ -28,6 +29,7 @@ interface IProps {
 
 const Listing = ({
 	activities,
+	hasActivityErrorsByIndex,
 	onAdd,
 	onEdit,
 	onRemove,
@@ -47,6 +49,7 @@ const Listing = ({
 					activities.map((activity, index) => (
 						<ActivityPanel
 							activity={activity}
+							hasErrors={hasActivityErrorsByIndex(index)}
 							key={index}
 							onEdit={() => onEdit(index)}
 							onRemove={() => onRemove(index)}

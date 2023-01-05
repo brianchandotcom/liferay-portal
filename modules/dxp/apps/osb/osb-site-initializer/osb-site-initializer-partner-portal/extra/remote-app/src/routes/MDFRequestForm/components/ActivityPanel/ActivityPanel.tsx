@@ -20,6 +20,7 @@ interface IProps {
 	activity: MDFRequestActivity;
 	children?: React.ReactNode;
 	detail?: boolean;
+	hasErrors?: boolean;
 	onEdit?: () => void;
 	onRemove?: () => void;
 	overallCampaignName: string;
@@ -29,13 +30,17 @@ const ActivityPanel = ({
 	activity,
 	children,
 	detail,
+	hasErrors,
 	onEdit,
 	onRemove,
 	overallCampaignName,
 }: IProps) => {
 	return (
 		<ClayPanel
-			className="border-brand-primary-lighten-4"
+			className={classNames({
+				'border-brand-primary-lighten-4': !hasErrors,
+				'border-danger': hasErrors,
+			})}
 			collapsable={detail}
 			displayTitle={
 				<ClayPanel.Title

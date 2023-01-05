@@ -123,6 +123,9 @@ const Activities = ({
 		arrayHelpers.remove(index);
 	};
 
+	const hasActivityErrorsByIndex = (index: number): boolean =>
+		Boolean(errors.activities?.[index]);
+
 	const onSaveAsDraftForm = () => {
 		updateEditableActivity();
 		setIsDraft(true);
@@ -156,6 +159,7 @@ const Activities = ({
 				<Listing
 					{...arrayHelpers}
 					activities={values.activities}
+					hasActivityErrorsByIndex={hasActivityErrorsByIndex}
 					onAdd={onAdd}
 					onEdit={onEdit}
 					onRemove={onRemove}

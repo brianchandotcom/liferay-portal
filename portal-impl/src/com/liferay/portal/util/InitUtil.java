@@ -199,7 +199,8 @@ public class InitUtil {
 	}
 
 	public static synchronized void initWithSpring(
-		List<String> configLocations, boolean initModuleFramework) {
+		List<String> configLocations, boolean initModuleFramework,
+		Runnable initFrameworkCallback) {
 
 		if (_initialized) {
 			return;
@@ -213,6 +214,10 @@ public class InitUtil {
 					System.getProperty(SystemProperties.TMP_DIR);
 
 				ModuleFrameworkUtil.initFramework();
+
+				if (initFrameworkCallback != null) {
+					initFrameworkCallback.run();
+				}
 			}
 
 			DBInitUtil.init();

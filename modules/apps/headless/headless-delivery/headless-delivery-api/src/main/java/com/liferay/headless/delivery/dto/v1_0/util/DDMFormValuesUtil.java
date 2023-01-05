@@ -195,8 +195,8 @@ public class DDMFormValuesUtil {
 
 		return new DDMFormFieldValue() {
 			{
-				setName(ddmFormField.getName());
 				setFieldReference(ddmFormField.getFieldReference());
+				setName(ddmFormField.getName());
 				setNestedDDMFormFields(
 					_flattenDDMFormFieldValues(
 						ddmFormField.getNestedDDMFormFields(),

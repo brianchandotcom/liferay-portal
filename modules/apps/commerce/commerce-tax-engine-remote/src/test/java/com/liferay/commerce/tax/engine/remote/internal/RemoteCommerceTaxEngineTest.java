@@ -322,11 +322,11 @@ public class RemoteCommerceTaxEngineTest {
 		return new CommerceTaxCalculateRequest() {
 			{
 				setCommerceBillingAddressId(1);
+				setCommerceChannelGroupId(4);
 				setCommerceShippingAddressId(2);
 				setCommerceTaxMethodId(3);
 				setPercentage(true);
 				setPrice(BigDecimal.valueOf(99));
-				setCommerceChannelGroupId(4);
 				setTaxCategoryId(5);
 			}
 		};

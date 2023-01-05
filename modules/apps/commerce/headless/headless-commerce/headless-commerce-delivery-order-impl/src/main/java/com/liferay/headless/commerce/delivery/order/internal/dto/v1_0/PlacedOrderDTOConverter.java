@@ -135,6 +135,12 @@ public class PlacedOrderDTOConverter
 					commerceOrder.getShippingAddressId();
 				printedNote = commerceOrder.getPrintedNote();
 				purchaseOrderNumber = commerceOrder.getPurchaseOrderNumber();
+				shippingOption = commerceOrder.getShippingOptionName();
+				status = commerceOrderWorkflowStatusLabel;
+				summary = _getSummary(commerceOrder, locale);
+				workflowStatusInfo = _toStatus(
+					commerceOrder.getStatus(), commerceOrderWorkflowStatusLabel,
+					commerceOrderWorkflowStatusLabelI18n);
 
 				setShippingMethod(
 					() -> {
@@ -147,12 +153,6 @@ public class PlacedOrderDTOConverter
 
 						return commerceShippingMethod.getEngineKey();
 					});
-				shippingOption = commerceOrder.getShippingOptionName();
-				status = commerceOrderWorkflowStatusLabel;
-				summary = _getSummary(commerceOrder, locale);
-				workflowStatusInfo = _toStatus(
-					commerceOrder.getStatus(), commerceOrderWorkflowStatusLabel,
-					commerceOrderWorkflowStatusLabelI18n);
 			}
 		};
 

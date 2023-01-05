@@ -156,8 +156,8 @@ public class DataDefinitionDDMFormUtilTest {
 								"pt_BR", "rótulo2"
 							).build(),
 							defaultLocale));
-					setName("name2");
 					setLocalizable(false);
+					setName("name2");
 					setPredefinedValue(
 						LocalizedValueUtil.toLocalizedValue(
 							HashMapBuilder.<String, Object>put(
@@ -231,8 +231,8 @@ public class DataDefinitionDDMFormUtilTest {
 						).put(
 							"pt_BR", "rótulo1"
 						).build());
-					setLocalizable(true);
 					setName("name1");
+					setLocalizable(true);
 					setReadOnly(true);
 					setRepeatable(true);
 					setRequired(true);

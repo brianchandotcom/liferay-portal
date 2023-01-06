@@ -226,8 +226,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 	private static class PathModulePrefixHolder {
 
 		private static final String _PATH_MODULE_PREFIX = StringBundler.concat(
-			PortalUtil.getPathProxy(), PortalUtil.getPathContext(),
-			Portal.PATH_MODULE, StringPool.SLASH);
+			PortalUtil.getPathContext(), Portal.PATH_MODULE, StringPool.SLASH);
 
 	}
 

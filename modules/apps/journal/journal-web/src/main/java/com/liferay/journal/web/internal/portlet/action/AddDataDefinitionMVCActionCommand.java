@@ -20,6 +20,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.web.internal.portlet.action.util.DataDefinitionFieldNameUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -27,9 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -98,22 +96,24 @@ public class AddDataDefinitionMVCActionCommand
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		String dataDefinitionString = ParamUtil.getString(
-			actionRequest, "dataDefinition");
-
 		DataDefinition dataDefinition = DataDefinition.toDTO(
-			dataDefinitionString);
+			ParamUtil.getString(actionRequest, "dataDefinition"));
 
-		String structureKey = ParamUtil.getString(
-			actionRequest, "structureKey");
-		String dataLayout = ParamUtil.getString(actionRequest, "dataLayout");
-		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
-			actionRequest, "description");
+		dataDefinition.setDataDefinitionKey(
+			ParamUtil.getString(actionRequest, "structureKey"));
 
-		dataDefinition.setDataDefinitionKey(structureKey);
-		dataDefinition.setDefaultDataLayout(DataLayout.toDTO(dataLayout));
+		DataLayout dataLayout = DataLayout.toDTO(
+			ParamUtil.getString(actionRequest, "dataLayout"));
+
+		DataDefinitionFieldNameUtil.normalizeFieldName(
+			dataDefinition, dataLayout);
+
+		dataDefinition.setDefaultDataLayout(dataLayout);
+
 		dataDefinition.setDescription(
-			LocalizedValueUtil.toStringObjectMap(descriptionMap));
+			LocalizedValueUtil.toStringObjectMap(
+				_localization.getLocalizationMap(
+					actionRequest, "description")));
 
 		dataDefinitionResource.postSiteDataDefinitionByContentType(
 			groupId, "journal", dataDefinition);

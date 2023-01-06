@@ -86,16 +86,35 @@ public class ConfigurationFactoryUtil {
 			throw new IllegalStateException("Service PID is null");
 		}
 
-		String servicePid = servicePids.get(0);
+		return getExternalReferenceCode(serviceFactoryPid, servicePids);
+	}
 
-		if (!servicePid.startsWith(serviceFactoryPid)) {
-			throw new IllegalStateException(
-				StringBundler.concat(
-					"Service PID (", servicePid, ") does not start with ",
-					"service factory PID (", serviceFactoryPid, ")"));
+	public static String getExternalReferenceCode(
+			String serviceFactoryPid, List<String> servicePids)
+		throws IllegalStateException {
+
+		for (String servicePid : servicePids) {
+			if (servicePid.startsWith(serviceFactoryPid)) {
+				String externalReferenceCode = servicePid.substring(
+					serviceFactoryPid.length() + 1);
+
+				// LPS-172217
+
+				int pos = externalReferenceCode.indexOf('/');
+
+				if (pos != -1) {
+					externalReferenceCode = externalReferenceCode.substring(
+						0, pos);
+				}
+
+				return externalReferenceCode;
+			}
 		}
 
-		return servicePid.substring(serviceFactoryPid.length() + 1);
+		throw new IllegalStateException(
+			StringBundler.concat(
+				"No Service PID starts with service factory PID (",
+				serviceFactoryPid, ")"));
 	}
 
 }

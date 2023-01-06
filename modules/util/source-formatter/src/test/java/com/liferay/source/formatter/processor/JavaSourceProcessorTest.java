@@ -38,14 +38,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"AssignmentsAndSetCallsOrder.testjava",
 			new String[] {
-				"The variable assignment for 'appDeployments' should come " +
-					"before the variable assignment for 'dataDefinitionId'",
-				"The variable assignment for 'settings' should come before " +
-					"the variable assignment for 'type'",
-				"The variable assignment for 'settings' should come before " +
-					"the variable assignment for 'type'"
+				"The variable assignment for 'appDeployments' should come before the variable assignment for 'dataDefinitionId'",
+				"The variable assignment for 'settings' should come before the variable assignment for 'type'",
+				"The variable assignment for 'type' shoud come before the method calling 'setName'",
+				"The variable assignment for 'settings' should come before the variable assignment for 'type'",
+				"The method calling 'setCompany' should come before the method calling 'setName'"
 			},
-			new Integer[] {29, 33, 45});
+			new Integer[] {29, 33, 42, 48, 54});
 	}
 
 	@Test

@@ -37,6 +37,9 @@ public class AssignmentsAndSetCallsOrder {
 					},
 					new AppDeployment() {
 						{
+							setName("test");
+
+							type = "productMenu";
 						}
 					},
 					new AppDeployment() {
@@ -46,6 +49,9 @@ public class AssignmentsAndSetCallsOrder {
 						}
 					}
 				};
+
+				setName("test");
+				setCompany("Liferay");
 			}
 		};
 	}

@@ -18,7 +18,7 @@ export default function getTotalBudget(
 		(previousValue: number, currentValue: MDFRequestActivity) => {
 			const sumBudgets = currentValue.budgets.reduce(
 				(previousValue, currentValue) =>
-					previousValue + (currentValue.cost || 0),
+					previousValue + (Number(currentValue.cost) || 0),
 				0
 			);
 

@@ -16,7 +16,7 @@ export default function getTotalMDFRequest(
 ) {
 	return mdfRequestActivities.reduce(
 		(previousValue: number, currentValue: MDFRequestActivity) => {
-			const sumAmount = currentValue.mdfRequestAmount;
+			const sumAmount = Number(currentValue.mdfRequestAmount);
 
 			return previousValue + sumAmount;
 		},

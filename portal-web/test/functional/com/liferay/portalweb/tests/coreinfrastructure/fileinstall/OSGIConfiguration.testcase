@@ -341,4 +341,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169760. Verify the tika configurations in custom tika.xml file can be loaded."
+	@priority = "3"
+	test TikaConfigurationWithCustomTikaXML {
+		property test.name.skip.portal.instance = "OSGIConfiguration#TikaConfigurationWithCustomTikaXML";
+
+		var projectDir = PropsUtil.get("project.dir");
+
+		var resourceTikaFilePath = "${projectDir}/modules/apps/portal/portal-tika/src/main/resources/com/liferay/portal/tika/internal/configuration/helper/dependencies/tika.xml";
+
+		var fileContent = FileUtil.read("${resourceTikaFilePath}");
+		var appServerDir = PropsUtil.get("app.server.dir");
+
+		var targetTikaFilePath = "${appServerDir}/webapps/ROOT/WEB-INF/classes/tika.xml";
+
+		FileUtil.write("${targetTikaFilePath}", "${fileContent}");
+
+		var replaceToken = '''<parser class="org.apache.tika.parser.odf.OpenDocumentParser" />''';
+
+		FileUtil.replaceStringInFile("${targetTikaFilePath}", "${replaceToken}", "");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Tika Configuration",
+			configurationScope = "System Scope");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Tika configuration xml",
+			settingValue = "tika.xml");
+
+		SystemSettings.saveConfiguration();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.odt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.expandInfo();
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "application/vnd.oasis.opendocument.text",
+			metadataLabel = "Content Type");
+
+		DMDocument.cannotViewDocumentMetadataCP(
+			metadataData = "2012-05-09T16:22:55.33",
+			metadataLabel = "Creation Date");
+
+		DMDocument.cannotViewDocumentMetadataCP(
+			metadataData = "2012-05-09T16:29:14.53",
+			metadataLabel = "Last Modification");
+	}
+
 }

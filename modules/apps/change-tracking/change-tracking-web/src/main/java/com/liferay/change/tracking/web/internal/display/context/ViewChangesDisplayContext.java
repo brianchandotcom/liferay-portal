@@ -42,6 +42,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -76,6 +77,7 @@ import java.io.Serializable;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -292,6 +294,30 @@ public class ViewChangesDisplayContext {
 				contextViewJSONObject, typeNameCacheMap)
 		).put(
 			"ctCollectionId", _ctCollection.getCtCollectionId()
+		).put(
+			"ctCollections",
+			() -> {
+				List<CTCollection> ctCollectionList =
+					_ctCollectionLocalService.getCTCollections(
+						_themeDisplay.getCompanyId(),
+						WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null);
+
+				List<Map<String, String>> ctCollectionJsonList =
+					new ArrayList<>();
+
+				for (CTCollection ctCollection : ctCollectionList) {
+					ctCollectionJsonList.add(
+						HashMapBuilder.put(
+							"ctCollectionId",
+							String.valueOf(ctCollection.getCtCollectionId())
+						).put(
+							"name", ctCollection.getName()
+						).build());
+				}
+
+				return JSONFactoryUtil.createJSONArray(ctCollectionJsonList);
+			}
 		).put(
 			"ctMappingInfos",
 			() -> {
@@ -524,6 +550,23 @@ public class ViewChangesDisplayContext {
 
 				return modelDataJSONObject;
 			}
+		).put(
+			"moveChangesURL",
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/move_changes"
+			).setRedirect(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_changes"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString()
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
 		).put(
 			"name", _ctCollection.getName()
 		).put(

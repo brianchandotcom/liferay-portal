@@ -34,6 +34,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 
 import ChangeTrackingComments from '../components/ChangeTrackingComments';
+import MoveChangesModal from '../components/MoveChangesModal';
 import WorkflowStatusLabel from '../components/WorkflowStatusLabel';
 import ManageCollaborators from '../components/manage-collaborators-modal/ManageCollaborators';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
@@ -100,6 +101,7 @@ export default function ChangeTrackingChangesView({
 	columnFromURL,
 	contextView,
 	ctCollectionId,
+	ctCollections,
 	ctMappingInfos,
 	currentUserId,
 	dataURL,
@@ -114,6 +116,7 @@ export default function ChangeTrackingChangesView({
 	getCTCommentsURL,
 	keywordsFromURL,
 	modelData,
+	moveChangesURL,
 	name,
 	namespace,
 	navigationFromURL,
@@ -582,6 +585,8 @@ export default function ChangeTrackingChangesView({
 	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
 	const [searchMobile, setSearchMobile] = useState(false);
 	const [showComments, setShowComments] = useState(false);
+	const [allChecked, setAllChecked] = useState(false);
+	const [selectedChanges, setSelectedChanges] = useState([]);
 
 	const getFilters = useCallback(
 		(changeTypes, sites, types, users) => {
@@ -1714,7 +1719,7 @@ export default function ChangeTrackingChangesView({
 
 				rows.push(
 					<ClayTable.Row divider>
-						<ClayTable.Cell colSpan={6}>
+						<ClayTable.Cell colSpan={7}>
 							{node.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -1726,6 +1731,37 @@ export default function ChangeTrackingChangesView({
 					className="cursor-pointer"
 					onClick={() => navigate(node.nodeId)}
 				>
+					<ClayTable.Cell
+						onClick={(event) => event.stopPropagation()}
+					>
+						<ClayCheckbox
+							disabled={allChecked}
+							id={i}
+							onChange={(event) => {
+								if (event.target.checked) {
+									setSelectedChanges([
+										...selectedChanges,
+										{
+											ctEntryId: node.ctEntryId,
+											modelClassNameId:
+												node.modelClassNameId,
+											modelClassPK: node.modelClassPK,
+										},
+									]);
+								}
+								else {
+									setSelectedChanges(
+										selectedChanges.filter(
+											(selectedChange) =>
+												selectedChange.ctEntryId !==
+												node.ctEntryId
+										)
+									);
+								}
+							}}
+						/>
+					</ClayTable.Cell>
+
 					<ClayTable.Cell>
 						{node.userId && node.userId > 0 && (
 							<ClaySticker
@@ -2051,7 +2087,7 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Row>
 					<ClayTable.Cell
 						className="publications-header-td"
-						colSpan={6}
+						colSpan={7}
 					>
 						<ManagementToolbar.Container>
 							{renderFilterDropdown()}
@@ -2165,7 +2201,7 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Row>
 					<ClayTable.Cell
 						className="publications-header-td"
-						colSpan={renderState.nav === NAVIGATION_DATA ? 6 : 1}
+						colSpan={renderState.nav === NAVIGATION_DATA ? 7 : 1}
 					>
 						<ClayNavigationBar spritemap={spritemap}>
 							<ClayNavigationBar.Item
@@ -2583,7 +2619,7 @@ export default function ChangeTrackingChangesView({
 			return (
 				<ClayTable.Head>
 					<ClayTable.Row>
-						<ClayTable.Cell colSpan={6}>
+						<ClayTable.Cell colSpan={7}>
 							<ClayEmptyState
 								description={Liferay.Language.get(
 									'there-are-no-changes-to-display-in-this-view'
@@ -2600,6 +2636,36 @@ export default function ChangeTrackingChangesView({
 		return (
 			<ClayTable.Head>
 				<ClayTable.Row>
+					<ClayTable.Cell headingCell>
+						<ClayCheckbox
+							onChange={(event) => {
+								if (event.target.checked) {
+									const nodes = filterDisplayNodes(
+										renderState.changes
+									);
+
+									const allChanges = [];
+
+									for (let i = 0; i < nodes.length; i++) {
+										allChanges.push({
+											ctEntryId: nodes[i].ctEntryId,
+											modelClassNameId:
+												nodes[i].modelClassNameId,
+											modelClassPK: nodes[i].modelClassPK,
+										});
+									}
+
+									setSelectedChanges(allChanges);
+									setAllChecked(true);
+								}
+								else {
+									setSelectedChanges([]);
+									setAllChecked(false);
+								}
+							}}
+						/>
+					</ClayTable.Cell>
+
 					<ClayTable.Cell headingCell>
 						{getColumnHeader(
 							COLUMN_USER,
@@ -2826,6 +2892,17 @@ export default function ChangeTrackingChangesView({
 
 						<ClayToolbar.Item>
 							<ManageCollaborators {...collaboratorsData} />
+						</ClayToolbar.Item>
+
+						<ClayToolbar.Item>
+							<MoveChangesModal
+								changes={selectedChanges}
+								ctCollectionId={ctCollectionId}
+								moveChangesURL={moveChangesURL}
+								namespace={namespace}
+								publications={ctCollections}
+								spritemap={spritemap}
+							/>
 						</ClayToolbar.Item>
 
 						{renderToolbarAction(

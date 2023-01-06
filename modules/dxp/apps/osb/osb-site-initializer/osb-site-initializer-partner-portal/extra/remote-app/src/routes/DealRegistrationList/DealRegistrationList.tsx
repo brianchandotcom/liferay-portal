@@ -31,24 +31,20 @@ import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
-
 export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
-
 interface IProps {
+	getFilteredItems: (items: DealRegistrationItem[]) => DealRegistrationItem[];
 	sort: string;
 }
-
-const DealRegistrationList = ({sort}: IProps) => {
+const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<DealRegistrationItem>({});
-
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisibleModal(false),
 	});
-
 	const pagination = usePagination();
 	const {data, isValidating} = useGetListItemsFromDealRegistration(
 		pagination.activePage,
@@ -56,7 +52,7 @@ const DealRegistrationList = ({sort}: IProps) => {
 		filtersTerm,
 		sort
 	);
-
+	const filteredData = data.items && getFilteredItems(data.items);
 	const siteURL = useLiferayNavigate();
 	const columns = [
 		{
@@ -84,12 +80,10 @@ const DealRegistrationList = ({sort}: IProps) => {
 			label: 'Status',
 		},
 	];
-
 	const handleCustomClickOnRow = (item: DealRegistrationItem) => {
 		setIsVisibleModal(true);
 		setModalContent(item);
 	};
-
 	const getModal = () => {
 		return (
 			<Modal observer={observer} size="lg">
@@ -97,7 +91,6 @@ const DealRegistrationList = ({sort}: IProps) => {
 			</Modal>
 		);
 	};
-
 	const getTable = (totalCount: number, items?: DealRegistrationItem[]) => {
 		if (items) {
 			if (!totalCount) {
@@ -150,13 +143,13 @@ const DealRegistrationList = ({sort}: IProps) => {
 
 						<div className="bd-highlight flex-shrink-2 mt-1">
 							{!!filters.searchTerm &&
-								!!data.items?.length &&
+								!!filteredData?.length &&
 								!isValidating && (
 									<div>
 										<p className="font-weight-semi-bold m-0 ml-1 mt-3 text-paragraph-sm">
-											{data.items?.length > 1
-												? `${data.items?.length} results for ${filters.searchTerm}`
-												: `${data.items?.length} result for ${filters.searchTerm}`}
+											{filteredData?.length > 1
+												? `${filteredData?.length} results for ${filters.searchTerm}`
+												: `${filteredData?.length} result for ${filters.searchTerm}`}
 										</p>
 									</div>
 								)}
@@ -165,10 +158,10 @@ const DealRegistrationList = ({sort}: IProps) => {
 				</div>
 
 				<div>
-					{!!data.items?.length && (
+					{!!filteredData?.length && (
 						<CSVLink
 							className="btn btn-secondary mb-2 mb-lg-0 mr-2"
-							data={data.items}
+							data={filteredData}
 							filename="Partner Deal Registration.csv"
 						>
 							Export Deal Registrations
@@ -192,7 +185,7 @@ const DealRegistrationList = ({sort}: IProps) => {
 
 			{isValidating && <ClayLoadingIndicator />}
 
-			{!isValidating && getTable(data?.totalCount || 0, data?.items)}
+			{!isValidating && getTable(filteredData?.length || 0, filteredData)}
 		</div>
 	);
 };

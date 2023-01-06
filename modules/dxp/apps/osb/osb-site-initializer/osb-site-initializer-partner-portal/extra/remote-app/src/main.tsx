@@ -44,7 +44,12 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.MDF_CLAIM_LIST]: <MDFClaimList />,
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
 	[AppRouteType.DEAL_REGISTRATION_LIST]: (
-		<DealRegistrationList sort="dateCreated:desc" />
+		<DealRegistrationList
+			getFilteredItems={(items) =>
+				items.filter((item) => item.STATUS !== 'Qualified')
+			}
+			sort="dateCreated:desc"
+		/>
 	),
 	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList

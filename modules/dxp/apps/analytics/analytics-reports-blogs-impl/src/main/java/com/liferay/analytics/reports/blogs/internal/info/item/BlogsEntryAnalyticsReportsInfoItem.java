@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,24 +47,30 @@ public class BlogsEntryAnalyticsReportsInfoItem
 
 	@Override
 	public String getAuthorName(BlogsEntry blogsEntry) {
-		return Optional.ofNullable(
-			_userLocalService.fetchUser(blogsEntry.getUserId())
-		).map(
-			User::getFullName
-		).orElse(
-			StringPool.BLANK
-		);
+		User user = _userLocalService.fetchUser(blogsEntry.getUserId());
+
+		if (user == null) {
+			return StringPool.BLANK;
+		}
+
+		String fullName = user.getFullName();
+
+		if (fullName == null) {
+			return StringPool.BLANK;
+		}
+
+		return fullName;
 	}
 
 	@Override
 	public long getAuthorUserId(BlogsEntry blogsEntry) {
-		return Optional.ofNullable(
-			_userLocalService.fetchUser(blogsEntry.getUserId())
-		).map(
-			User::getUserId
-		).orElse(
-			0L
-		);
+		User user = _userLocalService.fetchUser(blogsEntry.getUserId());
+
+		if (user == null) {
+			return 0L;
+		}
+
+		return user.getUserId();
 	}
 
 	@Override

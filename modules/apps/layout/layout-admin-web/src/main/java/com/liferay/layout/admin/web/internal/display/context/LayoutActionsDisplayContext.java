@@ -293,11 +293,10 @@ public class LayoutActionsDisplayContext {
 					segmentsExperienceId);
 
 			if (segmentsExperience != null) {
-				segmentsExperienceId = segmentsExperience.getSegmentsExperienceId();
+				return segmentsExperience.getSegmentsExperienceId();
 			}
-			else {
-				segmentsExperienceId = -1L;
-			}
+
+			segmentsExperienceId = -1L;
 		}
 
 		if (segmentsExperienceId == -1) {

@@ -31,6 +31,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.StringPool;
@@ -305,26 +306,28 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 		).isPresent();
 	}
 
-	private Optional<Layout> _getLayoutOptional(
+	private Layout _getLayout(
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
-		return Optional.ofNullable(
-			layoutDisplayPageObjectProvider
-		).filter(
-			currentLayoutDisplayPageObjectProvider ->
-				currentLayoutDisplayPageObjectProvider.getDisplayObject() !=
-					null
-		).map(
-			currentLayoutDisplayPageObjectProvider ->
-				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-					layoutDisplayPageObjectProvider.getGroupId(),
-					layoutDisplayPageObjectProvider.getClassNameId(),
-					layoutDisplayPageObjectProvider.getClassPK(),
-					layoutDisplayPageObjectProvider.getClassTypeId())
-		).map(
-			layoutPageTemplateEntry -> _layoutLocalService.fetchLayout(
-				layoutPageTemplateEntry.getPlid())
-		);
+		if ((layoutDisplayPageObjectProvider == null) ||
+			(layoutDisplayPageObjectProvider.getDisplayObject() == null)) {
+
+			return null;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+				layoutDisplayPageObjectProvider.getGroupId(),
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId());
+
+		if (layoutPageTemplateEntry == null) {
+			return null;
+		}
+
+		return _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
 	}
 
 	private Optional<ThemeDisplay> _getThemeDisplayOptional() {

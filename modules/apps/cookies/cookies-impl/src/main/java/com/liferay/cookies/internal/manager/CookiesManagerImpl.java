@@ -397,16 +397,10 @@ public class CookiesManagerImpl implements CookiesManager {
 								groupId);
 					}
 					else {
-						long companyId = _portal.getCompanyId(
-							httpServletRequest);
-
-						if (companyId > 0) {
-							cookiesPreferenceHandlingConfiguration =
-								_configurationProvider.getCompanyConfiguration(
-									CookiesPreferenceHandlingConfiguration.
-										class,
-									companyId);
-						}
+						cookiesPreferenceHandlingConfiguration =
+							_configurationProvider.getCompanyConfiguration(
+								CookiesPreferenceHandlingConfiguration.class,
+								_portal.getCompanyId(httpServletRequest));
 					}
 				}
 

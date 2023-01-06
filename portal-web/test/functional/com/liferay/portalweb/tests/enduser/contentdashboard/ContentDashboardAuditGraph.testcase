@@ -25,12 +25,12 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
 
-		for (var vocabulary : list "Audience,Stage") {
-			JSONCategory.tearDownCategories(
-				groupName = "Global",
-				vocabularyName = "${vocabulary}");
+			for (var vocabulary : list "Audience,Stage") {
+				JSONCategory.tearDownCategories(
+					groupName = "Global",
+					vocabularyName = "${vocabulary}");
+			}
 		}
 	}
 

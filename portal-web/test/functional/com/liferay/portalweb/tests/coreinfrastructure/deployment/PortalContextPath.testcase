@@ -9,6 +9,102 @@ definition {
 		SignIn.signInTestSetup();
 	}
 
+	@description = "LPS-171056 Verify sendRedirect works with non root context."
+	@priority = "3"
+	test SendRedirectWorksWithNonRootContext {
+		property portal.acceptance = "true";
+		property portal.context = "liferay";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.name.skip.portal.instance = "PortalContextPath#SendRedirectWorksWithNonRootContext";
+
+		task ("Given a display page template with a Heading and HTML fragment mapped to a Blogs Entry Title and Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Test Blogs Entry Display Page Template",
+				groupName = "Guest");
+
+			DisplayPageTemplate.addFragment(
+				collectionName = "Basic Components",
+				displayPageName = "Test Blogs Entry Display Page Template",
+				fragmentName = "Heading",
+				publish = "false",
+				siteURLKey = "guest");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+
+			Refresh();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML",
+				targetFragmentName = "Heading");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "HTML",
+				id = "element-html");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Content");
+
+			Button.clickPublish();
+		}
+
+		task ("And given a blogs entry configured with that display page template") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+
+			DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+				assetType = "Blogs Entry",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Guest",
+				pageName = "Test Blogs Entry Display Page Template",
+				siteURLKey = "guest");
+		}
+
+		task ("And given a page with a blogs widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Blog Widget Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Blog Widget Page",
+				widgetName = "Blogs");
+		}
+
+		task ("When the user goes to the blogs page and clicks on the blog entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Blog Widget Page",
+				siteName = "Guest");
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Then the user should be able to view the blog details") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Blogs Entry Title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "html",
+				id = "element-html",
+				text = "Blogs Entry Content");
+		}
+	}
+
 	@description = "Runs the smoke test on a non-root portal context."
 	@priority = "5"
 	test Smoke {
@@ -16,7 +112,7 @@ definition {
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PortalContext#Smoke";
+		property test.name.skip.portal.instance = "PortalContextPath#Smoke";
 
 		Smoke.viewWelcomeContentPage();
 

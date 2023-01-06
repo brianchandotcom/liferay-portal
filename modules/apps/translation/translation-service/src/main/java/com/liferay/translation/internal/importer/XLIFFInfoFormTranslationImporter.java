@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -51,7 +50,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -191,32 +189,31 @@ public class XLIFFInfoFormTranslationImporter
 	private InfoItemReference _getInfoItemReference(List<Event> events)
 		throws XLIFFFileException {
 
-		Optional<Event> optional = Optional.of(
-			ListUtil.filter(
-				events, Event::isStartSubDocument
-			).get(
-				0
-			));
+		Event eventStartSubdocument = null;
 
-		return optional.flatMap(
-			event -> {
-				StartSubDocument startSubDocument = event.getStartSubDocument();
-
-				Matcher matcher = _pattern.matcher(startSubDocument.getName());
-
-				if (!matcher.matches()) {
-					return Optional.empty();
-				}
-
-				return Optional.of(
-					new InfoItemReference(
-						matcher.group(1),
-						GetterUtil.getLong(matcher.group(2))));
+		for (Event event : events) {
+			if (event.isStartSubDocument()) {
+				eventStartSubdocument = event;
 			}
-		).orElseThrow(
-			() -> new XLIFFFileException.MustBeWellFormed(
-				"The XLIFF file is not well formed")
-		);
+		}
+
+		if (eventStartSubdocument == null) {
+			throw new XLIFFFileException.MustBeWellFormed(
+				"The XLIFF file is not well formed");
+		}
+
+		StartSubDocument startSubDocument =
+			eventStartSubdocument.getStartSubDocument();
+
+		Matcher matcher = _pattern.matcher(startSubDocument.getName());
+
+		if (!matcher.matches()) {
+			throw new XLIFFFileException.MustBeWellFormed(
+				"The XLIFF file is not well formed");
+		}
+
+		return new InfoItemReference(
+			matcher.group(1), GetterUtil.getLong(matcher.group(2)));
 	}
 
 	private InfoItemReference _getInfoItemReference(XLIFFDocument xliffDocument)

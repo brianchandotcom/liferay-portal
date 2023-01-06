@@ -1,0 +1,184 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+
+		task ("Given objectDefinition Student created") {
+			var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given universityStudents oneToMany relationship is created") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UniversityStudents",
+				name = "universityStudents",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${objectDefinitionId}",
+				type = "oneToMany");
+		}
+
+		task ("And Given subjectStudents oneToMany relationship is created") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "SubjectStudents",
+				name = "subjectStudents",
+				objectDefinitionId1 = "${staticObjectId2}",
+				objectDefinitionId2 = "${objectDefinitionId}",
+				type = "oneToMany");
+		}
+
+		task ("And Given a University entry created") {
+			ObjectDefinitionAPI.setUpGlobalUniversityId();
+		}
+
+		task ("And Given a Student entry created") {
+			ObjectDefinitionAPI.setUpGlobalStudentId();
+		}
+
+		task ("And Given a Subject entry created") {
+			ObjectDefinitionAPI.setUpGlobalSubjectId();
+		}
+
+		task ("And Given University entry related to the Student entry") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${staticUniversityId}",
+				objectEntry2 = "${staticStudentId}",
+				relationshipName = "universityStudents");
+		}
+
+		task ("And Given Student entry related to the Subject entry") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "subjects",
+				objectEntry1 = "${staticSubjectId}",
+				objectEntry2 = "${staticStudentId}",
+				relationshipName = "subjectStudents");
+		}
+	}
+
+	tearDown {
+		for (var objectName : list "University,Student,Subject") {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "${objectName}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "3"
+	test CanGetMultipleNestedFieldsInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When requesting GET /o/c/students/{studentId}?nestedFields=universityStudents,subjectStudents") {
+			var response = ObjectDefinitionAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = "${staticStudentId}",
+				parameter = "nestedFields",
+				parameterValue = "universityStudents,subjectStudents");
+		}
+
+		task ("Then in r_universityStudents_c_university node the value r_universityStudents_c_university.id and r_universityStudents_c_universityId have the value of universityId") {
+			var actualId = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.id==${staticUniversityId})].id");
+			var expectedId = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityId");
+
+			TestUtils.assertEquals(
+				actual = "${actualId}",
+				expected = "${expectedId}");
+		}
+
+		task ("And Then the value r_universityStudents_c_university.externalReferenceCode and r_universityStudents_c_universityERC have the value of universityErc") {
+			var actualErc = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.externalReferenceCode=='${staticUniversityErc}')].externalReferenceCode");
+			var expectedErc = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityERC");
+
+			TestUtils.assertEquals(
+				actual = "${actualErc}",
+				expected = "${expectedErc}");
+		}
+
+		task ("And Then r_subjectStudents_c_subject node the values r_subjectStudents_c_subject.id and r_subjectStudents_c_subjectId have the value of subjectId") {
+			var actualId = JSONUtil.getWithJSONPath("${response}", "$..r_subjectStudents_c_subject[?(@.id==${staticSubjectId})].id");
+			var expectedId = JSONUtil.getWithJSONPath("${response}", "$.r_subjectStudents_c_subjectId");
+
+			TestUtils.assertEquals(
+				actual = "${actualId}",
+				expected = "${expectedId}");
+		}
+
+		task ("And Then the value r_subjectStudents_c_subject.externalReferenceCode and r_subjectStudents_c_subjectERC have the value of subjectErc") {
+			var actualErc = JSONUtil.getWithJSONPath("${response}", "$..r_subjectStudents_c_subject[?(@.externalReferenceCode=='${staticSubjectErc}')].externalReferenceCode");
+			var expectedErc = JSONUtil.getWithJSONPath("${response}", "$.r_subjectStudents_c_subjectERC");
+
+			TestUtils.assertEquals(
+				actual = "${actualErc}",
+				expected = "${expectedErc}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanGetNestedFieldsNodeInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When requesting GET /o/c/students/{studentId}?nestedFields=universityStudents") {
+			var response = ObjectDefinitionAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = "${staticStudentId}",
+				parameter = "nestedFields",
+				parameterValue = "universityStudents");
+		}
+
+		task ("Then the value r_universityStudents_c_university.id in r_universityStudents_c_university node and r_universityStudents_c_universityId have the value of universityId") {
+			var actualId = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.id==${staticUniversityId})].id");
+			var expectedId = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityId");
+
+			TestUtils.assertEquals(
+				actual = "${actualId}",
+				expected = "${expectedId}");
+		}
+
+		task ("And Then the value r_universityStudents_c_university.externalReferenceCode and r_universityStudents_c_universityERC have the value of universityErc") {
+			var actualErc = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.externalReferenceCode=='${staticUniversityErc}')].externalReferenceCode");
+			var expectedErc = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityERC");
+
+			TestUtils.assertEquals(
+				actual = "${actualErc}",
+				expected = "${expectedErc}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanGetRelatedObjectEntryIdInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When requesting GET /o/c/students/{studentId}") {
+			var response = ObjectDefinitionAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = "${staticStudentId}");
+		}
+
+		task ("Then I can see correct value of r_universityStudents_c_universityId and r_universityStudents_c_universityERC") {
+			var actualId = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityId");
+			var actualErc = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityERC");
+
+			TestUtils.assertEquals(
+				actual = "${actualId}",
+				expected = "${staticUniversityId}");
+
+			TestUtils.assertEquals(
+				actual = "${actualErc}",
+				expected = "${staticUniversityErc}");
+		}
+	}
+
+}

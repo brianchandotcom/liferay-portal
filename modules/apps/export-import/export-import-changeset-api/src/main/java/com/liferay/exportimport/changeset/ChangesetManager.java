@@ -24,8 +24,6 @@ public interface ChangesetManager {
 
 	public void addChangeset(Changeset changeset);
 
-	public boolean hasChangeset(String changesetUuid);
-
 	public Changeset removeChangeset(String changesetUuid);
 
 }

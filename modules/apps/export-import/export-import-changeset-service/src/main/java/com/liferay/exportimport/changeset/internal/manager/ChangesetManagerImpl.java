@@ -45,12 +45,6 @@ public class ChangesetManagerImpl
 
 	@Clusterable(onMaster = true)
 	@Override
-	public boolean hasChangeset(String changesetUuid) {
-		return _changesets.containsKey(changesetUuid);
-	}
-
-	@Clusterable(onMaster = true)
-	@Override
 	public Changeset removeChangeset(String changesetUuid) {
 		return _changesets.remove(changesetUuid);
 	}

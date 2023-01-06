@@ -23,10 +23,12 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalServiceUtil;
@@ -205,9 +207,6 @@ public class AccountChannelEntryResourceTest
 
 		return new AccountChannelEntry() {
 			{
-				channelExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				channelId = RandomTestUtil.randomLong();
 				overrideEligibility = RandomTestUtil.randomBoolean();
 				priority = RandomTestUtil.randomDouble();
 			}
@@ -244,6 +243,14 @@ public class AccountChannelEntryResourceTest
 		throws Exception {
 
 		return _postAccountIdAccountChannelDiscount();
+	}
+
+	@Override
+	protected AccountChannelEntry
+			testDeleteAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		return _postAccountIdAccountChannelPaymentMethod();
 	}
 
 	@Override
@@ -361,6 +368,33 @@ public class AccountChannelEntryResourceTest
 	@Override
 	protected String
 			testGetAccountByExternalReferenceCodeAccountChannelDiscountsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected AccountChannelEntry
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_addCommercePaymentMethodGroupRel(
+				accountChannelEntry.getChannelId());
+
+		accountChannelEntry.setClassPK(
+			commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId());
+
+		return accountChannelEntryResource.
+			postAccountByExternalReferenceCodeAccountChannelPaymentMethod(
+				externalReferenceCode, accountChannelEntry);
+	}
+
+	@Override
+	protected String
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExternalReferenceCode()
 		throws Exception {
 
 		return _accountEntry.getExternalReferenceCode();
@@ -488,6 +522,14 @@ public class AccountChannelEntryResourceTest
 
 	@Override
 	protected AccountChannelEntry
+			testGetAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		return _postAccountIdAccountChannelPaymentMethod();
+	}
+
+	@Override
+	protected AccountChannelEntry
 			testGetAccountChannelPaymentTermId_addAccountChannelEntry()
 		throws Exception {
 
@@ -589,6 +631,30 @@ public class AccountChannelEntryResourceTest
 
 	@Override
 	protected Long testGetAccountIdAccountChannelDiscountsPage_getId()
+		throws Exception {
+
+		return _accountEntry.getAccountEntryId();
+	}
+
+	@Override
+	protected AccountChannelEntry
+			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_addCommercePaymentMethodGroupRel(
+				accountChannelEntry.getChannelId());
+
+		accountChannelEntry.setClassPK(
+			commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId());
+
+		return accountChannelEntryResource.
+			postAccountIdAccountChannelPaymentMethod(id, accountChannelEntry);
+	}
+
+	@Override
+	protected Long testGetAccountIdAccountChannelPaymentMethodsPage_getId()
 		throws Exception {
 
 		return _accountEntry.getAccountEntryId();
@@ -704,6 +770,14 @@ public class AccountChannelEntryResourceTest
 
 	@Override
 	protected AccountChannelEntry
+			testGraphQLGetAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		return _postAccountIdAccountChannelPaymentMethod();
+	}
+
+	@Override
+	protected AccountChannelEntry
 			testGraphQLGetAccountChannelPaymentTermId_addAccountChannelEntry()
 		throws Exception {
 
@@ -764,6 +838,14 @@ public class AccountChannelEntryResourceTest
 		throws Exception {
 
 		return _postAccountIdAccountChannelDiscount();
+	}
+
+	@Override
+	protected AccountChannelEntry
+			testPatchAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		return _postAccountIdAccountChannelPaymentMethod();
 	}
 
 	@Override
@@ -847,6 +929,24 @@ public class AccountChannelEntryResourceTest
 
 		return accountChannelEntryResource.
 			postAccountByExternalReferenceCodeAccountChannelDiscount(
+				_accountEntry.getExternalReferenceCode(), accountChannelEntry);
+	}
+
+	@Override
+	protected AccountChannelEntry
+			testPostAccountByExternalReferenceCodeAccountChannelPaymentMethod_addAccountChannelEntry(
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_addCommercePaymentMethodGroupRel(
+				accountChannelEntry.getChannelId());
+
+		accountChannelEntry.setClassPK(
+			commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId());
+
+		return accountChannelEntryResource.
+			postAccountByExternalReferenceCodeAccountChannelPaymentMethod(
 				_accountEntry.getExternalReferenceCode(), accountChannelEntry);
 	}
 
@@ -954,6 +1054,24 @@ public class AccountChannelEntryResourceTest
 
 	@Override
 	protected AccountChannelEntry
+			testPostAccountIdAccountChannelPaymentMethod_addAccountChannelEntry(
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_addCommercePaymentMethodGroupRel(
+				accountChannelEntry.getChannelId());
+
+		accountChannelEntry.setClassPK(
+			commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId());
+
+		return accountChannelEntryResource.
+			postAccountIdAccountChannelPaymentMethod(
+				_accountEntry.getAccountEntryId(), accountChannelEntry);
+	}
+
+	@Override
+	protected AccountChannelEntry
 			testPostAccountIdAccountChannelPaymentTerm_addAccountChannelEntry(
 				AccountChannelEntry accountChannelEntry)
 		throws Exception {
@@ -1002,6 +1120,22 @@ public class AccountChannelEntryResourceTest
 			_accountEntry.getAccountEntryId(), accountChannelEntry);
 	}
 
+	private CommercePaymentMethodGroupRel _addCommercePaymentMethodGroupRel(
+			long channelId)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			CommerceChannelLocalServiceUtil.getCommerceChannel(channelId);
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			CommerceTestUtil.addCommercePaymentMethodGroupRel(
+				_user.getUserId(), commerceChannel.getGroupId());
+
+		_commercePaymentMethodGroupRels.add(commercePaymentMethodGroupRel);
+
+		return commercePaymentMethodGroupRel;
+	}
+
 	private AccountChannelEntry _postAccountChannelEntryBillingAddress()
 		throws Exception {
 
@@ -1046,6 +1180,23 @@ public class AccountChannelEntryResourceTest
 
 		return accountChannelEntryResource.postAccountIdAccountChannelDiscount(
 			_accountEntry.getAccountEntryId(), accountChannelEntry);
+	}
+
+	private AccountChannelEntry _postAccountIdAccountChannelPaymentMethod()
+		throws Exception {
+
+		AccountChannelEntry accountChannelEntry = randomAccountChannelEntry();
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_addCommercePaymentMethodGroupRel(
+				accountChannelEntry.getChannelId());
+
+		accountChannelEntry.setClassPK(
+			commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId());
+
+		return accountChannelEntryResource.
+			postAccountIdAccountChannelPaymentMethod(
+				_accountEntry.getAccountEntryId(), accountChannelEntry);
 	}
 
 	private AccountChannelEntry _postAccountIdAccountChannelPaymentTerm()
@@ -1111,6 +1262,13 @@ public class AccountChannelEntryResourceTest
 
 	@DeleteAfterTestRun
 	private CommerceDiscount _commerceDiscount;
+
+	@DeleteAfterTestRun
+	private CommercePaymentMethodGroupRel _commercePaymentMethodGroupRel;
+
+	@DeleteAfterTestRun
+	private List<CommercePaymentMethodGroupRel>
+		_commercePaymentMethodGroupRels = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private CommerceTermEntry _commercePaymentTerm;

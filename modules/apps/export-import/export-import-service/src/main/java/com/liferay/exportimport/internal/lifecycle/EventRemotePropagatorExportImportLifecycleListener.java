@@ -40,6 +40,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -90,41 +91,29 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			return false;
 		}
 
-		long sourceGroupId = GetterUtil.getLong(
-			GroupConstants.ANY_PARENT_GROUP_ID);
-
-		long targetGroupId = GetterUtil.getLong(
-			GroupConstants.ANY_PARENT_GROUP_ID);
-
-		Object remoteAddressValue = null;
-
 		ExportImportConfiguration exportImportConfiguration =
 			_getExportImportConfiguration(exportImportLifecycleEvent);
 
-		if (exportImportConfiguration != null) {
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			Object sourceGroupValue = settingsMap.get("sourceGroupId");
-
-			if (sourceGroupValue != null) {
-				sourceGroupId = GetterUtil.getLong(sourceGroupValue);
-			}
-
-			Object targetGroupValue = settingsMap.get("targetGroupId");
-
-			if (targetGroupValue != null) {
-				targetGroupId = GetterUtil.getLong(targetGroupValue);
-			}
-
-			remoteAddressValue = settingsMap.get("remoteAddress");
+		if (exportImportConfiguration == null) {
+			return false;
 		}
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourceGroupId = GetterUtil.getLong(
+			settingsMap.get("sourceGroupId"),
+			GroupConstants.ANY_PARENT_GROUP_ID);
 
 		Group sourceGroup = _groupLocalService.fetchGroup(sourceGroupId);
 
 		if ((sourceGroup == null) || !sourceGroup.isStagedRemotely()) {
 			return false;
 		}
+
+		long targetGroupId = GetterUtil.getLong(
+			settingsMap.get("targetGroupId"),
+			GroupConstants.ANY_PARENT_GROUP_ID);
 
 		Group targetGroup = _groupLocalService.fetchGroup(targetGroupId);
 
@@ -144,13 +133,9 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			return false;
 		}
 
-		if (remoteAddressValue != null) {
-			String remoteAddress = GetterUtil.getString(remoteAddressValue);
-
-			return !remoteAddress.equals("localhost");
-		}
-
-		return true;
+		return !Objects.equals(
+			GetterUtil.getString(settingsMap.get("remoteAddress")),
+			"localhost");
 	}
 
 	private ExportImportConfiguration _getExportImportConfiguration(

@@ -104,11 +104,9 @@ definition {
 	}
 
 	@description = "LPS-154683: Upgrade Report shows errors"
-	@ignore = "true"
 	@priority = "4"
-	@refactorneeded
 	test ErrorsLogged {
-		property portal.version = "6.0.12";
+		property custom.mysql.sql.statement = "ALTER TABLE Release_ DROP servletContextName;";
 		property test.name.skip.portal.instance = "UpgradeReport#ErrorsLogged";
 
 		task ("Look for the upgrade report") {
@@ -117,9 +115,19 @@ definition {
 			var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
 		}
 
-		task ("Read the content. No errors expected") {
-			if (contains("${fileContent}", "Errors thrown during upgrade")) {
+		task ("Read the content. Error expected") {
+			if (!(contains("${fileContent}", "Errors thrown during upgrade process"))) {
 				fail("Upgrade report does not contain expected errors.");
+			}
+		}
+
+		task ("Read the content. Check for class name and message") {
+			if (!(contains("${fileContent}", "Class name: com.liferay.portal.tools.DBUpgrader"))) {
+				fail("Upgrade report does not contain the error class name.");
+			}
+
+			if (!(contains("${fileContent}", "1 occurrences of the following errors: Unknown column 'servletContextName' in 'where clause'"))) {
+				fail("Upgrade report does not contain the error message.");
 			}
 		}
 	}

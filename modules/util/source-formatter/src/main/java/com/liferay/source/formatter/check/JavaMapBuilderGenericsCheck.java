@@ -182,6 +182,10 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 		if (Objects.equals(matcher.group(2), "return")) {
 			JavaSignature javaSignature = javaTerm.getSignature();
 
+			if (javaSignature == null) {
+				return null;
+			}
+
 			mapTypeName = javaSignature.getReturnType();
 		}
 		else {

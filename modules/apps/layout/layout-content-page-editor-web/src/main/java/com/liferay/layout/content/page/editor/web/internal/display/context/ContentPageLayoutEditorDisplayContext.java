@@ -217,14 +217,8 @@ public class ContentPageLayoutEditorDisplayContext
 					_segmentsExperienceId);
 
 			if (segmentsExperience != null) {
-				Long id = segmentsExperience.getSegmentsExperienceId();
-
-				if (id != null) {
-					_segmentsExperienceId = id;
-				}
-				else {
-					_segmentsExperienceId = super.getSegmentsExperienceId();
-				}
+				_segmentsExperienceId =
+					segmentsExperience.getSegmentsExperienceId();
 			}
 			else {
 				_segmentsExperienceId = super.getSegmentsExperienceId();

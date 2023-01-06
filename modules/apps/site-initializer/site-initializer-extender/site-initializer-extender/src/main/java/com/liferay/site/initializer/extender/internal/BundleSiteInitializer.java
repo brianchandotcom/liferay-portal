@@ -1052,6 +1052,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				taxonomyCategoryIdsStringUtilReplaceValues);
 		}
 
+		_siteNavigationMenuLocalService.deleteSiteNavigationMenus(
+			serviceContext.getScopeGroupId());
+
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
 	}
 

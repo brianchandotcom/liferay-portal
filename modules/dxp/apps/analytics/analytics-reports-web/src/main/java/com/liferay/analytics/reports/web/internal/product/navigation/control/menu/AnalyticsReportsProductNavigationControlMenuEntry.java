@@ -56,7 +56,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -315,13 +314,16 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return Optional.ofNullable(
+		InfoItemReference infoItemReference =
 			(InfoItemReference)httpServletRequest.getAttribute(
-				AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE)
-		).orElseGet(
-			() -> new InfoItemReference(
-				Layout.class.getName(), themeDisplay.getPlid())
-		);
+				AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE);
+
+		if (infoItemReference == null) {
+			return new InfoItemReference(
+				Layout.class.getName(), themeDisplay.getPlid());
+		}
+
+		return infoItemReference;
 	}
 
 	private void _processBodyBottomTagBody(PageContext pageContext)

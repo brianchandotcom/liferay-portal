@@ -117,4 +117,14 @@ public class ConfigurationFactoryUtil {
 				serviceFactoryPid, ")"));
 	}
 
+	public static String getFactoryPidFromPid(String pid) {
+		int pos = pid.indexOf('~');
+
+		if (pos != -1) {
+			return pid.substring(0, pos);
+		}
+
+		return null;
+	}
+
 }

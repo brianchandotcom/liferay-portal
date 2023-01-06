@@ -76,6 +76,15 @@ public class ConfigurationFactoryUtilTest {
 		}
 	}
 
+	@Test
+	public void testGetFactoryPid() {
+		Assert.assertNull(ConfigurationFactoryUtil.getFactoryPidFromPid("foo"));
+
+		Assert.assertEquals(
+			"com.foo",
+			ConfigurationFactoryUtil.getFactoryPidFromPid("com.foo~bar"));
+	}
+
 	@Rule
 	public LiferayUnitTestRule liferayUnitTestRule = new LiferayUnitTestRule();
 

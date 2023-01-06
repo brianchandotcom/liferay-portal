@@ -23,7 +23,6 @@ import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -200,45 +199,47 @@ public class SegmentsExperimentConstants {
 					}));
 		}
 
-		public static Optional<Status> parse(int value) {
+		public static Status parse(int value) {
 			for (Status status : values()) {
 				if (status.getValue() == value) {
-					return Optional.of(status);
+					return status;
 				}
 			}
 
-			return Optional.empty();
+			return null;
 		}
 
-		public static Optional<Status> parse(String stringValue) {
+		public static Status parse(String stringValue) {
 			if (Validator.isNull(stringValue)) {
-				return Optional.empty();
+				return null;
 			}
 
 			for (Status status : values()) {
 				if (stringValue.equals(status.toString())) {
-					return Optional.of(status);
+					return status;
 				}
 			}
 
-			return Optional.empty();
+			return null;
 		}
 
 		public static void validateTransition(
 				int fromStatusValue, int toStatusValue)
 			throws SegmentsExperimentStatusException {
 
-			Optional<Status> fromStatusOptional = Status.parse(fromStatusValue);
+			Status fromStatus = Status.parse(fromStatusValue);
 
-			Status fromStatus = fromStatusOptional.orElseThrow(
-				() -> new SegmentsExperimentStatusException(
-					"Invalid initial status value " + fromStatusValue));
+			if (fromStatus == null) {
+				throw new SegmentsExperimentStatusException(
+					"Invalid initial status value " + fromStatusValue);
+			}
 
-			Optional<Status> toStatusOptional = Status.parse(toStatusValue);
+			Status toStatus = Status.parse(toStatusValue);
 
-			Status toStatus = toStatusOptional.orElseThrow(
-				() -> new SegmentsExperimentStatusException(
-					"Invalid final status value " + toStatusValue));
+			if (toStatus == null) {
+				throw new SegmentsExperimentStatusException(
+					"Invalid final status value " + toStatusValue);
+			}
 
 			if (Objects.equals(fromStatus, toStatus)) {
 				return;

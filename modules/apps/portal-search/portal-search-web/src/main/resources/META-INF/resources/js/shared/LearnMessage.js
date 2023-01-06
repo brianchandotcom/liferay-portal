@@ -13,6 +13,7 @@
  */
 
 import ClayLink from '@clayui/link';
+import getCN from 'classnames';
 import React from 'react';
 
 /**
@@ -33,7 +34,11 @@ import React from 'react';
  * @param {Object} learnMessages Contains messages and urls from learn-resources
  * @param {string} resourceKey Identifies which resource to render
  */
-export default function LearnMessage({learnMessages = {}, resourceKey}) {
+export default function LearnMessage({
+	className,
+	learnMessages = {},
+	resourceKey,
+}) {
 	const keyObject = learnMessages[resourceKey] || {en_US: {}};
 
 	const learnMessageObject =
@@ -44,7 +49,7 @@ export default function LearnMessage({learnMessages = {}, resourceKey}) {
 	if (learnMessageObject.url) {
 		return (
 			<ClayLink
-				className="learn-message"
+				className={getCN('learn-message', className)}
 				href={learnMessageObject.url}
 				rel="noopener noreferrer"
 				target="_blank"

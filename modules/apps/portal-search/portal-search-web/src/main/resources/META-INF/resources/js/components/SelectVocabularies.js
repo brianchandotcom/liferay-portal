@@ -350,6 +350,7 @@ function SelectVocabularies({
 
 				{!disabled && (
 					<LearnMessage
+						className="ml-1"
 						learnMessages={learnMessages}
 						resourceKey="tag-and-category-facet"
 					/>

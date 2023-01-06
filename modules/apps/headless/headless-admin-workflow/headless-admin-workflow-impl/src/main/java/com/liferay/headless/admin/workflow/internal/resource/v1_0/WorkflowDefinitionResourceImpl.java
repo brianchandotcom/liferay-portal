@@ -332,21 +332,6 @@ public class WorkflowDefinitionResourceImpl
 				title = workflowDefinition.getTitle(
 					_language.getLanguageId(
 						contextAcceptLanguage.getPreferredLocale()));
-
-				title_i18n = new HashMap<>();
-
-				Map<Locale, String> localeStringMap =
-					_localization.getLocalizationMap(
-						workflowDefinition.getTitle());
-
-				for (Map.Entry<Locale, String> entry :
-						localeStringMap.entrySet()) {
-
-					title_i18n.put(
-						_language.getLanguageId(entry.getKey()),
-						entry.getValue());
-				}
-
 				transitions = transformToArray(
 					workflowDefinition.getWorkflowTransitions(),
 					workflowTransition -> TransitionUtil.toTransition(
@@ -371,6 +356,24 @@ public class WorkflowDefinitionResourceImpl
 							"putWorkflowDefinition",
 							_workflowDefinitionModelResourcePermission)
 					).build());
+
+				setTitle_i18n(
+					() -> {
+						Map<String, String> title_i18n = new HashMap<>();
+						Map<Locale, String> localeStringMap =
+							_localization.getLocalizationMap(
+								workflowDefinition.getTitle());
+
+						for (Map.Entry<Locale, String> entry :
+								localeStringMap.entrySet()) {
+
+							title_i18n.put(
+								_language.getLanguageId(entry.getKey()),
+								entry.getValue());
+						}
+
+						return title_i18n;
+					});
 			}
 		};
 	}

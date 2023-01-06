@@ -723,17 +723,19 @@ public class TaxonomyVocabularyResourceImpl
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					assetVocabulary.getTitleMap());
-
-				numberOfTaxonomyCategories = 0;
-
-				List<AssetCategory> assetCategories =
-					assetVocabulary.getCategories();
-
-				if (assetCategories != null) {
-					numberOfTaxonomyCategories = assetCategories.size();
-				}
-
 				siteId = GroupUtil.getSiteId(group);
+
+				setNumberOfTaxonomyCategories(
+					() -> {
+						List<AssetCategory> assetCategories =
+							assetVocabulary.getCategories();
+
+						if (assetCategories != null) {
+							return assetCategories.size();
+						}
+
+						return 0;
+					});
 			}
 		};
 	}

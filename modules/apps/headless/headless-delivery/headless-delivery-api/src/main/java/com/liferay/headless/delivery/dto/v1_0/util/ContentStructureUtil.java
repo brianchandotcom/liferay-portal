@@ -156,35 +156,37 @@ public class ContentStructureUtil {
 				required = ddmFormField.isRequired();
 				showLabel = ddmFormField.isShowLabel();
 
-				Option[] options = new Option[0];
+				setOptions(
+					() -> {
+						DDMFormFieldOptions ddmFormFieldOptions =
+							ddmFormField.getDDMFormFieldOptions();
 
-				DDMFormFieldOptions ddmFormFieldOptions =
-					ddmFormField.getDDMFormFieldOptions();
+						if (ddmFormFieldOptions != null) {
+							Map<String, LocalizedValue> localizedValueMap =
+								ddmFormFieldOptions.getOptions();
 
-				if (ddmFormFieldOptions != null) {
-					Map<String, LocalizedValue> localizedValueMap =
-						ddmFormFieldOptions.getOptions();
+							return TransformUtil.transformToArray(
+								localizedValueMap.entrySet(),
+								entry -> new Option() {
+									{
+										LocalizedValue localizedValue =
+											entry.getValue();
 
-					options = TransformUtil.transformToArray(
-						localizedValueMap.entrySet(),
-						entry -> new Option() {
-							{
-								LocalizedValue localizedValue =
-									entry.getValue();
+										setLabel(
+											_toString(localizedValue, locale));
+										setLabel_i18n(
+											LocalizedMapUtil.getI18nMap(
+												acceptAllLanguage,
+												localizedValue.getValues()));
 
-								setLabel(_toString(localizedValue, locale));
-								setLabel_i18n(
-									LocalizedMapUtil.getI18nMap(
-										acceptAllLanguage,
-										localizedValue.getValues()));
+										setValue(entry.getKey());
+									}
+								},
+								Option.class);
+						}
 
-								setValue(entry.getKey());
-							}
-						},
-						Option.class);
-				}
-
-				setOptions(options);
+						return new Option[0];
+					});
 			}
 		};
 	}

@@ -254,14 +254,7 @@ public class GetCollectionFieldMVCResourceCommand
 		AssetListEntry assetListEntry = _getAssetListEntry(listObjectReference);
 
 		if (assetListEntry != null) {
-			String assetEntryType = assetListEntry.getAssetEntryType();
-
-			if (assetEntryType != null) {
-				originalItemType = assetEntryType;
-			}
-			else {
-				originalItemType = listObjectReference.getItemType();
-			}
+			originalItemType = assetListEntry.getAssetEntryType();
 		}
 		else {
 			originalItemType = listObjectReference.getItemType();

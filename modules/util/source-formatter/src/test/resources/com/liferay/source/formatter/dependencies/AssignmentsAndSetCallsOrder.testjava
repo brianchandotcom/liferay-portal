@@ -20,7 +20,7 @@ import com.liferay.app.builder.rest.client.dto.v1_0.AppDeployment;
 /**
  * @author Alan Huang
  */
-public class AttributeOrder {
+public class AssignmentsAndSetCallsOrder {
 
 	public void test() {
 		return new App() {

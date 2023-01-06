@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class AttributeOrderCheck extends BaseCheck {
+public class InstanceInitializerCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

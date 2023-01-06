@@ -387,7 +387,11 @@ export default function ObjectFieldFormBase({
 
 						setSelectedOutput(label);
 					}}
-					options={FORMULA_OUTPUT_OPTIONS}
+					options={FORMULA_OUTPUT_OPTIONS.filter(
+						(formulaOutput) =>
+							formulaOutput.value === 'Decimal' ||
+							formulaOutput.value === 'Integer'
+					)}
 					required
 					value={selectedOutput}
 				/>

@@ -47,28 +47,28 @@
 
 			<li class="facet-value">
 				<div class="custom-control custom-radio">
-					<label class="facet-checkbox-label" for="${customRangeModifiedFacetTermDisplayContext.getBucketText()}">
+					<label class="facet-checkbox-label" for="${customRangeBucketDisplayContext.getBucketText()}">
 						<input
 							autocomplete="off"
-							${(customRangeModifiedFacetTermDisplayContext.isSelected())?then("checked", "")}
+							${(customRangeBucketDisplayContext.isSelected())?then("checked", "")}
 							class="custom-control-input facet-term"
 							disabled
-							id="${customRangeModifiedFacetTermDisplayContext.getBucketText()}"
-							name="${customRangeModifiedFacetTermDisplayContext.getBucketText()}"
-							onChange='${"window.location.href = \"${customRangeModifiedFacetTermDisplayContext.getFilterValue()}\";"}'
+							id="${customRangeBucketDisplayContext.getBucketText()}"
+							name="${customRangeBucketDisplayContext.getBucketText()}"
+							onChange='${"window.location.href = \"${customRangeBucketDisplayContext.getFilterValue()}\";"}'
 							role="radio"
 							type="radio"
 						/>
 
-						<span class="custom-control-label term-name ${(customRangeModifiedFacetTermDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
+						<span class="custom-control-label term-name ${(customRangeBucketDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 							<span class="custom-control-label-text">
-								<@liferay_ui["message"] key="${htmlUtil.escape(customRangeModifiedFacetTermDisplayContext.getBucketText())}" />
+								<@liferay_ui["message"] key="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}" />
 							</span>
 						</span>
 
-						<#if customRangeModifiedFacetTermDisplayContext.isSelected()>
+						<#if customRangeBucketDisplayContext.isSelected()>
 							<small class="term-count">
-								(${customRangeModifiedFacetTermDisplayContext.getFrequency()})
+								(${customRangeBucketDisplayContext.getFrequency()})
 							</small>
 						</#if>
 					</label>

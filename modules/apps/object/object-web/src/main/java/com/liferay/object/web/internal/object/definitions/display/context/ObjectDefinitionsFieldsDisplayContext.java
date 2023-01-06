@@ -35,15 +35,18 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -160,8 +163,12 @@ public class ObjectDefinitionsFieldsDisplayContext
 	public List<Map<String, Object>> getObjectFieldCodeEditorElements() {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164948"))) {
 			return ObjectCodeEditorUtil.getCodeEditorElements(
-				true, true, false, objectRequestHelper.getLocale(),
-				getObjectDefinitionId());
+				ddmExpressionOperator ->
+					_filterableDDMExpressionOperators.contains(
+						ddmExpressionOperator),
+				objectRequestHelper.getLocale(), getObjectDefinitionId(),
+				objectField -> _filterableObjectFieldBusinessTypes.contains(
+					objectField.getBusinessType()));
 		}
 
 		return null;
@@ -192,6 +199,21 @@ public class ObjectDefinitionsFieldsDisplayContext
 	protected String getAPIURI() {
 		return "/object-fields";
 	}
+
+	private static final Set<ObjectCodeEditorUtil.DDMExpressionOperator>
+		_filterableDDMExpressionOperators = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				ObjectCodeEditorUtil.DDMExpressionOperator.DIVIDED_BY,
+				ObjectCodeEditorUtil.DDMExpressionOperator.MINUS,
+				ObjectCodeEditorUtil.DDMExpressionOperator.PLUS,
+				ObjectCodeEditorUtil.DDMExpressionOperator.TIMES));
+	private static final Set<String> _filterableObjectFieldBusinessTypes =
+		Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+				ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL));
 
 	private final ListTypeDefinitionService _listTypeDefinitionService;
 	private final ObjectFieldBusinessTypeRegistry

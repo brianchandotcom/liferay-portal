@@ -386,9 +386,7 @@ public class CookiesManagerImpl implements CookiesManager {
 
 		try {
 			CookiesPreferenceHandlingConfiguration
-				cookiesPreferenceHandlingConfiguration =
-					_configurationProvider.getSystemConfiguration(
-						CookiesPreferenceHandlingConfiguration.class);
+				cookiesPreferenceHandlingConfiguration = null;
 
 			if (httpServletRequest != null) {
 				long groupId = _portal.getScopeGroupId(httpServletRequest);
@@ -405,6 +403,11 @@ public class CookiesManagerImpl implements CookiesManager {
 							CookiesPreferenceHandlingConfiguration.class,
 							_portal.getCompanyId(httpServletRequest));
 				}
+			}
+			else {
+				cookiesPreferenceHandlingConfiguration =
+					_configurationProvider.getSystemConfiguration(
+						CookiesPreferenceHandlingConfiguration.class);
 			}
 
 			return !cookiesPreferenceHandlingConfiguration.

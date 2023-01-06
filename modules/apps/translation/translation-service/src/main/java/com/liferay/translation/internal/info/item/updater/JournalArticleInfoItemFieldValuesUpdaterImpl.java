@@ -59,7 +59,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -91,56 +90,52 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
-			_getInfoLocalizedValueOptional(
-				infoFieldValue
-			).ifPresent(
-				infoLocalizedValue -> {
-					InfoField infoField = infoFieldValue.getInfoField();
+			InfoLocalizedValue<Object> infoLocalizedValue =
+				_getInfoLocalizedValue(infoFieldValue);
 
-					for (Locale locale :
-							infoLocalizedValue.getAvailableLocales()) {
+			if (infoLocalizedValue != null) {
+				InfoField infoField = infoFieldValue.getInfoField();
 
-						if ((infoFieldValue.getValue(locale) != null) &&
-							(infoFieldValue.getValue(locale) instanceof
-								String)) {
+				for (Locale locale : infoLocalizedValue.getAvailableLocales()) {
+					if ((infoFieldValue.getValue(locale) != null) &&
+						(infoFieldValue.getValue(locale) instanceof String)) {
 
-							translatedLocales.add(locale);
+						translatedLocales.add(locale);
 
-							String fieldName = infoField.getName();
-							String fieldUniqueId = infoField.getUniqueId();
+						String fieldName = infoField.getName();
+						String fieldUniqueId = infoField.getUniqueId();
 
-							String valueString = String.valueOf(
-								infoFieldValue.getValue(locale));
+						String valueString = String.valueOf(
+							infoFieldValue.getValue(locale));
 
-							if (Objects.equals(fieldName, "description") &&
-								fieldUniqueId.startsWith(
-									JournalArticle.class.getSimpleName() +
-										StringPool.UNDERLINE)) {
+						if (Objects.equals(fieldName, "description") &&
+							fieldUniqueId.startsWith(
+								JournalArticle.class.getSimpleName() +
+									StringPool.UNDERLINE)) {
 
-								importedLocaleDescriptionMap.put(
-									locale, valueString);
-							}
-							else if (Objects.equals(fieldName, "title") &&
-									 fieldUniqueId.startsWith(
-										 JournalArticle.class.getSimpleName() +
-											 StringPool.UNDERLINE)) {
+							importedLocaleDescriptionMap.put(
+								locale, valueString);
+						}
+						else if (Objects.equals(fieldName, "title") &&
+								 fieldUniqueId.startsWith(
+									 JournalArticle.class.getSimpleName() +
+										 StringPool.UNDERLINE)) {
 
-								importedLocaleTitleMap.put(locale, valueString);
-							}
-							else {
-								List<String> values =
-									fieldNameContentMap.computeIfAbsent(
-										fieldName, name -> new ArrayList<>());
+							importedLocaleTitleMap.put(locale, valueString);
+						}
+						else {
+							List<String> values =
+								fieldNameContentMap.computeIfAbsent(
+									fieldName, name -> new ArrayList<>());
 
-								values.add(valueString);
+							values.add(valueString);
 
-								importedLocaleContentMap.put(
-									locale, fieldNameContentMap);
-							}
+							importedLocaleContentMap.put(
+								locale, fieldNameContentMap);
 						}
 					}
 				}
-			);
+			}
 		}
 
 		JournalArticle latestArticle =
@@ -272,16 +267,16 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		return dateArray;
 	}
 
-	private Optional<InfoLocalizedValue<Object>> _getInfoLocalizedValueOptional(
+	private InfoLocalizedValue<Object> _getInfoLocalizedValue(
 		InfoFieldValue<Object> infoFieldValue) {
 
 		Object value = infoFieldValue.getValue();
 
 		if (value instanceof InfoLocalizedValue) {
-			return Optional.of((InfoLocalizedValue)value);
+			return (InfoLocalizedValue)value;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private Serializable _getSerializable(

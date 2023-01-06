@@ -13,6 +13,7 @@ import {Liferay} from '../..';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
+
 export default async function deleteMDFRequestActivities(
 	apiOption: ResourceName,
 	mdfRequestActivityId: number

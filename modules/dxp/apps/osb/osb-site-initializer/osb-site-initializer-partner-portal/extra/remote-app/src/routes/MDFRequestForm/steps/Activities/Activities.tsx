@@ -72,6 +72,9 @@ const Activities = ({
 
 			arrayHelpers.remove(currentActivityIndex);
 		}
+
+		setCurrentActivityIndexEdit(undefined);
+		setCurrentActivityIndex(undefined);
 	};
 
 	const onAdd = () => setCurrentActivityIndex(values.activities.length);
@@ -101,8 +104,6 @@ const Activities = ({
 		}
 
 		updateEditableActivity();
-		setCurrentActivityIndexEdit(undefined);
-		setCurrentActivityIndex(undefined);
 	};
 
 	const onRemove = async (index: number) => {
@@ -136,8 +137,7 @@ const Activities = ({
 			onSaveAsDraft?.(values, formikHelpers);
 			setIsDraft(false);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isDraft]);
+	}, [formikHelpers, isDraft, onSaveAsDraft, values]);
 
 	return (
 		<PRMForm

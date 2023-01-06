@@ -20,7 +20,7 @@ export function getMDFRequestFromDTO(
 	return {
 		...mdfRequest,
 		activities:
-			mdfRequest.mdfRequestToActivities?.map((activity) => {
+			mdfRequest.mdfRequestToActivities?.map((activityItem) => {
 				const {
 					activityToBudgets,
 					endDate,
@@ -35,15 +35,15 @@ export function getMDFRequestFromDTO(
 					totalCostOfExpense,
 					typeActivity,
 					...activityDescription
-				} = activity;
+				} = activityItem;
 
 				return {
 					activityDescription: {
 						...activityDescription,
-						leadFollowUpStrategies: activity.leadFollowUpStrategies?.split(
+						leadFollowUpStrategies: activityItem.leadFollowUpStrategies?.split(
 							'; '
 						),
-						leadGenerated: String(activity.leadGenerated),
+						leadGenerated: String(activityItem.leadGenerated),
 					},
 					budgets: activityToBudgets || [],
 					endDate: endDate?.split('T')[0],

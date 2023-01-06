@@ -73,7 +73,7 @@ const LeadListSection = ({
 				/>
 			)}
 
-			{values.activities[currentActivityIndex]?.activityDescription
+			{values.activities[currentActivityIndex].activityDescription
 				?.leadGenerated === 'true' && (
 				<>
 					<PRMFormik.Field

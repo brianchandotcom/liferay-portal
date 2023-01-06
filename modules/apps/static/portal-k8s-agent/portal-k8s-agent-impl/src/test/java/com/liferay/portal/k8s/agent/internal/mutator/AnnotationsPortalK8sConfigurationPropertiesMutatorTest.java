@@ -41,7 +41,7 @@ public class AnnotationsPortalK8sConfigurationPropertiesMutatorTest {
 
 		mutator.mutateConfigurationProperties(
 			HashMapBuilder.put(
-				"com.liferay.lxc.ext.domains", StringUtil.merge(domains, "\n")
+				"ext.lxc.liferay.com.domains", StringUtil.merge(domains, "\n")
 			).build(),
 			HashMapBuilder.<String, String>create(
 				0
@@ -49,11 +49,10 @@ public class AnnotationsPortalK8sConfigurationPropertiesMutatorTest {
 			properties);
 
 		Assert.assertArrayEquals(
-			domains, (String[])properties.get("com.liferay.lxc.ext.domains"));
+			domains, (String[])properties.get("ext.lxc.liferay.com.domains"));
 	}
 
 	@Rule
-	private LiferayUnitTestRule _liferayUnitTestRule =
-		new LiferayUnitTestRule();
+	public LiferayUnitTestRule liferayUnitTestRule = new LiferayUnitTestRule();
 
 }

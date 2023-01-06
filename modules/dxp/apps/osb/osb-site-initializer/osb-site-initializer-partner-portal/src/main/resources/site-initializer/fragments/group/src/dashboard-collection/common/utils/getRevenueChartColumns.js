@@ -32,7 +32,7 @@ export default function getRevenueChartColumns(
 			accumulator + currentValue.growthArr || 0,
 		0
 	);
-	chartColumns.push(['New Business', totalNewBusiness]);
+	chartColumns.push(['Growth Revenue', totalNewBusiness]);
 
 	const totalRenewal = revenueData?.items?.reduce(
 		(accumulator, currentValue) =>
@@ -40,7 +40,7 @@ export default function getRevenueChartColumns(
 		0
 	);
 
-	chartColumns.push(['Project Revenue', totalRenewal]);
+	chartColumns.push(['Renewal Revenue', totalRenewal]);
 
 	setColumnsRevenueChart(chartColumns);
 }

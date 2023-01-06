@@ -17,8 +17,8 @@ import DonutChart from '../../common/components/donut-chart';
 import getRevenueChartColumns from '../../common/utils/getRevenueChartColumns';
 
 const colors = {
-	'New Business': '#000239',
-	'Project Revenue': '#83B6FE',
+	'Growth Revenue': '#000239',
+	'Renewal Revenue': '#83B6FE',
 };
 
 export default function () {

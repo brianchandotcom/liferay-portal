@@ -1128,6 +1128,11 @@ definition {
 				objectName = "CustomObject156");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customInteger",
+				objectName = "CustomObject156",
+				value = "1234");
 		}
 
 		task ("When an action is created using Groovy Script and is triggered when an object entry is deleted") {
@@ -1140,20 +1145,15 @@ definition {
 			ObjectAdmin.addObjectActionViaUI(
 				actionName = "Action Name",
 				active = "true",
-				scriptValidation = "println 'Success'",
+				scriptValidation = "print 'Success'",
 				thenAction = "Groovy Script",
 				whenAction = "On After Delete");
 		}
 
 		task ("Then deleting an object entry will trigger the action") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customInteger",
-				objectName = "CustomObject156",
-				value = "8");
-
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156");
 
-			ObjectPortlet.deleteEntry(entry = "8");
+			ObjectPortlet.deleteEntry(entry = "1234");
 
 			AssertConsoleTextPresent(value1 = "Success");
 		}

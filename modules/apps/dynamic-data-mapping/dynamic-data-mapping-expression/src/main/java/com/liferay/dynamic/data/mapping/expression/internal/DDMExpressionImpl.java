@@ -61,6 +61,23 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	@Override
+	public com.liferay.petra.sql.dsl.expression.Expression<?> getDSLExpression()
+		throws DDMExpressionException {
+
+		try {
+			DDMExpressionDSLExpressionVisitor
+				ddmExpressionDSLExpressionVisitor =
+					new DDMExpressionDSLExpressionVisitor(_variables);
+
+			return (com.liferay.petra.sql.dsl.expression.Expression<?>)
+				_expressionContext.accept(ddmExpressionDSLExpressionVisitor);
+		}
+		catch (Exception exception) {
+			throw new DDMExpressionException(exception);
+		}
+	}
+
+	@Override
 	public Expression getModel() {
 		return _expressionContext.accept(new DDMExpressionModelVisitor());
 	}

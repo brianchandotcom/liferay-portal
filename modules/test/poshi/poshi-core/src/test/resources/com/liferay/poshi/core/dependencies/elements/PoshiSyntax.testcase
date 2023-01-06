@@ -1,4 +1,5 @@
 <definition component-name="portal-acceptance" ignore="true">
+	<property name="app.server.bundles.size" value="12890"/>
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
@@ -39,6 +40,8 @@
 
 		<task summary="Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'">
 			<execute macro="Navigator#openURL" />
+
+			<var name="camelCase" method="StringUtil#replace('${camelCase}', ' ', '')"/>
 
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
@@ -85,7 +88,7 @@
 		<var name="specialCharacters" value="&quot;\&quot;" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
+		<var name="userLastName" value="${userFirstName} userln"/>
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />

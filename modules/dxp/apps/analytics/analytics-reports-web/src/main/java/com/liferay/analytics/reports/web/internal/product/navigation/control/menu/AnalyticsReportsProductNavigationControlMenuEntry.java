@@ -310,15 +310,15 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	private InfoItemReference _getInfoItemReference(
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		InfoItemReference infoItemReference =
 			(InfoItemReference)httpServletRequest.getAttribute(
 				AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE);
 
 		if (infoItemReference == null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			return new InfoItemReference(
 				Layout.class.getName(), themeDisplay.getPlid());
 		}

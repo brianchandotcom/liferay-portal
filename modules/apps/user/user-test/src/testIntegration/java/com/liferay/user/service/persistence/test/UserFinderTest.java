@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -372,7 +373,8 @@ public class UserFinderTest {
 			organizationsMembershipStrict,
 			organizationsMembershipStrict.getModifiers() & ~Modifier.FINAL);
 
-		organizationsMembershipStrict.setBoolean(null, strict);
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "ORGANIZATIONS_MEMBERSHIP_STRICT", strict);
 
 		modifiersField.setInt(
 			organizationsMembershipStrict,

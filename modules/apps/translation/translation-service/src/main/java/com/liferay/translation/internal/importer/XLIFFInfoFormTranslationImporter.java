@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -46,6 +47,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -53,8 +55,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import net.sf.okapi.common.Event;
 import net.sf.okapi.common.LocaleId;
@@ -191,11 +191,12 @@ public class XLIFFInfoFormTranslationImporter
 	private InfoItemReference _getInfoItemReference(List<Event> events)
 		throws XLIFFFileException {
 
-		Stream<Event> stream = events.stream();
-
-		Optional<Event> optional = stream.filter(
-			Event::isStartSubDocument
-		).findFirst();
+		Optional<Event> optional = Optional.of(
+			ListUtil.filter(
+				events, Event::isStartSubDocument
+			).get(
+				0
+			));
 
 		return optional.flatMap(
 			event -> {
@@ -326,9 +327,11 @@ public class XLIFFInfoFormTranslationImporter
 					tempFile.toURI(), document.getXMLEncoding(), sourceLocaleId,
 					targetLocaleId));
 
-			Stream<Event> stream = autoXLIFFFilter.stream();
+			List<Event> events = new ArrayList<>();
 
-			List<Event> events = stream.collect(Collectors.toList());
+			while (autoXLIFFFilter.hasNext()) {
+				events.add(autoXLIFFFilter.next());
+			}
 
 			if (_isVersion20(events)) {
 				return new TranslationSnapshot(

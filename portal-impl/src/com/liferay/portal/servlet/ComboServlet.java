@@ -144,6 +144,16 @@ public class ComboServlet extends HttpServlet {
 
 			name = HttpComponentsUtil.decodePath(name);
 
+			String modulePortletId = StringPool.BLANK;
+
+			int index = name.indexOf(CharPool.COLON);
+
+			if (index > 0) {
+				modulePortletId = name.substring(0, index + 1);
+
+				name = name.substring(index + 1);
+			}
+
 			ServletContext servletContext = getServletContext();
 
 			String pathProxy = PortalUtil.getPathProxy();
@@ -158,7 +168,7 @@ public class ComboServlet extends HttpServlet {
 				name = name.replaceFirst(contextPath, StringPool.BLANK);
 			}
 
-			modulePathsSet.add(name);
+			modulePathsSet.add(modulePortletId.concat(name));
 		}
 
 		if (modulePathsSet.isEmpty()) {

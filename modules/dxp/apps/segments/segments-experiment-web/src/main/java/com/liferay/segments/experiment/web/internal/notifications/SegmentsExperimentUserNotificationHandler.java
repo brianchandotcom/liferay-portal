@@ -38,7 +38,6 @@ import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,15 +81,13 @@ public class SegmentsExperimentUserNotificationHandler
 			return null;
 		}
 
-		Optional<SegmentsExperimentConstants.Status> statusOptional =
+		SegmentsExperimentConstants.Status status =
 			SegmentsExperimentConstants.Status.parse(
 				segmentsExperiment.getStatus());
 
-		if (!statusOptional.isPresent()) {
+		if (status == null) {
 			return null;
 		}
-
-		SegmentsExperimentConstants.Status status = statusOptional.get();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", serviceContext.getLocale(), getClass());

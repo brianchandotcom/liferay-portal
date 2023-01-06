@@ -306,6 +306,83 @@ definition {
 		}
 	}
 
+	@description = "LPS-172234 - Verify it's possible to create a groovy script action with the trigger On Order Status Update"
+	@priority = "3"
+	test CanCreateActionUsingGroovyScripWithOnOrderStatusUpdate {
+		task ("Given: An action in the Commerce Order object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+		}
+
+		task ("And: The user selects the trigger OnOrderStatusUpdate using the action Groovy Script") {
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Action Name",
+				active = "true",
+				scriptValidation = "println 'Success'",
+				thenAction = "Groovy Script",
+				whenAction = "On Order Status Update");
+		}
+
+		task ("And: given an account, minium site and an order is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name",
+				accountEntryType = "Business");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When: The user changes the order status") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_value = "Processing",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then: The action is triggered") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Action Name",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-156312 - Assert an Action can be created with Expression Builder."
 	@priority = "4"
 	test CanCreateActionWithExpressionBuilder {

@@ -145,7 +145,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 													</aui:a>
 
 													<div class="card-subtitle text-truncate">
-														<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - latestFileVersion.getCreateDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())}, false) %>
+														<%= LanguageUtil.format(request, "modified-x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())}, false) %>
 													</div>
 
 													<div class="card-detail">
@@ -299,7 +299,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 										<liferay-ui:search-container-column-date
 											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 											name="modified-date"
-											value="<%= latestFileVersion.getModifiedDate() %>"
+											value="<%= fileEntry.getModifiedDate() %>"
 										/>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("action") %>'>

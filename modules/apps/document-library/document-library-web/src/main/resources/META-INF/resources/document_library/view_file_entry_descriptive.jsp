@@ -57,7 +57,7 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 
 latestFileVersion = latestFileVersion.toEscapedModel();
 
-Date modifiedDate = latestFileVersion.getModifiedDate();
+Date modifiedDate = fileEntry.getModifiedDate();
 
 String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 
@@ -90,7 +90,7 @@ else {
 </h2>
 
 <span>
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(latestFileVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription, HtmlUtil.escape(latestFileVersion.getUserName())} %>" key="modified-x-ago-by-x" />
 </span>
 <span>
 	<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()).replace(StringPool.RAQUO_CHAR, StringPool.GREATER_THAN) %>

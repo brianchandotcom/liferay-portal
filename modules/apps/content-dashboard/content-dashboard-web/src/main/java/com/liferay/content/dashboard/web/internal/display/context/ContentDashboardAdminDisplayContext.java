@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -70,7 +71,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -298,21 +298,22 @@ public class ContentDashboardAdminDisplayContext {
 		}
 		else {
 			List<ContentDashboardItemSubtype> contentDashboardItemSubtypes =
-				Stream.of(
-					contentDashboardItemSubtypePayloads
-				).map(
-					contentDashboardItemSubtypePayload ->
-						ContentDashboardItemSubtypeUtil.
-							toContentDashboardItemSubtypeOptional(
-								_contentDashboardItemSubtypeFactoryRegistry,
-								contentDashboardItemSubtypePayload)
-				).filter(
-					Optional::isPresent
-				).map(
-					Optional::get
-				).collect(
-					Collectors.toList()
-				);
+				new ArrayList<>();
+
+			for (String contentDashboardItemSubtypePayload :
+					contentDashboardItemSubtypePayloads) {
+
+				ContentDashboardItemSubtype contentDashboardItemSubtype =
+					ContentDashboardItemSubtypeUtil.
+						toContentDashboardItemSubtype(
+							_contentDashboardItemSubtypeFactoryRegistry,
+							contentDashboardItemSubtypePayload);
+
+				if (contentDashboardItemSubtype != null) {
+					contentDashboardItemSubtypes.add(
+						contentDashboardItemSubtype);
+				}
+			}
 
 			_contentDashboardItemSubtypePayloads = contentDashboardItemSubtypes;
 		}

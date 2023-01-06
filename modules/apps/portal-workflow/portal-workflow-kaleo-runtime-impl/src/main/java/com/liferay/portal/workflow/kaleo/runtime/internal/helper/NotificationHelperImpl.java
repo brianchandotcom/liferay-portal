@@ -92,44 +92,20 @@ public class NotificationHelperImpl implements NotificationHelper {
 		_notificationSenderServiceTrackerMap.close();
 	}
 
-	private NotificationMessageGenerator _getNotificationMessageGenerator(
-			String templateLanguage)
-		throws WorkflowException {
-
-		NotificationMessageGenerator notificationMessageGenerator =
-			_notificationMessageGeneratorServiceTrackerMap.getService(
-				templateLanguage);
-
-		if (notificationMessageGenerator == null) {
-			throw new WorkflowException(
-				"Invalid template language " + templateLanguage);
-		}
-
-		return notificationMessageGenerator;
-	}
-
-	private NotificationSender _getNotificationSender(String notificationType)
-		throws WorkflowException {
-
-		NotificationSender notificationSender =
-			_notificationSenderServiceTrackerMap.getService(notificationType);
-
-		if (notificationSender == null) {
-			throw new WorkflowException(
-				"Invalid notification type " + notificationType);
-		}
-
-		return notificationSender;
-	}
-
 	private void _sendKaleoNotification(
 			KaleoNotification kaleoNotification,
 			ExecutionContext executionContext)
 		throws PortalException {
 
 		NotificationMessageGenerator notificationMessageGenerator =
-			_getNotificationMessageGenerator(
+			_notificationMessageGeneratorServiceTrackerMap.getService(
 				kaleoNotification.getTemplateLanguage());
+
+		if (notificationMessageGenerator == null) {
+			throw new WorkflowException(
+				"Invalid template language " +
+					kaleoNotification.getTemplateLanguage());
+		}
 
 		String notificationMessage =
 			notificationMessageGenerator.generateMessage(
@@ -159,8 +135,14 @@ public class NotificationHelperImpl implements NotificationHelper {
 					kaleoNotification.getKaleoNotificationId());
 
 		for (String notificationType : notificationTypes) {
-			NotificationSender notificationSender = _getNotificationSender(
-				notificationType);
+			NotificationSender notificationSender =
+				_notificationSenderServiceTrackerMap.getService(
+					notificationType);
+
+			if (notificationSender == null) {
+				throw new WorkflowException(
+					"Invalid notification type " + notificationType);
+			}
 
 			notificationSender.sendNotification(
 				kaleoNotificationRecipient, notificationSubject,

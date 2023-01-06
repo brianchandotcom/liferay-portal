@@ -373,7 +373,9 @@ public class VarPoshiElement extends PoshiElement {
 			else {
 				value = StringUtil.replace(value, "\"", "\\\"");
 
-				if (isDoubleQuotedVar(value)) {
+				String elementName = getName();
+
+				if (isDoubleQuotedVar(value) || elementName.equals("property")) {
 					value = doubleQuoteContent(value);
 				}
 			}

@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>METADATA_SETS_NAME</td>
-	<td>//td//a[contains(.,'${key_metadataSetName}')]</td>
+	<td>//tr[@data-qa-id="row"]//td[contains(.,'${key_metadataSetName}')]</td>
 	<td></td>
 </tr>
 <tr>

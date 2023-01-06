@@ -139,7 +139,12 @@ public class DBUpgrader {
 			InitUtil.initWithSpring(
 				ListUtil.fromArray(
 					PropsUtil.getArray(PropsKeys.SPRING_CONFIGS)),
-				true, false);
+				true, false,
+				() -> {
+					if (PropsValues.UPGRADE_REPORT_ENABLED) {
+						_startUpgradeReportLogAppender();
+					}
+				});
 
 			StartupHelperUtil.printPatchLevel();
 

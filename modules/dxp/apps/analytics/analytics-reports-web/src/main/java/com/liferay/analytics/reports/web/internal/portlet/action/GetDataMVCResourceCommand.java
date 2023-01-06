@@ -66,7 +66,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -262,10 +261,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 		List<AnalyticsReportsInfoItem.Action> actionList =
 			analyticsReportsInfoItem.getActions();
-
-		if (actionList == null) {
-			actionList = Collections.emptyList();
-		}
 
 		List<ObjectValuePair<String, String>> objectValuePairList =
 			TransformUtil.transform(actionList, _objectValuePairs::get);

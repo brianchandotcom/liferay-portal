@@ -34,7 +34,6 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
-import com.liferay.object.field.util.ObjectFieldFormulaEvaluatorUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -650,32 +649,12 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_FORMULA,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Full Name"), "fullName", false,
+			LocalizedMapUtil.getLocalizedMap("Overweight"), "overweight", false,
 			false,
 			Arrays.asList(
+				_createObjectFieldSetting("script", "weight + 10"),
 				_createObjectFieldSetting(
-					"script",
-					"concat(firstName, \" \", middleName, \" \", lastName)"),
-				_createObjectFieldSetting(
-					"output", ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				ObjectFieldFormulaEvaluatorUtil.class.getName(),
-				LoggerTestUtil.ERROR)) {
-
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"emailAddress", RandomTestUtil.randomString()
-				).put(
-					"emailAddressRequired", "athanasius@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).build());
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
-		}
+					"output", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL)));
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -683,13 +662,9 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"emailAddressRequired", "athanasius@liferay.com"
 			).put(
-				"firstName", "Athanasius"
-			).put(
-				"lastName", "Mundum"
-			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).put(
-				"middleName", "Contra"
+				"weight", 65D
 			).build());
 
 		Assert.assertNotNull(objectEntry);
@@ -697,7 +672,7 @@ public class ObjectEntryLocalServiceTest {
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry.getObjectEntryId());
 
-		Assert.assertEquals("Athanasius Contra Mundum", values.get("fullName"));
+		Assert.assertEquals(75D, values.get("overweight"));
 
 		_objectFieldLocalService.deleteObjectField(objectField);
 	}

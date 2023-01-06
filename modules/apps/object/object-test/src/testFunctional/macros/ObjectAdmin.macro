@@ -699,7 +699,7 @@ definition {
 	}
 
 	macro changeLabelLanguage {
-		Click(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM");
+		Click.clickNoMouseOver(locator1 = "ObjectAdmin#DROPDOWN_LANGUAGEM");
 
 		Click(
 			key_menuItem = "${newLanguage}",

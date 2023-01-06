@@ -2,6 +2,7 @@
 @ignore = "true"
 definition {
 
+	property app.server.bundles.size = "12890";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Smoke";
@@ -45,6 +46,8 @@ definition {
 		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
 			Navigator.openURL();
 
+			var camelCase = StringUtil.replace(${camelCase}, " ", "");
+
 			ProductMenu.gotoPortlet(
 				category = "Content",
 				panel = "Site Administration",
@@ -87,7 +90,8 @@ definition {
 		var specialCharacters = "\"\\"";
 		var userEmailAddress = "userea@liferay.com";
 		var userFirstName = "userfn";
-		var userLastName = "userln";
+
+		var userLastName = "${userFirstName} userln";
 
 		FormFields.editText(
 			fieldName = "label",

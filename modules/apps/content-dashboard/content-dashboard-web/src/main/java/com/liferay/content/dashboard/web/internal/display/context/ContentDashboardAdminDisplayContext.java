@@ -297,21 +297,24 @@ public class ContentDashboardAdminDisplayContext {
 			_contentDashboardItemSubtypePayloads = Collections.emptyList();
 		}
 		else {
-			return Stream.of(
-				contentDashboardItemSubtypePayloads
-			).map(
-				contentDashboardItemSubtypePayload ->
-					ContentDashboardItemSubtypeUtil.
-						toContentDashboardItemSubtypeOptional(
-							_contentDashboardItemSubtypeFactoryRegistry,
-							contentDashboardItemSubtypePayload)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).collect(
-				Collectors.toList()
-			);
+			List<ContentDashboardItemSubtype> contentDashboardItemSubtypes =
+				Stream.of(
+					contentDashboardItemSubtypePayloads
+				).map(
+					contentDashboardItemSubtypePayload ->
+						ContentDashboardItemSubtypeUtil.
+							toContentDashboardItemSubtypeOptional(
+								_contentDashboardItemSubtypeFactoryRegistry,
+								contentDashboardItemSubtypePayload)
+				).filter(
+					Optional::isPresent
+				).map(
+					Optional::get
+				).collect(
+					Collectors.toList()
+				);
+
+			_contentDashboardItemSubtypePayloads = contentDashboardItemSubtypes;
 		}
 
 		return _contentDashboardItemSubtypePayloads;

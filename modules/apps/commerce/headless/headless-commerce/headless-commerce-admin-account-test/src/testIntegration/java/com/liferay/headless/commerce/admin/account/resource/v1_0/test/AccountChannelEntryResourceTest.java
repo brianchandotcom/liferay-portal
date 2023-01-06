@@ -205,15 +205,9 @@ public class AccountChannelEntryResourceTest
 
 		return new AccountChannelEntry() {
 			{
-				accountExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				accountId = RandomTestUtil.randomLong();
 				channelExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				channelId = RandomTestUtil.randomLong();
-				classExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				id = RandomTestUtil.randomLong();
 				overrideEligibility = RandomTestUtil.randomBoolean();
 				priority = RandomTestUtil.randomDouble();
 			}

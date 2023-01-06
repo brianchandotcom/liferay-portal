@@ -67,7 +67,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -401,16 +400,9 @@ public class LayoutSiteNavigationMenuItemType
 	public boolean isAvailable(
 		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
 
-		Optional<Group> groupOptional =
-			siteNavigationMenuItemTypeContext.getGroupOptional();
+		Group group = siteNavigationMenuItemTypeContext.getGroup();
 
-		if (!groupOptional.isPresent()) {
-			return false;
-		}
-
-		Group group = groupOptional.get();
-
-		if (group.isCompany()) {
+		if ((group == null) || group.isCompany()) {
 			return false;
 		}
 

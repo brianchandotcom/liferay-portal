@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -23,6 +24,7 @@ import getCN from 'classnames';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import LearnMessage from '../shared/LearnMessage';
 import cleanSuggestionsContributorConfiguration from '../utils/clean_suggestions_contributor_configuration';
 import {CONTRIBUTOR_TYPES} from '../utils/types/contributorTypes';
 import FieldList from './FieldList';
@@ -374,10 +376,10 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 		onChange({[property]: event.target.value});
 	};
 
-	const _handleChangeContributorName = (event) => {
-		if (event.target.value === CONTRIBUTOR_TYPES.BASIC) {
+	const _handleChangeContributorName = (contributorName) => {
+		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
 			onReplace({
-				contributorName: event.target.value,
+				contributorName,
 				displayGroupName: value.displayGroupName,
 				size: value.size,
 			});
@@ -385,7 +387,7 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 		else {
 			onChange({
 				attributes: DEFAULT_ATTRIBUTES,
-				contributorName: event.target.value,
+				contributorName,
 				displayGroupName: value.displayGroupName,
 				size: value.size,
 			});
@@ -416,16 +418,42 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 						</ClayTooltipProvider>
 					</label>
 
-					<ClaySelect
-						aria-label={Liferay.Language.get(
-							'suggestion-contributor'
-						)}
-						onChange={_handleChangeContributorName}
-						required
-						value={value.contributorName}
+					<ClayDropDown
+						closeOnClick
+						menuWidth="sm"
+						trigger={
+							<ClayButton
+								aria-label={Liferay.Language.get(
+									'suggestion-contributor'
+								)}
+								className="form-control form-control-select"
+								displayType="unstyled"
+							>
+								{value.contributorName ===
+								CONTRIBUTOR_TYPES.BASIC
+									? Liferay.Language.get('basic')
+									: Liferay.Language.get('blueprint')}
+							</ClayButton>
+						}
 					>
-						{contributorOptions}
-					</ClaySelect>
+						<ClayDropDown.ItemList items={contributorOptions}>
+							{(item) => (
+								<ClayDropDown.Item
+									active={value.contributorName === item.name}
+									key={item.name}
+									onClick={() =>
+										_handleChangeContributorName(item.name)
+									}
+								>
+									<div>{item.title}</div>
+
+									<div className="text-2">
+										{item.subtitle}
+									</div>
+								</ClayDropDown.Item>
+							)}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem
@@ -530,6 +558,7 @@ function SearchBarConfigurationSuggestions({
 	initialSuggestionsContributorConfiguration = '[]',
 	isDXP = false,
 	isSearchExperiencesSupported = true,
+	learnMessages,
 	namespace = '',
 	suggestionsContributorConfigurationName = '',
 }) {
@@ -555,13 +584,34 @@ function SearchBarConfigurationSuggestions({
 		blueprintsEnabled || !suggestionsContributorConfiguration.length;
 
 	const _getContributorOptions = (index) => {
+		const BASIC_OPTION = {
+			name: CONTRIBUTOR_TYPES.BASIC,
+			subtitle: Liferay.Language.get(
+				'basic-suggestions-contributor-help'
+			),
+			title: Liferay.Language.get('basic'),
+		};
+
+		const BLUEPRINT_OPTION = {
+			name: CONTRIBUTOR_TYPES.SXP_BLUEPRINT,
+			subtitle: (
+				<>
+					{Liferay.Language.get(
+						'blueprint-suggestions-contributor-help'
+					)}
+
+					<LearnMessage
+						className="ml-1"
+						learnMessages={learnMessages}
+						resourceKey="search-bar-suggestions-blueprints"
+					/>
+				</>
+			),
+			title: Liferay.Language.get('blueprint'),
+		};
+
 		if (!blueprintsEnabled) {
-			return (
-				<ClaySelect.Option
-					label={Liferay.Language.get('basic')}
-					value={CONTRIBUTOR_TYPES.BASIC}
-				/>
-			);
+			return [BASIC_OPTION];
 		}
 
 		const indexOfBasic = suggestionsContributorConfiguration.findIndex(
@@ -569,27 +619,10 @@ function SearchBarConfigurationSuggestions({
 		);
 
 		if (indexOfBasic > -1 && index !== indexOfBasic) {
-			return (
-				<ClaySelect.Option
-					label={Liferay.Language.get('blueprint')}
-					value={CONTRIBUTOR_TYPES.SXP_BLUEPRINT}
-				/>
-			);
+			return [BLUEPRINT_OPTION];
 		}
 
-		return (
-			<>
-				<ClaySelect.Option
-					label={Liferay.Language.get('basic')}
-					value={CONTRIBUTOR_TYPES.BASIC}
-				/>
-
-				<ClaySelect.Option
-					label={Liferay.Language.get('blueprint')}
-					value={CONTRIBUTOR_TYPES.SXP_BLUEPRINT}
-				/>
-			</>
-		);
+		return [BASIC_OPTION, BLUEPRINT_OPTION];
 	};
 
 	const _getDefaultValue = () => {

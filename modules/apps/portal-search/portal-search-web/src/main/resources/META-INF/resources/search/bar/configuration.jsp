@@ -26,7 +26,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.petra.string.StringBundler" %><%@
+<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.petra.string.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -130,6 +131,8 @@ String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPE
 									"isDXP", ReleaseInfo.isDXP()
 								).put(
 									"isSearchExperiencesSupported", searchBarPortletDisplayContext.isSearchExperiencesSupported()
+								).put(
+									"learnMessages", LearnMessageUtil.getJSONObject("portal-search-web")
 								).put(
 									"namespace", liferayPortletResponse.getNamespace()
 								).put(

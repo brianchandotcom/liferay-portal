@@ -90,11 +90,7 @@ public class OpenGraphSettingsDisplayContext {
 		LayoutSEOSite layoutSEOSite = getLayoutSEOSite();
 
 		if (layoutSEOSite != null) {
-			Long id = layoutSEOSite.getOpenGraphImageFileEntryId();
-
-			if (id != null) {
-				return id;
-			}
+			return layoutSEOSite.getOpenGraphImageFileEntryId();
 		}
 
 		return 0L;

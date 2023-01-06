@@ -18,6 +18,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -35,8 +36,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,17 +114,17 @@ public class XLIFF12InfoFormTranslationExporter
 
 			List<InfoFieldValue<Object>> infoFieldValuesList = entry.getValue();
 
-			Stream<InfoFieldValue<Object>> stream =
-				infoFieldValuesList.stream();
+			StringBundler sb = new StringBundler();
 
-			sourceElement.addCDATA(
-				_getStringValue(
-					stream.map(
-						infoFieldValue -> (String)infoFieldValue.getValue(
-							sourceLocale)
-					).collect(
-						Collectors.joining(StringPool.COMMA_AND_SPACE)
-					)));
+			for (InfoFieldValue<Object> infoFieldValue : infoFieldValuesList) {
+				sb.append(
+					(String)infoFieldValue.getValue(sourceLocale) +
+						StringPool.COMMA_AND_SPACE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sourceElement.addCDATA(_getStringValue(sb));
 
 			if (infoFieldValuesList.size() > 1) {
 				Element segSourceElement = transUnitElement.addElement(

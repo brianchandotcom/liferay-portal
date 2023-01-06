@@ -45,7 +45,7 @@ public class NoSuchAccountGroupExceptionMapper
 
 	@Override
 	public Response.Status getStatus() {
-		return Response.Status.BAD_REQUEST;
+		return Response.Status.NOT_FOUND;
 	}
 
 }

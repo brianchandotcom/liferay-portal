@@ -1,7 +1,7 @@
 definition {
 
 	macro _formatCamelCase {
-		var camelCase = StringUtil.replace("${camelCase}", " ", "");
+		var camelCase = StringUtil.replace(${camelCase}, " ", "");
 
 		var camelCase = StringUtil.lowerCaseFirstLetter("${camelCase}");
 

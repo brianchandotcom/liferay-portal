@@ -380,39 +380,39 @@ public class CookiesManagerImpl implements CookiesManager {
 				consentCookieName, httpServletRequest);
 		}
 
-		if (Validator.isNull(consentCookieValue)) {
-			try {
-				CookiesPreferenceHandlingConfiguration
-					cookiesPreferenceHandlingConfiguration =
-						_configurationProvider.getSystemConfiguration(
-							CookiesPreferenceHandlingConfiguration.class);
-
-				if (httpServletRequest != null) {
-					long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-					if (groupId > 0) {
-						cookiesPreferenceHandlingConfiguration =
-							_configurationProvider.getGroupConfiguration(
-								CookiesPreferenceHandlingConfiguration.class,
-								groupId);
-					}
-					else {
-						cookiesPreferenceHandlingConfiguration =
-							_configurationProvider.getCompanyConfiguration(
-								CookiesPreferenceHandlingConfiguration.class,
-								_portal.getCompanyId(httpServletRequest));
-					}
-				}
-
-				return !cookiesPreferenceHandlingConfiguration.
-					explicitConsentMode();
-			}
-			catch (PortalException portalException) {
-				throw new SystemException(portalException);
-			}
+		if (Validator.isNotNull(consentCookieValue)) {
+			return GetterUtil.getBoolean(consentCookieValue);
 		}
 
-		return GetterUtil.getBoolean(consentCookieValue);
+		try {
+			CookiesPreferenceHandlingConfiguration
+				cookiesPreferenceHandlingConfiguration =
+					_configurationProvider.getSystemConfiguration(
+						CookiesPreferenceHandlingConfiguration.class);
+
+			if (httpServletRequest != null) {
+				long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+				if (groupId > 0) {
+					cookiesPreferenceHandlingConfiguration =
+						_configurationProvider.getGroupConfiguration(
+							CookiesPreferenceHandlingConfiguration.class,
+							groupId);
+				}
+				else {
+					cookiesPreferenceHandlingConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							CookiesPreferenceHandlingConfiguration.class,
+							_portal.getCompanyId(httpServletRequest));
+				}
+			}
+
+			return !cookiesPreferenceHandlingConfiguration.
+				explicitConsentMode();
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	@Override

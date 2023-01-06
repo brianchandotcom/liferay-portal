@@ -105,7 +105,11 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			settingsMap.get("sourceGroupId"),
 			GroupConstants.ANY_PARENT_GROUP_ID);
 
-		Group sourceGroup = _groupLocalService.fetchGroup(sourceGroupId);
+		Group sourceGroup = null;
+
+		if (sourceGroupId > 0) {
+			sourceGroup = _groupLocalService.fetchGroup(sourceGroupId);
+		}
 
 		if ((sourceGroup == null) || !sourceGroup.isStagedRemotely()) {
 			return false;
@@ -115,22 +119,28 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			settingsMap.get("targetGroupId"),
 			GroupConstants.ANY_PARENT_GROUP_ID);
 
-		Group targetGroup = _groupLocalService.fetchGroup(targetGroupId);
+		Group targetGroup = null;
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			sourceGroup.getTypeSettingsProperties();
+		if (targetGroupId > 0) {
+			targetGroup = _groupLocalService.fetchGroup(targetGroupId);
+		}
 
-		String remoteGroupUUID = typeSettingsUnicodeProperties.getProperty(
-			"remoteGroupUUID");
+		if (targetGroup != null) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				sourceGroup.getTypeSettingsProperties();
 
-		// If the target group can be found and the UUID's also match, then we
-		// must not propagate the event because it means remote staging is
-		// configured between two sites on the same portal instance
+			String remoteGroupUUID = typeSettingsUnicodeProperties.getProperty(
+				"remoteGroupUUID");
 
-		if (Validator.isNotNull(remoteGroupUUID) && (targetGroup != null) &&
-			StringUtil.equals(remoteGroupUUID, targetGroup.getUuid())) {
+			// If the target group can be found and the UUID's also match, then
+			// we must not propagate the event because it means remote staging
+			// is configured between two sites on the same portal instance
 
-			return false;
+			if (Validator.isNotNull(remoteGroupUUID) &&
+				StringUtil.equals(remoteGroupUUID, targetGroup.getUuid())) {
+
+				return false;
+			}
 		}
 
 		return !Objects.equals(

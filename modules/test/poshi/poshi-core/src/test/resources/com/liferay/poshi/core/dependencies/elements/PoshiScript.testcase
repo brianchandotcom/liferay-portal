@@ -47,6 +47,7 @@ definition {
 			Navigator.openURL();
 
 			var camelCase = StringUtil.replace(${camelCase}, " ", "");
+			var payload = StringUtil.replace(${payload}, ${payload}, "${payload}}");
 
 			ProductMenu.gotoPortlet(
 				category = "Content",

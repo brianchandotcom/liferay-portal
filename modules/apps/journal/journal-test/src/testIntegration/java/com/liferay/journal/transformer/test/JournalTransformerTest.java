@@ -81,14 +81,15 @@ public class JournalTransformerTest {
 				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
 				StringUtil.replace(
 					_read("data_definition.json"),
-					new String[] {"$FIELD_SET_NAME"},
+					new String[] {"[$FIELD_SET_NAME$]"},
 					new String[] {"FieldsGroup19507604"}),
 				TestPropsValues.getUser());
 
 		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
 			StringUtil.replace(
-				_read("journal_content.xml"), new String[] {"$FIELD_SET_NAME"},
+				_read("journal_content.xml"),
+				new String[] {"[$FIELD_SET_NAME$]"},
 				new String[] {"FieldsGroup19507604"}),
 			dataDefinition.getDataDefinitionKey(), null);
 	}
@@ -113,14 +114,15 @@ public class JournalTransformerTest {
 				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
 				StringUtil.replace(
 					_read("data_definition.json"),
-					new String[] {"$FIELD_SET_NAME"},
+					new String[] {"[$FIELD_SET_NAME$]"},
 					new String[] {"birthdayFieldSet"}),
 				TestPropsValues.getUser());
 
 		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
 			StringUtil.replace(
-				_read("journal_content.xml"), new String[] {"$FIELD_SET_NAME"},
+				_read("journal_content.xml"),
+				new String[] {"[$FIELD_SET_NAME$]"},
 				new String[] {"birthdayFieldSet"}),
 			dataDefinition.getDataDefinitionKey(), null);
 

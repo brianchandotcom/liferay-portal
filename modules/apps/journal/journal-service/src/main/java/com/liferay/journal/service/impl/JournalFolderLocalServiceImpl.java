@@ -87,7 +87,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -1434,13 +1433,16 @@ public class JournalFolderLocalServiceImpl
 							JournalFolder.class),
 						restrictedAncestorFolder.getFolderId());
 
-				Stream<DDMStructureLink> ancestorDDMStructureLinksStream =
-					ancestorDDMStructureLinks.stream();
-
 				long[] ancestorDDMStructureIds =
-					ancestorDDMStructureLinksStream.mapToLong(
-						DDMStructureLink::getStructureId
-					).toArray();
+					new long[ancestorDDMStructureLinks.size()];
+
+				for (int i = 0; i < ancestorDDMStructureLinks.size(); i++) {
+					DDMStructureLink ddmStructureLink =
+						ancestorDDMStructureLinks.get(i);
+
+					ancestorDDMStructureIds[i] =
+						ddmStructureLink.getStructureId();
+				}
 
 				_validateArticleDDMStructures(
 					folderId, ancestorDDMStructureIds);

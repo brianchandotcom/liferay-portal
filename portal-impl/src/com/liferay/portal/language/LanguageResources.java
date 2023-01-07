@@ -71,11 +71,8 @@ public class LanguageResources {
 			return overrideValue;
 		}
 
-		Map<String, String> languageMap = _languageMaps.get(locale);
-
-		if (languageMap == null) {
-			languageMap = _loadLocale(locale);
-		}
+		Map<String, String> languageMap = _languageMaps.getOrDefault(
+			locale, Collections.emptyMap());
 
 		String value = languageMap.get(key);
 
@@ -208,30 +205,11 @@ public class LanguageResources {
 		return null;
 	}
 
-	private static Map<String, String> _loadLocale(Locale locale) {
-		Map<String, String> languageMap = Collections.emptyMap();
-
-		_languageMaps.put(locale, languageMap);
-
-		return languageMap;
-	}
-
 	private Map<String, String> _putLanguageMap(
 		Locale locale, Map<String, String> languageMap) {
 
-		Map<String, String> oldLanguageMap = _languageMaps.get(locale);
-
-		if (oldLanguageMap == null) {
-			_loadLocale(locale);
-
-			oldLanguageMap = _languageMaps.get(locale);
-		}
-
-		Map<String, String> newLanguageMap = new HashMap<>();
-
-		if (oldLanguageMap != null) {
-			newLanguageMap.putAll(oldLanguageMap);
-		}
+		Map<String, String> newLanguageMap = new HashMap<>(
+			_languageMaps.getOrDefault(locale, Collections.emptyMap()));
 
 		Map<String, String> diffLanguageMap = new HashMap<>();
 
@@ -275,7 +253,8 @@ public class LanguageResources {
 
 		@Override
 		public Enumeration<String> getKeys() {
-			Map<String, String> languageMap = _getLanguageMap();
+			Map<String, String> languageMap = _languageMaps.getOrDefault(
+				_locale, Collections.emptyMap());
 
 			Set<String> keySet = _getSetWithOverrideKeys(
 				languageMap.keySet(), _locale);
@@ -300,14 +279,16 @@ public class LanguageResources {
 				return overrideValue;
 			}
 
-			Map<String, String> languageMap = _getLanguageMap();
+			Map<String, String> languageMap = _languageMaps.getOrDefault(
+				_locale, Collections.emptyMap());
 
 			return languageMap.get(key);
 		}
 
 		@Override
 		protected Set<String> handleKeySet() {
-			Map<String, String> languageMap = _getLanguageMap();
+			Map<String, String> languageMap = _languageMaps.getOrDefault(
+				_locale, Collections.emptyMap());
 
 			return _getSetWithOverrideKeys(languageMap.keySet(), _locale);
 		}
@@ -320,16 +301,6 @@ public class LanguageResources {
 			if (superLocale != null) {
 				setParent(new LanguageResourcesBundle(superLocale));
 			}
-		}
-
-		private Map<String, String> _getLanguageMap() {
-			Map<String, String> languageMap = _languageMaps.get(_locale);
-
-			if (languageMap == null) {
-				languageMap = _loadLocale(_locale);
-			}
-
-			return languageMap;
 		}
 
 		private final Locale _locale;

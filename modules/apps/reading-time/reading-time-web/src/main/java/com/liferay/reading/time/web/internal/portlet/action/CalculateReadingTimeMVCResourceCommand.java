@@ -26,8 +26,6 @@ import com.liferay.reading.time.web.internal.constants.ReadingTimePortletKeys;
 
 import java.time.Duration;
 
-import java.util.Optional;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -58,18 +56,18 @@ public class CalculateReadingTimeMVCResourceCommand
 		String contentType = ParamUtil.getString(
 			resourceRequest, "contentType");
 
-		Optional<Duration> readingTimeDurationOptional =
-			_readingTimeCalculator.calculate(
-				content, contentType, resourceRequest.getLocale());
+		Duration readingTimeDuration = _readingTimeCalculator.calculate(
+			content, contentType, resourceRequest.getLocale());
 
-		readingTimeDurationOptional.ifPresent(
-			readingTimeDuration -> jsonObject.put(
+		if (readingTimeDuration != null) {
+			jsonObject.put(
 				"readingTimeInSeconds", (float)readingTimeDuration.getSeconds()
 			).put(
 				"readingTimeMessage",
 				_readingTimeMessageProvider.provide(
 					readingTimeDuration, resourceRequest.getLocale())
-			));
+			);
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

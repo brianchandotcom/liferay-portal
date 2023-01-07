@@ -155,16 +155,16 @@
 		</a>
 
 		<div class="nav-items-wrapper tablet-mobile-nav-section">
-				[@liferay_site_navigation["navigation-menu"]
-					ddmTemplateGroupId=(scopeGroupId)
-					ddmTemplateKey=(configuration.navigationLinksOnly)?then("NAVIGATION_PRIMARY_LINKS", "NAVIGATION_PRIMARY")
-					displayDepth=0
-					expandedLevels="auto"
-					preview=false
-					rootItemLevel=0
-					rootLayoutType="absolute"
-					siteNavigationMenuId=(configuration.siteNavigationMenuId)!0
-				/]
+			[@liferay_site_navigation["navigation-menu"]
+				ddmTemplateGroupId=(scopeGroupId)
+				ddmTemplateKey=(configuration.navigationDDMTemplateKey)
+				displayDepth=0
+				expandedLevels="auto"
+				preview=false
+				rootItemLevel=0
+				rootLayoutType="absolute"
+				siteNavigationMenuId=(configuration.siteNavigationMenuId)!0
+			/]
 			<div class="cta-container-mobile mx-4 py-3">
 				[#if !configuration.showAccountMenu && themeDisplay.isSignedIn()]
 					<div class="account mobile position-relative">

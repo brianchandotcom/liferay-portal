@@ -44,11 +44,21 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": false,
-					"description": "Navigation Links Only",
-					"label": "Navigation Links Only",
-					"name": "navigationLinksOnly",
-					"type": "checkbox"
+					"defaultValue": "NAVIGATION_PRIMARY",
+					"description": "Navigation DDM Template Key",
+					"label": "Navigation DDM Template Key",
+					"name": "navigationDDMTemplateKey",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "NAVIGATION_BASIC"
+							},
+							{
+								"value": "NAVIGATION_PRIMARY"
+							}
+						]
+					}
 				},
 				{
 					"dataType": "int",

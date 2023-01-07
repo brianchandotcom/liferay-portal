@@ -1,0 +1,20 @@
+{
+	"author": "",
+	"dependencies": {
+		"metal-dom": "^2.16.8",
+		"spatial-navigation-js": "^1.0.0"
+	},
+	"description": "",
+	"devDependencies": {
+		"webpack": "^5.75.0",
+		"webpack-cli": "^5.0.0"
+	},
+	"keywords": [
+	],
+	"license": "ISC",
+	"name": "@liferay/navigation-js",
+	"scripts": {
+		"build": "webpack"
+	},
+	"version": "1.0.0"
+}

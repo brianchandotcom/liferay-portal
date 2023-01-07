@@ -240,7 +240,7 @@ public class LanguageResources {
 	private static volatile LanguageOverrideProvider _languageOverrideProvider =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			LanguageOverrideProvider.class, LanguageResources.class,
-			"_languageOverrideProvider", false);
+			"_languageOverrideProvider", false, true);
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
 	private static final Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<>();

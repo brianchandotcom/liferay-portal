@@ -1,0 +1,290 @@
+// Copyright (c) 2015-2016, Atlassian Pty Ltd
+// All rights reserved.
+//
+// Copyright (c) 2016-2018, Vladimir Schneider,
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// * Redistributions of source code must retain the above copyright notice, this
+// list of conditions and the following disclaimer.
+//
+// * Redistributions in binary form must reproduce the above copyright notice,
+//   this list of conditions and the following disclaimer in the documentation
+//   and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+.adm-block {
+	border: 1px solid;
+	border-left-width: 4px;
+	border-radius: 6px;
+	box-shadow: 2px 2px 6px #cdcdcd;
+	display: block;
+	margin-bottom: 1em;
+	padding-left: 10px;
+	width: 99%;
+}
+
+.adm-heading {
+	border-bottom: solid 1px;
+	display: block;
+	font-size: 0.9em;
+	font-weight: bold;
+	height: 1.8em;
+	margin-left: -10px;
+	padding-bottom: 2em;
+	padding-left: 10px;
+	padding-top: 0.3em;
+}
+
+.adm-body {
+	display: block;
+	margin-left: 1.5em;
+	margin-right: 1.5em;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+}
+
+.adm-heading > span {
+	color: initial;
+}
+
+.adm-icon {
+	display: inline-block;
+	height: 1.6em;
+	margin-left: -0.25em;
+	margin-right: 0.25em;
+	vertical-align: middle;
+	width: 1.6em;
+}
+
+.adm-hidden {
+	display: none !important;
+}
+
+.adm-block.adm-collapsed > .adm-heading,
+.adm-block.adm-open > .adm-heading {
+	cursor: pointer;
+	position: relative;
+}
+
+.adm-block.adm-collapsed > .adm-heading {
+	margin-bottom: 0;
+}
+
+.adm-block.adm-collapsed .adm-body {
+	display: none !important;
+}
+
+.adm-block.adm-open > .adm-heading:after,
+.adm-block.adm-collapsed > .adm-heading:after {
+	content: '▼';
+	display: inline-block;
+	font-size: 1.3em;
+	position: absolute;
+	right: 0.5em;
+	top: calc(50% - 0.65em);
+}
+
+.adm-block.adm-collapsed > .adm-heading:after {
+	right: 0.5em;
+	top: calc(50% - 0.75em);
+	transform: rotate(90deg);
+}
+
+// ---------- default scheme ---------- */
+
+.adm-block {
+	border-color: #ebebeb #ebebeb #bfbfbf #ebebeb;
+}
+
+.adm-block.adm-abstract {
+	border-left-color: #48c4ff;
+}
+
+.adm-block.adm-abstract .adm-heading {
+	background: #e8f7ff;
+	border-bottom-color: #dbf3ff;
+	color: #48c4ff;
+}
+
+.adm-block.adm-abstract.adm-open > .adm-heading:after,
+.adm-block.adm-abstract.adm-collapsed > .adm-heading:after {
+	color: #80d9ff;
+}
+
+.adm-block.adm-bug {
+	border-left-color: #f50057;
+}
+
+.adm-block.adm-bug .adm-heading {
+	background: #fee7ee;
+	border-bottom-color: #fcd9e4;
+	color: #f50057;
+}
+
+.adm-block.adm-bug.adm-open > .adm-heading:after,
+.adm-block.adm-bug.adm-collapsed > .adm-heading:after {
+	color: #f57aab;
+}
+
+.adm-block.adm-danger {
+	border-left-color: #fe1744;
+}
+
+.adm-block.adm-danger .adm-heading {
+	background: #ffe9ed;
+	border-bottom-color: #ffd9e0;
+	color: #fe1744;
+}
+
+.adm-block.adm-danger.adm-open > .adm-heading:after,
+.adm-block.adm-danger.adm-collapsed > .adm-heading:after {
+	color: #fc7e97;
+}
+
+.adm-block.adm-example {
+	border-left-color: #7940ff;
+}
+
+.adm-block.adm-example .adm-heading {
+	background: #efebff;
+	border-bottom-color: #e0d9ff;
+	color: #7940ff;
+}
+
+.adm-block.adm-example.adm-open > .adm-heading:after,
+.adm-block.adm-example.adm-collapsed > .adm-heading:after {
+	color: #b199ff;
+}
+
+.adm-block.adm-fail {
+	border-left-color: #fe5e5e;
+}
+
+.adm-block.adm-fail .adm-heading {
+	background: #fee;
+	border-bottom-color: #ffe3e3;
+	color: #fe5e5e;
+}
+
+.adm-block.adm-fail.adm-open > .adm-heading:after,
+.adm-block.adm-fail.adm-collapsed > .adm-heading:after {
+	color: #fcb1b1;
+}
+
+.adm-block.adm-faq {
+	border-left-color: #5ed116;
+}
+
+.adm-block.adm-faq .adm-heading {
+	background: #eefae8;
+	border-bottom-color: #e6fadc;
+	color: #5ed116;
+}
+
+.adm-block.adm-faq.adm-open > .adm-heading:after,
+.adm-block.adm-faq.adm-collapsed > .adm-heading:after {
+	color: #98cf72;
+}
+
+.adm-block.adm-info {
+	border-left-color: #00b8d4;
+}
+
+.adm-block.adm-info .adm-heading {
+	background: #e8f7fa;
+	border-bottom-color: #dcf5fa;
+	color: #00b8d4;
+}
+
+.adm-block.adm-info.adm-open > .adm-heading:after,
+.adm-block.adm-info.adm-collapsed > .adm-heading:after {
+	color: #83ced6;
+}
+
+.adm-block.adm-note {
+	border-left-color: #448aff;
+}
+
+.adm-block.adm-note .adm-heading {
+	background: #edf4ff;
+	border-bottom-color: #e0edff;
+	color: #448aff;
+}
+
+.adm-block.adm-note.adm-open > .adm-heading:after,
+.adm-block.adm-note.adm-collapsed > .adm-heading:after {
+	color: #8cb8ff;
+}
+
+.adm-block.adm-quote {
+	border-left-color: #9e9e9e;
+}
+
+.adm-block.adm-quote .adm-heading {
+	background: #f4f4f4;
+	border-bottom-color: #e8e8e8;
+	color: #9e9e9e;
+}
+
+.adm-block.adm-quote.adm-open > .adm-heading:after,
+.adm-block.adm-quote.adm-collapsed > .adm-heading:after {
+	color: #b3b3b3;
+}
+
+.adm-block.adm-success {
+	border-left-color: #1dcd63;
+}
+
+.adm-block.adm-success .adm-heading {
+	background: #e9f8ee;
+	border-bottom-color: #dcf7e5;
+	color: #1dcd63;
+}
+
+.adm-block.adm-success.adm-open > .adm-heading:after,
+.adm-block.adm-success.adm-collapsed > .adm-heading:after {
+	color: #7acc98;
+}
+
+.adm-block.adm-tip {
+	border-left-color: #01bfa5;
+}
+
+.adm-block.adm-tip .adm-heading {
+	background: #e9f9f6;
+	border-bottom-color: #dcf7f2;
+	color: #01bfa5;
+}
+
+.adm-block.adm-tip.adm-open > .adm-heading:after,
+.adm-block.adm-tip.adm-collapsed > .adm-heading:after {
+	color: #7dd1c0;
+}
+
+.adm-block.adm-warning {
+	border-left-color: #ff9001;
+}
+
+.adm-block.adm-warning .adm-heading {
+	background: #fef3e8;
+	border-bottom-color: #fef3e8;
+	color: #ff9001;
+}
+
+.adm-block.adm-warning.adm-open > .adm-heading:after,
+.adm-block.adm-warning.adm-collapsed > .adm-heading:after {
+	color: #fcbb6a;
+}

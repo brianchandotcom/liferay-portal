@@ -16,14 +16,13 @@
 
 @import 'clay/bootstrap/_functions';
 @import 'clay/bootstrap/_mixins';
-@import 'clay/bootstrap/_variables';
 
 @import 'clay/_mixins';
-@import 'clay/_variables';
 
 @import 'clay/components/_tables';
 
 // Custom Components
+@import 'flexmark-ext-admonition/admonition';
 
 @import '_404';
 @import '_admonition';
@@ -32,7 +31,6 @@
 @import '_copy_button_override';
 @import '_documentations';
 @import '_elements';
-@import '_header';
 @import '_help_center_footer';
 @import '_highlighting_alert';
 @import '_homepage';

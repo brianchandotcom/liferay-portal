@@ -1,0 +1,18 @@
+{
+	"cpu": 4,
+	"env": {
+		"LIFERAY_GROUP_FRIENDLY_URL_PATH": "guest",
+		"LIFERAY_OAUTH_CLIENT_ID": "@liferay-oauth-client-id",
+		"LIFERAY_OAUTH_CLIENT_SECRET": "@liferay-oauth-client-secret",
+		"LIFERAY_URL": "@liferay-url"
+	},
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "publicsitenavigationimporter",
+	"kind": "Job",
+	"memory": 3000,
+	"scale": 1
+}

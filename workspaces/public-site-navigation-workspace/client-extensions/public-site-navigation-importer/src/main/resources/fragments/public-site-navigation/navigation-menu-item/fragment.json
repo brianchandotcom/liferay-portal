@@ -1,0 +1,9 @@
+{
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"fragmentEntryKey": "navigationMenuItem",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Navigation Menu Item",
+	"type": "component"
+}

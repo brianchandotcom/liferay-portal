@@ -1,0 +1,18 @@
+public-site-navigation-importer:
+    name: Public Site Navigation Importer
+    scopes:
+        - Liferay.Headless.Admin.User.everything.read
+        - liferay-json-web-services.everything.write
+        - liferay-json-web-services.everything
+    type: oAuthApplicationHeadlessServer
+    userAccountEmailAddress: test@$[conf:dxp.lxc.liferay.com.virtualInstanceId]
+runtime:
+    cpu: 2000m
+    env:
+        - name: LIFERAY_GROUP_FRIENDLY_URL_PATH
+          value: guest
+        - name: OAUTH2_JOB_PROFILE
+          value: public-site-navigation-importer
+    memory: 500Mi
+    type: configuration
+    workload: job

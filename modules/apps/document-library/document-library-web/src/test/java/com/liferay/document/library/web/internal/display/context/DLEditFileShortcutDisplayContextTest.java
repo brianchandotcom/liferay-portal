@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.internal.display.context.util.MockHttpServletRequestBuilder;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.internal.PortalContextImpl;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletURL;
@@ -73,10 +71,6 @@ public class DLEditFileShortcutDisplayContextTest {
 		_itemSelector = Mockito.mock(ItemSelector.class);
 
 		_language = Mockito.mock(Language.class);
-
-		LanguageResources languageResources = new LanguageResources();
-
-		languageResources.setConfig(StringPool.BLANK);
 	}
 
 	@Test

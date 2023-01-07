@@ -42,6 +42,7 @@
 			<execute macro="Navigator#openURL" />
 
 			<var name="camelCase" method="StringUtil#replace('${camelCase}', ' ', '')"/>
+			<var name="payload" method="StringUtil#replace('${payload}', '${payload}', '${payload}}')"/>
 
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />

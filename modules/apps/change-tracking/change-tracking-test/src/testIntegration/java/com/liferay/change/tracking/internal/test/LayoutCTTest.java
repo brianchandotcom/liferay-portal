@@ -588,9 +588,9 @@ public class LayoutCTTest {
 	}
 
 	@Test
-	public void testPublishLayoutWithConflictingUpdate() throws Exception {
+	public void testPublishLayoutWithFriendlyURLUpdate() throws Exception {
 		String ctFriendlyURL = "/testCTLayout";
-		String conflictingFriendlyURL = "/testConflictingLayout";
+		String newCTFriendlyURL = "/testCTLayoutWithNewURL";
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
@@ -603,7 +603,7 @@ public class LayoutCTTest {
 			_layoutLocalService.updateLayout(layout);
 		}
 
-		layout.setFriendlyURL(conflictingFriendlyURL);
+		layout.setFriendlyURL(newCTFriendlyURL);
 
 		layout = _layoutLocalService.updateLayout(layout);
 
@@ -617,24 +617,14 @@ public class LayoutCTTest {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Throwable throwable = logEntry.getThrowable();
-
-			Assert.assertNotNull(throwable);
-
-			String message = throwable.getMessage();
-
-			Assert.assertTrue(message, message.startsWith("Unable to publish"));
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 		}
 
 		layout = _layoutLocalService.fetchLayout(layout.getPlid());
 
 		Assert.assertNotNull(layout);
 
-		Assert.assertEquals(layout.getFriendlyURL(), conflictingFriendlyURL);
+		Assert.assertEquals(layout.getFriendlyURL(), ctFriendlyURL);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -644,7 +634,7 @@ public class LayoutCTTest {
 
 			Assert.assertNotNull(layout);
 
-			Assert.assertEquals(layout.getFriendlyURL(), ctFriendlyURL);
+			Assert.assertEquals(layout.getFriendlyURL(), newCTFriendlyURL);
 		}
 	}
 

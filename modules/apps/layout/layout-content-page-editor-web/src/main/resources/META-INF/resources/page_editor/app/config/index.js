@@ -28,6 +28,14 @@ export let config = DEFAULT_CONFIG;
  * the app, so we can safely store is as a variable.
  */
 export function initializeConfig(backendConfig) {
+	if (!backendConfig.layoutType) {
+		config = {
+			...backendConfig,
+		};
+
+		return config;
+	}
+
 	const {
 		commonStyles,
 		layoutType,

@@ -422,27 +422,17 @@ definition {
 	test CustomElementCanConfigurePortletName {
 		property portal.acceptance = "true";
 
-		task ("Add a public page with JSON") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page");
-		}
-
-		task ("Create Vanilla Counter as a Custom Element") {
+		task ("Given Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
 				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
-		task ("Obtain Vanilla Counter's remoteAppEntryId") {
-			var remoteAppEntryId = RemoteApps.getRemoteAppEntryId();
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page",
-				remoteAppEntryId = "${remoteAppEntryId}",
-				widgetName = "Vanilla Counter");
+		task ("When adding created portlet to a widget page") {
+			ClientExtension.addPortletToWidgetPage(
+				portletName = "Vanilla Counter",
+				widgetPageName = "Test Page");
 		}
 
 		task ("Change Vanilla Counter portlet name") {

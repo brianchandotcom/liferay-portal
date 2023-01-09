@@ -247,10 +247,7 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 	const validate = (values: Partial<ObjectAction>) => {
 		const errors: ActionError = {};
 
-		if (
-			Liferay.FeatureFlags['LPS-148804'] &&
-			invalidateRequired(values.label?.[defaultLanguageId])
-		) {
+		if (invalidateRequired(values.label?.[defaultLanguageId])) {
 			errors.label = REQUIRED_MSG;
 		}
 

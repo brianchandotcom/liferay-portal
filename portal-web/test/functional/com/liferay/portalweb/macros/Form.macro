@@ -735,6 +735,10 @@ definition {
 			locator1 = "Form#SAVE_FORM_BUTTON_LOCALIZED");
 	}
 
+	macro previewExistingSubmissionButton {
+		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+	}
+
 	macro previewForm {
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
 
@@ -1088,6 +1092,10 @@ definition {
 			locator1 = "Form#PAGE_DEFAULT_TITLE_BY_NUMBER");
 	}
 
+	macro viewPreviewExistingSubmission {
+		AssertElementPresent(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+	}
+
 	macro viewPublishFormSuccessMessage {
 		var key_alertMessage = "The form was published successfully! Access it with this URL";
 
@@ -1138,6 +1146,12 @@ definition {
 			key_optionValue = "${optionValue}",
 			key_rowPosition = "${rowPosition}",
 			locator1 = "FormFields#SELECT_OPTIONS_FIELD_BY_ROW_PREVIEW");
+	}
+
+	macro viewSubmitAgainNotPresent {
+		AssertElementNotPresent(
+			key_submitAgainButton = "Submit Again",
+			locator1 = "Form#SUBMIT_AGAIN_BUTTON");
 	}
 
 	macro viewSubmitButtonText {

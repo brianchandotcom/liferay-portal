@@ -778,6 +778,71 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
+	@description = "LPS-163696 - Verify that a user on a form that limits one submission per user can see partial results when accessing the forms link."
+	@priority = "4"
+	test CanSeePartialResultsButtonWithLimitsOneSubmissionPerUser {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Test Form");
+
+		Form.editDescription(formDescription = "Test description");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Form.selectOptionSubmissions(checkboxOption = "Show Forms Report Data to Respondents");
+
+		Form.selectOptionSubmissions(checkboxOption = "Limit to One Submission per User");
+
+		Button.clickDone();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		Form.viewSubmitAgainNotPresent();
+
+		Form.viewPreviewExistingSubmission();
+
+		FormPortlet.clickSubmit();
+
+		WaitForElementPresent(
+			locator1 = "FormPortlet#SUCCESS_PAGE_TITLE",
+			value1 = "${successPageTitle}");
+
+		FormsAdminNavigator.closePublishedFormWindow();
+
+		Click(
+			key_formName = "Test Form",
+			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "You can fill out this form only once. Contact the owner of the form if you think this is a mistake.",
+			successPageTitle = "You have already responded.");
+
+		Form.viewSubmitAgainNotPresent();
+
+		Form.viewPreviewExistingSubmission();
+
+		Form.previewExistingSubmissionButton();
+
+		AssertElementPresent(
+			key_reportData = "Test Text",
+			locator1 = "Form#FORM_ANSWER");
+	}
+
 	@description = "Verify that with the option Limit to one submission per user activated, the user cannot send more than one submission."
 	@priority = "4"
 	test CheckCantSendMoreThanOneSubmitPerUser {
@@ -848,7 +913,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		AssertElementPresent(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+		Form.viewPreviewExistingSubmission();
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -856,7 +921,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+		Form.previewExistingSubmissionButton();
 
 		AssertElementPresent(
 			key_reportData = "Test",
@@ -895,7 +960,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+		Form.previewExistingSubmissionButton();
 
 		AssertElementPresent(
 			key_reportData = "Test",
@@ -915,7 +980,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+		Form.previewExistingSubmissionButton();
 
 		AssertElementPresent(
 			key_reportData = "Test",
@@ -981,7 +1046,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
 
-		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+		Form.previewExistingSubmissionButton();
 
 		AssertElementPresent(
 			locator1 = "Form#FORM_ANSWER_SINGLE_SELECTION",

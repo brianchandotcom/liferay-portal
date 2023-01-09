@@ -258,13 +258,12 @@ public class KaleoWorkflowModelConverterImpl
 
 		List<WorkflowNode> workflowNodes = new ArrayList<>();
 
-		for (KaleoInstanceToken instanceToken :
+		for (KaleoInstanceToken kaleoInstanceToken :
 				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
 					kaleoInstance.getKaleoInstanceId())) {
 
-			long nodeId = instanceToken.getCurrentKaleoNodeId();
-
-			KaleoNode kaleoNode = _kaleoNodeLocalService.fetchKaleoNode(nodeId);
+			KaleoNode kaleoNode = _kaleoNodeLocalService.fetchKaleoNode(
+				kaleoInstanceToken.getCurrentKaleoNodeId());
 
 			if ((kaleoNode != null) &&
 				!Objects.equals(kaleoNode.getType(), NodeType.FORK.name())) {

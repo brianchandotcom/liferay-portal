@@ -188,7 +188,8 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		BatchEngineUriInfo.Builder builder = new BatchEngineUriInfo.Builder();
 
 		for (Map.Entry<String, Serializable> entry : _parameters.entrySet()) {
-			builder.queryParameter(entry.getKey(), (String)entry.getValue());
+			builder.queryParameter(
+				entry.getKey(), String.valueOf(entry.getValue()));
 		}
 
 		batchEngineTaskItemDelegate.setContextUriInfo(builder.build());

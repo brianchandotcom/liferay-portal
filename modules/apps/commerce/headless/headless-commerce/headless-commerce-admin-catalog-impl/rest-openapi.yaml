@@ -12425,12 +12425,19 @@ paths:
                             $ref: "#/components/schemas/Sku"
                 required: true
             responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                    description:
+                        Updated
                 202:
                     description:
                         Async
-                204:
-                    description:
-                        Updated
                 400:
                     description:
                         Invalid input
@@ -12599,12 +12606,19 @@ paths:
                             $ref: "#/components/schemas/Sku"
                 required: true
             responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                    description:
+                        Updated
                 202:
                     description:
                         Async
-                204:
-                    description:
-                        Updated
                 400:
                     description:
                         Invalid input

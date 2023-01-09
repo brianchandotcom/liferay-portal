@@ -14,6 +14,7 @@
 
 package com.liferay.portal.k8s.agent.internal;
 
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -389,12 +390,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		return binaryData;
 	}
 
-	private Configuration _getConfiguration(
-			org.apache.felix.configurator.impl.model.Config config)
-		throws Exception {
-
-		String pid = config.getPid();
-
+	private Configuration _getConfiguration(String pid) throws Exception {
 		if (pid.endsWith(_FILE_EXTENSION)) {
 			pid = pid.substring(0, pid.length() - _FILE_EXTENSION.length());
 		}
@@ -443,15 +439,48 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		return labels;
 	}
 
+	private String _getVirtualInstancePid(
+		org.apache.felix.configurator.impl.model.Config config,
+		String virtualInstanceId) {
+
+		String pid = config.getPid();
+
+		String factoryPid = ConfigurationFactoryUtil.getFactoryPidFromPid(pid);
+
+		if (factoryPid == null) {
+			return pid;
+		}
+
+		return StringBundler.concat(pid, "/", virtualInstanceId);
+	}
+
 	private void _processConfiguration(
 			org.apache.felix.configurator.impl.model.Config config,
 			ObjectMeta objectMeta)
 		throws Exception {
 
+		Map<String, String> labels = objectMeta.getLabels();
+
+		String virtualInstanceId = labels.get(
+			"dxp.lxc.liferay.com/virtualInstanceId");
+
+		if (virtualInstanceId == null) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Config map labels must contain the key ",
+					"\"dxp.lxc.liferay.com/virtualInstanceId\" whose value is ",
+					"the web ID of the target virtual instance"));
+		}
+
+		// LPS-172217
+
+		String virtualInstancePid = _getVirtualInstancePid(
+			config, virtualInstanceId);
+
 		Configuration configuration = null;
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			StringBundler.concat("(.k8s.config.key=", config.getPid(), ")"));
+			StringBundler.concat("(.k8s.config.key=", virtualInstancePid, ")"));
 
 		if (ArrayUtil.isNotEmpty(configurations)) {
 			configuration = configurations[0];
@@ -473,7 +502,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 			}
 		}
 		else {
-			configuration = _getConfiguration(config);
+			configuration = _getConfiguration(virtualInstancePid);
 		}
 
 		Set<Configuration.ConfigurationAttribute> configurationAttributes =
@@ -494,11 +523,10 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 
 			portalK8sConfigurationPropertiesMutator.
 				mutateConfigurationProperties(
-					objectMeta.getAnnotations(), objectMeta.getLabels(),
-					properties);
+					objectMeta.getAnnotations(), labels, properties);
 		}
 
-		properties.put(".k8s.config.key", config.getPid());
+		properties.put(".k8s.config.key", virtualInstancePid);
 		properties.put(
 			".k8s.config.resource.version", objectMeta.getResourceVersion());
 		properties.put(".k8s.config.uid", objectMeta.getUid());

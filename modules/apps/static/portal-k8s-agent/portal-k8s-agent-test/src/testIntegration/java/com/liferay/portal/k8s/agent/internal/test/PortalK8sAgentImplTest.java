@@ -15,6 +15,8 @@
 package com.liferay.portal.k8s.agent.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.osgi.util.StringPlus;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -49,6 +51,7 @@ import java.net.InetAddress;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
@@ -67,6 +70,7 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -315,6 +319,80 @@ public class PortalK8sAgentImplTest {
 				TestPropsValues.getCompanyId(),
 				(long)properties.get("companyId"));
 			Assert.assertEquals("test.value", properties.get("test.key"));
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(configuration);
+		}
+	}
+
+	@Test
+	public void testListenForExtProvisionMetadataWithFactoryPid()
+		throws Exception {
+
+		String serviceId = RandomTestUtil.randomString();
+
+		String mainDomain = serviceId.concat("-extproject.lfr.sh");
+
+		Configuration configuration =
+			ConfigurationTestUtil.updateFactoryConfiguration(
+				"test.pid~foo/" + TestPropsValues.COMPANY_WEB_ID,
+				() -> {
+					ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
+
+					_kubernetesMockClient.configMaps(
+					).createOrReplace(
+						configMapBuilder.withNewMetadata(
+						).withName(
+							StringBundler.concat(
+								serviceId, "-", TestPropsValues.COMPANY_WEB_ID,
+								"-lxc-ext-provision-metadata")
+						).addToLabels(
+							"dxp.lxc.liferay.com/virtualInstanceId",
+							TestPropsValues.COMPANY_WEB_ID
+						).addToAnnotations(
+							"ext.lxc.liferay.com/domains",
+							serviceId.concat("-extproject.lfr.sh")
+						).addToAnnotations(
+							"ext.lxc.liferay.com/mainDomain", mainDomain
+						).addToLabels(
+							"ext.lxc.liferay.com/projectId",
+							RandomTestUtil.randomString()
+						).addToLabels(
+							"ext.lxc.liferay.com/serviceId", serviceId
+						).addToLabels(
+							"lxc.liferay.com/metadataType", "ext-provision"
+						).endMetadata(
+						).addToData(
+							"foo.client-extension-config.json",
+							"{\"test.pid~foo\": {\"test.key\": \"test.value\"}}"
+						).build()
+					);
+				});
+
+		Assert.assertNotNull(configuration);
+
+		try {
+			Dictionary<String, Object> properties =
+				configuration.getProcessedProperties(null);
+
+			Assert.assertEquals(
+				Http.HTTPS_WITH_SLASH.concat(mainDomain),
+				properties.get("baseURL"));
+			Assert.assertEquals(
+				TestPropsValues.getCompanyId(),
+				(long)properties.get("companyId"));
+			Assert.assertEquals("test.value", properties.get("test.key"));
+
+			String serviceFactoryPid = (String)properties.get(
+				"service.factoryPid");
+
+			List<String> servicePids = StringPlus.asList(
+				properties.get(Constants.SERVICE_PID));
+
+			Assert.assertEquals(
+				"foo",
+				ConfigurationFactoryUtil.getExternalReferenceCode(
+					serviceFactoryPid, servicePids));
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(configuration);

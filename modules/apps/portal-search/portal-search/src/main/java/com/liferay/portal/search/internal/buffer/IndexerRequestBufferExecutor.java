@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = IndexerRequestBufferExecutor.class)
+@Component(service = IndexerRequestBufferExecutor.class)
 public class IndexerRequestBufferExecutor {
 
 	public void execute(IndexerRequestBuffer indexerRequestBuffer) {

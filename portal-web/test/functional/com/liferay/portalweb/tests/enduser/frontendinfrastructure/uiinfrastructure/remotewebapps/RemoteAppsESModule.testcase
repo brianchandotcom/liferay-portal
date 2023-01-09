@@ -19,17 +19,9 @@ definition {
 		}
 
 		task ("And Given a Remote App portlet added to widget page") {
-			var remoteAppEntryId = RemoteApps.getRemoteAppEntryId(remoteAppName = "Vanilla Counter");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "My Widget Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "My Widget Page",
-				remoteAppEntryId = "${remoteAppEntryId}",
-				widgetName = "Vanilla Counter");
+			ClientExtension.addPortletToWidgetPage(
+				portletName = "Vanilla Counter",
+				widgetPageName = "My Widget Page");
 		}
 	}
 
@@ -70,7 +62,7 @@ definition {
 		}
 
 		task ("Then in the html <script> tag with src 'https://localhost:8081/runtime.js' is rendered as a module type") {
-			AssertElementPresent(locator1 = "//script[@src='https://localhost:8081/runtime.js' and contains(@type,'module')]");
+			AssertElementPresent(locator1 = "//script[contains(@src,'https://localhost:8081/runtime.js') and contains(@type,'module')]");
 		}
 	}
 

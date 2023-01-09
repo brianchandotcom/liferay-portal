@@ -90,6 +90,11 @@ export default function EditObjectDetails({
 		const validationErrors = handleValidate();
 
 		if (!Object.keys(validationErrors).length) {
+			delete values.objectRelationships;
+			delete values.objectActions;
+			delete values.objectLayouts;
+			delete values.objectViews;
+
 			const saveResponse = await API.putObjectDefinitionByExternalReferenceCode(
 				values
 			);
@@ -155,8 +160,8 @@ export default function EditObjectDetails({
 			const objectFieldsResponse = await API.getObjectFieldsByExternalReferenceCode(
 				externalReferenceCode
 			);
-			const objectDefinitionResponse = await API.getObjectDefinitionById(
-				objectDefinitionId
+			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode
 			);
 
 			setValues(objectDefinitionResponse);

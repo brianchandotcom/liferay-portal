@@ -1,6 +1,5 @@
 {
 	"accountEntryRestricted": true,
-	"accountEntryRestrictedObjectFieldName": "r_testOR3_accountEntryId",
 	"label": {
 		"en_US": "Test Object Definition 1"
 	},

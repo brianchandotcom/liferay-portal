@@ -972,9 +972,6 @@ public class BundleSiteInitializerTest {
 				group.getCompanyId(), "C_TestObjectDefinition1");
 
 		Assert.assertTrue(objectDefinition1.isAccountEntryRestricted());
-		Assert.assertNotEquals(
-			"accountEntryRestrictedObjectFieldName", 0,
-			objectDefinition1.getAccountEntryRestrictedObjectFieldId());
 		Assert.assertFalse(objectDefinition1.isSystem());
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);

@@ -301,6 +301,38 @@ public class FilterParserImplTest {
 	}
 
 	@Test
+	public void testParseWithEqBinaryExpressionWithDateTimeOffsetAndNowMethod()
+		throws ExpressionVisitException {
+
+		Expression expression = _filterParserImpl.parse(
+			"dateTimeExternal ge now()");
+
+		BinaryExpression binaryExpression = (BinaryExpression)expression;
+
+		Assert.assertEquals(
+			BinaryExpression.Operation.GE, binaryExpression.getOperation());
+
+		MemberExpression memberExpression =
+			(MemberExpression)binaryExpression.getLeftOperationExpression();
+
+		PrimitivePropertyExpression primitivePropertyExpression =
+			(PrimitivePropertyExpression)memberExpression.getExpression();
+
+		Assert.assertEquals(
+			"dateTimeExternal", primitivePropertyExpression.getName());
+
+		MethodExpression methodExpression =
+			(MethodExpression)binaryExpression.getRightOperationExpression();
+
+		Assert.assertEquals(
+			MethodExpression.Type.NOW, methodExpression.getType());
+
+		List<Expression> expressions = methodExpression.getExpressions();
+
+		Assert.assertTrue(expressions.isEmpty());
+	}
+
+	@Test
 	public void testParseWithEqBinaryExpressionWithDateTimeWithInvalidType() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
 			() -> _filterParserImpl.parse("dateTimeExternal ge 2012-05-29")

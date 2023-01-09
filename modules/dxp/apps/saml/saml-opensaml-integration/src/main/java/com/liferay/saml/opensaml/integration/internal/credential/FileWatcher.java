@@ -30,6 +30,7 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -40,7 +41,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 /**
  * @author Carlos Sierra Andrés
@@ -120,33 +120,36 @@ public class FileWatcher implements Closeable {
 				}
 
 				List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
+				List<WatchEvent<Path>> watchEventsPath = new ArrayList<>();
 
-				Stream<Path> pathsStream = _paths.stream();
-				Stream<WatchEvent<?>> watchEventsStream = watchEvents.stream();
+				for (Path path : _paths) {
+					for (WatchEvent<?> watchEvent : watchEvents) {
+						WatchEvent<Path> watchEventPath =
+							(WatchEvent<Path>)watchEvent;
 
-				Stream<WatchEvent<Path>> watchEventsPathStream =
-					pathsStream.flatMap(
-						path -> watchEventsStream.map(
-							watchEvent -> (WatchEvent<Path>)watchEvent
-						).filter(
-							watchEvent -> {
-								Path contextPath = watchEvent.context();
+						Path contextPath = watchEventPath.context();
 
-								return contextPath.endsWith(path.getFileName());
-							}
-						));
+						if (!contextPath.endsWith(path.getFileName())) {
+							continue;
+						}
+
+						watchEventsPath.add(watchEventPath);
+					}
+				}
+
+				CompletableFuture[] completableFutures =
+					new CompletableFuture[watchEventsPath.size()];
+
+				for (int i = 0; i < completableFutures.length; i++) {
+					WatchEvent<Path> watchEventPath = watchEventsPath.get(i);
+
+					completableFutures[i] = CompletableFuture.runAsync(
+						() -> _consumer.accept(watchEventPath),
+						notificationsExecutorService);
+				}
 
 				CompletableFuture<Void> completableFuture =
-					CompletableFuture.allOf(
-						watchEventsPathStream.map(
-							watchEvent -> (Runnable)() -> _consumer.accept(
-								watchEvent)
-						).map(
-							runnable -> CompletableFuture.runAsync(
-								runnable, notificationsExecutorService)
-						).toArray(
-							CompletableFuture[]::new
-						));
+					CompletableFuture.allOf(completableFutures);
 
 				try {
 					completableFuture.get(

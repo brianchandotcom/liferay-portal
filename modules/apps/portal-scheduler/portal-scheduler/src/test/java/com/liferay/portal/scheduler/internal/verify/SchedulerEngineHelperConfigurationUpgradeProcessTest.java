@@ -17,6 +17,7 @@ package com.liferay.portal.scheduler.internal.verify;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
+import com.liferay.portal.scheduler.internal.upgrade.v1_0_0.SchedulerEngineHelperConfigurationUpgradeProcess;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
@@ -37,8 +38,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Michael C. Han
+ * @author Alberto Chaparro
  */
-public class SchedulerHelperPropertiesVerifyProcessTest {
+public class SchedulerEngineHelperConfigurationUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -47,18 +49,14 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 
 	@Test
 	public void testNoVerify() throws Exception {
-		SchedulerHelperPropertiesVerifyProcess
-			schedulerHelperPropertiesVerifyProcess =
-				new SchedulerHelperPropertiesVerifyProcess();
-
-		schedulerHelperPropertiesVerifyProcess.props = PropsTestUtil.setProps(
-			Collections.emptyMap());
-
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);
 
-		schedulerHelperPropertiesVerifyProcess.configurationAdmin =
-			configurationAdmin;
+		SchedulerEngineHelperConfigurationUpgradeProcess
+			schedulerEngineHelperConfigurationUpgradeProcess =
+				new SchedulerEngineHelperConfigurationUpgradeProcess(
+					configurationAdmin,
+					PropsTestUtil.setProps(Collections.emptyMap()));
 
 		Mockito.when(
 			configurationAdmin.getConfiguration(
@@ -78,25 +76,20 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 			}
 		);
 
-		schedulerHelperPropertiesVerifyProcess.doVerify();
+		schedulerEngineHelperConfigurationUpgradeProcess.doUpgrade();
 	}
 
 	@Test
 	public void testVerify() throws Exception {
-		SchedulerHelperPropertiesVerifyProcess
-			schedulerHelperPropertiesVerifyProcess =
-				new SchedulerHelperPropertiesVerifyProcess();
-
-		schedulerHelperPropertiesVerifyProcess.props = PropsTestUtil.setProps(
-			SchedulerHelperPropertiesVerifyProcess.
-				LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB,
-			"true");
-
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);
 
-		schedulerHelperPropertiesVerifyProcess.configurationAdmin =
-			configurationAdmin;
+		SchedulerEngineHelperConfigurationUpgradeProcess
+			schedulerEngineHelperConfigurationUpgradeProcess =
+				new SchedulerEngineHelperConfigurationUpgradeProcess(
+					configurationAdmin,
+					PropsTestUtil.setProps(
+						_LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB, "true"));
 
 		Configuration configuration = Mockito.mock(Configuration.class);
 
@@ -108,7 +101,7 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 			configuration
 		);
 
-		schedulerHelperPropertiesVerifyProcess.doVerify();
+		schedulerEngineHelperConfigurationUpgradeProcess.doUpgrade();
 
 		Mockito.verify(
 			configuration
@@ -121,11 +114,14 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 		Assert.assertEquals(1, dictionary.size());
 
 		Assert.assertEquals(
-			Boolean.TRUE,
-			dictionary.get(
-				SchedulerHelperPropertiesVerifyProcess.
-					AUDIT_SCHEDULER_JOB_ENABLED));
+			Boolean.TRUE, dictionary.get(_AUDIT_SCHEDULER_JOB_ENABLED));
 	}
+
+	private static final String _AUDIT_SCHEDULER_JOB_ENABLED =
+		"auditSchedulerJobEnabled";
+
+	private static final String _LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB =
+		"audit.message.scheduler.job";
 
 	private final ArgumentCaptor<Dictionary<String, Object>> _argumentCaptor =
 		ArgumentCaptor.forClass(Dictionary.class);

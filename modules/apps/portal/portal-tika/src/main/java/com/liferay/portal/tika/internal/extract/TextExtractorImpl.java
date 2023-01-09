@@ -112,6 +112,10 @@ public class TextExtractorImpl implements TextExtractor {
 			}
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Extracted text: " + text);
+		}
+
 		return text;
 	}
 

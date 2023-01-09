@@ -81,10 +81,7 @@ definition {
 
 			Refresh();
 
-			AssertAttributeValue(
-				attribute1 = "src",
-				locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_MODULE_SCRIPT",
-				value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+			AssertElementPresent(locator1 = "//script[contains(@src,'https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js') and contains(@type,'module')]");
 		}
 	}
 

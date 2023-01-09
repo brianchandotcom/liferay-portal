@@ -1,0 +1,131 @@
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+index fd0d9178470d..26213f6908ad 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+@@ -13,6 +13,7 @@ package org.eclipse.osgi.internal.serviceregistry;
+ 
+ import java.security.*;
+ import java.util.*;
++import java.util.concurrent.ConcurrentHashMap;
+ import org.eclipse.osgi.container.Module;
+ import org.eclipse.osgi.container.ModuleRevision;
+ import org.eclipse.osgi.framework.eventmgr.*;
+@@ -97,7 +98,7 @@ public class ServiceRegistry {
+ 		publishedServicesByClass = new HashMap<>(initialCapacity);
+ 		publishedServicesByContext = new HashMap<>(initialCapacity);
+ 		allPublishedServices = new ArrayList<>(initialCapacity);
+-		serviceEventListeners = new HashMap<>(initialCapacity);
++		serviceEventListeners = new ConcurrentHashMap<>(initialCapacity);
+ 		Module systemModule = container.getStorage().getModuleContainer().getModule(0);
+ 		systemBundleContext = (BundleContextImpl) systemModule.getBundle().getBundleContext();
+ 		systemBundleContext.provisionServicesInUseMap();
+@@ -814,41 +815,59 @@ public class ServiceRegistry {
+ 
+ 	void publishServiceEventPrivileged(final ServiceEvent event) {
+ 		/* Build the listener snapshot */
+-		Map<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> listenerSnapshot;
+-		Set<Map.Entry<ServiceListener, FilteredServiceListener>> systemServiceListenersOrig = null;
+-		BundleContextImpl systemContext = null;
+-		synchronized (serviceEventListeners) {
+-			listenerSnapshot = new HashMap<>(serviceEventListeners.size());
+-			for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> entry : serviceEventListeners.entrySet()) {
+-				Map<ServiceListener, FilteredServiceListener> listeners = entry.getValue();
+-				if (!listeners.isEmpty()) {
+-					if (entry.getKey().getBundleImpl().getBundleId() == 0) {
+-						systemContext = entry.getKey();
+-						// make a copy that we can use to discard hook removals later
+-						systemServiceListenersOrig = listeners.entrySet();
++		Map<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> listenerSnapshot;
++
++		List<ServiceRegistrationImpl<?>> eventHooks = lookupServiceRegistrations(eventHookName, null);
++		List<ServiceRegistrationImpl<?>> eventListenerHooks = lookupServiceRegistrations(eventListenerHookName, null);
++
++		if (eventHooks.isEmpty() && eventListenerHooks.isEmpty()) {
++			listenerSnapshot = serviceEventListeners;
++		}
++		else {
++			CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> systemServiceListenersOrig = null;
++			BundleContextImpl systemContext = null;
++			synchronized (serviceEventListeners) {
++				listenerSnapshot = new HashMap<>(serviceEventListeners.size());
++				for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> entry : serviceEventListeners.entrySet()) {
++					CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> listeners = entry.getValue();
++					if (!listeners.isEmpty()) {
++						if (entry.getKey().getBundleImpl().getBundleId() == 0) {
++							systemContext = entry.getKey();
++							// make a copy that we can use to discard hook removals later
++							systemServiceListenersOrig = listeners;
++						}
++						listenerSnapshot.put(entry.getKey(), listeners);
+ 					}
+-					listenerSnapshot.put(entry.getKey(), listeners.entrySet());
+ 				}
+ 			}
+-		}
+ 
+-		/* shrink the snapshot.
+-		 * keySet returns a Collection which cannot be added to and
+-		 * removals from that collection will result in removals of the
+-		 * entry from the snapshot.
+-		 */
+-		Collection<BundleContext> contexts = asBundleContexts(listenerSnapshot.keySet());
+-		notifyEventHooksPrivileged(event, contexts);
+-		if (!listenerSnapshot.isEmpty()) {
+-			Map<BundleContext, Collection<ListenerInfo>> listeners = new ShrinkableValueCollectionMap<BundleContext, ListenerInfo>(listenerSnapshot);
+-			notifyEventListenerHooksPrivileged(event, listeners);
+-		}
+-		// always add back the system service listeners if they were removed
+-		if (systemServiceListenersOrig != null) {
+-			// No contains key check is done because hooks may have removed
+-			// a single listener from the value instead of the whole context key.
+-			// It is more simple to just replace with the original snapshot.
+-			listenerSnapshot.put(systemContext, systemServiceListenersOrig);
++			/* shrink the snapshot.
++			 * keySet returns a Collection which cannot be added to and
++			 * removals from that collection will result in removals of the
++			 * entry from the snapshot.
++			 */
++			Collection<BundleContext> contexts = asBundleContexts(listenerSnapshot.keySet());
++			notifyEventHooksPrivileged(event, contexts);
++			if (!listenerSnapshot.isEmpty()) {
++				Map<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> adaptedListenerSnapshot = new HashMap<>();
++
++				for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> entry : listenerSnapshot.entrySet()) {
++					adaptedListenerSnapshot.put(entry.getKey(), entry.getValue().entrySet());
++				}
++
++				Map<BundleContext, Collection<ListenerInfo>> listeners = new ShrinkableValueCollectionMap<BundleContext, ListenerInfo>(adaptedListenerSnapshot);
++
++				notifyEventListenerHooksPrivileged(event, listeners);
++
++				listenerSnapshot.keySet().retainAll(adaptedListenerSnapshot.keySet());
++			}
++			// always add back the system service listeners if they were removed
++			if (systemServiceListenersOrig != null) {
++				// No contains key check is done because hooks may have removed
++				// a single listener from the value instead of the whole context key.
++				// It is more simple to just replace with the original snapshot.
++				listenerSnapshot.put(systemContext, systemServiceListenersOrig);
++			}
+ 		}
+ 		if (listenerSnapshot.isEmpty()) {
+ 			return;
+@@ -878,15 +897,12 @@ public class ServiceRegistry {
+ 		}
+ 
+ 		try {
+-			for (Map.Entry<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> bundleContextEntry :
++			for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> bundleContextEntry :
+ 					listenerSnapshot.entrySet()) {
+ 
+-				for (Map.Entry<ServiceListener, FilteredServiceListener> serviceListenerEntry :
+-						bundleContextEntry.getValue()) {
+-
+-					FilteredServiceListener filteredServiceListener =
+-						serviceListenerEntry.getValue();
++				CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> map = bundleContextEntry.getValue();
+ 
++				for (FilteredServiceListener filteredServiceListener : map.values()) {
+ 					try {
+ 						filteredServiceListener.serviceChanged(event);
+ 					}

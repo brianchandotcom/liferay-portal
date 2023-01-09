@@ -1014,26 +1014,12 @@ definition {
 			LexiconEntry.gotoAdd();
 
 			if (IsElementPresent(key_entryName = "Test Page Name 3", locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED")) {
-				Click(
+				Uncheck.uncheckNotVisible(
 					key_entryName = "Test Page Name 3",
 					locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED");
 			}
 
-			AssertVisible(
-				key_entryName = "Test Page Name 3",
-				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED");
-
-			AssertClickNoError(
-				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
-				value1 = "Publish to Live");
-
-			WaitForElementNotPresent(
-				key_listEntry = "In Progress",
-				locator1 = "LexiconList#LIST_ENTRY_INFO");
-
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_RESULT",
-				value1 = "Successful");
+			Staging.publishToLive();
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {
@@ -1239,26 +1225,12 @@ definition {
 			LexiconEntry.gotoAdd();
 
 			if (IsElementPresent(key_entryName = "Test Page Name 3", locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED")) {
-				Click(
+				Uncheck.uncheckNotVisible(
 					key_entryName = "Test Page Name 3",
 					locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED");
 			}
 
-			AssertVisible(
-				key_entryName = "Test Page Name 3",
-				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED");
-
-			AssertClickNoError(
-				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
-				value1 = "Publish to Live");
-
-			WaitForElementNotPresent(
-				key_listEntry = "In Progress",
-				locator1 = "LexiconList#LIST_ENTRY_INFO");
-
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_RESULT",
-				value1 = "Successful");
+			Staging.publishToLive();
 		}
 
 		task ("Navigate to the Navigation Menu widget in the live site") {

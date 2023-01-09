@@ -123,12 +123,12 @@
 </tr>
 <tr>
 	<td>PAGES_TO_PUBLISH_CHECKBOX_CHECKED</td>
-	<td>//div[@class='pages-selector']//div[normalize-space()='${key_entryName}' and contains(@class,'checked')]//span[contains(@class,'icon-check')]</td>
+	<td>//div[contains(@class,'layout-selector')]//div[contains(@class,'treeview-link')][*//div[normalize-space()='${key_entryName}']]//input[@type='checkbox'][@checked]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED</td>
-	<td>//div[@class='pages-selector']//div[normalize-space()='${key_entryName}' and not(contains(@class,'checked'))]//span[contains(@class,'icon-check')]</td>
+	<td>//div[contains(@class,'layout-selector')]//div[contains(@class,'treeview-link')][*//div[normalize-space()='${key_entryName}']]//input[@type='checkbox'][not(@checked)]</td>
 	<td></td>
 </tr>
 <tr>

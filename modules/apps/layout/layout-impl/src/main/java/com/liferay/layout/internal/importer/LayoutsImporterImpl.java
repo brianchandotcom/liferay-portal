@@ -201,12 +201,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			String pageElementJSON, int position, long segmentsExperienceId)
 		throws Exception {
 
-		if (segmentsExperienceId == 0) {
-			importPageElement(
-				layout, layoutStructure, parentItemId, pageElementJSON,
-				position);
-		}
-
 		Consumer<LayoutStructure> consumer = processedLayoutStructure -> {
 			try {
 				_layoutPageTemplateStructureLocalService.

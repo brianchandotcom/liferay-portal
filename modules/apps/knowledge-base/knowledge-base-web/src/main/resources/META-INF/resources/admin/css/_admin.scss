@@ -16,8 +16,7 @@ $toolbarZIndex: 971;
 		}
 	}
 	.knowledge-base-vertical-bar {
-		position: relative;
-		z-index: 1;
+		position: fixed;
 
 		> div {
 			height: 100%;

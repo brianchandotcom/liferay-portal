@@ -546,7 +546,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
 			_invoke(
-				() -> _addOrUpdateSegmentsExperiences(
+				() -> _addSegmentsExperiences(
 					assetListEntryIdsStringUtilReplaceValues,
 					clientExtensionEntryIdsStringUtilReplaceValues,
 					ddmStructureEntryIdsStringUtilReplaceValues,

@@ -43,6 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,17 +72,20 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public List<Locale> getAvailableLocales(Layout layout) {
-		return Optional.ofNullable(
-			_groupLocalService.fetchGroup(layout.getGroupId())
-		).map(
-			Group::getGroupId
-		).map(
-			_language::getAvailableLocales
-		).map(
-			ListUtil::fromCollection
-		).orElseGet(
-			() -> Collections.singletonList(LocaleUtil.getDefault())
-		);
+		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
+
+		if (group == null) {
+			return Collections.singletonList(LocaleUtil.getDefault());
+		}
+
+		Set<Locale> availableLocales = _language.getAvailableLocales(
+			group.getGroupId());
+
+		if (availableLocales == null) {
+			return Collections.singletonList(LocaleUtil.getDefault());
+		}
+
+		return ListUtil.fromCollection(availableLocales);
 	}
 
 	@Override
@@ -138,13 +142,13 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public String getTitle(Layout layout, Locale locale) {
-		return Optional.ofNullable(
-			layout.getTitle(locale)
-		).filter(
-			Validator::isNotNull
-		).orElseGet(
-			() -> layout.getName(locale)
-		);
+		String title = layout.getTitle(locale);
+
+		if (Validator.isNull(title)) {
+			return layout.getName(locale);
+		}
+
+		return title;
 	}
 
 	@Override

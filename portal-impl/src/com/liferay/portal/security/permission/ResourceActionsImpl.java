@@ -567,7 +567,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	@Override
-	public void removeModelResourceAction(String name, String action) {
+	public void removeModelResource(String name, String action) {
 		if (Validator.isNull(action) || Validator.isNull(name)) {
 			return;
 		}

@@ -607,7 +607,7 @@ definition {
 	@description = "LPS-151765 - Verify if is possible to view the Relationship by Account on Custom Object Entries with Custom View"
 	@priority = "4"
 	test CanViewRelationshipOnCustomObjectEntriesWithCustomView {
-		task ("Create new Account (via APO") {
+		task ("Create new Account (via API") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");

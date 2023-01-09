@@ -731,7 +731,7 @@ public class GraphQLServletExtender {
 		ProcessingElementsContainer processingElementsContainer,
 		List<ServletData> servletDatas) {
 
-		Map<String, Method> methodsMap = new HashMap<>();
+		Map<String, Method> methods = new HashMap<>();
 
 		for (ServletData servletData : servletDatas) {
 			if (servletData.getGraphQLNamespace() != null) {
@@ -746,40 +746,33 @@ public class GraphQLServletExtender {
 
 			Class<?> clazz = object.getClass();
 
-			Method[] methods = clazz.getMethods();
+			for (Method method : clazz.getMethods()) {
+				if (_isMethodEnabled(method, servletData.getPath())) {
+					_servletDataMap.put(method, servletData);
 
-			for (Method method : methods) {
-				if (!_isMethodEnabled(method, servletData.getPath())) {
-					continue;
-				}
+					methods.compute(
+						method.getName(),
+						(key, value) -> {
+							if ((value == null) ||
+								((value != null) &&
+								 (_getVersion(value) < _getVersion(method)))) {
 
-				_servletDataMap.put(method, servletData);
+								return method;
+							}
 
-				String methodName = method.getName();
-
-				if (!methodsMap.containsKey(methodName)) {
-					methodsMap.put(methodName, method);
-
-					continue;
-				}
-
-				Method oldMethod = methodsMap.get(methodName);
-
-				if (_getVersion(oldMethod) < _getVersion(method)) {
-					methodsMap.put(methodName, method);
+							return value;
+						});
 				}
 			}
 		}
 
-		for (Method method : methodsMap.values()) {
-			if (method != null) {
-				Class<?> clazz = method.getDeclaringClass();
+		for (Method method : methods.values()) {
+			Class<?> clazz = method.getDeclaringClass();
 
-				graphQLObjectTypeBuilder.field(
-					_graphQLFieldRetriever.getField(
-						clazz.getSimpleName(), method,
-						processingElementsContainer));
-			}
+			graphQLObjectTypeBuilder.field(
+				_graphQLFieldRetriever.getField(
+					clazz.getSimpleName(), method,
+					processingElementsContainer));
 		}
 	}
 

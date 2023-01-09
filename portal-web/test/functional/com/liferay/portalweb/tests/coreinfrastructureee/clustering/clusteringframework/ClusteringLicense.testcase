@@ -47,6 +47,15 @@ definition {
 
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 
+		for (var nodeNumber : list "8,9") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
+				userEmailAddress = "test@liferay.com");
+
+			Alert.viewErrorMessage(errorMessage = "Grace period which already ended");
+		}
+
 		Navigator.openSpecificURL(url = "http://localhost:10080");
 
 		Alert.viewErrorMessage(errorMessage = "exceeded the maximum number of cluster nodes");

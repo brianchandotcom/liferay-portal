@@ -891,6 +891,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layoutStructure = LayoutStructure.of(
 							layoutPageTemplateStructure.
 								getDefaultSegmentsExperienceData());
+
+						segmentsExperienceId =
+							_segmentsExperienceLocalService.
+								fetchDefaultSegmentsExperienceId(
+									draftLayout.getPlid());
 					}
 					else {
 						layoutStructure = LayoutStructure.of(

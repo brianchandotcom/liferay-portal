@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -1903,6 +1904,12 @@ public class ThemeDisplay
 							_i18nLanguageId);
 				}
 			}
+		}
+
+		if (layout.getCtCollectionId() !=
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
+
+			return layout.getFriendlyURL(_locale);
 		}
 
 		String layoutFriendlyURL = _layoutFriendlyURLs.get(layout.getPlid());

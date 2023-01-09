@@ -186,16 +186,14 @@ public class SkuResourceImpl
 	}
 
 	@Override
-	public Response patchSku(Long id, Sku sku) throws Exception {
+	public Sku patchSku(Long id, Sku sku) throws Exception {
 		_updateSKU(_cpInstanceService.getCPInstance(id), sku);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toSku(id);
 	}
 
 	@Override
-	public Response patchSkuByExternalReferenceCode(
+	public Sku patchSkuByExternalReferenceCode(
 			String externalReferenceCode, Sku sku)
 		throws Exception {
 
@@ -210,9 +208,7 @@ public class SkuResourceImpl
 
 		_updateSKU(cpInstance, sku);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toSku(cpInstance.getCPInstanceId());
 	}
 
 	@Override

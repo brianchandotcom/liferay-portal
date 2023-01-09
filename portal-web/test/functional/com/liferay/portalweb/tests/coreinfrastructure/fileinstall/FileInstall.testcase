@@ -127,7 +127,7 @@ definition {
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		var symbolicLink = "${liferayHome}/osgi/config/com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration-abc.config";
+		var symbolicLink = "${liferayHome}/osgi/configs/com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration-abc.config";
 		var symbolicLinkResource = "${liferayHome}/osgi/temp/abc.config";
 
 		FileUtil.write("${symbolicLinkResource}", "urlsIncludes=\"abc\"");

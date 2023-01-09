@@ -121,6 +121,25 @@ public class ObjectActionResourceTest extends BaseObjectActionResourceTestCase {
 	}
 
 	@Override
+	protected ObjectAction
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				String externalReferenceCode, ObjectAction objectAction)
+		throws Exception {
+
+		return objectActionResource.
+			postObjectDefinitionByExternalReferenceCodeObjectAction(
+				externalReferenceCode, objectAction);
+	}
+
+	@Override
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _objectDefinition.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Long
 			testGetObjectDefinitionObjectActionsPage_getObjectDefinitionId()
 		throws Exception {
@@ -140,6 +159,17 @@ public class ObjectActionResourceTest extends BaseObjectActionResourceTestCase {
 		throws Exception {
 
 		return _addObjectAction();
+	}
+
+	@Override
+	protected ObjectAction
+			testPostObjectDefinitionByExternalReferenceCodeObjectAction_addObjectAction(
+				ObjectAction objectAction)
+		throws Exception {
+
+		return objectActionResource.
+			postObjectDefinitionByExternalReferenceCodeObjectAction(
+				_objectDefinition.getExternalReferenceCode(), objectAction);
 	}
 
 	@Override

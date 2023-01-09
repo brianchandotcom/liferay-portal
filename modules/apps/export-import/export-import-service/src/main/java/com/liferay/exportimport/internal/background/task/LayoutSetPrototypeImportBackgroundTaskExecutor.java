@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -168,6 +169,8 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 						" for layout set prototype ",
 						layoutSetPrototype.getLayoutSetPrototypeId()),
 					throwable);
+
+				throw new SystemException(throwable);
 			}
 			finally {
 				MergeLayoutPrototypesThreadLocal.setInProgress(false);

@@ -48,7 +48,7 @@ definition {
 				relationshipType = "oneToMany");
 
 			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Custom Layout",
+				layoutName = "Custom Layout 171590",
 				objectName = "CustomObject171590");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171590");
@@ -65,7 +65,7 @@ definition {
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
 				kebabOption = "View",
-				objectLabel = "Custom Layout");
+				objectLabel = "Custom Layout 171590");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -145,7 +145,7 @@ definition {
 				relationshipType = "manyToMany");
 
 			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Custom Layout",
+				layoutName = "Custom Layout 171597",
 				objectName = "CustomObject171597");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171597");
@@ -162,7 +162,7 @@ definition {
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
 				kebabOption = "View",
-				objectLabel = "Custom Layout");
+				objectLabel = "Custom Layout 171597");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -246,7 +246,7 @@ definition {
 				relationshipType = "oneToMany");
 
 			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Custom Layout",
+				layoutName = "Custom Layout 171629",
 				objectName = "CustomObject171629");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171629");
@@ -259,7 +259,7 @@ definition {
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
 				kebabOption = "View",
-				objectLabel = "Custom Layout");
+				objectLabel = "Custom Layout 171629");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -463,7 +463,7 @@ definition {
 				relationshipType = "oneToMany");
 
 			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Custom Layout",
+				layoutName = "Custom Layout 171632",
 				objectName = "CustomObject171632");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171632");
@@ -480,7 +480,7 @@ definition {
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
 				kebabOption = "View",
-				objectLabel = "Custom Layout");
+				objectLabel = "Custom Layout 171632");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -633,7 +633,7 @@ definition {
 				relationshipType = "oneToMany");
 
 			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Custom Layout",
+				layoutName = "Custom Layout 171630",
 				objectName = "CustomObject");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
@@ -650,7 +650,7 @@ definition {
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
 				kebabOption = "View",
-				objectLabel = "Custom Layout");
+				objectLabel = "Custom Layout 171630");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -760,7 +760,7 @@ definition {
 				relationshipType = "oneToMany");
 
 			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Custom Layout",
+				layoutName = "Custom Layout 171631",
 				objectName = "CustomObject");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
@@ -777,7 +777,7 @@ definition {
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
 				kebabOption = "View",
-				objectLabel = "Custom Layout");
+				objectLabel = "Custom Layout 171631");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -956,7 +956,7 @@ definition {
 				relationshipType = "oneToMany");
 
 			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Custom Layout",
+				layoutName = "Custom Layout 171628",
 				objectName = "CustomObject171628");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171628");
@@ -973,7 +973,7 @@ definition {
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
 				kebabOption = "View",
-				objectLabel = "Custom Layout");
+				objectLabel = "Custom Layout 171628");
 
 			ObjectAdmin.markLayoutAsDefault();
 

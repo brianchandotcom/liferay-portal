@@ -658,9 +658,9 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Mockito.when(
 			samlPeerBindingLocalService.fetchSamlPeerBinding(
-				Mockito.any(Long.class), Mockito.nullable(String.class),
+				Mockito.anyLong(), Mockito.anyBoolean(),
 				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.nullable(String.class))
+				Mockito.nullable(String.class), Mockito.nullable(String.class))
 		).thenReturn(
 			null
 		);

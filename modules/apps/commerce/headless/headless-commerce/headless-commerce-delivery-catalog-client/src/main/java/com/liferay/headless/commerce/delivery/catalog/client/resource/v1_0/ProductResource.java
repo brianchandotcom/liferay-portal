@@ -41,12 +41,12 @@ public interface ProductResource {
 	}
 
 	public Page<Product> getChannelProductsPage(
-			Long channelId, Long accountId, String filterString,
+			Long channelId, Long accountId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getChannelProductsPageHttpResponse(
-			Long channelId, Long accountId, String filterString,
+			Long channelId, Long accountId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
@@ -137,13 +137,14 @@ public interface ProductResource {
 	public static class ProductResourceImpl implements ProductResource {
 
 		public Page<Product> getChannelProductsPage(
-				Long channelId, Long accountId, String filterString,
-				Pagination pagination, String sortString)
+				Long channelId, Long accountId, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelProductsPageHttpResponse(
-					channelId, accountId, filterString, pagination, sortString);
+					channelId, accountId, search, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -183,8 +184,8 @@ public interface ProductResource {
 		}
 
 		public HttpInvoker.HttpResponse getChannelProductsPageHttpResponse(
-				Long channelId, Long accountId, String filterString,
-				Pagination pagination, String sortString)
+				Long channelId, Long accountId, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -210,6 +211,10 @@ public interface ProductResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			if (filterString != null) {

@@ -99,7 +99,8 @@ definition {
 		ObjectAdmin.goToActionsTab();
 
 		ObjectAdmin.addObjectActionViaUI(
-			actionName = "Action Name",
+			actionLabel = "Action Label",
+			actionName = "ActionName",
 			thenAction = "Webhook",
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");

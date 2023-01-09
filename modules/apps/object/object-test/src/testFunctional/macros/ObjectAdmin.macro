@@ -60,6 +60,7 @@ definition {
 
 		ObjectAdmin.fillObjectAction(
 			actionDescription = "${actionDescription}",
+			actionLabel = "${actionLabel}",
 			actionName = "${actionName}",
 			active = "${active}",
 			click = "save",
@@ -936,6 +937,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
 
 		ObjectAdmin.fillObjectAction(
+			actionLabel = "${actionLabel}",
 			actionName = "${actionName}",
 			active = "${active}",
 			click = "save",
@@ -955,6 +957,12 @@ definition {
 	}
 
 	macro fillObjectAction {
+		if (isSet(actionLabel)) {
+			Type(
+				locator1 = "ObjectAdmin#ACTION_LABEL_FIELD",
+				value1 = "${actionLabel}");
+		}
+
 		if (isSet(actionName)) {
 			Type(
 				locator1 = "ObjectAdmin#ACTION_NAME_FIELD",

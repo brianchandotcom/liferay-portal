@@ -2260,7 +2260,8 @@ definition {
 
 			ObjectAdmin.fillObjectAction(
 				actionDescription = "Custom Description",
-				actionName = "Custom Action",
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
 				active = "true",
 				inputExpression = "#",
 				inputMethod = "true",
@@ -2311,7 +2312,8 @@ definition {
 
 			ObjectAdmin.fillObjectAction(
 				actionDescription = "Custom Description",
-				actionName = "Custom Action",
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
 				active = "true",
 				inputExpressionValue = "#",
 				inputMethod = "false",
@@ -2362,7 +2364,8 @@ definition {
 		task ("Add a Custom Action using Groovy Script") {
 			ObjectAdmin.addObjectActionViaUI(
 				actionDescription = "Custom Description",
-				actionName = "Custom Action",
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
 				active = "true",
 				scriptValidation = "invalidFields = (customInteger < 18)",
 				thenAction = "Groovy Script",
@@ -2372,7 +2375,7 @@ definition {
 		task ("Assert that there is Custom Action") {
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "Custom Action",
+				actionName = "CustomAction",
 				status = "Never Ran");
 		}
 
@@ -2397,7 +2400,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "Custom Action",
+				actionName = "CustomAction",
 				status = "Success");
 		}
 	}
@@ -2425,7 +2428,8 @@ definition {
 
 			ObjectAdmin.fillObjectAction(
 				actionDescription = "Custom Description",
-				actionName = "Custom Action",
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
 				active = "true",
 				scriptValidation = "if = (customField == 'Syntax is incorrect')",
 				thenAction = "Groovy Script",

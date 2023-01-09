@@ -14,6 +14,7 @@
 
 package com.liferay.portal.messaging.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.messaging.DestinationStatistics;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -41,6 +43,22 @@ public class SynchronousDestination extends BaseDestination {
 
 	@Override
 	public void send(Message message) {
+		long companyId = message.getLong("companyId");
+
+		if (companyId == CompanyThreadLocal.getCompanyId()) {
+			_send(message);
+
+			return;
+		}
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			_send(message);
+		}
+	}
+
+	private void _send(Message message) {
 		for (MessageListener messageListener : messageListeners) {
 			try {
 				messageListener.receive(message);

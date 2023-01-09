@@ -9,24 +9,83 @@
  * distribution rights of the Software.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
-const ScriptInput = ({inputValue, updateSelectedItem}) => (
-	<ClayForm.Group>
-		<label htmlFor="nodeScript">{Liferay.Language.get('script')}</label>
+const scriptLanguageOptions = [
+	{
+		label: Liferay.Language.get('groovy'),
+		value: 'groovy',
+	},
+	{
+		label: Liferay.Language.get('java'),
+		value: 'java',
+	},
+];
 
-		<ClayInput
-			component="textarea"
-			id="nodeScript"
-			onChange={updateSelectedItem}
-			placeholder='returnValue = "Transition Name";'
-			type="text"
-			value={inputValue}
-		/>
-	</ClayForm.Group>
-);
+const ScriptInput = ({
+	defaultScriptLanguage,
+	handleClickCapture,
+	inputValue,
+	showSelectScriptLanguage = false,
+	updateSelectedItem,
+}) => {
+	const [script, setScript] = useState(inputValue);
+	const [scriptLanguage, setScriptLanguage] = useState(
+		defaultScriptLanguage || 'groovy'
+	);
+
+	return (
+		<>
+			{showSelectScriptLanguage && (
+				<>
+					<label htmlFor="script-language">
+						{Liferay.Language.get('script-language')}
+					</label>
+
+					<ClaySelect
+						aria-label="Select"
+						defaultValue={scriptLanguage}
+						id="script-language"
+						onChange={({target}) => {
+							setScriptLanguage(target.value);
+						}}
+						onClickCapture={() =>
+							handleClickCapture(scriptLanguage)
+						}
+					>
+						{scriptLanguageOptions.map((item) => (
+							<ClaySelect.Option
+								key={item.value}
+								label={item.label}
+								value={item.value}
+							/>
+						))}
+					</ClaySelect>
+				</>
+			)}
+
+			<ClayForm.Group>
+				<label htmlFor="nodeScript">
+					{Liferay.Language.get('script')}
+				</label>
+
+				<ClayInput
+					component="textarea"
+					id="nodeScript"
+					onChange={(event) => {
+						updateSelectedItem(event);
+						setScript(event.target.value);
+					}}
+					placeholder='returnValue = "Transition Name";'
+					type="text"
+					value={script}
+				/>
+			</ClayForm.Group>
+		</>
+	);
+};
 
 export default ScriptInput;
 

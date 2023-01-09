@@ -15,7 +15,6 @@ import {MultipleSelect} from '@liferay/object-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {DEFAULT_LANGUAGE} from '../../../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import ScriptInput from '../../../shared-components/ScriptInput';
 import SidebarPanel from '../../SidebarPanel';
@@ -77,17 +76,6 @@ const templateLanguageOptions = [
 	{
 		label: Liferay.Language.get('velocity'),
 		value: 'velocity',
-	},
-];
-
-const scriptLanguageOptions = [
-	{
-		label: Liferay.Language.get('groovy'),
-		value: 'groovy',
-	},
-	{
-		label: Liferay.Language.get('java'),
-		value: 'java',
 	},
 ];
 
@@ -178,11 +166,6 @@ const NotificationsInfo = ({
 		] || 'freemarker'
 	);
 
-	const [scriptLanguage, setScriptLanguage] = useState(
-		selectedItem?.data.notifications?.recipients?.[notificationIndex]
-			?.scriptLanguage || DEFAULT_LANGUAGE
-	);
-
 	const deleteSection = () => {
 		setSections((prevSections) => {
 			const newSections = prevSections.filter(
@@ -198,9 +181,11 @@ const NotificationsInfo = ({
 	const scriptedRecipientUpdateSelectedItem = ({target}) => {
 		setSelectedItem((previousItem) => {
 			previousItem.data.notifications.recipients[notificationIndex] = {
+				...previousItem.data.notifications.recipients[
+					notificationIndex
+				],
 				assignmentType: ['scriptedRecipient'],
 				script: [target.value],
-				scriptLanguage: [scriptLanguage],
 			};
 
 			return previousItem;
@@ -560,54 +545,42 @@ const NotificationsInfo = ({
 			{recipientType !== 'assetCreator' &&
 				recipientType !== 'taskAssignees' && (
 					<SidebarPanel panelTitle={Liferay.Language.get('type')}>
-						<label htmlFor="script-language">
-							{Liferay.Language.get('script-language')}
-						</label>
-
-						<ClaySelect
-							aria-label="Select"
-							defaultValue={scriptLanguage}
-							id="script-language"
-							onChange={({target}) => {
-								setScriptLanguage(target.value);
-							}}
-							onClickCapture={() =>
-								setSelectedItem((previousItem) => {
-									previousItem.data.notifications.recipients[
-										notificationIndex
-									] = {
-										...previousItem.data.notifications
-											.recipients[notificationIndex],
-										scriptLanguage: [scriptLanguage],
-									};
-
-									return previousItem;
-								})
-							}
-						>
-							{scriptLanguageOptions &&
-								scriptLanguageOptions.map((item) => (
-									<ClaySelect.Option
-										key={item.value}
-										label={item.label}
-										value={item.value}
-									/>
-								))}
-						</ClaySelect>
-
 						<ClayForm.Group className="recipient-type-form-group">
 							{internalSections.map((props, index) => (
 								<RecipientTypeComponent
+									defaultScriptLanguage={
+										selectedItem.data.notifications
+											?.recipients?.[notificationIndex]
+											?.scriptLanguage
+									}
+									handleClickCapture={(scriptLanguage) =>
+										setSelectedItem((previousItem) => {
+											previousItem.data.notifications.recipients[
+												notificationIndex
+											] = {
+												...previousItem.data
+													.notifications.recipients[
+													notificationIndex
+												],
+												scriptLanguage: [
+													scriptLanguage,
+												],
+											};
+
+											return previousItem;
+										})
+									}
 									index={index}
 									inputValue={
 										selectedItem.data.notifications
-											?.recipients[notificationIndex]
+											?.recipients?.[notificationIndex]
 											?.script?.[0]
 									}
 									key={`section-${props.identifier}`}
 									notificationIndex={notificationIndex}
 									sectionsLength={internalSections.length}
 									setSections={setInternalSections}
+									showSelectScriptLanguage
 									updateSelectedItem={
 										scriptedRecipientUpdateSelectedItem
 									}

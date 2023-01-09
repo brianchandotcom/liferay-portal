@@ -1,0 +1,11 @@
+configurations.all {
+	resolutionStrategy {
+		force group: "com.liferay.portal", name: "com.liferay.portal.test", version: "7.1.0"
+	}
+}
+
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "release.portal.api"
+	testIntegrationCompile project(":modules:headless-user-notification:headless-user-notification-api")
+	testIntegrationCompile project(":modules:headless-user-notification:headless-user-notification-client")
+}

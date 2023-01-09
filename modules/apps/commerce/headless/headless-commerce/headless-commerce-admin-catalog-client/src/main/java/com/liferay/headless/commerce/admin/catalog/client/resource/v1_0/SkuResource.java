@@ -104,7 +104,7 @@ public interface SkuResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public void patchSkuByExternalReferenceCode(
+	public Sku patchSkuByExternalReferenceCode(
 			String externalReferenceCode, Sku sku)
 		throws Exception;
 
@@ -129,7 +129,7 @@ public interface SkuResource {
 	public HttpInvoker.HttpResponse getSkuHttpResponse(Long id)
 		throws Exception;
 
-	public void patchSku(Long id, Sku sku) throws Exception;
+	public Sku patchSku(Long id, Sku sku) throws Exception;
 
 	public HttpInvoker.HttpResponse patchSkuHttpResponse(Long id, Sku sku)
 		throws Exception;
@@ -893,7 +893,7 @@ public interface SkuResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchSkuByExternalReferenceCode(
+		public Sku patchSkuByExternalReferenceCode(
 				String externalReferenceCode, Sku sku)
 			throws Exception {
 
@@ -924,6 +924,17 @@ public interface SkuResource {
 				_logger.fine(
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
+			}
+
+			try {
+				return SkuSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -1188,7 +1199,7 @@ public interface SkuResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchSku(Long id, Sku sku) throws Exception {
+		public Sku patchSku(Long id, Sku sku) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = patchSkuHttpResponse(
 				id, sku);
 
@@ -1215,6 +1226,17 @@ public interface SkuResource {
 				_logger.fine(
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
+			}
+
+			try {
+				return SkuSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 

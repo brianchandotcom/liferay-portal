@@ -402,7 +402,7 @@ public abstract class BaseSkuResourceImpl
 	@javax.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response patchSkuByExternalReferenceCode(
+	public Sku patchSkuByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -410,9 +410,7 @@ public abstract class BaseSkuResourceImpl
 			Sku sku)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return new Sku();
 	}
 
 	/**
@@ -547,16 +545,14 @@ public abstract class BaseSkuResourceImpl
 	@javax.ws.rs.Path("/skus/{id}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response patchSku(
+	public Sku patchSku(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id,
 			Sku sku)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return new Sku();
 	}
 
 	@Override

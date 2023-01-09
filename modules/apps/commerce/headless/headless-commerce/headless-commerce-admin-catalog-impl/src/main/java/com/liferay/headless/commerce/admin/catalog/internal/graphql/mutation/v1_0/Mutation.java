@@ -1842,7 +1842,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response patchSkuByExternalReferenceCode(
+	public Sku patchSkuByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("sku") Sku sku)
 		throws Exception {
@@ -1873,8 +1873,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response patchSku(
-			@GraphQLName("id") Long id, @GraphQLName("sku") Sku sku)
+	public Sku patchSku(@GraphQLName("id") Long id, @GraphQLName("sku") Sku sku)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

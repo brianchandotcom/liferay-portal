@@ -844,7 +844,30 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testPatchSkuByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
+		Sku postSku = testPatchSkuByExternalReferenceCode_addSku();
+
+		Sku randomPatchSku = randomPatchSku();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku patchSku = skuResource.patchSkuByExternalReferenceCode(
+			postSku.getExternalReferenceCode(), randomPatchSku);
+
+		Sku expectedPatchSku = postSku.clone();
+
+		BeanTestUtil.copyProperties(randomPatchSku, expectedPatchSku);
+
+		Sku getSku = skuResource.getSkuByExternalReferenceCode(
+			patchSku.getExternalReferenceCode());
+
+		assertEquals(expectedPatchSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku testPatchSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -963,7 +986,26 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testPatchSku() throws Exception {
-		Assert.assertTrue(false);
+		Sku postSku = testPatchSku_addSku();
+
+		Sku randomPatchSku = randomPatchSku();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku patchSku = skuResource.patchSku(postSku.getId(), randomPatchSku);
+
+		Sku expectedPatchSku = postSku.clone();
+
+		BeanTestUtil.copyProperties(randomPatchSku, expectedPatchSku);
+
+		Sku getSku = skuResource.getSku(patchSku.getId());
+
+		assertEquals(expectedPatchSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku testPatchSku_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

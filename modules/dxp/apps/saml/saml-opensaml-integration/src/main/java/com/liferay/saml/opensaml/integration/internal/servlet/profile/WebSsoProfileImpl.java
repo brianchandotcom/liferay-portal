@@ -676,19 +676,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return subjectConfirmationData;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setSamlBinding(SamlBinding samlBinding) {
-		addSamlBinding(samlBinding);
-	}
-
-	@Override
-	protected void unsetSamlBinding(SamlBinding samlBinding) {
-		removeSamlBinding(samlBinding);
-	}
-
 	protected void verifyAssertionSignature(
 			Signature signature, MessageContext<?> messageContext,
 			TrustEngine<Signature> trustEngine)

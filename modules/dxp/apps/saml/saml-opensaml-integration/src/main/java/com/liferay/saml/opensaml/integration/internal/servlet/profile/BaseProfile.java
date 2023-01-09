@@ -33,8 +33,8 @@ import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 import javax.servlet.http.Cookie;
@@ -82,6 +82,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 public abstract class BaseProfile {
+
+	public static void setSamlBindings(Map<String, SamlBinding> samlBindings) {
+		_samlBindings.putAll(samlBindings);
+	}
 
 	public MessageContext<?> decodeSamlMessage(
 			HttpServletRequest httpServletRequest,
@@ -332,12 +336,10 @@ public abstract class BaseProfile {
 	public SamlBinding getSamlBinding(String communicationProfileId)
 		throws PortalException {
 
-		for (SamlBinding samlBinding : _samlBindings) {
-			if (communicationProfileId.equals(
-					samlBinding.getCommunicationProfileId())) {
+		SamlBinding samlBinding = _samlBindings.get(communicationProfileId);
 
-				return samlBinding;
-			}
+		if (samlBinding != null) {
+			return samlBinding;
 		}
 
 		throw new SamlException(
@@ -523,22 +525,6 @@ public abstract class BaseProfile {
 			httpServletRequest.isSecure());
 	}
 
-	protected void addSamlBinding(SamlBinding samlBinding) {
-		_samlBindings.add(samlBinding);
-	}
-
-	protected void removeSamlBinding(SamlBinding samlBinding) {
-		_samlBindings.remove(samlBinding);
-	}
-
-	protected void setSamlBindings(List<SamlBinding> samlBindings) {
-		_samlBindings = samlBindings;
-	}
-
-	protected void unsetSamlBinding(SamlBinding samlBinding) {
-		removeSamlBinding(samlBinding);
-	}
-
 	@Reference
 	protected IdentifierGenerationStrategyFactory
 		identifierGenerationStrategyFactory;
@@ -557,6 +543,7 @@ public abstract class BaseProfile {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 
-	private List<SamlBinding> _samlBindings = new ArrayList<>();
+	private static final Map<String, SamlBinding> _samlBindings =
+		new ConcurrentHashMap<>();
 
 }

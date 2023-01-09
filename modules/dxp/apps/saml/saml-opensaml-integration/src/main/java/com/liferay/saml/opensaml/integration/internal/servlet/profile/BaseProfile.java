@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
+import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -33,8 +34,6 @@ import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 import javax.servlet.http.Cookie;
@@ -82,10 +81,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 public abstract class BaseProfile {
-
-	public static void setSamlBindings(Map<String, SamlBinding> samlBindings) {
-		_samlBindings.putAll(samlBindings);
-	}
 
 	public MessageContext<?> decodeSamlMessage(
 			HttpServletRequest httpServletRequest,
@@ -333,19 +328,6 @@ public abstract class BaseProfile {
 		return messageContext;
 	}
 
-	public SamlBinding getSamlBinding(String communicationProfileId)
-		throws PortalException {
-
-		SamlBinding samlBinding = _samlBindings.get(communicationProfileId);
-
-		if (samlBinding != null) {
-			return samlBinding;
-		}
-
-		throw new SamlException(
-			"Unsupported binding " + communicationProfileId);
-	}
-
 	public SamlSpSession getSamlSpSession(
 		HttpServletRequest httpServletRequest) {
 
@@ -449,7 +431,8 @@ public abstract class BaseProfile {
 
 		Endpoint endpoint = samlPeerEndpointContext.getEndpoint();
 
-		SamlBinding samlBinding = getSamlBinding(endpoint.getBinding());
+		SamlBinding samlBinding = samlBindingProvider.getSamlBinding(
+			endpoint.getBinding());
 
 		if (_log.isDebugEnabled()) {
 			try {
@@ -536,14 +519,14 @@ public abstract class BaseProfile {
 	protected Portal portal;
 
 	@Reference
+	protected SamlBindingProvider samlBindingProvider;
+
+	@Reference
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
 
 	@Reference
 	protected SamlSpSessionLocalService samlSpSessionLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
-
-	private static final Map<String, SamlBinding> _samlBindings =
-		new ConcurrentHashMap<>();
 
 }

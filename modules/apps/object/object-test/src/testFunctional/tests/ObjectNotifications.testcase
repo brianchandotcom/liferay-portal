@@ -249,7 +249,8 @@ definition {
 			ObjectAdmin.goToActionsTab();
 
 			ObjectAdmin.addObjectActionViaUI(
-				actionName = "Custom Action",
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
 				active = "true",
 				inputMethod = "true",
 				inputValue = "Action shot on add",
@@ -424,7 +425,8 @@ definition {
 			ObjectAdmin.gotoAddObjectAction();
 
 			ObjectAdmin.fillObjectAction(
-				actionName = "Action Name",
+				actionLabel = "Action Label",
+				actionName = "ActionName",
 				notificationName = "Notification Template",
 				thenAction = "Notification",
 				whenAction = "On After Add");

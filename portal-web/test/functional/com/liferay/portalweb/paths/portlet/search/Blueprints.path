@@ -425,6 +425,16 @@
 	<td>//button[contains(.,'${key_locale}')]//span[text()='Translated']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGINATION_PREVIOUS_LINK</td>
+	<td>//a[contains(@class, 'page-link')]//*[contains(@class,'lexicon-icon-angle-left')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT_LINK</td>
+	<td>//a[contains(@class, 'page-link')]//*[contains(@class,'lexicon-icon-angle-right')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

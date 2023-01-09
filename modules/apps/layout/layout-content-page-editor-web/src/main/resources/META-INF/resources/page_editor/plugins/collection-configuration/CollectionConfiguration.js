@@ -20,12 +20,19 @@ import classNames from 'classnames';
 import {fetch, objectToFormData, sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {initializeConfig} from '../../app/config/index';
 import {setIn} from '../../app/utils/setIn';
 import {FieldSet} from '../browser/components/page_structure/components/item_configuration_panels/FieldSet';
 
 import './CollectionConfiguration.scss';
 
-export default function CollectionConfiguration({
+export default function (data) {
+	initializeConfig({portletNamespace: data.portletNamespace});
+
+	return <CollectionConfiguration {...data} />;
+}
+
+function CollectionConfiguration({
 	collection,
 	collectionItemTypeLabel,
 	collectionLabel,

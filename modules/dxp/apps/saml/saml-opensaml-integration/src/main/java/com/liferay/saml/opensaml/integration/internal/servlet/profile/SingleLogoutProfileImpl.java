@@ -108,8 +108,6 @@ import org.opensaml.xmlsec.context.SecurityParametersContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Mika Koivisto
@@ -315,14 +313,6 @@ public class SingleLogoutProfileImpl
 		catch (Exception exception) {
 			ExceptionHandlerUtil.handleException(exception);
 		}
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setSamlBinding(SamlBinding samlBinding) {
-		addSamlBinding(samlBinding);
 	}
 
 	@Override

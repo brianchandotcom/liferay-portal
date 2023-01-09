@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 
@@ -57,11 +56,6 @@ public class ObjectActionResourceTest extends BaseObjectActionResourceTestCase {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-166918", "true"
-			).build());
 	}
 
 	@After
@@ -73,11 +67,6 @@ public class ObjectActionResourceTest extends BaseObjectActionResourceTestCase {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				_objectDefinition.getObjectDefinitionId());
 		}
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-166918", "false"
-			).build());
 	}
 
 	@Ignore

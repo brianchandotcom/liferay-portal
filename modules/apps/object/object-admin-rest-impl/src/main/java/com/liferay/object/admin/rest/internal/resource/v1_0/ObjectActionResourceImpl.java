@@ -18,7 +18,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
-import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
@@ -26,14 +25,11 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -152,14 +148,6 @@ public class ObjectActionResourceImpl
 			Long objectDefinitionId, ObjectAction objectAction)
 		throws Exception {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
-			Objects.equals(
-				objectAction.getObjectActionTriggerKey(),
-				ObjectActionTriggerConstants.KEY_STANDALONE)) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
 				objectDefinitionId, objectAction.getActive(),
@@ -179,14 +167,6 @@ public class ObjectActionResourceImpl
 	public ObjectAction putObjectAction(
 			Long objectActionId, ObjectAction objectAction)
 		throws Exception {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
-			Objects.equals(
-				objectAction.getObjectActionTriggerKey(),
-				ObjectActionTriggerConstants.KEY_STANDALONE)) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		return _toObjectAction(
 			_objectActionService.updateObjectAction(

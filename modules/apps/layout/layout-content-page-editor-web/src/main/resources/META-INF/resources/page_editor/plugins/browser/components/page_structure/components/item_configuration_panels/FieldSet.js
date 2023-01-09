@@ -123,43 +123,52 @@ function FieldSetContent({
 }) {
 	return (
 		<div className="page-editor__sidebar__fieldset">
-			{fields.map((field, index) => {
-				const FieldComponent =
-					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
+			{fields
+				.filter(
+					(field) =>
+						!field.typeOptions?.dependency ||
+						Object.entries(field.typeOptions.dependency).every(
+							([key, value]) => values[key] === value
+						)
+				)
+				.map((field, index) => {
+					const FieldComponent =
+						field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
-				return (
-					<div
-						className={classNames(
-							field.cssClass,
-							'autofit-row page-editor__sidebar__fieldset__field align-items-end',
-							{
-								'page-editor__sidebar__fieldset__field-small':
-									field.displaySize === DISPLAY_SIZES.small,
-							}
-						)}
-						key={index}
-					>
-						<div className="autofit-col autofit-col-expand">
-							<FieldComponent
-								disabled={fieldIsDisabled(item, field)}
-								field={field}
-								isCustomStyle={isCustomStylesFieldSet}
-								item={item}
-								onValueSelect={onValueSelect}
-								value={getFieldValue({
-									field,
-									languageId,
-									values,
-								})}
-							/>
+					return (
+						<div
+							className={classNames(
+								field.cssClass,
+								'autofit-row page-editor__sidebar__fieldset__field align-items-end',
+								{
+									'page-editor__sidebar__fieldset__field-small':
+										field.displaySize ===
+										DISPLAY_SIZES.small,
+								}
+							)}
+							key={index}
+						>
+							<div className="autofit-col autofit-col-expand">
+								<FieldComponent
+									disabled={fieldIsDisabled(item, field)}
+									field={field}
+									isCustomStyle={isCustomStylesFieldSet}
+									item={item}
+									onValueSelect={onValueSelect}
+									value={getFieldValue({
+										field,
+										languageId,
+										values,
+									})}
+								/>
+							</div>
+
+							{field.localizable && (
+								<CurrentLanguageFlag className="ml-2" />
+							)}
 						</div>
-
-						{field.localizable && (
-							<CurrentLanguageFlag className="ml-2" />
-						)}
-					</div>
-				);
-			})}
+					);
+				})}
 		</div>
 	);
 }

@@ -42,6 +42,12 @@
 		"scope": "1"
 	},
 	{
+		"actionId": "DELETE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
 		"actionId": "VIEW",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
 		"roleName": "User",
@@ -55,6 +61,12 @@
 	},
 	{
 		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "DELETE",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
 		"roleName": "User",
 		"scope": "1"
@@ -74,6 +86,144 @@
 	{
 		"actionId": "UPDATE",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "DELETE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CompanyExtender$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DealRegistration$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DealRegistration$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DealRegistration$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "DELETE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DealRegistration$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "DELETE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "DELETE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimDocument$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimDocument$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimDocument$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "DELETE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimDocument$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "DELETE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFListingColumn$]",
 		"roleName": "User",
 		"scope": "1"
 	}

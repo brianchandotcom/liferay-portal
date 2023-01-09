@@ -38,8 +38,8 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -190,7 +190,7 @@ public class AMImageDLPluggableContentDataHandler
 				portalException);
 		}
 
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	private String _getAMBasePath(FileEntry fileEntry, String uuid) {

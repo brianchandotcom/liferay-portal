@@ -87,17 +87,19 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 	}
 
 	private String _getSourceElement(MediaQuery mediaQuery) {
-		StringBundler sb = new StringBundler(5);
-
 		String mediaQueryString = _getMediaQueryString(mediaQuery);
 
-		if (mediaQueryString != null) {
-			sb.append("<source media=\"");
-			sb.append(mediaQueryString);
-			sb.append("\" srcset=\"");
-			sb.append(mediaQuery.getSrc());
-			sb.append("\" />");
+		if (mediaQueryString == null) {
+			return StringPool.BLANK;
 		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<source media=\"");
+		sb.append(mediaQueryString);
+		sb.append("\" srcset=\"");
+		sb.append(mediaQuery.getSrc());
+		sb.append("\" />");
 
 		return sb.toString();
 	}

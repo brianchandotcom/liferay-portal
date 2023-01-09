@@ -2570,7 +2570,7 @@ public class ObjectEntryLocalServiceImpl
 		try {
 			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
 
-			return GetterUtil.getString(jsonArray.get(0));
+			return GetterUtil.getString(jsonArray.getString(0));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

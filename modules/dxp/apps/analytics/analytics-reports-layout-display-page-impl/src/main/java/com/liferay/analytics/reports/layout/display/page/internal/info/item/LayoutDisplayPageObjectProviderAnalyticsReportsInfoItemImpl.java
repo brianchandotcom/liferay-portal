@@ -59,6 +59,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -104,18 +105,21 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 	public List<Locale> getAvailableLocales(
 		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider) {
 
-		return Optional.ofNullable(
-			_groupLocalService.fetchGroup(
-				layoutDisplayPageObjectProvider.getGroupId())
-		).map(
-			Group::getGroupId
-		).map(
-			_language::getAvailableLocales
-		).map(
-			ListUtil::fromCollection
-		).orElseGet(
-			() -> Collections.singletonList(LocaleUtil.getDefault())
-		);
+		Group group = _groupLocalService.fetchGroup(
+			layoutDisplayPageObjectProvider.getGroupId());
+
+		if (group == null) {
+			return Collections.singletonList(LocaleUtil.getDefault());
+		}
+
+		Set<Locale> availableLocales = _language.getAvailableLocales(
+			group.getGroupId());
+
+		if (availableLocales == null) {
+			return Collections.singletonList(LocaleUtil.getDefault());
+		}
+
+		return ListUtil.fromCollection(availableLocales);
 	}
 
 	@Override
@@ -202,41 +206,47 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 	public Date getPublishDate(
 		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider) {
 
-		Date date = (Date)Optional.ofNullable(
+		Object firstInfoItemService =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
-				layoutDisplayPageObjectProvider.getClassName())
-		).map(
-			infoItemFieldValuesProvider ->
+				layoutDisplayPageObjectProvider.getClassName());
+
+		Date date = new Date();
+
+		if (firstInfoItemService != null) {
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+				(InfoItemFieldValuesProvider<Object>)firstInfoItemService;
+
+			InfoFieldValue<Object> infoFieldValue =
 				infoItemFieldValuesProvider.getInfoFieldValue(
 					layoutDisplayPageObjectProvider.getDisplayObject(),
-					"createDate")
-		).filter(
-			infoFieldValue -> {
+					"createDate");
+
+			if (infoFieldValue != null) {
 				InfoField infoField = infoFieldValue.getInfoField();
 
-				return Objects.equals(
-					infoField.getInfoFieldType(), DateInfoFieldType.INSTANCE);
-			}
-		).map(
-			InfoFieldValue::getValue
-		).orElseGet(
-			Date::new
-		);
+				if (Objects.equals(
+						infoField.getInfoFieldType(),
+						DateInfoFieldType.INSTANCE)) {
 
-		return Optional.ofNullable(
+					date = (Date)infoFieldValue.getValue();
+				}
+			}
+		}
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				layoutDisplayPageObjectProvider.getGroupId(),
 				layoutDisplayPageObjectProvider.getClassNameId(),
-				layoutDisplayPageObjectProvider.getClassPK())
-		).filter(
-			assetDisplayPageEntry -> date.before(
-				assetDisplayPageEntry.getCreateDate())
-		).map(
-			AssetDisplayPageEntry::getCreateDate
-		).orElse(
-			date
-		);
+				layoutDisplayPageObjectProvider.getClassPK());
+
+		if ((assetDisplayPageEntry == null) ||
+			!date.before(assetDisplayPageEntry.getCreateDate())) {
+
+			return date;
+		}
+
+		return assetDisplayPageEntry.getCreateDate();
 	}
 
 	@Override
@@ -249,21 +259,23 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 				InfoItemFieldValuesProvider.class,
 				layoutDisplayPageObjectProvider.getClassName());
 
-		return (String)Optional.ofNullable(
+		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValuesProvider.getInfoFieldValue(
-				layoutDisplayPageObjectProvider.getDisplayObject(), "title")
-		).filter(
-			infoFieldValue -> {
-				InfoField infoField = infoFieldValue.getInfoField();
+				layoutDisplayPageObjectProvider.getDisplayObject(), "title");
 
-				return Objects.equals(
-					infoField.getInfoFieldType(), TextInfoFieldType.INSTANCE);
-			}
-		).map(
-			infoItemFieldValue -> infoItemFieldValue.getValue(locale)
-		).orElse(
-			StringPool.BLANK
-		);
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		InfoField infoField = infoFieldValue.getInfoField();
+
+		if (!Objects.equals(
+				infoField.getInfoFieldType(), TextInfoFieldType.INSTANCE)) {
+
+			return StringPool.BLANK;
+		}
+
+		return (String)infoFieldValue.getValue(locale);
 	}
 
 	@Override

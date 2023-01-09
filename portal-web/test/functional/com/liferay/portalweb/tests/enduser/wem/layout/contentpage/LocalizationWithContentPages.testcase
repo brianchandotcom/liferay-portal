@@ -134,15 +134,15 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Test Page Name - Page Template");
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Name - Page Template");
 
 			PageTemplatesAdmin.viewEntryWorkflowStatus(
-				entry = "Test Page Name - Page Template",
+				entry = "Content Page Name - Page Template",
 				workflowStatus = "Draft");
 		}
 
 		task ("View the default inline text shown in content page template in en-US") {
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Name - Page Template");
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Heading Example",

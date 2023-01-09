@@ -610,6 +610,7 @@ definition {
 	@priority = "5"
 	test CanEditEntryWhenAllowedToEdit {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanEditEntryWhenAllowedToEdit";
 
 		task ("Given a related object with Custom Layout and Relationship tab") {
 			ObjectAdmin.addObjectViaAPI(
@@ -737,6 +738,7 @@ definition {
 	@priority = "5"
 	test CannotEditEntryWhenNotAllowedToEdit {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectCustomLayouts#CannotEditEntryWhenNotAllowedToEdit";
 
 		task ("Given a related object with Custom Layout and Relationship tab") {
 			ObjectAdmin.addObjectViaAPI(

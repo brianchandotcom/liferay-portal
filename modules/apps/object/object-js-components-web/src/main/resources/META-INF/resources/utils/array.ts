@@ -44,7 +44,7 @@ export function filterArrayByQuery<T>({
 			const localizedLabels = localizedValue as LocalizedValue<string>;
 
 			let label = getLocalizableLabel(
-				creationLanguageId!,
+				creationLanguageId as Locale,
 				localizedLabels
 			);
 

@@ -15,11 +15,10 @@
 import {
 	API,
 	AutoComplete,
+	getLocalizableLabel,
 	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IProps {
 	error?: string;
@@ -35,17 +34,22 @@ export default function SelectRelationship({
 	value,
 	...otherProps
 }: IProps) {
+	const [creationLanguageId, setCreationLanguageId] = useState<Locale>();
 	const [fields, setFields] = useState<ObjectField[]>([]);
 	const [query, setQuery] = useState<string>('');
 	const options = useMemo(
 		() =>
 			fields.map(({label, name}) => {
 				return {
-					label: label[defaultLanguageId]!,
+					label: getLocalizableLabel(
+						creationLanguageId as Locale,
+						label,
+						name
+					),
 					name,
 				};
 			}),
-		[fields]
+		[creationLanguageId, fields]
 	);
 
 	const filteredOptions = useMemo(() => {
@@ -66,6 +70,12 @@ export default function SelectRelationship({
 				const items = await API.getObjectFieldsByExternalReferenceCode(
 					objectDefinitionExternalReferenceCode
 				);
+
+				const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
+
+				setCreationLanguageId(objectDefinition.defaultLanguageId);
 
 				const options = items.filter(
 					({businessType}) => businessType === 'Relationship'
@@ -99,7 +109,11 @@ export default function SelectRelationship({
 			tooltip={Liferay.Language.get(
 				'choose-a-relationship-field-from-the-selected-object'
 			)}
-			value={selectedValue?.label[defaultLanguageId]}
+			value={getLocalizableLabel(
+				creationLanguageId as Locale,
+				selectedValue?.label,
+				selectedValue?.name
+			)}
 			{...otherProps}
 		>
 			{({label, name}) => (

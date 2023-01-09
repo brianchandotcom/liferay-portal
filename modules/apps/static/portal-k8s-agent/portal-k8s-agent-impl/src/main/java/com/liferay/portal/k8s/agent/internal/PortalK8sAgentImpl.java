@@ -696,6 +696,13 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		try {
 			ObjectMeta oldObjectMeta = oldConfigMap.getMetadata();
 
+			if (Objects.equals(
+					oldObjectMeta.getResourceVersion(),
+					objectMeta.getResourceVersion())) {
+
+				return;
+			}
+
 			configurations = _configurationAdmin.listConfigurations(
 				StringBundler.concat(
 					"(&(.k8s.config.resource.version=",

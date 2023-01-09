@@ -20,6 +20,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import {
 	AutoComplete,
 	FormError,
+	REQUIRED_MSG,
 	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -132,7 +133,7 @@ export default function ModalAddObjectLayoutField({
 		const errors: FormError<TInitialValues> = {};
 
 		if (!values.objectFieldName) {
-			errors.objectFieldName = Liferay.Language.get('required');
+			errors.objectFieldName = REQUIRED_MSG;
 		}
 
 		return errors;

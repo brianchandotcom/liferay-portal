@@ -14,6 +14,7 @@
 
 import {
 	FormError,
+	REQUIRED_MSG,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -35,7 +36,6 @@ export interface TabProps {
 }
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function useObjectValidationForm({
 	initialValues,

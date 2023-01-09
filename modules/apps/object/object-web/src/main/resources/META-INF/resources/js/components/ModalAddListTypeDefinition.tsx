@@ -21,6 +21,7 @@ import {
 	API,
 	FormError,
 	Input,
+	REQUIRED_MSG,
 	useForm,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
@@ -53,7 +54,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 		const errors: FormError<TInitialValues> = {};
 
 		if (!values.name_i18n[defaultLanguageId]) {
-			errors.name_i18n = Liferay.Language.get('required');
+			errors.name_i18n = REQUIRED_MSG;
 		}
 
 		return errors;

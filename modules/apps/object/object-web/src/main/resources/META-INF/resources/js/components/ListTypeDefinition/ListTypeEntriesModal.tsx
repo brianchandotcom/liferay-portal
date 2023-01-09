@@ -19,6 +19,7 @@ import {
 	API,
 	Input,
 	InputLocalized,
+	REQUIRED_MSG,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import {openToast} from 'frontend-js-web';
@@ -28,7 +29,6 @@ import {specialCharactersInString, toCamelCase} from '../../utils/string';
 import {ObjectValidationErrors} from './ListTypeFormBase';
 import {fixLocaleKeys} from './utils';
 
-const REQUIRED_MSG = Liferay.Language.get('required');
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 export interface IModalState extends Partial<PickListItem> {
 	header?: string;

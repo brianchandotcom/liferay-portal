@@ -21,6 +21,7 @@ import {
 	API,
 	FormError,
 	Input,
+	REQUIRED_MSG,
 	Select,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -92,13 +93,13 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 		const errors: FormError<TInitialValues> = {};
 
 		if (!values.label) {
-			errors.label = Liferay.Language.get('required');
+			errors.label = REQUIRED_MSG;
 		}
 		if (!(values.name ?? values.label)) {
-			errors.name = Liferay.Language.get('required');
+			errors.name = REQUIRED_MSG;
 		}
 		if (!values.pluralLabel) {
-			errors.pluralLabel = Liferay.Language.get('required');
+			errors.pluralLabel = REQUIRED_MSG;
 		}
 
 		return errors;

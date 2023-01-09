@@ -16,6 +16,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {
 	Card,
 	Input,
+	REQUIRED_MSG,
 	getLocalizableLabel,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
@@ -47,7 +48,7 @@ export default function BasicInfoScreen() {
 			getLocalizableLabel(creationLanguageId, objectView.name)
 		)
 	) {
-		error = Liferay.Language.get('required');
+		error = REQUIRED_MSG;
 	}
 
 	return (

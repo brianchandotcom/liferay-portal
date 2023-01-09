@@ -17,6 +17,7 @@ import {
 	Card,
 	Input,
 	getLocalizableLabel,
+	REQUIRED_MSG,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import React from 'react';
@@ -38,7 +39,7 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			getLocalizableLabel(creationLanguageId as Locale, objectLayout.name)
 		)
 	) {
-		error = Liferay.Language.get('required');
+		error = REQUIRED_MSG;
 	}
 
 	return (

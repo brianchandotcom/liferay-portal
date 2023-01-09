@@ -18,6 +18,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {REQUIRED_MSG} from '../utils/constants';
 import CodeEditor, {SidebarCategory} from './CodeEditor/index';
 import {FieldBase} from './FieldBase';
 
@@ -143,7 +144,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 		let error: string | undefined;
 
 		if (required && !source?.trim()) {
-			error = Liferay.Language.get('required');
+			error = REQUIRED_MSG;
 		}
 		else if (source?.trim() && validateExpressionURL) {
 			const response = await fetch(

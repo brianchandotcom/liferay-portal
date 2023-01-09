@@ -14,6 +14,7 @@
 
 import {
 	API,
+	REQUIRED_MSG,
 	invalidateRequired,
 	openToast,
 	useForm,
@@ -28,8 +29,6 @@ interface UseObjectActionFormProps {
 }
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function useObjectActionForm({
 	initialValues,

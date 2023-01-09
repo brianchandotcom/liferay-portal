@@ -16,6 +16,7 @@ import ClayForm from '@clayui/form';
 import {
 	API,
 	ManagementToolbar,
+	REQUIRED_MSG,
 	invalidateRequired,
 	openToast,
 	useForm,
@@ -81,20 +82,20 @@ export default function EditNotificationTemplate({
 		const errors: NotificationTemplateError = {};
 
 		if (!values.name) {
-			errors.name = Liferay.Language.get('required');
+			errors.name = REQUIRED_MSG;
 		}
 
 		if (notificationTemplateType === 'email' || values.type === 'email') {
 			if (!values.recipients[0].from) {
-				errors.from = Liferay.Language.get('required');
+				errors.from = REQUIRED_MSG;
 			}
 
 			if (!values.recipients[0].fromName[defaultLanguageId]) {
-				errors.fromName = Liferay.Language.get('required');
+				errors.fromName = REQUIRED_MSG;
 			}
 
 			if (!values.recipients[0].to[defaultLanguageId]) {
-				errors.to = Liferay.Language.get('required');
+				errors.to = REQUIRED_MSG;
 			}
 		}
 

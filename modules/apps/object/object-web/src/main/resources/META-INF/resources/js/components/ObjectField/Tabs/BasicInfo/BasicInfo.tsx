@@ -19,6 +19,7 @@ import {
 	Card,
 	Input,
 	InputLocalized,
+	REQUIRED_MSG,
 	getLocalizableLabel,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
@@ -71,8 +72,6 @@ interface BasicInfoProps {
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
 }
-
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function BasicInfo({
 	errors,

@@ -18,6 +18,7 @@ import {
 	AutoComplete,
 	FormError,
 	Input,
+	REQUIRED_MSG,
 	SingleSelect,
 	filterArrayByQuery,
 	getLocalizableLabel,
@@ -53,8 +54,6 @@ const ONE_TO_ONE = {
 	label: Liferay.Language.get('one-to-one'),
 	value: ObjectRelationshipType.ONE_TO_ONE,
 };
-
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function useObjectRelationshipForm({
 	initialValues,

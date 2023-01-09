@@ -13,7 +13,7 @@
  */
 
 import {useModal} from '@clayui/modal';
-import {BuilderScreen} from '@liferay/object-js-components-web';
+import {BuilderScreen, REQUIRED_MSG} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import {
@@ -22,8 +22,6 @@ import {
 	ModalAddFilter,
 } from '../../ModalAddFilter';
 import {TYPES, useViewContext} from '../objectViewContext';
-
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function FilterScreen() {
 	const [

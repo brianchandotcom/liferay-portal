@@ -14,12 +14,12 @@
 
 import {
 	FormError,
+	REQUIRED_MSG,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 	const validate = (picklist: Partial<PickList>) => {

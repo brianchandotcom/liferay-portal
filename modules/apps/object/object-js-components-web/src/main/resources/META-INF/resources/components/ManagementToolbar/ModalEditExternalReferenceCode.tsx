@@ -21,6 +21,7 @@ import React, {useState} from 'react';
 
 import {FormError, useForm} from '../../hooks/useForm';
 import {save} from '../../utils/api';
+import {REQUIRED_MSG} from '../../utils/constants';
 import {Input} from '../Input';
 import {openToast} from '../SidePanelContent';
 import {Entity} from './index';
@@ -86,7 +87,7 @@ export function ModalEditExternalReferenceCode({
 		const errors: FormError<TInitialValues> = {};
 
 		if (externalReferenceCode === '') {
-			errors.externalReferenceCode = Liferay.Language.get('required');
+			errors.externalReferenceCode = REQUIRED_MSG;
 		}
 
 		return errors;

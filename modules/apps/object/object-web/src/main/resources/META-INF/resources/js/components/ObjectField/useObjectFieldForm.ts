@@ -12,7 +12,11 @@
  * details.
  */
 
-import {invalidateRequired, useForm} from '@liferay/object-js-components-web';
+import {
+	REQUIRED_MSG,
+	invalidateRequired,
+	useForm,
+} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
@@ -27,7 +31,6 @@ interface IUseObjectFieldForm {
 }
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function useObjectFieldForm({
 	forbiddenChars,

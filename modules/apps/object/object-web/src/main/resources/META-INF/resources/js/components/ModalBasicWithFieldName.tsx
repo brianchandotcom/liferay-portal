@@ -21,6 +21,7 @@ import {
 	API,
 	FormError,
 	Input,
+	REQUIRED_MSG,
 	useForm,
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
@@ -67,7 +68,7 @@ export function ModalBasicWithFieldName({
 		const errors: FormError<TInitialValues> = {};
 
 		if (name[defaultLanguageId] === '') {
-			errors.name = Liferay.Language.get('required');
+			errors.name = REQUIRED_MSG;
 		}
 
 		return errors;

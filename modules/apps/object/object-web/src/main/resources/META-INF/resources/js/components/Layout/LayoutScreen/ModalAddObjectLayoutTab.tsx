@@ -23,6 +23,7 @@ import {
 	FormError,
 	Input,
 	getLocalizableLabel,
+	REQUIRED_MSG,
 	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -181,14 +182,14 @@ export function ModalAddObjectLayoutTab({
 		const errors: FormError<TObjectLayoutTab> = {};
 
 		if (!getLocalizableLabel(creationLanguageId, values.name)) {
-			errors.name = Liferay.Language.get('required');
+			errors.name = REQUIRED_MSG;
 		}
 
 		if (
 			!values.objectRelationshipId &&
 			selectedType === TYPES.RELATIONSHIPS
 		) {
-			errors.objectRelationshipId = Liferay.Language.get('required');
+			errors.objectRelationshipId = REQUIRED_MSG;
 		}
 
 		return errors;

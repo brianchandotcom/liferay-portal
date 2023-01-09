@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -441,16 +442,10 @@ public class KaleoWorkflowModelConverterImpl
 	private List<WorkflowNode> _getWorkflowNodes(
 		long kaleoDefinitionVersionId) {
 
-		List<WorkflowNode> workflowNodes = new ArrayList<>();
-
-		for (KaleoNode kaleoNode :
-				_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
-					kaleoDefinitionVersionId)) {
-
-			workflowNodes.add(_toWorkflowNode(kaleoNode));
-		}
-
-		return workflowNodes;
+		return TransformUtil.transform(
+			_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
+				kaleoDefinitionVersionId),
+			kaleoNode -> _toWorkflowNode(kaleoNode));
 	}
 
 	private List<WorkflowTransition> _getWorkflowTransitions(

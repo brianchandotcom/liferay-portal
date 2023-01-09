@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -310,15 +311,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			KaleoNode kaleoNode = kaleoTask.getKaleoNode();
 
-			List<String> nextTransitionNames = new ArrayList<>();
-
-			for (KaleoTransition kaleoTransition :
-					kaleoNode.getKaleoTransitions()) {
-
-				nextTransitionNames.add(kaleoTransition.getName());
-			}
-
-			return nextTransitionNames;
+			return TransformUtil.transform(
+				kaleoNode.getKaleoTransitions(), KaleoTransition::getName);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;

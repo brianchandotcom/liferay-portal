@@ -25,6 +25,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -97,61 +99,6 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		}
 	}
 
-	public WebElement findElementByClassName(String using) {
-		try {
-			return _remoteWebElement.findElement(By.className(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElement(By.className(using));
-		}
-	}
-
-	public WebElement findElementByCssSelector(String using) {
-		try {
-			return _remoteWebElement.findElement(By.cssSelector(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElement(By.cssSelector(using));
-		}
-	}
-
-	public WebElement findElementByPartialLinkText(String using) {
-		try {
-			return _remoteWebElement.findElement(By.partialLinkText(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElement(By.partialLinkText(using));
-		}
-	}
-
-	public WebElement findElementByTagName(String using) {
-		try {
-			return _remoteWebElement.findElement(By.tagName(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElement(By.tagName(using));
-		}
-	}
-
-	public WebElement findElementByXPath(String using) {
-		try {
-			return _remoteWebElement.findElement(By.xpath(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElement(By.xpath(using));
-		}
-	}
-
 	@Override
 	public List<WebElement> findElements(By by) {
 		try {
@@ -164,58 +111,27 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		}
 	}
 
-	public List<WebElement> findElementsByClassName(String using) {
+	@Override
+	public String getAccessibleName() {
 		try {
-			return _remoteWebElement.findElements(By.className(using));
+			return _webElement.getAccessibleName();
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElements(By.className(using));
+			return _webElement.getAccessibleName();
 		}
 	}
 
-	public List<WebElement> findElementsByCssSelector(String using) {
+	@Override
+	public String getAriaRole() {
 		try {
-			return _remoteWebElement.findElements(By.cssSelector(using));
+			return _webElement.getAriaRole();
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElements(By.cssSelector(using));
-		}
-	}
-
-	public List<WebElement> findElementsByPartialLinkText(String using) {
-		try {
-			return _remoteWebElement.findElements(By.partialLinkText(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElements(By.partialLinkText(using));
-		}
-	}
-
-	public List<WebElement> findElementsByTagName(String using) {
-		try {
-			return _remoteWebElement.findElements(By.tagName(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElements(By.tagName(using));
-		}
-	}
-
-	public List<WebElement> findElementsByXPath(String using) {
-		try {
-			return _remoteWebElement.findElements(By.xpath(using));
-		}
-		catch (StaleElementReferenceException staleElementReferenceException) {
-			_refreshWebElement(staleElementReferenceException);
-
-			return _remoteWebElement.findElements(By.xpath(using));
+			return _webElement.getAriaRole();
 		}
 	}
 
@@ -260,6 +176,30 @@ public class RetryWebElementImpl extends RemoteWebElement {
 	}
 
 	@Override
+	public String getDomAttribute(String name) {
+		try {
+			return _webElement.getDomAttribute(name);
+		}
+		catch (StaleElementReferenceException staleElementReferenceException) {
+			_refreshWebElement(staleElementReferenceException);
+
+			return _webElement.getDomAttribute(name);
+		}
+	}
+
+	@Override
+	public String getDomProperty(String name) {
+		try {
+			return _webElement.getDomProperty(name);
+		}
+		catch (StaleElementReferenceException staleElementReferenceException) {
+			_refreshWebElement(staleElementReferenceException);
+
+			return _webElement.getDomProperty(name);
+		}
+	}
+
+	@Override
 	public String getId() {
 		try {
 			return _remoteWebElement.getId();
@@ -284,6 +224,18 @@ public class RetryWebElementImpl extends RemoteWebElement {
 	}
 
 	@Override
+	public Rectangle getRect() {
+		try {
+			return _webElement.getRect();
+		}
+		catch (StaleElementReferenceException staleElementReferenceException) {
+			_refreshWebElement(staleElementReferenceException);
+
+			return _webElement.getRect();
+		}
+	}
+
+	@Override
 	public <X> X getScreenshotAs(OutputType<X> target)
 		throws WebDriverException {
 
@@ -294,6 +246,18 @@ public class RetryWebElementImpl extends RemoteWebElement {
 			_refreshWebElement(staleElementReferenceException);
 
 			return _webElement.getScreenshotAs(target);
+		}
+	}
+
+	@Override
+	public SearchContext getShadowRoot() {
+		try {
+			return _webElement.getShadowRoot();
+		}
+		catch (StaleElementReferenceException staleElementReferenceException) {
+			_refreshWebElement(staleElementReferenceException);
+
+			return _webElement.getShadowRoot();
 		}
 	}
 

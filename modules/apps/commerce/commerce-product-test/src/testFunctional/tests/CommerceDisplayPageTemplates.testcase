@@ -652,7 +652,7 @@ definition {
 		task ("Then verifies the mapped fragments are visible") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "${baseURL}/web/minium/p/simple-product,01/01/22 01:01 AM,01/01/23 01:01 AM");
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "${baseURL}/web/minium/p/simple-product,1/1/23 1:01 AM,1/1/24 1:01 AM");
 		}
 	}
 

@@ -111,57 +111,6 @@ public class LanguageResources {
 	}
 
 	public void afterPropertiesSet() {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			_bundleContext, ResourceBundle.class,
-			"(&(!(javax.portlet.name=*))(language.id=*))",
-			(serviceReference, emitter) -> {
-				String languageId = GetterUtil.getString(
-					serviceReference.getProperty("language.id"));
-
-				emitter.emit(LocaleUtil.fromLanguageId(languageId, false));
-			},
-			new ServiceTrackerCustomizer
-				<ResourceBundle, Map<String, String>>() {
-
-				@Override
-				public Map<String, String> addingService(
-					ServiceReference<ResourceBundle> serviceReference) {
-
-					ResourceBundle resourceBundle = _bundleContext.getService(
-						serviceReference);
-
-					Map<String, String> languageMap = new HashMap<>();
-
-					Enumeration<String> enumeration = resourceBundle.getKeys();
-
-					while (enumeration.hasMoreElements()) {
-						String key = enumeration.nextElement();
-
-						String value = ResourceBundleUtil.getString(
-							resourceBundle, key);
-
-						languageMap.put(key, value);
-					}
-
-					return languageMap;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<ResourceBundle> serviceReference,
-					Map<String, String> map) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<ResourceBundle> serviceReference,
-					Map<String, String> map) {
-
-					_bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
 		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
 			PORTAL_RESOURCE_BUNDLE_LOADER);
 	}
@@ -252,13 +201,65 @@ public class LanguageResources {
 			LanguageOverrideProvider.class, LanguageResources.class,
 			"_languageOverrideProvider", false, true);
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
-	private static ServiceTrackerMap<Locale, Map<String, String>>
+	private static final ServiceTrackerMap<Locale, Map<String, String>>
 		_serviceTrackerMap;
 	private static final Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<>();
 
-	private final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
+	static {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ResourceBundle.class,
+			"(&(!(javax.portlet.name=*))(language.id=*))",
+			(serviceReference, emitter) -> {
+				String languageId = GetterUtil.getString(
+					serviceReference.getProperty("language.id"));
+
+				emitter.emit(LocaleUtil.fromLanguageId(languageId, false));
+			},
+			new ServiceTrackerCustomizer
+				<ResourceBundle, Map<String, String>>() {
+
+				@Override
+				public Map<String, String> addingService(
+					ServiceReference<ResourceBundle> serviceReference) {
+
+					ResourceBundle resourceBundle = bundleContext.getService(
+						serviceReference);
+
+					Map<String, String> languageMap = new HashMap<>();
+
+					Enumeration<String> enumeration = resourceBundle.getKeys();
+
+					while (enumeration.hasMoreElements()) {
+						String key = enumeration.nextElement();
+
+						String value = ResourceBundleUtil.getString(
+							resourceBundle, key);
+
+						languageMap.put(key, value);
+					}
+
+					return languageMap;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ResourceBundle> serviceReference,
+					Map<String, String> map) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ResourceBundle> serviceReference,
+					Map<String, String> map) {
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+	}
 
 	private static class LanguageResourcesBundle extends ResourceBundle {
 

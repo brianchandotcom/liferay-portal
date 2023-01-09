@@ -211,6 +211,8 @@ definition {
 	@description = "This is a test for LPS-142363. The style book designer could undo all interaction states at one time."
 	@priority = "5"
 	test UndoAllInteractionStates {
+		property portal.acceptance = "true";
+
 		task ("Given a style book designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(
 				groupName = "Test Site Name",
@@ -279,6 +281,8 @@ definition {
 	@description = "This is a test for LPS-142363. The style book designer could undo or redo interaction states."
 	@priority = "5"
 	test UndoAndRedoInteractionStates {
+		property portal.acceptance = "true";
+
 		task ("Given a style book designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(
 				groupName = "Test Site Name",

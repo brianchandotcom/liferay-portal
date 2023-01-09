@@ -1346,6 +1346,8 @@ main();
 	@description = "This is a test for LPS-164242. The fragment developer could map to web contents in Collection Display using itemSelector configuration."
 	@priority = "5"
 	test MapToWebContentsInCollectionDisplayViaItemSelectorConfiguration {
+		property portal.acceptance = "true";
+
 		task ("Given a fragment developer has a new fragment with itemSelector configuration") {
 			var newLine = '''
 ''';

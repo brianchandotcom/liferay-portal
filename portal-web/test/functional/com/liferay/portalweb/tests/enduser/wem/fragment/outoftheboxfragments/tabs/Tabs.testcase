@@ -327,6 +327,8 @@ definition {
 	@description = "This is a test for LPS-154576. The Tabs fragment should persist selected tab when navigate through the site."
 	@priority = "5"
 	test PersistSelectedTabWhenNavigateThroughTheSite {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a widget page and a content page with a Tabs fragment") {
 			task ("Add a widget page") {
 				JSONLayout.addPublicLayout(
@@ -394,6 +396,8 @@ definition {
 	@description = "This is a test for LPS-154576. The Tabs fragment should persist selected tab when reloading page."
 	@priority = "5"
 	test PersistSelectedTabWhenReloadPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page with a Tabs fragment") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",

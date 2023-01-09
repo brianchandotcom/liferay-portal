@@ -573,6 +573,8 @@ definition {
 	@description = "This is a test for LPS-146835. The user cannot see the alert popup when delete a web content if the recycle bin is enabled and can undo move to recycle bin action."
 	@priority = "5"
 	test UndoMoveToRecycleBin {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has a web conent and the recycle bin is enabled") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

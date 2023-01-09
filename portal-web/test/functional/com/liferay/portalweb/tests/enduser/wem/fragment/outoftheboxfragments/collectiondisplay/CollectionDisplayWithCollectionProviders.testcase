@@ -451,6 +451,8 @@ definition {
 	@description = "This is a test for LPS-163440. The page creator could define Flex Column, Align Items and Justify Content of a Collection Display."
 	@priority = "5"
 	test ConfigureFlexColumnCollectionDisplayStyles {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has an empty Collection Display on a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
@@ -570,6 +572,8 @@ definition {
 	@description = "This is a test for LPS-163440. The page creator could define Flex Row, Flex Wrap, Align Items and Justify Content of a Collection Display."
 	@priority = "5"
 	test ConfigureFlexRowCollectionDisplayStyles {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has an empty Collection Display on a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",

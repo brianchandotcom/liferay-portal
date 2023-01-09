@@ -713,6 +713,8 @@ definition {
 	@description = "This is a test for LPS-130607 and LPS-163074. The site designer could preview current version of web content through display page template in site."
 	@priority = "5"
 	test PreviewWebContentThroughTheDisplayPageOfCurrentSite {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has display page templates for web content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

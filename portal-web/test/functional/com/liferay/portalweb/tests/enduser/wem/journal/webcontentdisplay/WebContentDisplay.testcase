@@ -857,6 +857,8 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@description = "This is a test for LPS-169728. The site designer could search folders when select web content in Web Content Display."
 	@priority = "4"
 	test SearchWebContentFolder {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has web content folders") {
 			JSONWebcontent.addFolder(
 				folderName = "Brake System",
@@ -973,6 +975,8 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@description = "This is a test for LPS-169728. The site designer could see folders hierarchy when select web content in Web Content Display."
 	@priority = "5"
 	test SelectWebContentUnderFolder {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has web contents under different folders") {
 			JSONWebcontent.addFolder(
 				folderName = "Brake System",

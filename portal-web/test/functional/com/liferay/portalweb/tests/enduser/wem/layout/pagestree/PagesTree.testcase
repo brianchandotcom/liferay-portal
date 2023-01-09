@@ -80,6 +80,8 @@ definition {
 	@description = "This is a test for LPS-103104, LPS-140253, and LPS-164377. The page creator can add pages of different types via page tree panel when the private page is disabled. The page creator could identify the page type according to icon in page tree."
 	@priority = "5"
 	test AddAllTypesOfPagesWithoutPrivatePage {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator navigates to the Page Tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 

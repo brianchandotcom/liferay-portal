@@ -68,6 +68,8 @@ definition {
 	@description = "This is a test for LPS-153367. The page creator could preview changes in a new tab."
 	@priority = "5"
 	test PreviewChangesInANewTab {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a Heading fragment on a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

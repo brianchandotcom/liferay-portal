@@ -38,6 +38,8 @@ definition {
 	@description = "This is a test for LPS-152105. The page creator could add CSS class to fragment."
 	@priority = "5"
 	test AddCSSClassToFragment {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page with a Heading fragment") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -70,6 +72,8 @@ definition {
 	@description = "This is a test for LPS-152105. The page creator could add multiple CSS classes to fragment."
 	@priority = "5"
 	test AddMultipleCSSClassesToFragment {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page with a Heading fragment") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

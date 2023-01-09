@@ -131,6 +131,8 @@ definition {
 	@description = "This is a test for LPS-147787. The designer has full access permissions when given Update permission in Page section."
 	@priority = "5"
 	test EditContentPageAsUserWithUpdatePermission {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a content page") {
 			JSONRole.addSiteRole(
 				roleKey = "Page Designer",
@@ -225,6 +227,8 @@ definition {
 	@description = "This is a test for LPS-147787. The page builder has limited access permissions when given Update - Limited permission in Page section."
 	@priority = "5"
 	test EditFragmentStylesAsUserWithUpdateLimitedPermission {
+		property portal.acceptance = "true";
+
 		task ("Given a page builder has a content page") {
 			JSONRole.addSiteRole(
 				roleKey = "Page Builder",
@@ -366,6 +370,8 @@ definition {
 	@description = "This is a test for LPS-147787 and LPS-136411. The marketer has Basic permissions and view Advanced tab when given Update - Basic and Update - Advanced options permission in Page Section. The marketer only with Update - Basic and Advanced Options cannot define custom css of fragment."
 	@priority = "5"
 	test EditPageLayoutAsUserWithUpdateBasicAndAdvancedPermissions {
+		property portal.acceptance = "true";
+
 		task ("Given a marketer has a content page") {
 			JSONRole.addSiteRole(
 				roleKey = "Marketer",

@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-111561. The user could configure grid layout of Collection Display."
 	@priority = "5"
 	test ConfigureGridLayoutOfCollectionDisplay {
+		property portal.acceptance = "true";
+
 		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
 			task ("Add five web contents") {
 				for (var i : list "1,2,3,4,5") {

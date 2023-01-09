@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-75936. The admin user should access to product menu on page with Full Page Application type."
 	@priority = "5"
 	test AccessToProductMenuOnFullPageApplicationPageAsAdmin {
+		property portal.acceptance = "true";
+
 		task ("Given an admin user has a page with Full Page Application type") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

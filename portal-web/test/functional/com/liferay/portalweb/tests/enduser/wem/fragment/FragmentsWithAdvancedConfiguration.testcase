@@ -38,6 +38,8 @@ definition {
 	@description = "This is a test for LPS-147393. The user could add advanced options in fragment's configuration and the advanced options are grouped in collapsable section."
 	@priority = "5"
 	test ConfigureFragmentAdvancedSettings {
+		property portal.acceptance = "true";
+
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
@@ -147,6 +149,8 @@ definition {
 	@description = "This is a test for LPS-147396. Hide from Site Search Results could hide result from search."
 	@priority = "5"
 	test HideResultFromSearchInAdvancedSettings {
+		property portal.acceptance = "true";
+
 		task ("Add a Home page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -371,6 +375,8 @@ definition {
 	@description = "This is a test for LPS-150921. The user could view message when the parent fragment is hidden from search."
 	@priority = "5"
 	test ViewMessageWhenParentFragmentIsHiddenFromSiteSearchResults {
+		property portal.acceptance = "true";
+
 		task ("Given a Page creator has a content page with fragment composition") {
 			task ("Add a Container to page") {
 				ContentPagesNavigator.openEditContentPage(

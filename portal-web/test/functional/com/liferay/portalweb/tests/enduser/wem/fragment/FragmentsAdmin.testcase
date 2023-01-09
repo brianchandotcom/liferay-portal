@@ -911,6 +911,8 @@ definition {
 	@description = "This is a test for LPS-168163. The fragment developer could see the usages of basic fragment."
 	@priority = "5"
 	test ViewUsagesOfBasicFragment {
+		property portal.acceptance = "true";
+
 		task ("Given a fragment developer has a fragment set") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
@@ -1002,6 +1004,8 @@ definition {
 	@description = "This is a test for LPS-168163. The fragment developer could see the usages of form fragment."
 	@priority = "5"
 	test ViewUsagesOfFormFragment {
+		property portal.acceptance = "true";
+
 		task ("Given a fragment developer has a custom object with Text field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Purchase Order",

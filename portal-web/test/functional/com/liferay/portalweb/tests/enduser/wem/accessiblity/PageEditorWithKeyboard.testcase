@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-165776. The page creator could add elements into the Container via keyboard."
 	@priority = "5"
 	test AddElementsIntoContainer {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -76,6 +78,8 @@ definition {
 	@description = "This is a test for LPS-165776. The page creator could add elements into the Grid via keyboard."
 	@priority = "5"
 	test AddElementsIntoGrid {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -134,6 +138,8 @@ definition {
 	@description = "This is a test for LPS-165776. The page creator could add fragments to page via keyboard."
 	@priority = "5"
 	test AddFragmentsToPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -165,6 +171,8 @@ definition {
 	@description = "This is a test for LPS-165776. The page creator could add widgets to page via keyboard."
 	@priority = "5"
 	test AddWidgetsToPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -245,6 +253,8 @@ definition {
 	@description = "This is a test for LPS-165776. The page creator could reorder fragments on page editor via Browser panel with keyboard."
 	@priority = "5"
 	test ReorderElements {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has fragments on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -421,6 +421,8 @@ definition {
 	@description = "This is a test for LPS-169310. The Add menu should persist tab selection in the same browser session."
 	@priority = "5"
 	test PersistAddMenuTabSelectionInTheSameBrowserSession {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer accesses to the Add menu on a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

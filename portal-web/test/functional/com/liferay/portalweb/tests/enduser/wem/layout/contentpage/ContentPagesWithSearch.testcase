@@ -55,6 +55,7 @@ definition {
 	@description = "This is a test for LPS-148919. The user cannot search a content page without publish version and its content."
 	@priority = "5"
 	test CannotSearchContentPageWithoutPublishedVersion {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#CannotSearchContentPageWithoutPublishedVersion";
 
 		task ("Given a page creator has a content page with Heading fragment and keeps it as draft") {

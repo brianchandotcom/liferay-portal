@@ -177,6 +177,8 @@ definition {
 	@description = "This is a test for LPS-162848. The page creator cannot see Form Components in page editor when no approved custom objects exist."
 	@priority = "5"
 	test CannotSeeFormComponentsInPageEditorWhenNoApprovedCustomObjectExist {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator only has a draft custom object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Purchase Order",

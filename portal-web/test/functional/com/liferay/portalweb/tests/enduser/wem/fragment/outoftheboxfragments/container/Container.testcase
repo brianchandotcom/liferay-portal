@@ -217,6 +217,8 @@ definition {
 	@description = "This is a test for LPS-163440. The page creator could define the Flex Column and Flex Wrap of a Container."
 	@priority = "5"
 	test ConfigureFlexColumnAndFlexWrapContainerStyles {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a Container with fragments on a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
@@ -1364,6 +1366,8 @@ definition {
 	@description = "This is a test for LPS-149591. The user could view topper of Container when dragging fragment inside it."
 	@priority = "5"
 	test ViewTopperOfContainerWhenDragFragmentInsideIt {
+		property portal.acceptance = "true";
+
 		task ("Given a Page designer has a content page with fragment compositions") {
 			task ("Add the first Container to page") {
 				ContentPagesNavigator.openEditContentPage(

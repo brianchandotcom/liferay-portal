@@ -282,6 +282,8 @@ definition {
 	@description = "This is for LPS-150849."
 	@priority = "5"
 	test ChooseColumnTypeAndViewSelectedIcon {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -879,6 +881,8 @@ definition {
 	@description = "This is a test for LPS-152446. When a user with edit permissions clicks a content page in page administration, the page editor is opened with the selected page ready to be edited."
 	@priority = "5"
 	test NavigateToPageEditorWhenClickOnContentPageItem {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -917,6 +921,8 @@ definition {
 	@description = "This is a test for LPS-152446. When a user with edit permissions searches for a content page in pages administration, and then clicks on it in the results, the page editor is opened with the selected page ready to be edited."
 	@priority = "5"
 	test NavigateToPageEditorWhenClickOnContentPageTitleFromSearchResults {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1232,6 +1238,8 @@ definition {
 	@description = "This is a test for LPS-152949. View widget type pages' name and navigate to the page in search widget."
 	@priority = "5"
 	test SearchWidgetTypePages {
+		property portal.acceptance = "true";
+
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

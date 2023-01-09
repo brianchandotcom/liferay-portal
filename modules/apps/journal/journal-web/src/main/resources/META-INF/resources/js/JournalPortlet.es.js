@@ -85,13 +85,13 @@ export default function _JournalPortlet({
 		};
 
 		resetInput('displayDate');
-		resetInput('displayDateTime');
-		resetInput('displayDateMonth');
+		resetInput('displayDateAmPm');
 		resetInput('displayDateDay');
-		resetInput('displayDateYear');
 		resetInput('displayDateHour');
 		resetInput('displayDateMinute');
-		resetInput('displayDateAmPm');
+		resetInput('displayDateMonth');
+		resetInput('displayDateTime');
+		resetInput('displayDateYear');
 	}
 
 	const handleContextualSidebarButton = () => {

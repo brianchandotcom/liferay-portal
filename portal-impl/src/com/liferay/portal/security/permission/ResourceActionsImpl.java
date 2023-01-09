@@ -568,7 +568,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public void removeModelResource(String name, String action) {
-		if (Validator.isNull(action) || Validator.isNull(name)) {
+		if (Validator.isNull(name) || Validator.isNull(action)) {
 			return;
 		}
 
@@ -581,11 +581,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		ResourceAction resourceAction =
 			resourceActionLocalService.fetchResourceAction(name, action);
 
-		if (resourceAction == null) {
-			return;
+		if (resourceAction != null) {
+			resourceActionLocalService.deleteResourceAction(resourceAction);
 		}
-
-		resourceActionLocalService.deleteResourceAction(resourceAction);
 	}
 
 	@BeanReference(type = PortletLocalService.class)

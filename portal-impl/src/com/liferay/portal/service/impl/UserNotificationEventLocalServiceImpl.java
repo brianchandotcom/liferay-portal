@@ -178,13 +178,26 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
-	public void deleteUserNotificationEvent(String uuid, long companyId) {
+	public void deleteUserNotificationEvent(String uuid, long companyId)
+		throws PortalException {
+
+		List<UserNotificationEvent> userNotificationEvents =
+			userNotificationEventPersistence.findByUuid_C(uuid, companyId);
+
+		for (UserNotificationEvent userNotificationEvent :
+				userNotificationEvents) {
+
+			userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+		}
+
 		userNotificationEventPersistence.removeByUuid_C(uuid, companyId);
 	}
 
 	@Override
 	public void deleteUserNotificationEvents(
-		Collection<String> uuids, long companyId) {
+			Collection<String> uuids, long companyId)
+		throws PortalException {
 
 		for (String uuid : uuids) {
 			userNotificationEventLocalService.deleteUserNotificationEvent(
@@ -193,8 +206,18 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
-	public void deleteUserNotificationEvents(long userId) {
-		userNotificationEventPersistence.removeByUserId(userId);
+	public void deleteUserNotificationEvents(long userId)
+		throws PortalException {
+
+		List<UserNotificationEvent> userNotificationEvents =
+			userNotificationEventPersistence.findByUserId(userId);
+
+		for (UserNotificationEvent userNotificationEvent :
+				userNotificationEvents) {
+
+			userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+		}
 	}
 
 	@Override

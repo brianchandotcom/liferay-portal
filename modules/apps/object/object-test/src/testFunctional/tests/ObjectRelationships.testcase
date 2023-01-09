@@ -1507,7 +1507,7 @@ definition {
 			}
 		}
 
-		task ("Add a custom object, a field, and create a one-to-many relationship with the User object") {
+		task ("Add a Custom Object, a field, create a 1toM relationship with the User object, and add an entry (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156668",
 				objectName = "CustomObject156668",
@@ -1529,6 +1529,11 @@ definition {
 				relationshipType = "oneToMany");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156668");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject156668",
+				value = "Entry A");
 		}
 
 		task ("Define First Name as a title field on the native object") {
@@ -1573,12 +1578,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Add a custom object entry and relate the entries to the native object") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customField",
-				objectName = "CustomObject156668",
-				value = "Entry A");
-
+		task ("Go to Custom Object entries and relate the entries to the native object") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156668");
 
 			ObjectPortlet.viewEntryDetails(entry = "Entry A");

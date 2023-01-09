@@ -461,9 +461,9 @@ definition {
 	macro viewEntryDetails {
 		var key_entry = "${entry}";
 
-		SelectFrameTop();
+		Refresh();
 
-		WaitForVisible(locator1 = "CommerceEntry#PAGINATION_RESULTS");
+		WaitForVisible(locator1 = "ObjectPortlet#ENTRY_VALUE");
 
 		if (IsElementPresent(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
 			Click(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");

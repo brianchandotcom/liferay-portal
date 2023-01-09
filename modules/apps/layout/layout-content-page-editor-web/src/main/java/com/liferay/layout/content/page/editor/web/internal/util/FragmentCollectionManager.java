@@ -231,13 +231,11 @@ public class FragmentCollectionManager {
 	}
 
 	private Map<String, Map<String, Object>> _getDynamicFragmentCollectionMaps(
+		Map<String, Map<String, Object>> fragmentCollectionMaps,
 		boolean hideInputFragments, Set<String> highlightedFragmentEntryKeys,
 		HttpServletRequest httpServletRequest,
 		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem,
 		ThemeDisplay themeDisplay) {
-
-		Map<String, Map<String, Object>> dynamicFragmentCollectionMaps =
-			new LinkedHashMap<>();
 
 		for (FragmentRenderer fragmentRenderer :
 				_fragmentRendererRegistry.getFragmentRenderers()) {
@@ -257,7 +255,7 @@ public class FragmentCollectionManager {
 			}
 
 			Map<String, Object> dynamicFragmentCollectionMap =
-				dynamicFragmentCollectionMaps.computeIfAbsent(
+				fragmentCollectionMaps.computeIfAbsent(
 					fragmentRenderer.getCollectionKey(),
 					key -> HashMapBuilder.<String, Object>put(
 						"fragmentCollectionId",
@@ -292,7 +290,7 @@ public class FragmentCollectionManager {
 				).build());
 		}
 
-		return dynamicFragmentCollectionMaps;
+		return fragmentCollectionMaps;
 	}
 
 	private Map<String, Map<String, Object>>
@@ -515,11 +513,10 @@ public class FragmentCollectionManager {
 				hideInputFragments, highlightedFragmentEntryKeys,
 				masterDropZoneLayoutStructureItem, themeDisplay);
 
-		fragmentCollectionMaps.putAll(
-			_getDynamicFragmentCollectionMaps(
-				hideInputFragments, highlightedFragmentEntryKeys,
-				httpServletRequest, masterDropZoneLayoutStructureItem,
-				themeDisplay));
+		fragmentCollectionMaps = _getDynamicFragmentCollectionMaps(
+			fragmentCollectionMaps, hideInputFragments,
+			highlightedFragmentEntryKeys, httpServletRequest,
+			masterDropZoneLayoutStructureItem, themeDisplay);
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			ObjectUtil.getLayoutElementMapsListMap(

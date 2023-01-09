@@ -284,6 +284,15 @@ public class FragmentEntryLinkManager {
 					if (fragmentEntry != null) {
 						fragmentEntryType = fragmentEntry.getType();
 					}
+					else {
+						FragmentRenderer fragmentRenderer =
+							_fragmentRendererRegistry.getFragmentRenderer(
+								fragmentEntryLink.getRendererKey());
+
+						if (fragmentRenderer != null) {
+							fragmentEntryType = fragmentRenderer.getType();
+						}
+					}
 
 					return FragmentConstants.getTypeLabel(fragmentEntryType);
 				}

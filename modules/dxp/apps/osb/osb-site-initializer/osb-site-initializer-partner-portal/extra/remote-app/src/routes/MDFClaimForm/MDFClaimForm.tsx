@@ -31,7 +31,7 @@ const getInitialFormValues = (
 	totalrequestedAmount?: number
 ): MDFClaim => ({
 	activities: activitiesDTO?.map((activity) => ({
-		budgets: activity.activityToBudgets?.map((budget) => ({
+		budgets: activity.actToBgts?.map((budget) => ({
 			expenseName: budget.expense.name,
 			id: budget.id,
 			invoiceAmount: budget.cost,
@@ -45,7 +45,7 @@ const getInitialFormValues = (
 		totalCost: 0,
 	})),
 	mdfClaimStatus: Status.PENDING,
-	r_mdfRequestToMdfClaims_c_mdfRequestId: mdfRequestId,
+	r_mdfReqToMDFClms_c_mdfRequestId: mdfRequestId,
 	totalClaimAmount: 0,
 	totalrequestedAmount,
 });
@@ -83,7 +83,7 @@ const MDFClaimForm = () => {
 		<PRMFormik
 			initialValues={getInitialFormValues(
 				Number(mdfRequestId),
-				mdfRequest.mdfRequestToActivities,
+				mdfRequest.mdfReqToActs,
 				mdfRequest.totalMDFRequestAmount
 			)}
 			onSubmit={(values, formikHelpers) =>

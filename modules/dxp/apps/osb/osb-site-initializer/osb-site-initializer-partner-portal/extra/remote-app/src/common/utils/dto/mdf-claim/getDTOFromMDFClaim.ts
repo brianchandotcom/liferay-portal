@@ -20,16 +20,16 @@ export function getDTOFromMDFClaim(
 ): MDFClaimDTO {
 	return {
 		amountClaimed: mdfClaim.totalClaimAmount,
-		companyName: mdfRequest.r_accountToMDFRequests_accountEntry?.name,
+		companyName: mdfRequest.r_accToMDFReqs_accountEntry?.name,
 		externalReferenceCodeSF,
 		mdfClaimStatus: mdfClaim.mdfClaimStatus,
 		mdfRequestExternalReferenceCodeSF: mdfRequest?.externalReferenceCodeSF,
 		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
 		mdfRequestedAmount: mdfClaim.totalrequestedAmount,
 		partial: mdfClaim.partial,
-		r_accountToMdfClaims_accountEntryId:
-			mdfRequest.r_accountToMDFRequests_accountEntry?.id,
-		r_mdfRequestToMdfClaims_c_mdfRequestId:
-			mdfClaim.r_mdfRequestToMdfClaims_c_mdfRequestId,
+		r_accToMDFClms_accountEntryId:
+			mdfRequest.r_accToMDFReqs_accountEntry?.id,
+		r_mdfReqToMDFClms_c_mdfRequestId:
+			mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId,
 	};
 }

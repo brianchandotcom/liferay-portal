@@ -21,9 +21,9 @@ export function getDTOFromMDFClaimDocuments(
 	return {
 		fileName: file.name,
 		fileSize: file.size,
-		r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId: activityId,
-		r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId: budgetId,
-		r_mdfClaimToMdfClaimDocuments_c_mdfClaimId: claimId,
+		r_mdfClmActToMDFClmDocs_c_mdfClaimActivityId: activityId,
+		r_mdfClmToMDFClmDocs_c_mdfClaimBudgetId: budgetId,
+		r_mdfClmToMDFClmDocs_c_mdfClaimId: claimId,
 		url: contentUrl,
 	};
 }

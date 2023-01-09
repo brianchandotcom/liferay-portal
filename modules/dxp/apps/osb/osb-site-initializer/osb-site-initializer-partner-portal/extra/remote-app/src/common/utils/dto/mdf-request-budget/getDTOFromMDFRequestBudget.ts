@@ -18,6 +18,6 @@ export default function getDTOFromMDFRequestBudget(
 ): MDFRequestBudgetDTO {
 	return {
 		...budget,
-		r_activityToBudgets_c_activityId: activityId,
+		r_actToBgts_c_activityId: activityId,
 	};
 }

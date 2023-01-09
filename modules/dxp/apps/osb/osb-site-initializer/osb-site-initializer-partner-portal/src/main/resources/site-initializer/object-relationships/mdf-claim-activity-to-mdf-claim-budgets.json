@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "MDF Claim Activity to MDF Claim Budgets"
 	},
-	"name": "mdfClaimActivityToMdfClaimBudgets",
+	"name": "mdfClmActToMDFClmBgts",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
 	"objectDefinitionName2": "MDFClaimBudget",

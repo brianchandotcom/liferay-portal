@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "MDF Request to MDF Claims"
 	},
-	"name": "mdfRequestToMdfClaims",
+	"name": "mdfReqToMDFClms",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFClaim$]",
 	"objectDefinitionName2": "MDFClaim",

@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "Activity"
 	},
-	"name": "activityToDealRegistrations",
+	"name": "actToDealRegs",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Activity$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:DealRegistration$]",
 	"objectDefinitionName2": "DealRegistration",

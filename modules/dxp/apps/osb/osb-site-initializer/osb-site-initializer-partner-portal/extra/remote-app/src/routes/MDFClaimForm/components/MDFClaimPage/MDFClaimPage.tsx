@@ -53,7 +53,7 @@ const MDFClaimPage = ({
 		)
 	);
 
-	const claimsFiltered = mdfRequest.mdfRequestToMdfClaims?.filter(
+	const claimsFiltered = mdfRequest.mdfReqToMDFClms?.filter(
 		(mdfRequestToMdfClaim) => {
 			const ignoreStatus = [
 				Status.DRAFT.key,

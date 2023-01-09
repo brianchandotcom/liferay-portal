@@ -28,7 +28,7 @@ export default function useGetListItemsFromMDFRequests(
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
-				...getSummaryMDFClaims(item.mdfRequestToMdfClaims),
+				...getSummaryMDFClaims(item.mdfReqToMDFClms),
 				[MDFColumnKey.ID]: String(item.id),
 				[MDFColumnKey.NAME]: item.overallCampaignName,
 				...getMDFActivityPeriod(

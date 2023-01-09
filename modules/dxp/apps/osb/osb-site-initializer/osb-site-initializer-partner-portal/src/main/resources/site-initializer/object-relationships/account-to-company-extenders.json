@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "Account"
 	},
-	"name": "accountToCompanyExtenders",
+	"name": "accToCoExts",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CompanyExtender$]",
 	"objectDefinitionName2": "CompanyExtender",

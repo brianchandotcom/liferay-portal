@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "Budget to MDF Claim Budgets"
 	},
-	"name": "budgetToMdfClaimBudgets",
+	"name": "bgtToMDFClmBgts",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Budget$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
 	"objectDefinitionName2": "MDFClaimBudget",

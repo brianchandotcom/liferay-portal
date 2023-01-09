@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "User to MDF Requests"
 	},
-	"name": "userToMDFRequests",
+	"name": "usrToMDFReqs",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
 	"objectDefinitionName2": "MDFRequest",

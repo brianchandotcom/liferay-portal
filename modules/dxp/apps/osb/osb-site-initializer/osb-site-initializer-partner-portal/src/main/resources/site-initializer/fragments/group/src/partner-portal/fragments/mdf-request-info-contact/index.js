@@ -31,8 +31,8 @@ const getContactInfo = async () => {
 		);
 		if (response.ok) {
 			const data = await response.json();
-			const firstName = data?.r_userToMDFRequests_user?.givenName;
-			const infoEmail = data?.r_userToMDFRequests_user?.emailAddress;
+			const firstName = data?.r_usrToMDFReqs_user?.givenName;
+			const infoEmail = data?.r_usrToMDFReqs_user?.emailAddress;
 
 			fragmentElement.querySelector(
 				'#firstName'

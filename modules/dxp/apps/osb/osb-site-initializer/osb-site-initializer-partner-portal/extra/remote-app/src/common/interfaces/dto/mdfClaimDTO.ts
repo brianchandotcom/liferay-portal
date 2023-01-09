@@ -21,6 +21,6 @@ export default interface MDFClaimDTO
 	mdfRequestTotalCostOfExpense?: number;
 	mdfRequestedAmount?: number;
 	paymentReceived?: number;
-	r_accountToMdfClaims_accountEntry?: AccountEntry;
-	r_accountToMdfClaims_accountEntryId?: number;
+	r_accToMDFClms_accountEntry?: AccountEntry;
+	r_accToMDFClms_accountEntryId?: number;
 }

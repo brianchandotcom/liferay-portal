@@ -77,7 +77,7 @@ const ReimbursementInvoice = () => {
 		const getDocuments = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfclaims/${mdfClaimId}/mdfClaimToMdfClaimDocuments`,
+				`/o/c/mdfclaims/${mdfClaimId}/mdfClmToMDFClmDocs`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -185,7 +185,7 @@ const BudgetBreakdownTable = ({activityId}) => {
 		const getBudgets = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfclaimactivities/${activityId}/mdfClaimActivityToMdfClaimBudgets`,
+				`/o/c/mdfclaimactivities/${activityId}/mdfClmActToMDFClmBgts`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -236,7 +236,7 @@ export default function () {
 		const getActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfclaims/${mdfClaimId}/mdfClaimToMdfClaimActivities`,
+				`/o/c/mdfclaims/${mdfClaimId}/mdfClmToMDFClmActs`,
 				{
 					headers: {
 						'accept': 'application/json',

@@ -12,5 +12,5 @@
 import MDFRequestBudget from '../mdfRequestBudget';
 
 export default interface MDFRequestBudgetDTO extends MDFRequestBudget {
-	r_activityToBudgets_c_activityId?: number;
+	r_actToBgts_c_activityId?: number;
 }

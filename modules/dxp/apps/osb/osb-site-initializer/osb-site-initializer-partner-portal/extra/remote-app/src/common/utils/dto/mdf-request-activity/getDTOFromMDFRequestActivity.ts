@@ -31,7 +31,7 @@ export default function getDTOFromMDFRequestActivity(
 			', '
 		),
 		mdfRequestExternalReferenceCodeSF,
-		r_accountToActivities_accountEntryId: company?.id,
-		r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
+		r_accToActs_accountEntryId: company?.id,
+		r_mdfReqToActs_c_mdfRequestId: mdfRequestId,
 	};
 }

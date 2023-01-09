@@ -112,7 +112,7 @@ export default function () {
 	useEffect(() => {
 		const getClaimFromMDFRequest = async () => {
 			const response = await fetch(
-				`/o/c/mdfclaims?nestedFields=mdfClaimToMdfClaimActivities,mdfClaimActivityToMdfClaimBudgets&nestedFieldsDepth=2&filter=(r_mdfRequestToMdfClaims_c_mdfRequestId eq '${mdfRequestId}')`,
+				`/o/c/mdfclaims?nestedFields=mdfClmToMDFClmActs,mdfClmActToMDFClmBgts&nestedFieldsDepth=2&filter=(r_mdfReqToMDFClms_c_mdfRequestId eq '${mdfRequestId}')`,
 				{
 					headers: {
 						'accept': 'application/json',

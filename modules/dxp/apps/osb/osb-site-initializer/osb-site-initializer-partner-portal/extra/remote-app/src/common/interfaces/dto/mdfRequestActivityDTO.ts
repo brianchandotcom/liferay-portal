@@ -18,12 +18,12 @@ type MDFRequestActivityDTO = Omit<
 	'activityDescription' | 'budgets'
 > &
 	Omit<MDFRequestActivityDescription, 'leadFollowUpStrategies'> & {
-		activityToBudgets?: MDFRequestBudgetDTO[];
+		actToBgts?: MDFRequestBudgetDTO[];
 		externalReferenceCodeSF?: string;
 		leadFollowUpStrategies?: string;
 		mdfRequestExternalReferenceCodeSF?: string;
-		r_accountToActivities_accountEntryId?: number;
-		r_mdfRequestToActivities_c_mdfRequestId?: number;
+		r_accToActs_accountEntryId?: number;
+		r_mdfReqToActs_c_mdfRequestId?: number;
 	};
 
 export default MDFRequestActivityDTO;

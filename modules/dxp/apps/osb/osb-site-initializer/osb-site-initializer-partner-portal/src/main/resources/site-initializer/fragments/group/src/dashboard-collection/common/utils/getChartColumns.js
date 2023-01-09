@@ -43,7 +43,7 @@ const expiredDate = 30;
 function expiredTotalActivites(mdfRequests, chartColumns) {
 	const expiredActivities = mdfRequests?.items
 		?.map((activity) =>
-			activity?.mdfRequestToActivities?.filter(
+			activity?.mdfReqToActs?.filter(
 				(request) =>
 					new Date(request.endDate).setTime(expiredDate) > new Date()
 			)
@@ -59,7 +59,7 @@ function expiredTotalActivites(mdfRequests, chartColumns) {
 function expiringSoonTotalActivities(mdfRequests, chartColumns) {
 	const expiringSoonActivitiesDate = mdfRequests?.items
 		?.map((activity) =>
-			activity.mdfRequestToActivities.filter(
+			activity.mdfReqToActs.filter(
 				(request) =>
 					new Date(request.endDate).setTime(expiredDate) < new Date()
 			)
@@ -76,7 +76,7 @@ function expiringSoonTotalActivities(mdfRequests, chartColumns) {
 function totalApprovedMDFToClaims(mdfRequests, chartColumns) {
 	const claimedRequests = mdfRequests?.items
 		?.map((claim) =>
-			claim.mdfRequestToMdfClaims.filter(
+			claim.mdfReqToMDFClms.filter(
 				(request) => request.mdfClaimStatus.key === 'approved'
 			)
 		)

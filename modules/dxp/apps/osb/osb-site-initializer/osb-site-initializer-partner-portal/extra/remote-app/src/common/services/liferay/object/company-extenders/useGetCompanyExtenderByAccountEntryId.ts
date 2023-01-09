@@ -21,7 +21,7 @@ interface CompanyExtender {
 	accountExternalReferenceCodeSF: string;
 	country: LiferayPicklist;
 	id: number;
-	r_accountToCompanyExtenders_accountEntryId: number;
+	r_accToCoExts_accountEntryId: number;
 }
 
 export default function useGetCompanyExtenderByAccountEntryId(

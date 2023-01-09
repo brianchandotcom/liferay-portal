@@ -34,8 +34,8 @@ export function getDTOFromMDFRequest(
 		mdfRequestStatus: mdfRequest.mdfRequestStatus,
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		overallCampaignName: mdfRequest.overallCampaignName,
-		r_accountToMDFRequests_accountEntryId: mdfRequest.company?.id,
-		r_userToMDFRequests_userId: Number(Liferay.ThemeDisplay.getUserId()),
+		r_accToMDFReqs_accountEntryId: mdfRequest.company?.id,
+		r_usrToMDFReqs_userId: Number(Liferay.ThemeDisplay.getUserId()),
 		targetAudienceRoles: mdfRequest.targetAudienceRoles?.join('; '),
 		targetMarkets: mdfRequest.targetMarkets?.join('; '),
 	};

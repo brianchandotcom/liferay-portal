@@ -62,9 +62,9 @@ export default interface DealRegistrationDTO
 	prospectPostalCode?: string;
 	prospectState?: LiferayPicklist;
 	prospectStateCode?: string;
-	r_accountToDealRegistrations_accountEntry?: AccountEntry;
-	r_accountToDealRegistrations_accountEntryId?: number;
-	r_activityToDealRegistrations_c_activity?: MDFRequestActivity;
-	r_activityToDealRegistrations_c_activityId?: number;
+	r_accToDealRegs_accountEntry?: AccountEntry;
+	r_accToDealRegs_accountEntryId?: number;
+	r_actToDealRegs_c_activity?: MDFRequestActivity;
+	r_actToDealRegs_c_activityId?: number;
 	stage?: string;
 }

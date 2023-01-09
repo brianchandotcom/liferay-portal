@@ -11,7 +11,7 @@
 	"objectFieldSettings": [
 		{
 			"name": "objectRelationshipName",
-			"value": "mdfRequestToMdfClaims"
+			"value": "mdfReqToMDFClms"
 		},
 		{
 			"name": "function",

@@ -14,9 +14,9 @@ import LiferayObject from '../liferayObject';
 export default interface MDFClaimDocumentDTO extends Partial<LiferayObject> {
 	fileName?: string;
 	fileSize?: number;
-	r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId?: number;
-	r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId?: number;
-	r_mdfClaimToMdfClaimDocuments_c_mdfClaimId?: number;
+	r_mdfClmActToMDFClmDocs_c_mdfClaimActivityId?: number;
+	r_mdfClmToMDFClmDocs_c_mdfClaimBudgetId?: number;
+	r_mdfClmToMDFClmDocs_c_mdfClaimId?: number;
 	type?: string;
 	url?: string;
 }

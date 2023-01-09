@@ -20,8 +20,8 @@ export default function getDTOFromMDFClaimBudget(
 		expenseName: budget.expenseName,
 		invoice: budget.invoice,
 		invoiceAmount: budget.invoiceAmount,
-		r_budgetToMdfClaimBudgets_c_budgetId: budget.id,
-		r_mdfClaimActivityToMdfClaimBudgets_c_mdfClaimActivityId: activityId,
+		r_bgtToMDFClmBgts_c_budgetId: budget.id,
+		r_mdfClmActToMDFClmBgts_c_mdfClaimActivityId: activityId,
 		selected: budget.selected,
 	};
 }

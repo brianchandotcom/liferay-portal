@@ -29,12 +29,12 @@ export default interface MDFRequestDTO
 	externalReferenceCodeSF?: string;
 	liferayBusinessSalesGoals?: string;
 	liferaysUserIdSF?: number;
-	mdfRequestToActivities?: MDFRequestActivityDTO[];
-	mdfRequestToMdfClaims?: MDFClaimDTO[];
-	r_accountToMDFRequests_accountEntry?: AccountEntry;
-	r_accountToMDFRequests_accountEntryId?: number;
-	r_userToMDFRequests_user?: User;
-	r_userToMDFRequests_userId?: number;
+	mdfReqToActs?: MDFRequestActivityDTO[];
+	mdfReqToMDFClms?: MDFClaimDTO[];
+	r_accToMDFReqs_accountEntry?: AccountEntry;
+	r_accToMDFReqs_accountEntryId?: number;
+	r_usrToMDFReqs_user?: User;
+	r_usrToMDFReqs_userId?: number;
 	targetAudienceRoles?: string;
 	targetMarkets?: string;
 	totalCostOfExpense?: number;

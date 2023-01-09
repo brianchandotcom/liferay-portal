@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "Company"
 	},
-	"name": "accountToMDFRequests",
+	"name": "accToMDFReqs",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
 	"objectDefinitionName2": "MDFRequest",

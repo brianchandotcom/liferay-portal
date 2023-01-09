@@ -51,10 +51,8 @@ export function getDTOFromDealRegistration(
 		prospectPostalCode: dealRegistration.prospect.postalCode,
 		prospectState: dealRegistration.prospect.state,
 		prospectStateCode: dealRegistration.prospect.state.key,
-		r_accountToDealRegistrations_accountEntryId:
-			dealRegistration.partnerAccount.id,
-		r_activityToDealRegistrations_c_activityId:
-			dealRegistration.mdfActivityAssociated.id,
+		r_accToDealRegs_accountEntryId: dealRegistration.partnerAccount.id,
+		r_actToDealRegs_c_activityId: dealRegistration.mdfActivityAssociated.id,
 		registrationStatus: dealRegistration.registrationStatus,
 	};
 }

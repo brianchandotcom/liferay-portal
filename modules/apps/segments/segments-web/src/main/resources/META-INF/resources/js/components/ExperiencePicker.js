@@ -52,14 +52,17 @@ const TriggerLabel = React.forwardRef(({selectedItem, ...otherProps}, ref) => {
 	);
 });
 
-const ExperiencePicker = ({experiences, selectedExperience}) => {
+const ExperiencePicker = ({
+	segmentsExperiences,
+	selectedSegmentsExperience,
+}) => {
 	const [disabled, setDisabled] = useState(false);
 	const [selectedKey] = React.useState(
-		selectedExperience.segmentsExperienceId
+		selectedSegmentsExperience.segmentsExperienceId
 	);
 
 	const handleExperienceChange = (key) => {
-		const newSelectedExperience = experiences.find(
+		const newSelectedExperience = segmentsExperiences.find(
 			(experience) => experience.segmentsExperienceId === key
 		);
 
@@ -83,9 +86,9 @@ const ExperiencePicker = ({experiences, selectedExperience}) => {
 			as={TriggerLabel}
 			disabled={disabled}
 			id="experience-picker"
-			items={experiences}
+			items={segmentsExperiences}
 			onSelectionChange={handleExperienceChange}
-			selectedItem={selectedExperience}
+			selectedItem={selectedSegmentsExperience}
 			selectedKey={selectedKey}
 		>
 			{(item) => (

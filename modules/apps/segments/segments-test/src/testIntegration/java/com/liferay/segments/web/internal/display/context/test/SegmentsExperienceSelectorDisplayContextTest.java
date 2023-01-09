@@ -222,7 +222,7 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		Map<String, Object> data = _invokeMethod(
 			"getData", _getMockHttpServletRequest());
 
-		return (JSONArray)data.get("experiences");
+		return (JSONArray)data.get("segmentsExperiences");
 	}
 
 	private JSONObject _getSelectedSegmentsExperienceJSONObject(
@@ -239,7 +239,7 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		Map<String, Object> data = _invokeMethod(
 			"getData", mockHttpServletRequest);
 
-		return (JSONObject)data.get("selectedExperience");
+		return (JSONObject)data.get("selectedSegmentsExperience");
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

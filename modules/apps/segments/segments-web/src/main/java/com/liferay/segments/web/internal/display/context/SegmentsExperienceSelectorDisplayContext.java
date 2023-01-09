@@ -75,9 +75,9 @@ public class SegmentsExperienceSelectorDisplayContext {
 
 	public Map<String, Object> getData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
-			"experiences", _getSegmentsExperiencesJSONArray()
+			"segmentsExperiences", _getSegmentsExperiencesJSONArray()
 		).put(
-			"selectedExperience", _getSegmentsExperienceSelectedJSONObject()
+			"selectedSegmentsExperience", _getSegmentsExperienceSelectedJSONObject()
 		).build();
 	}
 

@@ -150,7 +150,7 @@ definition {
 		var actualCount = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
 
 		if ("${originalCount}" != "${actualCount}") {
-			fail("Expected MYSQL entries=${originalCount}, after restarting portal MYSQL entries=${actualCount}");
+			fail("Expected MYSQL entries='${originalCount}', after restarting portal MYSQL entries='${actualCount}'");
 		}
 	}
 

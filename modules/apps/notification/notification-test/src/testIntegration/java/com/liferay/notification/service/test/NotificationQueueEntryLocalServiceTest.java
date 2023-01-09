@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -52,6 +53,45 @@ public class NotificationQueueEntryLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testAddNotificationQueueEntry() throws Exception {
+		Assert.assertEquals(
+			0,
+			_notificationQueueEntryLocalService.
+				getNotificationQueueEntriesCount());
+
+		User user = TestPropsValues.getUser();
+		String body = StringUtil.randomString();
+		String subject = StringUtil.randomString();
+
+		NotificationQueueEntry notificationQueueEntry =
+			_addNotificationQueueEntry(
+				user, body, subject, NotificationConstants.TYPE_EMAIL);
+
+		Assert.assertNotNull(notificationQueueEntry);
+		Assert.assertEquals(
+			user.getCompanyId(), notificationQueueEntry.getCompanyId());
+		Assert.assertEquals(
+			user.getUserId(), notificationQueueEntry.getUserId());
+		Assert.assertEquals(
+			user.getFullName(), notificationQueueEntry.getUserName());
+		Assert.assertEquals(body, notificationQueueEntry.getBody());
+		Assert.assertEquals(subject, notificationQueueEntry.getSubject());
+		Assert.assertEquals(
+			NotificationConstants.TYPE_EMAIL, notificationQueueEntry.getType());
+		Assert.assertEquals(
+			NotificationQueueEntryConstants.STATUS_UNSENT,
+			notificationQueueEntry.getStatus());
+
+		Assert.assertEquals(
+			1,
+			_notificationQueueEntryLocalService.
+				getNotificationQueueEntriesCount());
+
+		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntry);
+	}
 
 	@Test
 	public void testDeleteNotificationQueueEntry() throws Exception {
@@ -94,10 +134,21 @@ public class NotificationQueueEntryLocalServiceTest {
 		throws Exception {
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
-			_createNotificationContext(TestPropsValues.getUser()));
+			_createNotificationContext(
+				TestPropsValues.getUser(), StringUtil.randomString(),
+				StringUtil.randomString(), NotificationConstants.TYPE_EMAIL));
 	}
 
-	private NotificationContext _createNotificationContext(User user)
+	private NotificationQueueEntry _addNotificationQueueEntry(
+			User user, String body, String subject, String type)
+		throws Exception {
+
+		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
+			_createNotificationContext(user, body, subject, type));
+	}
+
+	private NotificationContext _createNotificationContext(
+			User user, String body, String subject, String type)
 		throws Exception {
 
 		NotificationContext notificationContext = new NotificationContext();
@@ -107,7 +158,12 @@ public class NotificationQueueEntryLocalServiceTest {
 				RandomTestUtil.randomInt());
 
 		notificationQueueEntry.setUserId(user.getUserId());
-		notificationQueueEntry.setType(NotificationConstants.TYPE_EMAIL);
+		notificationQueueEntry.setUserName(user.getFullName());
+		notificationQueueEntry.setBody(body);
+		notificationQueueEntry.setSubject(subject);
+		notificationQueueEntry.setType(type);
+		notificationQueueEntry.setStatus(
+			NotificationQueueEntryConstants.STATUS_UNSENT);
 
 		notificationContext.setNotificationQueueEntry(notificationQueueEntry);
 

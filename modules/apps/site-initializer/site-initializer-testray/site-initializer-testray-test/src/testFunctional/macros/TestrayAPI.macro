@@ -595,4 +595,35 @@ definition {
 		return "${response}";
 	}
 
+	macro deleteTestrayGroupId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/builds/${buildId} \
+			${portalURL}/o/c/caseresults/${caseResultId} \
+			${portalURL}/o/c/subtaskscasesresultses/${caseResultsForSubtaskId} \
+			${portalURL}/o/c/cases/${casesId} \
+			${portalURL}/o/c/casetypes/${caseTypeId} \
+			${portalURL}/o/c/components/${componentId} \
+			${portalURL}/o/c/factorcategories/${factorCategoryId} \
+			${portalURL}/o/c/factoroptions/${factorOptionsId} \
+			${portalURL}/o/c/productversions/${productVersionId} \
+			${portalURL}/o/c/projects/${projectId} \
+			${portalURL}/o/c/requirements/${requirementId} \
+			${portalURL}/o/c/routines/${routineId} \
+			${portalURL}/o/c/runs/${runId} \
+			${portalURL}/o/c/subtasks/${subtaskId} \
+			${portalURL}/o/c/suites/${suiteId} \
+			${portalURL}/o/c/tasks/${taskId} \
+			${portalURL}/o/c/teams/${teamId} \
+			-u test@liferay.com:test \
+         	-H 'accept: application/json' \
+			-H 'Content-Type: application/json' \
+		''';
+
+		var curl = JSONCurlUtil.delete("${curl}");
+
+		return "${curl}";
+	}
+
 }

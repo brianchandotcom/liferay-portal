@@ -14,50 +14,76 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite();
+			// Testray.addTestraySite();
 
-			Refresh();
+			// Refresh();
 		}
 
-		task ("Setup for Subtask") {
-			TestraySubtask.setupForSubtaskAPI();
-
+		task ("Setup for SubtaskAPI") {
+			TestraySubtask.initiateMockSubtaskData();
 		}
 
-		task ("Go to Testray 2 and go to TestFlow") {
+		task ("Go to Testray 2 and select enviroments factors for the routine") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+		task ("Go to Task") {
 			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.tearDownCP();
+		// ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		// Testray.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
 	}
 
 	@description = "This is a test for LPS-169401 - Verify if, as an Administrator, can cancel merge subtasks"
 	@priority = "3"
 	test AdminCanCancelMergeSubtask {
 		task ("Given that the user trying merge subtasks") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
+
+			Testray.selectUsers(listUserName = "Test Test");
 		}
 
 		task ("Then can clear the merge") {
 			TestraySubtask.mergeSubtasks(
-				cancel = "Clear",
-				wcsubtaskName = "subtask_1,subtask_2");
+				buttonClear = "true",
+				wcsubtaskName = "Subtask_1,Subtask_2");
+
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+		}
+
+		task ("Then can clear the merge") {
+			TestraySubtask.assertNotMergedSubtasks(wcsubtaskName = "Subtask_2");
 		}
 	}
 
@@ -65,8 +91,6 @@ definition {
 	@priority = "5"
 	test AdminCanCompleteSubtaskAsBlocked {
 		task ("Given the user edit a Subtask as Blocked") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -104,8 +128,6 @@ definition {
 	@priority = "5"
 	test AdminCanCompleteSubtaskAsFailing {
 		task ("Given the user edit a Subtask as Failed") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -143,8 +165,6 @@ definition {
 	@priority = "5"
 	test AdminCanCompleteSubtaskAsPassing {
 		task ("Given the user edit a Subtask as passed") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -171,8 +191,6 @@ definition {
 	@priority = "5"
 	test AdminCanCompleteSubtaskAsTestFix {
 		task ("Given the user edit a Subtask as Test Fix") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -206,8 +224,6 @@ definition {
 	@priority = "5"
 	test AdminCanMergeCompletedSubtaskWithCompletedSubtask {
 		task ("Given that the user complete a Subtask") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -258,8 +274,6 @@ definition {
 	@priority = "5"
 	test AdminCanMergeCompleteSubtaskWithOpenSubtask {
 		task ("Given that the user complete a Subtask") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -296,8 +310,6 @@ definition {
 	@priority = "5"
 	test AdminCanMergeInAnalysisSubtaskWithCompletedSubtask {
 		task ("Given that the user complete a Subtask") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -348,15 +360,13 @@ definition {
 
 		TestraySubtask.goToSubtask(subtaskName = "sub tasks_1");
 
-		TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "sub tasks_2, hgf");
+		TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "sub tasks_1,sub tasks_2");
 	}
 
 	@description = "This is a test for LPS-169400 - Verify is as an Administrator I should be able to merge an in analysis subtask with an in analysis subtask"
 	@priority = "5"
 	test AdminCanMergeInAnalysisSubtaskWithInAnalysisSubtask {
 		task ("Given that the user in analysis a Subtask") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -401,8 +411,6 @@ definition {
 	@priority = "5"
 	test AdminCanReturnToOpenSubtask {
 		task ("Given that the user Assign and Begin Analysis of the subtask") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");
@@ -431,8 +439,6 @@ definition {
 	@priority = "5"
 	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
 		task ("Given that the user merged multiple unassigned subtasks") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");

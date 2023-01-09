@@ -1,6 +1,6 @@
 definition {
 
-	macro setupForSubtaskAPI {
+	macro initiateMockSubtaskData {
 
 			var projectId = TestrayAPI.createProjectAPI(
 				projectDescription = "Projects_1 Project Description",
@@ -169,6 +169,14 @@ definition {
 		}
 	}
 
+	macro assertNotMergedSubtasks {
+		for (var subtaskMerged : list "${listSubtaskMerged}") {
+			AssertElementNotPresent(
+				key_subtaskMerged = "${subtaskMerged}",
+				locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
+		}
+	}
+
 	macro goToSubtask {
 		Click(
 			key_projectName = "${subtaskName}",
@@ -182,8 +190,10 @@ definition {
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
 
-		if (isSet(cancel)) {
-			Button.click(button = "${cancel}");
+		if (isSet(buttonClear)) {
+			Click.javaScriptClick(
+				key_title = "Deselect Items",
+				locator1 = "Button#ANY_TITLE");
 		}
 
 		Button.click(button = "Merge Subtasks");

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UserGroupUADTestHelper.class)
+@Component(service = UserGroupUADTestHelper.class)
 public class UserGroupUADTestHelper {
 
 	public UserGroup addUserGroup(long userId) throws Exception {

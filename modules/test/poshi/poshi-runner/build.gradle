@@ -13,7 +13,7 @@ dependencies {
 	compile group: "com.deque.html.axe-core", name: "selenium", version: "4.3.2"
 	compile group: "com.github.lewka", name: "ocular", version: "1.0.5"
 	compile group: "com.github.scribejava", name: "scribejava-core", version: "3.2.0"
-	compile group: "com.google.guava", name: "guava", version: "30.1-jre"
+	compile group: "com.google.guava", name: "guava", version: "31.0.1-jre"
 	compile group: "com.jayway.jsonpath", name: "json-path", version: "2.1.0"
 	compile group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.111"
 	compile group: "com.liferay", name: "jodd.util", version: "6.0.1.LIFERAY-PATCHED-1"
@@ -23,7 +23,7 @@ dependencies {
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 	compile("io.netty:netty-transport") {
 		version {
-			strictly "4.1.70.Final"
+			strictly "4.1.84.Final"
 		}
 	}
 	compile group: "junit", name: "junit", version: "4.13.1"
@@ -32,7 +32,8 @@ dependencies {
 	compile group: "org.dom4j", name: "dom4j", transitive: false, version: "2.1.3"
 	compile group: "org.json", name: "json", version: "20220320"
 	compile group: "org.jsoup", name: "jsoup", version: "1.15.3"
-	compile group: "org.seleniumhq.selenium", name: "selenium-java", version: "4.1.1"
+	compile group: "org.seleniumhq.selenium", name: "selenium-devtools-v100", version: "4.2.2"
+	compile group: "org.seleniumhq.selenium", name: "selenium-java", version: "4.7.2"
 	compile group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
 	compile group: "xml-apis", name: "xml-apis", version: "1.4.01"
 

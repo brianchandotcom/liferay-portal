@@ -81,7 +81,7 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
-		task ("And no actions on alert") {
+		task ("And When no actions on alert") {
 			VerifyElementNotPresent(locator1 = "//*[@id='ToastAlertContainer']//a");
 		}
 

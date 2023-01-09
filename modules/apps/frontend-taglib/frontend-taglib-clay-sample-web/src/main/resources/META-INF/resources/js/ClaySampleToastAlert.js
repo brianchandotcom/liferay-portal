@@ -64,10 +64,7 @@ export default function ClaySampleToastAlert() {
 						{Liferay.Language.get('fail-submit')}
 					</ClayButton>
 
-					<ClayButton
-						onClick={onClick5Seconds}
-						type="submit"
-					>
+					<ClayButton onClick={onClick5Seconds} type="submit">
 						{Liferay.Language.get('disappear-after-5-secs')}
 					</ClayButton>
 				</ClayButton.Group>

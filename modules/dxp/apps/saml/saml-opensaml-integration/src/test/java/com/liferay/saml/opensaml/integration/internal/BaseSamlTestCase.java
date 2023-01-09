@@ -332,7 +332,7 @@ public abstract class BaseSamlTestCase {
 	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;
 	protected Portal portal;
-	protected List<SamlBinding> samlBindings;
+	protected Map<String, SamlBinding> samlBindings;
 	protected IdentifierGenerationStrategy samlIdentifierGenerator;
 	protected SamlPeerBindingLocalService samlPeerBindingLocalService;
 	protected SamlProviderConfiguration samlProviderConfiguration;
@@ -756,11 +756,21 @@ public abstract class BaseSamlTestCase {
 		VelocityEngine velocityEngine = velocityEngineFactory.getVelocityEngine(
 			currentThread.getContextClassLoader());
 
-		samlBindings = new ArrayList<>();
+		SamlBinding httpPostBinding = new HttpPostBinding(
+			parserPool, velocityEngine);
 
-		samlBindings.add(new HttpPostBinding(parserPool, velocityEngine));
-		samlBindings.add(new HttpRedirectBinding(parserPool));
-		samlBindings.add(new HttpSoap11Binding(parserPool, httpClient));
+		SamlBinding httpRedirectBinding = new HttpRedirectBinding(parserPool);
+
+		SamlBinding httpSoap11Binding = new HttpSoap11Binding(
+			parserPool, httpClient);
+
+		samlBindings = HashMapBuilder.put(
+			httpPostBinding.getCommunicationProfileId(), httpPostBinding
+		).put(
+			httpRedirectBinding.getCommunicationProfileId(), httpRedirectBinding
+		).put(
+			httpSoap11Binding.getCommunicationProfileId(), httpSoap11Binding
+		).build();
 	}
 
 	private void _setupSamlPeerBindingsLocalService() throws Exception {

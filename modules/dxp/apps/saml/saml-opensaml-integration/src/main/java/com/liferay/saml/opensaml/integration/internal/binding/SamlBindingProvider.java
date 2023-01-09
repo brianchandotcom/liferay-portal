@@ -14,9 +14,12 @@
 
 package com.liferay.saml.opensaml.integration.internal.binding;
 
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.saml.opensaml.integration.internal.servlet.profile.BaseProfile;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
+import com.liferay.saml.runtime.SamlException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import net.shibboleth.utilities.java.support.xml.ParserPool;
 
@@ -29,28 +32,41 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(service = {})
-public class HttpBindingsRegistrator {
+@Component(service = SamlBindingProvider.class)
+public class SamlBindingProvider {
+
+	public SamlBinding getSamlBinding(String communicationProfileId)
+		throws PortalException {
+
+		SamlBinding samlBinding = _samlBindings.get(communicationProfileId);
+
+		if (samlBinding != null) {
+			return samlBinding;
+		}
+
+		throw new SamlException(
+			"Unsupported binding " + communicationProfileId);
+	}
 
 	@Activate
 	protected void activate() {
 		SamlBinding httpPostBinding = new HttpPostBinding(
 			_parserPool, _velocityEngineFactory.getVelocityEngine());
 
+		_samlBindings.put(
+			httpPostBinding.getCommunicationProfileId(), httpPostBinding);
+
 		SamlBinding httpRedirectBinding = new HttpRedirectBinding(_parserPool);
+
+		_samlBindings.put(
+			httpRedirectBinding.getCommunicationProfileId(),
+			httpRedirectBinding);
 
 		SamlBinding httpSoap11Binding = new HttpSoap11Binding(
 			_parserPool, _httpClient);
 
-		BaseProfile.setSamlBindings(
-			HashMapBuilder.put(
-				httpPostBinding.getCommunicationProfileId(), httpPostBinding
-			).put(
-				httpRedirectBinding.getCommunicationProfileId(),
-				httpRedirectBinding
-			).put(
-				httpSoap11Binding.getCommunicationProfileId(), httpSoap11Binding
-			).build());
+		_samlBindings.put(
+			httpSoap11Binding.getCommunicationProfileId(), httpSoap11Binding);
 	}
 
 	@Reference
@@ -58,6 +74,8 @@ public class HttpBindingsRegistrator {
 
 	@Reference
 	private ParserPool _parserPool;
+
+	private final Map<String, SamlBinding> _samlBindings = new HashMap<>();
 
 	@Reference
 	private VelocityEngineFactory _velocityEngineFactory;

@@ -71,6 +71,18 @@ const colors: {[keys: string]: {}} = {
 
 let widthValue = 15;
 
+const productERCList: Array<{externalReferenceCode: string; name: string}> = [
+	{externalReferenceCode: 'RAY004', name: 'Business Owners Policy'},
+	{externalReferenceCode: 'RAY003', name: 'Workers Compensation'},
+	{externalReferenceCode: 'RAY002', name: 'Professional Liability'},
+	{externalReferenceCode: 'RAY001', name: 'General Liability'},
+	{externalReferenceCode: 'RAYAP-005', name: 'Health'},
+	{externalReferenceCode: 'RAYAP-004', name: 'Life'},
+	{externalReferenceCode: 'RAYAP-003', name: 'Property'},
+	{externalReferenceCode: 'RAYAP-002', name: 'Home'},
+	{externalReferenceCode: 'RAYAP-001', name: 'Auto'},
+];
+
 const ProductPerformance = () => {
 	const [products, setProducts] = useState<ProductCell[]>([]);
 	const [timePeriod, setTimePeriod] = useState<string>(PERIODS.YEAR);
@@ -285,7 +297,35 @@ const ProductPerformance = () => {
 
 	const lengthExceededColumn = getData()[0]?.exceeded.length - 1;
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const chartSelectedData = {
+		achievedData: Object.values(getData()[0]?.achieved),
+		exceededData: Object.values(getData()[0]?.exceeded),
+		goalsData: Object.values(getData()[0]?.goals),
+	};
+
+	const handleVerifyDataOfPolicies = (
+		arrayOfPolicyValues: (string | number)[]
+	) => {
+		const sumOfMonthsValues = arrayOfPolicyValues?.reduce(
+			(acumulador: number | string, valorAtual: number | string) =>
+				Number(acumulador) + Number(valorAtual),
+			0
+		);
+
+		return sumOfMonthsValues;
+	};
+
+	chartSelectedData.achievedData[0] = 0;
+
+	chartSelectedData.exceededData[0] = 0;
+
+	chartSelectedData.goalsData[0] = 0;
+
+	const hasNoData =
+		handleVerifyDataOfPolicies(chartSelectedData.achievedData) === 0 &&
+		handleVerifyDataOfPolicies(chartSelectedData.goalsData) === 0 &&
+		handleVerifyDataOfPolicies(chartSelectedData.exceededData) === 0;
+
 	const dataChart = {
 		colors,
 		columns: [
@@ -322,31 +362,30 @@ const ProductPerformance = () => {
 		const newProductList: ProductCell[] = [];
 		const yearlyProductsTotal: ProductListType = {};
 
+		productERCList.forEach(({externalReferenceCode, name}) => {
+			let productNameAbbrevation = name;
+
+			if (name.length > 8) {
+				productNameAbbrevation = name
+					.split(' ')
+					.map((product: string) => product.charAt(0))
+					.join('');
+			}
+
+			yearlyProductsTotal[externalReferenceCode] = {
+				goalValue: 0,
+				productExternalReferenceCode: externalReferenceCode,
+				productName: productNameAbbrevation,
+				totalSales: 0,
+			};
+		});
+
 		yearlyPolicies?.data?.items?.forEach(
 			({
 				productExternalReferenceCode,
-				productName,
+
 				termPremium,
 			}: PolicyTypes) => {
-				if (!yearlyProductsTotal[productExternalReferenceCode]) {
-					let productNameAbbrevation = productName;
-
-					if (productName.length > 8) {
-						productNameAbbrevation = productName
-							.split(' ')
-							.map((product) => product.charAt(0))
-							.join('');
-					}
-
-					yearlyProductsTotal[productExternalReferenceCode] = {
-						goalValue: 0,
-						productName: productNameAbbrevation,
-						totalSales: termPremium,
-					};
-
-					return;
-				}
-
 				yearlyProductsTotal[productExternalReferenceCode][
 					'totalSales'
 				] += termPremium;
@@ -590,67 +629,73 @@ const ProductPerformance = () => {
 					className="p-md-5 px-2 py-3"
 					id="dashboard-product-performance-chart-container"
 				>
-					{isLoading && (
-						<ClayChart
-							axis={{
-								x: {
-									height: 75,
-									label: {
-										position: 'outer-center',
-										text: 'Period (Month)',
+					{!hasNoData ? (
+						isLoading && (
+							<ClayChart
+								axis={{
+									x: {
+										height: 75,
+										label: {
+											position: 'outer-center',
+											text: 'Period (Month)',
+										},
+										show: true,
+										type: 'category',
 									},
-									show: true,
-									type: 'category',
-								},
-								y: {
-									label: {
-										position: 'outer-middle',
-										text: 'Dollar ($)',
-									},
-									padding: {
-										left: 200,
-										right: 200,
-									},
-									show: true,
-									tick: {
-										format(x: string) {
-											return '$' + x;
+									y: {
+										label: {
+											position: 'outer-middle',
+											text: 'Dollar ($)',
+										},
+										padding: {
+											left: 200,
+											right: 200,
+										},
+										show: true,
+										tick: {
+											format(x: string) {
+												return '$' + x;
+											},
 										},
 									},
-								},
-							}}
-							bar={{
-								width: widthValue,
-							}}
-							data={dataChart}
-							grid={{
-								x: {
-									show: false,
-								},
-								y: {
-									show: true,
-								},
-							}}
-							legend={{
-								item: {
-									onover: () => {
-										return false;
+								}}
+								bar={{
+									width: widthValue,
+								}}
+								data={dataChart}
+								grid={{
+									x: {
+										show: false,
 									},
-								},
-								padding: 5,
-								show: true,
-							}}
-							padding={{
-								bottom: 20,
-								right: 42.5,
-							}}
-							ref={labelRef}
-							size={{
-								height: 480,
-								width: chartWidth,
-							}}
-							tooltip={tooltip}
-						/>
+									y: {
+										show: true,
+									},
+								}}
+								legend={{
+									item: {
+										onover: () => {
+											return false;
+										},
+									},
+									padding: 5,
+									show: true,
+								}}
+								padding={{
+									bottom: 20,
+									right: 42.5,
+								}}
+								ref={labelRef}
+								size={{
+									height: 480,
+									width: chartWidth,
+								}}
+								tooltip={tooltip}
+							/>
+						)
+					) : (
+						<div className="align-items-center d-flex flex-column justify-content-center mt-10 py-8">
+							<span>No Data</span>
+						</div>
 					)}
 				</div>
 			</div>

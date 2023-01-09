@@ -1,0 +1,5 @@
+Bundle-Name: headless-user-notification-test
+Bundle-SymbolicName: headless.user.notification.test
+Bundle-Version: 1.0.0
+-includeresource: headless.user.notification.client.jar=../headless-user-notification-client/build/libs/headless.user.notification.client-1.0.0.jar;lib:=true
+-provider-policy: ${replacestring;${range;[==,==]};.*,(.*)];$1}

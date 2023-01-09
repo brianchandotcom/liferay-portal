@@ -127,6 +127,7 @@ interface ObjectDefinition {
 	objectActions: [];
 	objectFields: ObjectField[];
 	objectLayouts: [];
+	objectRelationships: [];
 	objectViews: [];
 	panelCategoryKey: string;
 	parameterRequired?: boolean;

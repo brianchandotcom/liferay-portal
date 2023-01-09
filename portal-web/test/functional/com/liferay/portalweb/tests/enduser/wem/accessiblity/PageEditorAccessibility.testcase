@@ -347,7 +347,7 @@ definition {
 				type = "content");
 		}
 
-		task ("When the page creator opens the create page template modal") {
+		task ("When the page creator opens the create page template modal before creating a page template set") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -355,12 +355,24 @@ definition {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
 		}
 
-		task ("Then the page creator sees the Name and Page Template Set fields with required attribute on modal") {
+		task ("Then the page creator sees the Name field with required attribute on modal") {
 			AssertAttributeValue(
 				attribute1 = "required",
 				locator1 = "TextInput#NAME",
 				value1 = "true");
 
+			IFrame.closeFrame();
+		}
+
+		task ("When the page creator opens the create page template modal after creating a page template set") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
+		}
+
+		task ("Then the page creator sees the Page Template Set field with required attribute on modal") {
 			AssertAttributeValue(
 				attribute1 = "required",
 				key_fieldLabel = "Page Template Set",

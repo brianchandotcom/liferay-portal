@@ -30,8 +30,9 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		ClickNoError(
-			locator1 = "DDMSelectFeed#FEED_STRUCTURE_TABLE_NAME",
-			value1 = "${structureName}");
+			key_columnName = "title",
+			key_tableEntry = "${structureName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO");
 
 		AssertConfirm(value1 = "Selecting a new structure changes the available templates and available feed item content. Do you want to proceed?");
 	}

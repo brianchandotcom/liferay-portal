@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,7 +88,12 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 			return;
 		}
 
-		String redirect = ParamUtil.getString(resourceRequest, "redirect");
+		String redirect = HttpComponentsUtil.removeParameter(
+			ParamUtil.getString(resourceRequest, "redirect"), "itemId");
+
+		String itemId = ParamUtil.getString(resourceRequest, "itemId");
+
+		redirect = HttpComponentsUtil.addParameter(redirect, "itemId", itemId);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
@@ -108,7 +114,7 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 				).setParameter(
 					"collectionKey", collectionKey
 				).setParameter(
-					"itemId", ParamUtil.getString(resourceRequest, "itemId")
+					"itemId", itemId
 				).setParameter(
 					"plid",
 					() -> {

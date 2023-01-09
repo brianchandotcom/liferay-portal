@@ -5,7 +5,7 @@ class DadJoke extends React.Component {
 		super(props);
 
 		this.oAuth2Client = props.oAuth2Client;
-		this.state = "";
+		this.state = {"joke": ""};
 	}
 
 	componentDidMount() {
@@ -14,7 +14,7 @@ class DadJoke extends React.Component {
 		).then(response => response.text()
 		).then(text => {
 			this._request = null;
-			this.setState(text);
+			this.setState({"joke": text});
 		});
 	}
 
@@ -29,7 +29,7 @@ class DadJoke extends React.Component {
 			return <div>Loading...</div>
 		}
 		else {
-			return <div>{this.state}</div>
+			return <div>{this.state.joke}</div>
 		}
 	}
 }

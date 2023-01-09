@@ -448,13 +448,10 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitMethodExpressionWithNow() {
-		String visitNowMethodExpression =
-			(String)_expressionVisitorImpl.visitMethodExpression(
-				Collections.emptyList(), MethodExpression.Type.NOW);
-
 		Assert.assertEquals(
 			String.valueOf(MethodExpression.Type.NOW),
-			visitNowMethodExpression);
+			_expressionVisitorImpl.visitMethodExpression(
+				Collections.emptyList(), MethodExpression.Type.NOW));
 	}
 
 	@Test

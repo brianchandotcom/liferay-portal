@@ -24,6 +24,7 @@ const noop = () => {};
 
 function AssetTagsSelector({
 	addCallback,
+	formGroupClassName = '',
 	groupIds = [],
 	helpText = '',
 	id,
@@ -211,8 +212,8 @@ function AssetTagsSelector({
 	};
 
 	return (
-		<div className="lfr-tags-selector-content" id={id}>
-			<ClayForm.Group>
+		<div id={id}>
+			<ClayForm.Group className={formGroupClassName}>
 				<label
 					className={showLabel ? '' : 'sr-only'}
 					htmlFor={inputName + '_MultiSelect'}
@@ -285,6 +286,7 @@ function AssetTagsSelector({
 
 AssetTagsSelector.propTypes = {
 	addCallback: PropTypes.string,
+	formGroupClassName: PropTypes.string,
 	groupIds: PropTypes.array,
 	helpText: PropTypes.string,
 	id: PropTypes.string,

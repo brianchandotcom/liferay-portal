@@ -85,7 +85,7 @@ exports[`Select calls onChange callback when an item is selected using multisele
       <div
         class="dropdown-menu ddm-btn-full ddm-select-dropdown show"
         role="presentation"
-        style="max-width: 0; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
       >
         <ul
           class="list-unstyled"
@@ -402,7 +402,7 @@ exports[`Select filters according to the input and calls onChange callback when 
       <div
         class="dropdown-menu ddm-btn-full ddm-select-dropdown show"
         role="presentation"
-        style="max-width: 0; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
       >
         <form
           class=""
@@ -2003,7 +2003,7 @@ exports[`Select shows a search input when the number of options is more than the
       <div
         class="dropdown-menu ddm-btn-full ddm-select-dropdown show"
         role="presentation"
-        style="max-width: 0; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
       >
         <form
           class=""

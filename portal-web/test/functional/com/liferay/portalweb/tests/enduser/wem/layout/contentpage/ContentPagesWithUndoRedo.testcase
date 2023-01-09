@@ -770,9 +770,7 @@ definition {
 					key_text = "undo",
 					locator1 = "Icon#ANY");
 
-				AssertTextEquals(
-					locator1 = "PageEditor#AUTOSAVE_MESSAGE",
-					value1 = "Saved");
+				PageEditor.waitForAutoSave();
 
 				var count = ${count} + 1;
 			}

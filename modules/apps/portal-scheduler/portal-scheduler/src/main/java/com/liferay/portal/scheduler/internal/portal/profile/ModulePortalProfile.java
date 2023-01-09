@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 import com.liferay.portal.scheduler.internal.SchedulerEngineHelperImpl;
-import com.liferay.portal.scheduler.internal.verify.SchedulerHelperPropertiesVerifyProcess;
+import com.liferay.portal.scheduler.internal.upgrade.registry.SchedulerUpgradeStepRegistrator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +67,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 		init(
 			componentContext, supportedPortalProfileNames,
 			SchedulerEngineHelperImpl.class.getName(),
-			SchedulerHelperPropertiesVerifyProcess.class.getName());
+			SchedulerUpgradeStepRegistrator.class.getName());
 	}
 
 	@Reference

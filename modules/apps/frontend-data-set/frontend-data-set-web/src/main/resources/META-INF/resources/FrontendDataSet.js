@@ -131,9 +131,13 @@ const FrontendDataSet = ({
 			);
 
 			if (activeViewName) {
-				initialActiveView = views.find(
+				const activeView = views.find(
 					({name}) => name === activeViewName
 				);
+
+				if (activeView) {
+					initialActiveView = activeView;
+				}
 			}
 
 			if (visibleFieldNames) {

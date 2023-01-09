@@ -1,155 +1,80 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
-
-	property osgi.modules.includes = "frontend-data-set-sample-web";
-	property portal.acceptance = "true";
-	property portal.release = "true";
-	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
-
-	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-
-		task ("Given Frontend Dataset sample portlet") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Frontend Data Set Test Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Frontend Data Set Test Page",
-				widgetName = "Frontend Data Set Sample");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Guest",
-				layoutName = "Frontend Data Set Test Page",
-				layoutTemplate = "1 Column");
-
-			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONLayout.deletePublicLayout(
-				groupName = "Guest",
-				layoutName = "Frontend Data Set Test Page");
-		}
-	}
-
-	@description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
-	@priority = "3"
-	test RequestInvalidIPCanReturnErrorConnectionRefused {
-		task ("When open action list dropdown menu in 1st row item. And When access async connection refused to request invalid ip address") {
-			FrontendDataSet.selectItemActionDropdownMenuList(
-				key_title = "Sample1",
-				key_viewMode = "Async Connection Refused");
-		}
-
-		task ("Then returns unexpected error alert toast") {
-			AssertElementPresent(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "An unexpected error occurred.");
-		}
-	}
-
-	@description = "LPS-170537. Request Non Existing Resource Can Return Error Not Found."
-	@priority = "3"
-	test RequestNonExistingResourceCanReturnErrorNotFound {
-		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request a resource that does not exist") {
-			FrontendDataSet.selectItemActionDropdownMenuList(
-				key_title = "Sample1",
-				key_viewMode = "Async Resource Not Found");
-		}
-
-		task ("Then returns unexpected error alert toast") {
-			AssertElementPresent(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "An unexpected error occurred.");
-		}
-	}
-
-	@description = "LPS-170535. Request Valid IP Can Return Success."
-	@priority = "3"
-	test RequestValidIPCanReturnSucces3 {
-		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
-			Click(locator1 = "//*[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-unstyled']");
-
-			takeScreenshot();
-
-			Click(
-				key_viewMode = "Async Success",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
-
-			takeScreenshot();
-		}
-
-		task ("Then returns success alert toast") {
-			AssertTextEquals(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Success:Your request completed successfully.");
-		}
-	}
-
-	@description = "LPS-170535. Request Valid IP Can Return Success."
-	@priority = "3"
-	test RequestValidIPCanReturnSuccess {
-		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
-
-			//FrontendDataSet.selectItemActionDropdownMenuList(
-			//	key_title = "Sample1",
-			//	key_viewMode = "Async Success");
-
-			Click(
-				key_title = "Sample1",
-				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
-
-			takeScreenshot();
-
-			Click(
-				key_viewMode = "Async Success",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
-
-			takeScreenshot();
-		}
-
-		task ("Then returns success alert toast") {
-			AssertTextEquals(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Success:Your request completed successfully.");
-		}
-	}
-
-	@description = "LPS-170535. Request Valid IP Can Return Success."
-	@priority = "3"
-	test RequestValidIPCanReturnSuccess2 {
-		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
-			Click.pauseClickAt(
-				key_title = "Sample1",
-				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
-
-			takeScreenshot();
-
-			Click.pauseClickAt(
-				key_viewMode = "Async Success",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
-
-			takeScreenshot();
-		}
-
-		task ("Then returns success alert toast") {
-			AssertTextEquals(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Success:Your request completed successfully.");
-		}
-	}
-
+    property osgi.modules.includes = "frontend-data-set-sample-web";
+    property portal.acceptance = "true";
+    property portal.release = "true";
+    property portal.upstream = "true";
+    property testray.component.names = "Frontend Dataset";
+    property testray.main.component.name = "Frontend Dataset";
+    setUp {
+        TestCase.setUpPortalInstance();
+        User.firstLoginPG();
+        task ("Given Frontend Dataset sample portlet") {
+            JSONLayout.addPublicLayout(
+                groupName = "Guest",
+                layoutName = "Frontend Data Set Test Page");
+            JSONLayout.addWidgetToPublicLayout(
+                groupName = "Guest",
+                layoutName = "Frontend Data Set Test Page",
+                widgetName = "Frontend Data Set Sample");
+            JSONLayout.updateLayoutTemplateOfPublicLayout(
+                groupName = "Guest",
+                layoutName = "Frontend Data Set Test Page",
+                layoutTemplate = "1 Column");
+            Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+        }
+    }
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Frontend Data Set Test Page");
+        }
+    }
+    @description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
+    @priority = "3"
+    test RequestInvalidIPCanReturnErrorConnectionRefused {
+        task ("When open action list dropdown menu in 1st row item. And When access async connection refused to request invalid ip address") {
+            FrontendDataSet.selectItemActionDropdownMenuList(
+                key_title = "Sample1",
+                key_viewMode = "Async Connection Refused");
+        }
+        task ("Then returns unexpected error alert toast") {
+            AssertElementPresent(
+                locator1 = "Message#ERROR_DISMISSIBLE",
+                value1 = "An unexpected error occurred.");
+        }
+    }
+    @description = "LPS-170537. Request Non Existing Resource Can Return Error Not Found."
+    @priority = "3"
+    test RequestNonExistingResourceCanReturnErrorNotFound {
+        task ("When open action list dropdown menu in 1st row item. And When access async success action item to request a resource that does not exist") {
+            FrontendDataSet.selectItemActionDropdownMenuList(
+                key_title = "Sample1",
+                key_viewMode = "Async Resource Not Found");
+        }
+        task ("Then returns unexpected error alert toast") {
+            AssertElementPresent(
+                locator1 = "Message#ERROR_DISMISSIBLE",
+                value1 = "An unexpected error occurred.");
+        }
+    }
+    @description = "LPS-170535. Request Valid IP Can Return Success."
+    @priority = "3"
+    test RequestValidIPCanReturnSuccess {
+        task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {
+            FrontendDataSet.selectItemActionDropdownMenuList(
+                key_title = "Sample1",
+                key_viewMode = "Async Success");
+        }
+        task ("Then returns success alert toast") {
+            AssertTextEquals(
+                locator1 = "Message#SUCCESS_DISMISSIBLE",
+                value1 = "Success:Your request completed successfully.");
+        }
+    }
 }

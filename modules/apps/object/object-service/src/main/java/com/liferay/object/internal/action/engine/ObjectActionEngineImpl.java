@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -60,10 +58,6 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			String objectActionName, String objectActionTriggerKey,
 			long objectDefinitionId, JSONObject payloadJSONObject, long userId)
 		throws Exception {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918"))) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectAction objectAction = _objectActionLocalService.getObjectAction(
 			objectDefinitionId, objectActionName, objectActionTriggerKey);

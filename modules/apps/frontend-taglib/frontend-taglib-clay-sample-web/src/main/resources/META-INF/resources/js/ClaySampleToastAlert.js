@@ -39,7 +39,6 @@ export default function ClaySampleToastAlert() {
 
 	const onClick5Seconds = () => {
 		openToast({
-			autoClose: 5000,
 			message: Liferay.Language.get(
 				'your-request-completed-successfully'
 			),
@@ -66,7 +65,6 @@ export default function ClaySampleToastAlert() {
 					</ClayButton>
 
 					<ClayButton
-						_dismissible="false"
 						onClick={onClick5Seconds}
 						type="submit"
 					>

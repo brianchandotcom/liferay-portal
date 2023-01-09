@@ -15,8 +15,8 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Locale;
 import java.util.Map;

@@ -23,9 +23,9 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Map;
 

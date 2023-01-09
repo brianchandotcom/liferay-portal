@@ -25,7 +25,6 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 import java.util.Objects;

@@ -67,7 +67,6 @@ import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -123,6 +122,7 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

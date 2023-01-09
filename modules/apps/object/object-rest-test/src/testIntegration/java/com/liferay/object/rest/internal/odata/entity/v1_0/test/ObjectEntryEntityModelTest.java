@@ -28,7 +28,6 @@ import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
@@ -48,6 +47,7 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.lang.reflect.Method;
 

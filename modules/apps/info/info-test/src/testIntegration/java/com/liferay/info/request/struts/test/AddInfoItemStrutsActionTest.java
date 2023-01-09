@@ -28,7 +28,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -59,6 +58,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.Serializable;

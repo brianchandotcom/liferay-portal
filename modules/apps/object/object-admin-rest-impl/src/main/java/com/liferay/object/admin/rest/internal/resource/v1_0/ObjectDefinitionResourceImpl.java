@@ -54,7 +54,6 @@ import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -75,6 +74,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
@@ -383,8 +383,7 @@ public class ObjectDefinitionResourceImpl
 					objectField.getDefaultValue(), objectField.getIndexed(),
 					objectField.getIndexedAsKeyword(),
 					objectField.getIndexedLanguageId(),
-					com.liferay.portal.vulcan.util.LocalizedMapUtil.
-						getLocalizedMap(objectField.getLabel()),
+					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 					objectField.getName(), objectField.getRequired(),
 					GetterUtil.getBoolean(objectField.getState()),
 					objectField.getSystem(),

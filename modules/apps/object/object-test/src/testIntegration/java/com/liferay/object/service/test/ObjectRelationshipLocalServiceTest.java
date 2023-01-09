@@ -36,7 +36,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.system.TestSystemObjectDefinitionMetadata;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -49,6 +48,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.sql.Connection;
 

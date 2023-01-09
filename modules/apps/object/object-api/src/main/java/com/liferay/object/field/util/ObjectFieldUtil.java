@@ -17,7 +17,7 @@ package com.liferay.object.field.util;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 import java.util.List;

@@ -18,10 +18,10 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 /**
  * @author Luis Miguel Barcos

@@ -39,7 +39,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringPool;
@@ -64,6 +63,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.sql.Connection;
 

@@ -36,7 +36,6 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

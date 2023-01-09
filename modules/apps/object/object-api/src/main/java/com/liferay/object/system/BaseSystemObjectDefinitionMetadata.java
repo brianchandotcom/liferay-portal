@@ -16,10 +16,10 @@ package com.liferay.object.system;
 
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Locale;
 import java.util.Map;

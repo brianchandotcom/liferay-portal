@@ -56,6 +56,18 @@ public class LocalizedMapUtil {
 		return getI18nMap(true, localizedMap);
 	}
 
+	public static Map<String, String> getLanguageIdMap(
+		Map<Locale, String> localizedMap) {
+
+		Map<String, String> languageIdMap = new HashMap<>();
+
+		localizedMap.forEach(
+			(locale, value) -> languageIdMap.put(
+				LocaleUtil.toLanguageId(locale), value));
+
+		return Collections.unmodifiableMap(languageIdMap);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getI18nMap(boolean, Map)}
@@ -122,6 +134,10 @@ public class LocalizedMapUtil {
 		}
 
 		return localizedMap;
+	}
+
+	public static Map<Locale, String> getLocalizedMap(String label) {
+		return Collections.singletonMap(LocaleUtil.getDefault(), label);
 	}
 
 	public static Map<Locale, String> merge(

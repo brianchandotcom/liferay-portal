@@ -87,14 +87,16 @@ public abstract class BaseMessageBodyWriter
 		ContextResolver<? extends ObjectMapper> contextResolver =
 			_providers.getContextResolver(_contextType, _mediaType);
 
-		if ((contextResolver == null) ||
-			(contextResolver.getContext(clazz) == null)) {
+		if (contextResolver != null) {
+			ObjectMapper objectMapper = contextResolver.getContext(clazz);
 
-			throw new InternalServerErrorException(
-				"Unable to generate object mapper for class " + clazz);
+			if (objectMapper != null) {
+				return objectMapper;
+			}
 		}
 
-		return contextResolver.getContext(clazz);
+		throw new InternalServerErrorException(
+			"Unable to generate object mapper for class " + clazz);
 	}
 
 	private SimpleFilterProvider _getSimpleFilterProvider() {

@@ -73,6 +73,7 @@ function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
 }
 
 export function FieldSet({
+	description,
 	fragmentEntryLinks,
 	selectedViewportSize,
 	isCustomStylesFieldSet = false,
@@ -93,6 +94,7 @@ export function FieldSet({
 	return !!availableFields.length && label ? (
 		<Collapse label={label} open>
 			<FieldSetContent
+				description={description}
 				fields={availableFields}
 				isCustomStylesFieldSet={isCustomStylesFieldSet}
 				item={item}
@@ -103,6 +105,7 @@ export function FieldSet({
 		</Collapse>
 	) : (
 		<FieldSetContent
+			description={description}
 			fields={availableFields}
 			isCustomStylesFieldSet={isCustomStylesFieldSet}
 			item={item}
@@ -114,6 +117,7 @@ export function FieldSet({
 }
 
 function FieldSetContent({
+	description,
 	fields,
 	isCustomStylesFieldSet,
 	item,
@@ -123,6 +127,8 @@ function FieldSetContent({
 }) {
 	return (
 		<div className="page-editor__sidebar__fieldset">
+			{description && <p className="text-secondary">{description}</p>}
+
 			{fields
 				.filter(
 					(field) =>

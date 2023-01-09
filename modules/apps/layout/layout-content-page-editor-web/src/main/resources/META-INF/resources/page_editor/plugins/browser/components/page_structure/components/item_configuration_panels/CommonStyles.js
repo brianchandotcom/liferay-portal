@@ -104,6 +104,7 @@ export function CommonStyles({
 				{styles.map((fieldSet, index) => {
 					return (
 						<FieldSet
+							description={fieldSet.description}
 							fields={fieldSet.styles}
 							fragmentEntryLinks={fragmentEntryLinksRef.current}
 							item={item}

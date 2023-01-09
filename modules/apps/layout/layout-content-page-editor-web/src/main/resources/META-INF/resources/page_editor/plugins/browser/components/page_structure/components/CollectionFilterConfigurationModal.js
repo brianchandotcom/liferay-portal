@@ -155,6 +155,7 @@ export default function CollectionFilterConfigurationModal({
 								.filter((fieldSet) => fieldSet.fields.length)
 								.map((fieldSet, index) => (
 									<FieldSet
+										description={fieldSet.description}
 										fields={fieldSet.fields}
 										key={`${fieldSet.label || ''}-${index}`}
 										label={fieldSet.label}

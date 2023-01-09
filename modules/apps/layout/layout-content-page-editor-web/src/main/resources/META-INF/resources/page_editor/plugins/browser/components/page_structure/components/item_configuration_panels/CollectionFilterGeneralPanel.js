@@ -247,6 +247,7 @@ export function CollectionFilterGeneralPanelContent({
 							key={`${fieldSet.label || ''}-${index}`}
 						>
 							<FieldSet
+								description={fieldSet.description}
 								fields={fieldSet.fields}
 								label={fieldSet.label}
 								languageId={languageId}

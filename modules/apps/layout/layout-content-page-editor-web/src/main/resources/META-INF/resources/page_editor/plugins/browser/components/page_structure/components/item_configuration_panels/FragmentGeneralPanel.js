@@ -83,6 +83,7 @@ export function FragmentGeneralPanel({item}) {
 					return (
 						<div className="mb-1" key={index}>
 							<FieldSet
+								description={fieldSet.description}
 								fields={fieldSet.fields}
 								fragmentEntryLinks={
 									fragmentEntryLinksRef.current

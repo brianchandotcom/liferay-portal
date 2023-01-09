@@ -77,6 +77,7 @@ export function FragmentAdvancedPanel({item}) {
 				fieldSets.map((fieldSet, index) => {
 					return (
 						<FieldSet
+							description={fieldSet.description}
 							fields={fieldSet.fields}
 							fragmentEntryLinks={fragmentEntryLinksRef.current}
 							key={index}

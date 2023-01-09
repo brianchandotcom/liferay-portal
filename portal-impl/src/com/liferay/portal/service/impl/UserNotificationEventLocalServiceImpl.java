@@ -63,7 +63,7 @@ public class UserNotificationEventLocalServiceImpl
 
 		serviceContext.setUuid(notificationEvent.getUuid());
 
-		return addUserNotificationEvent(
+		return userNotificationEventLocalService.addUserNotificationEvent(
 			userId, notificationEvent.getType(),
 			notificationEvent.getTimestamp(),
 			notificationEvent.getDeliveryType(),
@@ -77,7 +77,8 @@ public class UserNotificationEventLocalServiceImpl
 			long userId, NotificationEvent notificationEvent)
 		throws PortalException {
 
-		return addUserNotificationEvent(userId, true, false, notificationEvent);
+		return userNotificationEventLocalService.addUserNotificationEvent(
+			userId, true, false, notificationEvent);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -118,7 +119,7 @@ public class UserNotificationEventLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addUserNotificationEvent(
+		return userNotificationEventLocalService.addUserNotificationEvent(
 			userId, type, timestamp, deliveryType, deliverBy, true, payload,
 			false, archived, serviceContext);
 	}
@@ -133,7 +134,8 @@ public class UserNotificationEventLocalServiceImpl
 
 		for (NotificationEvent notificationEvent : notificationEvents) {
 			UserNotificationEvent userNotificationEvent =
-				addUserNotificationEvent(userId, notificationEvent);
+				userNotificationEventLocalService.addUserNotificationEvent(
+					userId, notificationEvent);
 
 			userNotificationEvents.add(userNotificationEvent);
 		}
@@ -165,7 +167,8 @@ public class UserNotificationEventLocalServiceImpl
 
 					userNotificationEvent.setArchived(true);
 
-					updateUserNotificationEvent(userNotificationEvent);
+					userNotificationEventLocalService.
+						updateUserNotificationEvent(userNotificationEvent);
 				}
 
 				return null;
@@ -184,7 +187,8 @@ public class UserNotificationEventLocalServiceImpl
 		Collection<String> uuids, long companyId) {
 
 		for (String uuid : uuids) {
-			deleteUserNotificationEvent(uuid, companyId);
+			userNotificationEventLocalService.deleteUserNotificationEvent(
+				uuid, companyId);
 		}
 	}
 
@@ -576,7 +580,7 @@ public class UserNotificationEventLocalServiceImpl
 			boolean actionRequired, JSONObject notificationEventJSONObject)
 		throws PortalException {
 
-		return sendUserNotificationEvents(
+		return userNotificationEventLocalService.sendUserNotificationEvents(
 			userId, portletId, deliveryType, true, actionRequired,
 			notificationEventJSONObject);
 	}
@@ -587,7 +591,7 @@ public class UserNotificationEventLocalServiceImpl
 			JSONObject notificationEventJSONObject)
 		throws PortalException {
 
-		return sendUserNotificationEvents(
+		return userNotificationEventLocalService.sendUserNotificationEvents(
 			userId, portletId, deliveryType, false,
 			notificationEventJSONObject);
 	}
@@ -620,7 +624,8 @@ public class UserNotificationEventLocalServiceImpl
 
 		for (String uuid : uuids) {
 			userNotificationEvents.add(
-				updateUserNotificationEvent(uuid, companyId, archive));
+				userNotificationEventLocalService.updateUserNotificationEvent(
+					uuid, companyId, archive));
 		}
 
 		return userNotificationEvents;

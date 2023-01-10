@@ -54,11 +54,11 @@ import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.action.executor.FunctionActionExecutorServiceWrapperTracker;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerDisplayContext;
 import com.liferay.portal.workflow.kaleo.exception.DuplicateKaleoDefinitionNameException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.io.IOException;
@@ -473,7 +473,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		KaleoDesignerDisplayContext kaleoDesignerDisplayContext =
 			new KaleoDesignerDisplayContext(
-				_functionActionExecutorServiceWrapperTracker, renderRequest,
+				_actionExecutorManager, renderRequest,
 				_kaleoDefinitionVersionLocalService, _portletResourcePermission,
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 				_userLocalService);
@@ -514,11 +514,10 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		KaleoDesignerPortlet.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	private ActionExecutorManager _actionExecutorManager;
 
 	@Reference
-	private FunctionActionExecutorServiceWrapperTracker
-		_functionActionExecutorServiceWrapperTracker;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

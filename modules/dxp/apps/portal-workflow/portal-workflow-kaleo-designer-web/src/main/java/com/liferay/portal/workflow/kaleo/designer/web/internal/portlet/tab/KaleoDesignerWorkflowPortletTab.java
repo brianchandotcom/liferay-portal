@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.action.executor.FunctionActionExecutorServiceWrapperTracker;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerDisplayContext;
 import com.liferay.portal.workflow.kaleo.exception.DuplicateKaleoDefinitionNameException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.portlet.tab.BaseWorkflowPortletTab;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
@@ -121,7 +121,7 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 			WebKeys.THEME_DISPLAY);
 
 		_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
-			_functionActionExecutorServiceWrapperTracker, renderRequest,
+			_actionExecutorManager, renderRequest,
 			_kaleoDefinitionVersionLocalService, _portletResourcePermission,
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 			_userLocalService);
@@ -169,8 +169,7 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 		KaleoDesignerWorkflowPortletTab.class);
 
 	@Reference
-	private FunctionActionExecutorServiceWrapperTracker
-		_functionActionExecutorServiceWrapperTracker;
+	private ActionExecutorManager _actionExecutorManager;
 
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;

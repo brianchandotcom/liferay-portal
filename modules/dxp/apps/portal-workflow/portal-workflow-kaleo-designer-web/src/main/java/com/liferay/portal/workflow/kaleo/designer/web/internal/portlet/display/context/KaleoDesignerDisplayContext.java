@@ -57,7 +57,6 @@ import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.action.executor.FunctionActionExecutorServiceWrapperTracker;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
@@ -68,6 +67,7 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.Kaleo
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionViewPermissionPredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionActiveComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionModifiedDateComparator;
@@ -78,7 +78,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -94,16 +93,14 @@ import javax.servlet.jsp.PageContext;
 public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
-		FunctionActionExecutorServiceWrapperTracker
-			functionActionExecutorServiceWrapperTracker,
+		ActionExecutorManager actionExecutorManager,
 		RenderRequest renderRequest,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		PortletResourcePermission portletResourcePermission,
 		ResourceBundleLoader resourceBundleLoader,
 		UserLocalService userLocalService) {
 
-		_functionActionExecutorServiceWrapperTracker =
-			functionActionExecutorServiceWrapperTracker;
+		_actionExecutorManager = actionExecutorManager;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_portletResourcePermission = portletResourcePermission;
@@ -223,12 +220,8 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public JSONArray getFunctionActionExecutorsJSONArray() throws Exception {
-		Set<String> functionActionExecutorKeys =
-			_functionActionExecutorServiceWrapperTracker.
-				getFunctionActionExecutorKeys();
-
 		return JSONUtil.putAll(
-			functionActionExecutorKeys.toArray(new String[0]));
+			_actionExecutorManager.getFunctionActionExecutorKeys());
 	}
 
 	public KaleoDefinition getKaleoDefinition(
@@ -839,8 +832,7 @@ public class KaleoDesignerDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerDisplayContext.class);
 
-	private final FunctionActionExecutorServiceWrapperTracker
-		_functionActionExecutorServiceWrapperTracker;
+	private final ActionExecutorManager _actionExecutorManager;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;

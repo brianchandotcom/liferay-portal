@@ -1187,7 +1187,7 @@ public class LayoutReferencesExportImportContentProcessor
 				}
 			}
 
-			if (uri != null) {
+			if ((uri != null) && Validator.isIPAddress(uri.getHost())) {
 				InetAddress inetAddress = InetAddressUtil.getInetAddressByName(
 					uri.getHost());
 

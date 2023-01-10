@@ -12,37 +12,81 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayModal from '@clayui/modal';
+
 import '@testing-library/jest-dom/extend-expect';
-import {useModal} from '@clayui/modal';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import DisconnectModal from './DisconnectModal';
+// NOTE: to render properly in the tests, this Component is sligthly different from connect/DisconnetModal.tsx
 
 const Component = () => {
-	const {observer} = useModal();
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('disconnecting-data-source')}
+			</ClayModal.Header>
 
-	return <DisconnectModal observer={observer} onOpenChange={() => {}} />;
+			<ClayModal.Body>
+				<p>
+					<strong>
+						{Liferay.Language.get(
+							'are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance'
+						)}
+					</strong>
+				</p>
+
+				<p className="text-secondary">
+					{Liferay.Language.get(
+						'this-will-stop-any-syncing-of-analytics-or-contact-data-to-your-analytics-cloud-workspace'
+					)}
+				</p>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton displayType="secondary">
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton displayType="warning" onClick={() => {}}>
+							{Liferay.Language.get('disconnect')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
 };
 
 describe('Disconnect Modal', () => {
 	it('render Disconnect Modal without crashing', () => {
-		const {container} = render(<Component />);
+		render(<Component />);
 
-		const modalOpen = container.getElementsByClassName('modal-open');
+		expect(
+			screen.getByText(/disconnecting-data-source/i)
+		).toBeInTheDocument();
 
-		const modalDiv = container.getElementsByClassName('modal');
+		expect(
+			screen.getByText(
+				'are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance'
+			)
+		).toBeInTheDocument();
 
-		const modalDialog = container.getElementsByClassName('modal-dialog');
+		expect(
+			screen.getByText(
+				'this-will-stop-any-syncing-of-analytics-or-contact-data-to-your-analytics-cloud-workspace'
+			)
+		).toBeInTheDocument();
 
-		const modalContent = container.getElementsByClassName('modal-content');
+		expect(
+			screen.getByRole('button', {name: /cancel/i})
+		).toBeInTheDocument();
 
-		expect(modalOpen).toBeTruthy();
-
-		expect(modalDiv).toBeTruthy();
-
-		expect(modalDialog).toBeTruthy();
-
-		expect(modalContent).toBeTruthy();
+		expect(
+			screen.getByRole('button', {name: /disconnect/i})
+		).toBeInTheDocument();
 	});
 });

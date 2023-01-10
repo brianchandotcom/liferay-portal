@@ -15,8 +15,8 @@
 package com.liferay.portal.tools.wsdd.builder;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.wsdd.builder.util.Java2WsddTask;
 import com.liferay.portal.xml.SAXReaderFactory;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public class WSDDMerger {
 
 		document = saxReader.read(destinationFile);
 
-		String oldContent = Dom4jUtil.toString(document);
+		String oldContent = Java2WsddTask.documentToString(document);
 
 		rootElement = document.getRootElement();
 
@@ -97,7 +97,7 @@ public class WSDDMerger {
 			rootElement.add(serviceElement);
 		}
 
-		String content = Dom4jUtil.toString(document);
+		String content = Java2WsddTask.documentToString(document);
 
 		if (!content.equals(oldContent)) {
 			content = StringUtil.replace(content, "\"/>", "\" />");

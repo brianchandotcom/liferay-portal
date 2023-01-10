@@ -236,7 +236,13 @@ public class UpgradeExecutor {
 					release.setBuildNumber(buildNumber);
 				}
 
-				release.setVerified(false);
+				if (_isInitialRelease(upgradeInfos)) {
+					release.setVerified(true);
+				}
+				else {
+					release.setVerified(false);
+				}
+
 				release.setState(state);
 
 				_releaseLocalService.updateRelease(release);

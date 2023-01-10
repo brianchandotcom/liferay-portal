@@ -3,6 +3,8 @@ definition {
 	macro addNewNotificationTemplate {
 		LexiconEntry.gotoAdd();
 
+		MenuItem.click(menuItem = "${notificationType}");
+
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",

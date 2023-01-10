@@ -21,7 +21,6 @@ import com.liferay.portal.search.solr8.configuration.SolrHttpClientFactoryConfig
 
 import java.util.Map;
 
-import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -33,10 +32,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author László Csontos
@@ -120,23 +115,6 @@ public class BasicAuthPoolingHttpClientFactory
 	@Deactivate
 	protected void deactivate() {
 		shutdown();
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setHttpRequestInterceptor(
-		HttpRequestInterceptor httpRequestInterceptor) {
-
-		addHttpRequestInterceptor(httpRequestInterceptor);
-	}
-
-	protected void unsetHttpRequestInterceptor(
-		HttpRequestInterceptor httpRequestInterceptor) {
-
-		removeHttpRequestInterceptor(httpRequestInterceptor);
 	}
 
 	private AuthScope _authScope;

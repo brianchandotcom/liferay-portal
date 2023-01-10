@@ -33,7 +33,6 @@ import java.util.Map;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -356,6 +355,9 @@ public class WebDriverUtil extends PropsValues {
 	private static void _setGenericCapabilities(
 		MutableCapabilities mutableCapabilities) {
 
+		mutableCapabilities.setCapability(
+			CapabilityType.UNHANDLED_PROMPT_BEHAVIOUR, "ignore");
+
 		for (Map.Entry<String, Object> entry :
 				_genericCapabilities.entrySet()) {
 
@@ -405,10 +407,6 @@ public class WebDriverUtil extends PropsValues {
 				if (PropsValues.PROXY_SERVER_ENABLED) {
 					put(CapabilityType.ACCEPT_INSECURE_CERTS, true);
 				}
-
-				put(
-					CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
-					UnexpectedAlertBehaviour.IGNORE);
 			}
 		};
 

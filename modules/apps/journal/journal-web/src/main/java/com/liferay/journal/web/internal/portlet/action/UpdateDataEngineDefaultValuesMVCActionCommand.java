@@ -98,8 +98,20 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 			throw new PortalException(throwable);
 		}
 
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
+		JournalArticle article = _addOrUpdateArticleDefaultValues(
+			actionRequest, _portal.getUploadPortletRequest(actionRequest));
+
+		// Asset display page
+
+		_assetDisplayPageEntryFormProcessor.process(
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
+			actionRequest);
+	}
+
+	private JournalArticle _addOrUpdateArticleDefaultValues(
+			ActionRequest actionRequest,
+			UploadPortletRequest uploadPortletRequest)
+		throws Exception {
 
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);
@@ -290,11 +302,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 				smallImage, smallImageURL, smallFile, serviceContext);
 		}
 
-		// Asset display page
-
-		_assetDisplayPageEntryFormProcessor.process(
-			JournalArticle.class.getName(), article.getResourcePrimKey(),
-			actionRequest);
+		return article;
 	}
 
 	@Reference

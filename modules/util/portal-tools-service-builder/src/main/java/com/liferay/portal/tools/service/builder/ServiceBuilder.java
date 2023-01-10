@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
@@ -131,8 +130,6 @@ import org.dom4j.XPath;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-
-import org.xml.sax.XMLReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -4797,15 +4794,7 @@ public class ServiceBuilder {
 
 		xml = StringUtil.replace(xml, '\r', "");
 
-		XMLReader xmlReader = null;
-
-		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider() !=
-				null) {
-
-			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
-		}
-
-		SAXReader saxReader = new SAXReader(xmlReader);
+		SAXReader saxReader = _getSAXReader();
 
 		Document document = saxReader.read(new UnsyncStringReader(xml));
 

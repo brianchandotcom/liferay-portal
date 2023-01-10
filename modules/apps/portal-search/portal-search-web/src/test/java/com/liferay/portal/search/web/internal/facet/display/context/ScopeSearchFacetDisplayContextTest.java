@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -23,19 +22,14 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.TestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -126,7 +120,7 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpOneTermCollector(groupId, count);
+		TestUtil.setUpOneTermCollector(_facetCollector, groupId, count);
 
 		String parameterValue = "0";
 
@@ -164,7 +158,7 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpOneTermCollector(groupId, count);
+		TestUtil.setUpOneTermCollector(_facetCollector, groupId, count);
 
 		String parameterValue = String.valueOf(groupId);
 
@@ -199,7 +193,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			new String[] {"able", "baker", "dog", "charlie"},
 			new int[] {6, 5, 4, 3});
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
 			createDisplayContext(StringPool.BLANK, "count:asc");
@@ -207,7 +201,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -218,7 +212,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			new String[] {"charlie", "dog", "baker", "able"},
 			new int[] {6, 5, 5, 4});
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		scopeSearchFacetDisplayContext = createDisplayContext(
 			StringPool.BLANK, "count:asc");
@@ -226,7 +220,8 @@ public class ScopeSearchFacetDisplayContextTest {
 		bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = TestUtil.buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), "able:4|baker:5|dog:5|charlie:6",
@@ -239,7 +234,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			new String[] {"able", "charlie", "baker", "dog"},
 			new int[] {3, 4, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
 			createDisplayContext(StringPool.BLANK, "count:desc");
@@ -247,7 +242,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -258,7 +253,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			new String[] {"able", "dog", "baker", "charlie"},
 			new int[] {4, 5, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		scopeSearchFacetDisplayContext = createDisplayContext(
 			StringPool.BLANK, "count:desc");
@@ -266,7 +261,8 @@ public class ScopeSearchFacetDisplayContextTest {
 		bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = TestUtil.buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), "charlie:6|baker:5|dog:5|able:4",
@@ -278,7 +274,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		List<TermCollector> termCollectors = _getTermCollectors(
 			"baker", "dog", "able", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
 			createDisplayContext(StringPool.BLANK, "key:asc");
@@ -286,7 +282,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -296,7 +292,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		termCollectors = _getTermCollectors(
 			"baker", "able", "baker", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		scopeSearchFacetDisplayContext = createDisplayContext(
 			StringPool.BLANK, "key:asc");
@@ -304,7 +300,8 @@ public class ScopeSearchFacetDisplayContextTest {
 		bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = TestUtil.buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -316,7 +313,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		List<TermCollector> termCollectors = _getTermCollectors(
 			"baker", "dog", "able", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
 			createDisplayContext(StringPool.BLANK, "key:desc");
@@ -324,7 +321,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -334,7 +331,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		termCollectors = _getTermCollectors(
 			"baker", "able", "baker", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors);
 
 		scopeSearchFacetDisplayContext = createDisplayContext(
 			StringPool.BLANK, "key:desc");
@@ -342,7 +339,8 @@ public class ScopeSearchFacetDisplayContextTest {
 		bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = TestUtil.buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -362,7 +360,9 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		ScopeSearchFacetDisplayContextBuilder
 			scopeSearchFacetDisplayContextBuilder =
-				new ScopeSearchFacetDisplayContextBuilder(getRenderRequest());
+				new ScopeSearchFacetDisplayContextBuilder(
+					TestUtil.getRenderRequest(
+						SiteFacetPortletInstanceConfiguration.class));
 
 		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
 		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
@@ -394,72 +394,6 @@ public class ScopeSearchFacetDisplayContextTest {
 		return group;
 	}
 
-	protected TermCollector createTermCollector(long groupId, int count) {
-		TermCollector termCollector = Mockito.mock(TermCollector.class);
-
-		Mockito.doReturn(
-			count
-		).when(
-			termCollector
-		).getFrequency();
-
-		Mockito.doReturn(
-			String.valueOf(groupId)
-		).when(
-			termCollector
-		).getTerm();
-
-		return termCollector;
-	}
-
-	protected PortletDisplay getPortletDisplay() throws ConfigurationException {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(SiteFacetPortletInstanceConfiguration.class)
-		).when(
-			portletDisplay
-		).getPortletInstanceConfiguration(
-			Mockito.any()
-		);
-
-		return portletDisplay;
-	}
-
-	protected RenderRequest getRenderRequest() throws ConfigurationException {
-		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
-
-		Mockito.doReturn(
-			getThemeDisplay()
-		).when(
-			renderRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
-		return renderRequest;
-	}
-
-	protected ThemeDisplay getThemeDisplay() throws ConfigurationException {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			getPortletDisplay()
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
-	}
-
-	protected void setUpOneTermCollector(long groupId, int count) {
-		Mockito.doReturn(
-			Collections.singletonList(createTermCollector(groupId, count))
-		).when(
-			_facetCollector
-		).getTermCollectors();
-	}
-
 	private void _addGroup(long groupId, String name) throws Exception {
 		Mockito.doReturn(
 			createGroup(groupId, name)
@@ -468,26 +402,6 @@ public class ScopeSearchFacetDisplayContextTest {
 		).fetchGroup(
 			groupId
 		);
-	}
-
-	private String _buildNameFrequencyString(
-			List<BucketDisplayContext> bucketDisplayContexts)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
-
-		for (BucketDisplayContext bucketDisplayContext :
-				bucketDisplayContexts) {
-
-			sb.append(bucketDisplayContext.getBucketText());
-			sb.append(StringPool.COLON);
-			sb.append(bucketDisplayContext.getFrequency());
-			sb.append(StringPool.PIPE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
 	}
 
 	private List<TermCollector> _getTermCollectors(String... groupNames)
@@ -511,20 +425,11 @@ public class ScopeSearchFacetDisplayContextTest {
 		for (int i = 1; i <= groupNames.length; i++) {
 			_addGroup(i, groupNames[i - 1]);
 
-			termCollectors.add(createTermCollector(i, frequencies[i - 1]));
+			termCollectors.add(
+				TestUtil.createTermCollector(i, frequencies[i - 1]));
 		}
 
 		return termCollectors;
-	}
-
-	private void _setUpMultipleTermCollectors(
-		List<TermCollector> termCollectors) {
-
-		Mockito.doReturn(
-			termCollectors
-		).when(
-			_facetCollector
-		).getTermCollectors();
 	}
 
 	private final Facet _facet = Mockito.mock(Facet.class);

@@ -14,25 +14,17 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.display.context;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.builder.CustomFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.search.web.internal.util.TestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -119,7 +111,7 @@ public class CustomFacetDisplayContextTest {
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		_setUpOneTermCollector(fieldName, count);
+		TestUtil.setUpOneTermCollector(_facetCollector, fieldName, count);
 
 		String parameterValue = "";
 
@@ -153,7 +145,7 @@ public class CustomFacetDisplayContextTest {
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		_setUpOneTermCollector(fieldName, count);
+		TestUtil.setUpOneTermCollector(_facetCollector, fieldName, count);
 
 		String parameterValue = fieldName;
 
@@ -184,8 +176,9 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
-		_setUpMultipleTermCollectors(
-			_getTermCollectors(
+		TestUtil.setUpMultipleTermCollectors(
+			_facetCollector,
+			TestUtil.getTermCollectors(
 				new String[] {"alpha", "delta", "bravo", "charlie"},
 				new int[] {4, 5, 5, 6}));
 
@@ -194,7 +187,7 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"count:asc");
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -203,8 +196,9 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
-		_setUpMultipleTermCollectors(
-			_getTermCollectors(
+		TestUtil.setUpMultipleTermCollectors(
+			_facetCollector,
+			TestUtil.getTermCollectors(
 				new String[] {"alpha", "delta", "bravo", "charlie"},
 				new int[] {4, 5, 5, 6}));
 
@@ -213,7 +207,7 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"count:desc");
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -222,15 +216,16 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		_setUpMultipleTermCollectors(
-			_getTermCollectors("bravo", "alpha", "bravo", "charlie"));
+		TestUtil.setUpMultipleTermCollectors(
+			_facetCollector,
+			TestUtil.getTermCollectors("bravo", "alpha", "bravo", "charlie"));
 
 		CustomFacetDisplayContext customFacetDisplayContext =
 			_createDisplayContext(
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"key:asc");
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -239,39 +234,20 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		_setUpMultipleTermCollectors(
-			_getTermCollectors("bravo", "alpha", "bravo", "charlie"));
+		TestUtil.setUpMultipleTermCollectors(
+			_facetCollector,
+			TestUtil.getTermCollectors("bravo", "alpha", "bravo", "charlie"));
 
 		CustomFacetDisplayContext customFacetDisplayContext =
 			_createDisplayContext(
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"key:desc");
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"charlie:4|bravo:3|bravo:1|alpha:2", nameFrequencyString);
-	}
-
-	private String _buildNameFrequencyString(
-			List<BucketDisplayContext> bucketDisplayContexts)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
-
-		for (BucketDisplayContext bucketDisplayContext :
-				bucketDisplayContexts) {
-
-			sb.append(bucketDisplayContext.getBucketText());
-			sb.append(StringPool.COLON);
-			sb.append(bucketDisplayContext.getFrequency());
-			sb.append(StringPool.PIPE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
 	}
 
 	private CustomFacetDisplayContext _createDisplayContext(
@@ -290,7 +266,8 @@ public class CustomFacetDisplayContextTest {
 		throws Exception {
 
 		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
-			new CustomFacetDisplayContextBuilder(_getHttpServletRequest());
+			new CustomFacetDisplayContextBuilder(
+				TestUtil.getHttpServletRequest());
 
 		customFacetDisplayContextBuilder.setFacet(_facet);
 		customFacetDisplayContextBuilder.setParameterName("custom");
@@ -306,92 +283,6 @@ public class CustomFacetDisplayContextTest {
 		customFacetDisplayContextBuilder.setFieldToAggregate(fieldToAggregate);
 
 		return customFacetDisplayContextBuilder.build();
-	}
-
-	private TermCollector _createTermCollector(String fieldName, int count) {
-		TermCollector termCollector = Mockito.mock(TermCollector.class);
-
-		Mockito.doReturn(
-			count
-		).when(
-			termCollector
-		).getFrequency();
-
-		Mockito.doReturn(
-			fieldName
-		).when(
-			termCollector
-		).getTerm();
-
-		return termCollector;
-	}
-
-	private HttpServletRequest _getHttpServletRequest() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		Mockito.doReturn(
-			_getThemeDisplay()
-		).when(
-			httpServletRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
-		return httpServletRequest;
-	}
-
-	private List<TermCollector> _getTermCollectors(String... fieldNames) {
-		int[] frequencies = new int[fieldNames.length];
-
-		for (int i = 0; i < fieldNames.length; i++) {
-			frequencies[i] = i + 1;
-		}
-
-		return _getTermCollectors(fieldNames, frequencies);
-	}
-
-	private List<TermCollector> _getTermCollectors(
-		String[] fieldNames, int[] frequencies) {
-
-		List<TermCollector> termCollectors = new ArrayList<>();
-
-		for (int i = 0; i < fieldNames.length; i++) {
-			termCollectors.add(
-				_createTermCollector(fieldNames[i], frequencies[i]));
-		}
-
-		return termCollectors;
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(PortletDisplay.class)
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
-	}
-
-	private void _setUpMultipleTermCollectors(
-		List<TermCollector> termCollectors) {
-
-		Mockito.doReturn(
-			termCollectors
-		).when(
-			_facetCollector
-		).getTermCollectors();
-	}
-
-	private void _setUpOneTermCollector(String fieldName, int count) {
-		Mockito.doReturn(
-			Collections.singletonList(_createTermCollector(fieldName, count))
-		).when(
-			_facetCollector
-		).getTermCollectors();
 	}
 
 	private final Facet _facet = Mockito.mock(Facet.class);

@@ -14,25 +14,18 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.TestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -118,7 +111,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		setUpOneTermCollector(term, frequency);
+		TestUtil.setUpOneTermCollector(_facetCollector, term, frequency);
 
 		String facetParam = StringPool.BLANK;
 
@@ -153,7 +146,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		setUpOneTermCollector(term, frequency);
+		TestUtil.setUpOneTermCollector(_facetCollector, term, frequency);
 
 		String facetParam = term;
 
@@ -185,11 +178,11 @@ public class AssetTagsSearchFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
-		List<TermCollector> termCollectors1 = _getTermCollectors(
+		List<TermCollector> termCollectors1 = TestUtil.getTermCollectors(
 			new String[] {"alpha", "delta", "bravo", "charlie"},
 			new int[] {3, 4, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors1);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors1);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "count:asc");
@@ -197,18 +190,18 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts1 =
 			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString1 = _buildNameFrequencyString(
+		String nameFrequencyString1 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts1);
 
 		Assert.assertEquals(
 			bucketDisplayContexts1.toString(),
 			"alpha:3|delta:4|bravo:5|charlie:6", nameFrequencyString1);
 
-		List<TermCollector> termCollectors2 = _getTermCollectors(
+		List<TermCollector> termCollectors2 = TestUtil.getTermCollectors(
 			new String[] {"alpha", "delta", "bravo", "charlie"},
 			new int[] {4, 5, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors2);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors2);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
 			createDisplayContext(StringPool.BLANK, "count:asc");
@@ -216,7 +209,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts2 =
 			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
 
-		String nameFrequencyString2 = _buildNameFrequencyString(
+		String nameFrequencyString2 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts2);
 
 		Assert.assertEquals(
@@ -226,11 +219,11 @@ public class AssetTagsSearchFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
-		List<TermCollector> termCollectors1 = _getTermCollectors(
+		List<TermCollector> termCollectors1 = TestUtil.getTermCollectors(
 			new String[] {"alpha", "charlie", "bravo", "delta"},
 			new int[] {3, 4, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors1);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors1);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "count:desc");
@@ -238,18 +231,18 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts1 =
 			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString1 = _buildNameFrequencyString(
+		String nameFrequencyString1 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts1);
 
 		Assert.assertEquals(
 			bucketDisplayContexts1.toString(),
 			"delta:6|bravo:5|charlie:4|alpha:3", nameFrequencyString1);
 
-		List<TermCollector> termCollectors2 = _getTermCollectors(
+		List<TermCollector> termCollectors2 = TestUtil.getTermCollectors(
 			new String[] {"alpha", "delta", "bravo", "charlie"},
 			new int[] {4, 5, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors2);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors2);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
 			createDisplayContext(StringPool.BLANK, "count:desc");
@@ -257,7 +250,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts2 =
 			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
 
-		String nameFrequencyString2 = _buildNameFrequencyString(
+		String nameFrequencyString2 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts2);
 
 		Assert.assertEquals(
@@ -267,10 +260,10 @@ public class AssetTagsSearchFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		List<TermCollector> termCollectors1 = _getTermCollectors(
+		List<TermCollector> termCollectors1 = TestUtil.getTermCollectors(
 			"bravo", "delta", "alpha", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors1);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors1);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "key:asc");
@@ -278,17 +271,17 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts1 =
 			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString1 = _buildNameFrequencyString(
+		String nameFrequencyString1 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts1);
 
 		Assert.assertEquals(
 			bucketDisplayContexts1.toString(),
 			"alpha:3|bravo:1|charlie:4|delta:2", nameFrequencyString1);
 
-		List<TermCollector> termCollectors2 = _getTermCollectors(
+		List<TermCollector> termCollectors2 = TestUtil.getTermCollectors(
 			"bravo", "alpha", "bravo", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors2);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors2);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
 			createDisplayContext(StringPool.BLANK, "key:asc");
@@ -296,7 +289,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts2 =
 			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
 
-		String nameFrequencyString2 = _buildNameFrequencyString(
+		String nameFrequencyString2 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts2);
 
 		Assert.assertEquals(
@@ -306,10 +299,10 @@ public class AssetTagsSearchFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		List<TermCollector> termCollectors1 = _getTermCollectors(
+		List<TermCollector> termCollectors1 = TestUtil.getTermCollectors(
 			"bravo", "delta", "alpha", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors1);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors1);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "key:desc");
@@ -317,17 +310,17 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts1 =
 			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString1 = _buildNameFrequencyString(
+		String nameFrequencyString1 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts1);
 
 		Assert.assertEquals(
 			bucketDisplayContexts1.toString(),
 			"delta:2|charlie:4|bravo:1|alpha:3", nameFrequencyString1);
 
-		List<TermCollector> termCollectors2 = _getTermCollectors(
+		List<TermCollector> termCollectors2 = TestUtil.getTermCollectors(
 			"bravo", "alpha", "bravo", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors2);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, termCollectors2);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
 			createDisplayContext(StringPool.BLANK, "key:desc");
@@ -335,7 +328,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts2 =
 			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
 
-		String nameFrequencyString2 = _buildNameFrequencyString(
+		String nameFrequencyString2 = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts2);
 
 		Assert.assertEquals(
@@ -357,7 +350,8 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		AssetTagsSearchFacetDisplayContextBuilder
 			assetTagsSearchFacetDisplayContextBuilder =
 				new AssetTagsSearchFacetDisplayContextBuilder(
-					getRenderRequest());
+					TestUtil.getRenderRequest(
+						TagFacetPortletInstanceConfiguration.class));
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
 		assetTagsSearchFacetDisplayContextBuilder.setFacet(_facet);
@@ -370,126 +364,6 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		assetTagsSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
 
 		return assetTagsSearchFacetDisplayContextBuilder.build();
-	}
-
-	protected TermCollector createTermCollector(String term, int frequency) {
-		TermCollector termCollector = Mockito.mock(TermCollector.class);
-
-		Mockito.doReturn(
-			frequency
-		).when(
-			termCollector
-		).getFrequency();
-
-		Mockito.doReturn(
-			term
-		).when(
-			termCollector
-		).getTerm();
-
-		return termCollector;
-	}
-
-	protected PortletDisplay getPortletDisplay() throws ConfigurationException {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(TagFacetPortletInstanceConfiguration.class)
-		).when(
-			portletDisplay
-		).getPortletInstanceConfiguration(
-			Mockito.any()
-		);
-
-		return portletDisplay;
-	}
-
-	protected RenderRequest getRenderRequest() throws ConfigurationException {
-		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
-
-		Mockito.doReturn(
-			getThemeDisplay()
-		).when(
-			renderRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
-		return renderRequest;
-	}
-
-	protected ThemeDisplay getThemeDisplay() throws ConfigurationException {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			getPortletDisplay()
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
-	}
-
-	protected void setUpOneTermCollector(String facetParam, int frequency) {
-		Mockito.doReturn(
-			Collections.singletonList(
-				createTermCollector(facetParam, frequency))
-		).when(
-			_facetCollector
-		).getTermCollectors();
-	}
-
-	private String _buildNameFrequencyString(
-			List<BucketDisplayContext> bucketDisplayContexts)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
-
-		for (BucketDisplayContext bucketDisplayContext :
-				bucketDisplayContexts) {
-
-			sb.append(bucketDisplayContext.getBucketText());
-			sb.append(StringPool.COLON);
-			sb.append(bucketDisplayContext.getFrequency());
-			sb.append(StringPool.PIPE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
-	private List<TermCollector> _getTermCollectors(String... terms) {
-		int[] frequencies = new int[terms.length];
-
-		for (int i = 0; i < terms.length; i++) {
-			frequencies[i] = i + 1;
-		}
-
-		return _getTermCollectors(terms, frequencies);
-	}
-
-	private List<TermCollector> _getTermCollectors(
-		String[] terms, int[] frequencies) {
-
-		List<TermCollector> termCollectors = new ArrayList<>();
-
-		for (int i = 1; i <= terms.length; i++) {
-			termCollectors.add(
-				createTermCollector(terms[i - 1], frequencies[i - 1]));
-		}
-
-		return termCollectors;
-	}
-
-	private void _setUpMultipleTermCollectors(
-		List<TermCollector> termCollectors) {
-
-		Mockito.doReturn(
-			termCollectors
-		).when(
-			_facetCollector
-		).getTermCollectors();
 	}
 
 	private final Facet _facet = Mockito.mock(Facet.class);

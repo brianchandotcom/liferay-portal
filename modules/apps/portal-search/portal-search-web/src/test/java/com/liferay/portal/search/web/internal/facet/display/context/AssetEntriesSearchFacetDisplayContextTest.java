@@ -18,22 +18,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.TestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,7 +67,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		_setUpMultipleTermCollectors(classNames);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
@@ -81,7 +76,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -100,7 +95,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		_setUpMultipleTermCollectors(classNames);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
@@ -109,7 +104,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -124,7 +119,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		_setUpMultipleTermCollectors(classNames);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
@@ -133,7 +128,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -147,7 +142,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		_setUpMultipleTermCollectors(classNames);
+		TestUtil.setUpMultipleTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext1 = _createDisplayContext(
@@ -156,31 +151,12 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
+		String nameFrequencyString = TestUtil.buildNameFrequencyString(
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
 			"delta:2|charlie:4|bravo:1|alpha:3", nameFrequencyString);
-	}
-
-	private String _buildNameFrequencyString(
-		List<BucketDisplayContext> bucketDisplayContexts) {
-
-		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
-
-		for (BucketDisplayContext bucketDisplayContext :
-				bucketDisplayContexts) {
-
-			sb.append(bucketDisplayContext.getBucketText());
-			sb.append(StringPool.COLON);
-			sb.append(bucketDisplayContext.getFrequency());
-			sb.append(StringPool.PIPE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
 	}
 
 	private AssetEntriesSearchFacetDisplayContext _createDisplayContext(
@@ -190,7 +166,8 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 		AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetDisplayContextBuilder =
 				new AssetEntriesSearchFacetDisplayContextBuilder(
-					_getRenderRequest());
+					TestUtil.getRenderRequest(
+						TypeFacetPortletInstanceConfiguration.class));
 
 		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(classNames);
 		assetEntriesSearchFacetDisplayContextBuilder.setFacet(_facet);
@@ -205,64 +182,6 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			StringPool.BLANK);
 
 		return assetEntriesSearchFacetDisplayContextBuilder.build();
-	}
-
-	private TermCollector _createTermCollector(String term, int frequency) {
-		TermCollector termCollector = Mockito.mock(TermCollector.class);
-
-		Mockito.doReturn(
-			frequency
-		).when(
-			termCollector
-		).getFrequency();
-
-		Mockito.doReturn(
-			term
-		).when(
-			termCollector
-		).getTerm();
-
-		return termCollector;
-	}
-
-	private PortletDisplay _getPortletDisplay() throws Exception {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(TypeFacetPortletInstanceConfiguration.class)
-		).when(
-			portletDisplay
-		).getPortletInstanceConfiguration(
-			Mockito.any()
-		);
-
-		return portletDisplay;
-	}
-
-	private RenderRequest _getRenderRequest() throws Exception {
-		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
-
-		Mockito.doReturn(
-			_getThemeDisplay()
-		).when(
-			renderRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
-		return renderRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			_getPortletDisplay()
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
 	}
 
 	private void _mockResourceActions(String[] classNames) {
@@ -280,22 +199,6 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			).getModelResource(
 				Mockito.any(Locale.class), Mockito.eq(className)
 			);
-		}
-	}
-
-	private void _setUpMultipleTermCollectors(String... terms) {
-		int frequency = 1;
-
-		for (String term : terms) {
-			Mockito.doReturn(
-				_createTermCollector(term, frequency)
-			).when(
-				_facetCollector
-			).getTermCollector(
-				term
-			);
-
-			frequency++;
 		}
 	}
 

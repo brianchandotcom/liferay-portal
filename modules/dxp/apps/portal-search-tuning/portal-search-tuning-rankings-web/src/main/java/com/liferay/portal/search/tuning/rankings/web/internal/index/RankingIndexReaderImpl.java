@@ -31,7 +31,6 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,11 +42,22 @@ import org.osgi.service.component.annotations.Reference;
 public class RankingIndexReaderImpl implements RankingIndexReader {
 
 	@Override
-	public Optional<Ranking> fetchByQueryStringOptional(
+	public Ranking fetch(RankingIndexName rankingIndexName, String id) {
+		Document document = _getDocument(rankingIndexName, id);
+
+		if (document == null) {
+			return null;
+		}
+
+		return translate(document, id);
+	}
+
+	@Override
+	public Ranking fetchByQueryString(
 		RankingIndexName rankingIndexName, String queryString) {
 
 		if (Validator.isBlank(queryString)) {
-			return Optional.empty();
+			return null;
 		}
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -59,18 +69,7 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
 
-		return _getFirstRankingOptional(rankingIndexName, searchSearchResponse);
-	}
-
-	@Override
-	public Optional<Ranking> fetchOptional(
-		RankingIndexName rankingIndexName, String id) {
-
-		return Optional.ofNullable(
-			_getDocument(rankingIndexName, id)
-		).map(
-			document -> translate(document, id)
-		);
+		return _getFirstRanking(rankingIndexName, searchSearchResponse);
 	}
 
 	@Override
@@ -108,17 +107,17 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		return null;
 	}
 
-	private Optional<Ranking> _getFirstRankingOptional(
+	private Ranking _getFirstRanking(
 		RankingIndexName rankingIndexName,
 		SearchSearchResponse searchSearchResponse) {
 
 		if (searchSearchResponse.getCount() == 0) {
-			return Optional.empty();
+			return null;
 		}
 
 		SearchHit searchHit = _getFirstSearchHit(searchSearchResponse);
 
-		return fetchOptional(rankingIndexName, searchHit.getId());
+		return fetch(rankingIndexName, searchHit.getId());
 	}
 
 	private SearchHit _getFirstSearchHit(

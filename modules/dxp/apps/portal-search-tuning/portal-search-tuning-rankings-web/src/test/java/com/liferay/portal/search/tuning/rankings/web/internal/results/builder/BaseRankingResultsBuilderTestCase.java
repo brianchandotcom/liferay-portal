@@ -22,8 +22,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
-import java.util.Optional;
-
 import org.mockito.Mockito;
 
 /**
@@ -32,9 +30,9 @@ import org.mockito.Mockito;
 public abstract class BaseRankingResultsBuilderTestCase
 	extends BaseRankingsWebTestCase {
 
-	protected void setUpRankingIndexReader(Optional<Ranking> rankingOptional) {
+	protected void setUpRankingIndexReader(Ranking ranking) {
 		Mockito.doReturn(
-			rankingOptional
+			ranking
 		).when(
 			rankingIndexReader
 		).fetch(

@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.wsdd.builder;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 
@@ -31,7 +31,9 @@ import java.util.TreeMap;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 /**
  * @author Brian Wing Shun Chan
@@ -67,7 +69,7 @@ public class WSDDMerger {
 
 		document = saxReader.read(destinationFile);
 
-		String oldContent = Dom4jUtil.toString(document);
+		String oldContent = _documentToString(document);
 
 		rootElement = document.getRootElement();
 
@@ -97,7 +99,7 @@ public class WSDDMerger {
 			rootElement.add(serviceElement);
 		}
 
-		String content = Dom4jUtil.toString(document);
+		String content = _documentToString(document);
 
 		if (!content.equals(oldContent)) {
 			content = StringUtil.replace(content, "\"/>", "\" />");
@@ -114,6 +116,33 @@ public class WSDDMerger {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+	}
+
+	private static String _documentToString(Document document)
+		throws IOException {
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputFormat outputFormat = new OutputFormat(StringPool.TAB, true);
+
+		outputFormat.setOmitEncoding(true);
+		outputFormat.setPadText(true);
+		outputFormat.setTrimText(true);
+
+		XMLWriter xmlWriter = new XMLWriter(
+			unsyncByteArrayOutputStream, outputFormat);
+
+		xmlWriter.write(document);
+
+		String content = StringUtil.trimTrailing(
+			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
+
+		while (content.contains(" \n")) {
+			content = StringUtil.replace(content, " \n", "\n");
+		}
+
+		return content;
 	}
 
 	private static SAXReader _getSAXReader() {

@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 
@@ -32,24 +33,22 @@ import org.opensaml.saml.saml2.core.Attribute;
 public class AttributePublisherImpl
 	implements AttributeResolver.AttributePublisher {
 
-	@Override
-	public AttributeValue buildString(String value) {
-		return new AttributeValueWrapper(
-			OpenSamlUtil.buildAttributeValue(value));
-	}
-
 	public List<Attribute> getAttributes() {
 		return _attributes;
 	}
 
 	@Override
-	public void publish(
-		String name, String nameFormat, AttributeValue... attributeValues) {
-
+	public void publish(String name, String nameFormat, String... values) {
 		Attribute attribute = OpenSamlUtil.buildAttribute(
 			name, null, nameFormat);
 
 		List<XMLObject> attributeXmlObjects = attribute.getAttributeValues();
+
+		AttributeValue[] attributeValues = TransformUtil.transform(
+			values,
+			value -> new AttributeValueWrapper(
+				OpenSamlUtil.buildAttributeValue(value)),
+			AttributeValue.class);
 
 		Stream<AttributeValue> stream = Arrays.stream(attributeValues);
 

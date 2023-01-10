@@ -150,14 +150,12 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		if (!namespaceEnabled) {
 			attributePublisher.publish(
-				attributeName, Attribute.UNSPECIFIED,
-				attributePublisher.buildString(value.toString()));
+				attributeName, Attribute.UNSPECIFIED, value.toString());
 		}
 		else {
 			attributePublisher.publish(
 				"urn:liferay:user:expando:" + attributeName,
-				Attribute.URI_REFERENCE,
-				attributePublisher.buildString(value.toString()));
+				Attribute.URI_REFERENCE, value.toString());
 		}
 	}
 
@@ -190,10 +188,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				name, nameFormat,
 				groupsStream.map(
 					Group::getName
-				).map(
-					attributePublisher::buildString
 				).toArray(
-					AttributePublisher.AttributeValue[]::new
+					String[]::new
 				));
 		}
 		catch (Exception exception) {
@@ -228,13 +224,11 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		if (namespaceEnabled) {
 			attributePublisher.publish(
-				values[0], Attribute.URI_REFERENCE,
-				attributePublisher.buildString(attributeValue));
+				values[0], Attribute.URI_REFERENCE, attributeValue);
 		}
 		else {
 			attributePublisher.publish(
-				values[0], Attribute.UNSPECIFIED,
-				attributePublisher.buildString(attributeValue));
+				values[0], Attribute.UNSPECIFIED, attributeValue);
 		}
 	}
 
@@ -286,10 +280,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					name, nameFormat,
 					rolesStream.map(
 						Role::getName
-					).map(
-						attributePublisher::buildString
 					).toArray(
-						AttributePublisher.AttributeValue[]::new
+						String[]::new
 					));
 			}
 		}
@@ -335,10 +327,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				name, nameFormat,
 				organizationsStream.map(
 					Organization::getName
-				).map(
-					publisher::buildString
 				).toArray(
-					AttributePublisher.AttributeValue[]::new
+					String[]::new
 				));
 		}
 		catch (Exception exception) {
@@ -427,10 +417,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				name, nameFormat,
 				uniqueRolesStream.map(
 					Role::getName
-				).map(
-					attributePublisher::buildString
 				).toArray(
-					AttributePublisher.AttributeValue[]::new
+					String[]::new
 				));
 		}
 		catch (Exception exception) {
@@ -457,7 +445,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		attributePublisher.publish(
 			"logoutURL", Attribute.UNSPECIFIED,
-			attributePublisher.buildString(samlIdpMetadataSalesForceLogoutURL));
+			samlIdpMetadataSalesForceLogoutURL);
 
 		String samlIdpMetadataSalesForceSsoStartPage = GetterUtil.getString(
 			PropsUtil.get(
@@ -473,8 +461,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		attributePublisher.publish(
 			"ssoStartPage", Attribute.UNSPECIFIED,
-			attributePublisher.buildString(
-				samlIdpMetadataSalesForceSsoStartPage));
+			samlIdpMetadataSalesForceSsoStartPage);
 	}
 
 	private void _addSiteRolesAttribute(
@@ -553,10 +540,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					name, nameFormat,
 					rolesStream.map(
 						Role::getName
-					).map(
-						attributePublisher::buildString
 					).toArray(
-						AttributePublisher.AttributeValue[]::new
+						String[]::new
 					));
 			}
 		}
@@ -604,9 +589,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			nameFormat = Attribute.UNSPECIFIED;
 		}
 
-		attributePublisher.publish(
-			attributeName, nameFormat,
-			attributePublisher.buildString(attributeValue));
+		attributePublisher.publish(attributeName, nameFormat, attributeValue);
 	}
 
 	private void _addUserAttribute(
@@ -618,13 +601,12 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		if (!namespaceEnabled) {
 			attributePublisher.publish(
-				attributeName, Attribute.UNSPECIFIED,
-				attributePublisher.buildString(value.toString()));
+				attributeName, Attribute.UNSPECIFIED, value.toString());
 		}
 		else {
 			attributePublisher.publish(
 				"urn:liferay:user:" + attributeName, Attribute.URI_REFERENCE,
-				attributePublisher.buildString(value.toString()));
+				value.toString());
 		}
 	}
 
@@ -657,10 +639,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				name, nameFormat,
 				userGroupsStream.map(
 					UserGroup::getName
-				).map(
-					attributePublisher::buildString
 				).toArray(
-					AttributePublisher.AttributeValue[]::new
+					String[]::new
 				));
 		}
 		catch (Exception exception) {

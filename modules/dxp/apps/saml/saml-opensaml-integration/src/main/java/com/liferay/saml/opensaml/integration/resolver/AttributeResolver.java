@@ -32,10 +32,8 @@ public interface AttributeResolver extends Resolver {
 
 	public interface AttributePublisher {
 
-		public AttributeValue buildString(String value);
-
 		public void publish(
-			String name, String nameFormat, AttributeValue... attributeValues);
+			String name, String nameFormat, String... attributeValues);
 
 		public interface AttributeValue {
 		}

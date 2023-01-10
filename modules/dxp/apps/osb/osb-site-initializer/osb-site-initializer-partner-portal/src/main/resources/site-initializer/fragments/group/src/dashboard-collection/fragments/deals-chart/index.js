@@ -272,7 +272,7 @@ export default function () {
 			title="Deals"
 		>
 			{!(opportunitiesChartValues && leadsChartValues) && (
-				<ClayLoadingIndicator className="mb-10" size="md" />
+				<ClayLoadingIndicator className="mb-10 mt-9" size="md" />
 			)}
 
 			{opportunitiesChartValues && leadsChartValues && getChart()}

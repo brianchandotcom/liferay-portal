@@ -105,7 +105,7 @@ export default function () {
 			}
 			title="Renewals"
 		>
-			{!data && <ClayLoadingIndicator size="md" />}
+			{!data && <ClayLoadingIndicator className="mb-10 mt-9" size="md" />}
 
 			<div className="align-items-start d-flex flex-column mt-3">
 				{filteredArray?.map((item, index) => {

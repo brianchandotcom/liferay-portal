@@ -58,6 +58,15 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public void checkModelResourcePermission(
+			long objectDefinitionId, long objectEntryId, String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryService.checkModelResourcePermission(
+			objectDefinitionId, objectEntryId, actionId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry deleteObjectEntry(
 			long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

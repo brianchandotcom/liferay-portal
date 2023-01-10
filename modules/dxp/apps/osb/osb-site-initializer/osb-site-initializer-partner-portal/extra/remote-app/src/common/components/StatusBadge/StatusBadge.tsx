@@ -32,6 +32,7 @@ const statusClassName: StatusClassname = {
 	[Status.CANCELED.name]: 'text-neutral-10',
 	[Status.CLAIM_PAID.name]: 'text-brand-primary-lighten-2',
 	[Status.IN_FINANCE_REVIEW.name]: 'text-brand-secondary-darken-3',
+	[Status.IN_DIRECTOR_REVIEW.name]: 'text-brand-secondary-darken-3',
 };
 
 const StatusBadge = ({status}: Props) => {

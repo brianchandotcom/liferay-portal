@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -71,11 +70,17 @@ public class DefaultFacetTranslator implements FacetTranslator {
 				continue;
 			}
 
-			Optional<QueryBuilder> postFilterQueryBuilderOptional =
-				_translateFacetQuery(facet);
+			BooleanClause<Filter> booleanClause =
+				facet.getFacetFilterBooleanClause();
 
-			postFilterQueryBuilderOptional.ifPresent(
-				postFilterQueryBuilders::add);
+			if (booleanClause != null) {
+				QueryBuilder postFilterQueryBuilder = _translateBooleanClause(
+					booleanClause);
+
+				if (postFilterQueryBuilder != null) {
+					postFilterQueryBuilders.add(postFilterQueryBuilder);
+				}
+			}
 
 			AggregationBuilder aggregationBuilder =
 				_facetProcessor.processFacet(facet);
@@ -143,19 +148,6 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
 
 		return _filterTranslator.translate(booleanFilter, null);
-	}
-
-	private Optional<QueryBuilder> _translateFacetQuery(Facet facet) {
-		BooleanClause<Filter> booleanClause =
-			facet.getFacetFilterBooleanClause();
-
-		if (booleanClause == null) {
-			return Optional.empty();
-		}
-
-		QueryBuilder queryBuilder = _translateBooleanClause(booleanClause);
-
-		return Optional.of(queryBuilder);
 	}
 
 	@Reference(service = CompositeFacetProcessor.class)

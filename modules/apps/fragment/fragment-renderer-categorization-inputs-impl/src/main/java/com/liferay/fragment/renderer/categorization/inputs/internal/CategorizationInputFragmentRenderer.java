@@ -148,6 +148,12 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
+			PrintWriter printWriter = httpServletResponse.getWriter();
+
+			printWriter.write("<div class=\"categories-input\">");
+
+			_writeCss(fragmentRendererContext, printWriter);
+
 			AssetCategoriesSelectorTag assetCategoriesSelectorTag =
 				new AssetCategoriesSelectorTag();
 
@@ -172,6 +178,8 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 
 			assetCategoriesSelectorTag.doTag(
 				httpServletRequest, httpServletResponse);
+
+			printWriter.write("</div>");
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -233,6 +241,22 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 		}
 
 		return layoutStructure;
+	}
+
+	private void _writeCss(
+		FragmentRendererContext fragmentRendererContext,
+		PrintWriter printWriter) {
+
+		if (Objects.equals(
+				fragmentRendererContext.getMode(),
+				FragmentEntryLinkConstants.EDIT)) {
+
+			printWriter.write(
+				StringUtil.read(
+					getClass(),
+					"/com/liferay/fragment/renderer/categorization/inputs" +
+						"/internal/dependencies/styles.html"));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

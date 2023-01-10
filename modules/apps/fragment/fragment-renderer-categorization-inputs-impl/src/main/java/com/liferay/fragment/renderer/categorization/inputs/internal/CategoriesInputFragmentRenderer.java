@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(service = FragmentRenderer.class)
-public class CategorizationInputFragmentRenderer implements FragmentRenderer {
+public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -262,7 +262,7 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CategorizationInputFragmentRenderer.class);
+		CategoriesInputFragmentRenderer.class);
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

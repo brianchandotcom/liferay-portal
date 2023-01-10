@@ -4262,12 +4262,13 @@ definition {
 					cardLabel = "No Variations");
 			}
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconList.viewListEntryLabel(
-					listEntry = "${collectionName}",
-					listEntryLabel = "No Variations");
+				LexiconTable.viewTableEntryInfo(
+					columnName = "variations",
+					tableEntry = "${collectionName}",
+					tableEntryInfo = "0");
 			}
 		}
 
@@ -4325,15 +4326,17 @@ definition {
 				card = "Manual Collection",
 				cardLabel = "3 Variations");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-			LexiconList.viewListEntryLabel(
-				listEntry = "Dynamic Collection",
-				listEntryLabel = "2 Variations");
+			LexiconTable.viewTableEntryInfo(
+				columnName = "variations",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = "2");
 
-			LexiconList.viewListEntryLabel(
-				listEntry = "Manual Collection",
-				listEntryLabel = "3 Variations");
+			LexiconTable.viewTableEntryInfo(
+				columnName = "variations",
+				tableEntry = "Manual Collection",
+				tableEntryInfo = "3");
 		}
 	}
 

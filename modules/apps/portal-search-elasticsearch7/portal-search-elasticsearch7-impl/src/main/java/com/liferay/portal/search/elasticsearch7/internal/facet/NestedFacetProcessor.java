@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
-import java.util.Optional;
-
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
@@ -44,9 +42,9 @@ public class NestedFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
-	public Optional<AggregationBuilder> processFacet(Facet facet) {
+	public AggregationBuilder processFacet(Facet facet) {
 		if (!(facet instanceof NestedFacet)) {
-			return Optional.empty();
+			return null;
 		}
 
 		NestedFacet nestedFacet = (NestedFacet)facet;
@@ -93,7 +91,7 @@ public class NestedFacetProcessor
 
 		nestedAggregationBuilder.subAggregation(aggregationBuilder);
 
-		return Optional.of(nestedAggregationBuilder);
+		return nestedAggregationBuilder;
 	}
 
 }

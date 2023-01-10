@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 
-import java.util.Optional;
-
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -38,7 +36,7 @@ public class DefaultFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
-	public Optional<AggregationBuilder> processFacet(Facet facet) {
+	public AggregationBuilder processFacet(Facet facet) {
 		TermsAggregationBuilder termsAggregationBuilder =
 			AggregationBuilders.terms(FacetUtil.getAggregationName(facet));
 
@@ -69,7 +67,7 @@ public class DefaultFacetProcessor
 			termsAggregationBuilder.size(size);
 		}
 
-		return Optional.of(termsAggregationBuilder);
+		return termsAggregationBuilder;
 	}
 
 }

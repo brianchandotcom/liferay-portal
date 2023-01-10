@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -38,7 +37,7 @@ public class CompositeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
-	public Optional<AggregationBuilder> processFacet(Facet facet) {
+	public AggregationBuilder processFacet(Facet facet) {
 		Class<?> clazz = facet.getClass();
 
 		FacetProcessor<SearchRequestBuilder> facetProcessor =

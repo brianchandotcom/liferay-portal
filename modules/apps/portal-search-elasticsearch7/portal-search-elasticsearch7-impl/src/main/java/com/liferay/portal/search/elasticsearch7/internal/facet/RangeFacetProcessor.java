@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -47,7 +45,7 @@ public class RangeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
-	public Optional<AggregationBuilder> processFacet(Facet facet) {
+	public AggregationBuilder processFacet(Facet facet) {
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
 		RangeAggregationBuilder rangeAggregationBuilder =
@@ -60,10 +58,10 @@ public class RangeFacetProcessor
 		_addCustomRange(facet, rangeAggregationBuilder);
 
 		if (ListUtil.isEmpty(rangeAggregationBuilder.ranges())) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(rangeAggregationBuilder);
+		return rangeAggregationBuilder;
 	}
 
 	private void _addConfigurationRanges(

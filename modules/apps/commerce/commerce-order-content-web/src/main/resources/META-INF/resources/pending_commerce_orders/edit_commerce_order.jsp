@@ -448,7 +448,7 @@ if (backURL != null) {
 
 		<liferay-commerce:order-transitions
 			commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>"
-			cssClass="btn btn-fixed btn-lg btn-primary ml-3"
+			cssClass="btn btn-fixed btn-primary ml-3"
 		/>
 	</div>
 </aui:form>

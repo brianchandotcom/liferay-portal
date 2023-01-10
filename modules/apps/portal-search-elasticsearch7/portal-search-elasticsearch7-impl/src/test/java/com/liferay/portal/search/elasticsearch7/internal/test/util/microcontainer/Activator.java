@@ -18,8 +18,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.objectweb.asm.tree.ClassNode;
 
@@ -37,17 +35,23 @@ public class Activator {
 	}
 
 	public void activate() {
-		Optional<Method> optional = _findMethodActivate();
+		Method method = _findMethodActivate();
 
-		optional.ifPresent(this::_invokeActivate);
+		if (method != null) {
+			_invokeActivate(method);
+		}
 	}
 
-	private Optional<Method> _findMethodActivate() {
-		return Stream.of(
-			_class.getMethods()
-		).filter(
-			method -> Objects.equals(method.getName(), "activate")
-		).findAny();
+	private Method _findMethodActivate() {
+		Method[] methods = _class.getMethods();
+
+		for (Method method : methods) {
+			if (Objects.equals(method.getName(), "activate")) {
+				return method;
+			}
+		}
+
+		return null;
 	}
 
 	private void _invokeActivate(Method method) {

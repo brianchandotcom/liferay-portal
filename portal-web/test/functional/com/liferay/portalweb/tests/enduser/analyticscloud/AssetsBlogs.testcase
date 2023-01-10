@@ -770,11 +770,6 @@ definition {
 	@description = "Bug: LRAC-7848 | Automation ID: LRAC-10601 | Test Summary: Number of Blog ratings is not getting negative when we delete a vote"
 	@priority = "3"
 	test RatingsNotGettingNegativeWhenDeleteVote {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine reason: Flaky behavior with rating not deleting
-		// AC Quarantine ticket: LRAC-11262
-
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

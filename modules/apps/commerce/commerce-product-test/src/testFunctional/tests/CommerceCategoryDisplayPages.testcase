@@ -64,6 +64,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10322. Create a new Content Page, deploy the widget Categories Navigation, configure it with Minium as Vocabulary, and then verify if when the page is reached by the guest no errors are present"
+	@priority = "4"
+	test CanGuestUserViewTheCategoriesNavigationWidgetWithoutErrors {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Content Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation");
+		}
+
+		task ("And the widget Categories Navigation is deployed") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation",
+				widgetName = "Commerce Categories Navigation");
+		}
+
+		task ("And configured with the Minium as a Vocabulary") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Categories Navigation");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Commerce Categories Navigation",
+				portletOption = "Configuration");
+
+			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
+		}
+
+		task ("When the guest reaches the Content Page by URL") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(
+				baseURL = "${portalURL}",
+				urlAppend = "web/minium/categories-navigation");
+		}
+
+		task ("Then no errors are present") {
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			AssertConsoleTextNotPresent(value1 = "must have VIEW permission for com.liferay.asset.kernel.model.AssetVocabulary");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7952. Verify user can select, change, and remove a default category display page"
 	@priority = "5"
 	test CanSelectChangeAndRemoveDefaultCategoryDisplayPage {

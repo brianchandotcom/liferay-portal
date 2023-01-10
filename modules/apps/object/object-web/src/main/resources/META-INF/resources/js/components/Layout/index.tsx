@@ -149,6 +149,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 			dispatch({
 				payload: {
+					creationLanguageId: objectDefinition.defaultLanguageId,
 					enableCategorization: objectDefinition.enableCategorization,
 					objectLayout,
 					objectRelationships: normalizeObjectRelationships({

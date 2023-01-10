@@ -13,7 +13,11 @@
  */
 
 import ClayLabel from '@clayui/label';
-import {Panel, PanelSimpleBody} from '@liferay/object-js-components-web';
+import {
+	Panel,
+	PanelSimpleBody,
+	getLocalizableLabel,
+} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
@@ -27,8 +31,6 @@ interface ObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	tabIndex: number;
 }
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
 export function ObjectLayoutField({
 	boxIndex,
 	columnIndex,
@@ -36,7 +38,10 @@ export function ObjectLayoutField({
 	rowIndex,
 	tabIndex,
 }: ObjectLayoutFieldProps) {
-	const [{objectFieldTypes, objectFields}, dispatch] = useLayoutContext();
+	const [
+		{creationLanguageId, objectFieldTypes, objectFields},
+		dispatch,
+	] = useLayoutContext();
 
 	const objectField = objectFields.find(
 		({name}) => name === objectFieldName
@@ -66,7 +71,11 @@ export function ObjectLayoutField({
 							}}
 						/>
 					}
-					title={objectField?.label[defaultLanguageId]!}
+					title={getLocalizableLabel(
+						creationLanguageId,
+						objectField.label,
+						objectField.name
+					)}
 				>
 					<small className="text-secondary">
 						{objectFieldType?.label} |{' '}

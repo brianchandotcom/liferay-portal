@@ -16,7 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
-import {Panel, PanelBody, PanelHeader} from '@liferay/object-js-components-web';
+import {
+	Panel,
+	PanelBody,
+	PanelHeader,
+	getLocalizableLabel,
+} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
@@ -28,7 +33,10 @@ import {ObjectLayoutRelationship} from './ObjectLayoutRelationship';
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{isViewOnly, objectLayout}, dispatch] = useLayoutContext();
+	const [
+		{creationLanguageId, isViewOnly, objectLayout},
+		dispatch,
+	] = useLayoutContext();
 	const [visibleModal, setVisibleModal] = useState(false);
 	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 	const {observer, onClose} = useModal({
@@ -112,7 +120,10 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 										/>
 									</>
 								}
-								title={name[defaultLanguageId]!}
+								title={getLocalizableLabel(
+									creationLanguageId,
+									name
+								)}
 								type="regular"
 							/>
 
@@ -133,9 +144,10 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 													boxIndex={boxIndex}
 													collapsable={collapsable}
 													key={`box_${boxIndex}`}
-													label={
-														name[defaultLanguageId]!
-													}
+													label={getLocalizableLabel(
+														creationLanguageId,
+														name
+													)}
 													objectLayoutRows={
 														objectLayoutRows
 													}

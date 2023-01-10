@@ -13,7 +13,11 @@
  */
 
 import ClayLabel from '@clayui/label';
-import {Panel, PanelSimpleBody} from '@liferay/object-js-components-web';
+import {
+	Panel,
+	PanelSimpleBody,
+	getLocalizableLabel,
+} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {useLayoutContext} from '../objectLayoutContext';
@@ -22,12 +26,11 @@ interface ObjectLayoutRelationshipProps
 	extends React.HTMLAttributes<HTMLElement> {
 	objectRelationshipId: number;
 }
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function ObjectLayoutRelationship({
 	objectRelationshipId,
 }: ObjectLayoutRelationshipProps) {
-	const [{objectRelationships}] = useLayoutContext();
+	const [{creationLanguageId, objectRelationships}] = useLayoutContext();
 
 	const objectRelationship = objectRelationships.find(
 		({id}) => id === objectRelationshipId
@@ -37,7 +40,11 @@ export function ObjectLayoutRelationship({
 		<>
 			<Panel key={`field_${objectRelationshipId}`}>
 				<PanelSimpleBody
-					title={objectRelationship?.label[defaultLanguageId]!}
+					title={getLocalizableLabel(
+						creationLanguageId,
+						objectRelationship.label,
+						objectRelationship.name
+					)}
 				>
 					<small className="text-secondary">
 						{Liferay.Language.get('relationship')} |{' '}

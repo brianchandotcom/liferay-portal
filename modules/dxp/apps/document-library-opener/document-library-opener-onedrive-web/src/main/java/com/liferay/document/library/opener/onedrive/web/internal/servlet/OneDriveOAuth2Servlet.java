@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.opener.onedrive.web.internal.servlet.OneDriveOAuth2Servlet",
 		"osgi.http.whiteboard.servlet.pattern=/document_library/onedrive/oauth2",

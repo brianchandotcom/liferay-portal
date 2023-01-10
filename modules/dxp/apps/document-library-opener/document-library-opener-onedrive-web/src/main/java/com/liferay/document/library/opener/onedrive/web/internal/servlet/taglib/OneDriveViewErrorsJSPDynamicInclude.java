@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García García
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class OneDriveViewErrorsJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

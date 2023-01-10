@@ -4801,10 +4801,9 @@ public class ServiceBuilder {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
+		OutputFormat outputFormat = new OutputFormat(StringPool.TAB, true);
 
-		outputFormat.setIndent(StringPool.TAB);
-		outputFormat.setPadText(false);
+		outputFormat.setTrimText(true);
 		outputFormat.setOmitEncoding(true);
 
 		XMLWriter xmlWriter = new XMLWriter(

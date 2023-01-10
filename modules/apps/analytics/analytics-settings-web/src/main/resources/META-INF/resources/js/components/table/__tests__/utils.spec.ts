@@ -12,9 +12,9 @@
  * details.
  */
 
-import {DEFAULT_FILTER, OrderBy} from '../../utils/filter';
-import {DEFAULT_PAGINATION} from '../../utils/pagination';
-import {TFormattedItems, TTableRequestParams} from './types';
+import {DEFAULT_FILTER, OrderBy} from '../../../utils/filter';
+import {DEFAULT_PAGINATION} from '../../../utils/pagination';
+import {TFormattedItems, TTableRequestParams} from '../types';
 import {
 	formattingItems,
 	getGlobalChecked,
@@ -24,7 +24,7 @@ import {
 	getResultsLanguage,
 	serializeTableRequestParams,
 	updateFormattedItems,
-} from './utils';
+} from '../utils';
 
 describe('serializeTableRequestParams', () => {
 	it('serialize the table request parameters correctly with default values', () => {

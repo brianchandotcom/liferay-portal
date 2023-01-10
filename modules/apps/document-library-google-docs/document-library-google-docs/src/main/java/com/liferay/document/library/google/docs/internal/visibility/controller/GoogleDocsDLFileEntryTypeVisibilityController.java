@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "dl.file.entry.type.key=" + GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY,
 	service = DLFileEntryTypeVisibilityController.class
 )

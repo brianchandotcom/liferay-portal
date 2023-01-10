@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = {
 		"model.class.name=com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion",
 		"model.class.name=com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion"

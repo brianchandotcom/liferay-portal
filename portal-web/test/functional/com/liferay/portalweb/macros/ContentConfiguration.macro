@@ -58,6 +58,25 @@ definition {
 		}
 	}
 
+	macro checkSubSubContent {
+		var key_contentName = "${contentName}";
+
+		Check.checkNotVisible(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
+
+		AssertClick(
+			locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
+			value1 = "Change");
+
+		var key_subContent = "${subContent}";
+		var key_subSubContent = "${checkSubSubContent}";
+
+		Check.checkNotVisible(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX");
+
+		AssertClick(
+			locator1 = "Button#OK",
+			value1 = "OK");
+	}
+
 	macro contentDateRange {
 		if (IsElementPresent(locator1 = "Button#PUBLISH")) {
 			ScrollWebElementIntoView(locator1 = "Button#PUBLISH");

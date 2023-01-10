@@ -445,6 +445,13 @@ definition {
 				uncheckSubSubContent = "${uncheckSubSubContent}");
 		}
 
+		if (isSet(checkSubSubContent)) {
+			ContentConfiguration.checkSubSubContent(
+				checkSubSubContent = "${checkSubSubContent}",
+				contentName = "${contentName}",
+				subContent = "${subContent}");
+		}
+
 		if (isSet(checkPrivatePages)) {
 			ContentConfiguration.checkPrivatePages(checkPrivatePages = "${checkPrivatePages}");
 		}
@@ -1306,6 +1313,32 @@ definition {
 		ClickNoError(locator1 = "Staging#STAGING_MENU_UNDO_BUTTON");
 
 		AssertConfirm(value1 = "Are you sure you want to undo your last changes?");
+	}
+
+	macro validateFolderExist {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "check-folder-in-lar");
+
+		var result = FileUtil.read("${liferayHome}/result.txt");
+
+		if (contains("${result}", "not found")) {
+			fail("Folder not found in lar file.");
+		}
+	}
+
+	macro validateFolderNotExist {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "check-folder-in-lar");
+
+		var result = FileUtil.read("${liferayHome}/result.txt");
+
+		if (!(contains("${result}", "not found"))) {
+			fail("Folder found in lar file.");
+		}
 	}
 
 	macro viewAddButtonDoesNotExist {

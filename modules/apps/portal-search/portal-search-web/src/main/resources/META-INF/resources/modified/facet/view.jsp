@@ -59,6 +59,8 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 				HashMapBuilder.<String, Object>put(
 					"customRangeBucketDisplayContext", customRangeBucketDisplayContext
 				).put(
+					"customRangeModifiedFacetTermDisplayContext", customRangeBucketDisplayContext
+				).put(
 					"modifiedFacetCalendarDisplayContext", modifiedFacetCalendarDisplayContext
 				).put(
 					"modifiedFacetDisplayContext", modifiedFacetDisplayContext

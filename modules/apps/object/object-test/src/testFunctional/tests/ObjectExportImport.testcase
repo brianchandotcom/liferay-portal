@@ -161,9 +161,15 @@ definition {
 	@description = "LPS-142175 - Verify it's possible to import object with Actions"
 	@priority = "4"
 	test CanImportObjectWithAction {
+		task ("When import object with action") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedObjectWithAction",
+				objectName = "ImportedObjectWithAction160652");
+		}
 
-		// TODO LPS-142175 CanImportObjectWithAction pending implementation
-
+		task ("Then assert the imported file is present") {
+			CreateObject.assertCustomObject(labelName = "Imported Object With Action");
+		}
 	}
 
 	@description = "LPS-142175 - Verify it is possible to import the same object more then one time"

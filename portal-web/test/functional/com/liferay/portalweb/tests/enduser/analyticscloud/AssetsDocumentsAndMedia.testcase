@@ -543,11 +543,6 @@ definition {
 	@description = "Bug: LRAC-7848 | Automation ID: LRAC-10590 | Test Summary: Number of Documents and Media ratings is not getting negative when we delete a vote"
 	@priority = "3"
 	test DocumentsAndMediaRatingsNotGettingNegativeWhenDeleteVote {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine reason: Flaky behavior with rating not deleting
-		// AC Quarantine ticket: LRAC-11263
-
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

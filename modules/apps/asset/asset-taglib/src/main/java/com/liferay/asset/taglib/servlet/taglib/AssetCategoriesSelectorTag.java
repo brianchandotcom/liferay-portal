@@ -97,6 +97,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		return _ignoreRequestValue;
 	}
 
+	public boolean isShowLabel() {
+		return _showLabel;
+	}
+
 	public boolean isShowOnlyRequiredVocabularies() {
 		return _showOnlyRequiredVocabularies;
 	}
@@ -148,6 +152,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setShowLabel(boolean showLabel) {
+		_showLabel = showLabel;
+	}
+
 	public void setShowOnlyRequiredVocabularies(
 		boolean showOnlyRequiredVocabularies) {
 
@@ -179,6 +187,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_id = null;
 		_ignoreRequestValue = false;
 		_namespace = null;
+		_showLabel = true;
 		_showOnlyRequiredVocabularies = false;
 		_showRequiredLabel = true;
 		_singleSelect = false;
@@ -429,6 +438,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"portletURL", String.valueOf(getPortletURL())
 				).put(
+					"showLabel", isShowLabel()
+				).put(
 					"vocabularies", getVocabularies()
 				).build());
 		}
@@ -532,6 +543,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _namespace;
+	private boolean _showLabel = true;
 	private boolean _showOnlyRequiredVocabularies;
 	private boolean _showRequiredLabel = true;
 	private boolean _singleSelect;

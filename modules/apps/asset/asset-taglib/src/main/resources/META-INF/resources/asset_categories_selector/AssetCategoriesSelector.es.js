@@ -24,6 +24,7 @@ function AssetCategoriesSelector({
 	inputName,
 	onVocabulariesChange,
 	portletURL,
+	showLabel,
 	useFallbackInput,
 	vocabularies = [],
 }) {
@@ -58,6 +59,7 @@ function AssetCategoriesSelector({
 						portletURL={portletURL}
 						required={vocabulary.required}
 						selectedItems={vocabulary.selectedItems}
+						showLabel={showLabel}
 						singleSelect={vocabulary.singleSelect}
 						sourceItemsVocabularyIds={[vocabulary.id]}
 						useFallbackInput={useFallbackInput}
@@ -76,6 +78,7 @@ AssetCategoriesSelector.propTypes = {
 	label: PropTypes.string,
 	onVocabulariesChange: PropTypes.func.isRequired,
 	portletURL: PropTypes.string.isRequired,
+	showLabel: PropTypes.bool,
 	useFallbackInput: PropTypes.bool,
 };
 

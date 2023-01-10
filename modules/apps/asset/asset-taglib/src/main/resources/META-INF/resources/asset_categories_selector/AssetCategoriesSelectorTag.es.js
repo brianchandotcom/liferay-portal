@@ -26,6 +26,7 @@ function AssetCategoriesSelectorTag({
 	initialVocabularies = [],
 	inputName,
 	portletURL,
+	showLabel,
 }) {
 	const [vocabularies, setVocabularies] = useState(initialVocabularies);
 
@@ -37,6 +38,7 @@ function AssetCategoriesSelectorTag({
 			inputName={inputName}
 			onVocabulariesChange={setVocabularies}
 			portletURL={portletURL}
+			showLabel={showLabel}
 			vocabularies={vocabularies}
 		/>
 	);
@@ -50,6 +52,7 @@ AssetCategoriesSelectorTag.propTypes = {
 	inputName: PropTypes.string,
 	learnHowLink: PropTypes.object,
 	portletURL: PropTypes.string,
+	showLabel: PropTypes.bool,
 };
 
 export default function (props) {
@@ -66,7 +69,7 @@ export default function (props) {
 
 	return (
 		<>
-			{props.learnHowLink && (
+			{props.showLabel && props.learnHowLink && (
 				<ClayLink href={props.learnHowLink.url} target="_blank">
 					{props.learnHowLink.message}
 				</ClayLink>
@@ -74,15 +77,19 @@ export default function (props) {
 
 			{initialPublicVocabularies && !!initialPublicVocabularies.length && (
 				<>
-					<div className="border-0 mb-0 sheet-subtitle text-uppercase">
-						{Liferay.Language.get('public-categories')}
-					</div>
+					{props.showLabel && (
+						<>
+							<div className="border-0 mb-0 sheet-subtitle text-uppercase">
+								{Liferay.Language.get('public-categories')}
+							</div>
 
-					<p className="small text-secondary">
-						{Liferay.Language.get(
-							'they-can-be-displayed-through-pages-widgets-fragments-and-searches'
-						)}
-					</p>
+							<p className="small text-secondary">
+								{Liferay.Language.get(
+									'they-can-be-displayed-through-pages-widgets-fragments-and-searches'
+								)}
+							</p>
+						</>
+					)}
 
 					<AssetCategoriesSelectorTag
 						{...props}
@@ -94,15 +101,20 @@ export default function (props) {
 			{initialInternalVocabularies &&
 				!!initialInternalVocabularies.length && (
 					<>
-						<div className="border-0 mb-0 sheet-subtitle text-uppercase">
-							{Liferay.Language.get('internal-categories')}
-						</div>
-
-						<p className="text-secondary">
-							{Liferay.Language.get(
-								'they-are-displayed-inside-the-administration-only'
-							)}
-						</p>
+						{props.showLabel && (
+							<>
+								<div className="border-0 mb-0 sheet-subtitle text-uppercase">
+									{Liferay.Language.get(
+										'internal-categories'
+									)}
+								</div>
+								<p className="text-secondary">
+									{Liferay.Language.get(
+										'they-are-displayed-inside-the-administration-only'
+									)}
+								</p>{' '}
+							</>
+						)}
 
 						<AssetCategoriesSelectorTag
 							{...props}

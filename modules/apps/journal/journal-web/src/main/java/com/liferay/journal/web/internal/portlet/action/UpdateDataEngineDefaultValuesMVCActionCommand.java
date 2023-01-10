@@ -200,7 +200,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 			uploadPortletRequest, "expirationDateAmPm");
 
 		boolean neverExpire = ParamUtil.getBoolean(
-			uploadPortletRequest, "neverExpire", displayDateYear == 0);
+			uploadPortletRequest, "neverExpire");
 
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			neverExpire = true;
@@ -224,7 +224,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 			uploadPortletRequest, "reviewDateAmPm");
 
 		boolean neverReview = ParamUtil.getBoolean(
-			uploadPortletRequest, "neverReview", displayDateYear == 0);
+			uploadPortletRequest, "neverReview");
 
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			neverReview = true;

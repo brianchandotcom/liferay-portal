@@ -4147,6 +4147,50 @@ paths:
                                     $ref: "#/components/schemas/EmailAddress"
                                 type: array
             tags: ["EmailAddress"]
+    "/user-accounts/{userAccountId}/email-verification-ticket":
+        get:
+            description:
+                Retrieves the user's email verification ticket.
+            operationId: getUserAccountEmailVerificationTicket
+            parameters:
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Ticket"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Ticket"
+            tags: ["Ticket"]
+    "/user-accounts/{userAccountId}/password-reset-ticket":
+        get:
+            description:
+                Retrieves the user's password reset ticket.
+            operationId: getUserAccountPasswordResetTicket
+            parameters:
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Ticket"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Ticket"
+            tags: ["Ticket"]
     "/user-accounts/{userAccountId}/phones":
         get:
             description:

@@ -24,7 +24,7 @@ export default function useGetMDFClaim(
 ) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}`,
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=dateCreated:desc`,
 			Liferay.authToken,
 		],
 		(url, token) => liferayFetcher<LiferayItems<MDFClaimDTO[]>>(url, token)

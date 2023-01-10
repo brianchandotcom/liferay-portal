@@ -24,7 +24,7 @@ export default function useGetMDFRequests(
 ) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=mdfRequestToMdfClaims&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}`,
+			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=mdfRequestToMdfClaims&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=dateCreated:desc`,
 			Liferay.authToken,
 		],
 		(url, token) =>

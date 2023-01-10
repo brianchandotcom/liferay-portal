@@ -20,6 +20,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -57,6 +59,28 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getCollectionKey() {
 		return "INPUTS";
+	}
+
+	@Override
+	public String getConfiguration(
+		FragmentRendererContext fragmentRendererContext) {
+
+		return JSONUtil.put(
+			"fieldSets",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"defaultValue", false
+						).put(
+							"label", "show-internal-categories"
+						).put(
+							"name", "showInternalCategories"
+						).put(
+							"type", "checkbox"
+						))))
+		).toString();
 	}
 
 	@Override
@@ -90,7 +114,7 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
@@ -117,8 +141,19 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 					formStyledLayoutStructureItem.getClassNameId()));
 			assetCategoriesSelectorTag.setClassTypePK(
 				formStyledLayoutStructureItem.getClassTypeId());
-			assetCategoriesSelectorTag.setVisibilityTypes(
-				AssetVocabularyConstants.VISIBILITY_TYPES);
+
+			if (isShowInternalCategories(
+					fragmentRendererContext.getFragmentEntryLink())) {
+
+				assetCategoriesSelectorTag.setVisibilityTypes(
+					AssetVocabularyConstants.VISIBILITY_TYPES);
+			}
+			else {
+				assetCategoriesSelectorTag.setVisibilityTypes(
+					new int[] {
+						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
+					});
+			}
 
 			assetCategoriesSelectorTag.doTag(
 				httpServletRequest, httpServletResponse);
@@ -127,6 +162,14 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 			_log.error(
 				"Unable to render categorization input fragment", exception);
 		}
+	}
+
+	public boolean isShowInternalCategories(FragmentEntryLink fragmentEntryLink) {
+		return GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				LocaleUtil.getMostRelevantLocale(), "showInternalCategories"));
 	}
 
 	private FormStyledLayoutStructureItem _getFormStyledLayoutStructureItem(
@@ -187,6 +230,9 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CategorizationInputFragmentRenderer.class);
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private Language _language;

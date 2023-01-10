@@ -34,6 +34,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -155,78 +156,53 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContext() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(PortalLog4jTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		String logContextName = "TestLogContext";
-
+	public void testLogOutputWithLogContext() {
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
 		String value1 = "test.value.1";
 		String value2 = "test.value.2";
 
-		ServiceRegistration<LogContext> serviceRegistration =
-			bundleContext.registerService(
-				LogContext.class,
-				new LogContext() {
-
-					@Override
-					public Map<String, String> getContext(String logName) {
-						return HashMapBuilder.put(
-							key1, value1
-						).put(
-							key2, value2
-						).build();
-					}
-
-					@Override
-					public String getName() {
-						return logContextName;
-					}
-
-				},
-				new HashMapDictionary());
-
-		PatternLayout.Builder builder = PatternLayout.newBuilder();
-
-		builder.withPattern("%level - %m%n %X");
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		Appender logContextWriterAppender = WriterAppender.createAppender(
-			builder.build(), null, unsyncStringWriter,
-			"logContextWriterAppender", false, false);
-
-		logContextWriterAppender.start();
-
-		Logger logger = (Logger)LogManager.getLogger(PortalLog4jTest.class);
-
-		logger.addAppender(logContextWriterAppender);
-
-		String logContextMessage = StringBundler.concat(
-			StringPool.OPEN_CURLY_BRACE, logContextName, StringPool.PERIOD,
-			key1, StringPool.EQUAL, value1, ", ", logContextName,
-			StringPool.PERIOD, key2, StringPool.EQUAL, value2,
-			StringPool.CLOSE_CURLY_BRACE);
+		String logContextName = "TestLogContext";
 
 		_testLogOutputWithLogContext(
-			"DEBUG", unsyncStringWriter, logContextMessage);
-		_testLogOutputWithLogContext(
-			"ERROR", unsyncStringWriter, logContextMessage);
-		_testLogOutputWithLogContext(
-			"FATAL", unsyncStringWriter, logContextMessage);
-		_testLogOutputWithLogContext(
-			"INFO", unsyncStringWriter, logContextMessage);
-		_testLogOutputWithLogContext(
-			"TRACE", unsyncStringWriter, logContextMessage);
-		_testLogOutputWithLogContext(
-			"WARN", unsyncStringWriter, logContextMessage);
+			logContextName,
+			HashMapBuilder.put(
+				key1, value1
+			).put(
+				key2, value2
+			).build(),
+			StringBundler.concat(
+				StringPool.OPEN_CURLY_BRACE, logContextName, StringPool.PERIOD,
+				key1, StringPool.EQUAL, value1, ", ", logContextName,
+				StringPool.PERIOD, key2, StringPool.EQUAL, value2,
+				StringPool.CLOSE_CURLY_BRACE));
+	}
 
-		serviceRegistration.unregister();
+	@Test
+	public void testLogOutputWithLogContextWithEmptyContextName() {
+		String key1 = "test.key.1";
+		String key2 = "test.key.2";
+		String value1 = "test.value.1";
+		String value2 = "test.value.2";
 
-		logger.removeAppender(logContextWriterAppender);
+		_testLogOutputWithLogContext(
+			StringPool.BLANK,
+			HashMapBuilder.put(
+				key1, value1
+			).put(
+				key2, value2
+			).build(),
+			StringBundler.concat(
+				StringPool.OPEN_CURLY_BRACE, key1, StringPool.EQUAL, value1,
+				", ", key2, StringPool.EQUAL, value2,
+				StringPool.CLOSE_CURLY_BRACE));
+	}
+
+	@Test
+	public void testLogOutputWithLogContextWithEmptyLogContext() {
+		_testLogOutputWithLogContext(
+			"TestLogContext", Collections.emptyMap(),
+			StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE);
 	}
 
 	private static Path _initFileAppender(
@@ -583,6 +559,66 @@ public class PortalLog4jTest {
 				_xmlLogFilePath, new byte[0],
 				StandardOpenOption.TRUNCATE_EXISTING);
 		}
+	}
+
+	private void _testLogOutputWithLogContext(
+		String logContextName, Map<String, String> contexts,
+		String expectedLogContextMessage) {
+
+		Bundle bundle = FrameworkUtil.getBundle(PortalLog4jTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<LogContext> serviceRegistration =
+			bundleContext.registerService(
+				LogContext.class,
+				new LogContext() {
+
+					@Override
+					public Map<String, String> getContext(String logName) {
+						return contexts;
+					}
+
+					@Override
+					public String getName() {
+						return logContextName;
+					}
+
+				},
+				new HashMapDictionary());
+
+		PatternLayout.Builder builder = PatternLayout.newBuilder();
+
+		builder.withPattern("%level - %m%n %X");
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		Appender logContextWriterAppender = WriterAppender.createAppender(
+			builder.build(), null, unsyncStringWriter,
+			"logContextWriterAppender", false, false);
+
+		logContextWriterAppender.start();
+
+		Logger logger = (Logger)LogManager.getLogger(PortalLog4jTest.class);
+
+		logger.addAppender(logContextWriterAppender);
+
+		_testLogOutputWithLogContext(
+			"DEBUG", unsyncStringWriter, expectedLogContextMessage);
+		_testLogOutputWithLogContext(
+			"ERROR", unsyncStringWriter, expectedLogContextMessage);
+		_testLogOutputWithLogContext(
+			"FATAL", unsyncStringWriter, expectedLogContextMessage);
+		_testLogOutputWithLogContext(
+			"INFO", unsyncStringWriter, expectedLogContextMessage);
+		_testLogOutputWithLogContext(
+			"TRACE", unsyncStringWriter, expectedLogContextMessage);
+		_testLogOutputWithLogContext(
+			"WARN", unsyncStringWriter, expectedLogContextMessage);
+
+		serviceRegistration.unregister();
+
+		logger.removeAppender(logContextWriterAppender);
 	}
 
 	private void _testLogOutputWithLogContext(

@@ -23,6 +23,7 @@ import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
@@ -43,13 +44,17 @@ import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -59,6 +64,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -458,6 +464,38 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				Arrays.asList(userAccount2, userAccount1),
 				(List<UserAccount>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetUserAccountWithInheritedRole() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		Group group = userGroup.getGroup();
+
+		_roleLocalService.addGroupRole(group.getGroupId(), role);
+
+		UserAccount userAccount = userAccountResource.getUserAccount(
+			user.getUserId());
+
+		RoleBrief[] roleBriefs = userAccount.getRoleBriefs();
+
+		boolean hasInheritedRole = false;
+
+		String roleName = role.getName();
+
+		for (RoleBrief roleBrief : roleBriefs) {
+			if (roleName.equals(roleBrief.getName())) {
+				hasInheritedRole = true;
+			}
+		}
+
+		Assert.assertTrue(hasInheritedRole);
 	}
 
 	@Override
@@ -1463,9 +1501,15 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private UserAccountResource _regularUserAccountResource;
 
 	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
 	private SAPEntryLocalService _sapEntryLocalService;
 
 	private User _testUser;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

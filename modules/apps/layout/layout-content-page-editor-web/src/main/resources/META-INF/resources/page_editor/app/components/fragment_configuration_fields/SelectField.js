@@ -206,10 +206,19 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 
 	const [nextValue, setNextValue] = useControlledState(value);
 
+	const isInline = field.typeOptions.inline;
+
 	return (
-		<>
+		<div
+			className={classNames({
+				'c-gap-2 d-flex align-items-center': isInline,
+			})}
+		>
 			<label
-				className={classNames({'sr-only': field.hideLabel})}
+				className={classNames({
+					'flex-shrink-0': isInline,
+					'sr-only': field.hideLabel,
+				})}
 				htmlFor={inputId}
 			>
 				{field.label}
@@ -235,7 +244,7 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 					{field.description}
 				</p>
 			) : null}
-		</>
+		</div>
 	);
 };
 

@@ -75,6 +75,7 @@ const ComponentWithData: React.FC<IComponentWithDataProps> = ({requestFn}) => {
 
 describe('Attributes', () => {
 	beforeAll(() => {
+
 		// @ts-ignore
 
 		ReactDOM.createPortal = jest.fn((element) => {

@@ -123,6 +123,7 @@ const ComponentWithEmptyState = () => {
 
 describe('People Modal', () => {
 	beforeAll(() => {
+
 		// @ts-ignore
 
 		ReactDOM.createPortal = jest.fn((element) => {

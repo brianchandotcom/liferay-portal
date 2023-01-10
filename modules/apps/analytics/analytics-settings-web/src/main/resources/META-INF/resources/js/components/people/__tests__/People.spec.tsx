@@ -167,6 +167,7 @@ const ComponentWithEmptyState: React.FC<IComponentWithEmptyStateProps> = ({
 
 describe('People', () => {
 	beforeAll(() => {
+
 		// @ts-ignore
 
 		ReactDOM.createPortal = jest.fn((element) => {

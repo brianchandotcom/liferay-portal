@@ -163,6 +163,7 @@ const ComponentWithEmptyState: React.FC<IComponentWithEmptyStateProps> = ({
 
 describe('Organizations Modal', () => {
 	beforeAll(() => {
+
 		// @ts-ignore
 
 		ReactDOM.createPortal = jest.fn((element) => {

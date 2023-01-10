@@ -19,6 +19,7 @@ import {
 	Card,
 	Input,
 	InputLocalized,
+	getLocalizableLabel,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
@@ -72,7 +73,6 @@ interface BasicInfoProps {
 }
 
 const REQUIRED_MSG = Liferay.Language.get('required');
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function BasicInfo({
 	errors,
@@ -102,6 +102,8 @@ export function BasicInfo({
 	const [aggregationFilters, setAggregationFilters] = useState<
 		AggregationFilters[]
 	>([]);
+
+	const [creationLanguageId, setCreationLanguageId] = useState<Locale>();
 	const [visibleModal, setVisibleModal] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -176,7 +178,11 @@ export function BasicInfo({
 		const newAggregationFilters = [
 			...aggregationFilters,
 			{
-				fieldLabel: fieldLabel ? fieldLabel[defaultLanguageId] : '',
+				fieldLabel: getLocalizableLabel(
+					creationLanguageId!,
+					fieldLabel,
+					objectFieldName
+				),
 				filterBy,
 				filterType,
 				label: fieldLabel,
@@ -378,6 +384,11 @@ export function BasicInfo({
 					objectDefinitionExternalReferenceCode2
 				);
 
+				const objectDefinition2 = await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode2
+				);
+				setCreationLanguageId(objectDefinition2.defaultLanguageId);
+
 				setObjectFields(items);
 			};
 
@@ -415,8 +426,11 @@ export function BasicInfo({
 
 						if (objectField && filterType) {
 							const aggregationFilter: AggregationFilters = {
-								fieldLabel:
-									objectField.label[defaultLanguageId],
+								fieldLabel: getLocalizableLabel(
+									creationLanguageId!,
+									objectField.label,
+									objectField.name
+								),
 								filterBy: parsedFilter.filterBy,
 								filterType,
 								label: objectField.label,
@@ -561,6 +575,7 @@ export function BasicInfo({
 				/>
 
 				<ObjectFieldFormBase
+					creationLanguageId={creationLanguageId!}
 					disabled={disableFieldFormBase}
 					editingField
 					errors={errors}
@@ -606,6 +621,7 @@ export function BasicInfo({
 
 			{values.businessType === 'Aggregation' && (
 				<BuilderScreen
+					creationLanguageId={creationLanguageId!}
 					disableEdit
 					emptyState={{
 						buttonText: Liferay.Language.get('new-filter'),

@@ -17,6 +17,7 @@ import {
 	AutoComplete,
 	SingleSelect,
 	filterArrayByQuery,
+	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -24,6 +25,7 @@ import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
 interface IAggregationSourcePropertyProps {
+	creationLanguageId: Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
@@ -41,8 +43,6 @@ type TObjectRelationship = {
 	name: string;
 	objectDefinitionExternalReferenceCode2: string;
 };
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const aggregationFunctions = [
 	{
@@ -68,6 +68,7 @@ const aggregationFunctions = [
 ];
 
 export function AggregationFormBase({
+	creationLanguageId,
 	disabled,
 	errors,
 	editingField,
@@ -101,21 +102,21 @@ export function AggregationFormBase({
 
 	const filteredObjectRelationships = useMemo(() => {
 		if (objectRelationships) {
-			return filterArrayByQuery(
-				objectRelationships,
-				'label',
-				relationshipsQuery
-			);
+			return filterArrayByQuery({
+				array: objectRelationships,
+				query: relationshipsQuery,
+				str: 'label',
+			});
 		}
 	}, [objectRelationships, relationshipsQuery]);
 
 	const filteredObjectRelationshipFields = useMemo(() => {
 		if (objectRelationshipFields) {
-			return filterArrayByQuery(
-				objectRelationshipFields,
-				'label',
-				relationshipFieldsQuery
-			);
+			return filterArrayByQuery({
+				array: objectRelationshipFields,
+				query: relationshipFieldsQuery,
+				str: 'label',
+			});
 		}
 	}, [objectRelationshipFields, relationshipFieldsQuery]);
 
@@ -189,7 +190,11 @@ export function AggregationFormBase({
 
 				if (currentSummarizeField) {
 					setSelectedSummarizeField(
-						currentSummarizeField.label[defaultLanguageId]
+						getLocalizableLabel(
+							creationLanguageId!,
+							currentSummarizeField.label,
+							currentSummarizeField.name
+						)
 					);
 				}
 			};
@@ -197,6 +202,7 @@ export function AggregationFormBase({
 			makeFetch();
 		}
 	}, [
+		creationLanguageId,
 		editingField,
 		objectRelationships,
 		objectFieldSettings,
@@ -308,7 +314,13 @@ export function AggregationFormBase({
 	};
 
 	const handleSummarizeFieldChange = (objectField: ObjectField) => {
-		setSelectedSummarizeField(objectField.label[defaultLanguageId]);
+		setSelectedSummarizeField(
+			getLocalizableLabel(
+				creationLanguageId!,
+				objectField.label,
+				objectField.name
+			)
+		);
 
 		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
 			...objectFieldSettings.filter(
@@ -340,13 +352,21 @@ export function AggregationFormBase({
 				}}
 				query={relationshipsQuery}
 				required
-				value={
-					selectedRelatedObjectRelationship?.label[defaultLanguageId]
-				}
+				value={getLocalizableLabel(
+					creationLanguageId!,
+					selectedRelatedObjectRelationship?.label,
+					selectedRelatedObjectRelationship?.name
+				)}
 			>
-				{({label}) => (
+				{({label, name}) => (
 					<div className="d-flex justify-content-between">
-						<div>{label[defaultLanguageId]}</div>
+						<div>
+							{getLocalizableLabel(
+								creationLanguageId!,
+								label,
+								name
+							)}
+						</div>
 					</div>
 				)}
 			</AutoComplete>
@@ -377,9 +397,15 @@ export function AggregationFormBase({
 					required
 					value={selectedSummarizeField}
 				>
-					{({label}) => (
+					{({label, name}) => (
 						<div className="d-flex justify-content-between">
-							<div>{label[defaultLanguageId]}</div>
+							<div>
+								{getLocalizableLabel(
+									creationLanguageId!,
+									label,
+									name
+								)}
+							</div>
 						</div>
 					)}
 				</AutoComplete>

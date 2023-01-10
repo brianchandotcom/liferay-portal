@@ -13,13 +13,14 @@
  */
 
 import {useModal} from '@clayui/modal';
-import {BuilderScreen} from '@liferay/object-js-components-web';
+import {
+	BuilderScreen,
+	getLocalizableLabel,
+} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import {ModalEditViewColumn} from '../ModalEditViewColumn/ModalEditViewColumn';
 import {TYPES, useViewContext} from '../objectViewContext';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ViewBuilderScreen: React.FC<{}> = () => {
 	const [visibleEditModal, setVisibleEditModal] = useState(false);
@@ -31,6 +32,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 
 	const [
 		{
+			creationLanguageId,
 			objectFields,
 			objectView: {objectViewColumns},
 		},
@@ -49,12 +51,14 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 		const parentWindow = Liferay.Util.getOpener();
 
 		parentWindow.Liferay.fire('openModalAddColumns', {
-			getName: ({label}: ObjectField) => label[defaultLanguageId],
+			getName: ({label, name}: ObjectField) =>
+				getLocalizableLabel(creationLanguageId, label, name),
 			header: Liferay.Language.get('add-columns'),
 			items: objectFields,
 			onSave: (selectedObjectFields: ObjectField[]) =>
 				dispatch({
 					payload: {
+						creationLanguageId,
 						selectedObjectFields,
 					},
 					type: TYPES.ADD_OBJECT_VIEW_COLUMN,

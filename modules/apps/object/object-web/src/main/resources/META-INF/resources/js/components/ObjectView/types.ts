@@ -71,6 +71,7 @@ export type TObjectView = {
 };
 
 export type TState = {
+	creationLanguageId: Locale;
 	filterOperators: TFilterOperators;
 	isViewOnly: boolean;
 	objectDefinitionExternalReferenceCode: string;

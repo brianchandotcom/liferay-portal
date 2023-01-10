@@ -165,7 +165,11 @@ export function ObjectRelationshipFormBase({
 	}, [readonly, values.objectDefinitionId1]);
 
 	const filteredRelationships = useMemo(() => {
-		return filterArrayByQuery(objectDefinitions, 'label', query);
+		return filterArrayByQuery({
+			array: objectDefinitions,
+			query,
+			str: 'label',
+		});
 	}, [objectDefinitions, query]);
 
 	return (

@@ -18,6 +18,7 @@ interface ObjectDefinition {
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;
+	defaultLanguageId: string;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;

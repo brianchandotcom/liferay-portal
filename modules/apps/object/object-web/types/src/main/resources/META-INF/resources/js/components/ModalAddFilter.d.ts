@@ -18,6 +18,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import './ModalAddFilter.scss';
 interface IProps {
 	aggregationFilter?: boolean;
+	creationLanguageId?: Locale;
 	currentFilters: CurrentFilter[];
 	disableDateValues?: boolean;
 	editingFilter: boolean;
@@ -83,6 +84,7 @@ declare type CurrentFilter = {
 };
 export declare function ModalAddFilter({
 	aggregationFilter,
+	creationLanguageId,
 	currentFilters,
 	disableDateValues,
 	editingFilter,

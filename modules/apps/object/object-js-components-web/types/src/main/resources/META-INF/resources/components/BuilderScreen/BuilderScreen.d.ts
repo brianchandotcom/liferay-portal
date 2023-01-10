@@ -16,6 +16,7 @@
 
 import './BuilderScreen.scss';
 export declare function BuilderScreen({
+	creationLanguageId,
 	defaultSort,
 	disableEdit,
 	emptyState,
@@ -52,6 +53,7 @@ declare type TBuilderScreenColumn = {
 	valueList?: TLabelValueObject[];
 };
 interface IProps {
+	creationLanguageId?: Locale;
 	defaultSort?: boolean;
 	disableEdit?: boolean;
 	emptyState: {

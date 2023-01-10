@@ -12,39 +12,55 @@
  * details.
  */
 
-import {stringIncludesQuery} from './string';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+import {getLocalizableLabel, stringIncludesQuery} from './string';
 
 /**
  * Filter an Array by checking if the String includes the query
  */
 
-export function filterArrayByQuery<T>(
-	array: T[] | any[],
-	str: string,
-	query: string
-) {
+interface FilterArrayByQueryProps<T> {
+	array: T[];
+	creationLanguageId?: Locale;
+	query: string;
+	str: string;
+}
+
+type LocalizedObject<T> = {
+	[key: string]: T;
+};
+
+export function filterArrayByQuery<T>({
+	array,
+	creationLanguageId,
+	query,
+	str,
+}: FilterArrayByQueryProps<T>) {
 	return array.filter((item) => {
 		if (str === 'label') {
-			const localizedValue = ((item as {[key: string]: unknown}) as {
-				[key: string]: LocalizedValue<string>;
-			})[str];
+			const localizedValue = ((item as unknown) as LocalizedObject<
+				LocalizedValue<string>
+			>)[str];
 
 			const localizedLabels = localizedValue as LocalizedValue<string>;
 
-			let label = localizedLabels[defaultLanguageId] as string;
+			let label = getLocalizableLabel(
+				creationLanguageId!,
+				localizedLabels
+			);
 
 			if (!label) {
 				label = localizedLabels[
-					item.defaultLanguageId as Locale
+					((item as unknown) as LocalizedObject<Locale>)
+						.defaultLanguageId as Locale
 				] as string;
 			}
 
 			return stringIncludesQuery(label, query);
 		}
 
-		const comparisonString = (item as {[key: string]: string})[str];
+		const comparisonString = ((item as unknown) as LocalizedObject<string>)[
+			str
+		];
 
 		return stringIncludesQuery(comparisonString, query);
 	});

@@ -112,6 +112,7 @@ interface ObjectDefinition {
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;
+	defaultLanguageId: Locale;
 	enableCategorization: boolean;
 	externalReferenceCode: string;
 	id: number;

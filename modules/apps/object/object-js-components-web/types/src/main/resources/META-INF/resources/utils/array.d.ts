@@ -15,8 +15,16 @@
 /**
  * Filter an Array by checking if the String includes the query
  */
-export declare function filterArrayByQuery<T>(
-	array: T[] | any[],
-	str: string,
-	query: string
-): any[];
+interface FilterArrayByQueryProps<T> {
+	array: T[];
+	creationLanguageId?: Locale;
+	query: string;
+	str: string;
+}
+export declare function filterArrayByQuery<T>({
+	array,
+	creationLanguageId,
+	query,
+	str,
+}: FilterArrayByQueryProps<T>): T[];
+export {};

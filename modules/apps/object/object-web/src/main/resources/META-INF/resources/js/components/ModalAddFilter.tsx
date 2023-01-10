@@ -23,6 +23,7 @@ import {
 	MultipleSelect,
 	SingleSelect,
 	filterArrayByQuery,
+	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
 import React, {
 	FormEvent,
@@ -42,6 +43,7 @@ import {
 import './ModalAddFilter.scss';
 interface IProps {
 	aggregationFilter?: boolean;
+	creationLanguageId?: Locale;
 	currentFilters: CurrentFilter[];
 	disableDateValues?: boolean;
 	editingFilter: boolean;
@@ -119,10 +121,9 @@ type AttachmentEntry = {
 	name: string;
 };
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
 export function ModalAddFilter({
 	aggregationFilter,
+	creationLanguageId,
 	currentFilters,
 	disableDateValues,
 	editingFilter,
@@ -155,8 +156,13 @@ export function ModalAddFilter({
 	const [filterEndDate, setFilterEndDate] = useState('');
 
 	const filteredAvailableFields = useMemo(() => {
-		return filterArrayByQuery(objectFields, 'label', query);
-	}, [objectFields, query]);
+		return filterArrayByQuery({
+			array: objectFields,
+			creationLanguageId: creationLanguageId!,
+			query,
+			str: 'label',
+		});
+	}, [creationLanguageId, objectFields, query]);
 
 	const setEditingFilterType = () => {
 		const currentFilterColumn = currentFilters.find((filterColumn) => {
@@ -475,11 +481,20 @@ export function ModalAddFilter({
 						}}
 						query={query}
 						required
-						value={selectedFilterBy?.label[defaultLanguageId]}
+						value={getLocalizableLabel(
+							creationLanguageId!,
+							selectedFilterBy?.label
+						)}
 					>
-						{({label}) => (
+						{({label, name}) => (
 							<div className="d-flex justify-content-between">
-								<div>{label[defaultLanguageId]}</div>
+								<div>
+									{getLocalizableLabel(
+										creationLanguageId!,
+										label,
+										name
+									)}
+								</div>
 							</div>
 						)}
 					</AutoComplete>

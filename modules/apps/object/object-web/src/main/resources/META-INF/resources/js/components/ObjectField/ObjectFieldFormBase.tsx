@@ -38,6 +38,7 @@ import './ObjectFieldFormBase.scss';
 
 interface IProps {
 	children?: ReactNode;
+	creationLanguageId?: Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
@@ -70,6 +71,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export default function ObjectFieldFormBase({
 	children,
+	creationLanguageId,
 	disabled,
 	editingField,
 	errors,
@@ -310,6 +312,7 @@ export default function ObjectFieldFormBase({
 
 			{values.businessType === 'Aggregation' && (
 				<AggregationFormBase
+					creationLanguageId={creationLanguageId!}
 					editingField={editingField}
 					errors={errors}
 					objectDefinitionExternalReferenceCode={

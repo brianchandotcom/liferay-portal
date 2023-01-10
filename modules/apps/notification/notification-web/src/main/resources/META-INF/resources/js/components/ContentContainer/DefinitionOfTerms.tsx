@@ -45,7 +45,11 @@ export function DefinitionOfTerms({
 
 	const filteredObjectDefinitions = useMemo(() => {
 		if (objectDefinitions) {
-			return filterArrayByQuery(objectDefinitions, 'label', query);
+			return filterArrayByQuery({
+				array: objectDefinitions,
+				query,
+				str: 'label',
+			});
 		}
 	}, [objectDefinitions, query]);
 

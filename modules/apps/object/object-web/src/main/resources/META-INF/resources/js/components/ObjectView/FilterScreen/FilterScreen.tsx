@@ -27,7 +27,13 @@ const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function FilterScreen() {
 	const [
-		{filterOperators, objectFields, objectView, workflowStatusJSONArray},
+		{
+			creationLanguageId,
+			filterOperators,
+			objectFields,
+			objectView,
+			workflowStatusJSONArray,
+		},
 		dispatch,
 	] = useViewContext();
 
@@ -73,6 +79,7 @@ export function FilterScreen() {
 		else {
 			dispatch({
 				payload: {
+					creationLanguageId,
 					filterType,
 					objectFieldName,
 					valueList,
@@ -123,6 +130,7 @@ export function FilterScreen() {
 	return (
 		<>
 			<BuilderScreen
+				creationLanguageId={creationLanguageId}
 				emptyState={{
 					buttonText: Liferay.Language.get('new-filter'),
 					description: Liferay.Language.get(
@@ -160,6 +168,7 @@ export function FilterScreen() {
 
 			{visibleModal && (
 				<ModalAddFilter
+					creationLanguageId={creationLanguageId}
 					currentFilters={objectViewFilterColumns}
 					disableDateValues
 					editingFilter={editingFilter}

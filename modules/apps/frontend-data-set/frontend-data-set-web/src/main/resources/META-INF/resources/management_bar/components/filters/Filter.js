@@ -18,10 +18,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {getComponentByModuleURL} from '../../../utils/modules';
 import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
-import AutocompleteFilter, {
-	getOdataString as getAutocompleteFilterOdataString,
-	getSelectedItemsLabel as getAutocompleteFilterSelectedItemsLabel,
-} from './AutocompleteFilter';
 import DateRangeFilter, {
 	getOdataString as getDateRangeFilterOdataString,
 	getSelectedItemsLabel as getDateRangeFilterSelectedItemsLabel,
@@ -32,15 +28,12 @@ import SelectionFilter, {
 } from './SelectionFilter';
 
 const FILTER_TYPE_COMPONENT = {
-	autocomplete: AutocompleteFilter,
 	dateRange: DateRangeFilter,
 	selection: SelectionFilter,
 };
 
 const getFilterSelectedItemsLabel = (filter) => {
 	switch (filter.type) {
-		case 'autocomplete':
-			return getAutocompleteFilterSelectedItemsLabel(filter);
 		case 'dateRange':
 			return getDateRangeFilterSelectedItemsLabel(filter);
 		case 'selection':
@@ -52,8 +45,6 @@ const getFilterSelectedItemsLabel = (filter) => {
 
 const getOdataFilterString = (filter) => {
 	switch (filter.type) {
-		case 'autocomplete':
-			return getAutocompleteFilterOdataString(filter);
 		case 'dateRange':
 			return getDateRangeFilterOdataString(filter);
 		case 'selection':
@@ -104,7 +95,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 			<Component setFilter={setFilter} {...otherProps} />
 		</div>
 	) : (
-		<ClayLoadingIndicator small />
+		<ClayLoadingIndicator size="sm" />
 	);
 };
 

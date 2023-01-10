@@ -405,6 +405,188 @@
 									],
 									"indexed": true
 								},
+								"pageElements": [
+									{
+										"definition": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "8px"
+													},
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"flexWrap": "Wrap",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"opacity": 100,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "edit-button"
+															},
+															"fragmentConfig": {
+																"channelAccountManager": true,
+																"channelFinanceManager": true,
+																"channelGeneralManager": true,
+																"channelGlobalMarketingManager": true,
+																"channelRegionalMarketingManager": true,
+																"user": false
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "cancel-button",
+																"siteKey": "prm"
+															},
+															"fragmentConfig": {
+																"channelAccountManager": true,
+																"channelFinanceManager": true,
+																"channelGeneralManager": true,
+																"channelGlobalMarketingManager": true,
+																"channelRegionalMarketingManager": true,
+																"user": true
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "FragmentDropZone"
+									},
+									{
+										"definition": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"flexWrap": "Wrap",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"opacity": 100,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "approve-button"
+															},
+															"fragmentConfig": {
+																"channelAccountManager": true,
+																"channelFinanceManager": true,
+																"channelGeneralManager": true,
+																"channelGlobalMarketingManager": true,
+																"channelRegionalMarketingManager": true,
+																"user": false
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "request-more-info-button"
+															},
+															"fragmentConfig": {
+																"channelAccountManager": true,
+																"channelFinanceManager": true,
+																"channelGeneralManager": true,
+																"channelGlobalMarketingManager": true,
+																"channelRegionalMarketingManager": true,
+																"user": false
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "marketing-director-review-button"
+															},
+															"fragmentConfig": {
+																"channelAccountManager": true,
+																"channelFinanceManager": true,
+																"channelGeneralManager": true,
+																"channelGlobalMarketingManager": true,
+																"channelRegionalMarketingManager": true,
+																"user": false
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "reject-button"
+															},
+															"fragmentConfig": {
+																"channelAccountManager": true,
+																"channelFinanceManager": true,
+																"channelGeneralManager": true,
+																"channelGlobalMarketingManager": true,
+																"channelRegionalMarketingManager": true,
+																"user": false
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
 								"type": "Fragment"
 							}
 						],

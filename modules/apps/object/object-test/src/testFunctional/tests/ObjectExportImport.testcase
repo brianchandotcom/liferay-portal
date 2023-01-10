@@ -112,6 +112,26 @@ definition {
 			objectName = "CustomObject184");
 	}
 
+	@description = "LPS-142175 - Verify it's possible to export imported object with validation structure"
+	@priority = "4"
+	test CanImportAndExportValidationStructure {
+		task ("When import object with validation") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedObjectWithValidation",
+				objectName = "ImportedObjectWithValidation170542");
+
+			CreateObject.assertCustomObject(labelName = "Imported Object With Validation");
+		}
+
+		task ("Then the imported object with validation can be exported") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectExportImport.exportObject(
+				objectLabel = "Imported Object With Validation",
+				objectName = "ImportedObjectWithValidation");
+		}
+	}
+
 	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"
 	@priority = "5"
 	test CanImportDataStructure {

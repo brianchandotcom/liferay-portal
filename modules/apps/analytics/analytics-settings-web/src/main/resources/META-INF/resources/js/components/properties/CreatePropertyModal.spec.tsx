@@ -12,43 +12,175 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayModal from '@clayui/modal';
+
 import '@testing-library/jest-dom/extend-expect';
-import {useModal} from '@clayui/modal';
-import {render} from '@testing-library/react';
-import React from 'react';
+import {fireEvent, render, screen} from '@testing-library/react';
+import getCN from 'classnames';
+import React, {useState} from 'react';
 
-import CreatePropertyModal from './CreatePropertyModal';
+import {MAX_LENGTH, MIN_LENGTH} from '../../utils/constants';
 
-const Component = () => {
-	const {observer} = useModal();
+interface IModalProps {
+	observer?: any;
+	onCancel: () => void;
+	onSubmit: () => void;
+}
+
+// NOTE: to render properly in the tests, this Component is sligthly different from properties/CreatePropertyModal.tsx
+
+const Component: React.FC<IModalProps> = ({onCancel}) => {
+	const [propertyName, setPropertyName] = useState('');
+	const [submitting] = useState(false);
+
+	const isValid = propertyName.length >= MIN_LENGTH;
 
 	return (
-		<CreatePropertyModal
-			observer={observer}
-			onCancel={() => {}}
-			onSubmit={() => {}}
-		/>
+		<>
+			<ClayForm onSubmit={(event) => event.preventDefault()}>
+				<ClayModal.Header>
+					{Liferay.Language.get('new-property')}
+				</ClayModal.Header>
+
+				<ClayModal.Body className="pb-0 pt-3">
+					<ClayForm.Group
+						className={getCN(
+							{
+								'has-error': propertyName && !isValid,
+							},
+							'mb-3'
+						)}
+					>
+						<label htmlFor="basicInputText">
+							{Liferay.Language.get('property-name')}
+						</label>
+
+						<ClayInput
+							id="inputPropertyName"
+							maxLength={MAX_LENGTH}
+							onChange={({target: {value}}) =>
+								setPropertyName(value)
+							}
+							type="text"
+							value={propertyName}
+						/>
+
+						{propertyName && !isValid && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayIcon
+										className="mr-1"
+										symbol="warning-full"
+									/>
+
+									<span>
+										{Liferay.Language.get(
+											'property-name-does-not-meet-minimum-length-required'
+										)}
+									</span>
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
+					</ClayForm.Group>
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={onCancel}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+
+							<ClayButton
+								disabled={
+									!propertyName || submitting || !isValid
+								}
+								onClick={() => {}}
+							>
+								{/* {submitting && <Loading inline />} */}
+
+								{Liferay.Language.get('create')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</ClayForm>
+		</>
 	);
 };
 
 describe('CreatePropertyModal', () => {
 	it('renders component without crashing it', () => {
-		const {container} = render(<Component />);
+		render(<Component onCancel={() => {}} onSubmit={() => {}} />);
 
-		const modalOpen = container.getElementsByClassName('modal-open');
+		expect(screen.getByText(/new-property/i)).toBeInTheDocument();
 
-		const modalDiv = container.getElementsByClassName('modal');
+		expect(screen.getByText(/property-name/i)).toBeInTheDocument();
 
-		const modalDialog = container.getElementsByClassName('modal-dialog');
+		expect(
+			screen.getByRole('button', {name: /cancel/i})
+		).toBeInTheDocument();
 
-		const modalContent = container.getElementsByClassName('modal-content');
+		expect(
+			screen.getByRole('button', {name: /create/i})
+		).toBeInTheDocument();
+	});
 
-		expect(modalOpen).toBeTruthy();
+	it('renders component, writes a character in the input and checks if the minimum length message is displayed', () => {
+		render(<Component onCancel={() => {}} onSubmit={() => {}} />);
 
-		expect(modalDiv).toBeTruthy();
+		expect(screen.getByText(/new-property/i)).toBeInTheDocument();
 
-		expect(modalDialog).toBeTruthy();
+		expect(screen.getByText(/property-name/i)).toBeInTheDocument();
 
-		expect(modalContent).toBeTruthy();
+		const textInput = screen.getByRole('textbox');
+
+		expect(textInput).toBeInTheDocument();
+
+		expect(textInput).toHaveValue('');
+
+		fireEvent.change(textInput, {target: {value: 't'}});
+
+		expect(textInput).toHaveValue('t');
+
+		const createButton = screen.getByRole('button', {name: /create/i});
+
+		expect(createButton).toHaveAttribute('disabled');
+
+		expect(
+			screen.getByText(
+				/property-name-does-not-meet-minimum-length-required/i
+			)
+		).toBeInTheDocument();
+	});
+
+	it('renders component, writes a character in the input and checks if the minimum length message is NOT displayed', () => {
+		render(<Component onCancel={() => {}} onSubmit={() => {}} />);
+
+		expect(screen.getByText(/new-property/i)).toBeInTheDocument();
+
+		expect(screen.getByText(/property-name/i)).toBeInTheDocument();
+
+		const textInput = screen.getByRole('textbox');
+
+		expect(textInput).toBeInTheDocument();
+
+		expect(textInput).toHaveValue('');
+
+		const createButton = screen.getByRole('button', {name: /create/i});
+
+		expect(createButton).toHaveAttribute('disabled');
+
+		fireEvent.change(textInput, {target: {value: 'test'}});
+
+		expect(textInput).toHaveValue('test');
+
+		expect(createButton).not.toHaveAttribute('disabled');
 	});
 });

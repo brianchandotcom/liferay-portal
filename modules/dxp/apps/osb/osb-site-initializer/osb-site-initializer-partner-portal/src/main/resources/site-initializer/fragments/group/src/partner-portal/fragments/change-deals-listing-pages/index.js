@@ -23,11 +23,15 @@ const buttonPartnerOpportunities = fragmentElement.querySelector(
 	'#partner-opportunities'
 );
 
-buttonDealRegistration.onclick = () =>
-	Liferay.Util.navigate(`${siteURL}/sales/deal-registrations`);
+if (buttonDealRegistration) {
+	buttonDealRegistration.onclick = () =>
+		Liferay.Util.navigate(`${siteURL}/sales/deal-registrations`);
+}
 
-buttonPartnerOpportunities.onclick = () =>
-	Liferay.Util.navigate(`${siteURL}/sales/partner-opportunities`);
+if (buttonPartnerOpportunities) {
+	buttonPartnerOpportunities.onclick = () =>
+		Liferay.Util.navigate(`${siteURL}/sales/partner-opportunities`);
+}
 
 if (Liferay.currentURL.includes('opportunities')) {
 	buttonPartnerOpportunities.classList.toggle('active');

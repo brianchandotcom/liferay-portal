@@ -18,11 +18,15 @@ const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 const buttonMDFRequest = fragmentElement.querySelector('#mdf-request');
 const buttonMDFClaim = fragmentElement.querySelector('#mdf-claim');
 
-buttonMDFRequest.onclick = () =>
-	Liferay.Util.navigate(`${siteURL}/marketing/mdf-requests`);
+if (buttonMDFRequest) {
+	buttonMDFRequest.onclick = () =>
+		Liferay.Util.navigate(`${siteURL}/marketing/mdf-requests`);
+}
 
-buttonMDFClaim.onclick = () =>
-	Liferay.Util.navigate(`${siteURL}/marketing/mdf-claim`);
+if (buttonMDFClaim) {
+	buttonMDFClaim.onclick = () =>
+		Liferay.Util.navigate(`${siteURL}/marketing/mdf-claim`);
+}
 
 if (Liferay.currentURL.includes('claim')) {
 	buttonMDFClaim.classList.toggle('active');

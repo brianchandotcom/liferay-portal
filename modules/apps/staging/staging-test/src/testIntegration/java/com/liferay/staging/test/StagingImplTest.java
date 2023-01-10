@@ -147,10 +147,10 @@ public class StagingImplTest {
 		Class<? extends Throwable> caughtExceptionClass =
 			caughtThrowable.getClass();
 
-		Assert.assertNotEquals(PortalException.class, caughtExceptionClass);
-		Assert.assertNotEquals(SystemException.class, caughtExceptionClass);
 		Assert.assertNotEquals(
 			NoSuchGroupException.class, caughtExceptionClass);
+		Assert.assertNotEquals(PortalException.class, caughtExceptionClass);
+		Assert.assertNotEquals(SystemException.class, caughtExceptionClass);
 
 		Assert.assertEquals(RemoteExportException.class, caughtExceptionClass);
 
@@ -182,9 +182,9 @@ public class StagingImplTest {
 			caughtThrowable.getClass();
 
 		Assert.assertNotEquals(PortalException.class, caughtExceptionClass);
-		Assert.assertNotEquals(SystemException.class, caughtExceptionClass);
 		Assert.assertNotEquals(
 			RemoteExportException.class, caughtExceptionClass);
+		Assert.assertNotEquals(SystemException.class, caughtExceptionClass);
 
 		Assert.assertEquals(NoSuchGroupException.class, caughtExceptionClass);
 

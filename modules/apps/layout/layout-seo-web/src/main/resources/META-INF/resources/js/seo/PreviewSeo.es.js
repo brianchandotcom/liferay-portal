@@ -37,7 +37,7 @@ const PreviewSeo = ({
 			{titleSuffix && ` - ${titleSuffix}`}
 		</div>,
 		<div className="preview-seo-url text-truncate" key="url">
-			{url}
+			{decodeURIComponent(url)}
 		</div>,
 	];
 

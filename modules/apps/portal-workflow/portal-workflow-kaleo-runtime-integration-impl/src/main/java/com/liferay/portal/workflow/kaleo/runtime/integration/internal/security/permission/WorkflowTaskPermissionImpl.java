@@ -29,14 +29,14 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 
 import java.io.Serializable;
@@ -78,19 +78,24 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 			return true;
 		}
 
-		int userNotificationEventsCount =
-			_userNotificationEventLocalService.getUserNotificationEventsCount(
-				permissionChecker.getUserId(), PortletKeys.MY_WORKFLOW_TASK,
-				HashMapBuilder.put(
-					"workflowInstanceId",
-					String.valueOf(workflowTask.getWorkflowInstanceId())
-				).put(
-					"workflowTaskId",
-					String.valueOf(workflowTask.getWorkflowTaskId())
-				).build());
+		boolean assignableUser;
+
+		try {
+			List<User> assignableUsers =
+				_workflowTaskManager.getAssignableUsers(
+					workflowTask.getWorkflowTaskId());
+
+			assignableUser = assignableUsers.contains(
+				permissionChecker.getUser());
+		}
+		catch (WorkflowException workflowException) {
+			_log.error(workflowException);
+
+			assignableUser = false;
+		}
 
 		if (hasAssetViewPermission(workflowTask, permissionChecker) &&
-			((userNotificationEventsCount > 0) ||
+			(assignableUser ||
 			 (workflowTask.isCompleted() &&
 			  (workflowTask.getAssigneeUserId() ==
 				  permissionChecker.getUserId())))) {
@@ -264,5 +269,8 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 	@Reference
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

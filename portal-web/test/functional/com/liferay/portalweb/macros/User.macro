@@ -38,6 +38,79 @@ definition {
 		}
 	}
 
+	macro _editUserInformation {
+		if (isSet(userScreenName)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${userScreenName}");
+		}
+
+		if (isSet(userEmailAddress)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "${userEmailAddress}");
+		}
+
+		if (isSet(userFirstName)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "${userFirstName}");
+		}
+
+		if (isSet(userLastName)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "${userLastName}");
+		}
+
+		if (isSet(userBirthday)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
+				value1 = "${userBirthday}");
+		}
+
+		if (isSet(userMiddleName)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD",
+				value1 = "${userMiddleName}");
+		}
+
+		if (isSet(userJobTitle)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD",
+				value1 = "${userJobTitle}");
+		}
+
+		if (isSet(userGender)) {
+			Select(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT",
+				value1 = "${userGender}");
+		}
+
+		if (isSet(userTag)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD_INPUT",
+				value1 = "${userTag}");
+
+			KeyPress(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD_INPUT",
+				value1 = "\ENTER");
+		}
+
+		if (isSet(userComment)) {
+			Type(
+				locator1 = "TextArea#COMMENTS",
+				value1 = "${userComment}");
+		}
+
+		if (isSet(userCustomField)) {
+			Type(
+				key_fieldLabel = "${userCustomFieldLabel}",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${userCustomField}");
+		}
+	}
+
 	macro _getSignInText {
 		if ("${localization}" == "JA") {
 			var localizedSignIn = "ログイン";
@@ -250,66 +323,19 @@ definition {
 	}
 
 	macro addCP {
-
-		// TODO LRQA-73479 Refactor so separate macros to add user can be used in this single macro EX: Organization.addUser
-
 		LexiconEntry.gotoAdd();
 
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "${userScreenName}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-			value1 = "${userEmailAddress}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-			value1 = "${userFirstName}");
-
-		if (isSet(userBirthday)) {
-			Type(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
-				value1 = "${userBirthday}");
-		}
-
-		if (isSet(userMiddleName)) {
-			Type(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD",
-				value1 = "${userMiddleName}");
-		}
-
-		if (isSet(userJobTitle)) {
-			Type(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD",
-				value1 = "${userJobTitle}");
-		}
-
-		if (isSet(userGender)) {
-			Select(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT",
-				value1 = "${userGender}");
-		}
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-			value1 = "${userLastName}");
-
-		if (isSet(userTag)) {
-			Type(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD_INPUT",
-				value1 = "${userTag}");
-
-			KeyPress(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD_INPUT",
-				value1 = "\ENTER");
-		}
-
-		if (isSet(userComment)) {
-			Type(
-				locator1 = "TextArea#COMMENTS",
-				value1 = "${userComment}");
-		}
+		User._editUserInformation(
+			userBirthday = "${userBirthday}",
+			userComment = "${userComment}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userGender = "${userGender}",
+			userJobTitle = "${userJobTitle}",
+			userLastName = "${userLastName}",
+			userMiddleName = "${userMiddleName}",
+			userScreenName = "${userScreenName}",
+			userTag = "${userTag}");
 
 		if (isSet(lat) && isSet(lng)) {
 			Geolocation.setMarkerPosition(
@@ -354,46 +380,15 @@ definition {
 			var userEmailAddress = StringUtil.lowerCase("${userEmailAddress}");
 			var userScreenName = StringUtil.lowerCase("${userScreenName}");
 
-			AssertTextEquals(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-				value1 = "${userScreenName}");
-
-			AssertTextEquals(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-				value1 = "${userEmailAddress}");
-
-			AssertTextEquals(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-				value1 = "${userFirstName}");
-
-			if (isSet(userMiddleName)) {
-				AssertTextEquals(
-					locator1 = "UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD",
-					value1 = "${userMiddleName}");
-			}
-
-			if (isSet(userJobTitle)) {
-				AssertTextEquals(
-					locator1 = "UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD",
-					value1 = "${userJobTitle}");
-			}
-
-			AssertTextEquals(
-				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-				value1 = "${userLastName}");
-
-			if (isSet(userTag)) {
-				AssertTextEquals(
-					key_userTag = "${userTag}",
-					locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
-					value1 = "${userTag}");
-			}
-
-			if (isSet(userComment)) {
-				AssertTextEquals(
-					locator1 = "TextArea#COMMENTS",
-					value1 = "${userComment}");
-			}
+			User._editUserInformation(
+				userComment = "${userComment}",
+				userEmailAddress = "${userEmailAddress}",
+				userFirstName = "${userFirstName}",
+				userJobTitle = "${userJobTitle}",
+				userLastName = "${userLastName}",
+				userMiddleName = "${userMiddleName}",
+				userScreenName = "${userScreenName}",
+				userTag = "${userTag}");
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -1652,30 +1647,11 @@ definition {
 	macro editUserInformation {
 		AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
 
-		if (isSet(userFirstNameEdit)) {
-			Type(
-				locator1 = "TextInput#FIRST_NAME",
-				value1 = "${userFirstNameEdit}");
-		}
-
-		if (isSet(userLastNameEdit)) {
-			Type(
-				locator1 = "TextInput#LAST_NAME",
-				value1 = "${userLastNameEdit}");
-		}
-
-		if (isSet(userMiddleNameEdit)) {
-			Type(
-				locator1 = "TextInput#MIDDLE_NAME",
-				value1 = "${userMiddleNameEdit}");
-		}
-
-		if (isSet(userCustomField)) {
-			Type(
-				key_fieldLabel = "${userCustomFieldLabel}",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${userCustomField}");
-		}
+		User._editUserInformation(
+			userCustomField = "${userCustomField}",
+			userFirstName = "${userFirstNameEdit}",
+			userLastName = "${userLastNameEdit}",
+			userMiddleName = "${userMiddleNameEdit}");
 
 		PortletEntry.save();
 

@@ -588,7 +588,7 @@ definition {
 		}
 
 		task ("Then it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Unable to add product to the cart.");
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
 		}
 	}
 
@@ -677,7 +677,7 @@ definition {
 		}
 
 		task ("Then the order item will not be added to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Unable to add product to the cart.");
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
 		}
 	}
 

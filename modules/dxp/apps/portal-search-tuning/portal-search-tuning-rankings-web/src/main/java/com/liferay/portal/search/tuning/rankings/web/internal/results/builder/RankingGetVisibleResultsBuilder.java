@@ -38,8 +38,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.name.Ranking
 import com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper.RankingSearchRequestHelper;
 import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingResultUtil;
 
-import java.util.Optional;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -75,18 +73,16 @@ public class RankingGetVisibleResultsBuilder {
 	}
 
 	public JSONObject build() {
-		Optional<Ranking> optional = _rankingIndexReader.fetchOptional(
+		Ranking ranking = _rankingIndexReader.fetch(
 			_rankingIndexName, _rankingId);
 
-		if (!optional.isPresent()) {
+		if (ranking == null) {
 			return JSONUtil.put(
 				"documents", JSONFactoryUtil.createJSONArray()
 			).put(
 				"total", 0
 			);
 		}
-
-		Ranking ranking = optional.get();
 
 		SearchResponse searchResponse = _getSearchResponse(ranking);
 

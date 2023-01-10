@@ -149,7 +149,7 @@ public abstract class BaseRankingsPortletActionTestCase
 			Optional.of(ranking)
 		).when(
 			rankingIndexReader
-		).fetchOptional(
+		).fetch(
 			Mockito.any(), Mockito.anyString()
 		);
 	}

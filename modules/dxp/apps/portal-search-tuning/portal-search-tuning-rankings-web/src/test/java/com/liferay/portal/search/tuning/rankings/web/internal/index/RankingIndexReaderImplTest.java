@@ -20,7 +20,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.name.Ranking
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,7 +54,20 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 	}
 
 	@Test
-	public void testFetchByQueryStringOptional() {
+	public void testFetch() {
+		setUpSearchEngineAdapter(
+			setUpGetDocumentResponseGetDocument(
+				setUpDocument(Arrays.asList("queryStrings")),
+				setUpGetDocumentResponse()));
+
+		Assert.assertEquals(
+			_setUpDocumentToRankingTranslator(),
+			_rankingIndexReaderImpl.fetch(
+				Mockito.mock(RankingIndexName.class), "id"));
+	}
+
+	@Test
+	public void testFetchByQueryString() {
 		_setUpDocumentToRankingTranslator();
 
 		setUpQueries();
@@ -67,30 +79,16 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 			setUpSearchHits(Arrays.asList("queryStrings")));
 
 		Assert.assertEquals(
-			Optional.of(_setUpDocumentToRankingTranslator()),
-			_rankingIndexReaderImpl.fetchByQueryStringOptional(
+			_setUpDocumentToRankingTranslator(),
+			_rankingIndexReaderImpl.fetchByQueryString(
 				Mockito.mock(RankingIndexName.class), "queryString"));
 	}
 
 	@Test
-	public void testFetchByQueryStringOptionalBlankQueryString() {
-		Assert.assertEquals(
-			Optional.empty(),
-			_rankingIndexReaderImpl.fetchByQueryStringOptional(
+	public void testFetchByQueryStringBlankQueryString() {
+		Assert.assertNull(
+			_rankingIndexReaderImpl.fetchByQueryString(
 				Mockito.mock(RankingIndexName.class), ""));
-	}
-
-	@Test
-	public void testFetchOptional() {
-		setUpSearchEngineAdapter(
-			setUpGetDocumentResponseGetDocument(
-				setUpDocument(Arrays.asList("queryStrings")),
-				setUpGetDocumentResponse()));
-
-		Assert.assertEquals(
-			Optional.of(_setUpDocumentToRankingTranslator()),
-			_rankingIndexReaderImpl.fetchOptional(
-				Mockito.mock(RankingIndexName.class), "id"));
 	}
 
 	@Test

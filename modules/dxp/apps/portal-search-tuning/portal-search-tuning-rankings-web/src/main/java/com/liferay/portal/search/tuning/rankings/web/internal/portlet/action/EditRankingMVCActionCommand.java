@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -52,7 +53,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -210,10 +210,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		String id = rankingStorageAdapter.create(rankingIndexName, ranking);
 
-		Optional<Ranking> optional = rankingIndexReader.fetchOptional(
-			rankingIndexName, id);
-
-		return optional.get();
+		return rankingIndexReader.fetch(rankingIndexName, id);
 	}
 
 	private void _deactivate(
@@ -380,25 +377,11 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		List<Ranking> rankings = new ArrayList<>();
-
-		String[] rankingDocumentIds = _getRankingDocumentIds(
-			actionRequest, editRankingMVCActionRequest);
-
 		RankingIndexName rankingIndexName = getRankingIndexName();
 
-		for (String rankingDocumentId : rankingDocumentIds) {
-			Optional<Ranking> optional = rankingIndexReader.fetchOptional(
-				rankingIndexName, rankingDocumentId);
-
-			if (optional.isPresent()) {
-				Ranking ranking = optional.get();
-
-				rankings.add(ranking);
-			}
-		}
-
-		return rankings;
+		return TransformUtil.transformToList(
+			_getRankingDocumentIds(actionRequest, editRankingMVCActionRequest),
+			id -> rankingIndexReader.fetch(rankingIndexName, id));
 	}
 
 	private String _getSaveAndContinueRedirect(
@@ -532,16 +515,14 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		String id = editRankingMVCActionRequest.getResultsRankingUid();
 
-		Optional<Ranking> optional = rankingIndexReader.fetchOptional(
+		Ranking ranking = rankingIndexReader.fetch(
 			rankingIndexNameBuilder.getRankingIndexName(
 				portal.getCompanyId(actionRequest)),
 			id);
 
-		if (!optional.isPresent()) {
+		if (ranking == null) {
 			return;
 		}
-
-		Ranking ranking = optional.get();
 
 		_guardDuplicateQueryStrings(editRankingMVCActionRequest, ranking);
 

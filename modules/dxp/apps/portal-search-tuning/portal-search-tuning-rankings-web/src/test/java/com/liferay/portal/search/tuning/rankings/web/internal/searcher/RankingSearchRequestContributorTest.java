@@ -109,7 +109,7 @@ public class RankingSearchRequestContributorTest
 			Optional.of(Mockito.mock(Ranking.class))
 		).when(
 			_rankingIndexReader
-		).fetchByQueryStringOptional(
+		).fetchByQueryString(
 			Mockito.any(), Mockito.anyString()
 		);
 

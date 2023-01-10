@@ -21,9 +21,9 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {TTableRequestParams} from '../table/types';
-import Attributes from './Attributes';
-import Modal from './Modal';
+import {TTableRequestParams} from '../../table/types';
+import Attributes from '../Attributes';
+import Modal from '../Modal';
 
 const response = {
 	account: 25,

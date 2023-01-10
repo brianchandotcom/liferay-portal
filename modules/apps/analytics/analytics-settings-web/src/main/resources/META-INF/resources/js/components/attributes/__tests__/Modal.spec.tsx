@@ -19,9 +19,9 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, render, screen} from '@testing-library/react';
 import React, {useState} from 'react';
 
-import Table from '../table/Table';
-import {TColumn, TFormattedItems, TTableRequestParams} from '../table/types';
-import {TRawItem} from './Modal';
+import Table from '../../table/Table';
+import {TColumn, TFormattedItems, TTableRequestParams} from '../../table/types';
+import {TRawItem} from '../Modal';
 
 const responseEmptyStateModal = {
 	actions: {},

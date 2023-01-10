@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.fragment.internal.renderer;
+package com.liferay.fragment.renderer.categorization.inputs.internal;
 
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.taglib.servlet.taglib.AssetCategoriesSelectorTag;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -40,8 +41,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.PrintWriter;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,7 +119,17 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 			return true;
 		}
 
-		return true;
+		return false;
+	}
+
+	public boolean isShowInternalCategories(
+		FragmentEntryLink fragmentEntryLink) {
+
+		return GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				LocaleUtil.getMostRelevantLocale(), "showInternalCategories"));
 	}
 
 	@Override
@@ -162,14 +177,6 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 			_log.error(
 				"Unable to render categorization input fragment", exception);
 		}
-	}
-
-	public boolean isShowInternalCategories(FragmentEntryLink fragmentEntryLink) {
-		return GetterUtil.getBoolean(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
-				LocaleUtil.getMostRelevantLocale(), "showInternalCategories"));
 	}
 
 	private FormStyledLayoutStructureItem _getFormStyledLayoutStructureItem(

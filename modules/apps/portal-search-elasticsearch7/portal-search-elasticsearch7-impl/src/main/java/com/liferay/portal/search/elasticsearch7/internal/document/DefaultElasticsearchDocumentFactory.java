@@ -30,7 +30,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.FastDateFormat;
 
@@ -296,13 +295,15 @@ public class DefaultElasticsearchDocumentFactory
 			Field field, List<Object> values, XContentBuilder xContentBuilder)
 		throws IOException {
 
-		Stream<Object> stream = values.stream();
+		Object[] elasticsearchValues = new Object[values.size()];
 
-		xContentBuilder.array(
-			field.getName(),
-			stream.map(
-				this::_toElasticsearchValue
-			).toArray());
+		for (int i = 0; i < values.size(); i++) {
+			Object value = values.get(i);
+
+			elasticsearchValues[i] = _toElasticsearchValue(value);
+		}
+
+		xContentBuilder.array(field.getName(), elasticsearchValues);
 	}
 
 	private void _addNestedField(

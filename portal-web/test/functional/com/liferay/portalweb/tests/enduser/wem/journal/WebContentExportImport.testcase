@@ -387,6 +387,11 @@ definition {
 				fieldReference = "Value",
 				targetFieldLabel = "Key");
 
+			DataEngine.editFieldReference(
+				assertFieldReference = "Fieldset",
+				fieldReference = "Fieldset",
+				fieldsGroupLabel = "Fields Group");
+
 			DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
 
 			WebContentStructures.saveCP(structureName = "STR_KV");
@@ -394,11 +399,11 @@ definition {
 
 		task ("And given a template is created for the structure to display keys and web content values") {
 			var templateScript = '''
-<#if Key.getSiblings()?has_content>
-	<#list Key.getSiblings() as cur_Key>
+<#if Fieldset.getSiblings()?has_content>
+	<#list Fieldset.getSiblings() as cur_Key>
 	    Key -> 
-		<#if (cur_Key.getData())??>
-			${cur_Key.getData()}
+		<#if (cur_Key.Key.getData())??>
+			${cur_Key.Key.getData()}
 		</#if>		
 		<br>
         Value ->

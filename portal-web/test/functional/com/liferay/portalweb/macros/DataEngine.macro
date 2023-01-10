@@ -1020,9 +1020,17 @@ definition {
 	}
 
 	macro editFieldReference {
-		Click(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+		if (isSet(fieldsGroupLabel)) {
+			AssertClick.assertPartialTextClickAt(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "${fieldsGroupLabel}");
+		}
+		else {
+			Click(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+		}
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

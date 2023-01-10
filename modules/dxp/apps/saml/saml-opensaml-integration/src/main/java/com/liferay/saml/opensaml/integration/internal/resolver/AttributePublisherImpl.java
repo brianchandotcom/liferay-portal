@@ -19,10 +19,7 @@ import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.saml.saml2.core.Attribute;
@@ -44,40 +41,13 @@ public class AttributePublisherImpl
 
 		List<XMLObject> attributeXmlObjects = attribute.getAttributeValues();
 
-		AttributeValue[] attributeValues = TransformUtil.transform(
-			values,
-			value -> new AttributeValueWrapper(
-				OpenSamlUtil.buildAttributeValue(value)),
-			AttributeValue.class);
-
-		Stream<AttributeValue> stream = Arrays.stream(attributeValues);
-
 		attributeXmlObjects.addAll(
-			stream.map(
-				AttributeValueWrapper.class::cast
-			).map(
-				AttributeValueWrapper::getXmlObject
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transformToList(
+				values, OpenSamlUtil::buildAttributeValue));
 
 		_attributes.add(attribute);
 	}
 
 	private final List<Attribute> _attributes = new ArrayList<>();
-
-	private static class AttributeValueWrapper implements AttributeValue {
-
-		public AttributeValueWrapper(XMLObject xmlObject) {
-			_xmlObject = xmlObject;
-		}
-
-		public XMLObject getXmlObject() {
-			return _xmlObject;
-		}
-
-		private final XMLObject _xmlObject;
-
-	}
 
 }

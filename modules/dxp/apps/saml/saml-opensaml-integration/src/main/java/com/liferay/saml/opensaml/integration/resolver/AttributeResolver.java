@@ -35,9 +35,6 @@ public interface AttributeResolver extends Resolver {
 		public void publish(
 			String name, String nameFormat, String... attributeValues);
 
-		public interface AttributeValue {
-		}
-
 	}
 
 	public interface AttributeResolverSAMLContext

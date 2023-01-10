@@ -223,7 +223,7 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 			String s = StringUtil.trim(content.substring(0, matcher.start()));
 
 			if (s.endsWith("else")) {
-				return null;
+				continue;
 			}
 
 			List<String> ifStatementCodeBlocks = new ArrayList<>();

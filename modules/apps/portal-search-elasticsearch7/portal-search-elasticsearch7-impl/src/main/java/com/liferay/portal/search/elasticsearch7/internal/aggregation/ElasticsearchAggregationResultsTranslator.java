@@ -18,8 +18,8 @@ import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.elasticsearch.search.aggregations.Aggregations;
 
@@ -43,17 +43,22 @@ public class ElasticsearchAggregationResultsTranslator {
 		_pipelineAggregationLookup = pipelineAggregationLookup;
 	}
 
-	public Stream<AggregationResult> translate(
+	public List<AggregationResult> translate(
 		Aggregations elasticsearchAggregations) {
 
-		Stream<org.elasticsearch.search.aggregations.Aggregation> stream =
-			_getElasticsearchAggregations(elasticsearchAggregations);
+		List<AggregationResult> aggregationResults = new ArrayList<>();
 
-		return stream.map(
-			this::translate
-		).filter(
-			aggregationResult -> aggregationResult != null
-		);
+		for (org.elasticsearch.search.aggregations.Aggregation aggregation :
+				elasticsearchAggregations.asList()) {
+
+			AggregationResult aggregationResult = translate(aggregation);
+
+			if (aggregationResult != null) {
+				aggregationResults.add(aggregationResult);
+			}
+		}
+
+		return aggregationResults;
 	}
 
 	public interface AggregationLookup {
@@ -94,15 +99,6 @@ public class ElasticsearchAggregationResultsTranslator {
 		}
 
 		return null;
-	}
-
-	private Stream<org.elasticsearch.search.aggregations.Aggregation>
-		_getElasticsearchAggregations(Aggregations aggregations) {
-
-		List<org.elasticsearch.search.aggregations.Aggregation> list =
-			aggregations.asList();
-
-		return list.stream();
 	}
 
 	private final AggregationLookup _aggregationLookup;

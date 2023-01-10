@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import App, {EPageView} from './App';
+import App, {EPageView} from '../App';
 
 const INITIAL_PROPS = {
 	connected: false,

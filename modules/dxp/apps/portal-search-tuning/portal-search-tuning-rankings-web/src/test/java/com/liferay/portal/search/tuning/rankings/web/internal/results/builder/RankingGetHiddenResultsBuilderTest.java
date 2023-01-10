@@ -20,7 +20,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,7 +69,7 @@ public class RankingGetHiddenResultsBuilderTest
 			ranking
 		).getHiddenDocumentIds();
 
-		setUpRankingIndexReader(Optional.of(ranking));
+		setUpRankingIndexReader(ranking);
 
 		setUpSearchEngineAdapter(
 			setUpGetDocumentResponseGetDocument(
@@ -84,8 +83,8 @@ public class RankingGetHiddenResultsBuilderTest
 	}
 
 	@Test
-	public void testBuildWithOptionalRankingNotPresent() {
-		setUpRankingIndexReader(Optional.empty());
+	public void testBuildWithRankingNotPresent() {
+		setUpRankingIndexReader(null);
 
 		Assert.assertEquals(
 			JSONUtil.put(

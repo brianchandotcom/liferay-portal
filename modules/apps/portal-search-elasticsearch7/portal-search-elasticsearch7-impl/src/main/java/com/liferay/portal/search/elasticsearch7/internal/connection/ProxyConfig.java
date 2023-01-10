@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.stream.Stream;
-
 /**
  * @author Adam Brandizzi
  */
@@ -123,16 +121,19 @@ public class ProxyConfig {
 		}
 
 		protected boolean shouldApplyConfig() {
-			if (hasHostAndPort()) {
-				return Stream.of(
-					_networkHostAddresses
-				).allMatch(
-					host -> !_http.isNonProxyHost(
-						HttpComponentsUtil.getDomain(host))
-				);
+			if (!hasHostAndPort()) {
+				return false;
 			}
 
-			return false;
+			for (String networkHostAddress : _networkHostAddresses) {
+				if (_http.isNonProxyHost(
+						HttpComponentsUtil.getDomain(networkHostAddress))) {
+
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		protected boolean shouldApplyCredentials() {

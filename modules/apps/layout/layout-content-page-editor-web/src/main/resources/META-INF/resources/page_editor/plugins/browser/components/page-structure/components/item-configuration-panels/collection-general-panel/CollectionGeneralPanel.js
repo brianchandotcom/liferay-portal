@@ -132,8 +132,8 @@ export function CollectionGeneralPanel({item}) {
 		);
 	};
 
-	const onPreventCollectionSelect = useCallback(
-		(callback) => {
+	const onBeforeCollectionSelect = useCallback(
+		({preventDefault}) => {
 			const state = getState();
 
 			const isLinkedToFilter = Object.values(state.layoutData.items).some(
@@ -170,14 +170,11 @@ export function CollectionGeneralPanel({item}) {
 						'if-you-change-the-collection-you-unlink-the-collection-filter'
 					)}\n\n${Liferay.Language.get('do-you-want-to-continue')}`,
 					onConfirm: (isConfirmed) => {
-						if (isConfirmed) {
-							callback(false);
+						if (!isConfirmed) {
+							preventDefault();
 						}
 					},
 				});
-			}
-			else {
-				callback(false);
 			}
 		},
 		[getState, item.itemId]
@@ -258,10 +255,10 @@ export function CollectionGeneralPanel({item}) {
 								collectionItem={collection}
 								itemSelectorURL={config.collectionSelectorURL}
 								label={Liferay.Language.get('collection')}
-								onCollectionSelect={handleCollectionSelect}
-								onPreventCollectionSelect={
-									onPreventCollectionSelect
+								onBeforeCollectionSelect={
+									onBeforeCollectionSelect
 								}
+								onCollectionSelect={handleCollectionSelect}
 								optionsMenuItems={optionsMenuItems}
 							/>
 

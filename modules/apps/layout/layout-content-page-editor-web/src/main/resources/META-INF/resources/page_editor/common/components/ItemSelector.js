@@ -26,7 +26,7 @@ import {selectPageContentDropdownItems} from '../../app/selectors/selectPageCont
 import {useId} from '../../core/hooks/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
-const DEFAULT_PREVENT_ITEM_SELECT = (callback) => callback(false);
+const DEFAULT_BEFORE_ITEM_SELECT = () => {};
 
 const DEFAULT_OPTIONS_MENU_ITEMS = [];
 
@@ -39,8 +39,8 @@ export default function ItemSelector({
 	itemSelectorURL,
 	label,
 	modalProps,
+	onBeforeItemSelect = DEFAULT_BEFORE_ITEM_SELECT,
 	onItemSelect,
-	onPreventCollectionSelect = DEFAULT_PREVENT_ITEM_SELECT,
 	optionsMenuItems = DEFAULT_OPTIONS_MENU_ITEMS,
 	quickMappedInfoItems = DEFAULT_QUICK_MAPPED_INFO_ITEMS,
 	selectedItem,
@@ -52,25 +52,31 @@ export default function ItemSelector({
 	const itemSelectorInputId = useId();
 
 	const openModal = useCallback(() => {
-		onPreventCollectionSelect((result) => {
-			if (!result) {
-				openItemSelector({
-					callback: onItemSelect,
-					eventName:
-						eventName || `${config.portletNamespace}selectInfoItem`,
-					itemSelectorURL:
-						itemSelectorURL || config.infoItemSelectorURL,
-					modalProps,
-					transformValueCallback,
-				});
-			}
+		let defaultPrevented = false;
+
+		onBeforeItemSelect({
+			preventDefault: () => {
+				defaultPrevented = true;
+			},
+		});
+
+		if (defaultPrevented) {
+			return;
+		}
+
+		openItemSelector({
+			callback: onItemSelect,
+			eventName: eventName || `${config.portletNamespace}selectInfoItem`,
+			itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,
+			modalProps,
+			transformValueCallback,
 		});
 	}, [
 		eventName,
 		itemSelectorURL,
 		modalProps,
 		onItemSelect,
-		onPreventCollectionSelect,
+		onBeforeItemSelect,
 		transformValueCallback,
 	]);
 
@@ -299,6 +305,7 @@ ItemSelector.propTypes = {
 	itemSelectorURL: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	modalProps: PropTypes.object,
+	onBeforeItemSelect: PropTypes.func,
 	onItemSelect: PropTypes.func.isRequired,
 	optionsMenuItems: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -314,7 +321,6 @@ ItemSelector.propTypes = {
 		})
 	),
 	selectedItem: PropTypes.shape({title: PropTypes.string}),
-	shouldPreventItemSelect: PropTypes.func,
 	showEditControls: PropTypes.bool,
 	showMappedItems: PropTypes.bool,
 	transformValueCallback: PropTypes.func.isRequired,

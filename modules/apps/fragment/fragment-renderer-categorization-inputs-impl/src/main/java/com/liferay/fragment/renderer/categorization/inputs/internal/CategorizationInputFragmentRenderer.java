@@ -163,6 +163,8 @@ public class CategorizationInputFragmentRenderer implements FragmentRenderer {
 			assetCategoriesSelectorTag.setClassTypePK(
 				formStyledLayoutStructureItem.getClassTypeId());
 
+			assetCategoriesSelectorTag.setShowLabel(false);
+
 			if (isShowInternalCategories(
 					fragmentRendererContext.getFragmentEntryLink())) {
 

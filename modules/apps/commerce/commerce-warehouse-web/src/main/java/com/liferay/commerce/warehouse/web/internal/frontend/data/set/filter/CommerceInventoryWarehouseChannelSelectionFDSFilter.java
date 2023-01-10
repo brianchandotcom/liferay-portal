@@ -15,7 +15,7 @@
 package com.liferay.commerce.warehouse.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.warehouse.web.internal.constants.CommerceInventoryWarehouseFDSNames;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS,
 	service = FDSFilter.class
 )
-public class CommerceInventoryWarehouseChannelAutocompleteFDSFilter
-	extends BaseAutocompleteFDSFilter {
+public class CommerceInventoryWarehouseChannelSelectionFDSFilter
+	extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getAPIURL() {
@@ -56,7 +56,12 @@ public class CommerceInventoryWarehouseChannelAutocompleteFDSFilter
 	}
 
 	@Override
-	public boolean isMultipleSelection() {
+	public boolean isAutocompleteEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean isMultiple() {
 		return true;
 	}
 

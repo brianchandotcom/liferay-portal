@@ -12,36 +12,38 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CommercePricingFDSNames.DISCOUNTS,
-		"frontend.data.set.name=" + CommercePricingFDSNames.PRICE_LISTS
-	},
+	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class CommerceAccountGroupAutocompleteFDSFilter
-	extends BaseAutocompleteFDSFilter {
+public class AssetCategorySelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-commerce-admin-account/v1.0" +
-			"/accountGroups?sort=name:asc";
+		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0" +
+			"/taxonomy-categories?sort=name:asc";
+	}
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.COLLECTION;
 	}
 
 	@Override
 	public String getId() {
-		return "accountGroupId";
+		return "categoryIds";
 	}
 
 	@Override
@@ -56,11 +58,11 @@ public class CommerceAccountGroupAutocompleteFDSFilter
 
 	@Override
 	public String getLabel() {
-		return "account-group";
+		return "category";
 	}
 
 	@Override
-	public boolean isMultipleSelection() {
+	public boolean isAutocompleteEnabled() {
 		return true;
 	}
 

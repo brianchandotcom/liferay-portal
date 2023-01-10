@@ -12,35 +12,31 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CommercePricingFDSNames.DISCOUNTS,
-		"frontend.data.set.name=" + CommercePricingFDSNames.PRICE_LISTS
-	},
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
 	service = FDSFilter.class
 )
-public class CommerceAccountAutocompleteFDSFilter
-	extends BaseAutocompleteFDSFilter {
+public class CommerceChannelSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-commerce-admin-account/v1.0/accounts?sort=name:asc";
+		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
 	}
 
 	@Override
 	public String getId() {
-		return "accountId";
+		return "channelId";
 	}
 
 	@Override
@@ -55,12 +51,17 @@ public class CommerceAccountAutocompleteFDSFilter
 
 	@Override
 	public String getLabel() {
-		return "account";
+		return "channel";
 	}
 
 	@Override
-	public boolean isMultipleSelection() {
+	public boolean isAutocompleteEnabled() {
 		return true;
+	}
+
+	@Override
+	public boolean isMultiple() {
+		return false;
 	}
 
 }

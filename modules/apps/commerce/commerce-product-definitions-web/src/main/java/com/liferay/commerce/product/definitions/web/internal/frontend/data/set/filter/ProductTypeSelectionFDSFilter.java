@@ -15,10 +15,18 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeRegistry;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -27,33 +35,40 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class AssetCategoryAutocompleteFDSFilter
-	extends BaseAutocompleteFDSFilter {
-
-	@Override
-	public String getAPIURL() {
-		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0" +
-			"/taxonomy-categories?sort=name:asc";
-	}
+public class ProductTypeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {
-		return "categoryIds";
-	}
-
-	@Override
-	public String getItemKey() {
-		return "id";
-	}
-
-	@Override
-	public String getItemLabel() {
-		return "name";
+		return "productType";
 	}
 
 	@Override
 	public String getLabel() {
-		return "category";
+		return "product-type";
 	}
+
+	@Override
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale) {
+
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
+
+		for (CPType cpType : _cpTypeRegistry.getCPTypes()) {
+			selectionFDSFilterItems.add(
+				new SelectionFDSFilterItem(
+					cpType.getLabel(locale), cpType.getName()));
+		}
+
+		return selectionFDSFilterItems;
+	}
+
+	@Override
+	public boolean isMultiple() {
+		return false;
+	}
+
+	@Reference
+	private CPTypeRegistry _cpTypeRegistry;
 
 }

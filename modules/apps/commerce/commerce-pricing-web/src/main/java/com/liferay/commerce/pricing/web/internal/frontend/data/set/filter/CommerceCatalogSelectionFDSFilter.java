@@ -12,32 +12,37 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.pricing.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
+	property = "frontend.data.set.name=" + CommercePricingFDSNames.PRICE_LISTS,
 	service = FDSFilter.class
 )
-public class CommerceChannelAutocompleteFDSFilter
-	extends BaseAutocompleteFDSFilter {
+public class CommerceCatalogSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
+		return "/o/headless-commerce-admin-catalog/v1.0/catalogs?sort=name:asc";
+	}
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.COLLECTION;
 	}
 
 	@Override
 	public String getId() {
-		return "channelId";
+		return "catalogId";
 	}
 
 	@Override
@@ -52,7 +57,17 @@ public class CommerceChannelAutocompleteFDSFilter
 
 	@Override
 	public String getLabel() {
-		return "channel";
+		return "catalog";
+	}
+
+	@Override
+	public boolean isAutocompleteEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean isMultiple() {
+		return true;
 	}
 
 }

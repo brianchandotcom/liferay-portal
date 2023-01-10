@@ -36,7 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
 	service = FDSFilter.class
 )
-public class CommerceOrderStatusFDSFilter extends BaseSelectionFDSFilter {
+public class CommerceOrderStatusSelectionFDSFilter
+	extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {

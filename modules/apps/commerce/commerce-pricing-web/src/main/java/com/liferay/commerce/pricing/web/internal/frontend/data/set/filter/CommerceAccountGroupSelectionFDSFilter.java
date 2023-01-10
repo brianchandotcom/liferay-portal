@@ -15,7 +15,8 @@
 package com.liferay.commerce.pricing.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,17 +31,23 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FDSFilter.class
 )
-public class CommerceChannelAutocompleteFDSFilter
-	extends BaseAutocompleteFDSFilter {
+public class CommerceAccountGroupSelectionFDSFilter
+	extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
+		return "/o/headless-commerce-admin-account/v1.0" +
+			"/accountGroups?sort=name:asc";
+	}
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.COLLECTION;
 	}
 
 	@Override
 	public String getId() {
-		return "channelId";
+		return "accountGroupId";
 	}
 
 	@Override
@@ -55,11 +62,16 @@ public class CommerceChannelAutocompleteFDSFilter
 
 	@Override
 	public String getLabel() {
-		return "channel";
+		return "account-group";
 	}
 
 	@Override
-	public boolean isMultipleSelection() {
+	public boolean isAutocompleteEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean isMultiple() {
 		return true;
 	}
 

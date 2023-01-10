@@ -15,60 +15,54 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeRegistry;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
-import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marco Leo
+ * @author Andrea Sbarra
  */
 @Component(
 	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class ProductTypeFDSFilter extends BaseSelectionFDSFilter {
+public class CommerceChannelSelectionFDSFilter extends BaseSelectionFDSFilter {
+
+	@Override
+	public String getAPIURL() {
+		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
+	}
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.COLLECTION;
+	}
 
 	@Override
 	public String getId() {
-		return "productType";
+		return "channelId";
+	}
+
+	@Override
+	public String getItemKey() {
+		return "id";
+	}
+
+	@Override
+	public String getItemLabel() {
+		return "name";
 	}
 
 	@Override
 	public String getLabel() {
-		return "product-type";
+		return "channel";
 	}
 
 	@Override
-	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
-		Locale locale) {
-
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
-
-		for (CPType cpType : _cpTypeRegistry.getCPTypes()) {
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					cpType.getLabel(locale), cpType.getName()));
-		}
-
-		return selectionFDSFilterItems;
+	public boolean isAutocompleteEnabled() {
+		return true;
 	}
-
-	@Override
-	public boolean isMultiple() {
-		return false;
-	}
-
-	@Reference
-	private CPTypeRegistry _cpTypeRegistry;
 
 }

@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration",
 	service = ConfigurationModelListener.class
 )

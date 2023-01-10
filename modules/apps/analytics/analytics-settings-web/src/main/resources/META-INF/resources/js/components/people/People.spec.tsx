@@ -15,10 +15,22 @@
 import fetch from 'jest-fetch-mock';
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, fireEvent, render, screen} from '@testing-library/react';
+import {useModal} from '@clayui/modal';
+import {
+	act,
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from '@testing-library/react';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-import People from './People';
+import {TEmptyState} from '../table/StateRenderer';
+import {TTableRequestParams} from '../table/types';
+import Modal from './Modal';
+import People, {EPeople} from './People';
 
 const accountsResponseUpdated = {
 	syncAllAccounts: true,
@@ -38,6 +50,16 @@ const response = {
 	syncedUserGroupIds: [],
 };
 
+const responseEmptyStateModal = {
+	actions: {},
+	facets: [],
+	items: [],
+	lastPage: 1,
+	page: 1,
+	pageSize: 20,
+	totalCount: 0,
+};
+
 const responseUpdated = {
 	syncAllAccounts: true,
 	syncAllContacts: true,
@@ -46,9 +68,121 @@ const responseUpdated = {
 	syncedUserGroupIds: [],
 };
 
+const responseWithDataModal = {
+	actions: {},
+	facets: [],
+	items: [
+		{
+			id: 45149,
+			name: 'test',
+			selected: false,
+		},
+		{
+			id: 45150,
+			name: 'test2',
+			selected: false,
+		},
+	],
+	lastPage: 1,
+	page: 1,
+	pageSize: 20,
+	totalCount: 2,
+};
+
+interface IComponentWithDataProps {
+	requestFn: (params: TTableRequestParams) => Promise<any>;
+}
+
+interface IComponentWithEmptyStateProps {
+	requestFn: (params: TTableRequestParams) => Promise<any>;
+}
+
+const ComponentWithData: React.FC<IComponentWithDataProps> = ({requestFn}) => {
+	const {observer} = useModal({onClose: () => {}});
+
+	const emptyState: TEmptyState = {
+		contentRenderer: () => <></>,
+		description: 'Empty State Description',
+		noResultsTitle: 'Empty State No Results Title',
+		title: 'Empty State Title',
+	};
+
+	return (
+		<Modal
+			columns={[
+				{
+					expanded: true,
+					id: 'name',
+					label: Liferay.Language.get('test-groups'),
+				},
+			]}
+			emptyState={emptyState}
+			name={EPeople.AccountGroupIds}
+			observer={observer}
+			onCloseModal={() => {}}
+			requestFn={requestFn}
+			syncAllAccounts
+			syncAllContacts
+			syncedIds={{
+				syncedAccountGroupIds: [''],
+				syncedOrganizationIds: [''],
+				syncedUserGroupIds: [''],
+			}}
+			title="Add Test Group"
+		/>
+	);
+};
+
+const ComponentWithEmptyState: React.FC<IComponentWithEmptyStateProps> = ({
+	requestFn,
+}) => {
+	const {observer} = useModal({onClose: () => {}});
+
+	const emptyState: TEmptyState = {
+		contentRenderer: () => <></>,
+		description: 'Empty State Description',
+		noResultsTitle: 'Empty State No Results Title',
+		title: 'Empty State Title',
+	};
+
+	return (
+		<Modal
+			columns={[]}
+			emptyState={emptyState}
+			name={EPeople.AccountGroupIds}
+			observer={observer}
+			onCloseModal={() => {}}
+			requestFn={requestFn}
+			syncAllAccounts
+			syncAllContacts
+			syncedIds={{
+				syncedAccountGroupIds: [''],
+				syncedOrganizationIds: [''],
+				syncedUserGroupIds: [''],
+			}}
+			title="Add Test Group"
+		/>
+	);
+};
+
 describe('People', () => {
+	beforeAll(() => {
+		// @ts-ignore
+
+		ReactDOM.createPortal = jest.fn((element) => {
+			return element;
+		});
+		jest.useFakeTimers();
+	});
+
+	afterAll(() => {
+		jest.useRealTimers();
+	});
+
 	afterEach(() => {
+		jest.clearAllTimers();
 		jest.restoreAllMocks();
+		cleanup();
 	});
 
 	it('renders People component without crashing it', async () => {
@@ -185,8 +319,8 @@ describe('People', () => {
 		);
 	});
 
-	it('renders component, clicks on "user groups" to open modal', async () => {
-		fetch.mockResponse(JSON.stringify(response));
+	it('renders component, clicks on "user groups" to open modal with empty state', async () => {
+		fetch.mockResponseOnce(JSON.stringify(response));
 
 		render(<People />);
 
@@ -194,15 +328,69 @@ describe('People', () => {
 
 		await act(async () => {
 			fireEvent.click(userGroups);
+
+			fetch.mockResponseOnce(JSON.stringify(responseEmptyStateModal));
+
+			render(
+				<ComponentWithEmptyState
+					requestFn={async () => responseEmptyStateModal}
+				/>
+			);
+
+			jest.useFakeTimers();
+
+			await waitFor(() => screen.getByText('Empty State Title'));
+
+			await waitFor(() => screen.getByText('Empty State Description'));
 		});
 
 		const modalContent = document.querySelector('.modal-content');
 
 		expect(modalContent).toBeInTheDocument();
+
+		expect(screen.getByText('Empty State Title')).toBeInTheDocument();
+
+		expect(screen.getByText('Empty State Description')).toBeInTheDocument();
 	});
 
-	it('renders component, clicks on "organizations" to open modal', async () => {
-		fetch.mockResponse(JSON.stringify(response));
+	it('renders component, clicks on "user groups" to open modal with data', async () => {
+		fetch.mockResponseOnce(JSON.stringify(response));
+
+		render(<People />);
+
+		const userGroups = screen.getByText('user-groups');
+
+		await act(async () => {
+			fireEvent.click(userGroups);
+
+			fetch.mockResponseOnce(JSON.stringify(responseEmptyStateModal));
+
+			render(
+				<ComponentWithData
+					requestFn={async () => responseWithDataModal}
+				/>
+			);
+
+			jest.useFakeTimers();
+
+			await waitFor(() => screen.getByText('test'));
+
+			await waitFor(() => screen.getByText('test2'));
+		});
+
+		const modalContent = document.querySelector('.modal-content');
+
+		expect(modalContent).toBeInTheDocument();
+
+		expect(screen.getByText('Add Test Group')).toBeInTheDocument();
+
+		expect(screen.getByText('test')).toBeInTheDocument();
+
+		expect(screen.getByText('test2')).toBeInTheDocument();
+	});
+
+	it('renders component, clicks on "organizations" to open modal with empty state', async () => {
+		fetch.mockResponseOnce(JSON.stringify(response));
 
 		render(<People />);
 
@@ -210,15 +398,69 @@ describe('People', () => {
 
 		await act(async () => {
 			fireEvent.click(organizations);
+
+			fetch.mockResponseOnce(JSON.stringify(responseEmptyStateModal));
+
+			render(
+				<ComponentWithEmptyState
+					requestFn={async () => responseEmptyStateModal}
+				/>
+			);
+
+			jest.useFakeTimers();
+
+			await waitFor(() => screen.getByText('Empty State Title'));
+
+			await waitFor(() => screen.getByText('Empty State Description'));
 		});
 
 		const modalContent = document.querySelector('.modal-content');
 
 		expect(modalContent).toBeInTheDocument();
+
+		expect(screen.getByText('Empty State Title')).toBeInTheDocument();
+
+		expect(screen.getByText('Empty State Description')).toBeInTheDocument();
 	});
 
-	it('renders component, clicks on "sync by accounts groups" to open modal', async () => {
-		fetch.mockResponse(JSON.stringify(response));
+	it('renders component, clicks on "organizations" to open modal with data', async () => {
+		fetch.mockResponseOnce(JSON.stringify(response));
+
+		render(<People />);
+
+		const organizations = screen.getByText('organizations');
+
+		await act(async () => {
+			fireEvent.click(organizations);
+
+			fetch.mockResponseOnce(JSON.stringify(responseEmptyStateModal));
+
+			render(
+				<ComponentWithData
+					requestFn={async () => responseWithDataModal}
+				/>
+			);
+
+			jest.useFakeTimers();
+
+			await waitFor(() => screen.getByText('test'));
+
+			await waitFor(() => screen.getByText('test2'));
+		});
+
+		const modalContent = document.querySelector('.modal-content');
+
+		expect(modalContent).toBeInTheDocument();
+
+		expect(screen.getByText('Add Test Group')).toBeInTheDocument();
+
+		expect(screen.getByText('test')).toBeInTheDocument();
+
+		expect(screen.getByText('test2')).toBeInTheDocument();
+	});
+
+	it('renders component, clicks on "sync by accounts groups" to open modal with empty state', async () => {
+		fetch.mockResponseOnce(JSON.stringify(response));
 
 		render(<People />);
 
@@ -226,10 +468,64 @@ describe('People', () => {
 
 		await act(async () => {
 			fireEvent.click(accountGroups);
+
+			fetch.mockResponseOnce(JSON.stringify(responseEmptyStateModal));
+
+			render(
+				<ComponentWithEmptyState
+					requestFn={async () => responseEmptyStateModal}
+				/>
+			);
+
+			jest.useFakeTimers();
+
+			await waitFor(() => screen.getByText('Empty State Title'));
+
+			await waitFor(() => screen.getByText('Empty State Description'));
 		});
 
 		const modalContent = document.querySelector('.modal-content');
 
 		expect(modalContent).toBeInTheDocument();
+
+		expect(screen.getByText('Empty State Title')).toBeInTheDocument();
+
+		expect(screen.getByText('Empty State Description')).toBeInTheDocument();
+	});
+
+	it('renders component, clicks on "sync by accounts groups" to open modal with data', async () => {
+		fetch.mockResponseOnce(JSON.stringify(response));
+
+		render(<People />);
+
+		const accountGroups = screen.getByText('sync-by-account-groups');
+
+		await act(async () => {
+			fireEvent.click(accountGroups);
+
+			fetch.mockResponseOnce(JSON.stringify(responseEmptyStateModal));
+
+			render(
+				<ComponentWithData
+					requestFn={async () => responseWithDataModal}
+				/>
+			);
+
+			jest.useFakeTimers();
+
+			await waitFor(() => screen.getByText('test'));
+
+			await waitFor(() => screen.getByText('test2'));
+		});
+
+		const modalContent = document.querySelector('.modal-content');
+
+		expect(modalContent).toBeInTheDocument();
+
+		expect(screen.getByText('Add Test Group')).toBeInTheDocument();
+
+		expect(screen.getByText('test')).toBeInTheDocument();
+
+		expect(screen.getByText('test2')).toBeInTheDocument();
 	});
 });

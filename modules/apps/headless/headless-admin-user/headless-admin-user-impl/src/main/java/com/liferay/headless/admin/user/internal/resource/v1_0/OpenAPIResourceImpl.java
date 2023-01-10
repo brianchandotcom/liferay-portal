@@ -120,6 +120,8 @@ public class OpenAPIResourceImpl {
 
 			add(SubscriptionResourceImpl.class);
 
+			add(TicketResourceImpl.class);
+
 			add(UserAccountResourceImpl.class);
 
 			add(UserGroupResourceImpl.class);

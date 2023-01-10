@@ -27,6 +27,7 @@ import com.liferay.headless.admin.user.internal.resource.v1_0.SegmentResourceImp
 import com.liferay.headless.admin.user.internal.resource.v1_0.SegmentUserResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.SiteResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.SubscriptionResourceImpl;
+import com.liferay.headless.admin.user.internal.resource.v1_0.TicketResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.UserAccountResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.UserGroupResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.WebUrlResourceImpl;
@@ -41,6 +42,7 @@ import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
+import com.liferay.headless.admin.user.resource.v1_0.TicketResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
@@ -106,6 +108,8 @@ public class ServletDataImpl implements ServletData {
 			_siteResourceComponentServiceObjects);
 		Query.setSubscriptionResourceComponentServiceObjects(
 			_subscriptionResourceComponentServiceObjects);
+		Query.setTicketResourceComponentServiceObjects(
+			_ticketResourceComponentServiceObjects);
 		Query.setUserAccountResourceComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects);
 		Query.setUserGroupResourceComponentServiceObjects(
@@ -718,6 +722,16 @@ public class ServletDataImpl implements ServletData {
 							SubscriptionResourceImpl.class,
 							"getMyUserAccountSubscription"));
 					put(
+						"query#userAccountEmailVerificationTicket",
+						new ObjectValuePair<>(
+							TicketResourceImpl.class,
+							"getUserAccountEmailVerificationTicket"));
+					put(
+						"query#userAccountPasswordResetTicket",
+						new ObjectValuePair<>(
+							TicketResourceImpl.class,
+							"getUserAccountPasswordResetTicket"));
+					put(
 						"query#accountUserAccountsByExternalReferenceCode",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
@@ -840,6 +854,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SiteResource>
 		_siteResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TicketResource>
+		_ticketResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WebUrlResource>

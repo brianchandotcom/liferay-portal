@@ -64,7 +64,7 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find grouped product with external reference code " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -82,7 +82,7 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find grouped product with ID " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return _getGroupedProductsPage(
@@ -124,7 +124,7 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find grouped product with external reference code " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -145,7 +145,7 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find grouped product with ID " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =

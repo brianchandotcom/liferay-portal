@@ -116,6 +116,140 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-167932. Fragments inside dropzones will be kept by data-lfr-drop-zone-id when new drop zone is added."
+	@priority = "3"
+	test PersistFragmentsInPreviousDropZoneAfterAddingNewOne {
+		property custom.properties = "feature.flag.LPS-167932=true";
+
+		task ("Given a page designer has a fragment with dropzones on page") {
+			JSONFragment.addFragmentCollection(
+				groupKey = "Test Site Name-staging",
+				name = "Fragment Set Name",
+				site = "false");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeHtmlEditor(content = '''
+<div class="fragment-name">
+	<lfr-drop-zone data-lfr-drop-zone-id="drop-zone-1"></lfr-drop-zone>
+	<lfr-drop-zone data-lfr-drop-zone-id="drop-zone-2"></lfr-drop-zone>
+</div>		''');
+
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				key_index = "2",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				key_index = "3",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.publish();
+
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("When the page designer adds one more dropzone into fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			FragmentsEditor.typeHtmlEditor(content = '''
+<div class="fragment-name">
+	<lfr-drop-zone data-lfr-drop-zone-id="drop-zone-1"></lfr-drop-zone>
+	<lfr-drop-zone data-lfr-drop-zone-id="drop-zone-3"></lfr-drop-zone>
+	<lfr-drop-zone data-lfr-drop-zone-id="drop-zone-2"></lfr-drop-zone>
+</div>		''');
+
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "View Usages");
+
+			FragmentsAdmin.propagateChanges();
+		}
+
+		task ("Then the page designer sees the fragments kept in previous dropzones in staging site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertVisible(
+				key_elementName = "Button",
+				key_position = "1",
+				locator1 = "Fragment#DROP_ZONE_NESTED_ELEMENT");
+
+			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
+
+			AssertVisible(
+				key_elementName = "Heading",
+				key_position = "3",
+				locator1 = "Fragment#DROP_ZONE_NESTED_ELEMENT");
+		}
+
+		task ("When the page designer publishes changes to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then the page designer sees the fragments kept in previous dropzones in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+	}
+
 	@description = "This is a test for LPS-114145. The changes are saved automatically in fragment editor before publish in Staging site."
 	@priority = "3"
 	test ViewAutoSavedBeforePublishingComponentInStaging {

@@ -1,0 +1,262 @@
+{
+	"configuration": {
+		"callbackURL": null,
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"fieldNameMappingMap": {
+		},
+		"parameters": null,
+		"version": "v1.0"
+	},
+	"facets": [
+	],
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"dateCreated": "2022-12-06T21:07:22Z",
+			"dateModified": "2022-12-06T21:09:39Z",
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "1b437c8e-abd4-26e7-5473-2e8c68aa93e1",
+			"id": 43762,
+			"label": {
+				"en_US": "Foo"
+			},
+			"name": "Foo",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "",
+					"dateCreated": "2022-12-06T21:09:13Z",
+					"dateModified": "2022-12-06T21:09:13Z",
+					"description": "",
+					"errorMessage": {
+					},
+					"id": 43790,
+					"label": {
+					},
+					"name": "Foo Update 1",
+					"objectActionExecutorKey": "function#easy-object-action-1",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"conditionExpression": "",
+					"dateCreated": "2022-12-06T21:09:27Z",
+					"dateModified": "2022-12-06T21:09:27Z",
+					"description": "",
+					"errorMessage": {
+					},
+					"id": 43792,
+					"label": {
+					},
+					"name": "Foo Update 2",
+					"objectActionExecutorKey": "function#easy-object-action-2",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"defaultValue": "",
+					"externalReferenceCode": "b861207e-9044-8956-39ca-a4f90acaf256",
+					"id": 43766,
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Create Date"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"listTypeDefinitionId": 0,
+					"name": "createDate",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "",
+					"externalReferenceCode": "91f88c9c-eb8c-fcc1-dc30-fdf06a741c19",
+					"id": 43764,
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Author"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"listTypeDefinitionId": 0,
+					"name": "creator",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "",
+					"externalReferenceCode": "dccc9c01-a0a5-e929-548b-8a3dde20a2a6",
+					"id": 43768,
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "External Reference Code"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"listTypeDefinitionId": 0,
+					"name": "externalReferenceCode",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "",
+					"externalReferenceCode": "47356a30-ea5e-997b-6e7f-6e92247310dc",
+					"id": 43777,
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Field1"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"listTypeDefinitionId": 0,
+					"name": "field1",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"defaultValue": "",
+					"externalReferenceCode": "bfb3f0ee-46ff-9102-f4bf-480eab078946",
+					"id": 43770,
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "ID"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"listTypeDefinitionId": 0,
+					"name": "id",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"defaultValue": "",
+					"externalReferenceCode": "88f5019f-2c55-80e6-c19b-27a451985caf",
+					"id": 43772,
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Modified Date"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"listTypeDefinitionId": 0,
+					"name": "modifiedDate",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "",
+					"externalReferenceCode": "2b96046e-6510-0a04-1dec-fe3e23b0f586",
+					"id": 43774,
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"listTypeDefinitionId": 0,
+					"name": "status",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Foos"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/foos",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	],
+	"lastPage": 1,
+	"page": 1,
+	"pageSize": 20,
+	"totalCount": 1
+}

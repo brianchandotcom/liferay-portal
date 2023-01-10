@@ -25,7 +25,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndex
 import com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper.RankingSearchRequestHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
@@ -106,7 +105,7 @@ public class RankingSearchRequestContributorTest
 			true);
 
 		Mockito.doReturn(
-			Optional.of(Mockito.mock(Ranking.class))
+			Mockito.mock(Ranking.class)
 		).when(
 			_rankingIndexReader
 		).fetchByQueryString(

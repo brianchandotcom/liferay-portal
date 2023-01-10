@@ -204,9 +204,11 @@ async function checkUnmappedInputChild(
 			}
 		);
 
-		const isCaptcha = allowedFieldTypes.includes('captcha');
+		const isSpecialFieldType =
+			allowedFieldTypes.includes('captcha') ||
+			allowedFieldTypes.includes('categorization');
 
-		if (isCaptcha) {
+		if (isSpecialFieldType) {
 			continue;
 		}
 

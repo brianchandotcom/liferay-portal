@@ -177,14 +177,16 @@ export function FormInputGeneralPanel({item}) {
 		key: [CACHE_KEYS.allowedInputTypes, fragmentEntryKey],
 	});
 
-	const isCaptchaInput = useMemo(
-		() => allowedInputTypes?.includes('captcha'),
+	const isSpecialInput = useMemo(
+		() =>
+			allowedInputTypes?.includes('captcha') ||
+			allowedInputTypes?.includes('categorization'),
 		[allowedInputTypes]
 	);
 
 	const filteredFormFields = useSelectorCallback(
 		(state) => {
-			if (!formFields || !allowedInputTypes || isCaptchaInput) {
+			if (!formFields || !allowedInputTypes || isSpecialInput) {
 				return [];
 			}
 
@@ -246,7 +248,7 @@ export function FormInputGeneralPanel({item}) {
 
 			return nextFields;
 		},
-		[allowedInputTypes, formFields, isCaptchaInput, item.itemId]
+		[allowedInputTypes, formFields, isSpecialInput, item.itemId]
 	);
 
 	const configFields = useMemo(() => {
@@ -257,7 +259,7 @@ export function FormInputGeneralPanel({item}) {
 				)
 				.flatMap((fieldSet) => fieldSet.fields) ?? [];
 
-		if (isCaptchaInput) {
+		if (isSpecialInput) {
 			return fieldSetsWithoutLabel;
 		}
 
@@ -267,7 +269,7 @@ export function FormInputGeneralPanel({item}) {
 		);
 
 		return [...inputCommonFields, ...fieldSetsWithoutLabel];
-	}, [configurationValues, fragmentEntryLinkRef, formFields, isCaptchaInput]);
+	}, [configurationValues, fragmentEntryLinkRef, formFields, isSpecialInput]);
 
 	const handleValueSelect = (key, value) => {
 		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];
@@ -299,7 +301,7 @@ export function FormInputGeneralPanel({item}) {
 		);
 	};
 
-	if (isCaptchaInput && !configFields.length) {
+	if (isSpecialInput && !configFields.length) {
 		return <FragmentGeneralPanel item={item} />;
 	}
 
@@ -310,7 +312,7 @@ export function FormInputGeneralPanel({item}) {
 					label={sub(Liferay.Language.get('x-options'), fragmentName)}
 					open
 				>
-					{!isCaptchaInput && (
+					{!isSpecialInput && (
 						<FormInputMappingOptions
 							allowedInputTypes={allowedInputTypes}
 							configurationValues={configurationValues}
@@ -325,7 +327,7 @@ export function FormInputGeneralPanel({item}) {
 					)}
 
 					{(configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
-						isCaptchaInput) && (
+						isSpecialInput) && (
 						<>
 							<span className="sr-only">
 								{sub(

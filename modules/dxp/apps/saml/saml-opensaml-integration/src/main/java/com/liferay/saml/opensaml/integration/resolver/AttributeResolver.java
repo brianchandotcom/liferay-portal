@@ -17,9 +17,6 @@ package com.liferay.saml.opensaml.integration.resolver;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.saml.opensaml.integration.internal.resolver.SAMLCommands;
 
-import java.net.URI;
-
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,26 +32,10 @@ public interface AttributeResolver extends Resolver {
 
 	public interface AttributePublisher {
 
-		public AttributeValue buildBase64(String value);
-
-		public AttributeValue buildBoolean(boolean value);
-
-		public AttributeValue buildDateTime(Date value);
-
-		public AttributeValue buildInt(int value);
-
 		public AttributeValue buildString(String value);
-
-		public AttributeValue buildURI(URI value);
-
-		public void publish(String name, AttributeValue... attributeValues);
 
 		public void publish(
 			String name, String nameFormat, AttributeValue... attributeValues);
-
-		public void publish(
-			String name, String friendlyName, String nameFormat,
-			AttributeValue... attributeValues);
 
 		public interface AttributeValue {
 		}

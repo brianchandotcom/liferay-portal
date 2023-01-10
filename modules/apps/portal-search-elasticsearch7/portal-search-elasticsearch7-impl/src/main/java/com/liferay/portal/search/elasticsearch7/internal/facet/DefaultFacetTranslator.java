@@ -77,15 +77,19 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			postFilterQueryBuilderOptional.ifPresent(
 				postFilterQueryBuilders::add);
 
-			Optional<AggregationBuilder> optional =
+			AggregationBuilder aggregationBuilder =
 				_facetProcessor.processFacet(facet);
 
-			optional.map(
-				aggregationBuilder -> postProcessAggregationBuilder(
-					aggregationBuilder, facetProcessorContext)
-			).ifPresent(
-				searchSourceBuilder::aggregation
-			);
+			if (aggregationBuilder != null) {
+				AggregationBuilder postProcessAggregationBuilder =
+					postProcessAggregationBuilder(
+						aggregationBuilder, facetProcessorContext);
+
+				if (postProcessAggregationBuilder != null) {
+					searchSourceBuilder.aggregation(
+						postProcessAggregationBuilder);
+				}
+			}
 		}
 
 		if (ListUtil.isNotEmpty(postFilterQueryBuilders)) {

@@ -390,7 +390,9 @@ definition {
 	}
 
 	macro viewAccountRestrictedFieldIsRequiredOnEntries {
-		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "${relationshipName}");
+		AssertElementPresent(
+			key_fieldName = "${relationshipName}",
+			locator1 = "FormFields#TEXT_FIELD");
 
 		Button.clickSave();
 

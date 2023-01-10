@@ -28,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -64,9 +65,15 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commerceOrderTypeId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+		CommerceAccount commerceAccount = _getCommerceAccount(
+			commerceAccountId);
+
+		if (commerceAccount.isBusinessAccount()) {
+			_portletResourcePermission.check(
+				getPermissionChecker(),
+				commerceAccount.getCommerceAccountGroupId(),
+				CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+		}
 
 		return commerceOrderLocalService.addCommerceOrder(
 			getUserId(), groupId, commerceAccountId, commerceCurrencyId,
@@ -95,9 +102,15 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 				externalReferenceCode, serviceContext.getCompanyId());
 
 		if (commerceOrder == null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+			CommerceAccount commerceAccount = _getCommerceAccount(
+				commerceAccountId);
+
+			if (commerceAccount.isBusinessAccount()) {
+				_portletResourcePermission.check(
+					getPermissionChecker(),
+					commerceAccount.getCommerceAccountGroupId(),
+					CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+			}
 		}
 		else {
 			_commerceOrderModelResourcePermission.check(
@@ -1024,6 +1037,20 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 				getPermissionChecker(),
 				commerceAccount.getCommerceAccountGroup(), action);
 		}
+	}
+
+	private CommerceAccount _getCommerceAccount(long commerceAccountId)
+		throws PortalException {
+
+		User user = getUser();
+
+		if ((user == null) || user.isDefaultUser()) {
+			return _commerceAccountLocalService.getGuestCommerceAccount(
+				user.getCompanyId());
+		}
+
+		return _commerceAccountLocalService.getCommerceAccount(
+			commerceAccountId);
 	}
 
 	private long[] _getCommerceAccountIds(long groupId) throws PortalException {

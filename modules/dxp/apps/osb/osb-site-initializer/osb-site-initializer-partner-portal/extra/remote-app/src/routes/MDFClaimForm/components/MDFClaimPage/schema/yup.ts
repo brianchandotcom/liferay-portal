@@ -93,7 +93,7 @@ const claimSchema = object({
 											)
 											.test(
 												'biggerAmount',
-												'Invoice amount is bigger than requested amount early',
+												'Invoice amount is larger than the MDF requested amount',
 												(invoiceAmount, testContext) =>
 													Number(invoiceAmount) <=
 													Number(

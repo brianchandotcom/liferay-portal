@@ -74,11 +74,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_1",
-			value1 = "Please enter a valid definition.");
+		Alert.viewSpecificRequiredField(fieldFieldLabel = "Data Definition");
 	}
 
 	@description = "This is a use case for LPS-50557."

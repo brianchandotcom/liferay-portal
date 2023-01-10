@@ -182,9 +182,8 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 				resetFailureCount, resetTicketMaxAge, serviceContext);
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		redirect = _portal.escapeRedirect(redirect);
+		String redirect = _portal.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
 
 		if (Validator.isNotNull(redirect)) {
 			redirect = HttpComponentsUtil.setParameter(

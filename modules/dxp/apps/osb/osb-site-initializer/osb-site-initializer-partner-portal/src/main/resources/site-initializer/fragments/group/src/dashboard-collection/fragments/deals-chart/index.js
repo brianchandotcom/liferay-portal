@@ -238,17 +238,10 @@ export default function () {
 	};
 
 	return (
-		<Container className="deals-chart-card-height" title="Deals">
-			{!(opportunitiesChartValues && leadsChartValues) && (
-				<ClayLoadingIndicator className="mb-10" size="md" />
-			)}
-
-			{opportunitiesChartValues && leadsChartValues && getChart()}
-
-			<div>
-				<hr className="mb-3 mt-1" />
-
-				<div className="d-flex">
+		<Container
+			className="deals-chart-card-height"
+			footer={
+				<>
 					<ClayButton
 						className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
 						displayType="secondary"
@@ -274,8 +267,15 @@ export default function () {
 					>
 						New Deal
 					</ClayButton>
-				</div>
-			</div>
+				</>
+			}
+			title="Deals"
+		>
+			{!(opportunitiesChartValues && leadsChartValues) && (
+				<ClayLoadingIndicator className="mb-10" size="md" />
+			)}
+
+			{opportunitiesChartValues && leadsChartValues && getChart()}
 		</Container>
 	);
 }

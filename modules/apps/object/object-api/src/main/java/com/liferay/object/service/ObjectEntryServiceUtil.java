@@ -62,6 +62,14 @@ public class ObjectEntryServiceUtil {
 			serviceContext);
 	}
 
+	public static void checkModelResourcePermission(
+			long objectDefinitionId, long objectEntryId, String actionId)
+		throws PortalException {
+
+		getService().checkModelResourcePermission(
+			objectDefinitionId, objectEntryId, actionId);
+	}
+
 	public static ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException {
 

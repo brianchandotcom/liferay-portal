@@ -194,9 +194,6 @@ public class StructureUtil {
 					});
 				setFormFieldOptions(
 					() -> {
-						List<FormFieldOption> formFieldOptionList =
-							new ArrayList<>();
-
 						DDMFormFieldOptions ddmFormFieldOptions =
 							ddmFormField.getDDMFormFieldOptions();
 
@@ -204,17 +201,14 @@ public class StructureUtil {
 							Map<String, LocalizedValue> ddmFormFieldOptionsMap =
 								ddmFormFieldOptions.getOptions();
 
-							for (Map.Entry<String, LocalizedValue> entry :
-									ddmFormFieldOptionsMap.entrySet()) {
-
-								formFieldOptionList.add(
-									_toFormFieldOption(
-										acceptAllLanguages, entry, locale));
-							}
+							return TransformUtil.transformToArray(
+								ddmFormFieldOptionsMap.entrySet(),
+								entry -> _toFormFieldOption(
+									acceptAllLanguages, entry, locale),
+								FormFieldOption.class);
 						}
 
-						return formFieldOptionList.toArray(
-							new FormFieldOption[0]);
+						return new FormFieldOption[0];
 					});
 				setGrid(
 					() -> {

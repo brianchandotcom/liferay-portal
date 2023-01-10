@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sort;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoDistanceTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
-import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.GeoDistanceSort;
@@ -30,9 +30,6 @@ import com.liferay.portal.search.sort.SortFieldTranslator;
 import com.liferay.portal.search.sort.SortMode;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.SortVisitor;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.geo.GeoPoint;
@@ -89,19 +86,12 @@ public class ElasticsearchSortFieldTranslator
 
 	@Override
 	public SortBuilder<?> visit(GeoDistanceSort geoDistanceSort) {
-		List<GeoLocationPoint> geoLocationPoints =
-			geoDistanceSort.getGeoLocationPoints();
-
-		Stream<GeoLocationPoint> stream = geoLocationPoints.stream();
-
 		GeoDistanceSortBuilder geoDistanceSortBuilder =
 			SortBuilders.geoDistanceSort(
 				geoDistanceSort.getField(),
-				stream.map(
-					GeoLocationPointTranslator::translate
-				).toArray(
-					GeoPoint[]::new
-				));
+				TransformUtil.transformToArray(
+					geoDistanceSort.getGeoLocationPoints(),
+					GeoLocationPointTranslator::translate, GeoPoint.class));
 
 		geoDistanceSortBuilder.order(translate(geoDistanceSort.getSortOrder()));
 

@@ -45,8 +45,7 @@ public class KaleoInstanceOrderByComparator
 	public WorkflowInstance adapt(KaleoInstance kaleoInstance) {
 		try {
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance,
-				kaleoInstance.getRootKaleoInstanceToken(_serviceContext));
+				kaleoInstance);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

@@ -279,8 +279,7 @@ public class DefaultWorkflowEngineImpl
 
 			if (kaleoInstance != null) {
 				return _kaleoWorkflowModelConverter.toWorkflowInstance(
-					kaleoInstance,
-					kaleoInstance.getRootKaleoInstanceToken(serviceContext));
+					kaleoInstance);
 			}
 		}
 		catch (WorkflowException workflowException) {
@@ -355,8 +354,7 @@ public class DefaultWorkflowEngineImpl
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
-					serviceContext),
-				serviceContext);
+					serviceContext));
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -380,8 +378,7 @@ public class DefaultWorkflowEngineImpl
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
-					serviceContext),
-				serviceContext);
+					serviceContext));
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -407,8 +404,7 @@ public class DefaultWorkflowEngineImpl
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
-					serviceContext),
-				serviceContext);
+					serviceContext));
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -505,8 +501,7 @@ public class DefaultWorkflowEngineImpl
 					serviceContext);
 
 			return new WorkflowModelSearchResult<>(
-				_toWorkflowInstances(
-					baseModelSearchResult.getBaseModels(), serviceContext),
+				_toWorkflowInstances(baseModelSearchResult.getBaseModels()),
 				baseModelSearchResult.getLength());
 		}
 		catch (WorkflowException workflowException) {
@@ -575,7 +570,7 @@ public class DefaultWorkflowEngineImpl
 				});
 
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance, kaleoInstanceToken, workflowContext);
+				kaleoInstance, workflowContext);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -682,7 +677,7 @@ public class DefaultWorkflowEngineImpl
 				});
 
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance, rootKaleoInstanceToken, workflowContext);
+				kaleoInstance, workflowContext);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -703,8 +698,7 @@ public class DefaultWorkflowEngineImpl
 				workflowInstanceId, workflowContext, serviceContext);
 
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance,
-				kaleoInstance.getRootKaleoInstanceToken(serviceContext));
+				kaleoInstance);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -731,8 +725,7 @@ public class DefaultWorkflowEngineImpl
 					userId, workflowInstanceId, active);
 
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
-				kaleoInstance,
-				kaleoInstance.getRootKaleoInstanceToken(serviceContext));
+				kaleoInstance);
 		}
 		catch (PortalException portalException) {
 			throw new WorkflowException(portalException);
@@ -864,17 +857,14 @@ public class DefaultWorkflowEngineImpl
 	}
 
 	private List<WorkflowInstance> _toWorkflowInstances(
-			List<KaleoInstance> kaleoInstances, ServiceContext serviceContext)
-		throws PortalException {
+		List<KaleoInstance> kaleoInstances) {
 
 		List<WorkflowInstance> workflowInstances = new ArrayList<>(
 			kaleoInstances.size());
 
 		for (KaleoInstance kaleoInstance : kaleoInstances) {
 			workflowInstances.add(
-				_kaleoWorkflowModelConverter.toWorkflowInstance(
-					kaleoInstance,
-					kaleoInstance.getRootKaleoInstanceToken(serviceContext)));
+				_kaleoWorkflowModelConverter.toWorkflowInstance(kaleoInstance));
 		}
 
 		return workflowInstances;

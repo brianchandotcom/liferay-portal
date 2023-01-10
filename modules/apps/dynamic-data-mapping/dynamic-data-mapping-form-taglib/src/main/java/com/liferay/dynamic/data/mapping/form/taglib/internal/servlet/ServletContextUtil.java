@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true)
+@Component(service = {})
 public class ServletContextUtil {
 
 	public static ServletContext getServletContext() {

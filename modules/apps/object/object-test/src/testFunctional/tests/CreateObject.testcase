@@ -791,6 +791,8 @@ definition {
 
 		CreateObject.saveObject();
 
+		Navigator.openURL();
+
 		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
 	}
 
@@ -7119,6 +7121,8 @@ definition {
 
 		CreateObject.saveObject();
 
+		Navigator.openURL();
+
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
@@ -7194,6 +7198,8 @@ definition {
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
+
+		Navigator.openURL();
 
 		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
 	}
@@ -8664,6 +8670,8 @@ definition {
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
+
+		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",

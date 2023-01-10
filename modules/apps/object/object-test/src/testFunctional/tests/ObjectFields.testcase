@@ -580,6 +580,8 @@ definition {
 		}
 
 		task ("Go to Custom Object entries and add an entry") {
+			Navigator.openURL();
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",

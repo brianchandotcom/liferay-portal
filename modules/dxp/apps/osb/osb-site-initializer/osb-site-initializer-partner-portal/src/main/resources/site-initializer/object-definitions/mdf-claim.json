@@ -188,6 +188,9 @@
 									},
 									{
 										"key": "rejected"
+									},
+									{
+										"key": "draft"
 									}
 								]
 							},

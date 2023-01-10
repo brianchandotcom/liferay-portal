@@ -253,6 +253,9 @@
 									},
 									{
 										"key": "canceled"
+									},
+									{
+										"key": "draft"
 									}
 								]
 							},

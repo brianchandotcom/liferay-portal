@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.collection.filter.tags.display.context;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Pablo Molina
@@ -84,6 +86,8 @@ public class FragmentCollectionFilterTagsDisplayContext {
 		}
 
 		_props = HashMapBuilder.<String, Object>put(
+			"disabled", isDisabled()
+		).put(
 			"fragmentEntryLinkId",
 			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId())
 		).put(
@@ -102,6 +106,12 @@ public class FragmentCollectionFilterTagsDisplayContext {
 		).build();
 
 		return _props;
+	}
+
+	public boolean isDisabled() {
+		return Objects.equals(
+			_fragmentRendererContext.getMode(),
+			FragmentEntryLinkConstants.EDIT);
 	}
 
 	public boolean isShowHelpText() {

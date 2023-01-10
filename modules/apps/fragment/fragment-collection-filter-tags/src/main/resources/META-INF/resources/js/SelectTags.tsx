@@ -20,6 +20,7 @@ import {AssetTagsSelector} from 'asset-taglib';
 import React, {useCallback, useState} from 'react';
 
 interface IProps {
+	disabled: boolean;
 	fragmentEntryLinkId: string;
 	helpText: string;
 	label: string;
@@ -27,6 +28,7 @@ interface IProps {
 }
 
 export default function SelectTags({
+	disabled,
 	fragmentEntryLinkId,
 	helpText,
 	label,
@@ -66,7 +68,7 @@ export default function SelectTags({
 			helpText={helpText}
 			inputValue={inputValue}
 			label={label}
-			onInputValueChange={setInputValue}
+			onInputValueChange={disabled ? () => {} : setInputValue}
 			onSelectedItemsChange={updateSelectedItems}
 			selectedItems={selectedItems}
 			showLabel={showLabel}

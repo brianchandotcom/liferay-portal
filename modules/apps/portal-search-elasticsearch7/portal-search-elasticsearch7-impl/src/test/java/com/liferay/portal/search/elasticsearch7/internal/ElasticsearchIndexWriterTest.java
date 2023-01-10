@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -27,8 +28,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,15 +57,10 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 	@After
 	@Override
 	public void tearDown() throws SearchException {
-		Stream<Document> stream = _documents.stream();
-
 		_indexWriter.deleteDocuments(
 			_getSearchContext(),
-			stream.map(
-				document -> document.get(Field.UID)
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transform(
+				_documents, document -> document.get(Field.UID)));
 
 		_documents.clear();
 	}

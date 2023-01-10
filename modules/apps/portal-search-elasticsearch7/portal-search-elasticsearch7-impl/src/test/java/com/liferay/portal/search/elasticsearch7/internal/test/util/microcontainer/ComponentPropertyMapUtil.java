@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.NoSuchElementException;
 
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -50,13 +50,15 @@ public class ComponentPropertyMapUtil {
 		List<AnnotationNode> annotationNodes = _getInvisibleAnnotations(
 			classNode);
 
-		Stream<AnnotationNode> stream = annotationNodes.stream();
+		for (AnnotationNode annotationNode : annotationNodes) {
+			if (annotationNode.desc.contains(Component.class.getSimpleName())) {
+				return annotationNode;
+			}
+		}
 
-		return stream.filter(
-			annotationNode -> annotationNode.desc.contains(
-				Component.class.getSimpleName())
-		).findAny(
-		).get();
+		throw new NoSuchElementException(
+			"Unable to find an AnnotationNode containing description of: " +
+				Component.class.getSimpleName());
 	}
 
 	private static List<AnnotationNode> _getInvisibleAnnotations(

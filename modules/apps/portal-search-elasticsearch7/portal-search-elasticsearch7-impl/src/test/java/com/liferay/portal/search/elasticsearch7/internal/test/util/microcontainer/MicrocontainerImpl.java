@@ -23,10 +23,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -41,17 +39,10 @@ public class MicrocontainerImpl implements Microcontainer {
 
 	@Override
 	public void deploy(Object... components) {
-		Stream.of(
-			components
-		).forEach(
-			this::_injectComponent
-		);
-
-		Stream.of(
-			components
-		).forEach(
-			this::_deployComponent
-		);
+		for (Object component : components) {
+			_injectComponent(component);
+			_deployComponent(component);
+		}
 	}
 
 	@Override
@@ -84,11 +75,9 @@ public class MicrocontainerImpl implements Microcontainer {
 
 		public void inject(Object component) {
 			if (_clazz.isInstance(component)) {
-				Stream.of(
-					_consumers
-				).forEach(
-					consumer -> consumer.accept(_clazz.cast(component))
-				);
+				for (Consumer<T> consumer : _consumers) {
+					consumer.accept(_clazz.cast(component));
+				}
 			}
 		}
 
@@ -99,31 +88,29 @@ public class MicrocontainerImpl implements Microcontainer {
 
 	public static class InjectorProp<T> {
 
-		public InjectorProp(Class<T> clazz, BiConsumer<T, Map>... biConsumers) {
+		public InjectorProp(
+			Class<T> clazz, BiConsumer<T, Map<String, ?>>... biConsumers) {
+
 			_clazz = clazz;
 			_biConsumers = biConsumers;
 		}
 
 		public void inject(Object component) {
 			if (_clazz.isInstance(component)) {
-				Stream.of(
-					_biConsumers
-				).forEach(
-					biConsumer -> biConsumer.accept(
+				for (BiConsumer<T, Map<String, ?>> biConsumer : _biConsumers) {
+					biConsumer.accept(
 						_clazz.cast(component),
-						getComponentPropertyMap(component))
-				);
+						getComponentPropertyMap(component));
+				}
 			}
 		}
 
-		protected Map<String, String> getComponentPropertyMap(
-			Object component) {
-
+		protected Map<String, ?> getComponentPropertyMap(Object component) {
 			return ComponentPropertyMapUtil.getComponentPropertyMap(
 				ASMUtil.getClassNode(component.getClass()));
 		}
 
-		private final BiConsumer<T, Map>[] _biConsumers;
+		private final BiConsumer<T, Map<String, ?>>[] _biConsumers;
 		private final Class<T> _clazz;
 
 	}
@@ -149,15 +136,16 @@ public class MicrocontainerImpl implements Microcontainer {
 		lifecycleComponents.add(component);
 	}
 
-	private Optional<MethodNode> _findMethodPortalInitialized(
-		ClassNode classNode) {
+	private MethodNode _findMethodPortalInitialized(ClassNode classNode) {
+		for (MethodNode methodNode : classNode.methods) {
+			if (_hasReferenceWithTarget(
+					methodNode, ModuleServiceLifecycle.PORTAL_INITIALIZED)) {
 
-		Stream<MethodNode> stream = classNode.methods.stream();
+				return methodNode;
+			}
+		}
 
-		return stream.filter(
-			methodNode -> _hasReferenceWithTarget(
-				methodNode, ModuleServiceLifecycle.PORTAL_INITIALIZED)
-		).findAny();
+		return null;
 	}
 
 	private String _getLifecycle(Object component) {
@@ -169,27 +157,26 @@ public class MicrocontainerImpl implements Microcontainer {
 	}
 
 	private boolean _hasMethodPortalInitialized(Object component) {
-		Class<?> clazz = component.getClass();
+		ClassNode classNode = ASMUtil.getClassNode(component.getClass());
 
-		ClassNode classNode1 = ASMUtil.getClassNode(clazz);
+		MethodNode methodNode = _findMethodPortalInitialized(classNode);
 
-		Optional<MethodNode> optional1 = _findMethodPortalInitialized(
-			classNode1);
-
-		if (optional1.isPresent()) {
+		if (methodNode != null) {
 			return true;
 		}
 
-		if (classNode1.superName == null) {
+		if (classNode.superName == null) {
 			return false;
 		}
 
-		ClassNode classNode2 = ASMUtil.getClassNode(classNode1.superName);
+		methodNode = _findMethodPortalInitialized(
+			ASMUtil.getClassNode(classNode.superName));
 
-		Optional<MethodNode> optional2 = _findMethodPortalInitialized(
-			classNode2);
+		if (methodNode != null) {
+			return true;
+		}
 
-		return optional2.isPresent();
+		return false;
 	}
 
 	private boolean _hasReferenceWithTarget(
@@ -201,12 +188,13 @@ public class MicrocontainerImpl implements Microcontainer {
 			return false;
 		}
 
-		Stream<AnnotationNode> stream = annotationNodes.stream();
+		for (AnnotationNode annotationNode : annotationNodes) {
+			if (_hasTarget(annotationNode, lifecycle)) {
+				return true;
+			}
+		}
 
-		return stream.filter(
-			annotationNode -> _hasTarget(annotationNode, lifecycle)
-		).findAny(
-		).isPresent();
+		return false;
 	}
 
 	private boolean _hasTarget(AnnotationNode annotationNode, String target) {

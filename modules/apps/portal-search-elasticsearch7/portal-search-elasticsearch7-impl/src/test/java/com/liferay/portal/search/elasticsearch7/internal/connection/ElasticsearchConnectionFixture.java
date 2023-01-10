@@ -34,12 +34,10 @@ import com.liferay.portal.util.PropsImpl;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.elasticsearch.client.RestHighLevelClient;
 
@@ -290,15 +288,20 @@ public class ElasticsearchConnectionFixture
 	}
 
 	private List<SettingsContributor> _getSettingsContributors() {
-		return Stream.of(
-			_getClusterLoggingThresholdSettingsContributor(),
-			_getDiskThresholdSettingsContributor(),
-			_getDiscoveryTypeZenContributor()
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+		List<SettingsContributor> settingsContributors = new ArrayList<>();
+
+		settingsContributors.add(
+			_getClusterLoggingThresholdSettingsContributor());
+		settingsContributors.add(_getDiskThresholdSettingsContributor());
+
+		SettingsContributor settingsContributor =
+			_getDiscoveryTypeZenContributor();
+
+		if (settingsContributor != null) {
+			settingsContributors.add(settingsContributor);
+		}
+
+		return settingsContributors;
 	}
 
 	private static final Path _TMP_PATH = Paths.get("tmp");

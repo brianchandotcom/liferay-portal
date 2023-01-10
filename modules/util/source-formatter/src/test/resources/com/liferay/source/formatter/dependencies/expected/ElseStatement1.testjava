@@ -67,4 +67,29 @@ public class ElseStatement1 {
 		return false;
 	}
 
+	protected int manyStatement(int a, int b) {
+		int c = 0;
+
+		if (a == 1) {
+			return a - 1;
+		}
+		else if (b == 1) {
+			if (a > 3) {
+				c = b - 2;
+			}
+			else {
+				return b - 3;
+			}
+		}
+		else {
+			if (a > 2) {
+				return a - b;
+			}
+
+			c = 5;
+		}
+
+		return c + a + b;
+	}
+
 }

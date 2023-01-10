@@ -239,13 +239,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 
 		String label = labelInfoLocalizedValue.getValue(locale);
 
-		Long groupId = infoItemFormVariation.getGroupId();
-
-		if (groupId == null) {
-			return label;
-		}
-
-		Group group = _groupLocalService.fetchGroup(groupId);
+		Group group = _groupLocalService.fetchGroup(
+			infoItemFormVariation.getGroupId());
 
 		if (group == null) {
 			return label;

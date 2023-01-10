@@ -29,14 +29,7 @@ public class InfoItemFormVariation {
 		long groupId, String key,
 		InfoLocalizedValue<String> labelInfoLocalizedValue) {
 
-		this(key, labelInfoLocalizedValue);
-
 		_groupId = groupId;
-	}
-
-	public InfoItemFormVariation(
-		String key, InfoLocalizedValue<String> labelInfoLocalizedValue) {
-
 		_key = key;
 		_labelInfoLocalizedValue = labelInfoLocalizedValue;
 	}
@@ -61,7 +54,7 @@ public class InfoItemFormVariation {
 		return false;
 	}
 
-	public Long getGroupId() {
+	public long getGroupId() {
 		return _groupId;
 	}
 
@@ -82,7 +75,7 @@ public class InfoItemFormVariation {
 		return HashUtil.hash(0, _key);
 	}
 
-	private Long _groupId;
+	private final long _groupId;
 	private final String _key;
 	private final InfoLocalizedValue<String> _labelInfoLocalizedValue;
 

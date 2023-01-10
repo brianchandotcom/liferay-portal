@@ -8817,6 +8817,33 @@ go</echo>
 		<check-config />
 	</target>
 
+	<target name="check-folder-in-lar">
+		<unzip
+			dest="${app.server.tomcat.temp.dir}"
+		>
+			<fileset
+				dir="${app.server.tomcat.temp.dir}"
+				includes="*.lar"
+			/>
+		</unzip>
+
+		<available file="${app.server.tomcat.temp.dir}/adaptive-media" property="folder.exists" type="dir" />
+
+		<if>
+			<equals arg1="${folder.exists}" arg2="true" />
+			<then>
+				<echo file="${liferay.home}/result.txt">
+				Folder found in lar file
+				</echo>
+			</then>
+			<else>
+				<echo file="${liferay.home}/result.txt">
+				Folder not found in lar file
+				</echo>
+			</else>
+		</if>
+	</target>
+
 	<target name="check-inet-address">
 		<if>
 			<equals arg1="${app.server.type}" arg2="jboss" />

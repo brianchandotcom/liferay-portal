@@ -18,9 +18,9 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, fireEvent, render, screen, within} from '@testing-library/react';
 import React from 'react';
 
-import {loadingElement} from '../../utils/tests/helpers';
-import {fetchPropertiesResponse} from '../../utils/tests/mocks';
-import Properties from './Properties';
+import {loadingElement} from '../../../utils/__tests__/helpers';
+import {fetchPropertiesResponse} from '../../../utils/__tests__/mocks';
+import Properties from '../Properties';
 
 describe('Properties', () => {
 	afterEach(() => {

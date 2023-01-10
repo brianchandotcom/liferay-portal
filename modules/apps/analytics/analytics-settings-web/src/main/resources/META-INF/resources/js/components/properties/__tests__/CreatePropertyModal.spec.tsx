@@ -22,7 +22,7 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import getCN from 'classnames';
 import React, {useState} from 'react';
 
-import {MAX_LENGTH, MIN_LENGTH} from '../../utils/constants';
+import {MAX_LENGTH, MIN_LENGTH} from '../../../utils/constants';
 
 interface IModalProps {
 	observer?: any;

@@ -170,8 +170,7 @@ public class KaleoWorkflowModelConverterImpl
 
 	@Override
 	public WorkflowDefinition toWorkflowDefinition(
-			KaleoDefinitionVersion kaleoDefinitionVersion)
-		throws PortalException {
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		DefaultWorkflowDefinition defaultWorkflowDefinition =
 			new DefaultWorkflowDefinition();
@@ -241,18 +240,14 @@ public class KaleoWorkflowModelConverterImpl
 	}
 
 	@Override
-	public WorkflowInstance toWorkflowInstance(
-			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken)
-		throws PortalException {
-
-		return toWorkflowInstance(kaleoInstance, kaleoInstanceToken, null);
+	public WorkflowInstance toWorkflowInstance(KaleoInstance kaleoInstance) {
+		return toWorkflowInstance(kaleoInstance, null);
 	}
 
 	@Override
 	public WorkflowInstance toWorkflowInstance(
-			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken,
-			Map<String, Serializable> workflowContext)
-		throws PortalException {
+		KaleoInstance kaleoInstance,
+		Map<String, Serializable> workflowContext) {
 
 		DefaultWorkflowInstance defaultWorkflowInstance =
 			new DefaultWorkflowInstance();

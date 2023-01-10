@@ -19,7 +19,7 @@ import React from 'react';
 import StateRenderer, {
 	EmptyStateComponent,
 	ErrorStateComponent,
-} from './StateRenderer';
+} from '../StateRenderer';
 
 describe('State Renderer', () => {
 	it('renders EmptyStateComponent', () => {

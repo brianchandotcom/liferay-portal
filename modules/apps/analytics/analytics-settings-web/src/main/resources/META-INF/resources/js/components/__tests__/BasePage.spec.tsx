@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import BasePage from './BasePage';
+import BasePage from '../BasePage';
 
 const ChildComponent = () => <p>I am a child component</p>;
 

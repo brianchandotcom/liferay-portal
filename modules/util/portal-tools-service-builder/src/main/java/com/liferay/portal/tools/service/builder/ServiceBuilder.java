@@ -4796,7 +4796,7 @@ public class ServiceBuilder {
 
 		SAXReader saxReader = _getSAXReader();
 
-		Document document = saxReader.read(new UnsyncStringReader(xml));
+		Document document = saxReader.read(new XMLSafeReader(xml));
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();

@@ -21,7 +21,7 @@ import fetch from 'jest-fetch-mock';
 import Attributes from '../../../components/attributes/Attributes';
 import People from '../../../components/people/People';
 import Properties from '../../../components/properties/Properties';
-import {fetchPropertiesResponse} from '../../../utils/tests/mocks';
+import {fetchPropertiesResponse} from '../../../utils/__tests__/mocks';
 import DefaultPage from '../DefaultPage';
 
 describe('DefaultPage', () => {

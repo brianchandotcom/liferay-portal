@@ -82,7 +82,11 @@ import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
@@ -851,6 +855,21 @@ public class BundleSiteInitializerTest {
 					"lfr-theme:regular:show-header")));
 	}
 
+	private void _assertLayoutStructureItems(
+		LayoutPageTemplateStructure layoutPageTemplateStructure,
+		int layoutStructureItemsCount, long segmentsExperienceId) {
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		Assert.assertEquals(
+			layoutStructureItems.toString(), layoutStructureItemsCount,
+			layoutStructureItems.size());
+	}
+
 	private void _assertListTypeDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
@@ -1418,25 +1437,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry1.getType());
 
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, "/test-public-layout");
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		SegmentsExperience segmentsExperience1 =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				groupId, "TEST-SEGMENTS-EXPERIENCE-1",
-				_portal.getClassNameId(Layout.class), draftLayout.getClassPK());
-
-		Assert.assertNotNull(segmentsExperience1);
-		Assert.assertEquals(
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsExperience1.getSegmentsEntryId());
-		Assert.assertEquals(
-			"Test Segments Experience 1",
-			segmentsExperience1.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertTrue(segmentsExperience1.isActive());
-
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				groupId, "TEST-SEGMENTS-ENTRY-2", true);
@@ -1449,19 +1449,40 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry2.getType());
 
-		SegmentsExperience segmentsExperience2 =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				groupId, "TEST-SEGMENTS-EXPERIENCE-2",
-				_portal.getClassNameId(Layout.class), draftLayout.getClassPK());
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, "/test-public-layout");
 
-		Assert.assertNotNull(segmentsExperience2);
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					draftLayout.getGroupId(), draftLayout.getPlid());
+
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				groupId,
+				new long[] {
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId()
+				},
+				_portal.getClassNameId(Layout.class), draftLayout.getClassPK(),
+				true);
+
 		Assert.assertEquals(
-			segmentsEntry2.getSegmentsEntryId(),
-			segmentsExperience2.getSegmentsEntryId());
-		Assert.assertEquals(
-			"Test Segments Experience 2",
-			segmentsExperience2.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertTrue(segmentsExperience2.isActive());
+			segmentsExperiences.toString(), 2, segmentsExperiences.size());
+
+		SegmentsExperience segmentsExperience1 = segmentsExperiences.get(0);
+
+		_assertLayoutStructureItems(
+			layoutPageTemplateStructure, 3,
+			segmentsExperience1.getSegmentsExperienceId());
+
+		SegmentsExperience segmentsExperience2 = segmentsExperiences.get(1);
+
+		_assertLayoutStructureItems(
+			layoutPageTemplateStructure, 3,
+			segmentsExperience2.getSegmentsExperienceId());
 	}
 
 	private void _assertSiteConfiguration(Long groupId) {
@@ -1924,6 +1945,10 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

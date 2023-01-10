@@ -485,13 +485,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 							siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(
-				() -> _addLayoutPageTemplates(
-					assetListEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues,
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					serviceContext,
-					taxonomyCategoryIdsStringUtilReplaceValues));
-			_invoke(
 				() -> _addOrUpdateNotificationTemplates(
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
@@ -509,6 +502,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
+
+			// LPS-172108 Layouts have to be created first so that links in page
+			// templates work
+
+			_invoke(
+				() -> _addLayoutPageTemplates(
+					assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					serviceContext,
+					taxonomyCategoryIdsStringUtilReplaceValues));
 
 			// TODO Review order/dependency
 

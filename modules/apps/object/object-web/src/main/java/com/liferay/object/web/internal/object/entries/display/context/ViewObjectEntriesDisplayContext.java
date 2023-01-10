@@ -146,7 +146,8 @@ public class ViewObjectEntriesDisplayContext {
 			new FDSActionDropdownItem(
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(),
-					"are-you-sure-you-want-to-delete-this-entry"),
+					"it-may-affect-many-records-are-you-sure-you-want-to-" +
+						"delete-this-entry"),
 				_apiURL + "/by-external-reference-code/{externalReferenceCode}",
 				"trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),

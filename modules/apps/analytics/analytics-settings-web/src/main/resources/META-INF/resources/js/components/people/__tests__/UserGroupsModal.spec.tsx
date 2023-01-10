@@ -20,29 +20,30 @@ import {act, cleanup, render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {TEmptyState} from '../table/StateRenderer';
-import Modal from './Modal';
-import {EPeople} from './People';
+import {TEmptyState} from '../../table/StateRenderer';
+import {TTableRequestParams} from '../../table/types';
+import Modal from '../Modal';
+import {EPeople} from '../People';
 
 const responseWithData = {
 	actions: {},
 	facets: [],
 	items: [
 		{
-			id: 44275,
-			name: 'test',
+			id: 11100,
+			name: 'user groups test',
 			selected: false,
 		},
 		{
-			id: 44279,
-			name: 'test2',
+			id: 12120,
+			name: 'user groups test 2',
 			selected: false,
 		},
 	],
 	lastPage: 1,
 	page: 1,
 	pageSize: 20,
-	totalCount: 7,
+	totalCount: 2,
 };
 
 const responseWithEmptyState = {
@@ -55,7 +56,15 @@ const responseWithEmptyState = {
 	totalCount: 0,
 };
 
-const ComponentWithData = () => {
+interface IComponentWithDataProps {
+	requestFn: (params: TTableRequestParams) => Promise<any>;
+}
+
+interface IComponentWithEmptyStateProps {
+	requestFn: (params: TTableRequestParams) => Promise<any>;
+}
+
+const ComponentWithData: React.FC<IComponentWithDataProps> = ({requestFn}) => {
 	const {observer} = useModal({onClose: () => {}});
 
 	const emptyState: TEmptyState = {
@@ -78,27 +87,29 @@ const ComponentWithData = () => {
 			name={EPeople.UserGroupIds}
 			observer={observer}
 			onCloseModal={() => {}}
-			requestFn={async () => responseWithData}
+			requestFn={requestFn}
 			syncAllAccounts
 			syncAllContacts
 			syncedIds={{
-				syncedAccountGroupIds: ['aaa'],
-				syncedOrganizationIds: ['bbb'],
-				syncedUserGroupIds: ['ccc'],
+				syncedAccountGroupIds: [''],
+				syncedOrganizationIds: [''],
+				syncedUserGroupIds: [''],
 			}}
 			title="Assign Modal Title"
 		/>
 	);
 };
 
-const ComponentWithEmptyState = () => {
+const ComponentWithEmptyState: React.FC<IComponentWithEmptyStateProps> = ({
+	requestFn,
+}) => {
 	const {observer} = useModal({onClose: () => {}});
 
 	const emptyState: TEmptyState = {
 		contentRenderer: () => <></>,
 		description: 'Empty State Description',
 		noResultsTitle: 'Empty State No Results Title',
-		title: 'Empty State Title',
+		title: 'There are no user groups',
 	};
 
 	return (
@@ -108,28 +119,26 @@ const ComponentWithEmptyState = () => {
 			name={EPeople.UserGroupIds}
 			observer={observer}
 			onCloseModal={() => {}}
-			requestFn={async () => responseWithEmptyState}
+			requestFn={requestFn}
 			syncAllAccounts
 			syncAllContacts
 			syncedIds={{
-				syncedAccountGroupIds: ['aaa'],
-				syncedOrganizationIds: ['bbb'],
-				syncedUserGroupIds: ['ccc'],
+				syncedAccountGroupIds: [''],
+				syncedOrganizationIds: [''],
+				syncedUserGroupIds: [''],
 			}}
-			title="Assign Modal Title"
+			title="Add User Groups"
 		/>
 	);
 };
 
-describe('People Modal', () => {
+describe('User Groups Modal', () => {
 	beforeAll(() => {
-
 		// @ts-ignore
 
 		ReactDOM.createPortal = jest.fn((element) => {
 			return element;
 		});
-
 		jest.useFakeTimers();
 	});
 
@@ -143,24 +152,26 @@ describe('People Modal', () => {
 		cleanup();
 	});
 
-	it('renders component with data without crashing it', async () => {
+	it('renders User Groups modal without crashing it', async () => {
 		fetch.mockResponse(JSON.stringify(responseWithData));
 
 		await act(async () => {
-			render(<ComponentWithData />);
+			render(
+				<ComponentWithData requestFn={async () => responseWithData} />
+			);
 
 			jest.runAllTimers();
 
-			await waitFor(() => screen.getByText('test'));
+			await waitFor(() => screen.getByText('user groups test'));
 
-			await waitFor(() => screen.getByText('test2'));
+			await waitFor(() => screen.getByText('user groups test 2'));
 		});
 
 		const modalContent = document.querySelector('.modal-content');
 
-		const tableColumnText = screen.getByText('test');
+		const tableColumnText = screen.getByText('user groups test');
 
-		const tableColumnText2 = screen.getByText('test2');
+		const tableColumnText2 = screen.getByText('user groups test 2');
 
 		expect(modalContent).toBeInTheDocument();
 
@@ -169,23 +180,27 @@ describe('People Modal', () => {
 		expect(tableColumnText2).toBeInTheDocument();
 	});
 
-	it('renders component with Empty State without crashing it', async () => {
+	it('renders User Groups Modal with Empty State without crashing it', async () => {
 		fetch.mockResponse(JSON.stringify(responseWithEmptyState));
 
 		await act(async () => {
-			render(<ComponentWithEmptyState />);
+			render(
+				<ComponentWithEmptyState
+					requestFn={async () => responseWithEmptyState}
+				/>
+			);
 			jest.runAllTimers();
 		});
 
-		const assignModalTitle = screen.getByText('Assign Modal Title');
+		const userGroupsTitle = screen.getByText('Add User Groups');
 
-		const emptyStateTitle = screen.getByText('Empty State Title');
+		const emptyStateTitle = screen.getByText('There are no user groups');
 
 		const emptyStateDescription = screen.getByText(
 			'Empty State Description'
 		);
 
-		expect(assignModalTitle).toBeInTheDocument();
+		expect(userGroupsTitle).toBeInTheDocument();
 
 		expect(emptyStateTitle).toBeInTheDocument();
 

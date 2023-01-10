@@ -27,10 +27,10 @@ import {
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {TEmptyState} from '../table/StateRenderer';
-import {TTableRequestParams} from '../table/types';
-import Modal from './Modal';
-import People, {EPeople} from './People';
+import {TEmptyState} from '../../table/StateRenderer';
+import {TTableRequestParams} from '../../table/types';
+import Modal from '../Modal';
+import People, {EPeople} from '../People';
 
 const accountsResponseUpdated = {
 	syncAllAccounts: true,

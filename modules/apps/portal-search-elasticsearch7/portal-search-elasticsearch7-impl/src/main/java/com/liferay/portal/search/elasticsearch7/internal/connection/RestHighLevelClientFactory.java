@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 
 import java.io.InputStream;
@@ -23,8 +24,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.security.KeyStore;
-
-import java.util.stream.Stream;
 
 import javax.net.ssl.SSLContext;
 
@@ -220,13 +219,8 @@ public class RestHighLevelClientFactory {
 	}
 
 	private HttpHost[] _getHttpHosts() {
-		return Stream.of(
-			_networkHostAddresses
-		).map(
-			HttpHost::create
-		).toArray(
-			HttpHost[]::new
-		);
+		return TransformUtil.transform(
+			_networkHostAddresses, HttpHost::create, HttpHost.class);
 	}
 
 	private boolean _authenticationEnabled;

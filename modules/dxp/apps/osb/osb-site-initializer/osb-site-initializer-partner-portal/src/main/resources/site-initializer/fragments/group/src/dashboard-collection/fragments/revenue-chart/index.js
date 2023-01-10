@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
@@ -67,11 +66,10 @@ export default function () {
 	};
 
 	return (
-		<Container className="revenue-chart-card-height" title="Revenue">
-			{loading && <ClayLoadingIndicator className="mt-10" size="md" />}
-
+		<Container title="Revenue">
 			<DonutChart
 				chartData={chartData}
+				isLoading={loading}
 				titleChart={titleChart}
 				valueChart={valueChart}
 			/>

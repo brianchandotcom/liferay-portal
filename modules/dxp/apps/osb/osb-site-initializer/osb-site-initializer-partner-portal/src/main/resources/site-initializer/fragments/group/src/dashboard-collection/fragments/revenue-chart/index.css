@@ -3,11 +3,6 @@
 	font-size: 1.3em;
 }
 
-.revenue-chart-card-height {
-	box-sizing: border-box;
-	height: 479px;
-}
-
 .bb-chart-arcs .bb-chart-arcs-background {
 	fill: #e0e0e0;
 	stroke: none;

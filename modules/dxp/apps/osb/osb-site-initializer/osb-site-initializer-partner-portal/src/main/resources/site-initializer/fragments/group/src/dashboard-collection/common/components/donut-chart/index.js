@@ -10,7 +10,8 @@
  */
 
 import ClayChart from '@clayui/charts';
-import React, {useCallback, useRef} from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {useCallback} from 'react';
 
 import {currencyFormat} from '../../utils';
 
@@ -18,6 +19,7 @@ const DonutChart = ({
 	chartData,
 	hasLegend = false,
 	height = 400,
+	isLoading,
 	LegendElement = () => null,
 	showLabel = false,
 	showLegend = false,
@@ -25,8 +27,6 @@ const DonutChart = ({
 	valueChart,
 	width = 300,
 }) => {
-	const chartRef = useRef();
-
 	const legendTransformData = useCallback((newItems, colors) => {
 		return newItems.map((item, index) => ({
 			color: Object.entries(colors)[index][1],
@@ -35,77 +35,100 @@ const DonutChart = ({
 		}));
 	}, []);
 
+	const hasChartData = chartData.columns.filter((column) => column[1]).length;
+
 	const legendItems = legendTransformData(
 		chartData.columns,
 		chartData.colors
 	);
 
+	const buildChart = () => {
+		if (isLoading) {
+			return <ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
+		}
+
+		if (!hasChartData && !isLoading) {
+			return (
+				<h2 className="mb-10 mt-9 text-center">No Data Available</h2>
+			);
+		}
+
+		return (
+			<>
+				<span className="text-nowrap">
+					{titleChart} <b>{valueChart}</b>
+				</span>
+
+				<div className="d-flex">
+					<div className="d-flex flex-column flex-sm-row justify-content-start">
+						<>
+							<ClayChart
+								className="dashboard-donut-chart"
+								data={chartData}
+								donut={{
+									label: {show: showLabel},
+									title: ' ',
+									width: 35,
+								}}
+								legend={{show: showLegend}}
+								size={{height, width}}
+								tooltip={{
+									contents: (data) => {
+										const title = data[0].id;
+										const value = data[0].value;
+
+										return `<div class="bg-neutral-0 d-flex font-weight-bold rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> $${currencyFormat(
+											value
+										)}</div>`;
+									},
+								}}
+							/>
+
+							<LegendElement />
+
+							{!hasLegend && (
+								<div className="d-flex flex-column justify-content-around pb-4 pl-4">
+									<div className="d-flex flex-column flex-wrap h-100 justify-content-center mb-1">
+										{legendItems?.map((item, index) => {
+											return (
+												<div key={index}>
+													<div className="align-items-center d-flex mb-4">
+														<span
+															className="mr-2 rounded-xs square-status-legend"
+															style={{
+																backgroundColor:
+																	item.color,
+															}}
+														></span>
+
+														<div className="d-flex flex-wrap">
+															<div className="mr-1">
+																{item.name}
+															</div>
+
+															<div className="font-weight-semi-bold">
+																{`$${currencyFormat(
+																	item.value
+																)}`}
+															</div>
+														</div>
+													</div>
+												</div>
+											);
+										})}
+									</div>
+								</div>
+							)}
+						</>
+					</div>
+				</div>
+			</>
+		);
+	};
+
 	return (
 		<div className="align-items-stretch d-flex flex-column">
-			<span className="text-nowrap">
-				{titleChart} <b>{valueChart}</b>
-			</span>
-
-			<div className="d-flex">
-				<div className="d-flex justify-content-start">
-					<ClayChart
-						className="dashboard-donut-chart"
-						data={chartData}
-						donut={{
-							label: {show: showLabel},
-							title: '-',
-							width: 35,
-						}}
-						legend={{show: showLegend}}
-						ref={chartRef}
-						size={{height, width}}
-						tooltip={{
-							contents: (data) => {
-								const title = data[0].id;
-								const value = data[0].value;
-
-								return `<div class="bg-neutral-0 d-flex font-weight-bold rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> $${currencyFormat(
-									value
-								)}</div>`;
-							},
-						}}
-					/>
-
-					<LegendElement />
-
-					{!hasLegend && (
-						<div className="d-flex flex-column justify-content-around pb-4 pl-4">
-							<div className="d-flex flex-column flex-wrap h-100 justify-content-center mb-1">
-								{legendItems?.map((item, index) => {
-									return (
-										<div key={index}>
-											<div className="align-items-center d-flex mb-4">
-												<span
-													className="mr-2 rounded-xs square-status-legend"
-													style={{
-														backgroundColor:
-															item.color,
-													}}
-												></span>
-
-												<div className="mr-1">
-													{item.name}
-												</div>
-
-												<div className="font-weight-semi-bold">
-													{`$${currencyFormat(
-														item.value
-													)}`}
-												</div>
-											</div>
-										</div>
-									);
-								})}
-							</div>
-						</div>
-					)}
-				</div>
-			</div>
+			{buildChart()}
 		</div>
 	);
 };

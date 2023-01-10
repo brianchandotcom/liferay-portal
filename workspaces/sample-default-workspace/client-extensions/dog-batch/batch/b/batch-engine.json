@@ -1,8 +1,0 @@
-{
-	"callbackURL": null,
-	"className": "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition",
-	"fieldNameMappingMap": {
-	},
-	"parameters": null,
-	"version": "v1.0"
-}

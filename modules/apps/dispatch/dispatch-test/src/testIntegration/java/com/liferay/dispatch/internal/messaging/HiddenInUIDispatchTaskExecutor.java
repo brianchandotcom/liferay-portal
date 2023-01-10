@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Joe Duffy
  */
 @Component(
-	immediate = true,
 	property = "dispatch.task.executor.type=" + HiddenInUIDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI,
 	service = DispatchTaskExecutor.class
 )

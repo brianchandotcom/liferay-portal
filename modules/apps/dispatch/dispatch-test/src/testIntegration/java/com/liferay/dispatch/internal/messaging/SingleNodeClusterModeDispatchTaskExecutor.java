@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Beslic
  */
 @Component(
-	immediate = true,
 	property = "dispatch.task.executor.type=" + SingleNodeClusterModeDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE,
 	service = DispatchTaskExecutor.class
 )

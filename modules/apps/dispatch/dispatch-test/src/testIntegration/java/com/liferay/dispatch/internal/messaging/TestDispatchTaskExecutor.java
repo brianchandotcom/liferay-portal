@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Matija Petanjek
  */
 @Component(
-	immediate = true,
 	property = "dispatch.task.executor.type=" + TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST,
 	service = DispatchTaskExecutor.class
 )

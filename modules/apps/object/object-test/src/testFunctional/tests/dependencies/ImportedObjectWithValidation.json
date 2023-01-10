@@ -1,0 +1,189 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableObjectEntryHistory": false,
+	"externalReferenceCode": "165e29ae-62f6-079d-ed90-aab96d21ebae",
+	"label": {
+		"en_US": "Imported Object With Validation"
+	},
+	"name": "ImportedObjectWithValidation",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "82e53063-eb2d-0abf-10e6-9c860d12b65d",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "f67807c0-9d1a-80af-ca91-9ce5ca68935d",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "c3ead905-3b1a-3ab0-37ea-130769e3c471",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Custom Field"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "customField",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "62aec0e8-0667-6cf2-260c-84133139e09d",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "externalReferenceCode",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"externalReferenceCode": "fa6a08d4-4605-0149-dbd3-5a56f6526cf4",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "6828cf75-4a29-0a9e-a9fa-fb7d6a163f84",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "5f74acdc-2dd3-afb4-06e1-238cd962259c",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "control_panel.object",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Imported Object With Validation"
+	},
+	"portlet": false,
+	"restContextPath": "/o/c/importedobjectwithvalidations",
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": false,
+	"titleObjectFieldName": "id"
+}

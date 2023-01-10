@@ -1,45 +1,8 @@
 <div>
-	<p class="mb-2 text-neutral-7 text-paragraph" id="mdf-request-status-display"></p>
+<p class="mb-2 text-neutral-7 text-paragraph" id="mdf-request-status-display"></p>
 </div>
 
-[#assign userRoles = permissionChecker.getUserBag().getRoles()/]
-
-[#assign approvedRoles =[""] /]
-
-[#if configuration.channelAccountManager]
-	[#assign approvedRoles = approvedRoles + ["Channel Account Manager"] /]
-[/#if]
-[#if configuration.channelFinanceManager]
-	[#assign approvedRoles = approvedRoles + ["Channel Finance Manager"] /]
-[/#if]
-[#if configuration.channelGeneralManager]
-	[#assign approvedRoles = approvedRoles + ["Channel General Manager"] /]
-[/#if]
-[#if configuration.channelGlobalMarketingManager]
-	[#assign approvedRoles = approvedRoles + ["Channel Global Marketing Manager"] /]
-[/#if]
-[#if configuration.channelRegionalMarketingManager]
-	[#assign approvedRoles = approvedRoles + ["Channel Regional Marketing Manager"] /]
-[/#if]
-[#if configuration.user]
-	[#assign approvedRoles = approvedRoles + ["User"] /]
-[/#if]
-
-[#list userRoles as userRoles]
-	[#if approvedRoles?seq_contains(userRoles.name)]
-		<div class="manager-buttons">
-			<button class="border-success btn btn-secondary mr-2" id="status-approved">
-				Approve
-			</button>
-
-			<button class="border-info btn btn-secondary mr-2" id="status-request">
-				Request more info
-			</button>
-
-			<button class="border-danger btn btn-secondary" id="status-reject">
-				Reject
-			</button>
-		</div>
-		[#break]
-	[/#if]
-[/#list]
+<div class="status-buttons">
+	<lfr-drop-zone></lfr-drop-zone>
+	<lfr-drop-zone></lfr-drop-zone>
+</div>

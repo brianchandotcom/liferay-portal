@@ -62,6 +62,7 @@ export default function SelectTags({
 
 	return (
 		<AssetTagsSelector
+			formGroupClassName="mb-0"
 			helpText={helpText}
 			inputValue={inputValue}
 			label={label}

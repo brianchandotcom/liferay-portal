@@ -49,7 +49,8 @@ definition {
 			ObjectNotifications.addNewNotificationTemplate(
 				fromAddress = "test@liferay",
 				fromName = "Test Test",
-				name = "Notification Template");
+				name = "Notification Template",
+				notificationType = "Email");
 		}
 
 		task ("When an attachment is added to the notification template") {
@@ -92,6 +93,7 @@ definition {
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
+				notificationType = "Email",
 				subject = "Subject");
 
 			PortletEntry.save();
@@ -140,7 +142,8 @@ definition {
 			ObjectNotifications.addNewNotificationTemplate(
 				fromAddress = "test@liferay",
 				fromName = "Test Test",
-				name = "Notification Template");
+				name = "Notification Template",
+				notificationType = "Email");
 		}
 
 		task ("And given an attachment is added to the notification template") {
@@ -179,6 +182,7 @@ definition {
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
+				notificationType = "Email",
 				subject = "Subject");
 
 			PortletEntry.save();
@@ -212,6 +216,7 @@ definition {
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
+				notificationType = "Email",
 				subject = "Subject");
 
 			PortletEntry.save();
@@ -294,6 +299,7 @@ definition {
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
+				notificationType = "Email",
 				subject = "Subject");
 
 			PortletEntry.save();
@@ -336,6 +342,7 @@ definition {
 					fromAddress = "Liferay",
 					fromName = "Test Test",
 					name = "Notification ${templateName}",
+					notificationType = "Email",
 					subject = "Subject");
 
 				PortletEntry.save();
@@ -384,6 +391,7 @@ definition {
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
+				notificationType = "Email",
 				subject = "Subject");
 
 			PortletEntry.save();

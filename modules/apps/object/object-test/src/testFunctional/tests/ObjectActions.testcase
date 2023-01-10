@@ -200,7 +200,8 @@ definition {
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
-				name = "Notification Template");
+				name = "Notification Template",
+				notificationType = "Email");
 
 			PortletEntry.save();
 		}

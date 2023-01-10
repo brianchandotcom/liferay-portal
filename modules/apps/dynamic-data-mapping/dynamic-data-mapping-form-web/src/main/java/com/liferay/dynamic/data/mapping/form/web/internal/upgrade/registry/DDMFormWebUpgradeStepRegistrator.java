@@ -14,9 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.upgrade.registry;
 
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_0_0.UpgradeDDMFormAdminPortletId;
 import com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_0_0.UpgradeDDMFormPortletId;
 import com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_0_0.UpgradeDDMFormPortletPreferences;
+import com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_1_0.DDMFormGuestAttachmentsUpgradeProcess;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -43,7 +48,26 @@ public class DDMFormWebUpgradeStepRegistrator
 			"0.0.1", "1.0.0", new UpgradeDDMFormAdminPortletId(),
 			new UpgradeDDMFormPortletId(),
 			new UpgradeDDMFormPortletPreferences());
+
+		registry.register(
+			"1.0.0", "1.1.0",
+			new DDMFormGuestAttachmentsUpgradeProcess(
+				_ddmFormInstanceRecordLocalService, _dlFileEntryLocalService,
+				_jsonFactory, _portletFileRepository));
 	}
+
+	@Reference
+	private DDMFormInstanceRecordLocalService
+		_ddmFormInstanceRecordLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -146,7 +145,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).getAliases();
 
 		Mockito.doReturn(
-			Optional.of(ranking)
+			ranking
 		).when(
 			rankingIndexReader
 		).fetch(

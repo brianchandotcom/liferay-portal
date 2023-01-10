@@ -799,6 +799,23 @@ components:
                 siteId:
                     format: int64
                     type: integer
+        Ticket:
+            properties:
+                expirationDate:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                extraInfo:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                key:
+                    readOnly: true
+                    type: string
+            type: object
         UserAccount:
             description:
                 Represents a user.

@@ -16,8 +16,9 @@ package com.liferay.object.internal.language;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.language.ResourceBundleEnumeration;
 
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
@@ -40,11 +41,13 @@ public class ObjectResourceBundle extends ResourceBundle {
 				objectDefinition.getObjectDefinitionId(),
 			objectDefinition.getLabel(locale)
 		).build();
+
+		setParent(LanguageResources.getResourceBundle(locale));
 	}
 
 	@Override
 	public Enumeration<String> getKeys() {
-		return Collections.enumeration(_map.keySet());
+		return new ResourceBundleEnumeration(_map.keySet(), parent.getKeys());
 	}
 
 	@Override

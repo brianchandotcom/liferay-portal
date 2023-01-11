@@ -15,8 +15,7 @@
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
@@ -124,12 +123,11 @@ public class OrderRuleAccountResourceImpl
 					externalReferenceCode);
 		}
 
-		CommerceAccount commerceAccount = _getCommerceAccount(orderRuleAccount);
+		AccountEntry accountEntry = _getAccountEntry(orderRuleAccount);
 
 		return _toOrderRuleAccount(
 			_corEntryRelService.addCOREntryRel(
-				AccountEntry.class.getName(),
-				commerceAccount.getCommerceAccountId(),
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
 				corEntry.getCOREntryId()));
 	}
 
@@ -138,12 +136,31 @@ public class OrderRuleAccountResourceImpl
 			Long id, OrderRuleAccount orderRuleAccount)
 		throws Exception {
 
-		CommerceAccount commerceAccount = _getCommerceAccount(orderRuleAccount);
+		AccountEntry accountEntry = _getAccountEntry(orderRuleAccount);
 
 		return _toOrderRuleAccount(
 			_corEntryRelService.addCOREntryRel(
-				AccountEntry.class.getName(),
-				commerceAccount.getCommerceAccountId(), id));
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				id));
+	}
+
+	private AccountEntry _getAccountEntry(OrderRuleAccount orderRuleAccount)
+		throws Exception {
+
+		AccountEntry accountEntry = null;
+
+		if (orderRuleAccount.getAccountId() > 0) {
+			accountEntry = _accountEntryService.getAccountEntry(
+				orderRuleAccount.getAccountId());
+		}
+		else {
+			accountEntry =
+				_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(),
+					orderRuleAccount.getAccountExternalReferenceCode());
+		}
+
+		return accountEntry;
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -156,26 +173,6 @@ public class OrderRuleAccountResourceImpl
 				"UPDATE", corEntryRel.getCOREntryRelId(),
 				"deleteOrderRuleAccount", _corEntryRelModelResourcePermission)
 		).build();
-	}
-
-	private CommerceAccount _getCommerceAccount(
-			OrderRuleAccount orderRuleAccount)
-		throws Exception {
-
-		CommerceAccount commerceAccount = null;
-
-		if (orderRuleAccount.getAccountId() > 0) {
-			commerceAccount = _commerceAccountService.getCommerceAccount(
-				orderRuleAccount.getAccountId());
-		}
-		else {
-			commerceAccount =
-				_commerceAccountService.fetchByExternalReferenceCode(
-					contextCompany.getCompanyId(),
-					orderRuleAccount.getAccountExternalReferenceCode());
-		}
-
-		return commerceAccount;
 	}
 
 	private OrderRuleAccount _toOrderRuleAccount(COREntryRel corEntryRel)
@@ -191,7 +188,7 @@ public class OrderRuleAccountResourceImpl
 	}
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.order.rule.model.COREntryRel)"

@@ -14,10 +14,10 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
@@ -431,7 +431,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 				}
 
 				DiscountAccountUtil.addCommerceDiscountAccountRel(
-					_commerceAccountService, _commerceDiscountAccountRelService,
+					_accountEntryService, _commerceDiscountAccountRelService,
 					discountAccount, commerceDiscount, _serviceContextHelper);
 			}
 		}
@@ -595,13 +595,13 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 	private static final EntityModel _entityModel = new DiscountEntityModel();
 
 	@Reference
+	private AccountEntryService _accountEntryService;
+
+	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private CommerceAccountGroupService _commerceAccountGroupService;
-
-	@Reference
-	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;

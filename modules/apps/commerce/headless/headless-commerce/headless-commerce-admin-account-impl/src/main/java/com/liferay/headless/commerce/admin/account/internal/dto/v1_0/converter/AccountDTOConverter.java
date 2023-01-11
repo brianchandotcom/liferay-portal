@@ -18,9 +18,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.petra.string.StringBundler;
@@ -41,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "dto.class.name=com.liferay.commerce.account.model.CommerceAccount",
+	property = "dto.class.name=com.liferay.account.model.AccountEntry",
 	service = {AccountDTOConverter.class, DTOConverter.class}
 )
 public class AccountDTOConverter
-	implements DTOConverter<CommerceAccount, Account> {
+	implements DTOConverter<AccountEntry, Account> {
 
 	@Override
 	public String getContentType() {
@@ -140,12 +137,6 @@ public class AccountDTOConverter
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
-
-	@Reference
-	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -15,10 +15,10 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.exception.NoSuchEntryException;
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelService;
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
@@ -58,11 +58,11 @@ public class AccountOrganizationResourceImpl
 			String externalReferenceCode, Long organizationId)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
@@ -70,7 +70,7 @@ public class AccountOrganizationResourceImpl
 
 		_commerceAccountOrganizationRelService.
 			deleteCommerceAccountOrganizationRel(
-				commerceAccount.getCommerceAccountId(), organizationId);
+				accountEntry.getAccountEntryId(), organizationId);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -96,11 +96,11 @@ public class AccountOrganizationResourceImpl
 				String externalReferenceCode, Long organizationId)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
@@ -110,8 +110,7 @@ public class AccountOrganizationResourceImpl
 			_commerceAccountOrganizationRelService.
 				getCommerceAccountOrganizationRel(
 					new CommerceAccountOrganizationRelPK(
-						commerceAccount.getCommerceAccountId(),
-						organizationId));
+						accountEntry.getAccountEntryId(), organizationId));
 
 		return _accountOrganizationDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -125,11 +124,11 @@ public class AccountOrganizationResourceImpl
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
@@ -138,13 +137,13 @@ public class AccountOrganizationResourceImpl
 		List<CommerceAccountOrganizationRel> commerceAccountOrganizationRels =
 			_commerceAccountOrganizationRelService.
 				getCommerceAccountOrganizationRels(
-					commerceAccount.getCommerceAccountId(),
+					accountEntry.getAccountEntryId(),
 					pagination.getStartPosition(), pagination.getEndPosition());
 
 		int totalItems =
 			_commerceAccountOrganizationRelService.
 				getCommerceAccountOrganizationRelsCount(
-					commerceAccount.getCommerceAccountId());
+					accountEntry.getAccountEntryId());
 
 		return Page.of(
 			_toAccountOrganizations(commerceAccountOrganizationRels),
@@ -190,11 +189,11 @@ public class AccountOrganizationResourceImpl
 				AccountOrganization accountOrganization)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
@@ -203,7 +202,7 @@ public class AccountOrganizationResourceImpl
 		CommerceAccountOrganizationRel commerceAccountOrganizationRel =
 			_commerceAccountOrganizationRelService.
 				addCommerceAccountOrganizationRel(
-					commerceAccount.getCommerceAccountId(),
+					accountEntry.getAccountEntryId(),
 					AccountOrganizationUtil.getOrganizationId(
 						_organizationLocalService, accountOrganization,
 						contextCompany.getCompanyId()),
@@ -256,14 +255,14 @@ public class AccountOrganizationResourceImpl
 	}
 
 	@Reference
+	private AccountEntryService _accountEntryService;
+
+	@Reference
 	private AccountOrganizationDTOConverter _accountOrganizationDTOConverter;
 
 	@Reference
 	private CommerceAccountOrganizationRelService
 		_commerceAccountOrganizationRelService;
-
-	@Reference
-	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

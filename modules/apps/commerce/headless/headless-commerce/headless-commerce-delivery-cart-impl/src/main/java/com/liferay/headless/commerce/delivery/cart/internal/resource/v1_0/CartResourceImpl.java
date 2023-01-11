@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
@@ -329,11 +329,19 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
 		}
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.getCommerceAccount(cart.getAccountId());
+		AccountEntry accountEntry = null;
+
+		if (cart.getAccountId() == AccountConstants.ACCOUNT_ENTRY_ID_GUEST) {
+			accountEntry = _accountEntryLocalService.getGuestAccountEntry(
+				contextCompany.getCompanyId());
+		}
+		else {
+			accountEntry = _accountEntryLocalService.getAccountEntry(
+				cart.getAccountId());
+		}
 
 		return _commerceOrderService.addCommerceOrder(
-			commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+			commerceChannelGroupId, accountEntry.getAccountEntryId(),
 			commerceCurrencyId, _getCommerceOrderTypeId(cart));
 	}
 
@@ -794,13 +802,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
 	private CartDTOConverter _cartDTOConverter;
 
 	@Reference
 	private CartItemDTOConverter _cartItemDTOConverter;
-
-	@Reference
-	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

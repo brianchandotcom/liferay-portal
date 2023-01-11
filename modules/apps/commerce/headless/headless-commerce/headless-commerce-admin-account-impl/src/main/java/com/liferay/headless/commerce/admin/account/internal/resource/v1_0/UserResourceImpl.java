@@ -15,8 +15,8 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.exception.NoSuchEntryException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
 import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.UserDTOConverter;
@@ -55,18 +55,18 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			String externalReferenceCode, User user)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commerceAccount.getCommerceAccountGroupId());
+			accountEntry.getAccountEntryGroupId());
 
 		com.liferay.portal.kernel.model.User invitedUser = null;
 
@@ -85,8 +85,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 				user.getFirstName(), user.getMiddleName(), user.getLastName(),
 				0L, 0L, GetterUtil.getBoolean(user.getMale(), true), 1, 1, 1970,
 				user.getJobTitle(),
-				new long[] {commerceAccount.getCommerceAccountGroupId()}, null,
-				null, null, false, serviceContext);
+				new long[] {accountEntry.getAccountEntryGroupId()}, null, null,
+				null, false, serviceContext);
 		}
 		else {
 			Date birthday = invitedUser.getBirthday();
@@ -143,8 +143,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 		}
 
 		_commerceAccountUserRelService.addCommerceAccountUserRel(
-			commerceAccount.getCommerceAccountId(), invitedUser.getUserId(),
-			roleIds, serviceContext);
+			accountEntry.getAccountEntryId(), invitedUser.getUserId(), roleIds,
+			serviceContext);
 
 		return _userDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -153,7 +153,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	}
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private CommerceAccountUserRelService _commerceAccountUserRelService;

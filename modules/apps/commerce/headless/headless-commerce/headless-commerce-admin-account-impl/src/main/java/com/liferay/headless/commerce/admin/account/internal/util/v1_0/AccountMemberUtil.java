@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.util.v1_0;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
@@ -36,8 +36,8 @@ public class AccountMemberUtil {
 
 	public static CommerceAccountUserRel addCommerceAccountUserRel(
 			CommerceAccountUserRelService commerceAccountUserRelService,
-			AccountMember accountMember, CommerceAccount commerceAccount,
-			User user, ServiceContext serviceContext)
+			AccountMember accountMember, AccountEntry accountEntry, User user,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long[] roleIds = null;
@@ -53,7 +53,7 @@ public class AccountMemberUtil {
 		}
 
 		return commerceAccountUserRelService.addCommerceAccountUserRel(
-			commerceAccount.getCommerceAccountId(), user.getUserId(), roleIds,
+			accountEntry.getAccountEntryId(), user.getUserId(), roleIds,
 			serviceContext);
 	}
 

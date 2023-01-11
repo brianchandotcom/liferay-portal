@@ -14,10 +14,9 @@
 
 package com.liferay.headless.commerce.admin.order.internal.util.v1_0;
 
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.exception.NoSuchAccountException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryRelService;
@@ -31,38 +30,38 @@ import com.liferay.portal.kernel.util.Validator;
 public class OrderRuleAccountUtil {
 
 	public static COREntryRel addCOREntryCommerceAccountRel(
-			CommerceAccountService commerceAccountService,
+			AccountEntryService accountEntryService,
 			COREntryRelService corEntryRelService, COREntry corEntry,
 			OrderRuleAccount orderRuleAccount)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = null;
+		AccountEntry accountEntry = null;
 
 		if (Validator.isNull(
 				orderRuleAccount.getAccountExternalReferenceCode())) {
 
-			commerceAccount = commerceAccountService.getCommerceAccount(
+			accountEntry = accountEntryService.getAccountEntry(
 				orderRuleAccount.getAccountId());
 		}
 		else {
-			commerceAccount =
-				commerceAccountService.fetchByExternalReferenceCode(
+			accountEntry =
+				accountEntryService.fetchAccountEntryByExternalReferenceCode(
 					corEntry.getCompanyId(),
 					orderRuleAccount.getAccountExternalReferenceCode());
 
-			if (commerceAccount == null) {
+			if (accountEntry == null) {
 				String accountExternalReferenceCode =
 					orderRuleAccount.getAccountExternalReferenceCode();
 
-				throw new NoSuchAccountException(
+				throw new NoSuchEntryException(
 					"Unable to find account with external reference code " +
 						accountExternalReferenceCode);
 			}
 		}
 
 		return corEntryRelService.addCOREntryRel(
-			AccountEntry.class.getName(),
-			commerceAccount.getCommerceAccountId(), corEntry.getCOREntryId());
+			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+			corEntry.getCOREntryId());
 	}
 
 }

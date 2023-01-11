@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
@@ -133,7 +133,7 @@ public class PriceListAccountResourceImpl
 
 		CommercePriceListAccountRel commercePriceListAccountRel =
 			PriceListAccountUtil.addCommercePriceListAccountRel(
-				_commerceAccountService, _commercePriceListAccountRelService,
+				_accountEntryService, _commercePriceListAccountRelService,
 				priceListAccount, commercePriceList, _serviceContextHelper);
 
 		return _toPriceListAccount(
@@ -147,7 +147,7 @@ public class PriceListAccountResourceImpl
 
 		CommercePriceListAccountRel commercePriceListAccountRel =
 			PriceListAccountUtil.addCommercePriceListAccountRel(
-				_commerceAccountService, _commercePriceListAccountRelService,
+				_accountEntryService, _commercePriceListAccountRelService,
 				priceListAccount,
 				_commercePriceListService.getCommercePriceList(id),
 				_serviceContextHelper);
@@ -206,7 +206,7 @@ public class PriceListAccountResourceImpl
 	}
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceListAccountRel)"

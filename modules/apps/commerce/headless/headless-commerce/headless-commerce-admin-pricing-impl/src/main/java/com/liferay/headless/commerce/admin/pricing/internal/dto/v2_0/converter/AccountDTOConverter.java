@@ -14,9 +14,8 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Account;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -31,11 +30,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "dto.class.name=com.liferay.commerce.account.model.CommerceAccount",
+	property = "dto.class.name=com.liferay.commerce.account.model.AccountEntry",
 	service = {AccountDTOConverter.class, DTOConverter.class}
 )
 public class AccountDTOConverter
-	implements DTOConverter<CommerceAccount, Account> {
+	implements DTOConverter<AccountEntry, Account> {
 
 	@Override
 	public String getContentType() {
@@ -46,7 +45,7 @@ public class AccountDTOConverter
 	public Account toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CommerceAccount commerceAccount;
+		AccountEntry accountEntry;
 
 		if ((Long)dtoConverterContext.getId() == -1) {
 			User user = dtoConverterContext.getUser();
@@ -56,29 +55,25 @@ public class AccountDTOConverter
 					PrincipalThreadLocal.getUserId());
 			}
 
-			commerceAccount =
-				_commerceAccountLocalService.getGuestCommerceAccount(
-					user.getCompanyId());
+			accountEntry = _accountEntryLocalService.getGuestAccountEntry(
+				user.getCompanyId());
 		}
 		else {
-			commerceAccount = _commerceAccountService.getCommerceAccount(
+			accountEntry = _accountEntryLocalService.getAccountEntry(
 				(Long)dtoConverterContext.getId());
 		}
 
 		return new Account() {
 			{
-				id = commerceAccount.getCommerceAccountId();
-				logoId = commerceAccount.getLogoId();
-				name = commerceAccount.getName();
+				id = accountEntry.getAccountEntryId();
+				logoId = accountEntry.getLogoId();
+				name = accountEntry.getName();
 			}
 		};
 	}
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
-
-	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

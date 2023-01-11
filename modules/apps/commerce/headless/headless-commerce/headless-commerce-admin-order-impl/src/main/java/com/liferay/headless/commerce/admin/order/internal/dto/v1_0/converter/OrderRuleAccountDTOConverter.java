@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryRelService;
@@ -49,16 +49,15 @@ public class OrderRuleAccountDTOConverter
 		COREntryRel corEntryRel = _corEntryRelService.getCOREntryRel(
 			(Long)dtoConverterContext.getId());
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.getCommerceAccount(
-				corEntryRel.getClassPK());
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			corEntryRel.getClassPK());
 		COREntry corEntry = corEntryRel.getCOREntry();
 
 		return new OrderRuleAccount() {
 			{
 				accountExternalReferenceCode =
-					commerceAccount.getExternalReferenceCode();
-				accountId = commerceAccount.getCommerceAccountId();
+					accountEntry.getExternalReferenceCode();
+				accountId = accountEntry.getAccountEntryId();
 				actions = dtoConverterContext.getActions();
 				orderRuleAccountId = corEntryRel.getCOREntryRelId();
 				orderRuleExternalReferenceCode =
@@ -69,7 +68,7 @@ public class OrderRuleAccountDTOConverter
 	}
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private COREntryRelService _corEntryRelService;

@@ -16,8 +16,8 @@ package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.exception.NoSuchAddressException;
 import com.liferay.commerce.model.CommerceAddress;
@@ -121,17 +121,17 @@ public class AccountAddressResourceImpl
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
-		return _getAccountAddressesPage(commerceAccount, pagination);
+		return _getAccountAddressesPage(accountEntry, pagination);
 	}
 
 	@NestedField(parentClass = Account.class, value = "accountAddresses")
@@ -141,7 +141,7 @@ public class AccountAddressResourceImpl
 		throws Exception {
 
 		return _getAccountAddressesPage(
-			_commerceAccountService.getCommerceAccount(id), pagination);
+			_accountEntryLocalService.getAccountEntry(id), pagination);
 	}
 
 	@Override
@@ -244,11 +244,11 @@ public class AccountAddressResourceImpl
 			String externalReferenceCode, AccountAddress accountAddress)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
@@ -293,7 +293,7 @@ public class AccountAddressResourceImpl
 					_serviceContextHelper.getServiceContext()));
 		}
 
-		return _addAccountAddress(commerceAccount, accountAddress);
+		return _addAccountAddress(accountEntry, accountAddress);
 	}
 
 	@Override
@@ -302,7 +302,7 @@ public class AccountAddressResourceImpl
 		throws Exception {
 
 		return _addAccountAddress(
-			_commerceAccountService.getCommerceAccount(id), accountAddress);
+			_accountEntryLocalService.getAccountEntry(id), accountAddress);
 	}
 
 	@Override
@@ -338,18 +338,17 @@ public class AccountAddressResourceImpl
 	}
 
 	private AccountAddress _addAccountAddress(
-			CommerceAccount commerceAccount, AccountAddress accountAddress)
+			AccountEntry accountEntry, AccountAddress accountAddress)
 		throws Exception {
 
 		Country country = _countryService.getCountryByA2(
-			commerceAccount.getCompanyId(), accountAddress.getCountryISOCode());
+			accountEntry.getCompanyId(), accountAddress.getCountryISOCode());
 
 		CommerceAddress commerceAddress =
 			_commerceAddressService.addCommerceAddress(
 				GetterUtil.getString(
 					accountAddress.getExternalReferenceCode(), null),
-				AccountEntry.class.getName(),
-				commerceAccount.getCommerceAccountId(),
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
 				accountAddress.getName(), accountAddress.getDescription(),
 				accountAddress.getStreet1(), accountAddress.getStreet2(),
 				accountAddress.getStreet3(), accountAddress.getCity(),
@@ -367,19 +366,17 @@ public class AccountAddressResourceImpl
 	}
 
 	private Page<AccountAddress> _getAccountAddressesPage(
-			CommerceAccount commerceAccount, Pagination pagination)
+			AccountEntry accountEntry, Pagination pagination)
 		throws Exception {
 
 		List<CommerceAddress> commerceAddresses =
 			_commerceAddressService.getCommerceAddresses(
-				AccountEntry.class.getName(),
-				commerceAccount.getCommerceAccountId(),
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
 		int totalItems = _commerceAddressService.getCommerceAddressesCount(
-			AccountEntry.class.getName(),
-			commerceAccount.getCommerceAccountId());
+			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
 
 		return Page.of(
 			_toAccountAddresses(commerceAddresses), pagination, totalItems);
@@ -438,7 +435,10 @@ public class AccountAddressResourceImpl
 	private AccountAddressDTOConverter _accountAddressDTOConverter;
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

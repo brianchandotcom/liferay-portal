@@ -15,11 +15,11 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.exception.NoSuchEntryException;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
 import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountGroupDTOConverter;
 import com.liferay.headless.commerce.admin.account.internal.odata.entity.v1_0.AccountGroupEntityModel;
@@ -95,18 +95,18 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountService.fetchByExternalReferenceCode(
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchEntryException(
 				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
 		return _getAccountAccountGroups(
-			commerceAccount.getCommerceAccountId(), pagination);
+			accountEntry.getAccountEntryId(), pagination);
 	}
 
 	@Override
@@ -267,20 +267,20 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	}
 
 	private Page<AccountGroup> _getAccountAccountGroups(
-			long commerceAccountId, Pagination pagination)
+			long accountEntryId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_commerceAccountGroupService.
 					getCommerceAccountGroupsByCommerceAccountId(
-						commerceAccountId, pagination.getStartPosition(),
+						accountEntryId, pagination.getStartPosition(),
 						pagination.getEndPosition()),
 				commerceAccountGroup -> _toAccountGroup(commerceAccountGroup)),
 			pagination,
 			_commerceAccountGroupService.
 				getCommerceAccountGroupsByCommerceAccountIdCount(
-					commerceAccountId));
+					accountEntryId));
 	}
 
 	private AccountGroup _toAccountGroup(
@@ -294,13 +294,13 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	}
 
 	@Reference
+	private AccountEntryService _accountEntryService;
+
+	@Reference
 	private AccountGroupDTOConverter _accountGroupDTOConverter;
 
 	@Reference
 	private CommerceAccountGroupService _commerceAccountGroupService;
-
-	@Reference
-	private CommerceAccountService _commerceAccountService;
 
 	private final EntityModel _entityModel = new AccountGroupEntityModel();
 

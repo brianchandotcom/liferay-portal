@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
-import com.liferay.commerce.account.exception.NoSuchAccountException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.account.exception.NoSuchEntryException;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -276,24 +276,24 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				commerceShippingMethod.getCommerceShippingMethodId();
 		}
 
-		CommerceAccount commerceAccount = null;
+		AccountEntry accountEntry = null;
 
 		if (order.getAccountId() != null) {
-			commerceAccount = _commerceAccountService.getCommerceAccount(
+			accountEntry = _accountEntryService.getAccountEntry(
 				order.getAccountId());
 		}
 
-		if ((commerceAccount == null) &&
+		if ((accountEntry == null) &&
 			Validator.isNotNull(order.getAccountExternalReferenceCode())) {
 
-			commerceAccount =
-				_commerceAccountService.fetchByExternalReferenceCode(
+			accountEntry =
+				_accountEntryService.fetchAccountEntryByExternalReferenceCode(
 					commerceChannel.getCompanyId(),
 					order.getAccountExternalReferenceCode());
 		}
 
-		if (commerceAccount == null) {
-			throw new NoSuchAccountException();
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
 		}
 
 		CommerceCurrency commerceCurrency =
@@ -307,7 +307,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			_commerceOrderService.addOrUpdateCommerceOrder(
 				order.getExternalReferenceCode(), commerceChannel.getGroupId(),
 				GetterUtil.getLong(order.getBillingAddressId()),
-				commerceAccount.getCommerceAccountId(),
+				accountEntry.getAccountEntryId(),
 				commerceCurrency.getCommerceCurrencyId(),
 				_getCommerceOrderTypeId(order), commerceShippingMethodId,
 				GetterUtil.getLong(order.getShippingAddressId()),
@@ -326,7 +326,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceChannel.getGroupId(),
 					contextUser.getUserId(), 0,
-					commerceAccount.getCommerceAccountId()),
+					accountEntry.getAccountEntryId()),
 				serviceContext);
 
 		// Order date
@@ -856,7 +856,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	private static final EntityModel _entityModel = new OrderEntityModel();
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

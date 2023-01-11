@@ -38,14 +38,15 @@ definition {
 	test CheckCreatedRoles {
 		task ("When: I go to Roles Page in Control Panel") {
 			Role.openRolesAdmin();
+		}
 
+		task ("Then: I search for the PRM Roles and assert them") {
 			for (var searchTerm : list "Channel Account Manager,Channel General Manager,Channel Finance Manager,Channel Global Marketing Manager,Channel Regional Marketing Manager") {
 				Search.searchCP(searchTerm = "${searchTerm}");
 
 				LexiconEntry.viewEntryName(rowEntry = "${searchTerm}");
 			}
 		}
-
 	}
 
 }

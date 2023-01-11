@@ -277,8 +277,6 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
-		long classTypeId = layoutDisplayPageObjectProvider.getClassTypeId();
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId);
@@ -287,7 +285,8 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
 					fetchDefaultLayoutPageTemplateEntry(
-						groupId, classNameId, classTypeId);
+						groupId, classNameId,
+						layoutDisplayPageObjectProvider.getClassTypeId());
 		}
 
 		if (layoutPageTemplateEntry != null) {

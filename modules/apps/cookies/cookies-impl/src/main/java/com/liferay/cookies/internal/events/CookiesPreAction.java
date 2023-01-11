@@ -14,18 +14,13 @@
 
 package com.liferay.cookies.internal.events;
 
-import com.liferay.cookies.configuration.CookiesConfigurationProvider;
-import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carol Alonso
@@ -55,43 +49,6 @@ public class CookiesPreAction extends Action {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-		}
-	}
-
-	private void _addCookies(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Cookie... cookies) {
-
-		for (Cookie cookie : cookies) {
-			if (cookie.getMaxAge() != 0) {
-				cookie.setMaxAge(365 * 24 * 60 * 60);
-			}
-
-			cookie.setPath("/");
-			cookie.setVersion(0);
-
-			CookiesManagerUtil.addCookie(
-				CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
-				httpServletRequest, httpServletResponse);
-		}
-	}
-
-	private void _expireCookies(
-		Map<String, String> cookieValues, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String... cookieNames) {
-
-		for (String cookieName : cookieNames) {
-			String cookieValue = cookieValues.get(cookieName);
-
-			if (cookieValue == null) {
-				continue;
-			}
-
-			Cookie cookie = new Cookie(cookieName, null);
-
-			cookie.setMaxAge(0);
-
-			_addCookies(httpServletRequest, httpServletResponse, cookie);
 		}
 	}
 
@@ -121,34 +78,11 @@ public class CookiesPreAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		CookiesPreferenceHandlingConfiguration
-			cookiesPreferenceHandlingConfiguration =
-				_cookiesConfigurationProvider.
-					getCookiesPreferenceHandlingConfiguration(themeDisplay);
-
 		Map<String, String> cookieValues = _getCookieValues(
 			httpServletRequest.getCookies());
 
-		if (!cookiesPreferenceHandlingConfiguration.enabled()) {
-			_expireCookies(
-				cookieValues, httpServletRequest, httpServletResponse,
-				CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
-				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
-				CookiesConstants.NAME_CONSENT_TYPE_NECESSARY,
-				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION);
-
-			return;
-		}
-
 		boolean functionalConsent = Validator.isNotNull(
 			cookieValues.get(CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL));
-		boolean necessaryConsent = Validator.isNotNull(
-			cookieValues.get(CookiesConstants.NAME_CONSENT_TYPE_NECESSARY));
 		boolean performanceConsent = Validator.isNotNull(
 			cookieValues.get(CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE));
 		boolean personalizationConsent = Validator.isNotNull(
@@ -164,48 +98,15 @@ public class CookiesPreAction extends Action {
 		boolean userConsent = Validator.isNotNull(
 			cookieValues.get(CookiesConstants.NAME_USER_CONSENT_CONFIGURED));
 
-		if (optionalConsent && necessaryConsent && userConsent) {
-			return;
-		}
-
-		_expireCookies(
-			cookieValues, httpServletRequest, httpServletResponse,
-			CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
-
-		if (!necessaryConsent) {
-			_addCookies(
+		if (!optionalConsent && userConsent) {
+			CookiesManagerUtil.deleteCookies(
+				CookiesManagerUtil.getDomain(httpServletRequest),
 				httpServletRequest, httpServletResponse,
-				new Cookie(
-					CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, "true"));
-		}
-
-		if (!optionalConsent || !userConsent) {
-			String cookieValue = "true";
-
-			if (cookiesPreferenceHandlingConfiguration.explicitConsentMode()) {
-				cookieValue = "false";
-			}
-
-			_addCookies(
-				httpServletRequest, httpServletResponse,
-				new Cookie(
-					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, cookieValue),
-				new Cookie(
-					CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-					cookieValue),
-				new Cookie(
-					CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-					cookieValue));
+				CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CookiesPreAction.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private CookiesConfigurationProvider _cookiesConfigurationProvider;
 
 }

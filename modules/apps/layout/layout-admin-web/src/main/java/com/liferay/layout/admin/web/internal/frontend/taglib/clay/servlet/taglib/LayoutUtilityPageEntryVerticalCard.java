@@ -122,7 +122,7 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getStickerCssClass() {
-		return "sticker-user-icon";
+		return "sticker-primary";
 	}
 
 	@Override

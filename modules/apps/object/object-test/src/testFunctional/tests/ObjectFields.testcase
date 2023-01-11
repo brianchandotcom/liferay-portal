@@ -1880,6 +1880,93 @@ definition {
 		}
 	}
 
+	@description = "LPS-162178 - Verify that the user is able to use the ERC field in Groovy Scripts, on the Validations tab"
+	@priority = "5"
+	test CanUseERCFieldWithGroovyScript {
+		property portal.acceptance = "true";
+
+		task ("Given: An object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162178",
+				objectName = "CustomObject162178",
+				pluralLabelName = "Custom Objects 162178");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject162178");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162178");
+		}
+
+		task ("And: Add a Custom Validation using a Groovy Script") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162178");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Groovy");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customObjectField == externalReferenceCode)");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+			PortletEntry.save();
+		}
+
+		task ("When: Create Custom View, mark Custom View as default, go to View Builder and add ERC") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field,External Reference Code");
+
+			PortletEntry.save();
+		}
+
+		task ("Then: Assert the error message display") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject162178",
+				value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162178");
+
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+
+			ObjectPortlet.assertEntryColumnPresent(column = "External Reference Code");
+
+			var externalReferenceCodeId = selenium.getText("//div[contains(@class,'dnd-tbody')]//*[contains(text(),'Entry Test')]/parent::div/following-sibling::div//a");
+
+			ObjectPortlet.updateEntry(
+				entry = "Entry Test",
+				invalidEntry = "true",
+				updateEntry = "${externalReferenceCodeId}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "This entry is not possible.");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel that only valid paths can be used on the 'Show files' settings"
 	@priority = "4"
 	test CanValidOnlyPathsDefinedOnShowFilesOption {

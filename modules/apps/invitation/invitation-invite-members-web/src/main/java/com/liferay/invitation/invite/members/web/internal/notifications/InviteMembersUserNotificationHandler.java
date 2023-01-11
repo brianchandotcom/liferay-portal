@@ -82,28 +82,8 @@ public class InviteMembersUserNotificationHandler
 			return StringPool.BLANK;
 		}
 
-		Group group = null;
-
-		if (memberRequest != null) {
-			group = _groupLocalService.fetchGroup(memberRequest.getGroupId());
-		}
-
-		if ((group == null) || (memberRequest == null)) {
-			_userNotificationEventLocalService.deleteUserNotificationEvent(
-				userNotificationEvent.getUserNotificationEventId());
-
-			return null;
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			serviceContext.getLocale(),
-			InviteMembersUserNotificationHandler.class);
-
-		String title = ResourceBundleUtil.getString(
-			resourceBundle, "x-invited-you-to-join-x",
-			_getUserNameLink(memberRequest.getUserId(), serviceContext),
-			_getSiteDescriptiveName(
-				memberRequest.getGroupId(), serviceContext));
+		String title = _getTitle(
+			memberRequest, serviceContext, userNotificationEvent);
 
 		LiferayPortletResponse liferayPortletResponse =
 			serviceContext.getLiferayPortletResponse();
@@ -160,6 +140,29 @@ public class InviteMembersUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
+	@Override
+	protected String getTitle(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		long memberRequestId = jsonObject.getLong("classPK");
+
+		MemberRequest memberRequest =
+			_memberRequestLocalService.fetchMemberRequest(memberRequestId);
+
+		if (memberRequest.getStatus() !=
+				MembershipRequestConstants.STATUS_PENDING) {
+
+			return StringPool.BLANK;
+		}
+
+		return _getTitle(memberRequest, serviceContext, userNotificationEvent);
+	}
+
 	private String _getSiteDescriptiveName(
 			long groupId, ServiceContext serviceContext)
 		throws Exception {
@@ -187,6 +190,35 @@ public class InviteMembersUserNotificationHandler
 		sb.append("</a>");
 
 		return sb.toString();
+	}
+
+	private String _getTitle(
+			MemberRequest memberRequest, ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		Group group = null;
+
+		if (memberRequest != null) {
+			group = _groupLocalService.fetchGroup(memberRequest.getGroupId());
+		}
+
+		if ((group == null) || (memberRequest == null)) {
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+
+			return null;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			serviceContext.getLocale(),
+			InviteMembersUserNotificationHandler.class);
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "x-invited-you-to-join-x",
+			_getUserNameLink(memberRequest.getUserId(), serviceContext),
+			_getSiteDescriptiveName(
+				memberRequest.getGroupId(), serviceContext));
 	}
 
 	private String _getUserNameLink(

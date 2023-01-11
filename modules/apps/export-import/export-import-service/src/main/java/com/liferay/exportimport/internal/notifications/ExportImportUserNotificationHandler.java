@@ -68,6 +68,55 @@ public class ExportImportUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
+		return _getMessage(serviceContext, userNotificationEvent);
+	}
+
+	@Override
+	protected String getLink(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		long backgroundTaskId = jsonObject.getLong("backgroundTaskId");
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
+
+		if (backgroundTask == null) {
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				serviceContext.getRequest(),
+				ExportImportPortletKeys.EXPORT_IMPORT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_export_import.jsp"
+		).setBackURL(
+			serviceContext.getCurrentURL()
+		).setParameter(
+			"backgroundTaskId", backgroundTaskId
+		).buildString();
+	}
+
+	@Override
+	protected String getTitle(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _getMessage(serviceContext, userNotificationEvent);
+	}
+
+	private String _getMessage(
+			ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
 		Locale locale = _portal.getLocale(serviceContext.getRequest());
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -119,38 +168,6 @@ public class ExportImportUserNotificationHandler
 			serviceContext.getRequest());
 
 		return _language.format(locale, message, processName);
-	}
-
-	@Override
-	protected String getLink(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		long backgroundTaskId = jsonObject.getLong("backgroundTaskId");
-
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
-
-		if (backgroundTask == null) {
-			return StringPool.BLANK;
-		}
-
-		return PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				serviceContext.getRequest(),
-				ExportImportPortletKeys.EXPORT_IMPORT,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/view_export_import.jsp"
-		).setBackURL(
-			serviceContext.getCurrentURL()
-		).setParameter(
-			"backgroundTaskId", backgroundTaskId
-		).buildString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

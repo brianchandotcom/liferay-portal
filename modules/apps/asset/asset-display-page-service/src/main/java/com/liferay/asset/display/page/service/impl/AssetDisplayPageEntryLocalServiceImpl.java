@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -280,15 +279,16 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		long classTypeId = layoutDisplayPageObjectProvider.getClassTypeId();
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId)
-		).orElseGet(
-			() ->
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
 					fetchDefaultLayoutPageTemplateEntry(
-						groupId, classNameId, classTypeId)
-		);
+						groupId, classNameId, classTypeId);
+		}
 
 		if (layoutPageTemplateEntry != null) {
 			return layoutPageTemplateEntry.getPlid();

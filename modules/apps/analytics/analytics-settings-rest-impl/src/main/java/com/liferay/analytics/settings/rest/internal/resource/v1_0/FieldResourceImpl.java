@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.constants.FieldAccountConstants;
 import com.liferay.analytics.settings.rest.constants.FieldOrderConstants;
@@ -22,12 +23,20 @@ import com.liferay.analytics.settings.rest.constants.FieldProductConstants;
 import com.liferay.analytics.settings.rest.dto.v1_0.Field;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.FieldResource;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -70,6 +79,11 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 			FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES, "account",
 			analyticsConfiguration.syncedAccountFieldNames(),
 			FieldAccountConstants.FIELD_ACCOUNT_TYPES);
+
+		fields.addAll(
+			_getExpandoFields(
+				AccountEntry.class.getName(), contextCompany.getCompanyId(),
+				"account", analyticsConfiguration.syncedAccountFieldNames()));
 
 		fields = _filter(fields, keyword);
 
@@ -141,6 +155,11 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				analyticsConfiguration.syncedUserFieldNames(),
 				FieldPeopleConstants.FIELD_USER_TYPES));
 
+		fields.addAll(
+			_getExpandoFields(
+				User.class.getName(), contextCompany.getCompanyId(), "user",
+				analyticsConfiguration.syncedUserFieldNames()));
+
 		fields = _filter(fields, keyword);
 
 		fields = _sort(fields, sorts);
@@ -208,7 +227,12 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				_updateSelectedFields(
 					analyticsConfiguration.syncedAccountFieldNames(), fields,
 					FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES,
-					"account", FieldAccountConstants.FIELD_ACCOUNT_NAMES)
+					"account",
+					ArrayUtil.append(
+						FieldAccountConstants.FIELD_ACCOUNT_NAMES,
+						_getExpandoFieldNames(
+							AccountEntry.class.getName(),
+							contextCompany.getCompanyId())))
 			).build());
 	}
 
@@ -254,7 +278,11 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				_updateSelectedFields(
 					analyticsConfiguration.syncedUserFieldNames(), fields,
 					FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES, "user",
-					FieldPeopleConstants.FIELD_USER_NAMES)
+					ArrayUtil.append(
+						FieldPeopleConstants.FIELD_USER_NAMES,
+						_getExpandoFieldNames(
+							User.class.getName(),
+							contextCompany.getCompanyId())))
 			).build());
 	}
 
@@ -305,6 +333,98 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private String _getDataType(int type) {
+		if ((type == ExpandoColumnConstants.BOOLEAN) ||
+			(type == ExpandoColumnConstants.BOOLEAN_ARRAY)) {
+
+			return "Boolean";
+		}
+		else if ((type == ExpandoColumnConstants.DATE) ||
+				 (type == ExpandoColumnConstants.DATE_ARRAY)) {
+
+			return "Date";
+		}
+		else if ((type == ExpandoColumnConstants.DOUBLE) ||
+				 (type == ExpandoColumnConstants.DOUBLE_ARRAY) ||
+				 (type == ExpandoColumnConstants.FLOAT) ||
+				 (type == ExpandoColumnConstants.FLOAT_ARRAY)) {
+
+			return "Decimal";
+		}
+		else if ((type == ExpandoColumnConstants.INTEGER) ||
+				 (type == ExpandoColumnConstants.INTEGER_ARRAY)) {
+
+			return "Integer";
+		}
+		else if ((type == ExpandoColumnConstants.LONG) ||
+				 (type == ExpandoColumnConstants.LONG_ARRAY)) {
+
+			return "Long";
+		}
+		else if ((type == ExpandoColumnConstants.NUMBER) ||
+				 (type == ExpandoColumnConstants.NUMBER_ARRAY) ||
+				 (type == ExpandoColumnConstants.SHORT) ||
+				 (type == ExpandoColumnConstants.SHORT_ARRAY)) {
+
+			return "Number";
+		}
+
+		return "String";
+	}
+
+	private String[] _getExpandoFieldNames(String className, long companyId) {
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			companyId, _portal.getClassNameId(className),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		List<String> fields = new ArrayList<>();
+
+		if (expandoTable != null) {
+			for (ExpandoColumn expandoColumn :
+					_expandoColumnLocalService.getColumns(
+						expandoTable.getTableId())) {
+
+				fields.add(expandoColumn.getName());
+			}
+
+			return fields.toArray(new String[0]);
+		}
+
+		return fields.toArray(new String[0]);
+	}
+
+	private List<Field> _getExpandoFields(
+		String className, long companyId, String source, String[] syncedNames) {
+
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			companyId, _portal.getClassNameId(className),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		if (expandoTable != null) {
+			List<Field> fields = new ArrayList<>();
+
+			for (ExpandoColumn expandoColumn :
+					_expandoColumnLocalService.getColumns(
+						expandoTable.getTableId())) {
+
+				Field field = new Field();
+
+				field.setName(expandoColumn.getName());
+				field.setRequired(false);
+				field.setSelected(
+					ArrayUtil.contains(syncedNames, expandoColumn.getName()));
+				field.setSource(source);
+				field.setType(_getDataType(expandoColumn.getType()));
+
+				fields.add(field);
+			}
+
+			return fields;
+		}
+
+		return Collections.emptyList();
 	}
 
 	private List<Field> _getFields(
@@ -403,5 +523,14 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

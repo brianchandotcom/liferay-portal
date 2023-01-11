@@ -13,6 +13,8 @@ import {array, number, object, string} from 'yup';
 
 import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
+const phoneZipRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
 const generalSchema = object({
 	additionalContact: object({
 		emailAddress: string()
@@ -55,7 +57,10 @@ const generalSchema = object({
 			.trim()
 			.max(255, 'reached max characters')
 			.required('Required'),
-		phone: string().max(20, 'reached max characters').required('Required'),
+		phone: string()
+			.trim()
+			.matches(phoneZipRegExp, 'Phone number is not valid')
+			.required('Required'),
 	}),
 	projectNeed: array().min(1, 'Required'),
 	projectTimeline: string()
@@ -85,7 +90,7 @@ const generalSchema = object({
 		}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 		postalCode: string()
 			.trim()
-			.max(255, 'reached max characters')
+			.matches(phoneZipRegExp, 'Postal Code is not valid')
 			.required('Required'),
 		state: object({
 			key: string(),

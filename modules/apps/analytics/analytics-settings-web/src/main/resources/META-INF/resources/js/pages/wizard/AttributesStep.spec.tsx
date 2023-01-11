@@ -13,9 +13,11 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render} from '@testing-library/react';
-import React from 'react';
+import {act, fireEvent, render} from '@testing-library/react';
+import fetch from 'jest-fetch-mock';
+import React, {useEffect} from 'react';
 
+import {AppContextProvider, TData, initialState, useData} from '../../App';
 import AttributesStep from './AttributesStep';
 
 const response = {
@@ -23,6 +25,21 @@ const response = {
 	order: 0,
 	people: 43,
 	product: 0,
+};
+
+const AttributesStepContent = ({
+	onDataChange,
+}: {
+	onDataChange: (data: TData) => void;
+}) => {
+	const data = useData();
+
+	useEffect(() => {
+		onDataChange(data);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
+
+	return <AttributesStep onCancel={() => {}} onChangeStep={() => {}} />;
 };
 
 describe('Attributes Step', () => {
@@ -33,22 +50,41 @@ describe('Attributes Step', () => {
 	it('render AttributesStep without crashing', async () => {
 		fetch.mockResponseOnce(JSON.stringify(response));
 
-		await act(async () => {
-			const {container, getByText} = render(
-				<AttributesStep onCancel={() => {}} onChangeStep={() => {}} />
-			);
+		let data: TData = initialState;
 
-			const attributesStepTitle = getByText('attributes');
-
-			const attributesStepDescription = getByText(
-				'attributes-step-description'
-			);
-
-			expect(attributesStepTitle).toBeInTheDocument();
-
-			expect(attributesStepDescription).toBeInTheDocument();
-
-			expect(container.firstChild).toHaveClass('sheet');
+		const onDataChange = jest.fn((newData: TData) => {
+			data = newData;
 		});
+
+		const {container, getByText} = render(
+			<AppContextProvider
+				connected={false}
+				liferayAnalyticsURL=""
+				token=""
+			>
+				<AttributesStepContent onDataChange={onDataChange} />
+			</AppContextProvider>
+		);
+
+		expect(data.pageView).toEqual('VIEW_WIZARD_MODE');
+		expect(getByText(/finish/i)).toBeInTheDocument();
+
+		const attributesStepTitle = getByText('attributes');
+
+		const attributesStepDescription = getByText(
+			'attributes-step-description'
+		);
+
+		const finishButton = getByText(/finish/i);
+
+		await act(async () => {
+			await fireEvent.click(finishButton);
+		});
+
+		expect(data.pageView).toEqual('VIEW_DEFAULT_MODE');
+		expect(onDataChange).toBeCalledTimes(2);
+		expect(attributesStepTitle).toBeInTheDocument();
+		expect(attributesStepDescription).toBeInTheDocument();
+		expect(container.firstChild).toHaveClass('sheet');
 	});
 });

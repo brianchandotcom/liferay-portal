@@ -35,7 +35,10 @@ import {
 	Liferay,
 	LiferayOnAction,
 } from '../../../../common/services/liferay/liferay';
-import {capitalizeFirstLetter} from '../../../../common/utils/constantsType';
+import {
+	capitalizeFirstLetter,
+	lowercaseFirstLetter,
+} from '../../../../common/utils/constantsType';
 import formatDate from '../../../../common/utils/dateFormatter';
 import useDebounce from '../../../../hooks/useDebounce';
 
@@ -648,9 +651,13 @@ const ClaimsTable = () => {
 			ClaimsChartTypes.SettledClaims
 		);
 
+		const claimStatusFieldKey = lowercaseFirstLetter(
+			statuses.replace(' ', '')
+		);
+
 		setFilterStatusCheck((prevFilterStatusCheck: string[]) => [
 			...prevFilterStatusCheck,
-			`'${statuses}'`,
+			`'${claimStatusFieldKey}'`,
 		]);
 	};
 

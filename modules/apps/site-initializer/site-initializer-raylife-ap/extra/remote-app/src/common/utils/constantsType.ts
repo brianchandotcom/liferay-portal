@@ -17,3 +17,9 @@ export function capitalizeFirstLetter(string: string) {
 
 	return capitalized;
 }
+
+export function lowercaseFirstLetter(string: string) {
+	const lowerCase = string.charAt(0).toLocaleLowerCase() + string.slice(1);
+
+	return lowerCase;
+}

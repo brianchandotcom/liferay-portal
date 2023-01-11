@@ -215,6 +215,16 @@
 	}
 }
 
+.tab-selected .tab-content {
+	color: #272833;
+
+	&::after {
+		background-color: #80acff;
+		content: '';
+		height: 0.125rem;
+	}
+}
+
 textarea.script {
 	min-height: 200px !important;
 }

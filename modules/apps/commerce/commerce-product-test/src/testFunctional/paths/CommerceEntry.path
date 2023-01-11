@@ -676,6 +676,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_ROW_FIELD_GENERIC</td>
+	<td>//div[@class= 'dnd-tr'][${key_rowIndex}]//div[@class='dnd-td'][${key_columnIndex}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_STATUS</td>
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td']/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
 	<td></td>

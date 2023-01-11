@@ -372,7 +372,7 @@ definition {
 		property osgi.module.configuration.file.names = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_journalArticleExportImportProcessorCacheEnabled=B\"false\"";
 
 		task ("Given a Web Content Structure with a repeatable fields group is created") {
-			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "guest");
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
 			WebContentStructures.addCP(structureName = "STR_KV");
 
@@ -431,7 +431,7 @@ definition {
 
 			JSONWebcontent.addWebContent(
 				content = "Basic WC",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				title = "WC_BASIC");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "STR_KV");
@@ -478,17 +478,17 @@ definition {
 
 		task ("And when a page is created with an Asset Publisher to display the Web Content and then staged") {
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				layoutName = "PAGE_KV");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				layoutName = "PAGE_KV",
 				widgetName = "Asset Publisher");
 
 			Navigator.openSitePage(
 				pageName = "PAGE_KV",
-				siteName = "Guest");
+				siteName = "Test Site Name");
 
 			Portlet.gotoPortletOptions(
 				portletName = "Asset Publisher",
@@ -496,11 +496,19 @@ definition {
 
 			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Full Content");
 
-			JSONStaging.enableLocalStaging(groupName = "Guest");
+			Navigator.gotoSitePage(
+				pageName = "PAGE_KV",
+				siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Publishing",
+				portlet = "Staging");
+
+			Staging.activateStagingCP(siteName = "Test Site Name");
 		}
 
 		task ("Then the Web Content will be displayed in the order they were entered on the staged site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",

@@ -21,7 +21,6 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -92,9 +91,9 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 	@Test
 	public void testRegisterInitialDeploymentVerifyProcessAfterModuleUpgrade() {
-		try (SafeCloseable safeCloseable1 = _executeUpgradeProcess();
-			SafeCloseable safeCloseable2 = _registerInitialVerifyProcess()) {
+		_simulateUpgradeProcessExecution();
 
+		try (SafeCloseable safeCloseable2 = _registerInitialVerifyProcess()) {
 			Assert.assertTrue(_verifyProcessRun);
 		}
 	}
@@ -127,8 +126,9 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 	@Test
 	public void testRegisterRunOnPortalUpgradeVerifyProcessAfterModuleUpgrade() {
-		try (SafeCloseable safeCloseable1 = _executeUpgradeProcess();
-			SafeCloseable safeCloseable2 =
+		_simulateUpgradeProcessExecution();
+
+		try (SafeCloseable safeCloseable2 =
 				_registerRunOnPortalUpgradeVerifyProcess()) {
 
 			Assert.assertTrue(_verifyProcessRun);
@@ -165,9 +165,9 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 	@Test
 	public void testRegisterVerifyProcessAfterModuleUpgrade() {
-		try (SafeCloseable safeCloseable1 = _executeUpgradeProcess();
-			SafeCloseable safeCloseable2 = _registerVerifyProcess()) {
+		_simulateUpgradeProcessExecution();
 
+		try (SafeCloseable safeCloseable2 = _registerVerifyProcess()) {
 			Assert.assertTrue(_verifyProcessRun);
 		}
 	}
@@ -201,35 +201,6 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 				).build());
 
 		return () -> upgradeStepServiceRegistration.unregister();
-	}
-
-	private SafeCloseable _executeUpgradeProcess() {
-		Release release = _releaseLocalService.createRelease(
-			_counterLocalService.increment());
-
-		release.setServletContextName(_symbolicName);
-		release.setSchemaVersion("0.0.1");
-		release.setVerified(true);
-
-		_releaseLocalService.updateRelease(release);
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"UPGRADE_DATABASE_AUTO_RUN", true)) {
-
-			ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-				_bundleContext.registerService(
-					UpgradeStep.class, new DummyUpgrade(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"upgrade.bundle.symbolic.name", _symbolicName
-					).put(
-						"upgrade.from.schema.version", "0.0.1"
-					).put(
-						"upgrade.to.schema.version", "1.0.0"
-					).build());
-
-			return () -> upgradeStepServiceRegistration.unregister();
-		}
 	}
 
 	private SafeCloseable _registerInitialVerifyProcess() {
@@ -268,6 +239,17 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 					"verify.process.name", _symbolicName));
 
 		return () -> verifyProcessRegistration.unregister();
+	}
+
+	private void _simulateUpgradeProcessExecution() {
+		Release release = _releaseLocalService.createRelease(
+			_counterLocalService.increment());
+
+		release.setServletContextName(_symbolicName);
+		release.setSchemaVersion("1.0.0");
+		release.setVerified(false);
+
+		_releaseLocalService.updateRelease(release);
 	}
 
 	private SafeCloseable _upgradePortal() {

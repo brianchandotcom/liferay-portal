@@ -1,7 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
-	property custom.properties = "dl.actions.visible=true";
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Document Management";
@@ -70,8 +70,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddAddDocumentPermissionsForSiteMember {
-		property custom.properties = "default.layout.template.id=1_column";
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		Permissions.setUpSiteMemberRoleLoginUserPG(
@@ -114,7 +112,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddDocumentAsSiteRoleWithPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		Permissions.setUpSiteRoleLoginUserPG(
@@ -206,8 +203,6 @@ definition {
 	@description = "This is a test for LPS-90864. It checks that a site member can add shortcut to folder with permissions."
 	@priority = "4"
 	test CanAddShortcutToFolderAsSiteMemberWithPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -290,7 +285,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddDocumentAsSiteRoleWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		Permissions.setUpSiteRoleLoginUserPG(
@@ -485,7 +479,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotViewDocumentWithOwnerAccessOnly {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -614,7 +607,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CannotViewFolderAsOrganizationMemberWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -702,7 +694,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CannotViewFolderAsSiteMember {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONUser.addUser(
@@ -806,7 +797,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CannotViewMultipleDocumentsAsSiteMember {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -900,8 +890,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanRemoveAddDocumentPermissionsForSiteMember {
-		property custom.properties = "default.layout.template.id=1_column";
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		Permissions.setUpSiteMemberRoleLoginUserPG(
@@ -996,7 +984,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test DocumentCanStillBeViewedAfterAuthorIsDeleted {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONUser.addUser(
@@ -1056,7 +1043,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test EntryCanNotBeEditedWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONUser.addUser(
@@ -1458,8 +1444,6 @@ definition {
 	@priority = "3"
 	@refactordone
 	test ImageFromGlobalSiteCanBeSelectedWithPermissionsInWCD {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
 
 		DMDocument.addCP(
@@ -1544,8 +1528,6 @@ definition {
 	@description = "This is a test for LPS-136852. It checks that a site member cannot access a folder image without permissions."
 	@priority = "3"
 	test SiteMemberCannotAccessFolderImageThroughURLWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1593,8 +1575,6 @@ definition {
 	@description = "This is a test for LPS-136841. It checks that a site member cannot add a document in a folder without permissions."
 	@priority = "3"
 	test SiteMemberCannotAddDocumentInFolder {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1661,8 +1641,6 @@ definition {
 	@description = "This is a test for LPS-136842. It checks that a site member cannot add a shortcut without permissions."
 	@priority = "3"
 	test SiteMemberCannotAddShortcut {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1721,8 +1699,6 @@ definition {
 	@description = "This is a test for LPS-136845. It checks that a site member cannot delete a file without permissions."
 	@priority = "3"
 	test SiteMemberCannotDeleteFile {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1777,8 +1753,6 @@ definition {
 	@description = "This is a test for LPS-136846. It checks that a site member cannot delete a shortcut without permissions."
 	@priority = "3"
 	test SiteMemberCannotDeleteShortcut {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONUser.addUser(
@@ -1839,8 +1813,6 @@ definition {
 	@description = "This is a test for LPS-136847. It checks that a site member cannot override a checkout process without permissions."
 	@priority = "3"
 	test SiteMemberCannotOverrideCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1901,8 +1873,6 @@ definition {
 	@description = "This is a test for LPS-136848. It checks that a site member cannot subscribe to a folder without permissions."
 	@priority = "3"
 	test SiteMemberCannotSubscribeToFolder {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1961,7 +1931,6 @@ definition {
 	@description = "This is a test for LPS-136849. It checks that a site member cannot update comments without permissions."
 	@priority = "3"
 	test SiteMemberCannotUpdateComments {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Comment";
 
 		JSONUser.addUser(
@@ -2015,8 +1984,6 @@ definition {
 	@description = "This is a test for LPS-136843. It checks that a site member cannot update the permissions of a file without permissions."
 	@priority = "3"
 	test SiteMemberCannotUpdateFilePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -2073,8 +2040,6 @@ definition {
 	@description = "This is a test for LPS-136850. It checks that a site member cannot update a folder without permissions."
 	@priority = "3"
 	test SiteMemberCannotUpdateFolder {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -2135,8 +2100,6 @@ definition {
 	@description = "This is a test for LPS-136844. It checks that a site member cannot update the permissions of a folder without permissions."
 	@priority = "3"
 	test SiteMemberCannotUpdateFolderPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -2199,8 +2162,6 @@ definition {
 	@description = "This is a test for LPS-136851. It checks that a site member cannot view a file without permissions."
 	@priority = "3"
 	test SiteMemberCannotViewFile {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONUser.addUser(
@@ -2255,8 +2216,6 @@ definition {
 	@description = "This is a test for LPS-136840. It checks that a site member can access an image in a folder through the URL with permissions."
 	@priority = "3"
 	test SiteMemberWithAccessToFolderCanAccessImageThroughURL {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONUser.addUser(

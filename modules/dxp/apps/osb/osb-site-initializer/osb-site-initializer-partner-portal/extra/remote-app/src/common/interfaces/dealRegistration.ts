@@ -44,6 +44,7 @@ export default interface DealRegistration extends Partial<LiferayObject> {
 	accountExternalReferenceCodeSF?: string;
 	additionalContact?: AdditionalContact;
 	additionalInformationAboutTheOpportunity?: string;
+	leadStatusDetails?: string;
 	mdfActivityAssociated: Partial<MDFRequestActivityDTO>;
 	partnerAccount: LiferayAccountBrief;
 	primaryProspect: PrimaryProspect;
@@ -51,5 +52,4 @@ export default interface DealRegistration extends Partial<LiferayObject> {
 	projectNeed: string[];
 	projectTimeline: string;
 	prospect: Prospect;
-	registrationStatus: string;
 }

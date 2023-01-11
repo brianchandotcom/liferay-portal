@@ -260,18 +260,6 @@
 			"name": "prospectState",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Registration Status"
-			},
-			"name": "registrationStatus",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"pluralLabel": {

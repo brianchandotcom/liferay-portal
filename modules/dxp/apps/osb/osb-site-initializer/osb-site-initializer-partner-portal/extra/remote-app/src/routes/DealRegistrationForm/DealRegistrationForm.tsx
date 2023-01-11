@@ -28,6 +28,7 @@ import submitForm from './utils/submitForm';
 const initialFormValues: DealRegistration = {
 	additionalContact: {emailAddress: '', firstName: '', lastName: ''},
 	additionalInformationAboutTheOpportunity: '',
+	leadStatusDetails: Status.EXPRESSED_INTEREST.name,
 	mdfActivityAssociated: {},
 	partnerAccount: {},
 	primaryProspect: {
@@ -51,7 +52,6 @@ const initialFormValues: DealRegistration = {
 		postalCode: '',
 		state: {},
 	},
-	registrationStatus: Status.PENDING.name,
 };
 
 type StepComponent = {

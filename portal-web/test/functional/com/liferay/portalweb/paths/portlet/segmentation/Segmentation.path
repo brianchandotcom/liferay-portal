@@ -121,6 +121,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPE_CARD_MESSAGE</td>
+	<td>//*[contains(@role,'tablist')]//div[@role='tabpanel']//p[contains(.,'Select the scope of your segment to specify where it can be used. It will not be possible to modify the scope after the segment is saved.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCOPE_CARD_SITE</td>
 	<td>//*[contains(@role,'tablist')]//div[@role='tabpanel']//p[contains(.,'${siteName}')]</td>
 	<td></td>

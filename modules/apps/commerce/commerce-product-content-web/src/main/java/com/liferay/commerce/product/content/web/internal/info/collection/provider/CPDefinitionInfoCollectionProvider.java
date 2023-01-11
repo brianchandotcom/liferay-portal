@@ -66,10 +66,14 @@ public class CPDefinitionInfoCollectionProvider
 
 			Pagination pagination = collectionQuery.getPagination();
 
+			String keywords = null;
+
 			KeywordsInfoFilter keywordsInfoFilter =
 				collectionQuery.getInfoFilter(KeywordsInfoFilter.class);
 
-			String keywords = keywordsInfoFilter.getKeywords();
+			if (keywordsInfoFilter != null) {
+				keywords = keywordsInfoFilter.getKeywords();
+			}
 
 			Sort sort = null;
 

@@ -1,0 +1,8 @@
+@default = "waitForTextNotPresent"
+definition {
+
+	function waitForTextNotPresent {
+		selenium.waitForTextNotPresent();
+	}
+
+}

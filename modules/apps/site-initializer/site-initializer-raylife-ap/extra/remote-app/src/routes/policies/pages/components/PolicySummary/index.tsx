@@ -60,7 +60,7 @@ const PolicySummary = ({application, policy}: any) => {
 	};
 
 	return (
-		<div className="bg-neutral-0 rounded summary-policy-container">
+		<div className="bg-neutral-0 h-100 rounded summary-policy-container">
 			<div className="policy-summary-title pt-3 px-5">
 				<h5 className="m-0">Summary</h5>
 			</div>

@@ -83,7 +83,7 @@ const PolicyDetails = () => {
 			<div className="d-flex policy-detail-content">
 				{policy && (
 					<>
-						<div className="mb-3 mr-3 summary-policy-content">
+						<div className="mr-3 summary-policy-content">
 							<PolicySummary
 								application={application}
 								policy={policy}

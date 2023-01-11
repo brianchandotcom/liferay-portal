@@ -17,3 +17,11 @@
 		}
 	}
 }
+
+@media screen and (max-width: 700px) {
+	.summary-policy-content {
+		margin-right: 0 !important;
+		padding-bottom: 10px !important;
+		width: 100% !important;
+	}
+}

@@ -61,19 +61,19 @@ public class FieldPeopleConstants {
 
 	public static final String[] FIELD_USER_EXAMPLES = {
 		"True", "lorem ipsum", "12345", "12345", "31st Oct 2008", "True",
-		"test@liferay.com", "True", "key=value,...", "external12345", "12345",
-		"John", "12345", "Hello John!", "Manager", "12345", "Doe", "12345",
-		"12354,34567,...", "Michael", "31st Oct 2008", "12345", "12345",
-		"johndoe", "0", "12345", "12345", "asd23-erwer34-..."
+		"test@liferay.com", "True", "external12345", "12345", "John", "12345",
+		"Hello John!", "Manager", "12345", "Doe", "12345", "Michael",
+		"31st Oct 2008", "12345", "12345", "johndoe", "0", "12345", "12345",
+		"asd23-erwer34-..."
 	};
 
 	public static final String[] FIELD_USER_NAMES = {
 		"agreedToTermsOfUse", "comments", "companyId", "contactId",
 		"createDate", "defaultUser", "emailAddress", "emailAddressVerified",
-		"expando", "externalReferenceCode", "facebookId", "firstName",
-		"googleUserId", "greeting", "jobTitle", "languageId", "lastName",
-		"ldapServerId", "membership", "middleName", "modifiedDate", "openId",
-		"portraitId", "screenName", "status", "timeZoneId", "userId", "uuid"
+		"externalReferenceCode", "facebookId", "firstName", "googleUserId",
+		"greeting", "jobTitle", "languageId", "lastName", "ldapServerId",
+		"middleName", "modifiedDate", "openId", "portraitId", "screenName",
+		"status", "timeZoneId", "userId", "uuid"
 	};
 
 	public static final String[] FIELD_USER_REQUIRED_NAMES = {
@@ -83,9 +83,9 @@ public class FieldPeopleConstants {
 
 	public static final String[] FIELD_USER_TYPES = {
 		"Boolean", "String", "Long", "Long", "Date", "Boolean", "String",
-		"Boolean", "String", "String", "Long", "String", "String", "String",
-		"String", "String", "String", "Long", "String", "String", "Date",
-		"String", "Long", "String", "Integer", "Long", "Long", "String"
+		"Boolean", "String", "Long", "String", "String", "String", "String",
+		"String", "String", "Long", "String", "Date", "String", "Long",
+		"String", "Integer", "Long", "Long", "String"
 	};
 
 }

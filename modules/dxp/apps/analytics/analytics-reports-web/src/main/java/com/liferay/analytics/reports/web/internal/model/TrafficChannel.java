@@ -142,7 +142,7 @@ public class TrafficChannel {
 				}
 
 				ResourceURL resourceURL =
-					(ResourceURL)liferayPortletResponse.createResourceURL();
+					liferayPortletResponse.createResourceURL();
 
 				resourceURL.setResourceID(String.valueOf(tuple.getObject(0)));
 

@@ -35,11 +35,12 @@ export function getDTOFromDealRegistration(
 			dealRegistration.mdfActivityAssociated.externalReferenceCodeSF,
 		primaryProspectBusinessUnit:
 			dealRegistration.primaryProspect.businessUnit,
-		primaryProspectDepartment: dealRegistration.primaryProspect.department,
+		primaryProspectDepartment:
+			dealRegistration.primaryProspect.department.name,
 		primaryProspectEmailAddress:
 			dealRegistration.primaryProspect.emailAddress,
 		primaryProspectFirstName: dealRegistration.primaryProspect.firstName,
-		primaryProspectJobRole: dealRegistration.primaryProspect.jobRole,
+		primaryProspectJobRole: dealRegistration.primaryProspect.jobRole.name,
 		primaryProspectLastName: dealRegistration.primaryProspect.lastName,
 		primaryProspectPhone: dealRegistration.primaryProspect.phone,
 		projectCategories: dealRegistration.projectCategories.join('; '),
@@ -50,7 +51,7 @@ export function getDTOFromDealRegistration(
 		prospectCity: dealRegistration.prospect.city,
 		prospectCountry: dealRegistration.prospect.country,
 		prospectCountryCode: dealRegistration.prospect.country.key,
-		prospectIndustry: dealRegistration.prospect.industry,
+		prospectIndustry: dealRegistration.prospect.industry.name,
 		prospectPostalCode: dealRegistration.prospect.postalCode,
 		prospectState: dealRegistration.prospect.state,
 		prospectStateCode: dealRegistration.prospect.state.key,

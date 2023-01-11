@@ -1,0 +1,47 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Lima Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		BlogPostingAPI.deleteAllBlogPostings();
+	}
+
+	@priority = "4"
+	test CanReceiveIdFieldValuesOnlyInResponse {
+		property portal.acceptance = "true";
+
+		task ("Given a blog-posting created") {
+			var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "ArticleBody",
+				headline = "Headline");
+		}
+
+		task ("When with curl I request GET getSiteBlogPostingsPage with siteId and restrictFields equal all fields except id field") {
+			var response = BlogPostingAPI.getBlogPostingsbyDifferentParameters(
+				parameter = "restrictFields",
+				restrictFieldsValue = "aggregateRating,alternativeHeadline,articleBody,creator,customFields,dateCreated,dateModified,datePublished,description,encodingFormat,externalReferenceCode,friendlyUrlPath,headline,image,keywords,numberOfComments,relatedContents,renderedContents,siteId,taxonomyCategoryBriefs,x-class-name,facets,actions");
+		}
+
+		task ("Then in a response I receive a with id field values only") {
+			BlogPostingAPI.assertResponseHasIdFieldValueOnly(
+				expectedValue = "{id=${blogPostingId}}",
+				responseToParse = "${response}");
+		}
+	}
+
+}

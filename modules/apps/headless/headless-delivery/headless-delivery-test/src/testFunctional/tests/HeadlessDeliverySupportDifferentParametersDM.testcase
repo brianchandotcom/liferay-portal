@@ -1,0 +1,88 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+	}
+
+	@priority = "4"
+	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
+		property portal.acceptance = "true";
+
+		task ("Given a document of a site") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("When with curl I request getDocument with fields=id") {
+			var response = DocumentAPI.getDocumentsByDifferentParameters(
+				documentId = "${documentId}",
+				parameter = "fields",
+				parameterValue = "id");
+		}
+
+		task ("Then in a response I received an id value only") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{id=${documentId}}");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveTitleFieldValuesOnlyInResponseForIndividualElement {
+		property portal.acceptance = "true";
+
+		task ("Given a document of a site") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("When with curl I request getDocument with restrictFields equal all fields except title field") {
+			var response = DocumentAPI.getDocumentsByDifferentParameters(
+				documentId = "${documentId}",
+				parameter = "restrictFields",
+				parameterValue = "actions,adaptedImages,assetLibraryKey,contentUrl,creator,customFields,dateCreated,dateModified,description,documentFolderId,documentType,encodingFormat,externalReferenceCode,fileExtension,id,keywords,numberOfComments,relatedContents,renderedContents,siteId,sizeInBytes,taxonomyCategoryBriefs");
+		}
+
+		task ("Then in a response I receive a body with title field values only") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{title=Document_1.txt}");
+		}
+	}
+
+}

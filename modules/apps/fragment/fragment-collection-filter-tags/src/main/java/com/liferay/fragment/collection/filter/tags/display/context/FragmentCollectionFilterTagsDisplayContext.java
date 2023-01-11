@@ -56,12 +56,6 @@ public class FragmentCollectionFilterTagsDisplayContext {
 		return defaultValuesJSONObject.getString("helpText", StringPool.BLANK);
 	}
 
-	public String getHelpTextId() {
-		return "fragment_" +
-			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId()) +
-				"_helpText";
-	}
-
 	public String getLabel() {
 		String label = GetterUtil.getString(_getFieldValue("label"));
 
@@ -70,12 +64,6 @@ public class FragmentCollectionFilterTagsDisplayContext {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	public String getLabelId() {
-		return "fragment_" +
-			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId()) +
-				"_label";
 	}
 
 	public Map<String, Object> getProps() {

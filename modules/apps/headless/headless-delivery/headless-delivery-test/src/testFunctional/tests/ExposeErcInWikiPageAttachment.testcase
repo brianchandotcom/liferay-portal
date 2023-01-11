@@ -37,4 +37,52 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test CanReturenErcWithGetSiteWikiPagesByErc {
+		property portal.acceptance = "true";
+
+		task ("When requesting getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode") {
+			var response = WikiPageAttachmentAPI.getWikiPageAttachments(
+				groupName = "Guest",
+				wikiPageAttachementErc = "${staticWikiPageAttachmentErc}",
+				wikiPageErc = "${staticWikiPageErc}");
+		}
+
+		task ("Then the payload contains externalReferenceCode") {
+			WikiPageAttachmentAPI.AssertCorrectErcInResponse(
+				expectedErc = "${staticWikiPageAttachmentErc}",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "3"
+	test CanReturenErcWithGetWikiPageAttachmentsByWikiPageId {
+		property portal.acceptance = "true";
+
+		task ("When requesting getWikiPageWikiPageAttachmentsPage") {
+			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageAttachementId = "${staticWikiPageAttachmentId}");
+		}
+
+		task ("Then the attachment object contains externalReferenceCode") {
+			WikiPageAttachmentAPI.AssertCorrectErcInResponse(
+				expectedErc = "${staticWikiPageAttachmentErc}",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "3"
+	test CanReturenErcWithGetWikiPagesByWikiPageId {
+		property portal.acceptance = "true";
+
+		task ("When requesting getWikiPageAttachment") {
+			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageId = "${staticWikiPageId}");
+		}
+
+		task ("Then the attachment object contains externalReferenceCode") {
+			WikiPageAttachmentAPI.AssertCorrectErcInResponse(
+				expectedErc = "${staticWikiPageAttachmentErc}",
+				responseToParse = "${response}");
+		}
+	}
+
 }

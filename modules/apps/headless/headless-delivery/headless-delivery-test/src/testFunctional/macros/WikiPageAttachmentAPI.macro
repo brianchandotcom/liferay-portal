@@ -16,6 +16,32 @@ definition {
 		return "${curl}";
 	}
 
+	macro _curlWikiPageAttachments {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(wikiPageId)) {
+			var api = "wiki-pages/${wikiPageId}/wiki-page-attachments";
+		}
+		else if (isSet(wikiPageAttachementId)) {
+			var api = "/wiki-page-attachments/${wikiPageAttachementId}";
+		}
+		else {
+			Variables.assertDefined(parameterList = "${groupName},${wikiPageErc},${wikiPageAttachementErc}");
+
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+			var api = "sites/${siteId}/wiki-pages/by-external-reference-code/${wikiPageErc}/wiki-page-attachments/by-external-reference-code/${wikiPageAttachementErc}";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		return "${curl}";
+	}
+
 	macro _getAttachmentById {
 		Variables.assertDefined(parameterList = "${wikiPageAttachmentId}");
 
@@ -31,6 +57,16 @@ definition {
 		var curl = JSONCurlUtil.get("${curl}");
 
 		return "${curl}";
+	}
+
+	macro AssertCorrectErcInResponse {
+		Variables.assertDefined(parameterList = "${responseToParse},${expectedErc}");
+
+		var actualErc = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
+
+		TestUtils.assertEquals(
+			actual = "${actualErc}",
+			expected = "${expectedErc}");
 	}
 
 	macro createWikiPageAttachment {
@@ -71,9 +107,23 @@ definition {
 		return "${response}";
 	}
 
+	macro getWikiPageAttachments {
+		var curl = WikiPageAttachmentAPI._curlWikiPageAttachments(
+			groupName = "${groupName}",
+			wikiPageAttachementErc = "${wikiPageAttachementErc}",
+			wikiPageAttachementId = "${wikiPageAttachementId}",
+			wikiPageErc = "${wikiPageErc}",
+			wikiPageId = "${wikiPageId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
 	macro setupGlobalWikiPageWithAttachment {
 		var wikiPage = JSONWiki.addWikiPage(
 			groupName = "Guest",
+			noSelenium = "true",
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageName = "Wiki Page Title");

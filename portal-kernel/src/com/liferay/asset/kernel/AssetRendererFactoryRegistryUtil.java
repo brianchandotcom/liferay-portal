@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 
@@ -112,15 +111,19 @@ public class AssetRendererFactoryRegistryUtil {
 		Set<String> classNames =
 			_classNameAssetRenderFactoriesServiceTrackerMap.keySet();
 
-		Stream<String> stream = classNames.stream();
+		long[] classNameIds = new long[classNames.size()];
 
-		return stream.map(
-			_classNameAssetRenderFactoriesServiceTrackerMap::getService
-		).map(
-			AssetRendererFactory::getClassNameId
-		).mapToLong(
-			classNameId -> classNameId
-		).toArray();
+		int i = 0;
+
+		for (String className : classNames) {
+			AssetRendererFactory<?> assetRendererFactory =
+				_classNameAssetRenderFactoriesServiceTrackerMap.getService(
+					className);
+
+			classNameIds[i++] = assetRendererFactory.getClassNameId();
+		}
+
+		return classNameIds;
 	}
 
 	private static Map<String, AssetRendererFactory<?>>

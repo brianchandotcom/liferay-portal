@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 public class UserNotificationFeedEntry {
 
 	public UserNotificationFeedEntry(
-		boolean actionable, String body, String link, boolean applicable) {
+		boolean actionable, String body, String link, boolean applicable,
+		String title) {
 
 		setActionable(actionable);
 		setApplicable(applicable);
 		setBody(body);
 		setLink(link);
+		setTitle(title);
 	}
 
 	public String getBody() {
@@ -41,6 +43,10 @@ public class UserNotificationFeedEntry {
 
 	public String getPortletId() {
 		return _portletId;
+	}
+
+	public String getTitle() {
+		return _title;
 	}
 
 	public boolean isActionable() {
@@ -79,11 +85,16 @@ public class UserNotificationFeedEntry {
 		_portletId = GetterUtil.getString(portletId);
 	}
 
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	private boolean _actionable;
 	private boolean _applicable = true;
 	private String _body;
 	private String _link;
 	private boolean _openDialog;
 	private String _portletId = StringPool.BLANK;
+	private String _title;
 
 }

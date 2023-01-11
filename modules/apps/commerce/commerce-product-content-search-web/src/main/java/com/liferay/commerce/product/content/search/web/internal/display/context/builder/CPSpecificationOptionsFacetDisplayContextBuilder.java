@@ -325,9 +325,11 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	}
 
 	private String _getFirstParameterValueString() {
-		for (String parameterValue : _parameterValues) {
-			if (GetterUtil.getLong(parameterValue) > 0) {
-				return parameterValue;
+		if (_parameterValues != null) {
+			for (String parameterValue : _parameterValues) {
+				if (GetterUtil.getLong(parameterValue) > 0) {
+					return parameterValue;
+				}
 			}
 		}
 

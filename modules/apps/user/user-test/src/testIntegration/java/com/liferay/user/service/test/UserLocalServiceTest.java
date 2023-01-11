@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServic
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -103,12 +104,9 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testAuthenticateByEmailAddress() throws Exception {
-		User user = UserTestUtil.addUser();
-
 		String password = "password";
 
-		user = _userLocalService.updatePassword(
-			user.getUserId(), password, password, false, true);
+		User user = _addUserWithPassword(password);
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
@@ -431,12 +429,9 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testLockout() throws Exception {
-		User user = UserTestUtil.addUser();
-
 		String password = "password";
 
-		user = _userLocalService.updatePassword(
-			user.getUserId(), password, password, false, true);
+		User user = _addUserWithPassword(password);
 
 		Assert.assertEquals(
 			Authenticator.SUCCESS,
@@ -756,6 +751,15 @@ public class UserLocalServiceTest {
 		}
 
 		return userIds;
+	}
+
+	private User _addUserWithPassword(String password) throws Exception {
+		User user = UserTestUtil.addUser();
+
+		AuditRequestThreadLocal.removeAuditThreadLocal();
+
+		return _userLocalService.updatePassword(
+			user.getUserId(), password, password, false, true);
 	}
 
 	@Inject

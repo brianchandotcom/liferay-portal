@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.account.service.impl;
 
-import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.base.CommerceAccountUserRelServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
@@ -49,9 +49,9 @@ public class CommerceAccountUserRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.MANAGE_MEMBERS);
+			AccountActionKeys.ASSIGN_USERS);
 
 		return commerceAccountUserRelLocalService.addCommerceAccountUserRel(
 			commerceAccountId, commerceAccountUserId, roleIds, serviceContext);
@@ -63,9 +63,9 @@ public class CommerceAccountUserRelServiceImpl
 			long[] roleIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.MANAGE_MEMBERS);
+			AccountActionKeys.ASSIGN_USERS);
 
 		commerceAccountUserRelLocalService.addCommerceAccountUserRels(
 			commerceAccountId, userIds, emailAddresses, roleIds,
@@ -77,9 +77,9 @@ public class CommerceAccountUserRelServiceImpl
 			long commerceAccountId, long userId)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.MANAGE_MEMBERS);
+			AccountActionKeys.ASSIGN_USERS);
 
 		CommerceAccountUserRelPK commerceAccountUserRelPK =
 			new CommerceAccountUserRelPK(commerceAccountId, userId);
@@ -92,9 +92,9 @@ public class CommerceAccountUserRelServiceImpl
 	public void deleteCommerceAccountUserRels(long commerceAccountId)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.MANAGE_MEMBERS);
+			AccountActionKeys.ASSIGN_USERS);
 
 		commerceAccountUserRelLocalService.
 			deleteCommerceAccountUserRelsByCommerceAccountId(commerceAccountId);
@@ -105,9 +105,9 @@ public class CommerceAccountUserRelServiceImpl
 			long commerceAccountId, long[] userIds)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.MANAGE_MEMBERS);
+			AccountActionKeys.ASSIGN_USERS);
 
 		commerceAccountUserRelLocalService.deleteCommerceAccountUserRels(
 			commerceAccountId, userIds);
@@ -123,10 +123,10 @@ public class CommerceAccountUserRelServiceImpl
 				commerceAccountUserRelPK);
 
 		if (commerceAccountUserRel != null) {
-			_commerceAccountModelResourcePermission.check(
+			_accountEntryModelResourcePermission.check(
 				getPermissionChecker(),
 				commerceAccountUserRelPK.getCommerceAccountId(),
-				CommerceAccountActionKeys.VIEW_MEMBERS);
+				AccountActionKeys.VIEW_USERS);
 		}
 
 		return commerceAccountUserRel;
@@ -137,10 +137,10 @@ public class CommerceAccountUserRelServiceImpl
 			CommerceAccountUserRelPK commerceAccountUserRelPK)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(),
 			commerceAccountUserRelPK.getCommerceAccountId(),
-			CommerceAccountActionKeys.VIEW_MEMBERS);
+			AccountActionKeys.VIEW_USERS);
 
 		return commerceAccountUserRelLocalService.getCommerceAccountUserRel(
 			commerceAccountUserRelPK);
@@ -151,9 +151,9 @@ public class CommerceAccountUserRelServiceImpl
 			long commerceAccountId, int start, int end)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.VIEW_MEMBERS);
+			AccountActionKeys.VIEW_USERS);
 
 		return commerceAccountUserRelLocalService.getCommerceAccountUserRels(
 			commerceAccountId, start, end);
@@ -163,9 +163,9 @@ public class CommerceAccountUserRelServiceImpl
 	public int getCommerceAccountUserRelsCount(long commerceAccountId)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.VIEW_MEMBERS);
+			AccountActionKeys.VIEW_USERS);
 
 		return commerceAccountUserRelLocalService.
 			getCommerceAccountUserRelsCount(commerceAccountId);
@@ -177,9 +177,9 @@ public class CommerceAccountUserRelServiceImpl
 			String userExternalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		_commerceAccountModelResourcePermission.check(
+		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), commerceAccountId,
-			CommerceAccountActionKeys.MANAGE_MEMBERS);
+			AccountActionKeys.ASSIGN_USERS);
 
 		return commerceAccountUserRelLocalService.inviteUser(
 			commerceAccountId, emailAddress, roleIds, userExternalReferenceCode,
@@ -187,9 +187,9 @@ public class CommerceAccountUserRelServiceImpl
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
 	)
-	private ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission;
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 }

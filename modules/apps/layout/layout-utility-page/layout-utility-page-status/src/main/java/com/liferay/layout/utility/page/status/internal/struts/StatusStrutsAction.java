@@ -18,7 +18,10 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
@@ -71,15 +74,22 @@ public class StatusStrutsAction implements StrutsAction {
 
 		requestDispatcher.include(httpServletRequest, pipingServletResponse);
 
+		String output = unsyncStringWriter.toString();
+
+		SessionErrors.clear(httpServletRequest);
+
 		Document document = Jsoup.parse(
 			ThemeUtil.include(
 				httpServletRequest.getServletContext(), httpServletRequest,
 				httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
 				false));
 
+		PortalMessages.clear(httpServletRequest);
+		SessionMessages.clear(httpServletRequest);
+
 		Element contentElement = document.getElementById("content");
 
-		contentElement.html(unsyncStringWriter.toString());
+		contentElement.html(output);
 
 		ServletResponseUtil.write(httpServletResponse, document.html());
 

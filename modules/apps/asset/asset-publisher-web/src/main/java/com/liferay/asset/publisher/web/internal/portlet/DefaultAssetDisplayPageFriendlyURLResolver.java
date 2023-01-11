@@ -199,14 +199,15 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 	}
 
 	private AssetEntry _getAssetEntry(JournalArticle journalArticle) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				JournalArticle.class.getName());
-
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(), journalArticle.getPrimaryKey());
 
 		if (assetEntry == null) {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						JournalArticle.class.getName());
+
 			try {
 				return assetRendererFactory.getAssetEntry(
 					JournalArticle.class.getName(),

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,7 +61,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +81,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Override
-	public String getLayoutsJSON(
+	public JSONArray getLayoutsJSONArray(
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean includeActions, boolean privateLayout, long parentLayoutId,
 			long[] expandedLayoutIds, boolean incomplete, String treeId,
@@ -93,7 +91,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"getLayoutsJSON(groupId=", groupId, ", privateLayout=",
+					"getLayoutsJSONArray(groupId=", groupId, ", privateLayout=",
 					privateLayout, ", parentLayoutId=", parentLayoutId,
 					", expandedLayoutIds=", expandedLayoutIds, ", incomplete=",
 					incomplete, ", treeId=", treeId,
@@ -104,7 +102,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
 			incomplete, expandedLayoutIds, treeId, false);
 
-		return _toJSON(
+		return _toJSONArray(
 			httpServletRequest, groupId, includeActions, layoutTreeNodes,
 			layoutSetBranch);
 	}
@@ -428,19 +426,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return false;
 	}
 
-	private String _toJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
-			LayoutSetBranch layoutSetBranch)
-		throws Exception {
-
-		JSONSerializable jsonSerializable = _toJSONSerializable(
-			httpServletRequest, groupId, includeActions, layoutTreeNodes,
-			layoutSetBranch);
-
-		return jsonSerializable.toString();
-	}
-
 	private JSONArray _toJSONArray(
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
@@ -484,7 +469,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			LayoutTreeNodes childLayoutTreeNodes =
 				layoutTreeNode.getChildLayoutTreeNodes();
 
-			JSONSerializable childrenJSONSerializable = _toJSONSerializable(
+			JSONArray childrenJSONArray = _toJSONArray(
 				httpServletRequest, groupId, includeActions,
 				childLayoutTreeNodes, layoutSetBranch);
 
@@ -518,16 +503,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				afterDeleteSelectedLayout = layout;
 			}
 
-			if (childrenJSONSerializable instanceof JSONArray) {
-				JSONArray childrenJSONArray =
-					(JSONArray)childrenJSONSerializable;
-
-				if (childrenJSONArray.length() > 0) {
-					jsonObject.put("children", childrenJSONSerializable);
-				}
-			}
-			else {
-				jsonObject.put("children", childrenJSONSerializable);
+			if (childrenJSONArray.length() > 0) {
+				jsonObject.put("children", childrenJSONArray);
 			}
 
 			jsonObject.put(
@@ -687,24 +664,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		}
 
 		return jsonArray;
-	}
-
-	private JSONSerializable _toJSONSerializable(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
-			LayoutSetBranch layoutSetBranch)
-		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Group ", groupId, " and layout tree nodes ",
-					layoutTreeNodes));
-		}
-
-		return _toJSONArray(
-			httpServletRequest, groupId, includeActions, layoutTreeNodes,
-			layoutSetBranch);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

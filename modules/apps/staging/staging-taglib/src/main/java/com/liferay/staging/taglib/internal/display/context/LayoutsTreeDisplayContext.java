@@ -15,9 +15,7 @@
 package com.liferay.staging.taglib.internal.display.context;
 
 import com.liferay.layout.util.LayoutsTree;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -91,25 +89,15 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private JSONArray _getLayoutsJSONArray() throws Exception {
-		JSONArray layoutsJSONArray = null;
-
 		LayoutsTree layoutsTree = ServletContextUtil.getLayoutsTree();
-
-		String layoutsJSON = layoutsTree.getLayoutsJSON(
-			_httpServletRequest, _groupId, false, _privateLayout,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _selectedLayoutIds, true,
-			_treeId, null);
-
-		if (layoutsJSON.startsWith(StringPool.OPEN_BRACKET)) {
-			layoutsJSONArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
-		}
-		else {
-			layoutsJSONArray = JSONFactoryUtil.createJSONArray();
-		}
 
 		return JSONUtil.putAll(
 			JSONUtil.put(
-				"children", layoutsJSONArray
+				"children",
+				layoutsTree.getLayoutsJSONArray(
+					_httpServletRequest, _groupId, false, _privateLayout,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+					_selectedLayoutIds, true, _treeId, null)
 			).put(
 				"hasChildren", true
 			).put(

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface LayoutsTree {
 
-	public String getLayoutsJSON(
+	public JSONArray getLayoutsJSONArray(
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean includeActions, boolean privateLayout, long parentLayoutId,
 			long[] expandedLayoutIds, boolean incomplete, String treeId,

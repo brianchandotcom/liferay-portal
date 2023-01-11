@@ -217,10 +217,16 @@ public class AssetPublisherDisplayContext {
 			return _assetListEntry;
 		}
 
+		long assetListEntryId = GetterUtil.getLong(
+			_portletPreferences.getValue("assetListEntryId", null));
+
+		if (assetListEntryId <= 0) {
+			return null;
+		}
+
 		try {
 			_assetListEntry = AssetListEntryServiceUtil.fetchAssetListEntry(
-				GetterUtil.getLong(
-					_portletPreferences.getValue("assetListEntryId", null)));
+				assetListEntryId);
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {

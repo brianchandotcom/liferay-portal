@@ -4,14 +4,14 @@ definition {
 
 	macro _getKeycloakUserAccessToken {
 		var curl = '''
- 			http://localhost:18080/auth/realms/master/protocol/openid-connect/token \
-			 -H 'Content-Type: application/x-www-form-urlencoded'
-			  --data-urlencode 'client_id=liferay' 
-			  --data-urlencode 'grant_type=password' 
-			  --data-urlencode 'client_secret=9d26a159-86fd-481b-889c-f9c7fd482761'
-			  --data-urlencode 'username=${userEmail}'
-			   --data-urlencode 'password=test'
-			''';
+			http://localhost:18080/auth/realms/master/protocol/openid-connect/token \
+				-H 'Content-Type: application/x-www-form-urlencoded'
+				--data-urlencode 'client_id=liferay'
+				--data-urlencode 'grant_type=password'
+				--data-urlencode 'client_secret=9d26a159-86fd-481b-889c-f9c7fd482761'
+				--data-urlencode 'username=${userEmail}'
+				--data-urlencode 'password=test'
+		''';
 
 		var accessToken = JSONCurlUtil.post("${curl}", "$['access_token']");
 
@@ -20,9 +20,9 @@ definition {
 
 	macro _getKeycloakUserInformations {
 		var curl = '''
-			 http://localhost:18080/auth/realms/master/protocol/openid-connect/userinfo \
-			 -H 'Authorization: Bearer ${accessToken}'
-			''';
+			http://localhost:18080/auth/realms/master/protocol/openid-connect/userinfo \
+				-H 'Authorization: Bearer ${accessToken}'
+		''';
 
 		var userInformation = JSONCurlUtil.post("${curl}");
 

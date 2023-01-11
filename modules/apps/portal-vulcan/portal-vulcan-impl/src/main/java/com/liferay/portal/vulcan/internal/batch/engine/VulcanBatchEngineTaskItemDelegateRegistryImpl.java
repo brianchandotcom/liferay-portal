@@ -35,9 +35,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Javier de Arcos
  */
-@Component(
-	immediate = true, service = VulcanBatchEngineTaskItemDelegateRegistry.class
-)
+@Component(service = VulcanBatchEngineTaskItemDelegateRegistry.class)
 public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 	implements VulcanBatchEngineTaskItemDelegateRegistry {
 

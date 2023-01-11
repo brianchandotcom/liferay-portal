@@ -104,7 +104,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Correa
  */
-@Component(immediate = true, service = LiferayMethodDataFetchingProcessor.class)
+@Component(service = LiferayMethodDataFetchingProcessor.class)
 public class LiferayMethodDataFetchingProcessor {
 
 	public Object process(

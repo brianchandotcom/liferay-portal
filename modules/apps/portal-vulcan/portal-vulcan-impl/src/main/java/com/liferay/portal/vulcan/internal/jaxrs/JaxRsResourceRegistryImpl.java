@@ -33,7 +33,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Correa
  */
-@Component(immediate = true, service = JaxRsResourceRegistry.class)
+@Component(service = JaxRsResourceRegistry.class)
 public class JaxRsResourceRegistryImpl implements JaxRsResourceRegistry {
 
 	@Override

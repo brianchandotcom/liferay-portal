@@ -30,7 +30,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Javier de Arcos
  */
-@Component(immediate = true, service = ExtensionProviderRegistry.class)
+@Component(service = ExtensionProviderRegistry.class)
 public class ExtensionProviderRegistryImpl
 	implements ExtensionProviderRegistry {
 

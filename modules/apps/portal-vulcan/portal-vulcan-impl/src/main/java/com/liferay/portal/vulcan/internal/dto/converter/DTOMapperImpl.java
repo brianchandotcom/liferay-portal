@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Javier de Arcos
  */
-@Component(immediate = true, service = DTOMapper.class)
+@Component(service = DTOMapper.class)
 public class DTOMapperImpl implements DTOMapper {
 
 	@Override

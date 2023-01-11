@@ -51,9 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Correa
  */
-@Component(
-	immediate = true, service = GraphQLDTOContributorDataFetchingProcessor.class
-)
+@Component(service = GraphQLDTOContributorDataFetchingProcessor.class)
 public class GraphQLDTOContributorDataFetchingProcessor {
 
 	public Object create(

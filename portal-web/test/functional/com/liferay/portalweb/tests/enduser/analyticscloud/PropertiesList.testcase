@@ -274,6 +274,14 @@ definition {
 	@priority = "5"
 	test SearchPropertyToAssignSite {
 		task ("Connect AC and DXP") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 

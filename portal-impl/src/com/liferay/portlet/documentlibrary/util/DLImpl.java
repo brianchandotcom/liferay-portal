@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -139,16 +140,38 @@ public class DLImpl implements DL {
 	public String getAbsolutePath(PortletRequest portletRequest, long folderId)
 		throws PortalException {
 
+		return getAbsolutePath(
+			portletRequest, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			folderId);
+	}
+
+	@Override
+	public String getAbsolutePath(
+			PortletRequest portletRequest, long rootFolderId, long folderId)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
+			(rootFolderId == folderId)) {
+
 			return themeDisplay.translate("home");
 		}
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
 		List<Folder> folders = folder.getAncestors();
+
+		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+
+			if (!folders.contains(rootFolder)) {
+				throw new PortalException("Invalid root folder");
+			}
+
+			folders = ListUtil.subList(folders, 0, folders.indexOf(rootFolder));
+		}
 
 		Collections.reverse(folders);
 

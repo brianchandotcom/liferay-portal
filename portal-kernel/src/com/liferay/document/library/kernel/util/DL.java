@@ -57,6 +57,10 @@ public interface DL {
 	public String getAbsolutePath(PortletRequest portletRequest, long folderId)
 		throws PortalException;
 
+	public String getAbsolutePath(
+			PortletRequest portletRequest, long rootFolderId, long folderId)
+		throws PortalException;
+
 	public Set<String> getAllMediaGalleryMimeTypes();
 
 	public String getDDMStructureKey(DLFileEntryType dlFileEntryType);

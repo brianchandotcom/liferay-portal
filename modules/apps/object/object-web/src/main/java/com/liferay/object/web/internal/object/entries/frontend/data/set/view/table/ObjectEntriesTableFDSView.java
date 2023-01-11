@@ -212,6 +212,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		if (!Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
 			!Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+			!Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT) &&
 			!Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BLOB) &&
 			sortable) {

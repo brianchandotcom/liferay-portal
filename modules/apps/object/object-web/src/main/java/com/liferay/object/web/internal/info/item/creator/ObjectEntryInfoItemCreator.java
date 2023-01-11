@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.info.item.creator;
 
+import com.liferay.info.constants.InfoItemCreatorConstants;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.exception.NoSuchFormVariationException;
@@ -234,6 +235,27 @@ public class ObjectEntryInfoItemCreator
 
 			throw new InfoFormException();
 		}
+	}
+
+	@Override
+	public int getScope() {
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				_objectDefinition.getScope());
+
+		if (Objects.equals(
+				objectScopeProvider.getKey(),
+				ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+			return InfoItemCreatorConstants.SCOPE_COMPANY;
+		}
+
+		return InfoItemCreatorConstants.SCOPE_SITE;
+	}
+
+	@Override
+	public boolean supportsCategorization() {
+		return _objectDefinition.isEnableCategorization();
 	}
 
 	private String _getAcceptedFileExtensions(

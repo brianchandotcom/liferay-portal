@@ -44,12 +44,22 @@ public class MockInfoItemCreator implements InfoItemCreator<MockObject> {
 		return _mockObject;
 	}
 
+	@Override
+	public int getScope() {
+		return 0;
+	}
+
 	public void setInfoFormException(InfoFormException infoFormException) {
 		_infoFormException = infoFormException;
 	}
 
 	public void setMockObject(MockObject mockObject) {
 		_mockObject = mockObject;
+	}
+
+	@Override
+	public boolean supportsCategorization() {
+		return false;
 	}
 
 	private InfoFormException _infoFormException;

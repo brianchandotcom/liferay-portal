@@ -25,7 +25,7 @@
 
 		<column name="name" type="String" uad-nonanonymizable="true" />
 		<column name="description" type="String" uad-nonanonymizable="true" />
-		<column name="lastPostDate" type="Date" />
+		<column change-tracking-resolution-type="max" name="lastPostDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

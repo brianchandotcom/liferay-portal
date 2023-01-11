@@ -83,7 +83,7 @@ public class RepositoryConstraintResolver
 				targetRepository.getName(),
 				TempFileEntryUtil.class.getName())) {
 
-			_repositoryLocalService.deleteRepository(targetRepository);
+			_repositoryLocalService.deleteRepository(sourceRepository);
 
 			_resolved = true;
 		}

@@ -48,7 +48,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -400,13 +399,8 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		Stream<String> valuesStream = Arrays.stream(values);
-
-		String[] filteredValues = valuesStream.filter(
-			value -> Validator.isNotNull(value)
-		).toArray(
-			String[]::new
-		);
+		String[] filteredValues = ArrayUtil.filter(
+			values, Validator::isNotNull);
 
 		if (ArrayUtil.isEmpty(filteredValues)) {
 			return;

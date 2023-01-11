@@ -3,8 +3,4 @@ Bundle-SymbolicName: com.liferay.commerce.shop.by.diagram.service
 Bundle-Version: 1.0.34
 Liferay-Require-SchemaVersion: 1.2.0
 Liferay-Service: true
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
-		resource.bundle.base.name="content.Language"
 -dsannotations-options: inherit

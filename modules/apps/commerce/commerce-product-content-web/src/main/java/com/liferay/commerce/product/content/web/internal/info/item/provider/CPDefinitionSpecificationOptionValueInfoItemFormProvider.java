@@ -68,8 +68,7 @@ public class CPDefinitionSpecificationOptionValueInfoItemFormProvider
 		).infoFieldSetEntry(
 			CPDefinitionSpecificationOptionValueInfoItemFields.valueInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "basic-information")
+			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(
 			"basic-information"
 		).build();
@@ -120,8 +119,7 @@ public class CPDefinitionSpecificationOptionValueInfoItemFormProvider
 		).infoFieldSetEntry(
 			CPDefinitionSpecificationOptionValueInfoItemFields.uuidInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "detailed-information")
+			InfoLocalizedValue.localize(getClass(), "detailed-information")
 		).name(
 			"detailed-information"
 		).build();

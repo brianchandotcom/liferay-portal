@@ -113,8 +113,7 @@ public class CommerceOrderInfoItemFormProvider
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.shippingAddressIdInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "basic-information")
+			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(
 			"basic-information"
 		).build();
@@ -259,8 +258,7 @@ public class CommerceOrderInfoItemFormProvider
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.uuidInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "detailed-information")
+			InfoLocalizedValue.localize(getClass(), "detailed-information")
 		).name(
 			"detailed-information"
 		).build();
@@ -337,8 +335,7 @@ public class CommerceOrderInfoItemFormProvider
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.subscriptionOrderStatusInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "order-status-information")
+			InfoLocalizedValue.localize(getClass(), "order-status-information")
 		).name(
 			"order-status-information"
 		).build();
@@ -374,7 +371,7 @@ public class CommerceOrderInfoItemFormProvider
 			CommerceOrderInfoItemFields.statusDateInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "workflow-status-information")
+				getClass(), "workflow-status-information")
 		).name(
 			"workflow-status-information"
 		).build();

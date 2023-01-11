@@ -104,8 +104,7 @@ public class CPDefinitionInfoItemFormProvider
 		).infoFieldSetEntry(
 			CPDefinitionInfoItemFields.userNameInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "basic-information")
+			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(
 			"basic-information"
 		).build();
@@ -223,8 +222,7 @@ public class CPDefinitionInfoItemFormProvider
 		).infoFieldSetEntry(
 			CPDefinitionInfoItemFields.widthInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.commerce.lang", "detailed-information")
+			InfoLocalizedValue.localize(getClass(), "detailed-information")
 		).name(
 			"detailed-information"
 		).build();

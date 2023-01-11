@@ -124,6 +124,45 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-155553. This test asserts that Account Modals can be custom styled."
+	@priority = "3"
+	test CanCustomizeStylingForAccountModals {
+		task ("Given the new account is created") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+		}
+
+		task ("When change theme to Dialect in page configuration") {
+			Navigator.openSpecificURL(url = "${portalURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
+
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Panel.expandPanel(panel = "Look and Feel");
+
+			Theme.changeCurrentTheme(themeName = "Dialect");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the background color of the new button in Accounts' Users Tab is #5924eb") {
+			Navigator.gotoPage(pageName = "Account Page");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Navigator.gotoNavTab(navTab = "Users");
+
+			AssertCssValue(
+				locator1 = "Button#PLUS",
+				locator2 = "background-color",
+				value1 = "rgba(89, 36, 235, 1)");
+		}
+	}
+
 	@description = "This test asserts that only business accounts can be added when the allowed account type is business"
 	@priority = "5"
 	test CanOnlyAddBusinessAccountsWhenAllowedAccountTypeIsBusiness {

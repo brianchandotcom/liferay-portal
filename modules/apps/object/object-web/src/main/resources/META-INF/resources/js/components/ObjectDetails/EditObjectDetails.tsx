@@ -51,6 +51,28 @@ interface EditObjectDetailsProps {
 	siteKeyValuePair: KeyValuePair[];
 }
 
+function setAccountRelationshipFieldMandatory(
+	values: Partial<ObjectDefinition>
+) {
+	const {objectFields} = values;
+
+	const newObjectFields = objectFields?.map((field) => {
+		if (field.name === values.accountEntryRestrictedObjectFieldName) {
+			return {
+				...field,
+				required: true,
+			};
+		}
+
+		return field;
+	});
+
+	return {
+		...values,
+		objectFields: newObjectFields,
+	};
+}
+
 export default function EditObjectDetails({
 	backURL,
 	companyKeyValuePair,
@@ -95,8 +117,14 @@ export default function EditObjectDetails({
 			delete values.objectLayouts;
 			delete values.objectViews;
 
+			let objectDefinition = values;
+
+			if (values.accountEntryRestricted) {
+				objectDefinition = setAccountRelationshipFieldMandatory(values);
+			}
+
 			const saveResponse = await API.putObjectDefinitionByExternalReferenceCode(
-				values
+				objectDefinition
 			);
 
 			if (!saveResponse.ok) {

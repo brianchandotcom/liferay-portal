@@ -25,6 +25,9 @@ export declare function useObjectActionForm({
 }: UseObjectActionFormProps): {
 	handleChange: import('react').ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: import('react').FormEventHandler<HTMLFormElement>;
+	handleValidate: () => import('@liferay/object-js-components-web').FormError<
+		ObjectAction & ObjectActionParameters
+	>;
 	setValues: (values: Partial<ObjectAction>) => void;
 	validateSubmit: () => void;
 	errors: ActionError;

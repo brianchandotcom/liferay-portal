@@ -16,10 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -157,15 +154,10 @@ public class ConcurrentHashMapBuilderTest {
 	}
 
 	private <K, V> void _assertContainsAll(Map<K, V> map1, Map<K, V> map2) {
-		Set<Map.Entry<K, V>> entries = map1.entrySet();
-
-		Stream<Map.Entry<K, V>> stream = entries.stream();
-
-		Assert.assertTrue(
-			map2.toString(),
-			stream.allMatch(
-				entry -> Objects.equals(
-					entry.getValue(), map2.get(entry.getKey()))));
+		for (Map.Entry<K, V> entry : map1.entrySet()) {
+			Assert.assertEquals(
+				map2.toString(), entry.getValue(), map2.get(entry.getKey()));
+		}
 	}
 
 	private void _testUnsafeSupplierKey(

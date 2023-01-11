@@ -2166,7 +2166,7 @@ definition {
 					locator1 = "TextInput#ANSWER",
 					value1 = "test");
 
-				Button.click(button = "Save");
+				ClickNoError(locator1 = "Button#SAVE");
 			}
 		}
 

@@ -23,22 +23,42 @@ exports[`EmptyDropZone renders illustration when empty contributors 1`] = `
   >
     <div>
       <div
-        class="empty-contributors mb-0 p-5 rounded taglib-empty-result-message"
+        class="empty-contributors mb-0 p-4 rounded"
       >
         <div
-          class="taglib-empty-result-message-header"
-        />
-        <div
-          class="sheet-text text-center"
+          class="c-empty-state c-empty-state-animation"
         >
-          <h1
-            class="mb-3 mt-4"
+          <div
+            class="c-empty-state-image"
           >
-            no-x-yet
-          </h1>
-          <p>
+            <div
+              class="c-empty-state-aspect-ratio"
+            >
+              <img
+                alt="c-empty-state-image"
+                class="aspect-ratio-item aspect-ratio-item-fluid"
+                src="http://localhost:8080/o/admin-theme/images/states/empty_state.gif"
+              />
+            </div>
+          </div>
+          <div
+            class="c-empty-state-title"
+          >
+            <span
+              class="text-truncate-inline"
+            >
+              <span
+                class="text-truncate"
+              >
+                no-x-yet
+              </span>
+            </span>
+          </div>
+          <div
+            class="c-empty-state-text"
+          >
             empty-conditions-message
-          </p>
+          </div>
         </div>
       </div>
     </div>

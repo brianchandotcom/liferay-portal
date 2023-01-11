@@ -2089,6 +2089,11 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
+		public void run(
+			String jobName, String groupName, StorageType storageType) {
+		}
+
+		@Override
 		public void schedule(
 				Trigger trigger, String description, String destinationName,
 				Message message, StorageType storageType)

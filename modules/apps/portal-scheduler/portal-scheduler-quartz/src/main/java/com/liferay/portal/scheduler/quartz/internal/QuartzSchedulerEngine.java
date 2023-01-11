@@ -342,6 +342,24 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	public void run(String jobName, String groupName, StorageType storageType)
+		throws SchedulerException {
+
+		SchedulerResponse schedulerResponse = getScheduledJob(
+			jobName, groupName, storageType);
+
+		Message message = schedulerResponse.getMessage();
+
+		message.put(
+			SchedulerEngine.DESTINATION_NAME,
+			schedulerResponse.getDestinationName());
+		message.put(SchedulerEngine.GROUP_NAME, groupName);
+		message.put(SchedulerEngine.JOB_NAME, jobName);
+
+		_messageBus.sendMessage(
+			schedulerResponse.getDestinationName(), message);
+	}
+
 	@Override
 	public void schedule(
 			com.liferay.portal.kernel.scheduler.Trigger trigger,

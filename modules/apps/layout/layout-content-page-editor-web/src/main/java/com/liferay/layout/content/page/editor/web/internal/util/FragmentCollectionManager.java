@@ -287,6 +287,9 @@ public class FragmentCollectionManager {
 					fragmentRenderer.getImagePreviewURL(httpServletRequest)
 				).put(
 					"name", fragmentRenderer.getLabel(themeDisplay.getLocale())
+				).put(
+					"type",
+					FragmentConstants.getTypeLabel(fragmentRenderer.getType())
 				).build());
 		}
 

@@ -66,7 +66,8 @@ function render(element, value, editableConfig = {}, languageId) {
 	if (image) {
 		image.alt =
 			getEditableLocalizedValue(editableConfig.alt, languageId) ||
-			value?.alt;
+			value?.alt ||
+			'';
 
 		const link = getEditableLinkValue(editableConfig, languageId);
 

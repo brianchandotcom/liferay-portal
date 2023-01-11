@@ -678,8 +678,6 @@ definition {
 	@description = "Verify that the time format in Revision History tab is following the system language"
 	@priority = "4"
 	test TimeFormatFollowsSystemLanguageInRevision {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

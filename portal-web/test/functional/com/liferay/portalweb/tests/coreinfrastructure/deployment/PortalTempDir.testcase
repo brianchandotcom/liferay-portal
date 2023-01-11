@@ -5,10 +5,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Deployment";
 
-	setUp {
-		SignIn.signInTestSetup();
-	}
-
 	@description = "Check the temp folder after portal shutdown."
 	@priority = "4"
 	test TempDirShouldBeEmptyAfterPortalShutdown {

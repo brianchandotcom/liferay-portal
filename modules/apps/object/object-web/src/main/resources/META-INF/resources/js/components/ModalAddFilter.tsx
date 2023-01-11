@@ -272,6 +272,12 @@ export function ModalAddFilter({
 						`${restContextPath}`
 					);
 
+					if (!relatedEntries) {
+						setItems([]);
+
+						return;
+					}
+
 					if (editingFilter) {
 						setItems(
 							getCheckedRelationshipItems(

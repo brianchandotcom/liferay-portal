@@ -199,6 +199,19 @@
 			"name": "leadType",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Lead_Status_Detail__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead Status Detail"
+			},
+			"name": "leadStatusDetail",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

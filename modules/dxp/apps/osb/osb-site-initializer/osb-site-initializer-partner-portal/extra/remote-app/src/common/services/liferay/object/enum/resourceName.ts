@@ -20,4 +20,5 @@ export enum ResourceName {
 	LEADS_SALESFORCE = 'leadsfs',
 	LEAD_QUALIFICATIONS_SALESFORCE = 'leadqualificationsfs',
 	OPPORTUNITIES_SALESFORCE = 'opportunitysfs',
+	PROJECT_SALESFORCE = 'projectsfs',
 }

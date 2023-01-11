@@ -19,14 +19,9 @@ import createDealRegistrationProxyAPI from './createDealRegistrationProxyAPI';
 export default async function submitForm(
 	values: DealRegistration,
 	formikHelpers: Omit<FormikHelpers<DealRegistration>, 'setFieldValue'>,
-	siteURL: string,
-	currentRequestStatus?: string
+	siteURL: string
 ) {
 	formikHelpers.setSubmitting(true);
-
-	if (currentRequestStatus) {
-		values.registrationStatus = currentRequestStatus;
-	}
 
 	await createDealRegistrationProxyAPI(values);
 

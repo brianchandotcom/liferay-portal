@@ -14,7 +14,8 @@ import DealRegistrationDTO from '../../../interfaces/dto/dealRegistrationDTO';
 
 export function getDTOFromDealRegistration(
 	dealRegistration: DealRegistration,
-	leadExternalReferenceCode?: string
+	leadExternalReferenceCode?: string,
+	leadQualificationExternalReferenceCode?: string
 ): DealRegistrationDTO {
 	return {
 		accountExternalReferenceCodeSF:
@@ -28,6 +29,8 @@ export function getDTOFromDealRegistration(
 		additionalInformationAboutTheOpportunity:
 			dealRegistration.additionalInformationAboutTheOpportunity,
 		leadExternalReferenceCode,
+		leadQualificationExternalReferenceCode,
+		leadStatusDetail: dealRegistration.leadStatusDetails,
 		mdfActivityExternalReferenceCodeSF:
 			dealRegistration.mdfActivityAssociated.externalReferenceCodeSF,
 		primaryProspectBusinessUnit:
@@ -53,6 +56,5 @@ export function getDTOFromDealRegistration(
 		prospectStateCode: dealRegistration.prospect.state.key,
 		r_accToDealRegs_accountEntryId: dealRegistration.partnerAccount.id,
 		r_actToDealRegs_c_activityId: dealRegistration.mdfActivityAssociated.id,
-		registrationStatus: dealRegistration.registrationStatus,
 	};
 }

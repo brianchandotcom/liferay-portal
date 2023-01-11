@@ -30,6 +30,9 @@ export const Status = {
 		key: 'expired',
 		name: 'Expired',
 	},
+	EXPRESSED_INTEREST: {
+		name: 'Expressed Interest',
+	},
 	IN_DIRECTOR_REVIEW: {
 		key: 'inDirectorReview',
 		name: 'In Director Review',

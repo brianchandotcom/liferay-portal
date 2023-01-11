@@ -1,0 +1,40 @@
+{
+	"externalReferenceCode": "Project__c",
+	"label": {
+		"en_US": "Project SF"
+	},
+	"name": "ProjectSF",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Lead_Qualification__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead Qualification External Reference Code"
+			},
+			"name": "leadQualificationExternalReferenceCode",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Lead__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead External Reference Code"
+			},
+			"name": "leadExternalReferenceCode",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Projects SF"
+	},
+	"scope": "company",
+	"storageType": "salesforce"
+}

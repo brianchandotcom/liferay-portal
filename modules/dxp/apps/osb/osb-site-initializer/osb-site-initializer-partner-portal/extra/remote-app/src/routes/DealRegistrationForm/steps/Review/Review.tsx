@@ -267,7 +267,7 @@ const Review = ({
 							type="submit"
 						>
 							Proceed
-							{isSubmitting && values.registrationStatus && (
+							{isSubmitting && (
 								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
 							)}
 						</Button>

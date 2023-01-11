@@ -14,16 +14,16 @@
 
 package com.liferay.portal.search.web.internal.facet;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.search.web.facet.SearchFacet;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eudaldo Alonso
@@ -32,23 +32,20 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SearchFacetRegistry {
 
 	public List<SearchFacet> getSearchFacets() {
-		return _searchFacets;
+		return _serviceTrackerList.toList();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addSearchFacet(SearchFacet searchFacet) {
-		_searchFacets.add(searchFacet);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, SearchFacet.class);
 	}
 
-	protected void removeSearchFacet(SearchFacet searchFacet) {
-		_searchFacets.remove(searchFacet);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
-	private final List<SearchFacet> _searchFacets =
-		new CopyOnWriteArrayList<>();
+	private ServiceTrackerList<SearchFacet> _serviceTrackerList;
 
 }

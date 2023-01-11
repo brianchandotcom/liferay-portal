@@ -14,7 +14,6 @@
 
 package com.liferay.saml.runtime.configuration;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -126,21 +125,6 @@ public class MetaTypeVirtualBundleRegistrator implements Closeable {
 
 		mainAttributes.put(
 			new Attributes.Name("Import-Package"), packageString);
-
-		return this;
-	}
-
-	protected MetaTypeVirtualBundleRegistrator requireLanguageKeys(
-		String filterString) {
-
-		Attributes mainAttributes = _manifest.getMainAttributes();
-
-		mainAttributes.put(
-			new Attributes.Name("Provide-Capability"),
-			StringBundler.concat(
-				"liferay.resource.bundle;bundle.symbolic.name=", _symbolicName,
-				";resource.bundle.aggregate=\"", filterString,
-				"\";resource.bundle.base.name=\"content.Language\""));
 
 		return this;
 	}

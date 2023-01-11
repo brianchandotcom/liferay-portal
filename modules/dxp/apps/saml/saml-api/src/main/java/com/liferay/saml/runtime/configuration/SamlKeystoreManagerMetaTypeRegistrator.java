@@ -43,8 +43,6 @@ public class SamlKeystoreManagerMetaTypeRegistrator {
 
 		_metaTypeRegistrator.importPackage(
 			"com.liferay.saml.runtime.configuration");
-		_metaTypeRegistrator.requireLanguageKeys(
-			"(bundle.symbolic.name=com.liferay.saml.api)");
 
 		_metaTypeRegistrator.open();
 	}

@@ -106,24 +106,24 @@ public class UpdateSegmentsEntryMVCCommandTest {
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
-		SegmentsEntry segmentsEntry1 =
+		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				_group.getGroupId(), "key12345", false);
 
 		Assert.assertEquals(
 			"New segments entry",
-			segmentsEntry1.getName(LocaleUtil.getDefault()));
+			segmentsEntry.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(
 			"description",
-			segmentsEntry1.getDescription(LocaleUtil.getDefault()));
+			segmentsEntry.getDescription(LocaleUtil.getDefault()));
 
-		String criteria = segmentsEntry1.getCriteria();
+		String criteria = segmentsEntry.getCriteria();
 
 		Assert.assertTrue(
 			criteria.contains(
 				String.format("(lastName eq '%s')", user.getLastName())));
 
-		Assert.assertEquals(_group.getGroupId(), segmentsEntry1.getGroupId());
+		Assert.assertEquals(_group.getGroupId(), segmentsEntry.getGroupId());
 	}
 
 	@Test
@@ -138,12 +138,12 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(WebKeys.USER, user);
 
-		SegmentsEntry segmentsEntry1 = _addSegmentEntry(
+		SegmentsEntry initialSegmentsEntry = _addSegmentEntry(
 			String.format("(firstName eq '%s')", user.getFirstName()));
 
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsEntryId",
-			String.valueOf(segmentsEntry1.getSegmentsEntryId()));
+			String.valueOf(initialSegmentsEntry.getSegmentsEntryId()));
 
 		mockLiferayPortletActionRequest.setParameter(
 			"criterionFilteruser",
@@ -151,39 +151,39 @@ public class UpdateSegmentsEntryMVCCommandTest {
 		mockLiferayPortletActionRequest.setParameter(
 			"name_" + LocaleUtil.getDefault(), "New segments entry");
 		mockLiferayPortletActionRequest.setParameter(
-			"segmentsEntryKey", segmentsEntry1.getSegmentsEntryKey());
+			"segmentsEntryKey", initialSegmentsEntry.getSegmentsEntryKey());
 		mockLiferayPortletActionRequest.setParameter(
 			"description_" + LocaleUtil.getDefault(), "description");
 		mockLiferayPortletActionRequest.setParameter(
-			"type", segmentsEntry1.getType());
+			"type", initialSegmentsEntry.getType());
 		mockLiferayPortletActionRequest.setParameter(
 			"saveAndContinue", StringPool.TRUE);
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
-		SegmentsEntry segmentsEntry2 =
+		SegmentsEntry finalSegmentsEntry =
 			_segmentsEntryLocalService.getSegmentsEntry(
-				segmentsEntry1.getSegmentsEntryId());
+				initialSegmentsEntry.getSegmentsEntryId());
 
 		Assert.assertEquals(
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsEntry2.getSegmentsEntryId());
+			initialSegmentsEntry.getSegmentsEntryId(),
+			finalSegmentsEntry.getSegmentsEntryId());
 		Assert.assertEquals(
 			"New segments entry",
-			segmentsEntry2.getName(LocaleUtil.getDefault()));
+			finalSegmentsEntry.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(
 			"description",
-			segmentsEntry2.getDescription(LocaleUtil.getDefault()));
+			finalSegmentsEntry.getDescription(LocaleUtil.getDefault()));
 
-		String criteria = segmentsEntry2.getCriteria();
+		String criteria = finalSegmentsEntry.getCriteria();
 
 		Assert.assertTrue(
 			criteria.contains(
 				String.format("(lastName eq '%s')", user.getLastName())));
 
 		Assert.assertEquals(
-			segmentsEntry1.getGroupId(), segmentsEntry2.getGroupId());
+			initialSegmentsEntry.getGroupId(), finalSegmentsEntry.getGroupId());
 	}
 
 	private SegmentsEntry _addSegmentEntry(String filterString)

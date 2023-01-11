@@ -53,13 +53,7 @@ public class BlogsEntryAnalyticsReportsInfoItem
 			return StringPool.BLANK;
 		}
 
-		String fullName = user.getFullName();
-
-		if (fullName == null) {
-			return StringPool.BLANK;
-		}
-
-		return fullName;
+		return user.getFullName();
 	}
 
 	@Override

@@ -172,7 +172,7 @@ public class ListTypeEntryLocalServiceImpl
 			(listTypeEntry.getListTypeEntryId() != listTypeEntryId)) {
 
 			throw new DuplicateListTypeEntryExternalReferenceCodeException(
-				externalReferenceCode);
+				"Duplicate external reference code " + externalReferenceCode);
 		}
 	}
 

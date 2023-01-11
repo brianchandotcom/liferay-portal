@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -104,13 +105,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 	}
 
 	protected long getFileLastModified(String path, Servlet servlet) {
-		ServletConfig servletConfig = servlet.getServletConfig();
-
-		ServletContext servletContext = servletConfig.getServletContext();
-
-		String rootPath = servletContext.getRealPath(StringPool.BLANK);
-
-		File file = new File(rootPath, path);
+		File file = _getFile(path, servlet);
 
 		if (file.exists()) {
 			return file.lastModified();
@@ -200,15 +195,25 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 	}
 
 	protected void updateFileLastModified(String path, Servlet servlet) {
+		File file = _getFile(path, servlet);
+
+		file.setLastModified(System.currentTimeMillis());
+	}
+
+	private File _getFile(String path, Servlet servlet) {
 		ServletConfig servletConfig = servlet.getServletConfig();
 
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		String rootPath = servletContext.getRealPath(StringPool.BLANK);
+		String servletContextPath = servletContext.getContextPath();
 
-		File file = new File(rootPath, path);
+		if (!Validator.isBlank(servletContextPath) &&
+			path.startsWith(servletContextPath)) {
 
-		file.setLastModified(System.currentTimeMillis());
+			path = path.substring(servletContextPath.length());
+		}
+
+		return new File(servletContext.getRealPath(StringPool.BLANK), path);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

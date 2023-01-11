@@ -102,9 +102,18 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
 			incomplete, expandedLayoutIds, treeId, false);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		boolean hasManageLayoutsPermission = _groupPermission.contains(
+			themeDisplay.getPermissionChecker(), groupId,
+			ActionKeys.MANAGE_LAYOUTS);
+
 		return _toJSONArray(
-			httpServletRequest, groupId, includeActions, layoutTreeNodes,
-			layoutSetBranch);
+			hasManageLayoutsPermission, httpServletRequest, groupId,
+			includeActions, layoutTreeNodes, layoutSetBranch,
+			_browserSniffer.isMobile(httpServletRequest), themeDisplay);
 	}
 
 	private Layout _fetchCurrentLayout(HttpServletRequest httpServletRequest) {
@@ -422,9 +431,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONArray _toJSONArray(
+			boolean hasManageLayoutsPermission,
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
-			LayoutSetBranch layoutSetBranch)
+			LayoutSetBranch layoutSetBranch, boolean mobile,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -434,16 +445,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					layoutTreeNodes));
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		boolean hasManageLayoutsPermission = _groupPermission.contains(
-			themeDisplay.getPermissionChecker(), groupId,
-			ActionKeys.MANAGE_LAYOUTS);
-		boolean mobile = _browserSniffer.isMobile(httpServletRequest);
 
 		Layout afterDeleteSelectedLayout = null;
 		Layout secondLayout = null;
@@ -465,8 +467,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				layoutTreeNode.getChildLayoutTreeNodes();
 
 			JSONArray childrenJSONArray = _toJSONArray(
-				httpServletRequest, groupId, includeActions,
-				childLayoutTreeNodes, layoutSetBranch);
+				hasManageLayoutsPermission, httpServletRequest, groupId,
+				includeActions, childLayoutTreeNodes, layoutSetBranch, mobile,
+				themeDisplay);
 
 			Layout layout = layoutTreeNode.getLayout();
 

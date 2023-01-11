@@ -236,9 +236,7 @@ definition {
 		}
 
 		task ("View the new site is created") {
-			WaitForElementNotPresent(
-				locator1 = "Message#SUBTITLE",
-				value1 = "The creation of the site may take some time. Closing the window will not cancel the process.");
+			WaitForTextNotPresent(value1 = "The creation of the site may take some time. Closing the window will not cancel the process.");
 
 			SelectFrameTop();
 

@@ -57,7 +57,7 @@ public class ConfigurationProviderUtil {
 		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)",
 		unbind = "-"
 	)
-	protected void setLDAPAuthConfigurationProvider(
+	protected static void setLDAPAuthConfigurationProvider(
 		ConfigurationProvider<LDAPAuthConfiguration>
 			ldapAuthConfigurationProvider) {
 
@@ -68,7 +68,7 @@ public class ConfigurationProviderUtil {
 		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration)",
 		unbind = "-"
 	)
-	protected void setLDAPExportConfigurationProvider(
+	protected static void setLDAPExportConfigurationProvider(
 		ConfigurationProvider<LDAPExportConfiguration>
 			ldapExportConfigurationProvider) {
 
@@ -79,7 +79,7 @@ public class ConfigurationProviderUtil {
 		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)",
 		unbind = "-"
 	)
-	protected void setLDAPImportConfigurationProvider(
+	protected static void setLDAPImportConfigurationProvider(
 		ConfigurationProvider<LDAPImportConfiguration>
 			ldapImportConfigurationProvider) {
 
@@ -90,7 +90,7 @@ public class ConfigurationProviderUtil {
 		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
 		unbind = "-"
 	)
-	protected void setLDAPServerConfigurationProvider(
+	protected static void setLDAPServerConfigurationProvider(
 		ConfigurationProvider<LDAPServerConfiguration>
 			ldapServerConfigurationProvider) {
 

@@ -210,8 +210,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			LayoutTreeNodes childLayoutTreeNodes = null;
 
 			if (_isExpandableLayout(
-					httpServletRequest, ancestorLayouts, expandedLayoutIds,
-					layout)) {
+					ancestorLayouts, expandedLayoutIds, layout)) {
 
 				if (layout instanceof VirtualLayout) {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -396,13 +395,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private boolean _isExpandableLayout(
-		HttpServletRequest httpServletRequest, List<Layout> ancestorLayouts,
-		long[] expandedLayoutIds, Layout layout) {
+		List<Layout> ancestorLayouts, long[] expandedLayoutIds, Layout layout) {
 
-		boolean expandParentLayouts = ParamUtil.getBoolean(
-			httpServletRequest, "expandParentLayouts");
-
-		if (expandParentLayouts || ancestorLayouts.contains(layout) ||
+		if (ancestorLayouts.contains(layout) ||
 			ArrayUtil.contains(expandedLayoutIds, layout.getLayoutId())) {
 
 			return true;

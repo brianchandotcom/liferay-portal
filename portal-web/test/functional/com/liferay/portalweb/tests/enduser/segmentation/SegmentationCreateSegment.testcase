@@ -3469,51 +3469,85 @@ definition {
 		}
 	}
 
+	@description = "LPS-168141 Given a segment entry is scoped to a site
+	When user navigates to another site
+	Then the segment can not be seen"
+	@priority = "4"
+	test ViewSegmentScopedIndividualSiteIsNotDisplayed {
+		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
+
+		task ("Add a segment scoped by Test Site Name") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(criterionValue = "Test");
+
+			Segmentation.fillTitle(titleField = "ViewSegmentScopedIndividualSiteIsNotDisplayed Test");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to Segments Admin in Liferay DXP") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		}
+
+		task ("Assert that segment is not present in Liferay DXP") {
+			AssertElementNotPresent(
+				key_tableEntry = "ViewSegmentScopedGlobalDisplayedOnAnySite Test",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+				value1 = "ViewSegmentScopedGlobalDisplayedOnAnySite Test");
+		}
+	}
+
 	@description = "LPS-168141 Given the scope card at the segment editor
     When the user selects a site
     And saves the segment
     Then the select button disappears"
-    @priority = "3"
-    test ViewSelectButtonIsNotPresentAfterSaveSegment {
-        property custom.properties = "feature.flag.LPS-166954=true";
+	@priority = "3"
+	test ViewSelectButtonIsNotPresentAfterSaveSegment {
+		property custom.properties = "feature.flag.LPS-166954=true";
 
-        task ("Add a segment and assert the information message") {
-            LexiconEntry.gotoAdd();
+		task ("Add a segment and assert the information message") {
+			LexiconEntry.gotoAdd();
 
-            Segmentation.addProperties(propertyOption = "First Name");
+			Segmentation.addProperties(propertyOption = "First Name");
 
-            Segmentation.fillProperty(criterionValue = "Test");
+			Segmentation.fillProperty(criterionValue = "Test");
 
-            Segmentation.fillTitle(titleField = "ViewSelectButtonIsNotPresentAfterSaveSegment Test");
+			Segmentation.fillTitle(titleField = "ViewSelectButtonIsNotPresentAfterSaveSegment Test");
 
-            AssertTextEquals(
-                locator1 = "Segmentation#SCOPE_CARD_MESSAGE",
-                value1 = "Select the scope of your segment to specify where it can be used. It will not be possible to modify the scope after the segment is saved.");
+			AssertTextEquals(
+				locator1 = "Segmentation#SCOPE_CARD_MESSAGE",
+				value1 = "Select the scope of your segment to specify where it can be used. It will not be possible to modify the scope after the segment is saved.");
 
-            AssertElementPresent(locator1 = "Button#SELECT");
-        }
+			AssertElementPresent(locator1 = "Button#SELECT");
+		}
 
-        task ("Configure the segment to be scoped by the global site") {
-            Segmentation.configureScope(site = "Global");
-        }
+		task ("Configure the segment to be scoped by the global site") {
+			Segmentation.configureScope(site = "Global");
+		}
 
-        task ("Saves the segment") {
-            Button.clickSave();
+		task ("Saves the segment") {
+			Button.clickSave();
 
-            Alert.viewSuccessMessage();
-        }
+			Alert.viewSuccessMessage();
+		}
 
-        task ("Assert that the Select button has disappeared") {
-            Segmentation.editSegment(entry = "ViewSelectButtonIsNotPresentAfterSaveSegment Test");
+		task ("Assert that the Select button has disappeared") {
+			Segmentation.editSegment(entry = "ViewSelectButtonIsNotPresentAfterSaveSegment Test");
 
-            AssertTextEquals(
-                locator1 = "Segmentation#SCOPE_CARD_SITE",
-                siteName = "Global",
-                value1 = "Global");
+			AssertTextEquals(
+				locator1 = "Segmentation#SCOPE_CARD_SITE",
+				siteName = "Global",
+				value1 = "Global");
 
-            AssertElementNotPresent(locator1 = "Button#SELECT");
-        }
-    }
+			AssertElementNotPresent(locator1 = "Button#SELECT");
+		}
+	}
 
 	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
 	@priority = "4"

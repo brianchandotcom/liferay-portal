@@ -24,8 +24,8 @@
 						{
 							"fragmentViewportStyle": {
 								"paddingBottom": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4",
+								"paddingLeft": "0",
+								"paddingRight": "0",
 								"paddingTop": "0"
 							},
 							"id": "portraitMobile"
@@ -88,281 +88,7 @@
 								"definition": {
 									"fragmentStyle": {
 										"borderWidth": "0",
-										"paddingBottom": "2",
-										"textAlign": ""
-									},
-									"indexed": true,
-									"layout": {
-										"align": "Start",
-										"borderWidth": 0,
-										"contentDisplay": "FlexRow",
-										"justify": "SpaceBetween",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fluid"
-									}
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"textAlign": ""
-											},
-											"indexed": true,
-											"layout": {
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											}
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "DIALECT-dialect-text"
-													},
-													"fragmentConfig": {
-														"textType": "h1"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"ar_SA": "MDF Claim",
-																		"ca_ES": "MDF Claim",
-																		"de_DE": "MDF Claim",
-																		"en_US": "MDF Claim",
-																		"es_ES": "MDF Claim",
-																		"fi_FI": "MDF Claim",
-																		"fr_FR": "MDF Claim",
-																		"hu_HU": "MDF Claim",
-																		"ja_JP": "MDF Claim",
-																		"nl_NL": "MDF Claim",
-																		"pt_BR": "MDF Claim",
-																		"sv_SE": "MDF Claim",
-																		"zh_CN": "MDF Claim"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightBold",
-														"paddingBottom": "1",
-														"textAlign": "",
-														"textColor": "colorNeutral10"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Date Submitted:",
-																				"ca_ES": "Date Submitted:",
-																				"de_DE": "Date Submitted:",
-																				"en_US": "Date Submitted:",
-																				"es_ES": "Date Submitted:",
-																				"fi_FI": "Date Submitted:",
-																				"fr_FR": "Date Submitted:",
-																				"hu_HU": "Date Submitted:",
-																				"ja_JP": "Date Submitted:",
-																				"nl_NL": "Date Submitted:",
-																				"pt_BR": "Date Submitted:",
-																				"sv_SE": "Date Submitted:",
-																				"zh_CN": "Date Submitted:"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"paddingRight": "1",
-																"textAlign": "",
-																"textColor": "colorNeutral7"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "ObjectEntry_createDate",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"paddingRight": "1",
-																"textAlign": "",
-																"textColor": "colorNeutral7"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": ", Last Modified:",
-																				"ca_ES": ", Last Modified:",
-																				"de_DE": ", Last Modified:",
-																				"en_US": ", Last Modified:",
-																				"es_ES": ", Last Modified:",
-																				"fi_FI": ", Last Modified:",
-																				"fr_FR": ", Last Modified:",
-																				"hu_HU": ", Last Modified:",
-																				"ja_JP": ", Last Modified:",
-																				"nl_NL": ", Last Modified:",
-																				"pt_BR": ", Last Modified:",
-																				"sv_SE": ", Last Modified:",
-																				"zh_CN": ", Last Modified:"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"paddingRight": "1",
-																"textAlign": "",
-																"textColor": "colorNeutral7"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "ObjectEntry_modifiedDate",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "",
-																"textColor": "colorNeutral7"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Section"
-									}
-								],
-								"type": "Section"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0",
+										"shadow": "",
 										"textAlign": ""
 									},
 									"indexed": true,
@@ -372,6 +98,7 @@
 										"marginLeft": 0,
 										"marginRight": 0,
 										"marginTop": 0,
+										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
 										"paddingRight": 0,
@@ -405,14 +132,19 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"marginBottom": "8px"
+																"borderRadius": "",
+																"borderWidth": "0",
+																"marginBottom": "2",
+																"shadow": "",
+																"textAlign": ""
 															},
 															"indexed": true,
 															"layout": {
-																"align": "Center",
+																"align": "Start",
 																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
 																"flexWrap": "Wrap",
+																"justify": "SpaceBetween",
 																"marginBottom": 0,
 																"marginLeft": 0,
 																"marginRight": 0,
@@ -428,22 +160,316 @@
 														"pageElements": [
 															{
 																"definition": {
-																	"fragment": {
-																		"key": "cancel-button"
+																	"fragmentStyle": {
+																		"borderRadius": "",
+																		"borderWidth": "0",
+																		"shadow": "",
+																		"textAlign": ""
 																	},
-																	"fragmentConfig": {
-																		"channelAccountManager": true,
-																		"channelFinanceManager": true,
-																		"channelGeneralManager": true,
-																		"channelGlobalMarketingManager": true,
-																		"channelRegionalMarketingManager": true,
-																		"user": true
-																	},
-																	"fragmentFields": [
-																	],
-																	"indexed": true
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
 																},
-																"type": "Fragment"
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h1",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "MDF Claim",
+																								"ca_ES": "MDF Claim",
+																								"de_DE": "MDF Claim",
+																								"en_US": "MDF Claim",
+																								"es_ES": "MDF Claim",
+																								"fi_FI": "MDF Claim",
+																								"fr_FR": "MDF Claim",
+																								"hu_HU": "MDF Claim",
+																								"ja_JP": "MDF Claim",
+																								"nl_NL": "MDF Claim",
+																								"pt_BR": "MDF Claim",
+																								"sv_SE": "MDF Claim",
+																								"zh_CN": "MDF Claim"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"fontWeight": "fontWeightBold",
+																				"paddingBottom": "1",
+																				"shadow": "",
+																				"textAlign": "",
+																				"textColor": "colorNeutral10"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"borderWidth": "0",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexRow",
+																				"flexWrap": "Wrap",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "text-paragraph",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"ar_SA": "Date Submitted:",
+																										"ca_ES": "Date Submitted:",
+																										"de_DE": "Date Submitted:",
+																										"en_US": "Date Submitted:",
+																										"es_ES": "Date Submitted:",
+																										"fi_FI": "Date Submitted:",
+																										"fr_FR": "Date Submitted:",
+																										"hu_HU": "Date Submitted:",
+																										"ja_JP": "Date Submitted:",
+																										"nl_NL": "Date Submitted:",
+																										"pt_BR": "Date Submitted:",
+																										"sv_SE": "Date Submitted:",
+																										"zh_CN": "Date Submitted:"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"paddingRight": "1",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorNeutral7"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "text-paragraph",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"mapping": {
+																										"fieldKey": "ObjectEntry_createDate",
+																										"itemReference": {
+																											"contextSource": "DisplayPageItem"
+																										}
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"paddingRight": "1",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorNeutral7"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "text-paragraph",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"ar_SA": " Last Modified:",
+																										"ca_ES": " Last Modified:",
+																										"de_DE": " Last Modified:",
+																										"en_US": " Last Modified:",
+																										"es_ES": " Last Modified:",
+																										"fi_FI": " Last Modified:",
+																										"fr_FR": " Last Modified:",
+																										"hu_HU": " Last Modified:",
+																										"ja_JP": " Last Modified:",
+																										"nl_NL": " Last Modified:",
+																										"pt_BR": " Last Modified:",
+																										"sv_SE": " Last Modified:",
+																										"zh_CN": " Last Modified:"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"paddingRight": "1",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorNeutral7"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "text-paragraph",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"mapping": {
+																										"fieldKey": "ObjectEntry_modifiedDate",
+																										"itemReference": {
+																											"contextSource": "DisplayPageItem"
+																										}
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorNeutral7"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Section"
+															},
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																		"align": "Center",
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexRow",
+																		"flexWrap": "Wrap",
+																		"justify": "End",
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "cancel-button"
+																			},
+																			"fragmentConfig": {
+																				"channelAccountManager": true,
+																				"channelFinanceManager": true,
+																				"channelGeneralManager": true,
+																				"channelGlobalMarketingManager": true,
+																				"channelRegionalMarketingManager": true,
+																				"user": true
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
 															}
 														],
 														"type": "Section"

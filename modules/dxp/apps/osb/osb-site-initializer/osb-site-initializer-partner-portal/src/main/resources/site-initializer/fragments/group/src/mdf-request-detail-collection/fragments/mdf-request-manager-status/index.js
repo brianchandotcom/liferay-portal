@@ -59,9 +59,11 @@ const updateStatus = async (status) => {
 		const data = await statusManagerResponse.json();
 		document.getElementById(
 			'mdf-request-status-display'
-		).innerHTML = `Status:${Liferay.Util.escape(data.mdfRequestStatus)}`;
+		).innerHTML = `Status: ${Liferay.Util.escape(
+			data.mdfRequestStatus.name
+		)}`;
 
-		getMDFRequestStatus();
+		updateButtons(data.mdfRequestStatus.key);
 
 		return;
 	}
@@ -150,27 +152,7 @@ const getMDFRequestStatus = async () => {
 			data.mdfRequestStatus.name
 		)}`;
 
-		if (
-			!editButtonManager &&
-			(data.mdfRequestStatus.key === 'draft' ||
-				data.mdfRequestStatus.key === 'moreInfoRequested')
-		) {
-			editButton.classList.toggle('d-flex');
-		}
-
-		if (editButton) {
-			editButton.onclick = () =>
-				Liferay.Util.navigate(
-					`${siteURL}/marketing/mdf-requests/new/#/${mdfRequestId}`
-				);
-		}
-
-		if (editButtonManager) {
-			editButtonManager.onclick = () =>
-				Liferay.Util.navigate(
-					`${siteURL}/marketing/mdf-requests/new/#/${mdfRequestId}`
-				);
-		}
+		updateButtons(data.mdfRequestStatus.key);
 
 		return;
 	}
@@ -179,6 +161,30 @@ const getMDFRequestStatus = async () => {
 		message: 'An unexpected error occured.',
 		type: 'danger',
 	});
+};
+
+const updateButtons = (mdfRequestStatusKey) => {
+	if (
+		!editButtonManager &&
+		(mdfRequestStatusKey === 'draft' ||
+			mdfRequestStatusKey === 'moreInfoRequested')
+	) {
+		editButton.classList.toggle('d-flex');
+	}
+
+	if (editButton) {
+		editButton.onclick = () =>
+			Liferay.Util.navigate(
+				`${siteURL}/marketing/mdf-requests/new/#/${mdfRequestId}`
+			);
+	}
+
+	if (editButtonManager) {
+		editButtonManager.onclick = () =>
+			Liferay.Util.navigate(
+				`${siteURL}/marketing/mdf-requests/new/#/${mdfRequestId}`
+			);
+	}
 };
 
 if (layoutMode !== 'edit') {

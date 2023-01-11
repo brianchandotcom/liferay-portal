@@ -60,9 +60,11 @@ const updateStatus = async (status) => {
 
 		document.getElementById(
 			'mdf-claim-status-display'
-		).innerHTML = `Status: ${Liferay.Util.escape(data.mdfClaimStatus)}`;
+		).innerHTML = `Status: ${Liferay.Util.escape(
+			data.mdfClaimStatus.name
+		)}`;
 
-		getMDFClaimStatus();
+		updateButtons(data.mdfClaimStatus.key);
 
 		return;
 	}
@@ -175,13 +177,7 @@ const getMDFClaimStatus = async () => {
 			data.mdfClaimStatus.name
 		)}`;
 
-		if (
-			!editButtonManager &&
-			(data.mdfClaimStatus.key === 'draft' ||
-				data.mdfClaimStatus.key === 'moreInfoRequested')
-		) {
-			editButton.classList.toggle('d-flex');
-		}
+		updateButtons(data.mdfClaimStatus.key);
 
 		return;
 	}
@@ -190,6 +186,16 @@ const getMDFClaimStatus = async () => {
 		message: 'An unexpected error occured.',
 		type: 'danger',
 	});
+};
+
+const updateButtons = (mdfClaimStatusKey) => {
+	if (
+		!editButtonManager &&
+		(mdfClaimStatusKey === 'draft' ||
+			mdfClaimStatusKey === 'moreInfoRequested')
+	) {
+		editButton.classList.toggle('d-flex');
+	}
 };
 
 if (layoutMode !== 'edit') {

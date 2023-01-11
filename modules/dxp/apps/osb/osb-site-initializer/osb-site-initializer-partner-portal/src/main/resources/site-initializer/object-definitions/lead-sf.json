@@ -212,6 +212,45 @@
 			"name": "leadStatusDetail",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Industry",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Prospect Industry"
+			},
+			"name": "prospectIndustry",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Job_Role__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Job Role"
+			},
+			"name": "primaryProspectJobRole",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Department__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Department"
+			},
+			"name": "primaryProspectDepartment",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

@@ -44,10 +44,10 @@ export default interface DealRegistrationDTO
 	partnerFirstName?: string;
 	partnerLastName?: string;
 	primaryProspectBusinessUnit?: string;
-	primaryProspectDepartment?: LiferayPicklist;
+	primaryProspectDepartment?: string;
 	primaryProspectEmailAddress?: string;
 	primaryProspectFirstName?: string;
-	primaryProspectJobRole?: LiferayPicklist;
+	primaryProspectJobRole?: string;
 	primaryProspectLastName?: string;
 	primaryProspectPhone?: string;
 	projectCategories?: string;
@@ -60,7 +60,7 @@ export default interface DealRegistrationDTO
 	prospectCity?: string;
 	prospectCountry?: LiferayPicklist;
 	prospectCountryCode?: string;
-	prospectIndustry?: LiferayPicklist;
+	prospectIndustry?: string;
 	prospectPostalCode?: string;
 	prospectState?: LiferayPicklist;
 	prospectStateCode?: string;

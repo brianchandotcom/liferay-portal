@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -103,6 +104,11 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 							relatedObjectDefinition)
 					).from(
 						relatedDynamicObjectDefinitionTable
+					).innerJoinON(
+						ObjectEntryTable.INSTANCE,
+						ObjectEntryTable.INSTANCE.objectEntryId.eq(
+							relatedDynamicObjectDefinitionTable.
+								getPrimaryKeyColumn())
 					).innerJoinON(
 						relatedObjectDefinitionExtensionTable,
 						relatedDynamicObjectDefinitionTable.getPrimaryKeyColumn(

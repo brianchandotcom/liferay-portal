@@ -74,7 +74,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.WindowState;
 
@@ -204,21 +203,21 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				JournalArticle.class.getName());
 
-		return Optional.ofNullable(
-			_assetEntryLocalService.fetchEntry(
-				JournalArticle.class.getName(), journalArticle.getPrimaryKey())
-		).orElseGet(
-			() -> {
-				try {
-					return assetRendererFactory.getAssetEntry(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey());
-				}
-				catch (PortalException portalException) {
-					throw new RuntimeException(portalException);
-				}
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), journalArticle.getPrimaryKey());
+
+		if (assetEntry == null) {
+			try {
+				return assetRendererFactory.getAssetEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
 			}
-		);
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
+		}
+
+		return assetEntry;
 	}
 
 	private String _getBasicLayoutURL(

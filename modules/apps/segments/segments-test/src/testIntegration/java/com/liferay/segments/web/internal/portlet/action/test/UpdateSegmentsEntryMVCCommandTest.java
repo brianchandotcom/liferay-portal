@@ -93,18 +93,13 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 		mockLiferayPortletActionRequest.setParameter(
 			"name_" + LocaleUtil.getDefault(), "New segments entry");
-
 		mockLiferayPortletActionRequest.setParameter(
 			"description_" + LocaleUtil.getDefault(), "description");
-
 		mockLiferayPortletActionRequest.setParameter("active", StringPool.TRUE);
-
 		mockLiferayPortletActionRequest.setParameter(
 			"type", User.class.getName());
-
 		mockLiferayPortletActionRequest.setParameter(
 			"saveAndContinue", StringPool.TRUE);
-
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsEntryKey", "key12345");
 
@@ -153,19 +148,14 @@ public class UpdateSegmentsEntryMVCCommandTest {
 		mockLiferayPortletActionRequest.setParameter(
 			"criterionFilteruser",
 			String.format("(lastName eq '%s')", user.getLastName()));
-
 		mockLiferayPortletActionRequest.setParameter(
 			"name_" + LocaleUtil.getDefault(), "New segments entry");
-
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsEntryKey", segmentsEntry1.getSegmentsEntryKey());
-
 		mockLiferayPortletActionRequest.setParameter(
 			"description_" + LocaleUtil.getDefault(), "description");
-
 		mockLiferayPortletActionRequest.setParameter(
 			"type", segmentsEntry1.getType());
-
 		mockLiferayPortletActionRequest.setParameter(
 			"saveAndContinue", StringPool.TRUE);
 
@@ -252,9 +242,7 @@ public class UpdateSegmentsEntryMVCCommandTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		themeDisplay.setLayout(layout);
-
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
-
 		themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)layout.getLayoutType());
 

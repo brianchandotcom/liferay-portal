@@ -37,15 +37,15 @@ definition {
 	@priority = "5"
 	test CheckCreatedRoles {
 		task ("When: I go to Roles Page in Control Panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
+
+			for (var searchTerm : list "Channel Account Manager,Channel General Manager,Channel Finance Manager,Channel Global Marketing Manager,Channel Regional Marketing Manager") {
+				Search.searchCP(searchTerm = "${searchTerm}");
+
+				LexiconEntry.viewEntryName(rowEntry = "${searchTerm}");
+			}
 		}
 
-		task ("Then: I assert that new roles appear after create PRM site") {
-			PRMUtils.viewRoles(roleNameList = "Channel Account Manager,Channel General Manager,Channel Finance Manager,Channel Global Marketing Manager,Channel Regional Marketing Manager");
-		}
 	}
 
 }

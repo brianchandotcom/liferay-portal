@@ -37,7 +37,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * @author Pavel Savinov
@@ -68,16 +67,17 @@ public class AssetDisplayLayoutUpgradeProcess extends UpgradeProcess {
 			long layoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId)
-		).orElseGet(
-			() ->
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.
 					fetchDefaultLayoutPageTemplateEntry(
 						groupId, assetEntry.getClassNameId(),
-						assetEntry.getClassTypeId())
-		);
+						assetEntry.getClassTypeId());
+		}
 
 		if (layoutPageTemplateEntry == null) {
 			return 0;

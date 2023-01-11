@@ -35,47 +35,25 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 		module="semantic_search/js/configuration/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"assetEntryClassNames", semanticSearchCompanyConfigurationDisplayContext.getAssetEntryClassNames()
-			).put(
-				"availableAssetEntryClassNames", semanticSearchCompanyConfigurationDisplayContext.getAvailableAssetEntryClassNames()
-			).put(
 				"availableEmbeddingVectorDimensions", semanticSearchCompanyConfigurationDisplayContext.getAvailableEmbeddingVectorDimensions()
 			).put(
 				"availableLanguageDisplayNames", semanticSearchCompanyConfigurationDisplayContext.getAvailableLanguageDisplayNames()
+			).put(
+				"availableModelClassNames", semanticSearchCompanyConfigurationDisplayContext.getAvailableModelClassNames()
 			).put(
 				"availableTextEmbeddingProviders", semanticSearchCompanyConfigurationDisplayContext.getAvailableTextEmbeddingProviders()
 			).put(
 				"availableTextTruncationStrategies", semanticSearchCompanyConfigurationDisplayContext.getAvailableTextTruncationStrategies()
 			).put(
-				"cacheTimeout", semanticSearchCompanyConfigurationDisplayContext.getCacheTimeout()
+				"initialTextEmbeddingCacheTimeout", semanticSearchCompanyConfigurationDisplayContext.getTextEmbeddingCacheTimeout()
 			).put(
-				"embeddingVectorDimensions", semanticSearchCompanyConfigurationDisplayContext.getEmbeddingVectorDimensions()
+				"initialTextEmbeddingProviderConfigurations", semanticSearchCompanyConfigurationDisplayContext.getTextEmbeddingProviderConfigurations()
 			).put(
-				"huggingFaceAccessToken", semanticSearchCompanyConfigurationDisplayContext.getHuggingFaceAccessToken()
-			).put(
-				"languageIds", semanticSearchCompanyConfigurationDisplayContext.getLanguageIds()
+				"initialTextEmbeddingsEnabled", semanticSearchCompanyConfigurationDisplayContext.isTextEmbeddingsEnabled()
 			).put(
 				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
 			).put(
-				"maxCharacterCount", semanticSearchCompanyConfigurationDisplayContext.getMaxCharacterCount()
-			).put(
-				"model", semanticSearchCompanyConfigurationDisplayContext.getModel()
-			).put(
-				"modelTimeout", semanticSearchCompanyConfigurationDisplayContext.getModelTimeout()
-			).put(
 				"namespace", liferayPortletResponse.getNamespace()
-			).put(
-				"textEmbeddingProvider", semanticSearchCompanyConfigurationDisplayContext.getTextEmbeddingProvider()
-			).put(
-				"textEmbeddingsEnabled", semanticSearchCompanyConfigurationDisplayContext.isTextEmbeddingsEnabled()
-			).put(
-				"textTruncationStrategy", semanticSearchCompanyConfigurationDisplayContext.getTextTruncationStrategy()
-			).put(
-				"txtaiHostAddress", semanticSearchCompanyConfigurationDisplayContext.getTxtaiHostAddress()
-			).put(
-				"txtaiPassword", semanticSearchCompanyConfigurationDisplayContext.getTxtaiPassword()
-			).put(
-				"txtaiUsername", semanticSearchCompanyConfigurationDisplayContext.getTxtaiUserName()
 			).build()
 		%>'
 	/>

@@ -19,6 +19,34 @@ definition {
 		return ${companies};
 	}
 
+	macro getCompanyGroupIdByGroupKey {
+		Variables.assertDefined(parameterList = "${groupKey},${portalInstanceName}");
+
+		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-groups \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d parentGroupId=0 \
+				-d site=true \
+				-d start=0 \
+				-d end=100
+		''';
+
+		var groupId = JSONCurlUtil.post(${curl}, "$.[?(@['groupKey'] == '${groupKey}')]['groupId']");
+
+		if (${groupId} == "") {
+			fail("FAIL. Cannot find group.");
+		}
+
+		return ${groupId};
+	}
+
 	macro getCompanyId {
 		if (!(isSet(portalInstanceName)) || (${portalInstanceName} == "liferay.com")) {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();

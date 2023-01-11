@@ -55,7 +55,7 @@ public class SelectInfoFieldTypeTemplateNodeTransformer
 
 		String stringValue = StringPool.BLANK;
 
-		Boolean multiple = GetterUtil.getBoolean(
+		boolean multiple = GetterUtil.getBoolean(
 			infoField.getAttribute(SelectInfoFieldType.MULTIPLE));
 
 		JSONArray selectedOptionValuesJSONArray =

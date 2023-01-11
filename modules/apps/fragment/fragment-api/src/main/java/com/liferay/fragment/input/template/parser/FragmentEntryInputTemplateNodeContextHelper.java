@@ -303,14 +303,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		else if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
 			String dataType = "integer";
 
-			Boolean decimal = (Boolean)infoField.getAttribute(
-				NumberInfoFieldType.DECIMAL);
+			if (GetterUtil.getBoolean(
+					infoField.getAttribute(NumberInfoFieldType.DECIMAL))) {
 
-			if (decimal == null) {
-				decimal = false;
-			}
-
-			if (decimal) {
 				dataType = "decimal";
 
 				Integer decimalPartMaxLength = (Integer)infoField.getAttribute(

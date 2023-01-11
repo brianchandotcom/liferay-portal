@@ -20,13 +20,9 @@ import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = {})
 public class ConfigurationProviderUtil {
 
 	public static ConfigurationProvider<LDAPAuthConfiguration>
@@ -53,44 +49,28 @@ public class ConfigurationProviderUtil {
 		return _ldapServerConfigurationProvider;
 	}
 
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPAuthConfigurationProvider(
+	public static void setLDAPAuthConfigurationProvider(
 		ConfigurationProvider<LDAPAuthConfiguration>
 			ldapAuthConfigurationProvider) {
 
 		_ldapAuthConfigurationProvider = ldapAuthConfigurationProvider;
 	}
 
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPExportConfigurationProvider(
+	public static void setLDAPExportConfigurationProvider(
 		ConfigurationProvider<LDAPExportConfiguration>
 			ldapExportConfigurationProvider) {
 
 		_ldapExportConfigurationProvider = ldapExportConfigurationProvider;
 	}
 
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPImportConfigurationProvider(
+	public static void setLDAPImportConfigurationProvider(
 		ConfigurationProvider<LDAPImportConfiguration>
 			ldapImportConfigurationProvider) {
 
 		_ldapImportConfigurationProvider = ldapImportConfigurationProvider;
 	}
 
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPServerConfigurationProvider(
+	public static void setLDAPServerConfigurationProvider(
 		ConfigurationProvider<LDAPServerConfiguration>
 			ldapServerConfigurationProvider) {
 

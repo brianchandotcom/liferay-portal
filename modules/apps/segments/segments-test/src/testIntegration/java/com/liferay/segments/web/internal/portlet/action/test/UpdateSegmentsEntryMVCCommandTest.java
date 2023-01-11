@@ -138,12 +138,12 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(WebKeys.USER, user);
 
-		SegmentsEntry segmentsEntry1 = _addSegmentEntry(
+		SegmentsEntry segmentsEntry = _addSegmentEntry(
 			String.format("(firstName eq '%s')", user.getFirstName()));
 
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsEntryId",
-			String.valueOf(segmentsEntry1.getSegmentsEntryId()));
+			String.valueOf(segmentsEntry.getSegmentsEntryId()));
 
 		mockLiferayPortletActionRequest.setParameter(
 			"criterionFilteruser",
@@ -151,11 +151,11 @@ public class UpdateSegmentsEntryMVCCommandTest {
 		mockLiferayPortletActionRequest.setParameter(
 			"name_" + LocaleUtil.getDefault(), "New segments entry");
 		mockLiferayPortletActionRequest.setParameter(
-			"segmentsEntryKey", segmentsEntry1.getSegmentsEntryKey());
+			"segmentsEntryKey", segmentsEntry.getSegmentsEntryKey());
 		mockLiferayPortletActionRequest.setParameter(
 			"description_" + LocaleUtil.getDefault(), "description");
 		mockLiferayPortletActionRequest.setParameter(
-			"type", segmentsEntry1.getType());
+			"type", segmentsEntry.getType());
 		mockLiferayPortletActionRequest.setParameter(
 			"saveAndContinue", StringPool.TRUE);
 
@@ -164,10 +164,10 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.getSegmentsEntry(
-				segmentsEntry1.getSegmentsEntryId());
+				segmentsEntry.getSegmentsEntryId());
 
 		Assert.assertEquals(
-			segmentsEntry1.getSegmentsEntryId(),
+			segmentsEntry.getSegmentsEntryId(),
 			segmentsEntry2.getSegmentsEntryId());
 		Assert.assertEquals(
 			"New segments entry",
@@ -183,7 +183,7 @@ public class UpdateSegmentsEntryMVCCommandTest {
 				String.format("(lastName eq '%s')", user.getLastName())));
 
 		Assert.assertEquals(
-			segmentsEntry1.getGroupId(), segmentsEntry2.getGroupId());
+			segmentsEntry.getGroupId(), segmentsEntry2.getGroupId());
 	}
 
 	private SegmentsEntry _addSegmentEntry(String filterString)

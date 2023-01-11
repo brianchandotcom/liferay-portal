@@ -1,0 +1,8 @@
+// LPS-172471 this file can be removed when ticket is fixed
+dockerDeploy {
+	destinationDir = file("${gradle.liferayWorkspace.dockerDir}/deploy")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/deploy")
+}

@@ -539,6 +539,14 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
+	macro getOrderCreationDateFromTable {
+		var key_columnIndex = "${columnIndex}";
+		var key_rowIndex = "${rowIndex}";
+		var orderCreationDate = selenium.getText("CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC");
+
+		return "${orderCreationDate}";
+	}
+
 	macro importFromOrder {
 		Click(locator1 = "CommerceEntry#DROPDOWN");
 

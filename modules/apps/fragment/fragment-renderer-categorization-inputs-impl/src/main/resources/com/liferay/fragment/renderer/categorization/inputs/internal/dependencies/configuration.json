@@ -1,0 +1,30 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "public",
+					"label": "vocabulary-visibility",
+					"name": "vocabularyVisibility",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "public",
+								"value": "public"
+							},
+							{
+								"label": "internal",
+								"value": "internal"
+							},
+							{
+								"label": "all",
+								"value": "all"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

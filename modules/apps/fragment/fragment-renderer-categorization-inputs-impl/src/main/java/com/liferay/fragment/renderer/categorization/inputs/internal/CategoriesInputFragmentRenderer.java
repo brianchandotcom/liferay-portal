@@ -31,7 +31,11 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -70,22 +74,26 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 	public String getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
-		return JSONUtil.put(
-			"fieldSets",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"fields",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"defaultValue", false
-						).put(
-							"label", "show-internal-categories"
-						).put(
-							"name", "showInternalCategories"
-						).put(
-							"type", "checkbox"
-						))))
-		).toString();
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(
+					getClass(),
+					"/com/liferay/fragment/renderer/categorization/inputs" +
+						"/internal/dependencies/configuration.json"));
+
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -122,16 +130,6 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 		return false;
 	}
 
-	public boolean isShowInternalCategories(
-		FragmentEntryLink fragmentEntryLink) {
-
-		return GetterUtil.getBoolean(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
-				LocaleUtil.getMostRelevantLocale(), "showInternalCategories"));
-	}
-
 	@Override
 	public void render(
 		FragmentRendererContext fragmentRendererContext,
@@ -162,21 +160,10 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 					formStyledLayoutStructureItem.getClassNameId()));
 			assetCategoriesSelectorTag.setClassTypePK(
 				formStyledLayoutStructureItem.getClassTypeId());
-
 			assetCategoriesSelectorTag.setShowLabel(false);
-
-			if (isShowInternalCategories(
-					fragmentRendererContext.getFragmentEntryLink())) {
-
-				assetCategoriesSelectorTag.setVisibilityTypes(
-					AssetVocabularyConstants.VISIBILITY_TYPES);
-			}
-			else {
-				assetCategoriesSelectorTag.setVisibilityTypes(
-					new int[] {
-						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
-					});
-			}
+			assetCategoriesSelectorTag.setVisibilityTypes(
+				_getVisibilityTypes(
+					fragmentRendererContext.getFragmentEntryLink()));
 
 			assetCategoriesSelectorTag.doTag(
 				httpServletRequest, httpServletResponse);
@@ -245,6 +232,26 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 		return layoutStructure;
 	}
 
+	private int[] _getVisibilityTypes(FragmentEntryLink fragmentEntryLink) {
+		String vocabularyVisibility = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				LocaleUtil.getMostRelevantLocale(), "vocabularyVisibility"));
+
+		if (Objects.equals(vocabularyVisibility, "all")) {
+			return AssetVocabularyConstants.VISIBILITY_TYPES;
+		}
+
+		if (Objects.equals(vocabularyVisibility, "internal")) {
+			return new int[] {
+				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL
+			};
+		}
+
+		return new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC};
+	}
+
 	private void _writeCss(
 		FragmentRendererContext fragmentRendererContext,
 		PrintWriter printWriter) {
@@ -266,6 +273,9 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

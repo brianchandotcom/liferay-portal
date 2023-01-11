@@ -11,7 +11,7 @@
 
 import ClayChart from '@clayui/charts';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import {currencyFormat} from '../../utils';
 
@@ -35,7 +35,10 @@ const DonutChart = ({
 		}));
 	}, []);
 
-	const hasChartData = chartData.columns.filter((column) => column[1]).length;
+	const hasChartData = useMemo(
+		() => chartData.columns.filter((column) => column[1]).length,
+		[chartData.columns]
+	);
 
 	const legendItems = legendTransformData(
 		chartData.columns,

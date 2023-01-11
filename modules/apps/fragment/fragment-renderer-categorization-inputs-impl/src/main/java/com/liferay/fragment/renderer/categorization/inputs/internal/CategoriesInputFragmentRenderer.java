@@ -146,7 +146,21 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
+			String className = _portal.getClassName(
+				formStyledLayoutStructureItem.getClassNameId());
+
+			InfoItemCreator<Object> infoItemCreator =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemCreator.class, className);
+
 			PrintWriter printWriter = httpServletResponse.getWriter();
+
+			if (!infoItemCreator.supportsCategorization()) {
+				_writeDisabledCategorizationAlert(
+					httpServletRequest, httpServletResponse, printWriter);
+
+				return;
+			}
 
 			printWriter.write("<div class=\"categories-input\">");
 
@@ -268,11 +282,32 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
+	private void _writeDisabledCategorizationAlert(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, PrintWriter printWriter)
+		throws Exception {
+
+		AlertTag alertTag = new AlertTag();
+
+		alertTag.setMessage(
+			_language.get(
+				httpServletRequest.getLocale(),
+				"categorization-is-disabled-for-the-selected-content"));
+		alertTag.setTitle(
+			_language.get(httpServletRequest.getLocale(), "info"));
+
+		printWriter.write(
+			alertTag.doTagAsString(httpServletRequest, httpServletResponse));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CategoriesInputFragmentRenderer.class);
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

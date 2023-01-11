@@ -493,6 +493,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
 								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 									irrelevant${javaMethodParameter.parameterName?cap_first}
+									<#sep>, </#sep>
 								</#list>
 							));
 						}
@@ -540,6 +541,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
 							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 								${javaMethodParameter.parameterName}
+								<#sep>, </#sep>
 							</#list>
 						));
 					<#else>
@@ -547,6 +549,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
 							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 								${javaMethodParameter.parameterName}
+								<#sep>, </#sep>
 							</#list>
 						));
 					</#if>
@@ -583,6 +586,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				protected Map<String, Map> test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
 					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 						${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}
+						<#sep>, </#sep>
 					</#list>
 				) throws Exception {
 

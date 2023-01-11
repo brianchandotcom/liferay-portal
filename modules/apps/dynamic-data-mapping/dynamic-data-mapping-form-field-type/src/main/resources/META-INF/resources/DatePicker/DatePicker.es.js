@@ -152,8 +152,10 @@ export default function DatePicker({
 	 */
 	useEffect(
 		() =>
-			setDate(({formattedDate, name, predefinedValue}) =>
-				name === date.name && predefinedValue === date.predefinedValue
+			setDate(({formattedDate, name, predefinedValue, rawDate}) =>
+				name === date.name &&
+				predefinedValue === date.predefinedValue &&
+				rawDate === ''
 					? {...date, formattedDate}
 					: date
 			),

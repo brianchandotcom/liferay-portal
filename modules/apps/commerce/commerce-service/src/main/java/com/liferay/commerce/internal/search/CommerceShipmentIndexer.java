@@ -168,7 +168,7 @@ public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 		document.addKeyword(
 			"commerceAccountId", commerceShipment.getCommerceAccountId());
 		document.addKeyword(
-			"commerceAccountName", commerceShipment.getCommerceAccountName());
+			"commerceAccountName", commerceShipment.getAccountEntryName());
 		document.addKeyword(
 			"commerceChannelId", commerceChannel.getCommerceChannelId());
 		document.addKeyword("commerceChannelName", commerceChannel.getName());

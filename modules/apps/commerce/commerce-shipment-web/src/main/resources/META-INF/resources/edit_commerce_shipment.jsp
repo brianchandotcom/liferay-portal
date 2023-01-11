@@ -21,7 +21,7 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 
 CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceShipment();
 
-CommerceAccount commerceAccount = commerceShipment.getCommerceAccount();
+AccountEntry accountEntry = commerceShipment.getAccountEntry();
 
 portletDisplay.setShowBackIcon(true);
 
@@ -48,7 +48,7 @@ else {
 	externalReferenceCode="<%= commerceShipment.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= editCommerceShipmentExternalReferenceCodeURL %>"
 	model="<%= CommerceShipment.class %>"
-	thumbnailUrl="<%= commerceShipmentDisplayContext.getCommerceAccountThumbnailURL(commerceAccount, themeDisplay.getPathImage()) %>"
+	thumbnailUrl="<%= commerceShipmentDisplayContext.getCommerceAccountThumbnailURL(accountEntry, themeDisplay.getPathImage()) %>"
 	title="<%= String.valueOf(commerceShipment.getCommerceShipmentId()) %>"
 	wrapperCssClasses="side-panel-top-anchor"
 />

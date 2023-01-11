@@ -18,7 +18,6 @@ import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceCon
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -51,7 +50,6 @@ public class BaseCommerceContext implements CommerceContext {
 		long companyId, long commerceChannelGroupId, long orderId,
 		long commerceAccountId, CommerceAccountHelper commerceAccountHelper,
 		CommerceAccountLocalService commerceAccountLocalService,
-		CommerceAccountService commerceAccountService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
@@ -65,7 +63,6 @@ public class BaseCommerceContext implements CommerceContext {
 		_commerceAccountId = commerceAccountId;
 		_commerceAccountHelper = commerceAccountHelper;
 		_commerceAccountLocalService = commerceAccountLocalService;
-		_commerceAccountService = commerceAccountService;
 		_commerceChannelAccountEntryRelLocalService =
 			commerceChannelAccountEntryRelLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
@@ -105,12 +102,12 @@ public class BaseCommerceContext implements CommerceContext {
 			return _commerceAccount;
 		}
 
-		if (_commerceAccountId == CommerceAccountConstants.ACCOUNT_ID_GUEST) {
+		if (_commerceAccountId <= 0) {
 			return _commerceAccountLocalService.getGuestCommerceAccount(
 				_companyId);
 		}
 
-		_commerceAccount = _commerceAccountService.getCommerceAccount(
+		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
 			_commerceAccountId);
 
 		return _commerceAccount;
@@ -259,7 +256,6 @@ public class BaseCommerceContext implements CommerceContext {
 	private final CommerceAccountHelper _commerceAccountHelper;
 	private final long _commerceAccountId;
 	private final CommerceAccountLocalService _commerceAccountLocalService;
-	private final CommerceAccountService _commerceAccountService;
 	private final CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 	private final long _commerceChannelGroupId;

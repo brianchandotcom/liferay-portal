@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.shipment.content.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
@@ -123,9 +123,9 @@ public class CommerceShipmentContentDisplayContext {
 			CommerceShipment commerceShipment)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = commerceShipment.getCommerceAccount();
+		AccountEntry accountEntry = commerceShipment.getAccountEntry();
 
-		return commerceAccount.getName();
+		return accountEntry.getName();
 	}
 
 	public String getCommerceShipmentExpectedDate(

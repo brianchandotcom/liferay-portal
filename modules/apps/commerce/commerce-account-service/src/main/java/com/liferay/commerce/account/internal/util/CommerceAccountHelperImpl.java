@@ -14,10 +14,12 @@
 
 package com.liferay.commerce.account.internal.util;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
@@ -25,21 +27,25 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountModel;
 import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.List;
@@ -150,8 +156,32 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) ||
 				(commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X)) {
 
-				commerceAccount =
-					_commerceAccountService.getPersonalCommerceAccount(userId);
+				AccountEntry accountEntry =
+					_accountEntryLocalService.fetchPersonAccountEntry(userId);
+
+				if (accountEntry == null) {
+					User user = _userLocalService.getUser(userId);
+
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCompanyId(user.getCompanyId());
+					serviceContext.setUserId(userId);
+
+					accountEntry = _accountEntryLocalService.addAccountEntry(
+						userId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+						user.getFullName(), null, null, user.getEmailAddress(),
+						null, StringPool.BLANK,
+						AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+					_commerceAccountUserRelLocalService.
+						addCommerceAccountUserRel(
+							accountEntry.getAccountEntryId(), userId,
+							serviceContext);
+				}
+
+				commerceAccount = CommerceAccountImpl.fromAccountEntry(
+					accountEntry);
 			}
 
 			if (commerceAccount == null) {
@@ -255,13 +285,17 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 	}
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private CommerceAccountUserRelLocalService
+		_commerceAccountUserRelLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
@@ -277,5 +311,8 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

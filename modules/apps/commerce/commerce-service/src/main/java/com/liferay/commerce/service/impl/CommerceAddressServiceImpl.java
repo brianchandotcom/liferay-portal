@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -409,12 +410,17 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 		else if (className.equals(AccountEntry.class.getName()) ||
 				 className.equals(CommerceAccount.class.getName())) {
 
-			_commerceAccountService.getCommerceAccount(classPK);
+			if (classPK == AccountConstants.ACCOUNT_ENTRY_ID_GUEST) {
+				_accountEntryLocalService.fetchAccountEntry(classPK);
+			}
+			else {
+				_accountEntryLocalService.getAccountEntry(classPK);
+			}
 		}
 	}
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

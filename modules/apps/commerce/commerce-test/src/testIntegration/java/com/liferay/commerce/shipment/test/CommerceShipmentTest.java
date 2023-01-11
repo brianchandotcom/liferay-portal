@@ -235,8 +235,8 @@ public class CommerceShipmentTest {
 				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
-			commerceOrder.getCommerceAccount(),
-			commerceShipment.getCommerceAccount());
+			commerceOrder.getCommerceAccountId(),
+			commerceShipment.getCommerceAccountId());
 		Assert.assertEquals(
 			commerceOrder.getGroupId(), commerceShipment.getGroupId());
 		Assert.assertEquals(
@@ -294,8 +294,8 @@ public class CommerceShipmentTest {
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 		Assert.assertEquals(
-			commerceOrder.getCommerceAccount(),
-			commerceShipment.getCommerceAccount());
+			commerceOrder.getCommerceAccountId(),
+			commerceShipment.getCommerceAccountId());
 		Assert.assertEquals(
 			commerceOrder.getGroupId(), commerceShipment.getGroupId());
 		Assert.assertEquals(

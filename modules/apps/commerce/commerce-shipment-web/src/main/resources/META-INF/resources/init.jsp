@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
+<%@ page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceShipmentFDSNames" %><%@
 page import="com.liferay.commerce.exception.CommerceShipmentExpectedDateException" %><%@

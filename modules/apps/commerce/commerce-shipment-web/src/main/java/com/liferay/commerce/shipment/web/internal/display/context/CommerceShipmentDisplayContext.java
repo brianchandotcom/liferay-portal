@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.shipment.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountServiceUtil;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryServiceUtil;
 import com.liferay.commerce.address.CommerceAddressFormatter;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
@@ -108,7 +108,7 @@ public class CommerceShipmentDisplayContext
 		_regionService = regionService;
 	}
 
-	public List<CommerceAccount> getCommerceAccountsWithShippableOrders()
+	public List<AccountEntry> getCommerceAccountsWithShippableOrders()
 		throws PortalException {
 
 		List<CommerceOrder> commerceOrders = getCommerceOrders();
@@ -121,31 +121,29 @@ public class CommerceShipmentDisplayContext
 
 		commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
 
-		List<CommerceAccount> commerceAccounts = new ArrayList<>();
+		List<AccountEntry> accountEntries = new ArrayList<>();
 
 		for (long commerceAccountId : commerceAccountIds) {
-			commerceAccounts.add(
-				CommerceAccountServiceUtil.getCommerceAccount(
-					commerceAccountId));
+			accountEntries.add(
+				AccountEntryServiceUtil.getAccountEntry(commerceAccountId));
 		}
 
-		return commerceAccounts;
+		return accountEntries;
 	}
 
 	public String getCommerceAccountThumbnailURL(
-		CommerceAccount commerceAccount, String pathImage) {
+		AccountEntry accountEntry, String pathImage) {
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(pathImage);
 		sb.append("/organization_logo?img_id=");
-		sb.append(commerceAccount.getLogoId());
+		sb.append(accountEntry.getLogoId());
 
-		if (commerceAccount.getLogoId() > 0) {
+		if (accountEntry.getLogoId() > 0) {
 			sb.append("&t=");
 			sb.append(
-				WebServerServletTokenUtil.getToken(
-					commerceAccount.getLogoId()));
+				WebServerServletTokenUtil.getToken(accountEntry.getLogoId()));
 		}
 
 		return sb.toString();

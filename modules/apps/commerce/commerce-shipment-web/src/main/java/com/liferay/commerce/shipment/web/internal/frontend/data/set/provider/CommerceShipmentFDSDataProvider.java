@@ -135,7 +135,7 @@ public class CommerceShipmentFDSDataProvider
 
 			shipments.add(
 				new Shipment(
-					commerceShipment.getCommerceAccountName(),
+					commerceShipment.getAccountEntryName(),
 					_getDescriptiveAddress(commerceShipment),
 					commerceChannel.getName(),
 					dateTimeFormat.format(commerceShipment.getCreateDate()),

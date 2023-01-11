@@ -45,10 +45,10 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 		<aui:select id="commerceAccountId" label="account" name="commerceAccountId" required="<%= true %>" showEmptyOption="<%= true %>">
 
 			<%
-			for (CommerceAccount commerceAccount : commerceShipmentDisplayContext.getCommerceAccountsWithShippableOrders()) {
+			for (AccountEntry accountEntry : commerceShipmentDisplayContext.getCommerceAccountsWithShippableOrders()) {
 			%>
 
-				<aui:option label="<%= commerceAccount.getName() %>" value="<%= commerceAccount.getCommerceAccountId() %>" />
+				<aui:option label="<%= accountEntry.getName() %>" value="<%= accountEntry.getAccountEntryId() %>" />
 
 			<%
 			}

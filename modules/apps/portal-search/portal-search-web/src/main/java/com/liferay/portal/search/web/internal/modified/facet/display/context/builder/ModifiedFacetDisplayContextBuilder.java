@@ -87,6 +87,8 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 				_buildCustomRangeModifiedTermDisplayContext());
 		}
 
+		modifiedFacetDisplayContext.setBucketDisplayContexts(
+			_buildTermDisplayContexts());
 		modifiedFacetDisplayContext.setDefaultBucketDisplayContext(
 			_buildDefaultBucketDisplayContext());
 		modifiedFacetDisplayContext.setDisplayStyleGroupId(
@@ -94,8 +96,6 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		modifiedFacetDisplayContext.
 			setModifiedFacetPortletInstanceConfiguration(
 				_modifiedFacetPortletInstanceConfiguration);
-		modifiedFacetDisplayContext.setBucketDisplayContexts(
-			_buildTermDisplayContexts());
 		modifiedFacetDisplayContext.setNothingSelected(isNothingSelected());
 		modifiedFacetDisplayContext.setPaginationStartParameterName(
 			_paginationStartParameterName);
@@ -226,10 +226,10 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 
 		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		bucketDisplayContext.setFrequency(
-			getFrequency(_getCustomRangeTermCollector(selected)));
 		bucketDisplayContext.setBucketText("custom-range");
 		bucketDisplayContext.setFilterValue(_getCustomRangeURL());
+		bucketDisplayContext.setFrequency(
+			getFrequency(_getCustomRangeTermCollector(selected)));
 		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;
@@ -257,10 +257,10 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 
 		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		bucketDisplayContext.setFrequency(
-			getFrequency(getTermCollector(range)));
 		bucketDisplayContext.setBucketText(label);
 		bucketDisplayContext.setFilterValue(_getLabeledRangeURL(label));
+		bucketDisplayContext.setFrequency(
+			getFrequency(getTermCollector(range)));
 		bucketDisplayContext.setSelected(_selectedRanges.contains(label));
 
 		return bucketDisplayContext;

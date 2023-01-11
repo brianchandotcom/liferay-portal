@@ -134,6 +134,23 @@ public class ListTypeEntryServiceTest {
 	}
 
 	@Test
+	public void testGetListTypeEntryByExternalReferenceCode() throws Exception {
+		try {
+			_testGetListTypeEntryByExternalReferenceCode(_defaultUser);
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _defaultUser.getUserId() +
+						" must have VIEW permission for"));
+		}
+
+		_testGetListTypeEntry(_user);
+	}
+
+	@Test
 	public void testUpdateListTypeEntry() throws Exception {
 		try {
 			_testUpdateListTypeEntry(_defaultUser);
@@ -217,6 +234,27 @@ public class ListTypeEntryServiceTest {
 
 			_listTypeEntryService.getListTypeEntry(
 				listTypeEntry.getListTypeEntryId());
+		}
+		finally {
+			if (listTypeEntry != null) {
+				_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
+			}
+		}
+	}
+
+	private void _testGetListTypeEntryByExternalReferenceCode(User user)
+		throws Exception {
+
+		ListTypeEntry listTypeEntry = null;
+
+		try {
+			_setUser(user);
+
+			listTypeEntry = _addListTypeEntry(user);
+
+			_listTypeEntryService.getListTypeEntryByExternalReferenceCode(
+				listTypeEntry.getExternalReferenceCode(),
+				listTypeEntry.getCompanyId());
 		}
 		finally {
 			if (listTypeEntry != null) {

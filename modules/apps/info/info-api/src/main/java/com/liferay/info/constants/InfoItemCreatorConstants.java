@@ -12,22 +12,15 @@
  * details.
  */
 
-package com.liferay.info.item.creator;
-
-import com.liferay.info.exception.InfoFormException;
-import com.liferay.info.item.InfoItemFieldValues;
+package com.liferay.info.constants;
 
 /**
- * @author Rubén Pulido
+ * @author Víctor Galán
  */
-public interface InfoItemCreator<T> {
+public class InfoItemCreatorConstants {
 
-	public T createFromInfoItemFieldValues(
-			long groupId, InfoItemFieldValues infoItemFieldValues)
-		throws InfoFormException;
+	public static final int SCOPE_COMPANY = 0;
 
-	public int getScope();
-
-	public boolean supportsCategorization();
+	public static final int SCOPE_SITE = 1;
 
 }

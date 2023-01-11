@@ -86,6 +86,8 @@ public class WorkflowTaskUserNotificationHandler
 
 		Locale locale = serviceContext.getLocale();
 
+		String title = _language.get(locale, "notification-no-longer-applies");
+
 		return new UserNotificationFeedEntry(
 			false,
 			StringUtil.replace(
@@ -94,9 +96,9 @@ public class WorkflowTaskUserNotificationHandler
 					_language.format(
 						locale, "notification-for-x-was-deactivated",
 						jsonObject.getString("entryType"), false),
-					_language.get(locale, "notification-no-longer-applies")
+					title
 				}),
-			StringPool.BLANK, false);
+			StringPool.BLANK, false, title);
 	}
 
 	@Override
@@ -105,38 +107,7 @@ public class WorkflowTaskUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		String notificationMessage = jsonObject.getString(
-			"notificationMessage");
-
-		long workflowTaskId = jsonObject.getLong("workflowTaskId");
-
-		if (workflowTaskId > 0) {
-			long ctCollectionId = jsonObject.getLong(
-				WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
-
-			WorkflowTask workflowTask = _fetchWorkflowTask(
-				ctCollectionId, workflowTaskId);
-
-			if (workflowTask == null) {
-				_userNotificationEventLocalService.deleteUserNotificationEvent(
-					userNotificationEvent.getUserNotificationEventId());
-
-				return StringPool.BLANK;
-			}
-
-			if (ctCollectionId != CTCollectionThreadLocal.getCTCollectionId()) {
-				String ctCollectionBody = _getCTCollectionBody(
-					ctCollectionId, serviceContext.getLanguageId());
-
-				return HtmlUtil.escape(
-					notificationMessage + " " + ctCollectionBody);
-			}
-		}
-
-		return HtmlUtil.escape(notificationMessage);
+		return _getMessage(serviceContext, userNotificationEvent);
 	}
 
 	@Override
@@ -185,6 +156,15 @@ public class WorkflowTaskUserNotificationHandler
 			workflowTaskId, serviceContext);
 	}
 
+	@Override
+	protected String getTitle(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _getMessage(serviceContext, userNotificationEvent);
+	}
+
 	private WorkflowTask _fetchWorkflowTask(
 			long ctCollectionId, long workflowTaskId)
 		throws Exception {
@@ -223,6 +203,45 @@ public class WorkflowTaskUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
+	private String _getMessage(
+			ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		String notificationMessage = jsonObject.getString(
+			"notificationMessage");
+
+		long workflowTaskId = jsonObject.getLong("workflowTaskId");
+
+		if (workflowTaskId > 0) {
+			long ctCollectionId = jsonObject.getLong(
+				WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
+
+			WorkflowTask workflowTask = _fetchWorkflowTask(
+				ctCollectionId, workflowTaskId);
+
+			if (workflowTask == null) {
+				_userNotificationEventLocalService.deleteUserNotificationEvent(
+					userNotificationEvent.getUserNotificationEventId());
+
+				return StringPool.BLANK;
+			}
+
+			if (ctCollectionId != CTCollectionThreadLocal.getCTCollectionId()) {
+				String ctCollectionBody = _getCTCollectionBody(
+					ctCollectionId, serviceContext.getLanguageId());
+
+				return HtmlUtil.escape(
+					notificationMessage + " " + ctCollectionBody);
+			}
+		}
+
+		return HtmlUtil.escape(notificationMessage);
+	}
+
 	private boolean _hasPermission(
 			long ctCollectionId, long workflowTaskId,
 			ServiceContext serviceContext)
@@ -231,7 +250,9 @@ public class WorkflowTaskUserNotificationHandler
 		WorkflowTask workflowTask = _fetchWorkflowTask(
 			ctCollectionId, workflowTaskId);
 
-		if (workflowTask == null) {
+		if ((workflowTask == null) ||
+			(serviceContext.getThemeDisplay() == null)) {
+
 			return false;
 		}
 

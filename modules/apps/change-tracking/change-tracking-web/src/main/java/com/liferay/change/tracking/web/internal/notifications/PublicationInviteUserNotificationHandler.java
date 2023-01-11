@@ -61,6 +61,52 @@ public class PublicationInviteUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
+		return _getMessage(serviceContext, userNotificationEvent);
+	}
+
+	@Override
+	protected String getLink(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		long ctCollectionId = jsonObject.getLong("classPK");
+
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if (ctCollection == null) {
+			return null;
+		}
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				serviceContext.getRequest(), serviceContext.getScopeGroup(),
+				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/change_tracking/view_changes"
+		).setParameter(
+			"ctCollectionId", ctCollectionId
+		).buildString();
+	}
+
+	@Override
+	protected String getTitle(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _getMessage(serviceContext, userNotificationEvent);
+	}
+
+	private String _getMessage(
+			ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
@@ -112,35 +158,6 @@ public class PublicationInviteUserNotificationHandler
 					serviceContext.getLocale(), _getRoleLabel(roleValue))
 			},
 			false);
-	}
-
-	@Override
-	protected String getLink(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		long ctCollectionId = jsonObject.getLong("classPK");
-
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
-
-		if (ctCollection == null) {
-			return null;
-		}
-
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				serviceContext.getRequest(), serviceContext.getScopeGroup(),
-				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/change_tracking/view_changes"
-		).setParameter(
-			"ctCollectionId", ctCollectionId
-		).buildString();
 	}
 
 	private String _getRoleLabel(int role) {

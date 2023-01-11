@@ -53,11 +53,27 @@ public class SharingUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject userNotificationEventPayloadJSONObject =
-			_jsonFactory.createJSONObject(userNotificationEvent.getPayload());
+		return _getMessage(
+			_jsonFactory.createJSONObject(userNotificationEvent.getPayload()),
+			userNotificationEvent);
+	}
+
+	@Override
+	protected String getTitle(
+			JSONObject jsonObject, AssetRenderer<?> assetRenderer,
+			ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		return _getMessage(jsonObject, userNotificationEvent);
+	}
+
+	private String _getMessage(
+			JSONObject jsonObject, UserNotificationEvent userNotificationEvent)
+		throws Exception {
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
-			userNotificationEventPayloadJSONObject.getLong("classPK"));
+			jsonObject.getLong("classPK"));
 
 		if (sharingEntry == null) {
 			_userNotificationEventLocalService.deleteUserNotificationEvent(
@@ -79,8 +95,7 @@ public class SharingUserNotificationHandler
 			return null;
 		}
 
-		String message = userNotificationEventPayloadJSONObject.getString(
-			"message");
+		String message = jsonObject.getString("message");
 
 		if (Validator.isNull(message)) {
 			_userNotificationEventLocalService.deleteUserNotificationEvent(

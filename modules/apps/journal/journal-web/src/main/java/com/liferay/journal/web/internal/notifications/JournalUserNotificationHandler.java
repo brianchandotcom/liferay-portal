@@ -22,6 +22,7 @@ import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -50,7 +51,8 @@ public class JournalUserNotificationHandler
 	@Override
 	protected String getTitle(
 		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
-		ServiceContext serviceContext) {
+		ServiceContext serviceContext,
+		UserNotificationEvent userNotificationEvent) {
 
 		String title = StringPool.BLANK;
 

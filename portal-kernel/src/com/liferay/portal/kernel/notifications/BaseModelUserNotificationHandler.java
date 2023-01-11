@@ -97,7 +97,7 @@ public abstract class BaseModelUserNotificationHandler
 			new String[] {
 				HtmlUtil.escape(
 					StringUtil.shorten(getBodyContent(jsonObject), 70)),
-				getTitle(jsonObject, assetRenderer, serviceContext)
+				getTitle(userNotificationEvent, serviceContext)
 			});
 	}
 
@@ -147,8 +147,10 @@ public abstract class BaseModelUserNotificationHandler
 	}
 
 	protected String getTitle(
-		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
-		ServiceContext serviceContext) {
+			JSONObject jsonObject, AssetRenderer<?> assetRenderer,
+			ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
 
 		String message = StringPool.BLANK;
 
@@ -174,6 +176,28 @@ public abstract class BaseModelUserNotificationHandler
 
 		return getFormattedMessage(
 			jsonObject, serviceContext, message, typeName);
+	}
+
+	@Override
+	protected final String getTitle(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		AssetRenderer<?> assetRenderer = getAssetRenderer(jsonObject);
+
+		if (assetRenderer == null) {
+			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+
+			return null;
+		}
+
+		return getTitle(
+			jsonObject, assetRenderer, serviceContext, userNotificationEvent);
 	}
 
 	private String _getUserFullName(JSONObject jsonObject) {

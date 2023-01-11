@@ -81,28 +81,7 @@ public class ContactsCenterUserNotificationHandler
 			return null;
 		}
 
-		String creatorUserName = _getUserNameLink(
-			socialRequest.getUserId(), serviceContext);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			serviceContext.getLocale(),
-			ContactsCenterUserNotificationHandler.class);
-
-		String title = StringPool.BLANK;
-
-		if (socialRequest.getType() ==
-				SocialRelationConstants.TYPE_BI_CONNECTION) {
-
-			title = ResourceBundleUtil.getString(
-				resourceBundle,
-				"request-social-networking-summary-add-connection",
-				new Object[] {creatorUserName});
-		}
-		else {
-			title = ResourceBundleUtil.getString(
-				resourceBundle, "x-sends-you-a-social-relationship-request",
-				new Object[] {creatorUserName});
-		}
+		String title = getTitle(userNotificationEvent, serviceContext);
 
 		if ((socialRequest.getStatus() !=
 				SocialRequestConstants.STATUS_PENDING) ||
@@ -169,6 +148,48 @@ public class ContactsCenterUserNotificationHandler
 		throws Exception {
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	protected String getTitle(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		long socialRequestId = jsonObject.getLong("classPK");
+
+		SocialRequest socialRequest =
+			_socialRequestLocalService.fetchSocialRequest(socialRequestId);
+
+		if (socialRequest == null) {
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+
+			return null;
+		}
+
+		String creatorUserName = _getUserNameLink(
+			socialRequest.getUserId(), serviceContext);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			serviceContext.getLocale(),
+			ContactsCenterUserNotificationHandler.class);
+
+		if (socialRequest.getType() ==
+				SocialRelationConstants.TYPE_BI_CONNECTION) {
+
+			return ResourceBundleUtil.getString(
+				resourceBundle,
+				"request-social-networking-summary-add-connection",
+				new Object[] {creatorUserName});
+		}
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "x-sends-you-a-social-relationship-request",
+			new Object[] {creatorUserName});
 	}
 
 	private String _getUserNameLink(

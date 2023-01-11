@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -92,7 +93,8 @@ public class CommentUserNotificationHandler
 	@Override
 	protected String getTitle(
 		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
-		ServiceContext serviceContext) {
+		ServiceContext serviceContext,
+		UserNotificationEvent userNotificationEvent) {
 
 		MBDiscussion mbDiscussion = _fetchDiscussion(jsonObject);
 

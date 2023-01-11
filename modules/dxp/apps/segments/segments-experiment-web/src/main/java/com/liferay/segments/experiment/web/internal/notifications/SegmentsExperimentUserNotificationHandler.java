@@ -65,14 +65,8 @@ public class SegmentsExperimentUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		long segmentsExperimentId = jsonObject.getLong("classPK");
-
-		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentLocalService.fetchSegmentsExperiment(
-				segmentsExperimentId);
+		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
+			userNotificationEvent);
 
 		if (segmentsExperiment == null) {
 			_userNotificationEventLocalService.deleteUserNotificationEvent(
@@ -81,20 +75,11 @@ public class SegmentsExperimentUserNotificationHandler
 			return null;
 		}
 
-		SegmentsExperimentConstants.Status status =
-			SegmentsExperimentConstants.Status.parse(
-				segmentsExperiment.getStatus());
+		String title = _getTitle(segmentsExperiment, serviceContext);
 
-		if (status == null) {
+		if (title == null) {
 			return null;
 		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", serviceContext.getLocale(), getClass());
-
-		String title = ResourceBundleUtil.getString(
-			resourceBundle, "ab-test-has-changed-status-to-x",
-			status.getLabel());
 
 		return StringUtil.replace(
 			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
@@ -137,6 +122,25 @@ public class SegmentsExperimentUserNotificationHandler
 		return _getLayoutURL(layout, segmentsExperimentKey, serviceContext);
 	}
 
+	@Override
+	protected String getTitle(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
+			userNotificationEvent);
+
+		if (segmentsExperiment == null) {
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+
+			return null;
+		}
+
+		return _getTitle(segmentsExperiment, serviceContext);
+	}
+
 	private String _getLayoutURL(
 		Layout layout, String segmentsExperimentKey,
 		ServiceContext serviceContext) {
@@ -163,6 +167,38 @@ public class SegmentsExperimentUserNotificationHandler
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private SegmentsExperiment _getSegmentsExperiment(
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
+			jsonObject.getLong("classPK"));
+	}
+
+	private String _getTitle(
+			SegmentsExperiment segmentsExperiment,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		SegmentsExperimentConstants.Status status =
+			SegmentsExperimentConstants.Status.parse(
+				segmentsExperiment.getStatus());
+
+		if (status == null) {
+			return null;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", serviceContext.getLocale(), getClass());
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "ab-test-has-changed-status-to-x",
+			status.getLabel());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

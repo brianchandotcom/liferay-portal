@@ -22,6 +22,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag;
+import com.liferay.info.constants.InfoItemCreatorConstants;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -40,12 +44,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.PrintWriter;
 
@@ -169,11 +175,22 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 			AssetCategoriesSelectorTag assetCategoriesSelectorTag =
 				new AssetCategoriesSelectorTag();
 
-			assetCategoriesSelectorTag.setClassName(
-				_portal.getClassName(
-					formStyledLayoutStructureItem.getClassNameId()));
+			assetCategoriesSelectorTag.setClassName(className);
 			assetCategoriesSelectorTag.setClassTypePK(
 				formStyledLayoutStructureItem.getClassTypeId());
+
+			if (Objects.equals(
+					infoItemCreator.getScope(),
+					InfoItemCreatorConstants.SCOPE_COMPANY)) {
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				assetCategoriesSelectorTag.setGroupIds(
+					new long[] {themeDisplay.getCompanyGroupId()});
+			}
+
 			assetCategoriesSelectorTag.setShowLabel(false);
 			assetCategoriesSelectorTag.setVisibilityTypes(
 				_getVisibilityTypes(

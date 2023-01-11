@@ -429,10 +429,12 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 								className="form-control form-control-select"
 								displayType="unstyled"
 							>
-								{value.contributorName ===
-								CONTRIBUTOR_TYPES.BASIC
-									? Liferay.Language.get('basic')
-									: Liferay.Language.get('blueprint')}
+								{
+									contributorOptions.find(
+										({name}) =>
+											name === value.contributorName
+									).title
+								}
 							</ClayButton>
 						}
 					>

@@ -95,6 +95,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -216,9 +217,16 @@ public class AssetPublisherDisplayContext {
 			return _assetListEntry;
 		}
 
-		_assetListEntry = AssetListEntryServiceUtil.fetchAssetListEntry(
-			GetterUtil.getLong(
-				_portletPreferences.getValue("assetListEntryId", null)));
+		try {
+			_assetListEntry = AssetListEntryServiceUtil.fetchAssetListEntry(
+				GetterUtil.getLong(
+					_portletPreferences.getValue("assetListEntryId", null)));
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 
 		return _assetListEntry;
 	}

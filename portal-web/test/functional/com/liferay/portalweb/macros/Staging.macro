@@ -1316,6 +1316,8 @@ definition {
 	}
 
 	macro validateFolderExist {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "check-folder-in-lar");

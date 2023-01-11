@@ -1665,6 +1665,21 @@ definition {
 					authorName = "${orderAuthorName}",
 					column = "Created By");
 			}
+
+			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "1");
+			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "2");
+
+			var compareDatesResult = CommerceUtilities.compareDates(
+				date1 = "${firstDate}",
+				date2 = "${secondDate}");
+
+			TestUtils.assertEquals(
+				actual = "${compareDatesResult}",
+				expected = "True");
 		}
 
 		task ("When the buyer clicks Create Date button in the pending orders page") {
@@ -1677,6 +1692,21 @@ definition {
 					authorName = "${orderAuthorName}",
 					column = "Created By");
 			}
+
+			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "1");
+			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "2");
+
+			var compareDatesResult = CommerceUtilities.compareDates(
+				date1 = "${firstDate}",
+				date2 = "${secondDate}");
+
+			TestUtils.assertEquals(
+				actual = "${compareDatesResult}",
+				expected = "False");
 		}
 
 		task ("When the buyer goes to the placed orders page") {
@@ -1689,6 +1719,21 @@ definition {
 					authorName = "${orderAuthorName}",
 					column = "Submitted By");
 			}
+
+			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "1");
+			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "2");
+
+			var compareDatesResult = CommerceUtilities.compareDates(
+				date1 = "${firstDate}",
+				date2 = "${secondDate}");
+
+			TestUtils.assertEquals(
+				actual = "${compareDatesResult}",
+				expected = "True");
 		}
 
 		task ("When the buyer clicks Order Date button in the placed orders page") {
@@ -1701,6 +1746,21 @@ definition {
 					authorName = "${orderAuthorName}",
 					column = "Submitted By");
 			}
+
+			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "1");
+			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
+				columnIndex = "1",
+				rowIndex = "2");
+
+			var compareDatesResult = CommerceUtilities.compareDates(
+				date1 = "${firstDate}",
+				date2 = "${secondDate}");
+
+			TestUtils.assertEquals(
+				actual = "${compareDatesResult}",
+				expected = "False");
 		}
 	}
 

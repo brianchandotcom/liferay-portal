@@ -19,15 +19,12 @@ import com.liferay.adaptive.media.exception.AMImageConfigurationException.Invali
 import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
-import com.liferay.adaptive.media.image.constants.AMImageDestinationNames;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -35,7 +32,6 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -57,7 +53,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ValidatorException;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -106,7 +101,7 @@ public class AMImageConfigurationHelperImpl
 
 		_updateConfiguration(companyId, updatedAMImageConfigurationEntries);
 
-		_triggerConfigurationEvent(amImageConfigurationEntry);
+		_journalContent.clearCache();
 
 		return amImageConfigurationEntry;
 	}
@@ -172,7 +167,7 @@ public class AMImageConfigurationHelperImpl
 
 		_updateConfiguration(companyId, updatedAMImageConfigurationEntries);
 
-		_triggerConfigurationEvent(amImageConfigurationEntry);
+		_journalContent.clearCache();
 	}
 
 	@Override
@@ -215,7 +210,7 @@ public class AMImageConfigurationHelperImpl
 
 		_updateConfiguration(companyId, updatedAMImageConfigurationEntries);
 
-		_triggerConfigurationEvent(amImageConfigurationEntry);
+		_journalContent.clearCache();
 	}
 
 	@Override
@@ -249,7 +244,7 @@ public class AMImageConfigurationHelperImpl
 
 		_updateConfiguration(companyId, updatedAMImageConfigurationEntries);
 
-		_triggerConfigurationEvent(amImageConfigurationEntry);
+		_journalContent.clearCache();
 	}
 
 	@Override
@@ -356,29 +351,13 @@ public class AMImageConfigurationHelperImpl
 
 		_updateConfiguration(companyId, updatedAMImageConfigurationEntries);
 
-		_triggerConfigurationEvent(
-			new AMImageConfigurationEntry[] {
-				oldAMImageConfigurationEntry, amImageConfigurationEntry
-			});
+		_journalContent.clearCache();
 
 		return amImageConfigurationEntry;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		DestinationConfiguration destinationConfiguration =
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-				AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION);
-
-		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
-
-		_destinationServiceRegistration = bundleContext.registerService(
-			Destination.class, destination,
-			MapUtil.singletonDictionary(
-				"destination.name", destination.getName()));
-
 		_portalCache =
 			(PortalCache<Long, Serializable>)_multiVMPool.getPortalCache(
 				AMImageConfigurationHelperImpl.class.getName());
@@ -386,8 +365,6 @@ public class AMImageConfigurationHelperImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_destinationServiceRegistration.unregister();
-
 		_multiVMPool.removePortalCache(
 			AMImageConfigurationHelperImpl.class.getName());
 	}
@@ -558,16 +535,6 @@ public class AMImageConfigurationHelperImpl
 		}
 	}
 
-	private void _triggerConfigurationEvent(Object payload) {
-		Message message = new Message();
-
-		message.setPayload(payload);
-
-		_messageBus.sendMessage(
-			AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION,
-			message);
-	}
-
 	private void _updateConfiguration(
 			long companyId,
 			List<AMImageConfigurationEntry> amImageConfigurationEntries)
@@ -621,7 +588,8 @@ public class AMImageConfigurationHelperImpl
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private ServiceRegistration<Destination> _destinationServiceRegistration;
+	@Reference
+	private JournalContent _journalContent;
 
 	@Reference
 	private MessageBus _messageBus;

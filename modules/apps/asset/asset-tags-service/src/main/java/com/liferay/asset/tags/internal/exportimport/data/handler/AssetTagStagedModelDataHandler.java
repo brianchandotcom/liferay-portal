@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -154,12 +153,12 @@ public class AssetTagStagedModelDataHandler
 			(!hasMergeParameter &&
 			 AssetTagsServiceConfigurationValues.STAGING_MERGE_TAGS_BY_NAME)) {
 
-			existingAssetTag = Optional.ofNullable(
-				_assetTagLocalService.fetchTag(
-					portletDataContext.getScopeGroupId(), assetTag.getName())
-			).orElse(
-				existingAssetTag
-			);
+			AssetTag fetchedAssetTag = _assetTagLocalService.fetchTag(
+				portletDataContext.getScopeGroupId(), assetTag.getName());
+
+			if (fetchedAssetTag != null) {
+				existingAssetTag = fetchedAssetTag;
+			}
 		}
 
 		AssetTag importedAssetTag = null;

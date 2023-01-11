@@ -96,6 +96,46 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterByRelatedObjectDefinitionSystemObjectFieldInManyToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testFilterByRelatedObjectDefinitionSystemObjectFieldInBothSides();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
+	public void testFilterByRelatedObjectDefinitionSystemObjectFieldInOneToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testFilterByRelatedObjectDefinitionSystemObjectFieldInBothSides();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
 	public void testGetNestedFieldDetailsInOneToManyRelationships()
 		throws Exception {
 
@@ -229,6 +269,42 @@ public class ObjectEntryResourceTest {
 			objectRelationship, TestPropsValues.getUserId());
 
 		return objectRelationship;
+	}
+
+	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
+			String expectedObjectFieldName, String expectedObjectFieldValue,
+			ObjectDefinition objectDefinition, long relatedObjectEntryId)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			objectDefinition.getRESTContextPath(), "?filter=",
+			_objectRelationship.getName(), "/id%20eq%20'",
+			String.valueOf(relatedObjectEntryId), StringPool.APOSTROPHE);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			expectedObjectFieldValue,
+			itemJSONObject.getString(expectedObjectFieldName));
+	}
+
+	private void _testFilterByRelatedObjectDefinitionSystemObjectFieldInBothSides()
+		throws Exception {
+
+		_testFilterByRelatedObjectDefinitionSystemObjectField(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, _objectDefinition1,
+			_objectEntry2.getObjectEntryId());
+
+		_testFilterByRelatedObjectDefinitionSystemObjectField(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, _objectDefinition2,
+			_objectEntry1.getObjectEntryId());
 	}
 
 	private void _testGetNestedFieldDetailsInOneToManyRelationships(

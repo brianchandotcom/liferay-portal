@@ -316,8 +316,7 @@ public class KBDropdownItemsProvider {
 							).setMVCPath(
 								"/admin/print_kb_template.jsp"
 							).setParameter(
-								"kbTemplateId",
-								String.valueOf(kbTemplate.getKbTemplateId())
+								"kbTemplateId", kbTemplate.getKbTemplateId()
 							).setParameter(
 								"viewMode", Constants.PRINT
 							).setWindowState(

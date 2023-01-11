@@ -626,6 +626,23 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro addUtilityPage {
+		LexiconEntry.gotoAdd();
+
+		if (isSet(masterLayoutName)) {
+			LexiconCard.clickCard(card = "${masterLayoutName}");
+		}
+		else {
+			LexiconCard.clickCard(card = "Blank");
+		}
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		Button.click(button = "Save");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro cannotDeletePagesAssociatedWithSiteTemplate {
 		if (isSet(pageName)) {
 			Click(

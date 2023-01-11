@@ -306,6 +306,29 @@ public class KBDropdownItemsProvider {
 				DropdownItemListBuilder.add(
 					() -> _hasUpdatePermission(kbTemplate),
 					_getEditActionUnsafeConsumer(kbTemplate)
+				).add(
+					dropdownItem -> {
+						dropdownItem.putData("action", "print");
+						dropdownItem.putData(
+							"printURL",
+							PortletURLBuilder.createRenderURL(
+								_liferayPortletResponse
+							).setMVCPath(
+								"/admin/print_kb_template.jsp"
+							).setParameter(
+								"kbTemplateId",
+								String.valueOf(kbTemplate.getKbTemplateId())
+							).setParameter(
+								"viewMode", Constants.PRINT
+							).setWindowState(
+								LiferayWindowState.POP_UP
+							).buildString());
+						dropdownItem.setIcon("print");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_liferayPortletRequest.getHttpServletRequest(),
+								"print"));
+					}
 				).build())
 		).addGroup(
 			dropdownGroupItem -> {

@@ -21,6 +21,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.oauth2.provider.redirect.OAuth2RedirectURIInterpolator;
 import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.OAuth2AuthorizationFlowConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
@@ -350,7 +351,7 @@ public class LiferayOAuthDataProvider
 	}
 
 	public Client getClient(OAuth2Application oAuth2Application) {
-		return _populateClient(oAuth2Application);
+		return _populateClient(oAuth2Application, getMessageContext());
 	}
 
 	@Override
@@ -470,8 +471,8 @@ public class LiferayOAuthDataProvider
 			long lifetime = expires - issuedAt;
 
 			RefreshToken refreshToken = new RefreshToken(
-				_populateClient(oAuth2Application), refreshTokenKey, lifetime,
-				issuedAt);
+				_populateClient(oAuth2Application, getMessageContext()),
+				refreshTokenKey, lifetime, issuedAt);
 
 			refreshToken.setAccessTokens(
 				Collections.singletonList(
@@ -833,7 +834,7 @@ public class LiferayOAuthDataProvider
 
 		messageContext.put(OAuthConstants.CLIENT_ID, clientId);
 
-		return _populateClient(oAuth2Application);
+		return _populateClient(oAuth2Application, messageContext);
 	}
 
 	@Override
@@ -1174,7 +1175,9 @@ public class LiferayOAuthDataProvider
 		return serverAccessToken;
 	}
 
-	private Client _populateClient(OAuth2Application oAuth2Application) {
+	private Client _populateClient(
+		OAuth2Application oAuth2Application, MessageContext messageContext) {
+
 		String clientSecret = oAuth2Application.getClientSecret();
 
 		if (Validator.isBlank(clientSecret)) {
@@ -1257,7 +1260,10 @@ public class LiferayOAuthDataProvider
 					oAuth2Application.getOAuth2ApplicationScopeAliasesId()));
 		}
 
-		client.setRedirectUris(oAuth2Application.getRedirectURIsList());
+		client.setRedirectUris(
+			OAuth2RedirectURIInterpolator.interpolateRedirectURIsList(
+				messageContext.getHttpServletRequest(),
+				oAuth2Application.getRedirectURIsList(), _portal));
 		client.setSubject(
 			_populateUserSubject(
 				oAuth2Application.getCompanyId(),

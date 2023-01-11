@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.internal.servlet.taglib;
 
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.redirect.OAuth2RedirectURIInterpolator;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -70,7 +71,11 @@ public class OAuth2ProviderTopJSDynamicInclude implements DynamicInclude {
 				).put(
 					"redirectURIs",
 					_jsonFactory.createJSONArray(
-						oAuth2Application.getRedirectURIsList())
+						OAuth2RedirectURIInterpolator.
+							interpolateRedirectURIsList(
+								httpServletRequest,
+								oAuth2Application.getRedirectURIsList(),
+								_portal))
 				));
 		}
 

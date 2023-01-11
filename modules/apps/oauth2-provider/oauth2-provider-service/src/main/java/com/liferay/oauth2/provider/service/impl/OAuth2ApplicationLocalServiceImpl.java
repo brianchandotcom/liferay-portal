@@ -27,7 +27,6 @@ import com.liferay.oauth2.provider.exception.OAuth2ApplicationHomePageURLSchemeE
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationNameException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationPrivacyPolicyURLException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationPrivacyPolicyURLSchemeException;
-import com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURIException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURIFragmentException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURIMissingException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURIPathException;
@@ -35,11 +34,13 @@ import com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURISchemeE
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.redirect.OAuth2RedirectURIInterpolator;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.base.OAuth2ApplicationLocalServiceBaseImpl;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.oauth2.provider.util.builder.OAuth2ScopeBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
@@ -75,9 +76,6 @@ import java.awt.image.RenderedImage;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -867,32 +865,40 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 
 		for (String redirectURI : redirectURIsList) {
-			try {
-				URI uri = new URI(redirectURI);
+			int pos = redirectURI.indexOf(StringPool.POUND);
 
-				if (uri.getFragment() != null) {
-					throw new OAuth2ApplicationRedirectURIFragmentException(
-						redirectURI);
-				}
+			if (pos != -1) {
+				throw new OAuth2ApplicationRedirectURIFragmentException(
+					redirectURI);
+			}
 
-				String scheme = uri.getScheme();
+			pos = redirectURI.indexOf(Http.PROTOCOL_DELIMITER);
 
-				if (scheme == null) {
-					throw new OAuth2ApplicationRedirectURISchemeException(
-						redirectURI);
-				}
+			if (pos == -1) {
+				throw new OAuth2ApplicationRedirectURISchemeException(
+					redirectURI);
+			}
 
-				scheme = StringUtil.toLowerCase(scheme);
+			String scheme = StringUtil.toLowerCase(
+				redirectURI.substring(0, pos));
 
-				if (!Objects.equals(scheme, Http.HTTP) &&
-					!Objects.equals(scheme, Http.HTTPS) &&
-					_ianaRegisteredUriSchemes.contains(scheme)) {
+			if (!Objects.equals(
+					scheme, OAuth2RedirectURIInterpolator.TOKEN_PROTOCOL) &&
+				!Objects.equals(scheme, Http.HTTP) &&
+				!Objects.equals(scheme, Http.HTTPS) &&
+				_ianaRegisteredUriSchemes.contains(scheme)) {
 
-					throw new OAuth2ApplicationHomePageURLSchemeException(
-						redirectURI);
-				}
+				throw new OAuth2ApplicationHomePageURLSchemeException(
+					redirectURI);
+			}
 
-				String path = uri.getPath();
+			String domainAndPath = redirectURI.substring(
+				pos + Http.PROTOCOL_DELIMITER.length());
+
+			pos = domainAndPath.indexOf(StringPool.SLASH);
+
+			if (pos > -1) {
+				String path = domainAndPath.substring(pos);
 
 				String normalizedPath = HttpComponentsUtil.normalizePath(path);
 
@@ -900,10 +906,6 @@ public class OAuth2ApplicationLocalServiceImpl
 					throw new OAuth2ApplicationRedirectURIPathException(
 						redirectURI);
 				}
-			}
-			catch (URISyntaxException uriSyntaxException) {
-				throw new OAuth2ApplicationRedirectURIException(
-					redirectURI, uriSyntaxException);
 			}
 		}
 	}

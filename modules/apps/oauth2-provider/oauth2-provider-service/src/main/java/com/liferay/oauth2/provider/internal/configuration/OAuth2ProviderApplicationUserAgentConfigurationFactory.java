@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAg
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.redirect.OAuth2RedirectURIInterpolator;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Arrays;
@@ -71,10 +73,12 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 
 		Company company = companyLocalService.getCompanyById(companyId);
 
-		String serviceAddress = getServiceAddress(company);
-
 		List<String> redirectURIsList = Collections.singletonList(
-			serviceAddress.concat("/o/oauth2/redirect"));
+			StringBundler.concat(
+				OAuth2RedirectURIInterpolator.TOKEN_PROTOCOL,
+				Http.PROTOCOL_DELIMITER, company.getVirtualHostname(),
+				OAuth2RedirectURIInterpolator.TOKEN_PORT_WITH_COLON,
+				"/o/oauth2/redirect"));
 
 		List<String> scopeAliasesList = ListUtil.fromArray(
 			oAuth2ProviderApplicationUserAgentConfiguration.scopes());
@@ -92,19 +96,17 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 			company,
 			HashMapBuilder.put(
 				externalReferenceCode + ".oauth2.authorization.uri",
-				serviceAddress.concat("/o/oauth2/authorize")
+				"/o/oauth2/authorize"
 			).put(
 				externalReferenceCode + ".oauth2.introspection.uri",
-				serviceAddress.concat("/o/oauth2/introspect")
+				"/o/oauth2/introspect"
 			).put(
-				externalReferenceCode + ".oauth2.jwks.uri",
-				serviceAddress.concat("/o/oauth2/jwks")
+				externalReferenceCode + ".oauth2.jwks.uri", "/o/oauth2/jwks"
 			).put(
 				externalReferenceCode + ".oauth2.redirect.uris",
-				StringUtil.merge(redirectURIsList, StringPool.NEW_LINE)
+				"/o/oauth2/redirect"
 			).put(
-				externalReferenceCode + ".oauth2.token.uri",
-				serviceAddress.concat("/o/oauth2/token")
+				externalReferenceCode + ".oauth2.token.uri", "/o/oauth2/token"
 			).put(
 				externalReferenceCode + ".oauth2.user.agent.audience",
 				oAuth2Application.getHomePageURL()

@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.authorize.container.request.filter;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.redirect.OAuth2RedirectURIInterpolator;
 import com.liferay.oauth2.provider.rest.internal.endpoint.authorize.configuration.AuthorizeScreenConfiguration;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -205,7 +206,10 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 
 		StringBundler sb = new StringBundler(5);
 
-		List<String> redirectURIsList = oAuth2Application.getRedirectURIsList();
+		List<String> redirectURIsList =
+			OAuth2RedirectURIInterpolator.interpolateRedirectURIsList(
+				_httpServletRequest, oAuth2Application.getRedirectURIsList(),
+				_portal);
 
 		sb.append(redirectURIsList.get(0));
 

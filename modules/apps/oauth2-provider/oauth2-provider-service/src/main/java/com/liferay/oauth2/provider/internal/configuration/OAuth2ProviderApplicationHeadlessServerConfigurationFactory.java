@@ -26,7 +26,6 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -83,15 +82,11 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			_log.debug("OAuth 2 application " + oAuth2Application);
 		}
 
-		Company company = companyLocalService.getCompanyById(companyId);
-
-		String serviceAddress = getServiceAddress(company);
-
 		modifyConfigMap(
-			company,
+			companyLocalService.getCompanyById(companyId),
 			HashMapBuilder.put(
 				externalReferenceCode + ".oauth2.authorization.uri",
-				serviceAddress.concat("/o/oauth2/authorize")
+				"/o/oauth2/authorize"
 			).put(
 				externalReferenceCode + ".oauth2.headless.server.audience",
 				oAuth2Application.getHomePageURL()
@@ -106,13 +101,14 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				StringUtil.merge(scopeAliasesList, StringPool.NEW_LINE)
 			).put(
 				externalReferenceCode + ".oauth2.introspection.uri",
-				serviceAddress.concat("/o/oauth2/introspect")
+				"/o/oauth2/introspect"
 			).put(
-				externalReferenceCode + ".oauth2.jwks.uri",
-				serviceAddress.concat("/o/oauth2/jwks")
+				externalReferenceCode + ".oauth2.jwks.uri", "/o/oauth2/jwks"
 			).put(
-				externalReferenceCode + ".oauth2.token.uri",
-				serviceAddress.concat("/o/oauth2/token")
+				externalReferenceCode + ".oauth2.redirect.uris",
+				"/o/oauth2/redirect"
+			).put(
+				externalReferenceCode + ".oauth2.token.uri", "/o/oauth2/token"
 			).build(),
 			properties);
 	}

@@ -40,7 +40,7 @@ export function adaptLegacyPriceModel(priceModel) {
 		 *
 		 * Then the promoPriceFormatted must be used.
 		 */
-		promoPrice: promoPrice ? promoPrice.match(/\d/gi)[0] : '0',
+		promoPrice: promoPrice ? promoPrice.toString().match(/\d/gi)[0] : '0',
 		promoPriceFormatted: promoPrice,
 		...(discountPercentages || ['0', '0', '0', '0']).reduce(
 			(discountLevels, percentage, i) => ({

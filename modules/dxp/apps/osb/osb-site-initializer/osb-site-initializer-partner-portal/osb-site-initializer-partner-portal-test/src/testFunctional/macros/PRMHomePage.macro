@@ -1,0 +1,11 @@
+definition {
+
+	@summary = "Click on button that takes the user to Quick Links"
+	macro gotoQuickLinksOption {
+		Click(
+			key_buttonLink = "${buttonLink}",
+			key_buttonText = "${buttonText}",
+			locator1 = "PRMHomePage#QUICK_OPTIONS");
+	}
+
+}

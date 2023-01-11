@@ -21,7 +21,7 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -40,14 +40,14 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		CommerceAccountGroupCommerceAccountRelLocalService
 			commerceAccountGroupCommerceAccountRelLocalService,
 		CommerceAccountGroupService commerceAccountGroupService,
-		CommerceAccountService commerceAccountService,
+		CommerceAccountLocalService commerceAccountLocalService,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
 		_commerceAccountGroupCommerceAccountRelLocalService =
 			commerceAccountGroupCommerceAccountRelLocalService;
 		_commerceAccountGroupService = commerceAccountGroupService;
-		_commerceAccountService = commerceAccountService;
+		_commerceAccountLocalService = commerceAccountLocalService;
 		_itemSelectedEventName = itemSelectedEventName;
 
 		_commerceAccountItemSelectorRequestHelper =
@@ -98,12 +98,12 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
-			() -> _commerceAccountService.getUserCommerceAccounts(
+			() -> _commerceAccountLocalService.getUserCommerceAccounts(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
 				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords(),
 				_searchContainer.getStart(), _searchContainer.getEnd()),
-			_commerceAccountService.getUserCommerceAccountsCount(
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
 				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords()));
@@ -148,7 +148,7 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 	private final CommerceAccountGroupService _commerceAccountGroupService;
 	private final CommerceAccountItemSelectorRequestHelper
 		_commerceAccountItemSelectorRequestHelper;
-	private final CommerceAccountService _commerceAccountService;
+	private final CommerceAccountLocalService _commerceAccountLocalService;
 	private final String _itemSelectedEventName;
 	private String _keywords;
 	private final PortletURL _portletURL;

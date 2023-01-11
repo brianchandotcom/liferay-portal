@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -283,7 +283,7 @@ public class CommerceAccountResource {
 		int end = page * pageSize;
 
 		List<CommerceAccount> userCommerceAccounts =
-			_commerceAccountService.getUserCommerceAccounts(
+			_commerceAccountLocalService.getUserCommerceAccounts(
 				userId, parentAccountId, commerceSiteType, keywords, true,
 				start, end);
 
@@ -304,7 +304,7 @@ public class CommerceAccountResource {
 			String keywords)
 		throws PortalException {
 
-		return _commerceAccountService.getUserCommerceAccountsCount(
+		return _commerceAccountLocalService.getUserCommerceAccountsCount(
 			userId, parentAccountId, commerceSiteType, keywords);
 	}
 
@@ -468,7 +468,7 @@ public class CommerceAccountResource {
 	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

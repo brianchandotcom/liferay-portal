@@ -18,7 +18,7 @@ import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroup
 import com.liferay.commerce.account.item.selector.web.internal.display.context.CommerceAccountGroupAccountItemSelectorViewDisplayContext;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
@@ -89,7 +89,7 @@ public class CommerceAccountGroupAccountItemSelectorView
 			commerceAccountGroupAccountItemSelectorViewDisplayContext =
 				new CommerceAccountGroupAccountItemSelectorViewDisplayContext(
 					_commerceAccountGroupCommerceAccountRelLocalService,
-					_commerceAccountGroupService, _commerceAccountService,
+					_commerceAccountGroupService, _commerceAccountLocalService,
 					httpServletRequest, portletURL, itemSelectedEventName);
 
 		httpServletRequest.setAttribute(
@@ -119,7 +119,7 @@ public class CommerceAccountGroupAccountItemSelectorView
 	private CommerceAccountGroupService _commerceAccountGroupService;
 
 	@Reference
-	private CommerceAccountService _commerceAccountService;
+	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Reference
 	private Language _language;

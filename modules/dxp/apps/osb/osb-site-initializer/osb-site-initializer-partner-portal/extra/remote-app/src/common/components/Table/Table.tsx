@@ -28,9 +28,8 @@ const Table = <T extends unknown>({
 	columns,
 	customClickOnRow,
 	rows,
-	...props
 }: TableProps<T>) => (
-	<ClayTable {...props} tableVerticalAlignment="middle">
+	<ClayTable borderless noWrap responsive tableVerticalAlignment="middle">
 		<ClayTable.Head>
 			<ClayTable.Row>
 				{columns.map((column: TableColumn<T>, index: number) => (
@@ -39,6 +38,7 @@ const Table = <T extends unknown>({
 						className="align-baseline border-neutral-2 rounded-0"
 						headingCell
 						key={index}
+						truncate
 					>
 						<p className="mt-4 text-neutral-10">{column.label}</p>
 					</ClayTable.Cell>
@@ -58,12 +58,13 @@ const Table = <T extends unknown>({
 								className="border-0 font-weight-normal py-4 text-neutral-10"
 								headingCell
 								key={index}
+								noWrap
 								onClick={() => {
 									if (customClickOnRow) {
 										return customClickOnRow(row);
 									}
 								}}
-								{...props}
+								truncate
 							>
 								{column.render
 									? column.render(data, row)

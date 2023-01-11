@@ -881,6 +881,78 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-167777 TC-2: Verify that the modified referred content(DM content) will present in the LAR when 'Include if modified' is enabled for Web Content."
+	@priority = "4"
+	test ModifiedReferredContentCanPublishToLiveWhenEnableIncludeIfModifiedOption {
+		property test.name.skip.portal.instance = "StagingUsecase#ModifiedReferredContentCanPublishToLiveWhenEnableIncludeIfModifiedOption";
+
+		task ("Given: Create basic web content with a new image and publish to live") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			ItemSelector.uploadFile(
+				navTab = "Documents and Media",
+				uploadFileName = "Document_1.png");
+
+			PortletEntry.publish();
+
+			Navigator.openStagingSiteURL(siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("And: Uncheck 'Delete temporary LAR during a successful staging publication process' in System Settings") {
+			StagingNavigator.openToConfigInSystemSettings(portlet = "Staging");
+
+			FormFields.disableCheckbox(fieldName = "Delete temporary LAR during a successful staging publish process");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("When: Edit WC title and DM title, then publish to live with 'Include if modified' option") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+			DMDocument.editCP(
+				dmDocumentTitle = "Document_1.png",
+				dmDocumentTitleEdit = "DM Title Edit");
+
+			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+			Staging.addCustomPublication();
+
+			Staging.configurePublishToLive(
+				checkSubSubContent = "Include If Modified",
+				contentName = "Web Content",
+				subContent = "Web Content",
+				uncheckContentNameList = "Documents and Media");
+
+			Staging.publishToLive();
+		}
+
+		task ("Then: Verify the new LAR contains adaptive-media folder since the referenced content is modified") {
+			Staging.validateFolderExist();
+		}
+	}
+
 	@priority = "3"
 	test ModifyInitalPageVariationSetup {
 		task ("When: User open staging site") {
@@ -933,6 +1005,71 @@ definition {
 			Staging.viewPublishTemplate(
 				publishTemplateDescription = "Publish Template Description",
 				publishTemplateName = "Publish Template Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-167777 TC-1: Verify that the non-modified referred content(DM content) will not present in the LAR when 'Include if modified' is enabled for Web Content."
+	@priority = "4"
+	test NonModifiedReferredContentCannotPublishToLiveWhenEnableIncludeIfModifiedOption {
+		property test.name.skip.portal.instance = "StagingUsecase#NonModifiedReferredContentCannotPublishToLiveWhenEnableIncludeIfModifiedOption";
+
+		task ("Given: Create basic web content with a new image and publish to live") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			ItemSelector.uploadFile(
+				navTab = "Documents and Media",
+				uploadFileName = "Document_1.png");
+
+			PortletEntry.publish();
+
+			Navigator.openStagingSiteURL(siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("And: Uncheck 'Delete temporary LAR during a successful staging publication process' in System Settings") {
+			StagingNavigator.openToConfigInSystemSettings(portlet = "Staging");
+
+			FormFields.disableCheckbox(fieldName = "Delete temporary LAR during a successful staging publish process");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("When: Edit WC title and do not edit DM, then publish to live with 'Include if modified' option") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit");
+
+			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+			Staging.addCustomPublication();
+
+			Staging.configurePublishToLive(
+				checkSubSubContent = "Include If Modified",
+				contentName = "Web Content",
+				subContent = "Web Content");
+
+			Staging.publishToLive();
+		}
+
+		task ("Then: Verify the new LAR does not contain adaptive-media folder since the referenced content isn't modified") {
+			Staging.validateFolderNotExist();
 		}
 	}
 

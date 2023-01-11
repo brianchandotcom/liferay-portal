@@ -14,6 +14,8 @@
 
 package com.liferay.segments.web.internal.odata;
 
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
+
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -38,8 +40,15 @@ import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.text.ParseException;
+import java.text.ParsePosition;
+
+import java.time.Duration;
+import java.time.Instant;
+
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +71,38 @@ public class ExpressionVisitorImplTest {
 	@Before
 	public void setUp() {
 		_expressionVisitorImpl = new ExpressionVisitorImpl(0, _entityModel);
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationSub()
+		throws ExpressionVisitException, ParseException {
+
+		Duration duration = Duration.ofDays(1);
+
+		Date initialDate = new Date();
+
+		Instant initialInstant = initialDate.toInstant();
+
+		initialInstant = initialInstant.minusMillis(duration.toMillis());
+
+		Date date = ISO8601Utils.parse(
+			(String)_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.SUB,
+				MethodExpression.Type.NOW.toString(), duration),
+			new ParsePosition(0));
+
+		Instant instant = Instant.ofEpochMilli(date.getTime());
+
+		Date finalDate = new Date();
+
+		Instant finalInstant = finalDate.toInstant();
+
+		finalInstant = finalInstant.minusMillis(duration.toMillis());
+
+		Assert.assertTrue(
+			instant.getEpochSecond() >= initialInstant.getEpochSecond());
+		Assert.assertTrue(
+			instant.getEpochSecond() <= finalInstant.getEpochSecond());
 	}
 
 	@Test
@@ -368,6 +409,38 @@ public class ExpressionVisitorImplTest {
 				)
 			).toString(),
 			itemsJSONArray.toString());
+	}
+
+	@Test
+	public void testVisitDurationLiteralExpression()
+		throws ExpressionVisitException {
+
+		LiteralExpression literalExpression = new LiteralExpression() {
+
+			@Override
+			public <T> T accept(ExpressionVisitor<T> expressionVisitor)
+				throws ExpressionVisitException {
+
+				return expressionVisitor.visitLiteralExpression(this);
+			}
+
+			@Override
+			public String getText() {
+				return "duration'PT24H'";
+			}
+
+			@Override
+			public Type getType() {
+				return LiteralExpression.Type.DURATION;
+			}
+
+		};
+
+		Duration duration =
+			(Duration)_expressionVisitorImpl.visitLiteralExpression(
+				literalExpression);
+
+		Assert.assertEquals("PT24H", duration.toString());
 	}
 
 	@Test

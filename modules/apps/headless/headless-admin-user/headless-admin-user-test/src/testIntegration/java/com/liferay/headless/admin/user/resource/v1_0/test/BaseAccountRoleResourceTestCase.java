@@ -309,7 +309,11 @@ public abstract class BaseAccountRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountRole),
 				(List<AccountRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExpectedActions(
+					irrelevantAccountExternalReferenceCode,
+					irrelevantUserAccountExternalReferenceCode));
 		}
 
 		AccountRole accountRole1 =
@@ -332,7 +336,22 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountRole1, accountRole2),
 			(List<AccountRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExpectedActions(
+				accountExternalReferenceCode,
+				userAccountExternalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExpectedActions(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected AccountRole
@@ -409,7 +428,10 @@ public abstract class BaseAccountRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountRole),
 				(List<AccountRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountRolesByExternalReferenceCodePage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountRole accountRole1 =
@@ -431,7 +453,31 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountRole1, accountRole2),
 			(List<AccountRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountRolesByExternalReferenceCodePage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountAccountRolesByExternalReferenceCodePage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/batch".
+				replace(
+					"{externalReferenceCode}",
+					String.valueOf(externalReferenceCode)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -899,7 +945,10 @@ public abstract class BaseAccountRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountRole),
 				(List<AccountRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getExpectedActions(
+					irrelevantExternalReferenceCode, irrelevantEmailAddress));
 		}
 
 		AccountRole accountRole1 =
@@ -920,7 +969,20 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountRole1, accountRole2),
 			(List<AccountRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getExpectedActions(
+				externalReferenceCode, emailAddress));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getExpectedActions(
+				String externalReferenceCode, String emailAddress)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected AccountRole
@@ -988,7 +1050,10 @@ public abstract class BaseAccountRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountRole),
 				(List<AccountRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountRolesPage_getExpectedActions(
+					irrelevantAccountId));
 		}
 
 		AccountRole accountRole1 =
@@ -1007,7 +1072,26 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountRole1, accountRole2),
 			(List<AccountRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetAccountAccountRolesPage_getExpectedActions(accountId));
+	}
+
+	protected Map<String, Map>
+			testGetAccountAccountRolesPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/batch".
+				replace("{accountId}", String.valueOf(accountId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1534,7 +1618,9 @@ public abstract class BaseAccountRoleResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AccountRole> page) {
+	protected void assertValid(
+		Page<AccountRole> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<AccountRole> accountRoles = page.getItems();
@@ -1549,6 +1635,21 @@ public abstract class BaseAccountRoleResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

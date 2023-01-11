@@ -285,7 +285,10 @@ public abstract class BaseEmailAddressResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantEmailAddress),
 				(List<EmailAddress>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrganizationEmailAddressesPage_getExpectedActions(
+					irrelevantOrganizationId));
 		}
 
 		EmailAddress emailAddress1 =
@@ -304,7 +307,29 @@ public abstract class BaseEmailAddressResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(emailAddress1, emailAddress2),
 			(List<EmailAddress>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrganizationEmailAddressesPage_getExpectedActions(
+				organizationId));
+	}
+
+	protected Map<String, Map>
+			testGetOrganizationEmailAddressesPage_getExpectedActions(
+				String organizationId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/email-addresses/batch".
+				replace("{organizationId}", String.valueOf(organizationId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected EmailAddress
@@ -356,7 +381,10 @@ public abstract class BaseEmailAddressResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantEmailAddress),
 				(List<EmailAddress>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetUserAccountEmailAddressesPage_getExpectedActions(
+					irrelevantUserAccountId));
 		}
 
 		EmailAddress emailAddress1 =
@@ -375,7 +403,29 @@ public abstract class BaseEmailAddressResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(emailAddress1, emailAddress2),
 			(List<EmailAddress>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetUserAccountEmailAddressesPage_getExpectedActions(
+				userAccountId));
+	}
+
+	protected Map<String, Map>
+			testGetUserAccountEmailAddressesPage_getExpectedActions(
+				Long userAccountId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/email-addresses/batch".
+				replace("{userAccountId}", String.valueOf(userAccountId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected EmailAddress testGetUserAccountEmailAddressesPage_addEmailAddress(
@@ -519,7 +569,9 @@ public abstract class BaseEmailAddressResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<EmailAddress> page) {
+	protected void assertValid(
+		Page<EmailAddress> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<EmailAddress> emailAddresses = page.getItems();
@@ -534,6 +586,21 @@ public abstract class BaseEmailAddressResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

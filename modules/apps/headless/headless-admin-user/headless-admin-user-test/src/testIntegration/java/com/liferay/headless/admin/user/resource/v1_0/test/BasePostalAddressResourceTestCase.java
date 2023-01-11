@@ -229,7 +229,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPostalAddress),
 				(List<PostalAddress>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountPostalAddressesPage_getExpectedActions(
+					irrelevantAccountId));
 		}
 
 		PostalAddress postalAddress1 =
@@ -247,7 +250,27 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(postalAddress1, postalAddress2),
 			(List<PostalAddress>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountPostalAddressesPage_getExpectedActions(accountId));
+	}
+
+	protected Map<String, Map>
+			testGetAccountPostalAddressesPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses/batch".
+				replace("{accountId}", String.valueOf(accountId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected PostalAddress testGetAccountPostalAddressesPage_addPostalAddress(
@@ -297,7 +320,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPostalAddress),
 				(List<PostalAddress>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrganizationPostalAddressesPage_getExpectedActions(
+					irrelevantOrganizationId));
 		}
 
 		PostalAddress postalAddress1 =
@@ -316,7 +342,29 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(postalAddress1, postalAddress2),
 			(List<PostalAddress>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrganizationPostalAddressesPage_getExpectedActions(
+				organizationId));
+	}
+
+	protected Map<String, Map>
+			testGetOrganizationPostalAddressesPage_getExpectedActions(
+				String organizationId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/postal-addresses/batch".
+				replace("{organizationId}", String.valueOf(organizationId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected PostalAddress
@@ -439,7 +487,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPostalAddress),
 				(List<PostalAddress>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetUserAccountPostalAddressesPage_getExpectedActions(
+					irrelevantUserAccountId));
 		}
 
 		PostalAddress postalAddress1 =
@@ -458,7 +509,29 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(postalAddress1, postalAddress2),
 			(List<PostalAddress>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetUserAccountPostalAddressesPage_getExpectedActions(
+				userAccountId));
+	}
+
+	protected Map<String, Map>
+			testGetUserAccountPostalAddressesPage_getExpectedActions(
+				Long userAccountId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/postal-addresses/batch".
+				replace("{userAccountId}", String.valueOf(userAccountId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected PostalAddress
@@ -675,7 +748,9 @@ public abstract class BasePostalAddressResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<PostalAddress> page) {
+	protected void assertValid(
+		Page<PostalAddress> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<PostalAddress> postalAddresses = page.getItems();
@@ -690,6 +765,21 @@ public abstract class BasePostalAddressResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

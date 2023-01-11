@@ -25,14 +25,12 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinition
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -95,145 +93,6 @@ public class ObjectEntryResourceTest {
 	public void tearDown() throws Exception {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			_objectRelationship);
-	}
-
-	@Test
-	public void testDeleteCustomObjectDefinition1WithCustomObjectDefinition2()
-		throws Exception {
-
-		Long irrelevantCurrentObjectId = RandomTestUtil.randomLong();
-
-		_objectRelationship = _addObjectRelationship(
-			StringUtil.randomId(), _objectEntry1.getPrimaryKey(),
-			_objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey()),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName()));
-
-		_objectRelationship = _addObjectRelationship(
-			StringUtil.randomId(), _objectEntry1.getPrimaryKey(),
-			_objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey()),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName()));
-
-		_objectRelationship = _addObjectRelationship(
-			StringUtil.randomId(), _objectEntry1.getPrimaryKey(),
-			_objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				irrelevantCurrentObjectId, StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey()),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				irrelevantCurrentObjectId),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName()));
-
-		_objectRelationship = _addObjectRelationship(
-			StringUtil.randomId(), _objectEntry1.getPrimaryKey(),
-			_objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				irrelevantCurrentObjectId, StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey()),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				irrelevantCurrentObjectId),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName()));
-
-		_objectRelationship = _addObjectRelationship(
-			StringUtil.randomId(), _objectEntry1.getPrimaryKey(),
-			_objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey()),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName()));
-
-		_objectRelationship = _addObjectRelationship(
-			StringUtil.randomId(), _objectEntry1.getPrimaryKey(),
-			_objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				irrelevantCurrentObjectId, StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey()),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				irrelevantCurrentObjectId),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName()));
-
-		_objectRelationship = _addObjectRelationship(
-			StringUtil.randomId(), _objectEntry1.getPrimaryKey(),
-			_objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				irrelevantCurrentObjectId, StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey()),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry2.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
-				irrelevantCurrentObjectId),
-			com.liferay.petra.string.StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
-				_objectRelationship.getName()));
 	}
 
 	@Test
@@ -356,27 +215,6 @@ public class ObjectEntryResourceTest {
 			CoreMatchers.containsString("No ObjectEntry exists with the key"));
 	}
 
-	private ObjectRelationship _addObjectRelationship(
-			String name, long primaryKey1, long primaryKey2, String type)
-		throws Exception {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, type);
-
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(), primaryKey1,
-			primaryKey2, ServiceContextTestUtil.getServiceContext());
-
-		return objectRelationship;
-	}
-
 	private ObjectRelationship _addObjectRelationshipAndRelateObjectsEntries(
 			String type)
 		throws Exception {
@@ -391,49 +229,6 @@ public class ObjectEntryResourceTest {
 			objectRelationship, TestPropsValues.getUserId());
 
 		return objectRelationship;
-	}
-
-	private void _testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(
-			String deleteEndpoint, String getEndpoint)
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invoke(
-			null, getEndpoint, Http.Method.GET);
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
-
-		HTTPTestUtil.invoke(null, deleteEndpoint, Http.Method.DELETE);
-
-		jsonObject = HTTPTestUtil.invoke(null, getEndpoint, Http.Method.GET);
-
-		itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(0, itemsJSONArray.length());
-	}
-
-	private void
-			_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
-				String deleteEndpoint1, String deleteEndpoint2,
-				String getEndpoint)
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invoke(
-			null, deleteEndpoint1, Http.Method.DELETE);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
-
-		jsonObject = HTTPTestUtil.invoke(
-			null, deleteEndpoint2, Http.Method.DELETE);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
-
-		jsonObject = HTTPTestUtil.invoke(null, getEndpoint, Http.Method.GET);
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
 	}
 
 	private void _testGetNestedFieldDetailsInOneToManyRelationships(

@@ -191,7 +191,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	private SafeCloseable _executeInitialUpgradeProcess() {
 		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
 			_bundleContext.registerService(
-				UpgradeStep.class, new DummyUpgrade(),
+				UpgradeStep.class, new DummyUpgradeProcess(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"upgrade.bundle.symbolic.name", _symbolicName
 				).put(
@@ -285,7 +285,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	private final VerifyProcessTest _verifyProcess = new VerifyProcessTest();
 	private boolean _verifyProcessRun;
 
-	private class DummyUpgrade extends DummyUpgradeStep {
+	private class DummyUpgradeProcess extends DummyUpgradeStep {
 	}
 
 	private class VerifyProcessTest extends VerifyProcess {

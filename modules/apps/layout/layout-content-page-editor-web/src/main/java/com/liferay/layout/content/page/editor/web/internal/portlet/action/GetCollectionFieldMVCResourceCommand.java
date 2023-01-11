@@ -168,15 +168,8 @@ public class GetCollectionFieldMVCResourceCommand
 			ClassedModelListObjectReference classedModelListObjectReference =
 				(ClassedModelListObjectReference)listObjectReference;
 
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.fetchAssetListEntry(
-					classedModelListObjectReference.getClassPK());
-
-			if (assetListEntry == null) {
-				return null;
-			}
-
-			return assetListEntry;
+			return _assetListEntryLocalService.fetchAssetListEntry(
+				classedModelListObjectReference.getClassPK());
 		}
 
 		return null;

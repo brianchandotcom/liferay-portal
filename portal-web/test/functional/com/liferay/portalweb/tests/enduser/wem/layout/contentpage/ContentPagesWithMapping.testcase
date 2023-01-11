@@ -1701,22 +1701,22 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("View selected page is still linked to Button fragment") {
+		task ("View selected page is changed to #") {
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "/web/test-site-name/test-widget-page-name",
+				key_url = "#",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
-		task ("Assert Not Found is shown") {
+		task ("Assert no redirection") {
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "/web/test-site-name/test-widget-page-name",
+				key_url = "#",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Content Page Name");
 		}
 
 		task ("Navigate to the content page in edit mode") {

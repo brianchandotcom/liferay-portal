@@ -17,7 +17,6 @@ package com.liferay.asset.util;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -32,12 +31,13 @@ public class LinkedAssetEntryIdsUtil {
 	public static void addLinkedAssetEntryId(
 		HttpServletRequest httpServletRequest, long assetEntryId) {
 
-		Set<Long> linkedAssetEntryIds = Optional.ofNullable(
+		Set<Long> linkedAssetEntryIds =
 			(Set<Long>)httpServletRequest.getAttribute(
-				WebKeys.LINKED_ASSET_ENTRY_IDS)
-		).orElse(
-			new HashSet<>()
-		);
+				WebKeys.LINKED_ASSET_ENTRY_IDS);
+
+		if (linkedAssetEntryIds == null) {
+			linkedAssetEntryIds = new HashSet<>();
+		}
 
 		linkedAssetEntryIds.add(assetEntryId);
 
@@ -48,12 +48,12 @@ public class LinkedAssetEntryIdsUtil {
 	public static void addLinkedAssetEntryId(
 		PortletRequest portletRequest, long assetEntryId) {
 
-		Set<Long> linkedAssetEntryIds = Optional.ofNullable(
-			(Set<Long>)portletRequest.getAttribute(
-				WebKeys.LINKED_ASSET_ENTRY_IDS)
-		).orElse(
-			new HashSet<>()
-		);
+		Set<Long> linkedAssetEntryIds = (Set<Long>)portletRequest.getAttribute(
+			WebKeys.LINKED_ASSET_ENTRY_IDS);
+
+		if (linkedAssetEntryIds == null) {
+			linkedAssetEntryIds = new HashSet<>();
+		}
 
 		linkedAssetEntryIds.add(assetEntryId);
 
@@ -65,12 +65,13 @@ public class LinkedAssetEntryIdsUtil {
 		HttpServletRequest httpServletRequest, long oldAssetEntryId,
 		long newAssetEntryId) {
 
-		Set<Long> linkedAssetEntryIds = Optional.ofNullable(
+		Set<Long> linkedAssetEntryIds =
 			(Set<Long>)httpServletRequest.getAttribute(
-				WebKeys.LINKED_ASSET_ENTRY_IDS)
-		).orElse(
-			new HashSet<>()
-		);
+				WebKeys.LINKED_ASSET_ENTRY_IDS);
+
+		if (linkedAssetEntryIds == null) {
+			linkedAssetEntryIds = new HashSet<>();
+		}
 
 		linkedAssetEntryIds.remove(oldAssetEntryId);
 

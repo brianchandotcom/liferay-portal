@@ -27,7 +27,6 @@ import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -259,14 +258,15 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		List<AnalyticsReportsInfoItem.Action> actionList =
-			analyticsReportsInfoItem.getActions();
+		for (AnalyticsReportsInfoItem.Action action :
+				analyticsReportsInfoItem.getActions()) {
 
-		List<ObjectValuePair<String, String>> objectValuePairList =
-			TransformUtil.transform(actionList, _objectValuePairs::get);
+			ObjectValuePair<String, String> objectValuePair =
+				_objectValuePairs.get(action);
 
-		for (ObjectValuePair<String, String> objectValuePair :
-				objectValuePairList) {
+			if (objectValuePair == null) {
+				continue;
+			}
 
 			jsonObject.put(
 				objectValuePair.getKey(),

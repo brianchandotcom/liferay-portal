@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -88,11 +87,12 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
-		ServiceContext serviceContext = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).orElse(
-			new ServiceContext()
-		);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
 
 		try {
 			_assetListEntryUsageLocalService.addAssetListEntryUsage(

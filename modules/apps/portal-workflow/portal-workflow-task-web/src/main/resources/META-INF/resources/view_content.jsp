@@ -65,7 +65,7 @@ renderResponse.setTitle(assetRenderer.getTitle(workflowTaskDisplayContext.getTas
 						assetEntry="<%= assetEntry %>"
 						assetRenderer="<%= assetRenderer %>"
 						assetRendererFactory="<%= assetRendererFactory %>"
-						showExtraInfo="<%= true %>"
+						showExtraInfo="<%= workflowTaskDisplayContext.isShowExtraInfo() %>"
 					/>
 				</c:if>
 

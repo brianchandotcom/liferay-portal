@@ -685,6 +685,24 @@ public class WorkflowTaskDisplayContext {
 		return showEditURL;
 	}
 
+	public boolean isShowExtraInfo() {
+		if (_showExtraInfo != null) {
+			return _showExtraInfo;
+		}
+
+		if (Objects.equals(
+				ParamUtil.getString(_liferayPortletRequest, "type"),
+				"document")) {
+
+			_showExtraInfo = true;
+		}
+		else {
+			_showExtraInfo = false;
+		}
+
+		return _showExtraInfo;
+	}
+
 	private String _getActorName(WorkflowLog workflowLog) {
 		if (workflowLog.getRoleId() != 0) {
 			Role role = _getRole(workflowLog.getRoleId());
@@ -1035,6 +1053,7 @@ public class WorkflowTaskDisplayContext {
 	private String _orderByType;
 	private String _portletResource;
 	private final Map<Long, Role> _roles = new HashMap<>();
+	private Boolean _showExtraInfo;
 	private final Map<Long, User> _users = new HashMap<>();
 	private WorkflowModelSearchResult<WorkflowTask> _workflowModelSearchResult;
 	private final WorkflowTaskRequestHelper _workflowTaskRequestHelper;

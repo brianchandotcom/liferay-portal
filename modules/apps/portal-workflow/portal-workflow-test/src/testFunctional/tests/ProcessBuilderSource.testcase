@@ -618,8 +618,6 @@ definition {
 	@description = "Verify that the time format in Details tab is following the system language"
 	@priority = "3"
 	test TimeFormatFollowsSystemLanguageInDetails {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -634,11 +632,11 @@ definition {
 		Click.clickAt(locator1 = "Icon#INFO");
 
 		AssertElementPresent(
-			key_titleValue = "Created",
+			key_titleValue = "CREATED",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 
 		AssertElementPresent(
-			key_titleValue = "Last Modified",
+			key_titleValue = "LAST MODIFIED",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
@@ -661,11 +659,11 @@ definition {
 		Click(locator1 = "Icon#INFO");
 
 		AssertElementNotPresent(
-			key_titleValue = "Criado",
+			key_titleValue = "CRIADO",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 
 		AssertElementNotPresent(
-			key_titleValue = "Última Modificação",
+			key_titleValue = "ÚLTIMA MODIFICAÇÃO",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Configurações da Conta");

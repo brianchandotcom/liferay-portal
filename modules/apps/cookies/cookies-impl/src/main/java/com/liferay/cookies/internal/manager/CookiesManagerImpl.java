@@ -143,10 +143,19 @@ public class CookiesManagerImpl implements CookiesManager {
 			return false;
 		}
 
-		if ((cookie.getMaxAge() != 0) &&
-			!hasConsentType(consentType, httpServletRequest)) {
+		if (cookie.getMaxAge() != 0) {
+			CookiesPreferenceHandlingConfiguration
+				cookiesPreferenceHandlingConfiguration =
+					_getCookiesPreferenceHandlingConfiguration(
+						httpServletRequest);
 
-			return false;
+			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
+				_deleteCookieConsentCookies(
+					httpServletRequest, httpServletResponse);
+			}
+			else if (!hasConsentType(consentType, httpServletRequest)) {
+				return false;
+			}
 		}
 
 		// LEP-5175
@@ -384,38 +393,11 @@ public class CookiesManagerImpl implements CookiesManager {
 			return GetterUtil.getBoolean(consentCookieValue);
 		}
 
-		try {
-			CookiesPreferenceHandlingConfiguration
-				cookiesPreferenceHandlingConfiguration = null;
+		CookiesPreferenceHandlingConfiguration
+			cookiesPreferenceHandlingConfiguration =
+				_getCookiesPreferenceHandlingConfiguration(httpServletRequest);
 
-			if (httpServletRequest != null) {
-				long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-				if (groupId > 0) {
-					cookiesPreferenceHandlingConfiguration =
-						_configurationProvider.getGroupConfiguration(
-							CookiesPreferenceHandlingConfiguration.class,
-							groupId);
-				}
-				else {
-					cookiesPreferenceHandlingConfiguration =
-						_configurationProvider.getCompanyConfiguration(
-							CookiesPreferenceHandlingConfiguration.class,
-							_portal.getCompanyId(httpServletRequest));
-				}
-			}
-			else {
-				cookiesPreferenceHandlingConfiguration =
-					_configurationProvider.getSystemConfiguration(
-						CookiesPreferenceHandlingConfiguration.class);
-			}
-
-			return !cookiesPreferenceHandlingConfiguration.
-				explicitConsentMode();
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
+		return !cookiesPreferenceHandlingConfiguration.explicitConsentMode();
 	}
 
 	@Override
@@ -482,6 +464,43 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 	}
 
+	private boolean _deleteCookieConsentCookies(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		boolean hasUserConsentConfiguredCookie = Validator.isNotNull(
+			getCookieValue(
+				CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
+				httpServletRequest));
+		boolean hasConsentTypeFunctionalCookie = Validator.isNotNull(
+			getCookieValue(
+				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+				httpServletRequest));
+		boolean hasConsentTypePerformanceCookie = Validator.isNotNull(
+			getCookieValue(
+				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+				httpServletRequest));
+		boolean hasConsentTypePersonalizationCookie = Validator.isNotNull(
+			getCookieValue(
+				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
+				httpServletRequest));
+
+		if (hasUserConsentConfiguredCookie || hasConsentTypeFunctionalCookie ||
+			hasConsentTypePerformanceCookie ||
+			hasConsentTypePersonalizationCookie) {
+
+			return deleteCookies(
+				getDomain(httpServletRequest), httpServletRequest,
+				httpServletResponse,
+				CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
+				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION);
+		}
+
+		return false;
+	}
+
 	private Map<String, Cookie> _getCookiesMap(
 		HttpServletRequest httpServletRequest) {
 
@@ -514,6 +533,32 @@ public class CookiesManagerImpl implements CookiesManager {
 			CookiesManagerImpl.class.getName(), cookiesMap);
 
 		return cookiesMap;
+	}
+
+	private CookiesPreferenceHandlingConfiguration
+		_getCookiesPreferenceHandlingConfiguration(
+			HttpServletRequest httpServletRequest) {
+
+		try {
+			if (httpServletRequest != null) {
+				long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+				if (groupId > 0) {
+					return _configurationProvider.getGroupConfiguration(
+						CookiesPreferenceHandlingConfiguration.class, groupId);
+				}
+
+				return _configurationProvider.getCompanyConfiguration(
+					CookiesPreferenceHandlingConfiguration.class,
+					_portal.getCompanyId(httpServletRequest));
+			}
+
+			return _configurationProvider.getSystemConfiguration(
+				CookiesPreferenceHandlingConfiguration.class);
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	private String _getCookieValue(

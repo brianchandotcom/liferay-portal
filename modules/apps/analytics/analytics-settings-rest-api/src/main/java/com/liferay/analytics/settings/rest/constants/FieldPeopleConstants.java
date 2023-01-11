@@ -20,33 +20,36 @@ package com.liferay.analytics.settings.rest.constants;
 public class FieldPeopleConstants {
 
 	public static final String[] FIELD_CONTACT_DEFAULTS = {
-		"birthday", "classNameId", "classPK", "employeeNumber",
-		"employeeStatusId", "facebookSn", "hoursOfOperation", "jabberSn",
-		"jobClass", "male", "parentContactId", "skypeSn", "smsSn", "twitterSn",
-		"userName"
+		"birthday", "classNameId", "classPK", "contactId", "createDate",
+		"emailAddress", "employeeNumber", "employeeStatusId", "facebookSn",
+		"hoursOfOperation", "jabberSn", "jobClass", "male", "modifiedDate",
+		"parentContactId", "skypeSn", "smsSn", "twitterSn", "userName"
 	};
 
 	public static final String[] FIELD_CONTACT_EXAMPLES = {
-		"31st Oct 2008", "12345", "12345", "12346-A", "0", "12345",
-		"9:00 AM - 5:00 PM", "johndoe", "Manager", "True", "12345", "12345",
+		"31st Oct 2008", "12345", "12345", "12345", "31st Oct 2008",
+		"johndoe@example.com", "12346-A", "0", "12345", "9:00 AM - 5:00 PM",
+		"johndoe", "Manager", "True", "31st Oct 2008", "12345", "12345",
 		"johndoe", "johndoe", "12345", "@johndoe", "John User"
 	};
 
 	public static final String[] FIELD_CONTACT_NAMES = {
-		"birthday", "classNameId", "classPK", "employeeNumber",
-		"employeeStatusId", "facebookSn", "hoursOfOperation", "jabberSn",
-		"jobClass", "male", "parentContactId", "prefixListTypeId", "skypeSn",
-		"smsSn", "suffixListTypeId", "twitterSn", "userName"
+		"birthday", "classNameId", "classPK", "contactId", "createDate",
+		"emailAddress", "employeeNumber", "employeeStatusId", "facebookSn",
+		"hoursOfOperation", "jabberSn", "jobClass", "male", "modifiedDate",
+		"parentContactId", "prefixListTypeId", "skypeSn", "smsSn",
+		"suffixListTypeId", "twitterSn", "userName"
 	};
 
 	public static final String[] FIELD_CONTACT_REQUIRED_NAMES = {
-		"classNameId", "classPK"
+		"classNameId", "classPK", "contactId", "createDate", "emailAddress",
+		"modifiedDate"
 	};
 
 	public static final String[] FIELD_CONTACT_TYPES = {
-		"Date", "Long", "Long", "String", "String", "String", "String",
-		"String", "String", "Boolean", "Long", "Long", "String", "String",
-		"Long", "String", "String"
+		"Date", "Long", "Long", "Long", "Date", "String", "String", "Long",
+		"String", "String", "String", "String", "Boolean", "Date", "Long",
+		"Long", "String", "String", "Long", "String", "String"
 	};
 
 	public static final String[] FIELD_USER_DEFAULTS = {

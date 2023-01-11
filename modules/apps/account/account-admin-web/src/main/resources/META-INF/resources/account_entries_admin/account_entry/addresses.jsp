@@ -71,42 +71,42 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="name"
-					value="<%= addressDisplay.getName() %>"
+					value="<%= HtmlUtil.escape(addressDisplay.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="street"
-					value="<%= addressDisplay.getStreet() %>"
+					value="<%= HtmlUtil.escape(addressDisplay.getStreet()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="city"
-					value="<%= addressDisplay.getCity() %>"
+					value="<%= HtmlUtil.escape(addressDisplay.getCity()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="region"
-					value="<%= addressDisplay.getRegionName() %>"
+					value="<%= HtmlUtil.escape(addressDisplay.getRegionName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="postal-code"
-					value="<%= addressDisplay.getZip() %>"
+					value="<%= HtmlUtil.escape(addressDisplay.getZip()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="type"
-					value="<%= addressDisplay.getType(themeDisplay.getLocale()) %>"
+					value="<%= HtmlUtil.escape(addressDisplay.getType(themeDisplay.getLocale())) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

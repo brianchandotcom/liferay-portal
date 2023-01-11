@@ -214,7 +214,10 @@ public abstract class BaseWebUrlResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantWebUrl), (List<WebUrl>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrganizationWebUrlsPage_getExpectedActions(
+					irrelevantOrganizationId));
 		}
 
 		WebUrl webUrl1 = testGetOrganizationWebUrlsPage_addWebUrl(
@@ -229,7 +232,28 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(webUrl1, webUrl2), (List<WebUrl>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrganizationWebUrlsPage_getExpectedActions(organizationId));
+	}
+
+	protected Map<String, Map>
+			testGetOrganizationWebUrlsPage_getExpectedActions(
+				String organizationId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/web-urls/batch".
+				replace("{organizationId}", String.valueOf(organizationId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected WebUrl testGetOrganizationWebUrlsPage_addWebUrl(
@@ -276,7 +300,10 @@ public abstract class BaseWebUrlResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantWebUrl), (List<WebUrl>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetUserAccountWebUrlsPage_getExpectedActions(
+					irrelevantUserAccountId));
 		}
 
 		WebUrl webUrl1 = testGetUserAccountWebUrlsPage_addWebUrl(
@@ -291,7 +318,27 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(webUrl1, webUrl2), (List<WebUrl>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetUserAccountWebUrlsPage_getExpectedActions(userAccountId));
+	}
+
+	protected Map<String, Map> testGetUserAccountWebUrlsPage_getExpectedActions(
+			Long userAccountId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/web-urls/batch".
+				replace("{userAccountId}", String.valueOf(userAccountId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected WebUrl testGetUserAccountWebUrlsPage_addWebUrl(
@@ -481,7 +528,9 @@ public abstract class BaseWebUrlResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WebUrl> page) {
+	protected void assertValid(
+		Page<WebUrl> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WebUrl> webUrls = page.getItems();
@@ -496,6 +545,21 @@ public abstract class BaseWebUrlResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

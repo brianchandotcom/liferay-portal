@@ -218,7 +218,9 @@ public abstract class BaseSegmentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantSegment),
 				(List<Segment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteSegmentsPage_getExpectedActions(irrelevantSiteId));
 		}
 
 		Segment segment1 = testGetSiteSegmentsPage_addSegment(
@@ -234,7 +236,25 @@ public abstract class BaseSegmentResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(segment1, segment2), (List<Segment>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetSiteSegmentsPage_getExpectedActions(siteId));
+	}
+
+	protected Map<String, Map> testGetSiteSegmentsPage_getExpectedActions(
+			Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/sites/{siteId}/segments/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -365,7 +385,10 @@ public abstract class BaseSegmentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantSegment),
 				(List<Segment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteUserAccountSegmentsPage_getExpectedActions(
+					irrelevantSiteId, irrelevantUserAccountId));
 		}
 
 		Segment segment1 = testGetSiteUserAccountSegmentsPage_addSegment(
@@ -381,7 +404,20 @@ public abstract class BaseSegmentResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(segment1, segment2), (List<Segment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteUserAccountSegmentsPage_getExpectedActions(
+				siteId, userAccountId));
+	}
+
+	protected Map<String, Map>
+			testGetSiteUserAccountSegmentsPage_getExpectedActions(
+				Long siteId, Long userAccountId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected Segment testGetSiteUserAccountSegmentsPage_addSegment(
@@ -555,7 +591,9 @@ public abstract class BaseSegmentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Segment> page) {
+	protected void assertValid(
+		Page<Segment> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Segment> segments = page.getItems();
@@ -570,6 +608,21 @@ public abstract class BaseSegmentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -218,7 +218,16 @@ public abstract class BaseSiteResourceTestCase {
 
 		assertContains(site1, (List<Site>)page.getItems());
 		assertContains(site2, (List<Site>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetMyUserAccountSitesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetMyUserAccountSitesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -582,7 +591,9 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Site> page) {
+	protected void assertValid(
+		Page<Site> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Site> sites = page.getItems();
@@ -597,6 +608,21 @@ public abstract class BaseSiteResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

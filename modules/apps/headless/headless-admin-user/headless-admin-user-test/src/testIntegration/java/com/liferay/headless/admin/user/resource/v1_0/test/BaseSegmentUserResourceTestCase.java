@@ -216,7 +216,10 @@ public abstract class BaseSegmentUserResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantSegmentUser),
 				(List<SegmentUser>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSegmentUserAccountsPage_getExpectedActions(
+					irrelevantSegmentId));
 		}
 
 		SegmentUser segmentUser1 =
@@ -235,7 +238,26 @@ public abstract class BaseSegmentUserResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(segmentUser1, segmentUser2),
 			(List<SegmentUser>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSegmentUserAccountsPage_getExpectedActions(segmentId));
+	}
+
+	protected Map<String, Map>
+			testGetSegmentUserAccountsPage_getExpectedActions(Long segmentId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/segments/{segmentId}/user-accounts/batch".
+				replace("{segmentId}", String.valueOf(segmentId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -412,7 +434,9 @@ public abstract class BaseSegmentUserResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SegmentUser> page) {
+	protected void assertValid(
+		Page<SegmentUser> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<SegmentUser> segmentUsers = page.getItems();
@@ -427,6 +451,21 @@ public abstract class BaseSegmentUserResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

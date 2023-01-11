@@ -1,0 +1,95 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-162765=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-162765. The page designer could add a 404 error type of utility page."
+	@priority = "5"
+	test Add404ErrorUtilityPage {
+		task ("Given a page designer navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the page designers navigates to the Utility Pages tab") {
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+		}
+
+		task ("Then the page designer can add a 404 error utility page") {
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+
+			LexiconCard.viewCardPresent(card = "404 Error Utility Page");
+
+			LexiconCard.viewCardSubtitle(
+				card = "404 Error Utility Page",
+				cardSubtitle = "404 Error");
+
+			LexiconCard.viewCardLabel(
+				card = "404 Error Utility Page",
+				cardLabel = "Approved");
+		}
+
+		task ("When the page designer navigates to the Static Pages tab") {
+			Navigator.gotoNavTab(navTab = "Static Pages");
+		}
+
+		task ("Then the page designer can see the empty message") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+				value1 = "No Pages yet.");
+		}
+
+		task ("Given the page designer has a static page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the page designer navigates to an non-exist public page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer sees the default 404 page") {
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+		}
+	}
+
+}

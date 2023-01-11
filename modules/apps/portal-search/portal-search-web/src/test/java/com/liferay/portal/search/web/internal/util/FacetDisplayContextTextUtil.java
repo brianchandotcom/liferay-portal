@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Amanda Costa
  */
-public class TestUtil {
+public class FacetDisplayContextTextUtil {
 
 	public static String buildNameFrequencyString(
 		List<BucketDisplayContext> bucketDisplayContexts) {
@@ -161,8 +161,7 @@ public class TestUtil {
 		List<TermCollector> termCollectors = new ArrayList<>();
 
 		for (int i = 0; i < terms.length; i++) {
-			termCollectors.add(
-				createTermCollector(terms[i], frequencies[i]));
+			termCollectors.add(createTermCollector(terms[i], frequencies[i]));
 		}
 
 		return termCollectors;

@@ -47,6 +47,11 @@ if (portletTitleBasedNavigation) {
 %>
 
 <c:if test='<%= portletTitleBasedNavigation && GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
+
+	<%
+	KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
+	%>
+
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
 			<ul class="justify-content-end navbar-nav navbar-nav-expand">
@@ -68,6 +73,13 @@ if (portletTitleBasedNavigation) {
 						%>'
 						icon="pencil"
 						title='<%= LanguageUtil.get(request, "edit") %>'
+					/>
+				</li>
+				<li class="nav-item">
+					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+						dropdownItems="<%= kbDropdownItemsProvider.getKBTemplateMoreActionsDopdownItems(kbTemplate) %>"
+						propsTransformer="admin/js/KBDropdownPropsTransformer"
 					/>
 				</li>
 			</ul>

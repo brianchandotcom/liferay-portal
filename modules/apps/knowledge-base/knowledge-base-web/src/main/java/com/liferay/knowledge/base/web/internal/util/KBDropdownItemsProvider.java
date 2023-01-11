@@ -298,6 +298,30 @@ public class KBDropdownItemsProvider {
 		).build();
 	}
 
+	public List<DropdownItem> getKBTemplateMoreActionsDopdownItems(
+		KBTemplate kbTemplate) {
+
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
+				DropdownItemListBuilder.add(
+					() -> _hasUpdatePermission(kbTemplate),
+					_getEditActionUnsafeConsumer(kbTemplate)
+				).build())
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _hasPermissionsPermission(kbTemplate),
+						_getPermissionsActionUnsafeConsumer(kbTemplate)
+					).add(
+						() -> _hasDeletePermission(kbTemplate),
+						_getDeleteActionUnsafeConsumer(kbTemplate)
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
+	}
+
 	private String _createKBArticleRenderURL(KBArticle kbArticle) {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse

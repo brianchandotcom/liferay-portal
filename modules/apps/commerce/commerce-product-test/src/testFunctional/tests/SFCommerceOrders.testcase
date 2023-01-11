@@ -585,6 +585,87 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for COMMERCE-3111. Assert that user can see an open order after deleting the product, and the product is no longer in the order."
+	@priority = "3"
+	test CanSeeAPlacedOrderWithDeletedProduct {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a minium site with a buyer user and creating an order with a product") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "Bushings",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Bushings",
+				productQuantity = "1",
+				productUnitPrice = "18",
+				shippingMethod = "Standard");
+		}
+
+		task ("When deleting that product from the products page in the admin control panel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceProducts.openProductsAdmin();
+
+			var product = "Bushings";
+
+			CommerceNavigator.searchEntry(entryName = "${product}");
+
+			CommerceProducts.deleteProductsEntry(key_value = "${product}");
+		}
+
+		task ("Then assert that user can see the open order, but the product is no longer in the order on minium site") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			CommerceAcceleratorsInitializer.reviewOrder(
+				orderAuthor = "Buyer User",
+				productName = "Bushings",
+				productPrice = "18.00",
+				productQuantity = "1",
+				productSku = "MIN38795",
+				productUnitPrice = "18.00");
+
+			ClickNoError(
+				key_productName = "Bushings",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+			AssertElementNotPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
+				value1 = "Bushings");
+		}
+	}
+
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
 	@priority = "3"
 	test CreateNewOrderFromPendingOrdersPage {

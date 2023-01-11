@@ -17,7 +17,7 @@ import {ChangeEventHandler, ReactNode} from 'react';
 import './ObjectFieldFormBase.scss';
 interface IProps {
 	children?: ReactNode;
-	creationLanguageId?: Locale;
+	creationLanguageId2?: Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
@@ -41,7 +41,7 @@ export declare type ObjectFieldErrors = FormError<
 >;
 export default function ObjectFieldFormBase({
 	children,
-	creationLanguageId,
+	creationLanguageId2,
 	disabled,
 	editingField,
 	errors,

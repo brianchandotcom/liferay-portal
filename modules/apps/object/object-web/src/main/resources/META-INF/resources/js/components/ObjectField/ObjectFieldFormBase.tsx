@@ -38,7 +38,7 @@ import './ObjectFieldFormBase.scss';
 
 interface IProps {
 	children?: ReactNode;
-	creationLanguageId?: Locale;
+	creationLanguageId2?: Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
@@ -164,7 +164,7 @@ async function getFieldSettingsByBusinessType(
 
 export default function ObjectFieldFormBase({
 	children,
-	creationLanguageId,
+	creationLanguageId2,
 	disabled,
 	editingField,
 	errors,
@@ -341,7 +341,7 @@ export default function ObjectFieldFormBase({
 
 			{values.businessType === 'Aggregation' && (
 				<AggregationFormBase
-					creationLanguageId={creationLanguageId!}
+					creationLanguageId2={creationLanguageId2 as Locale}
 					editingField={editingField}
 					errors={errors}
 					objectDefinitionExternalReferenceCode={

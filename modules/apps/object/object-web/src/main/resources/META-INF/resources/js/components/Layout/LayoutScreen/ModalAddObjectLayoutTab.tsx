@@ -22,8 +22,8 @@ import {
 	AutoComplete,
 	FormError,
 	Input,
-	getLocalizableLabel,
 	REQUIRED_MSG,
+	getLocalizableLabel,
 	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';

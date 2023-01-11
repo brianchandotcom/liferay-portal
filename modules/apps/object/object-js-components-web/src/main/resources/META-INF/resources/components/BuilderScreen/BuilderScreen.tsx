@@ -156,7 +156,7 @@ export function BuilderScreen({
 											: filter
 											? viewColumn?.objectFieldBusinessType
 											: getLocalizableLabel(
-													creationLanguageId!,
+													creationLanguageId as Locale,
 													viewColumn?.label,
 													viewColumn.objectFieldName
 											  )

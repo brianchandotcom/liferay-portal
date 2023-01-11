@@ -16,8 +16,8 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {
 	Card,
 	Input,
-	getLocalizableLabel,
 	REQUIRED_MSG,
+	getLocalizableLabel,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import React from 'react';

@@ -160,7 +160,7 @@ export function ModalAddFilter({
 	const filteredAvailableFields = useMemo(() => {
 		return filterArrayByQuery({
 			array: objectFields,
-			creationLanguageId: creationLanguageId!,
+			creationLanguageId: creationLanguageId as Locale,
 			query,
 			str: 'label',
 		});
@@ -490,7 +490,7 @@ export function ModalAddFilter({
 						query={query}
 						required
 						value={getLocalizableLabel(
-							creationLanguageId!,
+							creationLanguageId as Locale,
 							selectedFilterBy?.label
 						)}
 					>
@@ -498,7 +498,7 @@ export function ModalAddFilter({
 							<div className="d-flex justify-content-between">
 								<div>
 									{getLocalizableLabel(
-										creationLanguageId!,
+										creationLanguageId as Locale,
 										label,
 										name
 									)}

@@ -16,7 +16,7 @@
 
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 interface IAggregationSourcePropertyProps {
-	creationLanguageId: Locale;
+	creationLanguageId2: Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
@@ -29,7 +29,7 @@ interface IAggregationSourcePropertyProps {
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare function AggregationFormBase({
-	creationLanguageId,
+	creationLanguageId2,
 	disabled,
 	errors,
 	editingField,

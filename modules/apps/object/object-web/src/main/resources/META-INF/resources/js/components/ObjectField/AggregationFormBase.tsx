@@ -25,7 +25,7 @@ import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
 interface IAggregationSourcePropertyProps {
-	creationLanguageId: Locale;
+	creationLanguageId2: Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
@@ -68,7 +68,7 @@ const aggregationFunctions = [
 ];
 
 export function AggregationFormBase({
-	creationLanguageId,
+	creationLanguageId2,
 	disabled,
 	errors,
 	editingField,
@@ -191,7 +191,7 @@ export function AggregationFormBase({
 				if (currentSummarizeField) {
 					setSelectedSummarizeField(
 						getLocalizableLabel(
-							creationLanguageId!,
+							creationLanguageId2 as Locale,
 							currentSummarizeField.label,
 							currentSummarizeField.name
 						)
@@ -202,7 +202,7 @@ export function AggregationFormBase({
 			makeFetch();
 		}
 	}, [
-		creationLanguageId,
+		creationLanguageId2,
 		editingField,
 		objectRelationships,
 		objectFieldSettings,
@@ -316,7 +316,7 @@ export function AggregationFormBase({
 	const handleSummarizeFieldChange = (objectField: ObjectField) => {
 		setSelectedSummarizeField(
 			getLocalizableLabel(
-				creationLanguageId!,
+				creationLanguageId2 as Locale,
 				objectField.label,
 				objectField.name
 			)
@@ -353,7 +353,7 @@ export function AggregationFormBase({
 				query={relationshipsQuery}
 				required
 				value={getLocalizableLabel(
-					creationLanguageId!,
+					creationLanguageId2 as Locale,
 					selectedRelatedObjectRelationship?.label,
 					selectedRelatedObjectRelationship?.name
 				)}
@@ -362,7 +362,7 @@ export function AggregationFormBase({
 					<div className="d-flex justify-content-between">
 						<div>
 							{getLocalizableLabel(
-								creationLanguageId!,
+								creationLanguageId2 as Locale,
 								label,
 								name
 							)}
@@ -401,7 +401,7 @@ export function AggregationFormBase({
 						<div className="d-flex justify-content-between">
 							<div>
 								{getLocalizableLabel(
-									creationLanguageId!,
+									creationLanguageId2 as Locale,
 									label,
 									name
 								)}

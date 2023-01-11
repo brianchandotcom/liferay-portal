@@ -36,9 +36,12 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Marco Leo
  * @see CommerceAccountServiceUtil
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ com.liferay.account.service.AccountEntryService}
  * @generated
  */
 @AccessControlled
+@Deprecated
 @JSONWebService
 @ProviderType
 @Transactional(

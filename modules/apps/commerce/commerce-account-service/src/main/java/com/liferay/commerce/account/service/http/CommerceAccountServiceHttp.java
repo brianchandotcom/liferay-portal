@@ -46,8 +46,11 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Marco Leo
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ com.liferay.account.service.AccountEntryService}
  * @generated
  */
+@Deprecated
 public class CommerceAccountServiceHttp {
 
 	public static com.liferay.commerce.account.model.CommerceAccount

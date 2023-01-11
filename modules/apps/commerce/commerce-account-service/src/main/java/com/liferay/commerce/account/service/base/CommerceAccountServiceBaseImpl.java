@@ -37,8 +37,11 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Marco Leo
  * @see com.liferay.commerce.account.service.impl.CommerceAccountServiceImpl
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ com.liferay.account.service.AccountEntryService}
  * @generated
  */
+@Deprecated
 public abstract class CommerceAccountServiceBaseImpl
 	extends BaseServiceImpl
 	implements AopService, CommerceAccountService, IdentifiableOSGiService {

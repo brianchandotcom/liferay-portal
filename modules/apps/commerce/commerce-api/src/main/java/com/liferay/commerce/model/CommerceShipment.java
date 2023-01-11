@@ -61,11 +61,10 @@ public interface CommerceShipment
 
 	public CommerceShippingMethod fetchCommerceShippingMethod();
 
-	public com.liferay.commerce.account.model.CommerceAccount
-			getCommerceAccount()
+	public com.liferay.account.model.AccountEntry getAccountEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public String getCommerceAccountName()
+	public String getAccountEntryName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public CommerceShippingMethod getCommerceShippingMethod()

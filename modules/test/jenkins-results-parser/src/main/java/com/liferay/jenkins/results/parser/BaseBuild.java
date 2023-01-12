@@ -1573,9 +1573,7 @@ public abstract class BaseBuild implements Build {
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
 		String result = getResult();
 
-		if ((result == null) ||
-			(!result.equals("SUCCESS") && !result.equals("UNSTABLE"))) {
-
+		if (result == null) {
 			return null;
 		}
 
@@ -1898,10 +1896,10 @@ public abstract class BaseBuild implements Build {
 		}
 
 		if (!Objects.equals(getStatus(), "completed")) {
-			return !UpstreamFailureUtil.isBuildFailingInUpstreamJob(this);
+			return isFailing();
 		}
 
-		_uniqueFailure = !UpstreamFailureUtil.isBuildFailingInUpstreamJob(this);
+		_uniqueFailure = isFailing();
 
 		return _uniqueFailure;
 	}
@@ -4272,7 +4270,7 @@ public abstract class BaseBuild implements Build {
 
 		_testClassResults = new ConcurrentHashMap<>();
 
-		if (testReportJSONObject == null) {
+		if ((testReportJSONObject == null) || testReportJSONObject.isEmpty()) {
 			return;
 		}
 

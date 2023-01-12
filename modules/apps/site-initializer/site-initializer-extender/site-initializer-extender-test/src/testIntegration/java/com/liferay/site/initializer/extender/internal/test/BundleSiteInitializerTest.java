@@ -643,6 +643,17 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(productLayoutUuid, publicLayout.getUuid());
 	}
 
+	private void _assertDisplayPages(Group group) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				group.getGroupId(), "Test Display Page Template",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		Assert.assertNotNull(layoutPageTemplateEntry);
+		Assert.assertEquals(
+			"Test Display Page Template", layoutPageTemplateEntry.getName());
+	}
+
 	private void _assertDLFileEntry(Group group) throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -1776,6 +1787,7 @@ public class BundleSiteInitializerTest {
 			_assertCPInstanceProperties(group);
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
+			_assertDisplayPages(group);
 			_assertDLFileEntry(group);
 			_assertExpandoColumns(serviceContext);
 			_assertFragmentEntries(group, serviceContext);

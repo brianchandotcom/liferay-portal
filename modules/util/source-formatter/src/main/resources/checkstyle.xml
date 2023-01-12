@@ -688,6 +688,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ResourcePermissionFactoryCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks usage of `*ResourcePermissionFactory` classes." />
+			<property name="enabled" value="false" />
 			<message key="deprecated.get.instance.usage" value="Do not use ''{0}''. Use @Reference instead" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.SelfReferenceCheck">

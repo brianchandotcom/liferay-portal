@@ -254,6 +254,8 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 					_renderResponse
 				).setActionName(
 					"/fragment/delete_fragment_entry_preview"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
 				).setParameter(
 					"fragmentEntryId", _fragmentEntry.getFragmentEntryId()
 				).buildString());

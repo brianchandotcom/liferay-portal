@@ -286,7 +286,7 @@ export default function SearchBar({
 	const _updateQueryString = (queryString) => {
 		const searchParams = new URLSearchParams(queryString);
 
-		if (inputValue) {
+		if (inputValue || emptySearchEnabled) {
 			searchParams.set(
 				keywordsParameterName,
 				inputValue.replace(/^\s+|\s+$/, '')

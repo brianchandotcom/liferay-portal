@@ -15,7 +15,7 @@
 package com.liferay.users.admin.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery.PerformActionMethod;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -51,8 +51,6 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -174,13 +172,13 @@ public class UserGroupCascadeReindexUsersTest {
 	}
 
 	protected List<Group> addGroups(int groupCount) {
-		return Stream.generate(
-			this::addGroup
-		).limit(
-			groupCount
-		).collect(
-			Collectors.toList()
-		);
+		List<Group> groups = new ArrayList<>(groupCount);
+
+		for (int i = 0; i < groupCount; i++) {
+			groups.add(addGroup());
+		}
+
+		return groups;
 	}
 
 	protected User addUser() {
@@ -194,13 +192,13 @@ public class UserGroupCascadeReindexUsersTest {
 	}
 
 	protected List<User> addUsers(int count) {
-		return Stream.generate(
-			this::addUser
-		).limit(
-			count
-		).collect(
-			Collectors.toList()
-		);
+		List<User> users = new ArrayList<>(count);
+
+		for (int i = 0; i < count; i++) {
+			users.add(addUser());
+		}
+
+		return users;
 	}
 
 	protected void doTraverseWithActionableDynamicQuery(
@@ -294,18 +292,22 @@ public class UserGroupCascadeReindexUsersTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private String _getAllGroupIdsString(List<Group> groups) {
-		Stream<Group> stream = groups.stream();
+		List<String> sortedGroupsIds = TransformUtil.transform(
+			groups, group -> String.valueOf(group.getGroupId()));
 
-		return _toSortedListString(stream.map(Group::getGroupId));
+		sortedGroupsIds.sort(String::compareTo);
+
+		return sortedGroupsIds.toString();
 	}
 
 	private long[] _getAllUserIds(List<User> users) {
-		Stream<User> stream = users.stream();
+		long[] userIds = new long[users.size()];
 
-		return stream.mapToLong(
-			User::getUserId
-		).toArray();
-	}
+		for (int i = 0; i < users.size(); i++) {
+			User user = users.get(i);
+
+			userIds[i] = user.getUserId();
+		}
 
 		return userIds;
 	}
@@ -320,29 +322,13 @@ public class UserGroupCascadeReindexUsersTest {
 	}
 
 	private String _repeat(String s, int times) {
-		return _toListString(
-			Stream.generate(
-				() -> s
-			).limit(
-				times
-			));
-	}
+		List<String> strings = new ArrayList<>(times);
 
-	private String _toListString(Stream<?> stream) {
-		return stream.map(
-			String::valueOf
-		).collect(
-			Collectors.joining(
-				StringPool.COMMA_AND_SPACE, StringPool.OPEN_BRACKET,
-				StringPool.CLOSE_BRACKET)
-		);
-	}
+		for (int i = 0; i < times; i++) {
+			strings.add(s);
+		}
 
-	private String _toSortedListString(Stream<?> stream) {
-		return _toListString(
-			stream.map(
-				String::valueOf
-			).sorted());
+		return strings.toString();
 	}
 
 	private void _translate(User user) {
@@ -375,7 +361,6 @@ public class UserGroupCascadeReindexUsersTest {
 	private static UserLocalService _userLocalService;
 
 	private int _groupCount;
-
 	private int _userCount;
 
 }

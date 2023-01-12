@@ -118,7 +118,7 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	@Override
-	protected void subscribeToContainer() {
+	protected void subscribeToContainer() throws Exception {
 		MailServiceTestUtil.clearMessages();
 
 		_userNotificationEventLocalService.deleteUserNotificationEvents(

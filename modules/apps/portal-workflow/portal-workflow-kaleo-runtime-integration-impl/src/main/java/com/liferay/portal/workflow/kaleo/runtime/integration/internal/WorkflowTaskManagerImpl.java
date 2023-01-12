@@ -1148,7 +1148,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 							kaleoTaskInstanceToken.getGroupId(),
 							kaleoTaskAssignment.getAssigneeClassPK())) {
 
-				users.addAll(
+				userGroupGroupRolesUsers.addAll(
 					_userLocalService.getUserGroupUsers(
 						userGroupGroupRole.getUserGroupId()));
 			}

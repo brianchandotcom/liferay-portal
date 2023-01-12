@@ -32,6 +32,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.StartupFailu
 import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.io.IOException;
@@ -41,7 +42,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.zip.GZIPInputStream;
 
@@ -50,6 +53,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -182,6 +187,14 @@ public class DownstreamBuild extends BaseBuild {
 		if (result.equals("ABORTED")) {
 			messageElement.add(
 				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
+
+			List<Element> untestedElements = getTestResultGitHubElements(
+				getUniqueFailureTestResults(), true);
+
+			if (!untestedElements.isEmpty()) {
+				Dom4JUtil.getOrderedListElement(
+					untestedElements, messageElement, 3);
+			}
 		}
 
 		if (result.equals("FAILURE")) {
@@ -189,6 +202,14 @@ public class DownstreamBuild extends BaseBuild {
 
 			if (failureMessageElement != null) {
 				messageElement.add(failureMessageElement);
+			}
+
+			List<Element> untestedElements = getTestResultGitHubElements(
+				getUniqueFailureTestResults(), true);
+
+			if (!untestedElements.isEmpty()) {
+				Dom4JUtil.getOrderedListElement(
+					untestedElements, messageElement, 3);
 			}
 		}
 
@@ -223,6 +244,45 @@ public class DownstreamBuild extends BaseBuild {
 		return messageElement;
 	}
 
+	public HashMap<String, List<String>> getTestClassMap() {
+		HashMap<String, List<String>> classNamesMethodsList = new HashMap<>();
+
+		if (!getBatchName().contains("modules-integration")) {
+			return classNamesMethodsList;
+		}
+
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		if ((axisTestClassGroup != null) &&
+			axisTestClassGroup.hasTestClasses()) {
+
+			List<TestClass> testClasses = axisTestClassGroup.getTestClasses();
+
+			for (TestClass testClass : testClasses) {
+				if (testClass instanceof JUnitTestClass) {
+					JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
+
+					List<String> methodNames = new ArrayList<>();
+
+					for (TestClassMethod testClassMethod :
+							testClass.getTestClassMethods()) {
+
+						String testMethodName = testClassMethod.getName();
+
+						if (!methodNames.contains(testMethodName)) {
+							methodNames.add(testClassMethod.getName());
+						}
+					}
+
+					classNamesMethodsList.put(
+						jUnitTestClass.getTestClassName(), methodNames);
+				}
+			}
+		}
+
+		return classNamesMethodsList;
+	}
+
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testStatus)) {
@@ -254,7 +314,77 @@ public class DownstreamBuild extends BaseBuild {
 			}
 		}
 
+		uniqueFailureTestResults.addAll(getUntestedTestResults());
+
 		return uniqueFailureTestResults;
+	}
+
+	public List<TestResult> getUntestedTestResults() {
+		HashMap<String, List<String>> untestedTestsMap = getUntestedTestsMap();
+
+		if (untestedTestsMap.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		List<TestResult> untestedTestResults = new ArrayList<>();
+
+		for (Map.Entry<String, List<String>> entry :
+				untestedTestsMap.entrySet()) {
+
+			List<String> testClassMethods = entry.getValue();
+
+			if (!testClassMethods.isEmpty()) {
+				for (String methodName : testClassMethods) {
+					String testClassName = entry.getKey();
+
+					JSONObject caseJSONObject = new JSONObject();
+
+					caseJSONObject.put("className", testClassName);
+					caseJSONObject.put("duration", 0);
+					caseJSONObject.put(
+						"errorDetails",
+						"The build failed prior to running the test.");
+					caseJSONObject.put("errorStackTrace", "");
+					caseJSONObject.put("name", methodName);
+					caseJSONObject.put("status", "UNTESTED");
+					caseJSONObject.put("testName", methodName);
+
+					untestedTestResults.add(
+						TestResultFactory.newTestResult(this, caseJSONObject));
+				}
+			}
+		}
+
+		return untestedTestResults;
+	}
+
+	public HashMap<String, List<String>> getUntestedTestsMap() {
+		HashMap<String, List<String>> testClassMap = getTestClassMap();
+
+		if (testClassMap.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		List<TestResult> testResults = getTestResults();
+
+		if (testResults.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		for (TestResult testResult : testResults) {
+			String testResultClassName = testResult.getClassName();
+
+			if (testClassMap.containsKey(testResultClassName)) {
+				List<String> classMethods = testClassMap.get(
+					testResultClassName);
+
+				classMethods.remove(testResult.getTestName());
+
+				testClassMap.put(testResultClassName, classMethods);
+			}
+		}
+
+		return testClassMap;
 	}
 
 	@Override

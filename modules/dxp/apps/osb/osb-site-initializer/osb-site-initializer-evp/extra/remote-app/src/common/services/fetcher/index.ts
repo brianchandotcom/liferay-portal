@@ -69,6 +69,34 @@ const fetcher = async <T = any>(
 	}
 };
 
+fetcher.downloadZipContent = async (
+	resource: RequestInfo,
+	options?: RequestInit
+) => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(changeResource(resource), {
+		...options,
+		headers: {
+			'x-csrf-token': Liferay.authToken,
+			...options?.headers,
+		},
+	});
+
+	if (!response.ok) {
+		const error = new FetcherError(
+			'An error occurred while fetching the data.'
+		);
+
+		error.info = await response.json();
+		error.status = response.status;
+		throw error;
+	}
+
+	if (options?.method !== 'DELETE' && response.status !== 204) {
+		return response.blob();
+	}
+};
+
 fetcher.delete = (resource: RequestInfo) =>
 	fetcher(resource, {
 		method: 'DELETE',

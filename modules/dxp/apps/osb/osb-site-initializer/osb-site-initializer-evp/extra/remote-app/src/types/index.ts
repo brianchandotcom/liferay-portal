@@ -66,3 +66,9 @@ export enum FIELDSREPORT {
 	ORGANIZATIONNAME = 'organizationName',
 	REQUESTSTATUS = 'requestStatus',
 }
+
+export enum STATUS {
+	COMPLETED = 'COMPLETED',
+	FAILED = 'FAILED',
+	INITIAL = 'INITIAL',
+}

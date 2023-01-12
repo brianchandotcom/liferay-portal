@@ -14,12 +14,19 @@ import {useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 
 import Form from '../../../common/components/Form';
+import LoadingIndicator from '../../../common/components/Form/LoadingIndicator';
 import yupSchema, {yupResolver} from '../../../common/schema/yup';
+import {
+	downloadContentById,
+	exportTask,
+	readyToDownload,
+} from '../../../common/services/export';
 import {getPicklistByName} from '../../../common/services/picklist';
 import {getRequestsByFilter} from '../../../common/services/request';
 import {
 	FIELDSREPORT,
 	LiferayBranchType,
+	STATUS,
 	Statustype,
 } from '../../../types/index';
 
@@ -30,6 +37,7 @@ export type generateReportsType = typeof yupSchema.report.__outputType;
 const GenerateReport = () => {
 	const [statuses, setStatuses] = useState<any>([]);
 	const [branches, setBranches] = useState<any>([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const {
 		clearErrors,
@@ -85,7 +93,23 @@ const GenerateReport = () => {
 		return true;
 	};
 
-	const onSubmit: SubmitHandler<generateReportsType> = (data: any) => {
+	const downloadCsvFiltered = async () => {
+		setIsLoading(true);
+		const task = await exportTask('csv');
+
+		setTimeout(async () => {
+			readyToDownload(task.id)
+				.then(async (response) => {
+					if (response.executeStatus === STATUS.COMPLETED) {
+						await downloadContentById(task.id);
+					}
+					setIsLoading(false);
+				})
+				.catch(console.error);
+		}, 1000);
+	};
+
+	const onSubmit: SubmitHandler<generateReportsType> = async (data: any) => {
 		const dateCheck = validateDate(
 			data.initialRequestDate,
 			data.finalRequestDate
@@ -95,7 +119,8 @@ const GenerateReport = () => {
 			return;
 		}
 
-		getRequestsByFilter(data).then((response) => response);
+		await downloadCsvFiltered();
+		await getRequestsByFilter(data).then((response) => response);
 	};
 
 	const branchesWatch = watch('liferayBranch') as string[];
@@ -139,145 +164,153 @@ const GenerateReport = () => {
 
 	useEffect(() => {
 		loadPickLists();
+
+		setTimeout(() => setIsLoading(false), 1000);
 	}, []);
 
 	return (
 		<>
-			<ClayForm>
-				<div className="row">
-					<div className="col">
-						<Form.DatePicker
-							clearErrors={clearErrors}
-							errors={errors}
-							id="initialRequestDate"
-							label="Initial Request Date"
-							{...register('initialRequestDate')}
-							name="initialRequestDate"
-							placeholder="YYYY-MM-DD"
-							setValue={setValue}
-						/>
+			{isLoading ? (
+				<LoadingIndicator />
+			) : (
+				<ClayForm>
+					<div className="row">
+						<div className="col">
+							<Form.DatePicker
+								clearErrors={clearErrors}
+								errors={errors}
+								id="initialRequestDate"
+								label="Initial Request Date"
+								{...register('initialRequestDate')}
+								name="initialRequestDate"
+								placeholder="YYYY-MM-DD"
+								setValue={setValue}
+							/>
+						</div>
+
+						<div className="col">
+							<Form.DatePicker
+								clearErrors={clearErrors}
+								errors={errors}
+								id="finalRequestDate"
+								label="Final Request Date"
+								{...register('finalRequestDate')}
+								name="finalRequestDate"
+								placeholder="YYYY-MM-DD"
+								setValue={setValue}
+							/>
+						</div>
 					</div>
 
-					<div className="col">
-						<Form.DatePicker
-							clearErrors={clearErrors}
-							errors={errors}
-							id="finalRequestDate"
-							label="Final Request Date"
-							{...register('finalRequestDate')}
-							name="finalRequestDate"
-							placeholder="YYYY-MM-DD"
-							setValue={setValue}
-						/>
-					</div>
-				</div>
-
-				<div className="row">
-					<div className="col">
-						<Form.Input
-							{...formProps}
-							label="Full Name"
-							name="fullName"
-							placeholder="Full name"
-						/>
-					</div>
-				</div>
-
-				<div className="row">
-					<div className="col">
-						<Form.Input
-							{...formProps}
-							label="Initial Company ID"
-							min={0}
-							name="initialCompanyId"
-							placeholder="Company ID"
-							type="number"
-						/>
+					<div className="row">
+						<div className="col">
+							<Form.Input
+								{...formProps}
+								label="Full Name"
+								name="fullName"
+								placeholder="Full name"
+							/>
+						</div>
 					</div>
 
-					<div className="col">
-						<Form.Input
-							{...formProps}
-							label="Final Company ID"
-							min={0}
-							name="finalCompanyId"
-							placeholder="Initial Company ID"
-							type="number"
-						/>
+					<div className="row">
+						<div className="col">
+							<Form.Input
+								{...formProps}
+								label="Initial Company ID"
+								min={0}
+								name="initialCompanyId"
+								placeholder="Company ID"
+								type="number"
+							/>
+						</div>
+
+						<div className="col">
+							<Form.Input
+								{...formProps}
+								label="Final Company ID"
+								min={0}
+								name="finalCompanyId"
+								placeholder="Initial Company ID"
+								type="number"
+							/>
+						</div>
 					</div>
-				</div>
 
-				<div className="row">
-					<div className="col">
-						<Form.Input
-							{...formProps}
-							label="Company Name"
-							name="organizationName"
-							placeholder="Company Name"
-						/>
+					<div className="row">
+						<div className="col">
+							<Form.Input
+								{...formProps}
+								label="Company Name"
+								name="organizationName"
+								placeholder="Company Name"
+							/>
+						</div>
 					</div>
-				</div>
 
-				<div className="row">
-					<div className="col">
-						<label>Statuses</label>
+					<div className="row">
+						<div className="col">
+							<label>Statuses</label>
 
-						{statuses.map((status: Statustype, index: number) => (
-							<div
-								className="align-items-center d-flex"
-								key={index}
+							{statuses.map(
+								(status: Statustype, index: number) => (
+									<div
+										className="align-items-center d-flex"
+										key={index}
+									>
+										<Form.Checkbox
+											checked={statusesWatch?.includes(
+												status.key
+											)}
+											id="requestStatus"
+											label={status.name}
+											name="requestStatus"
+											onChange={onClickStatus}
+											value={status.key}
+										/>
+									</div>
+								)
+							)}
+						</div>
+
+						<div className="col">
+							<label>Liferay Branch</label>
+
+							{branches.map(
+								(branch: LiferayBranchType, index: number) => (
+									<div
+										className="align-items-center d-flex"
+										key={index}
+									>
+										<Form.Checkbox
+											checked={branchesWatch?.includes(
+												branch.key
+											)}
+											id="liferayBranch"
+											label={branch.name}
+											name="liferayBranch"
+											onChange={onClickBranches}
+											value={branch.key}
+										/>
+									</div>
+								)
+							)}
+						</div>
+					</div>
+
+					<div className="mt-4 row">
+						<div className="col d-flex justify-content-end">
+							<Form.Button
+								className="px-4"
+								displayType="primary"
+								onClick={handleSubmit(onSubmit)}
 							>
-								<Form.Checkbox
-									checked={statusesWatch?.includes(
-										status.key
-									)}
-									id="requestStatus"
-									label={status.name}
-									name="requestStatus"
-									onChange={onClickStatus}
-									value={status.key}
-								/>
-							</div>
-						))}
+								Generate
+							</Form.Button>
+						</div>
 					</div>
-
-					<div className="col">
-						<label>Liferay Branch</label>
-
-						{branches.map(
-							(branch: LiferayBranchType, index: number) => (
-								<div
-									className="align-items-center d-flex"
-									key={index}
-								>
-									<Form.Checkbox
-										checked={branchesWatch?.includes(
-											branch.key
-										)}
-										id="liferayBranch"
-										label={branch.name}
-										name="liferayBranch"
-										onChange={onClickBranches}
-										value={branch.key}
-									/>
-								</div>
-							)
-						)}
-					</div>
-				</div>
-
-				<div className="mt-4 row">
-					<div className="col d-flex justify-content-end">
-						<Form.Button
-							className="px-4"
-							displayType="primary"
-							onClick={handleSubmit(onSubmit)}
-						>
-							Generate
-						</Form.Button>
-					</div>
-				</div>
-			</ClayForm>
+				</ClayForm>
+			)}
 		</>
 	);
 };

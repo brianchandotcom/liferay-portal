@@ -2473,8 +2473,6 @@ definition {
 	@description = "LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization"
 	@priority = "5"
 	test CanViewOnlySelectedColumns {
-		property portal.acceptance = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147771",
 			objectName = "CustomObject147771",

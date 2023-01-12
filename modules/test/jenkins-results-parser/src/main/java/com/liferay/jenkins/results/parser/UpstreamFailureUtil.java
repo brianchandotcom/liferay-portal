@@ -180,39 +180,6 @@ public class UpstreamFailureUtil {
 		return null;
 	}
 
-	public static boolean isBuildFailingInUpstreamJob(Build build) {
-		if (!_upstreamComparisonAvailable || !build.isCompareToUpstream()) {
-			return false;
-		}
-
-		try {
-			List<TestResult> testResults = new ArrayList<>();
-
-			testResults.addAll(build.getTestResults("FAILED"));
-			testResults.addAll(build.getTestResults("REGRESSION"));
-
-			if (testResults.isEmpty()) {
-				return _isBuildFailingInUpstreamJob(build);
-			}
-
-			for (TestResult testResult : testResults) {
-				if (testResult.isUniqueFailure()) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-		catch (Exception exception) {
-			System.out.println(
-				"Unable to get upstream acceptance failure data.");
-
-			exception.printStackTrace();
-
-			return false;
-		}
-	}
-
 	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
 		Build build = testResult.getBuild();
 
@@ -433,36 +400,6 @@ public class UpstreamFailureUtil {
 		catch (IOException ioException) {
 			return null;
 		}
-	}
-
-	private static boolean _isBuildFailingInUpstreamJob(Build build) {
-		String jobVariant = build.getJobVariant();
-
-		if (jobVariant == null) {
-			return false;
-		}
-
-		String result = build.getResult();
-
-		if (result == null) {
-			return false;
-		}
-
-		String batchName = _getBatchName(jobVariant);
-
-		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
-
-		for (String upstreamJobFailure :
-				_getUpstreamJobFailures("build", topLevelBuild)) {
-
-			if (upstreamJobFailure.equals(
-					_formatUpstreamBuildFailure(batchName, result))) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static boolean _upstreamComparisonAvailable = true;

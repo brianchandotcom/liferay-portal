@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -398,6 +399,30 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		if (loadedLayoutsCount > end) {
 			end = loadedLayoutsCount;
+		}
+
+		long loadMoreParentLayoutId = GetterUtil.getLong(
+			httpServletRequest.getAttribute(
+				ProductNavigationProductMenuWebKeys.LOAD_MORE_PARENT_LAYOUT_ID),
+			-1);
+
+		if (loadMoreParentLayoutId == parentLayoutId) {
+			String key = StringBundler.concat(
+				treeId, StringPool.COLON, groupId, StringPool.COLON,
+				privateLayout, ":Pagination");
+
+			String paginationJSON = SessionClicks.get(
+				httpServletRequest.getSession(), key,
+				_jsonFactory.getNullJSON());
+
+			JSONObject paginationJSONObject = _jsonFactory.createJSONObject(
+				paginationJSON);
+
+			paginationJSONObject.put(String.valueOf(parentLayoutId), end);
+
+			SessionClicks.put(
+				httpServletRequest.getSession(), key,
+				paginationJSONObject.toString());
 		}
 
 		end = Math.max(start, Math.min(end, count));

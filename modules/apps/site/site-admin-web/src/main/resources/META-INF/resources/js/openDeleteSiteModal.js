@@ -36,6 +36,7 @@ export default function openDeleteSiteModal({multiple = false, onDelete}) {
 				},
 			},
 		],
+		role: 'alert',
 		status: 'danger',
 		title: sub(
 			Liferay.Language.get('delete-x'),

@@ -53,7 +53,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.Servlet;

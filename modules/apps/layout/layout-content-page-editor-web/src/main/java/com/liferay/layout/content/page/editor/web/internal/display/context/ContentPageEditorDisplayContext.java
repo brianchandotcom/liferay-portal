@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -98,6 +99,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -118,7 +120,9 @@ import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperimentRelLocalServiceUtil;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.staging.StagingGroupHelper;
@@ -554,7 +558,14 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"portletNamespace", getPortletNamespace()
 			).put(
-				"publishURL", getPublishURL()
+				"publishURL",
+				() -> {
+					if (_isSegmentsExperimentVariant()) {
+						return getSaveVariantSegmentsExperienceURL();
+					}
+
+					return getPublishURL();
+				}
 			).put(
 				"redirectURL", _getRedirect()
 			).put(
@@ -760,6 +771,21 @@ public class ContentPageEditorDisplayContext {
 	public String getPublishURL() {
 		return getFragmentEntryActionURL(
 			"/layout_content_page_editor/publish_layout");
+	}
+
+	public String getSaveVariantSegmentsExperienceURL() {
+		String portletId = _getPortletId(httpServletRequest);
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createActionURL(portletId)
+		).setActionName(
+			"/layout_content_page_editor/save_variant_segments_experience"
+		).setParameter(
+			"segmentsExperienceId", getSegmentsExperienceId()
+		).buildString();
 	}
 
 	public List<Map<String, Object>> getSidebarPanels() {
@@ -1577,6 +1603,16 @@ public class ContentPageEditorDisplayContext {
 		return _masterLayoutStructure;
 	}
 
+	private String _getPortletId(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getId();
+	}
+
 	private String _getPortletId(String content) {
 		Document document = Jsoup.parse(content);
 
@@ -1790,6 +1826,27 @@ public class ContentPageEditorDisplayContext {
 
 			return false;
 		}
+	}
+
+	private boolean _isSegmentsExperimentVariant() {
+		long segmentsExperienceId = getSegmentsExperienceId();
+
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		if ((segmentsExperience != null) && !segmentsExperience.isActive()) {
+			List<SegmentsExperimentRel> segmentsExperimentRelList =
+				SegmentsExperimentRelLocalServiceUtil.
+					getSegmentsExperimentRelsBySegmentsExperienceId(
+						segmentsExperienceId);
+
+			if (ListUtil.isNotEmpty(segmentsExperimentRelList)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

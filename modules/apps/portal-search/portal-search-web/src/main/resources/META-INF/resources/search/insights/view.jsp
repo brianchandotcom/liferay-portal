@@ -59,7 +59,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 						"selector", ".search-insights-copy-to-clipboard"
 					).build()
 				%>'
-				module="js/utils/initializeClipboard"
+				module="js/utils/initialize_clipboard"
 			/>
 
 			<liferay-ui:panel-container

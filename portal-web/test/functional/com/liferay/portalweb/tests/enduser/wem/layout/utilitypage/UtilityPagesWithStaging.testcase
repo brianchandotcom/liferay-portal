@@ -1,0 +1,129 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-162765=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Enable local live") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-162765. The page designer could use the 404 error type of utility page in staging and live site."
+	@priority = "4"
+	test Apply404ErrorUtilityPage {
+		task ("Given a page designer has a 404 error utility page and a static page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Mark as Default",
+				pageName = "404 Error Utility Page");
+
+			Alert.viewSuccessMessage();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false");
+
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("When the page designer navigates to an non-exist public page in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Then the page designer sees the default 404 page") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+
+		task ("When the page designer navigates to the Pages admin in staging site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+		}
+
+		task ("Then the page designer sees the 404 error utility page") {
+			LexiconCard.viewCardPresent(card = "404 Error Utility Page");
+		}
+
+		task ("When the page designer navigates to an non-exist public page in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer sees the default 404 page") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+
+		task ("When the page designer navigates to the Pages admin in live site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+		}
+
+		task ("Then the page designer cannot add a new 404 error utility page or edit the existing 404 error utility page") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "404 Error Utility Page",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Edit");
+		}
+	}
+
+}

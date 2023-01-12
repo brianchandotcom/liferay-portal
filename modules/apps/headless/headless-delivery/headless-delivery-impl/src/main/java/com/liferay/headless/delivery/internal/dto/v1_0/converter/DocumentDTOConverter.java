@@ -82,8 +82,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -203,19 +201,13 @@ public class DocumentDTOConverter
 			return new AdaptedImage[0];
 		}
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		return TransformUtil.transformToArray(
+			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).withConfigurationStatus(
 					AMImageQueryBuilder.ConfigurationStatus.ANY
-				).done());
-
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
-		return TransformUtil.transformToArray(
-			adaptiveMedias,
+				).done()),
 			adaptiveMedia -> _toAdaptedImage(
 				adaptiveMedia, dtoConverterContext.getUriInfoOptional()),
 			AdaptedImage.class);

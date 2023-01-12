@@ -40,7 +40,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -103,13 +103,14 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).done());
 
-		Assert.assertEquals(0, adaptiveMediaStream.count());
+		Assert.assertEquals(
+			adaptiveMedias.toString(), 0, adaptiveMedias.size());
 	}
 
 	@Test
@@ -118,13 +119,15 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).done());
 
-		Assert.assertEquals(_getVariantsCount(), adaptiveMediaStream.count());
+		Assert.assertEquals(
+			adaptiveMedias.toString(), _getVariantsCount(),
+			adaptiveMedias.size());
 	}
 
 	@Test
@@ -135,13 +138,14 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).done());
 
-		Assert.assertEquals(0, adaptiveMediaStream.count());
+		Assert.assertEquals(
+			adaptiveMedias.toString(), 0, adaptiveMedias.size());
 	}
 
 	@Test
@@ -152,13 +156,14 @@ public class AMImageProcessorTest {
 
 		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).done());
 
-		Assert.assertEquals(0, adaptiveMediaStream.count());
+		Assert.assertEquals(
+			adaptiveMedias.toString(), 0, adaptiveMedias.size());
 	}
 
 	@Test
@@ -169,13 +174,14 @@ public class AMImageProcessorTest {
 
 		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).done());
 
-		Assert.assertEquals(0, adaptiveMediaStream.count());
+		Assert.assertEquals(
+			adaptiveMedias.toString(), 0, adaptiveMedias.size());
 	}
 
 	private FileEntry _addImageFileEntry(ServiceContext serviceContext)

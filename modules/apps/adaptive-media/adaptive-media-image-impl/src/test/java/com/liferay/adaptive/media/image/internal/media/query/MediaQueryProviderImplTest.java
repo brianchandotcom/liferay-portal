@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URI;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -68,9 +69,9 @@ public class MediaQueryProviderImplTest {
 	@Before
 	public void setUp() throws PortalException {
 		Mockito.when(
-			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> Stream.empty()
+			invocation -> new ArrayList<>()
 		);
 
 		Mockito.when(
@@ -646,7 +647,7 @@ public class MediaQueryProviderImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
 			invocation -> {
 				Function<AMImageQueryBuilder, AMQuery<?, ?>>
@@ -677,11 +678,11 @@ public class MediaQueryProviderImplTest {
 						configurationUuid.equals(
 							amImageQueryBuilderImpl.getConfigurationUuid())) {
 
-						return Stream.of(adaptiveMedia);
+						return Arrays.asList(adaptiveMedia);
 					}
 				}
 
-				return Stream.empty();
+				return new ArrayList<>();
 			}
 		);
 	}

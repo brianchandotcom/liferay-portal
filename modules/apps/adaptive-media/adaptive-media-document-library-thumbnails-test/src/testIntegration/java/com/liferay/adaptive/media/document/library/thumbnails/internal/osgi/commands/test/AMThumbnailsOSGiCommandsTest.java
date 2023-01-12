@@ -58,8 +58,8 @@ import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -345,13 +345,13 @@ public class AMThumbnailsOSGiCommandsTest {
 	}
 
 	private long _getAdaptiveMediaCount(FileEntry fileEntry) throws Exception {
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).done());
 
-		return adaptiveMediaStream.count();
+		return adaptiveMedias.size();
 	}
 
 	private int _getThumbnailCount() throws Exception {

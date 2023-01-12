@@ -56,15 +56,13 @@ definition {
 
 			Pause(locator1 = "19000");
 
-			if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger",
-				locator1 = "ClayAlertToast#ALERT_TOAST")) {
+			if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger", locator1 = "ClayAlertToast#ALERT_TOAST")) {
 
 				// For LPS-170578, need this to pause longer than the auto close time of the fail message
 
 				Pause(locator1 = "1100");
 
-				if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger",
-				locator1 = "ClayAlertToast#ALERT_TOAST")) {
+				if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger", locator1 = "ClayAlertToast#ALERT_TOAST")) {
 					fail("Alert message did not disappear after 20 seconds");
 				}
 			}

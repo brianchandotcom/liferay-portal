@@ -35,4 +35,8 @@
 	body.open & {
 		left: calc(320px + #{$frame-size});
 	}
+
+	.btn {
+		height: 3.75rem;
+	}
 }

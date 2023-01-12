@@ -168,9 +168,16 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
-			printWriter.write("<div class=\"categories-input\">");
+			printWriter.write("<div");
 
-			_writeCss(fragmentRendererContext, printWriter);
+			if (Objects.equals(
+					fragmentRendererContext.getMode(),
+					FragmentEntryLinkConstants.EDIT)) {
+
+				printWriter.write(" inert");
+			}
+
+			printWriter.write(StringPool.GREATER_THAN);
 
 			AssetCategoriesSelectorTag assetCategoriesSelectorTag =
 				new AssetCategoriesSelectorTag();
@@ -281,22 +288,6 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 		}
 
 		return new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC};
-	}
-
-	private void _writeCss(
-		FragmentRendererContext fragmentRendererContext,
-		PrintWriter printWriter) {
-
-		if (Objects.equals(
-				fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)) {
-
-			printWriter.write(
-				StringUtil.read(
-					getClass(),
-					"/com/liferay/fragment/renderer/categorization/inputs" +
-						"/internal/dependencies/styles.html"));
-		}
 	}
 
 	private void _writeDisabledCategorizationAlert(

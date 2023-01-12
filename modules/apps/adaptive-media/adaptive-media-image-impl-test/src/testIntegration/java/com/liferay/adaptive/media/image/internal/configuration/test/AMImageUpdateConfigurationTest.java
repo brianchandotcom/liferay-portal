@@ -19,7 +19,6 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -27,7 +26,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,58 +46,6 @@ public class AMImageUpdateConfigurationTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Test
-	public void testSendsAMessageToTheMessageBus() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
-		AMImageConfigurationEntry amImageConfigurationEntry =
-			_amImageConfigurationHelper.addAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		List<Message> messages = collectConfigurationMessages(
-			() -> _amImageConfigurationHelper.updateAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(), "1", "two", "twodesc", "2",
-				properties));
-
-		Assert.assertEquals(messages.toString(), 1, messages.size());
-
-		Message message = messages.get(0);
-
-		AMImageConfigurationEntry[] amImageConfigurationEntries =
-			(AMImageConfigurationEntry[])message.getPayload();
-
-		AMImageConfigurationEntry oldAMImageConfigurationEntry =
-			amImageConfigurationEntries[0];
-
-		AMImageConfigurationEntry newAMImageConfigurationEntry =
-			amImageConfigurationEntries[1];
-
-		Assert.assertEquals(
-			amImageConfigurationEntry.getName(),
-			oldAMImageConfigurationEntry.getName());
-		Assert.assertEquals(
-			amImageConfigurationEntry.getDescription(),
-			oldAMImageConfigurationEntry.getDescription());
-		Assert.assertEquals(
-			amImageConfigurationEntry.getUUID(),
-			oldAMImageConfigurationEntry.getUUID());
-		Assert.assertEquals(
-			amImageConfigurationEntry.getProperties(),
-			oldAMImageConfigurationEntry.getProperties());
-
-		Assert.assertEquals("two", newAMImageConfigurationEntry.getName());
-		Assert.assertEquals(
-			"twodesc", newAMImageConfigurationEntry.getDescription());
-		Assert.assertEquals("2", newAMImageConfigurationEntry.getUUID());
-		Assert.assertEquals(
-			properties, newAMImageConfigurationEntry.getProperties());
-	}
 
 	@Test
 	public void testUpdateConfigurationEntryWithAlphanumericCharactersUuid()

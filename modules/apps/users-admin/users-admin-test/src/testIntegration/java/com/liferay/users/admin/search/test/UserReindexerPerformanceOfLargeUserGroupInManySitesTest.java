@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.configuration.ReindexerConfiguration;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
@@ -56,8 +57,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -160,13 +159,9 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	}
 
 	protected void addGroups(int groupCount, List<Group> groups) {
-		Stream.generate(
-			this::addGroup
-		).limit(
-			groupCount
-		).forEach(
-			groups::add
-		);
+		for (int i = 0; i < groupCount; i++) {
+			groups.add(addGroup());
+		}
 	}
 
 	protected void addGroupUserGroup(Group group, UserGroup userGroup) {
@@ -294,13 +289,8 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	protected void reindex(List<User> users) {
 		User user = users.get(0);
 
-		Stream<Long> stream = _getUserIdsStream(users);
-
 		_reindexer.reindex(
-			user.getCompanyId(), _CLASS_NAME,
-			stream.mapToLong(
-				Long::longValue
-			).toArray());
+			user.getCompanyId(), _CLASS_NAME, _getUserIds(users));
 	}
 
 	protected SearchResponse searchUsersInAllGroups(
@@ -337,16 +327,32 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private String _getTimesReport(Map<String, String> map) {
-		Set<Map.Entry<String, String>> set = map.entrySet();
+		StringBundler sb = new StringBundler((2 * map.size()) + 1);
 
-		Stream<Map.Entry<String, String>> stream = set.stream();
+		sb.append(StringPool.NEW_LINE);
 
-		return stream.map(
-			String::valueOf
-		).collect(
-			Collectors.joining(
-				StringPool.NEW_LINE, StringPool.NEW_LINE, StringPool.NEW_LINE)
-		);
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			sb.append(String.valueOf(entry));
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.NEW_LINE);
+
+		return sb.toString();
+	}
+
+	private long[] _getUserIds(List<User> users) {
+		long[] userIds = new long[users.size()];
+
+		for (int i = 0; i < users.size(); i++) {
+			User user = users.get(i);
+
+			userIds[i] = user.getUserId();
+		}
+
+		return userIds;
 	}
 
 	private Stream<Long> _getUserIdsStream(List<User> users) {

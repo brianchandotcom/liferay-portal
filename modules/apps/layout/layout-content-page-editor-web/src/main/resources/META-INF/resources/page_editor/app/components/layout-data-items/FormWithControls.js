@@ -32,16 +32,7 @@ import isItemEmpty from '../../utils/isItemEmpty';
 import ContainerWithControls from './ContainerWithControls';
 
 const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
-	const isMapped = formIsMapped(item);
-
-	const isEmpty = useSelectorCallback(
-		(state) =>
-			isItemEmpty(item, state.layoutData, state.selectedViewportSize),
-		[item]
-	);
-
 	const showMessagePreview = item.config?.showMessagePreview;
-	const showLoadingState = item.config?.loading;
 
 	return (
 		<form
@@ -52,22 +43,35 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 			ref={ref}
 		>
 			<ContainerWithControls {...rest} item={item}>
-				{showLoadingState ? (
-					<FormLoadingState />
-				) : isEmpty || !isMapped ? (
-					<FormEmptyState isMapped={isMapped} item={item} />
-				) : Liferay.FeatureFlags['LPS-169923'] &&
-				  !formHasPermissions(item) ? (
-					<PermissionRestrictionMessage />
-				) : (
-					<FormWrapper item={item}>{children}</FormWrapper>
-				)}
+				<Form item={item}>{children}</Form>
 			</ContainerWithControls>
 		</form>
 	);
 });
 
-function FormWrapper({children, item}) {
+function Form({children, item}) {
+	const showLoadingState = item.config?.loading;
+
+	const isEmpty = useSelectorCallback(
+		(state) =>
+			isItemEmpty(item, state.layoutData, state.selectedViewportSize),
+		[item]
+	);
+
+	if (showLoadingState) {
+		return <FormLoadingState />;
+	}
+
+	if (Liferay.FeatureFlags['LPS-169923'] && !formHasPermissions(item)) {
+		return <PermissionRestrictionMessage />;
+	}
+
+	const isMapped = formIsMapped(item);
+
+	if (isEmpty || !isMapped) {
+		return <FormEmptyState isMapped={isMapped} item={item} />;
+	}
+
 	const {showMessagePreview} = item.config;
 
 	return (

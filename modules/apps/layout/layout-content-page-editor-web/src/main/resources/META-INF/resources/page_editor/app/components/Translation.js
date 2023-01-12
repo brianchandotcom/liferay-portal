@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
+import ClayLabel from '@clayui/label';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
@@ -83,6 +83,13 @@ const TRANSLATION_STATUS_LANGUAGE = {
 	),
 };
 
+const TRANSLATION_STATUS_DISPLAY_TYPE = {
+	[TRANSLATION_STATUS_TYPE.default]: 'info',
+	[TRANSLATION_STATUS_TYPE.translated]: 'success',
+	[TRANSLATION_STATUS_TYPE.translating]: 'warning',
+	[TRANSLATION_STATUS_TYPE.untranslated]: 'warning',
+};
+
 const TranslationItem = ({
 	editableValuesLength,
 	isDefault,
@@ -107,19 +114,16 @@ const TranslationItem = ({
 				<span>{languageLabel}</span>
 			)}
 
-			<span className="dropdown-item-indicator-end page-editor__translation__label-wrapper">
-				<div
-					className={classNames(
-						'page-editor__translation__label label',
-						status
-					)}
+			<span className="dropdown-item-indicator-end w-auto">
+				<ClayLabel
+					displayType={TRANSLATION_STATUS_DISPLAY_TYPE[status]}
 				>
 					{TRANSLATION_STATUS_LANGUAGE[status]}
 
 					{TRANSLATION_STATUS_TYPE[status] ===
 						TRANSLATION_STATUS_TYPE.translating &&
 						` ${translatedValuesLength}/${editableValuesLength}`}
-				</div>
+				</ClayLabel>
 			</span>
 		</ClayDropDown.Item>
 	);

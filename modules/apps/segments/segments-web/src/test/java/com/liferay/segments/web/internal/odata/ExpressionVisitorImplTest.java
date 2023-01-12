@@ -17,6 +17,7 @@ package com.liferay.segments.web.internal.odata;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -41,9 +42,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -486,18 +484,26 @@ public class ExpressionVisitorImplTest {
 
 		@Override
 		public Map<String, EntityField> getEntityFieldsMap() {
-			return Stream.of(
-				new ComplexEntityField(
-					"complexField",
-					Collections.singletonList(
-						new StringEntityField(
-							"fieldInsideComplexField",
-							locale -> "fieldInsideComplexFieldInternal"))),
-				new IntegerEntityField("id", locale -> "id"),
-				new StringEntityField("title", locale -> "title")
-			).collect(
-				Collectors.toMap(EntityField::getName, Function.identity())
-			);
+			EntityField complexEntityField = new ComplexEntityField(
+				"complexField",
+				Collections.singletonList(
+					new StringEntityField(
+						"fieldInsideComplexField",
+						locale -> "fieldInsideComplexFieldInternal")));
+
+			EntityField integerEntityField = new IntegerEntityField(
+				"id", locale -> "id");
+
+			EntityField stringEntityField = new StringEntityField(
+				"title", locale -> "title");
+
+			return HashMapBuilder.put(
+				complexEntityField.getName(), complexEntityField
+			).put(
+				integerEntityField.getName(), integerEntityField
+			).put(
+				stringEntityField.getName(), stringEntityField
+			).build();
 		}
 
 		@Override

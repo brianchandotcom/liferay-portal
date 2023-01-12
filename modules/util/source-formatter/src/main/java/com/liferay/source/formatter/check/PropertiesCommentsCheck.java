@@ -41,7 +41,7 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 	}
 
 	private String _formatComments(String content) {
-		Matcher matcher = _commentPattern.matcher(content);
+		Matcher matcher = _commentPattern1.matcher(content);
 
 		while (matcher.find()) {
 			if ((matcher.group(1) != null) || (matcher.group(3) != null)) {
@@ -102,7 +102,7 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 		"jQuery", "reCAPTCHA", "svg4everybody", "tc"
 	};
 
-	private static final Pattern _commentPattern = Pattern.compile(
+	private static final Pattern _commentPattern1 = Pattern.compile(
 		"([^#]\\s*)?\\n\\s*#+\\s+(\\w[\\s\\w]+)(\\n\\s*#+.*[\\w]+.*)?$",
 		Pattern.MULTILINE);
 

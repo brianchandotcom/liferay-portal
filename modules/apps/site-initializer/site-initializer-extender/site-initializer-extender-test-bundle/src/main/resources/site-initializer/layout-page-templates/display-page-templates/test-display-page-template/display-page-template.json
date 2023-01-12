@@ -1,0 +1,9 @@
+{
+	"contentSubtype": {
+		"subtypeKey": "TEST DDM STRUCTURE NAME"
+	},
+	"contentType": {
+		"className": "com.liferay.journal.model.JournalArticle"
+	},
+	"name": "Test Display Page Template"
+}

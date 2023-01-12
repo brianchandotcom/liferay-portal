@@ -1,0 +1,48 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "BASIC_COMPONENT-button"
+					},
+					"fragmentConfig": {
+						"buttonSize": "nm",
+						"buttonType": "primary"
+					},
+					"fragmentFields": [
+						{
+							"id": "link",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"mapping": {
+												"itemReference": {
+													"className": "com.liferay.portal.kernel.model.Layout",
+													"fields": [
+														{
+															"fieldName": "friendlyURL",
+															"fieldValue": "/home"
+														},
+														{
+															"fieldName": "privatePage",
+															"fieldValue": "false"
+														}
+													]
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	}
+}

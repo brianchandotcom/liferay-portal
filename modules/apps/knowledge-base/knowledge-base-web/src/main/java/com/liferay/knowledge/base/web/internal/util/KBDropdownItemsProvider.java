@@ -384,8 +384,8 @@ public class KBDropdownItemsProvider {
 	private String _createKbTemplatesAdminHomeRenderURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
-		).setMVCPath(
-			"/admin/view_kb_templates.jsp"
+		).setMVCRenderCommandName(
+			"/knowledge_base/view_kb_templates"
 		).buildString();
 	}
 

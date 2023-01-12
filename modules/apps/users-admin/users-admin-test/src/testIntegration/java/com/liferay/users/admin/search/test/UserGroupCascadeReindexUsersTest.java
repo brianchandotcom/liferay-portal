@@ -21,24 +21,17 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery.PerformActionMet
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -104,16 +97,6 @@ public class UserGroupCascadeReindexUsersTest {
 			userGroupSearchFixture);
 
 		userSearchFixture.setUp();
-
-		_addresses = userSearchFixture.getAddresses();
-
-		_groups = groupSearchFixture.getGroups();
-
-		_organizations = organizationSearchFixture.getOrganizations();
-
-		_users = userSearchFixture.getUsers();
-
-		_userGroups = userGroupSearchFixture.getUserGroups();
 	}
 
 	@Test
@@ -324,9 +307,12 @@ public class UserGroupCascadeReindexUsersTest {
 		).toArray();
 	}
 
-	private Document _getDocument(Indexer<User> indexer, User user) {
+		return userIds;
+	}
+
+	private void _getDocument(Indexer<User> indexer, User user) {
 		try {
-			return indexer.getDocument(user);
+			indexer.getDocument(user);
 		}
 		catch (SearchException searchException) {
 			throw new RuntimeException(searchException);
@@ -367,9 +353,6 @@ public class UserGroupCascadeReindexUsersTest {
 
 	private static final boolean _STRESS_MODE_10_MIN_TO_RUN_ALL_TESTS = false;
 
-	@Inject
-	private static DocumentBuilderFactory _documentBuilderFactory;
-
 	@Inject(filter = "indexer.class.name=com.liferay.portal.kernel.model.User")
 	private static Indexer<User> _indexer;
 
@@ -378,13 +361,6 @@ public class UserGroupCascadeReindexUsersTest {
 
 	@Inject
 	private static Queries _queries;
-
-	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-
-	@Inject
-	private static SearchEngineHelper _searchEngineHelper;
 
 	@Inject
 	private static Searcher _searcher;
@@ -398,23 +374,8 @@ public class UserGroupCascadeReindexUsersTest {
 	@Inject
 	private static UserLocalService _userLocalService;
 
-	@DeleteAfterTestRun
-	private List<Address> _addresses = new ArrayList<>();
-
 	private int _groupCount;
 
-	@DeleteAfterTestRun
-	private List<Group> _groups;
-
-	@DeleteAfterTestRun
-	private List<Organization> _organizations;
-
 	private int _userCount;
-
-	@DeleteAfterTestRun
-	private List<UserGroup> _userGroups;
-
-	@DeleteAfterTestRun
-	private List<User> _users;
 
 }

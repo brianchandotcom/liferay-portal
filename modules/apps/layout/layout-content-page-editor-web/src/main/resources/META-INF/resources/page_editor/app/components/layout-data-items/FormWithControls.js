@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback} from 'react';
@@ -27,6 +28,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import updateFormItemConfig from '../../thunks/updateFormItemConfig';
 import {formHasPermissions} from '../../utils/formHasPermissions';
 import {formIsMapped} from '../../utils/formIsMapped';
+import {formIsUnavailable} from '../../utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../utils/getEditableLocalizedValue';
 import isItemEmpty from '../../utils/isItemEmpty';
 import ContainerWithControls from './ContainerWithControls';
@@ -62,8 +64,22 @@ function Form({children, item}) {
 		return <FormLoadingState />;
 	}
 
-	if (Liferay.FeatureFlags['LPS-169923'] && !formHasPermissions(item)) {
-		return <PermissionRestrictionMessage />;
+	if (Liferay.FeatureFlags['LPS-169923']) {
+		if (formIsUnavailable(item)) {
+			return (
+				<ClayAlert
+					displayType="warning"
+					title={`${Liferay.Language.get('warning')}:`}
+				>
+					{Liferay.Language.get(
+						'this-content-is-currently-unavailable-or-has-been-deleted.-users-cannot-see-this-fragment'
+					)}
+				</ClayAlert>
+			);
+		}
+		else if (!formHasPermissions(item)) {
+			return <PermissionRestrictionMessage />;
+		}
 	}
 
 	const isMapped = formIsMapped(item);

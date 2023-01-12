@@ -544,7 +544,9 @@ nav.public-sites-navigation {
 		cursor: pointer;
 		padding: 0.75rem;
 
-		&:hover, &:focus, &:active {
+		&:hover,
+		&:focus,
+		&:active {
 			background-color: var(--color-action-primary-hover-lighten);
 
 			svg {
@@ -699,8 +701,8 @@ nav.public-sites-navigation {
 			padding-top: 8rem;
 
 			.close-search {
+				right: 1.5rem;
 				top: 1.5rem;
-				right: 1.5rem
 			}
 
 			form.search {
@@ -1300,7 +1302,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 .search-wrapper.search-open {
 	min-height: 80vh;
 	opacity: 1;
-	transform: translate3d(0px, 0px, 0px);
+	transform: translate3d(0, 0, 0);
 	z-index: 4;
 }
 
@@ -1320,7 +1322,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	position: fixed;
 	right: 0;
 	top: 0;
-	transform: translate3d(0px, -800px, 0px);
+	transform: translate3d(0, -800px, 0);
 	transform-style: preserve-3d;
 	transition: transform 0.25s, opacity 0.25s;
 	z-index: -2;
@@ -1353,7 +1355,8 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 				opacity: 1;
 			}
 
-			&:active, &:focus {
+			&:active,
+			&:focus {
 				border-color: var(--white);
 			}
 		}
@@ -1431,7 +1434,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 		}
 
 		.suggested-text {
-			color: #FFFFFF;
+			color: #fff;
 			font-size: var(--text-small-caps-font-size);
 			letter-spacing: 0.05em;
 			opacity: 0.7;
@@ -1455,10 +1458,13 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 
 			.search-suggestion-item-content {
 				color: var(--white);
+				display: -webkit-box;
 				font-size: var(--text-paragraph-font-size);
 				font-weight: 400;
 				opacity: 0.9;
-				padding-bottom: 12px;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
 
 				b {
 					font-weight: var(--font-weight-bold);

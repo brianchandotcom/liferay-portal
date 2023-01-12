@@ -789,17 +789,6 @@ public class BundleSiteInitializerTest {
 			"This is the body for Test KB Article 3.", kbArticle3.getContent());
 	}
 
-	private void _assertLayoutPageTemplateEntry(Group group) throws Exception {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				group.getGroupId(), "Test Master Page",
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
-
-		Assert.assertNotNull(layoutPageTemplateEntry);
-		Assert.assertEquals(
-			"Test Master Page", layoutPageTemplateEntry.getName());
-	}
-
 	private void _assertLayouts(Group group, ServiceContext serviceContext)
 		throws Exception {
 
@@ -886,6 +875,17 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(listTypeEntry2);
 		Assert.assertEquals("testlisttypeentry2", listTypeEntry2.getKey());
+	}
+
+	private void _assertMasterLayouts(Group group) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				group.getGroupId(), "Test Master Page",
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+
+		Assert.assertNotNull(layoutPageTemplateEntry);
+		Assert.assertEquals(
+			"Test Master Page", layoutPageTemplateEntry.getName());
 	}
 
 	private void _assertNotificationTemplate(ServiceContext serviceContext)
@@ -1781,10 +1781,10 @@ public class BundleSiteInitializerTest {
 			_assertFragmentEntries(group, serviceContext);
 			_assertJournalArticles(group);
 			_assertKBArticles(group);
-			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group, serviceContext);
 			_assertLayoutSets(group);
 			_assertListTypeDefinitions(serviceContext);
+			_assertMasterLayouts(group);
 			_assertNotificationTemplate(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
 			_assertOrganizations(serviceContext);

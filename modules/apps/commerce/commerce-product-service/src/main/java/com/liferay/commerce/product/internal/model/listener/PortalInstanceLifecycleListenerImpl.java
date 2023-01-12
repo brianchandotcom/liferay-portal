@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.model.listener;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -101,8 +102,9 @@ public class PortalInstanceLifecycleListenerImpl
 					user.getUserId(), company.getGroupId(),
 					_portal.getClassNameId(PortletRepository.class.getName()),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, null, null,
-					new UnicodeProperties(), true, serviceContext);
+					PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, null,
+					CPConstants.SERVICE_NAME_PRODUCT, new UnicodeProperties(),
+					true, serviceContext);
 
 				Image image = _imageTool.getDefaultCompanyLogo();
 

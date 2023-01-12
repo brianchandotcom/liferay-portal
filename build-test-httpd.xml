@@ -3,6 +3,17 @@
 <project basedir="." name="portal-test-httpd" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<target name="clean-up-httpd-server">
+		<replaceregexp
+			file="${apache.http.dir}/conf/httpd.conf"
+			flags="s"
+			match="(IncludeOptional.*conf)(.*)"
+			replace="\1"
+		/>
+
+		<print-file file.name="${apache.http.dir}/conf/httpd.conf" />
+	</target>
+
 	<target name="configure-httpd-server">
 		<get-test-url />
 

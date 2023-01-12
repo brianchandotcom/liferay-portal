@@ -14622,6 +14622,10 @@ mail.send.blacklist=</echo>
 		<if>
 			<isset property="portal.proxy.path" />
 			<then>
+				<ant antfile="build-test-httpd.xml" target="stop-httpd-server" />
+
+				<ant antfile="build-test-httpd.xml" target="clean-up-httpd-server" />
+
 				<ant antfile="build-test-httpd.xml" target="configure-httpd-server" />
 
 				<ant antfile="build-test-httpd.xml" target="start-httpd-server" />
@@ -15384,6 +15388,8 @@ mail.send.blacklist=</echo>
 			<isset property="portal.proxy.path" />
 			<then>
 				<ant antfile="build-test-httpd.xml" target="stop-httpd-server" />
+
+				<ant antfile="build-test-httpd.xml" target="clean-up-httpd-server" />
 			</then>
 		</if>
 

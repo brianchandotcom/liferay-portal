@@ -14,7 +14,7 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -25,6 +25,7 @@ import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import Layout from './Layout';
 import FragmentContent from './fragment-content/FragmentContent';
+import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
 import {
 	Collection,
 	Column,
@@ -112,9 +113,14 @@ function CollectionItem({children}) {
 	return <div>{children}</div>;
 }
 
-function Fragment({item}) {
+function Fragment({item, layoutData}) {
 	const ref = useRef(null);
 	const selectItem = useSelectItem();
+
+	const hasDropzoneChild = useMemo(() => hasDropZoneChild(item, layoutData), [
+		item,
+		layoutData,
+	]);
 
 	useEffect(() => {
 		const element = ref.current;
@@ -136,12 +142,20 @@ function Fragment({item}) {
 		};
 
 		element.addEventListener('click', handler);
-		element.setAttribute('inert', '');
+
+		if (!hasDropzoneChild) {
+			element.setAttribute('inert', '');
+		}
+
 		element.setAttribute('aria-hidden', 'true');
 
 		return () => {
 			element.removeEventListener('click', handler);
-			element.removeAttribute('inert');
+
+			if (!hasDropzoneChild) {
+				element.removeAttribute('inert');
+			}
+
 			element.removeAttribute('aria-hidden');
 		};
 	});

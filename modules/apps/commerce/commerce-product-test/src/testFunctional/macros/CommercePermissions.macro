@@ -134,6 +134,47 @@ definition {
 		}
 	}
 
+	macro defineProductPermissionsViaJSONAPI {
+		if ("${view}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_COMMERCE_CATALOGS",
+				resourceName = "com.liferay.commerce.catalog",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet",
+				roleTitle = "${roleTitle}");
+		}
+
+		if ("${update}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "${roleTitle}");
+		}
+	}
+
 	macro defineSingleRolePermissionsPG {
 		SelectFrameTop(value1 = "relative=top");
 

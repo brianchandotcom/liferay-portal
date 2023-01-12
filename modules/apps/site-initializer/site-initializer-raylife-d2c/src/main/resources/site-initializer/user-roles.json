@@ -1,0 +1,20 @@
+[
+	{
+		"emailAddress": "ryan.underwriter@mailinator.com",
+		"roles": [
+			"Underwriter"
+		]
+	},
+	{
+		"emailAddress": "scott.producer@mailinator.com",
+		"roles": [
+			"Producer"
+		]
+	},
+	{
+		"emailAddress": "marie.producer@mailinator.com",
+		"roles": [
+			"Producer"
+		]
+	}
+]

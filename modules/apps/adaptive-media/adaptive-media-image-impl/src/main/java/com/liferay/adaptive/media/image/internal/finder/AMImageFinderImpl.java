@@ -32,14 +32,13 @@ import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.net.URI;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -88,13 +87,14 @@ public class AMImageFinderImpl implements AMImageFinder {
 		if (!_amImageMimeTypeProvider.isMimeTypeSupported(
 				fileVersion.getMimeType())) {
 
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		String mimeType = fileVersion.getMimeType();
 
 		if (mimeType.equals(ContentTypes.IMAGE_SVG_XML)) {
-			return Arrays.asList(_createRawAdaptiveMedia(fileVersion));
+			return Collections.singletonList(
+				_createRawAdaptiveMedia(fileVersion));
 		}
 
 		BiFunction<FileVersion, AMImageConfigurationEntry, URI> uriFactory =
@@ -111,25 +111,25 @@ public class AMImageFinderImpl implements AMImageFinder {
 			amImageQueryBuilderImpl.getConfigurationEntryFilter();
 
 		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			new ArrayList<>();
+			TransformUtil.transform(
+				amImageConfigurationEntries,
+				amImageConfigurationEntry -> {
+					if (filter.test(amImageConfigurationEntry) &&
+						_hasAdaptiveMedia(
+							fileVersion, amImageConfigurationEntry)) {
 
-		for (AMImageConfigurationEntry amImageConfigurationEntry :
-				amImageConfigurationEntries) {
+						return _createMedia(
+							fileVersion, uriFactory, amImageConfigurationEntry);
+					}
 
-			if (filter.test(amImageConfigurationEntry) &&
-				_hasAdaptiveMedia(fileVersion, amImageConfigurationEntry)) {
-
-				adaptiveMedias.add(
-					_createMedia(
-						fileVersion, uriFactory, amImageConfigurationEntry));
-			}
-		}
+					return null;
+				});
 
 		AMDistanceComparator<AdaptiveMedia<AMImageProcessor>>
 			amDistanceComparator =
 				amImageQueryBuilderImpl.getAMDistanceComparator();
 
-		Collections.sort(adaptiveMedias, amDistanceComparator.toComparator());
+		adaptiveMedias.sort(amDistanceComparator.toComparator());
 
 		return adaptiveMedias;
 	}

@@ -41,8 +41,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -262,7 +262,7 @@ public class AMImageRequestHandlerTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
@@ -498,7 +498,7 @@ public class AMImageRequestHandlerTest {
 					return adaptiveMedias;
 				}
 
-				return new ArrayList<>();
+				return Collections.emptyList();
 			}
 		);
 	}
@@ -524,7 +524,7 @@ public class AMImageRequestHandlerTest {
 					amImageQueryBuilderImpl);
 
 				if (!AMImageQueryBuilderImpl.AM_QUERY.equals(amQuery)) {
-					return new ArrayList<>();
+					return Collections.emptyList();
 				}
 
 				if (fileVersion.equals(
@@ -542,7 +542,7 @@ public class AMImageRequestHandlerTest {
 					}
 				}
 
-				return new ArrayList<>();
+				return Collections.emptyList();
 			}
 		);
 	}

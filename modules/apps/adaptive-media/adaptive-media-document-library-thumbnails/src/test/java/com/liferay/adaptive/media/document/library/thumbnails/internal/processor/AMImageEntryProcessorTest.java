@@ -29,8 +29,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.Function;
@@ -108,7 +108,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -139,7 +139,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -164,7 +164,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -199,7 +199,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -255,7 +255,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -286,7 +286,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -311,7 +311,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -348,7 +348,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -398,7 +398,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -429,7 +429,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -454,7 +454,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -510,7 +510,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -541,7 +541,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -566,7 +566,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -616,7 +616,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -647,7 +647,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(
@@ -672,7 +672,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenAnswer(
-			invocation -> new ArrayList<>()
+			invocation -> Collections.emptyList()
 		);
 
 		Mockito.when(

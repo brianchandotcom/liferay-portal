@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.internal.upgrade.v1_0_2;
+package com.liferay.exportimport.internal.upgrade.v1_0_1;
 
 import com.liferay.exportimport.internal.upgrade.BaseUpgradeBackgroundTaskExecutorClassNames;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;

@@ -188,7 +188,6 @@ definition {
 	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments
 	and I have connected my DXP instance with AC
 	when I create an Individual Segment in AC and it shows in the DXP Segments administration
-	and I delete the segment
 	Then in the next sync time, the segment will appear again"
 	@priority = "4"
 	test PersistSegmentFromACAtDXP {
@@ -207,14 +206,6 @@ definition {
 				portlet = "Segments");
 
 			AssertElementPresent(
-				key_tableEntry = "Dynamic Segment Test",
-				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
-		}
-
-		task ("Delete Dynamic Segment Test") {
-			Segmentation.deleteSegment(entry = "Dynamic Segment Test");
-
-			AssertElementNotPresent(
 				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 		}

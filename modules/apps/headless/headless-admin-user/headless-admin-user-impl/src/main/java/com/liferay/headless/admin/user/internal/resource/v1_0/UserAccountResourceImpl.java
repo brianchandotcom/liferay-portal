@@ -816,6 +816,12 @@ public class UserAccountResourceImpl
 			existingUserAccount.setAccountBriefs(accountBriefs);
 		}
 
+		CustomField[] customFields = userAccount.getCustomFields();
+
+		if (customFields != null) {
+			existingUserAccount.setCustomFields(customFields);
+		}
+
 		OrganizationBrief[] organizationBriefs =
 			userAccount.getOrganizationBriefs();
 
@@ -888,12 +894,6 @@ public class UserAccountResourceImpl
 			if (webUrls != null) {
 				existingUserAccountContactInformation.setWebUrls(webUrls);
 			}
-		}
-
-		CustomField[] customFields = userAccount.getCustomFields();
-
-		if (customFields != null) {
-			existingUserAccount.setCustomFields(customFields);
 		}
 	}
 

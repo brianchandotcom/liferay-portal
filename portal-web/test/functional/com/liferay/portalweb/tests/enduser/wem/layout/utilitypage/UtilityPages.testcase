@@ -92,6 +92,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162765. The page designer could change the default utility page."
+	@priority = "4"
+	test ChangeDefault404ErrorUtilityPage {
+		task ("Given a page designer has 404 error utility pages and static pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "First 404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+
+			PagesAdmin.addUtilityPage(pageName = "Second 404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer marks one utility page as default") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Mark as Default",
+				pageName = "First 404 Error Utility Page");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page designer sees the default 404 Error Utility Page working") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+
+		task ("When the page designer marks another utility page as default") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Mark as Default",
+				pageName = "Second 404 Error Utility Page");
+
+			AssertConfirm(value1 = "Do you want to replace Second 404 Error Utility Page for First 404 Error Utility Page as the default utility page?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page designer sees the default 404 Error Utility Page working") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Resource Not Found");
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
 	@priority = "5"
 	test Mark404ErrorUtilityPageAsDefault {
@@ -118,8 +207,8 @@ definition {
 
 		task ("When the page designer marks it as default") {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
-				pageName = "404 Error Utility Page",
-				menuItem = "Mark as Default");
+				menuItem = "Mark as Default",
+				pageName = "404 Error Utility Page");
 
 			Alert.viewSuccessMessage();
 		}

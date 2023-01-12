@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.definition.util;
+package com.liferay.object.internal.security.permission.resource.util;
 
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectAction;
@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 /**
  * @author Carolina Barbosa
  */
-public class ObjectDefinitionPermissionUtil {
+public class ObjectDefinitionResourcePermissionUtil {
 
 	public static void populateResourceActions(
 			ObjectActionLocalService objectActionLocalService,
@@ -39,7 +39,7 @@ public class ObjectDefinitionPermissionUtil {
 		throws Exception {
 
 		ClassLoader classLoader =
-			ObjectDefinitionPermissionUtil.class.getClassLoader();
+			ObjectDefinitionResourcePermissionUtil.class.getClassLoader();
 
 		String objectActionPermissionKeys = StringPool.BLANK;
 

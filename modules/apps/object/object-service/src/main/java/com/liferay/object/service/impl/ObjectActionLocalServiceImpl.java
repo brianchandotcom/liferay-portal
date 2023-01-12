@@ -28,7 +28,7 @@ import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
 import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
-import com.liferay.object.internal.definition.util.ObjectDefinitionPermissionUtil;
+import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -138,7 +138,7 @@ public class ObjectActionLocalServiceImpl
 				ObjectActionTriggerConstants.KEY_STANDALONE)) {
 
 			try {
-				ObjectDefinitionPermissionUtil.populateResourceActions(
+				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 					objectActionLocalService, objectDefinition,
 					_portletLocalService, _resourceActions);
 			}

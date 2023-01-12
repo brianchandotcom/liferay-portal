@@ -24,7 +24,6 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.internal.definition.util.ObjectDefinitionPermissionUtil;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
@@ -43,6 +42,7 @@ import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntr
 import com.liferay.object.internal.search.spi.model.result.contributor.ObjectEntryModelSummaryContributor;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
+import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
@@ -175,7 +175,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			objectDefinition.getClassName(), _objectEntryLocalService);
 
 		try {
-			ObjectDefinitionPermissionUtil.populateResourceActions(
+			ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 				_objectActionLocalService, objectDefinition,
 				_portletLocalService, _resourceActions);
 		}

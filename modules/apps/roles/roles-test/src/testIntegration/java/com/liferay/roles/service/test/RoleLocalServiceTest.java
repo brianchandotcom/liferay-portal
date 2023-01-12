@@ -485,8 +485,10 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
-	public void testGetUserRelatedRoles() {
-		long userId = RandomTestUtil.nextLong();
+	public void testGetUserRelatedRoles() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long userId = user.getUserId();
 
 		// See LPS-113146 for the magic number 2100
 
@@ -497,6 +499,38 @@ public class RoleLocalServiceTest {
 		}
 
 		_roleLocalService.getUserRelatedRoles(userId, groupIds);
+
+		Role role1 = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addUserRole(userId, role1.getRoleId());
+
+		Role role2 = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+		Group group = GroupTestUtil.addGroup();
+
+		long groupId = group.getGroupId();
+
+		_roleLocalService.addGroupRole(groupId, role2.getRoleId());
+
+		List<Role> userRelatedRoles = _roleLocalService.getUserRelatedRoles(
+			userId, new long[0]);
+
+		Assert.assertTrue(userRelatedRoles.contains(role1));
+		Assert.assertTrue(userRelatedRoles.contains(role2));
+
+		userRelatedRoles = _roleLocalService.getUserRelatedRoles(
+			userId, new long[] {groupId});
+
+		Assert.assertTrue(userRelatedRoles.contains(role1));
+		Assert.assertTrue(userRelatedRoles.contains(role2));
+
+		userRelatedRoles = _roleLocalService.getUserRelatedRoles(
+			userId, new long[] {RandomTestUtil.nextLong()});
+
+		Assert.assertTrue(userRelatedRoles.contains(role1));
+		Assert.assertFalse(userRelatedRoles.contains(role2));
 	}
 
 	@Test

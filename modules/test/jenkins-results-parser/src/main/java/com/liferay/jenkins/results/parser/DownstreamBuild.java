@@ -314,7 +314,11 @@ public class DownstreamBuild extends BaseBuild {
 			}
 		}
 
-		uniqueFailureTestResults.addAll(getUntestedTestResults());
+		for (TestResult untestedTestResult : getUntestedTestResults()) {
+			if (untestedTestResult.isUniqueFailure()) {
+				uniqueFailureTestResults.add(untestedTestResult);
+			}
+		}
 
 		return uniqueFailureTestResults;
 	}
@@ -342,8 +346,7 @@ public class DownstreamBuild extends BaseBuild {
 					caseJSONObject.put("className", testClassName);
 					caseJSONObject.put("duration", 0);
 					caseJSONObject.put(
-						"errorDetails",
-						"The build failed prior to running the test.");
+						"errorDetails", "This test was untested.");
 					caseJSONObject.put("errorStackTrace", "");
 					caseJSONObject.put("name", methodName);
 					caseJSONObject.put("status", "UNTESTED");
@@ -398,6 +401,12 @@ public class DownstreamBuild extends BaseBuild {
 
 			if (!testResult.isUniqueFailure()) {
 				upstreamFailureTestResults.add(testResult);
+			}
+		}
+
+		for (TestResult untestedTestResult : getUntestedTestResults()) {
+			if (!untestedTestResult.isUniqueFailure()) {
+				upstreamFailureTestResults.add(untestedTestResult);
 			}
 		}
 

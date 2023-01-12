@@ -42,5 +42,6 @@
 		"masterPage": {
 			"key": "home"
 		}
-	}
+	},
+	"version": 1.1
 }

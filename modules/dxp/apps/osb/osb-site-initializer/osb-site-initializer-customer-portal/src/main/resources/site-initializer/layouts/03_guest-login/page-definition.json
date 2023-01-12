@@ -41,5 +41,6 @@
 		"masterPage": {
 			"key": "onboarding"
 		}
-	}
+	},
+	"version": 1.1
 }

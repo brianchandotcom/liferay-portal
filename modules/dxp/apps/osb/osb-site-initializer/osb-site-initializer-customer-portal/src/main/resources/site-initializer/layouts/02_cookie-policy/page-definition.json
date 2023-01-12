@@ -564,5 +564,6 @@
 	},
 	"settings": {
 		"themeName": "Dialect"
-	}
+	},
+	"version": 1.1
 }

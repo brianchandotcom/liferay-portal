@@ -1,0 +1,680 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-10529. Buyer user can add same SKU multiple times"
+	@priority = "4"
+	test CanAddSameSKUMultipleTimes {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer user opens the minicart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And selects a SKU on the minicart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93015");
+		}
+
+		task ("And selected sku is visible as a chip on the search bar") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "ABS Sensor");
+		}
+
+		task ("And the buyer user adds the SKU to the cart") {
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("And the sku is added to the cart with quantity 1") {
+			AssertTextEquals(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "1");
+		}
+
+		task ("And the buyer user searches and selects the same sku once again") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93015");
+		}
+
+		task ("And the buyer user adds the SKU to the cart") {
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the quantity of the item added to the cart increases by 1") {
+			AssertTextEquals(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "2");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10596. Buyer user can add SKU with maximum quantity"
+	@priority = "4"
+	test CanAddSKUWithMaximumQuantity {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		var maximumQuantity = "8";
+		var product = "Transmission Cooler Line Assembly";
+
+		task ("Given a maximum quantity is configured for a product (e.g. maximum quantity 8 for MIN55860)") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "${product}");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Type(
+				key_text = "Maximum Order Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = "${maximumQuantity}");
+
+			Button.clickPublish();
+		}
+
+		task ("And an account with a buyer user is created(e.g. Commerce Account)") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer user opens the minicart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And selects 'MIN55860' on the quick add-to-cart search bar") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55860");
+		}
+
+		task ("And adds the SKU to the cart") {
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("And the quantity is edited to '9'") {
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSku = "MIN55860",
+				productQuantity = "9");
+		}
+
+		task ("Then the quantity selector becomes red") {
+			KeyPress(
+				key_cartItemSku = "MIN55860",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "\ENTER");
+
+			AssertElementPresent(locator1 = "TextInput#ALERT");
+		}
+
+		task ("And When the quantity is edited to '8'") {
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSku = "MIN55860",
+				productQuantity = "8");
+		}
+
+		task ("Then the quantity is recognized as acceptable") {
+			KeyPress(
+				key_cartItemSku = "MIN55860",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "\ENTER");
+
+			AssertElementNotPresent(locator1 = "TextInput#ALERT");
+		}
+
+		task ("And When the quantity is edited to '7'") {
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSku = "MIN55860",
+				productQuantity = "7");
+		}
+
+		task ("Then the quantity is also acceptable") {
+			KeyPress(
+				key_cartItemSku = "MIN55860",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "\ENTER");
+
+			AssertElementNotPresent(locator1 = "TextInput#ALERT");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10530. Buyer user can add SKU with minimum quantity"
+	@priority = "4"
+	test CanAddSKUWithMinimumQuantity {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		var minimumQuantity = "3";
+		var product = "Transmission Cooler Line Assembly";
+
+		task ("Given a minimum quantity is configured for a product (e.g. minimum quantity 3 for MIN55860)") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "${product}");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Type(
+				key_text = "Minimum Order Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = "${minimumQuantity}");
+
+			Button.clickPublish();
+		}
+
+		task ("And an account with a buyer user is created(e.g. Commerce Account)") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer user opens the minicart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And selects 'MIN55860' on the quick add-to-cart search bar") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55860");
+		}
+
+		task ("And adds the SKU to the cart") {
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the SKU is added to the cart with quantity 3") {
+			AssertTextEquals(
+				key_cartItemSku = "MIN55860",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "3");
+		}
+
+		task ("And When the quantity is edited to '2'") {
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSku = "MIN55860",
+				productQuantity = "2");
+		}
+
+		task ("Then the quantity selector becomes red") {
+			KeyPress(
+				key_cartItemSku = "MIN55860",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "\ENTER");
+
+			AssertElementPresent(locator1 = "TextInput#ALERT");
+		}
+
+		task ("And When the quantity is edited to '4'") {
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSku = "MIN55860",
+				productQuantity = "4");
+		}
+
+		task ("Then the quantity is recognized as acceptable") {
+			KeyPress(
+				key_cartItemSku = "MIN55860",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "\ENTER");
+
+			AssertElementNotPresent(locator1 = "TextInput#ALERT");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10532. Buyer user can create first order adding SKU via quick add-to-cart"
+	@priority = "4"
+	test CanCreateFirstOrderAddingSKUViaQuickAdd {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer user opens the minicart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And searches for a sku on the quick add-to-cart") {
+			Type(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "MIN93015");
+		}
+
+		task ("And results are shown") {
+			AssertElementPresent(
+				key_productSku = "MIN93015",
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
+		}
+
+		task ("And the buyer user can select the SKU") {
+			Click(
+				key_productSku = "MIN93015",
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
+		}
+
+		task ("Then the selected SKU can be added to the cart") {
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+		}
+
+		task ("And an order is automatically created") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productSku = "MIN93015",
+				productTotalPrice = "50.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10389. Buyer user cannot select invalid SKUs on quick add to cart"
+	@priority = "4"
+	test CannotSelectInvalidSkusOnQuickAddToCart {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And searches for an invalid sku on the quick add-to-cart") {
+			Type(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "MIN99999");
+		}
+
+		task ("Then no results are shown") {
+			AssertElementNotPresent(
+				key_productSku = "MIN",
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
+		}
+
+		task ("And the search bar color is changed to red") {
+			KeyPress(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "\ENTER");
+
+			/*There's the bug COMMERCE-10474 when pressing the enter keyboard button on the searchbar
+			but I'm using it in this test anyway because in this particular case the bug doesn't affect it*/
+
+			AssertElementPresent(locator1 = "TextInput#ALERT");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10390. Buyer user can quick add to cart and complete a checkout"
+	@priority = "4"
+	test CanQuickAddToCartAndCheckout {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And asserts there are no existing open orders") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
+		}
+
+		task ("And returns to the catalog") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And the buyer selects multiple skus on the quick add-to-cart") {
+			for (var productSku : list "MIN38805,MIN55860,MIN93015") {
+				FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "${productSku}");
+			}
+		}
+
+		task ("And the buyer clicks on the search bar add to cart button") {
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then all selected skus are added to the cart") {
+			for (var productSku : list "MIN38805,MIN55860,MIN93015") {
+				AssertElementPresent(
+					key_cartItemSku = "${productSku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+			}
+		}
+
+		task ("And all selected skus quantity is set as 1 by default") {
+			for (var productSku : list "MIN38805,MIN55860,MIN93015") {
+				AssertTextEquals(
+					key_cartItemSku = "${productSku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+					value1 = "1");
+			}
+		}
+
+		task ("And When the buyer starts the checkout") {
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+		}
+
+		task ("Then the buyer can complete the checkout successfully") {
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10388. Buyer user can select SKUs on quick add to cart"
+	@priority = "4"
+	test CanSelectSkusOnQuickAddToCart {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("Then the user can select the sku by searching it") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+		}
+
+		task ("And the selected sku is visible as a chip on the search bar") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "U-Joint");
+		}
+
+		task ("When the buyer selects other skus on the quick add-to-cart") {
+			for (var productSku : list "MIN38805,MIN55860") {
+				FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "${productSku}");
+			}
+		}
+
+		task ("Then selected skus are visible as chips on the search bar") {
+			for (var productName : list "Wheel Bearing Grease,Transmission Cooler Line Assembly") {
+				AssertElementPresent(
+					locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+					tagName = "${productName}");
+			}
+		}
+	}
+
+}

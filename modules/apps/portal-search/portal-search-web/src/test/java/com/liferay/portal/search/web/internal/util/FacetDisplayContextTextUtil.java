@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 
 import java.util.ArrayList;
@@ -58,24 +59,6 @@ public class FacetDisplayContextTextUtil {
 		return sb.toString();
 	}
 
-	public static TermCollector createTermCollector(long id, int frequency) {
-		TermCollector termCollector = Mockito.mock(TermCollector.class);
-
-		Mockito.doReturn(
-			frequency
-		).when(
-			termCollector
-		).getFrequency();
-
-		Mockito.doReturn(
-			String.valueOf(id)
-		).when(
-			termCollector
-		).getTerm();
-
-		return termCollector;
-	}
-
 	public static TermCollector createTermCollector(
 		String term, int frequency) {
 
@@ -96,12 +79,14 @@ public class FacetDisplayContextTextUtil {
 		return termCollector;
 	}
 
-	public static HttpServletRequest getHttpServletRequest() {
+	public static HttpServletRequest getHttpServletRequest()
+		throws ConfigurationException {
+
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay()
+			getThemeDisplay(CustomFacetPortletInstanceConfiguration.class)
 		).when(
 			httpServletRequest
 		).getAttribute(
@@ -145,16 +130,6 @@ public class FacetDisplayContextTextUtil {
 		return renderRequest;
 	}
 
-	public static List<TermCollector> getTermCollectors(String... terms) {
-		int[] frequencies = new int[terms.length];
-
-		for (int i = 0; i < terms.length; i++) {
-			frequencies[i] = i + 1;
-		}
-
-		return getTermCollectors(terms, frequencies);
-	}
-
 	public static List<TermCollector> getTermCollectors(
 		String[] terms, int[] frequencies) {
 
@@ -165,18 +140,6 @@ public class FacetDisplayContextTextUtil {
 		}
 
 		return termCollectors;
-	}
-
-	public static ThemeDisplay getThemeDisplay() {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(PortletDisplay.class)
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
 	}
 
 	public static ThemeDisplay getThemeDisplay(
@@ -194,7 +157,28 @@ public class FacetDisplayContextTextUtil {
 		return themeDisplay;
 	}
 
-	public static void setUpMultipleTermCollectors(
+	public static void setUpTermCollector(
+		FacetCollector facetCollector, long id, int count) {
+
+		Mockito.doReturn(
+			Collections.singletonList(
+				createTermCollector(Long.toString(id), count))
+		).when(
+			facetCollector
+		).getTermCollectors();
+	}
+
+	public static void setUpTermCollector(
+		FacetCollector facetCollector, String term, int frequency) {
+
+		Mockito.doReturn(
+			Collections.singletonList(createTermCollector(term, frequency))
+		).when(
+			facetCollector
+		).getTermCollectors();
+	}
+
+	public static void setUpTermCollectors(
 		FacetCollector facetCollector, List<TermCollector> termCollectors) {
 
 		Mockito.doReturn(
@@ -204,7 +188,7 @@ public class FacetDisplayContextTextUtil {
 		).getTermCollectors();
 	}
 
-	public static void setUpMultipleTermCollectors(
+	public static void setUpTermCollectors(
 		FacetCollector facetCollector, String... terms) {
 
 		int frequency = 1;
@@ -220,26 +204,6 @@ public class FacetDisplayContextTextUtil {
 
 			frequency++;
 		}
-	}
-
-	public static void setUpOneTermCollector(
-		FacetCollector facetCollector, long id, int count) {
-
-		Mockito.doReturn(
-			Collections.singletonList(createTermCollector(id, count))
-		).when(
-			facetCollector
-		).getTermCollectors();
-	}
-
-	public static void setUpOneTermCollector(
-		FacetCollector facetCollector, String term, int frequency) {
-
-		Mockito.doReturn(
-			Collections.singletonList(createTermCollector(term, frequency))
-		).when(
-			facetCollector
-		).getTermCollectors();
 	}
 
 }

@@ -67,7 +67,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpMultipleTermCollectors(
+		FacetDisplayContextTextUtil.setUpTermCollectors(
 			_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
@@ -97,7 +97,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpMultipleTermCollectors(
+		FacetDisplayContextTextUtil.setUpTermCollectors(
 			_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
@@ -123,7 +123,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpMultipleTermCollectors(
+		FacetDisplayContextTextUtil.setUpTermCollectors(
 			_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
@@ -148,7 +148,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpMultipleTermCollectors(
+		FacetDisplayContextTextUtil.setUpTermCollectors(
 			_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext

@@ -254,25 +254,23 @@ public class KaleoWorkflowModelConverterImpl
 			new DefaultWorkflowInstance();
 
 		defaultWorkflowInstance.setActive(kaleoInstance.isActive());
+		defaultWorkflowInstance.setCurrentWorkflowNodes(
+			TransformUtil.transform(
+				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
+					kaleoInstance.getKaleoInstanceId()),
+				kaleoInstanceToken -> {
+					KaleoNode kaleoNode = _kaleoNodeLocalService.fetchKaleoNode(
+						kaleoInstanceToken.getCurrentKaleoNodeId());
 
-		List<WorkflowNode> workflowNodes = TransformUtil.transform(
-			_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
-				kaleoInstance.getKaleoInstanceId()),
-			kaleoInstanceToken -> {
-				KaleoNode kaleoNode = _kaleoNodeLocalService.fetchKaleoNode(
-					kaleoInstanceToken.getCurrentKaleoNodeId());
+					if ((kaleoNode == null) ||
+						Objects.equals(
+							kaleoNode.getType(), NodeType.FORK.name())) {
 
-				if ((kaleoNode == null) ||
-					Objects.equals(kaleoNode.getType(), NodeType.FORK.name())) {
+						return null;
+					}
 
-					return null;
-				}
-
-				return _toWorkflowNode(kaleoNode);
-			});
-
-		defaultWorkflowInstance.setCurrentWorkflowNodes(workflowNodes);
-
+					return _toWorkflowNode(kaleoNode);
+				}));
 		defaultWorkflowInstance.setEndDate(kaleoInstance.getCompletionDate());
 		defaultWorkflowInstance.setStartDate(kaleoInstance.getCreateDate());
 

@@ -94,7 +94,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		sb.append("\"><span class=\"align-items-center ");
 		sb.append("control-menu-level-1-heading d-flex mr-1\" ");
 		sb.append("data-qa-id=\"headerTitle\"><h1 class=\"");
-		sb.append("lfr-portal-tooltip text-truncate h4 mb-0\" title=\"");
+		sb.append("lfr-portal-tooltip h4 mb-0\" title=\"");
 
 		String headerTitle = HtmlUtil.escapeAttribute(
 			_getHeaderTitle(httpServletRequest));

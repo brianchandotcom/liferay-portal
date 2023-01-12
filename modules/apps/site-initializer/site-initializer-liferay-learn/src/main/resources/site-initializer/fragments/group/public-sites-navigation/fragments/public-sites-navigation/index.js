@@ -94,9 +94,14 @@ const searchSuggestionsInput = fragmentElement.querySelector(
 const searchSuggestionsResult = fragmentElement.querySelector(
 	'.search-suggestions'
 );
+const noResultsMessage = fragmentElement.querySelector('.no-results-message');
 
 searchSuggestionsInput.oninput = function () {
 	searchSuggestionsResult.innerHTML = '';
+
+	if (!searchSuggestionsInput.value) {
+		noResultsMessage.classList.add('d-none');
+	}
 
 	const query = searchSuggestionsInput.value;
 	navSearch(query);
@@ -132,17 +137,21 @@ function navSearch(query) {
 			'.suggestions-popular'
 		);
 		const suggestedText = fragmentElement.querySelector('.suggested-text');
-		const noResultsMessage = fragmentElement.querySelector(
-			'.no-results-message'
+
+		const searchSuggestionsResult = fragmentElement.querySelector(
+			'.search-suggestions'
 		);
 
-		if (data.items[0] !== void 0) {
+		if (data && data.items && data.items[0]) {
 			const myjson = JSON.parse(JSON.stringify(data.items[0]));
 			if (myjson) {
+				searchSuggestionsResult.innerHTML = '';
+
 				for (const suggestion of myjson.suggestions) {
+					searchSuggestionsResult.classList.remove('d-none');
+
 					const newSuggestion = document.createElement('div');
 					newSuggestion.classList.add('search-suggestion-item');
-					newSuggestion.href = suggestion.attributes.assetURL;
 
 					const suggestionTitle = document.createElement('div');
 					const suggestionTitleText = document.createTextNode(
@@ -155,10 +164,12 @@ function navSearch(query) {
 
 					const suggestionContent = document.createElement('div');
 					let suggestionContentTextValue =
-						suggestion.attributes.fields.content_en_US;
+						suggestion.attributes.assetSearchSummary;
 
 					if (!suggestionContentTextValue) {
-						suggestionContentTextValue = 'No content preview';
+						suggestionContentTextValue = Liferay.Language.get(
+							'no-preview-available'
+						);
 					}
 
 					const suggestionContentText = document.createTextNode(
@@ -169,8 +180,19 @@ function navSearch(query) {
 					);
 					suggestionContent.appendChild(suggestionContentText);
 
+					const assetUrl = suggestion.attributes.assetURL;
+
+					const suggestionUrl = document.createElement('div');
+
+					const suggestionUrlText = document.createTextNode(assetUrl);
+
+					newSuggestion.href = assetUrl;
+					suggestionUrl.classList.add('search-suggestion-item-link');
+					suggestionUrl.appendChild(suggestionUrlText);
+
 					newSuggestion.appendChild(suggestionTitle);
 					newSuggestion.appendChild(suggestionContent);
+					newSuggestion.appendChild(suggestionUrl);
 
 					searchSuggestions.appendChild(newSuggestion);
 
@@ -222,3 +244,10 @@ async function postData(url = '', data = {}) {
 
 	return response.json();
 }
+
+String.prototype.replaceAll = function (strReplace, strWith) {
+	const esc = strReplace.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+	const reg = new RegExp(esc, 'ig');
+
+	return this.replace(reg, strWith);
+};

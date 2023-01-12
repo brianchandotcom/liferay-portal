@@ -73,7 +73,6 @@ import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -101,12 +100,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 		Metadata metadata = _extractMetadata(mimeType, inputStream);
 
 		return _createDDMFormValuesMap(metadata);
-	}
-
-	@Activate
-	protected void activate() throws Exception {
-		_parser = new AutoDetectParser(
-			_tikaConfigurationHelper.getTikaConfig());
 	}
 
 	private static void _addFields(Class<?> clazz, Map<String, String> fields)
@@ -206,6 +199,9 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	private Metadata _extractMetadata(
 		String mimeType, InputStream inputStream) {
 
+		Parser parser = new AutoDetectParser(
+			_tikaConfigurationHelper.getTikaConfig());
+
 		if (_tikaConfigurationHelper.useForkProcess(mimeType)) {
 			File file = FileUtil.createTempFile();
 
@@ -217,7 +213,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 				}
 
 				ExtractMetadataProcessCallable extractMetadataProcessCallable =
-					new ExtractMetadataProcessCallable(file, _parser);
+					new ExtractMetadataProcessCallable(file, parser);
 
 				ProcessChannel<Metadata> processChannel =
 					_processExecutor.execute(
@@ -241,7 +237,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			return _postProcessMetadata(
 				mimeType,
 				ExtractMetadataProcessCallable._extractMetadata(
-					inputStream, _parser));
+					inputStream, parser));
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
@@ -296,8 +292,6 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 
 		_fields = fields;
 	}
-
-	private Parser _parser;
 
 	@Reference
 	private ProcessExecutor _processExecutor;

@@ -29,6 +29,7 @@ import org.apache.tika.config.TikaConfig;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Tina Tian
@@ -60,6 +61,7 @@ public class TikaConfigurationHelper {
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_tikaConfiguration = ConfigurableUtil.createConfigurable(
 			TikaConfiguration.class, properties);
@@ -99,7 +101,7 @@ public class TikaConfigurationHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TikaConfigurationHelper.class);
 
-	private TikaConfig _tikaConfig;
-	private TikaConfiguration _tikaConfiguration;
+	private volatile TikaConfig _tikaConfig;
+	private volatile TikaConfiguration _tikaConfiguration;
 
 }

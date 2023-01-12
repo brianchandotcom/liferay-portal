@@ -5,10 +5,18 @@ definition {
 
 		Refresh();
 
-		Type(
-			key_productName = "${productName}",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-			value1 = "${productQuantity}");
+		if (isSet(allowedQuantities)) {
+			Select(
+				key_productName = "${productName}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD",
+				value1 = "${allowedQuantities}");
+		}
+		else {
+			Type(
+				key_productName = "${productName}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "${productQuantity}");
+		}
 
 		Click(
 			key_productName = "${productName}",
@@ -102,6 +110,15 @@ definition {
 			AssertElementPresent(
 				key_couponCode = "${discountCouponCode}",
 				locator1 = "CommerceFrontStore#COUPON_CODE_BODY");
+		}
+	}
+
+	macro assertMiniCartItemAllowedQuantities {
+		for (var number : list "${allowedQuantities}") {
+			AssertElementPresent(
+				key_cartItemSku = "${cartItemSku}",
+				key_optionValue = "${number}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
 		}
 	}
 

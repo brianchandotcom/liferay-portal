@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = OpenSamlBootstrap.class)
+@Component(service = OpenSamlBootstrap.class)
 public class OpenSamlBootstrap {
 
 	public static synchronized void bootstrap()

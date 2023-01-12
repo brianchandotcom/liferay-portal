@@ -84,10 +84,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
 /**
  * @author Mika Koivisto
  */
-@Component(
-	immediate = true,
-	service = {MetadataManager.class, SamlHttpRequestUtil.class}
-)
+@Component(service = {MetadataManager.class, SamlHttpRequestUtil.class})
 public class MetadataManagerImpl
 	implements MetadataManager, SamlHttpRequestUtil {
 

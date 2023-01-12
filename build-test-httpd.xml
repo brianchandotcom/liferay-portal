@@ -15,15 +15,6 @@
 	</target>
 
 	<target name="configure-httpd-server">
-		<get-test-url />
-
-		<propertyregex
-			input="${test.url}"
-			property="hostname"
-			regexp="(http:\/\/)(.*)(:[0-9][0-9])"
-			select="\2"
-		/>
-
 		<if>
 			<not>
 				<resourcecontains
@@ -35,10 +26,10 @@
 				<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
 <VirtualHost *:80>
-	ServerName ${hostname}
+	ServerName localhost
 	ProxyPreserveHost On
-	ProxyPass /liferay http://${hostname}:8080
-	ProxyPassReverse /liferay http://${hostname}:8080
+	ProxyPass /liferay http://localhost:8080
+	ProxyPassReverse /liferay http://localhost:8080
 </VirtualHost>]]></echo>
 			</then>
 		</if>
@@ -80,10 +71,10 @@ Listen ${test.app.server.leading.port.number}0]]></echo>
 							<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
 <VirtualHost *:${test.app.server.leading.port.number}0>
-	ServerName ${hostname}
+	ServerName localhost
 	ProxyPreserveHost On
-	ProxyPass /liferay http://${hostname}:${test.app.server.leading.port.number}080
-	ProxyPassReverse /liferay http://${hostname}:${test.app.server.leading.port.number}080
+	ProxyPass /liferay http://localhost:${test.app.server.leading.port.number}080
+	ProxyPassReverse /liferay http://localhost:${test.app.server.leading.port.number}080
 </VirtualHost>]]></echo>
 						</then>
 					</if>

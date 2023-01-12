@@ -842,7 +842,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	public boolean isSingleSegmentsExperienceMode() {
-		return false;
+		return _isSegmentsExperimentVariant();
 	}
 
 	public boolean isWorkflowEnabled() {

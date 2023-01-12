@@ -277,6 +277,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
 				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
+
 		Assert.assertEquals(
 			infoFieldValue.toString(),
 			nameValue.getString(

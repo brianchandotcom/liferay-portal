@@ -402,7 +402,7 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_collection_variations")
 			).put(
-				"getEditCollectionConfigurationUrlURL",
+				"getEditCollectionConfigurationURL",
 				ResourceURLBuilder.createResourceURL(
 					_renderResponse
 				).setRedirect(

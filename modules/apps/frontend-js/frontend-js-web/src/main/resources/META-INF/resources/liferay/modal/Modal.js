@@ -702,6 +702,7 @@ Modal.propTypes = {
 	onClose: PropTypes.func,
 	onOpen: PropTypes.func,
 	size: PropTypes.oneOf(['full-screen', 'lg', 'md', 'sm']),
+	status: PropTypes.string,
 	title: PropTypes.string,
 	url: PropTypes.string,
 };

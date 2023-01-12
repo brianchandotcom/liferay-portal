@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alberto Chaparro
  */
-@Component(enabled = false, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class SchedulerUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Override

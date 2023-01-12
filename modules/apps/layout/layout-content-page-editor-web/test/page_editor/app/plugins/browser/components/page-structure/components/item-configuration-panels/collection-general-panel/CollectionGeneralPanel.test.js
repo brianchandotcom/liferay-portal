@@ -15,7 +15,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/collectionFilterFragmentEntryKey';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
@@ -505,14 +505,8 @@ describe('CollectionGeneralPanel', () => {
 
 		it('shows a confirmation when updating a collection linked to a filter', async () => {
 			CollectionSelector.mockImplementation(
-				({onPreventCollectionSelect}) => {
-					useEffect(
-						() => {
-							onPreventCollectionSelect();
-						},
-						// eslint-disable-next-line react-hooks/exhaustive-deps
-						[]
-					);
+				({onBeforeCollectionSelect}) => {
+					onBeforeCollectionSelect({preventDefault: () => {}});
 
 					return <h1>Collection Selector</h1>;
 				}

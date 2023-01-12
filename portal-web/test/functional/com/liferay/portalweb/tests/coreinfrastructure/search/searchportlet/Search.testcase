@@ -1585,6 +1585,103 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test CanOrderUserFacetTerms {
+		for (var userList : list "carter.braxton,john.adams,jonathan.franklin") {
+			var firstName = StringUtil.extractFirst("${userList}", ".");
+			var lastName = StringUtil.extractLast("${userList}", ".");
+
+			JSONUser.addUser(
+				userEmailAddress = "${userList}@liferay.com",
+				userFirstName = "${firstName}",
+				userLastName = "${lastName}",
+				userScreenName = "${firstName}");
+
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "${userList}@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "${userList}@liferay.com");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "john.adams@liferay.com",
+			userLoginFullName = "john adams");
+
+		for (var count : list "1,2,3,4") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Test",
+				webContentTitle = "WC WebContent Title ${count}");
+
+			PortletEntry.publish();
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "carter.braxton@liferay.com",
+			userLoginFullName = "carter braxton");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		for (var count : list "1,2") {
+			Blogs.addEntry(
+				entryContent = "Test",
+				entryTitle = "Blogs Entry Title ${count}");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "jonathan.franklin@liferay.com",
+			userLoginFullName = "jonathan franklin");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Test",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Home");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "john adams,test test,carter braxton,jonathan franklin");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "User Facet",
+			sortOption = "Term Frequency Ascending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,test test,john adams");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "User Facet",
+			sortOption = "Term Value Ascending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "carter braxton,john adams,jonathan franklin,test test");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "User Facet",
+			sortOption = "Term Value Descending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "test test,jonathan franklin,john adams,carter braxton");
+	}
+
 	@priority = "4"
 	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
 		property custom.properties = "enterprise.product.notification.enabled=true";

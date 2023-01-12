@@ -143,13 +143,15 @@ public class LoadBalancerUtilTest
 			"jenkins.local.url[test-3-3]", "http://test-3-3");
 
 		for (int i = 1; i <= 20; i++) {
-			properties.setProperty("master.slaves(test-1-" + i + ")", "");
+			_copyProperties(
+				buildProperties, properties, "master.slaves(test-1-" + i + ")");
 		}
 
-		properties.setProperty("master.slaves(test-2-1)", "");
+		_copyProperties(buildProperties, properties, "master.slaves(test-2-1)");
 
-		for (int i = 1; i <= 3; i++) {
-			properties.setProperty("master.slaves(test-3-" + i + ")", "");
+		for (int i = 1; i <= 2; i++) {
+			_copyProperties(
+				buildProperties, properties, "master.slaves(test-3-" + i + ")");
 		}
 
 		properties.setProperty("invoked.batch.size", "2");
@@ -233,7 +235,8 @@ public class LoadBalancerUtilTest
 		for (String propertyName : propertyNames) {
 			if (sourceProperties.containsKey(propertyName)) {
 				targetProperties.put(
-				propertyName, sourceProperties.getProperty(propertyName));
+					propertyName, sourceProperties.getProperty(propertyName));
+			}
 		}
 	}
 

@@ -71,13 +71,14 @@ public class ClientExtension {
 				}
 			});
 
-		if ((type.equals("oAuthApplicationHeadlessServer") ||
-			 type.equals("oAuthApplicationUserAgent")) &&
-			(_typeSettings.get("homePageURL") == null)) {
+		if (type.equals("oAuthApplicationHeadlessServer") ||
+			type.equals("oAuthApplicationUserAgent")) {
 
-			_typeSettings.put(
+			configMap.put(
 				"homePageURL",
-				"https://$[conf:ext.lxc.liferay.com.mainDomain]");
+				_typeSettings.getOrDefault(
+					"homePageURL",
+					"https://$[conf:ext.lxc.liferay.com.mainDomain]"));
 		}
 
 		configMap.put("typeSettings", _encode(_typeSettings));

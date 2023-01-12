@@ -1,0 +1,196 @@
+@component-name = "portal-staging"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Staging";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "User can enable local staging on site which is based on Masterclass site template. Blocked by LPS-172531."
+	@ignore = "true"
+	@priority = "4"
+	test CanEnableLocalStagingOnMasterclassSiteTemplate {
+		task ("Given: Add a new site based on Masterclass site template") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Test Masterclass Site",
+				siteTemplateName = "Masterclass");
+		}
+
+		task ("When: Enable local staging on the new site with page versioning") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Masterclass Site");
+		}
+
+		task ("Then: User can publish the staging site") {
+			Navigator.openSiteURL(siteName = "Test Masterclass Site");
+
+			var key_tabName = "Staging";
+
+			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
+				Refresh();
+			}
+
+			Click(locator1 = "StagingPublishToLive#TAB_NAME");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+	}
+
+	@description = "User can enable local staging on site which is based on Minium site template. Blocked by LPS-172633."
+	@ignore = "true"
+	@priority = "4"
+	test CanEnableLocalStagingOnMiniumSiteTemplate {
+		task ("Given: Add a new site based on Minium site template") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Test Minium Site",
+				siteTemplateName = "Minium");
+		}
+
+		task ("When: Enable local staging on the new site with page versioning") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Minium Site");
+		}
+
+		task ("Then: User can publish the staging site") {
+			Navigator.openSiteURL(siteName = "Test Minium Site");
+
+			var key_tabName = "Staging";
+
+			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
+				Refresh();
+			}
+
+			Click(locator1 = "StagingPublishToLive#TAB_NAME");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+	}
+
+	@description = "User can enable local staging on site which is based on Raylife site template. Blocked by LPS-172534 and LPS-172537."
+	@ignore = "true"
+	@priority = "4"
+	test CanEnableLocalStagingOnRaylifeSiteTemplate {
+		task ("Given: Add a new site based on Raylife site template") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Test Raylife Site",
+				siteTemplateName = "Raylife D2C");
+		}
+
+		task ("When: Enable local staging on the new site with page versioning") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Raylife Site");
+		}
+
+		task ("Then: User can publish the staging site") {
+			Navigator.openSiteURL(siteName = "Test Raylife Site");
+
+			var key_tabName = "Staging";
+
+			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
+				Refresh();
+			}
+
+			Click(locator1 = "StagingPublishToLive#TAB_NAME");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+	}
+
+	@description = "User can enable local staging on site which is based on Speedwell site template."
+	@priority = "4"
+	test CanEnableLocalStagingOnSpeedwellSiteTemplate {
+		task ("Given: Add a new site based on Speedwell site template") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Test Speedwell Site",
+				siteTemplateName = "Speedwell");
+		}
+
+		task ("When: Enable local staging on the new site with page versioning") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Speedwell Site");
+		}
+
+		task ("Then: User can publish the staging site") {
+			Navigator.openSiteURL(siteName = "Test Speedwell Site");
+
+			var key_tabName = "Staging";
+
+			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
+				Refresh();
+			}
+
+			Click(locator1 = "StagingPublishToLive#TAB_NAME");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+	}
+
+	@description = "User can enable local staging on site which is based on Welcome site template."
+	@priority = "4"
+	test CanEnableLocalStagingOnWelcomeSiteTemplate {
+		task ("Given: Add a new site based on Welcome site template") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Test Welcome Site",
+				siteTemplateName = "Welcome");
+		}
+
+		task ("When: Enable local staging on the new site with page versioning") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Welcome Site");
+		}
+
+		task ("Then: User can publish the staging site") {
+			Navigator.openStagingSiteURL(siteName = "Test Welcome Site");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+	}
+
+}

@@ -187,6 +187,28 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return true;
 	}
 
+	@Override
+	public boolean isSiteIdSynced(long companyId, long groupId)
+		throws Exception {
+
+		if (!isAnalyticsEnabled(companyId)) {
+			return false;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			getAnalyticsConfiguration(companyId);
+
+		if (analyticsConfiguration.liferayAnalyticsEnableAllGroupIds() ||
+			ArrayUtil.contains(
+				analyticsConfiguration.syncedGroupIds(),
+				String.valueOf(groupId))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String[] updateCommerceChannelIds(
 			String analyticsChannelId, long companyId,
 			Long[] dataSourceCommerceChannelIds)

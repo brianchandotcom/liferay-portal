@@ -16,6 +16,7 @@ package com.liferay.exportimport.internal.upgrade.registry;
 
 import com.liferay.exportimport.internal.upgrade.v1_0_0.PublisherRequestUpgradeProcess;
 import com.liferay.exportimport.internal.upgrade.v1_0_1.SystemEventsUpgradeProcess;
+import com.liferay.exportimport.internal.upgrade.v1_0_1.UpgradeBackgroundTaskExecutorClassNames;
 import com.liferay.exportimport.internal.upgrade.v1_0_2.UpgradeExportImportServiceConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.portal.kernel.model.Release;
@@ -57,12 +58,8 @@ public class ExportImportServiceUpgradeStepRegistrator
 		registry.register(
 			"1.0.0", "1.0.1",
 			new SystemEventsUpgradeProcess(
-				_groupLocalService, _systemEventLocalService));
-
-		registry.register(
-			"1.0.1", "1.0.2",
-			new com.liferay.exportimport.internal.upgrade.v1_0_2.
-				UpgradeBackgroundTaskExecutorClassNames());
+				_groupLocalService, _systemEventLocalService),
+			new UpgradeBackgroundTaskExecutorClassNames());
 
 		registry.register(
 			"1.0.1", "1.0.2",

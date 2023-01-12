@@ -449,11 +449,11 @@ public class DXPCloudClientTestrayImporter {
 	}
 
 	private static List<Element> _getTestCaseResultElements() {
-		try {
-			File xmlFile = new File(
-				_projectDir,
-				"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml");
+		File xmlFile = new File(
+			_projectDir,
+			"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml");
 
+		try {
 			Document document = Dom4JUtil.parse(
 				JenkinsResultsParserUtil.read(xmlFile));
 
@@ -461,7 +461,18 @@ public class DXPCloudClientTestrayImporter {
 
 			return rootElement.elements("testcase");
 		}
-		catch (DocumentException | IOException exception) {
+		catch (Exception exception) {
+			if (xmlFile.exists()) {
+				File xmlGzipFile = new File(
+					xmlFile.getParentFile(), xmlFile.getName() + ".gz");
+
+				JenkinsResultsParserUtil.gzip(xmlFile, xmlGzipFile);
+
+				_testrayS3Bucket.createTestrayS3Object(
+					_getRelativeURLPath() + "/" + xmlGzipFile.getName(),
+					xmlGzipFile);
+			}
+
 			throw new RuntimeException(exception);
 		}
 	}

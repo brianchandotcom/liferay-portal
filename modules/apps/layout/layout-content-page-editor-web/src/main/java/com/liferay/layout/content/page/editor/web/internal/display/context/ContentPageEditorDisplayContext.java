@@ -135,7 +135,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -866,14 +865,23 @@ public class ContentPageEditorDisplayContext {
 			unicodeProperties.getProperty("segmentsExperienceId"), -1);
 
 		if (_segmentsExperienceId != -1) {
-			_segmentsExperienceId = Optional.ofNullable(
+			SegmentsExperience segmentsExperience =
 				SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-					_segmentsExperienceId)
-			).map(
-				SegmentsExperience::getSegmentsExperienceId
-			).orElse(
-				-1L
-			);
+					_segmentsExperienceId);
+
+			if (segmentsExperience != null) {
+				Long id = segmentsExperience.getSegmentsExperienceId();
+
+				if (id != null) {
+					_segmentsExperienceId = id;
+				}
+				else {
+					_segmentsExperienceId = -1L;
+				}
+			}
+			else {
+				_segmentsExperienceId = -1L;
+			}
 		}
 
 		if (_segmentsExperienceId == -1) {
@@ -1498,13 +1506,15 @@ public class ContentPageEditorDisplayContext {
 	private JSONObject _getMasterLayoutJSONObject() {
 		return JSONUtil.put(
 			"masterLayoutData",
-			Optional.ofNullable(
-				_getMasterLayoutStructure()
-			).map(
-				LayoutStructure::toJSONObject
-			).orElse(
-				null
-			)
+			() -> {
+				LayoutStructure layoutStructure = _getMasterLayoutStructure();
+
+				if (layoutStructure != null) {
+					return layoutStructure.toJSONObject();
+				}
+
+				return null;
+			}
 		).put(
 			"masterLayoutPlid",
 			() -> {

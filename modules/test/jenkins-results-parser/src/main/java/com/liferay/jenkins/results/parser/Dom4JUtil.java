@@ -289,6 +289,10 @@ public class Dom4JUtil {
 	}
 
 	public static Document parse(String xml) throws DocumentException {
+		if (xml != null) {
+			xml = xml.trim();
+		}
+
 		try {
 			SAXReader saxReader = new SAXReader();
 

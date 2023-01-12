@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,7 +30,12 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _removeUnnecessaryComments(absolutePath, content);
+		if (fileName.endsWith("/test.properties") &&
+			!absolutePath.equals(
+				SourceUtil.getRootDirName(absolutePath) + "/test.properties")) {
+
+			content = _removeUnnecessaryComments(content);
+		}
 
 		return _formatComments(content);
 	}
@@ -59,13 +65,7 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _removeUnnecessaryComments(String fileName, String content) {
-		if (!fileName.endsWith("/test.properties") ||
-			fileName.endsWith("/liferay-portal/test.properties")) {
-
-			return content;
-		}
-
+	private String _removeUnnecessaryComments(String content) {
 		String[] lines = StringUtil.splitLines(content);
 
 		boolean inComment = false;

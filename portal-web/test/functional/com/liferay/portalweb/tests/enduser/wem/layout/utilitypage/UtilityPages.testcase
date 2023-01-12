@@ -92,4 +92,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
+	@priority = "5"
+	test Mark404ErrorUtilityPageAsDefault {
+		property test.name.skip.portal.instance = "UtilityPages#Mark404ErrorUtilityPageAsDefault";
+
+		task ("Given a page designer has a 404 error utility page before enabling private pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer marks it as default") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				pageName = "404 Error Utility Page",
+				menuItem = "Mark as Default");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page designer sees the sticker on the card") {
+			LexiconCard.viewCardSticker(
+				card = "404 Error Utility Page",
+				icon = "check-circle");
+		}
+
+		task ("Given the page designer has a public static page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the page designer navigates to an non-exist public page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer sees the 404 Error Utility Page") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+
+		task ("Given the page designer has a private static page after enabling private pages") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Release Feature Flags",
+				configurationName = "Release Feature Flags",
+				configurationScope = "System Scope");
+
+			SystemSettings.selectOptionSetting(
+				fieldName = "Disabled Features",
+				selectOption = "Disable Private Pages");
+
+			SystemSettings.saveConfiguration();
+
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Private Page Name");
+		}
+
+		task ("When the page designer navigates to an non-exist private page") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer sees the 404 Error Utility Page") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+	}
+
 }

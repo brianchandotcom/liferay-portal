@@ -74,6 +74,7 @@ import {
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import {formHasPermissions} from '../../../../../app/utils/formHasPermissions';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
+import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import {
 	FORM_ERROR_TYPES,
@@ -441,6 +442,11 @@ function StructureTreeNodeContent({
 					node.type === LAYOUT_DATA_ITEM_TYPES.form &&
 					!formHasPermissions(item)
 				}
+				showUnavailableWarning={
+					Liferay.FeatureFlags['LPS-169923'] &&
+					node.type === LAYOUT_DATA_ITEM_TYPES.form &&
+					formIsUnavailable(item)
+				}
 			/>
 
 			{!editingName && (
@@ -487,6 +493,7 @@ const NameLabel = React.forwardRef(
 			nameInfo,
 			onEditName,
 			showPermissionRestriction,
+			showUnavailableWarning,
 		},
 		ref
 	) => {
@@ -554,7 +561,19 @@ const NameLabel = React.forwardRef(
 					</span>
 				)}
 
-				{showPermissionRestriction ? (
+				{showUnavailableWarning ? (
+					<>
+						<ClayIcon
+							className="ml-2 mt-0 text-secondary"
+							symbol="warning-full"
+						/>
+						<span className="sr-only">
+							{Liferay.Language.get(
+								'this-content-is-currently-unavailable-or-has-been-deleted.-users-cannot-see-this-fragment'
+							)}
+						</span>
+					</>
+				) : showPermissionRestriction ? (
 					<>
 						<ClayIcon
 							className="ml-2 mt-0 text-secondary"

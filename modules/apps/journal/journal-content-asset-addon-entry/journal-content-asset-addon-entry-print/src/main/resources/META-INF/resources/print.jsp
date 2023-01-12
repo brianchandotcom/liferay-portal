@@ -46,10 +46,11 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 
 			<clay:button
 				aria-label="<%= title %>"
-				cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
+				borderless="<%= true %>"
 				displayType="secondary"
 				icon="print"
 				onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
+				small="<%= true %>"
 				title="<%= title %>"
 				type="button"
 			/>

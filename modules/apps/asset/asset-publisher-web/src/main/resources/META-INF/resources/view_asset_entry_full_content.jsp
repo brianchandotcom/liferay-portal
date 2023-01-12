@@ -332,10 +332,11 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 						<c:when test="<%= print %>">
 							<clay:button
 								aria-label="<%= label %>"
-								cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip "
+								borderless="<%= true %>"
 								displayType="secondary"
 								icon="print"
 								onClick="javascript:print();"
+								small="<%= true %>"
 								type="button"
 							/>
 
@@ -351,10 +352,11 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 
 							<clay:button
 								aria-label="<%= label %>"
-								cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
+								borderless="<%= true %>"
 								displayType="secondary"
 								icon="print"
 								onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
+								small="<%= true %>"
 								type="button"
 							/>
 

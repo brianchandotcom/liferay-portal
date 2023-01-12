@@ -23,10 +23,12 @@ import {addParams, fetch, navigate} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 import useDebounceCallback from '../hooks/useDebounceCallback';
+import cleanSuggestionsContributorConfiguration from '../utils/clean_suggestions_contributor_configuration';
 
 export default function SearchBar({
 	destinationFriendlyURL,
 	emptySearchEnabled,
+	isSearchExperiencesSupported = true,
 	keywords = '',
 	keywordsParameterName = 'q',
 	letUserChooseScope = false,
@@ -63,6 +65,10 @@ export default function SearchBar({
 	 */
 
 	const _getLowestSuggestionsDisplayThreshold = useCallback(() => {
+		if (!isSearchExperiencesSupported) {
+			return parseInt(suggestionsDisplayThreshold, 10);
+		}
+
 		const characterThresholdArray = JSON.parse(
 			suggestionsContributorConfiguration
 		)
@@ -74,7 +80,26 @@ export default function SearchBar({
 		return characterThresholdArray.length
 			? Math.min(...characterThresholdArray)
 			: parseInt(suggestionsDisplayThreshold, 10);
-	}, [suggestionsContributorConfiguration, suggestionsDisplayThreshold]);
+	}, [
+		suggestionsContributorConfiguration,
+		suggestionsDisplayThreshold,
+		isSearchExperiencesSupported,
+	]);
+
+	/**
+	 * Filters out blueprint suggestion contributors if search
+	 * experiences is not supported.
+	 */
+	const _getSuggestionsContributorConfiguration = useCallback(
+		() =>
+			JSON.stringify(
+				cleanSuggestionsContributorConfiguration(
+					suggestionsContributorConfiguration,
+					isSearchExperiencesSupported
+				)
+			),
+		[isSearchExperiencesSupported, suggestionsContributorConfiguration]
+	);
 
 	const _fetchSuggestions = (searchValue, scopeValue) => {
 		fetch(
@@ -92,7 +117,7 @@ export default function SearchBar({
 				suggestionsURL
 			),
 			{
-				body: suggestionsContributorConfiguration,
+				body: _getSuggestionsContributorConfiguration(),
 				headers: new Headers({
 					'Accept': 'application/json',
 					'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),

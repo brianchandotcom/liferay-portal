@@ -23,13 +23,10 @@ import getCN from 'classnames';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import cleanSuggestionsContributorConfiguration from '../utils/clean_suggestions_contributor_configuration';
+import {CONTRIBUTOR_TYPES} from '../utils/types/contributorTypes';
 import FieldList from './FieldList';
 import SelectSXPBlueprintModal from './select_sxp_blueprint_modal/SelectSXPBlueprintModal';
-
-const CONTRIBUTORS = {
-	BASIC: 'basic',
-	SXP_BLUEPRINT: 'sxpBlueprint',
-};
 
 const DEFAULT_ATTRIBUTES = {
 	characterThreshold: '',
@@ -48,7 +45,7 @@ const DEFAULT_ATTRIBUTES = {
  */
 const removeEmptyFields = (fields) =>
 	fields.filter(({attributes, contributorName, displayGroupName, size}) => {
-		if (contributorName === CONTRIBUTORS.BASIC) {
+		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
 			return displayGroupName && size;
 		}
 
@@ -378,7 +375,7 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 	};
 
 	const _handleChangeContributorName = (event) => {
-		if (event.target.value === CONTRIBUTORS.BASIC) {
+		if (event.target.value === CONTRIBUTOR_TYPES.BASIC) {
 			onReplace({
 				contributorName: event.target.value,
 				displayGroupName: value.displayGroupName,
@@ -517,7 +514,7 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 				</ClayInput.GroupItem>
 			</div>
 
-			{value.contributorName === CONTRIBUTORS.SXP_BLUEPRINT && (
+			{value.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT && (
 				<SXPBlueprintAttributes
 					onBlur={_handleBlur}
 					onChange={onChange}
@@ -532,40 +529,50 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 function SearchBarConfigurationSuggestions({
 	initialSuggestionsContributorConfiguration = '[]',
 	isDXP = false,
+	isSearchExperiencesSupported = true,
 	namespace = '',
 	suggestionsContributorConfigurationName = '',
 }) {
+	const blueprintsEnabled = isDXP && isSearchExperiencesSupported;
+
 	const [
 		suggestionsContributorConfiguration,
 		setSuggestionsContributorConfiguration,
 	] = useState(
-		JSON.parse(initialSuggestionsContributorConfiguration).map(
-			(item, index) => ({
-				...item,
-				id: index, // For FieldList item `key` when reordering.
-			})
-		)
+		cleanSuggestionsContributorConfiguration(
+			initialSuggestionsContributorConfiguration,
+			isSearchExperiencesSupported
+		).map((item, index) => ({
+			...item,
+			id: index, // For FieldList item `key` when reordering.
+		}))
 	);
 
+	/*
+	 * If blueprints are not enabled, exactly one contributor can be added.
+	 */
+	const _hasAvailableContributors = () =>
+		blueprintsEnabled || !suggestionsContributorConfiguration.length;
+
 	const _getContributorOptions = (index) => {
-		if (!isDXP) {
+		if (!blueprintsEnabled) {
 			return (
 				<ClaySelect.Option
 					label={Liferay.Language.get('basic')}
-					value={CONTRIBUTORS.BASIC}
+					value={CONTRIBUTOR_TYPES.BASIC}
 				/>
 			);
 		}
 
 		const indexOfBasic = suggestionsContributorConfiguration.findIndex(
-			(value) => value.contributorName === CONTRIBUTORS.BASIC
+			(value) => value.contributorName === CONTRIBUTOR_TYPES.BASIC
 		);
 
 		if (indexOfBasic > -1 && index !== indexOfBasic) {
 			return (
 				<ClaySelect.Option
 					label={Liferay.Language.get('blueprint')}
-					value={CONTRIBUTORS.SXP_BLUEPRINT}
+					value={CONTRIBUTOR_TYPES.SXP_BLUEPRINT}
 				/>
 			);
 		}
@@ -574,12 +581,12 @@ function SearchBarConfigurationSuggestions({
 			<>
 				<ClaySelect.Option
 					label={Liferay.Language.get('basic')}
-					value={CONTRIBUTORS.BASIC}
+					value={CONTRIBUTOR_TYPES.BASIC}
 				/>
 
 				<ClaySelect.Option
 					label={Liferay.Language.get('blueprint')}
-					value={CONTRIBUTORS.SXP_BLUEPRINT}
+					value={CONTRIBUTOR_TYPES.SXP_BLUEPRINT}
 				/>
 			</>
 		);
@@ -588,19 +595,19 @@ function SearchBarConfigurationSuggestions({
 	const _getDefaultValue = () => {
 		if (
 			suggestionsContributorConfiguration.some(
-				(config) => config.contributorName === CONTRIBUTORS.BASIC
+				(config) => config.contributorName === CONTRIBUTOR_TYPES.BASIC
 			)
 		) {
 			return {
 				attributes: DEFAULT_ATTRIBUTES,
-				contributorName: CONTRIBUTORS.SXP_BLUEPRINT,
+				contributorName: CONTRIBUTOR_TYPES.SXP_BLUEPRINT,
 				displayGroupName: '',
 				size: '',
 			};
 		}
 
 		return {
-			contributorName: CONTRIBUTORS.BASIC,
+			contributorName: CONTRIBUTOR_TYPES.BASIC,
 			displayGroupName: '',
 			size: '',
 		};
@@ -642,9 +649,9 @@ function SearchBarConfigurationSuggestions({
 						value={value}
 					/>
 				)}
-				showAddButton={isDXP}
-				showDeleteButton={isDXP}
-				showDragButton={isDXP}
+				showAddButton={_hasAvailableContributors()}
+				showDeleteButton={true}
+				showDragButton={blueprintsEnabled}
 				value={suggestionsContributorConfiguration}
 			/>
 		</div>

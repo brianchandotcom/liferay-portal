@@ -21,7 +21,7 @@ import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.object.web.internal.util.ObjectDefinitionPermissionUtil;
+import com.liferay.object.web.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,9 +65,10 @@ public class ObjectEntryInfoItemPermissionProvider
 
 	private boolean _hasPermission(String actionId, long objectEntryId) {
 		try {
-			return ObjectDefinitionPermissionUtil.hasModelResourcePermission(
-				_objectDefinition, objectEntryId, _objectEntryService,
-				actionId);
+			return ObjectDefinitionResourcePermissionUtil.
+				hasModelResourcePermission(
+					_objectDefinition, objectEntryId, _objectEntryService,
+					actionId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.util;
+package com.liferay.object.web.internal.security.permission.resource.util;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Guilherme Camacho
  */
-public class ObjectDefinitionPermissionUtil {
+public class ObjectDefinitionResourcePermissionUtil {
 
 	public static boolean hasModelResourcePermission(
 			ObjectDefinition objectDefinition, Long objectEntryId,

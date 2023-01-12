@@ -12,12 +12,7 @@
  * details.
  */
 
-import {
-	Card,
-	FormError,
-	Input,
-	SingleSelect,
-} from '@liferay/object-js-components-web';
+import {Card, FormError, Input} from '@liferay/object-js-components-web';
 import React from 'react';
 
 interface BasicInfoContainerProps {
@@ -60,15 +55,6 @@ export function BasicInfoContainer({
 				type="text"
 				value={values.description}
 			/>
-
-			{!Liferay.FeatureFlags['LPS-162133'] && (
-				<SingleSelect
-					disabled
-					label={Liferay.Language.get('type')}
-					options={[]}
-					value={Liferay.Language.get('email')}
-				/>
-			)}
 		</Card>
 	);
 }

@@ -41,8 +41,7 @@ export function SettingsContainer({
 				)}
 			</Text>
 
-			{Liferay.FeatureFlags['LPS-162133'] &&
-			values.type === 'userNotification' ? (
+			{values.type === 'userNotification' ? (
 				<UserNotificationSettings
 					setValues={setValues}
 					values={values}

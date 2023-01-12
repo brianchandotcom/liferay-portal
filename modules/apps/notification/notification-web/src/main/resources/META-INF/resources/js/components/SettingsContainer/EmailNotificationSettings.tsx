@@ -37,6 +37,7 @@ export function EmailNotificationSettings({
 	return (
 		<>
 			<InputLocalized
+				error={errors.to}
 				label={Liferay.Language.get('to')}
 				name="to"
 				onChange={(translation) => {
@@ -51,6 +52,7 @@ export function EmailNotificationSettings({
 					});
 				}}
 				placeholder=""
+				required
 				selectedLocale={selectedLocale}
 				translations={(values.recipients[0] as EmailRecipients).to}
 			/>

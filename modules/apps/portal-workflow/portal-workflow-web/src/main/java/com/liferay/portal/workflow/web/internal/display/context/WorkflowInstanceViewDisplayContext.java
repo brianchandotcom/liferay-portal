@@ -77,6 +77,8 @@ public class WorkflowInstanceViewDisplayContext
 		throws PortalException {
 
 		super(liferayPortletRequest, liferayPortletResponse);
+
+		_liferayPortletRequest = liferayPortletRequest;
 	}
 
 	public String getAssetIconCssClass(WorkflowInstance workflowInstance) {
@@ -409,6 +411,24 @@ public class WorkflowInstanceViewDisplayContext
 		return false;
 	}
 
+	public boolean isShowExtraInfo() {
+		if (_showExtraInfo != null) {
+			return _showExtraInfo;
+		}
+
+		if (Objects.equals(
+				ParamUtil.getString(_liferayPortletRequest, "type"),
+				"document")) {
+
+			_showExtraInfo = true;
+		}
+		else {
+			_showExtraInfo = false;
+		}
+
+		return _showExtraInfo;
+	}
+
 	protected String getAssetType(String keywords) {
 		for (WorkflowHandler<?> workflowHandler :
 				getSearchableAssetsWorkflowHandlers()) {
@@ -536,9 +556,11 @@ public class WorkflowInstanceViewDisplayContext
 
 	private String _displayStyle;
 	private String _keywords;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
 	private WorkflowInstanceSearch _searchContainer;
+	private Boolean _showExtraInfo;
 
 }

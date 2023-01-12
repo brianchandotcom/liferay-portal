@@ -46,6 +46,7 @@ renderResponse.setTitle(assetRenderer.getTitle(locale));
 				assetEntry="<%= assetEntry %>"
 				assetRenderer="<%= assetRenderer %>"
 				assetRendererFactory="<%= assetRendererFactory %>"
+				showExtraInfo="<%= workflowInstanceViewDisplayContext.isShowExtraInfo() %>"
 			/>
 
 			<%

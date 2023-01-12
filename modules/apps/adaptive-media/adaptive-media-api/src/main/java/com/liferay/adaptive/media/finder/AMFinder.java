@@ -17,8 +17,8 @@ package com.liferay.adaptive.media.finder;
 import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * An {@link AMFinder} is responsible for locating and returning media related
@@ -42,13 +42,13 @@ public interface AMFinder<B extends AMQueryBuilder<M, T>, M, T> {
 	 * @param  amQueryBuilderFunction a function to be invoked with an {@link
 	 *         AMQueryBuilder} argument. The query builder provides operations
 	 *         to filter and sort the returned media.
-	 * @return a non-<code>null</code>, possibly empty stream of all media
+	 * @return a non-<code>null</code>, possibly empty list of all media
 	 *         instances matching the query ordered by score: better matches are
 	 *         prioritized first
 	 * @throws PortalException if an error occurred while calling any Liferay
 	 *         service
 	 */
-	public Stream<AdaptiveMedia<T>> getAdaptiveMediaStream(
+	public List<AdaptiveMedia<T>> getAdaptiveMedias(
 			Function<B, AMQuery<M, T>> amQueryBuilderFunction)
 		throws PortalException;
 

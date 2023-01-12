@@ -38,12 +38,15 @@ import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.net.URI;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AMImageFinderImpl implements AMImageFinder {
 
 	@Override
-	public Stream<AdaptiveMedia<AMImageProcessor>> getAdaptiveMediaStream(
+	public List<AdaptiveMedia<AMImageProcessor>> getAdaptiveMedias(
 			Function
 				<AMImageQueryBuilder, AMQuery<FileVersion, AMImageProcessor>>
 					amImageQueryBuilderFunction)
@@ -85,13 +88,13 @@ public class AMImageFinderImpl implements AMImageFinder {
 		if (!_amImageMimeTypeProvider.isMimeTypeSupported(
 				fileVersion.getMimeType())) {
 
-			return Stream.empty();
+			return new ArrayList<>();
 		}
 
 		String mimeType = fileVersion.getMimeType();
 
 		if (mimeType.equals(ContentTypes.IMAGE_SVG_XML)) {
-			return Stream.of(_createRawAdaptiveMedia(fileVersion));
+			return Arrays.asList(_createRawAdaptiveMedia(fileVersion));
 		}
 
 		BiFunction<FileVersion, AMImageConfigurationEntry, URI> uriFactory =
@@ -107,23 +110,28 @@ public class AMImageFinderImpl implements AMImageFinder {
 		Predicate<AMImageConfigurationEntry> filter =
 			amImageQueryBuilderImpl.getConfigurationEntryFilter();
 
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			new ArrayList<>();
+
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
+
+			if (filter.test(amImageConfigurationEntry) &&
+				_hasAdaptiveMedia(fileVersion, amImageConfigurationEntry)) {
+
+				adaptiveMedias.add(
+					_createMedia(
+						fileVersion, uriFactory, amImageConfigurationEntry));
+			}
+		}
+
 		AMDistanceComparator<AdaptiveMedia<AMImageProcessor>>
 			amDistanceComparator =
 				amImageQueryBuilderImpl.getAMDistanceComparator();
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
-			amImageConfigurationEntries.stream();
+		Collections.sort(adaptiveMedias, amDistanceComparator.toComparator());
 
-		return amImageConfigurationEntryStream.filter(
-			amImageConfigurationEntry ->
-				filter.test(amImageConfigurationEntry) &&
-				_hasAdaptiveMedia(fileVersion, amImageConfigurationEntry)
-		).map(
-			amImageConfigurationEntry -> _createMedia(
-				fileVersion, uriFactory, amImageConfigurationEntry)
-		).sorted(
-			amDistanceComparator.toComparator()
-		);
+		return adaptiveMedias;
 	}
 
 	private AdaptiveMedia<AMImageProcessor> _createMedia(

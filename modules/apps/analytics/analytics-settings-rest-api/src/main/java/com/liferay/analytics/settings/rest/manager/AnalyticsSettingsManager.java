@@ -42,6 +42,9 @@ public interface AnalyticsSettingsManager {
 
 	public boolean isAnalyticsEnabled(long companyId) throws Exception;
 
+	public boolean isSiteIdSynced(long companyId, long groupId)
+		throws Exception;
+
 	public String[] updateCommerceChannelIds(
 			String analyticsChannelId, long companyId,
 			Long[] dataSourceCommerceChannelIds)

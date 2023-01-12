@@ -384,6 +384,16 @@ definition {
 		return "${newItemCount}";
 	}
 
+	macro quickAddToCartSearchAndSelectItem {
+		Type(
+			locator1 = "Publications#KEYWORD_TEXTFIELD",
+			value1 = "${orderItemSku}");
+
+		Click(
+			key_productSku = "${orderItemSku}",
+			locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
+	}
+
 	macro selectAssociatedFSOptionsValue {
 		Click(
 			key_optionName = "${fsOptionName}",

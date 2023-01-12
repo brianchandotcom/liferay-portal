@@ -358,6 +358,7 @@ definition {
 
 	@priority = "3"
 	test BulkExecutionFailuresAreLoggedCorrectly {
+		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#BulkExecutionFailuresAreLoggedCorrectly";
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration");

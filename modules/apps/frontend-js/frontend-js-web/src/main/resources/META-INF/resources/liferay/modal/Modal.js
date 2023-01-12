@@ -673,6 +673,7 @@ Modal.propTypes = {
 	buttons: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayType: PropTypes.oneOf([
+				'danger',
 				'link',
 				'primary',
 				'secondary',

@@ -16,6 +16,7 @@ package com.liferay.layout.reports.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -26,6 +27,7 @@ import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataPr
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,6 +49,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -57,7 +60,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -240,42 +243,47 @@ public class LayoutReportsDataMVCResourceCommand
 		String canonicalURL = _getCanonicalURL(
 			_getCompleteURL(portletRequest), layout, themeDisplay);
 
+		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
+
+		Set<Locale> availableLocales = Collections.emptySet();
+
+		if (group != null) {
+			availableLocales = _language.getAvailableLocales(
+				group.getGroupId());
+
+			if (availableLocales == null) {
+				availableLocales = Collections.emptySet();
+			}
+		}
+
 		return JSONUtil.putAll(
-			Optional.ofNullable(
-				_groupLocalService.fetchGroup(layout.getGroupId())
-			).map(
-				Group::getGroupId
-			).map(
-				_language::getAvailableLocales
-			).orElseGet(
-				Collections::emptySet
-			).stream(
-			).sorted(
-				(locale1, locale2) -> {
-					if (Objects.equals(locale1, defaultLocale)) {
-						return -1;
-					}
+			TransformUtil.transformToArray(
+				ListUtil.sort(
+					TransformUtil.transform(availableLocales, locale -> locale),
+					(locale1, locale2) -> {
+						if (Objects.equals(locale1, defaultLocale)) {
+							return -1;
+						}
 
-					if (Objects.equals(locale2, defaultLocale)) {
+						if (Objects.equals(locale2, defaultLocale)) {
+							return 1;
+						}
+
+						Locale locale = themeDisplay.getLocale();
+
+						String displayLanguage1 = locale1.getDisplayLanguage(
+							locale);
+						String displayLanguage2 = locale2.getDisplayLanguage(
+							locale);
+
+						if (StringUtil.equalsIgnoreCase(
+								displayLanguage1, displayLanguage2)) {
+
+							return -1;
+						}
+
 						return 1;
-					}
-
-					Locale locale = themeDisplay.getLocale();
-
-					String displayLanguage1 = locale1.getDisplayLanguage(
-						locale);
-					String displayLanguage2 = locale2.getDisplayLanguage(
-						locale);
-
-					if (StringUtil.equalsIgnoreCase(
-							displayLanguage1, displayLanguage2)) {
-
-						return -1;
-					}
-
-					return 1;
-				}
-			).map(
+					}),
 				locale -> {
 					String url = _getLocaleURL(
 						canonicalURL, defaultLocale, layout, locale,
@@ -299,8 +307,8 @@ public class LayoutReportsDataMVCResourceCommand
 					).put(
 						"url", url
 					).build();
-				}
-			).toArray());
+				},
+				Object.class));
 	}
 
 	private String _getResourceURL(
@@ -322,34 +330,43 @@ public class LayoutReportsDataMVCResourceCommand
 		PortletRequest portletRequest, Layout layout, Locale locale) {
 
 		if (layout.isTypeAssetDisplay()) {
-			return Optional.ofNullable(
+			InfoItemDetails infoItemDetails =
 				(InfoItemDetails)portletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_DETAILS)
-			).map(
-				infoItemDetails ->
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+			if (infoItemDetails != null) {
+				InfoItemFieldValuesProvider infoItemFieldValuesProvider =
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemFieldValuesProvider.class,
-						infoItemDetails.getClassName())
-			).map(
-				infoItemFieldValuesProvider ->
-					infoItemFieldValuesProvider.getInfoFieldValue(
-						portletRequest.getAttribute(
-							InfoDisplayWebKeys.INFO_ITEM),
-						"title")
-			).map(
-				infoFieldValue -> (String)infoFieldValue.getValue(locale)
-			).orElse(
-				StringPool.BLANK
-			);
+						infoItemDetails.getClassName());
+
+				if (infoItemFieldValuesProvider != null) {
+					InfoFieldValue<Object> infoFieldValue =
+						infoItemFieldValuesProvider.getInfoFieldValue(
+							portletRequest.getAttribute(
+								InfoDisplayWebKeys.INFO_ITEM),
+							"title");
+
+					if (infoFieldValue != null) {
+						String value = (String)infoFieldValue.getValue(locale);
+
+						if (value != null) {
+							return value;
+						}
+					}
+				}
+			}
+
+			return StringPool.BLANK;
 		}
 		else if (layout.isTypeContent() || layout.isTypePortlet()) {
-			return Optional.ofNullable(
-				layout.getTitle(locale)
-			).filter(
-				Validator::isNotNull
-			).orElseGet(
-				() -> layout.getName(locale)
-			);
+			String title = layout.getTitle(locale);
+
+			if (Validator.isNotNull(title)) {
+				return title;
+			}
+
+			return layout.getName(locale);
 		}
 
 		return StringPool.BLANK;

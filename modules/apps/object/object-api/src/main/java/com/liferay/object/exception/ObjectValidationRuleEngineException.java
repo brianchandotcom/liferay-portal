@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectValidationRuleEngineException extends PortalException {
 
-	public ObjectValidationRuleEngineException() {
-	}
-
 	public ObjectValidationRuleEngineException(String msg) {
 		super(msg);
 	}
@@ -37,5 +34,30 @@ public class ObjectValidationRuleEngineException extends PortalException {
 	public ObjectValidationRuleEngineException(Throwable throwable) {
 		super(throwable);
 	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
+
+	public static class InvalidScript
+		extends ObjectValidationRuleEngineException {
+
+		public InvalidScript() {
+			super(
+				"There was an error validating your data.",
+				"there-was-an-error-validating-your-data");
+		}
+		
+	}
+
+	private ObjectValidationRuleEngineException(
+		String message, String messageKey) {
+
+		super(message);
+
+		_messageKey = messageKey;
+	}
+
+	private String _messageKey;
 
 }

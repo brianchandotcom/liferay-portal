@@ -139,6 +139,14 @@ public class CommerceAccountRoleHelperImpl
 					"MANAGE_COMMERCE_ORDERS", "VIEW_BILLING_ADDRESS",
 					"VIEW_COMMERCE_ORDERS", "VIEW_OPEN_COMMERCE_ORDERS"
 				});
+			groupResourceActionIds.put(
+				AccountEntry.class.getName(),
+				new String[] {
+					AccountActionKeys.MANAGE_ADDRESSES,
+					AccountActionKeys.ASSIGN_USERS, ActionKeys.UPDATE,
+					ActionKeys.VIEW, AccountActionKeys.VIEW_ADDRESSES,
+					AccountActionKeys.VIEW_USERS
+				});
 		}
 		else if (name.equals(
 					CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER)) {

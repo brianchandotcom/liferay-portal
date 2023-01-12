@@ -593,4 +593,91 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12763 | Test Summary: Check that it is possible to sort by user groups name in the groups list"
+	@priority = "3"
+	test CheckCanSortByUserGroupsName {
+		var userGroupPageListUp = "ac UserGroup,DXP UserGroup,LXC UserGroup";
+		var userGroupPageListDown = "LXC UserGroup,DXP UserGroup,ac UserGroup";
+
+		task ("Create some user groups") {
+			for (var userGroupName : list "${userGroupPageListUp}") {
+				JSONUserGroup.addUserGroup(
+					userGroupDescription = "UserGroup Description",
+					userGroupName = "${userGroupName}");
+			}
+		}
+
+		task ("Click on Select Contacts > Click on sync contacts by groups") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+		task ("Sort the list by the User Groups column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "User Groups");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${userGroupPageListUp}");
+		}
+
+		task ("Sort the list by the User Groups column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${userGroupPageListDown}");
+		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+		task ("Click on Select Contacts > Click on sync contacts by groups") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+		task ("Sort the list by the User Groups column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "User Groups");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${userGroupPageListUp}");
+		}
+
+		task ("Sort the list by the User Groups column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${userGroupPageListDown}");
+		}
+	}
+
 }

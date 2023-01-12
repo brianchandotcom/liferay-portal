@@ -36,7 +36,7 @@ export default function PagesTree({
 	const {loadMoreItemsURL, maxPageSize, moveItemURL, namespace} = config;
 
 	const onLoadMore = useCallback(
-		(item, initialCursor = 1) => {
+		(item) => {
 			if (!item.hasChildren) {
 				return Promise.resolve({
 					cursor: null,
@@ -44,7 +44,9 @@ export default function PagesTree({
 				});
 			}
 
-			const cursor = item.children ? initialCursor : 0;
+			const cursor = item.children
+				? Math.floor(item.children.length / maxPageSize)
+				: 0;
 
 			return fetch(loadMoreItemsURL, {
 				body: Liferay.Util.objectToURLSearchParams({

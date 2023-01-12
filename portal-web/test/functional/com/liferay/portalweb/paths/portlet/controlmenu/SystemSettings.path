@@ -16,8 +16,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHECK_INTERVAL_SEGMENTS_VALUE</td>
-	<td>//*[contains(text(),'Check Interval')]/following-sibling::input[contains(@value,'${key_value}')]</td>
+	<td>UPDATE_INTERVAL_SEGMENTS_VALUE</td>
+	<td>//*[contains(text(),'Update Interval')]/following-sibling::input[contains(@value,'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

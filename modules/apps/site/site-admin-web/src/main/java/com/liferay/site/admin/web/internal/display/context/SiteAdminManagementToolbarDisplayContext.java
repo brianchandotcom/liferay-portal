@@ -138,7 +138,7 @@ public class SiteAdminManagementToolbarDisplayContext
 							}
 						).buildString());
 					dropdownItem.setLabel(
-						LanguageUtil.get(httpServletRequest, "add"));
+						LanguageUtil.get(httpServletRequest, "add-site"));
 				}
 			).build();
 		}

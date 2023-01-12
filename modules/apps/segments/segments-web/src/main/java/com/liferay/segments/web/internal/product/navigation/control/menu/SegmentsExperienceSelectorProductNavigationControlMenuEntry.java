@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.EXP,
 		"product.navigation.control.menu.entry.order:Integer=110"
 	},
 	service = ProductNavigationControlMenuEntry.class

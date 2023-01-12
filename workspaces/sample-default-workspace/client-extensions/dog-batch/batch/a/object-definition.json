@@ -29,8 +29,9 @@
 					},
 					"id": 43790,
 					"label": {
+						"en_US": "Foo Update 1"
 					},
-					"name": "Foo Update 1",
+					"name": "FooUpdate1",
 					"objectActionExecutorKey": "function#easy-object-action-1",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
@@ -51,8 +52,9 @@
 					},
 					"id": 43792,
 					"label": {
+						"en_US": "Foo Update 2"
 					},
-					"name": "Foo Update 2",
+					"name": "FooUpdate2",
 					"objectActionExecutorKey": "function#easy-object-action-2",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {

@@ -1,6 +1,9 @@
 [
 	{
 		"active": true,
+		"label": {
+			"en_US": "Action Replicate ID"
+		},
 		"name": "actionReplicateID",
 		"objectActionExecutorKey": "update-object-entry",
 		"objectActionTriggerKey": "onAfterAdd",

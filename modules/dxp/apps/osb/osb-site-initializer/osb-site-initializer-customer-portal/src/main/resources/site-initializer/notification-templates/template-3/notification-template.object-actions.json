@@ -1,7 +1,10 @@
 [
 	{
 		"active": true,
-		"name": "Notification Template Action",
+		"label": {
+			"en_US": "Notification Template Action"
+		},
+		"name": "NotificationTemplateAction",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AnalyticsCloudWorkspace$]"

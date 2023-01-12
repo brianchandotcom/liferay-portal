@@ -1,7 +1,10 @@
 [
 	{
 		"active": true,
-		"name": "Test Object Action 2",
+		"label": {
+			"en_US": "Test Object Action 2"
+		},
+		"name": "TestObjectAction2",
 		"objectActionExecutorKey": "webhook",
 		"objectActionTriggerKey": "onAfterAdd",
 		"parameters": {
@@ -11,7 +14,10 @@
 	},
 	{
 		"active": true,
-		"name": "Test Object Action 3",
+		"label": {
+			"en_US": "Test Object Action 3"
+		},
+		"name": "TestObjectAction3",
 		"objectActionExecutorKey": "webhook",
 		"objectActionTriggerKey": "onAfterAdd",
 		"parameters": {

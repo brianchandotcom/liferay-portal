@@ -63,7 +63,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -273,47 +272,47 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	}
 
 	private boolean _isShow(ThemeDisplay themeDisplay) {
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
+		Layout layout = _layoutLocalService.fetchLayout(themeDisplay.getPlid());
 
-		return Optional.ofNullable(
-			_layoutLocalService.fetchLayout(themeDisplay.getPlid())
-		).filter(
-			layout ->
-				layout.isTypeAssetDisplay() || layout.isTypeContent() ||
-				layout.isTypePortlet()
-		).filter(
-			layout -> !layout.isEmbeddedPersonalApplication()
-		).filter(
-			layout -> {
-				try {
-					if (permissionChecker.hasPermission(
-							themeDisplay.getScopeGroup(),
-							BlogsEntry.class.getName(),
-							BlogsEntry.class.getName(), ActionKeys.UPDATE) ||
-						permissionChecker.hasPermission(
-							themeDisplay.getScopeGroup(),
-							DLFileEntry.class.getName(),
-							DLFileEntry.class.getName(), ActionKeys.UPDATE) ||
-						permissionChecker.hasPermission(
-							themeDisplay.getScopeGroup(),
-							JournalArticle.class.getName(),
-							JournalArticle.class.getName(),
-							ActionKeys.UPDATE)) {
+		if (layout == null) {
+			return false;
+		}
 
-						return true;
-					}
+		if ((layout.isTypeAssetDisplay() || layout.isTypeContent() ||
+			 layout.isTypePortlet()) &&
+			!layout.isEmbeddedPersonalApplication()) {
 
-					return _hasEditPermission(
-						layout, PermissionThreadLocal.getPermissionChecker());
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			try {
+				if (permissionChecker.hasPermission(
+						themeDisplay.getScopeGroup(),
+						BlogsEntry.class.getName(), BlogsEntry.class.getName(),
+						ActionKeys.UPDATE) ||
+					permissionChecker.hasPermission(
+						themeDisplay.getScopeGroup(),
+						DLFileEntry.class.getName(),
+						DLFileEntry.class.getName(), ActionKeys.UPDATE) ||
+					permissionChecker.hasPermission(
+						themeDisplay.getScopeGroup(),
+						JournalArticle.class.getName(),
+						JournalArticle.class.getName(), ActionKeys.UPDATE)) {
+
+					return true;
 				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
 
-					return false;
-				}
+				return _hasEditPermission(
+					layout, PermissionThreadLocal.getPermissionChecker());
 			}
-		).isPresent();
+			catch (PortalException portalException) {
+				_log.error(portalException);
+
+				return false;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isShowPanel(HttpServletRequest httpServletRequest) {

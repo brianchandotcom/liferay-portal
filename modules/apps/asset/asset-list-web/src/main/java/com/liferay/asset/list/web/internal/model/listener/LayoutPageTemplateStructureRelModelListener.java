@@ -34,7 +34,11 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -119,6 +123,18 @@ public class LayoutPageTemplateStructureRelModelListener
 	private void _updateAssetListEntryUsages(
 		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
 
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				layoutPageTemplateStructureRel.getSegmentsExperienceId());
+
+		if ((segmentsExperience == null) ||
+			!Objects.equals(
+				SegmentsExperienceConstants.KEY_DEFAULT,
+				segmentsExperience.getSegmentsExperienceKey())) {
+
+			return;
+		}
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -195,5 +211,8 @@ public class LayoutPageTemplateStructureRelModelListener
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

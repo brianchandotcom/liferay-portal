@@ -119,6 +119,46 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterObjectEntriesByRelatedObjectsUsingINOperatorInManyToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingINOperatorInBothSidesOfRelationship();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
+	public void testFilterObjectEntriesByRelatedObjectsUsingINOperatorInOneToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingINOperatorInBothSidesOfRelationship();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
 	public void testGetNestedFieldDetailsInOneToManyRelationships()
 		throws Exception {
 
@@ -333,6 +373,46 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			expectedObjectFieldValue,
 			itemJSONObject.getString(expectedObjectFieldName));
+	}
+
+	private void _testFilterObjectEntriesByRelatedObjectsUsingINOperator(
+			String expectedObjectFieldName, String expectedObjectFieldValue,
+			ObjectDefinition objectDefinition, String relatedObjectFieldName,
+			String relatedObjectFieldValue)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			objectDefinition.getRESTContextPath(), "?filter=",
+			_objectRelationship.getName(), StringPool.SLASH,
+			relatedObjectFieldName, "%20in%20('", RandomTestUtil.randomString(),
+			StringPool.APOSTROPHE, StringPool.COMMA, StringPool.APOSTROPHE,
+			relatedObjectFieldValue, StringPool.APOSTROPHE,
+			StringPool.CLOSE_PARENTHESIS);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			expectedObjectFieldValue,
+			itemJSONObject.getString(expectedObjectFieldName));
+	}
+
+	private void _testFilterObjectEntriesByRelatedObjectsUsingINOperatorInBothSidesOfRelationship()
+		throws Exception {
+
+		_testFilterObjectEntriesByRelatedObjectsUsingINOperator(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, _objectDefinition1,
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingINOperator(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, _objectDefinition2,
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 	}
 
 	private void _testGetNestedFieldDetailsInOneToManyRelationships(

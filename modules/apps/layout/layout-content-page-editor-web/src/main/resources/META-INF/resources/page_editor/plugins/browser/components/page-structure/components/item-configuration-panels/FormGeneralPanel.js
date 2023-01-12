@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -26,6 +27,7 @@ import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import updateFormItemConfig from '../../../../../../app/thunks/updateFormItemConfig';
 import {formHasPermissions} from '../../../../../../app/utils/formHasPermissions';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
+import {formIsUnavailable} from '../../../../../../app/utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
@@ -51,8 +53,22 @@ export function FormGeneralPanel({item}) {
 		[dispatch, item.itemId]
 	);
 
-	if (Liferay.FeatureFlags['LPS-169923'] && !formHasPermissions(item)) {
-		return <PermissionRestrictionMessage />;
+	if (Liferay.FeatureFlags['LPS-169923']) {
+		if (formIsUnavailable(item)) {
+			return (
+				<ClayAlert
+					displayType="warning"
+					title={`${Liferay.Language.get('warning')}:`}
+				>
+					{Liferay.Language.get(
+						'this-content-is-currently-unavailable-or-has-been-deleted.-users-cannot-see-this-fragment'
+					)}
+				</ClayAlert>
+			);
+		}
+		else if (!formHasPermissions(item)) {
+			return <PermissionRestrictionMessage />;
+		}
 	}
 
 	return (

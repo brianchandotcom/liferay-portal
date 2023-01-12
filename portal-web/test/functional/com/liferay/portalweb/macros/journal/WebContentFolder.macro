@@ -110,7 +110,7 @@ definition {
 
 			AssertClickNoError(
 				key_tableEntry = "${structureName}",
-				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 				value1 = "${structureName}");
 
 			SelectFrame(value1 = "relative=top");

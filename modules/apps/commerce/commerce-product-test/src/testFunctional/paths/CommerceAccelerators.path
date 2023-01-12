@@ -600,6 +600,19 @@
 	<td></td>
 </tr>
 
+<!--QUICK_ADD_TO_CART-->
+
+<tr>
+	<td>QUICK_ADD_TO_CART_SEARCH_RESULT</td>
+	<td>//div[contains(@class,'autofit-col') and contains(.,"${key_productSku}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUICK_ADD_TO_CART_BUTTON</td>
+	<td>//div[contains(@class,'input-group-item-shrink')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+
 <!--ORDERS-->
 
 <tr>

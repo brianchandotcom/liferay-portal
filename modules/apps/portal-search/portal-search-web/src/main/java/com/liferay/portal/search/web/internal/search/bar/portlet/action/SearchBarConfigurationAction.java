@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
@@ -69,6 +70,8 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 				themeDisplay, true));
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
 			searchBarPortletInstanceConfiguration);
+		searchBarPortletDisplayContext.setSearchExperiencesSupported(
+			searchCapabilities.isSearchExperiencesSupported());
 
 		SearchSuggestionsCompanyConfiguration
 			searchSuggestionsCompanyConfiguration =
@@ -86,6 +89,9 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 
 	@Reference
 	protected SearchBarPrecedenceHelper searchBarPrecedenceHelper;
+
+	@Reference
+	protected SearchCapabilities searchCapabilities;
 
 	private SearchBarPortletInstanceConfiguration
 		_getSearchBarPortletInstanceConfiguration(

@@ -107,6 +107,10 @@ public class SearchBarPortletDisplayContext {
 		return _renderNothing;
 	}
 
+	public boolean isSearchExperiencesSupported() {
+		return _searchExperiencesSupported;
+	}
+
 	public boolean isSelectedCurrentSiteSearchScope() {
 		return _selectedCurrentSiteSearchScope;
 	}
@@ -210,6 +214,12 @@ public class SearchBarPortletDisplayContext {
 			searchBarPortletInstanceConfiguration;
 	}
 
+	public void setSearchExperiencesSupported(
+		boolean searchExperiencesSupported) {
+
+		_searchExperiencesSupported = searchExperiencesSupported;
+	}
+
 	public void setSearchURL(String searchURL) {
 		_searchURL = searchURL;
 	}
@@ -271,6 +281,7 @@ public class SearchBarPortletDisplayContext {
 	private String _scopeParameterValue;
 	private SearchBarPortletInstanceConfiguration
 		_searchBarPortletInstanceConfiguration;
+	private boolean _searchExperiencesSupported;
 	private String _searchURL;
 	private boolean _selectedCurrentSiteSearchScope;
 	private boolean _selectedEverythingSearchScope;

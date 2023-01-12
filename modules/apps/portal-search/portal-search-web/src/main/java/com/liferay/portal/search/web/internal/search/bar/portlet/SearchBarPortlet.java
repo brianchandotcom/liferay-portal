@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
@@ -79,7 +80,7 @@ public class SearchBarPortlet extends MVCPortlet {
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayContextFactory.create(
 				portletPreferencesLookup, portletSharedSearchRequest,
-				searchBarPrecedenceHelper);
+				searchBarPrecedenceHelper, searchCapabilities);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
@@ -106,5 +107,8 @@ public class SearchBarPortlet extends MVCPortlet {
 
 	@Reference
 	protected SearchBarPrecedenceHelper searchBarPrecedenceHelper;
+
+	@Reference
+	protected SearchCapabilities searchCapabilities;
 
 }

@@ -100,7 +100,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Jorge Ferrer
@@ -263,11 +262,12 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		List<String> assetCategoryIds = new ArrayList<>();
 
-		Optional<Map<String, String[]>> configurationOptional =
-			collectionQuery.getConfigurationOptional();
+		Map<String, String[]> configuration =
+			collectionQuery.getConfiguration();
 
-		Map<String, String[]> configuration = configurationOptional.orElse(
-			Collections.emptyMap());
+		if (configuration == null) {
+			configuration = Collections.emptyMap();
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -309,13 +309,10 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		searchContext.setGroupIds(new long[] {_getGroupId()});
 
-		Optional<KeywordsInfoFilter> keywordsInfoFilterOptional =
-			collectionQuery.getInfoFilterOptional(KeywordsInfoFilter.class);
+		KeywordsInfoFilter keywordsInfoFilter = collectionQuery.getInfoFilter(
+			KeywordsInfoFilter.class);
 
-		if (keywordsInfoFilterOptional.isPresent()) {
-			KeywordsInfoFilter keywordsInfoFilter =
-				keywordsInfoFilterOptional.get();
-
+		if (keywordsInfoFilter != null) {
 			searchContext.setKeywords(keywordsInfoFilter.getKeywords());
 		}
 
@@ -362,11 +359,12 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			_objectFieldLocalService.getObjectFields(
 				_objectDefinition.getObjectDefinitionId());
 
-		Optional<Map<String, String[]>> configurationOptional =
-			collectionQuery.getConfigurationOptional();
+		Map<String, String[]> configuration =
+			collectionQuery.getConfiguration();
 
-		Map<String, String[]> configuration = configurationOptional.orElse(
-			Collections.emptyMap());
+		if (configuration == null) {
+			configuration = Collections.emptyMap();
+		}
 
 		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
 			String[] values = entry.getValue();

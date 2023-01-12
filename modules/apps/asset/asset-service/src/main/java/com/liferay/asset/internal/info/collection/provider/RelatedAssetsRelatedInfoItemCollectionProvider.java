@@ -20,14 +20,12 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.sort.Sort;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,10 +43,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 	public InfoPage<AssetEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Optional<Object> relatedItemOptional =
-			collectionQuery.getRelatedItemObjectOptional();
-
-		Object relatedItem = relatedItemOptional.orElse(null);
+		Object relatedItem = collectionQuery.getRelatedItemObject();
 
 		if (!(relatedItem instanceof AssetEntry)) {
 			return InfoPage.of(
@@ -57,12 +52,10 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 
 		AssetEntry assetEntry = (AssetEntry)relatedItem;
 
-		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
-
 		try {
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 				assetEntry.getCompanyId(), assetEntry.getGroupId(),
-				collectionQuery.getPagination(), sortOptional.orElse(null));
+				collectionQuery.getPagination(), collectionQuery.getSort());
 
 			assetEntryQuery.setLinkedAssetEntryIds(
 				new long[] {assetEntry.getEntryId()});

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,10 +46,7 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 	public InfoPage<AssetCategory> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Optional<Object> relatedItemOptional =
-			collectionQuery.getRelatedItemObjectOptional();
-
-		Object relatedItem = relatedItemOptional.orElse(null);
+		Object relatedItem = collectionQuery.getRelatedItemObject();
 
 		if (!(relatedItem instanceof AssetEntry)) {
 			return InfoPage.of(
@@ -95,14 +91,11 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 
 						@Override
 						public boolean isAscending() {
-							Optional<Sort> sortOptional =
-								collectionQuery.getSortOptional();
+							Sort sort = collectionQuery.getSort();
 
-							if (!sortOptional.isPresent()) {
+							if (sort == null) {
 								return true;
 							}
-
-							Sort sort = sortOptional.get();
 
 							if (sort.isReverse()) {
 								return false;

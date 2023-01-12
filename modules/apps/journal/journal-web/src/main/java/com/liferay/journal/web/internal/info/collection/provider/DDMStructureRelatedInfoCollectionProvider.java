@@ -46,7 +46,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
@@ -67,10 +66,7 @@ public class DDMStructureRelatedInfoCollectionProvider
 	public InfoPage<JournalArticle> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Optional<Object> relatedItemOptional =
-			collectionQuery.getRelatedItemObjectOptional();
-
-		Object relatedItem = relatedItemOptional.orElse(null);
+		Object relatedItem = collectionQuery.getRelatedItemObject();
 
 		if (!(relatedItem instanceof AssetCategory)) {
 			return InfoPage.of(
@@ -178,11 +174,9 @@ public class DDMStructureRelatedInfoCollectionProvider
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
 
-		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
+		Sort sort = collectionQuery.getSort();
 
-		if (sortOptional.isPresent()) {
-			Sort sort = sortOptional.get();
-
+		if (sort != null) {
 			searchContext.setSorts(
 				new com.liferay.portal.kernel.search.Sort(
 					sort.getFieldName(),

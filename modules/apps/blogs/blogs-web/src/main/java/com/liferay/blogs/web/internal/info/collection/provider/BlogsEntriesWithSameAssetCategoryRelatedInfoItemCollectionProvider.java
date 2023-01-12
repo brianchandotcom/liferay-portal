@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,10 +62,7 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	public InfoPage<BlogsEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Optional<Object> relatedItemOptional =
-			collectionQuery.getRelatedItemObjectOptional();
-
-		Object relatedItem = relatedItemOptional.orElse(null);
+		Object relatedItem = collectionQuery.getRelatedItemObject();
 
 		if (!(relatedItem instanceof AssetCategory)) {
 			return InfoPage.of(
@@ -142,9 +138,7 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			new long[] {serviceContext.getScopeGroupId()});
 		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
 
-		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
-
-		Sort sort = sortOptional.orElse(null);
+		Sort sort = collectionQuery.getSort();
 
 		if ((sort != null) && sort.isReverse()) {
 			assetEntryQuery.setOrderByType1("ASC");

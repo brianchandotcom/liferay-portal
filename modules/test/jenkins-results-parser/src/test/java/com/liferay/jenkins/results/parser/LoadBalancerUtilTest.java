@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -71,7 +72,21 @@ public class LoadBalancerUtilTest
 	protected static Properties getDownloadProperties(
 		String baseInvocationHostName) {
 
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to download build properties", ioException);
+		}
+
 		Properties properties = new Properties();
+
+		_copyProperties(
+			buildProperties, properties, "jenkins.admin.user.name",
+			"jenkins.admin.user.token");
 
 		properties.setProperty(
 			"base.invocation.url",
@@ -209,6 +224,17 @@ public class LoadBalancerUtilTest
 	protected Properties getTestProperties(TestSample testSample) {
 		return getTestProperties(
 			testSample.getSampleKey(), testSample.getSampleDirName());
+	}
+
+	private static void _copyProperties(
+		Properties sourceProperties, Properties targetProperties,
+		String... propertyNames) {
+
+		for (String propertyName : propertyNames) {
+			if (sourceProperties.containsKey(propertyName)) {
+				targetProperties.put(
+				propertyName, sourceProperties.getProperty(propertyName));
+		}
 	}
 
 }

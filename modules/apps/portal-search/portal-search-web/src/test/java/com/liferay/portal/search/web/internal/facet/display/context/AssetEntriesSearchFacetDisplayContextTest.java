@@ -67,8 +67,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpTermCollectors(
-			_facetCollector, classNames);
+		_setUpTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
@@ -97,8 +96,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpTermCollectors(
-			_facetCollector, classNames);
+		_setUpTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
@@ -123,8 +121,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpTermCollectors(
-			_facetCollector, classNames);
+		_setUpTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
@@ -148,8 +145,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		_mockResourceActions(classNames);
 
-		FacetDisplayContextTextUtil.setUpTermCollectors(
-			_facetCollector, classNames);
+		_setUpTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext1 = _createDisplayContext(
@@ -207,6 +203,24 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			).getModelResource(
 				Mockito.any(Locale.class), Mockito.eq(className)
 			);
+		}
+	}
+
+	private void _setUpTermCollectors(
+		FacetCollector facetCollector, String... terms) {
+
+		int frequency = 1;
+
+		for (String term : terms) {
+			Mockito.doReturn(
+				FacetDisplayContextTextUtil.createTermCollector(term, frequency)
+			).when(
+				facetCollector
+			).getTermCollector(
+				term
+			);
+
+			frequency++;
 		}
 	}
 

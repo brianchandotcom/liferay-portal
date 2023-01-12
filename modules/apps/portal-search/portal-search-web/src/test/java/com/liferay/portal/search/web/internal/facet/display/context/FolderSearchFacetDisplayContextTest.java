@@ -153,7 +153,7 @@ public class FolderSearchFacetDisplayContextTest {
 		int count = RandomTestUtil.randomInt();
 
 		FacetDisplayContextTextUtil.setUpTermCollector(
-			_facetCollector, folderId, count);
+			_facetCollector, String.valueOf(folderId), count);
 
 		String facetParam = "";
 
@@ -192,7 +192,7 @@ public class FolderSearchFacetDisplayContextTest {
 		int count = RandomTestUtil.randomInt();
 
 		FacetDisplayContextTextUtil.setUpTermCollector(
-			_facetCollector, folderId, count);
+			_facetCollector, String.valueOf(folderId), count);
 
 		String facetParam = String.valueOf(folderId);
 

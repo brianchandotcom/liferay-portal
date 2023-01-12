@@ -121,7 +121,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		int count = RandomTestUtil.randomInt();
 
 		FacetDisplayContextTextUtil.setUpTermCollector(
-			_facetCollector, groupId, count);
+			_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = "0";
 
@@ -160,7 +160,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		int count = RandomTestUtil.randomInt();
 
 		FacetDisplayContextTextUtil.setUpTermCollector(
-			_facetCollector, groupId, count);
+			_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = String.valueOf(groupId);
 

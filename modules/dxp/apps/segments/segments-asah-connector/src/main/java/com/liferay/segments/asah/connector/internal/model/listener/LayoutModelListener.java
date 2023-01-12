@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.model.listener;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,11 +54,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	public void onBeforeUpdate(Layout originalLayout, Layout layout)
 		throws ModelListenerException {
 
-		if (_isSkipEvent(layout)) {
-			return;
-		}
-
 		try {
+			if (_isSkipEvent(layout)) {
+				return;
+			}
+
 			List<SegmentsExperiment> segmentsExperiments =
 				_segmentsExperimentLocalService.getSegmentsExperiments(
 					layout.getGroupId(),
@@ -94,9 +95,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		_asahSegmentsExperimentProcessor = null;
 	}
 
-	private boolean _isSkipEvent(Layout layout) {
+	private boolean _isSkipEvent(Layout layout) throws Exception {
 		if (AsahUtil.isSkipAsahEvent(
-				layout.getCompanyId(), layout.getGroupId())) {
+				_analyticsSettingsManager, layout.getCompanyId(),
+				layout.getGroupId())) {
 
 			return true;
 		}
@@ -115,6 +117,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutModelListener.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	private AsahSegmentsExperimentProcessor _asahSegmentsExperimentProcessor;
 

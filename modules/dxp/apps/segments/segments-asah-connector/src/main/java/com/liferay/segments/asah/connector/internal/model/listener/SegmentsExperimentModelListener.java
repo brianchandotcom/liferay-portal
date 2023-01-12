@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.model.listener;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,14 +51,15 @@ public class SegmentsExperimentModelListener
 			SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(
-				segmentsExperiment.getCompanyId(),
-				segmentsExperiment.getGroupId())) {
-
-			return;
-		}
-
 		try {
+			if (AsahUtil.isSkipAsahEvent(
+					_analyticsSettingsManager,
+					segmentsExperiment.getCompanyId(),
+					segmentsExperiment.getGroupId())) {
+
+				return;
+			}
+
 			_asahSegmentsExperimentProcessor.processUpdateSegmentsExperiment(
 				segmentsExperiment);
 		}
@@ -73,14 +75,15 @@ public class SegmentsExperimentModelListener
 	public void onBeforeCreate(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(
-				segmentsExperiment.getCompanyId(),
-				segmentsExperiment.getGroupId())) {
-
-			return;
-		}
-
 		try {
+			if (AsahUtil.isSkipAsahEvent(
+					_analyticsSettingsManager,
+					segmentsExperiment.getCompanyId(),
+					segmentsExperiment.getGroupId())) {
+
+				return;
+			}
+
 			_asahSegmentsExperimentProcessor.processAddSegmentsExperiment(
 				segmentsExperiment);
 		}
@@ -96,14 +99,15 @@ public class SegmentsExperimentModelListener
 	public void onBeforeRemove(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(
-				segmentsExperiment.getCompanyId(),
-				segmentsExperiment.getGroupId())) {
-
-			return;
-		}
-
 		try {
+			if (AsahUtil.isSkipAsahEvent(
+					_analyticsSettingsManager,
+					segmentsExperiment.getCompanyId(),
+					segmentsExperiment.getGroupId())) {
+
+				return;
+			}
+
 			_asahSegmentsExperimentProcessor.processDeleteSegmentsExperiment(
 				segmentsExperiment);
 		}
@@ -133,6 +137,9 @@ public class SegmentsExperimentModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentModelListener.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	private AsahSegmentsExperimentProcessor _asahSegmentsExperimentProcessor;
 

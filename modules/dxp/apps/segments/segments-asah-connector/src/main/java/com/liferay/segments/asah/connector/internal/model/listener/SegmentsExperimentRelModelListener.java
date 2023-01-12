@@ -14,8 +14,8 @@
 
 package com.liferay.segments.asah.connector.internal.model.listener;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -107,10 +107,10 @@ public class SegmentsExperimentRelModelListener
 
 	private void _processUpdateSegmentsExperimentRel(
 			SegmentsExperimentRel segmentsExperimentRel)
-		throws PortalException {
+		throws Exception {
 
 		if (AsahUtil.isSkipAsahEvent(
-				segmentsExperimentRel.getCompanyId(),
+				_analyticsSettingsManager, segmentsExperimentRel.getCompanyId(),
 				segmentsExperimentRel.getGroupId())) {
 
 			return;
@@ -122,6 +122,9 @@ public class SegmentsExperimentRelModelListener
 			_segmentsExperimentRelLocalService.getSegmentsExperimentRels(
 				segmentsExperimentRel.getSegmentsExperimentId()));
 	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	private AsahSegmentsExperimentProcessor _asahSegmentsExperimentProcessor;
 

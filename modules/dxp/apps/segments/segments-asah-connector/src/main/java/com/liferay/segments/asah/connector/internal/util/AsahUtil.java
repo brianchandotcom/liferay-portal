@@ -14,10 +14,9 @@
 
 package com.liferay.segments.asah.connector.internal.util;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,31 +56,12 @@ public class AsahUtil {
 		return true;
 	}
 
-	public static boolean isAnalyticsEnabled(long companyId, long groupId) {
-		if (!isAnalyticsEnabled(companyId)) {
-			return false;
-		}
+	public static boolean isSkipAsahEvent(
+			AnalyticsSettingsManager analyticsSettingsManager, long companyId,
+			long groupId)
+		throws Exception {
 
-		if (PrefsPropsUtil.getBoolean(
-				companyId, "liferayAnalyticsEnableAllGroupIds")) {
-
-			return true;
-		}
-
-		String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(
-			companyId, "liferayAnalyticsGroupIds", StringPool.COMMA);
-
-		if (ArrayUtil.contains(
-				liferayAnalyticsGroupIds, String.valueOf(groupId))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isSkipAsahEvent(long companyId, long groupId) {
-		if (!isAnalyticsEnabled(companyId, groupId)) {
+		if (!analyticsSettingsManager.isSiteIdSynced(companyId, groupId)) {
 			return true;
 		}
 

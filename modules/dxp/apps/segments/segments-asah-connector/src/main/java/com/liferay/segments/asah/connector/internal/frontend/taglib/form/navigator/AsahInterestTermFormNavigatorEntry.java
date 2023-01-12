@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.frontend.taglib.form.navigator;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.IOException;
@@ -124,10 +124,17 @@ public class AsahInterestTermFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, AssetListEntry assetListEntry) {
-		if (!AsahUtil.isAnalyticsEnabled(
-				user.getCompanyId(), assetListEntry.getGroupId()) ||
-			(assetListEntry.getType() !=
-				AssetListEntryTypeConstants.TYPE_DYNAMIC)) {
+		try {
+			if (!_analyticsSettingsManager.isSiteIdSynced(
+					user.getCompanyId(), assetListEntry.getGroupId()) ||
+				(assetListEntry.getType() !=
+					AssetListEntryTypeConstants.TYPE_DYNAMIC)) {
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 
 			return false;
 		}
@@ -142,6 +149,9 @@ public class AsahInterestTermFormNavigatorEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahInterestTermFormNavigatorEntry.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;

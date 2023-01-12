@@ -18,8 +18,11 @@ import com.liferay.headless.admin.user.dto.v1_0.Ticket;
 import com.liferay.headless.admin.user.resource.v1_0.TicketResource;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.UserPermission;
 
 import java.util.List;
 
@@ -53,6 +56,10 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 	private Ticket _getTicket(int type, Long userAccountId) throws Exception {
 		_userLocalService.getUser(userAccountId);
 
+		_userPermission.check(
+			PermissionThreadLocal.getPermissionChecker(), userAccountId,
+			ActionKeys.UPDATE);
+
 		List<com.liferay.portal.kernel.model.Ticket> tickets =
 			_ticketLocalService.getTickets(
 				User.class.getName(), userAccountId, type);
@@ -82,5 +89,8 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserPermission _userPermission;
 
 }

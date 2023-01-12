@@ -28,6 +28,50 @@ definition {
 		AssertConsoleTextPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
 	}
 
+	@description = "LRQA-78466: Verify Properties is executed before the PortalUpgradeProcess starts to upgrade database when running upgrade tool"
+	@priority = "4"
+	test VerifyPropertiesIsOnlyExecutedInUpgradeProcess {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property test.name.skip.portal.instance = "VerifyProperties#VerifyPropertiesIsOnlyExecutedInUpgradeProcess";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var fileContentLog = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
+
+		if (!(contains("${fileContentLog}", "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties"))) {
+			echo("verifySystemProperties is present in the logs");
+
+			fail("verifySystemProperties is not showing completed in upgrade.log");
+		}
+		else if (!(contains("${fileContentLog}", "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties"))) {
+			echo("verifyPortalProperties is present in the logs");
+
+			fail("verifyPortalProperties is not showing completed in upgrade.log");
+		}
+		else if (!(contains("${fileContentLog}", "Completed Liferay upgrade process"))) {
+			echo("Completed Upgrade message is present in the logs");
+
+			fail("Upgrade Process is not completed");
+		}
+
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+
+		AssertConsoleTextPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+
+		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+
+		AssertConsoleTextNotPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
+	}
+
 	@description = "LRQA-78468: Verify Properties not run when start portal with empty database"
 	@priority = "3"
 	test VerifyPropertiesNotRunWithEmptyDatabase {

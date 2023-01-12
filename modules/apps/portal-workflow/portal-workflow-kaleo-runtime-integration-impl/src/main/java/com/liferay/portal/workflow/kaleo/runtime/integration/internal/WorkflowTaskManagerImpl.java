@@ -661,26 +661,18 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			KaleoNode kaleoNode = kaleoTask.getKaleoNode();
 
-			List<WorkflowTransition> workflowTransitions = new ArrayList<>();
-
-			for (KaleoTransition kaleoTransition :
-					kaleoNode.getKaleoTransitions()) {
-
-				DefaultWorkflowTransition defaultWorkflowTransition =
-					new DefaultWorkflowTransition();
-
-				defaultWorkflowTransition.setLabelMap(
-					kaleoTransition.getLabelMap());
-				defaultWorkflowTransition.setName(kaleoTransition.getName());
-				defaultWorkflowTransition.setSourceNodeName(
-					kaleoTransition.getSourceKaleoNodeName());
-				defaultWorkflowTransition.setTargetNodeName(
-					kaleoTransition.getTargetKaleoNodeName());
-
-				workflowTransitions.add(defaultWorkflowTransition);
-			}
-
-			return workflowTransitions;
+			return TransformUtil.transform(
+				kaleoNode.getKaleoTransitions(),
+				kaleoTransition -> new DefaultWorkflowTransition() {
+					{
+						setLabelMap(kaleoTransition.getLabelMap());
+						setName(kaleoTransition.getName());
+						setSourceNodeName(
+							kaleoTransition.getSourceKaleoNodeName());
+						setTargetNodeName(
+							kaleoTransition.getTargetKaleoNodeName());
+					}
+				});
 		}
 		catch (PortalException portalException) {
 			throw new WorkflowException(portalException);

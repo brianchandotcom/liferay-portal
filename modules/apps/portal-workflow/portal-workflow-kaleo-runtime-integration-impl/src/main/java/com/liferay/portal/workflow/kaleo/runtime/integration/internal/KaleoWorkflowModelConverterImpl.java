@@ -48,7 +48,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
-import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.LazyWorkflowTaskAssigneeList;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.WorkflowTaskAssigneesSupplier;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
@@ -61,7 +60,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -448,28 +446,18 @@ public class KaleoWorkflowModelConverterImpl
 	private List<WorkflowTransition> _getWorkflowTransitions(
 		long kaleoDefinitionVersionId) {
 
-		List<WorkflowTransition> workflowTransitions = new ArrayList<>();
-
-		for (KaleoTransition kaleoTransition :
-				_kaleoTransitionLocalService.
-					getKaleoDefinitionVersionKaleoTransitions(
-						kaleoDefinitionVersionId)) {
-
-			DefaultWorkflowTransition defaultWorkflowTransition =
-				new DefaultWorkflowTransition();
-
-			defaultWorkflowTransition.setLabelMap(
-				kaleoTransition.getLabelMap());
-			defaultWorkflowTransition.setName(kaleoTransition.getName());
-			defaultWorkflowTransition.setSourceNodeName(
-				kaleoTransition.getSourceKaleoNodeName());
-			defaultWorkflowTransition.setTargetNodeName(
-				kaleoTransition.getTargetKaleoNodeName());
-
-			workflowTransitions.add(defaultWorkflowTransition);
-		}
-
-		return workflowTransitions;
+		return TransformUtil.transform(
+			_kaleoTransitionLocalService.
+				getKaleoDefinitionVersionKaleoTransitions(
+					kaleoDefinitionVersionId),
+			kaleoTransition -> new DefaultWorkflowTransition() {
+				{
+					setLabelMap(kaleoTransition.getLabelMap());
+					setName(kaleoTransition.getName());
+					setSourceNodeName(kaleoTransition.getSourceKaleoNodeName());
+					setTargetNodeName(kaleoTransition.getTargetKaleoNodeName());
+				}
+			});
 	}
 
 	private WorkflowNode _toWorkflowNode(KaleoNode kaleoNode) {

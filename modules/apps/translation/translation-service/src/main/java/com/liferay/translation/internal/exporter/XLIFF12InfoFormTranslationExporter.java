@@ -112,29 +112,26 @@ public class XLIFF12InfoFormTranslationExporter
 			sourceElement.addAttribute(
 				"xml:lang", fileElement.attributeValue("source-language"));
 
-			List<InfoFieldValue<Object>> infoFieldValuesList = entry.getValue();
+			List<InfoFieldValue<Object>> infoFieldValues = entry.getValue();
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(infoFieldValues.size() * 2);
 
-			for (InfoFieldValue<Object> infoFieldValue : infoFieldValuesList) {
-				sb.append(
-					(String)infoFieldValue.getValue(sourceLocale) +
-						StringPool.COMMA_AND_SPACE);
+			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+				sb.append(infoFieldValue.getValue(sourceLocale));
+				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 
 			sb.setIndex(sb.index() - 1);
 
 			sourceElement.addCDATA(_getStringValue(sb));
 
-			if (infoFieldValuesList.size() > 1) {
+			if (infoFieldValues.size() > 1) {
 				Element segSourceElement = transUnitElement.addElement(
 					"seg-source");
 
 				int mid = 0;
 
-				for (InfoFieldValue<Object> infoFieldValue :
-						infoFieldValuesList) {
-
+				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 					Element mrkElement = segSourceElement.addElement("mrk");
 
 					mrkElement.addAttribute("mid", String.valueOf(mid));
@@ -151,12 +148,10 @@ public class XLIFF12InfoFormTranslationExporter
 			targetElement.addAttribute(
 				"xml:lang", fileElement.attributeValue("target-language"));
 
-			if (infoFieldValuesList.size() > 1) {
+			if (infoFieldValues.size() > 1) {
 				int mid = 0;
 
-				for (InfoFieldValue<Object> infoFieldValue :
-						infoFieldValuesList) {
-
+				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 					Element mrkElement = targetElement.addElement("mrk");
 
 					mrkElement.addAttribute("mid", String.valueOf(mid));
@@ -168,8 +163,7 @@ public class XLIFF12InfoFormTranslationExporter
 				}
 			}
 			else {
-				InfoFieldValue<Object> infoFieldValue = infoFieldValuesList.get(
-					0);
+				InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
 
 				targetElement.addCDATA(
 					_getStringValue(infoFieldValue.getValue(targetLocale)));

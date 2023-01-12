@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -203,7 +204,9 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		List<String> treePathValues = new ArrayList<>(
 			Arrays.asList(
-				StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH)));
+				ArrayUtil.remove(
+					StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH),
+					String.valueOf(dlFolder.getFolderId()))));
 
 		if (treePathValues.size() == 1) {
 			map.put(Field.TREE_PATH, treePathValues.get(0));

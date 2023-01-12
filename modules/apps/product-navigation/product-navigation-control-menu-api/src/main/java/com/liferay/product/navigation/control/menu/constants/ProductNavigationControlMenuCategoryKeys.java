@@ -25,6 +25,8 @@ public interface ProductNavigationControlMenuCategoryKeys {
 
 	public static final String TOOLS = "tools";
 
+	public static final String EXP = "exp";
+
 	public static final String USER = "user";
 
 }

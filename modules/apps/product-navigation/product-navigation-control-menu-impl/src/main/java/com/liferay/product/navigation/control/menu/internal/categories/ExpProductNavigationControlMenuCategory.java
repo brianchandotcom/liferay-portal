@@ -27,16 +27,16 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.ROOT,
-		"product.navigation.control.menu.category.order:Integer=400"
+		"product.navigation.control.menu.category.order:Integer=300"
 	},
 	service = ProductNavigationControlMenuCategory.class
 )
-public class UserProductNavigationControlMenuCategory
+public class ExpProductNavigationControlMenuCategory
 	implements ProductNavigationControlMenuCategory {
 
 	@Override
 	public String getKey() {
-		return ProductNavigationControlMenuCategoryKeys.USER;
+		return ProductNavigationControlMenuCategoryKeys.EXP;
 	}
 
 	@Override

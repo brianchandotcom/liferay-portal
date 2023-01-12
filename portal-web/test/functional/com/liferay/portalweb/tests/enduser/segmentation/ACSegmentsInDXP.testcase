@@ -233,7 +233,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Go to segmentats page and assert that the segment created is preset again") {
+		task ("Go to segments page and assert that the segment created is preset again") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			ProductMenu.gotoPortlet(

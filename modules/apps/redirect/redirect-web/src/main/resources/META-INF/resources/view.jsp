@@ -44,5 +44,19 @@ RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.
 				props="<%= redirectPatternConfigurationDisplayContext.getRedirectPatterns() %>"
 			/>
 		</div>
+
+		<c:if test="<%= SessionErrors.contains(renderRequest, ConfigurationModelListenerException.class) %>">
+			<aui:script>
+				Liferay.Util.openToast({
+					message:
+						'<liferay-ui:message key="patterns-must-be-valid-regular-expressions" />',
+					title: '<liferay-ui:message key="error" />',
+					toastProps: {
+						autoClose: 5000,
+					},
+					type: 'danger',
+				});
+			</aui:script>
+		</c:if>
 	</c:otherwise>
 </c:choose>

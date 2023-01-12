@@ -65,6 +65,8 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(
 				actionRequest, configurationModelListenerException.getClass());
 
+			hideDefaultErrorMessage(actionRequest);
+
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
 		}

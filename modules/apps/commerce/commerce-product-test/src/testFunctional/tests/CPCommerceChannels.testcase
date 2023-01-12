@@ -842,6 +842,90 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10602. Verify that the user can see the channel entries only if the 'Channels > Commerce Channel: View' is present"
+	@priority = "3"
+	test CanUserWithChannelViewPermissionSeeChannelEntries {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+
+		task ("Given the User role has all the required permissions to see the product and channel") {
+			CommercePermissions.defineChannelPermissionsViaJSONAPI(
+				roleTitle = "User",
+				view = "true");
+
+			CommercePermissions.defineProductPermissionsViaJSONAPI(
+				roleTitle = "User",
+				view = "true");
+		}
+
+		task ("Given a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the buyer reach the Channels section") {
+			User.logoutPG();
+
+			User.firstLoginPG(userEmailAddress = "buyer@liferay.com");
+
+			CommerceChannels.openChannelsAdmin();
+		}
+
+		task ("Then the buyer will see 'Minium Portal' entry") {
+			AssertElementPresent(
+				key_productName = "Minium Portal",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		}
+
+		task ("And when the buyer reach the visibility tab for a product inside the Products section") {
+			CommerceProducts.openProductsAdmin();
+
+			AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+		}
+
+		task ("Then the buyer will see 'Minium Portal' entry") {
+			AssertElementPresent(
+				key_productName = "Minium Portal",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		}
+
+		task ("But when the VIEW Channel permission is removed") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
+				roleTitle = "User");
+		}
+
+		task ("Then for both Channels and Product Visibility the entry 'Minium Portal' is not present anymore") {
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+			AssertElementNotPresent(
+				key_productName = "Minium Portal",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+			CommerceChannels.openChannelsAdmin();
+
+			AssertElementNotPresent(
+				key_productName = "Minium Portal",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-4270. CheckAvalaraTaxPresence"
 	@priority = "3"
 	test CheckAvalaraTaxPresence {

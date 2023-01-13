@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
@@ -25,15 +26,28 @@ import java.nio.file.Paths;
 
 import java.security.KeyStore;
 
+import java.util.concurrent.Future;
+
 import javax.net.ssl.SSLContext;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.concurrent.BasicFuture;
+import org.apache.http.concurrent.FutureCallback;
+import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
+import org.apache.http.nio.protocol.HttpAsyncRequestProducer;
+import org.apache.http.nio.protocol.HttpAsyncResponseConsumer;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 
@@ -194,22 +208,89 @@ public class RestHighLevelClientFactory {
 	private HttpAsyncClientBuilder _customizeHttpClient(
 		HttpAsyncClientBuilder httpAsyncClientBuilder) {
 
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
 		if (_authenticationEnabled) {
-			httpAsyncClientBuilder.setDefaultCredentialsProvider(
+			httpClientBuilder.setDefaultCredentialsProvider(
 				_createCredentialsProvider());
 		}
 
 		if (_httpSSLEnabled) {
-			httpAsyncClientBuilder.setSSLContext(_createSSLContext());
+			httpClientBuilder.setSSLContext(_createSSLContext());
 		}
 
 		if ((_proxyConfig != null) && _proxyConfig.shouldApplyConfig()) {
-			httpAsyncClientBuilder.setProxy(
+			httpClientBuilder.setProxy(
 				new HttpHost(
 					_proxyConfig.getHost(), _proxyConfig.getPort(), "http"));
 		}
 
-		return httpAsyncClientBuilder;
+		httpClientBuilder.setMaxConnPerRoute(
+			RestClientBuilder.DEFAULT_MAX_CONN_PER_ROUTE);
+		httpClientBuilder.setMaxConnTotal(
+			RestClientBuilder.DEFAULT_MAX_CONN_TOTAL);
+
+		CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
+
+		CloseableHttpAsyncClient closeableHttpAsyncClient =
+			new CloseableHttpAsyncClient() {
+
+				@Override
+				public void close() throws IOException {
+					closeableHttpClient.close();
+				}
+
+				@Override
+				public <T> Future<T> execute(
+					HttpAsyncRequestProducer httpAsyncRequestProducer,
+					HttpAsyncResponseConsumer<T> httpAsyncResponseConsumer,
+					HttpContext httpContext, FutureCallback<T> futureCallback) {
+
+					BasicFuture<T> basicFuture = new BasicFuture<>(
+						futureCallback);
+
+					try (CloseableHttpResponse closeableHttpResponse =
+							closeableHttpClient.execute(
+								httpAsyncRequestProducer.getTarget(),
+								httpAsyncRequestProducer.generateRequest(),
+								httpContext)) {
+
+						HttpEntity httpEntity =
+							closeableHttpResponse.getEntity();
+
+						if (httpEntity != null) {
+							closeableHttpResponse.setEntity(
+								new BufferedHttpEntity(httpEntity));
+						}
+
+						basicFuture.completed((T)closeableHttpResponse);
+					}
+					catch (Exception exception) {
+						basicFuture.failed(exception);
+					}
+
+					return basicFuture;
+				}
+
+				@Override
+				public boolean isRunning() {
+					return true;
+				}
+
+				@Override
+				public void start() {
+				}
+
+			};
+
+		return new HttpAsyncClientBuilder() {
+
+			@Override
+			public CloseableHttpAsyncClient build() {
+				return closeableHttpAsyncClient;
+			}
+
+		};
 	}
 
 	private RequestConfig.Builder _customizeRequestConfig(

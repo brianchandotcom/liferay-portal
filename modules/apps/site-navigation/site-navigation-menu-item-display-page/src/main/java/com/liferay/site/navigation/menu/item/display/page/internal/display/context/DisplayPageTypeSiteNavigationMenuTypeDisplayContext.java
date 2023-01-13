@@ -16,7 +16,6 @@ package com.liferay.site.navigation.menu.item.display.page.internal.display.cont
 
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -39,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,11 +49,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -377,13 +374,8 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
 				getClassPK());
 
-		Collection<InfoFieldValue<Object>> infoFieldValues =
-			infoItemFieldValues.getInfoFieldValues();
-
-		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
-
 		return JSONUtil.toJSONArray(
-			stream.collect(Collectors.toList()),
+			ListUtil.fromCollection(infoItemFieldValues.getInfoFieldValues()),
 			infoFieldValue -> JSONUtil.put(
 				"title",
 				() -> {

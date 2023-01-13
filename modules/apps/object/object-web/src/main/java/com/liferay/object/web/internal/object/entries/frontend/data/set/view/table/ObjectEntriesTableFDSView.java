@@ -103,7 +103,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 				if ((objectField == null) || objectField.isSystem()) {
 					_addNonbjectField(
-						fdsTableSchemaBuilder, _filterLabel(label),
+						fdsTableSchemaBuilder, label,
 						objectViewColumn.getObjectFieldName());
 				}
 				else {
@@ -131,25 +131,21 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 		for (ObjectField objectField : objectFields) {
 			if (Objects.equals(objectField.getName(), "id")) {
-				objectFieldId = _filterLabel(
-					objectField.getLabel(locale, true));
+				objectFieldId = objectField.getLabel(locale, true);
 			}
 
 			if (Objects.equals(
 					objectField.getName(), "externalReferenceCode")) {
 
-				objectFieldERC = _filterLabel(
-					objectField.getLabel(locale, true));
+				objectFieldERC = objectField.getLabel(locale, true);
 			}
 
 			if (Objects.equals(objectField.getName(), "creator")) {
-				objectFieldCreator = _filterLabel(
-					objectField.getLabel(locale, true));
+				objectFieldCreator = objectField.getLabel(locale, true);
 			}
 
 			if (Objects.equals(objectField.getName(), "status")) {
-				objectFieldStatus = _filterLabel(
-					objectField.getLabel(locale, true));
+				objectFieldStatus = objectField.getLabel(locale, true);
 			}
 		}
 
@@ -261,32 +257,32 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		if (Objects.equals(fieldName, "createDate")) {
 			_addFDSTableSchemaField(
 				null, null, "Date", fdsTableSchemaBuilder, "dateCreated",
-				fieldLabel, true, true);
+				_getLabel(fieldLabel, "create-date"), true, true);
 		}
 		else if (Objects.equals(fieldName, "creator")) {
 			_addFDSTableSchemaField(
 				null, null, null, fdsTableSchemaBuilder, fieldName + ".name",
-				fieldLabel, true, true);
+				_getLabel(fieldLabel, "author"), true, true);
 		}
 		else if (Objects.equals(fieldName, "externalReferenceCode")) {
 			_addFDSTableSchemaField(
-				null, "actionLink", null, fdsTableSchemaBuilder,
-				"externalReferenceCode", fieldLabel, true, true);
+				null, "actionLink", null, fdsTableSchemaBuilder, fieldName,
+				_getLabel(fieldLabel, "external-reference-code"), true, true);
 		}
 		else if (Objects.equals(fieldName, "id")) {
 			_addFDSTableSchemaField(
 				null, "actionLink", null, fdsTableSchemaBuilder, "id",
-				fieldLabel, true, true);
+				_getLabel(fieldLabel, "id"), true, true);
 		}
 		else if (Objects.equals(fieldName, "modifiedDate")) {
 			_addFDSTableSchemaField(
 				null, null, "Date", fdsTableSchemaBuilder, "dateModified",
-				fieldLabel, true, true);
+				_getLabel(fieldLabel, "modified-date"), true, true);
 		}
 		else if (Objects.equals(fieldName, "status")) {
 			_addFDSTableSchemaField(
 				null, "status", null, fdsTableSchemaBuilder, fieldName,
-				fieldLabel, true, true);
+				_getLabel(fieldLabel, "status"), true, true);
 		}
 	}
 
@@ -345,34 +341,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		}
 	}
 
-	private String _filterLabel(String label) {
-		if (label.equals("Id")) {
-			label = "id";
-		}
-
-		if (label.equals("External Reference Code")) {
-			label = "external-reference-code";
-		}
-
-		if (label.equals("Author")) {
-			label = "author";
-		}
-
-		if (label.equals("Status")) {
-			label = "status";
-		}
-
-		if (label.equals("Create Date")) {
-			label = "create-date";
-		}
-
-		if (label.equals("Modified Date")) {
-			label = "modified-date";
-		}
-
-		return label;
-	}
-
 	private String _getContentRenderer(String fieldName) {
 		if (Objects.equals(fieldName, "status")) {
 			return "status";
@@ -415,6 +383,14 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		}
 
 		return fieldName;
+	}
+
+	private String _getLabel(String label, String defaultLabel) {
+		if (Validator.isNotNull(label)) {
+			return label;
+		}
+
+		return defaultLabel;
 	}
 
 	private final FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;

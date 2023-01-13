@@ -37,6 +37,6 @@ Import-Package:\
 	!org.jgroups.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.3.0
+Liferay-Require-SchemaVersion: 2.4.0
 Liferay-Service: true
 -dsannotations-options: inherit

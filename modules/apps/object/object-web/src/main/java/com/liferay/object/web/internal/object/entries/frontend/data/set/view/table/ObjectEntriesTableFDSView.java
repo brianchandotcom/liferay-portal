@@ -95,11 +95,9 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 						_objectDefinition.getObjectDefinitionId(),
 						objectViewColumn.getObjectFieldName());
 
-				String label = objectViewColumn.getLabel(locale, true);
-
-				if (label.isEmpty()) {
-					label = objectField.getLabel(locale, true);
-				}
+				String label = _getLabel(
+					objectViewColumn.getLabel(locale, false),
+					objectField.getLabel(locale, false));
 
 				if ((objectField == null) || objectField.isSystem()) {
 					_addNonbjectField(
@@ -107,9 +105,15 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 						objectViewColumn.getObjectFieldName());
 				}
 				else {
-					_addObjectField(
-						fdsTableSchemaBuilder,
-						objectField.getLabel(locale, true), objectField);
+					if (Validator.isNull(label)) {
+						label = _getLabel(
+							objectViewColumn.getLabel(
+								objectViewColumn.getDefaultLanguageId()),
+							objectField.getLabel(
+								objectField.getDefaultLanguageId()));
+					}
+
+					_addObjectField(fdsTableSchemaBuilder, label, objectField);
 				}
 			}
 		);

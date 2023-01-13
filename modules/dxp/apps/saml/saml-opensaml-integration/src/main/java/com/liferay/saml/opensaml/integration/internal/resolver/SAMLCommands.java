@@ -15,7 +15,6 @@
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 import com.liferay.saml.opensaml.integration.resolver.Resolver;
@@ -115,10 +114,14 @@ public interface SAMLCommands {
 				}
 
 				return TransformUtil.transform(
-					ListUtil.filter(
-						singleSignOnServices,
-						ssos -> binding.equals(ssos.getBinding())),
-					SingleSignOnService::getLocation);
+					singleSignOnServices,
+					singleSignOnService -> {
+						if (binding.equals(singleSignOnService.getBinding())) {
+							return singleSignOnService.getLocation();
+						}
+
+						return null;
+					});
 			});
 	}
 

@@ -16,16 +16,11 @@ package com.liferay.search.experiences.internal.search.spi.model.index.contribut
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
+import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
 import com.liferay.wiki.model.WikiPage;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,28 +34,20 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelDocumentContributor.class
 )
 public class WikiPageTextEmbeddingModelDocumentContributor
-	extends BaseTextEmbeddingModelDocumentContributor
+	extends BaseTextEmbeddingModelDocumentContributor<WikiPage>
 	implements ModelDocumentContributor<WikiPage> {
 
 	@Override
 	public void contribute(Document document, WikiPage wikiPage) {
-		if (!isAddTextEmbedding(WikiPage.class)) {
-			return;
-		}
-
-		addTextEmbeddingForAvailableLanguages(
-			wikiPage.getCompanyId(), document,
-			getTextEmbedding(
-				_textEmbeddingRetriever::getTextEmbedding,
-				StringBundler.concat(
-					wikiPage.getTitle(), StringPool.SPACE,
-					wikiPage.getContent())));
+		addTextEmbeddings(
+			wikiPage, wikiPage.getCompanyId(), document,
+			_textEmbeddingRetriever::getTextEmbedding);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
-			SemanticSearchConfiguration.class, properties);
+	@Override
+	protected String getText(WikiPage wikiPage) {
+		return StringBundler.concat(
+			wikiPage.getTitle(), StringPool.SPACE, wikiPage.getContent());
 	}
 
 	@Reference

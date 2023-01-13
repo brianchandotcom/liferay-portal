@@ -998,9 +998,9 @@ definition {
 
 		SelectFrame(locator1 = "Message#ERROR");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "Error:There can only be one default object layout");
+			value1 = "There can only be one default object layout");
 	}
 
 	@description = "LPS-165850 - Verify if you can 'select existing one' and add existing entries"

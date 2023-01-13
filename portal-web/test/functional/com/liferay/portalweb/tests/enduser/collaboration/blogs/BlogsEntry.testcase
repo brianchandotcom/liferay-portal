@@ -868,9 +868,9 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOsGiState = "true");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "start-app-server -Ddelete.liferay.home=false -Dkeep.osgi.state=true");
 
 		if ("${testRunEnvironment}" == "EE") {
 			License.deployLicenseFile();
@@ -978,9 +978,9 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOsGiState = "true");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "start-app-server -Ddelete.liferay.home=false -Dkeep.osgi.state=true");
 
 		if ("${testRunEnvironment}" == "EE") {
 			License.deployLicenseFile();

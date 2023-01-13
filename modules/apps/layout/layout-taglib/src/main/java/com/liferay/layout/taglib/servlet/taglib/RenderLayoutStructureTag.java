@@ -249,34 +249,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		return false;
 	}
 
-	private boolean _hasViewPermission(String className) {
-		InfoItemServiceRegistry infoItemServiceRegistry =
-			ServletContextUtil.getInfoItemServiceRegistry();
-
-		InfoPermissionProvider infoPermissionProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoPermissionProvider.class, className);
-
-		if (infoPermissionProvider == null) {
-			return true;
-		}
-
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if ((themeDisplay != null) &&
-			infoPermissionProvider.hasViewPermission(
-				themeDisplay.getPermissionChecker())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _renderCollectionStyledLayoutStructureItem(
 			InfoForm infoForm,
 			CollectionStyledLayoutStructureItem

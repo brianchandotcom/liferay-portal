@@ -59,30 +59,32 @@ public class CreatorUtil {
 					});
 				setProfileURL(
 					() -> {
-						if (uriInfo != null) {
-							MultivaluedMap<String, String> queryParameters =
-								uriInfo.getQueryParameters();
-
-							String nestedFields = queryParameters.getFirst(
-								"nestedFields");
-
-							if ((nestedFields != null) &&
-								nestedFields.contains("profileURL")) {
-
-								Group group = user.getGroup();
-
-								ThemeDisplay themeDisplay = new ThemeDisplay() {
-									{
-										setPortalURL(StringPool.BLANK);
-										setSiteGroupId(group.getGroupId());
-									}
-								};
-
-								return group.getDisplayURL(themeDisplay);
-							}
+						if (uriInfo == null) {
+							return null;
 						}
 
-						return null;
+						MultivaluedMap<String, String> queryParameters =
+							uriInfo.getQueryParameters();
+
+						String nestedFields = queryParameters.getFirst(
+							"nestedFields");
+
+						if ((nestedFields == null) ||
+							!nestedFields.contains("profileURL")) {
+
+							return null;
+						}
+
+						Group group = user.getGroup();
+
+						ThemeDisplay themeDisplay = new ThemeDisplay() {
+							{
+								setPortalURL(StringPool.BLANK);
+								setSiteGroupId(group.getGroupId());
+							}
+						};
+
+						return group.getDisplayURL(themeDisplay);
 					});
 			}
 		};

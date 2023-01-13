@@ -4129,6 +4129,8 @@ definition {
 
 			DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitle}");
 
+			WaitForPageLoad();
+
 			DMDocument.viewDocumentInfoTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 		}
 	}

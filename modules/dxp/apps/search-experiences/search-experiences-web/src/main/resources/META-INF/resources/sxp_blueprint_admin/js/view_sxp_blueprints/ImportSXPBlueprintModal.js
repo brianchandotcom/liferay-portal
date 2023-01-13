@@ -17,6 +17,8 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
+
 const VALID_EXTENSIONS = '.json';
 
 const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
@@ -76,9 +78,7 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 
 			fetch(fetchURL, {
 				body: importText,
-				headers: new Headers({
-					'Content-Type': 'application/json',
-				}),
+				headers: DEFAULT_HEADERS,
 				method: 'POST',
 			})
 				.then((response) => {

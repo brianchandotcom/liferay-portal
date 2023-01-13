@@ -10,6 +10,7 @@
  */
 
 import {download} from '../shared/fdsPropsTransformerActions';
+import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 
 export default function propsTransformer({...otherProps}) {
 	return {
@@ -18,7 +19,7 @@ export default function propsTransformer({...otherProps}) {
 			if (action.data.id === 'export') {
 				download(
 					`/o/search-experiences-rest/v1.0/sxp-blueprints/${itemData.id}/export`,
-					{method: 'GET'},
+					{headers: DEFAULT_HEADERS, method: 'GET'},
 					itemData.title
 				);
 			}

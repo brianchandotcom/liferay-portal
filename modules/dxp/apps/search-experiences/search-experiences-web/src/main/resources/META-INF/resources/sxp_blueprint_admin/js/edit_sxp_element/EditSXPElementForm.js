@@ -42,6 +42,7 @@ import ThemeContext from '../shared/ThemeContext';
 import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
+import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import formatLocaleWithDashes from '../utils/language/format_locale_with_dashes';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
@@ -413,9 +414,7 @@ function EditSXPElementForm({
 						title_i18n: sxpElementJSONObjectNew.title_i18n,
 						type,
 					}),
-					headers: new Headers({
-						'Content-Type': 'application/json',
-					}),
+					headers: DEFAULT_HEADERS,
 					method: 'PATCH',
 				}
 			).then((response) => {

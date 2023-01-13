@@ -33,7 +33,7 @@ import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_INDEX_CONFIGURATION} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
 import addParams from '../utils/fetch/add_params';
-import fetchData from '../utils/fetch/fetch_data';
+import fetchData, {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import fetchPreviewSearch from '../utils/fetch/fetch_preview_search';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
@@ -193,9 +193,7 @@ function EditSXPBlueprintForm({
 							title_i18n: renameKeys(formik.values.title,
 								formatLocaleWithUnderscores),
 						}),
-						headers: new Headers({
-							'Content-Type': 'application/json',
-						}),
+						headers: DEFAULT_HEADERS,
 						method: 'POST',
 					}
 				).then((response) => response.json());
@@ -224,9 +222,7 @@ function EditSXPBlueprintForm({
 							formatLocaleWithUnderscores
 						),
 					}),
-					headers: new Headers({
-						'Content-Type': 'application/json',
-					}),
+					headers: DEFAULT_HEADERS,
 					method: 'PATCH',
 				}
 			).then((response) => {

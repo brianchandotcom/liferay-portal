@@ -39,8 +39,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -124,50 +126,43 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	private void _addAllObjectFields(
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, Locale locale) {
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId());
+		Map<String, String> systemObjectFieldLabels = new HashMap<>();
 
-		String objectFieldId = null;
-		String objectFieldERC = null;
-		String objectFieldCreator = null;
-		String objectFieldStatus = null;
+		for (ObjectField systemObjectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId(), true)) {
 
-		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(objectField.getName(), "id")) {
-				objectFieldId = objectField.getLabel(locale, false);
-			}
-
-			if (Objects.equals(
-					objectField.getName(), "externalReferenceCode")) {
-
-				objectFieldERC = objectField.getLabel(locale, false);
-			}
-
-			if (Objects.equals(objectField.getName(), "creator")) {
-				objectFieldCreator = objectField.getLabel(locale, false);
-			}
-
-			if (Objects.equals(objectField.getName(), "status")) {
-				objectFieldStatus = objectField.getLabel(locale, false);
-			}
+			systemObjectFieldLabels.put(
+				systemObjectField.getName(),
+				systemObjectField.getLabel(locale, false));
 		}
 
 		if (_objectDefinition.isDefaultStorageType()) {
-			_addNonbjectField(fdsTableSchemaBuilder, objectFieldId, "id");
+			_addNonbjectField(
+				fdsTableSchemaBuilder, systemObjectFieldLabels.get("id"), "id");
 		}
 		else {
 			_addNonbjectField(
-				fdsTableSchemaBuilder, objectFieldERC, "externalReferenceCode");
+				fdsTableSchemaBuilder,
+				systemObjectFieldLabels.get("externalReferenceCode"),
+				"externalReferenceCode");
 		}
 
-		objectFields.forEach(
-			objectField -> _addObjectField(
-				fdsTableSchemaBuilder, objectField.getLabel(locale, true),
-				objectField));
+		for (ObjectField customObjectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId(), false)) {
 
-		_addNonbjectField(fdsTableSchemaBuilder, objectFieldStatus, "status");
-		_addNonbjectField(fdsTableSchemaBuilder, objectFieldCreator, "creator");
+			_addObjectField(
+				fdsTableSchemaBuilder, customObjectField.getLabel(locale, true),
+				customObjectField);
+		}
+
+		_addNonbjectField(
+			fdsTableSchemaBuilder, systemObjectFieldLabels.get("status"),
+			"status");
+		_addNonbjectField(
+			fdsTableSchemaBuilder, systemObjectFieldLabels.get("creator"),
+			"creator");
 	}
 
 	private void _addFDSTableSchemaField(

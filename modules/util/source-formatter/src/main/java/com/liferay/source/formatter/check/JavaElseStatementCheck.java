@@ -54,7 +54,7 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 			String exitStatementType = null;
 
 			for (String ifStatementCodeBlock : ifStatementCodeBlocks) {
-				boolean hasExit = false;
+				exitStatementType = null;
 
 				Matcher matcher2 = _exitStatementPattern.matcher(
 					ifStatementCodeBlock);
@@ -71,13 +71,12 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 
 					if (getLevel(s, "{", "}") == 1) {
 						exitStatementType = matcher2.group(1);
-						hasExit = true;
 
 						break;
 					}
 				}
 
-				if (!hasExit) {
+				if (exitStatementType == null) {
 					continue outerLoop;
 				}
 			}

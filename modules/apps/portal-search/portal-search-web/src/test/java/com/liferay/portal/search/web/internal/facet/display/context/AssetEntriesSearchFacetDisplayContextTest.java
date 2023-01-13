@@ -41,7 +41,8 @@ import org.mockito.Mockito;
 /**
  * @author Gustavo Lima
  */
-public class AssetEntriesSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
+public class AssetEntriesSearchFacetDisplayContextTest
+	extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -76,9 +77,8 @@ public class AssetEntriesSearchFacetDisplayContextTest extends BaseFacetDisplayC
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -105,9 +105,8 @@ public class AssetEntriesSearchFacetDisplayContextTest extends BaseFacetDisplayC
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -130,9 +129,8 @@ public class AssetEntriesSearchFacetDisplayContextTest extends BaseFacetDisplayC
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -154,9 +152,8 @@ public class AssetEntriesSearchFacetDisplayContextTest extends BaseFacetDisplayC
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -213,8 +210,7 @@ public class AssetEntriesSearchFacetDisplayContextTest extends BaseFacetDisplayC
 
 		for (String term : terms) {
 			Mockito.doReturn(
-				createTermCollector(
-					term, frequency)
+				createTermCollector(term, frequency)
 			).when(
 				facetCollector
 			).getTermCollector(

@@ -37,7 +37,8 @@ import org.mockito.Mockito;
 /**
  * @author André de Oliveira
  */
-public class AssetTagsSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
+public class AssetTagsSearchFacetDisplayContextTest
+	extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -110,8 +111,7 @@ public class AssetTagsSearchFacetDisplayContextTest extends BaseFacetDisplayCont
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, term, frequency);
+		setUpTermCollector(_facetCollector, term, frequency);
 
 		String facetParam = StringPool.BLANK;
 
@@ -146,8 +146,7 @@ public class AssetTagsSearchFacetDisplayContextTest extends BaseFacetDisplayCont
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, term, frequency);
+		setUpTermCollector(_facetCollector, term, frequency);
 
 		String facetParam = term;
 
@@ -240,9 +239,7 @@ public class AssetTagsSearchFacetDisplayContextTest extends BaseFacetDisplayCont
 		throws Exception {
 
 		setUpTermCollectors(
-			_facetCollector,
-			getTermCollectors(
-				terms, frequencies));
+			_facetCollector, getTermCollectors(terms, frequencies));
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
 			createDisplayContext(StringPool.BLANK, order);
@@ -250,9 +247,8 @@ public class AssetTagsSearchFacetDisplayContextTest extends BaseFacetDisplayCont
 		List<BucketDisplayContext> bucketDisplayContexts2 =
 			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts2);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts2);
 
 		Assert.assertEquals(
 			bucketDisplayContexts2.toString(), expected, nameFrequencyString);

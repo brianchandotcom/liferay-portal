@@ -37,7 +37,8 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
+public class CustomFacetDisplayContextTest
+	extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -111,8 +112,7 @@ public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCa
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, fieldName, count);
+		setUpTermCollector(_facetCollector, fieldName, count);
 
 		String parameterValue = "";
 
@@ -146,8 +146,7 @@ public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCa
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, fieldName, count);
+		setUpTermCollector(_facetCollector, fieldName, count);
 
 		String parameterValue = fieldName;
 
@@ -189,9 +188,8 @@ public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCa
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"count:asc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				customFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:4|bravo:5|delta:5|charlie:6", nameFrequencyString);
@@ -210,9 +208,8 @@ public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCa
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"count:desc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				customFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"charlie:6|bravo:5|delta:5|alpha:4", nameFrequencyString);
@@ -231,9 +228,8 @@ public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCa
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"key:asc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				customFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:5|bravo:5|bravo:4|charlie:6", nameFrequencyString);
@@ -252,9 +248,8 @@ public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCa
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"key:desc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				customFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"charlie:6|bravo:5|bravo:3|alpha:4", nameFrequencyString);
@@ -276,8 +271,7 @@ public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCa
 		throws Exception {
 
 		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
-			new CustomFacetDisplayContextBuilder(
-				getHttpServletRequest());
+			new CustomFacetDisplayContextBuilder(getHttpServletRequest());
 
 		customFacetDisplayContextBuilder.setFacet(_facet);
 		customFacetDisplayContextBuilder.setParameterName("custom");

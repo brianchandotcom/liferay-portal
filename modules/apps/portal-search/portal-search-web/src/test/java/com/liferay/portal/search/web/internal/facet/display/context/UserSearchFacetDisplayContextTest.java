@@ -36,7 +36,8 @@ import org.mockito.Mockito;
 /**
  * @author Lino Alves
  */
-public class UserSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
+public class UserSearchFacetDisplayContextTest
+	extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -106,8 +107,7 @@ public class UserSearchFacetDisplayContextTest extends BaseFacetDisplayContextTe
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, userName, count);
+		setUpTermCollector(_facetCollector, userName, count);
 
 		String paramValue = "";
 
@@ -140,8 +140,7 @@ public class UserSearchFacetDisplayContextTest extends BaseFacetDisplayContextTe
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, userName, count);
+		setUpTermCollector(_facetCollector, userName, count);
 
 		String paramValue = userName;
 
@@ -174,15 +173,13 @@ public class UserSearchFacetDisplayContextTest extends BaseFacetDisplayContextTe
 
 		setUpTermCollectors(
 			_facetCollector,
-			getTermCollectors(
-				userNames, new int[] {6, 5, 5, 4}));
+			getTermCollectors(userNames, new int[] {6, 5, 5, 4}));
 
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			_createDisplayContext(StringPool.BLANK, "count:asc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				userSearchFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			userSearchFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:4|bravo:5|delta:5|charlie:6", nameFrequencyString);
@@ -194,15 +191,13 @@ public class UserSearchFacetDisplayContextTest extends BaseFacetDisplayContextTe
 
 		setUpTermCollectors(
 			_facetCollector,
-			getTermCollectors(
-				userNames, new int[] {4, 5, 5, 6}));
+			getTermCollectors(userNames, new int[] {4, 5, 5, 6}));
 
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			_createDisplayContext(StringPool.BLANK, "count:desc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				userSearchFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			userSearchFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"charlie:6|bravo:5|delta:5|alpha:4", nameFrequencyString);
@@ -219,9 +214,8 @@ public class UserSearchFacetDisplayContextTest extends BaseFacetDisplayContextTe
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			_createDisplayContext(StringPool.BLANK, "key:asc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				userSearchFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			userSearchFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:4|bravo:5|bravo:3|charlie:6", nameFrequencyString);
@@ -238,9 +232,8 @@ public class UserSearchFacetDisplayContextTest extends BaseFacetDisplayContextTe
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			_createDisplayContext(StringPool.BLANK, "key:desc");
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				userSearchFacetDisplayContext.getBucketDisplayContexts());
+		String nameFrequencyString = buildNameFrequencyString(
+			userSearchFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"charlie:6|bravo:5|bravo:3|alpha:4", nameFrequencyString);

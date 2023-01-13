@@ -42,7 +42,8 @@ import org.mockito.Mockito;
 /**
  * @author André de Oliveira
  */
-public class ScopeSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
+public class ScopeSearchFacetDisplayContextTest
+	extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -120,8 +121,7 @@ public class ScopeSearchFacetDisplayContextTest extends BaseFacetDisplayContextT
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, String.valueOf(groupId), count);
+		setUpTermCollector(_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = "0";
 
@@ -159,8 +159,7 @@ public class ScopeSearchFacetDisplayContextTest extends BaseFacetDisplayContextT
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, String.valueOf(groupId), count);
+		setUpTermCollector(_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = String.valueOf(groupId);
 
@@ -286,8 +285,7 @@ public class ScopeSearchFacetDisplayContextTest extends BaseFacetDisplayContextT
 			_addGroup(i, groupNames[i - 1]);
 
 			termCollectors.add(
-				createTermCollector(
-					String.valueOf(i), frequencies[i - 1]));
+				createTermCollector(String.valueOf(i), frequencies[i - 1]));
 		}
 
 		return termCollectors;
@@ -307,9 +305,8 @@ public class ScopeSearchFacetDisplayContextTest extends BaseFacetDisplayContextT
 		List<BucketDisplayContext> bucketDisplayContexts =
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), expected, nameFrequencyString);

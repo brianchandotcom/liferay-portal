@@ -41,7 +41,8 @@ import org.mockito.Mockito;
 /**
  * @author Lino Alves
  */
-public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
+public class FolderSearchFacetDisplayContextTest
+	extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -152,8 +153,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, String.valueOf(folderId), count);
+		setUpTermCollector(_facetCollector, String.valueOf(folderId), count);
 
 		String facetParam = "";
 
@@ -191,8 +191,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(
-			_facetCollector, String.valueOf(folderId), count);
+		setUpTermCollector(_facetCollector, String.valueOf(folderId), count);
 
 		String facetParam = String.valueOf(folderId);
 
@@ -227,8 +226,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 			new String[] {"alpha", "charlie", "bravo", "delta"},
 			new int[] {4, 5, 5, 6});
 
-		setUpTermCollectors(
-			_facetCollector, termCollectors);
+		setUpTermCollectors(_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "count:asc");
@@ -236,9 +234,8 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 		List<BucketDisplayContext> bucketDisplayContexts =
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -251,8 +248,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 			new String[] {"alpha", "charlie", "bravo", "delta"},
 			new int[] {4, 5, 5, 6});
 
-		setUpTermCollectors(
-			_facetCollector, termCollectors);
+		setUpTermCollectors(_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "count:desc");
@@ -260,9 +256,8 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 		List<BucketDisplayContext> bucketDisplayContexts =
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -274,8 +269,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
 			"zeroFolderId", "alpha", "bravo", "charlie", "bravo");
 
-		setUpTermCollectors(
-			_facetCollector, termCollectors);
+		setUpTermCollectors(_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "key:asc");
@@ -283,9 +277,8 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 		List<BucketDisplayContext> bucketDisplayContexts =
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -297,8 +290,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
 			"zeroFolderId", "alpha", "bravo", "charlie", "bravo");
 
-		setUpTermCollectors(
-			_facetCollector, termCollectors);
+		setUpTermCollectors(_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "key:desc");
@@ -306,9 +298,8 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 		List<BucketDisplayContext> bucketDisplayContexts =
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(),
@@ -323,8 +314,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 			"zeroFolderId", null, "null", "", "   ", "assert", "volatile",
 			"alpha");
 
-		setUpTermCollectors(
-			_facetCollector, termCollectors);
+		setUpTermCollectors(_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null);
@@ -332,9 +322,8 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 		List<BucketDisplayContext> bucketDisplayContexts =
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
-		String nameFrequencyString =
-			buildNameFrequencyString(
-				bucketDisplayContexts);
+		String nameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), "alpha:8|volatile:7|assert:6",
@@ -403,8 +392,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 			int frequency = folderId + 1;
 
 			termCollectors.add(
-				createTermCollector(
-					String.valueOf(folderId), frequency));
+				createTermCollector(String.valueOf(folderId), frequency));
 
 			folderId++;
 		}
@@ -422,8 +410,7 @@ public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContext
 			_addFolder(i, folderNames[i - 1]);
 
 			termCollectors.add(
-				createTermCollector(
-					String.valueOf(i), frequencies[i - 1]));
+				createTermCollector(String.valueOf(i), frequencies[i - 1]));
 		}
 
 		return termCollectors;

@@ -86,8 +86,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 			HttpServletRequest.class);
 
 		Mockito.doReturn(
-			BaseFacetDisplayContextTestCase.getThemeDisplay(
-				CustomFacetPortletInstanceConfiguration.class)
+			getThemeDisplay(CustomFacetPortletInstanceConfiguration.class)
 		).when(
 			httpServletRequest
 		).getAttribute(
@@ -121,8 +120,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
 		Mockito.doReturn(
-			BaseFacetDisplayContextTestCase.getThemeDisplay(
-				facetPortletConfiguration)
+			getThemeDisplay(facetPortletConfiguration)
 		).when(
 			renderRequest
 		).getAttribute(
@@ -138,9 +136,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		List<TermCollector> termCollectors = new ArrayList<>();
 
 		for (int i = 0; i < terms.length; i++) {
-			termCollectors.add(
-				BaseFacetDisplayContextTestCase.createTermCollector(
-					terms[i], frequencies[i]));
+			termCollectors.add(createTermCollector(terms[i], frequencies[i]));
 		}
 
 		return termCollectors;
@@ -153,8 +149,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.doReturn(
-			BaseFacetDisplayContextTestCase.getPortletDisplay(
-				facetPortletConfiguration)
+			getPortletDisplay(facetPortletConfiguration)
 		).when(
 			themeDisplay
 		).getPortletDisplay();
@@ -166,9 +161,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		FacetCollector facetCollector, String term, int frequency) {
 
 		Mockito.doReturn(
-			Collections.singletonList(
-				BaseFacetDisplayContextTestCase.createTermCollector(
-					term, frequency))
+			Collections.singletonList(createTermCollector(term, frequency))
 		).when(
 			facetCollector
 		).getTermCollectors();

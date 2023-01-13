@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -164,20 +166,20 @@ public class ObjectEntryModelResourcePermission
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
 			accountEntryId);
 
-		long[] accountEntryIds = ListUtil.toLongArray(
-			_accountEntryLocalService.getUserAccountEntries(
-				permissionChecker.getUserId(),
-				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				new String[] {
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				},
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
-			AccountEntry::getAccountEntryId);
-
-		if (!ArrayUtil.contains(accountEntryIds, accountEntryId)) {
-			return false;
+		if (Objects.equals(actionId, ActionKeys.VIEW)) {
+			return ArrayUtil.contains(
+				ListUtil.toLongArray(
+					_accountEntryLocalService.getUserAccountEntries(
+						permissionChecker.getUserId(),
+						AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+						new String[] {
+							AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+							AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+						},
+						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					AccountEntry::getAccountEntryId),
+				accountEntryId);
 		}
 
 		Set<Long> rolesIds = new HashSet<>();

@@ -426,7 +426,12 @@ definition {
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
 			value1 = "${updateEntry}");
 
-		PortletEntry.save();
+		if ("${invalidEntry}" == "true") {
+			Button.clickSave();
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro viewClobEntryDetails {

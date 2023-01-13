@@ -22,7 +22,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,9 +51,7 @@ public class SearchRankingResponseTest {
 	@Test
 	public void testSearchRankingResponseGetter() {
 		Assert.assertEquals(_documents, _searchRankingResponse.getDocuments());
-		Assert.assertEquals(
-			Optional.of(_KEYWORDS),
-			_searchRankingResponse.getKeywordsOptional());
+		Assert.assertEquals(_KEYWORDS, _searchRankingResponse.getKeywords());
 		Assert.assertEquals(
 			_PAGINATION_DELTA, _searchRankingResponse.getPaginationDelta());
 		Assert.assertEquals(

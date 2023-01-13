@@ -314,11 +314,7 @@ public class AssetCategoriesSelectorDisplayContext {
 				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
 					vocabularyId);
 
-			if ((assetVocabulary != null) &&
-				(isMoveCategory() ||
-				 (!isMoveCategory() &&
-				  (assetVocabulary.getCategoriesCount() > 0)))) {
-
+			if (assetVocabulary != null) {
 				assetVocabularies.add(assetVocabulary);
 			}
 		}
@@ -348,6 +344,10 @@ public class AssetCategoriesSelectorDisplayContext {
 		boolean allowedSelectVocabularies = isAllowedSelectVocabularies();
 
 		for (AssetVocabulary vocabulary : _getVocabularies()) {
+			if (!isMoveCategory() && (vocabulary.getCategoriesCount() == 0)) {
+				continue;
+			}
+
 			jsonArray.put(
 				JSONUtil.put(
 					"children",

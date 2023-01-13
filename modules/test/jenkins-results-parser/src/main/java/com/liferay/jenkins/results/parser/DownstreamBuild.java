@@ -247,7 +247,9 @@ public class DownstreamBuild extends BaseBuild {
 	public HashMap<String, List<String>> getTestClassMap() {
 		HashMap<String, List<String>> classNamesMethodsList = new HashMap<>();
 
-		if (!getBatchName().contains("modules-integration")) {
+		if (!getBatchName().contains("modules-integration") ||
+			!getBatchName().contains("modules-unit")) {
+
 			return classNamesMethodsList;
 		}
 

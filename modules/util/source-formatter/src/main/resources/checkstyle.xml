@@ -679,6 +679,11 @@
 			<property name="description" value="Performs several checks on `*ResourceImpl` classes (except `Base*ResourceImpl` classes)." />
 			<message key="invalid.method.parameter.annotation" value="Remove annotation ''{0}'' from method parameter ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ResourcePermissionCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Performs several checks on `*ResourcePermission` classes." />
+			<message key="remove.service.ranking.property" value="Remove property ''{0}'' from @Component annotation" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.SelfReferenceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases of unnecessary reference to its own class." />

@@ -498,6 +498,46 @@ definition {
 			searchAssetTitle = "Apple Pie");
 	}
 
+	@priority = "3"
+	test ViewBlueprintContributorZeroCharacterThreshold {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "Software");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Text Match Over Multiple Fields");
+
+		Type(
+			ariaLabel = "Text to Match",
+			locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+			value1 = "software");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Home");
+
+		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+			characterThreshold = "0",
+			suggestionContributor = "Blueprint",
+			suggestionContributorBlueprint = "Test Blueprint",
+			suggestionContributorDisplayGroupName = "Blueprint 0",
+			suggestionContributorSize = "5");
+
+		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+		AssertElementPresent(
+			locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+			subHeader = "Blueprint 0");
+
+		AssertElementPresent(
+			key_dropdownItem = "Software",
+			locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+	}
+
 	@priority = "5"
 	test ViewBlueprintSuggestionsAcrossDifferentScopes {
 		property test.run.environment = "EE";

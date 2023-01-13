@@ -31,6 +31,7 @@ import org.apache.olingo.commons.api.edm.provider.CsdlComplexType;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainer;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
+import org.apache.olingo.commons.api.edm.provider.CsdlNavigationProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
 import org.apache.olingo.server.core.SchemaBasedEdmProvider;
@@ -56,7 +57,9 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 				_createCsdlProperties(
 					_NAMESPACE, entityModel.getEntityFieldsMap()),
 				_createCsdlComplexTypes(
-					_NAMESPACE, entityModel.getEntityFieldsMap())));
+					_NAMESPACE, entityModel.getEntityFieldsMap()),
+				_createCsdlNavigationProperties(
+					entityModel.getEntityRelationshipsMap())));
 	}
 
 	private CsdlProperty _createCollectionCsdlProperty(
@@ -146,14 +149,47 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private CsdlEntityType _createCsdlEntityType(
-		String name, List<CsdlProperty> csdlProperties) {
+		String name, List<CsdlProperty> csdlProperties,
+		List<CsdlNavigationProperty> csdlNavigationProperties) {
 
 		CsdlEntityType csdlEntityType = new CsdlEntityType();
 
 		csdlEntityType.setName(name);
 		csdlEntityType.setProperties(csdlProperties);
+		csdlEntityType.setNavigationProperties(csdlNavigationProperties);
 
 		return csdlEntityType;
+	}
+
+	private List<CsdlNavigationProperty> _createCsdlNavigationProperties(
+		Map<String, EntityModel.EntityRelationship> entityRelationshipMap) {
+
+		List<CsdlNavigationProperty> csdlNavigationProperties = new ArrayList<>(
+			entityRelationshipMap.size());
+
+		for (EntityModel.EntityRelationship entityRelationship :
+				entityRelationshipMap.values()) {
+
+			CsdlNavigationProperty csdlNavigationProperty =
+				new CsdlNavigationProperty();
+
+			EntityModel entityModel = entityRelationship.getEntityModel();
+
+			csdlNavigationProperty.setName(entityRelationship.getName());
+			csdlNavigationProperty.setPartner(entityModel.getName());
+
+			if (entityRelationship.getType() ==
+					EntityModel.EntityRelationship.Type.COLLECTION) {
+
+				csdlNavigationProperty.setCollection(true);
+			}
+
+			csdlNavigationProperty.setType(_getFullQualifiedName(entityModel));
+
+			csdlNavigationProperties.add(csdlNavigationProperty);
+		}
+
+		return csdlNavigationProperties;
 	}
 
 	private List<CsdlProperty> _createCsdlProperties(
@@ -207,7 +243,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 	private CsdlSchema _createCsdlSchema(
 		String namespace, String name, List<CsdlProperty> csdlProperties,
-		List<CsdlComplexType> csdlComplexTypes) {
+		List<CsdlComplexType> csdlComplexTypes,
+		List<CsdlNavigationProperty> csdlNavigationProperties) {
 
 		CsdlSchema csdlSchema = new CsdlSchema();
 
@@ -216,7 +253,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			_createCsdlEntityContainer(namespace, name));
 		csdlSchema.setEntityTypes(
 			Collections.singletonList(
-				_createCsdlEntityType(name, csdlProperties)));
+				_createCsdlEntityType(
+					name, csdlProperties, csdlNavigationProperties)));
 		csdlSchema.setNamespace(namespace);
 
 		return csdlSchema;
@@ -272,6 +310,10 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		}
 
 		return null;
+	}
+
+	private FullQualifiedName _getFullQualifiedName(EntityModel entityModel) {
+		return new FullQualifiedName(_NAMESPACE + "." + entityModel.getName());
 	}
 
 	private static final String _NAMESPACE = "HypermediaRestApis";

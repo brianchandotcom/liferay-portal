@@ -14,9 +14,11 @@
 
 package com.liferay.tld.formatter;
 
-import com.liferay.petra.xml.Dom4jUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 
@@ -38,7 +40,10 @@ import java.util.TreeMap;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 /**
  * @author Brian Wing Shun Chan
@@ -102,6 +107,31 @@ public class TLDFormatter {
 		return _modifiedFileNames;
 	}
 
+	private String _documentToString(Node node) throws Exception {
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputFormat outputFormat = new OutputFormat(StringPool.TAB, true);
+
+		outputFormat.setOmitEncoding(true);
+		outputFormat.setPadText(true);
+		outputFormat.setTrimText(true);
+
+		XMLWriter xmlWriter = new XMLWriter(
+			unsyncByteArrayOutputStream, outputFormat);
+
+		xmlWriter.write(node);
+
+		String content = StringUtil.trimTrailing(
+			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
+
+		while (content.contains(" \n")) {
+			content = StringUtil.replace(content, " \n", "\n");
+		}
+
+		return content;
+	}
+
 	private void _formatTLD(Path file) throws Exception {
 		String content = new String(
 			Files.readAllBytes(file), StandardCharsets.UTF_8);
@@ -129,7 +159,7 @@ public class TLDFormatter {
 			}
 		}
 
-		String newContent = Dom4jUtil.toString(document);
+		String newContent = _documentToString(document);
 
 		int x = newContent.indexOf("<tlib-version");
 		int y = newContent.indexOf("</taglib>");

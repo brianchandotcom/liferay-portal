@@ -24,14 +24,15 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
-import com.liferay.search.experiences.rest.dto.v1_0.TextEmbeddingProviderValidationResult;
+import com.liferay.search.experiences.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
-import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
 
 import java.util.function.BiFunction;
 
@@ -51,6 +52,15 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
+
+	public static void
+		setEmbeddingProviderValidationResultResourceComponentServiceObjects(
+			ComponentServiceObjects<EmbeddingProviderValidationResultResource>
+				embeddingProviderValidationResultResourceComponentServiceObjects) {
+
+		_embeddingProviderValidationResultResourceComponentServiceObjects =
+			embeddingProviderValidationResultResourceComponentServiceObjects;
+	}
 
 	public static void setSXPBlueprintResourceComponentServiceObjects(
 		ComponentServiceObjects<SXPBlueprintResource>
@@ -76,14 +86,21 @@ public class Mutation {
 			searchResponseResourceComponentServiceObjects;
 	}
 
-	public static void
-		setTextEmbeddingProviderValidationResultResourceComponentServiceObjects(
-			ComponentServiceObjects
-				<TextEmbeddingProviderValidationResultResource>
-					textEmbeddingProviderValidationResultResourceComponentServiceObjects) {
+	@GraphQLField
+	public EmbeddingProviderValidationResult
+			createTextEmbeddingValidateProviderConfiguration(
+				@GraphQLName("embeddingProviderConfiguration")
+					EmbeddingProviderConfiguration
+						embeddingProviderConfiguration)
+		throws Exception {
 
-		_textEmbeddingProviderValidationResultResourceComponentServiceObjects =
-			textEmbeddingProviderValidationResultResourceComponentServiceObjects;
+		return _applyComponentServiceObjects(
+			_embeddingProviderValidationResultResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			embeddingProviderValidationResultResource ->
+				embeddingProviderValidationResultResource.
+					postTextEmbeddingValidateProviderConfiguration(
+						embeddingProviderConfiguration));
 	}
 
 	@GraphQLField
@@ -284,20 +301,6 @@ public class Mutation {
 				query, Pagination.of(page, pageSize), sxpBlueprint));
 	}
 
-	@GraphQLField
-	public TextEmbeddingProviderValidationResult
-			createTextEmbeddingValidateConfiguration(
-				@GraphQLName("string") String string)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_textEmbeddingProviderValidationResultResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			textEmbeddingProviderValidationResultResource ->
-				textEmbeddingProviderValidationResultResource.
-					postTextEmbeddingValidateConfiguration(string));
-	}
-
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -334,6 +337,26 @@ public class Mutation {
 		finally {
 			componentServiceObjects.ungetService(resource);
 		}
+	}
+
+	private void _populateResourceContext(
+			EmbeddingProviderValidationResultResource
+				embeddingProviderValidationResultResource)
+		throws Exception {
+
+		embeddingProviderValidationResultResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		embeddingProviderValidationResultResource.setContextCompany(_company);
+		embeddingProviderValidationResultResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		embeddingProviderValidationResultResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		embeddingProviderValidationResultResource.setContextUriInfo(_uriInfo);
+		embeddingProviderValidationResultResource.setContextUser(_user);
+		embeddingProviderValidationResultResource.setGroupLocalService(
+			_groupLocalService);
+		embeddingProviderValidationResultResource.setRoleLocalService(
+			_roleLocalService);
 	}
 
 	private void _populateResourceContext(
@@ -386,37 +409,15 @@ public class Mutation {
 		searchResponseResource.setRoleLocalService(_roleLocalService);
 	}
 
-	private void _populateResourceContext(
-			TextEmbeddingProviderValidationResultResource
-				textEmbeddingProviderValidationResultResource)
-		throws Exception {
-
-		textEmbeddingProviderValidationResultResource.setContextAcceptLanguage(
-			_acceptLanguage);
-		textEmbeddingProviderValidationResultResource.setContextCompany(
-			_company);
-		textEmbeddingProviderValidationResultResource.
-			setContextHttpServletRequest(_httpServletRequest);
-		textEmbeddingProviderValidationResultResource.
-			setContextHttpServletResponse(_httpServletResponse);
-		textEmbeddingProviderValidationResultResource.setContextUriInfo(
-			_uriInfo);
-		textEmbeddingProviderValidationResultResource.setContextUser(_user);
-		textEmbeddingProviderValidationResultResource.setGroupLocalService(
-			_groupLocalService);
-		textEmbeddingProviderValidationResultResource.setRoleLocalService(
-			_roleLocalService);
-	}
-
+	private static ComponentServiceObjects
+		<EmbeddingProviderValidationResultResource>
+			_embeddingProviderValidationResultResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SXPBlueprintResource>
 		_sxpBlueprintResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SXPElementResource>
 		_sxpElementResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
-	private static ComponentServiceObjects
-		<TextEmbeddingProviderValidationResultResource>
-			_textEmbeddingProviderValidationResultResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

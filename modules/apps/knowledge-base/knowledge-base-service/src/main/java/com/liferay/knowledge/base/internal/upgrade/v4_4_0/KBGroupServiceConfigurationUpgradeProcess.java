@@ -51,9 +51,9 @@ public class KBGroupServiceConfigurationUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			Integer rssDelta = (Integer)properties.get("rssDelta");
+			Object rssDelta = properties.get("rssDelta");
 
-			if (rssDelta != null) {
+			if (rssDelta instanceof Integer) {
 				properties.put("rssDelta", String.valueOf(rssDelta));
 			}
 

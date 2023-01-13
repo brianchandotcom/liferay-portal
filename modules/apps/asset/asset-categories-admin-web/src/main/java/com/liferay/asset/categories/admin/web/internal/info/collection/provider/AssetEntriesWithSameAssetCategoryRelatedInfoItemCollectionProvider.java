@@ -172,6 +172,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				).name(
 					"assetCategoryRule"
 				).attribute(
+					SelectInfoFieldType.INLINE, true
+				).attribute(
 					SelectInfoFieldType.OPTIONS,
 					ListUtil.fromArray(
 						new SelectInfoFieldType.Option(

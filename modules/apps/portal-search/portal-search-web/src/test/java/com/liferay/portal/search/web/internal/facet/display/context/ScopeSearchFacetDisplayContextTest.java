@@ -50,6 +50,39 @@ public class ScopeSearchFacetDisplayContextTest
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(String parameterValue)
+		throws ConfigurationException {
+
+		return createFacetDisplayContext(parameterValue, "count:desc");
+	}
+
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(
+			String parameterValue, String order)
+		throws ConfigurationException {
+
+		ScopeSearchFacetDisplayContextBuilder
+			scopeSearchFacetDisplayContextBuilder =
+				new ScopeSearchFacetDisplayContextBuilder(
+					getRenderRequest(
+						SiteFacetPortletInstanceConfiguration.class));
+
+		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
+		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
+		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(
+			_groupLocalService);
+		scopeSearchFacetDisplayContextBuilder.setOrder(order);
+		scopeSearchFacetDisplayContextBuilder.setParameterValue(parameterValue);
+
+		return scopeSearchFacetDisplayContextBuilder.build();
+	}
+
+	@Override
+	public String getParameterValue() {
+		return "0";
+	}
+
 	@Before
 	public void setUp() {
 		Mockito.doReturn(
@@ -57,25 +90,6 @@ public class ScopeSearchFacetDisplayContextTest
 		).when(
 			_facet
 		).getFacetCollector();
-	}
-
-	@Test
-	public void testEmptySearchResults() throws Exception {
-		String parameterValue = "0";
-
-		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
-			createDisplayContext(parameterValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(scopeSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertTrue(scopeSearchFacetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -87,11 +101,11 @@ public class ScopeSearchFacetDisplayContextTest
 
 		String parameterValue = String.valueOf(groupId);
 
-		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
-			createDisplayContext(parameterValue);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			parameterValue);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -107,9 +121,9 @@ public class ScopeSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
-			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(scopeSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(scopeSearchFacetDisplayContext.isRenderNothing());
+			parameterValue, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -125,11 +139,11 @@ public class ScopeSearchFacetDisplayContextTest
 
 		String parameterValue = "0";
 
-		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
-			createDisplayContext(parameterValue);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			parameterValue);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -145,9 +159,9 @@ public class ScopeSearchFacetDisplayContextTest
 		Assert.assertFalse(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
-			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(scopeSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(scopeSearchFacetDisplayContext.isRenderNothing());
+			parameterValue, facetDisplayContext.getParameterValue());
+		Assert.assertTrue(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -163,11 +177,11 @@ public class ScopeSearchFacetDisplayContextTest
 
 		String parameterValue = String.valueOf(groupId);
 
-		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
-			createDisplayContext(parameterValue);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			parameterValue);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -183,9 +197,9 @@ public class ScopeSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
-			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(scopeSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(scopeSearchFacetDisplayContext.isRenderNothing());
+			parameterValue, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -216,33 +230,6 @@ public class ScopeSearchFacetDisplayContextTest
 		_testOrderBy(
 			new String[] {"baker", "dog", "able", "dog"},
 			new int[] {3, 4, 5, 6}, "dog:6|dog:4|baker:3|able:5", "key:desc");
-	}
-
-	protected ScopeSearchFacetDisplayContext createDisplayContext(
-			String parameterValue)
-		throws ConfigurationException {
-
-		return createDisplayContext(parameterValue, "count:desc");
-	}
-
-	protected ScopeSearchFacetDisplayContext createDisplayContext(
-			String parameterValue, String order)
-		throws ConfigurationException {
-
-		ScopeSearchFacetDisplayContextBuilder
-			scopeSearchFacetDisplayContextBuilder =
-				new ScopeSearchFacetDisplayContextBuilder(
-					getRenderRequest(
-						SiteFacetPortletInstanceConfiguration.class));
-
-		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
-		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
-		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(
-			_groupLocalService);
-		scopeSearchFacetDisplayContextBuilder.setOrder(order);
-		scopeSearchFacetDisplayContextBuilder.setParameterValue(parameterValue);
-
-		return scopeSearchFacetDisplayContextBuilder.build();
 	}
 
 	protected Group createGroup(long groupId, String name) throws Exception {
@@ -299,11 +286,11 @@ public class ScopeSearchFacetDisplayContextTest
 		setUpTermCollectors(
 			_facetCollector, _getTermCollectors(groupNames, frequencies));
 
-		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
-			createDisplayContext(StringPool.BLANK, order);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			StringPool.BLANK, order);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString = buildNameFrequencyString(
 			bucketDisplayContexts);

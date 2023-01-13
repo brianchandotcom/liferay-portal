@@ -58,6 +58,11 @@ public class AssetEntriesSearchFacetDisplayContextTest
 		).getFacetCollector();
 	}
 
+	@Override
+	@Test
+	public void testEmptySearchResults() throws Exception {
+	}
+
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
 		String type1 = RandomTestUtil.randomString();

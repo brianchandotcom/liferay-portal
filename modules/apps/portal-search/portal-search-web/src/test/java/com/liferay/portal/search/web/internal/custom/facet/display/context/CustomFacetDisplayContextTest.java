@@ -76,6 +76,11 @@ public class CustomFacetDisplayContextTest
 			fieldToAggregate, customFacetDisplayContext.getDisplayCaption());
 	}
 
+	@Override
+	@Test
+	public void testEmptySearchResults() throws Exception {
+	}
+
 	@Test
 	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
 		String fieldName = RandomTestUtil.randomString();

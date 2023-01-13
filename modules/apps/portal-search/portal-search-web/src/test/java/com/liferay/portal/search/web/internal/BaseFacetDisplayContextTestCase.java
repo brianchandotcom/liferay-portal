@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,12 +34,51 @@ import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import org.mockito.Mockito;
 
 /**
- * @author Amanda Costa
+ * @author Amanda Costa, Joshua Cords
  */
 public abstract class BaseFacetDisplayContextTestCase {
+
+	public FacetDisplayContext createFacetDisplayContext(String parameterValue)
+		throws Exception {
+
+		return null;
+	}
+
+	public FacetDisplayContext createFacetDisplayContext(
+			String parameterValue, String order)
+		throws Exception {
+
+		return null;
+	}
+
+	public String getParameterValue() {
+		return null;
+	}
+
+	@Test
+	public void testEmptySearchResults() throws Exception {
+		String parameterValue = getParameterValue();
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			parameterValue);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		Assert.assertEquals(
+			parameterValue, facetDisplayContext.getParameterValue());
+		Assert.assertTrue(facetDisplayContext.isNothingSelected());
+		Assert.assertTrue(facetDisplayContext.isRenderNothing());
+	}
 
 	protected static String buildNameFrequencyString(
 		List<BucketDisplayContext> bucketDisplayContexts) {

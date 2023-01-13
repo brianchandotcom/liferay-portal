@@ -72,6 +72,8 @@ definition {
 		if (IsElementNotPresent(key_text = "Save and Return to ${siteName}", locator1 = "Button#ANY")) {
 			Refresh();
 
+			WaitForPageLoad();
+
 			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Edit in ${dmDocumentTypeName}");

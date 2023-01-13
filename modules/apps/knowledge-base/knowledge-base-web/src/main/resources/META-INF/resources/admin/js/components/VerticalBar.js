@@ -24,6 +24,8 @@ import TemplatesPanel from './TemplatesPanel';
 
 const CSS_EXPANDED = 'expanded';
 
+const DELAY_ANIMATION = 300;
+
 const SUGGESTION_KEY = 'suggestion';
 
 const VerticalNavigationBar = ({
@@ -52,21 +54,42 @@ const VerticalNavigationBar = ({
 	);
 
 	useEffect(() => {
-		if (productMenu && activePanel !== SUGGESTION_KEY) {
-			productMenu.on('openStart.lexicon.sidenav', () => {
-				setProductMenuOpen(true);
+		const onProductMenuChange = ({open}) => {
+			setProductMenuOpen(open);
+
+			if (open) {
 				setVerticalBarOpen(false);
-			});
+			}
+			else {
+				setTimeout(() => {
+					setVerticalBarOpen(true);
+				}, DELAY_ANIMATION);
+			}
+		};
 
-			productMenu.on('closedStart.lexicon.sidenav', () => {
-				setProductMenuOpen(false);
-			});
+		const closedProductMenuListener = productMenu?.on(
+			'closed.lexicon.sidenav',
+			() => onProductMenuChange({open: false})
+		);
 
-			return () => {
-				productMenu.destroy();
-			};
+		const openProductMenuListener = productMenu?.on(
+			'openStart.lexicon.sidenav',
+			() => onProductMenuChange({open: true})
+		);
+
+		if (initialProductMenuOpen) {
+			setTimeout(() => {
+				productMenu.hide();
+			}, DELAY_ANIMATION);
 		}
-	}, [activePanel, productMenu]);
+
+		return () => {
+			closedProductMenuListener?.removeListener();
+			openProductMenuListener?.removeListener();
+
+			productMenu.destroy();
+		};
+	}, [initialProductMenuOpen, productMenu]);
 
 	useEffect(() => {
 		parentContainer.classList.toggle(

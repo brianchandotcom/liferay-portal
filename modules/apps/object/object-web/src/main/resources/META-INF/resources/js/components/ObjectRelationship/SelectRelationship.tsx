@@ -81,6 +81,8 @@ export default function SelectRelationship({
 					({businessType}) => businessType === 'Relationship'
 				);
 
+				setCreationLanguageId(objectDefinition.defaultLanguageId);
+
 				setFields(options);
 			};
 
@@ -93,6 +95,7 @@ export default function SelectRelationship({
 
 	return (
 		<AutoComplete<LabelNameObject>
+			creationLanguageId={creationLanguageId as Locale}
 			emptyStateMessage={Liferay.Language.get('no-parameters-were-found')}
 			error={error}
 			items={filteredOptions ?? []}

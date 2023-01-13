@@ -88,6 +88,9 @@ export function DefinitionOfTerms({
 		>
 			<ClayPanel.Body>
 				<AutoComplete<ObjectDefinition>
+					creationLanguageId={
+						selectedEntity?.defaultLanguageId as Locale
+					}
 					emptyStateMessage={Liferay.Language.get(
 						'no-entities-were-found'
 					)}

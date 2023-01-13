@@ -267,6 +267,7 @@ export function ModalAddObjectLayoutTab({
 									{selectedRelationshipInfo.labelContent}
 								</ClayLabel>
 							}
+							creationLanguageId={defaultLanguageId}
 							emptyStateMessage={Liferay.Language.get(
 								'there-are-no-relationship-for-this-object'
 							)}

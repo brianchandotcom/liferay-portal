@@ -143,6 +143,9 @@ export function Attachments({setValues, values}: IProps) {
 				<div className="lfr__notification-template-attachments">
 					<div className="lfr__notification-template-attachments-fields">
 						<AutoComplete<ObjectDefinition>
+							creationLanguageId={
+								selectedEntity?.defaultLanguageId as Locale
+							}
 							emptyStateMessage={Liferay.Language.get(
 								'no-data-sources-were-found'
 							)}

@@ -23,7 +23,7 @@ interface IProps {
 export function CheckboxItem({checked, label, onChange}: IProps) {
 	return (
 		<li>
-			<div className="dropdown-item">
+			<div className={`dropdown-item ${checked ? 'hover' : ''}`}>
 				<div className="custom-checkbox custom-control">
 					<label>
 						<input

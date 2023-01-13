@@ -391,6 +391,7 @@ export default function ObjectFieldFormBase({
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
 				<AutoComplete<Partial<PickList>>
+					creationLanguageId={creationLanguageId2 as Locale}
 					disabled={disabled}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.listTypeDefinitionId}
@@ -461,6 +462,7 @@ export default function ObjectFieldFormBase({
 
 			{values.state && (
 				<AutoComplete<PickListItem>
+					creationLanguageId={creationLanguageId2 as Locale}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.defaultValue}
 					items={filteredPicklistItems}

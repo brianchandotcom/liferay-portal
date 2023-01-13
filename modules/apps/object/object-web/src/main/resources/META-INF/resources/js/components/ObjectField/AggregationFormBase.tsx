@@ -340,6 +340,7 @@ export function AggregationFormBase({
 	return (
 		<>
 			<AutoComplete<TObjectRelationship>
+				creationLanguageId={creationLanguageId2}
 				emptyStateMessage={Liferay.Language.get(
 					'no-relationships-were-found'
 				)}
@@ -383,6 +384,7 @@ export function AggregationFormBase({
 
 			{selectedAggregationFunction?.value !== 'COUNT' && (
 				<AutoComplete<ObjectField>
+					creationLanguageId={creationLanguageId2 as Locale}
 					emptyStateMessage={Liferay.Language.get(
 						'no-fields-were-found'
 					)}

@@ -457,6 +457,7 @@ export function ModalAddFilter({
 			<ClayModal.Body>
 				{!editingFilter && (
 					<AutoComplete<ObjectField>
+						creationLanguageId={creationLanguageId as Locale}
 						emptyStateMessage={Liferay.Language.get(
 							'there-are-no-columns-available'
 						)}

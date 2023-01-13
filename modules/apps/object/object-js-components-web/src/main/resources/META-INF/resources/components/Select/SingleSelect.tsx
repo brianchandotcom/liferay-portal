@@ -66,6 +66,7 @@ export function SingleSelect<
 							trigger={
 								<ClayDropDown.Item
 									{...events}
+									active={option.label === otherProps.value}
 									className={
 										option.type
 											? 'lfr-object__single-select--with-label'

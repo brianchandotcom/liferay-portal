@@ -18,11 +18,18 @@ import React, {useState} from 'react';
 import {FieldBase} from '../FieldBase';
 
 import './index.scss';
+import {getLocalizableLabel} from '../../utils/string';
 import {CustomSelect} from './CustomSelect';
-
-interface AutoCompleteProps<T> extends React.HTMLAttributes<HTMLElement> {
+interface AutoCompleteProps<
+	T extends {
+		label?: LocalizedValue<string> | string;
+		name?: string;
+		value?: string;
+	}
+> extends React.HTMLAttributes<HTMLElement> {
 	children: (item: T) => React.ReactNode;
 	contentRight?: React.ReactNode;
+	creationLanguageId: Locale;
 	disabled?: boolean;
 	emptyStateMessage: string;
 	error?: string;
@@ -45,10 +52,17 @@ type EmptyStateItem = {
 	label: string;
 };
 
-export default function AutoComplete<T>({
+export default function AutoComplete<
+	T extends {
+		label?: LocalizedValue<string> | string;
+		name?: string;
+		value?: string;
+	}
+>({
 	children,
 	className,
 	contentRight,
+	creationLanguageId,
 	disabled,
 	emptyStateMessage,
 	error,
@@ -134,6 +148,15 @@ export default function AutoComplete<T>({
 						{items.map((item, index) => {
 							return (
 								<ClayDropDown.Item
+									active={
+										typeof item.label !== 'string'
+											? value ===
+											  getLocalizableLabel(
+													creationLanguageId,
+													item.label
+											  )
+											: value === item.name
+									}
 									key={index}
 									onClick={() => {
 										setActive(false);

@@ -155,6 +155,8 @@ export function ObjectRelationshipFormBase({
 					!parameterRequired
 			);
 
+			setCreationLanguageId(currentObjectDefinition.defaultLanguageId);
+
 			setObjectDefinitions(objectDefinitions);
 		};
 
@@ -207,6 +209,7 @@ export function ObjectRelationshipFormBase({
 			/>
 
 			<AutoComplete<ObjectDefinition>
+				creationLanguageId={creationLanguageId as Locale}
 				disabled={readonly}
 				emptyStateMessage={Liferay.Language.get(
 					'no-objects-were-found'

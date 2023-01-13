@@ -173,7 +173,7 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 		}
 
 		int openCurlyBracePos = content.indexOf(
-			StringPool.OPEN_CURLY_BRACE, closeCurlyBracePos);
+			StringPool.OPEN_CURLY_BRACE, closeCurlyBracePos + 1);
 
 		if (openCurlyBracePos == -1) {
 			ifStatementCodeBlocks.clear();

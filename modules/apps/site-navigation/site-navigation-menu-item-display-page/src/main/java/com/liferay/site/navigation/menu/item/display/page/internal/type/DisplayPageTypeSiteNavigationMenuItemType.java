@@ -54,7 +54,6 @@ import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -133,16 +132,12 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	public String getAddTitle(Locale locale) {
 		String label = _displayPageTypeContext.getLabel(locale);
 
-		Optional<LayoutDisplayPageMultiSelectionProvider<?>>
-			layoutDisplayPageMultiSelectionProviderOptional =
+		LayoutDisplayPageMultiSelectionProvider<?>
+			layoutDisplayPageMultiSelectionProvider =
 				_displayPageTypeContext.
-					getLayoutDisplayPageMultiSelectionProviderOptional();
+					getLayoutDisplayPageMultiSelectionProvider();
 
-		if (layoutDisplayPageMultiSelectionProviderOptional.isPresent()) {
-			LayoutDisplayPageMultiSelectionProvider<?>
-				layoutDisplayPageMultiSelectionProvider =
-					layoutDisplayPageMultiSelectionProviderOptional.get();
-
+		if (layoutDisplayPageMultiSelectionProvider != null) {
 			label = layoutDisplayPageMultiSelectionProvider.getPluralLabel(
 				locale);
 		}
@@ -403,12 +398,12 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public boolean isMultiSelection() {
-		Optional<LayoutDisplayPageMultiSelectionProvider<?>>
-			layoutDisplayPageMultiSelectionProviderOptional =
+		LayoutDisplayPageMultiSelectionProvider<?>
+			layoutDisplayPageMultiSelectionProvider =
 				_displayPageTypeContext.
-					getLayoutDisplayPageMultiSelectionProviderOptional();
+					getLayoutDisplayPageMultiSelectionProvider();
 
-		if (layoutDisplayPageMultiSelectionProviderOptional.isPresent()) {
+		if (layoutDisplayPageMultiSelectionProvider != null) {
 			return true;
 		}
 

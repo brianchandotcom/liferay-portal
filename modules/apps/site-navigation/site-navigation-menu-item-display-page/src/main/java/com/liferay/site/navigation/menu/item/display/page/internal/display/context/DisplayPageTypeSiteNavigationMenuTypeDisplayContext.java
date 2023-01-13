@@ -50,7 +50,6 @@ import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayP
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -356,15 +355,10 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	}
 
 	private JSONArray _getDataJSONArray() throws Exception {
-		Optional<LayoutDisplayPageInfoItemFieldValuesProvider<?>>
-			layoutDisplayPageInfoItemFieldValuesProviderOptional =
-				_displayPageTypeContext.
-					getLayoutDisplayPageInfoItemFieldValuesProviderOptional();
-
 		LayoutDisplayPageInfoItemFieldValuesProvider<?>
 			layoutDisplayPageInfoItemFieldValuesProvider =
-				layoutDisplayPageInfoItemFieldValuesProviderOptional.orElse(
-					null);
+				_displayPageTypeContext.
+					getLayoutDisplayPageInfoItemFieldValuesProvider();
 
 		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
 			return JSONFactoryUtil.createJSONArray();

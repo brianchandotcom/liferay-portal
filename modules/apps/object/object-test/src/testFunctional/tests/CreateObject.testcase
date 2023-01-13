@@ -1701,7 +1701,7 @@ definition {
 			object = "Custom Object 41",
 			type = "One to Many");
 
-		Alert.viewErrorMessage(errorMessage = "Internal Server Error");
+		Alert.viewErrorMessage(errorMessage = "Duplicate name relationship");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"

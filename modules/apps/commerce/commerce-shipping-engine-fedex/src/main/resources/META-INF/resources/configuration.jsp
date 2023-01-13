@@ -35,7 +35,15 @@ String[] serviceTypes = StringUtil.split(fedExCommerceShippingEngineGroupService
 
 		<aui:input name="settings--key--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.key() %>" />
 
-		<aui:input name="settings--password--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.password() %>" />
+		<%
+		String password = fedExCommerceShippingEngineGroupServiceConfiguration.password();
+
+		if (Validator.isNotNull(password)) {
+			password = Portal.TEMP_OBFUSCATION_VALUE;
+		}
+		%>
+
+		<aui:input name="settings--password--" type="password" value="<%= password %>" />
 
 		<aui:input label="account-number" name="settings--accountNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.accountNumber() %>" />
 

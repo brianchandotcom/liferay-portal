@@ -73,7 +73,7 @@ public class UserSearchFacetDisplayContextTest
 	}
 
 	@Override
-	public String getParameterValue() {
+	public String getFacetDisplayContextParameterValue() {
 		return "";
 	}
 

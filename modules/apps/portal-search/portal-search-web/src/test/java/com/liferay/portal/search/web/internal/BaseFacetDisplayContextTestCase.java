@@ -57,13 +57,13 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return null;
 	}
 
-	public String getParameterValue() {
+	public String getFacetDisplayContextParameterValue() {
 		return null;
 	}
 
 	@Test
 	public void testEmptySearchResults() throws Exception {
-		String parameterValue = getParameterValue();
+		String parameterValue = getFacetDisplayContextParameterValue();
 
 		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
 			parameterValue);

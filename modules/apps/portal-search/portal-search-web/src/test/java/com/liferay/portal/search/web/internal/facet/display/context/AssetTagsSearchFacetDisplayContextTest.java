@@ -78,7 +78,7 @@ public class AssetTagsSearchFacetDisplayContextTest
 	}
 
 	@Override
-	public String getParameterValue() {
+	public String getFacetDisplayContextParameterValue() {
 		return "";
 	}
 

@@ -79,7 +79,7 @@ public class ScopeSearchFacetDisplayContextTest
 	}
 
 	@Override
-	public String getParameterValue() {
+	public String getFacetDisplayContextParameterValue() {
 		return "0";
 	}
 

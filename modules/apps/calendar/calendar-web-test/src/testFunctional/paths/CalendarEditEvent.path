@@ -429,7 +429,7 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_TAG_FIELD</td>
-	<td>//input[contains(@title,'Add Tags')] | //div[contains(@class,'tags-selector')]//input[contains(@class,'form-control-inset')]</td>
+	<td>//input[contains(@id,'Tags')] | //div[contains(@class,'tags-selector')]//input[contains(@class,'form-control-inset')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -677,6 +677,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ResourceImplCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on `*ResourceImpl` classes (except `Base*ResourceImpl` classes)." />
+			<property name="enabled" value="false" />
 			<message key="invalid.method.parameter.annotation" value="Remove annotation ''{0}'' from method parameter ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ResourcePermissionCheck">

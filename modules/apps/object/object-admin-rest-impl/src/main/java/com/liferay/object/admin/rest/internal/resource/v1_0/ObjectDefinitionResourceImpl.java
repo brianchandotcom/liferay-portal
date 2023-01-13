@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -481,18 +480,11 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		for (ObjectField objectField : objectDefinition.getObjectFields()) {
-			if (StringUtil.equals(
-					objectField.getBusinessTypeAsString(),
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
-				StringUtil.equals(
-					objectField.getBusinessTypeAsString(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
+			objectField.setListTypeDefinitionId(
 				ObjectFieldUtil.addListTypeDefinition(
 					contextUser.getCompanyId(), _listTypeDefinitionLocalService,
 					_listTypeEntryLocalService, objectField,
-					contextUser.getUserId());
-			}
+					contextUser.getUserId()));
 		}
 	}
 

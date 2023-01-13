@@ -53,8 +53,12 @@ public class ObjectFieldUtil {
 			ObjectField objectField, long userId)
 		throws Exception {
 
-		if (Validator.isNull(
-				objectField.getListTypeDefinitionExternalReferenceCode())) {
+		if (StringUtil.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+			StringUtil.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return 0;
 		}

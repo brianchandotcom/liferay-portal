@@ -65,9 +65,15 @@ public class JUnitTestResult extends BaseTestResult {
 		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
 			"div", null);
 
-		downstreamBuildListItemElement.add(
-			Dom4JUtil.getNewAnchorElement(
-				getTestReportURL(), getDisplayName()));
+		if (getStatus().equals("UNTESTED")) {
+			downstreamBuildListItemElement.addText(
+				getDisplayName() + " - UNTESTED");
+		}
+		else {
+			downstreamBuildListItemElement.add(
+				Dom4JUtil.getNewAnchorElement(
+					getTestReportURL(), getDisplayName()));
+		}
 
 		TestHistory testHistory = getTestHistory();
 

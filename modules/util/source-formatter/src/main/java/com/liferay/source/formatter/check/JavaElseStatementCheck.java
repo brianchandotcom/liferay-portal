@@ -168,42 +168,43 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 		String content, int closeCurlyBracePos, int x,
 		List<String> ifStatementCodeBlocks) {
 
-		if (closeCurlyBracePos != x) {
-			int openCurlyBracePos = content.indexOf(
-				StringPool.OPEN_CURLY_BRACE, closeCurlyBracePos);
-
-			if (openCurlyBracePos == -1) {
-				ifStatementCodeBlocks.clear();
-
-				return;
-			}
-
-			String statement = content.substring(
-				closeCurlyBracePos + 1, openCurlyBracePos);
-
-			statement = StringUtil.trim(statement);
-
-			if (!statement.startsWith("else if")) {
-				ifStatementCodeBlocks.clear();
-
-				return;
-			}
-
-			closeCurlyBracePos = _getCloseCurlyBracePos(
-				content, openCurlyBracePos);
-
-			if (closeCurlyBracePos == -1) {
-				ifStatementCodeBlocks.clear();
-
-				return;
-			}
-
-			ifStatementCodeBlocks.add(
-				content.substring(openCurlyBracePos, closeCurlyBracePos + 1));
-
-			_getElseIfStatementCodeBlock(
-				content, closeCurlyBracePos, x, ifStatementCodeBlocks);
+		if (closeCurlyBracePos == x) {
+			return;
 		}
+
+		int openCurlyBracePos = content.indexOf(
+			StringPool.OPEN_CURLY_BRACE, closeCurlyBracePos);
+
+		if (openCurlyBracePos == -1) {
+			ifStatementCodeBlocks.clear();
+
+			return;
+		}
+
+		String statement = content.substring(
+			closeCurlyBracePos + 1, openCurlyBracePos);
+
+		statement = StringUtil.trim(statement);
+
+		if (!statement.startsWith("else if")) {
+			ifStatementCodeBlocks.clear();
+
+			return;
+		}
+
+		closeCurlyBracePos = _getCloseCurlyBracePos(content, openCurlyBracePos);
+
+		if (closeCurlyBracePos == -1) {
+			ifStatementCodeBlocks.clear();
+
+			return;
+		}
+
+		ifStatementCodeBlocks.add(
+			content.substring(openCurlyBracePos, closeCurlyBracePos + 1));
+
+		_getElseIfStatementCodeBlock(
+			content, closeCurlyBracePos, x, ifStatementCodeBlocks);
 	}
 
 	private List<String> _getIfStatementCodeBlock(String content, int x) {

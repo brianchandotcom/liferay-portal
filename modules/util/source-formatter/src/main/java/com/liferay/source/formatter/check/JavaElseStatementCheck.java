@@ -42,7 +42,7 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 
 		Matcher matcher1 = _elseStatementPattern.matcher(javaTermContent);
 
-		outLoop:
+		outerLoop:
 		while (matcher1.find()) {
 			List<String> ifStatementCodeBlocks = _getIfStatementCodeBlock(
 				javaTermContent, matcher1.start());
@@ -78,7 +78,7 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 				}
 
 				if (!hasExit) {
-					continue outLoop;
+					continue outerLoop;
 				}
 			}
 

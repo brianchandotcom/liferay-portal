@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Jorge Ferrer
@@ -49,10 +48,8 @@ public class WebImage {
 		return StringPool.BLANK;
 	}
 
-	public Optional<InfoLocalizedValue<String>>
-		getAltInfoLocalizedValueOptional() {
-
-		return Optional.ofNullable(_altInfoLocalizedValue);
+	public InfoLocalizedValue<String> getAltInfoLocalizedValue() {
+		return _altInfoLocalizedValue;
 	}
 
 	public InfoItemReference getInfoItemReference() {

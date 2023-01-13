@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -49,6 +48,39 @@ public class FolderSearchFacetDisplayContextTest
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(String parameterValue)
+		throws Exception {
+
+		return createFacetDisplayContext(parameterValue, "count:desc");
+	}
+
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(
+			String parameterValue, String order)
+		throws Exception {
+
+		FolderSearchFacetDisplayContextBuilder
+			folderSearchFacetDisplayContextBuilder =
+				new FolderSearchFacetDisplayContextBuilder(
+					getRenderRequest(
+						FolderFacetPortletInstanceConfiguration.class));
+
+		folderSearchFacetDisplayContextBuilder.setFacet(_facet);
+		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(
+			_folderTitleLookup);
+		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
+		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
+		folderSearchFacetDisplayContextBuilder.setOrder(order);
+		folderSearchFacetDisplayContextBuilder.setParameterName(
+			_facet.getFieldId());
+		folderSearchFacetDisplayContextBuilder.setParameterValue(
+			parameterValue);
+
+		return folderSearchFacetDisplayContextBuilder.build();
+	}
+
 	@Before
 	public void setUp() {
 		Mockito.doReturn(
@@ -56,26 +88,6 @@ public class FolderSearchFacetDisplayContextTest
 		).when(
 			_facet
 		).getFacetCollector();
-	}
-
-	@Test
-	public void testEmptySearchResults() throws Exception {
-		String facetParam = null;
-
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			folderSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(folderSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertTrue(folderSearchFacetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -88,10 +100,10 @@ public class FolderSearchFacetDisplayContextTest
 			Collections.emptyList()
 		);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null);
 
-		Assert.assertTrue(folderSearchFacetDisplayContext.isRenderNothing());
+		Assert.assertTrue(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -103,11 +115,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		String facetParam = String.valueOf(folderId);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -123,9 +135,9 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam, folderSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(folderSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(folderSearchFacetDisplayContext.isRenderNothing());
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -138,10 +150,10 @@ public class FolderSearchFacetDisplayContextTest
 			Arrays.asList(new DefaultTermCollector("0", 200))
 		);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null);
 
-		Assert.assertTrue(folderSearchFacetDisplayContext.isRenderNothing());
+		Assert.assertTrue(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -157,11 +169,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		String facetParam = "";
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -177,9 +189,9 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam, folderSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(folderSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(folderSearchFacetDisplayContext.isRenderNothing());
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertTrue(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -195,11 +207,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		String facetParam = String.valueOf(folderId);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -215,9 +227,9 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam, folderSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(folderSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(folderSearchFacetDisplayContext.isRenderNothing());
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -228,11 +240,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		setUpTermCollectors(_facetCollector, termCollectors);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null, "count:asc");
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null, "count:asc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString = buildNameFrequencyString(
 			bucketDisplayContexts);
@@ -250,11 +262,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		setUpTermCollectors(_facetCollector, termCollectors);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null, "count:desc");
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null, "count:desc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString = buildNameFrequencyString(
 			bucketDisplayContexts);
@@ -271,11 +283,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		setUpTermCollectors(_facetCollector, termCollectors);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null, "key:asc");
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null, "key:asc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString = buildNameFrequencyString(
 			bucketDisplayContexts);
@@ -292,11 +304,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		setUpTermCollectors(_facetCollector, termCollectors);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null, "key:desc");
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null, "key:desc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString = buildNameFrequencyString(
 			bucketDisplayContexts);
@@ -316,11 +328,11 @@ public class FolderSearchFacetDisplayContextTest
 
 		setUpTermCollectors(_facetCollector, termCollectors);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			folderSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString = buildNameFrequencyString(
 			bucketDisplayContexts);
@@ -335,37 +347,6 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 21,
 			_getTotalBucketDisplayContextFrequencyCount(bucketDisplayContexts));
-	}
-
-	protected FolderSearchFacetDisplayContext createDisplayContext(
-			String facetParam)
-		throws Exception {
-
-		return createDisplayContext(facetParam, "count:desc");
-	}
-
-	protected FolderSearchFacetDisplayContext createDisplayContext(
-			String facetParam, String order)
-		throws Exception {
-
-		FolderSearchFacetDisplayContextBuilder
-			folderSearchFacetDisplayContextBuilder =
-				new FolderSearchFacetDisplayContextBuilder(
-					getRenderRequest(
-						FolderFacetPortletInstanceConfiguration.class));
-
-		folderSearchFacetDisplayContextBuilder.setFacet(_facet);
-		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(
-			_folderTitleLookup);
-		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
-		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
-		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
-		folderSearchFacetDisplayContextBuilder.setOrder(order);
-		folderSearchFacetDisplayContextBuilder.setParameterName(
-			_facet.getFieldId());
-		folderSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
-
-		return folderSearchFacetDisplayContextBuilder.build();
 	}
 
 	private void _addFolder(long folderId, String title) throws Exception {

@@ -74,6 +74,10 @@ public abstract class BaseFacetDisplayContextTestCase {
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
+		if (parameterValue == null) {
+			parameterValue = StringPool.BLANK;
+		}
+
 		Assert.assertEquals(
 			parameterValue, facetDisplayContext.getParameterValue());
 		Assert.assertTrue(facetDisplayContext.isNothingSelected());

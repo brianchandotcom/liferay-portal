@@ -45,6 +45,43 @@ public class AssetTagsSearchFacetDisplayContextTest
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(String parameterValue)
+		throws ConfigurationException {
+
+		return createFacetDisplayContext(parameterValue, "count:desc");
+	}
+
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(
+			String parameterValue, String order)
+		throws ConfigurationException {
+
+		AssetTagsSearchFacetDisplayContextBuilder
+			assetTagsSearchFacetDisplayContextBuilder =
+				new AssetTagsSearchFacetDisplayContextBuilder(
+					getRenderRequest(
+						TagFacetPortletInstanceConfiguration.class));
+
+		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
+		assetTagsSearchFacetDisplayContextBuilder.setFacet(_facet);
+		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
+		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		assetTagsSearchFacetDisplayContextBuilder.setMaxTerms(0);
+		assetTagsSearchFacetDisplayContextBuilder.setOrder(order);
+		assetTagsSearchFacetDisplayContextBuilder.setParameterName(
+			_facet.getFieldId());
+		assetTagsSearchFacetDisplayContextBuilder.setParameterValue(
+			parameterValue);
+
+		return assetTagsSearchFacetDisplayContextBuilder.build();
+	}
+
+	@Override
+	public String getParameterValue() {
+		return "";
+	}
+
 	@Before
 	public void setUp() {
 		Mockito.doReturn(
@@ -55,36 +92,16 @@ public class AssetTagsSearchFacetDisplayContextTest
 	}
 
 	@Test
-	public void testEmptySearchResults() throws Exception {
-		String facetParam = "";
-
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			facetParam, assetTagsSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(
-			assetTagsSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertTrue(assetTagsSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
 	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
 		String term = RandomTestUtil.randomString();
 
 		String facetParam = term;
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -99,11 +116,9 @@ public class AssetTagsSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam, assetTagsSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(
-			assetTagsSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(
-			assetTagsSearchFacetDisplayContext.isRenderNothing());
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -115,11 +130,11 @@ public class AssetTagsSearchFacetDisplayContextTest
 
 		String facetParam = StringPool.BLANK;
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -134,11 +149,9 @@ public class AssetTagsSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam, assetTagsSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(
-			assetTagsSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(
-			assetTagsSearchFacetDisplayContext.isRenderNothing());
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertTrue(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -150,11 +163,11 @@ public class AssetTagsSearchFacetDisplayContextTest
 
 		String facetParam = term;
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
-			createDisplayContext(facetParam);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -169,11 +182,9 @@ public class AssetTagsSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam, assetTagsSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(
-			assetTagsSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(
-			assetTagsSearchFacetDisplayContext.isRenderNothing());
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -204,36 +215,6 @@ public class AssetTagsSearchFacetDisplayContextTest
 			"key:desc", new String[] {"bravo", "alpha", "alpha", "charlie"});
 	}
 
-	protected AssetTagsSearchFacetDisplayContext createDisplayContext(
-			String facetParam)
-		throws Exception {
-
-		return createDisplayContext(facetParam, "count:desc");
-	}
-
-	protected AssetTagsSearchFacetDisplayContext createDisplayContext(
-			String facetParam, String order)
-		throws ConfigurationException {
-
-		AssetTagsSearchFacetDisplayContextBuilder
-			assetTagsSearchFacetDisplayContextBuilder =
-				new AssetTagsSearchFacetDisplayContextBuilder(
-					getRenderRequest(
-						TagFacetPortletInstanceConfiguration.class));
-
-		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
-		assetTagsSearchFacetDisplayContextBuilder.setFacet(_facet);
-		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
-		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
-		assetTagsSearchFacetDisplayContextBuilder.setMaxTerms(0);
-		assetTagsSearchFacetDisplayContextBuilder.setOrder(order);
-		assetTagsSearchFacetDisplayContextBuilder.setParameterName(
-			_facet.getFieldId());
-		assetTagsSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
-
-		return assetTagsSearchFacetDisplayContextBuilder.build();
-	}
-
 	private void _testOrderBy(
 			String expected, int[] frequencies, String order, String[] terms)
 		throws Exception {
@@ -241,11 +222,11 @@ public class AssetTagsSearchFacetDisplayContextTest
 		setUpTermCollectors(
 			_facetCollector, getTermCollectors(terms, frequencies));
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
-			createDisplayContext(StringPool.BLANK, order);
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			StringPool.BLANK, order);
 
 		List<BucketDisplayContext> bucketDisplayContexts2 =
-			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
+			facetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString = buildNameFrequencyString(
 			bucketDisplayContexts2);

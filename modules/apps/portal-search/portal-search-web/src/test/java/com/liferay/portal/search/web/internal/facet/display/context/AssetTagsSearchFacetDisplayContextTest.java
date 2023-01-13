@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author André de Oliveira
  */
-public class AssetTagsSearchFacetDisplayContextTest {
+public class AssetTagsSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -110,7 +110,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, term, frequency);
 
 		String facetParam = StringPool.BLANK;
@@ -146,7 +146,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, term, frequency);
 
 		String facetParam = term;
@@ -219,7 +219,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		AssetTagsSearchFacetDisplayContextBuilder
 			assetTagsSearchFacetDisplayContextBuilder =
 				new AssetTagsSearchFacetDisplayContextBuilder(
-					BaseFacetDisplayContextTestCase.getRenderRequest(
+					getRenderRequest(
 						TagFacetPortletInstanceConfiguration.class));
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
@@ -239,9 +239,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			String expected, int[] frequencies, String order, String[] terms)
 		throws Exception {
 
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector,
-			BaseFacetDisplayContextTestCase.getTermCollectors(
+			getTermCollectors(
 				terms, frequencies));
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
@@ -251,7 +251,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts2);
 
 		Assert.assertEquals(

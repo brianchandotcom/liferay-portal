@@ -42,7 +42,7 @@ import org.mockito.Mockito;
 /**
  * @author André de Oliveira
  */
-public class ScopeSearchFacetDisplayContextTest {
+public class ScopeSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -120,7 +120,7 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = "0";
@@ -159,7 +159,7 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = String.valueOf(groupId);
@@ -233,7 +233,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		ScopeSearchFacetDisplayContextBuilder
 			scopeSearchFacetDisplayContextBuilder =
 				new ScopeSearchFacetDisplayContextBuilder(
-					BaseFacetDisplayContextTestCase.getRenderRequest(
+					getRenderRequest(
 						SiteFacetPortletInstanceConfiguration.class));
 
 		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
@@ -286,7 +286,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			_addGroup(i, groupNames[i - 1]);
 
 			termCollectors.add(
-				BaseFacetDisplayContextTestCase.createTermCollector(
+				createTermCollector(
 					String.valueOf(i), frequencies[i - 1]));
 		}
 
@@ -298,7 +298,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			String order)
 		throws Exception {
 
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector, _getTermCollectors(groupNames, frequencies));
 
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
@@ -308,7 +308,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(

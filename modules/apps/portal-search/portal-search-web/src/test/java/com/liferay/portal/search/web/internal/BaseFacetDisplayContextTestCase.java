@@ -40,7 +40,7 @@ import org.mockito.Mockito;
  */
 public abstract class BaseFacetDisplayContextTestCase {
 
-	public static String buildNameFrequencyString(
+	protected static String buildNameFrequencyString(
 		List<BucketDisplayContext> bucketDisplayContexts) {
 
 		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
@@ -59,7 +59,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return sb.toString();
 	}
 
-	public static TermCollector createTermCollector(
+	protected static TermCollector createTermCollector(
 		String term, int frequency) {
 
 		TermCollector termCollector = Mockito.mock(TermCollector.class);
@@ -79,7 +79,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return termCollector;
 	}
 
-	public static HttpServletRequest getHttpServletRequest()
+	protected static HttpServletRequest getHttpServletRequest()
 		throws ConfigurationException {
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
@@ -97,7 +97,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return httpServletRequest;
 	}
 
-	public static PortletDisplay getPortletDisplay(
+	protected static PortletDisplay getPortletDisplay(
 			Class<?> facetPortletConfiguration)
 		throws ConfigurationException {
 
@@ -114,7 +114,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return portletDisplay;
 	}
 
-	public static RenderRequest getRenderRequest(
+	protected static RenderRequest getRenderRequest(
 			Class<?> facetPortletConfiguration)
 		throws ConfigurationException {
 
@@ -132,7 +132,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return renderRequest;
 	}
 
-	public static List<TermCollector> getTermCollectors(
+	protected static List<TermCollector> getTermCollectors(
 		String[] terms, int[] frequencies) {
 
 		List<TermCollector> termCollectors = new ArrayList<>();
@@ -146,7 +146,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return termCollectors;
 	}
 
-	public static ThemeDisplay getThemeDisplay(
+	protected static ThemeDisplay getThemeDisplay(
 			Class<?> facetPortletConfiguration)
 		throws ConfigurationException {
 
@@ -162,7 +162,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return themeDisplay;
 	}
 
-	public static void setUpTermCollector(
+	protected static void setUpTermCollector(
 		FacetCollector facetCollector, String term, int frequency) {
 
 		Mockito.doReturn(
@@ -174,7 +174,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 		).getTermCollectors();
 	}
 
-	public static void setUpTermCollectors(
+	protected static void setUpTermCollectors(
 		FacetCollector facetCollector, List<TermCollector> termCollectors) {
 
 		Mockito.doReturn(

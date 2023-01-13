@@ -41,7 +41,7 @@ import org.mockito.Mockito;
 /**
  * @author Lino Alves
  */
-public class FolderSearchFacetDisplayContextTest {
+public class FolderSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -152,7 +152,7 @@ public class FolderSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, String.valueOf(folderId), count);
 
 		String facetParam = "";
@@ -191,7 +191,7 @@ public class FolderSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, String.valueOf(folderId), count);
 
 		String facetParam = String.valueOf(folderId);
@@ -227,7 +227,7 @@ public class FolderSearchFacetDisplayContextTest {
 			new String[] {"alpha", "charlie", "bravo", "delta"},
 			new int[] {4, 5, 5, 6});
 
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
@@ -237,7 +237,7 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -251,7 +251,7 @@ public class FolderSearchFacetDisplayContextTest {
 			new String[] {"alpha", "charlie", "bravo", "delta"},
 			new int[] {4, 5, 5, 6});
 
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
@@ -261,7 +261,7 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -274,7 +274,7 @@ public class FolderSearchFacetDisplayContextTest {
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
 			"zeroFolderId", "alpha", "bravo", "charlie", "bravo");
 
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
@@ -284,7 +284,7 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -297,7 +297,7 @@ public class FolderSearchFacetDisplayContextTest {
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
 			"zeroFolderId", "alpha", "bravo", "charlie", "bravo");
 
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
@@ -307,7 +307,7 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -323,7 +323,7 @@ public class FolderSearchFacetDisplayContextTest {
 			"zeroFolderId", null, "null", "", "   ", "assert", "volatile",
 			"alpha");
 
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector, termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
@@ -333,7 +333,7 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -362,7 +362,7 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContextBuilder
 			folderSearchFacetDisplayContextBuilder =
 				new FolderSearchFacetDisplayContextBuilder(
-					BaseFacetDisplayContextTestCase.getRenderRequest(
+					getRenderRequest(
 						FolderFacetPortletInstanceConfiguration.class));
 
 		folderSearchFacetDisplayContextBuilder.setFacet(_facet);
@@ -403,7 +403,7 @@ public class FolderSearchFacetDisplayContextTest {
 			int frequency = folderId + 1;
 
 			termCollectors.add(
-				BaseFacetDisplayContextTestCase.createTermCollector(
+				createTermCollector(
 					String.valueOf(folderId), frequency));
 
 			folderId++;
@@ -422,7 +422,7 @@ public class FolderSearchFacetDisplayContextTest {
 			_addFolder(i, folderNames[i - 1]);
 
 			termCollectors.add(
-				BaseFacetDisplayContextTestCase.createTermCollector(
+				createTermCollector(
 					String.valueOf(i), frequencies[i - 1]));
 		}
 

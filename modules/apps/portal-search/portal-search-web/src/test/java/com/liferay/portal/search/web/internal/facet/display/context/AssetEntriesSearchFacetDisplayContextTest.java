@@ -41,7 +41,7 @@ import org.mockito.Mockito;
 /**
  * @author Gustavo Lima
  */
-public class AssetEntriesSearchFacetDisplayContextTest {
+public class AssetEntriesSearchFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -77,7 +77,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -106,7 +106,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -131,7 +131,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -155,7 +155,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext1.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -170,7 +170,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 		AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetDisplayContextBuilder =
 				new AssetEntriesSearchFacetDisplayContextBuilder(
-					BaseFacetDisplayContextTestCase.getRenderRequest(
+					getRenderRequest(
 						TypeFacetPortletInstanceConfiguration.class));
 
 		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(classNames);
@@ -213,7 +213,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		for (String term : terms) {
 			Mockito.doReturn(
-				BaseFacetDisplayContextTestCase.createTermCollector(
+				createTermCollector(
 					term, frequency)
 			).when(
 				facetCollector

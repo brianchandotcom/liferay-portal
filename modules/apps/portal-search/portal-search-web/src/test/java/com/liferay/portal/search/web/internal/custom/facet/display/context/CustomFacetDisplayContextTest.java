@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class CustomFacetDisplayContextTest {
+public class CustomFacetDisplayContextTest extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -111,7 +111,7 @@ public class CustomFacetDisplayContextTest {
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, fieldName, count);
 
 		String parameterValue = "";
@@ -146,7 +146,7 @@ public class CustomFacetDisplayContextTest {
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		BaseFacetDisplayContextTestCase.setUpTermCollector(
+		setUpTermCollector(
 			_facetCollector, fieldName, count);
 
 		String parameterValue = fieldName;
@@ -178,9 +178,9 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector,
-			BaseFacetDisplayContextTestCase.getTermCollectors(
+			getTermCollectors(
 				new String[] {"alpha", "delta", "bravo", "charlie"},
 				new int[] {4, 5, 5, 6}));
 
@@ -190,7 +190,7 @@ public class CustomFacetDisplayContextTest {
 				"count:asc");
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -199,9 +199,9 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector,
-			BaseFacetDisplayContextTestCase.getTermCollectors(
+			getTermCollectors(
 				new String[] {"alpha", "delta", "bravo", "charlie"},
 				new int[] {4, 5, 5, 6}));
 
@@ -211,7 +211,7 @@ public class CustomFacetDisplayContextTest {
 				"count:desc");
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -220,9 +220,9 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector,
-			BaseFacetDisplayContextTestCase.getTermCollectors(
+			getTermCollectors(
 				new String[] {"bravo", "alpha", "bravo", "charlie"},
 				new int[] {4, 5, 5, 6}));
 
@@ -232,7 +232,7 @@ public class CustomFacetDisplayContextTest {
 				"key:asc");
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -241,9 +241,9 @@ public class CustomFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		BaseFacetDisplayContextTestCase.setUpTermCollectors(
+		setUpTermCollectors(
 			_facetCollector,
-			BaseFacetDisplayContextTestCase.getTermCollectors(
+			getTermCollectors(
 				new String[] {"bravo", "alpha", "bravo", "charlie"},
 				new int[] {3, 4, 5, 6}));
 
@@ -253,7 +253,7 @@ public class CustomFacetDisplayContextTest {
 				"key:desc");
 
 		String nameFrequencyString =
-			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
+			buildNameFrequencyString(
 				customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
@@ -277,7 +277,7 @@ public class CustomFacetDisplayContextTest {
 
 		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
 			new CustomFacetDisplayContextBuilder(
-				BaseFacetDisplayContextTestCase.getHttpServletRequest());
+				getHttpServletRequest());
 
 		customFacetDisplayContextBuilder.setFacet(_facet);
 		customFacetDisplayContextBuilder.setParameterName("custom");

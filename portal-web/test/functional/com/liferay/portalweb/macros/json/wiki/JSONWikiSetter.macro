@@ -23,6 +23,7 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
+			noSelenium = "${noSelenium}",
 			site = "${site}");
 
 		var nodeId = JSONWikiAPI._getNodeIdByName(

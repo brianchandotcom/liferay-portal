@@ -3,7 +3,9 @@ definition {
 	macro _curlDeleteByErc {
 		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
 
-		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "${groupName}",
+			site = "true");
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -28,7 +30,9 @@ definition {
 		else {
 			Variables.assertDefined(parameterList = "${groupName},${wikiPageErc},${wikiPageAttachementErc}");
 
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "${groupName}",
+				site = "true");
 
 			var api = "sites/${siteId}/wiki-pages/by-external-reference-code/${wikiPageErc}/wiki-page-attachments/by-external-reference-code/${wikiPageAttachementErc}";
 		}

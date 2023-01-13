@@ -248,7 +248,13 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var companyId = JSONCompany.getCompanyId(portalURL = "${portalURL}");
+		if (isSet(noSelenium)) {
+			var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = "${portalURL}");
+		}
+		else {
+			var companyId = JSONCompany.getCompanyId(portalURL = "${portalURL}");
+		}
+
 		var parentGroupId = JSONGroupSetter.setParentGroupId(
 			grandParentGroupName = "${grandParentGroupName}",
 			parentGroupName = "${parentGroupName}");

@@ -17,6 +17,7 @@ definition {
 		JSONWiki.deleteWikiPageById(wikiPageId = "${staticWikiPageId}");
 	}
 
+	@disable-webdriver = "true"
 	@priority = "4"
 	test CanDeleteAttachmentByExternalReferenceCode {
 		property portal.acceptance = "true";
@@ -37,10 +38,9 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "3"
 	test CanReturenErcWithGetSiteWikiPagesByErc {
-		property portal.acceptance = "true";
-
 		task ("When requesting getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode") {
 			var response = WikiPageAttachmentAPI.getWikiPageAttachments(
 				groupName = "Guest",
@@ -55,10 +55,9 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "3"
 	test CanReturenErcWithGetWikiPageAttachmentsByWikiPageId {
-		property portal.acceptance = "true";
-
 		task ("When requesting getWikiPageWikiPageAttachmentsPage") {
 			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageAttachementId = "${staticWikiPageAttachmentId}");
 		}
@@ -70,10 +69,9 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "3"
 	test CanReturenErcWithGetWikiPagesByWikiPageId {
-		property portal.acceptance = "true";
-
 		task ("When requesting getWikiPageAttachment") {
 			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageId = "${staticWikiPageId}");
 		}

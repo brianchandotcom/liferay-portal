@@ -55,6 +55,7 @@ definition {
 		var nodeId = JSONWikiSetter.setNodeId(
 			groupName = "${groupName}",
 			name = "${wikiNodeName}",
+			noSelenium = "${noSelenium}",
 			site = "${site}");
 
 		var response = JSONWikiAPI._addWikiPage(

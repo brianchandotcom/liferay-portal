@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -148,12 +148,12 @@ public class InfoFormUtil {
 		);
 
 		if (infoFieldType instanceof SelectInfoFieldType) {
-			List<SelectInfoFieldType.Option> options =
-				(List<SelectInfoFieldType.Option>)infoField.getAttribute(
-					SelectInfoFieldType.OPTIONS);
+			List<SelectInfoFieldType.Option> options = new ArrayList<>();
 
-			if (options == null) {
-				options = Collections.emptyList();
+			if (infoField.getAttribute(SelectInfoFieldType.OPTIONS) != null) {
+				options.addAll(
+					(List<SelectInfoFieldType.Option>)infoField.getAttribute(
+						SelectInfoFieldType.OPTIONS));
 			}
 
 			try {

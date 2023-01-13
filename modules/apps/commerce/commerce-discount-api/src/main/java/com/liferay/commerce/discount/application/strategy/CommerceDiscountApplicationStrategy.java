@@ -27,4 +27,6 @@ public interface CommerceDiscountApplicationStrategy {
 			BigDecimal commercePrice, BigDecimal[] commerceDiscountLevels)
 		throws PortalException;
 
+	public String getCommerceDiscountApplicationStrategyKey();
+
 }

@@ -26,10 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Alberti
  */
-@Component(
-	property = "commerce.discount.application.strategy.key=" + CommercePricingConstants.DISCOUNT_CHAIN_METHOD,
-	service = CommerceDiscountApplicationStrategy.class
-)
+@Component(service = CommerceDiscountApplicationStrategy.class)
 public class ChainCommerceDiscountApplicationStrategyImpl
 	implements CommerceDiscountApplicationStrategy {
 
@@ -56,6 +53,11 @@ public class ChainCommerceDiscountApplicationStrategyImpl
 		}
 
 		return discountedAmount;
+	}
+
+	@Override
+	public String getCommerceDiscountApplicationStrategyKey() {
+		return CommercePricingConstants.DISCOUNT_CHAIN_METHOD;
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);

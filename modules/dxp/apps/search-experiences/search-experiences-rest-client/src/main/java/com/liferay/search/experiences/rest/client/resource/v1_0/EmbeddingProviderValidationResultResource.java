@@ -14,10 +14,11 @@
 
 package com.liferay.search.experiences.rest.client.resource.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.TextEmbeddingProviderValidationResult;
+import com.liferay.search.experiences.rest.client.dto.v1_0.EmbeddingProviderConfiguration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.EmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.problem.Problem;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.TextEmbeddingProviderValidationResultSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.EmbeddingProviderValidationResultSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -32,18 +33,20 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface TextEmbeddingProviderValidationResultResource {
+public interface EmbeddingProviderValidationResultResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public TextEmbeddingProviderValidationResult
-			postTextEmbeddingValidateConfiguration(String string)
+	public EmbeddingProviderValidationResult
+			postTextEmbeddingValidateProviderConfiguration(
+				EmbeddingProviderConfiguration embeddingProviderConfiguration)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postTextEmbeddingValidateConfigurationHttpResponse(String string)
+			postTextEmbeddingValidateProviderConfigurationHttpResponse(
+				EmbeddingProviderConfiguration embeddingProviderConfiguration)
 		throws Exception;
 
 	public static class Builder {
@@ -55,8 +58,8 @@ public interface TextEmbeddingProviderValidationResultResource {
 			return this;
 		}
 
-		public TextEmbeddingProviderValidationResultResource build() {
-			return new TextEmbeddingProviderValidationResultResourceImpl(this);
+		public EmbeddingProviderValidationResultResource build() {
+			return new EmbeddingProviderValidationResultResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -122,15 +125,18 @@ public interface TextEmbeddingProviderValidationResultResource {
 
 	}
 
-	public static class TextEmbeddingProviderValidationResultResourceImpl
-		implements TextEmbeddingProviderValidationResultResource {
+	public static class EmbeddingProviderValidationResultResourceImpl
+		implements EmbeddingProviderValidationResultResource {
 
-		public TextEmbeddingProviderValidationResult
-				postTextEmbeddingValidateConfiguration(String string)
+		public EmbeddingProviderValidationResult
+				postTextEmbeddingValidateProviderConfiguration(
+					EmbeddingProviderConfiguration
+						embeddingProviderConfiguration)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTextEmbeddingValidateConfigurationHttpResponse(string);
+				postTextEmbeddingValidateProviderConfigurationHttpResponse(
+					embeddingProviderConfiguration);
 
 			String content = httpResponse.getContent();
 
@@ -158,8 +164,7 @@ public interface TextEmbeddingProviderValidationResultResource {
 			}
 
 			try {
-				return TextEmbeddingProviderValidationResultSerDes.toDTO(
-					content);
+				return EmbeddingProviderValidationResultSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -171,13 +176,15 @@ public interface TextEmbeddingProviderValidationResultResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postTextEmbeddingValidateConfigurationHttpResponse(
-					String string)
+				postTextEmbeddingValidateProviderConfigurationHttpResponse(
+					EmbeddingProviderConfiguration
+						embeddingProviderConfiguration)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(string.toString(), "application/json");
+			httpInvoker.body(
+				embeddingProviderConfiguration.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -201,7 +208,7 @@ public interface TextEmbeddingProviderValidationResultResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/search-experiences-rest/v1.0/text-embedding/validate-configuration");
+						"/o/search-experiences-rest/v1.0/text-embeddings/validate-provider-configuration");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -209,14 +216,12 @@ public interface TextEmbeddingProviderValidationResultResource {
 			return httpInvoker.invoke();
 		}
 
-		private TextEmbeddingProviderValidationResultResourceImpl(
-			Builder builder) {
-
+		private EmbeddingProviderValidationResultResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			TextEmbeddingProviderValidationResultResource.class.getName());
+			EmbeddingProviderValidationResultResource.class.getName());
 
 		private Builder _builder;
 

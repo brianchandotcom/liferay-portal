@@ -43,21 +43,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("TextEmbeddingProviderValidationResult")
+@GraphQLName("EmbeddingProviderValidationResult")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TextEmbeddingProviderValidationResult")
-public class TextEmbeddingProviderValidationResult implements Serializable {
+@XmlRootElement(name = "EmbeddingProviderValidationResult")
+public class EmbeddingProviderValidationResult implements Serializable {
 
-	public static TextEmbeddingProviderValidationResult toDTO(String json) {
+	public static EmbeddingProviderValidationResult toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			TextEmbeddingProviderValidationResult.class, json);
+			EmbeddingProviderValidationResult.class, json);
 	}
 
-	public static TextEmbeddingProviderValidationResult unsafeToDTO(
-		String json) {
-
+	public static EmbeddingProviderValidationResult unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			TextEmbeddingProviderValidationResult.class, json);
+			EmbeddingProviderValidationResult.class, json);
 	}
 
 	@Schema
@@ -122,16 +120,15 @@ public class TextEmbeddingProviderValidationResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof TextEmbeddingProviderValidationResult)) {
+		if (!(object instanceof EmbeddingProviderValidationResult)) {
 			return false;
 		}
 
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult =
-				(TextEmbeddingProviderValidationResult)object;
+		EmbeddingProviderValidationResult embeddingProviderValidationResult =
+			(EmbeddingProviderValidationResult)object;
 
 		return Objects.equals(
-			toString(), textEmbeddingProviderValidationResult.toString());
+			toString(), embeddingProviderValidationResult.toString());
 	}
 
 	@Override
@@ -177,7 +174,7 @@ public class TextEmbeddingProviderValidationResult implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.TextEmbeddingProviderValidationResult",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderValidationResult",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -42,12 +42,12 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.search.experiences.rest.client.dto.v1_0.EmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Field;
-import com.liferay.search.experiences.rest.client.dto.v1_0.TextEmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
-import com.liferay.search.experiences.rest.client.resource.v1_0.TextEmbeddingProviderValidationResultResource;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.TextEmbeddingProviderValidationResultSerDes;
+import com.liferay.search.experiences.rest.client.resource.v1_0.EmbeddingProviderValidationResultResource;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.EmbeddingProviderValidationResultSerDes;
 
 import java.lang.reflect.Method;
 
@@ -82,8 +82,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class
-	BaseTextEmbeddingProviderValidationResultResourceTestCase {
+public abstract class BaseEmbeddingProviderValidationResultResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -104,13 +103,13 @@ public abstract class
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_textEmbeddingProviderValidationResultResource.setContextCompany(
+		_embeddingProviderValidationResultResource.setContextCompany(
 			testCompany);
 
-		TextEmbeddingProviderValidationResultResource.Builder builder =
-			TextEmbeddingProviderValidationResultResource.builder();
+		EmbeddingProviderValidationResultResource.Builder builder =
+			EmbeddingProviderValidationResultResource.builder();
 
-		textEmbeddingProviderValidationResultResource = builder.authentication(
+		embeddingProviderValidationResultResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -141,21 +140,19 @@ public abstract class
 			}
 		};
 
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult1 =
-				randomTextEmbeddingProviderValidationResult();
+		EmbeddingProviderValidationResult embeddingProviderValidationResult1 =
+			randomEmbeddingProviderValidationResult();
 
 		String json = objectMapper.writeValueAsString(
-			textEmbeddingProviderValidationResult1);
+			embeddingProviderValidationResult1);
 
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult2 =
-				TextEmbeddingProviderValidationResultSerDes.toDTO(json);
+		EmbeddingProviderValidationResult embeddingProviderValidationResult2 =
+			EmbeddingProviderValidationResultSerDes.toDTO(json);
 
 		Assert.assertTrue(
 			equals(
-				textEmbeddingProviderValidationResult1,
-				textEmbeddingProviderValidationResult2));
+				embeddingProviderValidationResult1,
+				embeddingProviderValidationResult2));
 	}
 
 	@Test
@@ -175,14 +172,13 @@ public abstract class
 			}
 		};
 
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult =
-				randomTextEmbeddingProviderValidationResult();
+		EmbeddingProviderValidationResult embeddingProviderValidationResult =
+			randomEmbeddingProviderValidationResult();
 
 		String json1 = objectMapper.writeValueAsString(
-			textEmbeddingProviderValidationResult);
-		String json2 = TextEmbeddingProviderValidationResultSerDes.toJSON(
-			textEmbeddingProviderValidationResult);
+			embeddingProviderValidationResult);
+		String json2 = EmbeddingProviderValidationResultSerDes.toJSON(
+			embeddingProviderValidationResult);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -192,45 +188,46 @@ public abstract class
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult =
-				randomTextEmbeddingProviderValidationResult();
+		EmbeddingProviderValidationResult embeddingProviderValidationResult =
+			randomEmbeddingProviderValidationResult();
 
-		textEmbeddingProviderValidationResult.setErrorMessage(regex);
+		embeddingProviderValidationResult.setErrorMessage(regex);
 
-		String json = TextEmbeddingProviderValidationResultSerDes.toJSON(
-			textEmbeddingProviderValidationResult);
+		String json = EmbeddingProviderValidationResultSerDes.toJSON(
+			embeddingProviderValidationResult);
 
 		Assert.assertFalse(json.contains(regex));
 
-		textEmbeddingProviderValidationResult =
-			TextEmbeddingProviderValidationResultSerDes.toDTO(json);
+		embeddingProviderValidationResult =
+			EmbeddingProviderValidationResultSerDes.toDTO(json);
 
 		Assert.assertEquals(
-			regex, textEmbeddingProviderValidationResult.getErrorMessage());
+			regex, embeddingProviderValidationResult.getErrorMessage());
 	}
 
 	@Test
-	public void testPostTextEmbeddingValidateConfiguration() throws Exception {
-		TextEmbeddingProviderValidationResult
-			randomTextEmbeddingProviderValidationResult =
-				randomTextEmbeddingProviderValidationResult();
+	public void testPostTextEmbeddingValidateProviderConfiguration()
+		throws Exception {
 
-		TextEmbeddingProviderValidationResult
-			postTextEmbeddingProviderValidationResult =
-				testPostTextEmbeddingValidateConfiguration_addTextEmbeddingProviderValidationResult(
-					randomTextEmbeddingProviderValidationResult);
+		EmbeddingProviderValidationResult
+			randomEmbeddingProviderValidationResult =
+				randomEmbeddingProviderValidationResult();
+
+		EmbeddingProviderValidationResult
+			postEmbeddingProviderValidationResult =
+				testPostTextEmbeddingValidateProviderConfiguration_addEmbeddingProviderValidationResult(
+					randomEmbeddingProviderValidationResult);
 
 		assertEquals(
-			randomTextEmbeddingProviderValidationResult,
-			postTextEmbeddingProviderValidationResult);
-		assertValid(postTextEmbeddingProviderValidationResult);
+			randomEmbeddingProviderValidationResult,
+			postEmbeddingProviderValidationResult);
+		assertValid(postEmbeddingProviderValidationResult);
 	}
 
-	protected TextEmbeddingProviderValidationResult
-			testPostTextEmbeddingValidateConfiguration_addTextEmbeddingProviderValidationResult(
-				TextEmbeddingProviderValidationResult
-					textEmbeddingProviderValidationResult)
+	protected EmbeddingProviderValidationResult
+			testPostTextEmbeddingValidateProviderConfiguration_addEmbeddingProviderValidationResult(
+				EmbeddingProviderValidationResult
+					embeddingProviderValidationResult)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -238,17 +235,16 @@ public abstract class
 	}
 
 	protected void assertContains(
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult,
-		List<TextEmbeddingProviderValidationResult>
-			textEmbeddingProviderValidationResults) {
+		EmbeddingProviderValidationResult embeddingProviderValidationResult,
+		List<EmbeddingProviderValidationResult>
+			embeddingProviderValidationResults) {
 
 		boolean contains = false;
 
-		for (TextEmbeddingProviderValidationResult item :
-				textEmbeddingProviderValidationResults) {
+		for (EmbeddingProviderValidationResult item :
+				embeddingProviderValidationResults) {
 
-			if (equals(textEmbeddingProviderValidationResult, item)) {
+			if (equals(embeddingProviderValidationResult, item)) {
 				contains = true;
 
 				break;
@@ -256,8 +252,8 @@ public abstract class
 		}
 
 		Assert.assertTrue(
-			textEmbeddingProviderValidationResults + " does not contain " +
-				textEmbeddingProviderValidationResult,
+			embeddingProviderValidationResults + " does not contain " +
+				embeddingProviderValidationResult,
 			contains);
 	}
 
@@ -270,68 +266,64 @@ public abstract class
 	}
 
 	protected void assertEquals(
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult1,
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult2) {
+		EmbeddingProviderValidationResult embeddingProviderValidationResult1,
+		EmbeddingProviderValidationResult embeddingProviderValidationResult2) {
 
 		Assert.assertTrue(
-			textEmbeddingProviderValidationResult1 + " does not equal " +
-				textEmbeddingProviderValidationResult2,
+			embeddingProviderValidationResult1 + " does not equal " +
+				embeddingProviderValidationResult2,
 			equals(
-				textEmbeddingProviderValidationResult1,
-				textEmbeddingProviderValidationResult2));
+				embeddingProviderValidationResult1,
+				embeddingProviderValidationResult2));
 	}
 
 	protected void assertEquals(
-		List<TextEmbeddingProviderValidationResult>
-			textEmbeddingProviderValidationResults1,
-		List<TextEmbeddingProviderValidationResult>
-			textEmbeddingProviderValidationResults2) {
+		List<EmbeddingProviderValidationResult>
+			embeddingProviderValidationResults1,
+		List<EmbeddingProviderValidationResult>
+			embeddingProviderValidationResults2) {
 
 		Assert.assertEquals(
-			textEmbeddingProviderValidationResults1.size(),
-			textEmbeddingProviderValidationResults2.size());
+			embeddingProviderValidationResults1.size(),
+			embeddingProviderValidationResults2.size());
 
-		for (int i = 0; i < textEmbeddingProviderValidationResults1.size();
-			 i++) {
-
-			TextEmbeddingProviderValidationResult
-				textEmbeddingProviderValidationResult1 =
-					textEmbeddingProviderValidationResults1.get(i);
-			TextEmbeddingProviderValidationResult
-				textEmbeddingProviderValidationResult2 =
-					textEmbeddingProviderValidationResults2.get(i);
+		for (int i = 0; i < embeddingProviderValidationResults1.size(); i++) {
+			EmbeddingProviderValidationResult
+				embeddingProviderValidationResult1 =
+					embeddingProviderValidationResults1.get(i);
+			EmbeddingProviderValidationResult
+				embeddingProviderValidationResult2 =
+					embeddingProviderValidationResults2.get(i);
 
 			assertEquals(
-				textEmbeddingProviderValidationResult1,
-				textEmbeddingProviderValidationResult2);
+				embeddingProviderValidationResult1,
+				embeddingProviderValidationResult2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<TextEmbeddingProviderValidationResult>
-			textEmbeddingProviderValidationResults1,
-		List<TextEmbeddingProviderValidationResult>
-			textEmbeddingProviderValidationResults2) {
+		List<EmbeddingProviderValidationResult>
+			embeddingProviderValidationResults1,
+		List<EmbeddingProviderValidationResult>
+			embeddingProviderValidationResults2) {
 
 		Assert.assertEquals(
-			textEmbeddingProviderValidationResults1.size(),
-			textEmbeddingProviderValidationResults2.size());
+			embeddingProviderValidationResults1.size(),
+			embeddingProviderValidationResults2.size());
 
-		for (TextEmbeddingProviderValidationResult
-				textEmbeddingProviderValidationResult1 :
-					textEmbeddingProviderValidationResults1) {
+		for (EmbeddingProviderValidationResult
+				embeddingProviderValidationResult1 :
+					embeddingProviderValidationResults1) {
 
 			boolean contains = false;
 
-			for (TextEmbeddingProviderValidationResult
-					textEmbeddingProviderValidationResult2 :
-						textEmbeddingProviderValidationResults2) {
+			for (EmbeddingProviderValidationResult
+					embeddingProviderValidationResult2 :
+						embeddingProviderValidationResults2) {
 
 				if (equals(
-						textEmbeddingProviderValidationResult1,
-						textEmbeddingProviderValidationResult2)) {
+						embeddingProviderValidationResult1,
+						embeddingProviderValidationResult2)) {
 
 					contains = true;
 
@@ -340,15 +332,14 @@ public abstract class
 			}
 
 			Assert.assertTrue(
-				textEmbeddingProviderValidationResults2 + " does not contain " +
-					textEmbeddingProviderValidationResult1,
+				embeddingProviderValidationResults2 + " does not contain " +
+					embeddingProviderValidationResult1,
 				contains);
 		}
 	}
 
 	protected void assertValid(
-			TextEmbeddingProviderValidationResult
-				textEmbeddingProviderValidationResult)
+			EmbeddingProviderValidationResult embeddingProviderValidationResult)
 		throws Exception {
 
 		boolean valid = true;
@@ -357,7 +348,7 @@ public abstract class
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
-				if (textEmbeddingProviderValidationResult.getErrorMessage() ==
+				if (embeddingProviderValidationResult.getErrorMessage() ==
 						null) {
 
 					valid = false;
@@ -369,8 +360,8 @@ public abstract class
 			if (Objects.equals(
 					"expectedDimensions", additionalAssertFieldName)) {
 
-				if (textEmbeddingProviderValidationResult.
-						getExpectedDimensions() == null) {
+				if (embeddingProviderValidationResult.getExpectedDimensions() ==
+						null) {
 
 					valid = false;
 				}
@@ -386,15 +377,13 @@ public abstract class
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(
-		Page<TextEmbeddingProviderValidationResult> page) {
-
+	protected void assertValid(Page<EmbeddingProviderValidationResult> page) {
 		boolean valid = false;
 
-		java.util.Collection<TextEmbeddingProviderValidationResult>
-			textEmbeddingProviderValidationResults = page.getItems();
+		java.util.Collection<EmbeddingProviderValidationResult>
+			embeddingProviderValidationResults = page.getItems();
 
-		int size = textEmbeddingProviderValidationResults.size();
+		int size = embeddingProviderValidationResults.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -416,7 +405,7 @@ public abstract class
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.search.experiences.rest.dto.v1_0.
-						TextEmbeddingProviderValidationResult.class)) {
+						EmbeddingProviderValidationResult.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -465,13 +454,11 @@ public abstract class
 	}
 
 	protected boolean equals(
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult1,
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult2) {
+		EmbeddingProviderValidationResult embeddingProviderValidationResult1,
+		EmbeddingProviderValidationResult embeddingProviderValidationResult2) {
 
-		if (textEmbeddingProviderValidationResult1 ==
-				textEmbeddingProviderValidationResult2) {
+		if (embeddingProviderValidationResult1 ==
+				embeddingProviderValidationResult2) {
 
 			return true;
 		}
@@ -481,10 +468,8 @@ public abstract class
 
 			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						textEmbeddingProviderValidationResult1.
-							getErrorMessage(),
-						textEmbeddingProviderValidationResult2.
-							getErrorMessage())) {
+						embeddingProviderValidationResult1.getErrorMessage(),
+						embeddingProviderValidationResult2.getErrorMessage())) {
 
 					return false;
 				}
@@ -496,9 +481,9 @@ public abstract class
 					"expectedDimensions", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						textEmbeddingProviderValidationResult1.
+						embeddingProviderValidationResult1.
 							getExpectedDimensions(),
-						textEmbeddingProviderValidationResult2.
+						embeddingProviderValidationResult2.
 							getExpectedDimensions())) {
 
 					return false;
@@ -557,7 +542,7 @@ public abstract class
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_textEmbeddingProviderValidationResultResource instanceof
+		if (!(_embeddingProviderValidationResultResource instanceof
 				EntityModelResource)) {
 
 			throw new UnsupportedOperationException(
@@ -565,7 +550,7 @@ public abstract class
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_textEmbeddingProviderValidationResultResource;
+			(EntityModelResource)_embeddingProviderValidationResultResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -595,8 +580,7 @@ public abstract class
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult) {
+		EmbeddingProviderValidationResult embeddingProviderValidationResult) {
 
 		StringBundler sb = new StringBundler();
 
@@ -612,7 +596,7 @@ public abstract class
 			sb.append("'");
 			sb.append(
 				String.valueOf(
-					textEmbeddingProviderValidationResult.getErrorMessage()));
+					embeddingProviderValidationResult.getErrorMessage()));
 			sb.append("'");
 
 			return sb.toString();
@@ -621,8 +605,7 @@ public abstract class
 		if (entityFieldName.equals("expectedDimensions")) {
 			sb.append(
 				String.valueOf(
-					textEmbeddingProviderValidationResult.
-						getExpectedDimensions()));
+					embeddingProviderValidationResult.getExpectedDimensions()));
 
 			return sb.toString();
 		}
@@ -668,11 +651,11 @@ public abstract class
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected TextEmbeddingProviderValidationResult
-			randomTextEmbeddingProviderValidationResult()
+	protected EmbeddingProviderValidationResult
+			randomEmbeddingProviderValidationResult()
 		throws Exception {
 
-		return new TextEmbeddingProviderValidationResult() {
+		return new EmbeddingProviderValidationResult() {
 			{
 				errorMessage = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -681,26 +664,26 @@ public abstract class
 		};
 	}
 
-	protected TextEmbeddingProviderValidationResult
-			randomIrrelevantTextEmbeddingProviderValidationResult()
+	protected EmbeddingProviderValidationResult
+			randomIrrelevantEmbeddingProviderValidationResult()
 		throws Exception {
 
-		TextEmbeddingProviderValidationResult
-			randomIrrelevantTextEmbeddingProviderValidationResult =
-				randomTextEmbeddingProviderValidationResult();
+		EmbeddingProviderValidationResult
+			randomIrrelevantEmbeddingProviderValidationResult =
+				randomEmbeddingProviderValidationResult();
 
-		return randomIrrelevantTextEmbeddingProviderValidationResult;
+		return randomIrrelevantEmbeddingProviderValidationResult;
 	}
 
-	protected TextEmbeddingProviderValidationResult
-			randomPatchTextEmbeddingProviderValidationResult()
+	protected EmbeddingProviderValidationResult
+			randomPatchEmbeddingProviderValidationResult()
 		throws Exception {
 
-		return randomTextEmbeddingProviderValidationResult();
+		return randomEmbeddingProviderValidationResult();
 	}
 
-	protected TextEmbeddingProviderValidationResultResource
-		textEmbeddingProviderValidationResultResource;
+	protected EmbeddingProviderValidationResultResource
+		embeddingProviderValidationResultResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -887,13 +870,13 @@ public abstract class
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(
-			BaseTextEmbeddingProviderValidationResultResourceTestCase.class);
+			BaseEmbeddingProviderValidationResultResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
 	private com.liferay.search.experiences.rest.resource.v1_0.
-		TextEmbeddingProviderValidationResultResource
-			_textEmbeddingProviderValidationResultResource;
+		EmbeddingProviderValidationResultResource
+			_embeddingProviderValidationResultResource;
 
 }

@@ -24,7 +24,8 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.search.experiences.rest.dto.v1_0.TextEmbeddingProviderValidationResult;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderValidationResult;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,10 +51,11 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface TextEmbeddingProviderValidationResultResource {
+public interface EmbeddingProviderValidationResultResource {
 
-	public TextEmbeddingProviderValidationResult
-			postTextEmbeddingValidateConfiguration(String string)
+	public EmbeddingProviderValidationResult
+			postTextEmbeddingValidateProviderConfiguration(
+				EmbeddingProviderConfiguration embeddingProviderConfiguration)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -113,7 +115,7 @@ public interface TextEmbeddingProviderValidationResultResource {
 	@ProviderType
 	public interface Builder {
 
-		public TextEmbeddingProviderValidationResultResource build();
+		public EmbeddingProviderValidationResultResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

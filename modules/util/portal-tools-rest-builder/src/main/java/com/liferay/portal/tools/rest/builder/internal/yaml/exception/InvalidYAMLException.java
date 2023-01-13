@@ -16,8 +16,6 @@ package com.liferay.portal.tools.rest.builder.internal.yaml.exception;
 
 import com.liferay.petra.string.StringBundler;
 
-import java.util.Optional;
-
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
 
@@ -38,17 +36,16 @@ public class InvalidYAMLException extends IllegalArgumentException {
 		MarkedYAMLException markedYAMLException =
 			(MarkedYAMLException)throwable;
 
-		Optional<Mark> markOptional = Optional.ofNullable(
-			markedYAMLException.getProblemMark());
+		Mark mark = markedYAMLException.getProblemMark();
+
+		String markStr = "";
+
+		if (mark != null) {
+			markStr = mark.toString();
+		}
 
 		return StringBundler.concat(
-			"Invalid YAML",
-			markOptional.map(
-				Mark::toString
-			).orElse(
-				""
-			),
-			": ", markedYAMLException.getProblem());
+			"Invalid YAML", markStr, ": ", markedYAMLException.getProblem());
 	}
 
 }

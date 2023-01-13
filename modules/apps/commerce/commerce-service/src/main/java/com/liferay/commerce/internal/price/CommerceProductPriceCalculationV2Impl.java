@@ -45,13 +45,15 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
@@ -59,15 +61,13 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Riccardo Alberti
@@ -394,46 +394,33 @@ public class CommerceProductPriceCalculationV2Impl
 			cpInstanceId, quantity, commerceContext);
 	}
 
-	public void unsetCommerceDiscountApplicationStrategy(
-		CommerceDiscountApplicationStrategy
-			commerceDiscountApplicationStrategy) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_commerceDiscountApplicationStrategyServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, CommerceDiscountApplicationStrategy.class, null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(commerceDiscountApplicationStrategy, emitter) ->
+						emitter.emit(
+							commerceDiscountApplicationStrategy.
+								getCommerceDiscountApplicationStrategyKey())));
 
-		_commerceDiscountApplicationStrategyMap.remove(
-			commerceDiscountApplicationStrategy.
-				getCommerceDiscountApplicationStrategyKey());
+		_commercePriceListDiscoveryServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, CommercePriceListDiscovery.class, null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(commercePriceListDiscovery, emitter) -> emitter.emit(
+						commercePriceListDiscovery.
+							getCommercePriceListDiscoveryKey())));
 	}
 
-	public void unsetCommercePriceListDiscovery(
-		CommercePriceListDiscovery commercePriceListDiscovery) {
+	@Deactivate
+	protected void deactivate() {
+		_commerceDiscountApplicationStrategyServiceTrackerMap.close();
 
-		_commercePriceListDiscoveryMap.remove(commercePriceListDiscovery.getCommercePriceListDiscoveryKey());
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setCommerceDiscountApplicationStrategy(
-		CommerceDiscountApplicationStrategy
-			commerceDiscountApplicationStrategy) {
-
-		_commerceDiscountApplicationStrategyMap.put(
-			commerceDiscountApplicationStrategy.
-				getCommerceDiscountApplicationStrategyKey(),
-			commerceDiscountApplicationStrategy);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setCommercePriceListDiscovery(
-		CommercePriceListDiscovery commercePriceListDiscovery) {
-
-		_commercePriceListDiscoveryMap.put(
-			commercePriceListDiscovery.getCommercePriceListDiscoveryKey(), commercePriceListDiscovery);
+		_commercePriceListDiscoveryServiceTrackerMap.close();
 	}
 
 	private CommerceDiscountValue _calculateCommerceDiscountValue(
@@ -541,23 +528,23 @@ public class CommerceProductPriceCalculationV2Impl
 			_configurationProvider.getSystemConfiguration(
 				CommercePricingConfiguration.class);
 
-		String commerceDiscountApplicationStrategy =
+		String commerceDiscountApplicationStrategyKey =
 			commercePricingConfiguration.commerceDiscountApplicationStrategy();
 
-		if (!_commerceDiscountApplicationStrategyMap.containsKey(
-				commerceDiscountApplicationStrategy)) {
+		CommerceDiscountApplicationStrategy
+			commerceDiscountApplicationStrategy =
+				_commerceDiscountApplicationStrategyServiceTrackerMap.
+					getService(commerceDiscountApplicationStrategyKey);
 
+		if (commerceDiscountApplicationStrategy == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No commerce discount application strategy specified for " +
-						commerceDiscountApplicationStrategy);
+						commerceDiscountApplicationStrategyKey);
 			}
-
-			return null;
 		}
 
-		return _commerceDiscountApplicationStrategyMap.get(
-			commerceDiscountApplicationStrategy);
+		return commerceDiscountApplicationStrategy;
 	}
 
 	private CommerceDiscountValue _getCommerceDiscountValue(
@@ -877,17 +864,19 @@ public class CommerceProductPriceCalculationV2Impl
 				commercePricingConfiguration.commercePromotionDiscovery();
 		}
 
-		if (!_commercePriceListDiscoveryMap.containsKey(discoveryMethod)) {
+		CommercePriceListDiscovery commercePriceListDiscovery =
+			_commercePriceListDiscoveryServiceTrackerMap.getService(
+				discoveryMethod);
+
+		if (commercePriceListDiscovery == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No commerce price list discovery specified for " +
 						discoveryMethod);
 			}
-
-			return null;
 		}
 
-		return _commercePriceListDiscoveryMap.get(discoveryMethod);
+		return commercePriceListDiscovery;
 	}
 
 	private long _getCommercePriceListId(
@@ -1134,8 +1123,8 @@ public class CommerceProductPriceCalculationV2Impl
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
-	private final Map<String, CommerceDiscountApplicationStrategy>
-		_commerceDiscountApplicationStrategyMap = new HashMap<>();
+	private ServiceTrackerMap<String, CommerceDiscountApplicationStrategy>
+		_commerceDiscountApplicationStrategyServiceTrackerMap;
 
 	@Reference
 	private CommerceDiscountCalculation _commerceDiscountCalculation;
@@ -1143,8 +1132,8 @@ public class CommerceProductPriceCalculationV2Impl
 	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
-	private final Map<String, CommercePriceListDiscovery>
-		_commercePriceListDiscoveryMap = new HashMap<>();
+	private ServiceTrackerMap<String, CommercePriceListDiscovery>
+		_commercePriceListDiscoveryServiceTrackerMap;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

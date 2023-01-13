@@ -181,10 +181,8 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 			return;
 		}
 
-		String statement = content.substring(
-			closeCurlyBracePos + 1, openCurlyBracePos);
-
-		statement = StringUtil.trim(statement);
+		String statement = StringUtil.trim(
+			content.substring(closeCurlyBracePos + 1, openCurlyBracePos));
 
 		if (!statement.startsWith("else if")) {
 			ifStatementCodeBlocks.clear();

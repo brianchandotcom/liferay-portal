@@ -272,6 +272,16 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Portrait Phone viewport") {
+			PageEditor.clickManagementBar();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.clickConfigurableField(fragmentName = "Container");
+
+			SelectFrameTop();
+
+			Navigator.gotoNavTab(navTab = "Styles");
+
 			var fileSizePortraitPhone = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -433,6 +443,16 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Landscape Phone viewport") {
+			PageEditor.clickManagementBar();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.clickEditableField(
+				fragmentName = "Card",
+				id = "01-img");
+
+			SelectFrameTop();
+
 			var fileSizeLandscapePhone = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}

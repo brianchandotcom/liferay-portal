@@ -22,10 +22,14 @@ definition {
 		}
 
 		if (isSet(suggestionContributor)) {
-			Select(
+			Click(
 				key_suggestionContributorOrder = "${suggestionContributorOrder}",
-				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR",
-				value1 = "${suggestionContributor}");
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR");
+
+			Click(
+				key_suggestionContributor = "${suggestionContributor}",
+				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT");
 		}
 
 		if (isSet(suggestionContributorBlueprint)) {

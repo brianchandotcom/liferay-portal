@@ -104,7 +104,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PagesAdmin#PREVIEW_URL",
-			value1 = "${portalURL}/web/guest/hel%C3%B3");
+			value1 = "${portalURL}/web/guest/heló");
 	}
 
 	@description = "This ensures that the OG preview is inherited from the SEO."

@@ -3358,12 +3358,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		if (role == null) {
 			if (jsonObject.getInt("type") == RoleConstants.TYPE_ACCOUNT) {
+			com.liferay.account.model.AccountRole accountRole =
 				_accountRoleLocalService.addAccountRole(
 					serviceContext.getUserId(),
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
 					Collections.singletonMap(serviceContext.getLocale(), name),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("description")));
+
+			role = accountRole.getRole();
+
 			}
 			else {
 				role = _roleLocalService.addRole(
@@ -3378,7 +3382,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = jsonObject.getJSONArray("actions");
 
-		if (JSONUtil.isEmpty(jsonArray)) {
+		if (JSONUtil.isEmpty(jsonArray) && role == null) {
 			return;
 		}
 

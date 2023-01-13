@@ -1340,7 +1340,7 @@ public class BundleSiteInitializerTest {
 			group.getCompanyId(), "Test Role 2");
 
 		Assert.assertNotNull(role2);
-		Assert.assertEquals(1, role2.getType());
+		Assert.assertEquals(6, role2.getType());
 
 		_assertRolesAssignments(2, role2.getRoleId());
 

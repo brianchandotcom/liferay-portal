@@ -9,9 +9,10 @@
 	{
 		"actions": [
 		],
+		"description": "",
 		"name": "Test Role 2",
 		"scope": 1,
-		"type": 1
+		"type": 6
 	},
 	{
 		"actions": [

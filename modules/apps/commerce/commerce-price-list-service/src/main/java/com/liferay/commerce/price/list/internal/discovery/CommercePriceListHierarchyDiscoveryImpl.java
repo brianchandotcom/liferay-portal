@@ -34,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = "commerce.price.list.discovery.key=" + CommercePricingConstants.ORDER_BY_HIERARCHY,
-	service = CommercePriceListDiscovery.class
-)
+@Component(service = CommercePriceListDiscovery.class)
 public class CommercePriceListHierarchyDiscoveryImpl
 	implements CommercePriceListDiscovery {
 
@@ -285,6 +282,11 @@ public class CommercePriceListHierarchyDiscoveryImpl
 		}
 
 		return firstEligibleCommercePriceList;
+	}
+
+	@Override
+	public String getCommercePriceListDiscoveryKey() {
+		return CommercePricingConstants.ORDER_BY_HIERARCHY;
 	}
 
 	private CommercePriceList _getDefaultCommercePriceList(

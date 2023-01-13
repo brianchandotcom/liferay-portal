@@ -30,4 +30,6 @@ public interface CommercePriceListDiscovery {
 			long commerceOrderTypeId, String cpInstanceUuid, String type)
 		throws PortalException;
 
+	public String getCommercePriceListDiscoveryKey();
+
 }

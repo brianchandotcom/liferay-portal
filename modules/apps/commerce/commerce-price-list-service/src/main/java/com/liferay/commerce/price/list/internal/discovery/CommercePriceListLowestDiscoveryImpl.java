@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(
-	property = "commerce.price.list.discovery.key=" + CommercePricingConstants.ORDER_BY_LOWEST_ENTRY,
-	service = CommercePriceListDiscovery.class
-)
+@Component(service = CommercePriceListDiscovery.class)
 public class CommercePriceListLowestDiscoveryImpl
 	implements CommercePriceListDiscovery {
 
@@ -45,6 +42,11 @@ public class CommercePriceListLowestDiscoveryImpl
 			_commerceAccountHelper.getCommerceAccountGroupIds(
 				commerceAccountId),
 			commerceChannelId, commerceOrderTypeId, cpInstanceUuid, type);
+	}
+
+	@Override
+	public String getCommercePriceListDiscoveryKey() {
+		return CommercePricingConstants.ORDER_BY_LOWEST_ENTRY;
 	}
 
 	@Reference

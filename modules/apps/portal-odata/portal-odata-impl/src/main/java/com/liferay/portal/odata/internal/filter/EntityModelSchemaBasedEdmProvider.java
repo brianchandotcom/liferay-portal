@@ -54,12 +54,12 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		addSchema(
 			_createCsdlSchema(
 				_NAMESPACE, entityModel.getName(),
-				_createCsdlProperties(
-					_NAMESPACE, entityModel.getEntityFieldsMap()),
 				_createCsdlComplexTypes(
 					_NAMESPACE, entityModel.getEntityFieldsMap()),
 				_createCsdlNavigationProperties(
-					entityModel.getEntityRelationshipsMap())));
+					entityModel.getEntityRelationshipsMap()),
+				_createCsdlProperties(
+					_NAMESPACE, entityModel.getEntityFieldsMap())));
 	}
 
 	private CsdlProperty _createCollectionCsdlProperty(
@@ -149,14 +149,14 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private CsdlEntityType _createCsdlEntityType(
-		String name, List<CsdlProperty> csdlProperties,
-		List<CsdlNavigationProperty> csdlNavigationProperties) {
+		String name, List<CsdlNavigationProperty> csdlNavigationProperties,
+		List<CsdlProperty> csdlProperties) {
 
 		CsdlEntityType csdlEntityType = new CsdlEntityType();
 
 		csdlEntityType.setName(name);
-		csdlEntityType.setProperties(csdlProperties);
 		csdlEntityType.setNavigationProperties(csdlNavigationProperties);
+		csdlEntityType.setProperties(csdlProperties);
 
 		return csdlEntityType;
 	}
@@ -242,9 +242,9 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private CsdlSchema _createCsdlSchema(
-		String namespace, String name, List<CsdlProperty> csdlProperties,
-		List<CsdlComplexType> csdlComplexTypes,
-		List<CsdlNavigationProperty> csdlNavigationProperties) {
+		String namespace, String name, List<CsdlComplexType> csdlComplexTypes,
+		List<CsdlNavigationProperty> csdlNavigationProperties,
+		List<CsdlProperty> csdlProperties) {
 
 		CsdlSchema csdlSchema = new CsdlSchema();
 
@@ -254,7 +254,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		csdlSchema.setEntityTypes(
 			Collections.singletonList(
 				_createCsdlEntityType(
-					name, csdlProperties, csdlNavigationProperties)));
+					name, csdlNavigationProperties, csdlProperties)));
 		csdlSchema.setNamespace(namespace);
 
 		return csdlSchema;

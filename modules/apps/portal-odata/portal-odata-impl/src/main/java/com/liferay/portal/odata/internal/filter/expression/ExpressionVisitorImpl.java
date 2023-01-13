@@ -21,6 +21,7 @@ import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
 import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.NavigationPropertyExpression;
 import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
@@ -45,8 +46,10 @@ import org.apache.olingo.server.api.ODataApplicationException;
 import org.apache.olingo.server.api.uri.UriInfoResource;
 import org.apache.olingo.server.api.uri.UriResource;
 import org.apache.olingo.server.api.uri.UriResourceComplexProperty;
+import org.apache.olingo.server.api.uri.UriResourceCount;
 import org.apache.olingo.server.api.uri.UriResourceKind;
 import org.apache.olingo.server.api.uri.UriResourceLambdaAny;
+import org.apache.olingo.server.api.uri.UriResourceNavigation;
 import org.apache.olingo.server.api.uri.UriResourcePartTyped;
 import org.apache.olingo.server.api.uri.UriResourcePrimitiveProperty;
 import org.apache.olingo.server.api.uri.queryoption.expression.BinaryOperatorKind;
@@ -247,6 +250,12 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 					uriResources.subList(1, uriResources.size())));
 		}
 		else if ((uriResources.size() > 1) &&
+				 (uriResource instanceof UriResourceNavigation)) {
+
+			return new NavigationPropertyExpressionImpl(
+				uriResource.getSegmentValue(), _getType(uriResources.get(1)));
+		}
+		else if ((uriResources.size() > 1) &&
 				 (uriResource instanceof UriResourcePrimitiveProperty)) {
 
 			UriResource lambdaUriResource = uriResources.get(
@@ -318,6 +327,16 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		}
 
 		return Optional.empty();
+	}
+
+	private NavigationPropertyExpression.Type _getType(
+		UriResource uriResource) {
+
+		if (uriResource instanceof UriResourceCount) {
+			return NavigationPropertyExpression.Type.COUNT;
+		}
+
+		return NavigationPropertyExpression.Type.SIMPLE;
 	}
 
 }

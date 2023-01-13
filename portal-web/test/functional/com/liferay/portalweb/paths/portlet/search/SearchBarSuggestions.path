@@ -32,7 +32,12 @@
 </tr>
 <tr>
 	<td>SUGGESTION_CONTRIBUTOR</td>
-	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//select[contains(@aria-label,'Suggestion Contributor')]</td>
+	<td>xpath=(//button[contains(@aria-label,'Suggestion Contributor')])[${key_suggestionContributorOrder}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTRIBUTOR_SELECT</td>
+	<td>xpath=(//button[contains(@class,'dropdown-item') and contains(.,'${key_suggestionContributor}')])[${key_suggestionContributorOrder}]</td>
 	<td></td>
 </tr>
 <tr>

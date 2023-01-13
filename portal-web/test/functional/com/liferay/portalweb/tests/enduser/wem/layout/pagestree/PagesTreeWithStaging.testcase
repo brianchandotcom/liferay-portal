@@ -182,11 +182,11 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToUp(
 				locator1 = "//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')][normalize-space()='Test Widget Page']",
-				locator2 = "//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')][normalize-space()='Test Content Page']");
+				locator2 = "//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')][normalize-space()='Test Content Page*']");
 
 			var n = "1";
 
-			for (var pageName : list "Test Widget Page,Test Content Page") {
+			for (var pageName : list "Test Widget Page,Test Content Page*") {
 				AssertVisible(
 					key_index = "${n}",
 					key_pageName = "${pageName}",

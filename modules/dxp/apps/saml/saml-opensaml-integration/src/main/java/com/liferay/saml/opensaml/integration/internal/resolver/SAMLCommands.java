@@ -114,18 +114,6 @@ public interface SAMLCommands {
 					return null;
 				}
 
-				List<String> locations = new ArrayList<>();
-
-				for (SingleSignOnService singleSignOnService :
-						singleSignOnServices) {
-
-					if (!binding.equals(singleSignOnService.getBinding())) {
-						continue;
-					}
-
-					locations.add(singleSignOnService.getLocation());
-				}
-
 				return TransformUtil.transform(
 					ListUtil.filter(
 						singleSignOnServices,

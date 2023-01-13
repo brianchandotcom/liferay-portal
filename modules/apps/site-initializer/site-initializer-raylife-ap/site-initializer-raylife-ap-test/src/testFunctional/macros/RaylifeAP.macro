@@ -8,7 +8,7 @@ definition {
 			siteTemplateName = "Raylife AP");
 	}
 
-	macro assertFieldRequiredMessage{
+	macro assertFieldRequiredMessage {
 		AssertElementPresent(
 			key_field = "${field}",
 			locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");

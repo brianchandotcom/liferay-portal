@@ -58,7 +58,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 /**
  * @author Peter Shin
@@ -1040,21 +1039,21 @@ public class ResourceOpenAPIParser {
 		Set<Map.Entry<ResponseCode, Response>> responseEntrySet =
 			responses.entrySet();
 
-		Stream<Map.Entry<ResponseCode, Response>> responseEntryStream =
-			responseEntrySet.stream();
+		Response response = null;
 
-		Response response = responseEntryStream.filter(
-			responseEntry -> {
-				ResponseCode responseCode = responseEntry.getKey();
+		for (Map.Entry<ResponseCode, Response> responseEntry :
+				responseEntrySet) {
 
-				return responseCode.isDefaultResponse();
+			ResponseCode responseCode = responseEntry.getKey();
+
+			if (!responseCode.isDefaultResponse()) {
+				continue;
 			}
-		).findFirst(
-		).map(
-			Map.Entry::getValue
-		).orElse(
-			null
-		);
+
+			response = responseEntry.getValue();
+
+			break;
+		}
 
 		for (Map.Entry<ResponseCode, Response> entry : responses.entrySet()) {
 			ResponseCode responseCode = entry.getKey();

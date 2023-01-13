@@ -119,6 +119,46 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterObjectEntriesByRelatedObjectsUsingContainsOperatorInManyToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingContainsOperatorInBothSidesOfRelationship();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
+	public void testFilterObjectEntriesByRelatedObjectsUsingContainsOperatorInOneToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingContainsOperatorInBothSidesOfRelationship();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
 	public void testFilterObjectEntriesByRelatedObjectsUsingINOperatorInManyToManyRelationship()
 		throws Exception {
 
@@ -373,6 +413,45 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			expectedObjectFieldValue,
 			itemJSONObject.getString(expectedObjectFieldName));
+	}
+
+	private void _testFilterObjectEntriesByRelatedObjectsUsingContainsOperator(
+			String expectedObjectFieldName, String expectedObjectFieldValue,
+			ObjectDefinition objectDefinition, String relatedObjectFieldName,
+			String relatedObjectFieldValue)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			objectDefinition.getRESTContextPath(), "?filter=contains(",
+			_objectRelationship.getName(), StringPool.SLASH,
+			relatedObjectFieldName, StringPool.COMMA, StringPool.APOSTROPHE,
+			relatedObjectFieldValue, StringPool.APOSTROPHE,
+			StringPool.CLOSE_PARENTHESIS);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			expectedObjectFieldValue,
+			itemJSONObject.getString(expectedObjectFieldName));
+	}
+
+	private void _testFilterObjectEntriesByRelatedObjectsUsingContainsOperatorInBothSidesOfRelationship()
+		throws Exception {
+
+		_testFilterObjectEntriesByRelatedObjectsUsingContainsOperator(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, _objectDefinition1,
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingContainsOperator(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, _objectDefinition2,
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 	}
 
 	private void _testFilterObjectEntriesByRelatedObjectsUsingINOperator(

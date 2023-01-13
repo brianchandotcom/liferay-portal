@@ -18,7 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.wiki.web.internal.importer.MediaWikiImporter;
+import com.liferay.wiki.constants.WikiPageConstants;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -196,7 +196,7 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 			int imageEndPos = matcher1.start(2) + offset + originalLength - 4;
 
 			String image = StringBundler.concat(
-				"{{", MediaWikiImporter.SHARED_IMAGES_TITLE, "/",
+				"{{", WikiPageConstants.SHARED_IMAGES_TITLE, "/",
 				StringUtil.toLowerCase(
 					sb.substring(imageStartPos, imageEndPos)),
 				"}}");
@@ -211,7 +211,7 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 				matcher1.start(0) + originalLength + offset, image);
 
 			offset +=
-				MediaWikiImporter.SHARED_IMAGES_TITLE.length() - prefixLength -
+				WikiPageConstants.SHARED_IMAGES_TITLE.length() - prefixLength -
 					(imageLength - image.length());
 		}
 

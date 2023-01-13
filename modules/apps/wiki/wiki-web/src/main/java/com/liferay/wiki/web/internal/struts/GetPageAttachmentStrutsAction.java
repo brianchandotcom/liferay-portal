@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
+import com.liferay.wiki.constants.WikiPageConstants;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageService;
-import com.liferay.wiki.web.internal.importer.MediaWikiImporter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,14 +59,14 @@ public class GetPageAttachmentStrutsAction implements StrutsAction {
 				httpServletRequest, "fileName");
 
 			if (fileName.startsWith(
-					MediaWikiImporter.SHARED_IMAGES_TITLE + StringPool.SLASH)) {
+					WikiPageConstants.SHARED_IMAGES_TITLE + StringPool.SLASH)) {
 
 				String[] fileNameParts = fileName.split(
-					MediaWikiImporter.SHARED_IMAGES_TITLE + StringPool.SLASH);
+					WikiPageConstants.SHARED_IMAGES_TITLE + StringPool.SLASH);
 
 				fileName = fileNameParts[1];
 
-				title = MediaWikiImporter.SHARED_IMAGES_TITLE;
+				title = WikiPageConstants.SHARED_IMAGES_TITLE;
 			}
 
 			int status = ParamUtil.getInteger(

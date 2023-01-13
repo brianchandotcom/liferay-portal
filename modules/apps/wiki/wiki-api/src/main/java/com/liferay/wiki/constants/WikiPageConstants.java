@@ -27,6 +27,8 @@ public class WikiPageConstants {
 
 	public static final String REVERTED = "Reverted";
 
+	public static final String SHARED_IMAGES_TITLE = "SharedImages";
+
 	public static final double VERSION_DEFAULT = 1.0;
 
 }

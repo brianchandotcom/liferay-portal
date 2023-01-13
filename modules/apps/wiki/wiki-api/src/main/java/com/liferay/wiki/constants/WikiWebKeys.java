@@ -19,6 +19,14 @@ package com.liferay.wiki.constants;
  */
 public class WikiWebKeys {
 
+	public static final String OPTIONS_FRONT_PAGE = "OPTIONS_FRONT_PAGE";
+
+	public static final String OPTIONS_IMPORT_LATEST_VERSION =
+		"OPTIONS_IMPORT_LATEST_VERSION";
+
+	public static final String OPTIONS_STRICT_IMPORT_MODE =
+		"OPTIONS_STRICT_IMPORT_MODE";
+
 	public static final String SHOW_SIDEBAR_HEADER = "SHOW_SIDEBAR_HEADER";
 
 	public static final String WIKI_ENGINE_RENDERER = "WIKI_ENGINE_RENDERER";

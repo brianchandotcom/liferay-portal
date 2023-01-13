@@ -139,7 +139,7 @@ const MDFRequestForm = () => {
 		<PRMFormik
 			initialValues={
 				mdfRequestId
-					? getMDFRequestFromDTO(data as MDFRequestDTO, Status.DRAFT)
+					? getMDFRequestFromDTO(data as MDFRequestDTO)
 					: initialFormValues
 			}
 			onSubmit={(values, formikHelpers) =>

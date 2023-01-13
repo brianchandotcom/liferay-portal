@@ -20,6 +20,11 @@ interface AccountBrief {
 	name: string;
 }
 
+interface RoleBrief {
+	id: number;
+	name: string;
+}
+
 interface Telephone {
 	id: number;
 	phoneNumber: string;
@@ -35,6 +40,7 @@ interface UserAccount {
 	familyName: string;
 	givenName: string;
 	id: number;
+	roleBriefs: RoleBrief[];
 	userAccountContactInformation: UserAccountContactInformation;
 }
 

@@ -17,7 +17,7 @@ package com.liferay.object.rest.internal.manager.v1_0.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountRole;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -1288,58 +1288,27 @@ public class DefaultObjectEntryManagerImplTest {
 		_assertObjectEntriesSize(0);
 
 		// User should be able to view object entries for account entry 1
-		// because he has the Account Administrator role (i.e.
-		// com.liferay.portal.kernel.model.Role) that is scoped to
-		// account entries. See
-		// AddDefaultAccountRolesPortalInstanceLifecycleListener#
-		// portalInstanceRegistered.
+		// because he is a member of account entry 1
 
 		Assert.assertTrue(
 			AccountRoleConstants.isSharedRole(_accountAdministratorRole));
 
-		_assignAccountEntryRole(
-			accountEntry1, _accountAdministratorRole, _user);
-
-		_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
-
-		_assertObjectEntriesSize(1);
-
-		_removeResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
-
-		_assertObjectEntriesSize(0);
-
-		// User should be able to view object entries for account entry 2
-		// because he has an account role (i.e.
-		// com.liferay.account.model.AccountRole)
-
-		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			_user.getUserId(), accountEntry2.getAccountEntryId(),
-			RandomTestUtil.randomString(), Collections.emptyMap(),
-			Collections.emptyMap());
-
-		Assert.assertFalse(
-			AccountRoleConstants.isSharedRole(accountRole.getRole()));
-
-		_assignAccountEntryRole(accountEntry2, accountRole.getRole(), _user);
-
-		_addResourcePermission(ActionKeys.VIEW, accountRole.getRole());
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntry1.getAccountEntryId(), _user.getUserId());
 
 		_assertObjectEntriesSize(1);
 
-		_removeResourcePermission(ActionKeys.VIEW, accountRole.getRole());
+		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
+			accountEntryUserRel);
 
 		_assertObjectEntriesSize(0);
 
 		// User should be able to view object entries for account entry 1 and
-		// account entry 2 because he has the Account Manager role (i.e.
-		// com.liferay.portal.kernel.model.Role) that is scoped to
-		// organizations. See
-		// AddDefaultAccountRolesPortalInstanceLifecycleListener#
-		// portalInstanceRegistered.
+		// account entry 2 because he is a member of the organization that
+		// contains account entry 1 and account entry 2.
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
-
-		_addResourcePermission(ActionKeys.VIEW, _accountManagerRole);
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry1.getAccountEntryId(),
@@ -1350,7 +1319,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addUser();
 
-		_assignOrganizationRole(organization1, _accountManagerRole, _user);
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
 
 		_assertObjectEntriesSize(2);
 
@@ -1393,11 +1363,13 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addUser();
 
-		_assignOrganizationRole(organization1, _accountManagerRole, _user);
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
 
 		_assertObjectEntriesSize(1);
 
-		_assignOrganizationRole(suborganization2, _accountManagerRole, _user);
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), suborganization2.getOrganizationId());
 
 		_assertObjectEntriesSize(2);
 

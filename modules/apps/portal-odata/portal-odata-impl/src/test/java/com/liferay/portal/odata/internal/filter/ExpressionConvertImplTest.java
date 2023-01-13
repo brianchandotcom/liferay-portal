@@ -39,6 +39,7 @@ import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.NavigationPropertyExpression;
 import com.liferay.portal.odata.internal.filter.expression.BinaryExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.CollectionPropertyExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.LambdaFunctionExpressionImpl;
@@ -47,6 +48,7 @@ import com.liferay.portal.odata.internal.filter.expression.ListExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.MethodExpressionImpl;
+import com.liferay.portal.odata.internal.filter.expression.NavigationPropertyExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
 import com.liferay.portal.search.internal.query.NestedFieldQueryHelperImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -105,6 +107,22 @@ public class ExpressionConvertImplTest {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			fastDateFormatFactory);
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testConvertBinaryExpressionWithCount()
+		throws ExpressionVisitException {
+
+		BinaryExpression binaryExpression = new BinaryExpressionImpl(
+			new MemberExpressionImpl(
+				new NavigationPropertyExpressionImpl(
+					"EntityModelName",
+					NavigationPropertyExpression.Type.COUNT)),
+			BinaryExpression.Operation.GE,
+			new LiteralExpressionImpl("2", LiteralExpression.Type.INTEGER));
+
+		_expressionConvertImpl.convert(
+			binaryExpression, LocaleUtil.getDefault(), _entityModel);
 	}
 
 	@Test

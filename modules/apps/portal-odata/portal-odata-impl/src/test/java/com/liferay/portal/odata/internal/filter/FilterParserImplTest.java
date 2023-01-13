@@ -14,6 +14,7 @@
 
 package com.liferay.portal.odata.internal.filter;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
@@ -34,6 +35,7 @@ import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.NavigationPropertyExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -499,6 +501,35 @@ public class FilterParserImplTest {
 	}
 
 	@Test
+	public void testParseWithGtBinaryExpressionOnCount()
+		throws ExpressionVisitException {
+
+		BinaryExpression binaryExpression =
+			(BinaryExpression)_filterParserImpl.parse(
+				"EntityModelName/$count gt 2");
+
+		Assert.assertEquals(
+			BinaryExpression.Operation.GT, binaryExpression.getOperation());
+
+		MemberExpression memberExpression =
+			(MemberExpression)binaryExpression.getLeftOperationExpression();
+
+		NavigationPropertyExpression navigationPropertyExpression =
+			(NavigationPropertyExpression)memberExpression.getExpression();
+
+		Assert.assertEquals(
+			NavigationPropertyExpression.Type.COUNT,
+			navigationPropertyExpression.getType());
+		Assert.assertEquals(
+			"EntityModelName", navigationPropertyExpression.getName());
+
+		LiteralExpression literalExpression =
+			(LiteralExpression)binaryExpression.getRightOperationExpression();
+
+		Assert.assertEquals(String.valueOf(2), literalExpression.getText());
+	}
+
+	@Test
 	public void testParseWithINMethod() throws ExpressionVisitException {
 		Expression expression = _filterParserImpl.parse(
 			"fieldExternal in ('value1', 'value2', 'value3')");
@@ -814,6 +845,18 @@ public class FilterParserImplTest {
 						Collectors.toMap(
 							EntityField::getName, Function.identity())
 					);
+				}
+
+				@Override
+				public Map<String, EntityRelationship>
+					getEntityRelationshipsMap() {
+
+					return HashMapBuilder.put(
+						"EntityModelName",
+						new EntityRelationship(
+							this, "EntityModelName",
+							EntityRelationship.Type.COLLECTION)
+					).build();
 				}
 
 				@Override

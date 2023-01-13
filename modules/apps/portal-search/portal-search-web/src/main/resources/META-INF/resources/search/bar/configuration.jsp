@@ -129,8 +129,6 @@ String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPE
 								).put(
 									"isDXP", ReleaseInfo.isDXP()
 								).put(
-									"isSearchExperiencesSupported", searchBarPortletDisplayContext.isSearchExperiencesSupported()
-								).put(
 									"namespace", liferayPortletResponse.getNamespace()
 								).put(
 									"suggestionsContributorConfigurationName", PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_CONTRIBUTOR_CONFIGURATION)

@@ -89,8 +89,6 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 									).put(
 										"emptySearchEnabled", searchBarPortletDisplayContext.isEmptySearchEnabled()
 									).put(
-										"isSearchExperiencesSupported", searchBarPortletDisplayContext.isSearchExperiencesSupported()
-									).put(
 										"keywords", searchBarPortletDisplayContext.getKeywords()
 									).put(
 										"keywordsParameterName", searchBarPortletDisplayContext.getKeywordsParameterName()

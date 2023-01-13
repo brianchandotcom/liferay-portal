@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -75,8 +74,7 @@ public class SearchBarPortletDisplayContextFactory {
 	public SearchBarPortletDisplayContext create(
 		PortletPreferencesLookup portletPreferencesLookup,
 		PortletSharedSearchRequest portletSharedSearchRequest,
-		SearchBarPrecedenceHelper searchBarPrecedenceHelper,
-		SearchCapabilities searchCapabilities) {
+		SearchBarPrecedenceHelper searchBarPrecedenceHelper) {
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			new SearchBarPortletDisplayContext();
@@ -185,9 +183,6 @@ public class SearchBarPortletDisplayContextFactory {
 		if (searchBarPortletPreferences.isInvisible()) {
 			searchBarPortletDisplayContext.setRenderNothing(true);
 		}
-
-		searchBarPortletDisplayContext.setSearchExperiencesSupported(
-			searchCapabilities.isSearchExperiencesSupported());
 
 		SearchSuggestionsCompanyConfiguration
 			searchSuggestionsCompanyConfiguration =

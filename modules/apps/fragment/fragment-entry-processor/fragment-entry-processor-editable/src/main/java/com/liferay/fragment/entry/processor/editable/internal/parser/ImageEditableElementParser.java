@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,13 +89,10 @@ public class ImageEditableElementParser implements EditableElementParser {
 		else if (fieldValue instanceof WebImage) {
 			WebImage webImage = (WebImage)fieldValue;
 
-			Optional<InfoLocalizedValue<String>> altInfoLocalizedValueOptional =
-				webImage.getAltInfoLocalizedValueOptional();
+			InfoLocalizedValue<String> infoLocalizedValue =
+				webImage.getAltInfoLocalizedValue();
 
-			if (altInfoLocalizedValueOptional.isPresent()) {
-				InfoLocalizedValue<String> infoLocalizedValue =
-					altInfoLocalizedValueOptional.get();
-
+			if (infoLocalizedValue != null) {
 				alt = infoLocalizedValue.getValue(locale);
 			}
 

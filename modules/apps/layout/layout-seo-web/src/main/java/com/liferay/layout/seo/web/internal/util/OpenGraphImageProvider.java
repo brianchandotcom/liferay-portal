@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Alejandro Tardín
@@ -220,13 +219,11 @@ public class OpenGraphImageProvider {
 						return openGraphImageAlt;
 					}
 
-					Optional<InfoLocalizedValue<String>>
-						altInfoLocalizedValueOptional =
-							mappedWebImage.getAltInfoLocalizedValueOptional();
+					InfoLocalizedValue<String> altInfoLocalizedValue =
+						mappedWebImage.getAltInfoLocalizedValue();
 
-					return altInfoLocalizedValueOptional.map(
-						altInfoLocalizedValue -> altInfoLocalizedValue.getValue(
-							themeDisplay.getLocale()));
+					return altInfoLocalizedValue.getValue(
+						themeDisplay.getLocale());
 				}
 
 				@Override

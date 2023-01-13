@@ -64,7 +64,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -359,11 +358,8 @@ public class JournalArticleInfoItemFormProviderTest {
 		WebImage webImage = (WebImage)imageInfoFieldValue.getValue(
 			LocaleUtil.getDefault());
 
-		Optional<InfoLocalizedValue<String>> altInfoLocalizedValueOptional =
-			webImage.getAltInfoLocalizedValueOptional();
-
 		InfoLocalizedValue<String> altInfoLocalizedValue =
-			altInfoLocalizedValueOptional.get();
+			webImage.getAltInfoLocalizedValue();
 
 		Assert.assertEquals(
 			"alt text",

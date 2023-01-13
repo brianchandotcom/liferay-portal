@@ -32,6 +32,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -97,8 +98,9 @@ public class ObjectEntryOpenAPIResourceImpl
 			String propertyName = schemaEntry.getKey();
 			Schema propertySchema = schemaEntry.getValue();
 
-			if ((propertySchema == null) || propertySchema.getReadOnly() ||
-				propertySchema.getWriteOnly() ||
+			if ((propertySchema == null) ||
+				GetterUtil.getBoolean(propertySchema.getReadOnly()) ||
+				GetterUtil.getBoolean(propertySchema.getWriteOnly()) ||
 				propertyName.startsWith("x-")) {
 
 				continue;
@@ -108,9 +110,10 @@ public class ObjectEntryOpenAPIResourceImpl
 				propertyName,
 				Field.of(
 					propertySchema.getDescription(), propertyName,
-					propertySchema.getReadOnly(),
+					GetterUtil.getBoolean(propertySchema.getReadOnly()),
 					requiredPropertySchemaNames.contains(propertyName),
-					propertySchema.getType(), propertySchema.getWriteOnly()));
+					propertySchema.getType(),
+					GetterUtil.getBoolean(propertySchema.getWriteOnly())));
 		}
 
 		return fields;

@@ -120,7 +120,9 @@ public class FileWatcher implements Closeable {
 				}
 
 				List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
-				List<WatchEvent<Path>> watchEventsPath = new ArrayList<>();
+
+				List<CompletableFuture<Void>> completableFutures =
+					new ArrayList<>();
 
 				for (Path path : _paths) {
 					for (WatchEvent<?> watchEvent : watchEvents) {
@@ -133,23 +135,16 @@ public class FileWatcher implements Closeable {
 							continue;
 						}
 
-						watchEventsPath.add(watchEventPath);
+						completableFutures.add(
+							CompletableFuture.runAsync(
+								() -> _consumer.accept(watchEventPath),
+								notificationsExecutorService));
 					}
 				}
 
-				CompletableFuture[] completableFutures =
-					new CompletableFuture[watchEventsPath.size()];
-
-				for (int i = 0; i < completableFutures.length; i++) {
-					WatchEvent<Path> watchEventPath = watchEventsPath.get(i);
-
-					completableFutures[i] = CompletableFuture.runAsync(
-						() -> _consumer.accept(watchEventPath),
-						notificationsExecutorService);
-				}
-
 				CompletableFuture<Void> completableFuture =
-					CompletableFuture.allOf(completableFutures);
+					CompletableFuture.allOf(
+						completableFutures.toArray(new CompletableFuture[0]));
 
 				try {
 					completableFuture.get(

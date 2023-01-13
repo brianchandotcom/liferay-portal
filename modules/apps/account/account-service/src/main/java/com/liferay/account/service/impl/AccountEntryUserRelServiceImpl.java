@@ -29,6 +29,8 @@ import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -157,9 +159,12 @@ public class AccountEntryUserRelServiceImpl
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
 	)
-	private ModelResourcePermission<AccountEntry> _modelResourcePermission;
+	private volatile ModelResourcePermission<AccountEntry>
+		_modelResourcePermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

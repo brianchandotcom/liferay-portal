@@ -2298,11 +2298,10 @@ definition {
 	}
 
 	macro selectUserTagCP {
-		AssertElementPresent.assertVisible(
-			locator1 = "AssetCategorization#TAGS_SELECT_BUTTON",
-			value1 = "Select");
-
-		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+		Click(
+			key_fieldLabel = "Tags",
+			key_text = "Select",
+			locator1 = "Button#ANY_WITH_LABEL");
 
 		IFrame.selectTagFrame();
 

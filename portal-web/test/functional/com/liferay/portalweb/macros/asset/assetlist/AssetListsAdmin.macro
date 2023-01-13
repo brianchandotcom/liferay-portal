@@ -175,7 +175,10 @@ definition {
 			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
 			value1 = "Tags");
 
-		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+		Click(
+			key_fieldLabel = "Tags",
+			key_text = "Select",
+			locator1 = "Button#ANY_WITH_LABEL");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

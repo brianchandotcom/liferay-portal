@@ -113,7 +113,10 @@ definition {
 
 			Panel.expandPanel(panel = "Filter");
 
-			AssertVisible(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+			AssertVisible(
+				key_fieldLabel = "Tags",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 	}
 
@@ -150,7 +153,10 @@ definition {
 
 			Panel.expandPanel(panel = "Filter");
 
-			AssertVisible(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+			AssertVisible(
+				key_fieldLabel = "Tags",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 	}
 
@@ -187,7 +193,10 @@ definition {
 
 			Panel.expandPanel(panel = "Filter");
 
-			AssertVisible(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+			AssertVisible(
+				key_fieldLabel = "Tags",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 	}
 
@@ -224,7 +233,10 @@ definition {
 
 			Panel.expandPanel(panel = "Filter");
 
-			AssertVisible(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+			AssertVisible(
+				key_fieldLabel = "Tags",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 	}
 

@@ -205,6 +205,10 @@ definition {
 				category = "People",
 				portlet = "Segments");
 
+			while ((IsElementNotPresent(key_tableEntry = "Dynamic Segment Test", locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS")) && (maxIterations = "40")) {
+				Refresh();
+			}
+
 			AssertElementPresent(
 				key_tableEntry = "Dynamic Segment Test",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -223,7 +227,7 @@ definition {
 
 			AssertElementPresent(
 				key_value = "1",
-				locator1 = "SystemSettings#CHECK_INTERVAL_SEGMENTS_VALUE");
+				locator1 = "SystemSettings#UPDATE_INTERVAL_SEGMENTS_VALUE");
 
 			AssertClick(
 				key_text = "Update",

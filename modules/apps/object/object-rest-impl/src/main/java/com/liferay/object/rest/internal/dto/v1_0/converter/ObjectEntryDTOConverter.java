@@ -566,21 +566,23 @@ public class ObjectEntryDTOConverter
 			UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
 			if (uriInfo != null) {
-				List<ObjectRelationship> objectRelationships =
-					_objectRelationshipLocalService.getObjectRelationships(
-						objectDefinition.getObjectDefinitionId());
-
 				MultivaluedMap<String, String> queryParameters =
 					uriInfo.getQueryParameters();
 
 				String nestedFields = queryParameters.getFirst("nestedFields");
 
+				if (nestedFields == null) {
+					values.remove(objectDefinition.getPKObjectFieldName());
+
+					return map;
+				}
+
+				List<ObjectRelationship> objectRelationships =
+					_objectRelationshipLocalService.getObjectRelationships(
+						objectDefinition.getObjectDefinitionId());
+
 				for (ObjectRelationship objectRelationship :
 						objectRelationships) {
-
-					if (nestedFields == null) {
-						continue;
-					}
 
 					List<String> strings = Arrays.asList(
 						nestedFields.split(","));

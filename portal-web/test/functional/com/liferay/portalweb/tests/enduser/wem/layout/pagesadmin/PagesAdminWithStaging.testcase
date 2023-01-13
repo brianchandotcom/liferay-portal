@@ -679,7 +679,7 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
 
-			Click(
+			Check.checkNotVisible(
 				key_pageName = "Pages",
 				locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}

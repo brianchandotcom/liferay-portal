@@ -404,13 +404,9 @@ public class CommerceProductPriceCalculationV2Impl
 	}
 
 	public void unsetCommercePriceListDiscovery(
-		CommercePriceListDiscovery commercePriceListDiscovery,
-		Map<String, Object> properties) {
+		CommercePriceListDiscovery commercePriceListDiscovery) {
 
-		String commercePriceListDiscoveryKey = GetterUtil.getString(
-			properties.get("commerce.price.list.discovery.key"));
-
-		_commercePriceListDiscoveryMap.remove(commercePriceListDiscoveryKey);
+		_commercePriceListDiscoveryMap.remove(commercePriceListDiscovery.getCommercePriceListDiscoveryKey());
 	}
 
 	@Reference(
@@ -434,14 +430,10 @@ public class CommerceProductPriceCalculationV2Impl
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setCommercePriceListDiscovery(
-		CommercePriceListDiscovery commercePriceListDiscovery,
-		Map<String, Object> properties) {
-
-		String commercePriceListDiscoveryKey = GetterUtil.getString(
-			properties.get("commerce.price.list.discovery.key"));
+		CommercePriceListDiscovery commercePriceListDiscovery) {
 
 		_commercePriceListDiscoveryMap.put(
-			commercePriceListDiscoveryKey, commercePriceListDiscovery);
+			commercePriceListDiscovery.getCommercePriceListDiscoveryKey(), commercePriceListDiscovery);
 	}
 
 	private CommerceDiscountValue _calculateCommerceDiscountValue(

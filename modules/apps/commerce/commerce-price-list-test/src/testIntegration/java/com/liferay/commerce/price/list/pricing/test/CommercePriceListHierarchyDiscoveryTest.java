@@ -30,7 +30,6 @@ import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
-import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -617,7 +616,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private CommercePriceList _commercePriceList5;
 
 	@Inject(
-		filter = "commerce.price.list.discovery.key=" + CommercePricingConstants.ORDER_BY_HIERARCHY
+		filter = "component.name=com.liferay.commerce.price.list.internal.discovery.CommercePriceListHierarchyDiscoveryImpl"
 	)
 	private CommercePriceListDiscovery _commercePriceListDiscovery;
 

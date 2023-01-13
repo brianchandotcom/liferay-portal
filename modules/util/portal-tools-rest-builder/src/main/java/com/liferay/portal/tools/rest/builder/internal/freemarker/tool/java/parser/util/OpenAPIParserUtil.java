@@ -51,7 +51,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
@@ -157,13 +156,13 @@ public class OpenAPIParserUtil {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
-		Map<String, Schema> schemas = Optional.ofNullable(
-			openAPIYAML.getComponents()
-		).map(
-			Components::getSchemas
-		).orElse(
-			new HashMap<>()
-		);
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = new HashMap<>();
+
+		if ((components != null) && (components.getSchemas() != null)) {
+			schemas = components.getSchemas();
+		}
 
 		if (pathItems != null) {
 			for (PathItem pathItem : pathItems.values()) {

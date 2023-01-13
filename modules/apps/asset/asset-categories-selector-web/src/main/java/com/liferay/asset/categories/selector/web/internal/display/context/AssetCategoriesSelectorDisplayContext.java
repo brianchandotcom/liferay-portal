@@ -73,7 +73,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	public String getAddCategoryURL() throws Exception {
 		List<AssetVocabulary> vocabularies = _getVocabularies();
 
-		if (vocabularies.size() > 1) {
+		if (vocabularies.size() != 1) {
 			return null;
 		}
 

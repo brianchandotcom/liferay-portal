@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryce Osterhaus
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class FrontendIconsSpritemapTopHeadDynamicInclude
 	extends BaseDynamicInclude {
 

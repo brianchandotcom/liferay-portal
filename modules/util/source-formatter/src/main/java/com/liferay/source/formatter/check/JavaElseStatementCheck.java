@@ -54,10 +54,10 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 			String exitStatementType = null;
 
 			for (String ifStatementCodeBlock : ifStatementCodeBlocks) {
+				boolean hasExit = false;
+
 				Matcher matcher2 = _exitStatementPattern.matcher(
 					ifStatementCodeBlock);
-
-				boolean hasExit = false;
 
 				while (matcher2.find()) {
 					if (ToolsUtil.isInsideQuotes(

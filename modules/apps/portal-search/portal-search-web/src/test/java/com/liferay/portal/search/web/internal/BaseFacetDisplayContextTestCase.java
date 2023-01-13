@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.util;
+package com.liferay.portal.search.web.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -38,7 +38,7 @@ import org.mockito.Mockito;
 /**
  * @author Amanda Costa
  */
-public class FacetDisplayContextTextUtil {
+public abstract class BaseFacetDisplayContextTestCase {
 
 	public static String buildNameFrequencyString(
 		List<BucketDisplayContext> bucketDisplayContexts) {
@@ -86,7 +86,8 @@ public class FacetDisplayContextTextUtil {
 			HttpServletRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay(CustomFacetPortletInstanceConfiguration.class)
+			BaseFacetDisplayContextTestCase.getThemeDisplay(
+				CustomFacetPortletInstanceConfiguration.class)
 		).when(
 			httpServletRequest
 		).getAttribute(
@@ -120,7 +121,8 @@ public class FacetDisplayContextTextUtil {
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay(facetPortletConfiguration)
+			BaseFacetDisplayContextTestCase.getThemeDisplay(
+				facetPortletConfiguration)
 		).when(
 			renderRequest
 		).getAttribute(
@@ -136,7 +138,9 @@ public class FacetDisplayContextTextUtil {
 		List<TermCollector> termCollectors = new ArrayList<>();
 
 		for (int i = 0; i < terms.length; i++) {
-			termCollectors.add(createTermCollector(terms[i], frequencies[i]));
+			termCollectors.add(
+				BaseFacetDisplayContextTestCase.createTermCollector(
+					terms[i], frequencies[i]));
 		}
 
 		return termCollectors;
@@ -149,7 +153,8 @@ public class FacetDisplayContextTextUtil {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.doReturn(
-			getPortletDisplay(facetPortletConfiguration)
+			BaseFacetDisplayContextTestCase.getPortletDisplay(
+				facetPortletConfiguration)
 		).when(
 			themeDisplay
 		).getPortletDisplay();
@@ -161,7 +166,9 @@ public class FacetDisplayContextTextUtil {
 		FacetCollector facetCollector, String term, int frequency) {
 
 		Mockito.doReturn(
-			Collections.singletonList(createTermCollector(term, frequency))
+			Collections.singletonList(
+				BaseFacetDisplayContextTestCase.createTermCollector(
+					term, frequency))
 		).when(
 			facetCollector
 		).getTermCollectors();

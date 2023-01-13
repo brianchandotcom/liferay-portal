@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration;
-import com.liferay.portal.search.web.internal.util.FacetDisplayContextTextUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -77,7 +77,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			FacetDisplayContextTextUtil.buildNameFrequencyString(
+			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -106,7 +106,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			FacetDisplayContextTextUtil.buildNameFrequencyString(
+			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -131,7 +131,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			FacetDisplayContextTextUtil.buildNameFrequencyString(
+			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -155,7 +155,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 			assetEntriesSearchFacetDisplayContext1.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			FacetDisplayContextTextUtil.buildNameFrequencyString(
+			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(
@@ -170,7 +170,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 		AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetDisplayContextBuilder =
 				new AssetEntriesSearchFacetDisplayContextBuilder(
-					FacetDisplayContextTextUtil.getRenderRequest(
+					BaseFacetDisplayContextTestCase.getRenderRequest(
 						TypeFacetPortletInstanceConfiguration.class));
 
 		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(classNames);
@@ -213,7 +213,8 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		for (String term : terms) {
 			Mockito.doReturn(
-				FacetDisplayContextTextUtil.createTermCollector(term, frequency)
+				BaseFacetDisplayContextTestCase.createTermCollector(
+					term, frequency)
 			).when(
 				facetCollector
 			).getTermCollector(

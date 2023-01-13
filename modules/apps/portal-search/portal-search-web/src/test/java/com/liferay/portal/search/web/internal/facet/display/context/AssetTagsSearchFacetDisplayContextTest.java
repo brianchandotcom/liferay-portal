@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
-import com.liferay.portal.search.web.internal.util.FacetDisplayContextTextUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -110,7 +110,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		FacetDisplayContextTextUtil.setUpTermCollector(
+		BaseFacetDisplayContextTestCase.setUpTermCollector(
 			_facetCollector, term, frequency);
 
 		String facetParam = StringPool.BLANK;
@@ -146,7 +146,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		FacetDisplayContextTextUtil.setUpTermCollector(
+		BaseFacetDisplayContextTestCase.setUpTermCollector(
 			_facetCollector, term, frequency);
 
 		String facetParam = term;
@@ -219,7 +219,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		AssetTagsSearchFacetDisplayContextBuilder
 			assetTagsSearchFacetDisplayContextBuilder =
 				new AssetTagsSearchFacetDisplayContextBuilder(
-					FacetDisplayContextTextUtil.getRenderRequest(
+					BaseFacetDisplayContextTestCase.getRenderRequest(
 						TagFacetPortletInstanceConfiguration.class));
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
@@ -239,9 +239,10 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			String expected, int[] frequencies, String order, String[] terms)
 		throws Exception {
 
-		FacetDisplayContextTextUtil.setUpTermCollectors(
+		BaseFacetDisplayContextTestCase.setUpTermCollectors(
 			_facetCollector,
-			FacetDisplayContextTextUtil.getTermCollectors(terms, frequencies));
+			BaseFacetDisplayContextTestCase.getTermCollectors(
+				terms, frequencies));
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
 			createDisplayContext(StringPool.BLANK, order);
@@ -250,7 +251,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			FacetDisplayContextTextUtil.buildNameFrequencyString(
+			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
 				bucketDisplayContexts2);
 
 		Assert.assertEquals(

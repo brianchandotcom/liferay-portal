@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.ScopeSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration;
-import com.liferay.portal.search.web.internal.util.FacetDisplayContextTextUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -120,7 +120,7 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		FacetDisplayContextTextUtil.setUpTermCollector(
+		BaseFacetDisplayContextTestCase.setUpTermCollector(
 			_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = "0";
@@ -159,7 +159,7 @@ public class ScopeSearchFacetDisplayContextTest {
 
 		int count = RandomTestUtil.randomInt();
 
-		FacetDisplayContextTextUtil.setUpTermCollector(
+		BaseFacetDisplayContextTestCase.setUpTermCollector(
 			_facetCollector, String.valueOf(groupId), count);
 
 		String parameterValue = String.valueOf(groupId);
@@ -233,7 +233,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		ScopeSearchFacetDisplayContextBuilder
 			scopeSearchFacetDisplayContextBuilder =
 				new ScopeSearchFacetDisplayContextBuilder(
-					FacetDisplayContextTextUtil.getRenderRequest(
+					BaseFacetDisplayContextTestCase.getRenderRequest(
 						SiteFacetPortletInstanceConfiguration.class));
 
 		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
@@ -286,7 +286,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			_addGroup(i, groupNames[i - 1]);
 
 			termCollectors.add(
-				FacetDisplayContextTextUtil.createTermCollector(
+				BaseFacetDisplayContextTestCase.createTermCollector(
 					String.valueOf(i), frequencies[i - 1]));
 		}
 
@@ -298,7 +298,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			String order)
 		throws Exception {
 
-		FacetDisplayContextTextUtil.setUpTermCollectors(
+		BaseFacetDisplayContextTestCase.setUpTermCollectors(
 			_facetCollector, _getTermCollectors(groupNames, frequencies));
 
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
@@ -308,7 +308,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		String nameFrequencyString =
-			FacetDisplayContextTextUtil.buildNameFrequencyString(
+			BaseFacetDisplayContextTestCase.buildNameFrequencyString(
 				bucketDisplayContexts);
 
 		Assert.assertEquals(

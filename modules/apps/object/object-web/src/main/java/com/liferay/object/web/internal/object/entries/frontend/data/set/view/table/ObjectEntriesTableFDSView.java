@@ -135,21 +135,21 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 		for (ObjectField objectField : objectFields) {
 			if (Objects.equals(objectField.getName(), "id")) {
-				objectFieldId = objectField.getLabel(locale, true);
+				objectFieldId = objectField.getLabel(locale, false);
 			}
 
 			if (Objects.equals(
 					objectField.getName(), "externalReferenceCode")) {
 
-				objectFieldERC = objectField.getLabel(locale, true);
+				objectFieldERC = objectField.getLabel(locale, false);
 			}
 
 			if (Objects.equals(objectField.getName(), "creator")) {
-				objectFieldCreator = objectField.getLabel(locale, true);
+				objectFieldCreator = objectField.getLabel(locale, false);
 			}
 
 			if (Objects.equals(objectField.getName(), "status")) {
-				objectFieldStatus = objectField.getLabel(locale, true);
+				objectFieldStatus = objectField.getLabel(locale, false);
 			}
 		}
 

@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>TAG</td>
-	<td>//div[contains(@id,'assetTagsSelector')]//span[(contains(@class,'label-item'))][contains(.,'${key_tagName}')] | //div[contains(@class,'tags-selector')]//span[(contains(@class,'label-item'))][contains(.,'${key_tagName}')]</td>
+	<td>//div[contains(@id,'assetTagsSelector')]//span[(contains(@class,'label-item'))][contains(.,'${key_tagName}')] | //label[normalize-space(text())='Tags']//following-sibling::div[contains(@class,'input-group')]//span[(contains(@class,'label-item'))][contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

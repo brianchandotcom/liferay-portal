@@ -1062,6 +1062,8 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
+		WaitForPageLoad();
+
 		DMDocument.editCP(
 			dmDocumentTitle = "Document_1.jpeg",
 			dmDocumentTypeEdit = "Google Drive Shortcut");

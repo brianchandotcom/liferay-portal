@@ -31,6 +31,33 @@ const ITEM_TYPES = {
 	folder: 'folder',
 };
 
+const showSuccessMessage = (portletNamespace) => {
+	const openToastSuccessProps = {
+		message: Liferay.Language.get('your-request-completed-successfully'),
+		type: 'success',
+	};
+
+	const reloadButtonLabel = Liferay.Language.get('reload');
+	const reloadButtonClassName = 'knowledge-base-reload-button';
+
+	openToastSuccessProps.message =
+		openToastSuccessProps.message +
+		`<div class="alert-footer">
+				<div class="btn-group" role="group">
+					<button class="btn btn-sm btn-primary alert-btn ${reloadButtonClassName}">${reloadButtonLabel}</button>
+				</div>
+		</div>`;
+
+	openToastSuccessProps.onClick = ({event, onClose: closeToast}) => {
+		if (event.target.classList.contains(reloadButtonClassName)) {
+			Liferay.Portlet.refresh(`#p_p_id${portletNamespace}`);
+			closeToast();
+		}
+	};
+
+	openToast(openToastSuccessProps);
+};
+
 export default function NavigationPanel({
 	items,
 	moveKBObjectURL,
@@ -85,6 +112,8 @@ export default function NavigationPanel({
 				if (!response.success) {
 					throw new Error(response.errorMessage);
 				}
+
+				showSuccessMessage(portletNamespace);
 			})
 			.catch(
 				({

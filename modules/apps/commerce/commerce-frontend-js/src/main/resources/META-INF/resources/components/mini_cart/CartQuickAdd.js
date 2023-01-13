@@ -71,31 +71,80 @@ export default function CartQuickAdd() {
 		fetch(productsApiURL.toString())
 			.then((response) => response.json())
 			.then((availableProducts) => {
-				setFormattedProducts(
-					availableProducts.items.map((product) => {
-						const {name, skus} = product;
+				const formattedProducts = [];
 
-						return {
+				availableProducts.items.map((product) => {
+					const {name, skus} = product;
+
+					if (product.skus.length > 1) {
+						product.skus.forEach((sku) =>
+							formattedProducts.push({
+								...sku,
+								label: name,
+								value: sku.sku,
+							})
+						);
+					}
+					else {
+						formattedProducts.push({
 							...product,
 							label: name,
 							value: skus[0].sku,
-						};
-					})
+						});
+					}
+				});
+
+				setFormattedProducts(formattedProducts);
+
+				const productSKUs = availableProducts.items.filter(
+					(product) => {
+						if (product.skus.length > 1) {
+							return product.skus.map((sku) => sku);
+						}
+					}
 				);
 
-				setProducts(availableProducts.items);
+				setProducts([...availableProducts.items, ...productSKUs]);
 			});
 	}, [accountId, channelId]);
 
 	const handleAddToCartClick = () => {
-		const itemSKUs = selectedProducts.map((item) => item.value);
+		const selectedSKUs = selectedProducts.map((item) => item.value);
+		const productsWithOptions = products.filter(
+			(item) => item.skus && item.skus.length > 1
+		);
 		const readyProducts = [];
 
 		products.forEach((product) => {
 			if (
-				product.skus.length &&
+				!product.skus &&
+				product.sku &&
+				selectedSKUs.includes(product.sku)
+			) {
+				const parentProduct = productsWithOptions.find((item) => {
+					const childSKUs = [];
+
+					item.skus.forEach((itemSKU) => childSKUs.push(itemSKU.sku));
+
+					return childSKUs.includes(product.sku);
+				});
+
+				readyProducts.push({
+					...product,
+					price: product.price,
+					productURLs: parentProduct.urls,
+					quantity:
+						parentProduct.productConfiguration.minOrderQuantity,
+					settings: parentProduct.productConfiguration,
+					sku: product.sku,
+					skuId: product.id,
+				});
+			}
+			else if (
+				product.skus &&
 				product.skus[0] &&
-				itemSKUs.includes(product.skus[0].sku)
+				product.skus.length < 2 &&
+				selectedSKUs.includes(product.skus[0].sku)
 			) {
 				const {productConfiguration, skus, urls} = product;
 

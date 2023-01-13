@@ -1,4 +1,12 @@
 {
+	"configuration": {
+		"callbackURL": null,
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"fieldNameMappingMap": {
+		},
+		"parameters": null,
+		"version": "v1.0"
+	},
 	"facets": [
 	],
 	"items": [

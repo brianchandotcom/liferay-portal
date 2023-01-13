@@ -28,7 +28,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Lourdes Fernández Besada
@@ -85,20 +84,18 @@ public class DisplayPageTypeContext {
 		return infoItemClassDetails.getLabel(locale);
 	}
 
-	public Optional<LayoutDisplayPageInfoItemFieldValuesProvider<?>>
-		getLayoutDisplayPageInfoItemFieldValuesProviderOptional() {
+	public LayoutDisplayPageInfoItemFieldValuesProvider<?>
+		getLayoutDisplayPageInfoItemFieldValuesProvider() {
 
-		return Optional.ofNullable(
-			_layoutDisplayPageInfoItemFieldValuesProviderRegistry.
-				getLayoutDisplayPageInfoItemFieldValuesProvider(_className));
+		return _layoutDisplayPageInfoItemFieldValuesProviderRegistry.
+			getLayoutDisplayPageInfoItemFieldValuesProvider(_className);
 	}
 
-	public Optional<LayoutDisplayPageMultiSelectionProvider<?>>
-		getLayoutDisplayPageMultiSelectionProviderOptional() {
+	public LayoutDisplayPageMultiSelectionProvider<?>
+		getLayoutDisplayPageMultiSelectionProvider() {
 
-		return Optional.ofNullable(
-			_layoutDisplayPageMultiSelectionProviderRegistry.
-				getLayoutDisplayPageMultiSelectionProvider(_className));
+		return _layoutDisplayPageMultiSelectionProviderRegistry.
+			getLayoutDisplayPageMultiSelectionProvider(_className);
 	}
 
 	public LayoutDisplayPageObjectProvider<?>

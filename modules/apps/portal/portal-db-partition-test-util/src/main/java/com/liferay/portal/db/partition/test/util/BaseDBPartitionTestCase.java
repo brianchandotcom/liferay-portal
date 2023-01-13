@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.db.partition.test;
+package com.liferay.portal.db.partition.test.util;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;

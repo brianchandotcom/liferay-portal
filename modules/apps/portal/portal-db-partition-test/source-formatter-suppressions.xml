@@ -2,7 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="CompanyIterationCheck" files="src/testIntegration/java/com/liferay/portal/db/partition/test/BaseDBPartitionTestCase\.java" />
 		<suppress checks="CompanyIterationCheck" files="src/testIntegration/java/com/liferay/portal/db/partition/test/DBPartitionUtilTest\.java" />
 	</checkstyle>
 </suppressions>

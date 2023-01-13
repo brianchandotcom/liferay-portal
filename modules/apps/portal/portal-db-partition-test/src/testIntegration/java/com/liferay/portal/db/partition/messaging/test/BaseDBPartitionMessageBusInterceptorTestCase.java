@@ -16,7 +16,7 @@ package com.liferay.portal.db.partition.messaging.test;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.db.partition.DBPartitionUtil;
-import com.liferay.portal.db.partition.test.BaseDBPartitionTestCase;
+import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;

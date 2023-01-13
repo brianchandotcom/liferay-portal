@@ -20,21 +20,14 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
+import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,45 +41,21 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelDocumentContributor.class
 )
 public class JournalArticleTextEmbeddingModelDocumentContributor
-	extends BaseTextEmbeddingModelDocumentContributor
+	extends BaseTextEmbeddingModelDocumentContributor<JournalArticle>
 	implements ModelDocumentContributor<JournalArticle> {
 
 	@Override
 	public void contribute(Document document, JournalArticle journalArticle) {
-		if (!isAddTextEmbedding(JournalArticle.class) ||
-			(journalArticle.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-
-			return;
-		}
-
-		List<String> languageIds = Arrays.asList(
-			semanticSearchConfiguration.languageIds());
-
-		for (Locale locale :
-				_language.getCompanyAvailableLocales(
-					journalArticle.getCompanyId())) {
-
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			if (!languageIds.contains(languageId)) {
-				continue;
-			}
-
-			addTextEmbedding(
-				document, languageId,
-				getTextEmbedding(
-					_textEmbeddingRetriever::getTextEmbedding,
-					StringBundler.concat(
-						journalArticle.getTitle(languageId, true),
-						StringPool.SPACE,
-						_getArticleContent(journalArticle, languageId))));
-		}
+		addLocalizedTextEmbeddings(
+			journalArticle, _textEmbeddingRetriever::getTextEmbedding,
+			journalArticle.getCompanyId(), document);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
-			SemanticSearchConfiguration.class, properties);
+	@Override
+	protected String getText(JournalArticle journalArticle, String languageId) {
+		return StringBundler.concat(
+			journalArticle.getTitle(languageId, true), StringPool.SPACE,
+			_getArticleContent(journalArticle, languageId));
 	}
 
 	private String _getArticleContent(

@@ -485,6 +485,9 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
+																"paddingBottom": "2",
+																"shadow": "",
 																"textAlign": "center"
 															},
 															"indexed": true

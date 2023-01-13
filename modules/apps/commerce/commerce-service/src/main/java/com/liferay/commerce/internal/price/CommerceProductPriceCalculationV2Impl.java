@@ -395,14 +395,12 @@ public class CommerceProductPriceCalculationV2Impl
 	}
 
 	public void unsetCommerceDiscountApplicationStrategy(
-		CommerceDiscountApplicationStrategy commerceDiscountApplicationStrategy,
-		Map<String, Object> properties) {
-
-		String commerceDiscountApplicationStrategyKey = GetterUtil.getString(
-			properties.get("commerce.discount.application.strategy.key"));
+		CommerceDiscountApplicationStrategy
+			commerceDiscountApplicationStrategy) {
 
 		_commerceDiscountApplicationStrategyMap.remove(
-			commerceDiscountApplicationStrategyKey);
+			commerceDiscountApplicationStrategy.
+				getCommerceDiscountApplicationStrategyKey());
 	}
 
 	public void unsetCommercePriceListDiscovery(
@@ -421,14 +419,12 @@ public class CommerceProductPriceCalculationV2Impl
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setCommerceDiscountApplicationStrategy(
-		CommerceDiscountApplicationStrategy commerceDiscountApplicationStrategy,
-		Map<String, Object> properties) {
-
-		String commerceDiscountApplicationStrategyKey = GetterUtil.getString(
-			properties.get("commerce.discount.application.strategy.key"));
+		CommerceDiscountApplicationStrategy
+			commerceDiscountApplicationStrategy) {
 
 		_commerceDiscountApplicationStrategyMap.put(
-			commerceDiscountApplicationStrategyKey,
+			commerceDiscountApplicationStrategy.
+				getCommerceDiscountApplicationStrategyKey(),
 			commerceDiscountApplicationStrategy);
 	}
 

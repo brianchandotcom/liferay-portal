@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -180,14 +179,12 @@ public class CommerceDiscountCalculationV2Impl
 	}
 
 	public void unsetCommerceDiscountApplicationStrategy(
-		CommerceDiscountApplicationStrategy commerceDiscountApplicationStrategy,
-		Map<String, Object> properties) {
-
-		String commerceDiscountApplicationStrategyKey = GetterUtil.getString(
-			properties.get("commerce.discount.application.strategy.key"));
+		CommerceDiscountApplicationStrategy
+			commerceDiscountApplicationStrategy) {
 
 		_commerceDiscountApplicationStrategyMap.remove(
-			commerceDiscountApplicationStrategyKey);
+			commerceDiscountApplicationStrategy.
+				getCommerceDiscountApplicationStrategyKey());
 	}
 
 	@Reference(
@@ -196,14 +193,12 @@ public class CommerceDiscountCalculationV2Impl
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setCommerceDiscountApplicationStrategy(
-		CommerceDiscountApplicationStrategy commerceDiscountApplicationStrategy,
-		Map<String, Object> properties) {
-
-		String commerceDiscountApplicationStrategyKey = GetterUtil.getString(
-			properties.get("commerce.discount.application.strategy.key"));
+		CommerceDiscountApplicationStrategy
+			commerceDiscountApplicationStrategy) {
 
 		_commerceDiscountApplicationStrategyMap.put(
-			commerceDiscountApplicationStrategyKey,
+			commerceDiscountApplicationStrategy.
+				getCommerceDiscountApplicationStrategyKey(),
 			commerceDiscountApplicationStrategy);
 	}
 

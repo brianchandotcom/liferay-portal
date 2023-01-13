@@ -852,12 +852,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			return;
 		}
 
-		HttpServletRequest httpServletRequest = getRequest();
-
-		String mode = ParamUtil.getString(
-			PortalUtil.getOriginalServletRequest(httpServletRequest),
-			"p_l_mode", Constants.VIEW);
-
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<form action=\"");
@@ -926,6 +920,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					formStyledLayoutStructureItem));
 		jspWriter.write("\"><input name=\"backURL\" type=\"hidden\" value=\"");
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -946,7 +942,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("\"><input name=\"groupId\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getScopeGroupId()));
 		jspWriter.write("\"><input name=\"p_l_mode\" type=\"hidden\" value=\"");
-		jspWriter.write(mode);
+		jspWriter.write(
+			ParamUtil.getString(
+				PortalUtil.getOriginalServletRequest(httpServletRequest),
+				"p_l_mode", Constants.VIEW));
 		jspWriter.write("\"><input name=\"plid\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
 		jspWriter.write(

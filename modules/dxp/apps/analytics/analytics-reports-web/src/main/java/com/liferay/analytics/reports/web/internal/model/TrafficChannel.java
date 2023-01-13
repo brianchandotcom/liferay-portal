@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -27,9 +28,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceURL;
 
@@ -152,23 +150,12 @@ public class TrafficChannel {
 				Map<String, String[]> httpServletRequestParameterMap =
 					httpServletRequest.getParameterMap();
 
-				Set<Map.Entry<String, String[]>>
-					httpServletRequestParameterEntries =
-						httpServletRequestParameterMap.entrySet();
-
 				Map<String, String[]> parameterMap =
 					(Map<String, String[]>)tuple.getObject(1);
 
-				Set<Map.Entry<String, String[]>> parameterEntries =
-					parameterMap.entrySet();
+				MapUtil.merge(parameterMap, httpServletRequestParameterMap);
 
-				resourceURL.setParameters(
-					Stream.concat(
-						httpServletRequestParameterEntries.stream(),
-						parameterEntries.stream()
-					).collect(
-						Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-					));
+				resourceURL.setParameters(httpServletRequestParameterMap);
 
 				return String.valueOf(resourceURL);
 			}

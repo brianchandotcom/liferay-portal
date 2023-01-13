@@ -32,7 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Lino Alves
  */
-public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
+public class AssetCategoriesSearchFacetDisplayContext
+	implements FacetDisplayContext, Serializable {
 
 	public AssetCategoriesSearchFacetDisplayContext(
 			HttpServletRequest httpServletRequest)

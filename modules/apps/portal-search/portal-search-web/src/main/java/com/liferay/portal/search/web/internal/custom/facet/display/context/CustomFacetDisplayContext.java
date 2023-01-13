@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Wade Cao
  */
-public class CustomFacetDisplayContext {
+public class CustomFacetDisplayContext implements FacetDisplayContext {
 
 	public CustomFacetDisplayContext(HttpServletRequest httpServletRequest)
 		throws ConfigurationException {

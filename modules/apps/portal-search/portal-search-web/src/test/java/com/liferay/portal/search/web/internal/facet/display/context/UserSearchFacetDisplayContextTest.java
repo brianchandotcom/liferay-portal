@@ -67,7 +67,7 @@ public class UserSearchFacetDisplayContextTest
 			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
 		Assert.assertEquals(
-			paramValue, userSearchFacetDisplayContext.getParamValue());
+			paramValue, userSearchFacetDisplayContext.getParameterValue());
 		Assert.assertTrue(userSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertTrue(userSearchFacetDisplayContext.isRenderNothing());
 	}
@@ -96,7 +96,7 @@ public class UserSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
-			paramValue, userSearchFacetDisplayContext.getParamValue());
+			paramValue, userSearchFacetDisplayContext.getParameterValue());
 		Assert.assertFalse(userSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(userSearchFacetDisplayContext.isRenderNothing());
 	}
@@ -129,7 +129,7 @@ public class UserSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			paramValue, userSearchFacetDisplayContext.getParamValue());
+			paramValue, userSearchFacetDisplayContext.getParameterValue());
 		Assert.assertTrue(userSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(userSearchFacetDisplayContext.isRenderNothing());
 	}
@@ -162,7 +162,7 @@ public class UserSearchFacetDisplayContextTest
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
-			paramValue, userSearchFacetDisplayContext.getParamValue());
+			paramValue, userSearchFacetDisplayContext.getParameterValue());
 		Assert.assertFalse(userSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(userSearchFacetDisplayContext.isRenderNothing());
 	}

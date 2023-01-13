@@ -75,9 +75,9 @@ public class UserSearchFacetDisplayContextBuilder {
 		userSearchFacetDisplayContext.setNothingSelected(nothingSelected);
 		userSearchFacetDisplayContext.setPaginationStartParameterName(
 			_paginationStartParameterName);
-		userSearchFacetDisplayContext.setParamName(_paramName);
-		userSearchFacetDisplayContext.setParamValue(_getFirstParamValue());
-		userSearchFacetDisplayContext.setParamValues(_paramValues);
+		userSearchFacetDisplayContext.setParameterName(_paramName);
+		userSearchFacetDisplayContext.setParameterValue(_getFirstParamValue());
+		userSearchFacetDisplayContext.setParameterValues(_paramValues);
 		userSearchFacetDisplayContext.setRenderNothing(renderNothing);
 		userSearchFacetDisplayContext.setUserFacetPortletInstanceConfiguration(
 			_userFacetPortletInstanceConfiguration);

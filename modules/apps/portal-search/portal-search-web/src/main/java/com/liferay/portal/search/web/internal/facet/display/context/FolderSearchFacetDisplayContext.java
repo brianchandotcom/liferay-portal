@@ -23,7 +23,8 @@ import java.util.List;
 /**
  * @author Lino Alves
  */
-public class FolderSearchFacetDisplayContext implements Serializable {
+public class FolderSearchFacetDisplayContext
+	implements FacetDisplayContext, Serializable {
 
 	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;

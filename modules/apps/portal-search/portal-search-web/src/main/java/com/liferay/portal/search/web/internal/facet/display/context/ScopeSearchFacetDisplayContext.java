@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author André de Oliveira
  */
-public class ScopeSearchFacetDisplayContext {
+public class ScopeSearchFacetDisplayContext implements FacetDisplayContext {
 
 	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;

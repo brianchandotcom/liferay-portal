@@ -86,14 +86,14 @@ const SXPElementList = ({
 			{showList && (
 				<ClayList>
 					{sxpElements.map((sxpElement, index) => {
-						const description = getLocalizedText(
-							sxpElement.description_i18n,
-							locale
-						);
-						const title = getLocalizedText(
-							sxpElement.title_i18n,
-							locale
-						);
+						const description =
+							getLocalizedText(
+								sxpElement.description_i18n,
+								locale
+							) || sxpElement.description;
+						const title =
+							getLocalizedText(sxpElement.title_i18n, locale) ||
+							sxpElement.title;
 
 						return (
 							<ClayList.Item
@@ -245,10 +245,9 @@ function AddSXPElement({
 		(value) => {
 			const newSXPElements = sxpElements.filter((sxpElement) => {
 				if (value) {
-					const sxpElementTitle = getLocalizedText(
-						sxpElement.title_i18n,
-						locale
-					);
+					const sxpElementTitle =
+						getLocalizedText(sxpElement.title_i18n, locale) ||
+						sxpElement.title;
 
 					return sxpElementTitle
 						.toLowerCase()
@@ -312,7 +311,6 @@ function AddSXPElementSidebar({
 	onClose,
 	visible,
 }) {
-	const {defaultLocale} = useContext(ThemeContext);
 	const isMounted = useIsMounted();
 
 	const [querySXPElements, setQuerySXPElements] = useState(null);
@@ -325,25 +323,7 @@ function AddSXPElementSidebar({
 		)
 			.then((responseContent) => {
 				if (isMounted()) {
-					setQuerySXPElements(
-						responseContent.items.map(
-							({
-								description,
-								description_i18n,
-								title,
-								title_i18n,
-								...props
-							}) => ({
-								...props,
-								description_i18n: description_i18n || {
-									[defaultLocale]: description,
-								},
-								title_i18n: title_i18n || {
-									[defaultLocale]: title,
-								},
-							})
-						)
-					);
+					setQuerySXPElements(responseContent.items);
 				}
 			})
 			.catch(() => {

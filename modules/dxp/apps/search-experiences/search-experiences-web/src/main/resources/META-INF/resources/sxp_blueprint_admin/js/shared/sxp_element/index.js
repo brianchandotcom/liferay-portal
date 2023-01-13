@@ -79,8 +79,11 @@ function SXPElement({
 	const [collapse, setCollapse] = useState(false);
 	const [active, setActive] = useState(false);
 
-	const description = getLocalizedText(sxpElement.description_i18n, locale);
-	const title = getLocalizedText(sxpElement.title_i18n, locale);
+	const description =
+		getLocalizedText(sxpElement.description_i18n, locale) ||
+		sxpElement.description;
+	const title =
+		getLocalizedText(sxpElement.title_i18n, locale) || sxpElement.title;
 
 	const fieldSets = cleanUIConfiguration(
 		sxpElement.elementDefinition?.uiConfiguration

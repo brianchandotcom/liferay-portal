@@ -21,6 +21,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategy;
+import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategyRegistry;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductPrice;
@@ -396,16 +397,6 @@ public class CommerceProductPriceCalculationV2Impl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_commerceDiscountApplicationStrategyServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CommerceDiscountApplicationStrategy.class, null,
-				ServiceReferenceMapperFactory.create(
-					bundleContext,
-					(commerceDiscountApplicationStrategy, emitter) ->
-						emitter.emit(
-							commerceDiscountApplicationStrategy.
-								getCommerceDiscountApplicationStrategyKey())));
-
 		_commercePriceListDiscoveryServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, CommercePriceListDiscovery.class, null,
@@ -418,8 +409,6 @@ public class CommerceProductPriceCalculationV2Impl
 
 	@Deactivate
 	protected void deactivate() {
-		_commerceDiscountApplicationStrategyServiceTrackerMap.close();
-
 		_commercePriceListDiscoveryServiceTrackerMap.close();
 	}
 
@@ -533,8 +522,8 @@ public class CommerceProductPriceCalculationV2Impl
 
 		CommerceDiscountApplicationStrategy
 			commerceDiscountApplicationStrategy =
-				_commerceDiscountApplicationStrategyServiceTrackerMap.
-					getService(commerceDiscountApplicationStrategyKey);
+				_commerceDiscountApplicationStrategyRegistry.get(
+					commerceDiscountApplicationStrategyKey);
 
 		if (commerceDiscountApplicationStrategy == null) {
 			if (_log.isWarnEnabled()) {
@@ -1123,8 +1112,9 @@ public class CommerceProductPriceCalculationV2Impl
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
-	private ServiceTrackerMap<String, CommerceDiscountApplicationStrategy>
-		_commerceDiscountApplicationStrategyServiceTrackerMap;
+	@Reference
+	private CommerceDiscountApplicationStrategyRegistry
+		_commerceDiscountApplicationStrategyRegistry;
 
 	@Reference
 	private CommerceDiscountCalculation _commerceDiscountCalculation;

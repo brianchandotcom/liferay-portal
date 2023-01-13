@@ -21,6 +21,7 @@ import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategy;
+import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategyRegistry;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
@@ -33,9 +34,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -52,10 +50,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -179,22 +174,6 @@ public class CommerceDiscountCalculationV2Impl
 			productUnitPrice, quantity, commerceContext, commerceDiscounts);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommerceDiscountApplicationStrategy.class, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(commerceDiscountApplicationStrategy, emitter) -> emitter.emit(
-					commerceDiscountApplicationStrategy.
-						getCommerceDiscountApplicationStrategyKey())));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	private CommerceDiscountApplicationStrategy
 			_getCommerceDiscountApplicationStrategy()
 		throws ConfigurationException {
@@ -207,8 +186,9 @@ public class CommerceDiscountCalculationV2Impl
 			commercePricingConfiguration.commerceDiscountApplicationStrategy();
 
 		CommerceDiscountApplicationStrategy
-			commerceDiscountApplicationStrategy = _serviceTrackerMap.getService(
-				commerceDiscountApplicationStrategyKey);
+			commerceDiscountApplicationStrategy =
+				_commerceDiscountApplicationStrategyRegistry.get(
+					commerceDiscountApplicationStrategyKey);
 
 		if (commerceDiscountApplicationStrategy == null) {
 			if (_log.isWarnEnabled()) {
@@ -519,6 +499,10 @@ public class CommerceDiscountCalculationV2Impl
 		CommerceDiscountCalculationV2Impl.class);
 
 	@Reference
+	private CommerceDiscountApplicationStrategyRegistry
+		_commerceDiscountApplicationStrategyRegistry;
+
+	@Reference
 	private CommerceDiscountUsageEntryLocalService
 		_commerceDiscountUsageEntryLocalService;
 
@@ -537,8 +521,5 @@ public class CommerceDiscountCalculationV2Impl
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
-
-	private ServiceTrackerMap<String, CommerceDiscountApplicationStrategy>
-		_serviceTrackerMap;
 
 }

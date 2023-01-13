@@ -205,6 +205,10 @@ public class InfoFormUtil {
 				).put(
 					"typeOptions",
 					JSONUtil.put(
+						"inline",
+						() -> GetterUtil.getBoolean(
+							infoField.getAttribute(SelectInfoFieldType.INLINE))
+					).put(
 						"multiSelect",
 						() -> GetterUtil.getBoolean(
 							infoField.getAttribute(

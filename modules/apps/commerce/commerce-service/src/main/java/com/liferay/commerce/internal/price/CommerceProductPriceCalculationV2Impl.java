@@ -397,19 +397,18 @@ public class CommerceProductPriceCalculationV2Impl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_commercePriceListDiscoveryServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CommercePriceListDiscovery.class, null,
-				ServiceReferenceMapperFactory.create(
-					bundleContext,
-					(commercePriceListDiscovery, emitter) -> emitter.emit(
-						commercePriceListDiscovery.
-							getCommercePriceListDiscoveryKey())));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CommercePriceListDiscovery.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(commercePriceListDiscovery, emitter) -> emitter.emit(
+					commercePriceListDiscovery.
+						getCommercePriceListDiscoveryKey())));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_commercePriceListDiscoveryServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private CommerceDiscountValue _calculateCommerceDiscountValue(
@@ -854,8 +853,7 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		CommercePriceListDiscovery commercePriceListDiscovery =
-			_commercePriceListDiscoveryServiceTrackerMap.getService(
-				discoveryMethod);
+			_serviceTrackerMap.getService(discoveryMethod);
 
 		if (commercePriceListDiscovery == null) {
 			if (_log.isWarnEnabled()) {
@@ -1122,9 +1120,6 @@ public class CommerceProductPriceCalculationV2Impl
 	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
-	private ServiceTrackerMap<String, CommercePriceListDiscovery>
-		_commercePriceListDiscoveryServiceTrackerMap;
-
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
@@ -1137,5 +1132,8 @@ public class CommerceProductPriceCalculationV2Impl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private ServiceTrackerMap<String, CommercePriceListDiscovery>
+		_serviceTrackerMap;
 
 }

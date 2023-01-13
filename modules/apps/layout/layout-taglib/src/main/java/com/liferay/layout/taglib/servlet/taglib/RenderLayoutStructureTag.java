@@ -23,7 +23,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
@@ -872,7 +871,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext)
 		throws Exception {
 
-		if (infoForm == null) {
+		if ((infoForm == null) ||
+			(GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169923")) &&
+			 !_hasAddPermission(
+				 PortalUtil.getClassName(
+					 formStyledLayoutStructureItem.getClassNameId())))) {
+
 			return;
 		}
 
@@ -881,42 +885,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		String mode = ParamUtil.getString(
 			PortalUtil.getOriginalServletRequest(httpServletRequest),
 			"p_l_mode", Constants.VIEW);
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169923")) &&
-			((!Objects.equals(mode, Constants.VIEW) &&
-			  !_hasViewPermission(
-				  PortalUtil.getClassName(
-					  formStyledLayoutStructureItem.getClassNameId()))) ||
-			 (Objects.equals(mode, Constants.VIEW) &&
-			  !_hasAddPermission(
-				  PortalUtil.getClassName(
-					  formStyledLayoutStructureItem.getClassNameId()))))) {
-
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.write(
-				"<div class=\"p-3 bg-light text-secondary rounded\" style=" +
-					"\"border: 1px solid #d3d6e0;\">" +
-						"<span class=\"mr-2 alert-indicator\">");
-
-			IconTag iconTag = new IconTag();
-
-			iconTag.setCssClass("lexicon-icon lexicon-icon-password-policies");
-
-			iconTag.setSymbol("password-policies");
-
-			iconTag.doTag(pageContext);
-
-			jspWriter.write("</span>");
-			jspWriter.write(
-				LanguageUtil.get(
-					getRequest(),
-					"this-content-cannot-be-displayed-due-to-permission-" +
-						"restrictions"));
-			jspWriter.write("</div>");
-
-			return;
-		}
 
 		JspWriter jspWriter = pageContext.getOut();
 

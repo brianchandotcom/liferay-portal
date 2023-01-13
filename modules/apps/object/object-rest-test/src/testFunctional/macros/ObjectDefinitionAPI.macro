@@ -838,7 +838,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${api} \
-			-u test@liferay.com:test
+				-u test@liferay.com:test
 		''';
 
 		var response = JSONCurlUtil.get("${curl}");

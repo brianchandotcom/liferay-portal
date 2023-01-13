@@ -77,8 +77,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = "3"
 	test CanGetMultipleNestedFieldsInOneToManyRelationship {
-		property portal.acceptance = "true";
-
 		task ("When requesting GET /o/c/students/{studentId}?nestedFields=universityStudents,subjectStudents") {
 			var response = ObjectDefinitionAPI.getObjectEntryById(
 				en_US_plural_label = "students",

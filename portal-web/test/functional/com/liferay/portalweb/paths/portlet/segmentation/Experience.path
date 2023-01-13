@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_SELECTED_VIEW_MODE</td>
+	<td>//button[contains(@id, 'experience-picker')]//*[contains(text(),'${experienceName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_HEADING</td>
 	<td>//*[contains(@class, 'component-heading') and contains(@class, 'text-break')]</td>
 	<td></td>

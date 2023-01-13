@@ -527,7 +527,7 @@ definition {
 
 			var aux_iterator = ${aux_iterator} + 1;
 
-			ApplicationsMenu.gotoSite(site = "Minium");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 		}
 
 		CommerceNavigator.gotoPortlet(

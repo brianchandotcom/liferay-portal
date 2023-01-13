@@ -53,9 +53,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -320,15 +317,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		List<String> strings = new ArrayList<>(
 			editRankingMVCActionRequest.getAliases());
 
-		Stream<String> stream = strings.stream();
-
-		Predicate<String> predicate = this::_isUpdateSpecial;
-
-		return stream.filter(
-			predicate.negate()
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(strings, string -> !_isUpdateSpecial(string));
 	}
 
 	private String _getCompanyIndexName() {
@@ -339,18 +328,19 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		String oldName,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		List<String> strings = editRankingMVCActionRequest.getAliases();
+		List<String> stripUpdateSpecialStrings = TransformUtil.transform(
+			ListUtil.filter(
+				editRankingMVCActionRequest.getAliases(),
+				this::_isUpdateSpecial),
+			this::_stripUpdateSpecial);
 
-		Stream<String> stream = strings.stream();
+		for (String string : stripUpdateSpecialStrings) {
+			if (string != null) {
+				return _stripUpdateSpecial(string);
+			}
+		}
 
-		return stream.filter(
-			this::_isUpdateSpecial
-		).map(
-			this::_stripUpdateSpecial
-		).findAny(
-		).orElse(
-			oldName
-		);
+		return oldName;
 	}
 
 	private String[] _getRankingDocumentIds(
@@ -448,17 +438,16 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		Collection<String> queryStrings = ranking.getQueryStrings();
 
 		if (editRankingMVCActionRequest.isCmd(Constants.UPDATE)) {
-			List<String> aliases = _getAliases(editRankingMVCActionRequest);
+			List<String> strings = ListUtil.concat(
+				ListUtil.fromString(ranking.getQueryString()),
+				_getAliases(editRankingMVCActionRequest));
 
-			queryStrings = Stream.concat(
-				Stream.of(ranking.getQueryString()), aliases.stream()
-			).filter(
-				string -> !Validator.isBlank(string)
-			).distinct(
-			).sorted(
-			).collect(
-				Collectors.toList()
-			);
+			strings = ListUtil.filter(
+				strings, concatString -> !Validator.isBlank(concatString));
+
+			ListUtil.distinct(strings);
+
+			queryStrings = ListUtil.sort(strings);
 		}
 
 		if (_detectedDuplicateQueryStrings(ranking, queryStrings)) {

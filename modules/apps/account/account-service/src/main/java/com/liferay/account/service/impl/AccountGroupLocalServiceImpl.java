@@ -180,7 +180,7 @@ public class AccountGroupLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			return accountGroupPersistence.findByCompanyId(
-				companyId, start, end);
+				companyId, start, end, orderByComparator);
 		}
 
 		return accountGroupPersistence.findByC_LikeN(

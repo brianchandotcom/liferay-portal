@@ -73,7 +73,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -390,12 +389,12 @@ public class RESTBuilder {
 	private String _addClientVersionDescription(String yamlString) {
 		String clientMavenGroupId = _getClientMavenGroupId(
 			_configYAML.getApiPackagePath());
-		Optional<String> clientVersionOptional = _getClientVersionOptional();
+		String clientVersion = _getClientVersion();
 
 		int licenseIndex = yamlString.indexOf("    license:");
 
-		if ((clientMavenGroupId == null) ||
-			!clientVersionOptional.isPresent() || (licenseIndex == -1)) {
+		if ((clientMavenGroupId == null) || (clientVersion == null) ||
+			(licenseIndex == -1)) {
 
 			return yamlString;
 		}
@@ -409,8 +408,6 @@ public class RESTBuilder {
 		if (description == null) {
 			return yamlString;
 		}
-
-		String clientVersion = clientVersionOptional.get();
 
 		String clientMessage = StringBundler.concat(
 			"A Java client JAR is available for use with the group ID '",
@@ -1657,7 +1654,7 @@ public class RESTBuilder {
 		return _configYAML.getClientMavenGroupId();
 	}
 
-	private Optional<String> _getClientVersionOptional() {
+	private String _getClientVersion() {
 		try {
 			String directory = StringUtil.removeSubstring(
 				_configYAML.getClientDir(), "src/main/java");
@@ -1671,8 +1668,7 @@ public class RESTBuilder {
 					continue;
 				}
 
-				return Optional.of(
-					StringUtil.removeSubstring(line, "Bundle-Version: "));
+				return StringUtil.removeSubstring(line, "Bundle-Version: ");
 			}
 
 			return null;
@@ -1682,7 +1678,7 @@ public class RESTBuilder {
 				_log.debug(exception);
 			}
 
-			return Optional.empty();
+			return null;
 		}
 	}
 

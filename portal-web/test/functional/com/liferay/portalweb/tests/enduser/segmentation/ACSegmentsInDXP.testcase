@@ -294,7 +294,7 @@ definition {
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#RedirectToSegmentPageErrorAC";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval();
+			Segmentation.updateSegmentsInterval(interval = "1");
 		}
 
 		task ("Go to segmentats page and at segment created in AC") {
@@ -303,6 +303,10 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");
+
+			while ((IsElementNotPresent(key_tableEntry = "Dynamic Segment Test", locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS")) && (maxIterations = "40")) {
+				Refresh();
+			}
 
 			AssertElementPresent(
 				key_tableEntry = "Dynamic Segment Test",

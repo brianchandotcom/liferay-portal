@@ -310,7 +310,7 @@ public class Dom4JUtil {
 
 				org.w3c.dom.Document orgW3CDomDocument = null;
 
-				if (!xml.contains("<!DOCTYPE definition")) {
+				try {
 					String documentTypeDefinition =
 						"<!DOCTYPE definition [\n<!ENTITY micro" +
 							"  \"&#181;\">\n]>\n";
@@ -319,7 +319,7 @@ public class Dom4JUtil {
 						new InputSource(
 							new StringReader(documentTypeDefinition + xml)));
 				}
-				else {
+				catch (Exception exception2) {
 					orgW3CDomDocument = documentBuilder.parse(
 						new InputSource(new StringReader(xml)));
 				}

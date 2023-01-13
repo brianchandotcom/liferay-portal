@@ -104,7 +104,7 @@ definition {
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#CheckNotEditableSegmentFromACAtDXP";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval();
+			Segmentation.updateSegmentsInterval(interval = "1");
 		}
 
 		task ("Go to segmentats page and assert that not possible Edit/Delete ") {
@@ -113,6 +113,10 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");
+
+			while ((IsElementNotPresent(key_tableEntry = "Dynamic Segment Test", locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS")) && (maxIterations = "40")) {
+				Refresh();
+			}
 
 			Click.waitForMenuToggleJSClick(
 				key_tableEntry = "Dynamic Segment Test",

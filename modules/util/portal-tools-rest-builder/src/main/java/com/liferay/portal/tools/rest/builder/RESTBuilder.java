@@ -76,7 +76,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 /**
  * @author Peter Shin
@@ -1663,14 +1662,20 @@ public class RESTBuilder {
 			String directory = StringUtil.removeSubstring(
 				_configYAML.getClientDir(), "src/main/java");
 
-			Stream<String> stream = Files.lines(
-				Paths.get(directory + "/bnd.bnd"), StandardCharsets.UTF_8);
+			for (String line :
+					Files.readAllLines(
+						Paths.get(directory + "/bnd.bnd"),
+						StandardCharsets.UTF_8)) {
 
-			return stream.filter(
-				line -> line.startsWith("Bundle-Version: ")
-			).map(
-				line -> StringUtil.removeSubstring(line, "Bundle-Version: ")
-			).findFirst();
+				if (!line.startsWith("Bundle-Version: ")) {
+					continue;
+				}
+
+				return Optional.of(
+					StringUtil.removeSubstring(line, "Bundle-Version: "));
+			}
+
+			return null;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

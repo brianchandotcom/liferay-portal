@@ -633,6 +633,17 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 			return _prefsProps.getString(companyId, name);
 		}
 
+		@Override
+		public String[] getStringArray(
+			long companyId, String name, String delimiter) {
+
+			if (Objects.equals("liferayAnalyticsGroupIds", name)) {
+				return new String[] {"test"};
+			}
+
+			return _prefsProps.getStringArray(companyId, name, delimiter);
+		}
+
 		private final PrefsProps _prefsProps;
 
 	}

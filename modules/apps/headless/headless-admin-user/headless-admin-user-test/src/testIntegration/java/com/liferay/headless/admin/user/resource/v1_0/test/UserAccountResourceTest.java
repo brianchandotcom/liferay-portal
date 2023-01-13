@@ -37,6 +37,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
@@ -1183,6 +1184,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _assertAuthenticationResult(
 			int authenticatorResult, String emailAddress, String password)
 		throws Exception {
+
+		AuditRequestThreadLocal.removeAuditThreadLocal();
 
 		Assert.assertEquals(
 			authenticatorResult,

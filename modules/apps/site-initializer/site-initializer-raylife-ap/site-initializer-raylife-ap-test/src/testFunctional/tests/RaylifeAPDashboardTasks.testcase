@@ -44,7 +44,7 @@ definition {
 	@priority = "4"
 	test ClickSubsectionApplicationsRedirectedToApplications {
 		task ("Go to Raylife AP Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}
 
 		task ("Go to section applications through in the subsection Tasks") {
@@ -60,7 +60,7 @@ definition {
 	@priority = "4"
 	test ClickSubsectionPoliciesRedirectedToPolicies {
 		task ("Go to Raylife AP Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}
 
 		task ("Go to section policies through in the subsection Tasks") {

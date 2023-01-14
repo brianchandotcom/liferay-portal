@@ -1229,6 +1229,22 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasStructure(
+		long groupId, long classNameId, String structureKey) {
+
+		structureKey = _getStructureKey(structureKey);
+
+		int count = ddmStructurePersistence.countByG_C_S(
+			groupId, classNameId, structureKey);
+
+		if (count == 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public String prepareLocalizedDefinitionForImport(
 		DDMStructure structure, Locale defaultImportLocale) {
 

@@ -283,13 +283,9 @@ definition {
 				locator1 = "Search#EMBEDDED_SEARCH_BAR",
 				value1 = "p");
 
-			AssertElementPresent(
-				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
-				subHeader = "Blueprint 1");
-
-			AssertElementPresent(
-				key_dropdownItem = "Pineapple",
-				locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+			SearchBarSuggestions.viewSuggestions(
+				searchAssetTitle = "Pineapple",
+				suggestionContributorDisplayGroupName = "Blueprint 1");
 		}
 
 		task ("Assert that 'Blueprint 3' shows up as a display group and 'Pineapple' appears as a suggestion in that group") {
@@ -297,13 +293,9 @@ definition {
 				locator1 = "Search#EMBEDDED_SEARCH_BAR",
 				value1 = "pin");
 
-			AssertElementPresent(
-				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
-				subHeader = "Blueprint 3");
-
-			AssertElementPresent(
-				key_dropdownItem = "Pineapple",
-				locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+			SearchBarSuggestions.viewSuggestions(
+				searchAssetTitle = "Pineapple",
+				suggestionContributorDisplayGroupName = "Blueprint 3");
 		}
 
 		task ("Assert that 'Blueprint 5' shows up as a display group and 'Pineapple' appears as a suggestion in that group") {
@@ -311,13 +303,9 @@ definition {
 				locator1 = "Search#EMBEDDED_SEARCH_BAR",
 				value1 = "pinea");
 
-			AssertElementPresent(
-				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
-				subHeader = "Blueprint 5");
-
-			AssertElementPresent(
-				key_dropdownItem = "Pineapple",
-				locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+			SearchBarSuggestions.viewSuggestions(
+				searchAssetTitle = "Pineapple",
+				suggestionContributorDisplayGroupName = "Blueprint 5");
 		}
 	}
 
@@ -529,11 +517,9 @@ definition {
 
 		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
-		AssertElementPresent(
-			locator1 = "Dropdown#DROPDOWN_SUBHEADER",
-			subHeader = "Blueprint 0");
-
-		SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Software");
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetTitle = "Software",
+			suggestionContributorDisplayGroupName = "Blueprint 0");
 	}
 
 	@priority = "5"

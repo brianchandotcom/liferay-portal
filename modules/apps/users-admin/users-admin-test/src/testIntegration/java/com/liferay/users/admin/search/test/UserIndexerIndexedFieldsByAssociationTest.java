@@ -15,7 +15,6 @@
 package com.liferay.users.admin.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -61,11 +60,10 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -267,10 +265,14 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		long groupId = group.getGroupId();
 
+		List<Long> sortedGroupIds = new ArrayList<>(groupIds);
+
+		sortedGroupIds.sort(Comparator.comparing(String::valueOf));
+
 		if (!groupIds.contains(groupId)) {
 			DocumentsAssert.assertValuesIgnoreRelevance(
 				searchResponse1.getRequestString(), documents, Field.GROUP_ID,
-				_toSingletonListString(_toSortedListString(groupIds.stream())));
+				_toSingletonListString(sortedGroupIds.toString()));
 		}
 
 		SearchResponse searchResponse2 = _searcher.search(
@@ -280,8 +282,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			searchResponse2.getRequestString(), searchResponse2.getDocuments(),
-			Field.GROUP_ID,
-			_toSingletonListString(_toSortedListString(groupIds.stream())));
+			Field.GROUP_ID, _toSingletonListString(sortedGroupIds.toString()));
 	}
 
 	protected Group addGroup() {
@@ -337,25 +338,8 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	protected UserGroupSearchFixture userGroupSearchFixture;
 	protected UserSearchFixture userSearchFixture;
 
-	private String _toListString(Stream<?> stream) {
-		return stream.map(
-			String::valueOf
-		).collect(
-			Collectors.joining(
-				StringPool.COMMA_AND_SPACE, StringPool.OPEN_BRACKET,
-				StringPool.CLOSE_BRACKET)
-		);
-	}
-
 	private String _toSingletonListString(String string) {
 		return String.valueOf(Collections.singletonList(string));
-	}
-
-	private String _toSortedListString(Stream<?> stream) {
-		return _toListString(
-			stream.map(
-				String::valueOf
-			).sorted());
 	}
 
 	private static final String _CT_COLLECTION_ID = "ctCollectionId";

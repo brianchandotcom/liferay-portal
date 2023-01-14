@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.verify;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.internal.util.DDMFormUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -25,6 +26,12 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.RawMetadataProcessor;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.string.StringBundler;
@@ -38,17 +45,20 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -61,7 +71,9 @@ import com.liferay.portal.verify.VerifyProcess;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,6 +94,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		_checkDLFileEntryMetadata();
+		_checkDDMStructureDefinition();
 		_checkMimeTypes();
 		_updateClassNameId();
 		_updateFileEntryAssets();
@@ -134,6 +147,43 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			});
 
 		groupActionableDynamicQuery.performActions();
+	}
+
+	private void _checkDDMStructureDefinition() throws Exception {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				Map<String, Set<String>> fieldNames =
+					RawMetadataProcessorUtil.getFieldNames();
+
+				Group group = _groupLocalService.getCompanyGroup(companyId);
+
+				for (Map.Entry<String, Set<String>> entry :
+						fieldNames.entrySet()) {
+
+					String name = entry.getKey();
+
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.fetchStructure(
+							group.getGroupId(),
+							_portal.getClassNameId(RawMetadataProcessor.class),
+							name);
+
+					if (ddmStructure != null) {
+						DDMForm ddmForm = DDMFormUtil.buildDDMForm(
+							entry.getValue(),
+							_portal.getSiteDefaultLocale(group.getGroupId()));
+
+						String definition = _serializeJSONDDMForm(ddmForm);
+
+						if (!definition.equals(ddmStructure.getDefinition())) {
+							ddmStructure.setDDMForm(ddmForm);
+
+							_ddmStructureLocalService.updateDDMStructure(
+								ddmStructure);
+						}
+					}
+				}
+			});
 	}
 
 	private void _checkDLFileEntryMetadata() throws Exception {
@@ -298,6 +348,16 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			dlFileEntryMetadata);
 	}
 
+	private String _serializeJSONDDMForm(DDMForm ddmForm) {
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			_jsonDDMFormSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
+	}
+
 	private void _updateClassNameId() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
@@ -393,6 +453,9 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		DLServiceVerifyProcess.class);
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private CTStoreFactory _ctStoreFactory;
 
 	@Reference
@@ -415,6 +478,12 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.document.library.service)(&(release.schema.version>=3.0.0)(!(release.schema.version>=4.0.0))))"

@@ -1031,6 +1031,12 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getStructuresCount(groupIds, classNameId);
 	}
 
+	public static boolean hasStructure(
+		long groupId, long classNameId, String structureKey) {
+
+		return getService().hasStructure(groupId, classNameId, structureKey);
+	}
+
 	public static String prepareLocalizedDefinitionForImport(
 		DDMStructure structure, java.util.Locale defaultImportLocale) {
 

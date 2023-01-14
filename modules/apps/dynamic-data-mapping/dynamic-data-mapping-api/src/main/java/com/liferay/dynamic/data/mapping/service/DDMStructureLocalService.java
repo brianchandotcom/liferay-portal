@@ -877,6 +877,10 @@ public interface DDMStructureLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructuresCount(long[] groupIds, long classNameId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasStructure(
+		long groupId, long classNameId, String structureKey);
+
 	public String prepareLocalizedDefinitionForImport(
 		DDMStructure structure, Locale defaultImportLocale);
 

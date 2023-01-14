@@ -1135,6 +1135,14 @@ public class DDMStructureLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasStructure(
+		long groupId, long classNameId, String structureKey) {
+
+		return _ddmStructureLocalService.hasStructure(
+			groupId, classNameId, structureKey);
+	}
+
+	@Override
 	public String prepareLocalizedDefinitionForImport(
 		DDMStructure structure, java.util.Locale defaultImportLocale) {
 

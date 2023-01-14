@@ -245,12 +245,12 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	public HashMap<String, List<String>> getTestClassMap() {
-		HashMap<String, List<String>> classNamesMethodsList = new HashMap<>();
+		HashMap<String, List<String>> classNamesMethodsMap = new HashMap<>();
 
-		if (!getBatchName().contains("modules-integration") ||
-			!getBatchName().contains("modules-unit")) {
+		if (!getBatchName().contains("integration") &&
+			!getBatchName().contains("unit")) {
 
-			return classNamesMethodsList;
+			return classNamesMethodsMap;
 		}
 
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
@@ -276,13 +276,13 @@ public class DownstreamBuild extends BaseBuild {
 						}
 					}
 
-					classNamesMethodsList.put(
+					classNamesMethodsMap.put(
 						jUnitTestClass.getTestClassName(), methodNames);
 				}
 			}
 		}
 
-		return classNamesMethodsList;
+		return classNamesMethodsMap;
 	}
 
 	@Override

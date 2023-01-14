@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
@@ -96,12 +95,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		for (Map.Entry<String, Set<String>> entry : fieldNames.entrySet()) {
 			String name = entry.getKey();
 
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchStructure(
+			if (!_ddmStructureLocalService.hasStructure(
 					group.getGroupId(),
-					_portal.getClassNameId(RawMetadataProcessor.class), name);
+					_portal.getClassNameId(RawMetadataProcessor.class), name)) {
 
-			if (ddmStructure == null) {
 				Map<Locale, String> nameMap = HashMapBuilder.put(
 					locale, name
 				).build();

@@ -33,7 +33,7 @@ public class NormalizerImpl implements Normalizer {
 			return s;
 		}
 
-		String normalizedText = _transliterator.transform(s);
+		String normalizedText = TransliteratorHolder.transform(s);
 
 		return StringUtil.replace(
 			normalizedText, _UNICODE_TEXT, _NORMALIZED_TEXT);
@@ -55,7 +55,17 @@ public class NormalizerImpl implements Normalizer {
 		"\u0142", "\u02B9", "\u02BA"
 	};
 
-	private final Transliterator _transliterator = Transliterator.getInstance(
-		"Greek-Latin; Cyrillic-Latin; NFD; [:Nonspacing Mark:] Remove; NFC");
+	private static class TransliteratorHolder {
+
+		public static String transform(String source) {
+			return _transliterator.transform(source);
+		}
+
+		private static final Transliterator _transliterator =
+			Transliterator.getInstance(
+				"Greek-Latin; Cyrillic-Latin; NFD; [:Nonspacing Mark:] " +
+					"Remove; NFC");
+
+	}
 
 }

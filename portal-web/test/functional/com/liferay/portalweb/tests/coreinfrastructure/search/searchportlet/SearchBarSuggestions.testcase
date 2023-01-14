@@ -533,9 +533,7 @@ definition {
 			locator1 = "Dropdown#DROPDOWN_SUBHEADER",
 			subHeader = "Blueprint 0");
 
-		AssertElementPresent(
-			key_dropdownItem = "Software",
-			locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+		SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Software");
 	}
 
 	@priority = "5"

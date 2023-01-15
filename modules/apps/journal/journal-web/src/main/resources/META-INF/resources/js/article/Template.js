@@ -21,6 +21,7 @@ import {
 } from 'frontend-js-web';
 
 export default function ({
+	availableLocales,
 	currentURL,
 	ddmTemplateId,
 	editDDMTemplateURL,
@@ -58,6 +59,7 @@ export default function ({
 
 					if (form) {
 						setFormValues(form, {
+							availableLocales,
 							ddmTemplateId: newDDMTemplateId,
 							ddmTemplateKey:
 								(newDDMTemplate &&

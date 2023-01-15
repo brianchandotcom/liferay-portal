@@ -848,6 +848,8 @@ public class JournalEditArticleDisplayContext {
 
 	public Map<String, Object> getTemplateComponentContext() {
 		return HashMapBuilder.<String, Object>put(
+			"availableLocales", _getAvailableLanguageIds()
+		).put(
 			"currentURL", _themeDisplay::getURLCurrent
 		).put(
 			"ddmTemplateId",

@@ -18,7 +18,9 @@
 
 		cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel()
 
-		addressModel = dataFactory.newAddressModel(commerceAccountEntryModels[0].accountEntryId, countryModel.countryId)
+		addressModels = dataFactory.newAddressModels(commerceAccountEntryModels, countryModel.countryId)
+
+		commerceShippingMethodModels = dataFactory.newCommerceShippingMethodModels(commerceChannelGroupModels)
 	/>
 
 	<#list commerceAccountEntryModels as commerceAccountEntryModel>
@@ -29,7 +31,9 @@
 		${dataFactory.toInsertSQL(dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel))}
 	</#list>
 
-	${dataFactory.toInsertSQL(addressModel)}
+	<#list addressModels as addressModel>
+		${dataFactory.toInsertSQL(addressModel)}
+	</#list>
 
 	<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
 		${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}
@@ -142,7 +146,7 @@
 
 				${csvFileWriter.write("cpDefinition", virtualHostModel.hostname + "," + cpDefinitionModel.CPDefinitionId + "\n")}
 
-				<#if dataFactory.maxCPDefinitionAttachmentTypePDFCount != 0>
+				<#if (dataFactory.maxCPDefinitionAttachmentTypeImageCount != 0) || (dataFactory.maxCPDefinitionAttachmentTypePDFCount != 0)>
 					<#include "commerce_product_attachment_file_entries.ftl">
 				</#if>
 			</#list>
@@ -159,6 +163,28 @@
 		${dataFactory.toInsertSQL(openCommerceOrderModel)}
 
 		${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(openCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()]))}
+	</#list>
+
+	<#list commerceAccountEntryModels as commerceAccountEntryModel>
+		<#assign
+			addressModel = addressModels[commerceAccountEntryModel?index]
+
+			accountEntryCommerceOrderModels = dataFactory.newAccountEntryCommerceOrderModels(commerceChannelGroupModels[0].groupId, commerceAccountEntryModel.accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModel.addressId, addressModel.addressId, commerceShippingMethodModels[0].commerceShippingMethodId, "Standard Delivery", 2)
+		/>
+
+		<#list accountEntryCommerceOrderModels as accountEntryCommerceOrderModel>
+			${dataFactory.toInsertSQL(accountEntryCommerceOrderModel)}
+
+			${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(accountEntryCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()]))}
+		</#list>
+
+		<#if dataFactory.maxCommerceAccountOrderCount != 0>
+			<#assign
+				accountEntryCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(accountEntryCommerceOrderModels[0], commercePriceListModel.commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()])
+			/>
+
+			${csvFileWriter.write("commerceDeliveryAPI", virtualHostModel.hostname + "," + commerceAccountEntryModel.accountEntryId + "," + commerceChannelModels[0].commerceChannelId + "," + addressModel.addressId + "," + addressModel.countryId + "," + commerceCurrencyModel.code + "," + commerceShippingMethodModels[0].engineKey + "," + accountEntryCommerceOrderItemModel.CProductId + "," + accountEntryCommerceOrderItemModel.CPInstanceId + "," + accountEntryCommerceOrderModels[0].commerceOrderId + "\n")}
+		</#if>
 	</#list>
 
 	<#list commerceGroupModels as commerceGroupModel>
@@ -205,7 +231,7 @@
 		<#assign
 			commerceB2BSiteTypePortletPreferencesModel = dataFactory.newCommerceB2BSiteTypePortletPreferencesModel(commerceChannelGroupModel.groupId)
 
-			commerceShippingMethodModel = dataFactory.newCommerceShippingMethodModel(commerceChannelGroupModel.groupId)
+			commerceShippingMethodModel = commerceShippingMethodModels[commerceChannelGroupModel?index]
 
 			commerceShippingFixedOptionModel = dataFactory.newCommerceShippingFixedOptionModel(commerceChannelGroupModel.groupId, commerceShippingMethodModel.commerceShippingMethodId)
 		/>
@@ -218,13 +244,13 @@
 
 		${dataFactory.toInsertSQL(commerceShippingFixedOptionModel)}
 
-		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModel.addressId, addressModel.addressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 8) as cancelledCommerceOrderModel>
+		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModels[0].addressId, addressModels[0].addressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 8) as cancelledCommerceOrderModel>
 			${dataFactory.toInsertSQL(cancelledCommerceOrderModel)}
 
 			${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(cancelledCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[0]))}
 		</#list>
 
-		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModel.addressId, addressModel.addressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 1) as pendingCommerceOrderModel>
+		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModels[0].addressId, addressModels[0].addressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 1) as pendingCommerceOrderModel>
 			${dataFactory.toInsertSQL(pendingCommerceOrderModel)}
 
 			<#assign
@@ -235,7 +261,7 @@
 
 			${dataFactory.toInsertSQL(pendingCommerceOrderItemModel)}
 
-			${csvFileWriter.write("commerceOrder", virtualHostModel.hostname + "," + pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderItemModel.commerceOrderItemId + ", " + pendingCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + addressModel.countryId + ", " + pendingCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + ", " + commerceGroupModels[0].groupId + "\n")}
+			${csvFileWriter.write("commerceOrder", virtualHostModel.hostname + "," + pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderItemModel.commerceOrderItemId + ", " + pendingCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + addressModels[0].countryId + ", " + pendingCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + ", " + commerceGroupModels[0].groupId + "\n")}
 		</#list>
 
 		${dataFactory.toInsertSQL(commerceChannelGroupModel)}

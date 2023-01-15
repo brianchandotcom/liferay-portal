@@ -51,6 +51,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_COMMERCE_ACCOUNT_ENTRY_COUNT =
 		"sample.sql.max.commerce.account.entry.count";
 
+	public static final String MAX_COMMERCE_ACCOUNT_ORDER_COUNT =
+		"sample.sql.max.commerce.account.order.count";
+
 	public static final String MAX_COMMERCE_CATALOG_COUNT =
 		"sample.sql.max.commerce.catalog.count";
 

@@ -55,25 +55,40 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 		_userLocalService = userLocalService;
 	}
 
-	public void addDLVideoExternalShortcutDLFileEntryType() throws Exception {
+	public void addDLVideoExternalShortcutDLFileEntryType(boolean shortcut)
+		throws Exception {
+
+		if (shortcut &&
+			_ddmStructureLocalService.hasStructure(
+				_company.getGroupId(), _dlFileEntryMetadataClassNameId,
+				DLVideoConstants.
+					DDM_STRUCTURE_KEY_DL_VIDEO_EXTERNAL_SHORTCUT)) {
+
+			return;
+		}
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
 			DLVideoConstants.DDM_STRUCTURE_KEY_DL_VIDEO_EXTERNAL_SHORTCUT);
 
 		if (ddmStructure == null) {
 			ddmStructure = _addDLVideoExternalShortcutDDMStructure();
-		}
 
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.fetchDataDefinitionFileEntryType(
-				_company.getGroupId(), ddmStructure.getStructureId());
-
-		if (dlFileEntryType == null) {
 			_addDLVideoExternalShortcutDLFileEntryType(
 				ddmStructure.getStructureId());
 		}
 		else {
-			_updateDLFileEntryTypeNameMap(dlFileEntryType);
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeLocalService.fetchDataDefinitionFileEntryType(
+					_company.getGroupId(), ddmStructure.getStructureId());
+
+			if (dlFileEntryType == null) {
+				_addDLVideoExternalShortcutDLFileEntryType(
+					ddmStructure.getStructureId());
+			}
+			else {
+				_updateDLFileEntryTypeNameMap(dlFileEntryType);
+			}
 		}
 	}
 

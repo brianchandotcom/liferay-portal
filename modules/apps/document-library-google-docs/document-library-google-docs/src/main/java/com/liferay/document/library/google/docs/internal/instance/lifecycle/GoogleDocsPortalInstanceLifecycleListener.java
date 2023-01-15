@@ -55,7 +55,7 @@ public class GoogleDocsPortalInstanceLifecycleListener
 					_ddmStructureLocalService, _dlFileEntryTypeLocalService,
 					_userLocalService);
 
-			googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
+			googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType(true);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

@@ -52,7 +52,17 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		_userLocalService = userLocalService;
 	}
 
-	public void addGoogleDocsDLFileEntryType() throws Exception {
+	public void addGoogleDocsDLFileEntryType(boolean shortcut)
+		throws Exception {
+
+		if (shortcut &&
+			_ddmStructureLocalService.hasStructure(
+				_company.getGroupId(), _dlFileEntryMetadataClassNameId,
+				GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
+
+			return;
+		}
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
 			GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS);

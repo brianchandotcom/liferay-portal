@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Liferay
  */
-@Component(immediate = true, service = Rule.class)
+@Component(service = Rule.class)
 public class FooRuleRule extends BaseJSPRule {
 
 	@Override

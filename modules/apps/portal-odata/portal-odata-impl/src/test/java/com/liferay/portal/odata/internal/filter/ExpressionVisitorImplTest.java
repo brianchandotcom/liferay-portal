@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
@@ -61,9 +62,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
@@ -813,24 +811,27 @@ public class ExpressionVisitorImplTest {
 
 		@Override
 		public Map<String, EntityField> getEntityFieldsMap() {
-			return Stream.of(
+			return HashMapBuilder.put(
+				"date",
+				(EntityField)new DateEntityField(
+					"date", locale -> "date", locale -> "date")
+			).put(
+				"dateTime",
+				new DateTimeEntityField(
+					"dateTime", locale -> "dateTime", locale -> "dateTime")
+			).put(
+				"keywords",
 				new CollectionEntityField(
-					new StringEntityField(
-						"keywords", locale -> "keywords.raw")),
+					new StringEntityField("keywords", locale -> "keywords.raw"))
+			).put(
+				"title", new StringEntityField("title", locale -> "title")
+			).put(
+				"values",
 				new ComplexEntityField(
 					"values",
-					Stream.of(
-						new StringEntityField("value1", locale -> "value1")
-					).collect(
-						Collectors.toList()
-					)),
-				new DateEntityField("date", locale -> "date", locale -> "date"),
-				new DateTimeEntityField(
-					"dateTime", locale -> "dateTime", locale -> "dateTime"),
-				new StringEntityField("title", locale -> "title")
-			).collect(
-				Collectors.toMap(EntityField::getName, Function.identity())
-			);
+					Collections.singletonList(
+						new StringEntityField("value1", locale -> "value1")))
+			).build();
 		}
 
 		@Override

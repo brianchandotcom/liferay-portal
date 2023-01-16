@@ -79,6 +79,21 @@ public class LayoutUtilityPageEntryServiceImpl
 			long layoutUtilityPageEntryId)
 		throws PortalException {
 
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntry(
+				layoutUtilityPageEntryId);
+
+		_layoutUtilityPageEntryModelResourcePermission.check(
+			getPermissionChecker(), layoutUtilityPageEntryId,
+			ActionKeys.DELETE);
+
+		if (layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+			_groupPermission.check(
+				getPermissionChecker(), layoutUtilityPageEntry.getGroupId(),
+				LayoutUtilityPageActionKeys.
+					ASSIGN_DEFAULT_LAYOUT_UTILITY_PAGE_ENTRY);
+		}
+
 		return layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId);
 	}

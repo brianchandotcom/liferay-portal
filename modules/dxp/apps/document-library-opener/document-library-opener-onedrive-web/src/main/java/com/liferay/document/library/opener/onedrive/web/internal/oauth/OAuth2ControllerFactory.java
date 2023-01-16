@@ -36,7 +36,6 @@ import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 
 import javax.portlet.PortletRequest;
@@ -220,11 +219,11 @@ public class OAuth2ControllerFactory {
 				return JSONUtil.put("redirectURL", _redirectURL);
 			}
 
-			return Optional.ofNullable(
-				_responseJSONObject
-			).orElseGet(
-				_jsonFactory::createJSONObject
-			);
+			if (_responseJSONObject == null) {
+				return _jsonFactory.createJSONObject();
+			}
+
+			return _responseJSONObject;
 		}
 
 		private final PortalException _portalException;
@@ -265,13 +264,13 @@ public class OAuth2ControllerFactory {
 					fieldName, jsonObject.getString(fieldName));
 			}
 
-			portletRequest.setAttribute(
-				WebKeys.REDIRECT,
-				Optional.ofNullable(
-					oAuth2Result.getRedirectURL()
-				).orElseGet(
-					() -> _getRenderURL(portletRequest)
-				));
+			String url = oAuth2Result.getRedirectURL();
+
+			if (url == null) {
+				url = _getRenderURL(portletRequest);
+			}
+
+			portletRequest.setAttribute(WebKeys.REDIRECT, url);
 		}
 
 		private final Function<PortletRequest, String> _function;

@@ -709,28 +709,12 @@ public class LayoutsAdminDisplayContext {
 
 		layoutsSearchContainer.setResultsAndTotal(
 			() -> LayoutServiceUtil.getLayouts(
-				getSelGroupId(), isPrivateLayout(), keywords,
-				new String[] {
-					LayoutConstants.TYPE_COLLECTION,
-					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
-					LayoutConstants.TYPE_LINK_TO_LAYOUT,
-					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-					LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PANEL,
-					LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
-				},
+				getSelGroupId(), isPrivateLayout(), keywords, _getTypes(),
 				layoutStatuses, layoutsSearchContainer.getStart(),
 				layoutsSearchContainer.getEnd(),
 				layoutsSearchContainer.getOrderByComparator()),
 			LayoutServiceUtil.getLayoutsCount(
-				getSelGroupId(), isPrivateLayout(), keywords,
-				new String[] {
-					LayoutConstants.TYPE_COLLECTION,
-					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
-					LayoutConstants.TYPE_LINK_TO_LAYOUT,
-					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-					LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PANEL,
-					LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
-				},
+				getSelGroupId(), isPrivateLayout(), keywords, _getTypes(),
 				layoutStatuses));
 
 		layoutsSearchContainer.setRowChecker(
@@ -2222,6 +2206,22 @@ public class LayoutsAdminDisplayContext {
 		return _themeId;
 	}
 
+	private String[] _getTypes() {
+		if (_types != null) {
+			return _types;
+		}
+
+		_types = new String[] {
+			LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
+			LayoutConstants.TYPE_EMBEDDED, LayoutConstants.TYPE_LINK_TO_LAYOUT,
+			LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PANEL,
+			LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
+		};
+
+		return _types;
+	}
+
 	private boolean _isLiveGroup() {
 		if (_liveGroup != null) {
 			return _liveGroup;
@@ -2287,5 +2287,6 @@ public class LayoutsAdminDisplayContext {
 	private final StagingGroupHelper _stagingGroupHelper;
 	private String _tabs1;
 	private String _themeId;
+	private String[] _types;
 
 }

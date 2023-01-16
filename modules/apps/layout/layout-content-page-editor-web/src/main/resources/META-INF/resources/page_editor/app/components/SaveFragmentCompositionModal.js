@@ -31,7 +31,7 @@ import {useActiveItemId} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import addFragmentComposition from '../thunks/addFragmentComposition';
 
-const SaveFragmentCompositionModal = ({onCloseModal}) => {
+const SaveFragmentCompositionModal = ({itemId, onCloseModal}) => {
 	const dispatch = useDispatch();
 
 	const activeItemId = useActiveItemId();
@@ -74,7 +74,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 				addFragmentComposition({
 					description,
 					fragmentCollectionId,
-					itemId: activeItemId,
+					itemId: itemId || activeItemId,
 					name,
 					previewImageURL: thumbnail.url,
 					saveInlineContent,
@@ -360,6 +360,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 };
 
 SaveFragmentCompositionModal.propTypes = {
+	itemId: PropTypes.string,
 	onCloseModal: PropTypes.func.isRequired,
 };
 

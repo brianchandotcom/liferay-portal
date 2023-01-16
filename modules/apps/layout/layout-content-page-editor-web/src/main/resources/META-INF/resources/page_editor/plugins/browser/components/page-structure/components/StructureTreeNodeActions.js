@@ -110,6 +110,7 @@ export default function StructureTreeNodeActions({
 
 			{openSaveModal && (
 				<SaveFragmentCompositionModal
+					itemId={item.itemId}
 					onCloseModal={() => setOpenSaveModal(false)}
 				/>
 			)}

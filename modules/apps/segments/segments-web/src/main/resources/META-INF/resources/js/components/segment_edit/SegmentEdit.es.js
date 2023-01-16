@@ -551,15 +551,9 @@ class SegmentEdit extends Component {
 										<div className="btn-group">
 											<div className="btn-group-item mr-2">
 												<ClayToggle
-													aria-label={
-														editing
-															? Liferay.Language.get(
-																	'View'
-															  )
-															: Liferay.Language.get(
-																	'Edit'
-															  )
-													}
+													aria-label={Liferay.Language.get(
+														'edit-segment'
+													)}
 													checked={editing}
 													className="toggle-editing"
 													iconOff="pencil"
@@ -567,15 +561,9 @@ class SegmentEdit extends Component {
 													onChange={
 														this._handleCriteriaEdit
 													}
-													title={
-														editing
-															? Liferay.Language.get(
-																	'View'
-															  )
-															: Liferay.Language.get(
-																	'Edit'
-															  )
-													}
+													title={Liferay.Language.get(
+														'edit-segment'
+													)}
 												/>
 											</div>
 										</div>

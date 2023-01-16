@@ -12,7 +12,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import DOMPurify from 'dompurify';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import i18n from '../../../../common/I18n';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
 import {storage} from '../../../../common/services/liferay/storage';
@@ -36,7 +36,7 @@ const QuickLinksPanel = () => {
 	] = useCustomerPortal();
 	const [quickLinksContents, setQuickLinksContents] = useState([]);
 
-	const pageRoutes = routerPath();
+	const pageRoutes = useMemo(() => routerPath(), []);
 
 	useEffect(() => {
 		const quickLinksExpandedStorage = storage.getItem(

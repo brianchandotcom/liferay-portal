@@ -13,16 +13,19 @@ import {Liferay} from '../services/liferay';
 
 export default function routerPath() {
 	const relativeSiteURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
-	const siteURL = relativeSiteURL.substring(
-		1,
-		relativeSiteURL.lastIndexOf('/')
-	);
+	const lastIndexSlash = relativeSiteURL.lastIndexOf('/');
+
+	let siteURL = '';
+
+	if (lastIndexSlash > 0) {
+		siteURL = `/${relativeSiteURL.substring(1, lastIndexSlash)}`;
+	}
 
 	return {
-		home: () => `${Liferay.ThemeDisplay.getPortalURL()}/${siteURL}`,
+		home: () => `${Liferay.ThemeDisplay.getPortalURL()}${siteURL}`,
 		onboarding: (externalReferenceCode) =>
-			`${Liferay.ThemeDisplay.getPortalURL()}/${siteURL}/onboarding/#/${externalReferenceCode}`,
+			`${Liferay.ThemeDisplay.getPortalURL()}${siteURL}/onboarding/#/${externalReferenceCode}`,
 		project: (externalReferenceCode) =>
-			`${Liferay.ThemeDisplay.getPortalURL()}/${siteURL}/project/#/${externalReferenceCode}`,
+			`${Liferay.ThemeDisplay.getPortalURL()}${siteURL}/project/#/${externalReferenceCode}`,
 	};
 }

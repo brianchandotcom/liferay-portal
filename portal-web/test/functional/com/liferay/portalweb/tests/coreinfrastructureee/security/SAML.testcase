@@ -695,11 +695,9 @@ definition {
 		task ("Assert ds:Signature present in HTML source text") {
 			Open.openNoError(locator1 = "http://localhost:8080/c/portal/saml/metadata");
 
-			AssertHTMLSourceTextPresent(value1 = "ds:Signature");
+			AssertHTMLSourceTextPresent.assertHTMLSourceTextPresentNoSPARefresh(value1 = "ds:Signature");
 
-			var baseURL = PropsUtil.get("portal.url");
-
-			SAML.goToSAMLAdmin();
+			Open.openNoErrorNoSPARefresh(locator1 = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 		}
 
 		task ("Disable IdP") {
@@ -711,7 +709,7 @@ definition {
 		task ("Assert ds:Signature not present in HTML source text") {
 			Open.openNoError(locator1 = "http://localhost:8080/c/portal/saml/metadata");
 
-			AssertHTMLSourceTextNotPresent(value1 = "ds:Signature");
+			AssertHTMLSourceTextNotPresent.assertHTMLSourceTextNotPresentNoSPARefresh(value1 = "ds:Signature");
 		}
 	}
 
@@ -735,19 +733,21 @@ definition {
 		task ("Assert http://www.w3.org/2000/09/xmldsig#rsa-sha1 not present in able.com:9080 HTML source text ") {
 			Open.openNoError(locator1 = "http://www.able.com:9080/c/portal/saml/metadata");
 
-			AssertHTMLSourceTextNotPresent(value1 = "http://www.w3.org/2000/09/xmldsig#rsa-sha1");
+			AssertHTMLSourceTextNotPresent.assertHTMLSourceTextNotPresentNoSPARefresh(value1 = "http://www.w3.org/2000/09/xmldsig#rsa-sha1");
 		}
 
 		task ("Assert http://www.w3.org/2001/04/xmldsig-more#rsa-sha256,http://www.w3.org/2001/04/xmldsig-more#rsa-sha384,http://www.w3.org/2001/04/xmldsig-more#rsa-sha512 not present in localhost:8080 HTML source text ") {
-			Open.openNoError(locator1 = "http://localhost:8080/c/portal/saml/metadata");
+			Open.openNoErrorNoSPARefresh(locator1 = "http://localhost:8080/c/portal/saml/metadata");
 
 			for (var algorithm : list "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256,http://www.w3.org/2001/04/xmldsig-more#rsa-sha384,http://www.w3.org/2001/04/xmldsig-more#rsa-sha512") {
-				AssertHTMLSourceTextNotPresent(value1 = "algorithm");
+				AssertHTMLSourceTextNotPresent.assertHTMLSourceTextNotPresentNoSPARefresh(value1 = "algorithm");
 			}
 		}
 
 		task ("Logout and open able.com:9080") {
-			User.logoutPG();
+			Open.openNoErrorNoSPARefresh(locator1 = "http://localhost:8080/web/guest/home");
+
+			UserBar.signOut();
 
 			User.viewLoggedOutPG();
 

@@ -93,7 +93,7 @@ const activitiesSchema = object({
 										startDate.getMonth() +
 										12 *
 											(endDate.getFullYear() -
-												startDate.getFullYear()) <=
+												startDate.getFullYear()) <
 									6
 								);
 							}

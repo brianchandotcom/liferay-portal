@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -62,9 +63,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -281,16 +279,17 @@ public class ExpressionConvertImplTest {
 
 		@Override
 		public Map<String, EntityField> getEntityFieldsMap() {
-			return Stream.of(
-				new CollectionEntityField(
-					new StringEntityField(
-						"keywords", locale -> "keywords.raw")),
-				new StringEntityField("title", locale -> "title"),
-				new DateTimeEntityField(
+			return HashMapBuilder.put(
+				"dateTime",
+				(EntityField)new DateTimeEntityField(
 					"dateTime", locale -> "dateTime", locale -> "dateTime")
-			).collect(
-				Collectors.toMap(EntityField::getName, Function.identity())
-			);
+			).put(
+				"keywords",
+				new CollectionEntityField(
+					new StringEntityField("keywords", locale -> "keywords.raw"))
+			).put(
+				"title", new StringEntityField("title", locale -> "title")
+			).build();
 		}
 
 		@Override

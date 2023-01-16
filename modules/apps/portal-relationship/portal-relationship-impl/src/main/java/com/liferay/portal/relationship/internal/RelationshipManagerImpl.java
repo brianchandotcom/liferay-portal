@@ -51,7 +51,12 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		Stream<Relationship<T>> stream = relationships.stream();
 
 		return stream.flatMap(
-			relationship -> relationship.getInboundRelatedModelStream(primKey)
+			relationship -> {
+				List<? extends ClassedModel> inboundRelatedModels =
+					relationship.getInboundRelatedModels(primKey);
+
+				return inboundRelatedModels.stream();
+			}
 		).collect(
 			Collectors.toList()
 		);
@@ -71,10 +76,13 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 		stream.forEach(
 			relationship -> {
-				Stream<? extends ClassedModel> inboundRelatedModelStream =
-					relationship.getInboundRelatedModelStream(primKey);
+				List<? extends ClassedModel> inboundRelatedModels =
+					relationship.getInboundRelatedModels(primKey);
 
-				inboundRelatedModelStream.map(
+				Stream<? extends ClassedModel> inboundRelatedModelsStream =
+					inboundRelatedModels.stream();
+
+				inboundRelatedModelsStream.map(
 					inboundRelatedModel -> (ClassedModel)inboundRelatedModel
 				).forEach(
 					inboundRelatedClassedModel -> {
@@ -116,7 +124,12 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		Stream<Relationship<T>> stream = relationships.stream();
 
 		return stream.flatMap(
-			relationship -> relationship.getOutboundRelatedModelStream(primKey)
+			relationship -> {
+				List<? extends ClassedModel> outboundRelatedModels =
+					relationship.getOutboundRelatedModels(primKey);
+
+				return outboundRelatedModels.stream();
+			}
 		).collect(
 			Collectors.toList()
 		);
@@ -136,10 +149,13 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 		stream.forEach(
 			relationship -> {
-				Stream<? extends ClassedModel> outboundRelatedModelStream =
-					relationship.getOutboundRelatedModelStream(primKey);
+				List<? extends ClassedModel> outboundRelatedModels =
+					relationship.getOutboundRelatedModels(primKey);
 
-				outboundRelatedModelStream.map(
+				Stream<? extends ClassedModel> outboundRelatedModelsStream =
+					outboundRelatedModels.stream();
+
+				outboundRelatedModelsStream.map(
 					outboundRelatedModel -> (ClassedModel)outboundRelatedModel
 				).forEach(
 					outboundRelatedClassedModel -> {
@@ -181,7 +197,12 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		Stream<Relationship<T>> stream = relationships.stream();
 
 		return stream.flatMap(
-			relationship -> relationship.getRelatedModelStream(primKey)
+			relationship -> {
+				List<? extends ClassedModel> relatedModels =
+					relationship.getRelatedModels(primKey);
+
+				return relatedModels.stream();
+			}
 		).collect(
 			Collectors.toList()
 		);
@@ -200,10 +221,13 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 		stream.forEach(
 			relationship -> {
-				Stream<? extends ClassedModel> relatedModelStream =
-					relationship.getRelatedModelStream(primKey);
+				List<? extends ClassedModel> relatedModels =
+					relationship.getRelatedModels(primKey);
 
-				relatedModelStream.map(
+				Stream<? extends ClassedModel> relatedModelsStream =
+					relatedModels.stream();
+
+				relatedModelsStream.map(
 					relatedModel -> (ClassedModel)relatedModel
 				).forEach(
 					relatedClassedModel -> {

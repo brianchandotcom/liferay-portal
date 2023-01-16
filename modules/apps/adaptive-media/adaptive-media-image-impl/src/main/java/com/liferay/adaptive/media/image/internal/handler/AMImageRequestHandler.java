@@ -225,24 +225,20 @@ public class AMImageRequestHandler
 		_interpretPath(String pathInfo) {
 
 		try {
-			Optional<Tuple<FileVersion, Map<String, String>>>
-				fileVersionPropertiesTupleOptional =
-					_pathInterpreter.interpretPath(pathInfo);
+			Tuple<FileVersion, Map<String, String>> fileVersionPropertiesTuple =
+				_pathInterpreter.interpretPath(pathInfo);
 
-			if (!fileVersionPropertiesTupleOptional.isPresent()) {
+			if (fileVersionPropertiesTuple == null) {
 				return Optional.empty();
 			}
 
-			Tuple<FileVersion, Map<String, String>> fileVersionMapTuple =
-				fileVersionPropertiesTupleOptional.get();
-
-			FileVersion fileVersion = fileVersionMapTuple.first;
+			FileVersion fileVersion = fileVersionPropertiesTuple.first;
 
 			if (fileVersion.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 				return Optional.empty();
 			}
 
-			Map<String, String> properties = fileVersionMapTuple.second;
+			Map<String, String> properties = fileVersionPropertiesTuple.second;
 
 			AMAttribute<Object, Long> contentLengthAMAttribute =
 				AMAttribute.getContentLengthAMAttribute();

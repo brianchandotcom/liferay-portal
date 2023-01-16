@@ -135,7 +135,7 @@ public class AMImageRequestHandlerTest {
 		Mockito.when(
 			_pathInterpreter.interpretPath(Mockito.anyString())
 		).thenReturn(
-			Optional.empty()
+			null
 		);
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
@@ -402,13 +402,11 @@ public class AMImageRequestHandlerTest {
 		Mockito.when(
 			_pathInterpreter.interpretPath(httpServletRequest.getPathInfo())
 		).thenReturn(
-			Optional.of(
-				Tuple.of(
-					fileVersion,
-					HashMapBuilder.put(
-						"configuration-uuid",
-						amImageConfigurationEntry.getUUID()
-					).build()))
+			Tuple.of(
+				fileVersion,
+				HashMapBuilder.put(
+					"configuration-uuid", amImageConfigurationEntry.getUUID()
+				).build())
 		);
 
 		return httpServletRequest;

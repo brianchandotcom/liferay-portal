@@ -7,9 +7,7 @@ definition {
 	}
 
 	macro clickBannerButton {
-		Click(
-			key_buttonText = "${buttonText}",
-			locator1 = "PRMPages#BANNER_BUTTON");
+		Click(locator1 = "PRMPages#VIDEO_BUTTON");
 	}
 
 	macro dismissBanner {

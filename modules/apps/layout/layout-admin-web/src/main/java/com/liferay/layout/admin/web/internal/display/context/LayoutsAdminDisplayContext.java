@@ -715,8 +715,8 @@ public class LayoutsAdminDisplayContext {
 					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 					LayoutConstants.TYPE_LINK_TO_LAYOUT,
 					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
-					LayoutConstants.TYPE_URL
+					LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PANEL,
+					LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
 				},
 				layoutStatuses, layoutsSearchContainer.getStart(),
 				layoutsSearchContainer.getEnd(),
@@ -728,8 +728,8 @@ public class LayoutsAdminDisplayContext {
 					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 					LayoutConstants.TYPE_LINK_TO_LAYOUT,
 					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
-					LayoutConstants.TYPE_URL
+					LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PANEL,
+					LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
 				},
 				layoutStatuses));
 

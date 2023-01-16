@@ -37,6 +37,7 @@ import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemSer
 import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
@@ -101,6 +102,8 @@ public class AssetListEntryUsagesUtil {
 			if (uniqueAssetListEntryUsagesKeys.contains(
 					_generateUniqueLayoutClassedModelUsageKey(
 						assetListEntryUsage)) ||
+				_isCollectionStyledLayoutStructureItemDeleted(
+					assetListEntryUsage, layoutStructure) ||
 				_isFragmentEntryLinkDeleted(assetListEntryUsage)) {
 
 				continue;
@@ -581,6 +584,36 @@ public class AssetListEntryUsagesUtil {
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private static boolean _isCollectionStyledLayoutStructureItemDeleted(
+		AssetListEntryUsage assetListEntryUsage,
+		LayoutStructure layoutStructure) {
+
+		if (assetListEntryUsage.getContainerType() != PortalUtil.getClassNameId(
+				CollectionStyledLayoutStructureItem.class)) {
+
+			return false;
+		}
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				assetListEntryUsage.getContainerKey());
+
+		if (layoutStructureItem == null) {
+			AssetListEntryUsageLocalServiceUtil.deleteAssetListEntryUsage(
+				assetListEntryUsage);
+
+			return true;
+		}
+
+		if (layoutStructure.isItemMarkedForDeletion(
+				layoutStructureItem.getItemId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isFragmentEntryLinkDeleted(

@@ -8,6 +8,11 @@
 	},
 	{
 		"actions": [
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.portal.kernel.model.Role",
+				"scope": 1
+			}
 		],
 		"description": "",
 		"name": "Test Role 2",

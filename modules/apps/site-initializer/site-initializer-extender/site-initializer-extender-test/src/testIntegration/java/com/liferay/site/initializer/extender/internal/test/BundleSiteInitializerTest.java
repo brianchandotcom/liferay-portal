@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal.test;
 
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -59,6 +60,7 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
@@ -104,6 +106,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -115,6 +118,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -1325,6 +1329,7 @@ public class BundleSiteInitializerTest {
 				String.valueOf(group.getGroupId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
+
 	}
 
 	private void _assertRoles(Group group) {
@@ -1344,6 +1349,15 @@ public class BundleSiteInitializerTest {
 
 		_assertRolesAssignments(2, role2.getRoleId());
 
+		ResourcePermission roleResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+			group.getCompanyId(), "com.liferay.portal.kernel.model.Role",
+			1, String.valueOf(group.getCompanyId()), role2.getRoleId());
+
+		Assert.assertEquals(1, roleResourcePermission.getScope());
+		Assert.assertTrue(roleResourcePermission.getViewActionId());
+
+
 		Role role3 = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 3");
 
@@ -1359,6 +1373,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(2, role4.getType());
 
 		_assertRolesAssignments(0, role4.getRoleId());
+
 	}
 
 	private void _assertRolesAssignments(

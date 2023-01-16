@@ -42,7 +42,7 @@ import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveC
 import useCache from '../../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
-import {useId} from '../../../../../../../core/hooks/useId';
+import {useId} from '../../../../../../../common/hooks/useId';
 import CollectionFilterConfigurationModal from '../../CollectionFilterConfigurationModal';
 import {CommonStyles} from '../CommonStyles';
 import {FlexOptions} from '../FlexOptions';

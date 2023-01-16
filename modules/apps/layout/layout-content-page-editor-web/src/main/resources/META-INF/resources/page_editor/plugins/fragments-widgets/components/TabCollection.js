@@ -18,7 +18,7 @@ import React from 'react';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {config} from '../../../app/config/index';
 import Collapse from '../../../common/components/Collapse';
-import {useSessionState} from '../../../core/hooks/useSessionState';
+import {useSessionState} from '../../../common/hooks/useSessionState';
 import TabItem from './TabItem';
 
 export default function TabCollection({

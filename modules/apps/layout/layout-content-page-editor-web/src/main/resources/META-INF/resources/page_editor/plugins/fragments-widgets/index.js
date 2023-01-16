@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import {Component} from '../../core/AppContext';
+import {Component} from '../../common/AppContext';
 import FragmentsSidebar from './components/FragmentsSidebar';
 
 /**

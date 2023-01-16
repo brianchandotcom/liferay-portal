@@ -21,8 +21,8 @@ import React from 'react';
 import {VIEWPORT_SIZES} from '../../app/config/constants/viewportSizes';
 import {useSelector} from '../../app/contexts/StoreContext';
 import {selectPageContents} from '../../app/selectors/selectPageContents';
-import {useId} from '../../core/hooks/useId';
-import {openImageSelector} from '../../core/openImageSelector';
+import {useId} from '../hooks/useId';
+import {openImageSelector} from '../openImageSelector';
 
 export function ImageSelector({
 	fileEntryId,

@@ -22,8 +22,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {LengthInput} from '../../../common/components/LengthField';
-import useControlledState from '../../../core/hooks/useControlledState';
-import {useId} from '../../../core/hooks/useId';
+import useControlledState from '../../../common/hooks/useControlledState';
+import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';

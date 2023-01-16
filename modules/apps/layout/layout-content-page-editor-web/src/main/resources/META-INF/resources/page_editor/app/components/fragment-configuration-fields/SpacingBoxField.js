@@ -17,7 +17,7 @@ import React, {useMemo} from 'react';
 
 import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
 import SpacingBox from '../../../common/components/SpacingBox';
-import useControlledState from '../../../core/hooks/useControlledState';
+import useControlledState from '../../../common/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';

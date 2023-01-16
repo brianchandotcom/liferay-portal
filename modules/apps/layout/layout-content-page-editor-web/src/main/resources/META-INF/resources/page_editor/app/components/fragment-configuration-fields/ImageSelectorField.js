@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 import {ImageSelector} from '../../../common/components/ImageSelector';
 import {ImageSelectorSize} from '../../../common/components/ImageSelectorSize';
 import MappingSelector from '../../../common/components/MappingSelector';
-import {useId} from '../../../core/hooks/useId';
+import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';

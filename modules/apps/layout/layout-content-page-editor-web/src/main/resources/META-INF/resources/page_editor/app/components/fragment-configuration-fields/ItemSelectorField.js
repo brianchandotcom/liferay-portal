@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
-import {useId} from '../../../core/hooks/useId';
+import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {CollectionItemContext} from '../../contexts/CollectionItemContext';
 import {useDispatch} from '../../contexts/StoreContext';

@@ -23,8 +23,8 @@ import {PAGINATION_ERROR_MESSAGES} from '../../../../../../../app/config/constan
 import {config} from '../../../../../../../app/config/index';
 import CollectionService from '../../../../../../../app/services/CollectionService';
 import {WarningMessage} from '../../../../../../../common/components/WarningMessage';
-import useControlledState from '../../../../../../../core/hooks/useControlledState';
-import {useId} from '../../../../../../../core/hooks/useId';
+import useControlledState from '../../../../../../../common/hooks/useControlledState';
+import {useId} from '../../../../../../../common/hooks/useId';
 
 export function NoPaginationOptions({
 	collection,

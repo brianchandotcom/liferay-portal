@@ -18,7 +18,7 @@ import React, {useState} from 'react';
 
 import {useDispatch} from '../../../app/contexts/StoreContext';
 import addFragmentComment from '../../../app/thunks/addFragmentComment';
-import {useId} from '../../../core/hooks/useId';
+import {useId} from '../../../common/hooks/useId';
 import CommentForm from './CommentForm';
 
 export default function AddCommentForm({fragmentEntryLinkId}) {

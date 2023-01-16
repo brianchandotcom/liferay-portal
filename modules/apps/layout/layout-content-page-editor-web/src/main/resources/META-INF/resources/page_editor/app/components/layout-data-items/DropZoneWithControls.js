@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import useSetRef from '../../../core/hooks/useSetRef';
+import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
 import Topper from '../topper/Topper';

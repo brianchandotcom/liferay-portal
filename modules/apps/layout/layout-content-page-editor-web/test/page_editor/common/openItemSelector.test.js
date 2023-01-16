@@ -14,7 +14,7 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
-import {openItemSelector} from '../../../src/main/resources/META-INF/resources/page_editor/core/openItemSelector';
+import {openItemSelector} from '../../../src/main/resources/META-INF/resources/page_editor/common/openItemSelector';
 
 jest.mock('frontend-js-web');
 

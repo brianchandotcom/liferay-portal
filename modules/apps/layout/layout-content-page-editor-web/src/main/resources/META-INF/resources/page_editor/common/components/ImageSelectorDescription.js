@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {useId} from '../../core/hooks/useId';
+import {useId} from '../hooks/useId';
 import CurrentLanguageFlag from './CurrentLanguageFlag';
 import {PopoverTooltip} from './PopoverTooltip';
 

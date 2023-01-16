@@ -18,7 +18,7 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
+import useControlledState from '../../../common/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelectItem} from '../../contexts/ControlsContext';

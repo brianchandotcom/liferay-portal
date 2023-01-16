@@ -19,8 +19,8 @@ import ClayModal, {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
 import {PopoverTooltip} from '../../../common/components/PopoverTooltip';
-import useControlledState from '../../../core/hooks/useControlledState';
-import {useId} from '../../../core/hooks/useId';
+import useControlledState from '../../../common/hooks/useControlledState';
+import {useId} from '../../../common/hooks/useId';
 import {FRAGMENT_CLASS_PLACEHOLDER} from '../../config/constants/fragmentClassPlaceholder';
 import CodeMirrorEditor from '../CodeMirrorEditor';
 

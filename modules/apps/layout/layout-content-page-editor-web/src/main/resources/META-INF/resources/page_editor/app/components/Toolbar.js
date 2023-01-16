@@ -19,9 +19,9 @@ import classNames from 'classnames';
 import {openConfirmModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import useLazy from '../../core/hooks/useLazy';
-import useLoad from '../../core/hooks/useLoad';
-import usePlugins from '../../core/hooks/usePlugins';
+import useLazy from '../../common/hooks/useLazy';
+import useLoad from '../../common/hooks/useLoad';
+import usePlugins from '../../common/hooks/usePlugins';
 import * as Actions from '../actions/index';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';

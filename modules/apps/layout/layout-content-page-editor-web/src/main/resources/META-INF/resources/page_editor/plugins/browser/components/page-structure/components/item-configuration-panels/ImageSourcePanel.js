@@ -38,7 +38,7 @@ import {updateIn} from '../../../../../../app/utils/updateIn';
 import {ImageSelector} from '../../../../../../common/components/ImageSelector';
 import {ImageSelectorDescription} from '../../../../../../common/components/ImageSelectorDescription';
 import {ImageSelectorSize} from '../../../../../../common/components/ImageSelectorSize';
-import {useId} from '../../../../../../core/hooks/useId';
+import {useId} from '../../../../../../common/hooks/useId';
 import {getEditableItemPropTypes} from '../../../../../../prop-types/index';
 import {MappingPanel} from './MappingPanel';
 

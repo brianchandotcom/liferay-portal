@@ -20,8 +20,8 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
-import {useId} from '../../../core/hooks/useId';
+import useControlledState from '../../../common/hooks/useControlledState';
+import {useId} from '../../../common/hooks/useId';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../contexts/StoreContext';

@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import SidebarPanelHeader from '../../common/components/SidebarPanelHeader';
-import {useId} from '../../core/hooks/useId';
+import {useId} from '../../common/hooks/useId';
 import {
 	PANELS,
 	selectPanels,

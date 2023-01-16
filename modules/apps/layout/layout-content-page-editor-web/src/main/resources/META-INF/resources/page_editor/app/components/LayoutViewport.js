@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 import {useDragLayer} from 'react-dnd';
 
-import debounceRAF from '../../core/debounceRAF';
+import debounceRAF from '../../common/debounceRAF';
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';

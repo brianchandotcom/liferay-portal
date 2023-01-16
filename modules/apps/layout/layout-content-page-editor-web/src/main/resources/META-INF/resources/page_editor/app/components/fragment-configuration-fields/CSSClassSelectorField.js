@@ -19,8 +19,8 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {FocusScope} from '@clayui/shared';
 import React, {useMemo, useRef, useState} from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
-import {useId} from '../../../core/hooks/useId';
+import useControlledState from '../../../common/hooks/useControlledState';
+import {useId} from '../../../common/hooks/useId';
 import {useSelector} from '../../contexts/StoreContext';
 
 const MAX_SUGGESTED_CLASSES = 20;

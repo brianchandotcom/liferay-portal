@@ -27,8 +27,8 @@ import {
 } from '../../../app/contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../../../app/thunks/loadWidgets';
-import {useId} from '../../../core/hooks/useId';
-import {useSessionState} from '../../../core/hooks/useSessionState';
+import {useId} from '../../../common/hooks/useId';
+import {useSessionState} from '../../../common/hooks/useSessionState';
 import {COLLECTION_IDS} from './FragmentsSidebar';
 import TabCollection from './TabCollection';
 

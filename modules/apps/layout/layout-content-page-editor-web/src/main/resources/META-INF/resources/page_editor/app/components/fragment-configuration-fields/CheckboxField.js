@@ -18,8 +18,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
-import {useId} from '../../../core/hooks/useId';
+import useControlledState from '../../../common/hooks/useControlledState';
+import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';

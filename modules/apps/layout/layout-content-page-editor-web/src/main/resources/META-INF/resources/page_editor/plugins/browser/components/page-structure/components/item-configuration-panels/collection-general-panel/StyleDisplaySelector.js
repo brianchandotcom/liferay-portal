@@ -18,7 +18,7 @@ import React, {useEffect, useState} from 'react';
 
 import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../../app/config/constants/contentDisplayOptions';
 import InfoItemService from '../../../../../../../app/services/InfoItemService';
-import {useId} from '../../../../../../../core/hooks/useId';
+import {useId} from '../../../../../../../common/hooks/useId';
 
 const DEFAULT_LIST_STYLES = [
 	{

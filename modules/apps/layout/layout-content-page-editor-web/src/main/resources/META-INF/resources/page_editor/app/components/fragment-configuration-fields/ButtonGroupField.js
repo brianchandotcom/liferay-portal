@@ -17,8 +17,8 @@ import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
-import {useId} from '../../../core/hooks/useId';
+import useControlledState from '../../../common/hooks/useControlledState';
+import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export function ButtonGroupField({field, onValueSelect, value}) {

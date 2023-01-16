@@ -15,7 +15,7 @@
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import useSetRef from '../../../core/hooks/useSetRef';
+import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {

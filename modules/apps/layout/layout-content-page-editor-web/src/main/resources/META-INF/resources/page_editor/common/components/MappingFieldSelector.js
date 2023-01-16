@@ -19,7 +19,7 @@ import React from 'react';
 
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
 import getSelectedField from '../../app/utils/getSelectedField';
-import {useId} from '../../core/hooks/useId';
+import {useId} from '../hooks/useId';
 
 const UNMAPPED_OPTION = {
 	label: `-- ${Liferay.Language.get('unmapped')} --`,

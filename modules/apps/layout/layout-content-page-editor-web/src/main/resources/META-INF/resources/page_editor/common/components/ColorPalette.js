@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
 import {config} from '../../app/config/index';
-import {useId} from '../../core/hooks/useId';
+import {useId} from '../hooks/useId';
 
 export default function ColorPalette({
 	label,

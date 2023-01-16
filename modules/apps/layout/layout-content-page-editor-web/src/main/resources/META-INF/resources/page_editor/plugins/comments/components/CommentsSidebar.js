@@ -18,7 +18,7 @@ import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../../app/config/constants/highligh
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useActiveItemId} from '../../../app/contexts/ControlsContext';
 import {useSelectorCallback} from '../../../app/contexts/StoreContext';
-import {useSessionState} from '../../../core/hooks/useSessionState';
+import {useSessionState} from '../../../common/hooks/useSessionState';
 import FragmentComments from './FragmentComments';
 import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 

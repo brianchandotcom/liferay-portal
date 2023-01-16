@@ -25,8 +25,8 @@ import {useSelector} from '../../app/contexts/StoreContext';
 import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
 import {LengthInput} from '../../common/components/LengthField';
-import {useId} from '../../core/hooks/useId';
 import {useStyleBook} from '../../plugins/page-design-options/hooks/useStyleBook';
+import {useId} from '../hooks/useId';
 
 /**
  * These elements must be sorted from the most outer circle to the most inner

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openImageSelector} from '../../core/openImageSelector';
+import {openImageSelector} from '../../common/openImageSelector';
 import {getEditableLinkValue} from '../utils/getEditableLinkValue';
 import {getEditableLocalizedValue} from '../utils/getEditableLocalizedValue';
 

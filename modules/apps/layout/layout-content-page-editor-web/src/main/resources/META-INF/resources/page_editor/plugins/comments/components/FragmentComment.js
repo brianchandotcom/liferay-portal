@@ -27,7 +27,7 @@ import FragmentService from '../../../app/services/FragmentService';
 import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
 import InlineConfirm from '../../../common/components/InlineConfirm';
 import UserIcon from '../../../common/components/UserIcon';
-import {useSessionState} from '../../../core/hooks/useSessionState';
+import {useSessionState} from '../../../common/hooks/useSessionState';
 import EditCommentForm from './EditCommentForm';
 import ReplyCommentForm from './ReplyCommentForm';
 import ResolveButton from './ResolveButton';

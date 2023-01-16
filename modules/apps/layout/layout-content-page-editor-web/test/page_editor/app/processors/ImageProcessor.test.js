@@ -13,10 +13,10 @@
  */
 
 import ImageProcessor from '../../../../src/main/resources/META-INF/resources/page_editor/app/processors/ImageProcessor';
-import {openImageSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/core/openImageSelector';
+import {openImageSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/common/openImageSelector';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/core/openImageSelector',
+	'../../../../src/main/resources/META-INF/resources/page_editor/common/openImageSelector',
 	() => ({
 		openImageSelector: jest.fn(),
 	})

@@ -14,7 +14,7 @@
 
 import {useCallback, useEffect} from 'react';
 
-import {useSessionState} from '../../../core/hooks/useSessionState';
+import {useSessionState} from '../../../common/hooks/useSessionState';
 import switchSidebarPanel from '../../actions/switchSidebarPanel';
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../config/constants/highlightedCommentIdKey';
 import {useSelectItem} from '../../contexts/ControlsContext';

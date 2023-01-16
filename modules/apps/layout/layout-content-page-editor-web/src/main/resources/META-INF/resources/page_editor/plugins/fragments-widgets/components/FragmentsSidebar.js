@@ -32,7 +32,7 @@ import isNullOrUndefined from '../../../app/utils/isNullOrUndefined';
 import SearchForm from '../../../common/components/SearchForm';
 import SearchResultsMessage from '../../../common/components/SearchResultsMessage';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import {useSessionState} from '../../../core/hooks/useSessionState';
+import {useSessionState} from '../../../common/hooks/useSessionState';
 import SearchResultsPanel from './SearchResultsPanel';
 import TabsPanel from './TabsPanel';
 

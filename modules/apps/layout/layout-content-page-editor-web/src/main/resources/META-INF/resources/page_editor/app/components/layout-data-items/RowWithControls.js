@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import useSetRef from '../../../core/hooks/useSetRef';
+import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {ResizeContextProvider} from '../../contexts/ResizeContext';
 import {useSelector} from '../../contexts/StoreContext';

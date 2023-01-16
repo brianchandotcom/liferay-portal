@@ -135,6 +135,12 @@ public class AssetListEntryUsageLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteAssetListEntryUsages(long containerType, long plid) {
+		_assetListEntryUsageLocalService.deleteAssetListEntryUsages(
+			containerType, plid);
+	}
+
+	@Override
 	public void deleteAssetListEntryUsages(
 		String containerKey, long containerType, long plid) {
 
@@ -294,6 +300,14 @@ public class AssetListEntryUsageLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _assetListEntryUsageLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<AssetListEntryUsage> getAssetEntryListUsages(
+		long containerType, long plid) {
+
+		return _assetListEntryUsageLocalService.getAssetEntryListUsages(
+			containerType, plid);
 	}
 
 	@Override

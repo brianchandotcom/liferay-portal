@@ -129,6 +129,12 @@ public class AssetListEntryUsageLocalServiceUtil {
 	}
 
 	public static void deleteAssetListEntryUsages(
+		long containerType, long plid) {
+
+		getService().deleteAssetListEntryUsages(containerType, plid);
+	}
+
+	public static void deleteAssetListEntryUsages(
 		String containerKey, long containerType, long plid) {
 
 		getService().deleteAssetListEntryUsages(
@@ -262,6 +268,12 @@ public class AssetListEntryUsageLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static List<AssetListEntryUsage> getAssetEntryListUsages(
+		long containerType, long plid) {
+
+		return getService().getAssetEntryListUsages(containerType, plid);
 	}
 
 	public static List<AssetListEntryUsage> getAssetEntryListUsagesByPlid(

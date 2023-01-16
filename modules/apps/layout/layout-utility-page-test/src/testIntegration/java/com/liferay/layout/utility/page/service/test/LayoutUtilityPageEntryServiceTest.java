@@ -161,6 +161,24 @@ public class LayoutUtilityPageEntryServiceTest {
 			persistedLayoutUtilityPageEntry2.isDefaultLayoutUtilityPageEntry());
 	}
 
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testUnsetDefaultLayoutUtilityPageEntryWithNoPermissions()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				0);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_layoutUtilityPageEntryService.unsetDefaultLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+		}
+	}
+
 	@Test
 	public void testUnsetDefaultLayoutUtilityPageEntryWithPermissions()
 		throws Exception {

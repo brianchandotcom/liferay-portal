@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -42,14 +44,9 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 
-import java.net.URI;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -63,9 +60,11 @@ public class RelatedObjectEntryOpenAPIContributor
 	extends BaseOpenAPIContributor {
 
 	@Override
-	public void contribute(OpenAPI openAPI, UriInfo uriInfo) throws Exception {
+	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
+		throws Exception {
+
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324")) ||
-			(uriInfo == null)) {
+			(openAPIContext == null)) {
 
 			return;
 		}
@@ -85,12 +84,10 @@ public class RelatedObjectEntryOpenAPIContributor
 				continue;
 			}
 
-			URI uri = uriInfo.getBaseUri();
-
-			String path = uri.getPath();
-
 			JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 				systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
+			String path = openAPIContext.getPath();
 
 			if (path.contains(
 					jaxRsApplicationDescriptor.getApplicationPath())) {
@@ -111,7 +108,7 @@ public class RelatedObjectEntryOpenAPIContributor
 
 				_contribute(
 					openAPI, systemObjectDefinition, entry.getValue(),
-					systemObjectRelationship, uriInfo);
+					systemObjectRelationship, openAPIContext.getVersion());
 			}
 		}
 	}
@@ -124,7 +121,7 @@ public class RelatedObjectEntryOpenAPIContributor
 	private void _contribute(
 			OpenAPI openAPI, ObjectDefinition systemObjectDefinition,
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
-			ObjectRelationship systemObjectRelationship, UriInfo uriInfo)
+			ObjectRelationship systemObjectRelationship, String version)
 		throws Exception {
 
 		Paths paths = openAPI.getPaths();
@@ -133,11 +130,16 @@ public class RelatedObjectEntryOpenAPIContributor
 			systemObjectDefinition, systemObjectRelationship);
 
 		String relatedSchemaName = getSchemaName(relatedObjectDefinition);
-		OpenAPI relatedOpenAPI = OpenAPIContributorUtil.getObjectEntryOpenAPI(
-			relatedObjectDefinition, _objectEntryOpenAPIResource);
+
+		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
+			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(
+				relatedObjectDefinition);
+
+		Map<String, Schema> relatedSchemas =
+			objectEntryOpenAPIResource.getSchemas();
 
 		OpenAPIContributorUtil.copySchemas(
-			relatedSchemaName, relatedOpenAPI,
+			relatedSchemaName, relatedSchemas,
 			relatedObjectDefinition.isSystem(), openAPI);
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -145,7 +147,7 @@ public class RelatedObjectEntryOpenAPIContributor
 		String schemaName = getSchemaName(systemObjectDefinition);
 
 		String name = StringBundler.concat(
-			StringPool.SLASH, _getJaxRsVersion(uriInfo), StringPool.SLASH,
+			StringPool.SLASH, version, StringPool.SLASH,
 			jaxRsApplicationDescriptor.getPath(), StringPool.SLASH,
 			_getIdParameterTemplate(schemaName), StringPool.SLASH,
 			systemObjectRelationship.getName());
@@ -234,7 +236,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								});
 						}
 					});
-				tags(Collections.singletonList(schemaName));
+				tags(Arrays.asList(schemaName));
 			}
 		};
 	}
@@ -251,7 +253,7 @@ public class RelatedObjectEntryOpenAPIContributor
 					_getOperationId(
 						"get", objectRelationship.getName(), schemaName));
 				parameters(
-					Collections.singletonList(
+					Arrays.asList(
 						new Parameter() {
 							{
 								in("path");
@@ -274,7 +276,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								});
 						}
 					});
-				tags(Collections.singletonList(schemaName));
+				tags(Arrays.asList(schemaName));
 			}
 		};
 	}
@@ -286,10 +288,6 @@ public class RelatedObjectEntryOpenAPIContributor
 	private String _getIdParameterTemplate(String name) {
 		return StringPool.OPEN_CURLY_BRACE + _getIdParameterName(name) +
 			StringPool.CLOSE_CURLY_BRACE;
-	}
-
-	private String _getJaxRsVersion(UriInfo uriInfo) {
-		return StringUtil.extractFirst(uriInfo.getPath(), StringPool.SLASH);
 	}
 
 	private String _getOperationId(
@@ -344,7 +342,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								});
 						}
 					});
-				tags(Collections.singletonList(schemaName));
+				tags(Arrays.asList(schemaName));
 			}
 		};
 	}
@@ -375,7 +373,8 @@ public class RelatedObjectEntryOpenAPIContributor
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
+	private ObjectEntryOpenAPIResourceProvider
+		_objectEntryOpenAPIResourceProvider;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

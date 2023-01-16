@@ -14,28 +14,14 @@
 
 package com.liferay.object.rest.openapi.v1_0;
 
-import com.liferay.portal.vulcan.batch.engine.Field;
-
-import io.swagger.v3.oas.models.media.Schema;
-
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import com.liferay.object.model.ObjectDefinition;
 
 /**
- * @author Luis Miguel Barcos
+ * @author Carlos Correa
  */
-public interface ObjectEntryOpenAPIResource {
+public interface ObjectEntryOpenAPIResourceProvider {
 
-	public Map<String, Field> getFields(UriInfo uriInfo) throws Exception;
-
-	public Response getOpenAPI(
-			HttpServletRequest httpServletRequest, String type, UriInfo uriInfo)
-		throws Exception;
-
-	public Map<String, Schema> getSchemas() throws Exception;
+	public ObjectEntryOpenAPIResource getObjectEntryOpenAPIResource(
+		ObjectDefinition objectDefinition);
 
 }

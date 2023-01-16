@@ -241,6 +241,22 @@ definition {
 		}
 	}
 
+	macro selectTagInCollectionFilter {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Type.sendKeys(
+			index = "${index}",
+			locator1 = "PageEditor#COLLECTION_FILTER_TAGS_SELECTOR",
+			value1 = "${tagName}");
+
+		KeyPress(
+			index = "${index}",
+			locator1 = "PageEditor#COLLECTION_FILTER_TAGS_SELECTOR",
+			value1 = "\RETURN");
+	}
+
 	macro viewChildPageDropdown {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 

@@ -3,7 +3,7 @@ definition {
 	@summary = "Verify if the MDF is visible on listing page"
 	macro viewOnList {
 		AssertVisible(
-			key_rowNumber = "3",
+			key_rowNumber = "6",
 			key_rowValue = "${campaignName}",
 			locator1 = "PRMMDFListing#LISTING_TABLE");
 	}

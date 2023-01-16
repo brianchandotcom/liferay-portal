@@ -22,7 +22,6 @@ interface Item {
 const GoalsEntries = ({mdfRequest}: IProps) => (
 	<div>
 		<Table<Item>
-			borderless
 			className="bg-brand-primary-lighten-6 border-top table-striped"
 			columns={[
 				{
@@ -44,11 +43,9 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.country?.name,
 				},
 			]}
-			truncate
 		/>
 
 		<Table<Item>
-			borderless
 			className="bg-brand-primary-lighten-6 border-top table-striped"
 			columns={[
 				{
@@ -75,11 +72,9 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.liferayBusinessSalesGoals?.join('; '),
 				},
 			]}
-			truncate
 		/>
 
 		<Table<Item>
-			borderless
 			className="bg-brand-primary-lighten-6 border-top table-striped"
 			columns={[
 				{
@@ -107,7 +102,6 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.targetAudienceRoles?.join('; '),
 				},
 			]}
-			truncate
 		/>
 	</div>
 );

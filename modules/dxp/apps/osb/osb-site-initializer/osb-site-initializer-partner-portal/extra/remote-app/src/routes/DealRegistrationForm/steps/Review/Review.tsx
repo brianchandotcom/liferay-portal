@@ -34,7 +34,6 @@ const Review = ({
 				title="Review Deal Registration"
 			>
 				<Table
-					borderless
 					className="bg-brand-primary-lighten-6 border-top table-striped"
 					columns={[
 						{
@@ -59,7 +58,6 @@ const Review = ({
 				/>
 
 				<Table
-					borderless
 					className="bg-brand-primary-lighten-6 border-top table-striped"
 					columns={[
 						{
@@ -104,7 +102,6 @@ const Review = ({
 				/>
 
 				<Table
-					borderless
 					className="bg-brand-primary-lighten-6 border-top table-striped"
 					columns={[
 						{
@@ -145,7 +142,6 @@ const Review = ({
 				/>
 
 				<Table
-					borderless
 					className="bg-brand-primary-lighten-6 border-top table-striped"
 					columns={[
 						{
@@ -174,7 +170,6 @@ const Review = ({
 				/>
 
 				<Table
-					borderless
 					className="bg-brand-primary-lighten-6 border-top table-striped"
 					columns={[
 						{
@@ -196,7 +191,6 @@ const Review = ({
 				/>
 
 				<Table
-					borderless
 					className="bg-brand-primary-lighten-6 border-top table-striped"
 					columns={[
 						{
@@ -221,7 +215,6 @@ const Review = ({
 				/>
 
 				<Table
-					borderless
 					className="bg-brand-primary-lighten-6 border-top table-striped"
 					columns={[
 						{

@@ -49,7 +49,6 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 	return (
 		<>
 			<Table<Item>
-				borderless
 				className="bg-brand-primary-lighten-6 border-top table-striped"
 				columns={[
 					{
@@ -100,7 +99,6 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 							),
 					},
 				]}
-				truncate
 			/>
 
 			<ActivityContent mdfRequestActivity={mdfRequestActivity} />

@@ -78,13 +78,7 @@ const MDFRequestList = () => {
 
 			return (
 				<div className="mt-3">
-					<Table<MDFRequestListItem>
-						borderless
-						columns={columns}
-						noWrap
-						responsive
-						rows={items}
-					/>
+					<Table<MDFRequestListItem> columns={columns} rows={items} />
 
 					<ClayPaginationBarWithBasicItems
 						{...pagination}

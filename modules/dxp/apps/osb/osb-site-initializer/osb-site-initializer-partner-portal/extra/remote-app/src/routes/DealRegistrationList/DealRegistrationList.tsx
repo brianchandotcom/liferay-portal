@@ -110,10 +110,8 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 			return (
 				<div className="mt-3">
 					<Table<DealRegistrationListItem>
-						borderless
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
-						responsive
 						rows={items}
 					/>
 

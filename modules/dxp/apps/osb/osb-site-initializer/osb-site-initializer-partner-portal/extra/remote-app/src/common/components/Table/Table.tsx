@@ -14,22 +14,25 @@ import ClayTable from '@clayui/table';
 import TableColumn from '../../interfaces/tableColumn';
 
 interface TableProps<T> {
-	borderless?: boolean;
 	className?: string;
 	columns: TableColumn<T>[];
 	customClickOnRow?: (row: T) => void;
-	noWrap?: boolean;
-	responsive?: boolean;
 	rows: T[];
-	truncate?: boolean;
 }
 
 const Table = <T extends unknown>({
+	className,
 	columns,
 	customClickOnRow,
 	rows,
 }: TableProps<T>) => (
-	<ClayTable borderless noWrap responsive tableVerticalAlignment="middle">
+	<ClayTable
+		borderless
+		className={className}
+		noWrap
+		responsive
+		tableVerticalAlignment="middle"
+	>
 		<ClayTable.Head>
 			<ClayTable.Row>
 				{columns.map((column: TableColumn<T>, index: number) => (

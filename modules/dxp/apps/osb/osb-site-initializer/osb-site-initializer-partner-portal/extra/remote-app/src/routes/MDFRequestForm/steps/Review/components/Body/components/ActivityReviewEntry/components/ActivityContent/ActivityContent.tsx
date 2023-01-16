@@ -56,7 +56,6 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 	return (
 		<>
 			<Table
-				borderless
 				className="bg-brand-primary-lighten-6 border-top table-striped"
 				columns={[
 					{
@@ -75,7 +74,6 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 			/>
 
 			<Table
-				borderless
 				className="bg-brand-primary-lighten-6 border-top table-striped"
 				columns={[
 					{
@@ -88,7 +86,6 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 					},
 				]}
 				rows={leadList}
-				truncate
 			/>
 		</>
 	);

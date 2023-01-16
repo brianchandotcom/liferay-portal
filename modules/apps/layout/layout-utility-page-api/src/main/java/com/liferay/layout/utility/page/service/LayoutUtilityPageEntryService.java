@@ -107,6 +107,10 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 			long layoutUtilityPageEntryId)
 		throws PortalException;
 
+	public LayoutUtilityPageEntry unsetDefaultLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId)
+		throws PortalException;
+
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId)
 		throws PortalException;

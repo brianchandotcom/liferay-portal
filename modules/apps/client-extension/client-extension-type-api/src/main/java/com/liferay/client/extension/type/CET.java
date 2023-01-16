@@ -16,6 +16,7 @@ package com.liferay.client.extension.type;
 
 import com.liferay.client.extension.type.annotation.CETProperty;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -31,12 +32,16 @@ public interface CET {
 
 	public long getCompanyId();
 
+	public Date getCreateDate();
+
 	@CETProperty(name = "description", type = CETProperty.Type.String)
 	public String getDescription();
 
 	public String getEditJSP();
 
 	public String getExternalReferenceCode();
+
+	public Date getModifiedDate();
 
 	@CETProperty(name = "name", type = CETProperty.Type.String)
 	public String getName(Locale locale);

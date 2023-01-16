@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -50,9 +51,11 @@ public abstract class BaseCETImpl implements CET {
 
 		if (clientExtensionEntry != null) {
 			_companyId = clientExtensionEntry.getCompanyId();
+			_createDate = clientExtensionEntry.getCreateDate();
 			_description = clientExtensionEntry.getDescription();
 			_externalReferenceCode =
 				clientExtensionEntry.getExternalReferenceCode();
+			_modifiedDate = clientExtensionEntry.getModifiedDate();
 
 			try {
 				_properties = PropertiesUtil.load(
@@ -113,6 +116,11 @@ public abstract class BaseCETImpl implements CET {
 	}
 
 	@Override
+	public Date getCreateDate() {
+		return _modifiedDate;
+	}
+
+	@Override
 	public String getDescription() {
 		return _description;
 	}
@@ -120,6 +128,11 @@ public abstract class BaseCETImpl implements CET {
 	@Override
 	public String getExternalReferenceCode() {
 		return _externalReferenceCode;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
 	}
 
 	@Override
@@ -236,8 +249,10 @@ public abstract class BaseCETImpl implements CET {
 	private String _baseURL = StringPool.BLANK;
 	private ClientExtensionEntry _clientExtensionEntry;
 	private long _companyId;
+	private Date _createDate;
 	private String _description = StringPool.BLANK;
 	private String _externalReferenceCode = StringPool.BLANK;
+	private Date _modifiedDate;
 	private String _name = StringPool.BLANK;
 	private Properties _properties;
 	private boolean _readOnly;

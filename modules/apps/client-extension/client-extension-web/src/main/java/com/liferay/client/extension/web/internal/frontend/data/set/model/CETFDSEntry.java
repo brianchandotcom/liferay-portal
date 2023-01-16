@@ -19,6 +19,7 @@ import com.liferay.client.extension.web.internal.display.context.util.CETLabelUt
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -33,14 +34,22 @@ public class CETFDSEntry {
 
 	public String getConfiguredFrom() {
 		if (_cet.isReadOnly()) {
-			return "workspace";
+			return LanguageUtil.get(_locale, "workspace");
 		}
 
-		return "ui";
+		return LanguageUtil.get(_locale, "ui");
+	}
+
+	public Date getCreateDate() {
+		return _cet.getCreateDate();
 	}
 
 	public String getExternalReferenceCode() {
 		return _cet.getExternalReferenceCode();
+	}
+
+	public Date getModifiedDate() {
+		return _cet.getModifiedDate();
 	}
 
 	public String getName() {

@@ -69,15 +69,14 @@ public class LayoutPageTemplateStructureRelModelListener
 	}
 
 	private void _addAssetListEntryUsage(
-		long classNameId, long groupId, String key,
-		long layoutPageTemplateStructureId, long plid) {
+		long classNameId, long groupId, String itemId, String key, long plid) {
 
 		AssetListEntryUsage assetListEntryUsage =
 			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
-				groupId, classNameId,
-				String.valueOf(layoutPageTemplateStructureId),
-				_portal.getClassNameId(LayoutPageTemplateStructure.class), key,
-				plid);
+				groupId, classNameId, itemId,
+				_portal.getClassNameId(
+					CollectionStyledLayoutStructureItem.class),
+				key, plid);
 
 		if (assetListEntryUsage != null) {
 			return;
@@ -92,10 +91,10 @@ public class LayoutPageTemplateStructureRelModelListener
 
 		try {
 			_assetListEntryUsageLocalService.addAssetListEntryUsage(
-				serviceContext.getUserId(), groupId, classNameId,
-				String.valueOf(layoutPageTemplateStructureId),
-				_portal.getClassNameId(LayoutPageTemplateStructure.class), key,
-				plid, serviceContext);
+				serviceContext.getUserId(), groupId, classNameId, itemId,
+				_portal.getClassNameId(
+					CollectionStyledLayoutStructureItem.class),
+				key, plid, serviceContext);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -181,9 +180,8 @@ public class LayoutPageTemplateStructureRelModelListener
 				_addAssetListEntryUsage(
 					_portal.getClassNameId(AssetListEntry.class),
 					layoutPageTemplateStructure.getGroupId(),
+					layoutStructureItem.getItemId(),
 					collectionJSONObject.getString("classPK"),
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
 					layoutPageTemplateStructure.getPlid());
 			}
 
@@ -191,9 +189,8 @@ public class LayoutPageTemplateStructureRelModelListener
 				_addAssetListEntryUsage(
 					_portal.getClassNameId(InfoCollectionProvider.class),
 					layoutPageTemplateStructure.getGroupId(),
+					layoutStructureItem.getItemId(),
 					collectionJSONObject.getString("key"),
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
 					layoutPageTemplateStructure.getPlid());
 			}
 		}

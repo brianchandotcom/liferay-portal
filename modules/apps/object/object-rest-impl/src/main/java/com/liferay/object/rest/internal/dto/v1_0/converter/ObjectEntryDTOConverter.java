@@ -149,6 +149,32 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
+	private void _addObjectRelationshipNames(
+		Map<String, Object> map, long objectEntryId, ObjectField objectField,
+		String objectFieldName, ObjectRelationship objectRelationship,
+		Map<String, Serializable> values) {
+
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				objectField);
+
+		String relatedObjectEntryERC = GetterUtil.getString(
+			values.get(objectRelationshipERCObjectFieldName));
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161364")) &&
+			(map.get(objectRelationship.getName()) == null)) {
+
+			map.put(
+				objectRelationship.getName() + "ERC", relatedObjectEntryERC);
+		}
+
+		map.put(objectFieldName, objectEntryId);
+
+		map.put(objectRelationshipERCObjectFieldName, relatedObjectEntryERC);
+	}
+
 	private DTOConverterContext _getDTOConverterContext(
 		DTOConverterContext dtoConverterContext, long objectEntryId) {
 
@@ -533,29 +559,23 @@ public class ObjectEntryDTOConverter
 					}
 				}
 
-				map.put(objectFieldName, objectEntryId);
+				_addObjectRelationshipNames(
+					map, objectEntryId, objectField, objectFieldName,
+					objectRelationship, values);
+			}
+			else if ((nestedFieldsDepth == 0) &&
+					 Objects.equals(
+						 objectField.getRelationshipType(),
+						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				String objectRelationshipERCObjectFieldName =
-					ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.
-							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-						objectField);
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectFieldId2(
+							objectField.getObjectFieldId());
 
-				String relatedObjectEntryERC = GetterUtil.getString(
-					values.get(objectRelationshipERCObjectFieldName));
-
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-161364")) &&
-					(map.get(objectRelationship.getName()) == null)) {
-
-					map.put(
-						objectRelationship.getName() + "ERC",
-						relatedObjectEntryERC);
-				}
-
-				map.put(
-					objectRelationshipERCObjectFieldName,
-					relatedObjectEntryERC);
+				_addObjectRelationshipNames(
+					map, (long)serializable, objectField, objectFieldName,
+					objectRelationship, values);
 			}
 			else {
 				map.put(objectFieldName, serializable);

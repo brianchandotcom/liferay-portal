@@ -59,7 +59,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -128,66 +127,59 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider,
 		Locale locale) {
 
-		Optional<ThemeDisplay> themeDisplayOptional =
-			_getThemeDisplayOptional();
+		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		return themeDisplayOptional.map(
-			themeDisplay -> {
-				Layout layout = _getLayout(layoutDisplayPageObjectProvider);
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
 
-				if (layout == null) {
-					return StringPool.BLANK;
-				}
+		Layout layout = _getLayout(layoutDisplayPageObjectProvider);
 
-				HttpServletRequest httpServletRequest =
-					themeDisplay.getRequest();
+		if (layout == null) {
+			return StringPool.BLANK;
+		}
 
-				LayoutDisplayPageObjectProvider<?>
-					initialLayoutDisplayPageObjectProvider =
-						(LayoutDisplayPageObjectProvider<?>)
-							httpServletRequest.getAttribute(
-								LayoutDisplayPageWebKeys.
-									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
-				httpServletRequest.setAttribute(
-					LayoutDisplayPageWebKeys.
-						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-					layoutDisplayPageObjectProvider);
-
-				String completeURL = _portal.getCurrentCompleteURL(
-					httpServletRequest);
-
-				try {
-					String canonicalURL = _portal.getCanonicalURL(
-						completeURL, themeDisplay, layout, false, false);
-
-					LayoutSEOLink layoutSEOLink =
-						_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-							layout, locale, canonicalURL, themeDisplay);
-
-					String href = layoutSEOLink.getHref();
-
-					if (href == null) {
-						return StringPool.BLANK;
-					}
-
-					return href;
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-
-					return StringPool.BLANK;
-				}
-				finally {
-					httpServletRequest.setAttribute(
+		LayoutDisplayPageObjectProvider<?>
+			initialLayoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					httpServletRequest.getAttribute(
 						LayoutDisplayPageWebKeys.
-							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-						initialLayoutDisplayPageObjectProvider);
-				}
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageObjectProvider);
+
+		String completeURL = _portal.getCurrentCompleteURL(httpServletRequest);
+
+		try {
+			String canonicalURL = _portal.getCanonicalURL(
+				completeURL, themeDisplay, layout, false, false);
+
+			LayoutSEOLink layoutSEOLink =
+				_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+					layout, locale, canonicalURL, themeDisplay);
+
+			String href = layoutSEOLink.getHref();
+
+			if (href == null) {
+				return StringPool.BLANK;
 			}
-		).orElse(
-			StringPool.BLANK
-		);
+
+			return href;
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return StringPool.BLANK;
+		}
+		finally {
+			httpServletRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				initialLayoutDisplayPageObjectProvider);
+		}
 	}
 
 	@Override

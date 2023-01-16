@@ -84,6 +84,24 @@ public class LayoutUtilityPageEntryServiceTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testDeleteDefaultLayoutUtilityPageEntryWithNoPermissions()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				0);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+		}
+	}
+
 	@Test
 	public void testDeleteDefaultLayoutUtilityPageEntryWithPermissions()
 		throws Exception {

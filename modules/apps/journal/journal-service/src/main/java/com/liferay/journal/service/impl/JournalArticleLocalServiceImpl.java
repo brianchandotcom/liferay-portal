@@ -765,6 +765,12 @@ public class JournalArticleLocalServiceImpl
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(), null);
 
+		if ((displayDateMonth == displayDateDay) &&
+			(displayDateDay == displayDateYear) && (displayDateYear == 0)) {
+
+			displayDate = null;
+		}
+
 		Date expirationDate = null;
 		Date reviewDate = null;
 
@@ -6307,6 +6313,13 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		JournalArticle article = getArticle(groupId, articleId);
+
+		if ((article.getClassNameId() > 0) &&
+			(displayDateMonth == displayDateDay) &&
+			(displayDateDay == displayDateYear) && (displayDateYear == 0)) {
+
+			displayDate = null;
+		}
 
 		serviceContext.validateModifiedDate(
 			article, ArticleVersionException.class);

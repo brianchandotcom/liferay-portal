@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -252,16 +253,17 @@ public class AMImageConfigurationHelperImpl
 	public Collection<AMImageConfigurationEntry> getAMImageConfigurationEntries(
 		long companyId) {
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
+		List<AMImageConfigurationEntry> amImageConfigurationEntryList =
 			_getAMImageConfigurationEntries(companyId);
 
-		return amImageConfigurationEntryStream.filter(
-			AMImageConfigurationEntry::isEnabled
-		).sorted(
-			Comparator.comparing(AMImageConfigurationEntry::getName)
-		).collect(
-			Collectors.toList()
-		);
+		amImageConfigurationEntryList = ListUtil.filter(
+			amImageConfigurationEntryList,
+			AMImageConfigurationEntry::isEnabled);
+
+		amImageConfigurationEntryList.sort(
+			Comparator.comparing(AMImageConfigurationEntry::getName));
+
+		return amImageConfigurationEntryList;
 	}
 
 	@Override
@@ -269,29 +271,36 @@ public class AMImageConfigurationHelperImpl
 		long companyId,
 		Predicate<? super AMImageConfigurationEntry> predicate) {
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
+		List<AMImageConfigurationEntry> amImageConfigurationEntryList =
 			_getAMImageConfigurationEntries(companyId);
 
-		return amImageConfigurationEntryStream.filter(
-			predicate
-		).sorted(
-			Comparator.comparing(AMImageConfigurationEntry::getName)
-		).collect(
-			Collectors.toList()
-		);
+		amImageConfigurationEntryList = ListUtil.filter(
+			amImageConfigurationEntryList,
+			(Predicate<AMImageConfigurationEntry>)predicate);
+
+		amImageConfigurationEntryList.sort(
+			Comparator.comparing(AMImageConfigurationEntry::getName));
+
+		return amImageConfigurationEntryList;
 	}
 
 	@Override
 	public Optional<AMImageConfigurationEntry> getAMImageConfigurationEntry(
 		long companyId, String configurationEntryUUID) {
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
+		List<AMImageConfigurationEntry> amImageConfigurationEntryList =
 			_getAMImageConfigurationEntries(companyId);
 
-		return amImageConfigurationEntryStream.filter(
+		amImageConfigurationEntryList = ListUtil.filter(
+			amImageConfigurationEntryList,
 			amImageConfigurationEntry -> configurationEntryUUID.equals(
-				amImageConfigurationEntry.getUUID())
-		).findFirst();
+				amImageConfigurationEntry.getUUID()));
+
+		if (amImageConfigurationEntryList.isEmpty()) {
+			return Optional.empty();
+		}
+
+		return Optional.of(amImageConfigurationEntryList.get(0));
 	}
 
 	@Override

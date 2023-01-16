@@ -35,6 +35,20 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172458. User can access Deal Registration Listing through Quick Links"
+	@priority = "4"
+	test CanAccessDealListingViaQuickLinks {
+		task ("When I click on 'Deal Registration' button, on Quick Links section") {
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "deal-registrations",
+				buttonText = "Deal Registration");
+		}
+
+		task ("Then I'm redirected to the 'Deal Registration Listing' page") {
+			PRMPages.assertPageTitle(pageTitle = "Partner Deal Registration");
+		}
+	}
+
 	@description = "This is a test for LPS-171642. User can access MDF Request Listing through Quick Links"
 	@priority = "4"
 	test CanAccessMDFRequestListingViaQuickLinks {

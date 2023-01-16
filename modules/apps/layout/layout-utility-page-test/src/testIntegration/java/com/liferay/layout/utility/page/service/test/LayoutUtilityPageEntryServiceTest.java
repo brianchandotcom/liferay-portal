@@ -142,6 +142,45 @@ public class LayoutUtilityPageEntryServiceTest {
 			persistedLayoutUtilityPageEntry2.isDefaultLayoutUtilityPageEntry());
 	}
 
+	@Test
+	public void testUnsetDefaultLayoutUtilityPageEntryWithPermissions()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				0);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_group.getCompanyId(), Group.class.getName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			_role.getRoleId(),
+			LayoutUtilityPageActionKeys.
+				ASSIGN_DEFAULT_LAYOUT_UTILITY_PAGE_ENTRY);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_group.getCompanyId(), LayoutUtilityPageEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId()),
+			_role.getRoleId(), new String[] {ActionKeys.UPDATE});
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_layoutUtilityPageEntryService.unsetDefaultLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+		}
+
+		LayoutUtilityPageEntry persistedLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+
+		Assert.assertFalse(
+			persistedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 

@@ -140,6 +140,37 @@ public class LayoutUtilityPageEntryServiceTest {
 		Assert.assertNull(persistedLayoutUtilityPageEntry);
 	}
 
+	@Test
+	public void testDeleteNondefaultLayoutUtilityPageEntryWithNoAssignPermissions()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, false,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				0);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_group.getCompanyId(), LayoutUtilityPageEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId()),
+			_role.getRoleId(), new String[] {ActionKeys.DELETE});
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+		}
+
+		LayoutUtilityPageEntry persistedLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+
+		Assert.assertNull(persistedLayoutUtilityPageEntry);
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testSetDefaultLayoutUtilityPageEntryWithNoPermissions()
 		throws Exception {

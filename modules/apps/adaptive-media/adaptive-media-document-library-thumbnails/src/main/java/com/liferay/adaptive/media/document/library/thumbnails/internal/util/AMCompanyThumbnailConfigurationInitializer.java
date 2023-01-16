@@ -26,10 +26,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import java.io.IOException;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -140,20 +138,18 @@ public class AMCompanyThumbnailConfigurationInitializer {
 
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_amImageConfigurationHelper.getAMImageConfigurationEntries(
-				companyId, amImageConfigurationEntry -> true);
+				companyId,
+				amImageConfigurationEntry -> {
+					if (name.equals(amImageConfigurationEntry.getName()) ||
+						uuid.equals(amImageConfigurationEntry.getUUID())) {
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
-			amImageConfigurationEntries.stream();
+						return true;
+					}
 
-		Optional<AMImageConfigurationEntry>
-			duplicateNameAMImageConfigurationEntryOptional =
-				amImageConfigurationEntryStream.filter(
-					amImageConfigurationEntry ->
-						name.equals(amImageConfigurationEntry.getName()) ||
-						uuid.equals(amImageConfigurationEntry.getUUID())
-				).findFirst();
+					return false;
+				});
 
-		return duplicateNameAMImageConfigurationEntryOptional.isPresent();
+		return !amImageConfigurationEntries.isEmpty();
 	}
 
 	private String _normalize(String str) {

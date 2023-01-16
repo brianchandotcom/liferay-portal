@@ -25,6 +25,70 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-164162 - Styling Content Pages is not properly applied when the user edits a page in a Publication"
+	@priority = "3"
+	test CanStylingContentPagesProperlyInPublications {
+		task ("Enable Publications and add Content Page") {
+			Publications.enablePublications();
+
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Example Page");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "2",
+				fragmentName = "Button",
+				navTab = "Fragments");
+
+			PageEditor.publish();
+		}
+
+		task ("Create new publication and edit Content Page") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Example Page",
+				siteName = "Guest");
+
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(
+				paddingLeft = "2",
+				paddingRight = "2");
+
+			PageEditor.publish();
+
+			Navigator.openURL();
+		}
+
+		task ("Go to edit Content Page again and assert that 'spacing' is changed") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Example Page",
+				siteName = "Guest");
+
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Button",
+				paddingLeft = "2",
+				paddingRight = "2");
+
+			Navigator.openURL();
+		}
+	}
+
 	@priority = "4"
 	test ContentPageChangesCanBeAutomaticallyResolved {
 		property test.assert.warning.exceptions = "true";

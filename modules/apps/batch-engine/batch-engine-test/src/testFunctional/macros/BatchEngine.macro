@@ -53,14 +53,10 @@ definition {
 	}
 
 	macro setUpGlobalIds {
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 		var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = "${portalURL}");
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-		static var staticUserId = "${userId}";
 		static var staticCompanyId = "${companyId}";
 		static var staticSiteId = "${siteId}";
-
-		return "${staticUserId}";
 
 		return "${staticCompanyId}";
 

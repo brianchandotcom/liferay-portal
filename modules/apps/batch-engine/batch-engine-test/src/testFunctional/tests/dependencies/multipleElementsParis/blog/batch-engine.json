@@ -6,6 +6,5 @@
 		"createStrategy": "UPSERT",
 		"siteId": 20121
 	},
-	"userId": 20125,
 	"version": "v1.0"
 }

@@ -41,8 +41,6 @@ definition {
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
 
-			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
-
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20121", "${staticSiteId}");
 
 			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
@@ -76,19 +74,13 @@ definition {
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
 
-			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
-
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20121", "${staticSiteId}");
 
 			FileUtil.replaceStringInFile("${filePath}/blog/batch-engine.json", "20097", "${staticCompanyId}");
 
-			FileUtil.replaceStringInFile("${filePath}/blog/batch-engine.json", "20125", "${staticUserId}");
-
 			FileUtil.replaceStringInFile("${filePath}/blog/batch-engine.json", "20121", "${staticSiteId}");
 
 			FileUtil.replaceStringInFile("${filePath}/object/objectDefinition/batch-engine.json", "20097", "${staticCompanyId}");
-
-			FileUtil.replaceStringInFile("${filePath}/object/objectDefinition/batch-engine.json", "20125", "${staticUserId}");
 
 			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
 				fileNameWithExtension = "multipleElementsParis.zip",
@@ -128,8 +120,6 @@ definition {
 			var filePath = BatchEngine.copyDependenciesDirToFolder(file = "objectDefinition");
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
-
-			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
 
 			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
 				fileNameWithExtension = "objectDefinition.zip",
@@ -181,8 +171,6 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
-
-			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20121", "${staticSiteId}");
 

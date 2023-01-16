@@ -212,7 +212,11 @@ public class LayoutActionProvider {
 		else {
 			itemsJSONArray.put(
 				JSONUtil.put(
-					"href", ""
+					"href",
+					StringUtil.replace(
+						_getConfigureLayoutURLTemplate(),
+						StringPool.OPEN_CURLY_BRACE,
+						StringPool.CLOSE_CURLY_BRACE, valuesMap)
 				).put(
 					"id", "configure"
 				).put(

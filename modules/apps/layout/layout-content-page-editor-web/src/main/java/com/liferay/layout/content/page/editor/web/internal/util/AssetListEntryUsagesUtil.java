@@ -98,6 +98,8 @@ public class AssetListEntryUsagesUtil {
 			AssetListEntryUsageLocalServiceUtil.getAssetEntryListUsagesByPlid(
 				plid);
 
+		String redirect = _getRedirect(httpServletRequest);
+
 		for (AssetListEntryUsage assetListEntryUsage : assetListEntryUsages) {
 			String uniqueKey = _generateUniqueLayoutClassedModelUsageKey(
 				assetListEntryUsage);
@@ -113,7 +115,7 @@ public class AssetListEntryUsagesUtil {
 			mappedContentsJSONArray.put(
 				_getPageContentJSONObject(
 					assetListEntryUsage, httpServletRequest,
-					httpServletResponse));
+					httpServletResponse, redirect));
 
 			uniqueAssetListEntryUsagesKeys.add(uniqueKey);
 		}
@@ -463,13 +465,7 @@ public class AssetListEntryUsagesUtil {
 	private static JSONObject _getPageContentJSONObject(
 		AssetListEntryUsage assetListEntryUsage,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String redirect = _getRedirect(httpServletRequest);
+		HttpServletResponse httpServletResponse, String redirect) {
 
 		JSONObject mappedContentJSONObject = JSONUtil.put(
 			"className", assetListEntryUsage.getClassName()
@@ -482,6 +478,10 @@ public class AssetListEntryUsagesUtil {
 		).put(
 			"type", LanguageUtil.get(httpServletRequest, "collection")
 		);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (Objects.equals(
 				assetListEntryUsage.getClassName(),

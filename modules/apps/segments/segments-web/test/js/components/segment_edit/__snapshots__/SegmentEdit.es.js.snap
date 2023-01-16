@@ -191,9 +191,9 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
               class="btn-group-item mr-2"
             >
               <label
-                aria-label="Edit"
+                aria-label="edit-segment"
                 class="toggle-switch toggle-editing"
-                title="Edit"
+                title="edit-segment"
               >
                 <input
                   class="toggle-switch-check"
@@ -367,9 +367,9 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="btn-group-item mr-2"
             >
               <label
-                aria-label="View"
+                aria-label="edit-segment"
                 class="toggle-switch toggle-editing"
-                title="View"
+                title="edit-segment"
               >
                 <input
                   checked=""

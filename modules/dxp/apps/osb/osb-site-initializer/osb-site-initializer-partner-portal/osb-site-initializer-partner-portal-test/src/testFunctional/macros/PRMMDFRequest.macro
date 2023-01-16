@@ -148,11 +148,11 @@ definition {
 			value1 = "${activityDescription}");
 
 		Click.clickAtNotVisible(
+			key_buttonText = "${leadList}",
 			key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
-			locator1 = "PRMMDFRequest#INPUT_BUTTON",
-			key_buttonText = "${leadList}");
+			locator1 = "PRMMDFRequest#INPUT_BUTTON");
 
-		if("${leadList}" == "Yes") {
+		if ("${leadList}" == "Yes") {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",

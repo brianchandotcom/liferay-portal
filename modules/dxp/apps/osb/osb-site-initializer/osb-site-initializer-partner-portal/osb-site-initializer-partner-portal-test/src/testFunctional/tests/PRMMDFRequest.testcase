@@ -142,11 +142,11 @@ definition {
 
 		task ("And I add a new activity") {
 			PRMMDFRequest.newActivity(
+				activityDescription = "Activity Description",
 				activityName = "Activity Name 1",
 				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
 				followUpStrategy = "test",
 				leadFollowUpList = "Other",
-				activityDescription = "Activity Description",
 				leadList = "No",
 				tactic = "Other",
 				targetOfLeads = "test",

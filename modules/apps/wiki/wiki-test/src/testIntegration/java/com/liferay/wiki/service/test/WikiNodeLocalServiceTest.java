@@ -139,7 +139,7 @@ public class WikiNodeLocalServiceTest {
 				LoggerTestUtil.WARN)) {
 
 			WikiNodeLocalServiceUtil.importPages(
-				TestPropsValues.getUserId(), _node.getNodeId(), "MediaWiki",
+				TestPropsValues.getUserId(), _node.getNodeId(),
 				new InputStream[] {inputStream, null, null},
 				Collections.<String, String[]>emptyMap());
 		}
@@ -176,7 +176,7 @@ public class WikiNodeLocalServiceTest {
 				LoggerTestUtil.WARN)) {
 
 			WikiNodeLocalServiceUtil.importPages(
-				TestPropsValues.getUserId(), _node.getNodeId(), "MediaWiki",
+				TestPropsValues.getUserId(), _node.getNodeId(),
 				new InputStream[] {pagesInputStream, null, filesInputStream},
 				Collections.<String, String[]>emptyMap());
 		}

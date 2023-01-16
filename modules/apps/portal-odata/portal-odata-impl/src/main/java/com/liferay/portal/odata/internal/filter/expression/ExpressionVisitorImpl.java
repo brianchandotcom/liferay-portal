@@ -27,7 +27,6 @@ import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.apache.olingo.commons.api.edm.EdmEnumType;
 import org.apache.olingo.commons.api.edm.EdmType;
@@ -76,17 +75,17 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		Expression leftBinaryOperationExpression,
 		Expression rightBinaryOperationExpression) {
 
-		Optional<BinaryExpression.Operation> binaryExpressionOperationOptional =
-			_getOperationOptional(binaryOperatorKind);
+		BinaryExpression.Operation binaryExpressionOperation = _getOperation(
+			binaryOperatorKind);
 
-		return binaryExpressionOperationOptional.map(
-			binaryExpressionOperation -> new BinaryExpressionImpl(
-				leftBinaryOperationExpression, binaryExpressionOperation,
-				rightBinaryOperationExpression)
-		).orElseThrow(
-			() -> new UnsupportedOperationException(
-				"Binary operator: " + binaryOperatorKind)
-		);
+		if (binaryExpressionOperation == null) {
+			throw new UnsupportedOperationException(
+				"Binary operator: " + binaryOperatorKind);
+		}
+
+		return new BinaryExpressionImpl(
+			leftBinaryOperationExpression, binaryExpressionOperation,
+			rightBinaryOperationExpression);
 	}
 
 	@Override
@@ -298,35 +297,35 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 				uriResources);
 	}
 
-	private Optional<BinaryExpression.Operation> _getOperationOptional(
+	private BinaryExpression.Operation _getOperation(
 		BinaryOperatorKind binaryOperatorKind) {
 
 		if (binaryOperatorKind == BinaryOperatorKind.AND) {
-			return Optional.of(BinaryExpression.Operation.AND);
+			return BinaryExpression.Operation.AND;
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.EQ) {
-			return Optional.of(BinaryExpression.Operation.EQ);
+			return BinaryExpression.Operation.EQ;
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.GE) {
-			return Optional.of(BinaryExpression.Operation.GE);
+			return BinaryExpression.Operation.GE;
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.GT) {
-			return Optional.of(BinaryExpression.Operation.GT);
+			return BinaryExpression.Operation.GT;
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.LE) {
-			return Optional.of(BinaryExpression.Operation.LE);
+			return BinaryExpression.Operation.LE;
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.LT) {
-			return Optional.of(BinaryExpression.Operation.LT);
+			return BinaryExpression.Operation.LT;
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.NE) {
-			return Optional.of(BinaryExpression.Operation.NE);
+			return BinaryExpression.Operation.NE;
 		}
 		else if (binaryOperatorKind == BinaryOperatorKind.OR) {
-			return Optional.of(BinaryExpression.Operation.OR);
+			return BinaryExpression.Operation.OR;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private NavigationPropertyExpression.Type _getType(

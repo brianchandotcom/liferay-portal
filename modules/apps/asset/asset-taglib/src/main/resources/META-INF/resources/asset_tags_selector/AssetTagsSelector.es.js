@@ -221,7 +221,7 @@ function AssetTagsSelector({
 					{label}
 				</label>
 
-				<ClayInput.Group>
+				<ClayInput.Group style={{minHeight: '2.125rem'}}>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
 							alignmentByViewport

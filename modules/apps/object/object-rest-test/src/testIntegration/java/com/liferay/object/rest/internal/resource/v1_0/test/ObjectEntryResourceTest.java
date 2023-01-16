@@ -199,6 +199,46 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperatorInManyToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperatorInBothSidesOfRelationship();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
+	public void testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperatorInOneToManyRelationship()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperatorInBothSidesOfRelationship();
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
+	}
+
+	@Test
 	public void testGetNestedFieldDetailsInOneToManyRelationships()
 		throws Exception {
 
@@ -490,6 +530,46 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
 		_testFilterObjectEntriesByRelatedObjectsUsingINOperator(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, _objectDefinition2,
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+	}
+
+	private void
+			_testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperator(
+				String expectedObjectFieldName, String expectedObjectFieldValue,
+				ObjectDefinition objectDefinition,
+				String relatedObjectFieldName, String relatedObjectFieldValue)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			objectDefinition.getRESTContextPath(), "?filter=startswith(",
+			_objectRelationship.getName(), StringPool.SLASH,
+			relatedObjectFieldName, StringPool.COMMA, StringPool.APOSTROPHE,
+			relatedObjectFieldValue.substring(0, 1), StringPool.APOSTROPHE,
+			StringPool.CLOSE_PARENTHESIS);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			expectedObjectFieldValue,
+			itemJSONObject.getString(expectedObjectFieldName));
+	}
+
+	private void _testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperatorInBothSidesOfRelationship()
+		throws Exception {
+
+		_testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperator(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, _objectDefinition1,
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		_testFilterObjectEntriesByRelatedObjectsUsingStartsWithOperator(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, _objectDefinition2,
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 	}

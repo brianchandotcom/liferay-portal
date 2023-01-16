@@ -56,7 +56,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						<clay:content-col
 							expand="<%= true %>"
 						>
-							<h4 class="component-title"><liferay-ui:message key="sites" /></h4>
+							<h2 class="component-title"><liferay-ui:message key="sites" /></h2>
 						</clay:content-col>
 					</clay:content-row>
 				</div>
@@ -86,7 +86,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						<clay:content-col
 							expand="<%= true %>"
 						>
-							<h4 class="component-title"><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
+							<h2 class="component-title"><%= HtmlUtil.escape(group.getDescriptiveName()) %></h2>
 						</clay:content-col>
 
 						<clay:content-col>
@@ -225,9 +225,9 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h4 class="component-title">
+					<h2 class="component-title">
 						<liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" />
-					</h4>
+					</h2>
 				</clay:content-col>
 			</clay:content-row>
 		</div>

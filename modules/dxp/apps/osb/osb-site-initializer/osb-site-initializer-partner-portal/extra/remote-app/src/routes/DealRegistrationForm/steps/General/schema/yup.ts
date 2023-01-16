@@ -27,7 +27,6 @@ const generalSchema = object({
 		500,
 		'reached max characters'
 	),
-	categories: array().min(1, 'Required'),
 	partnerAccount: object({
 		id: number(),
 		name: string(),
@@ -62,6 +61,7 @@ const generalSchema = object({
 			.matches(phoneZipRegExp, 'Phone number is not valid')
 			.required('Required'),
 	}),
+	projectCategories: array().min(1, 'Required'),
 	projectNeed: array().min(1, 'Required'),
 	projectTimeline: string()
 		.trim()

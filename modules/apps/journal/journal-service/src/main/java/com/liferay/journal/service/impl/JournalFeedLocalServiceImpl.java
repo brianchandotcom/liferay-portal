@@ -131,6 +131,14 @@ public class JournalFeedLocalServiceImpl
 
 		feed = journalFeedPersistence.update(feed);
 
+		// Asset
+
+		updateAsset(
+			userId, feed, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
+
 		// DDM Structure Link
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
@@ -219,6 +227,11 @@ public class JournalFeedLocalServiceImpl
 		// Expando
 
 		_expandoValueLocalService.deleteValues(
+			JournalFeed.class.getName(), feed.getId());
+
+		// Asset
+
+		_assetEntryLocalService.deleteEntry(
 			JournalFeed.class.getName(), feed.getId());
 	}
 
@@ -368,6 +381,15 @@ public class JournalFeedLocalServiceImpl
 		feed.setExpandoBridgeAttributes(serviceContext);
 
 		feed = journalFeedPersistence.update(feed);
+
+		// Asset
+
+		updateAsset(
+			serviceContext.getUserId(), feed,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
 
 		// DDM Structure Link
 

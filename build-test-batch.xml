@@ -6453,7 +6453,7 @@ ${output.content}</echo>
 
 						<trycatch property="junit.failure.message">
 							<try>
-								<for keepgoing="true" list="patching-tool-auto-discovery" param="patchingtool.test.target">
+								<for keepgoing="true" list="patching-tool-auto-discovery,patching-tool-info" param="patchingtool.test.target">
 									<sequential>
 										<ant antfile="${project.dir}/build-test-patching-tool.xml" target="@{patchingtool.test.target}" />
 									</sequential>

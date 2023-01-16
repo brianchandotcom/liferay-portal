@@ -20,12 +20,16 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -71,7 +75,9 @@ public class DLUserNotificationHandler
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY) {
 
-			message = "x-review-a-x";
+			return _language.format(
+				serviceContext.getLocale(), "x-needs-review",
+				StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
@@ -82,5 +88,8 @@ public class DLUserNotificationHandler
 		return getFormattedMessage(
 			jsonObject, serviceContext, message, typeName);
 	}
+
+	@Reference
+	private Language _language;
 
 }

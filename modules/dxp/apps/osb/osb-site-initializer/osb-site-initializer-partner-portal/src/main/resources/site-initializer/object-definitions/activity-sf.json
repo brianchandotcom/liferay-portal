@@ -97,6 +97,7 @@
 			"type": "Date"
 		}
 	],
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Activities SF"
 	},

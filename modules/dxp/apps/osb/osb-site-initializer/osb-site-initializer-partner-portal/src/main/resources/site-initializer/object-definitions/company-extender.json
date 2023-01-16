@@ -55,6 +55,7 @@
 			"type": "String"
 		}
 	],
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Company Extenders"
 	},

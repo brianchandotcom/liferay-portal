@@ -40,6 +40,7 @@
 			"type": "Boolean"
 		}
 	],
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "MDF Claim Budgets"
 	},

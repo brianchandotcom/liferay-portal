@@ -228,6 +228,11 @@
 	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//label[normalize-space(text())='${sourceLabel}'][not(contains(@class,'sr-only'))]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLLECTION_FILTER_TAGS_SELECTOR</td>
+	<td>xpath=(//input[contains(@id,'MultiSelect')])[${index}]</td>
+	<td></td>
+</tr>
 
 <!--COLOR_PICKER-->
 

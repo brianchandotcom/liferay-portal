@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -81,6 +82,24 @@ public class LayoutUtilityPageEntryServiceTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testSetDefaultLayoutUtilityPageEntryWithNoPermissions()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				0);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_layoutUtilityPageEntryService.setDefaultLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+		}
 	}
 
 	@Test

@@ -17,28 +17,11 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "partner@liferay.com",
-				userFirstName = "partner",
-				userLastName = "partner",
-				userScreenName = "partner");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "partner@liferay.com");
-		}
-
 		task ("Create a new Partner Portal Site") {
 			PRMUtils.addPRMSite();
 		}
 
-		task ("Go to Partner Portal and login with the created user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
+		task ("Go to Partner Portal ") {
 			PRMUtils.gotoPRM();
 		}
 
@@ -122,7 +105,7 @@ definition {
 	@priority = "4"
 	test CanWatchBannerVideo {
 		task ("Given that the user clicks on 'Watch a Video Tour' button on Welcome Banner") {
-			PRMPages.clickBannerButton(buttonText = "Watch a Video Tour");
+			PRMPages.clickBannerButton();
 		}
 
 		task ("Then a modal will be opened and the user can watch the video") {

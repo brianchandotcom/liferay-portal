@@ -29,6 +29,7 @@ import {
 	useMovementSource,
 } from '../contexts/KeyboardMovementContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
+import AppHooks from '../hooks/app_hooks/index';
 import {reducer} from '../reducers/index';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
@@ -44,7 +45,6 @@ import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import WidgetsManager from './WidgetsManager';
-import AppHooks from './app-hooks/index';
 
 export default function App({state}) {
 	const initialState = reducer(state, {type: INIT});

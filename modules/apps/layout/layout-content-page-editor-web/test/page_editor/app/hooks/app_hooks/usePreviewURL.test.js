@@ -15,7 +15,6 @@
 import {render} from '@testing-library/react';
 import React, {useEffect} from 'react';
 
-import usePreviewURL from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/app-hooks/usePreviewURL';
 import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {LAYOUT_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutTypes';
 import {ControlsProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
@@ -23,6 +22,7 @@ import {
 	DisplayPagePreviewItemContextProvider,
 	useSelectDisplayPagePreviewItem,
 } from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/DisplayPagePreviewItemContext';
+import usePreviewURL from '../../../../../src/main/resources/META-INF/resources/page_editor/app/hooks/app_hooks/usePreviewURL';
 import StoreMother from '../../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
 
 const HookComponent = ({displayPagePreviewItem}) => {

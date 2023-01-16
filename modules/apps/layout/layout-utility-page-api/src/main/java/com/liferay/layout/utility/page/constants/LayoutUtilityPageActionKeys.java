@@ -22,4 +22,7 @@ public class LayoutUtilityPageActionKeys {
 	public static final String ADD_LAYOUT_UTILITY_PAGE_ENTRY =
 		"ADD_LAYOUT_UTILITY_PAGE_ENTRY";
 
+	public static final String ASSIGN_DEFAULT_LAYOUT_UTILITY_PAGE_ENTRY =
+		"ASSIGN_DEFAULT_LAYOUT_UTILITY_PAGE_ENTRY";
+
 }

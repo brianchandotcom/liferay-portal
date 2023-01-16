@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Greg Amerson
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

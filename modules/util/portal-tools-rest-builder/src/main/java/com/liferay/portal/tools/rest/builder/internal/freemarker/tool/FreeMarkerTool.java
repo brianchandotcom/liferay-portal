@@ -17,6 +17,7 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -436,19 +437,11 @@ public class FreeMarkerTool {
 		JavaMethodSignature javaMethodSignature,
 		List<JavaMethodSignature> javaMethodSignatures) {
 
-		List<String> javaMethodSignatureMethodNames = new ArrayList<>();
-
-		for (JavaMethodSignature curJavaMethodSignature :
-				javaMethodSignatures) {
-
-			javaMethodSignatureMethodNames.add(
-				curJavaMethodSignature.getMethodName());
-		}
-
 		return GraphQLNamingUtil.getGraphQLPropertyName(
 			javaMethodSignature.getMethodName(),
 			javaMethodSignature.getReturnType(),
-			javaMethodSignatureMethodNames);
+			ListUtil.toList(
+				javaMethodSignatures, JavaMethodSignature::getMethodName));
 	}
 
 	public List<JavaMethodSignature> getGraphQLRelationJavaMethodSignatures(

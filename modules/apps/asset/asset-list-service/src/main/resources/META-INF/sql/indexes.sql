@@ -28,6 +28,7 @@ create index IX_76643456 on AssetListEntryUsage (assetListEntryId, classNameId, 
 create index IX_6E1C4974 on AssetListEntryUsage (assetListEntryId, ctCollectionId);
 create index IX_7AEA679B on AssetListEntryUsage (companyId, classNameId, key_[$COLUMN_LENGTH:255$], ctCollectionId);
 create index IX_669BC47F on AssetListEntryUsage (containerKey[$COLUMN_LENGTH:255$], containerType, plid, ctCollectionId);
+create index IX_3C389091 on AssetListEntryUsage (containerType, plid, ctCollectionId);
 create unique index IX_624112AF on AssetListEntryUsage (groupId, classNameId, containerKey[$COLUMN_LENGTH:255$], containerType, key_[$COLUMN_LENGTH:255$], plid, ctCollectionId);
 create index IX_AF0F2C99 on AssetListEntryUsage (groupId, classNameId, key_[$COLUMN_LENGTH:255$], ctCollectionId);
 create index IX_27D73798 on AssetListEntryUsage (groupId, classNameId, key_[$COLUMN_LENGTH:255$], type_, ctCollectionId);

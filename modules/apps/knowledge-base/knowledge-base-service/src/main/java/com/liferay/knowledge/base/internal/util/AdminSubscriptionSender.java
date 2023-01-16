@@ -49,7 +49,8 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 
 		_kbArticle = kbArticle;
 		_kbArticleModelResourcePermission = kbArticleModelResourcePermission;
-		_serviceContext = serviceContext;
+
+		setServiceContext(serviceContext);
 	}
 
 	@Override
@@ -60,8 +61,8 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 		setContextAttribute(
 			"[$ARTICLE_URL$]",
 			KnowledgeBaseUtil.getKBArticleURL(
-				_serviceContext.getPlid(), _kbArticle.getResourcePrimKey(),
-				_kbArticle.getStatus(), _serviceContext.getPortalURL(), false));
+				serviceContext.getPlid(), _kbArticle.getResourcePrimKey(),
+				_kbArticle.getStatus(), serviceContext.getPortalURL(), false));
 		setLocalizedContextAttributeWithFunction(
 			"[$ARTICLE_ATTACHMENTS$]", _getEmailKBArticleAttachmentsFunction());
 		setLocalizedContextAttributeWithFunction(
@@ -154,6 +155,5 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	private final KBArticle _kbArticle;
 	private final ModelResourcePermission<KBArticle>
 		_kbArticleModelResourcePermission;
-	private final ServiceContext _serviceContext;
 
 }

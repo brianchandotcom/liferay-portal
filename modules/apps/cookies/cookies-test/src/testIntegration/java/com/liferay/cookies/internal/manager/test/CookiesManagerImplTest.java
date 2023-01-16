@@ -203,7 +203,7 @@ public class CookiesManagerImplTest {
 					"The ", cookie.getName(),
 					" cookie was previously added with consent type ",
 					CookiesConstants.CONSENT_TYPE_NECESSARY,
-					" and will now be upgraded to consent type ",
+					" and will now be modified to consent type ",
 					CookiesConstants.CONSENT_TYPE_FUNCTIONAL),
 				logEntry.getMessage());
 		}

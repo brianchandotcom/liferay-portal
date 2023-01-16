@@ -73,7 +73,7 @@ export default function CartQuickAdd() {
 			.then((availableProducts) => {
 				const formattedProducts = [];
 
-				availableProducts.items.map((product) => {
+				availableProducts.items.forEach((product) => {
 					const {name, skus} = product;
 
 					if (product.skus.length > 1) {
@@ -96,7 +96,7 @@ export default function CartQuickAdd() {
 
 				setFormattedProducts(formattedProducts);
 
-				const productSKUs = availableProducts.items.filter(
+				const productsWithOptions = availableProducts.items.filter(
 					(product) => {
 						if (product.skus.length > 1) {
 							return product.skus.map((sku) => sku);
@@ -104,33 +104,27 @@ export default function CartQuickAdd() {
 					}
 				);
 
-				setProducts([...availableProducts.items, ...productSKUs]);
+				setProducts([
+					...availableProducts.items,
+					...productsWithOptions,
+				]);
 			});
 	}, [accountId, channelId]);
 
 	const handleAddToCartClick = () => {
-		const selectedSKUs = selectedProducts.map((item) => item.value);
-		const productsWithOptions = products.filter(
-			(item) => item.skus && item.skus.length > 1
-		);
-		const readyProducts = [];
+		const readyProducts = selectedProducts.map((product) => {
+			if (product.sku) {
+				const productsWithOptions = products.filter(
+					(item) => item.skus && item.skus.length > 1
+				);
 
-		products.forEach((product) => {
-			if (
-				!product.skus &&
-				product.sku &&
-				selectedSKUs.includes(product.sku)
-			) {
-				const parentProduct = productsWithOptions.find((item) => {
-					const childSKUs = [];
+				const parentProduct = productsWithOptions.find((item) =>
+					item.skus.find((childSku) => childSku.sku === product.sku)
+				);
 
-					item.skus.forEach((itemSKU) => childSKUs.push(itemSKU.sku));
-
-					return childSKUs.includes(product.sku);
-				});
-
-				readyProducts.push({
+				return {
 					...product,
+					name: parentProduct.name,
 					price: product.price,
 					productURLs: parentProduct.urls,
 					quantity:
@@ -138,17 +132,12 @@ export default function CartQuickAdd() {
 					settings: parentProduct.productConfiguration,
 					sku: product.sku,
 					skuId: product.id,
-				});
+				};
 			}
-			else if (
-				product.skus &&
-				product.skus[0] &&
-				product.skus.length < 2 &&
-				selectedSKUs.includes(product.skus[0].sku)
-			) {
+			else {
 				const {productConfiguration, skus, urls} = product;
 
-				readyProducts.push({
+				return {
 					...product,
 					price: skus[0].price,
 					productURLs: urls,
@@ -156,7 +145,7 @@ export default function CartQuickAdd() {
 					settings: productConfiguration,
 					sku: skus[0].sku,
 					skuId: skus[0].id,
-				});
+				};
 			}
 		});
 
@@ -207,10 +196,12 @@ export default function CartQuickAdd() {
 							const {label, value} = product;
 							const lowerCaseValue = productsQuery.toLowerCase();
 
-							return (
-								label.toLowerCase().match(lowerCaseValue) ||
-								value.toLowerCase().match(lowerCaseValue)
-							);
+							if (!selectedProducts.includes(product)) {
+								return (
+									label.toLowerCase().match(lowerCaseValue) ||
+									value.toLowerCase().match(lowerCaseValue)
+								);
+							}
 						})}
 						value={productsQuery}
 					/>

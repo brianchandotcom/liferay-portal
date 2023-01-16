@@ -70,7 +70,7 @@ if (stageableGroup.isLayout()) {
 
 					<%
 					for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
-						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetEntry.getClassNameId());
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
 						if (assetRendererFactory == null) {
 							continue;

@@ -25,7 +25,6 @@ import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
 
@@ -115,9 +114,8 @@ public class KBArticleLayoutDisplayPageObjectProvider
 		throws PortalException {
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					PortalUtil.getClassNameId(KBArticle.class));
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				KBArticle.class);
 
 		return assetRendererFactory.getAssetEntry(
 			KBArticle.class.getName(), kbArticle.getClassPK());

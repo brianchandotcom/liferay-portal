@@ -55,9 +55,8 @@ public class AssetEntryItemDescriptor
 		_httpServletRequest = httpServletRequest;
 
 		_assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					_assetEntry.getClassNameId());
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_assetEntry.getClassName());
 	}
 
 	@Override

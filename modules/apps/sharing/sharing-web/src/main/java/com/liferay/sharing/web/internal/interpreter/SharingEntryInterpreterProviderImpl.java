@@ -44,7 +44,7 @@ public class SharingEntryInterpreterProviderImpl
 			_serviceTrackerMap.getService(sharingEntry.getClassNameId());
 
 		if ((sharingEntryInterpreter == null) &&
-			_isAssetObject(sharingEntry.getClassNameId())) {
+			_isAssetObject(sharingEntry.getClassName())) {
 
 			return _assetRendererSharingEntryInterpreter;
 		}
@@ -67,10 +67,10 @@ public class SharingEntryInterpreterProviderImpl
 		_serviceTrackerMap.close();
 	}
 
-	private boolean _isAssetObject(long classNameId) {
+	private boolean _isAssetObject(String className) {
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
 
 		if (assetRendererFactory != null) {
 			return true;

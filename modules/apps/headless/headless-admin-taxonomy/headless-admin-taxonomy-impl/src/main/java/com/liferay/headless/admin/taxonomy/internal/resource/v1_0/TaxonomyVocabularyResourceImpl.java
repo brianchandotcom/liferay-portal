@@ -431,8 +431,8 @@ public class TaxonomyVocabularyResourceImpl
 
 						AssetRendererFactory<?> assetRendererFactory =
 							AssetRendererFactoryRegistryUtil.
-								getAssetRendererFactoryByClassName(
-									_portal.getClassName(classNameId));
+								getAssetRendererFactoryByClassNameId(
+									classNameId);
 
 						ClassTypeReader classTypeReader =
 							assetRendererFactory.getClassTypeReader();
@@ -473,8 +473,8 @@ public class TaxonomyVocabularyResourceImpl
 
 						return _getModelResource(
 							AssetRendererFactoryRegistryUtil.
-								getAssetRendererFactoryByClassName(
-									_portal.getClassName(classNameId)));
+								getAssetRendererFactoryByClassNameId(
+									classNameId));
 					});
 			}
 		};
@@ -578,8 +578,8 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_portal.getClassName(classNameId));
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
 
 		ClassTypeReader classTypeReader =
 			assetRendererFactory.getClassTypeReader();

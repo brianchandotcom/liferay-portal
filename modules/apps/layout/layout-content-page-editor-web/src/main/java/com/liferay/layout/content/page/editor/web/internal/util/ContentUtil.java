@@ -912,9 +912,8 @@ public class ContentUtil {
 		throws Exception {
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					layoutClassedModelUsage.getClassNameId());
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				layoutClassedModelUsage.getClassName());
 
 		if (assetRendererFactory == null) {
 			return JSONUtil.put(

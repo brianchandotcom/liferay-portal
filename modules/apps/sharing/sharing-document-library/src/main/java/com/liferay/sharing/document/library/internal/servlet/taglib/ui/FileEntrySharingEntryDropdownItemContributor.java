@@ -69,9 +69,8 @@ public class FileEntrySharingEntryDropdownItemContributor
 		throws PortalException {
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					sharingEntry.getClassNameId());
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				sharingEntry.getClassName());
 
 		return assetRendererFactory.getAssetRenderer(sharingEntry.getClassPK());
 	}

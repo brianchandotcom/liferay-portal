@@ -107,9 +107,8 @@ public class FileEntryLayoutDisplayPageObjectProvider
 
 	private AssetEntry _getAssetEntry(FileEntry fileEntry) {
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					PortalUtil.getClassNameId(DLFileEntry.class));
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				DLFileEntry.class);
 
 		if (assetRendererFactory == null) {
 			return null;

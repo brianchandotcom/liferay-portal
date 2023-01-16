@@ -32,7 +32,6 @@ import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,8 +109,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		}
 
 		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassNameId(
-				PortalUtil.getClassNameId(_infoItemDetails.getClassName()));
+			getAssetRendererFactoryByClassName(_infoItemDetails.getClassName());
 	}
 
 	public boolean hasPermission(

@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_FILTER_HELP_TEXT</td>
+	<td>xpath=(//div[@aria-label='Collection Filter'])[${index}]//p[contains(@id,'HelpText')][normalize-space(text())='${helpText}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_FILTER_SEARCH_FIELD</td>
 	<td>xpath=(//input[contains(@id,'keywordsInput')])[${index}]</td>
 	<td></td>

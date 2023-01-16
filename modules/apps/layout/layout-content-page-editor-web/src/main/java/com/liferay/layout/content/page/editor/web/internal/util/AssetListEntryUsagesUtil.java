@@ -99,9 +99,10 @@ public class AssetListEntryUsagesUtil {
 				plid);
 
 		for (AssetListEntryUsage assetListEntryUsage : assetListEntryUsages) {
-			if (uniqueAssetListEntryUsagesKeys.contains(
-					_generateUniqueLayoutClassedModelUsageKey(
-						assetListEntryUsage)) ||
+			String uniqueKey = _generateUniqueLayoutClassedModelUsageKey(
+				assetListEntryUsage);
+
+			if (uniqueAssetListEntryUsagesKeys.contains(uniqueKey) ||
 				_isCollectionStyledLayoutStructureItemDeleted(
 					assetListEntryUsage, layoutStructure) ||
 				_isFragmentEntryLinkDeleted(assetListEntryUsage)) {
@@ -114,8 +115,7 @@ public class AssetListEntryUsagesUtil {
 					assetListEntryUsage, httpServletRequest,
 					httpServletResponse));
 
-			uniqueAssetListEntryUsagesKeys.add(
-				_generateUniqueLayoutClassedModelUsageKey(assetListEntryUsage));
+			uniqueAssetListEntryUsagesKeys.add(uniqueKey);
 		}
 
 		return mappedContentsJSONArray;

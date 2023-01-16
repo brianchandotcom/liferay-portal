@@ -18,6 +18,9 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -119,6 +122,23 @@ public class AssetRendererFactoryRegistryUtil {
 		}
 
 		return classNameIds;
+	}
+
+	public static long[] getIndexableClassNameIds(
+		long companyId, boolean filterSelectable) {
+
+		return ArrayUtil.filter(
+			getClassNameIds(companyId, filterSelectable),
+			classNameId -> {
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+					PortalUtil.getClassName(classNameId));
+
+				if (indexer == null) {
+					return false;
+				}
+
+				return true;
+			});
 	}
 
 	private static Map<String, AssetRendererFactory<?>>

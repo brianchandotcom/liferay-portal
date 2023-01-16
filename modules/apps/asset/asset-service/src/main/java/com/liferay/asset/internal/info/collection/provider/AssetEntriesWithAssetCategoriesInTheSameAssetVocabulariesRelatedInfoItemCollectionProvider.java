@@ -269,19 +269,8 @@ public class
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		return ArrayUtil.filter(
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				serviceContext.getCompanyId(), true),
-			classNameId -> {
-				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					_portal.getClassName(classNameId));
-
-				if (indexer == null) {
-					return false;
-				}
-
-				return true;
-			});
+		return AssetRendererFactoryRegistryUtil.getIndexableClassNameIds(
+			serviceContext.getCompanyId(), true);
 	}
 
 	private InfoField _getItemTypesInfoField() {

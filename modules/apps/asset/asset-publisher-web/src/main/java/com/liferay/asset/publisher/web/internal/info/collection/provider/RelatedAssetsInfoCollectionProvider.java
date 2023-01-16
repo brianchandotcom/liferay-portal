@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -133,19 +131,8 @@ public class RelatedAssetsInfoCollectionProvider
 			ServiceContextThreadLocal.getServiceContext();
 
 		assetEntryQuery.setClassNameIds(
-			ArrayUtil.filter(
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					serviceContext.getCompanyId(), true),
-				availableClassNameId -> {
-					Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-						_portal.getClassName(availableClassNameId));
-
-					if (indexer == null) {
-						return false;
-					}
-
-					return true;
-				}));
+			AssetRendererFactoryRegistryUtil.getIndexableClassNameIds(
+				serviceContext.getCompanyId(), true));
 
 		assetEntryQuery.setEnablePermissions(true);
 

@@ -210,6 +210,10 @@
 			<finder-column name="assetListEntryId" />
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="CT_P" return-type="Collection">
+			<finder-column name="containerType" />
+			<finder-column name="plid" />
+		</finder>
 		<finder name="G_C_K" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />

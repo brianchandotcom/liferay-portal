@@ -30,30 +30,16 @@ definition {
 
 		task ("Add a new account and assign the created user to the account") {
 			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Account 1",
+				accountEntryName = "Company Name 1",
 				accountEntryType = "Business");
 
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account 1");
-
-			Account.assignUsers(
-				accountName = "Account 1",
-				assigneeName = "partner partner");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "partner@liferay.com");
 		}
 
 		task ("Create a new Partner Portal Site") {
 			PRMUtils.addPRMSite();
-		}
-
-		task ("Add permission for the user to be able to see the 'Name' column on MDF Listing") {
-			PRMUtils.publishObject(objectName = "MDF Listing Column");
-
-			PRMUtils.definePermission(
-				itemName = "Name",
-				objectName = "MDF Listings Columns",
-				permissionName = "View",
-				roleName = "User");
 		}
 
 		task ("Go to Partner Portal and login with the created user") {
@@ -89,7 +75,7 @@ definition {
 
 		task ("When I fill all mandatory fields on the MDF Request") {
 			PRMMDFRequest.fillGoalsPage(
-				accountName = "Account 1",
+				accountName = "Company Name 1",
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
@@ -109,7 +95,7 @@ definition {
 			PRMMarketing.gotoAddNewMDF();
 
 			PRMMDFRequest.fillGoalsPage(
-				accountName = "Account 1",
+				accountName = "Company Name 1",
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignName = "Campaign Name",
 				countryName = "Global",
@@ -142,7 +128,7 @@ definition {
 
 		task ("And I fill all Goals form with my informations") {
 			PRMMDFRequest.fillGoalsPage(
-				accountName = "Account 1",
+				accountName = "Company Name 1",
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
@@ -160,7 +146,8 @@ definition {
 				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
 				followUpStrategy = "test",
 				leadFollowUpList = "Other",
-				leadList = "true",
+				activityDescription = "Activity Description",
+				leadList = "No",
 				tactic = "Other",
 				targetOfLeads = "test",
 				typeOfActivity = "Miscellaneous Marketing");

@@ -79,6 +79,11 @@ public class AssetListEntryUsageLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAssetListEntryUsages(long containerType, long plid) {
+		assetListEntryUsagePersistence.removeByCT_P(containerType, plid);
+	}
+
+	@Override
 	public void deleteAssetListEntryUsages(
 		String containerKey, long containerType, long plid) {
 
@@ -93,6 +98,13 @@ public class AssetListEntryUsageLocalServiceImpl
 
 		return assetListEntryUsagePersistence.fetchByG_C_CK_CT_K_P(
 			groupId, classNameId, containerKey, containerType, key, plid);
+	}
+
+	@Override
+	public List<AssetListEntryUsage> getAssetEntryListUsages(
+		long containerType, long plid) {
+
+		return assetListEntryUsagePersistence.findByCT_P(containerType, plid);
 	}
 
 	@Override

@@ -62,7 +62,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Julio Camarero
@@ -83,13 +82,15 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	public Filter visitBinaryExpressionOperation(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
-		Optional<Filter> filterOptional = _getFilterOptional(
-			operation, left, right, _locale);
+		Filter filter = _getFilter(operation, left, right, _locale);
 
-		return filterOptional.orElseThrow(
-			() -> new UnsupportedOperationException(
+		if (filter == null) {
+			throw new UnsupportedOperationException(
 				"Unsupported method visitBinaryExpressionOperation with " +
-					"operation " + operation));
+					"operation " + operation);
+		}
+
+		return filter;
 	}
 
 	@Override
@@ -321,7 +322,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 					fieldName, entityField.getFilterableValue(fieldValue))));
 	}
 
-	private Optional<Filter> _getFilterOptional(
+	private Filter _getFilter(
 		BinaryExpression.Operation operation, Object left, Object right,
 		Locale locale) {
 
@@ -351,11 +352,8 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
 			filter = _getORFilter((Filter)left, (Filter)right);
 		}
-		else {
-			return Optional.empty();
-		}
 
-		return Optional.of(filter);
+		return filter;
 	}
 
 	private Filter _getGEFilter(

@@ -18,7 +18,12 @@
 </tr>
 <tr>
 	<td>BANNER_BUTTON</td>
-	<td>//div[contains(@data-lfr-editable-id,'first-banner') and contains(.,'${key_buttonText}')]</td>
+	<td>//div/*[contains(@data-lfr-editable-id,'first-welcome-banner-title')]//ancestor::div//div/a[contains(.,'${key_buttonText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_BUTTON</td>
+	<td>//button[contains(@class,'video-tour-button')]</td>
 	<td></td>
 </tr>
 

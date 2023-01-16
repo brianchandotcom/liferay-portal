@@ -69,20 +69,15 @@ export function ThenContainer({
 	updateParameters,
 	values,
 }: ThenContainerProps) {
-	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
-
 	const [notificationTemplates, setNotificationTemplates] = useState<
 		CustomItem<number>[]
 	>([]);
 
+	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
+
 	const [selectedObjectDefinition, setSelectedObjectDefinition] = useState(
 		''
 	);
-	const notificationTemplateLabel = useMemo(() => {
-		return notificationTemplates.find(
-			({value}) => value === values.parameters?.notificationTemplateId
-		)?.label;
-	}, [notificationTemplates, values.parameters]);
 
 	const actionExecutors = useMemo(() => {
 		const executors = new Map<string, string>();
@@ -93,6 +88,12 @@ export function ThenContainer({
 
 		return executors;
 	}, [newObjectActionExecutors]);
+
+	const notificationTemplateLabel = useMemo(() => {
+		return notificationTemplates.find(
+			({value}) => value === values.parameters?.notificationTemplateId
+		)?.label;
+	}, [notificationTemplates, values.parameters]);
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {

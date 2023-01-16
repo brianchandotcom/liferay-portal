@@ -53,15 +53,6 @@ export async function fetchObjectDefinitions(
 
 	const objectsOptionsList: ObjectsOptionsList = [];
 
-	if (!values.parameters?.objectDefinitionExternalReferenceCode) {
-		objectsOptionsList.push({
-			disabled: true,
-			label: Liferay.Language.get('choose-an-object'),
-			selected: true,
-			value: '',
-		});
-	}
-
 	fillSelect(
 		Liferay.Language.get('related-objects'),
 		relatedObjects,

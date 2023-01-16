@@ -14,6 +14,11 @@
 
 import React from 'react';
 import './index.scss';
+declare type Item = {
+	label: string;
+	options: LabelValueObject[];
+	type: string;
+};
 interface SelectWithOptionProps
 	extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	ariaLabel?: string;
@@ -26,11 +31,6 @@ interface SelectWithOptionProps
 	required?: boolean;
 	tooltip?: string;
 }
-declare type Item = {
-	label: string;
-	options: LabelValueObject[];
-	type: string;
-};
 export declare function SelectWithOption({
 	ariaLabel,
 	className,

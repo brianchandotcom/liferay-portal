@@ -18,10 +18,14 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
+import './index.scss';
 import {FieldBase} from '../FieldBase';
 
-import './index.scss';
-
+type Item = {
+	label: string;
+	options: LabelValueObject[];
+	type: string;
+};
 interface SelectWithOptionProps
 	extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	ariaLabel?: string;
@@ -34,12 +38,6 @@ interface SelectWithOptionProps
 	required?: boolean;
 	tooltip?: string;
 }
-
-type Item = {
-	label: string;
-	options: LabelValueObject[];
-	type: string;
-};
 
 export function SelectWithOption({
 	ariaLabel,
@@ -72,7 +70,7 @@ export function SelectWithOption({
 			<>
 				<ClayIcon
 					className={classNames('base-select__input-icon', {
-						'base-selec	t__input-icon--disabled': disabled,
+						'base-select__input-icon--disabled': disabled,
 					})}
 					onClick={() =>
 						!disabled && setDropdownActive((active) => !active)

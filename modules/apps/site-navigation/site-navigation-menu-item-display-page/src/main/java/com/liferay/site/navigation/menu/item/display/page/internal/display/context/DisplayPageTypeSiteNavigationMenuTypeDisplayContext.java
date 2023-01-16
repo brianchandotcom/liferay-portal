@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -369,7 +368,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 				getClassPK());
 
 		return JSONUtil.toJSONArray(
-			ListUtil.fromCollection(infoItemFieldValues.getInfoFieldValues()),
+			infoItemFieldValues.getInfoFieldValues(),
 			infoFieldValue -> JSONUtil.put(
 				"title",
 				() -> {

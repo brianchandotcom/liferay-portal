@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -136,7 +135,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 				classPK);
 
 		return JSONUtil.toJSONArray(
-			ListUtil.fromCollection(infoItemFieldValues.getInfoFieldValues()),
+			infoItemFieldValues.getInfoFieldValues(),
 			infoFieldValue -> JSONUtil.put(
 				"title",
 				() -> {

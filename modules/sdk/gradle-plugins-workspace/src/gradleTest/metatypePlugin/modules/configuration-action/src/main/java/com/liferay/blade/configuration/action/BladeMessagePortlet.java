@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.blade.configuration.action.MessageDisplayConfiguration",
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.instanceable=true",

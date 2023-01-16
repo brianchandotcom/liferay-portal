@@ -16,6 +16,7 @@ package com.liferay.asset.list.web.internal.model.listener;
 
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -37,9 +38,8 @@ public class LayoutPageTemplateStructureModelListener
 		throws ModelListenerException {
 
 		_assetListEntryUsageLocalService.deleteAssetListEntryUsages(
-			String.valueOf(
-				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
-			_portal.getClassNameId(LayoutPageTemplateStructure.class),
+			_portal.getClassNameId(
+				CollectionStyledLayoutStructureItem.class.getName()),
 			layoutPageTemplateStructure.getPlid());
 	}
 

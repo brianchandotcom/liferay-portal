@@ -145,9 +145,7 @@ public class LayoutPageTemplateStructureRelModelListener
 		}
 
 		_assetListEntryUsageLocalService.deleteAssetListEntryUsages(
-			String.valueOf(
-				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
-			_portal.getClassNameId(LayoutPageTemplateStructure.class),
+			_portal.getClassNameId(CollectionStyledLayoutStructureItem.class),
 			layoutPageTemplateStructure.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(

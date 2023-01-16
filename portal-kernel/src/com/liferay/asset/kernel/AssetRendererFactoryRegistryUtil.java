@@ -22,13 +22,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.BundleContext;
 
@@ -41,15 +39,13 @@ public class AssetRendererFactoryRegistryUtil {
 	public static List<AssetRendererFactory<?>> getAssetRendererFactories(
 		long companyId) {
 
-		return ListUtil.fromMapValues(
-			_filterAssetRendererFactories(companyId, false));
+		return _filterAssetRendererFactories(companyId, false);
 	}
 
 	public static List<AssetRendererFactory<?>> getAssetRendererFactories(
 		long companyId, boolean filterSelectable) {
 
-		return ListUtil.fromMapValues(
-			_filterAssetRendererFactories(companyId, filterSelectable));
+		return _filterAssetRendererFactories(companyId, filterSelectable);
 	}
 
 	public static <T> AssetRendererFactory<T> getAssetRendererFactoryByClass(
@@ -88,7 +84,7 @@ public class AssetRendererFactoryRegistryUtil {
 		long companyId, boolean filterSelectable) {
 
 		if (companyId > 0) {
-			Map<String, AssetRendererFactory<?>> assetRenderFactories =
+			List<AssetRendererFactory<?>> assetRenderFactories =
 				_filterAssetRendererFactories(companyId, filterSelectable);
 
 			long[] classNameIds = new long[assetRenderFactories.size()];
@@ -96,7 +92,7 @@ public class AssetRendererFactoryRegistryUtil {
 			int i = 0;
 
 			for (AssetRendererFactory<?> assetRendererFactory :
-					assetRenderFactories.values()) {
+					assetRenderFactories) {
 
 				classNameIds[i] = assetRendererFactory.getClassNameId();
 
@@ -141,12 +137,11 @@ public class AssetRendererFactoryRegistryUtil {
 			});
 	}
 
-	private static Map<String, AssetRendererFactory<?>>
-		_filterAssetRendererFactories(
-			long companyId, boolean filterSelectable) {
+	private static List<AssetRendererFactory<?>> _filterAssetRendererFactories(
+		long companyId, boolean filterSelectable) {
 
-		Map<String, AssetRendererFactory<?>> filteredAssetRendererFactories =
-			new ConcurrentHashMap<>();
+		List<AssetRendererFactory<?>> filteredAssetRendererFactories =
+			new CopyOnWriteArrayList<>();
 
 		for (String key :
 				_companyAssetRenderFactoriesServiceTrackerMap.keySet()) {
@@ -161,13 +156,12 @@ public class AssetRendererFactoryRegistryUtil {
 						"com.liferay.object.model.ObjectDefinition#")) {
 
 					if (key.split("#")[2].equals(String.valueOf(companyId))) {
-						filteredAssetRendererFactories.put(
-							key, assetRendererFactory);
+						filteredAssetRendererFactories.add(
+							assetRendererFactory);
 					}
 				}
 				else {
-					filteredAssetRendererFactories.put(
-						key, assetRendererFactory);
+					filteredAssetRendererFactories.add(assetRendererFactory);
 				}
 			}
 		}

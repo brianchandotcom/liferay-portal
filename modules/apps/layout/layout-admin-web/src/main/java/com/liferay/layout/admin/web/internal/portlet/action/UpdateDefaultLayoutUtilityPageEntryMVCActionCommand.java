@@ -16,13 +16,14 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,44 +50,26 @@ public class UpdateDefaultLayoutUtilityPageEntryMVCActionCommand
 			actionRequest, "layoutUtilityPageEntryId");
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntry(
+			_layoutUtilityPageEntryService.fetchLayoutUtilityPageEntry(
 				layoutUtilityPageEntryId);
 
+		if (layoutUtilityPageEntry == null) {
+			throw new PortletException("Invalid Layout Utility Page requested");
+		}
+
 		if (layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
-			layoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(false);
-
-			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-				layoutUtilityPageEntry);
-
-			sendRedirect(actionRequest, actionResponse);
-
-			return;
+			_layoutUtilityPageEntryService.unsetDefaultLayoutUtilityPageEntry(
+				layoutUtilityPageEntryId);
 		}
-
-		LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				fetchDefaultLayoutUtilityPageEntry(
-					layoutUtilityPageEntry.getGroupId(),
-					layoutUtilityPageEntry.getType());
-
-		if (defaultLayoutUtilityPageEntry != null) {
-			defaultLayoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(
-				false);
-
-			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-				defaultLayoutUtilityPageEntry);
+		else {
+			_layoutUtilityPageEntryService.setDefaultLayoutUtilityPageEntry(
+				layoutUtilityPageEntryId);
 		}
-
-		layoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(true);
-
-		_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntry);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference
-	private LayoutUtilityPageEntryLocalService
-		_layoutUtilityPageEntryLocalService;
+	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
 
 }

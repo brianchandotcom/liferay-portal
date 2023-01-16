@@ -866,7 +866,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+			value1 = "rebuild-database -Dkeep.osgi.state=true -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -976,7 +976,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+			value1 = "rebuild-database -Dkeep.osgi.state=true -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		AntCommand(
 			locator1 = "build-test.xml",

@@ -47,7 +47,6 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -143,16 +142,12 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 				"width", amImageEntry.getWidth()
 			);
 
-			Optional<AMImageConfigurationEntry>
-				amImageConfigurationEntryOptional =
-					_amImageConfigurationHelper.getAMImageConfigurationEntry(
-						fileEntry.getCompanyId(),
-						amImageEntry.getConfigurationUuid());
+			AMImageConfigurationEntry amImageConfigurationEntry =
+				_amImageConfigurationHelper.getAMImageConfigurationEntry(
+					fileEntry.getCompanyId(),
+					amImageEntry.getConfigurationUuid());
 
-			if (amImageConfigurationEntryOptional.isPresent()) {
-				AMImageConfigurationEntry amImageConfigurationEntry =
-					amImageConfigurationEntryOptional.get();
-
+			if (amImageConfigurationEntry != null) {
 				URI uri = _amImageURLFactory.createFileEntryURL(
 					fileEntry.getFileVersion(), amImageConfigurationEntry);
 

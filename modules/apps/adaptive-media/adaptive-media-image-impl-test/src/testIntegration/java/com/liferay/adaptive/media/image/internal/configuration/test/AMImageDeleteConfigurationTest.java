@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -83,43 +81,41 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "200"
 			).build());
 
-		Optional<AMImageConfigurationEntry>
-			firstAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "1");
-
-		assertEnabled(firstAMImageConfigurationEntryOptional);
-
-		Optional<AMImageConfigurationEntry>
-			secondAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "2");
-
-		assertEnabled(secondAMImageConfigurationEntryOptional);
-
-		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "1");
-
-		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "1");
-
-		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "2");
-
-		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "2");
-
-		firstAMImageConfigurationEntryOptional =
+		AMImageConfigurationEntry firstAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(firstAMImageConfigurationEntryOptional.isPresent());
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		secondAMImageConfigurationEntryOptional =
+		AMImageConfigurationEntry secondAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		Assert.assertFalse(secondAMImageConfigurationEntryOptional.isPresent());
+		assertEnabled(secondAMImageConfigurationEntry);
+
+		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "1");
+
+		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "1");
+
+		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "2");
+
+		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "2");
+
+		firstAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "1");
+
+		Assert.assertNull(firstAMImageConfigurationEntry);
+
+		secondAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "2");
+
+		Assert.assertNull(secondAMImageConfigurationEntry);
 	}
 
 	@Test
@@ -151,17 +147,17 @@ public class AMImageDeleteConfigurationTest
 		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2");
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertDisabled(amImageConfigurationEntryOptional);
+		assertDisabled(amImageConfigurationEntry);
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 	}
 
 	@Test
@@ -208,11 +204,11 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "100"
 			).build());
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(amImageConfigurationEntryOptional);
+		assertEnabled(amImageConfigurationEntry);
 
 		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
@@ -220,20 +216,20 @@ public class AMImageDeleteConfigurationTest
 		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 
 		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 	}
 
 	@Test(expected = InvalidStateAMImageConfigurationException.class)
@@ -246,11 +242,9 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "100"
 			).build());
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		assertEnabled(
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(), "1");
-
-		assertEnabled(amImageConfigurationEntryOptional);
+				TestPropsValues.getCompanyId(), "1"));
 
 		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
@@ -274,19 +268,17 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "200"
 			).build());
 
-		Optional<AMImageConfigurationEntry>
-			firstAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "1");
+		AMImageConfigurationEntry firstAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(firstAMImageConfigurationEntryOptional);
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		Optional<AMImageConfigurationEntry>
-			secondAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "2");
+		AMImageConfigurationEntry secondAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "2");
 
-		assertEnabled(secondAMImageConfigurationEntryOptional);
+		assertEnabled(secondAMImageConfigurationEntry);
 
 		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
@@ -294,17 +286,17 @@ public class AMImageDeleteConfigurationTest
 		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		firstAMImageConfigurationEntryOptional =
+		firstAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(firstAMImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(firstAMImageConfigurationEntry);
 
-		secondAMImageConfigurationEntryOptional =
+		secondAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		assertEnabled(secondAMImageConfigurationEntryOptional);
+		assertEnabled(secondAMImageConfigurationEntry);
 	}
 
 	@Test
@@ -325,19 +317,17 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "200"
 			).build());
 
-		Optional<AMImageConfigurationEntry>
-			firstAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "1");
+		AMImageConfigurationEntry firstAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(firstAMImageConfigurationEntryOptional);
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		Optional<AMImageConfigurationEntry>
-			secondAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "2");
+		AMImageConfigurationEntry secondAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "2");
 
-		assertEnabled(secondAMImageConfigurationEntryOptional);
+		assertEnabled(secondAMImageConfigurationEntry);
 
 		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2");
@@ -345,17 +335,17 @@ public class AMImageDeleteConfigurationTest
 		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2");
 
-		firstAMImageConfigurationEntryOptional =
+		firstAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(firstAMImageConfigurationEntryOptional);
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		secondAMImageConfigurationEntryOptional =
+		secondAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		Assert.assertFalse(secondAMImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(secondAMImageConfigurationEntry);
 	}
 
 	@Test
@@ -368,11 +358,11 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "100"
 			).build());
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(amImageConfigurationEntryOptional);
+		assertEnabled(amImageConfigurationEntry);
 
 		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
@@ -380,11 +370,11 @@ public class AMImageDeleteConfigurationTest
 		_amImageConfigurationHelper.deleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 	}
 
 	@Test
@@ -405,19 +395,17 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "200"
 			).build());
 
-		Optional<AMImageConfigurationEntry>
-			firstAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "1");
+		AMImageConfigurationEntry firstAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(firstAMImageConfigurationEntryOptional);
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		Optional<AMImageConfigurationEntry>
-			secondAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "2");
+		AMImageConfigurationEntry secondAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "2");
 
-		assertEnabled(secondAMImageConfigurationEntryOptional);
+		assertEnabled(secondAMImageConfigurationEntry);
 
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
@@ -425,17 +413,17 @@ public class AMImageDeleteConfigurationTest
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2");
 
-		firstAMImageConfigurationEntryOptional =
+		firstAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(firstAMImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(firstAMImageConfigurationEntry);
 
-		secondAMImageConfigurationEntryOptional =
+		secondAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		Assert.assertFalse(secondAMImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(secondAMImageConfigurationEntry);
 	}
 
 	@Test
@@ -464,17 +452,17 @@ public class AMImageDeleteConfigurationTest
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2");
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertDisabled(amImageConfigurationEntryOptional);
+		assertDisabled(amImageConfigurationEntry);
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 	}
 
 	@Test
@@ -517,29 +505,29 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "100"
 			).build());
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(amImageConfigurationEntryOptional);
+		assertEnabled(amImageConfigurationEntry);
 
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 	}
 
 	@Test
@@ -552,20 +540,20 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "100"
 			).build());
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(amImageConfigurationEntryOptional);
+		assertEnabled(amImageConfigurationEntry);
 
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		amImageConfigurationEntryOptional =
+		amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(amImageConfigurationEntry);
 	}
 
 	@Test
@@ -586,34 +574,32 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "200"
 			).build());
 
-		Optional<AMImageConfigurationEntry>
-			firstAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "1");
+		AMImageConfigurationEntry firstAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(firstAMImageConfigurationEntryOptional);
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		Optional<AMImageConfigurationEntry>
-			secondAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "2");
+		AMImageConfigurationEntry secondAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "2");
 
-		assertEnabled(secondAMImageConfigurationEntryOptional);
+		assertEnabled(secondAMImageConfigurationEntry);
 
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		firstAMImageConfigurationEntryOptional =
+		firstAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		Assert.assertFalse(firstAMImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(firstAMImageConfigurationEntry);
 
-		secondAMImageConfigurationEntryOptional =
+		secondAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		assertEnabled(secondAMImageConfigurationEntryOptional);
+		assertEnabled(secondAMImageConfigurationEntry);
 	}
 
 	@Test
@@ -634,34 +620,32 @@ public class AMImageDeleteConfigurationTest
 				"max-width", "200"
 			).build());
 
-		Optional<AMImageConfigurationEntry>
-			firstAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "1");
+		AMImageConfigurationEntry firstAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(firstAMImageConfigurationEntryOptional);
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		Optional<AMImageConfigurationEntry>
-			secondAMImageConfigurationEntryOptional =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					TestPropsValues.getCompanyId(), "2");
+		AMImageConfigurationEntry secondAMImageConfigurationEntry =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(), "2");
 
-		assertEnabled(secondAMImageConfigurationEntryOptional);
+		assertEnabled(secondAMImageConfigurationEntry);
 
 		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2");
 
-		firstAMImageConfigurationEntryOptional =
+		firstAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1");
 
-		assertEnabled(firstAMImageConfigurationEntryOptional);
+		assertEnabled(firstAMImageConfigurationEntry);
 
-		secondAMImageConfigurationEntryOptional =
+		secondAMImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "2");
 
-		Assert.assertFalse(secondAMImageConfigurationEntryOptional.isPresent());
+		Assert.assertNull(secondAMImageConfigurationEntry);
 	}
 
 	@Override

@@ -59,34 +59,26 @@ public class PathInterpreter {
 				_dlAppService.getFileEntry(fileEntryId),
 				_getFileVersionId(matcher));
 
-			Optional<AMImageConfigurationEntry>
-				amImageConfigurationEntryOptional =
-					_amImageConfigurationHelper.getAMImageConfigurationEntry(
-						fileVersion.getCompanyId(),
-						_getConfigurationEntryUUID(matcher));
+			AMImageConfigurationEntry amImageConfigurationEntry =
+				_amImageConfigurationHelper.getAMImageConfigurationEntry(
+					fileVersion.getCompanyId(),
+					_getConfigurationEntryUUID(matcher));
 
-			return Optional.of(
-				Tuple.of(
-					fileVersion,
-					amImageConfigurationEntryOptional.map(
-						amImageConfigurationEntry -> {
-							Map<String, String> curProperties =
-								amImageConfigurationEntry.getProperties();
+			if (amImageConfigurationEntry == null) {
+				return Optional.of(Tuple.of(fileVersion, new HashMap<>()));
+			}
 
-							AMAttribute<?, String>
-								configurationUuidAMAttribute =
-									AMAttribute.
-										getConfigurationUuidAMAttribute();
+			Map<String, String> curProperties =
+				amImageConfigurationEntry.getProperties();
 
-							curProperties.put(
-								configurationUuidAMAttribute.getName(),
-								amImageConfigurationEntry.getUUID());
+			AMAttribute<?, String> configurationUuidAMAttribute =
+				AMAttribute.getConfigurationUuidAMAttribute();
 
-							return curProperties;
-						}
-					).orElse(
-						new HashMap<>()
-					)));
+			curProperties.put(
+				configurationUuidAMAttribute.getName(),
+				amImageConfigurationEntry.getUUID());
+
+			return Optional.of(Tuple.of(fileVersion, curProperties));
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);

@@ -25,7 +25,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -66,11 +65,9 @@ public class AMImageConfigurationTest extends BaseAMImageConfigurationTestCase {
 				"max-width", "100"
 			).build());
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		Assert.assertNotNull(
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(), "1");
-
-		Assert.assertTrue(amImageConfigurationEntryOptional.isPresent());
+				TestPropsValues.getCompanyId(), "1"));
 	}
 
 	@Test
@@ -171,11 +168,9 @@ public class AMImageConfigurationTest extends BaseAMImageConfigurationTestCase {
 		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		Assert.assertNotNull(
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(), "1");
-
-		Assert.assertTrue(amImageConfigurationEntryOptional.isPresent());
+				TestPropsValues.getCompanyId(), "1"));
 	}
 
 	@Test
@@ -207,11 +202,9 @@ public class AMImageConfigurationTest extends BaseAMImageConfigurationTestCase {
 				"max-width", "100"
 			).build());
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		Assert.assertNull(
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(), "0");
-
-		Assert.assertFalse(amImageConfigurationEntryOptional.isPresent());
+				TestPropsValues.getCompanyId(), "0"));
 	}
 
 	@Override

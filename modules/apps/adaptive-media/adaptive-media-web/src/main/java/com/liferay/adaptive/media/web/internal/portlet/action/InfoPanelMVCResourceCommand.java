@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -91,13 +90,13 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			new ArrayList<>();
 
 		for (String entryUuid : rowIdsAMImageConfigurationEntry) {
-			Optional<AMImageConfigurationEntry>
-				amImageConfigurationEntryOptional =
-					_amImageConfigurationHelper.getAMImageConfigurationEntry(
-						themeDisplay.getCompanyId(), entryUuid);
+			AMImageConfigurationEntry amImageConfigurationEntry =
+				_amImageConfigurationHelper.getAMImageConfigurationEntry(
+					themeDisplay.getCompanyId(), entryUuid);
 
-			amImageConfigurationEntryOptional.ifPresent(
-				amImageConfigurationEntries::add);
+			if (amImageConfigurationEntry != null) {
+				amImageConfigurationEntries.add(amImageConfigurationEntry);
+			}
 		}
 
 		return amImageConfigurationEntries;

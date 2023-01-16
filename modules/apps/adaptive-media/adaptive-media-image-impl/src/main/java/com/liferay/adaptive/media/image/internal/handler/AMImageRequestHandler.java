@@ -108,7 +108,7 @@ public class AMImageRequestHandler
 					AMAttribute.getConfigurationUuidAMAttribute());
 
 			Optional<AMImageConfigurationEntry>
-				amImageConfigurationEntryOptional = valueOptional.flatMap(
+				amImageConfigurationEntryOptional = valueOptional.map(
 					configurationUuid ->
 						_amImageConfigurationHelper.
 							getAMImageConfigurationEntry(

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -43,23 +42,17 @@ public abstract class BaseAMImageConfigurationTestCase {
 	}
 
 	protected void assertDisabled(
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional) {
+		AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		Assert.assertTrue(amImageConfigurationEntryOptional.isPresent());
-
-		AMImageConfigurationEntry amImageConfigurationEntry =
-			amImageConfigurationEntryOptional.get();
+		Assert.assertNotNull(amImageConfigurationEntry);
 
 		Assert.assertFalse(amImageConfigurationEntry.isEnabled());
 	}
 
 	protected void assertEnabled(
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional) {
+		AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		Assert.assertTrue(amImageConfigurationEntryOptional.isPresent());
-
-		AMImageConfigurationEntry amImageConfigurationEntry =
-			amImageConfigurationEntryOptional.get();
+		Assert.assertNotNull(amImageConfigurationEntry);
 
 		Assert.assertTrue(amImageConfigurationEntry.isEnabled());
 	}

@@ -380,7 +380,7 @@ public class AMImageRequestHandlerTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				companyId, amImageConfigurationEntryImpl.getUUID())
 		).thenReturn(
-			Optional.of(amImageConfigurationEntryImpl)
+			amImageConfigurationEntryImpl
 		);
 
 		return amImageConfigurationEntryImpl;

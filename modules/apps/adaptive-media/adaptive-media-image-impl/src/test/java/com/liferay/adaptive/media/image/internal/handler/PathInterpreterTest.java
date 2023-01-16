@@ -75,7 +75,7 @@ public class PathInterpreterTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.eq("x"))
 		).thenReturn(
-			Optional.of(_amImageConfigurationEntry)
+			_amImageConfigurationEntry
 		);
 
 		_pathInterpreter.interpretPath("/image/0/x/foo.jpg");
@@ -145,7 +145,7 @@ public class PathInterpreterTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.eq("x"))
 		).thenReturn(
-			Optional.of(_amImageConfigurationEntry)
+			_amImageConfigurationEntry
 		);
 
 		_pathInterpreter.interpretPath("/image/0/x/foo.jpg?t=12345");
@@ -181,7 +181,7 @@ public class PathInterpreterTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.eq("x"))
 		).thenReturn(
-			Optional.of(_amImageConfigurationEntry)
+			_amImageConfigurationEntry
 		);
 
 		_pathInterpreter.interpretPath("/image/0/1/x/foo.jpg");

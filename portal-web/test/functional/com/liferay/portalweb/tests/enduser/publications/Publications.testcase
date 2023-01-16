@@ -201,6 +201,38 @@ definition {
 		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 	}
 
+	@description = "Assert that we can schedule a asset inside a publication and publish it."
+	@priority = "3"
+	test AssertThatScheduleAssetsCanBePublished {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		WebContent.editDisplayDate(
+			displayDate = "01/01/2050",
+			displayTime = "12:30 AM");
+
+		PortletEntry.publish();
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+	}
+
 	@description = "This is the use case for LPS-153276. Browsing in a publication should not cause changes inside the publication."
 	@priority = "4"
 	test BrowsingInPublicationCannotCauseChanges {

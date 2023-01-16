@@ -162,9 +162,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> LayoutUtilityPageEntryPermission.contains(
-							_themeDisplay.getPermissionChecker(),
-							_layoutUtilityPageEntry, ActionKeys.DELETE),
+						() -> _hasDeletePermission(),
 						_getDeleteLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -521,6 +519,37 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		return _assignDefaultLayoutUtilityPagePermission;
 	}
 
+	private boolean _hasDeletePermission() {
+		if (_deletePermission != null) {
+			return _deletePermission;
+		}
+
+		Boolean deletePermission = null;
+
+		try {
+			deletePermission = LayoutUtilityPageEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), _layoutUtilityPageEntry,
+				ActionKeys.DELETE);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			deletePermission = false;
+		}
+
+		if (!deletePermission) {
+			_deletePermission = false;
+
+			return false;
+		}
+
+		_deletePermission = _hasAssignDefaultLayoutUtilityPagePermission();
+
+		return _deletePermission;
+	}
+
 	private boolean _hasUpdatePermission() {
 		if (_updatePermission != null) {
 			return _updatePermission;
@@ -559,6 +588,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		LayoutUtilityPageEntryActionDropdownItemsProvider.class);
 
 	private Boolean _assignDefaultLayoutUtilityPagePermission;
+	private Boolean _deletePermission;
 	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;

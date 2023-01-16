@@ -221,21 +221,21 @@ public class AMImageRequestHandler
 		return distanceOptional.orElse(Integer.MAX_VALUE);
 	}
 
-	private Optional<Tuple<FileVersion, AMImageAttributeMapping>>
-		_interpretPath(String pathInfo) {
+	private Tuple<FileVersion, AMImageAttributeMapping> _interpretPath(
+		String pathInfo) {
 
 		try {
 			Tuple<FileVersion, Map<String, String>> fileVersionPropertiesTuple =
 				_pathInterpreter.interpretPath(pathInfo);
 
 			if (fileVersionPropertiesTuple == null) {
-				return Optional.empty();
+				return null;
 			}
 
 			FileVersion fileVersion = fileVersionPropertiesTuple.first;
 
 			if (fileVersion.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-				return Optional.empty();
+				return null;
 			}
 
 			Map<String, String> properties = fileVersionPropertiesTuple.second;
@@ -262,12 +262,12 @@ public class AMImageRequestHandler
 			AMImageAttributeMapping amImageAttributeMapping =
 				AMImageAttributeMapping.fromProperties(properties);
 
-			return Optional.of(Tuple.of(fileVersion, amImageAttributeMapping));
+			return Tuple.of(fileVersion, amImageAttributeMapping);
 		}
 		catch (AMRuntimeException | NumberFormatException exception) {
 			_log.error(exception);
 
-			return Optional.empty();
+			return null;
 		}
 	}
 

@@ -91,7 +91,7 @@
 											.get('boundingBox')
 											.contains(event.target)
 									) {
-										editable.save();
+										editable.fire('stopEditing');
 									}
 								}
 							);

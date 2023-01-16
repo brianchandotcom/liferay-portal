@@ -26,7 +26,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,27 +50,21 @@ public class SortParserImplTest {
 
 	@Test
 	public void testGetEntityFieldOptional() {
-		Optional<EntityField> entityFieldOptional =
-			_sortParserImpl.getEntityFieldOptional(
-				_entityModel.getEntityFieldsMap(), "fieldExternal");
+		EntityField entityField = _sortParserImpl.getEntityField(
+			_entityModel.getEntityFieldsMap(), "fieldExternal");
 
-		Assert.assertTrue(entityFieldOptional.isPresent());
-
-		EntityField entityField = entityFieldOptional.get();
+		Assert.assertNotNull(entityField);
 
 		Assert.assertEquals("fieldExternal", entityField.getName());
 	}
 
 	@Test
 	public void testGetEntityFieldOptionalWithComplexType() {
-		Optional<EntityField> entityFieldOptional =
-			_sortParserImpl.getEntityFieldOptional(
-				_entityModel.getEntityFieldsMap(),
-				"complexFieldExternal/fieldInsideComplexFieldExternal");
+		EntityField entityField = _sortParserImpl.getEntityField(
+			_entityModel.getEntityFieldsMap(),
+			"complexFieldExternal/fieldInsideComplexFieldExternal");
 
-		Assert.assertTrue(entityFieldOptional.isPresent());
-
-		EntityField entityField = entityFieldOptional.get();
+		Assert.assertNotNull(entityField);
 
 		Assert.assertEquals(
 			"fieldInsideComplexFieldExternal", entityField.getName());
@@ -80,7 +73,7 @@ public class SortParserImplTest {
 	@Test
 	public void testGetEntityFieldOptionalWithInvalidType() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _sortParserImpl.getEntityFieldOptional(
+			() -> _sortParserImpl.getEntityField(
 				_entityModel.getEntityFieldsMap(), "fieldExternal2/invalidType")
 		).isInstanceOf(
 			InvalidSortException.class
@@ -91,12 +84,9 @@ public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalAsc() {
-		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional("fieldExternal:asc");
+		SortField sortField = _sortParserImpl.getSortField("fieldExternal:asc");
 
-		Assert.assertTrue(sortFieldOptional.isPresent());
-
-		SortField sortField = sortFieldOptional.get();
+		Assert.assertNotNull(sortField);
 
 		Assert.assertEquals(
 			"fieldInternal",
@@ -107,12 +97,9 @@ public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalDefault() {
-		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional("fieldExternal");
+		SortField sortField = _sortParserImpl.getSortField("fieldExternal");
 
-		Assert.assertTrue(sortFieldOptional.isPresent());
-
-		SortField sortField = sortFieldOptional.get();
+		Assert.assertNotNull(sortField);
 
 		Assert.assertEquals(
 			"fieldInternal",
@@ -123,12 +110,10 @@ public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalDesc() {
-		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional("fieldExternal:desc");
+		SortField sortField = _sortParserImpl.getSortField(
+			"fieldExternal:desc");
 
-		Assert.assertTrue(sortFieldOptional.isPresent());
-
-		SortField sortField = sortFieldOptional.get();
+		Assert.assertNotNull(sortField);
 
 		Assert.assertEquals(
 			"fieldInternal",
@@ -140,8 +125,7 @@ public class SortParserImplTest {
 	@Test
 	public void testGetSortFieldOptionalInvalidSyntax() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _sortParserImpl.getSortFieldOptional(
-				"fieldExternal:desc:another")
+			() -> _sortParserImpl.getSortField("fieldExternal:desc:another")
 		).isInstanceOf(
 			InvalidSortException.class
 		);
@@ -151,21 +135,15 @@ public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalNull() {
-		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional(null);
-
-		Assert.assertTrue(!sortFieldOptional.isPresent());
+		Assert.assertNull(_sortParserImpl.getSortField(null));
 	}
 
 	@Test
 	public void testGetSortFieldOptionalWithComplexType() {
-		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional(
-				"complexFieldExternal/fieldInsideComplexFieldExternal");
+		SortField sortField = _sortParserImpl.getSortField(
+			"complexFieldExternal/fieldInsideComplexFieldExternal");
 
-		Assert.assertTrue(sortFieldOptional.isPresent());
-
-		SortField sortField = sortFieldOptional.get();
+		Assert.assertNotNull(sortField);
 
 		Assert.assertEquals(
 			"fieldInsideComplexFieldInternal",
@@ -176,13 +154,10 @@ public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalWithComplexTypeAsc() {
-		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional(
-				"complexFieldExternal/fieldInsideComplexFieldExternal:asc");
+		SortField sortField = _sortParserImpl.getSortField(
+			"complexFieldExternal/fieldInsideComplexFieldExternal:asc");
 
-		Assert.assertTrue(sortFieldOptional.isPresent());
-
-		SortField sortField = sortFieldOptional.get();
+		Assert.assertNotNull(sortField);
 
 		Assert.assertEquals(
 			"fieldInsideComplexFieldInternal",
@@ -193,13 +168,10 @@ public class SortParserImplTest {
 
 	@Test
 	public void testGetSortFieldOptionalWithComplexTypeDesc() {
-		Optional<SortField> sortFieldOptional =
-			_sortParserImpl.getSortFieldOptional(
-				"complexFieldExternal/fieldInsideComplexFieldExternal:desc");
+		SortField sortField = _sortParserImpl.getSortField(
+			"complexFieldExternal/fieldInsideComplexFieldExternal:desc");
 
-		Assert.assertTrue(sortFieldOptional.isPresent());
-
-		SortField sortField = sortFieldOptional.get();
+		Assert.assertNotNull(sortField);
 
 		Assert.assertEquals(
 			"fieldInsideComplexFieldInternal",

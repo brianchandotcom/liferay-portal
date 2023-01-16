@@ -756,6 +756,149 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-167949. The page designer could filter collection by contains all tags."
+	@priority = "5"
+	test FilterResultsOfCollectionDisplayByContainsAllTags {
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionDisplayByContainsAllTags";
+
+		task ("Given a page designer has a Collection Display and two Collection Filter on page") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.filter.tags.FragmentCollectionFilterTags");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			HeadlessWebcontent.addBasicWebContent(
+				assetTagNames = "huawei",
+				content = "Wenjie M5",
+				groupName = "Test Site Name",
+				title = "Wenjie M5");
+
+			HeadlessBlog.addBlogEntry(
+				assetTagNames = "electric",
+				content = "GA8 Intelligent System",
+				groupName = "Test Site Name",
+				title = "GA8 Intelligent System");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "GA8 Interior",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Wenjie M5",
+				assetType = "Basic Web Content");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "GA8 Intelligent System",
+				assetType = "Blogs Entry");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "GA8 Interior",
+				assetType = "Basic Document");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Collection Display");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Collection Filter");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Wenjie M5",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("When the page designer selects the Tags as filter in both Collection Filter") {
+			PageEditor.editCollectionFilter(
+				filter = "Tags",
+				fragmentName = "Collection Filter",
+				targetCollection = "Manual Collection");
+
+			PageEditor.editCollectionFilter(
+				filter = "Tags",
+				fragmentName = "Collection Filter",
+				index = "2",
+				targetCollection = "Manual Collection");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer filters the Collection Display by tags at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Page.selectTagInCollectionFilter(tagName = "huawei");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+				value1 = "Wenjie M5");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "2",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+
+			Page.selectTagInCollectionFilter(
+				index = "2",
+				tagName = "electric");
+
+			AssertTextEquals.assertPartialText(
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.filter.tags.FragmentCollectionFilterTags");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a test for LPS-167949. The page designer could filter collection by contains any tags."
 	@priority = "5"
 	test FilterResultsOfCollectionDisplayByContainsAnyTags {

@@ -22,7 +22,7 @@
 			<%= fragmentCollectionFilterTagsDisplayContext.getLabel() %>
 		</label>
 
-		<input class="form-control form-control-select form-control-sm w-100" type="text" />
+		<input class="form-control form-control-select form-control-sm w-100" style="min-height: 2.125rem;" type="text" />
 
 		<c:choose>
 			<c:when test="<%= fragmentCollectionFilterTagsDisplayContext.isShowHelpText() %>">

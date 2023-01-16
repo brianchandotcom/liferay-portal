@@ -2391,6 +2391,14 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(showHelpText)) {
+			Check.checkNotVisible(
+				checkboxName = "Show Help Text",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(showLabel)) {
 			Check.checkNotVisible(
 				checkboxName = "Show Label",

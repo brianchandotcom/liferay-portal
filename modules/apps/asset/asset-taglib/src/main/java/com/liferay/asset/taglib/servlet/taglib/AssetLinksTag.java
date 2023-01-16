@@ -223,8 +223,8 @@ public class AssetLinksTag extends IncludeTag {
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(
-						assetLinkEntry.getClassNameId());
+					getAssetRendererFactoryByClassName(
+						assetLinkEntry.getClassName());
 
 			if (assetRendererFactory == null) {
 				if (_log.isWarnEnabled()) {

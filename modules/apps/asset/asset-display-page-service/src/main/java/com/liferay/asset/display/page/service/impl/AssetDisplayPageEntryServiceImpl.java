@@ -52,7 +52,8 @@ public class AssetDisplayPageEntryServiceImpl
 			ServiceContext serviceContext)
 		throws Exception {
 
-		_checkPermissions(classNameId, classPK, ActionKeys.UPDATE);
+		_checkPermissions(
+			_portal.getClassName(classNameId), classPK, ActionKeys.UPDATE);
 
 		return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
@@ -65,7 +66,8 @@ public class AssetDisplayPageEntryServiceImpl
 			long layoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws Exception {
 
-		_checkPermissions(classNameId, classPK, ActionKeys.UPDATE);
+		_checkPermissions(
+			_portal.getClassName(classNameId), classPK, ActionKeys.UPDATE);
 
 		return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
@@ -77,7 +79,8 @@ public class AssetDisplayPageEntryServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws Exception {
 
-		_checkPermissions(classNameId, classPK, ActionKeys.DELETE);
+		_checkPermissions(
+			_portal.getClassName(classNameId), classPK, ActionKeys.DELETE);
 
 		assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
 			groupId, classNameId, classPK);
@@ -88,7 +91,8 @@ public class AssetDisplayPageEntryServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws Exception {
 
-		_checkPermissions(classNameId, classPK, ActionKeys.VIEW);
+		_checkPermissions(
+			_portal.getClassName(classNameId), classPK, ActionKeys.VIEW);
 
 		return assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 			groupId, classNameId, classPK);
@@ -157,7 +161,7 @@ public class AssetDisplayPageEntryServiceImpl
 				assetDisplayPageEntryId);
 
 		_checkPermissions(
-			assetDisplayPageEntry.getClassNameId(),
+			assetDisplayPageEntry.getClassName(),
 			assetDisplayPageEntry.getClassPK(), ActionKeys.UPDATE);
 
 		return assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
@@ -165,13 +169,12 @@ public class AssetDisplayPageEntryServiceImpl
 	}
 
 	private void _checkPermissions(
-			long classNameId, long classPK, String actionId)
+			String className, long classPK, String actionId)
 		throws Exception {
 
 		InfoItemPermissionProvider infoItemPermissionProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemPermissionProvider.class,
-				_portal.getClassName(classNameId));
+				InfoItemPermissionProvider.class, className);
 
 		if (infoItemPermissionProvider != null) {
 			if (!infoItemPermissionProvider.hasPermission(
@@ -183,7 +186,7 @@ public class AssetDisplayPageEntryServiceImpl
 		else {
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(classNameId);
+					getAssetRendererFactoryByClassName(className);
 
 			if (!assetRendererFactory.hasPermission(
 					getPermissionChecker(), classPK, actionId)) {

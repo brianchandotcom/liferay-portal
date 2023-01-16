@@ -421,8 +421,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				}
 
 				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					_portal.getClassName(
-						assetRendererFactory.getClassNameId()));
+					assetRendererFactory.getClassName());
 
 				if (indexer == null) {
 					return false;

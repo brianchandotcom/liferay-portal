@@ -197,8 +197,8 @@ public class TranslationEntryAssetRenderer
 		try {
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(
-						_translationEntry.getClassNameId());
+					getAssetRendererFactoryByClassName(
+						_translationEntry.getClassName());
 
 			if (assetRendererFactory == null) {
 				return LanguageUtil.get(locale, "translation");

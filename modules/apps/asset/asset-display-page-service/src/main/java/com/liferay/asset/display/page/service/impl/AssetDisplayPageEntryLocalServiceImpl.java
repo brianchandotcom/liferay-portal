@@ -294,15 +294,15 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		}
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
 
 		AssetEntry assetEntry = null;
 
 		if (assetRendererFactory != null) {
 			try {
 				assetEntry = assetRendererFactory.getAssetEntry(
-					_portal.getClassName(classNameId), classPK);
+					className, classPK);
 			}
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {

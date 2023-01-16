@@ -89,9 +89,8 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 
 	private ClassType _getClassType(FileEntry fileEntry, Locale locale) {
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					_portal.getClassNameId(DLFileEntry.class));
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				DLFileEntry.class);
 
 		if (assetRendererFactory == null) {
 			return null;

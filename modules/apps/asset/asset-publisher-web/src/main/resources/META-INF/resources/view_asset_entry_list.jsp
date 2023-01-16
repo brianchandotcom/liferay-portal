@@ -76,7 +76,7 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 			for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
 				AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
 
-				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetEntry.getClassNameId());
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
 				if (assetRendererFactory == null) {
 					continue;

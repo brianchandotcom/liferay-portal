@@ -4,8 +4,8 @@
 			"fields": [
 				{
 					"defaultValue": "public",
-					"label": "vocabulary-visibility",
-					"name": "vocabularyVisibility",
+					"label": "vocabulary-type",
+					"name": "vocabularyType",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [

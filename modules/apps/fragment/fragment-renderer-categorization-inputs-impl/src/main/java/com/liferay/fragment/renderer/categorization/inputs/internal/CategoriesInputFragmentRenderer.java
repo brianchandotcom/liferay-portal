@@ -271,17 +271,17 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 	}
 
 	private int[] _getVisibilityTypes(FragmentEntryLink fragmentEntryLink) {
-		String vocabularyVisibility = GetterUtil.getString(
+		String vocabularyType = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(),
-				LocaleUtil.getMostRelevantLocale(), "vocabularyVisibility"));
+				LocaleUtil.getMostRelevantLocale(), "vocabularyType"));
 
-		if (Objects.equals(vocabularyVisibility, "all")) {
+		if (Objects.equals(vocabularyType, "all")) {
 			return AssetVocabularyConstants.VISIBILITY_TYPES;
 		}
 
-		if (Objects.equals(vocabularyVisibility, "internal")) {
+		if (Objects.equals(vocabularyType, "internal")) {
 			return new int[] {
 				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL
 			};

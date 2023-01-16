@@ -101,8 +101,7 @@ public class AssetListEntryUsagesUtil {
 			if (uniqueAssetListEntryUsagesKeys.contains(
 					_generateUniqueLayoutClassedModelUsageKey(
 						assetListEntryUsage)) ||
-				_isFragmentEntryLinkDeleted(
-					assetListEntryUsage, layoutStructure)) {
+				_isFragmentEntryLinkDeleted(assetListEntryUsage)) {
 
 				continue;
 			}
@@ -585,8 +584,7 @@ public class AssetListEntryUsagesUtil {
 	}
 
 	private static boolean _isFragmentEntryLinkDeleted(
-		AssetListEntryUsage assetListEntryUsage,
-		LayoutStructure layoutStructure) {
+		AssetListEntryUsage assetListEntryUsage) {
 
 		if (assetListEntryUsage.getContainerType() != PortalUtil.getClassNameId(
 				FragmentEntryLink.class)) {
@@ -605,18 +603,11 @@ public class AssetListEntryUsagesUtil {
 			return true;
 		}
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-				fragmentEntryLink.getFragmentEntryLinkId());
-
-		if ((layoutStructureItem == null) ||
-			layoutStructure.isItemMarkedForDeletion(
-				layoutStructureItem.getItemId())) {
-
+		if (fragmentEntryLink.isDeleted()) {
 			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

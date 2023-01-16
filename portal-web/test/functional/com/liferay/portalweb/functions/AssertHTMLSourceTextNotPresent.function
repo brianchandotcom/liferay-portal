@@ -7,4 +7,8 @@ definition {
 		selenium.assertHTMLSourceTextNotPresent();
 	}
 
+	function assertHTMLSourceTextNotPresentNoSPARefresh {
+		selenium.assertHTMLSourceTextNotPresent();
+	}
+
 }

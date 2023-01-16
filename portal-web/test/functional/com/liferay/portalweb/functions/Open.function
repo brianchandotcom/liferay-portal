@@ -40,6 +40,14 @@ definition {
 		selenium.open();
 	}
 
+	function openNoErrorNoSPARefresh {
+		selenium.selectWindow("null");
+
+		selenium.selectFrame("relative=top");
+
+		selenium.open();
+	}
+
 	function openRedirect {
 		WaitForSPARefresh();
 

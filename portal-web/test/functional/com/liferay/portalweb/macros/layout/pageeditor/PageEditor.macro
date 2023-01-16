@@ -5668,8 +5668,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	macro waitForAutoSave {
 		SelectFrameTop();
 
-		WaitForElementNotPresent(locator1 = "PageEditor#DRAFT_SAVING_MESSAGE");
-
 		WaitForVisible(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
 	}
 

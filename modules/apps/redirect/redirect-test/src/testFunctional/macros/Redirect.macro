@@ -165,7 +165,7 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		if (isSet(error)) {
-			Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+			Alert.viewErrorMessage(errorMessage = "Error:Patterns must be valid regular expressions.");
 		}
 		else {
 			Alert.viewSuccessMessage();

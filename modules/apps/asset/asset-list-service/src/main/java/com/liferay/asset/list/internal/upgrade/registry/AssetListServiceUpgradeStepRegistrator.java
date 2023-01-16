@@ -17,12 +17,17 @@ package com.liferay.asset.list.internal.upgrade.registry;
 import com.liferay.asset.list.internal.upgrade.v1_3_0.AssetListEntryUpgradeProcess;
 import com.liferay.asset.list.internal.upgrade.v1_4_0.AssetListEntryUsageUpgradeProcess;
 import com.liferay.asset.list.internal.upgrade.v1_5_0.AssetListEntrySegmentsEntryRelUpgradeProcess;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
@@ -76,6 +81,27 @@ public class AssetListServiceUpgradeStepRegistrator
 			"1.7.0", "1.8.0",
 			new com.liferay.asset.list.internal.upgrade.v1_8_0.
 				AssetListEntrySegmentsEntryRelUpgradeProcess());
+
+		registry.register(
+			"1.8.0", "1.9.0",
+			new com.liferay.asset.list.internal.upgrade.v1_9_0.
+				AssetListEntryUsageUpgradeProcess(
+					_layoutLocalService, _layoutPageTemplateEntryLocalService,
+					_layoutPageTemplateStructureLocalService, _portal));
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

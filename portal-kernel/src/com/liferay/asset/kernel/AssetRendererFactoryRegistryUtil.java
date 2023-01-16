@@ -39,18 +39,14 @@ public class AssetRendererFactoryRegistryUtil {
 		long companyId) {
 
 		return ListUtil.fromMapValues(
-			_filterAssetRendererFactories(
-				companyId, _companyAssetRenderFactoriesServiceTrackerMap,
-				false));
+			_filterAssetRendererFactories(companyId, false));
 	}
 
 	public static List<AssetRendererFactory<?>> getAssetRendererFactories(
 		long companyId, boolean filterSelectable) {
 
 		return ListUtil.fromMapValues(
-			_filterAssetRendererFactories(
-				companyId, _companyAssetRenderFactoriesServiceTrackerMap,
-				filterSelectable));
+			_filterAssetRendererFactories(companyId, filterSelectable));
 	}
 
 	public static <T> AssetRendererFactory<T> getAssetRendererFactoryByClass(
@@ -90,9 +86,7 @@ public class AssetRendererFactoryRegistryUtil {
 
 		if (companyId > 0) {
 			Map<String, AssetRendererFactory<?>> assetRenderFactories =
-				_filterAssetRendererFactories(
-					companyId, _companyAssetRenderFactoriesServiceTrackerMap,
-					filterSelectable);
+				_filterAssetRendererFactories(companyId, filterSelectable);
 
 			long[] classNameIds = new long[assetRenderFactories.size()];
 
@@ -129,17 +123,16 @@ public class AssetRendererFactoryRegistryUtil {
 
 	private static Map<String, AssetRendererFactory<?>>
 		_filterAssetRendererFactories(
-			long companyId,
-			ServiceTrackerMap<String, AssetRendererFactory<?>>
-				assetRendererFactories,
-			boolean filterSelectable) {
+			long companyId, boolean filterSelectable) {
 
 		Map<String, AssetRendererFactory<?>> filteredAssetRendererFactories =
 			new ConcurrentHashMap<>();
 
-		for (String key : assetRendererFactories.keySet()) {
+		for (String key :
+				_companyAssetRenderFactoriesServiceTrackerMap.keySet()) {
+
 			AssetRendererFactory<?> assetRendererFactory =
-				assetRendererFactories.getService(key);
+				_companyAssetRenderFactoriesServiceTrackerMap.getService(key);
 
 			if (assetRendererFactory.isActive(companyId) &&
 				(!filterSelectable || assetRendererFactory.isSelectable())) {

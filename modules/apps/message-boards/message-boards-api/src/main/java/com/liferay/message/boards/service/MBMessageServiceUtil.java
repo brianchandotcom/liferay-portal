@@ -286,6 +286,14 @@ public class MBMessageServiceUtil {
 			entryURL, themeDisplay);
 	}
 
+	public static MBMessage getMBMessageByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getMBMessageByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static MBMessage getMessage(long messageId) throws PortalException {
 		return getService().getMessage(messageId);
 	}

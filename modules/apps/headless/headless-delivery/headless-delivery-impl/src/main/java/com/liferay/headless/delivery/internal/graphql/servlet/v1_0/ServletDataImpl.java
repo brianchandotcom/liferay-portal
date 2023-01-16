@@ -803,6 +803,11 @@ public class ServletDataImpl implements ServletData {
 							MessageBoardAttachmentResourceImpl.class,
 							"postMessageBoardThreadMessageBoardAttachmentBatch"));
 					put(
+						"mutation#deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							MessageBoardAttachmentResourceImpl.class,
+							"deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode"));
+					put(
 						"mutation#deleteMessageBoardMessage",
 						new ObjectValuePair<>(
 							MessageBoardMessageResourceImpl.class,
@@ -1775,6 +1780,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							MessageBoardAttachmentResourceImpl.class,
 							"getMessageBoardThreadMessageBoardAttachmentsPage"));
+					put(
+						"query#messageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							MessageBoardAttachmentResourceImpl.class,
+							"getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode"));
 					put(
 						"query#messageBoardMessage",
 						new ObjectValuePair<>(

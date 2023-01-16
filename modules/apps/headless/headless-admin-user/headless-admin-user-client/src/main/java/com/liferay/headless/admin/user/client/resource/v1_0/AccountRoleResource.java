@@ -43,37 +43,37 @@ public interface AccountRoleResource {
 	public void
 			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public void
 			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public Page<AccountRole>
 			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPageHttpResponse(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
@@ -255,13 +255,13 @@ public interface AccountRoleResource {
 		public void
 				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 					String accountExternalReferenceCode, Long accountRoleId,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
-					userAccountExternalReferenceCode);
+					externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -303,7 +303,7 @@ public interface AccountRoleResource {
 		public HttpInvoker.HttpResponse
 				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -330,14 +330,12 @@ public interface AccountRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
 			httpInvoker.path("accountRoleId", accountRoleId);
-			httpInvoker.path(
-				"userAccountExternalReferenceCode",
-				userAccountExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -348,13 +346,13 @@ public interface AccountRoleResource {
 		public void
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 					String accountExternalReferenceCode, Long accountRoleId,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
-					userAccountExternalReferenceCode);
+					externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -396,7 +394,7 @@ public interface AccountRoleResource {
 		public HttpInvoker.HttpResponse
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -423,14 +421,12 @@ public interface AccountRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
 			httpInvoker.path("accountRoleId", accountRoleId);
-			httpInvoker.path(
-				"userAccountExternalReferenceCode",
-				userAccountExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -441,13 +437,12 @@ public interface AccountRoleResource {
 		public Page<AccountRole>
 				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 					String accountExternalReferenceCode,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPageHttpResponse(
-					accountExternalReferenceCode,
-					userAccountExternalReferenceCode);
+					accountExternalReferenceCode, externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -489,7 +484,7 @@ public interface AccountRoleResource {
 		public HttpInvoker.HttpResponse
 				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPageHttpResponse(
 					String accountExternalReferenceCode,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -516,13 +511,11 @@ public interface AccountRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/account-roles");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}/account-roles");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
-			httpInvoker.path(
-				"userAccountExternalReferenceCode",
-				userAccountExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

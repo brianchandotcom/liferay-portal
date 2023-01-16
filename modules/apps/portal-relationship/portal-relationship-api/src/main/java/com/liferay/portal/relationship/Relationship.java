@@ -14,42 +14,38 @@
 
 package com.liferay.portal.relationship;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * @author Máté Thurzó
  */
 public class Relationship<T extends ClassedModel> {
 
-	public Stream<? extends ClassedModel> getInboundRelatedModelStream(
-		long primKey) {
-
-		T model = _modelSupplier.supply(primKey);
-
-		return _getInboundRelatedModelStream(model);
+	public List<? extends ClassedModel> getInboundRelatedModels(long primKey) {
+		return _getInboundRelatedModels(_modelSupplier.supply(primKey));
 	}
 
-	public Stream<? extends ClassedModel> getOutboundRelatedModelStream(
-		long primKey) {
-
-		T model = _modelSupplier.supply(primKey);
-
-		return _getOutboundRelatedModelStream(model);
+	public List<? extends ClassedModel> getOutboundRelatedModels(long primKey) {
+		return _getOutboundRelatedModels(_modelSupplier.supply(primKey));
 	}
 
-	public Stream<? extends ClassedModel> getRelatedModelStream(long primKey) {
+	public List<? extends ClassedModel> getRelatedModels(long primKey) {
 		T model = _modelSupplier.supply(primKey);
 
-		return Stream.concat(
-			_getInboundRelatedModelStream(model),
-			_getOutboundRelatedModelStream(model));
+		List<ClassedModel> relatedModels = new ArrayList<>();
+
+		relatedModels.addAll(_getInboundRelatedModels(model));
+		relatedModels.addAll(_getOutboundRelatedModels(model));
+
+		return relatedModels;
 	}
 
 	public static class Builder<T extends ClassedModel> {
@@ -130,64 +126,62 @@ public class Relationship<T extends ClassedModel> {
 	private Relationship() {
 	}
 
-	private Stream<? extends ClassedModel> _getInboundMultiRelatedModelStream(
+	private List<? extends ClassedModel> _getInboundMultiRelatedModels(
 		T model) {
 
-		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
-			_inboundMultiRelationshipFunctions.stream();
+		List<ClassedModel> inboundMultiRelatedModels = new ArrayList<>();
 
-		return stream.map(
-			multiRelationshipFunction -> multiRelationshipFunction.apply(model)
-		).flatMap(
-			Collection::stream
-		);
+		_inboundMultiRelationshipFunctions.forEach(
+			multiRelationshipFunction -> inboundMultiRelatedModels.addAll(
+				multiRelationshipFunction.apply(model)));
+
+		return inboundMultiRelatedModels;
 	}
 
-	private Stream<? extends ClassedModel> _getInboundRelatedModelStream(
-		T model) {
+	private List<? extends ClassedModel> _getInboundRelatedModels(T model) {
+		List<ClassedModel> inboundRelatedModels = new ArrayList<>();
 
-		return Stream.concat(
-			_getInboundMultiRelatedModelStream(model),
-			_getSingleInboundRelatedModelStream(model));
+		inboundRelatedModels.addAll(_getInboundMultiRelatedModels(model));
+		inboundRelatedModels.addAll(_getSingleInboundRelatedModels(model));
+
+		return inboundRelatedModels;
 	}
 
-	private Stream<? extends ClassedModel> _getOutboundMultiRelatedModelStream(
+	private List<? extends ClassedModel> _getOutboundMultiRelatedModels(
 		T model) {
 
-		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
-			_outboundMultiRelationshipFunctions.stream();
+		List<ClassedModel> outboundMultiRelatedModels = new ArrayList<>();
 
-		return stream.map(
-			multiRelationshipFunction -> multiRelationshipFunction.apply(model)
-		).flatMap(
-			Collection::stream
-		);
+		_outboundMultiRelationshipFunctions.forEach(
+			multiRelationshipFunction -> outboundMultiRelatedModels.addAll(
+				multiRelationshipFunction.apply(model)));
+
+		return outboundMultiRelatedModels;
 	}
 
-	private Stream<? extends ClassedModel> _getOutboundRelatedModelStream(
-		T model) {
+	private List<? extends ClassedModel> _getOutboundRelatedModels(T model) {
+		List<ClassedModel> outboundRelatedModels = new ArrayList<>();
 
-		return Stream.concat(
-			_getOutboundMultiRelatedModelStream(model),
-			_getSingleOutboudRelatedModelStream(model));
+		outboundRelatedModels.addAll(_getOutboundMultiRelatedModels(model));
+		outboundRelatedModels.addAll(_getSingleOutboudRelatedModels(model));
+
+		return outboundRelatedModels;
 	}
 
-	private Stream<? extends ClassedModel> _getSingleInboundRelatedModelStream(
+	private List<? extends ClassedModel> _getSingleInboundRelatedModels(
 		T model) {
 
-		Stream<Function<T, ? extends ClassedModel>> stream =
-			_inboundSingleRelationshipFunctions.stream();
-
-		return stream.map(function -> function.apply(model));
+		return TransformUtil.transform(
+			_inboundSingleRelationshipFunctions,
+			function -> function.apply(model));
 	}
 
-	private Stream<? extends ClassedModel> _getSingleOutboudRelatedModelStream(
+	private List<? extends ClassedModel> _getSingleOutboudRelatedModels(
 		T model) {
 
-		Stream<Function<T, ? extends ClassedModel>> stream =
-			_outboundSingleRelationshipFunctions.stream();
-
-		return stream.map(function -> function.apply(model));
+		return TransformUtil.transform(
+			_outboundSingleRelationshipFunctions,
+			function -> function.apply(model));
 	}
 
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>

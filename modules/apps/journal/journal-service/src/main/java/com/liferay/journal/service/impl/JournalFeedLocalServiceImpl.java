@@ -14,6 +14,10 @@
 
 package com.liferay.journal.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -45,6 +49,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -303,6 +308,25 @@ public class JournalFeedLocalServiceImpl
 	}
 
 	@Override
+	public void updateAsset(
+			long userId, JournalFeed feed, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
+		throws PortalException {
+
+		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+			userId, feed.getGroupId(), feed.getCreateDate(),
+			feed.getModifiedDate(), JournalFeed.class.getName(), feed.getId(),
+			feed.getUuid(), 0, assetCategoryIds, assetTagNames, true, true,
+			null, null, feed.getCreateDate(), null, ContentTypes.TEXT_PLAIN,
+			feed.getName(), feed.getDescription(), null, null, null, 0, 0,
+			priority);
+
+		_assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
+	}
+
+	@Override
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
 			String ddmStructureKey, String ddmTemplateKey,
@@ -467,6 +491,12 @@ public class JournalFeedLocalServiceImpl
 				"Invalid content field " + contentField);
 		}
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

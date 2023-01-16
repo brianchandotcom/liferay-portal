@@ -109,6 +109,8 @@ interface ObjectFieldView extends ObjectField {
 }
 
 interface ObjectDefinition {
+	accountEntryRestricted: boolean;
+	accountEntryRestrictedObjectFieldName: string;
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;

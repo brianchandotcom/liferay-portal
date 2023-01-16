@@ -105,6 +105,9 @@ export default function ObjectFieldFormBase({
 		TObjectRelationship
 	>();
 	const [selectedOutput, setSelectedOutput] = useState<string>('');
+	const [objectDefinition, setObjectDefinition] = useState<
+		ObjectDefinition
+	>();
 
 	useEffect(() => {
 		const {businessType, defaultValue, objectFieldSettings} = values;
@@ -253,6 +256,14 @@ export default function ObjectFieldFormBase({
 
 	const getMandatoryToggleDisabledState = () => {
 		if (
+			objectDefinition?.accountEntryRestricted &&
+			objectDefinition?.accountEntryRestrictedObjectFieldName ===
+				values.name
+		) {
+			return true;
+		}
+
+		if (
 			oneToManyRelationship &&
 			oneToManyRelationship.deletionType !== 'disassociate'
 		) {
@@ -272,6 +283,18 @@ export default function ObjectFieldFormBase({
 
 		return disabled || values.state;
 	};
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
+			);
+
+			setObjectDefinition(objectDefinitionResponse);
+		};
+
+		makeFetch();
+	}, [objectDefinitionExternalReferenceCode]);
 
 	return (
 		<>

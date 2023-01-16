@@ -131,7 +131,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 						CompanyConstants.SYSTEM) {
 
 					_updateOAuthClientEntry(
-						company.getCompanyId(), "", properties);
+						company.getCompanyId(), null, "", properties);
 				}
 			});
 	}
@@ -149,7 +149,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 			try {
 				_companyLocalService.forEachCompanyId(
 					curCompanyId -> _updateOAuthClientEntry(
-						curCompanyId, oldProviderName, properties));
+						curCompanyId, oldProperties, oldProviderName,
+						properties));
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -165,6 +166,18 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 			_updateOAuthClientEntry(companyId, oldProviderName, properties);
 		}
+	}
+
+	private OAuthClientEntry _addOAuthClientEntry(
+			Dictionary<String, ?> properties, long defaultUserId)
+		throws Exception {
+
+		return _oAuthClientEntryLocalService.addOAuthClientEntry(
+			defaultUserId, _generateAuthRequestParametersJSON(properties),
+			_updateOAuthClientASLocalMetadata(defaultUserId, properties),
+			_generateInfoJSON(properties),
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+			_generateTokenRequestParametersJSON(properties));
 	}
 
 	private String _deleteOAuthClientASLocalMetadata(
@@ -468,8 +481,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private void _updateOAuthClientEntry(
-		long companyId, String oldProviderName,
-		Dictionary<String, ?> properties) {
+		long companyId, Dictionary<String, ?> oldProperties,
+		String oldProviderName, Dictionary<String, ?> properties) {
 
 		long defaultUserId = 0;
 
@@ -485,31 +498,38 @@ public class OpenIdConnectProviderManagedServiceFactory
 		}
 
 		try {
-			String authServerWellKnownURI = _updateOAuthClientASLocalMetadata(
-				defaultUserId, properties);
+			OAuthClientEntry oAuthClientEntry = null;
 
-			OAuthClientEntry oAuthClientEntry =
-				_oAuthClientEntryLocalService.fetchOAuthClientEntry(
-					companyId, authServerWellKnownURI,
-					_getPropertyAsString("openIdConnectClientId", properties));
+			if (oldProperties != null) {
+				String oldAuthServerWellKnownURI =
+					_updateOAuthClientASLocalMetadata(
+						defaultUserId, oldProperties);
 
-			if (oAuthClientEntry == null) {
-				oAuthClientEntry =
-					_oAuthClientEntryLocalService.addOAuthClientEntry(
-						defaultUserId,
-						_generateAuthRequestParametersJSON(properties),
-						authServerWellKnownURI, _generateInfoJSON(properties),
-						OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-						_generateTokenRequestParametersJSON(properties));
+				OAuthClientEntry oldOAuthClientEntry =
+					_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+						companyId, oldAuthServerWellKnownURI,
+						_getPropertyAsString(
+							"openIdConnectClientId", oldProperties));
+
+				if (oldOAuthClientEntry != null) {
+					oAuthClientEntry =
+						_oAuthClientEntryLocalService.updateOAuthClientEntry(
+							oldOAuthClientEntry.getOAuthClientEntryId(),
+							_generateAuthRequestParametersJSON(properties),
+							_updateOAuthClientASLocalMetadata(
+								defaultUserId, properties),
+							_generateInfoJSON(properties),
+							oldOAuthClientEntry.getOIDCUserInfoMapperJSON(),
+							_generateTokenRequestParametersJSON(properties));
+				}
+				else {
+					oAuthClientEntry = _addOAuthClientEntry(
+						properties, defaultUserId);
+				}
 			}
 			else {
-				oAuthClientEntry =
-					_oAuthClientEntryLocalService.updateOAuthClientEntry(
-						oAuthClientEntry.getOAuthClientEntryId(),
-						_generateAuthRequestParametersJSON(properties),
-						authServerWellKnownURI, _generateInfoJSON(properties),
-						oAuthClientEntry.getOIDCUserInfoMapperJSON(),
-						_generateTokenRequestParametersJSON(properties));
+				oAuthClientEntry = _addOAuthClientEntry(
+					properties, defaultUserId);
 			}
 
 			Map<String, Long> oAuthClientEntryIds = _oAuthClientEntryIds.get(

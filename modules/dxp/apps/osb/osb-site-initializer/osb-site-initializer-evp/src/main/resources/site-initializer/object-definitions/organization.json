@@ -412,79 +412,17 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Banking Account"
+				"en_US": "Banking Info"
 			},
-			"name": "bankingAccount",
+			"name": "bankingInfo",
 			"objectFieldSettings": [
 				{
 					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Banking agency"
-			},
-			"name": "bankingAgency",
-			"objectFieldSettings": [
+					"value": "true"
+				},
 				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Bank Code/Name"
-			},
-			"name": "bankCodeName",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Instant Transfer ID (PIX)"
-			},
-			"name": "instantTransferIDPIX",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
+					"name": "maxLength",
+					"value": "200"
 				}
 			],
 			"required": false,

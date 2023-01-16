@@ -2,9 +2,7 @@
 	"object-entries": [
 		{
 			"accountOwnerName": "Maria",
-			"bankCodeName": "Liferay Banking 24h",
-			"bankingAccount": "40022-22",
-			"bankingAgency": "99",
+			"bankingInfo": "Itau Bank, Agency: 123-4, Account: 099009-11",
 			"city": "New York",
 			"contactEmail": "lorem@contact.com",
 			"contactName": "Johnny Oliver",
@@ -25,9 +23,7 @@
 		},
 		{
 			"accountOwnerName": "Maria",
-			"bankCodeName": "Liferay Banking 24h",
-			"bankingAccount": "40022-22",
-			"bankingAgency": "99",
+			"bankingInfo": "Bradesco Bank, Agency: 2309-7, Account: 582028-00",
 			"city": "Recife",
 			"contactEmail": "ipsum@contact.com",
 			"contactName": "Enza Juliana",

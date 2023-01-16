@@ -245,7 +245,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "organization-status-update-buttons-staff"
+																				"key": "organization-status-update-buttons-staff",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"inverted": false,
@@ -369,7 +370,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -547,7 +549,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -599,7 +602,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -689,7 +693,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -741,7 +746,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -832,7 +838,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -884,7 +891,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -974,7 +982,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1026,7 +1035,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1117,7 +1127,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1169,7 +1180,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1259,7 +1271,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1311,7 +1324,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1402,7 +1416,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1454,7 +1469,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1545,7 +1561,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1597,7 +1614,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1785,7 +1803,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1837,7 +1856,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1927,7 +1947,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1979,7 +2000,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -2070,7 +2092,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -2122,7 +2145,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -2212,7 +2236,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -2264,7 +2289,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h4"
+																"textType": "h4",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -2275,6 +2301,248 @@
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "ObjectField_contactPhone",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-spacer"
+									},
+									"fragmentConfig": {
+										"height": "py-2"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-spacer"
+							},
+							"fragmentConfig": {
+								"height": "py-3"
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderRadius": "borderRadiusLg",
+								"shadow": "boxShadow"
+							},
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h3"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Bank information"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"paddingTop": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-separator"
+									},
+									"fragmentConfig": {
+										"bottomSpacing": "4"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundColor": "colorBrandPrimaryLighten6",
+												"paddingBottom": "2",
+												"paddingTop": "2"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {
+													}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {
+													}
+												}
+											],
+											"verticalAlignment": "middle"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 5
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h4",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Banking Info"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 7
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h4",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ObjectField_bankingInfo",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}

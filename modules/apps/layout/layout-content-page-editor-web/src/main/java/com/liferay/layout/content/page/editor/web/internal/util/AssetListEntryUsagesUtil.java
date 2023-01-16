@@ -325,6 +325,29 @@ public class AssetListEntryUsagesUtil {
 					className));
 	}
 
+	private static long _getCollectionStyledLayoutStructureItemClassNameId() {
+		if (_collectionStyledLayoutStructureItemClassNameId != null) {
+			return _collectionStyledLayoutStructureItemClassNameId;
+		}
+
+		_collectionStyledLayoutStructureItemClassNameId =
+			PortalUtil.getClassNameId(
+				CollectionStyledLayoutStructureItem.class.getName());
+
+		return _collectionStyledLayoutStructureItemClassNameId;
+	}
+
+	private static long _getFragmentEntryLinkClassNameId() {
+		if (_fragmentEntryLinkClassNameId != null) {
+			return _fragmentEntryLinkClassNameId;
+		}
+
+		_fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
+			FragmentEntryLink.class.getName());
+
+		return _fragmentEntryLinkClassNameId;
+	}
+
 	private static JSONObject _getInfoCollectionProviderActionsJSONObject(
 		InfoCollectionProvider<?> infoCollectionProvider,
 		HttpServletRequest httpServletRequest, String redirect) {
@@ -590,8 +613,8 @@ public class AssetListEntryUsagesUtil {
 		AssetListEntryUsage assetListEntryUsage,
 		LayoutStructure layoutStructure) {
 
-		if (assetListEntryUsage.getContainerType() != PortalUtil.getClassNameId(
-				CollectionStyledLayoutStructureItem.class)) {
+		if (assetListEntryUsage.getContainerType() !=
+				_getCollectionStyledLayoutStructureItemClassNameId()) {
 
 			return false;
 		}
@@ -619,8 +642,8 @@ public class AssetListEntryUsagesUtil {
 	private static boolean _isFragmentEntryLinkDeleted(
 		AssetListEntryUsage assetListEntryUsage) {
 
-		if (assetListEntryUsage.getContainerType() != PortalUtil.getClassNameId(
-				FragmentEntryLink.class)) {
+		if (assetListEntryUsage.getContainerType() !=
+				_getFragmentEntryLinkClassNameId()) {
 
 			return false;
 		}
@@ -645,5 +668,8 @@ public class AssetListEntryUsagesUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetListEntryUsagesUtil.class);
+
+	private static Long _collectionStyledLayoutStructureItemClassNameId;
+	private static Long _fragmentEntryLinkClassNameId;
 
 }

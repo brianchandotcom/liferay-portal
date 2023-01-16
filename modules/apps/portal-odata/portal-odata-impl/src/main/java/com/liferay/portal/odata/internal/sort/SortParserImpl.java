@@ -14,6 +14,7 @@
 
 package com.liferay.portal.odata.internal.sort;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,8 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Parses {@code Sort} strings. This class uses a model to create a {@code
@@ -76,21 +75,17 @@ public class SortParserImpl implements SortParser {
 			return Collections.emptyList();
 		}
 
-		List<String> list = StringUtil.split(sortString);
+		return TransformUtil.transform(
+			StringUtil.split(sortString),
+			s -> {
+				Optional<SortField> sortFieldOptional = getSortFieldOptional(s);
 
-		Stream<String> stream = list.stream();
+				if (sortFieldOptional.isPresent()) {
+					return sortFieldOptional.get();
+				}
 
-		return stream.map(
-			this::getSortFieldOptional
-		).flatMap(
-			sortFieldOptional -> sortFieldOptional.map(
-				Stream::of
-			).orElseGet(
-				Stream::empty
-			)
-		).collect(
-			Collectors.toList()
-		);
+				return null;
+			});
 	}
 
 	protected Optional<EntityField> getEntityFieldOptional(

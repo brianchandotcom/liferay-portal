@@ -124,6 +124,14 @@ public class LayoutUtilityPageEntryServiceUtil {
 			layoutUtilityPageEntryId);
 	}
 
+	public static LayoutUtilityPageEntry unsetDefaultLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId)
+		throws PortalException {
+
+		return getService().unsetDefaultLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId);
+	}
+
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId)
 		throws PortalException {

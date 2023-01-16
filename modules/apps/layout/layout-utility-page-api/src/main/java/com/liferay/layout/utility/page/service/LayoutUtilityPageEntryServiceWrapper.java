@@ -140,6 +140,15 @@ public class LayoutUtilityPageEntryServiceWrapper
 	}
 
 	@Override
+	public LayoutUtilityPageEntry unsetDefaultLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutUtilityPageEntryService.
+			unsetDefaultLayoutUtilityPageEntry(layoutUtilityPageEntryId);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, long previewFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

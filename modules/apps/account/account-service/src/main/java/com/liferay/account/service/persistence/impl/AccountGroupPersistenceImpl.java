@@ -4995,7 +4995,7 @@ public class AccountGroupPersistenceImpl
 					if ((companyId != accountGroup.getCompanyId()) ||
 						!StringUtil.wildcardMatches(
 							accountGroup.getName(), name, '_', '%', '\\',
-							true)) {
+							false)) {
 
 						list = null;
 
@@ -5053,7 +5053,7 @@ public class AccountGroupPersistenceImpl
 				queryPos.add(companyId);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				list = (List<AccountGroup>)QueryUtil.list(
@@ -5351,7 +5351,7 @@ public class AccountGroupPersistenceImpl
 		queryPos.add(companyId);
 
 		if (bindName) {
-			queryPos.add(name);
+			queryPos.add(StringUtil.toLowerCase(name));
 		}
 
 		if (orderByComparator != null) {
@@ -5511,7 +5511,7 @@ public class AccountGroupPersistenceImpl
 			queryPos.add(companyId);
 
 			if (bindName) {
-				queryPos.add(name);
+				queryPos.add(StringUtil.toLowerCase(name));
 			}
 
 			return (List<AccountGroup>)QueryUtil.list(
@@ -5722,7 +5722,7 @@ public class AccountGroupPersistenceImpl
 		queryPos.add(companyId);
 
 		if (bindName) {
-			queryPos.add(name);
+			queryPos.add(StringUtil.toLowerCase(name));
 		}
 
 		if (orderByComparator != null) {
@@ -5809,7 +5809,7 @@ public class AccountGroupPersistenceImpl
 				queryPos.add(companyId);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)query.uniqueResult();
@@ -5878,7 +5878,7 @@ public class AccountGroupPersistenceImpl
 			queryPos.add(companyId);
 
 			if (bindName) {
-				queryPos.add(name);
+				queryPos.add(StringUtil.toLowerCase(name));
 			}
 
 			Long count = (Long)sqlQuery.uniqueResult();
@@ -5897,7 +5897,7 @@ public class AccountGroupPersistenceImpl
 		"accountGroup.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_LIKEN_NAME_2 =
-		"accountGroup.name LIKE ?";
+		"lower(accountGroup.name) LIKE ?";
 
 	private static final String _FINDER_COLUMN_C_LIKEN_NAME_3 =
 		"(accountGroup.name IS NULL OR accountGroup.name LIKE '')";

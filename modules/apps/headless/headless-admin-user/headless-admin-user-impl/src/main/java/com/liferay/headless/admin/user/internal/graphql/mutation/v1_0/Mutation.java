@@ -356,8 +356,8 @@ public class Mutation {
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("accountRoleId") Long accountRoleId,
-				@GraphQLName("userAccountExternalReferenceCode") String
-					userAccountExternalReferenceCode)
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -367,7 +367,7 @@ public class Mutation {
 				accountRoleResource.
 					deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
-						userAccountExternalReferenceCode));
+						externalReferenceCode));
 
 		return true;
 	}
@@ -380,8 +380,8 @@ public class Mutation {
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("accountRoleId") Long accountRoleId,
-				@GraphQLName("userAccountExternalReferenceCode") String
-					userAccountExternalReferenceCode)
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -391,7 +391,7 @@ public class Mutation {
 				accountRoleResource.
 					postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
-						userAccountExternalReferenceCode));
+						externalReferenceCode));
 
 		return true;
 	}
@@ -923,8 +923,8 @@ public class Mutation {
 			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
-				@GraphQLName("userAccountExternalReferenceCode") String
-					userAccountExternalReferenceCode)
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -933,8 +933,7 @@ public class Mutation {
 			userAccountResource ->
 				userAccountResource.
 					deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
-						accountExternalReferenceCode,
-						userAccountExternalReferenceCode));
+						accountExternalReferenceCode, externalReferenceCode));
 
 		return true;
 	}
@@ -946,8 +945,8 @@ public class Mutation {
 			createAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
-				@GraphQLName("userAccountExternalReferenceCode") String
-					userAccountExternalReferenceCode)
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -956,8 +955,7 @@ public class Mutation {
 			userAccountResource ->
 				userAccountResource.
 					postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
-						accountExternalReferenceCode,
-						userAccountExternalReferenceCode));
+						accountExternalReferenceCode, externalReferenceCode));
 
 		return true;
 	}

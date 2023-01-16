@@ -238,19 +238,11 @@ public abstract class BaseUserAccountResourceTestCase {
 			userAccountResource.
 				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
-					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getUserAccountExternalReferenceCode()));
+					userAccount.getExternalReferenceCode()));
 	}
 
 	protected String
 			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getUserAccountExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -277,13 +269,13 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					null, null));
+					null, userAccount.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.
 				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					null, null));
+					null, userAccount.getExternalReferenceCode()));
 	}
 
 	protected UserAccount

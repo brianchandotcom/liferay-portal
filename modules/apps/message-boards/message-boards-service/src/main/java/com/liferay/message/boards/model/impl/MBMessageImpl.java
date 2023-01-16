@@ -15,6 +15,7 @@
 package com.liferay.message.boards.model.impl;
 
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.message.boards.constants.MBCategoryConstants;
@@ -25,6 +26,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -119,6 +121,28 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 
 		return attachmentsFileEntriesCount;
+	}
+
+	@Override
+	public FileEntry getAttachmentsFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		FileEntry fileEntry =
+			PortletFileRepositoryUtil.
+				getPortletFileEntryByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		long attachmentsFolderId = getAttachmentsFolderId();
+
+		if (attachmentsFolderId == fileEntry.getFolderId()) {
+			return fileEntry;
+		}
+
+		throw new NoSuchFileEntryException(
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				fileEntry.getFileEntryId(), "}"));
 	}
 
 	@Override

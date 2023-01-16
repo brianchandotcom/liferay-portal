@@ -136,11 +136,11 @@ public class UserAccountResourceImpl
 	public void
 			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception {
 
 		User user = _userLocalService.getUserByExternalReferenceCode(
-			userAccountExternalReferenceCode, contextCompany.getCompanyId());
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		_accountEntryUserRelService.deleteAccountEntryUserRelByEmailAddress(
 			_accountResourceDTOConverter.getAccountEntryId(
@@ -392,11 +392,11 @@ public class UserAccountResourceImpl
 	public void
 			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception {
 
 		User user = _userLocalService.getUserByExternalReferenceCode(
-			userAccountExternalReferenceCode, contextCompany.getCompanyId());
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
 			_accountResourceDTOConverter.getAccountEntryId(

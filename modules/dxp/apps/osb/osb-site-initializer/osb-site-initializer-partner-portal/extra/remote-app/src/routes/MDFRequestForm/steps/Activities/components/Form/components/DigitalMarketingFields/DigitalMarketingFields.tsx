@@ -11,7 +11,6 @@
  */
 
 import {useFormikContext} from 'formik';
-import {useEffect} from 'react';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
@@ -27,35 +26,40 @@ interface IProps {
 const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
 	const {setFieldValue, values} = useFormikContext<MDFRequest>();
 
-	useEffect(() => {
-		if (
-			values.activities[currentActivityIndex].activityDescription
-				?.nurtureDripCampaign
-		) {
-			setFieldValue(
-				`activities[${currentActivityIndex}].activityDescription.manySeries`,
-				''
-			);
-		}
-	}, [
-		values.activities[currentActivityIndex].activityDescription
-			?.nurtureDripCampaign,
-	]);
+	const onAssetsLiferaySelected = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const assetsLiferayRequiredValue = event.target.value;
 
-	useEffect(() => {
-		if (
-			values.activities[currentActivityIndex].activityDescription
-				?.assetsLiferayRequired
-		) {
+		setFieldValue(
+			`activities[${currentActivityIndex}].activityDescription.assetsLiferayRequired`,
+			assetsLiferayRequiredValue
+		);
+
+		if (assetsLiferayRequiredValue) {
 			setFieldValue(
 				`activities[${currentActivityIndex}].activityDescription.assetsLiferayDescription`,
 				''
 			);
 		}
-	}, [
-		values.activities[currentActivityIndex].activityDescription
-			?.assetsLiferayRequired,
-	]);
+	};
+	const onNurtureDripCampaignSelected = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const nurtureDripCampaignValue = event.target.value;
+
+		setFieldValue(
+			`activities[${currentActivityIndex}].activityDescription.nurtureDripCampaign`,
+			nurtureDripCampaignValue
+		);
+
+		if (nurtureDripCampaignValue) {
+			setFieldValue(
+				`activities[${currentActivityIndex}].activityDescription.manySeries`,
+				''
+			);
+		}
+	};
 
 	return (
 		<>
@@ -80,6 +84,7 @@ const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
 						items={getBooleanEntries()}
 						label="Nurture or drip campaign?"
 						name={`activities[${currentActivityIndex}].activityDescription.nurtureDripCampaign`}
+						onChange={onNurtureDripCampaignSelected}
 						required
 						small
 					/>
@@ -122,6 +127,7 @@ const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
 				items={getBooleanEntries()}
 				label="Do you require any assets from Liferay?"
 				name={`activities[${currentActivityIndex}].activityDescription.assetsLiferayRequired`}
+				onChange={onAssetsLiferaySelected}
 				required
 				small
 			/>

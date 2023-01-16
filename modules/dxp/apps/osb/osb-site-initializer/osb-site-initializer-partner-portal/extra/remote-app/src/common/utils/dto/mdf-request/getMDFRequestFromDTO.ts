@@ -40,8 +40,11 @@ export function getMDFRequestFromDTO(
 				return {
 					activityDescription: {
 						...activityDescription,
+						assetsLiferayRequired: String(
+							activityItem.assetsLiferayRequired
+						),
 						leadFollowUpStrategies: activityItem.leadFollowUpStrategies?.split(
-							'; '
+							', '
 						),
 						leadGenerated: String(activityItem.leadGenerated),
 					},

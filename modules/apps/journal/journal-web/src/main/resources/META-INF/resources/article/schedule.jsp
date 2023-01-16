@@ -18,6 +18,13 @@
 
 <%
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, journalDisplayContext.getArticle());
+
+Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+JournalArticle article = journalDisplayContext.getArticle();
+
+if ((article != null) && (article.getDisplayDate() != null)) {
+	cal.setTime(article.getDisplayDate());
+}
 %>
 
 <liferay-ui:error-marker
@@ -31,7 +38,40 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 <liferay-ui:error exception="<%= ArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
 <div class="schedule">
-	<aui:input formName="fm1" name="displayDate" wrapperCssClass="mb-3" />
+	<div class="form-group display-date mb-3 input-Date-wrapper">
+		<label class="control-label"><liferay-ui:message key="display-date" /></label>
+
+		<div class="form-group-autofit">
+			<div class="form-group-item">
+				<liferay-ui:input-date
+					dayParam="displayDateDay"
+					dayValue="<%= cal.get(Calendar.DATE) %>"
+					disabled="<%= false %>"
+					formName="fm1"
+					monthParam="displayDateMonth"
+					monthValue="<%= cal.get(Calendar.MONTH) %>"
+					name="displayDate"
+					nullable="<%= journalEditArticleDisplayContext.getClassNameId() != 0 %>"
+					showDisableCheckbox="<%= false %>"
+					yearParam="displayDateYear"
+					yearValue="<%= cal.get(Calendar.YEAR) %>"
+				/>
+			</div>
+
+			<div class="form-group-item">
+				<liferay-ui:input-time
+					amPmParam="displayDateAmPm"
+					amPmValue="<%= cal.get(Calendar.AM_PM) %>"
+					cssClass="form-group form-group-inline"
+					hourParam="displayDateHour"
+					hourValue="<%= cal.get(Calendar.HOUR) %>"
+					minuteParam="displayDateMinute"
+					minuteValue="<%= cal.get(Calendar.MINUTE) %>"
+					name="displayDateTime"
+				/>
+			</div>
+		</div>
+	</div>
 
 	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= journalEditArticleDisplayContext.isNeverExpire() %>" formName="fm1" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
 

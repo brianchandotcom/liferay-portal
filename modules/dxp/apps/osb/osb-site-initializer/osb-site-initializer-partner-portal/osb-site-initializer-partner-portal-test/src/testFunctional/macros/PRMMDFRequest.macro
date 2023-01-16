@@ -142,6 +142,35 @@ definition {
 			locator1 = "PRMMDFRequest#SELECT",
 			value1 = "${tactic}");
 
+		Type(
+			key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${activityDescription}");
+
+		Click.clickAtNotVisible(
+			key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
+			locator1 = "PRMMDFRequest#INPUT_BUTTON",
+			key_buttonText = "${leadList}");
+
+		if("${leadList}" == "Yes") {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "${targetOfLeads}");
+
+			for (var leadFollowUp : list "${leadFollowUpList}") {
+				Click.clickAtNotVisible(
+					key_fieldName = "activities[${activityIndex}].activityDescription.leadFollowUpStrategies",
+					key_optionValue = "${leadFollowUp}",
+					locator1 = "PRMMDFRequest#CHECKBOX");
+			}
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.detailsLeadFollowUp",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "${followUpStrategy}");
+		}
+
 		var startDate = PRMMDFRequest.formatDate();
 
 		Type.sendKeys(
@@ -178,28 +207,6 @@ definition {
 
 			var budgetIndex = ${budgetIndex} + 1;
 		}
-
-		Click.clickAtNotVisible(
-			key_fieldName = "activities[${activityIndex}].leadGenerated",
-			key_optionValue = "${leadList}",
-			locator1 = "PRMMDFRequest#CHECKBOX");
-
-		Type(
-			key_fieldName = "activities[${activityIndex}].targetOfLeads",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${targetOfLeads}");
-
-		for (var leadFollowUp : list "${leadFollowUpList}") {
-			Click.clickAtNotVisible(
-				key_fieldName = "activities[${activityIndex}].leadFollowUpStrategies",
-				key_optionValue = "${leadFollowUp}",
-				locator1 = "PRMMDFRequest#CHECKBOX");
-		}
-
-		Type(
-			key_fieldName = "activities[${activityIndex}].detailsLeadFollowUp",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${followUpStrategy}");
 	}
 
 	@summary = "Assert button is not clickable"

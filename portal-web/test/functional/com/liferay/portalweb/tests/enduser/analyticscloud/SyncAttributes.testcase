@@ -114,5 +114,40 @@ definition {
 		}
 	}
 
+    @description = "Story: LRAC-10860 | Automation ID: LRAC-12780 | Test Summary: Deselect non-required Attributes for People"
+	@priority = "5"
+	test CanDeselectNoRequiredAttributesForPeople {
+		task ("Get the number of attributes currently synced") {
+			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
+		}
+
+        task ("Deselect two attributes for People") {
+			ACDXPSettings.desyncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "birthday,male");
+		}
+
+        task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				decreaseAttributeNumber = "2",
+				currentAttributeNumber = "${syncPeopleNumberStart}");
+		}
+
+        task ("Save and Finish the wizard") {
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		}
+
+        task ("Go to the attributes page in the sidebar") {
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
+        task ("Check selected account group number") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				decreaseAttributeNumber = "2",
+				currentAttributeNumber = "${syncPeopleNumberStart}");
+		}
+	}
 
 }

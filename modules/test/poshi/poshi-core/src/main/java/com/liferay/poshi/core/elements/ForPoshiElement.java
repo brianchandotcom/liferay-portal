@@ -16,7 +16,6 @@ package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.Dom4JUtil;
-import com.liferay.poshi.core.util.StringUtil;
 
 import java.io.IOException;
 
@@ -82,8 +81,8 @@ public class ForPoshiElement extends PoshiElement {
 
 			String value = matcher.group(3);
 
-			if (value.contains("\"")) {
-				value = StringUtil.replace(value, "\"", "");
+			if (value.startsWith("\"") && value.endsWith("\"")) {
+				value = getDoubleQuotedContent(value);
 			}
 
 			addAttribute(matcher.group(2), value);

@@ -14,6 +14,7 @@
 
 package com.liferay.segments.experiment.web.internal.product.navigation.control.menu;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -21,6 +22,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -50,7 +53,6 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
-import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -250,9 +252,16 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			portalPreferences.getValue(
 				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, "hide-panel"));
 
-		if (!SegmentsExperimentUtil.isAnalyticsConnected(
-				themeDisplay.getCompanyId()) &&
-			hidePanel) {
+		try {
+			if (!_analyticsSettingsManager.isAnalyticsEnabled(
+					themeDisplay.getCompanyId()) &&
+				hidePanel) {
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 
 			return false;
 		}
@@ -503,6 +512,12 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 	private static final String _SESSION_CLICKS_KEY =
 		"com.liferay.segments.experiment.web_panelState";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsExperimentProductNavigationControlMenuEntry.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

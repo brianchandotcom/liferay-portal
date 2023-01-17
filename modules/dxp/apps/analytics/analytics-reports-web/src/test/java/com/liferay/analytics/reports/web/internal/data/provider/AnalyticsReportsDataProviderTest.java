@@ -22,15 +22,13 @@ import com.liferay.analytics.reports.web.internal.model.ReferringURL;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
@@ -47,7 +45,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,13 +60,6 @@ public class AnalyticsReportsDataProviderTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		ReflectionTestUtil.setFieldValue(
-			PrefsPropsUtil.class, "_prefsProps",
-			Mockito.mock(PrefsProps.class));
-	}
 
 	@Test
 	public void testGetAcquisitionChannels() throws Exception {
@@ -454,7 +444,17 @@ public class AnalyticsReportsDataProviderTest {
 	private AnalyticsSettingsManager _getAnalyticsSettingsManager()
 		throws Exception {
 
-		return Mockito.mock(AnalyticsSettingsManager.class);
+		AnalyticsSettingsManager analyticsSettingsManager = Mockito.mock(
+			AnalyticsSettingsManager.class);
+
+		Mockito.when(
+			analyticsSettingsManager.getAnalyticsConfiguration(
+				Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(AnalyticsConfiguration.class)
+		);
+
+		return analyticsSettingsManager;
 	}
 
 	private Http _getHttp(Exception exception) throws Exception {

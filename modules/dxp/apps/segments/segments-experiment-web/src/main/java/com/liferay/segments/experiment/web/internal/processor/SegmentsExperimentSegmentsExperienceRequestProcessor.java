@@ -14,9 +14,11 @@
 
 package com.liferay.segments.experiment.web.internal.processor;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
-import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -70,18 +71,28 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 	@Override
 	public long[] getSegmentsExperienceIds(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, long groupId, long classNameId,
-		long classPK, long[] segmentsExperienceIds) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long groupId,
+			long classNameId, long classPK, long[] segmentsExperienceIds)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!SegmentsExperimentUtil.isAnalyticsSynced(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+		try {
+			if (!_analyticsSettingsManager.isSiteIdSynced(
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
 
-			return segmentsExperienceIds;
+				return segmentsExperienceIds;
+			}
+		}
+		catch (PortalException portalException) {
+			throw portalException;
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 
 		long segmentsExperienceId = _getSelectedSegmentsExperienceId(
@@ -195,9 +206,11 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 	@Override
 	public long[] getSegmentsExperienceIds(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, long groupId, long classNameId,
-		long classPK, long[] segmentsEntryIds, long[] segmentsExperienceIds) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long groupId,
+			long classNameId, long classPK, long[] segmentsEntryIds,
+			long[] segmentsExperienceIds)
+		throws PortalException {
 
 		return getSegmentsExperienceIds(
 			httpServletRequest, httpServletResponse, groupId, classNameId,
@@ -361,6 +374,9 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentSegmentsExperienceRequestProcessor.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Portal _portal;

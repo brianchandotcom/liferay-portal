@@ -14,6 +14,8 @@
 
 package com.liferay.segments.experiment.web.internal.portlet.action;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -290,6 +292,10 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 		Group group = layout.getGroup();
 
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				group.getCompanyId());
+
 		return JSONUtil.put(
 			"analyticsData",
 			JSONUtil.put(
@@ -297,11 +303,11 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				SegmentsExperimentUtil.ANALYTICS_CLOUD_TRIAL_URL
 			).put(
 				"isConnected",
-				SegmentsExperimentUtil.isAnalyticsConnected(
+				_analyticsSettingsManager.isAnalyticsEnabled(
 					group.getCompanyId())
 			).put(
 				"isSynced",
-				SegmentsExperimentUtil.isAnalyticsSynced(
+				_analyticsSettingsManager.isSiteIdSynced(
 					group.getCompanyId(), _getLiveGroupId(group.getGroupId()))
 			).put(
 				"url",
@@ -333,7 +339,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					new SegmentsExperimentModifiedDateComparator()),
 				segmentsExperiment ->
 					SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-						locale, segmentsExperiment))
+						analyticsConfiguration, locale, segmentsExperiment))
 		).put(
 			"initialSegmentsVariants",
 			() -> {
@@ -371,7 +377,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"segmentsExperiment",
 					SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-						locale,
+						analyticsConfiguration, locale,
 						_fetchSegmentsExperiment(
 							layout,
 							segmentsExperience.getSegmentsExperienceId()))
@@ -379,7 +385,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"segmentsExperiment",
 			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-				locale, _fetchSegmentsExperiment(layout, segmentsExperienceId))
+				analyticsConfiguration, locale,
+				_fetchSegmentsExperiment(layout, segmentsExperienceId))
 		).put(
 			"segmentsExperimentGoals",
 			JSONUtil.toJSONArray(
@@ -439,6 +446,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetDataMVCResourceCommand.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -14,6 +14,7 @@
 
 package com.liferay.segments.experiment.web.internal.portlet.action;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -122,6 +123,8 @@ public class AddSegmentsExperimentMVCActionCommand
 		return JSONUtil.put(
 			"segmentsExperiment",
 			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
+				_analyticsSettingsManager.getAnalyticsConfiguration(
+					segmentsExperiment.getCompanyId()),
 				themeDisplay.getLocale(), segmentsExperiment)
 		).put(
 			"segmentsExperimentRel",
@@ -136,6 +139,9 @@ public class AddSegmentsExperimentMVCActionCommand
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Language _language;

@@ -346,4 +346,5 @@ describe('Table', () => {
 	// 1. Create unit test for table state renderer (error, loading, empty)
 	// 2. Create unit test for management toolbar filters
 	// 3. Create unit test for pagination
+
 });

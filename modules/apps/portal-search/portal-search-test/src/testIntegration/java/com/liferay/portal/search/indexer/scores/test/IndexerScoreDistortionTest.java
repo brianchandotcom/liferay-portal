@@ -33,6 +33,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -67,8 +68,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -267,14 +266,11 @@ public class IndexerScoreDistortionTest {
 			expected);
 	}
 
-	protected String getClassNamesAsString(Class... classes) {
-		return Stream.of(
-			classes
-		).map(
-			Class::getName
-		).collect(
-			Collectors.toList()
-		).toString();
+	protected String getClassNamesAsString(Class<?>... classes) {
+		List<String> classNames = TransformUtil.transformToList(
+			classes, Class::getName);
+
+		return classNames.toString();
 	}
 
 	protected String getMessage(

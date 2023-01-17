@@ -106,6 +106,12 @@ definition {
 	}
 
 	macro desyncAttributes {
+		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR") && IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON")) {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
 		ACDXPSettings.clickToSelectAttributes(attributeCategory = "${attributeCategory}");
 
 		for (var attributeName : list "${attributeNameList}") {
@@ -118,7 +124,11 @@ definition {
 			}
 		}
 
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		Click(
+			key_text = "Sync",
+			locator1 = "Button#ANY");
+
+		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
 	}
 
 	macro disconnectDXPFromAnalyticsCloud {
@@ -245,7 +255,7 @@ definition {
 	}
 
 	macro syncAttributes {
-		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) {
+		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR") && IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON")) {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.navToSyncedAttributes();
@@ -263,7 +273,11 @@ definition {
 			}
 		}
 
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		Click(
+			key_text = "Sync",
+			locator1 = "Button#ANY");
+
+		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
 	}
 
 	macro syncChannel {

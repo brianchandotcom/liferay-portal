@@ -187,7 +187,7 @@ public class SegmentsDisplayContext {
 					"/segments/edit_segments_entry", "type",
 					User.class.getName());
 				dropdownItem.setLabel(
-					_language.get(_httpServletRequest, "user-segment"));
+					_language.get(_httpServletRequest, "add-new-user-segment"));
 			}
 		).build();
 	}

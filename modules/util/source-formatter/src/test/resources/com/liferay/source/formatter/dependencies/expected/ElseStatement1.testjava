@@ -67,7 +67,7 @@ public class ElseStatement1 {
 		return false;
 	}
 
-	protected int manyStatement(int a, int b) {
+	protected int manyStatements(int a, int b) {
 		int c = 0;
 
 		if (a == 1) {

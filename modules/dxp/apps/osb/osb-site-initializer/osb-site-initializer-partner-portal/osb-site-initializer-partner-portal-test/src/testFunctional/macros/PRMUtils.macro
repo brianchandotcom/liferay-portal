@@ -64,4 +64,14 @@ definition {
 		CreateObject.saveObject();
 	}
 
+	@summary = "Go to Folder"
+	macro gotoFolder{
+		var key_dmFolderName = "${folderName}";
+
+		SelectFrame(locator1 = "DocumentsAndMedia#CARD_FOLDER");
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = "${folderName}");
+	}
 }

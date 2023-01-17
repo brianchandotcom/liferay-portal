@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.search.spi.model.index.contributor;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
@@ -28,9 +29,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,15 +71,10 @@ public class SegmentsEntryModelDocumentContributor
 	}
 
 	private long[] _getRoleIds(long segmentsEntryId) {
-		List<SegmentsEntryRole> segmentsEntryRoles =
+		return TransformUtil.transformToLongArray(
 			_segmentsEntryRoleLocalService.getSegmentsEntryRoles(
-				segmentsEntryId);
-
-		Stream<SegmentsEntryRole> stream = segmentsEntryRoles.stream();
-
-		return stream.mapToLong(
-			SegmentsEntryRole::getRoleId
-		).toArray();
+				segmentsEntryId),
+			SegmentsEntryRole::getRoleId);
 	}
 
 	private Locale _getSiteDefaultLocale(long groupId) {

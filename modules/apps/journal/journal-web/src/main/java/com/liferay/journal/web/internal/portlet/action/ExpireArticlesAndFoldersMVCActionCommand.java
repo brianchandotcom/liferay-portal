@@ -16,14 +16,20 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,7 +64,7 @@ public class ExpireArticlesAndFoldersMVCActionCommand
 			JournalArticle.class.getName(), actionRequest);
 
 		for (long expireFolderId : expireFolderIds) {
-			ActionUtil.expireFolder(
+			_expireFolder(
 				themeDisplay.getScopeGroupId(), expireFolderId, serviceContext);
 		}
 
@@ -68,6 +74,26 @@ public class ExpireArticlesAndFoldersMVCActionCommand
 		for (String expireArticleId : expireArticleIds) {
 			ActionUtil.expireArticle(
 				actionRequest, HtmlUtil.unescape(expireArticleId));
+		}
+	}
+
+	private void _expireFolder(
+			long groupId, long parentFolderId, ServiceContext serviceContext)
+		throws Exception {
+
+		List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(
+			groupId, parentFolderId);
+
+		for (JournalFolder folder : folders) {
+			_expireFolder(groupId, folder.getFolderId(), serviceContext);
+		}
+
+		List<JournalArticle> articles = JournalArticleServiceUtil.getArticles(
+			groupId, parentFolderId, LocaleUtil.getMostRelevantLocale());
+
+		for (JournalArticle article : articles) {
+			JournalArticleServiceUtil.expireArticle(
+				groupId, article.getArticleId(), null, serviceContext);
 		}
 	}
 

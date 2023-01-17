@@ -16,8 +16,16 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -42,14 +50,45 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		resourceRequest.setAttribute(
-			JournalWebKeys.JOURNAL_ARTICLES,
-			ActionUtil.getArticles(resourceRequest));
+			JournalWebKeys.JOURNAL_ARTICLES, _getArticles(resourceRequest));
 
 		resourceRequest.setAttribute(
-			JournalWebKeys.JOURNAL_FOLDERS,
-			ActionUtil.getFolders(resourceRequest));
+			JournalWebKeys.JOURNAL_FOLDERS, _getFolders(resourceRequest));
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
+	}
+
+	private List<JournalArticle> _getArticles(ResourceRequest request)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(request, "groupId");
+
+		String[] articleIds = ParamUtil.getStringValues(
+			request, "rowIdsJournalArticle");
+
+		List<JournalArticle> articles = new ArrayList<>();
+
+		for (String articleId : articleIds) {
+			articles.add(
+				JournalArticleServiceUtil.getArticle(groupId, articleId));
+		}
+
+		return articles;
+	}
+
+	private List<JournalFolder> _getFolders(ResourceRequest request)
+		throws Exception {
+
+		long[] folderIds = ParamUtil.getLongValues(
+			request, "rowIdsJournalFolder");
+
+		List<JournalFolder> folders = new ArrayList<>();
+
+		for (long folderId : folderIds) {
+			folders.add(JournalFolderServiceUtil.getFolder(folderId));
+		}
+
+		return folders;
 	}
 
 }

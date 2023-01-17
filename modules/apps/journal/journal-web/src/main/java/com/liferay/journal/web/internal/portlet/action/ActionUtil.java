@@ -14,30 +14,21 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.diff.exception.CompareVersionsException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
-import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
-import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFeedServiceUtil;
-import com.liferay.journal.service.JournalFolderServiceUtil;
-import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.portlet.JournalPortlet;
-import com.liferay.journal.web.internal.security.permission.resource.JournalPermission;
-import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -46,28 +37,17 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -75,89 +55,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public class ActionUtil {
-
-	public static void compareVersions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(renderRequest, "groupId");
-		String articleId = ParamUtil.getString(renderRequest, "articleId");
-
-		String sourceArticleId = ParamUtil.getString(
-			renderRequest, "sourceVersion");
-
-		int index = sourceArticleId.lastIndexOf(
-			JournalPortlet.VERSION_SEPARATOR);
-
-		if (index != -1) {
-			sourceArticleId = sourceArticleId.substring(
-				index + JournalPortlet.VERSION_SEPARATOR.length());
-		}
-
-		double sourceVersion = GetterUtil.getDouble(sourceArticleId);
-
-		String targetArticleId = ParamUtil.getString(
-			renderRequest, "targetVersion");
-
-		index = targetArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
-
-		if (index != -1) {
-			targetArticleId = targetArticleId.substring(
-				index + JournalPortlet.VERSION_SEPARATOR.length());
-		}
-
-		double targetVersion = GetterUtil.getDouble(targetArticleId);
-
-		if ((sourceVersion == 0) && (targetVersion == 0)) {
-			List<JournalArticle> sourceArticles =
-				JournalArticleServiceUtil.getArticlesByArticleId(
-					groupId, articleId, 0, 1,
-					new ArticleVersionComparator(false));
-
-			JournalArticle sourceArticle = sourceArticles.get(0);
-
-			sourceVersion = sourceArticle.getVersion();
-
-			List<JournalArticle> targetArticles =
-				JournalArticleServiceUtil.getArticlesByArticleId(
-					groupId, articleId, 0, 1,
-					new ArticleVersionComparator(true));
-
-			JournalArticle targetArticle = targetArticles.get(0);
-
-			targetVersion = targetArticle.getVersion();
-		}
-
-		if (sourceVersion > targetVersion) {
-			double tempVersion = targetVersion;
-
-			targetVersion = sourceVersion;
-			sourceVersion = tempVersion;
-		}
-
-		String languageId = _getLanguageId(
-			renderRequest, groupId, articleId, sourceVersion, targetVersion);
-
-		String diffHtmlResults = null;
-
-		try {
-			diffHtmlResults = JournalHelperUtil.diffHtml(
-				groupId, articleId, sourceVersion, targetVersion, languageId,
-				new PortletRequestModel(renderRequest, renderResponse),
-				themeDisplay);
-		}
-		catch (CompareVersionsException compareVersionsException) {
-			renderRequest.setAttribute(
-				WebKeys.DIFF_VERSION, compareVersionsException.getVersion());
-		}
-
-		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
-		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
-	}
 
 	public static void deleteArticle(
 			ActionRequest actionRequest, String deleteArticleId)
@@ -219,26 +116,6 @@ public class ActionUtil {
 		}
 
 		JournalUtil.removeRecentArticle(actionRequest, articleId, version);
-	}
-
-	public static void expireFolder(
-			long groupId, long parentFolderId, ServiceContext serviceContext)
-		throws Exception {
-
-		List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(
-			groupId, parentFolderId);
-
-		for (JournalFolder folder : folders) {
-			expireFolder(groupId, folder.getFolderId(), serviceContext);
-		}
-
-		List<JournalArticle> articles = JournalArticleServiceUtil.getArticles(
-			groupId, parentFolderId, LocaleUtil.getMostRelevantLocale());
-
-		for (JournalArticle article : articles) {
-			JournalArticleServiceUtil.expireArticle(
-				groupId, article.getArticleId(), null, serviceContext);
-		}
 	}
 
 	public static JournalArticle getArticle(
@@ -362,24 +239,6 @@ public class ActionUtil {
 		return article;
 	}
 
-	public static List<JournalArticle> getArticles(ResourceRequest request)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-
-		String[] articleIds = ParamUtil.getStringValues(
-			request, "rowIdsJournalArticle");
-
-		List<JournalArticle> articles = new ArrayList<>();
-
-		for (String articleId : articleIds) {
-			articles.add(
-				JournalArticleServiceUtil.getArticle(groupId, articleId));
-		}
-
-		return articles;
-	}
-
 	public static JournalFeed getFeed(HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -396,52 +255,6 @@ public class ActionUtil {
 		return feed;
 	}
 
-	public static JournalFolder getFolder(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
-
-		JournalFolder folder = null;
-
-		if ((folderId > 0) &&
-			(folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			folder = JournalFolderServiceUtil.fetchFolder(folderId);
-		}
-		else {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			JournalPermission.check(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup(), ActionKeys.VIEW);
-		}
-
-		return folder;
-	}
-
-	public static JournalFolder getFolder(PortletRequest portletRequest)
-		throws PortalException {
-
-		return getFolder(PortalUtil.getHttpServletRequest(portletRequest));
-	}
-
-	public static List<JournalFolder> getFolders(ResourceRequest request)
-		throws Exception {
-
-		long[] folderIds = ParamUtil.getLongValues(
-			request, "rowIdsJournalFolder");
-
-		List<JournalFolder> folders = new ArrayList<>();
-
-		for (long folderId : folderIds) {
-			folders.add(JournalFolderServiceUtil.getFolder(folderId));
-		}
-
-		return folders;
-	}
-
 	public static String getScript(UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
@@ -454,41 +267,6 @@ public class ActionUtil {
 		return new String(
 			Base64.decode(
 				ParamUtil.getString(uploadPortletRequest, "scriptContent")));
-	}
-
-	public static boolean hasArticle(ActionRequest actionRequest)
-		throws Exception {
-
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		if (Validator.isNull(articleId)) {
-			String[] articleIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "rowIds"));
-
-			if (articleIds.length <= 0) {
-				return false;
-			}
-
-			articleId = articleIds[0];
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int pos = articleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
-
-		if (pos != -1) {
-			articleId = articleId.substring(0, pos);
-		}
-
-		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
-			themeDisplay.getScopeGroupId(), articleId);
-
-		if (article == null) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private static String _getFileScriptContent(
@@ -513,44 +291,6 @@ public class ActionUtil {
 		}
 
 		return fileScriptContent;
-	}
-
-	private static String _getLanguageId(
-			RenderRequest renderRequest, long groupId, String articleId,
-			double sourceVersion, double targetVersion)
-		throws Exception {
-
-		JournalArticle sourceArticle =
-			JournalArticleLocalServiceUtil.fetchArticle(
-				groupId, articleId, sourceVersion);
-
-		JournalArticle targetArticle =
-			JournalArticleLocalServiceUtil.fetchArticle(
-				groupId, articleId, targetVersion);
-
-		Set<Locale> locales = new HashSet<>();
-
-		for (String locale : sourceArticle.getAvailableLanguageIds()) {
-			locales.add(LocaleUtil.fromLanguageId(locale));
-		}
-
-		for (String locale : targetArticle.getAvailableLanguageIds()) {
-			locales.add(LocaleUtil.fromLanguageId(locale));
-		}
-
-		String languageId = ParamUtil.get(
-			renderRequest, "languageId", targetArticle.getDefaultLanguageId());
-
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-		if (!locales.contains(locale)) {
-			languageId = targetArticle.getDefaultLanguageId();
-		}
-
-		renderRequest.setAttribute(WebKeys.AVAILABLE_LOCALES, locales);
-		renderRequest.setAttribute(WebKeys.LANGUAGE_ID, languageId);
-
-		return languageId;
 	}
 
 	private static boolean _isValidContentType(String contentType) {

@@ -32,6 +32,9 @@ import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -83,14 +86,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.Response;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -112,6 +118,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Rule
 	public static final SynchronousMailTestRule synchronousMailTestRule =
 		SynchronousMailTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseUserAccountResourceTestCase.setUpClass();
+
+		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
+			UserAccountResourceTest.class.getName());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_noticeableExecutorService.shutdown();
+	}
 
 	@Before
 	@Override
@@ -1181,15 +1200,25 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private void _assertAuthenticationResult(
-			int authenticatorResult, String emailAddress, String password)
+			Integer authenticatorResult, String emailAddress, String password)
 		throws Exception {
 
+		NoticeableFuture<Integer> authenticatorResultNoticeableFuture =
+			_noticeableExecutorService.submit(
+				new Callable<Integer>() {
+
+					@Override
+					public Integer call() throws Exception {
+						return _userLocalService.authenticateByEmailAddress(
+							testCompany.getCompanyId(), emailAddress, password,
+							Collections.emptyMap(), Collections.emptyMap(),
+							new HashMap<>());
+					}
+
+				});
+
 		Assert.assertEquals(
-			authenticatorResult,
-			_userLocalService.authenticateByEmailAddress(
-				testCompany.getCompanyId(), emailAddress, password,
-				Collections.emptyMap(), Collections.emptyMap(),
-				new HashMap<>()));
+			authenticatorResult, authenticatorResultNoticeableFuture.get());
 	}
 
 	private <T extends Exception> void _assertProblem(
@@ -1445,6 +1474,11 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private long[] _toUserIds(List<User> users) {
 		return ListUtil.toLongArray(users, User.USER_ID_ACCESSOR);
 	}
+
+	private static NoticeableExecutorService _noticeableExecutorService;
+
+	@Inject
+	private static PortalExecutorManager _portalExecutorManager;
 
 	private AccountEntry _accountEntry;
 

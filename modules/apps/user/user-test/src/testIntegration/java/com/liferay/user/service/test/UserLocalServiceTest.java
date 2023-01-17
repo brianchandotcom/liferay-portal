@@ -16,6 +16,9 @@ package com.liferay.user.service.test;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -81,9 +84,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.stream.LongStream;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -101,9 +107,31 @@ public class UserLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
+			UserLocalServiceTest.class.getName());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_noticeableExecutorService.shutdown();
+	}
+
 	@Test
 	public void testAuthenticateByEmailAddress() throws Exception {
-		User user = UserTestUtil.addUser();
+		NoticeableFuture<User> userNoticeableFuture =
+			_noticeableExecutorService.submit(
+				new Callable<User>() {
+
+					@Override
+					public User call() throws Exception {
+						return UserTestUtil.addUser();
+					}
+
+				});
+
+		User user = userNoticeableFuture.get();
 
 		String password = "password";
 
@@ -431,7 +459,18 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testLockout() throws Exception {
-		User user = UserTestUtil.addUser();
+		NoticeableFuture<User> userNoticeableFuture =
+			_noticeableExecutorService.submit(
+				new Callable<User>() {
+
+					@Override
+					public User call() throws Exception {
+						return UserTestUtil.addUser();
+					}
+
+				});
+
+		User user = userNoticeableFuture.get();
 
 		String password = "password";
 
@@ -757,6 +796,11 @@ public class UserLocalServiceTest {
 
 		return userIds;
 	}
+
+	private static NoticeableExecutorService _noticeableExecutorService;
+
+	@Inject
+	private static PortalExecutorManager _portalExecutorManager;
 
 	@Inject
 	private AnnouncementsDeliveryLocalService

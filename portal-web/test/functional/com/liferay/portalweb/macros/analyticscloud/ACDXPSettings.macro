@@ -486,4 +486,11 @@ definition {
 			value1 = "${syncNumber}");
 	}
 
+	macro getSyncNumberPreview {
+		var key_syncFieldName = "${attributeCategory}";
+		var syncNumber = selenium.getText("ACDXPSettings#SYNC_NUMBER_PREVIEW");
+		var syncNumber = StringUtil.extractDigits("${syncNumber}");
+
+		return "${syncNumber}";
+	}
 }

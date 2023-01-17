@@ -213,7 +213,7 @@ definition {
 		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
 
 		PortletEntry.inputText(
-			fieldLabel = "Hugging Face Access Token",
+			fieldLabel = "Access Token",
 			text = "");
 
 		AssertElementPresent(
@@ -227,7 +227,7 @@ definition {
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
 
 		PortletEntry.inputText(
-			fieldLabel = "Hugging Face Access Token",
+			fieldLabel = "Access Token",
 			text = "test");
 
 		PortletEntry.inputText(
@@ -296,7 +296,7 @@ definition {
 			value1 = "txtai");
 
 		PortletEntry.inputText(
-			fieldLabel = "txtai Host Address",
+			fieldLabel = "Host Address",
 			text = "");
 
 		AssertElementPresent(
@@ -310,7 +310,7 @@ definition {
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
 
 		PortletEntry.inputText(
-			fieldLabel = "txtai Host Address",
+			fieldLabel = "Host Address",
 			text = "test");
 
 		PortletEntry.save();
@@ -346,7 +346,7 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Connection is successful");
 
 		PortletEntry.inputText(
-			fieldLabel = "txtai Host Address",
+			fieldLabel = "Host Address",
 			text = "");
 
 		Button.click(button = "Test Configuration");

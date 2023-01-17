@@ -25,11 +25,14 @@ import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymousUserProvider;
@@ -76,8 +79,16 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		}
 	}
 
+	private void _completeAnonymousUser(User anonymousUser) throws Exception {
+		_userLocalService.updateStatus(
+			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
+	}
+
 	private User _createAnonymousUser(long companyId) throws Exception {
-		long creatorUserId = 0;
+		long userId = _counterLocalService.increment();
+
+		User user = _userLocalService.createUser(userId);
 
 		PasswordPolicy passwordPolicy =
 			_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
@@ -106,26 +117,26 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		int birthdayYear = 1970;
 		String jobTitle = StringPool.BLANK;
 
-		User anonymousUser = _userLocalService.addUser(
-			creatorUserId, companyId, false, randomString, randomString, false,
-			screenName, emailAddress, locale, firstName, middleName, lastName,
-			prefixListTypeId, suffixListTypeId, true, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, null, null, null, null, false,
-			null);
-
-		anonymousUser.setComments(
+		user.setCompanyId(companyId);
+		user.setPassword(randomString);
+		user.setScreenName(screenName);
+		user.setEmailAddress(emailAddress);
+		user.setLanguageId(LocaleUtil.toLanguageId(locale));
+		user.setFirstName(firstName);
+		user.setMiddleName(middleName);
+		user.setLastName(lastName);
+		user.setJobTitle(jobTitle);
+		user.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		user.setComments(
 			StringBundler.concat(
 				"This user is automatically created by the UAD application. ",
 				"Application data anonymized by Personal Data Erasure will be ",
 				"assigned to this user."));
 
-		_userLocalService.updateUser(anonymousUser);
+		_userLocalService.addUser(user);
 
-		_userLocalService.updateStatus(
-			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-			new ServiceContext());
 
-		return anonymousUser;
+		return user;
 	}
 
 	private User _getAnonymousUser(long companyId) throws Exception {
@@ -142,6 +153,8 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 				).put(
 					"userId", anonymousUser.getUserId()
 				).build());
+
+			_completeAnonymousUser(anonymousUser);
 
 			return anonymousUser;
 		}
@@ -165,6 +178,8 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 
 		configuration.update(properties);
 
+		_completeAnonymousUser(anonymousUser);
+
 		return anonymousUser;
 	}
 
@@ -182,10 +197,16 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private ContactLocalService _contactLocalService;
+
+	@Reference
 	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

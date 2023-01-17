@@ -21,7 +21,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import sxpElementSchema from '../../schemas/sxp-query-element.schema.json';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
-import getLocalizedText from '../utils/language/get_localized_text';
+import getSXPElementTitleAndDescription from '../utils/sxp_element/get_sxp_element_title_and_description';
 import ThemeContext from './ThemeContext';
 import JSONInput from './sxp_element/JSONInput';
 
@@ -45,8 +45,10 @@ function JSONSXPElement({
 	const [active, setActive] = useState(false);
 	const [collapse, setCollapse] = useState(collapseAll);
 
-	const description = getLocalizedText(sxpElement.description_i18n, locale);
-	const title = getLocalizedText(sxpElement.title_i18n, locale);
+	const [title, description] = getSXPElementTitleAndDescription(
+		sxpElement,
+		locale
+	);
 
 	useEffect(() => {
 		setCollapse(collapseAll);

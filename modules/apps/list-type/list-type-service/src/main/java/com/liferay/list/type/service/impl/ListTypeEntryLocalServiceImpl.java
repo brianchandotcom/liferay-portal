@@ -80,6 +80,18 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteListTypeEntryByListTypeDefinitionId(
+		long listTypeDefinitionId) {
+
+		for (ListTypeEntry listTypeEntry :
+				listTypeEntryPersistence.findByListTypeDefinitionId(
+					listTypeDefinitionId)) {
+
+			listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
+		}
+	}
+
+	@Override
 	public ListTypeEntry fetchListTypeEntry(
 		long listTypeDefinitionId, String key) {
 

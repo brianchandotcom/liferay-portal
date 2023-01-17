@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.portlet.action;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,7 +34,6 @@ import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.client.JSONWebServiceClient;
 import com.liferay.segments.asah.connector.internal.client.model.util.ExperimentSettingsUtil;
-import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -114,10 +114,13 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 	}
 
 	private Long _calculateSegmentsExperimentEstimatedDaysDuration(
-		double confidenceLevel, SegmentsExperiment segmentsExperiment,
-		Map<String, Double> segmentsExperienceKeySplitMap) {
+			double confidenceLevel, SegmentsExperiment segmentsExperiment,
+			Map<String, Double> segmentsExperienceKeySplitMap)
+		throws Exception {
 
-		if (!AsahUtil.isAnalyticsEnabled(segmentsExperiment.getCompanyId())) {
+		if (!_analyticsSettingsManager.isAnalyticsEnabled(
+				segmentsExperiment.getCompanyId())) {
+
 			return null;
 		}
 
@@ -176,6 +179,9 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalculateSegmentsExperimentEstimatedDurationMVCActionCommand.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	private AsahFaroBackendClient _asahFaroBackendClient;
 

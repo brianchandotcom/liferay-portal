@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Eduardo García
@@ -43,17 +42,6 @@ public class AsahUtil {
 
 	public static String getAsahProjectId(long companyId) {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsProjectId");
-	}
-
-	public static boolean isAnalyticsEnabled(long companyId) {
-		if (Validator.isNull(getAsahFaroBackendDataSourceId(companyId)) ||
-			Validator.isNull(getAsahFaroBackendSecuritySignature(companyId)) ||
-			Validator.isNull(getAsahFaroBackendURL(companyId))) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	public static boolean isSkipAsahEvent(

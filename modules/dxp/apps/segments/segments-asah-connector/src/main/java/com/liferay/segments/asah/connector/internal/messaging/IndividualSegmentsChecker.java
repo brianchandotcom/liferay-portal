@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.messaging;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +37,6 @@ import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
 import com.liferay.segments.asah.connector.internal.client.util.OrderByField;
-import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -61,17 +61,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = IndividualSegmentsChecker.class)
 public class IndividualSegmentsChecker {
 
-	public void checkIndividualSegments() {
+	public void checkIndividualSegments() throws Exception {
 		_checkIndividualSegments();
 		_checkIndividualSegmentsMemberships();
 	}
 
 	public void checkIndividualSegments(long companyId, String individualPK)
-		throws PortalException {
+		throws Exception {
 
 		if ((_asahSegmentsEntryCache.getSegmentsEntryIds(individualPK) !=
 				null) ||
-			!AsahUtil.isAnalyticsEnabled(companyId)) {
+			!_analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
 
 			return;
 		}
@@ -248,10 +248,10 @@ public class IndividualSegmentsChecker {
 		}
 	}
 
-	private void _checkIndividualSegments() {
+	private void _checkIndividualSegments() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				if (AsahUtil.isAnalyticsEnabled(companyId)) {
+				if (_analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
 					_checkIndividualSegments(companyId);
 				}
 			});
@@ -355,6 +355,9 @@ public class IndividualSegmentsChecker {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndividualSegmentsChecker.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	private volatile AsahFaroBackendClient _asahFaroBackendClient;
 

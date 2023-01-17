@@ -14,7 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.processor;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -25,7 +25,6 @@ import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.util.DXPVariantUtil;
 import com.liferay.segments.asah.connector.internal.client.model.util.ExperimentUtil;
-import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -40,6 +39,7 @@ import java.util.List;
 public class AsahSegmentsExperimentProcessor {
 
 	public AsahSegmentsExperimentProcessor(
+		AnalyticsSettingsManager analyticsSettingsManager,
 		AsahFaroBackendClient asahFaroBackendClient,
 		CompanyLocalService companyLocalService,
 		GroupLocalService groupLocalService,
@@ -47,6 +47,7 @@ public class AsahSegmentsExperimentProcessor {
 		SegmentsEntryLocalService segmentsEntryLocalService,
 		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
+		_analyticsSettingsManager = analyticsSettingsManager;
 		_asahFaroBackendClient = asahFaroBackendClient;
 		_companyLocalService = companyLocalService;
 		_groupLocalService = groupLocalService;
@@ -58,10 +59,11 @@ public class AsahSegmentsExperimentProcessor {
 
 	public void processAddSegmentsExperiment(
 			SegmentsExperiment segmentsExperiment)
-		throws PortalException {
+		throws Exception {
 
 		if ((segmentsExperiment == null) ||
-			!AsahUtil.isAnalyticsEnabled(segmentsExperiment.getCompanyId())) {
+			!_analyticsSettingsManager.isAnalyticsEnabled(
+				segmentsExperiment.getCompanyId())) {
 
 			return;
 		}
@@ -81,10 +83,12 @@ public class AsahSegmentsExperimentProcessor {
 	}
 
 	public void processDeleteSegmentsExperiment(
-		SegmentsExperiment segmentsExperiment) {
+			SegmentsExperiment segmentsExperiment)
+		throws Exception {
 
 		if ((segmentsExperiment == null) ||
-			!AsahUtil.isAnalyticsEnabled(segmentsExperiment.getCompanyId())) {
+			!_analyticsSettingsManager.isAnalyticsEnabled(
+				segmentsExperiment.getCompanyId())) {
 
 			return;
 		}
@@ -96,10 +100,11 @@ public class AsahSegmentsExperimentProcessor {
 
 	public void processUpdateSegmentsExperiment(
 			SegmentsExperiment segmentsExperiment)
-		throws PortalException {
+		throws Exception {
 
 		if ((segmentsExperiment == null) ||
-			!AsahUtil.isAnalyticsEnabled(segmentsExperiment.getCompanyId())) {
+			!_analyticsSettingsManager.isAnalyticsEnabled(
+				segmentsExperiment.getCompanyId())) {
 
 			return;
 		}
@@ -119,11 +124,12 @@ public class AsahSegmentsExperimentProcessor {
 	public void processUpdateSegmentsExperimentLayout(
 			SegmentsExperiment segmentsExperiment,
 			Layout segmentsExperimentLayout)
-		throws PortalException {
+		throws Exception {
 
 		if ((segmentsExperiment == null) ||
 			(segmentsExperimentLayout == null) ||
-			!AsahUtil.isAnalyticsEnabled(segmentsExperiment.getCompanyId())) {
+			!_analyticsSettingsManager.isAnalyticsEnabled(
+				segmentsExperiment.getCompanyId())) {
 
 			return;
 		}
@@ -143,10 +149,10 @@ public class AsahSegmentsExperimentProcessor {
 	public void processUpdateSegmentsExperimentRel(
 			long companyId, String segmentsExperimentKey,
 			List<SegmentsExperimentRel> segmentsExperimentRels)
-		throws PortalException {
+		throws Exception {
 
 		if ((segmentsExperimentRels == null) ||
-			!AsahUtil.isAnalyticsEnabled(companyId)) {
+			!_analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
 
 			return;
 		}
@@ -157,6 +163,7 @@ public class AsahSegmentsExperimentProcessor {
 				LocaleUtil.getSiteDefault(), segmentsExperimentRels));
 	}
 
+	private final AnalyticsSettingsManager _analyticsSettingsManager;
 	private final AsahFaroBackendClient _asahFaroBackendClient;
 	private final CompanyLocalService _companyLocalService;
 	private final GroupLocalService _groupLocalService;

@@ -16,7 +16,6 @@ package com.liferay.segments.asah.connector.internal.model.listener;
 
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -90,6 +89,7 @@ public class SegmentsExperienceModelListener
 	@Activate
 	protected void activate() {
 		_asahSegmentsExperimentProcessor = new AsahSegmentsExperimentProcessor(
+			_analyticsSettingsManager,
 			new AsahFaroBackendClientImpl(_jsonWebServiceClient),
 			_companyLocalService, _groupLocalService, _layoutLocalService,
 			_portal, _segmentsEntryLocalService,
@@ -104,7 +104,7 @@ public class SegmentsExperienceModelListener
 	private void _processUpdateSegmentsExperience(
 			SegmentsExperience segmentsExperience,
 			SegmentsExperiment segmentsExperiment)
-		throws PortalException {
+		throws Exception {
 
 		if (segmentsExperience.getSegmentsExperienceId() ==
 				segmentsExperiment.getSegmentsExperienceId()) {

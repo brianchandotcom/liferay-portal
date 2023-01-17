@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.messaging;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +27,6 @@ import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient
 import com.liferay.segments.asah.connector.internal.client.JSONWebServiceClient;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
 import com.liferay.segments.asah.connector.internal.client.model.Topic;
-import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = InterestTermsChecker.class)
 public class InterestTermsChecker {
 
-	public void checkInterestTerms(long companyId, String userId) {
+	public void checkInterestTerms(long companyId, String userId)
+		throws Exception {
+
 		if ((_asahInterestTermCache.getInterestTerms(userId) != null) ||
-			!AsahUtil.isAnalyticsEnabled(companyId)) {
+			!_analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
 
 			return;
 		}
@@ -108,6 +110,9 @@ public class InterestTermsChecker {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InterestTermsChecker.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	private AsahFaroBackendClient _asahFaroBackendClient;
 

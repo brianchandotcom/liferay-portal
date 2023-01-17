@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -35,8 +36,6 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -86,17 +85,19 @@ public abstract class BaseFacetedSearcherTestCase {
 	protected void assertAllHitsAreUsers(
 		String keywords, Hits hits, SearchContext searchContext) {
 
-		List<Document> documents = Stream.of(
-			hits.getDocs()
-		).filter(
-			this::isMissingScreenName
-		).collect(
-			Collectors.toList()
-		);
+		List<Document> documents = TransformUtil.transformToList(
+			hits.getDocs(),
+			document -> {
+				if (isMissingScreenName(document)) {
+					return document;
+				}
+
+				return null;
+			});
 
 		Assert.assertTrue(
 			(String)searchContext.getAttribute("queryString") + "->" +
-				documents.toString(),
+				documents,
 			documents.isEmpty());
 	}
 
@@ -119,12 +120,15 @@ public abstract class BaseFacetedSearcherTestCase {
 		SearchContext searchContext = userSearchFixture.getSearchContext(
 			keywords);
 
-		Stream<Group> stream = _groups.stream();
+		long[] groupId = new long[_groups.size()];
 
-		searchContext.setGroupIds(
-			stream.mapToLong(
-				Group::getGroupId
-			).toArray());
+		for (int i = 0; i < _groups.size(); i++) {
+			Group group = _groups.get(i);
+
+			groupId[i] = group.getGroupId();
+		}
+
+		searchContext.setGroupIds(groupId);
 
 		return searchContext;
 	}

@@ -20,6 +20,7 @@ import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFi
 import com.liferay.notification.exception.NotificationTemplateEditorTypeException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
 import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;
+import com.liferay.notification.exception.NotificationTemplateSubjectException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
@@ -155,6 +156,10 @@ public abstract class BaseNotificationType implements NotificationType {
 			if (objectDefinition == null) {
 				throw new NotificationTemplateObjectDefinitionIdException();
 			}
+		}
+
+		if (Validator.isNull(notificationTemplate.getSubject())) {
+			throw new NotificationTemplateSubjectException("Subject is null");
 		}
 
 		for (long attachmentObjectFieldId :

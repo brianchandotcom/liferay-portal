@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryNameException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -88,7 +89,15 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		layoutUtilityPageEntry.setUserId(user.getUserId());
 		layoutUtilityPageEntry.setUserName(user.getFullName());
 
-		layoutUtilityPageEntry.setExternalReferenceCode(externalReferenceCode);
+		if (Validator.isNotNull(externalReferenceCode)) {
+			layoutUtilityPageEntry.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+		else {
+			layoutUtilityPageEntry.setExternalReferenceCode(
+				_generateLayoutUtilityPageEntryExternalReferenceCode(
+					groupId, name));
+		}
 
 		if (plid == 0) {
 			Layout layout = _addLayout(
@@ -391,6 +400,35 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntryId + "_preview", serviceContext);
 
 		return copyDLFileEntry.getFileEntryId();
+	}
+
+	private String _generateLayoutUtilityPageEntryExternalReferenceCode(
+		long groupId, String name) {
+
+		String layoutUtilityPageEntryReferenceCode = StringUtil.toLowerCase(
+			name.trim());
+
+		layoutUtilityPageEntryReferenceCode = StringUtil.replace(
+			layoutUtilityPageEntryReferenceCode, CharPool.SPACE, CharPool.DASH);
+
+		String curLayoutUtilityPageEntryReferenceCode =
+			layoutUtilityPageEntryReferenceCode;
+
+		int count = 0;
+
+		while (true) {
+			LayoutUtilityPageEntry layoutUtilityPageEntry =
+				layoutUtilityPageEntryPersistence.fetchByERC_G(
+					curLayoutUtilityPageEntryReferenceCode, groupId);
+
+			if (layoutUtilityPageEntry == null) {
+				return curLayoutUtilityPageEntryReferenceCode;
+			}
+
+			curLayoutUtilityPageEntryReferenceCode =
+				curLayoutUtilityPageEntryReferenceCode + CharPool.DASH +
+					count++;
+		}
 	}
 
 	private String _getColorSchemeId(long companyId, String themeId) {

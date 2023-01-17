@@ -42,8 +42,9 @@ public class SearchableAssetClassNamesProviderImpl
 		for (AssetRendererFactory<?> assetRendererFactory :
 				assetRendererFactories) {
 
+			String className = assetRendererFactory.getClassName();
+
 			if (assetRendererFactory.isSearchable()) {
-				String className = assetRendererFactory.getClassName();
 
 				if (ArrayUtil.contains(
 						searchEngineHelper.getEntryClassNames(), className,
@@ -51,17 +52,12 @@ public class SearchableAssetClassNamesProviderImpl
 
 					classNames.add(className);
 				}
+			} else if (className.startsWith(
+				"com.liferay.object.model.ObjectDefinition#")) {
+
+				classNames.add(className);
 			}
-		}
 
-		for (String searchEngineHelperEntryClassName :
-				searchEngineHelper.getEntryClassNames()) {
-
-			if (searchEngineHelperEntryClassName.startsWith(
-					"com.liferay.object.model.ObjectDefinition#")) {
-
-				classNames.add(searchEngineHelperEntryClassName);
-			}
 		}
 
 		return classNames.toArray(new String[0]);

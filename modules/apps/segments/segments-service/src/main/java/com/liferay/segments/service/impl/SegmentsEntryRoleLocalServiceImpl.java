@@ -37,8 +37,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -210,19 +208,20 @@ public class SegmentsEntryRoleLocalServiceImpl
 		List<SegmentsEntryRole> segmentsEntryRoles = getSegmentsEntryRoles(
 			segmentsEntryId);
 
-		Stream<SegmentsEntryRole> segmentsEntryRolesStream =
-			segmentsEntryRoles.stream();
+		Set<Long> roleIds = new HashSet<>();
 
-		return segmentsEntryRolesStream.map(
-			segmentsEntryRole -> _roleLocalService.fetchRole(
-				segmentsEntryRole.getRoleId())
-		).filter(
-			role -> Objects.equals(role.getType(), RoleConstants.TYPE_SITE)
-		).map(
-			Role::getRoleId
-		).collect(
-			Collectors.toSet()
-		);
+		for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
+			Role role = _roleLocalService.fetchRole(
+				segmentsEntryRole.getRoleId());
+
+			if (!Objects.equals(role.getType(), RoleConstants.TYPE_SITE)) {
+				continue;
+			}
+
+			roleIds.add(role.getRoleId());
+		}
+
+		return roleIds;
 	}
 
 	private void _reindex(long segmentsEntryId) throws PortalException {

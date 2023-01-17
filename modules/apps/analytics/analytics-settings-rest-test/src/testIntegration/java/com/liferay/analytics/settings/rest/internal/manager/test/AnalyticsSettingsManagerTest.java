@@ -286,7 +286,9 @@ public class AnalyticsSettingsManagerTest {
 	}
 
 	@Test
-	public void testIsSiteIdSyncedWithAnalyticsDisabled() throws Exception {
+	public void testIsSiteIdSyncedWithNullLiferayAnalyticsDataSourceId()
+		throws Exception {
+
 		Dictionary<String, Object> dictionary = new HashMapDictionary();
 
 		dictionary.put("liferayAnalyticsDataSourceId", null);

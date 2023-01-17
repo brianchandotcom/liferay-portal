@@ -15,16 +15,22 @@
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.web.internal.configuration.KBSearchPortletInstanceConfiguration;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -61,6 +67,33 @@ public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 			return "/display/view_kb_article.jsp";
 		}
 
+		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
+			try {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				KBSearchPortletInstanceConfiguration
+					kbSearchPortletInstanceConfiguration =
+						portletDisplay.getPortletInstanceConfiguration(
+							KBSearchPortletInstanceConfiguration.class);
+
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(renderRequest);
+
+				httpServletRequest.setAttribute(
+					"init.jsp-enableKBArticleDescription",
+					kbSearchPortletInstanceConfiguration.
+						enableKBArticleDescription());
+			}
+			catch (ConfigurationException configurationException) {
+				throw new RuntimeException(configurationException);
+			}
+		}
+
 		return "/admin/common/view_kb_article.jsp";
 	}
 
@@ -72,5 +105,8 @@ public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 
 		return portletDisplay.getRootPortletId();
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

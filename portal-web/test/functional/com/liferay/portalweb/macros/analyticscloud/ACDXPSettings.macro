@@ -493,4 +493,21 @@ definition {
 
 		return "${syncNumber}";
 	}
+
+	macro viewIncreaseOrDecreaseSyncNumber {
+		if (isSet(increaseAttributeNumber)) {
+			var expectedAttributeNumber = MathUtil.sum("${currentAttributeNumber}", "${increaseAttributeNumber}");
+		}
+
+		if (isSet(decreaseAttributeNumber)) {
+			var expectedAttributeNumber = MathUtil.difference("${currentAttributeNumber}", "${decreaseAttributeNumber}");
+		}
+
+		var actualAttributeNumber = ACDXPSettings.getSyncNumberPreview(attributeCategory = "${attributeCategory}");
+
+		TestUtils.assertEquals(
+			actual = "${actualAttributeNumber}",
+			expected = "${expectedAttributeNumber}");
+	}
+
 }

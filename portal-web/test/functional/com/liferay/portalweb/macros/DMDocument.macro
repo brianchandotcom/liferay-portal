@@ -4131,6 +4131,8 @@ definition {
 
 			WaitForPageLoad();
 
+			DMDocument.expandInfo();
+
 			DMDocument.viewDocumentInfoTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 		}
 	}

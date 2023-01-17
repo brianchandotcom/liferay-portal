@@ -1,0 +1,18 @@
+definition {
+
+	@summary = "Create and Publish an Announcement"
+	macro addAndPublishAnnouncement {
+		LexiconEntry.gotoAddMenuItem(menuItem = "Announcement");
+
+		PortletEntry.inputTitle(title = "${announcementTitle}" );
+
+		CKEditor.addContentInWebContent(
+			content = "${announcementBody}",
+			fieldLabel = "Body");
+
+		Button.click(button = "Publish");
+
+		Alert.viewSuccessMessage();
+	}
+
+}

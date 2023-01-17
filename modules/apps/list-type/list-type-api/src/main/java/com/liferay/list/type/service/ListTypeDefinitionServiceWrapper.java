@@ -70,6 +70,17 @@ public class ListTypeDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.list.type.model.ListTypeDefinition
+			fetchListTypeDefinitionByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeDefinitionService.
+			fetchListTypeDefinitionByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
 	public com.liferay.list.type.model.ListTypeDefinition getListTypeDefinition(
 			long listTypeDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

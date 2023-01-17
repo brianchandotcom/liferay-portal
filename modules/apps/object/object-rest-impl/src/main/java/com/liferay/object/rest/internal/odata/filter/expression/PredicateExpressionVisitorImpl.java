@@ -443,10 +443,14 @@ public class PredicateExpressionVisitorImpl
 		Predicate predicate = null;
 
 		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
-			predicate = Predicate.and((Predicate)left, (Predicate)right);
+			predicate = Predicate.and(
+				Predicate.withParentheses((Predicate)left),
+				Predicate.withParentheses((Predicate)right));
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
-			predicate = Predicate.or((Predicate)left, (Predicate)right);
+			predicate = Predicate.or(
+				Predicate.withParentheses((Predicate)left),
+				Predicate.withParentheses((Predicate)right));
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(

@@ -23,6 +23,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -164,45 +165,48 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private void _getElseIfStatementCodeBlock(
-		String content, int closeCurlyBracePos, int x,
-		List<String> ifStatementCodeBlocks) {
-
-		if (closeCurlyBracePos == x) {
-			return;
-		}
+	private List<String> _getElseIfStatementCodeBlock(
+		String content, int closeCurlyBracePos, int x) {
 
 		int openCurlyBracePos = content.indexOf(
 			StringPool.OPEN_CURLY_BRACE, closeCurlyBracePos + 1);
 
 		if (openCurlyBracePos == -1) {
-			ifStatementCodeBlocks.clear();
-
-			return;
+			return Collections.emptyList();
 		}
 
 		String statement = StringUtil.trim(
 			content.substring(closeCurlyBracePos + 1, openCurlyBracePos));
 
 		if (!statement.startsWith("else if")) {
-			ifStatementCodeBlocks.clear();
-
-			return;
+			return Collections.emptyList();
 		}
 
 		closeCurlyBracePos = _getCloseCurlyBracePos(content, openCurlyBracePos);
 
 		if (closeCurlyBracePos == -1) {
-			ifStatementCodeBlocks.clear();
-
-			return;
+			return Collections.emptyList();
 		}
 
-		ifStatementCodeBlocks.add(
+		List<String> elseIfStatementCodeBlocks = new ArrayList<>();
+
+		elseIfStatementCodeBlocks.add(
 			content.substring(openCurlyBracePos, closeCurlyBracePos + 1));
 
-		_getElseIfStatementCodeBlock(
-			content, closeCurlyBracePos, x, ifStatementCodeBlocks);
+		if (closeCurlyBracePos == x) {
+			return elseIfStatementCodeBlocks;
+		}
+
+		List<String> nestedElseIfStatementCodeBlocks =
+			_getElseIfStatementCodeBlock(content, closeCurlyBracePos, x);
+
+		if (nestedElseIfStatementCodeBlocks.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		elseIfStatementCodeBlocks.addAll(nestedElseIfStatementCodeBlocks);
+
+		return elseIfStatementCodeBlocks;
 	}
 
 	private List<String> _getIfStatementCodeBlock(String content, int x) {
@@ -230,12 +234,15 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 				content.substring(matcher.start(), closeCurlyBracePos + 1));
 
 			if (closeCurlyBracePos != x) {
-				_getElseIfStatementCodeBlock(
-					content, closeCurlyBracePos, x, ifStatementCodeBlocks);
+				List<String> elseIfStatementCodeBlocks =
+					_getElseIfStatementCodeBlock(
+						content, closeCurlyBracePos, x);
 
-				if (ListUtil.isEmpty(ifStatementCodeBlocks)) {
+				if (elseIfStatementCodeBlocks.isEmpty()) {
 					continue;
 				}
+
+				ifStatementCodeBlocks.addAll(elseIfStatementCodeBlocks);
 			}
 
 			return ifStatementCodeBlocks;

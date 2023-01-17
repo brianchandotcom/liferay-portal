@@ -32,7 +32,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * The extended model implementation for the SegmentsExperiment service.
@@ -98,14 +97,15 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 
 	@Override
 	public String getSegmentsExperienceKey() {
-		return Optional.ofNullable(
+		SegmentsExperience segmentsExperience =
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				getSegmentsExperienceId())
-		).map(
-			SegmentsExperience::getSegmentsExperienceKey
-		).orElse(
-			null
-		);
+				getSegmentsExperienceId());
+
+		if (segmentsExperience != null) {
+			return segmentsExperience.getSegmentsExperienceKey();
+		}
+
+		return null;
 	}
 
 	@Override

@@ -306,4 +306,24 @@ describe('FormGeneralPanel', () => {
 			)
 		).toBeInTheDocument();
 	});
+
+	it('shows a warning if it is mapped to an object that does not exist anymore', () => {
+		renderComponent({
+			item: {
+				children: [],
+				config: {
+					classNameId: '33333',
+					classTypeId: '33333',
+				},
+				itemId: 'form',
+				type: LAYOUT_DATA_ITEM_TYPES.form,
+			},
+		});
+
+		expect(
+			screen.getByText(
+				'this-content-is-currently-unavailable-or-has-been-deleted.-users-cannot-see-this-fragment'
+			)
+		).toBeInTheDocument();
+	});
 });

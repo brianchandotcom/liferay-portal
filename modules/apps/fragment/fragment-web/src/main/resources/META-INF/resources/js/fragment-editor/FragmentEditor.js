@@ -21,7 +21,6 @@ import {
 	debounce,
 	fetch,
 	navigate,
-	objectToFormData,
 	openToast,
 	sub,
 } from 'frontend-js-web';
@@ -30,6 +29,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import CodeMirrorEditor from './CodeMirrorEditor';
 import {FieldTypeSelector} from './FieldTypeSelector';
 import FragmentPreview from './FragmentPreview';
+import createFile from './createFile';
 
 const CHANGES_STATUS = {
 	saved: Liferay.Language.get('changes-saved'),
@@ -78,6 +78,13 @@ const FragmentEditor = ({
 	const previousFieldTypes = usePrevious(fieldTypes) || initialFieldTypes;
 	const previousHtml = usePrevious(html) || initialHTML;
 	const previousJs = usePrevious(js) || initialJS;
+
+	const [previewData, setPreviewData] = useState({
+		configuration: initialConfiguration,
+		css: initialCSS,
+		html: initialHTML,
+		js: initialJS,
+	});
 
 	const isMounted = useIsMounted();
 
@@ -149,21 +156,33 @@ const FragmentEditor = ({
 		debounce(() => {
 			setChangesStatus(CHANGES_STATUS.saving);
 
-			const data = {
-				cacheable: isCacheable,
-				configurationContent: configuration,
-				cssContent: btoa(css),
-				fieldTypes,
-				fragmentCollectionId,
-				fragmentEntryId,
-				htmlContent: btoa(html),
-				jsContent: btoa(js),
-				name,
-				status: allowedStatus.draft,
-			};
+			const formData = new FormData();
+
+			formData.append(`${namespace}cacheable`, isCacheable);
+			formData.append(`${namespace}configurationContent`, configuration);
+			formData.append(
+				`${namespace}cssContent`,
+				createFile('cssContent', css)
+			);
+			formData.append(`${namespace}fieldTypes`, fieldTypes);
+			formData.append(
+				`${namespace}fragmentCollectionId`,
+				fragmentCollectionId
+			);
+			formData.append(`${namespace}fragmentEntryId`, fragmentEntryId);
+			formData.append(
+				`${namespace}htmlContent`,
+				createFile('htmlContent', html)
+			);
+			formData.append(
+				`${namespace}jsContent`,
+				createFile('jsContent', js)
+			);
+			formData.append(`${namespace}name`, name);
+			formData.append(`${namespace}status`, allowedStatus.draft);
 
 			fetch(urls.edit, {
-				body: objectToFormData(Liferay.Util.ns(namespace, data)),
+				body: formData,
 				method: 'POST',
 			})
 				.then((response) => response.json())
@@ -175,6 +194,8 @@ const FragmentEditor = ({
 					return response;
 				})
 				.then(() => {
+					setPreviewData({configuration, css, html, js});
+
 					setChangesStatus(CHANGES_STATUS.saved);
 				})
 				.catch((error) => {
@@ -380,10 +401,10 @@ const FragmentEditor = ({
 						</div>
 
 						<FragmentPreview
-							configuration={configuration}
-							css={css}
-							html={html}
-							js={js}
+							configuration={previewData.configuration}
+							css={previewData.css}
+							html={previewData.html}
+							js={previewData.js}
 							namespace={namespace}
 							urls={urls}
 						/>

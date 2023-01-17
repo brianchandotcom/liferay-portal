@@ -22,6 +22,8 @@ import classNames from 'classnames';
 import {cancelDebounce, debounce, fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import createFile from './createFile';
+
 /**
  * Defined ratios for preview sizing.
  */
@@ -85,9 +87,9 @@ const FragmentPreview = ({
 				const formData = new FormData();
 
 				formData.append(`${namespace}configuration`, configuration);
-				formData.append(`${namespace}css`, btoa(css));
-				formData.append(`${namespace}html`, btoa(html));
-				formData.append(`${namespace}js`, btoa(js));
+				formData.append(`${namespace}css`, createFile('css', css));
+				formData.append(`${namespace}html`, createFile('html', html));
+				formData.append(`${namespace}js`, createFile('js', js));
 
 				fetch(urls.render, {
 					body: formData,

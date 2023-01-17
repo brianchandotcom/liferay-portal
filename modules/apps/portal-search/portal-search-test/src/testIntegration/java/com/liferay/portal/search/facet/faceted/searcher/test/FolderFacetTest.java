@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.document.library.test.util.search.DLFolderSearchFixture;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -47,10 +48,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -223,16 +223,9 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 	}
 
 	protected String[] getFolderIds(Collection<DLFolder> dlFolders) {
-		Stream<DLFolder> stream = dlFolders.stream();
-
-		return ArrayUtil.toStringArray(
-			stream.map(
-				DLFolder::getFolderId
-			).map(
-				String::valueOf
-			).collect(
-				Collectors.toList()
-			));
+		return TransformUtil.transformToArray(
+			dlFolders, dlFolder -> String.valueOf(dlFolder.getFolderId()),
+			String.class);
 	}
 
 	protected void index(String keyword) throws Exception {
@@ -270,9 +263,13 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 	protected Map<String, Integer> toMap(
 		Collection<String> strings, int value) {
 
-		Stream<String> stream = strings.stream();
-
-		return stream.collect(Collectors.toMap(s -> s, s -> value));
+		return new HashMap<String, Integer>(strings.size()) {
+			{
+				for (String string : strings) {
+					put(string, value);
+				}
+			}
+		};
 	}
 
 	@Inject

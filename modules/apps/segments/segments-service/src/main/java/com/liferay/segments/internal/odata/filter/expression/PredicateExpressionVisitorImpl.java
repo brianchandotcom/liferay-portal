@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -373,24 +372,38 @@ public class PredicateExpressionVisitorImpl<T extends Map>
 	private Predicate<T> _getINPredicate(
 		EntityField entityField, List<Object> fieldValues) {
 
-		Stream<Object> stream = fieldValues.stream();
+		return p -> {
+			for (Object fieldValue : fieldValues) {
+				if (StringUtils.containsIgnoreCase(
+						String.valueOf(p.get(entityField.getName())),
+						String.valueOf(fieldValue))) {
 
-		return p -> stream.anyMatch(
-			fieldValue -> StringUtils.containsIgnoreCase(
-				String.valueOf(p.get(entityField.getName())),
-				String.valueOf(fieldValue)));
+					return true;
+				}
+			}
+
+			return false;
+		};
 	}
 
 	private Predicate<T> _getLambdaContainsPredicate(
 		EntityField entityField, Object fieldValue) {
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
-			return p -> Stream.of(
-				(String[])p.get(_lambdaCollectionEntityField.getName())
-			).anyMatch(
-				c -> StringUtils.containsIgnoreCase(
-					String.valueOf(c), String.valueOf(fieldValue))
-			);
+			return p -> {
+				for (String name :
+						(String[])p.get(
+							_lambdaCollectionEntityField.getName())) {
+
+					if (StringUtils.containsIgnoreCase(
+							String.valueOf(name), String.valueOf(fieldValue))) {
+
+						return true;
+					}
+				}
+
+				return false;
+			};
 		}
 
 		throw new UnsupportedOperationException(
@@ -421,12 +434,20 @@ public class PredicateExpressionVisitorImpl<T extends Map>
 		EntityField entityField, Object fieldValue) {
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
-			return p -> Stream.of(
-				(String[])p.get(_lambdaCollectionEntityField.getName())
-			).anyMatch(
-				c -> fieldValue.equals(
-					_normalizeStringLiteral(String.valueOf(c)))
-			);
+			return p -> {
+				for (String name :
+						(String[])p.get(
+							_lambdaCollectionEntityField.getName())) {
+
+					if (fieldValue.equals(
+							_normalizeStringLiteral(String.valueOf(name)))) {
+
+						return true;
+					}
+				}
+
+				return false;
+			};
 		}
 
 		throw new UnsupportedOperationException(

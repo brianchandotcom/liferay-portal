@@ -119,17 +119,7 @@ definition {
 
 	test AssertTxtaiTextEmbeddingIndexFieldAddedToAssets {
 		property custom.properties = "feature.flag.LPS-163688=true";
-		property test.name.skip.portal.instance = "SemanticSearch#AssertTxtaiTextEmbeddingIndexFieldAddedToAssets";
 		property txtai.enabled = "true";
-
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
-
-		Select(
-			ariaLabel = "Asset Entry Class Names",
-			locator1 = "Select#ANY_ARIA_LABEL",
-			value1 = "Message Boards Message");
-
-		PortletEntry.update();
 
 		JSONWebcontent.addWebContent(
 			content = "",

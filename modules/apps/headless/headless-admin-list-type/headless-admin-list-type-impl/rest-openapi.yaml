@@ -26,7 +26,6 @@ components:
                 listTypeEntries:
                     items:
                         $ref: "#/components/schemas/ListTypeEntry"
-                    readOnly: true
                     type: array
                 name:
                     type: string

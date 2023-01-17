@@ -27,7 +27,7 @@ definition {
 
 	@description = "This is a use case for LPS-164162 - Styling Content Pages is not properly applied when the user edits a page in a Publication"
 	@priority = "3"
-	test CanStylingContentPagesProperlyInPublications {
+	test CanStyleContentPages {
 		task ("Enable Publications and add Content Page") {
 			ContentPages.addPage(pageName = "Example Page");
 

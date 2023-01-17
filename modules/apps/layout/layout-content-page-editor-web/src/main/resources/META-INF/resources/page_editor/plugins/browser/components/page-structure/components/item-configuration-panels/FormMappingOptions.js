@@ -49,7 +49,10 @@ export default function FormMappingOptions({
 					label: Liferay.Language.get('content-type'),
 					name: 'classNameId',
 					typeOptions: {
-						validValues: formTypes,
+						validValues: formTypes.map(({label, value}) => ({
+							label,
+							value,
+						})),
 					},
 				}}
 				onValueSelect={(_name, classNameId) => {

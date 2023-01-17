@@ -16,7 +16,6 @@ package com.liferay.journal.internal.util;
 
 import com.liferay.diff.DiffHtml;
 import com.liferay.diff.exception.CompareVersionsException;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -371,9 +370,6 @@ public class JournalHelperImpl implements JournalHelper {
 		"data-latitude (-?\\d+(?:\\.\\d+)?)");
 	private static final Pattern _longitudePattern = Pattern.compile(
 		"data-longitude (-?\\d+(?:\\.\\d+)?)");
-
-	@Reference
-	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private DiffHtml _diffHtml;

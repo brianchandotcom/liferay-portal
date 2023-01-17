@@ -27,9 +27,9 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
-import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -96,10 +96,12 @@ public class JournalArticleAssetRenderer
 	}
 
 	public JournalArticleAssetRenderer(
-		JournalArticle article, HtmlParser htmlParser) {
+		JournalArticle article, HtmlParser htmlParser,
+		JournalHelper journalHelper) {
 
 		_article = article;
 		_htmlParser = htmlParser;
+		_journalHelper = journalHelper;
 	}
 
 	public JournalArticle getArticle() {
@@ -385,7 +387,7 @@ public class JournalArticleAssetRenderer
 		}
 
 		if (layout != null) {
-			String friendlyURL = JournalHelperUtil.createURLPattern(
+			String friendlyURL = _journalHelper.createURLPattern(
 				_article, themeDisplay.getLocale(), layout.isPrivateLayout(),
 				JournalArticleConstants.CANONICAL_URL_SEPARATOR, themeDisplay);
 
@@ -654,6 +656,7 @@ public class JournalArticleAssetRenderer
 		_assetDisplayPageFriendlyURLProvider;
 	private final HtmlParser _htmlParser;
 	private JournalContent _journalContent;
+	private final JournalHelper _journalHelper;
 	private JournalServiceConfiguration _journalServiceConfiguration;
 
 }

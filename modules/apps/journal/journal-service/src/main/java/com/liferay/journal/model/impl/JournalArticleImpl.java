@@ -33,7 +33,6 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.internal.transformer.LocaleTransformerListener;
-import com.liferay.journal.internal.util.JournalHelperUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
@@ -56,6 +55,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -577,8 +577,21 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Layout getLayout() {
-		return JournalHelperUtil.getArticleLayout(
-			getLayoutUuid(), getGroupId());
+		if (Validator.isNull(getLayoutUuid())) {
+			return null;
+		}
+
+		// The target page and the article must belong to the same group
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			getLayoutUuid(), getGroupId(), false);
+
+		if (layout == null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				getLayoutUuid(), getGroupId(), true);
+		}
+
+		return layout;
 	}
 
 	@JSON

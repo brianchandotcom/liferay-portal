@@ -60,6 +60,7 @@ import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
@@ -184,6 +185,8 @@ public class JournalPortlet extends MVCPortlet {
 			_fieldsToDDMFormValuesConverter);
 		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 		renderRequest.setAttribute(
+			JournalHelper.class.getName(), _journalHelper);
+		renderRequest.setAttribute(
 			JournalFileUploadsConfiguration.class.getName(),
 			_journalFileUploadsConfiguration);
 		renderRequest.setAttribute(
@@ -215,6 +218,8 @@ public class JournalPortlet extends MVCPortlet {
 			_ffJournalAutoSaveDraftConfiguration);
 		resourceRequest.setAttribute(
 			ItemSelector.class.getName(), _itemSelector);
+		resourceRequest.setAttribute(
+			JournalHelper.class.getName(), _journalHelper);
 		resourceRequest.setAttribute(
 			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
 		resourceRequest.setAttribute(
@@ -391,6 +396,9 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private JournalHelper _journalHelper;
 
 	private volatile JournalWebConfiguration _journalWebConfiguration;
 

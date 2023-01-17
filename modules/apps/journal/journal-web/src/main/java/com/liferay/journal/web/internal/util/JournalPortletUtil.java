@@ -18,6 +18,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleCreateDateComparator;
 import com.liferay.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
@@ -39,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +55,7 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalPortletUtil {
 
 	public static String getAddMenuFavItemKey(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			JournalHelper journalHelper, PortletRequest portletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -66,7 +66,7 @@ public class JournalPortletUtil {
 		String key =
 			"journal-add-menu-fav-items-" + themeDisplay.getScopeGroupId();
 
-		folderId = _getAddMenuFavItemFolderId(folderId);
+		folderId = _getAddMenuFavItemFolderId(folderId, journalHelper);
 
 		if (folderId <= 0) {
 			return key;
@@ -171,7 +171,8 @@ public class JournalPortletUtil {
 		return breadcrumbEntries;
 	}
 
-	private static long _getAddMenuFavItemFolderId(long folderId)
+	private static long _getAddMenuFavItemFolderId(
+			long folderId, JournalHelper journalHelper)
 		throws PortalException {
 
 		if (folderId <= 0) {
@@ -182,7 +183,7 @@ public class JournalPortletUtil {
 			folderId);
 
 		while (folder != null) {
-			int restrictionType = JournalHelperUtil.getRestrictionType(
+			int restrictionType = journalHelper.getRestrictionType(
 				folder.getFolderId());
 
 			if (restrictionType ==

@@ -18,6 +18,7 @@ import com.liferay.list.type.exception.ListTypeDefinitionNameException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -81,8 +82,14 @@ public class ListTypeDefinitionLocalServiceImpl
 			listTypeDefinitionPersistence.create(
 				counterLocalService.increment());
 
-		return _addListTypeDefinition(
+		listTypeDefinition = _addListTypeDefinition(
 			listTypeDefinition, externalReferenceCode, userId, nameMap);
+
+		_addListTypeEntries(
+			listTypeDefinition.getListTypeDefinitionId(), userId,
+			listTypeEntries);
+
+		return listTypeDefinition;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -142,6 +149,11 @@ public class ListTypeDefinitionLocalServiceImpl
 		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
 		listTypeDefinition.setNameMap(nameMap);
 
+		_listTypeEntryLocalService.deleteListTypeEntryByListTypeDefinitionId(
+			listTypeDefinitionId);
+
+		_addListTypeEntries(listTypeDefinitionId, userId, listTypeEntries);
+
 		return listTypeDefinitionPersistence.update(listTypeDefinition);
 	}
 
@@ -171,6 +183,19 @@ public class ListTypeDefinitionLocalServiceImpl
 		return listTypeDefinition;
 	}
 
+	private void _addListTypeEntries(
+			long listTypeDefinitionId, long userId,
+			List<ListTypeEntry> listTypeEntries)
+		throws PortalException {
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			_listTypeEntryLocalService.addListTypeEntry(
+				listTypeEntry.getExternalReferenceCode(), userId,
+				listTypeDefinitionId, listTypeEntry.getKey(),
+				listTypeEntry.getNameMap());
+		}
+	}
+
 	private void _validateName(
 			Map<Locale, String> nameMap, Locale defaultLocale)
 		throws PortalException {
@@ -180,6 +205,9 @@ public class ListTypeDefinitionLocalServiceImpl
 				"Name is null for locale " + defaultLocale.getDisplayName());
 		}
 	}
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ListTypeEntryPersistence _listTypeEntryPersistence;

@@ -72,7 +72,8 @@ public class ListTypeDefinitionLocalServiceTest {
 		try {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, ""));
+				Collections.singletonMap(LocaleUtil.US, ""),
+				Collections.emptyList());
 
 			Assert.fail();
 		}
@@ -91,7 +92,8 @@ public class ListTypeDefinitionLocalServiceTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.emptyList());
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(
@@ -156,7 +158,9 @@ public class ListTypeDefinitionLocalServiceTest {
 			_listTypeDefinitionLocalService.updateListTypeDefinition(
 				externalReferenceCode,
 				listTypeDefinition.getListTypeDefinitionId(),
-				Collections.singletonMap(LocaleUtil.getDefault(), name));
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.getDefault(), name),
+				Collections.emptyList());
 
 		Assert.assertEquals(
 			externalReferenceCode,
@@ -167,7 +171,9 @@ public class ListTypeDefinitionLocalServiceTest {
 		listTypeDefinition =
 			_listTypeDefinitionLocalService.updateListTypeDefinition(
 				StringPool.BLANK, listTypeDefinition.getListTypeDefinitionId(),
-				Collections.singletonMap(LocaleUtil.getDefault(), name));
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.getDefault(), name),
+				Collections.emptyList());
 
 		externalReferenceCode = listTypeDefinition.getExternalReferenceCode();
 
@@ -178,7 +184,8 @@ public class ListTypeDefinitionLocalServiceTest {
 		return _listTypeDefinitionLocalService.addListTypeDefinition(
 			null, TestPropsValues.getUserId(),
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			Collections.emptyList());
 	}
 
 	@Inject

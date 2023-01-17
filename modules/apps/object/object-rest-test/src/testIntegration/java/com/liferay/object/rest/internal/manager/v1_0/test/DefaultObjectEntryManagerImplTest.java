@@ -211,7 +211,8 @@ public class DefaultObjectEntryManagerImplTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, _adminUser.getUserId(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.emptyList());
 
 		_objectDefinition2 = _createObjectDefinition(
 			Arrays.asList(

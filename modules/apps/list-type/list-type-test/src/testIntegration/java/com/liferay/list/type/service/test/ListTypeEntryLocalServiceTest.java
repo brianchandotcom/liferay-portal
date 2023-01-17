@@ -60,7 +60,8 @@ public class ListTypeEntryLocalServiceTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.emptyList());
 
 		_listTypeEntry = _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),

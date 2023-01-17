@@ -155,7 +155,8 @@ public class ListTypeDefinitionServiceTest {
 		return _listTypeDefinitionLocalService.addListTypeDefinition(
 			null, user.getUserId(),
 			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()));
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -175,8 +176,8 @@ public class ListTypeDefinitionServiceTest {
 				_listTypeDefinitionService.addListTypeDefinition(
 					null,
 					Collections.singletonMap(
-						LocaleUtil.getDefault(),
-						RandomTestUtil.randomString()));
+						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+					Collections.emptyList());
 		}
 		finally {
 			if (listTypeDefinition != null) {
@@ -245,8 +246,8 @@ public class ListTypeDefinitionServiceTest {
 					listTypeDefinition.getExternalReferenceCode(),
 					listTypeDefinition.getListTypeDefinitionId(),
 					Collections.singletonMap(
-						LocaleUtil.getDefault(),
-						RandomTestUtil.randomString()));
+						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+					Collections.emptyList());
 		}
 		finally {
 			if (listTypeDefinition != null) {

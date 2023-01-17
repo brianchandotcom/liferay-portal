@@ -91,7 +91,8 @@ public class ObjectViewLocalServiceTest {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, "Countries"));
+				Collections.singletonMap(LocaleUtil.US, "Countries"),
+				Collections.emptyList());
 
 		_listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
@@ -379,7 +380,8 @@ public class ObjectViewLocalServiceTest {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, "Countries"));
+				Collections.singletonMap(LocaleUtil.US, "Countries"),
+				Collections.emptyList());
 
 		_listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),

@@ -75,8 +75,8 @@ public class ObjectStateFlowLocalServiceTest {
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString()));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.emptyList());
 
 		_step1ListTypeEntry = _addListTypeEntry("step1");
 		_step2ListTypeEntry = _addListTypeEntry("step2");
@@ -281,8 +281,8 @@ public class ObjectStateFlowLocalServiceTest {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString()));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.emptyList());
 
 		_listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),

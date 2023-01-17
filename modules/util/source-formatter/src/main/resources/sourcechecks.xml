@@ -1568,6 +1568,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of categories in `*-log4j.xml` file." />
 		</check>
+		<check name="XMLLog4jLoggersCheck">
+			<category name="Miscellaneous" />
+			<description name="Checks the loggers defined in `*-log4j.xml` file." />
+		</check>
 		<check name="XMLLookAndFeelCompatibilityVersionCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing attribute `version` in `compatibility` element in `*--look-and-feel.xml` file." />

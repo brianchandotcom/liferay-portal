@@ -136,7 +136,11 @@ public class ListTypeDefinitionResourceImpl
 			_listTypeDefinitionService.addListTypeDefinition(
 				listTypeDefinition.getExternalReferenceCode(),
 				LocalizedMapUtil.getLocalizedMap(
-					listTypeDefinition.getName_i18n())));
+					listTypeDefinition.getName_i18n()),
+				transformToList(
+					listTypeDefinition.getListTypeEntries(),
+					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
+						listTypeEntry, _listTypeEntryLocalService))));
 	}
 
 	@Override
@@ -149,7 +153,11 @@ public class ListTypeDefinitionResourceImpl
 				listTypeDefinition.getExternalReferenceCode(),
 				listTypeDefinitionId,
 				LocalizedMapUtil.getLocalizedMap(
-					listTypeDefinition.getName_i18n())));
+					listTypeDefinition.getName_i18n()),
+				transformToList(
+					listTypeDefinition.getListTypeEntries(),
+					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
+						listTypeEntry, _listTypeEntryLocalService))));
 	}
 
 	@Override

@@ -40,10 +40,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -191,12 +189,15 @@ public class SearchLocalizationHelperTest {
 
 		searchContext.setCompanyId(company.getCompanyId());
 
-		Stream<Group> stream = Arrays.stream(groups);
+		long[] groupIds = new long[groups.length];
 
-		searchContext.setGroupIds(
-			stream.mapToLong(
-				Group::getGroupId
-			).toArray());
+		for (int i = 0; i < groups.length; i++) {
+			Group group = groups[i];
+
+			groupIds[i] = group.getGroupId();
+		}
+
+		searchContext.setGroupIds(groupIds);
 
 		return searchContext;
 	}

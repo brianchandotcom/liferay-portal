@@ -32,7 +32,6 @@ import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
-import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
@@ -355,10 +354,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				oldUrlTitle = tempOldUrlTitle;
 			}
 		}
-
-		// Recent articles
-
-		JournalUtil.addRecentArticle(actionRequest, article);
 
 		// Journal content
 

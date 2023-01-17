@@ -149,6 +149,10 @@ public class JournalDisplayContext {
 		return journalDisplayContext;
 	}
 
+	public String getAbsolutePath(long folderId) throws PortalException {
+		return _journalHelper.getAbsolutePath(_liferayPortletRequest, folderId);
+	}
+
 	public String[] getAddMenuFavItems() throws PortalException {
 		if (_addMenuFavItems != null) {
 			return _addMenuFavItems;
@@ -1090,7 +1094,7 @@ public class JournalDisplayContext {
 
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
-		_journalHelper = (JournalHelper) httpServletRequest.getAttribute(
+		_journalHelper = (JournalHelper)httpServletRequest.getAttribute(
 			JournalHelper.class.getName());
 		_journalWebConfiguration =
 			(JournalWebConfiguration)_httpServletRequest.getAttribute(
@@ -1489,10 +1493,6 @@ public class JournalDisplayContext {
 		return searchContext;
 	}
 
-	public String getAbsolutePath(long folderId) throws PortalException {
-		return _journalHelper.getAbsolutePath(_liferayPortletRequest, folderId);
-	}
-
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
@@ -1510,11 +1510,11 @@ public class JournalDisplayContext {
 	private Long _folderId;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
+	private final JournalHelper _journalHelper;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final JournalHelper _journalHelper;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

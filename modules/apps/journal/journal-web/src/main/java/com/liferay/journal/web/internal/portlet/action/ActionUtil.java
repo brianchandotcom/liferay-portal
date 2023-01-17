@@ -25,7 +25,6 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFeedServiceUtil;
 import com.liferay.journal.web.internal.portlet.JournalPortlet;
-import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.File;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,9 +59,7 @@ public class ActionUtil {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String articleId = deleteArticleId;
 		String articleURL = ParamUtil.getString(actionRequest, "articleURL");
-		double version = 0;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
@@ -72,19 +68,17 @@ public class ActionUtil {
 
 		if (pos == -1) {
 			JournalArticleServiceUtil.deleteArticle(
-				groupId, articleId, articleURL, serviceContext);
+				groupId, deleteArticleId, articleURL, serviceContext);
 		}
 		else {
-			articleId = articleId.substring(0, pos);
-			version = GetterUtil.getDouble(
+			String articleId = deleteArticleId.substring(0, pos);
+			double version = GetterUtil.getDouble(
 				deleteArticleId.substring(
 					pos + JournalPortlet.VERSION_SEPARATOR.length()));
 
 			JournalArticleServiceUtil.deleteArticle(
 				groupId, articleId, version, articleURL, serviceContext);
 		}
-
-		JournalUtil.removeRecentArticle(actionRequest, articleId, version);
 	}
 
 	public static void expireArticle(
@@ -92,9 +86,7 @@ public class ActionUtil {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String articleId = expireArticleId;
 		String articleURL = ParamUtil.getString(actionRequest, "articleURL");
-		double version = 0;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
@@ -103,19 +95,17 @@ public class ActionUtil {
 
 		if (pos == -1) {
 			JournalArticleServiceUtil.expireArticle(
-				groupId, articleId, articleURL, serviceContext);
+				groupId, expireArticleId, articleURL, serviceContext);
 		}
 		else {
-			articleId = articleId.substring(0, pos);
-			version = GetterUtil.getDouble(
+			String articleId = expireArticleId.substring(0, pos);
+			double version = GetterUtil.getDouble(
 				expireArticleId.substring(
 					pos + JournalPortlet.VERSION_SEPARATOR.length()));
 
 			JournalArticleServiceUtil.expireArticle(
 				groupId, articleId, version, articleURL, serviceContext);
 		}
-
-		JournalUtil.removeRecentArticle(actionRequest, articleId, version);
 	}
 
 	public static JournalArticle getArticle(
@@ -224,17 +214,6 @@ public class ActionUtil {
 				return null;
 			}
 		}
-
-		return article;
-	}
-
-	public static JournalArticle getArticle(PortletRequest portletRequest)
-		throws Exception {
-
-		JournalArticle article = getArticle(
-			PortalUtil.getHttpServletRequest(portletRequest));
-
-		JournalUtil.addRecentArticle(portletRequest, article);
 
 		return article;
 	}

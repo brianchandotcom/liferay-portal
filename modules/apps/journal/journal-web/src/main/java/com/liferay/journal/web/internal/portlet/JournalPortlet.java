@@ -256,7 +256,8 @@ public class JournalPortlet extends MVCPortlet {
 			if (Objects.equals(path, "/edit_article.jsp") ||
 				Objects.equals(path, "/view_article_history.jsp")) {
 
-				ActionUtil.getArticle(renderRequest);
+				ActionUtil.getArticle(
+					_portal.getHttpServletRequest(renderRequest));
 			}
 			else {
 				_getFolder(_portal.getHttpServletRequest(renderRequest));

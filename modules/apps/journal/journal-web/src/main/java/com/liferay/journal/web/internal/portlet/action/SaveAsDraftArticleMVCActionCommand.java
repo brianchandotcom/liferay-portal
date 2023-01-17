@@ -31,7 +31,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
-import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -385,10 +384,6 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 					smallImageURL, smallFile, null, articleURL, serviceContext);
 			}
 		}
-
-		// Recent articles
-
-		JournalUtil.addRecentArticle(actionRequest, article);
 
 		// Asset display page
 

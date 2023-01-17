@@ -61,7 +61,8 @@ public class ViewSourcePortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			JournalArticle article = ActionUtil.getArticle(portletRequest);
+			JournalArticle article = ActionUtil.getArticle(
+				_portal.getHttpServletRequest(portletRequest));
 
 			return PortletURLBuilder.createRenderURL(
 				_portal.getLiferayPortletResponse(portletResponse)
@@ -96,7 +97,10 @@ public class ViewSourcePortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			if (ActionUtil.getArticle(portletRequest) != null) {
+			JournalArticle article = ActionUtil.getArticle(
+				_portal.getHttpServletRequest(portletRequest));
+
+			if (article != null) {
 				return true;
 			}
 		}

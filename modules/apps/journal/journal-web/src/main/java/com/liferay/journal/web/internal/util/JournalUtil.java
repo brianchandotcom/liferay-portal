@@ -51,30 +51,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 
 /**
  * @author Tom Wang
  */
 public class JournalUtil {
-
-	public static final int MAX_STACK_SIZE = 20;
-
-	public static void addRecentArticle(
-		PortletRequest portletRequest, JournalArticle article) {
-
-		if (article != null) {
-			Stack<JournalArticle> stack = _getRecentArticles(portletRequest);
-
-			stack.push(article);
-		}
-	}
 
 	public static DiffVersionsInfo getDiffVersionsInfo(
 		long groupId, String articleId, double sourceVersion,
@@ -359,71 +344,6 @@ public class JournalUtil {
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId, DDMStructure.class.getName(), ddmStructureId);
-	}
-
-	public static void removeRecentArticle(
-		PortletRequest portletRequest, String articleId, double version) {
-
-		Stack<JournalArticle> stack = _getRecentArticles(portletRequest);
-
-		Iterator<JournalArticle> iterator = stack.iterator();
-
-		while (iterator.hasNext()) {
-			JournalArticle journalArticle = iterator.next();
-
-			String journalArticleId = journalArticle.getArticleId();
-
-			if (journalArticleId.equals(articleId) &&
-				((journalArticle.getVersion() == version) || (version == 0))) {
-
-				iterator.remove();
-			}
-		}
-	}
-
-	public static class FiniteUniqueStack<E> extends Stack<E> {
-
-		@Override
-		public E push(E item) {
-			if (contains(item)) {
-				if (!item.equals(peek())) {
-					remove(item);
-
-					super.push(item);
-				}
-			}
-			else if (size() < _maxSize) {
-				super.push(item);
-			}
-
-			return item;
-		}
-
-		private FiniteUniqueStack(int maxSize) {
-			_maxSize = maxSize;
-		}
-
-		private final int _maxSize;
-
-	}
-
-	private static Stack<JournalArticle> _getRecentArticles(
-		PortletRequest portletRequest) {
-
-		PortletSession portletSession = portletRequest.getPortletSession();
-
-		Stack<JournalArticle> recentArticles =
-			(Stack<JournalArticle>)portletSession.getAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES);
-
-		if (recentArticles == null) {
-			recentArticles = new FiniteUniqueStack<>(MAX_STACK_SIZE);
-
-			portletSession.setAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES, recentArticles);
-		}
-
-		return recentArticles;
 	}
 
 	private static Layout _getViewableLayout(

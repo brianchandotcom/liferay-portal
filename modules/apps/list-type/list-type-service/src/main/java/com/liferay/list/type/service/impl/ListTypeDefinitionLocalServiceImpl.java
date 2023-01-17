@@ -17,6 +17,7 @@ package com.liferay.list.type.service.impl;
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -70,7 +72,7 @@ public class ListTypeDefinitionLocalServiceImpl
 	@Override
 	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, long userId,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
 		_validateName(nameMap, LocaleUtil.getSiteDefault());
@@ -127,7 +129,8 @@ public class ListTypeDefinitionLocalServiceImpl
 	@Override
 	public ListTypeDefinition updateListTypeDefinition(
 			String externalReferenceCode, long listTypeDefinitionId,
-			Map<Locale, String> nameMap)
+			long userId, Map<Locale, String> nameMap,
+			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
 		_validateName(nameMap, LocaleUtil.getSiteDefault());

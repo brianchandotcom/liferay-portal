@@ -143,7 +143,7 @@
 </tr>
 <tr>
 	<td>TRANSLATION_STATUS_TITLE_PAGE</td>
-	<td>//div[contains(@class,'page-editor')]//span[contains(text(),'${key_localizedLanguage}')]//..//div</td>
+	<td>//div[contains(@class,'page-editor')]//span[contains(text(),'${key_localizedLanguage}')]//following-sibling::span//span[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
 <tr>

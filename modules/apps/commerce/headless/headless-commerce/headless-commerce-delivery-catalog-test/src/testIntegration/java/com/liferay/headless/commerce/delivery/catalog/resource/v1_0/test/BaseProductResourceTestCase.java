@@ -185,6 +185,7 @@ public abstract class BaseProductResourceTestCase {
 		Product product = randomProduct();
 
 		product.setDescription(regex);
+		product.setExternalReferenceCode(regex);
 		product.setMetaDescription(regex);
 		product.setMetaKeyword(regex);
 		product.setMetaTitle(regex);
@@ -201,6 +202,7 @@ public abstract class BaseProductResourceTestCase {
 		product = ProductSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, product.getDescription());
+		Assert.assertEquals(regex, product.getExternalReferenceCode());
 		Assert.assertEquals(regex, product.getMetaDescription());
 		Assert.assertEquals(regex, product.getMetaKeyword());
 		Assert.assertEquals(regex, product.getMetaTitle());
@@ -729,6 +731,16 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (product.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("images", additionalAssertFieldName)) {
 				if (product.getImages() == null) {
 					valid = false;
@@ -1022,6 +1034,19 @@ public abstract class BaseProductResourceTestCase {
 				if (!equals(
 						(Map)product1.getExpando(),
 						(Map)product2.getExpando())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						product1.getExternalReferenceCode(),
+						product2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1390,6 +1415,14 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(product.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1587,6 +1620,8 @@ public abstract class BaseProductResourceTestCase {
 			{
 				createDate = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				metaDescription = StringUtil.toLowerCase(

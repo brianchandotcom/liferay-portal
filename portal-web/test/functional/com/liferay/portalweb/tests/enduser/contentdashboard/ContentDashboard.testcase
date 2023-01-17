@@ -27,17 +27,17 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			for (var vocabulary : list "Topic,Audience,Stage") {
+				JSONCategory.tearDownCategories(
+					groupName = "Global",
+					vocabularyName = "${vocabulary}");
+			}
+
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteTestRoles();
 		}
-
-		for (var vocabulary : list "Topic,Audience,Stage") {
-			JSONCategory.tearDownCategories(
-				groupName = "Global",
-				vocabularyName = "${vocabulary}");
-		}
-
-		JSONUser.tearDownNonAdminUsers();
-
-		JSONRole.deleteTestRoles();
 	}
 
 	@description = "LPS-116987 When the user makes a change on web content and creates a draft version, the Info panel shows the version for the last version approved and the version of the draft "

@@ -52,11 +52,11 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
-        task ("Click on sync all contacts and accounts") {
+		task ("Click on sync all contacts and accounts") {
 			ACDXPSettings.syncContactsAndAccountstData();
 		}
 
-        task ("Go to the next page to configure attributes") {
+		task ("Go to the next page to configure attributes") {
 			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 		}
 	}
@@ -78,89 +78,92 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12777 | Test Summary: Select Attributes for People"
-	@priority = "5"
-	test CanSelectAttributesForPeople {
-		task ("Get the number of attributes currently synced") {
-			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
-		}
-
-        task ("Enable two attributes for People") {
-			ACDXPSettings.syncAttributes(
-				attributeCategory = "People",
-				attributeNameList = "comments,externalReferenceCode");
-		}
-
-        task ("Check that the number of synchronized attributes has increased by 2 attributes") {
-			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
-				attributeCategory = "People",
-				increaseAttributeNumber = "2",
-				currentAttributeNumber = "${syncPeopleNumberStart}");
-		}
-
-        task ("Save and Finish the wizard") {
-			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-		}
-
-        task ("Go to the attributes page in the sidebar") {
-			ACDXPSettings.navToSyncedAttributes();
-		}
-
-        task ("Check selected account group number") {
-			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
-				attributeCategory = "People",
-				increaseAttributeNumber = "2",
-				currentAttributeNumber = "${syncPeopleNumberStart}");
-		}
-	}
-
-    @description = "Story: LRAC-10860 | Automation ID: LRAC-12780 | Test Summary: Deselect non-required Attributes for People"
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12780 | Test Summary: Deselect non-required Attributes for People"
 	@priority = "5"
 	test CanDeselectNoRequiredAttributesForPeople {
 		task ("Get the number of attributes currently synced") {
 			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
 		}
 
-        task ("Deselect two attributes for People") {
+		task ("Deselect two attributes for People") {
 			ACDXPSettings.desyncAttributes(
 				attributeCategory = "People",
 				attributeNameList = "birthday,male");
 		}
 
-        task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "People",
-				decreaseAttributeNumber = "2",
-				currentAttributeNumber = "${syncPeopleNumberStart}");
+				currentAttributeNumber = "${syncPeopleNumberStart}",
+				decreaseAttributeNumber = "2");
 		}
 
-        task ("Save and Finish the wizard") {
+		task ("Save and Finish the wizard") {
 			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 		}
 
-        task ("Go to the attributes page in the sidebar") {
+		task ("Go to the attributes page in the sidebar") {
 			ACDXPSettings.navToSyncedAttributes();
 		}
 
-        task ("Check selected account group number") {
+		task ("Check selected account group number") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "People",
-				decreaseAttributeNumber = "2",
-				currentAttributeNumber = "${syncPeopleNumberStart}");
+				currentAttributeNumber = "${syncPeopleNumberStart}",
+				decreaseAttributeNumber = "2");
 		}
 	}
 
-    @description = "Story: LRAC-10860 | Automation ID: LRAC-12781 | Test Summary: Check that it is possible to search the Attribute for People list"
-	@priority = "4"
-	test CanSearchAttributeForPeopleList {
-        var foundPeopleAttribute = "birthday";
-		var notFoundPeopleAttribute = "createDate,firstName";
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12782 | Test Summary: Check that it is possible to make pagination in the Attribute for People list"
+	@priority = "3"
+	test CanPaginationAttributeForPeopleList {
+		var firstPageList = "agreedToTermsOfUse,birthday,classNameId,classPK,comments";
+		var lastPageList = "userName,uuid";
 
-        task ("Click to select attribute for people") {
+		task ("Click to select attribute for people") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
 		}
 
-        task ("Search for people attributes") {
+		task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 47 entries.");
+		}
+
+		task ("Check that 5 attributes for people appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+		task ("Check that the attributes for people on the last page does not appear on the first") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${lastPageList}");
+		}
+
+		task ("Click to navigate for the last page") {
+			ACUtils.checkAnyPage(pageNumber = "10");
+
+			ACUtils.viewResultsMessage(results = "Showing 46 to 47 of 47 entries.");
+		}
+
+		task ("Check that 2 attributes for people appear on the last page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${lastPageList}");
+		}
+
+		task ("Check that the attributes for people on the first page does not appear on the last") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+	}
+
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12781 | Test Summary: Check that it is possible to search the Attribute for People list"
+	@priority = "4"
+	test CanSearchAttributeForPeopleList {
+		var foundPeopleAttribute = "birthday";
+		var notFoundPeopleAttribute = "createDate,firstName";
+
+		task ("Click to select attribute for people") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+		}
+
+		task ("Search for people attributes") {
 			ACUtils.searchBar(searchItem = "${foundPeopleAttribute}");
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
@@ -183,42 +186,39 @@ definition {
 		}
 	}
 
-    @description = "Story: LRAC-10860 | Automation ID: LRAC-12782 | Test Summary: Check that it is possible to make pagination in the Attribute for People list"
-	@priority = "3"
-	test CanPaginationAttributeForPeopleList {
-        var firstPageList = "agreedToTermsOfUse,birthday,classNameId,classPK,comments";
-		var lastPageList = "userName,uuid";
-
-        task ("Click to select attribute for people") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12777 | Test Summary: Select Attributes for People"
+	@priority = "5"
+	test CanSelectAttributesForPeople {
+		task ("Get the number of attributes currently synced") {
+			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
 		}
 
-        task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = "5");
-
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 47 entries.");
+		task ("Enable two attributes for People") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "comments,externalReferenceCode");
 		}
 
-		task ("Check that 5 attributes for people appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				currentAttributeNumber = "${syncPeopleNumberStart}",
+				increaseAttributeNumber = "2");
 		}
 
-		task ("Check that the attributes for people on the last page does not appear on the first") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${lastPageList}");
+		task ("Save and Finish the wizard") {
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 		}
 
-		task ("Click to navigate for the last page") {
-			ACUtils.checkAnyPage(pageNumber = "10");
-
-			ACUtils.viewResultsMessage(results = "Showing 46 to 47 of 47 entries.");
+		task ("Go to the attributes page in the sidebar") {
+			ACDXPSettings.navToSyncedAttributes();
 		}
 
-        task ("Check that 2 attributes for people appear on the last page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${lastPageList}");
-		}
-
-		task ("Check that the attributes for people on the first page does not appear on the last") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		task ("Check selected account group number") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				currentAttributeNumber = "${syncPeopleNumberStart}",
+				increaseAttributeNumber = "2");
 		}
 	}
 

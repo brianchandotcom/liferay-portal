@@ -106,7 +106,7 @@ definition {
 	}
 
 	macro desyncAttributes {
-		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR") && IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON")) {
+		if ((IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) && (IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON"))) {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.navToSyncedAttributes();
@@ -149,6 +149,15 @@ definition {
 		static var assignedPropertyName = selenium.getText("ACDXPSettings#FIRST_AVAILABLE_PROPERTY");
 
 		return ${assignedPropertyName};
+	}
+
+	macro getSyncNumberPreview {
+		var key_syncFieldName = "${attributeCategory}";
+		var syncNumber = selenium.getText("ACDXPSettings#SYNC_NUMBER_PREVIEW");
+
+		var syncNumber = StringUtil.extractDigits("${syncNumber}");
+
+		return "${syncNumber}";
 	}
 
 	macro goToInstanceSettingsAC {
@@ -255,7 +264,7 @@ definition {
 	}
 
 	macro syncAttributes {
-		if (IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR") && IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON")) {
+		if ((IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) && (IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON"))) {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.navToSyncedAttributes();
@@ -460,6 +469,22 @@ definition {
 		}
 	}
 
+	macro viewIncreaseOrDecreaseSyncNumber {
+		if (isSet(increaseAttributeNumber)) {
+			var expectedAttributeNumber = ${currentAttributeNumber} + ${increaseAttributeNumber};
+		}
+
+		if (isSet(decreaseAttributeNumber)) {
+			var expectedAttributeNumber = ${currentAttributeNumber} - ${decreaseAttributeNumber};
+		}
+
+		var actualAttributeNumber = ACDXPSettings.getSyncNumberPreview(attributeCategory = "${attributeCategory}");
+
+		TestUtils.assertEquals(
+			actual = "${actualAttributeNumber}",
+			expected = "${expectedAttributeNumber}");
+	}
+
 	macro viewSyncedChannelsAndSitesNumber {
 		if (isSet(syncedChannelsNumber)) {
 			AssertTextEquals(
@@ -484,30 +509,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACDXPSettings#SYNC_NUMBER_PREVIEW",
 			value1 = "${syncNumber}");
-	}
-
-	macro getSyncNumberPreview {
-		var key_syncFieldName = "${attributeCategory}";
-		var syncNumber = selenium.getText("ACDXPSettings#SYNC_NUMBER_PREVIEW");
-		var syncNumber = StringUtil.extractDigits("${syncNumber}");
-
-		return "${syncNumber}";
-	}
-
-	macro viewIncreaseOrDecreaseSyncNumber {
-		if (isSet(increaseAttributeNumber)) {
-			var expectedAttributeNumber = MathUtil.sum("${currentAttributeNumber}", "${increaseAttributeNumber}");
-		}
-
-		if (isSet(decreaseAttributeNumber)) {
-			var expectedAttributeNumber = MathUtil.difference("${currentAttributeNumber}", "${decreaseAttributeNumber}");
-		}
-
-		var actualAttributeNumber = ACDXPSettings.getSyncNumberPreview(attributeCategory = "${attributeCategory}");
-
-		TestUtils.assertEquals(
-			actual = "${actualAttributeNumber}",
-			expected = "${expectedAttributeNumber}");
 	}
 
 }

@@ -131,8 +131,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "People",
-				decreaseAttributeNumber = "2",
-				currentAttributeNumber = "${syncPeopleNumberStart}");
+				currentAttributeNumber = "${syncPeopleNumberStart}",
+				decreaseAttributeNumber = "2");
 		}
 
 		task ("Get the number of attributes currently synced") {
@@ -148,8 +148,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "People",
-				increaseAttributeNumber = "1",
-				currentAttributeNumber = "${syncPeopleNumberStart}");
+				currentAttributeNumber = "${syncPeopleNumberStart}",
+				increaseAttributeNumber = "1");
 		}
 
 		task ("Get the number of attributes currently synced") {
@@ -171,8 +171,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "Account",
-				decreaseAttributeNumber = "2",
-				currentAttributeNumber = "${syncAccountNumberStart}");
+				currentAttributeNumber = "${syncAccountNumberStart}",
+				decreaseAttributeNumber = "2");
 		}
 
 		task ("Get the number of attributes currently synced") {
@@ -188,8 +188,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "Account",
-				increaseAttributeNumber = "1",
-				currentAttributeNumber = "${syncAccountNumberStart}");
+				currentAttributeNumber = "${syncAccountNumberStart}",
+				increaseAttributeNumber = "1");
 		}
 
 		task ("Get the number of attributes currently synced") {

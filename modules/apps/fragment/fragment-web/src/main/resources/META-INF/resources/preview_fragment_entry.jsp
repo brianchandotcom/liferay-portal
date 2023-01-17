@@ -25,14 +25,10 @@
 
 			virtualDocument.innerHTML = JSON.parse(event.data).data;
 
-			var virtualBody = virtualDocument.querySelector('.portlet-body');
+			document.querySelector('.portlet-body').innerHTML =
+				virtualDocument.innerHTML;
 
-			if (virtualBody) {
-				document.querySelector('.portlet-body').innerHTML =
-					virtualBody.innerHTML;
-			}
-
-			runScriptsInElement(virtualBody);
+			runScriptsInElement(virtualDocument);
 		}
 	}
 

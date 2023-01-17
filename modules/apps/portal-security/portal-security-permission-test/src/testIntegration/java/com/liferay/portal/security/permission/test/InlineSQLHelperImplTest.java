@@ -259,6 +259,19 @@ public class InlineSQLHelperImplTest {
 	}
 
 	@Test
+	public void testIsNotEnabledForCompanyAdminWithNewInstance()
+		throws Exception {
+
+		_company = CompanyTestUtil.addCompany();
+
+		_user = UserTestUtil.addCompanyAdminUser(_company);
+
+		_setPermissionChecker();
+
+		Assert.assertFalse(_inlineSQLHelper.isEnabled());
+	}
+
+	@Test
 	public void testIsNotEnabledForOmniAdmin() throws Exception {
 		Role role = _roleLocalService.getRole(
 			_user.getCompanyId(), RoleConstants.ADMINISTRATOR);

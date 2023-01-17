@@ -53,9 +53,9 @@ definition {
 				value1 = "${instanceAdminLastName}");
 		}
 
-		Button.clickAdd();
-
 		SelectFrameTop();
+
+		Button.clickAdd();
 
 		Alert.viewSuccessMessage();
 	}

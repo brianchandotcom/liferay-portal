@@ -6,7 +6,6 @@ Check | File Extensions | Description
 AppendCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks instances where literal Strings are appended. |
 [ArrayTypeStyleCheck](https://checkstyle.sourceforge.io/config_misc.html#ArrayTypeStyle) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the style of array type definitions. |
 [AssertEqualsCheck](check/assert_equals_check.markdown#assertequalscheck) | .java | Checks that additional information is provided when calling `Assert.assertEquals`. |
-[AttributeOrderCheck](check/attribute_order_check.markdown#attributeordercheck) | .java | Checks that attributes in anonymous classes are ordered alphabetically. |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds nested blocks (blocks that are used freely in the code). |
 BNDCapabilityCheck | .bnd | Sorts and applies logic to fix line breaks to property values for `Provide-Capability` and `Require-Capability`. |
 [BNDImportsCheck](check/bnd_imports_check.markdown#bndimportscheck) | .bnd | Sorts class names and checks for use of wildcards in property values for `-conditionalpackage`, `-exportcontents` and `Export-Package`. |
@@ -52,6 +51,7 @@ GroovyImportsCheck | .groovy | Sorts and groups imports in `.groovy` files. |
 HTMLEmptyLinesCheck | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
 [IfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies |
+InstanceInitializerCheck | .java | Checks the order of variable assignments and set* calls in the instance initializer. |
 InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
 JSONStylingCheck | .ipynb, .json, .jsont or .npmbridgerc | Applies rules to enforce consistency in code style. |
 [JSONUtilCheck](check/json_util_check.markdown#jsonutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `JSONUtil`. |

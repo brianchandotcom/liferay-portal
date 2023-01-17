@@ -164,6 +164,23 @@ if (portletTitleBasedNavigation) {
 					<%= kbArticle.getContent() %>
 				</div>
 
+				<liferay-ui:panel-container
+					cssClass="mt-5 panel-group-flush panel-group-sm"
+					extended="<%= true %>"
+					markupView="lexicon"
+					persistState="<%= true %>"
+				>
+					<liferay-frontend:fieldset
+						collapsible="<%= false %>"
+						cssClass="panel-unstyled"
+						label="description"
+					>
+						<div class="lfr-asset-description">
+							<%= HtmlUtil.escape(kbArticle.getDescription()) %>
+						</div>
+					</liferay-frontend:fieldset>
+				</liferay-ui:panel-container>
+
 				<clay:content-row>
 					<clay:content-col>
 

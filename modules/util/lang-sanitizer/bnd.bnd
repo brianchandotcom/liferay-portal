@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Lang Sanitizer
+Bundle-SymbolicName: com.liferay.lang.sanitizer
+Bundle-Version: 1.0.1
+Main-Class: com.liferay.lang.sanitizer.LangSanitizer
+-includeresource:\
+	@antisamy-*.jar!/org/owasp/validator/html/Policy.class,\
+	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/*.class

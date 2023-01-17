@@ -187,9 +187,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 							<aui:input cssClass="input-medium" data-custom-url="<%= false %>" disabled="<%= editKBArticleDisplayContext.isURLTitleDisabled() %>" ignoreRequestValue="<%= true %>" label="" name="urlTitle" placeholder="sample-article-url-title" type="text" value="<%= editKBArticleDisplayContext.getKBArticleURLTitle() %>" />
 						</aui:field-wrapper>
 
-						<c:if test="<%= editKBArticleDisplayContext.isKBArticleDescriptionEnabled() %>">
-							<aui:input name="description" value="<%= editKBArticleDisplayContext.getKBArticleDescription() %>" />
-						</c:if>
+						<aui:input name="description" value="<%= editKBArticleDisplayContext.getKBArticleDescription() %>" />
 
 						<c:if test="<%= editKBArticleDisplayContext.isSourceURLEnabled() %>">
 							<aui:input label="source-url" name="sourceURL" value="<%= editKBArticleDisplayContext.getKBArticleSourceURL() %>" />

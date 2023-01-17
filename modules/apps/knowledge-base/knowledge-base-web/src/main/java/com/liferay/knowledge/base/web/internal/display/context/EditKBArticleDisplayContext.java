@@ -360,12 +360,6 @@ public class EditKBArticleDisplayContext {
 		return false;
 	}
 
-	public boolean isKBArticleDescriptionEnabled() {
-		return GetterUtil.getBoolean(
-			_liferayPortletRequest.getAttribute(
-				"init.jsp-enableKBArticleDescription"));
-	}
-
 	public boolean isKBArticleSectionSelected(String section)
 		throws ConfigurationException {
 

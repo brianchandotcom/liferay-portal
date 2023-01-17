@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -27,8 +28,13 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.File;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -83,13 +89,13 @@ public class EditFragmentEntryMVCActionCommand
 			}
 		}
 
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
 		String name = ParamUtil.getString(actionRequest, "name");
-		String css = new String(
-			Base64.decode(ParamUtil.getString(actionRequest, "cssContent")));
-		String html = new String(
-			Base64.decode(ParamUtil.getString(actionRequest, "htmlContent")));
-		String js = new String(
-			Base64.decode(ParamUtil.getString(actionRequest, "jsContent")));
+		String css = _read("cssContent", uploadPortletRequest);
+		String html = _read("htmlContent", uploadPortletRequest);
+		String js = _read("jsContent", uploadPortletRequest);
 		String configuration = ParamUtil.getString(
 			actionRequest, "configurationContent");
 		int status = ParamUtil.getInteger(actionRequest, "status");
@@ -136,10 +142,25 @@ public class EditFragmentEntryMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private String _read(String fileName, UploadRequest uploadRequest)
+		throws Exception {
+
+		File file = uploadRequest.getFile(fileName);
+
+		if (file != null) {
+			return FileUtil.read(file);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -26,8 +26,13 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,9 +42,11 @@ import javax.servlet.http.HttpServletRequest;
 public class RenderFragmentEntryDisplayContext {
 
 	public RenderFragmentEntryDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletRequest = liferayPortletRequest;
 
 		_fragmentCollectionContributorRegistry =
 			(FragmentCollectionContributorRegistry)
@@ -47,21 +54,17 @@ public class RenderFragmentEntryDisplayContext {
 					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 	}
 
-	public DefaultFragmentRendererContext getDefaultFragmentRendererContext() {
+	public DefaultFragmentRendererContext getDefaultFragmentRendererContext()
+		throws Exception {
+
 		FragmentEntry fragmentEntry = _getFragmentEntry();
 
-		String css = new String(
-			Base64.decode(
-				BeanParamUtil.getString(
-					fragmentEntry, _httpServletRequest, "css")));
-		String html = new String(
-			Base64.decode(
-				BeanParamUtil.getString(
-					fragmentEntry, _httpServletRequest, "html")));
-		String js = new String(
-			Base64.decode(
-				BeanParamUtil.getString(
-					fragmentEntry, _httpServletRequest, "js")));
+		UploadRequest uploadRequest = _getUploadRequest();
+
+		String css = _readParameter(fragmentEntry, "css", uploadRequest);
+		String html = _readParameter(fragmentEntry, "html", uploadRequest);
+		String js = _readParameter(fragmentEntry, "js", uploadRequest);
+
 		String configuration = BeanParamUtil.getString(
 			fragmentEntry, _httpServletRequest, "configuration");
 
@@ -135,8 +138,32 @@ public class RenderFragmentEntryDisplayContext {
 		return fragmentEntry;
 	}
 
+	private UploadRequest _getUploadRequest() {
+		if (_liferayPortletRequest != null) {
+			return PortalUtil.getUploadPortletRequest(_liferayPortletRequest);
+		}
+
+		return PortalUtil.getUploadServletRequest(_httpServletRequest);
+	}
+
+	private String _readParameter(
+			FragmentEntry fragmentEntry, String parameterName,
+			UploadRequest uploadRequest)
+		throws Exception {
+
+		File file = uploadRequest.getFile(parameterName);
+
+		if (file != null) {
+			return FileUtil.read(file);
+		}
+
+		return BeanParamUtil.getString(
+			fragmentEntry, _httpServletRequest, parameterName);
+	}
+
 	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletRequest _liferayPortletRequest;
 
 }

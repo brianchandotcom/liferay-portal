@@ -148,10 +148,6 @@ public class DBUpgrader {
 
 			StartupHelperUtil.printPatchLevel();
 
-			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				_startUpgradeReportLogAppender();
-			}
-
 			StartupHelperUtil.setUpgrading(true);
 
 			upgradePortal();

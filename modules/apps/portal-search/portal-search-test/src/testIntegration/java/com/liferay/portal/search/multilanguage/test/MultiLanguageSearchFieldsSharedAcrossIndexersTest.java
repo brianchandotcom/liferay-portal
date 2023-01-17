@@ -55,10 +55,9 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 import java.io.InputStream;
 import java.io.StringReader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -267,17 +266,16 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 
 		Hits hits = search(searchContext);
 
-		Stream<FileEntry> fileEntryStream = _fileEntries.stream();
-		Stream<JournalArticle> journalArticleStream = _journalArticles.stream();
+		List<String> keys = new ArrayList<>(
+			_fileEntries.size() + _journalArticles.size());
 
-		List<String> keys = Stream.concat(
-			fileEntryStream.map(FileEntry::getPrimaryKey),
-			journalArticleStream.map(JournalArticle::getResourcePrimKey)
-		).map(
-			String::valueOf
-		).collect(
-			Collectors.toList()
-		);
+		for (FileEntry fileEntry : _fileEntries) {
+			keys.add(String.valueOf(fileEntry.getPrimaryKey()));
+		}
+
+		for (JournalArticle journalArticle : _journalArticles) {
+			keys.add(String.valueOf(journalArticle.getResourcePrimKey()));
+		}
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			(String)searchContext.getAttribute("queryString"), hits.getDocs(),

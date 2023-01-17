@@ -100,6 +100,7 @@ const MDFClaimList = () => {
 			label: '',
 			render: (_: string | undefined, row: MDFClaimListItem) => (
 				<Dropdown
+					closeOnClick={true}
 					onClick={() =>
 						Liferay.Util.navigate(
 							`${siteURL}/l/${row[MDFClaimColumnKey.REQUEST_ID]}`

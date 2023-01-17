@@ -20,12 +20,14 @@ interface DropdownOption {
 }
 
 interface Props {
+	closeOnClick?: boolean;
 	onClick?: () => void;
 	options: DropdownOption[];
 }
 
-const DropDown = ({options}: Props) => (
+const DropDown = ({closeOnClick, options}: Props) => (
 	<ClayDropDown
+		closeOnClick={closeOnClick}
 		trigger={
 			<ClayButton displayType="unstyled">
 				<ClayIcon symbol="ellipsis-v"></ClayIcon>

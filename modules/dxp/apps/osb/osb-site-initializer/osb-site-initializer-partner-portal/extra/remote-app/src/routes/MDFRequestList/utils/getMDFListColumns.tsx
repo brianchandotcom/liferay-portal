@@ -29,6 +29,7 @@ export default function getMDFListColumns(
 		) {
 			return (
 				<Dropdown
+					closeOnClick={true}
 					options={[
 						{
 							icon: 'view',
@@ -67,7 +68,7 @@ export default function getMDFListColumns(
 			},
 		];
 
-		return <Dropdown options={options}></Dropdown>;
+		return <Dropdown closeOnClick={true} options={options}></Dropdown>;
 	};
 
 	return (

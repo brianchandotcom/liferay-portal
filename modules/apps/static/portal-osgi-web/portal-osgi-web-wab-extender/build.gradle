@@ -2,7 +2,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-9"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
-	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20211119-2358.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20211118-0920.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-13"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

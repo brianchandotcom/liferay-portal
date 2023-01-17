@@ -321,7 +321,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			assetLibrariesScope = "true",
 			define = "true",
 			permissionNavHeader = "Content & Data",
@@ -408,7 +408,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			assetLibrariesScope = "true",
 			define = "true",
 			permissionNavHeader = "Content & Data",
@@ -444,7 +444,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			permissionNavHeader = "Content & Data",
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "General Permissions",
@@ -462,7 +462,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCmdCPUI(
+		Role.editPermissionCP(
 			assetLibrariesScope = "true",
 			define = "true",
 			permissionNavHeader = "Content & Data",

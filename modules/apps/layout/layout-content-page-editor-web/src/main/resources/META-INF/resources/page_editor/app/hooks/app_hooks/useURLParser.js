@@ -70,24 +70,7 @@ export default function useURLParser() {
 			selectFragment(url.searchParams.get('messageId'));
 			url.searchParams.delete('messageId');
 
-			let skipLoadPopstate;
-
-			if (Liferay.SPA && Liferay.SPA.app) {
-				skipLoadPopstate = Liferay.SPA.app.skipLoadPopstate;
-				Liferay.SPA.app.skipLoadPopstate = true;
-			}
-
 			history.replaceState(null, document.head.title, url.href);
-
-			requestAnimationFrame(() => {
-				if (
-					Liferay.SPA &&
-					Liferay.SPA.app &&
-					typeof skipLoadPopstate === 'boolean'
-				) {
-					Liferay.SPA.app.skipLoadPopstate = skipLoadPopstate;
-				}
-			});
 		}
 
 		if (url.searchParams.has('itemId')) {

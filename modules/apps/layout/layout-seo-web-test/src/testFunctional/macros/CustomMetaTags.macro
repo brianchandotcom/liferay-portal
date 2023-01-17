@@ -33,7 +33,7 @@ definition {
 
 		Click(
 			key_locale = "${locale}",
-			locator1 = "Translation#LOCALIZATION_NAME");
+			locator1 = "Translation#LOCALIZATION_NAME_METATAGS");
 	}
 
 	macro editMultipleTags {

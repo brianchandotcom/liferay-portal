@@ -15,6 +15,7 @@
 package com.liferay.portal.odata.internal.filter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
@@ -42,9 +43,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
@@ -811,40 +809,47 @@ public class FilterParserImplTest {
 
 				@Override
 				public Map<String, EntityField> getEntityFieldsMap() {
-					return Stream.of(
-						new BooleanEntityField(
-							"booleanExternal", locale -> "booleanInternal"),
+					return HashMapBuilder.put(
+						"booleanExternal",
+						(EntityField)new BooleanEntityField(
+							"booleanExternal", locale -> "booleanInternal")
+					).put(
+						"collectionFieldExternal",
 						new CollectionEntityField(
 							new StringEntityField(
 								"collectionFieldExternal",
-								locale -> "collectionFieldInternal")),
+								locale -> "collectionFieldInternal"))
+					).put(
+						"complexField",
 						new ComplexEntityField(
 							"complexField",
-							Stream.of(
+							ListUtil.fromArray(
 								new CollectionEntityField(
 									new StringEntityField(
 										"collectionField",
 										locale -> "collectionFieldInternal")),
 								new StringEntityField(
 									"primitiveField",
-									locale -> "primitiveFieldInternal")
-							).collect(
-								Collectors.toList()
-							)),
+									locale -> "primitiveFieldInternal")))
+					).put(
+						"dateExternal",
 						new DateEntityField(
 							"dateExternal", locale -> "dateInternal",
-							locale -> "dateInternal"),
+							locale -> "dateInternal")
+					).put(
+						"dateTimeExternal",
 						new DateTimeEntityField(
 							"dateTimeExternal", locale -> "dateTimeInternal",
-							locale -> "dateTimeInternal"),
+							locale -> "dateTimeInternal")
+					).put(
+						"doubleExternal",
 						new DoubleEntityField(
-							"doubleExternal", locale -> "doubleInternal"),
+							"doubleExternal", locale -> "doubleInternal")
+					).put(
+						"fieldExternal",
 						new StringEntityField(
 							"fieldExternal", locale -> "fieldInternal")
-					).collect(
-						Collectors.toMap(
-							EntityField::getName, Function.identity())
-					);
+					).build();
 				}
 
 				@Override

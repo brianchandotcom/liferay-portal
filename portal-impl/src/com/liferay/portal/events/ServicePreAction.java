@@ -1821,7 +1821,8 @@ public class ServicePreAction extends Action {
 		}
 
 		if (requestURI.startsWith(mainPath) &&
-			requestURI.startsWith(_PATH_PORTAL_LOGIN, mainPath.length())) {
+			(requestURI.startsWith(_PATH_PORTAL_LOGIN, mainPath.length()) ||
+			 requestURI.startsWith("/portal/saml", mainPath.length()))) {
 
 			return true;
 		}

@@ -182,4 +182,44 @@ definition {
 			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
 	}
+
+    @description = "Story: LRAC-10860 | Automation ID: LRAC-12782 | Test Summary: Check that it is possible to make pagination in the Attribute for People list"
+	@priority = "3"
+	test CanPaginationAttributeForPeopleList {
+        var firstPageList = "agreedToTermsOfUse,birthday,classNameId,classPK,comments";
+		var lastPageList = "userName,uuid";
+
+        task ("Click to select attribute for people") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+		}
+
+        task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 47 entries.");
+		}
+
+		task ("Check that 5 attributes for people appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+		task ("Check that the attributes for people on the last page does not appear on the first") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${lastPageList}");
+		}
+
+		task ("Click to navigate for the last page") {
+			ACUtils.checkAnyPage(pageNumber = "10");
+
+			ACUtils.viewResultsMessage(results = "Showing 46 to 47 of 47 entries.");
+		}
+
+        task ("Check that 2 attributes for people appear on the last page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${lastPageList}");
+		}
+
+		task ("Check that the attributes for people on the first page does not appear on the last") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+	}
+
 }

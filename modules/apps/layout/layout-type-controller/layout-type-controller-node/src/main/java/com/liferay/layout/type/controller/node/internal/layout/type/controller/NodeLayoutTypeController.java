@@ -64,7 +64,7 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public boolean isURLFriendliable() {
-		return false;
+		return true;
 	}
 
 	@Override

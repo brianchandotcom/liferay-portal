@@ -12,6 +12,7 @@ definition {
 
 	macro addApp {
 		ClientExtensionEntry.addEntry(
+			entryHTMLElementName = "${entryHTMLElementName}",
 			entryName = "${entryName}",
 			entryURL = "${entryURL}",
 			mainURL = "${mainURL}");

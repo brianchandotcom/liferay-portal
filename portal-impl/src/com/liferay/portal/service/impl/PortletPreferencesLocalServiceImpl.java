@@ -175,6 +175,21 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public PortletPreferences deletePortletPreferences(
+			long portletPreferencesId)
+		throws PortalException {
+
+		for (PortletPreferenceValue portletPreferenceValue :
+				_portletPreferenceValuePersistence.findByPortletPreferencesId(
+					portletPreferencesId)) {
+
+			_portletPreferenceValuePersistence.remove(portletPreferenceValue);
+		}
+
+		return super.deletePortletPreferences(portletPreferencesId);
+	}
+
+	@Override
 	public void deletePortletPreferences(
 		long ownerId, int ownerType, long plid) {
 

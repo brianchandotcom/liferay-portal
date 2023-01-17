@@ -17,11 +17,11 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.diff.exception.CompareVersionsException;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.portlet.JournalPortlet;
-import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,6 +40,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -105,7 +106,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 
 		if ((sourceVersion == 0) && (targetVersion == 0)) {
 			List<JournalArticle> sourceArticles =
-				JournalArticleServiceUtil.getArticlesByArticleId(
+				_journalArticleService.getArticlesByArticleId(
 					groupId, articleId, 0, 1,
 					new ArticleVersionComparator(false));
 
@@ -114,7 +115,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			sourceVersion = sourceArticle.getVersion();
 
 			List<JournalArticle> targetArticles =
-				JournalArticleServiceUtil.getArticlesByArticleId(
+				_journalArticleService.getArticlesByArticleId(
 					groupId, articleId, 0, 1,
 					new ArticleVersionComparator(true));
 
@@ -136,7 +137,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		String diffHtmlResults = null;
 
 		try {
-			diffHtmlResults = JournalHelperUtil.diffHtml(
+			diffHtmlResults = _journalHelper.diffHtml(
 				groupId, articleId, sourceVersion, targetVersion, languageId,
 				new PortletRequestModel(renderRequest, renderResponse),
 				themeDisplay);
@@ -152,17 +153,14 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _getLanguageId(
-			RenderRequest renderRequest, long groupId, String articleId,
-			double sourceVersion, double targetVersion)
-		throws Exception {
+		RenderRequest renderRequest, long groupId, String articleId,
+		double sourceVersion, double targetVersion) {
 
-		JournalArticle sourceArticle =
-			JournalArticleLocalServiceUtil.fetchArticle(
-				groupId, articleId, sourceVersion);
+		JournalArticle sourceArticle = _journalArticleLocalService.fetchArticle(
+			groupId, articleId, sourceVersion);
 
-		JournalArticle targetArticle =
-			JournalArticleLocalServiceUtil.fetchArticle(
-				groupId, articleId, targetVersion);
+		JournalArticle targetArticle = _journalArticleLocalService.fetchArticle(
+			groupId, articleId, targetVersion);
 
 		Set<Locale> locales = new HashSet<>();
 
@@ -188,5 +186,14 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 
 		return languageId;
 	}
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private JournalHelper _journalHelper;
 
 }

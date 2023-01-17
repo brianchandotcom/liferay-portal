@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
-import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.exception.ArticleContentException;
@@ -57,15 +57,13 @@ import com.liferay.journal.exception.MaxAddMenuFavItemsException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
-import com.liferay.journal.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,11 +74,12 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
@@ -94,7 +93,6 @@ import java.util.Objects;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -256,7 +254,7 @@ public class JournalPortlet extends MVCPortlet {
 				ActionUtil.getArticle(renderRequest);
 			}
 			else {
-				_getFolder(renderRequest);
+				_getFolder(_portal.getHttpServletRequest(renderRequest));
 			}
 		}
 		catch (Exception exception) {
@@ -335,35 +333,23 @@ public class JournalPortlet extends MVCPortlet {
 		return false;
 	}
 
-	private JournalFolder _getFolder(HttpServletRequest httpServletRequest)
+	private void _getFolder(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
 
-		JournalFolder folder = null;
-
-		if ((folderId > 0) &&
-			(folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			folder = JournalFolderServiceUtil.fetchFolder(folderId);
+		if (folderId > 0) {
+			_journalFolderService.fetchFolder(folderId);
 		}
 		else {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			JournalPermission.check(
+			_portletResourcePermission.check(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup(), ActionKeys.VIEW);
 		}
-
-		return folder;
-	}
-
-	private JournalFolder _getFolder(PortletRequest portletRequest)
-		throws PortalException {
-
-		return _getFolder(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
@@ -402,7 +388,19 @@ public class JournalPortlet extends MVCPortlet {
 
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
+
+	@Reference
+	private JournalFolderService _journalFolderService;
+
 	private volatile JournalWebConfiguration _journalWebConfiguration;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.journal.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

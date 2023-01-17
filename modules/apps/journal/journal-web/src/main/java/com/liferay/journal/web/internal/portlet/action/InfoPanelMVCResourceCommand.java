@@ -18,8 +18,8 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,6 +31,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -69,8 +70,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		List<JournalArticle> articles = new ArrayList<>();
 
 		for (String articleId : articleIds) {
-			articles.add(
-				JournalArticleServiceUtil.getArticle(groupId, articleId));
+			articles.add(_journalArticleService.getArticle(groupId, articleId));
 		}
 
 		return articles;
@@ -85,10 +85,16 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		List<JournalFolder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
-			folders.add(JournalFolderServiceUtil.getFolder(folderId));
+			folders.add(_journalFolderService.getFolder(folderId));
 		}
 
 		return folders;
 	}
+
+	@Reference
+	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private JournalFolderService _journalFolderService;
 
 }

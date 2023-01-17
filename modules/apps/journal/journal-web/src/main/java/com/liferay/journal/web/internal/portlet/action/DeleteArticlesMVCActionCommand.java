@@ -16,7 +16,7 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.portlet.JournalPortlet;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -34,6 +34,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -83,7 +84,7 @@ public class DeleteArticlesMVCActionCommand extends BaseMVCActionCommand {
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
-	private boolean _hasArticle(ActionRequest actionRequest) throws Exception {
+	private boolean _hasArticle(ActionRequest actionRequest) {
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
 
 		if (Validator.isNull(articleId)) {
@@ -106,7 +107,7 @@ public class DeleteArticlesMVCActionCommand extends BaseMVCActionCommand {
 			articleId = articleId.substring(0, pos);
 		}
 
-		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
+		JournalArticle article = _journalArticleLocalService.fetchArticle(
 			themeDisplay.getScopeGroupId(), articleId);
 
 		if (article == null) {
@@ -115,5 +116,8 @@ public class DeleteArticlesMVCActionCommand extends BaseMVCActionCommand {
 
 		return true;
 	}
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

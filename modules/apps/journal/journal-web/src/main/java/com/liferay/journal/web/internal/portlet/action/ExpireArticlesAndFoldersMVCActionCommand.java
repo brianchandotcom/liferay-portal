@@ -17,8 +17,8 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -35,6 +35,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -81,20 +82,26 @@ public class ExpireArticlesAndFoldersMVCActionCommand
 			long groupId, long parentFolderId, ServiceContext serviceContext)
 		throws Exception {
 
-		List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(
+		List<JournalFolder> folders = _journalFolderService.getFolders(
 			groupId, parentFolderId);
 
 		for (JournalFolder folder : folders) {
 			_expireFolder(groupId, folder.getFolderId(), serviceContext);
 		}
 
-		List<JournalArticle> articles = JournalArticleServiceUtil.getArticles(
+		List<JournalArticle> articles = _journalArticleService.getArticles(
 			groupId, parentFolderId, LocaleUtil.getMostRelevantLocale());
 
 		for (JournalArticle article : articles) {
-			JournalArticleServiceUtil.expireArticle(
+			_journalArticleService.expireArticle(
 				groupId, article.getArticleId(), null, serviceContext);
 		}
 	}
+
+	@Reference
+	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private JournalFolderService _journalFolderService;
 
 }

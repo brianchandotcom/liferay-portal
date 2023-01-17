@@ -45,6 +45,17 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get("${curl}");
 	}
 
+	@summary = "Go to Folder"
+	macro gotoFolder {
+		var key_dmFolderName = "${folderName}";
+
+		SelectFrame(locator1 = "DocumentsAndMedia#CARD_FOLDER");
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = "${folderName}");
+	}
+
 	macro gotoPRM {
 		Navigator.openSiteURL(siteName = "Partner Portal");
 
@@ -64,14 +75,4 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	@summary = "Go to Folder"
-	macro gotoFolder{
-		var key_dmFolderName = "${folderName}";
-
-		SelectFrame(locator1 = "DocumentsAndMedia#CARD_FOLDER");
-
-		AssertClick(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "${folderName}");
-	}
 }

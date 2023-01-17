@@ -4,7 +4,7 @@ definition {
 	macro addAndPublishAnnouncement {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Announcement");
 
-		PortletEntry.inputTitle(title = "${announcementTitle}" );
+		PortletEntry.inputTitle(title = "${announcementTitle}");
 
 		CKEditor.addContentInWebContent(
 			content = "${announcementBody}",

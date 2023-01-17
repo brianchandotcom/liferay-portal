@@ -25,7 +25,7 @@ describe('ExportFormModal', () => {
 	let observer;
 
 	beforeEach(() => {
-		fileExtensions = {csv: 'CSV', json: 'JSON', xls: 'XLS', xml: 'XML'};
+		fileExtensions = ['csv', 'json', 'xls', 'xml'];
 		observer = {
 			dispatch: () => {},
 			mutation: [1, 1],

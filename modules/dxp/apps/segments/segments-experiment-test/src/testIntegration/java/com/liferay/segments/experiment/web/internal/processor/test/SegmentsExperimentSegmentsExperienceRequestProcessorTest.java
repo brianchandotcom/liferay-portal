@@ -30,13 +30,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PrefsPropsImpl;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -570,71 +567,5 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 	@Inject
 	private SegmentsExperimentRelLocalService
 		_segmentsExperimentRelLocalService;
-
-	private final class AnalyticsSyncedPrefsPropsWrapper
-		extends PrefsPropsImpl {
-
-		public AnalyticsSyncedPrefsPropsWrapper(PrefsProps prefsProps) {
-			_prefsProps = prefsProps;
-		}
-
-		@Override
-		public boolean getBoolean(long companyId, String name) {
-			if (Objects.equals("liferayAnalyticsEnableAllGroupIds", name)) {
-				return true;
-			}
-
-			return _prefsProps.getBoolean(companyId, name);
-		}
-
-		@Override
-		public String getString(long companyId, String name) {
-			if (Objects.equals("liferayAnalyticsDataSourceId", name) ||
-				Objects.equals(
-					name, "liferayAnalyticsFaroBackendSecuritySignature") ||
-				Objects.equals("liferayAnalyticsFaroBackendURL", name)) {
-
-				return "test";
-			}
-
-			return _prefsProps.getString(companyId, name);
-		}
-
-		private final PrefsProps _prefsProps;
-
-	}
-
-	private final class AnalyticsUnSyncedPrefsPropsWrapper
-		extends PrefsPropsImpl {
-
-		public AnalyticsUnSyncedPrefsPropsWrapper(PrefsProps prefsProps) {
-			_prefsProps = prefsProps;
-		}
-
-		@Override
-		public boolean getBoolean(long companyId, String name) {
-			if (Objects.equals("liferayAnalyticsEnableAllGroupIds", name)) {
-				return false;
-			}
-
-			return _prefsProps.getBoolean(companyId, name);
-		}
-
-		@Override
-		public String getString(long companyId, String name) {
-			if (Objects.equals("liferayAnalyticsDataSourceId", name) ||
-				Objects.equals(
-					name, "liferayAnalyticsFaroBackendSecuritySignature") ||
-				Objects.equals("liferayAnalyticsFaroBackendURL", name)) {
-
-				return "test";
-			}
-
-			return _prefsProps.getString(companyId, name);
-		}
-
-		private final PrefsProps _prefsProps;
-
-	}
 
 }

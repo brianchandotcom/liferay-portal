@@ -17,11 +17,13 @@ package com.liferay.analytics.reports.web.internal.portlet.action.test;
 import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -43,20 +46,19 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PrefsPropsImpl;
 
 import java.io.ByteArrayOutputStream;
 
-import java.util.Objects;
+import java.util.Dictionary;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -86,40 +88,46 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 	@Test
 	public void testGetTrafficSources() throws Exception {
-		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
+		Long dataSourceId = RandomTestUtil.nextLong();
 
-		ValidPrefsPropsWrapper validPrefsPropsWrapper =
-			new ValidPrefsPropsWrapper(prefsProps);
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId", dataSourceId
+						).put(
+							"liferayAnalyticsEnableAllGroupIds", true
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							RandomTestUtil.randomString()
+						).put(
+							"liferayAnalyticsFaroBackendURL",
+							RandomTestUtil.randomString()
+						).build(),
+						SettingsFactoryUtil.getSettingsFactory())) {
 
-		ReflectionTestUtil.setFieldValue(
-			PrefsPropsUtil.class, "_prefsProps", validPrefsPropsWrapper);
+			ReflectionTestUtil.setFieldValue(
+				_mvcResourceCommand, "_http",
+				MockHttpUtil.geHttp(
+					HashMapBuilder.
+						<String, UnsafeSupplier<String, Exception>>put(
+							"/api/1.0/data-sources/" + dataSourceId,
+							() -> StringPool.BLANK
+						).put(
+							"/api/1.0/pages/acquisition-channels",
+							() -> JSONUtil.put(
+								"organic", 3192L
+							).put(
+								"paid", 1L
+							).put(
+								"referral", 2L
+							).put(
+								"social", 385L
+							).toString()
+						).build()));
 
-		ReflectionTestUtil.setFieldValue(
-			_mvcResourceCommand, "_http",
-			MockHttpUtil.geHttp(
-				HashMapBuilder.<String, UnsafeSupplier<String, Exception>>put(
-					() -> {
-						String dataSourceId = validPrefsPropsWrapper.getString(
-							RandomTestUtil.nextLong(),
-							"liferayAnalyticsDataSourceId");
-
-						return "/api/1.0/data-sources/" + dataSourceId;
-					},
-					() -> StringPool.BLANK
-				).put(
-					"/api/1.0/pages/acquisition-channels",
-					() -> JSONUtil.put(
-						"organic", 3192L
-					).put(
-						"paid", 1L
-					).put(
-						"referral", 2L
-					).put(
-						"social", 385L
-					).toString()
-				).build()));
-
-		try {
 			MockContextUtil.testWithMockContext(
 				MockContextUtil.MockContext.builder(
 				).build(),
@@ -194,24 +202,25 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				PrefsPropsUtil.class, "_prefsProps", prefsProps);
-
-			ReflectionTestUtil.setFieldValue(
 				_mvcResourceCommand, "_http", _http);
 		}
 	}
 
 	@Test
-	public void testGetTrafficSourcesWithInvalidConnection() throws Exception {
-		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
+	public void testGetTrafficSourcesWithoutLiferayAnalyticsDataSourceId()
+		throws Exception {
 
-		InvalidPropsWrapper invalidPropsWrapper = new InvalidPropsWrapper(
-			prefsProps);
+		Dictionary<String, Object> dictionary = new HashMapDictionary();
 
-		ReflectionTestUtil.setFieldValue(
-			PrefsPropsUtil.class, "_prefsProps", invalidPropsWrapper);
+		dictionary.put("liferayAnalyticsDataSourceId", null);
 
-		try {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(), dictionary,
+						SettingsFactoryUtil.getSettingsFactory())) {
+
 			MockContextUtil.testWithMockContext(
 				MockContextUtil.MockContext.builder(
 				).build(),
@@ -334,9 +343,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				PrefsPropsUtil.class, "_prefsProps", prefsProps);
-
-			ReflectionTestUtil.setFieldValue(
 				_mvcResourceCommand, "_http", _http);
 		}
 	}
@@ -385,51 +391,5 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 	@Inject
 	private Portal _portal;
-
-	private class InvalidPropsWrapper extends PrefsPropsImpl {
-
-		public InvalidPropsWrapper(PrefsProps prefsProps) {
-			_prefsProps = prefsProps;
-		}
-
-		@Override
-		public String getString(long companyId, String name) {
-			if (Objects.equals("liferayAnalyticsDataSourceId", name) ||
-				Objects.equals(
-					name, "liferayAnalyticsFaroBackendSecuritySignature") ||
-				Objects.equals("liferayAnalyticsFaroBackendURL", name)) {
-
-				return null;
-			}
-
-			return _prefsProps.getString(companyId, name);
-		}
-
-		private final PrefsProps _prefsProps;
-
-	}
-
-	private class ValidPrefsPropsWrapper extends PrefsPropsImpl {
-
-		public ValidPrefsPropsWrapper(PrefsProps prefsProps) {
-			_prefsProps = prefsProps;
-		}
-
-		@Override
-		public String getString(long companyId, String name) {
-			if (Objects.equals("liferayAnalyticsDataSourceId", name) ||
-				Objects.equals(
-					name, "liferayAnalyticsFaroBackendSecuritySignature") ||
-				Objects.equals("liferayAnalyticsFaroBackendURL", name)) {
-
-				return "test";
-			}
-
-			return _prefsProps.getString(companyId, name);
-		}
-
-		private final PrefsProps _prefsProps;
-
-	}
 
 }

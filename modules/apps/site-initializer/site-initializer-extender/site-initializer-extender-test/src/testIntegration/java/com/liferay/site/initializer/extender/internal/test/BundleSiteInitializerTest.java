@@ -1344,13 +1344,13 @@ public class BundleSiteInitializerTest {
 
 		_assertRolesAssignments(2, role2.getRoleId());
 
-		ResourcePermission roleResourcePermission =
+		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(
 				group.getCompanyId(), "com.liferay.portal.kernel.model.Role", 1,
 				String.valueOf(group.getCompanyId()), role2.getRoleId());
 
-		Assert.assertEquals(1, roleResourcePermission.getScope());
-		Assert.assertTrue(roleResourcePermission.isViewActionId());
+		Assert.assertEquals(1, resourcePermission.getScope());
+		Assert.assertTrue(resourcePermission.isViewActionId());
 
 		Role role3 = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 3");

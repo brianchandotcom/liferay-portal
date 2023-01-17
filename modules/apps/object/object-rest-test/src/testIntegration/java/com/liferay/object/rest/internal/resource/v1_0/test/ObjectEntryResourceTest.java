@@ -184,6 +184,50 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetRelationshipERCFieldInOneToManyRelationshipUsingNestedFields()
+		throws Exception {
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-161364", "true"
+			).build());
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), "?nestedFields=",
+				_objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		JSONArray relationshipJSONArray = itemJSONObject.getJSONArray(
+			_objectRelationship.getName());
+
+		Assert.assertEquals(1, relationshipJSONArray.length());
+
+		JSONObject relatedObjectEntryJSONObject =
+			relationshipJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			relatedObjectEntryJSONObject.getString(
+				_objectRelationship.getName() + "ERC"),
+			_objectEntry1.getExternalReferenceCode());
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-161364", "false"
+			).build());
+	}
+
+	@Test
 	public void testPutByExternalReferenceCodeManyToManyRelationship()
 		throws Exception {
 

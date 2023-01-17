@@ -18,18 +18,18 @@
 .portlet-sxp-blueprint-admin {
 	// Shared
 
-	@import 'edit_sxp_blueprint/_edit_sxp_blueprint';
+	@import 'shared/_page_toolbar';
 	@import 'shared/_sidebar';
+	@import 'shared/sxp_element/_sxp_element';
 
 	// Components
 
+	@import 'edit_sxp_blueprint/_edit_sxp_blueprint';
 	@import 'edit_sxp_blueprint/add_sxp_element_sidebar/_add_sxp_element_sidebar';
 	@import 'edit_sxp_blueprint/clause_contributors_sidebar/_clause_contributors_sidebar';
 	@import 'edit_sxp_blueprint/preview_sidebar/_preview_sidebar';
 	@import 'edit_sxp_blueprint/preview_sidebar/_result_list_item';
 	@import 'edit_sxp_blueprint/query_builder_tab/_query_builder_tab';
 	@import 'edit_sxp_element/_edit_sxp_element';
-	@import 'shared/_page_toolbar';
-	@import 'shared/sxp_element/_sxp_element';
 	@import 'view_sxp_blueprints/_import_sxp_blueprint';
 }

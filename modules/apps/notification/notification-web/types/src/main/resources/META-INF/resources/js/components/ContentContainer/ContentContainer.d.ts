@@ -12,10 +12,12 @@
  * details.
  */
 
+import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 interface ContentContainerProps {
 	baseResourceURL: string;
 	editorConfig: object;
+	errors: FormError<NotificationTemplate>;
 	selectedLocale: Locale;
 	setSelectedLocale: React.Dispatch<
 		React.SetStateAction<Liferay.Language.Locale>
@@ -26,6 +28,7 @@ interface ContentContainerProps {
 export default function ContentContainer({
 	baseResourceURL,
 	editorConfig,
+	errors,
 	selectedLocale,
 	setSelectedLocale,
 	setValues,

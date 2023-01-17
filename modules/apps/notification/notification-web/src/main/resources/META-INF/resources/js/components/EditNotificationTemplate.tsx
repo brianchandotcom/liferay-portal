@@ -85,6 +85,10 @@ export default function EditNotificationTemplate({
 			errors.name = REQUIRED_MSG;
 		}
 
+		if (!values.subject[defaultLanguageId]) {
+			errors.subject = Liferay.Language.get('required');
+		}
+
 		if (notificationTemplateType === 'email' || values.type === 'email') {
 			if (!values.recipients[0].from) {
 				errors.from = REQUIRED_MSG;
@@ -305,6 +309,7 @@ export default function EditNotificationTemplate({
 					<ContentContainer
 						baseResourceURL={baseResourceURL}
 						editorConfig={editorConfig}
+						errors={errors}
 						selectedLocale={selectedLocale}
 						setSelectedLocale={setSelectedLocale}
 						setValues={setValues}

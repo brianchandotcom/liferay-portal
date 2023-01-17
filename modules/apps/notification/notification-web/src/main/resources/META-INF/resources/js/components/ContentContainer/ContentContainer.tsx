@@ -16,6 +16,7 @@ import {Text} from '@clayui/core';
 import {
 	API,
 	Card,
+	FormError,
 	InputLocalized,
 	RichTextLocalized,
 	SingleSelect,
@@ -44,6 +45,7 @@ interface EditorType extends LabelValueObject {
 interface ContentContainerProps {
 	baseResourceURL: string;
 	editorConfig: object;
+	errors: FormError<NotificationTemplate>;
 	selectedLocale: Locale;
 	setSelectedLocale: React.Dispatch<
 		React.SetStateAction<Liferay.Language.Locale>
@@ -55,6 +57,7 @@ interface ContentContainerProps {
 export default function ContentContainer({
 	baseResourceURL,
 	editorConfig,
+	errors,
 	selectedLocale,
 	setSelectedLocale,
 	setValues,
@@ -86,6 +89,7 @@ export default function ContentContainer({
 				{...(values.type === 'userNotification' && {
 					component: 'textarea',
 				})}
+				error={errors.subject}
 				label={Liferay.Language.get('subject')}
 				name="subject"
 				onChange={(translation) => {
@@ -95,6 +99,7 @@ export default function ContentContainer({
 					});
 				}}
 				placeholder=""
+				required
 				selectedLocale={selectedLocale}
 				translations={values.subject}
 			/>

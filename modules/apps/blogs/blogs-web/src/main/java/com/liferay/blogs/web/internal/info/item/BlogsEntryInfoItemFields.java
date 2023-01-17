@@ -18,6 +18,8 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.PrimaryKeyInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -109,6 +111,42 @@ public class BlogsEntryInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				"com.liferay.asset.info.display.impl", "display-page-url")
+		).build();
+	public static final InfoField entryIdInfoField =
+		BuilderHolder._builder.infoFieldType(
+			PrimaryKeyInfoFieldType.INSTANCE
+		).name(
+			"entryId"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "primary-key")
+		).build();
+	public static final InfoField externalReferenceCodeInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"externalReferenceCode"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "external-reference-code")
+		).build();
+	public static final InfoField<TextInfoFieldType> friendlyURLInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"friendlyURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "friendly-url")
+		).build();
+	public static final InfoField<NumberInfoFieldType> groupIdInfoField =
+		BuilderHolder._builder.infoFieldType(
+			NumberInfoFieldType.INSTANCE
+		).name(
+			"groupId"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "group-id")
 		).build();
 	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
 		BuilderHolder._builder.infoFieldType(

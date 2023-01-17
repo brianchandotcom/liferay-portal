@@ -190,6 +190,23 @@ public class BlogsEntryInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.displayDateInfoField,
 					blogsEntry.getDisplayDate()));
+
+			blogsEntryFieldValues.add(
+				new InfoFieldValue<>(
+					BlogsEntryInfoItemFields.entryIdInfoField,
+					blogsEntry.getEntryId()));
+			blogsEntryFieldValues.add(
+				new InfoFieldValue<>(
+					BlogsEntryInfoItemFields.externalReferenceCodeInfoField,
+					blogsEntry.getExternalReferenceCode()));
+			blogsEntryFieldValues.add(
+				new InfoFieldValue<>(
+					BlogsEntryInfoItemFields.friendlyURLInfoField,
+					blogsEntry.getUrlTitle()));
+			blogsEntryFieldValues.add(
+				new InfoFieldValue<>(
+					BlogsEntryInfoItemFields.groupIdInfoField,
+					blogsEntry.getGroupId()));
 			blogsEntryFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.publishDateInfoField,

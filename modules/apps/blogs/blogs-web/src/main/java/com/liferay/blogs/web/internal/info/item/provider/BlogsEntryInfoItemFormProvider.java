@@ -85,6 +85,18 @@ public class BlogsEntryInfoItemFormProvider
 			BlogsEntryInfoItemFields.authorNameInfoField
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.authorProfileImageInfoField
+		).infoFieldSetEntry(
+			BlogsEntryInfoItemFields.createDateInfoField
+		).infoFieldSetEntry(
+			BlogsEntryInfoItemFields.entryIdInfoField
+		).infoFieldSetEntry(
+			BlogsEntryInfoItemFields.externalReferenceCodeInfoField
+		).infoFieldSetEntry(
+			BlogsEntryInfoItemFields.groupIdInfoField
+		).infoFieldSetEntry(
+			BlogsEntryInfoItemFields.modifiedDateInfoField
+		).infoFieldSetEntry(
+			BlogsEntryInfoItemFields.publishDateInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				"com.liferay.journal.lang", "basic-information")
@@ -101,6 +113,8 @@ public class BlogsEntryInfoItemFormProvider
 			BlogsEntryInfoItemFields.smallImageInfoField
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.displayDateInfoField
+		).infoFieldSetEntry(
+			BlogsEntryInfoItemFields.friendlyURLInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "configuration")
 		).name(

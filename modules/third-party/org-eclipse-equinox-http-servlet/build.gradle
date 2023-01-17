@@ -7,7 +7,7 @@ task jarPatched(type: Zip)
 task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", transitive: false, version: "1.2.2.v20211119-2358-LIFERAY-CACHED"
+	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", transitive: false, version: "1.2.2.v20211118-0920-LIFERAY-CACHED"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", transitive: false, version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", transitive: false, version: "1.0.0"
 	compileOnly group: "org.osgi", name: "osgi.core", transitive: false, version: "6.0.0"

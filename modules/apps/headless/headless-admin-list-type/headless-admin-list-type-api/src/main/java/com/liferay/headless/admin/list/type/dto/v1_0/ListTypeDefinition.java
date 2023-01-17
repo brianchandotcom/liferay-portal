@@ -229,7 +229,7 @@ public class ListTypeDefinition implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ListTypeEntry[] listTypeEntries;
 
 	@Schema

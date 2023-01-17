@@ -295,6 +295,10 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 					ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
 						Long.valueOf(parts[1]));
 
+				if (objectDefinition == null) {
+					continue;
+				}
+
 				typeName = objectDefinition.getLabel(_themeDisplay.getLocale());
 			}
 

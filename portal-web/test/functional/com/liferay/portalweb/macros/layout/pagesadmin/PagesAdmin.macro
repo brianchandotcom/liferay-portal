@@ -8,11 +8,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+		PortletEntry.inputName(name = "${pageName}");
+
 		PagesAdmin._addPageToNavigationMenu(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
 			navigationMenus = "${navigationMenus}");
-
-		PortletEntry.inputName(name = "${pageName}");
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(

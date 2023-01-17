@@ -12,6 +12,10 @@
  * details.
  */
 
+import {TTableRequestParams} from '../../components/table/types';
+import {serializeTableRequestParams} from '../../components/table/utils';
+import request from '../request';
+
 export const fetchPropertiesResponse = {
 	actions: {},
 	facets: [],
@@ -46,3 +50,21 @@ export const fetchPropertiesResponse = {
 	pageSize: 20,
 	totalCount: 2,
 };
+
+export function fetchTableData(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
+
+	return request(`/table-data?${queryString}`, {method: 'GET'});
+}
+
+export function fetchTableDataResponse(items: any[]) {
+	return {
+		actions: {},
+		facets: [],
+		items,
+		lastPage: 1,
+		page: 1,
+		pageSize: 20,
+		totalCount: items.length,
+	};
+}

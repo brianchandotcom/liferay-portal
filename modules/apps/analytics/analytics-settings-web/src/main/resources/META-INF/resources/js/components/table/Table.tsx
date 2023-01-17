@@ -23,7 +23,7 @@ import PaginationBar from './PaginationBar';
 import StateRenderer, {TEmptyState} from './StateRenderer';
 import {TColumn, TFormattedItems, TItem, TTableRequestParams} from './types';
 
-interface ITableProps<TRawItem> {
+export interface ITableProps<TRawItem> {
 	addItemTitle?: string;
 	columns: TColumn[];
 	disabled?: boolean;

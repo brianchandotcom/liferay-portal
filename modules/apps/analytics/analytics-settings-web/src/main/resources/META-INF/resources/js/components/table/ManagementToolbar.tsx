@@ -59,6 +59,7 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 						<ClayManagementToolbar.Item>
 							<ClayCheckbox
 								checked={globalChecked}
+								data-testid="globalCheckbox"
 								disabled={disabled}
 								onChange={() => {
 									dispatch({
@@ -200,7 +201,10 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 			{storedKeywords && (
 				<ClayResultsBar>
 					<ClayResultsBar.Item expand>
-						<span className="component-text text-truncate-inline">
+						<span
+							className="component-text text-truncate-inline"
+							data-testid="subnav-description"
+						>
 							<span className="text-truncate">
 								<span>{getResultsLanguage(totalCount)}</span>
 
@@ -212,6 +216,7 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 					<ClayResultsBar.Item>
 						<ClayButton
 							className="component-link tbar-link"
+							data-testid="subnav-clear-button"
 							displayType="unstyled"
 							onClick={() => {
 								dispatch({

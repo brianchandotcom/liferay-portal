@@ -1822,7 +1822,7 @@ public class ServicePreAction extends Action {
 
 		if (requestURI.startsWith(mainPath) &&
 			(requestURI.startsWith(_PATH_PORTAL_LOGIN, mainPath.length()) ||
-			 requestURI.startsWith("/portal/saml", mainPath.length()))) {
+			 requestURI.startsWith(_PATH_PORTAL_SAML, mainPath.length()))) {
 
 			return true;
 		}
@@ -2113,6 +2113,8 @@ public class ServicePreAction extends Action {
 	private static final String _PATH_PORTAL_LOGIN = "/portal/login";
 
 	private static final String _PATH_PORTAL_LOGOUT = "/portal/logout";
+
+	private static final String _PATH_PORTAL_SAML = "/portal/saml";
 
 	private static final String _PATH_PROXY;
 

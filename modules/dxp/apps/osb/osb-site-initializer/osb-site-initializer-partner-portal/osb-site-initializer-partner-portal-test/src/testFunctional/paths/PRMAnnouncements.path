@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>PRMAnnouncements</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMAnnouncements</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ANNOUNCEMENT_TITLE_AND_CONTENT</td>
+	<td>//div[@data-analytics-asset-title='${key_announcementTitle}']/*[contains(.,'${key_announcementContent}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

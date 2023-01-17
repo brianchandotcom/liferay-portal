@@ -79,7 +79,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -87,7 +89,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -111,6 +112,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -130,16 +132,15 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -1465,7 +1466,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Subscriptions
 
-		_notifySubscribers(userId, kbArticle, action, serviceContext);
+		_notify(
+			Collections.singleton(_NOTIFICATION_RECEIVER_SUBSCRIBER), userId,
+			kbArticle, action, serviceContext);
 
 		return kbArticle;
 	}
@@ -1617,9 +1620,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					"between ", _previousCheckDate, " and ", reviewDate));
 		}
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> _notifyReviewKBArticlesByCompanyId(
-				companyId, reviewDate));
+		_companyLocalService.forEachCompany(
+			company -> _notifyReviewKBArticlesByCompany(company, reviewDate));
 	}
 
 	private void _deleteAssets(KBArticle kbArticle) throws PortalException {
@@ -1739,7 +1741,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return kbGroupServiceConfiguration.emailKBArticleAddedBody();
 		}
 
-		if (action.equals("review")) {
+		if (_NOTIFICATION_ACTION_REVIEW.equals(action)) {
 			return kbGroupServiceConfiguration.emailKBArticleReviewBody();
 		}
 
@@ -1812,28 +1814,35 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			));
 	}
 
-	private String _getKBArticleURL(
-		KBArticle kbArticle, ServiceContext serviceContext) {
+	private String _getKBArticleURL(KBArticle kbArticle)
+		throws PortalException {
 
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+		String controlPanelFullURL = _portal.getControlPanelFullURL(
+			kbArticle.getGroupId(), KBPortletKeys.KNOWLEDGE_BASE_ADMIN, null);
 
-		if (httpServletRequest == null) {
-			return StringPool.BLANK;
-		}
+		String namespace = _portal.getPortletNamespace(
+			KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
 
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/knowledge_base/view_kb_article"
-		).setParameter(
-			"resourceClassNameId", kbArticle.getClassNameId()
-		).setParameter(
-			"resourcePrimKey", kbArticle.getResourcePrimKey()
-		).setParameter(
-			"selectedItemId", kbArticle.getResourcePrimKey()
-		).buildString();
+		String kbArticleURL = HttpComponentsUtil.addParameter(
+			controlPanelFullURL, namespace + "mvcRenderCommandName",
+			"/knowledge_base/view_kb_article");
+
+		kbArticleURL = HttpComponentsUtil.addParameter(
+			kbArticleURL, namespace + "resourceClassNameId",
+			kbArticle.getClassNameId());
+		kbArticleURL = HttpComponentsUtil.addParameter(
+			kbArticleURL, namespace + "resourcePrimKey",
+			kbArticle.getResourcePrimKey());
+		kbArticleURL = HttpComponentsUtil.addParameter(
+			kbArticleURL, namespace + "selectedItemId",
+			kbArticle.getResourcePrimKey());
+		kbArticleURL = HttpComponentsUtil.addParameter(
+			kbArticleURL, namespace + "redirect",
+			HttpComponentsUtil.addParameter(
+				controlPanelFullURL, namespace + "mvcRenderCommandName",
+				"/knowledge_base/view"));
+
+		return kbArticleURL;
 	}
 
 	private KBGroupServiceConfiguration _getKBGroupServiceConfiguration(
@@ -1850,7 +1859,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 		}
 
-		if (action.equals("review")) {
+		if (_NOTIFICATION_ACTION_REVIEW.equals(action)) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
 		}
 
@@ -1912,7 +1921,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return kbGroupServiceConfiguration.emailKBArticleAddedSubject();
 		}
 
-		if (action.equals("review")) {
+		if (_NOTIFICATION_ACTION_REVIEW.equals(action)) {
 			return kbGroupServiceConfiguration.emailKBArticleReviewSubject();
 		}
 
@@ -2001,35 +2010,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return StringPool.SLASH + urlTitle;
 	}
 
-	private void _notifyReviewKBArticlesByCompanyId(
-			long companyId, Date reviewDate)
+	private void _notify(
+			Set<String> receivers, long userId, KBArticle kbArticle,
+			String action, ServiceContext serviceContext)
 		throws PortalException {
 
-		long userId = _userLocalService.getDefaultUserId(companyId);
-
-		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(
-			companyId, _previousCheckDate, reviewDate);
-
-		for (KBArticle kbArticle : kbArticles) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Sending review notification for article ",
-						kbArticle.getKbArticleId(), " with reviewDate ",
-						kbArticle.getReviewDate()));
-			}
-
-			_notifySubscribers(
-				userId, kbArticle, "review", new ServiceContext());
-		}
-	}
-
-	private void _notifySubscribers(
-			long userId, KBArticle kbArticle, String action,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (Validator.isNull(serviceContext.getLayoutFullURL())) {
+		if (receivers.isEmpty()) {
 			return;
 		}
 
@@ -2048,7 +2034,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return;
 		}
 
-		if (action.equals("review") &&
+		if (_NOTIFICATION_ACTION_REVIEW.equals(action) &&
 			!kbGroupServiceConfiguration.emailKBArticleReviewEnabled()) {
 
 			return;
@@ -2076,8 +2062,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticleDiffs.put(entry.getKey(), value);
 		}
 
-		String kbArticleURL = _getKBArticleURL(kbArticle, serviceContext);
-
 		SubscriptionSender subscriptionSender =
 			AdminSubscriptionSenderFactory.createSubscriptionSender(
 				kbArticle, serviceContext);
@@ -2092,17 +2076,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT_DIFF$]", kbArticleDiffs.get("content"), false);
 		subscriptionSender.setContextAttribute(
-			"[$ARTICLE_TITLE$]", kbArticle.getTitle(), false);
-		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_TITLE_DIFF$]", kbArticleDiffs.get("title"), false);
-		subscriptionSender.setContextAttributes(
-			"[$ARTICLE_TITLE$]", kbArticle.getTitle(), "[$ARTICLE_URL$]",
-			kbArticleURL, "[$ARTICLE_VERSION$]", kbArticle.getVersion());
 		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
 		subscriptionSender.setCreatorUserId(kbArticle.getUserId());
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(kbArticle.getTitle());
-		subscriptionSender.setEntryURL(kbArticleURL);
+		subscriptionSender.setEntryURL(_getKBArticleURL(kbArticle));
 		subscriptionSender.setFrom(
 			fromAddress, kbGroupServiceConfiguration.emailFromName());
 		subscriptionSender.setHtmlFormat(true);
@@ -2111,30 +2090,77 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		subscriptionSender.setPortletId(serviceContext.getPortletId());
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(kbArticle.getGroupId());
-		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(
 			_getSubject(action, kbGroupServiceConfiguration));
 
-		subscriptionSender.addAssetEntryPersistedSubscribers(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-		subscriptionSender.addPersistedSubscribers(
-			KBArticle.class.getName(), kbArticle.getGroupId());
-		subscriptionSender.addPersistedSubscribers(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-
-		while (!kbArticle.isRoot() &&
-			   (kbArticle.getClassNameId() ==
-				   kbArticle.getParentResourceClassNameId())) {
-
-			kbArticle = getLatestKBArticle(
-				kbArticle.getParentResourcePrimKey(),
-				WorkflowConstants.STATUS_APPROVED);
-
+		if (receivers.contains(_NOTIFICATION_RECEIVER_SUBSCRIBER)) {
+			subscriptionSender.addAssetEntryPersistedSubscribers(
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+			subscriptionSender.addPersistedSubscribers(
+				KBArticle.class.getName(), kbArticle.getGroupId());
 			subscriptionSender.addPersistedSubscribers(
 				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+			KBArticle parentKBArticle = kbArticle.getParentKBArticle();
+
+			while (parentKBArticle != null) {
+				subscriptionSender.addPersistedSubscribers(
+					KBArticle.class.getName(),
+					parentKBArticle.getResourcePrimKey());
+
+				parentKBArticle = parentKBArticle.getParentKBArticle();
+			}
+		}
+
+		if (receivers.contains(_NOTIFICATION_RECEIVER_OWNER)) {
+			User user = _userLocalService.fetchUser(kbArticle.getUserId());
+
+			if ((user == null) || !user.isActive()) {
+				user = _userLocalService.fetchUser(userId);
+			}
+
+			subscriptionSender.addRuntimeSubscribers(
+				user.getEmailAddress(), user.getFullName());
+			subscriptionSender.setSendToCurrentUser(true);
 		}
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	private void _notifyReviewKBArticlesByCompany(
+			Company company, Date reviewDate)
+		throws PortalException {
+
+		long userId = _userLocalService.getDefaultUserId(
+			company.getCompanyId());
+
+		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(
+			company.getCompanyId(), _previousCheckDate, reviewDate);
+
+		for (KBArticle kbArticle : kbArticles) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Sending review notification for article ",
+						kbArticle.getKbArticleId(), " with reviewDate ",
+						kbArticle.getReviewDate()));
+			}
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setPlid(LayoutConstants.DEFAULT_PLID);
+			serviceContext.setPortalURL(
+				company.getPortalURL(kbArticle.getGroupId()));
+			serviceContext.setPortletId(KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
+			serviceContext.setScopeGroupId(kbArticle.getGroupId());
+
+			_notify(
+				new HashSet<>(
+					Arrays.asList(
+						_NOTIFICATION_RECEIVER_OWNER,
+						_NOTIFICATION_RECEIVER_SUBSCRIBER)),
+				userId, kbArticle, _NOTIFICATION_ACTION_REVIEW, serviceContext);
+		}
 	}
 
 	private void _removeKBArticleAttachments(long[] removeFileEntryIds)
@@ -2371,6 +2397,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
 		}
 	}
+
+	private static final String _NOTIFICATION_ACTION_REVIEW = "review";
+
+	private static final String _NOTIFICATION_RECEIVER_OWNER = "owner";
+
+	private static final String _NOTIFICATION_RECEIVER_SUBSCRIBER =
+		"subscriber";
 
 	private static final int[] _STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_PENDING

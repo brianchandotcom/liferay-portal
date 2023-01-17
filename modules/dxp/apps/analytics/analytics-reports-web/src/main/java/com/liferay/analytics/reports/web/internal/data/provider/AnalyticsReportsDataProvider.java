@@ -29,6 +29,7 @@ import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,12 +53,15 @@ import java.util.stream.Stream;
  */
 public class AnalyticsReportsDataProvider {
 
-	public AnalyticsReportsDataProvider(Http http) {
+	public AnalyticsReportsDataProvider(
+		AnalyticsSettingsManager analyticsSettingsManager, Http http) {
+
 		if (http == null) {
 			throw new IllegalArgumentException("Http is null");
 		}
 
-		_asahFaroBackendClient = new AsahFaroBackendClient(http);
+		_asahFaroBackendClient = new AsahFaroBackendClient(
+			analyticsSettingsManager, http);
 	}
 
 	public Map<String, AcquisitionChannel> getAcquisitionChannels(
@@ -376,7 +380,7 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public boolean isValidAnalyticsConnection(long companyId) {
+	public boolean isValidAnalyticsConnection(long companyId) throws Exception {
 		return _asahFaroBackendClient.isValidConnection(companyId);
 	}
 

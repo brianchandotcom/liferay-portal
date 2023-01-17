@@ -21,10 +21,13 @@ import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItem
 import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderRegistry;
 import com.liferay.analytics.reports.web.internal.item.action.AnalyticsReportsContentDashboardItemAction;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -122,10 +125,21 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (AnalyticsReportsUtil.isShowAnalyticsReportsPanel(
-				themeDisplay.getCompanyId(), httpServletRequest)) {
+		try {
+			if (AnalyticsReportsUtil.isShowAnalyticsReportsPanel(
+					_analyticsSettingsManager, themeDisplay.getCompanyId(),
+					httpServletRequest)) {
 
-			return true;
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			throw portalException;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return false;
 		}
 
 		return false;
@@ -141,12 +155,18 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 			httpServletRequest, new InfoItemReference(className, classPK));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsReportsContentDashboardItemActionProviderImpl.class);
+
 	@Reference
 	private AnalyticsReportsInfoItemObjectProviderRegistry
 		_analyticsReportsInfoItemObjectProviderRegistry;
 
 	@Reference
 	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Portal _portal;

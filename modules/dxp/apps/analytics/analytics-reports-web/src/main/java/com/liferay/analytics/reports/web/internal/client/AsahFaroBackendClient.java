@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.web.internal.client;
 
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,7 +31,10 @@ import org.apache.http.HttpStatus;
  */
 public class AsahFaroBackendClient {
 
-	public AsahFaroBackendClient(Http http) {
+	public AsahFaroBackendClient(
+		AnalyticsSettingsManager analyticsSettingsManager, Http http) {
+
+		_analyticsSettingsManager = analyticsSettingsManager;
 		_http = http;
 	}
 
@@ -49,8 +53,8 @@ public class AsahFaroBackendClient {
 		}
 	}
 
-	public boolean isValidConnection(long companyId) {
-		if (!AnalyticsReportsUtil.isAnalyticsConnected(companyId)) {
+	public boolean isValidConnection(long companyId) throws Exception {
+		if (!_analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
 			return false;
 		}
 
@@ -108,6 +112,7 @@ public class AsahFaroBackendClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahFaroBackendClient.class);
 
+	private final AnalyticsSettingsManager _analyticsSettingsManager;
 	private final Http _http;
 
 }

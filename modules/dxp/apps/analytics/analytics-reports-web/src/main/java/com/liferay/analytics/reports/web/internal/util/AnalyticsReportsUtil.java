@@ -16,23 +16,20 @@ package com.liferay.analytics.reports.web.internal.util;
 
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -119,50 +116,10 @@ public class AnalyticsReportsUtil {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsProjectId");
 	}
 
-	public static boolean isAnalyticsConnected(long companyId) {
-		if (Validator.isNull(
-				PrefsPropsUtil.getString(
-					companyId, "liferayAnalyticsDataSourceId")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					companyId,
-					"liferayAnalyticsFaroBackendSecuritySignature")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					companyId, "liferayAnalyticsFaroBackendURL"))) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public static boolean isAnalyticsSynced(long companyId, long groupId) {
-		if (!isAnalyticsConnected(companyId)) {
-			return false;
-		}
-
-		if (PrefsPropsUtil.getBoolean(
-				companyId, "liferayAnalyticsEnableAllGroupIds")) {
-
-			return true;
-		}
-
-		String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(
-			companyId, "liferayAnalyticsGroupIds", StringPool.COMMA);
-
-		if (ArrayUtil.contains(
-				liferayAnalyticsGroupIds, String.valueOf(groupId))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public static boolean isShowAnalyticsReportsPanel(
-			long companyId, HttpServletRequest httpServletRequest)
-		throws PortalException {
+			AnalyticsSettingsManager analyticsSettingsManager, long companyId,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
 		if (!CTCollectionThreadLocal.isProductionMode()) {
 			return false;
@@ -183,7 +140,9 @@ public class AnalyticsReportsUtil {
 			portalPreferences.getValue(
 				AnalyticsReportsPortletKeys.ANALYTICS_REPORTS, "hide-panel"));
 
-		if (!isAnalyticsConnected(companyId) && hidePanel) {
+		if (!analyticsSettingsManager.isAnalyticsEnabled(companyId) &&
+			hidePanel) {
+
 			return false;
 		}
 

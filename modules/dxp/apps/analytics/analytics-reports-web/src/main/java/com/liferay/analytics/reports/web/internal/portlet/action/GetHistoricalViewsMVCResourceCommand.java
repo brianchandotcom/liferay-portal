@@ -18,6 +18,7 @@ import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPort
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -60,7 +61,8 @@ public class GetHistoricalViewsMVCResourceCommand
 
 		try {
 			AnalyticsReportsDataProvider analyticsReportsDataProvider =
-				new AnalyticsReportsDataProvider(_http);
+				new AnalyticsReportsDataProvider(
+					_analyticsSettingsManager, _http);
 
 			String timeSpanKey = ParamUtil.getString(
 				resourceRequest, "timeSpanKey", TimeSpan.defaultTimeSpanKey());
@@ -101,6 +103,9 @@ public class GetHistoricalViewsMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetHistoricalViewsMVCResourceCommand.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Http _http;

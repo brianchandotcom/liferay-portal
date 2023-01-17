@@ -19,6 +19,7 @@ import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReports
 import com.liferay.analytics.reports.web.internal.model.ReferringSocialMedia;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -73,7 +74,9 @@ public class GetSocialTrafficSourcesMVCResourceCommand
 
 		try {
 			AnalyticsReportsDataProvider analyticsReportsDataProvider =
-				new AnalyticsReportsDataProvider(_http);
+				new AnalyticsReportsDataProvider(
+					_analyticsSettingsManager, _http);
+
 			String canonicalURL = ParamUtil.getString(
 				resourceRequest, "canonicalURL");
 
@@ -139,7 +142,7 @@ public class GetSocialTrafficSourcesMVCResourceCommand
 	private List<ReferringSocialMedia> _getReferringSocialMediaList(
 			AnalyticsReportsDataProvider analyticsReportsDataProvider,
 			String canonicalURL, long companyId, TimeRange timeRange)
-		throws PortalException {
+		throws Exception {
 
 		if (!analyticsReportsDataProvider.isValidAnalyticsConnection(
 				companyId)) {
@@ -153,6 +156,9 @@ public class GetSocialTrafficSourcesMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetSocialTrafficSourcesMVCResourceCommand.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Http _http;

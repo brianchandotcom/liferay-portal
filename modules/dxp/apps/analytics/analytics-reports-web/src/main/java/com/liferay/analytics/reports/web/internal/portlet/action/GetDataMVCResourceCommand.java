@@ -24,6 +24,7 @@ import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsRe
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
@@ -175,14 +176,15 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			"hasValidConnection",
 			() -> {
 				AnalyticsReportsDataProvider analyticsReportsDataProvider =
-					new AnalyticsReportsDataProvider(_http);
+					new AnalyticsReportsDataProvider(
+						_analyticsSettingsManager, _http);
 
 				return analyticsReportsDataProvider.isValidAnalyticsConnection(
 					layout.getCompanyId());
 			}
 		).put(
 			"isSynced",
-			() -> AnalyticsReportsUtil.isAnalyticsSynced(
+			() -> _analyticsSettingsManager.isSiteIdSynced(
 				layout.getCompanyId(), layout.getGroupId())
 		).put(
 			"url",
@@ -629,6 +631,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Http _http;

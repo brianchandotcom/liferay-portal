@@ -22,6 +22,7 @@ import com.liferay.analytics.reports.web.internal.model.ReferringURL;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -74,6 +75,7 @@ public class AnalyticsReportsDataProviderTest {
 	public void testGetAcquisitionChannels() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					Collections.singletonMap(
 						"/acquisition-channels",
@@ -121,6 +123,7 @@ public class AnalyticsReportsDataProviderTest {
 	public void testGetDomainReferringURLs() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					Collections.singletonMap(
 						"/page-referrer-hosts",
@@ -159,6 +162,7 @@ public class AnalyticsReportsDataProviderTest {
 
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					Collections.singletonMap(
 						"/read-counts",
@@ -207,6 +211,7 @@ public class AnalyticsReportsDataProviderTest {
 	public void testGetPageReferringURLs() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					Collections.singletonMap(
 						"/page-referrers",
@@ -252,6 +257,7 @@ public class AnalyticsReportsDataProviderTest {
 	public void testGetReferringSocialMediaList() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					Collections.singletonMap(
 						"/social-page-referrers",
@@ -290,6 +296,7 @@ public class AnalyticsReportsDataProviderTest {
 	public void testGetTotalReads() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					HashMapBuilder.put(
 						"/read-count", "12345"
@@ -323,7 +330,8 @@ public class AnalyticsReportsDataProviderTest {
 	@Test(expected = PortalException.class)
 	public void testGetTotalReadsWithAsahFaroBackendError() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			new AnalyticsReportsDataProvider(_getHttp(new IOException()));
+			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(), _getHttp(new IOException()));
 
 		analyticsReportsDataProvider.getTotalReads(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
@@ -333,6 +341,7 @@ public class AnalyticsReportsDataProviderTest {
 	public void testGetTotalViews() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					HashMapBuilder.put(
 						"/view-count", "12345"
@@ -366,7 +375,8 @@ public class AnalyticsReportsDataProviderTest {
 	@Test(expected = PortalException.class)
 	public void testGetTotalViewsWithAsahFaroBackendError() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			new AnalyticsReportsDataProvider(_getHttp(new IOException()));
+			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(), _getHttp(new IOException()));
 
 		analyticsReportsDataProvider.getTotalViews(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
@@ -376,6 +386,7 @@ public class AnalyticsReportsDataProviderTest {
 	public void testGetTrafficChannels() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(),
 				_getHttp(
 					HashMapBuilder.put(
 						"/acquisition-channels",
@@ -421,7 +432,8 @@ public class AnalyticsReportsDataProviderTest {
 		throws Exception {
 
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			new AnalyticsReportsDataProvider(_getHttp(new IOException()));
+			new AnalyticsReportsDataProvider(
+				_getAnalyticsSettingsManager(), _getHttp(new IOException()));
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
@@ -433,8 +445,16 @@ public class AnalyticsReportsDataProviderTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testNewAnalyticsReportsDataProviderWithNullHttp() {
-		new AnalyticsReportsDataProvider(null);
+	public void testNewAnalyticsReportsDataProviderWithNullHttp()
+		throws Exception {
+
+		new AnalyticsReportsDataProvider(_getAnalyticsSettingsManager(), null);
+	}
+
+	private AnalyticsSettingsManager _getAnalyticsSettingsManager()
+		throws Exception {
+
+		return Mockito.mock(AnalyticsSettingsManager.class);
 	}
 
 	private Http _getHttp(Exception exception) throws Exception {

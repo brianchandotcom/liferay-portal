@@ -16,6 +16,7 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -54,7 +55,8 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			new AnalyticsReportsDataProvider(_http);
+			new AnalyticsReportsDataProvider(_analyticsSettingsManager, _http);
+
 		String canonicalURL = ParamUtil.getString(
 			resourceRequest, "canonicalURL");
 
@@ -91,6 +93,9 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetTotalReadsMVCResourceCommand.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Http _http;

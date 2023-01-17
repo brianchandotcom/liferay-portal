@@ -19,7 +19,7 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
-import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../contexts/ControlsContext';
@@ -36,7 +36,7 @@ import {
 import hideFragment from '../../utils/hideFragment';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
-import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
+import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
 
 export default function TopperItemActions({item}) {
 	const [active, setActive] = useState(false);

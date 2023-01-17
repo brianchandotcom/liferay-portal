@@ -22,7 +22,7 @@ import {
 	ControlsProvider,
 	useSelectItem,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
-import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
+import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 const AutoSelect = ({itemId}) => {
 	useSelectItem()(itemId);

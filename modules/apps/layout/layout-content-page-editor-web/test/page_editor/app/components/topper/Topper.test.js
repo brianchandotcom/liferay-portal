@@ -18,7 +18,7 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import Row from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Row';
+import Row from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/Row';
 import Topper from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/Topper';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';

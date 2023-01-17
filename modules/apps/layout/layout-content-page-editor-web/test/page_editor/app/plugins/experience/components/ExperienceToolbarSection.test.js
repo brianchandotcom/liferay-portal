@@ -22,7 +22,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import configModule from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
+import configModule from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import serviceFetch from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
 import {

@@ -17,7 +17,7 @@ import React from 'react';
 
 import {SWITCH_SIDEBAR_PANEL} from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/types';
 import ShortcutManager from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ShortcutManager';
-import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
+import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 const DEFAULT_STATE = {
 	permissions: {

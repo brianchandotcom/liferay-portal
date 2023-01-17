@@ -19,14 +19,14 @@ import React, {useEffect, useRef} from 'react';
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
-} from '../../prop-types/index';
+} from '../../prop_types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
 import useDropContainerId from '../utils/useDropContainerId';
-import FragmentWithControls from './layout-data-items/FragmentWithControls';
+import FragmentWithControls from './layout_data_items/FragmentWithControls';
 import {
 	CollectionItemWithControls,
 	CollectionWithControls,
@@ -36,7 +36,7 @@ import {
 	FormWithControls,
 	Root,
 	RowWithControls,
-} from './layout-data-items/index';
+} from './layout_data_items/index';
 
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: CollectionWithControls,

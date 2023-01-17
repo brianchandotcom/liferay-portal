@@ -19,11 +19,11 @@ import React from 'react';
 
 import {VIEWPORT_SIZES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import SpacingBox from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/SpacingBox';
-import {StyleBookContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-design-options/hooks/useStyleBook';
-import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
+import {StyleBookContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_design_options/hooks/useStyleBook';
+import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
 			availableViewportSizes: {

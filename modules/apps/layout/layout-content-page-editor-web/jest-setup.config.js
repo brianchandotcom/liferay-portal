@@ -35,7 +35,7 @@ if (typeof Array.prototype.flatMap !== 'function') {
 
 // eslint-disable-next-line
 jest.mock(
-	'./src/main/resources/META-INF/resources/page_editor/app/config',
+	'./src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
 			availableLanguages: {

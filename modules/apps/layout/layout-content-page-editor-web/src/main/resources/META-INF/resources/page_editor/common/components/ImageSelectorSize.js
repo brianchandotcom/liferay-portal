@@ -22,8 +22,8 @@ import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useSelector} from '../../app/contexts/StoreContext';
 import selectLanguageId from '../../app/selectors/selectLanguageId';
 import ImageService from '../../app/services/ImageService';
-import isMapped from '../../app/utils/editable-value/isMapped';
-import resolveEditableValue from '../../app/utils/editable-value/resolveEditableValue';
+import isMapped from '../../app/utils/editable_value/isMapped';
+import resolveEditableValue from '../../app/utils/editable_value/resolveEditableValue';
 import {useId} from '../hooks/useId';
 
 export const DEFAULT_IMAGE_SIZE_ID = 'auto';

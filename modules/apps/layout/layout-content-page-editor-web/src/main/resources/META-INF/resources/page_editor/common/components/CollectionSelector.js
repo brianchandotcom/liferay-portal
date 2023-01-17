@@ -18,7 +18,7 @@ import React from 'react';
 
 import {config} from '../../app/config/index';
 import {useCustomCollectionSelectorURL} from '../../app/contexts/CollectionItemContext';
-import itemSelectorValueToCollection from '../../app/utils/item-selector-value/itemSelectorValueToCollection';
+import itemSelectorValueToCollection from '../../app/utils/item_selector_value/itemSelectorValueToCollection';
 import ItemSelector from './ItemSelector';
 
 const DEFAULT_OPTION_MENU_ITEMS = [];

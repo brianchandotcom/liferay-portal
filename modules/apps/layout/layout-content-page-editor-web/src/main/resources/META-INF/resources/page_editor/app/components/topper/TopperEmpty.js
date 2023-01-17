@@ -15,18 +15,18 @@
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
-import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {
 	useMovementTarget,
 	useMovementTargetPosition,
 } from '../../contexts/KeyboardMovementContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
-import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
+import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import {
 	useDropTarget,
 	useIsDroppable,
-} from '../../utils/drag-and-drop/useDragAndDrop';
+} from '../../utils/drag_and_drop/useDragAndDrop';
 import useDropContainerId from '../../utils/useDropContainerId';
 
 export default function ({children, ...props}) {

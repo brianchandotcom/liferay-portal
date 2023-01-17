@@ -16,7 +16,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useEffect, useState} from 'react';
 
 import ImageService from '../services/ImageService';
-import resolveEditableValue from './editable-value/resolveEditableValue';
+import resolveEditableValue from './editable_value/resolveEditableValue';
 
 export default function useBackgroundImageValue(
 	elementId,

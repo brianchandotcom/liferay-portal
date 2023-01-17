@@ -14,7 +14,7 @@
 
 import {useEffect, useRef} from 'react';
 
-import {switchSidebarPanel} from '../../actions';
+import {switchSidebarPanel} from '../../actions/index';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectSidebarIsOpened from '../../selectors/selectSidebarIsOpened';
 import hideProductMenuIfPresent from '../../utils/hideProductMenuIfPresent';

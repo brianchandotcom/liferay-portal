@@ -16,7 +16,7 @@ import {VIEWPORT_SIZES} from '../../../../src/main/resources/META-INF/resources/
 import getPreviousResponsiveStyle from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getPreviousResponsiveStyle';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
 			availableViewportSizes: {

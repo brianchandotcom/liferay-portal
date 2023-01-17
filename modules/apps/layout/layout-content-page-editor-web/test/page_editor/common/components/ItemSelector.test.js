@@ -21,7 +21,7 @@ import ItemSelector from '../../../../src/main/resources/META-INF/resources/page
 import {openItemSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/common/openItemSelector';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
 			infoItemSelectorUrl: 'infoItemSelectorUrl',

@@ -28,8 +28,8 @@ import Sidebar, {
 	MIN_SIZEBAR_WIDTH,
 	SIDEBAR_WIDTH_RESIZE_STEP,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/Sidebar';
-import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag-and-drop/useDragAndDrop';
-import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
+import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag_and_drop/useDragAndDrop';
+import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 const renderSidebar = async () => {
 	render(

@@ -22,17 +22,17 @@
 @import 'Translation';
 @import 'ViewportSizeSelector';
 
-@import 'fragment-configuration-fields/AdvancedSelectField';
-@import 'fragment-configuration-fields/CSSClassSelectorField';
-@import 'fragment-configuration-fields/CustomCSSField';
-@import 'fragment-configuration-fields/HideFromSearchField';
-@import 'fragment-configuration-fields/TargetCollectionsField';
+@import 'fragment_configuration_fields/AdvancedSelectField';
+@import 'fragment_configuration_fields/CSSClassSelectorField';
+@import 'fragment_configuration_fields/CustomCSSField';
+@import 'fragment_configuration_fields/HideFromSearchField';
+@import 'fragment_configuration_fields/TargetCollectionsField';
 
-@import 'fragment-content/FragmentContent';
+@import 'fragment_content/FragmentContent';
 
-@import 'layout-data-items/CollectionPagination';
-@import 'layout-data-items/FormWithControls';
-@import 'layout-data-items/RowWithControls';
+@import 'layout_data_items/CollectionPagination';
+@import 'layout_data_items/FormWithControls';
+@import 'layout_data_items/RowWithControls';
 
 @import 'topper/Topper';
 
@@ -57,6 +57,6 @@
 @import '../../plugins/browser/components/Plugin';
 @import '../../plugins/comments/components/Plugin';
 @import '../../plugins/experience/components/Plugin';
-@import '../../plugins/fragments-widgets/components/Plugin';
-@import '../../plugins/page-content/components/Plugin';
-@import '../../plugins/page-design-options/components/Plugin';
+@import '../../plugins/fragments_and_widgets/components/Plugin';
+@import '../../plugins/page_content/components/Plugin';
+@import '../../plugins/page_design_options/components/Plugin';

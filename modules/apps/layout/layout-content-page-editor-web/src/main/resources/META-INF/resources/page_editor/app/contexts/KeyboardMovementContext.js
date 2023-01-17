@@ -14,7 +14,7 @@
 
 import React, {useCallback, useContext, useState} from 'react';
 
-import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
+import {TARGET_POSITIONS} from '../utils/drag_and_drop/constants/targetPositions';
 import isItemContainerFlex from '../utils/isItemContainerFlex';
 import {useSelectorRef} from './StoreContext';
 

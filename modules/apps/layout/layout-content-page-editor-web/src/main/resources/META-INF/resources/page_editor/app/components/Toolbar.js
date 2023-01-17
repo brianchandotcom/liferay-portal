@@ -32,7 +32,7 @@ import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
-import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
+import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
 import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import HideSidebarButton from './HideSidebarButton';

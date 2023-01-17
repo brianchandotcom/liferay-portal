@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {toggleShowResolvedComments} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/actions';
+import {toggleShowResolvedComments} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/actions/index';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import ResolvedCommentsToggle from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/comments/components/ResolvedCommentsToggle';
 

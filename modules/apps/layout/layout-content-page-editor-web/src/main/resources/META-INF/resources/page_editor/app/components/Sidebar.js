@@ -37,7 +37,7 @@ import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectItemConfigurationOpen from '../selectors/selectItemConfigurationOpen';
 import selectSidebarIsOpened from '../selectors/selectSidebarIsOpened';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
-import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
+import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
 
 const {Suspense, useCallback, useEffect} = React;
 

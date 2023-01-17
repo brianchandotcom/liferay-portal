@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 
 import {useId} from '../../../common/hooks/useId';
-import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
@@ -49,12 +49,12 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import moveItem from '../../thunks/moveItem';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
-import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
+import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import {
 	useDragItem,
 	useDropTarget,
 	useIsDroppable,
-} from '../../utils/drag-and-drop/useDragAndDrop';
+} from '../../utils/drag_and_drop/useDragAndDrop';
 import isItemWidget from '../../utils/isItemWidget';
 import useDropContainerId from '../../utils/useDropContainerId';
 import TopperItemActions from './TopperItemActions';

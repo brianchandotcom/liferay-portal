@@ -25,7 +25,7 @@ import {VIEWPORT_SIZES} from '../../app/config/constants/viewportSizes';
 import {useSelector} from '../../app/contexts/StoreContext';
 import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
-import {ConfigurationFieldPropTypes} from '../../prop-types/index';
+import {ConfigurationFieldPropTypes} from '../../prop_types/index';
 import useControlledState from '../hooks/useControlledState';
 import {useId} from '../hooks/useId';
 

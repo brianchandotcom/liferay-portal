@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getToControlsId} from '../components/layout-data-items/Collection';
+import {getToControlsId} from '../components/layout_data_items/Collection';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 

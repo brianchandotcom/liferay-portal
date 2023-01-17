@@ -19,20 +19,20 @@ import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
-} from '../../prop-types/index';
+} from '../../prop_types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import Layout from './Layout';
-import FragmentContent from './fragment-content/FragmentContent';
-import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
+import FragmentContent from './fragment_content/FragmentContent';
+import hasDropZoneChild from './layout_data_items/hasDropZoneChild';
 import {
 	Collection,
 	Column,
 	Container,
 	Form,
 	Row,
-} from './layout-data-items/index';
+} from './layout_data_items/index';
 
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: Collection,

@@ -46,7 +46,7 @@ public class PageContentPageEditorSidebarPanel
 
 	@Override
 	public String getId() {
-		return "page-content";
+		return "page_content";
 	}
 
 	@Override

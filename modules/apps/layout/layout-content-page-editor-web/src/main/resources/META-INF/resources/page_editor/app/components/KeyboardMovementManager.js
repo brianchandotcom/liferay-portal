@@ -40,10 +40,10 @@ import addFragment from '../thunks/addFragment';
 import addItem from '../thunks/addItem';
 import addWidget from '../thunks/addWidget';
 import moveItem from '../thunks/moveItem';
-import checkAllowedChild from '../utils/drag-and-drop/checkAllowedChild';
-import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
-import getDropData from '../utils/drag-and-drop/getDropData';
-import itemIsAncestor from '../utils/drag-and-drop/itemIsAncestor';
+import checkAllowedChild from '../utils/drag_and_drop/checkAllowedChild';
+import {TARGET_POSITIONS} from '../utils/drag_and_drop/constants/targetPositions';
+import getDropData from '../utils/drag_and_drop/getDropData';
+import itemIsAncestor from '../utils/drag_and_drop/itemIsAncestor';
 import {isUnmappedCollection} from '../utils/isUnmappedCollection';
 
 const DIRECTIONS = {

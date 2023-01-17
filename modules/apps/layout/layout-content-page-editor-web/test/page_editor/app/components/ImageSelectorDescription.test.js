@@ -17,7 +17,7 @@ import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {ImageSelectorDescription} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelectorDescription';
-import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
+import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 describe('ImageSelectorDescription', () => {
 	it('synchronizes imageDescription prop with input value', () => {

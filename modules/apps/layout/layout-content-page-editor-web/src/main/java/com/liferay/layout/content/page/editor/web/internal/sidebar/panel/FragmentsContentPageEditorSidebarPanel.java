@@ -43,7 +43,7 @@ public class FragmentsContentPageEditorSidebarPanel
 
 	@Override
 	public String getId() {
-		return "fragments-widgets";
+		return "fragments_and_widgets";
 	}
 
 	@Override

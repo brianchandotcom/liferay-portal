@@ -23,7 +23,7 @@ export default function selectAvailablePanels(panels) {
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportSize: string }} state
 	 */
 	return function ({permissions, selectedViewportSize}) {
-		const availablePanels = ['browser', 'comments', 'page-content'];
+		const availablePanels = ['browser', 'comments', 'page_content'];
 
 		if (
 			permissions.LOCKED_SEGMENTS_EXPERIMENT ||

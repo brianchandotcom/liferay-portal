@@ -18,11 +18,11 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {CollectionItemWithControls} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items';
-import Collection from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Collection';
+import {CollectionItemWithControls} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items';
+import Collection from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/Collection';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import CollectionService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
-import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag-and-drop/useDragAndDrop';
+import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag_and_drop/useDragAndDrop';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService',
@@ -38,7 +38,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
 			maxNumberOfItemsInEditMode: 2,

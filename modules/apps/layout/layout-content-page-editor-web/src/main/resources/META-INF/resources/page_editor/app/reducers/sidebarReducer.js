@@ -15,7 +15,7 @@
 import {SWITCH_SIDEBAR_PANEL} from '../actions/types';
 import isNullOrUndefined from '../utils/isNullOrUndefined';
 
-const DEFAULT_PANEL_ID = 'fragments-widgets';
+const DEFAULT_PANEL_ID = 'fragments_and_widgets';
 
 export const INITIAL_STATE = {
 	hidden: false,

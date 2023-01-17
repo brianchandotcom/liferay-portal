@@ -14,7 +14,7 @@
 
 import {useEffect} from 'react';
 
-import {config} from '../../config';
+import {config} from '../../config/index';
 
 const DEFAULT_SESSION_LENGTH = 60 * 1000;
 

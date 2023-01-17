@@ -20,7 +20,7 @@ import PublishButton from '../../../../src/main/resources/META-INF/resources/pag
 import useCheckFormsValidity from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCheckFormsValidity';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
 			pending: false,

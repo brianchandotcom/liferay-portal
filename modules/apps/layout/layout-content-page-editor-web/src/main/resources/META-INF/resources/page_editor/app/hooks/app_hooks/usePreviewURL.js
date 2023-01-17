@@ -14,8 +14,8 @@
 
 import {useEffect} from 'react';
 
-import {config} from '../../config';
 import {LAYOUT_TYPES} from '../../config/constants/layoutTypes';
+import {config} from '../../config/index';
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';

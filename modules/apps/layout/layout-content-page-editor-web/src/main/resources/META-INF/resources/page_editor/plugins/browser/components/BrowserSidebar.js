@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import PageStructureSidebar from './page-structure/components/PageStructureSidebar';
+import PageStructureSidebar from './page_structure/components/PageStructureSidebar';
 export default function BrowserSidebar({title}) {
 	return (
 		<div className={classNames('page-editor__sidebar__browser')}>

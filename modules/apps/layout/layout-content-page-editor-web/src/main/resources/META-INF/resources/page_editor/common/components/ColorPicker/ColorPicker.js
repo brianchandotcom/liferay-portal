@@ -28,7 +28,7 @@ import {
 	useStyleErrors,
 } from '../../../app/contexts/StyleErrorsContext';
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
-import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {useId} from '../../hooks/useId';
 import {DropdownColorPicker} from './DropdownColorPicker';
 import {parseColorValue} from './parseColorValue';

@@ -14,7 +14,7 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
-import {config} from '../app/config';
+import {config} from '../app/config/index';
 
 export function openImageSelector(callback, destroyedCallback = null) {
 	openSelectionModal({

@@ -28,7 +28,7 @@ import {
 	useDisplayPageRecentPreviewItemList,
 	useSelectDisplayPagePreviewItem,
 } from '../contexts/DisplayPagePreviewItemContext';
-import itemSelectorValueToInfoItem from '../utils/item-selector-value/itemSelectorValueToInfoItem';
+import itemSelectorValueToInfoItem from '../utils/item_selector_value/itemSelectorValueToInfoItem';
 
 const NO_ITEM_LABEL = `-- ${Liferay.Language.get('none')} --`;
 

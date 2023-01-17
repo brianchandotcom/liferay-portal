@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
 import {config} from '../../app/config/index';
-import itemSelectorValueToLayout from '../../app/utils/item-selector-value/itemSelectorValueToLayout';
+import itemSelectorValueToLayout from '../../app/utils/item_selector_value/itemSelectorValueToLayout';
 import ItemSelector from './ItemSelector';
 
 export function LayoutSelector({mappedLayout, onLayoutSelect}) {

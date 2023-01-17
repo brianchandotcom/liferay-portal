@@ -43,7 +43,7 @@ public class PageDesignOptionsSidebarPanel
 
 	@Override
 	public String getId() {
-		return "page-design-options";
+		return "page_design_options";
 	}
 
 	@Override

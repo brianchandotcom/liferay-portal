@@ -14,8 +14,8 @@
 
 import {useMovementTarget} from '../contexts/KeyboardMovementContext';
 import {useSelectorRef} from '../contexts/StoreContext';
-import getDropContainerId from './drag-and-drop/getDropContainerId';
-import {useDropTargetData} from './drag-and-drop/useDragAndDrop';
+import getDropContainerId from './drag_and_drop/getDropContainerId';
+import {useDropTargetData} from './drag_and_drop/useDragAndDrop';
 
 export default function useDropContainerId() {
 	const {item: dropItem, position: dropPosition} = useDropTargetData();

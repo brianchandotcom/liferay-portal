@@ -7,5 +7,14 @@ definition {
 			key_buttonText = "${buttonText}",
 			locator1 = "PRMHomePage#QUICK_OPTIONS");
 	}
+	
+	@summary = "View Announcement on PRM Home Page"
+	macro viewAnnouncementOnList {
+		AssertElementPresent(
+			key_announcementContent = "${announcementBody}",
+			key_announcementTitle = "${announcementTitle}",
+			locator1 = "PRMAnnouncements#ANNOUNCEMENT_TITLE_AND_CONTENT");
+	}
+
 
 }

@@ -70,7 +70,7 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 	@Activate
 	protected void activate() {
 		_asahFaroBackendClient = new AsahFaroBackendClientImpl(
-			_jsonWebServiceClient);
+			_analyticsSettingsManager, _jsonWebServiceClient);
 	}
 
 	@Deactivate

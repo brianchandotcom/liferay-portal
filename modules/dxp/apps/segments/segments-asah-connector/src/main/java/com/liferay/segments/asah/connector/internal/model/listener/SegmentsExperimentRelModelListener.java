@@ -95,7 +95,8 @@ public class SegmentsExperimentRelModelListener
 	protected void activate() {
 		_asahSegmentsExperimentProcessor = new AsahSegmentsExperimentProcessor(
 			_analyticsSettingsManager,
-			new AsahFaroBackendClientImpl(_jsonWebServiceClient),
+			new AsahFaroBackendClientImpl(
+				_analyticsSettingsManager, _jsonWebServiceClient),
 			_companyLocalService, _groupLocalService, _layoutLocalService,
 			_portal, _segmentsEntryLocalService,
 			_segmentsExperienceLocalService);

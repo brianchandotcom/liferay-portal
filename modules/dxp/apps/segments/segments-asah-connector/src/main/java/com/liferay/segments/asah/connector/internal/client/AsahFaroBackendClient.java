@@ -66,16 +66,7 @@ public interface AsahFaroBackendClient {
 	public void deleteExperiment(long companyId, String experimentId);
 
 	/**
-	 * Returns the ID of the data source connected to the client.
-	 *
-	 * @param  companyId the company ID
-	 * @return the ID of the data source connected to the client
-	 */
-	public String getDataSourceId(long companyId);
-
-	/**
-	 * Returns the individual matching the primary key for the data source
-	 * {@link #getDataSourceId(long)}.
+	 * Returns the individual matching the primary key for the data source.
 	 *
 	 * @param  companyId the company ID
 	 * @param  individualPK the primary key of the individual

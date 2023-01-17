@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.client;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,6 +46,7 @@ public class AsahFaroBackendClientImplTest {
 		_jsonWebServiceClient = Mockito.mock(JSONWebServiceClient.class);
 
 		_asahFaroBackendClient = new AsahFaroBackendClientImpl(
+			Mockito.mock(AnalyticsSettingsManager.class),
 			_jsonWebServiceClient);
 
 		ReflectionTestUtil.setFieldValue(

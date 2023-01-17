@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.messaging;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -118,7 +119,7 @@ public class IndividualSegmentsChecker {
 	@Activate
 	protected void activate() {
 		_asahFaroBackendClient = new AsahFaroBackendClientImpl(
-			_jsonWebServiceClient);
+			_analyticsSettingsManager, _jsonWebServiceClient);
 	}
 
 	@Deactivate
@@ -177,8 +178,12 @@ public class IndividualSegmentsChecker {
 		}
 	}
 
-	private void _checkIndividualSegmentMemberships(
-		SegmentsEntry segmentsEntry) {
+	private void _checkIndividualSegmentMemberships(SegmentsEntry segmentsEntry)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				segmentsEntry.getCompanyId());
 
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
 			segmentsEntry.getSegmentsEntryId());
@@ -216,7 +221,10 @@ public class IndividualSegmentsChecker {
 				individuals.forEach(
 					individual -> {
 						Long userId = _getUserId(
-							segmentsEntry.getCompanyId(), individual);
+							segmentsEntry.getCompanyId(),
+							analyticsConfiguration.
+								liferayAnalyticsDataSourceId(),
+							individual);
 
 						if (userId != null) {
 							userIds.add(userId);
@@ -292,7 +300,7 @@ public class IndividualSegmentsChecker {
 				companyId, individualSegment));
 	}
 
-	private void _checkIndividualSegmentsMemberships() {
+	private void _checkIndividualSegmentsMemberships() throws Exception {
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntriesBySource(
 				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
@@ -319,13 +327,14 @@ public class IndividualSegmentsChecker {
 		return serviceContext;
 	}
 
-	private Long _getUserId(long companyId, Individual individual) {
+	private Long _getUserId(
+		long companyId, String dataSourceId, Individual individual) {
+
 		for (Individual.DataSourceIndividualPK dataSourceIndividualPK :
 				individual.getDataSourceIndividualPKs()) {
 
 			if (Objects.equals(
-					_asahFaroBackendClient.getDataSourceId(companyId),
-					dataSourceIndividualPK.getDataSourceId())) {
+					dataSourceId, dataSourceIndividualPK.getDataSourceId())) {
 
 				for (String individualUuid :
 						dataSourceIndividualPK.getIndividualPKs()) {

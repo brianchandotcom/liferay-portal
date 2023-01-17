@@ -140,7 +140,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
-	public void testIsShowWithIsShowAnalyticsReportsInfoItemWithoutAnalyticsConnected()
+	public void testIsShowWithIsShowAnalyticsReportsInfoItemWithNullLiferayAnalyticsDataSourceId()
 		throws Exception {
 
 		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
@@ -171,7 +171,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
-	public void testIsShowWithIsShowAnalyticsReportsInfoItemWithoutAnalyticsConnectedAndHidePanel()
+	public void testIsShowWithIsShowAnalyticsReportsInfoItemWithNullLiferayAnalyticsDataSourceIdAndHidePanel()
 		throws Exception {
 
 		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();

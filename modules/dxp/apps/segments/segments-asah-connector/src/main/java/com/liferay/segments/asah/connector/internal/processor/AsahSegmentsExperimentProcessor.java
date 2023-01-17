@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.processor;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -68,12 +69,15 @@ public class AsahSegmentsExperimentProcessor {
 			return;
 		}
 
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				segmentsExperiment.getCompanyId());
+
 		Experiment experiment = _asahFaroBackendClient.addExperiment(
 			segmentsExperiment.getCompanyId(),
 			ExperimentUtil.toExperiment(
 				_companyLocalService,
-				_asahFaroBackendClient.getDataSourceId(
-					segmentsExperiment.getCompanyId()),
+				analyticsConfiguration.liferayAnalyticsDataSourceId(),
 				_groupLocalService, _layoutLocalService,
 				LocaleUtil.getSiteDefault(), _portal,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
@@ -109,12 +113,15 @@ public class AsahSegmentsExperimentProcessor {
 			return;
 		}
 
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				segmentsExperiment.getCompanyId());
+
 		_asahFaroBackendClient.updateExperiment(
 			segmentsExperiment.getCompanyId(),
 			ExperimentUtil.toExperiment(
 				_companyLocalService,
-				_asahFaroBackendClient.getDataSourceId(
-					segmentsExperiment.getCompanyId()),
+				analyticsConfiguration.liferayAnalyticsDataSourceId(),
 				_groupLocalService, _layoutLocalService,
 				LocaleUtil.getSiteDefault(), _portal,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
@@ -134,12 +141,15 @@ public class AsahSegmentsExperimentProcessor {
 			return;
 		}
 
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				segmentsExperiment.getCompanyId());
+
 		_asahFaroBackendClient.updateExperiment(
 			segmentsExperiment.getCompanyId(),
 			ExperimentUtil.toExperiment(
 				_companyLocalService,
-				_asahFaroBackendClient.getDataSourceId(
-					segmentsExperiment.getCompanyId()),
+				analyticsConfiguration.liferayAnalyticsDataSourceId(),
 				_groupLocalService, segmentsExperimentLayout,
 				LocaleUtil.getSiteDefault(), _portal,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,

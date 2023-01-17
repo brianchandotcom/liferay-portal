@@ -19,19 +19,24 @@ import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsConten
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.analytics.reports.info.item.MockObjectAnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.test.util.MockContextUtil;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -70,19 +75,40 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 
 	@Test
 	public void testIsShowContentDashboardItemAction() throws Exception {
-		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder(
-			).mockObjectAnalyticsReportsInfoItem(
-				MockObjectAnalyticsReportsInfoItem.builder(
-				).show(
-					true
-				).build()
-			).build(),
-			() -> Assert.assertTrue(
-				_analyticsReportsContentDashboardItemActionProvider.
-					isShowContentDashboardItemAction(
-						_getHttpServletRequest(),
-						new InfoItemReference(MockObject.class.getName(), 0))));
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId",
+							RandomTestUtil.randomLong()
+						).put(
+							"liferayAnalyticsEnableAllGroupIds", true
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							RandomTestUtil.randomString()
+						).put(
+							"liferayAnalyticsFaroBackendURL",
+							RandomTestUtil.randomString()
+						).build(),
+						SettingsFactoryUtil.getSettingsFactory())) {
+
+			MockContextUtil.testWithMockContext(
+				new MockContextUtil.MockContext.Builder(
+				).mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
+				() -> Assert.assertTrue(
+					_analyticsReportsContentDashboardItemActionProvider.
+						isShowContentDashboardItemAction(
+							_getHttpServletRequest(),
+							new InfoItemReference(
+								MockObject.class.getName(), 0))));
+		}
 	}
 
 	@Test

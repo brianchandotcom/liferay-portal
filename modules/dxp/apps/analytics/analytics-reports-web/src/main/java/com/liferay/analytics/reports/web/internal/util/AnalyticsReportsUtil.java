@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -95,25 +94,6 @@ public class AnalyticsReportsUtil {
 		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 		return portletURL.toString();
-	}
-
-	public static String getAsahFaroBackendDataSourceId(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsDataSourceId");
-	}
-
-	public static String getAsahFaroBackendSecuritySignature(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsFaroBackendSecuritySignature");
-	}
-
-	public static String getAsahFaroBackendURL(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsFaroBackendURL");
-	}
-
-	public static String getAsahProjectId(long companyId) {
-		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsProjectId");
 	}
 
 	public static boolean isShowAnalyticsReportsPanel(

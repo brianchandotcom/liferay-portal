@@ -14,15 +14,13 @@
 
 package com.liferay.analytics.reports.web.internal.client;
 
-import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
-
-import java.io.IOException;
 
 import org.apache.http.HttpStatus;
 
@@ -40,16 +38,19 @@ public class AsahFaroBackendClient {
 
 	public String doGet(long companyId, String path) {
 		try {
+			AnalyticsConfiguration analyticsConfiguration =
+				_analyticsSettingsManager.getAnalyticsConfiguration(companyId);
+
 			return _getResponse(
 				companyId,
 				String.format(
 					"%s/%s",
-					AnalyticsReportsUtil.getAsahFaroBackendURL(companyId),
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
 					path));
 		}
-		catch (IOException ioException) {
+		catch (Exception exception) {
 			throw new NestableRuntimeException(
-				"Request to Asah Faro backend failed", ioException);
+				"Request to Asah Faro backend failed", exception);
 		}
 	}
 
@@ -59,12 +60,13 @@ public class AsahFaroBackendClient {
 		}
 
 		try {
-			String asahFaroBackendDataSourceId =
-				AnalyticsReportsUtil.getAsahFaroBackendDataSourceId(companyId);
+			AnalyticsConfiguration analyticsConfiguration =
+				_analyticsSettingsManager.getAnalyticsConfiguration(companyId);
 
 			doGet(
 				companyId,
-				"/api/1.0/data-sources/" + asahFaroBackendDataSourceId);
+				"/api/1.0/data-sources/" +
+					analyticsConfiguration.liferayAnalyticsDataSourceId());
 
 			return true;
 		}
@@ -77,16 +79,19 @@ public class AsahFaroBackendClient {
 		}
 	}
 
-	private String _getResponse(long companyId, String url) throws IOException {
+	private String _getResponse(long companyId, String url) throws Exception {
 		Http.Options options = new Http.Options();
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(companyId);
 
 		options.addHeader("Accept", "application/json");
 		options.addHeader(
 			"OSB-Asah-Faro-Backend-Security-Signature",
-			AnalyticsReportsUtil.getAsahFaroBackendSecuritySignature(
-				companyId));
+			analyticsConfiguration.
+				liferayAnalyticsFaroBackendSecuritySignature());
 
-		String projectId = AnalyticsReportsUtil.getAsahProjectId(companyId);
+		String projectId = analyticsConfiguration.liferayAnalyticsProjectId();
 
 		if (projectId != null) {
 			options.addHeader("OSB-Asah-Project-ID", projectId);

@@ -18,31 +18,11 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 
 /**
  * @author Eduardo García
  */
 public class AsahUtil {
-
-	public static String getAsahFaroBackendDataSourceId(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsDataSourceId");
-	}
-
-	public static String getAsahFaroBackendSecuritySignature(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsFaroBackendSecuritySignature");
-	}
-
-	public static String getAsahFaroBackendURL(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsFaroBackendURL");
-	}
-
-	public static String getAsahProjectId(long companyId) {
-		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsProjectId");
-	}
 
 	public static boolean isSkipAsahEvent(
 			AnalyticsSettingsManager analyticsSettingsManager, long companyId,

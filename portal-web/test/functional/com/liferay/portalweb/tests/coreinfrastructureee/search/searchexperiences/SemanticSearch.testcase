@@ -25,12 +25,12 @@ definition {
 	test AssertBlacklistedTextEmbeddingProvidersAreUnavailable {
 		property custom.properties = "feature.flag.LPS-163688=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
-		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.search.experiences.internal.ml.text.embedding.TXTAITextEmbeddingProvider\",\"com.liferay.search.experiences.internal.ml.text.embedding.HuggingFaceInferenceAPITextEmbeddingProvider\"]";
+		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider\",\"com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider\"]";
 		property test.name.skip.portal.instance = "SemanticSearch#AssertBlacklistedTextEmbeddingProvidersAreUnavailable";
 
-		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.text.embedding.TXTAITextEmbeddingProvider");
+		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider");
 
-		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.text.embedding.HuggingFaceInferenceAPITextEmbeddingProvider");
+		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider");
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
 
@@ -58,9 +58,9 @@ definition {
 
 		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
 
-		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.text.embedding.TXTAITextEmbeddingProvider");
+		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider");
 
-		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.text.embedding.HuggingFaceInferenceAPITextEmbeddingProvider");
+		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider");
 
 		Refresh();
 

@@ -14,9 +14,24 @@
 
 import ClayDatePicker from '@clayui/date-picker';
 import moment from 'moment';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {FieldBase} from './FieldBase';
+
+interface DatePickerProps
+	extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
+	className?: string;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	id?: string;
+	label?: string;
+	name?: string;
+	onChange: (value: string) => void;
+	range?: boolean;
+	required?: boolean;
+	value?: string;
+}
 
 const NON_NUMERIC_REGEX = /[^0-9-]/;
 
@@ -31,7 +46,9 @@ export function DatePicker({
 	range,
 	required,
 	value,
-}: IProps) {
+}: DatePickerProps) {
+	const [expanded, setExpanded] = useState(false);
+
 	return (
 		<FieldBase
 			className={className}
@@ -43,8 +60,13 @@ export function DatePicker({
 			required={required}
 		>
 			<ClayDatePicker
+				expanded={expanded}
 				onChange={(value: string) => {
 					onChange(value.replace(NON_NUMERIC_REGEX, ''));
+					setExpanded(false);
+				}}
+				onExpandedChange={() => {
+					setExpanded(!expanded);
 				}}
 				placeholder="YYYY-MM-DD"
 				range={range}
@@ -56,19 +78,4 @@ export function DatePicker({
 			/>
 		</FieldBase>
 	);
-}
-
-interface IProps
-	extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
-	className?: string;
-	disabled?: boolean;
-	error?: string;
-	feedbackMessage?: string;
-	id?: string;
-	label?: string;
-	name?: string;
-	onChange: (value: string) => void;
-	range?: boolean;
-	required?: boolean;
-	value?: string;
 }

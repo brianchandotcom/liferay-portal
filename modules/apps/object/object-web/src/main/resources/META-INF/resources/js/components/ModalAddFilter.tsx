@@ -45,6 +45,7 @@ interface IProps {
 	aggregationFilter?: boolean;
 	creationLanguageId?: Locale;
 	currentFilters: CurrentFilter[];
+	disableAutoClose?: boolean;
 	disableDateValues?: boolean;
 	editingFilter: boolean;
 	editingObjectFieldName: string;
@@ -125,6 +126,7 @@ export function ModalAddFilter({
 	aggregationFilter,
 	creationLanguageId,
 	currentFilters,
+	disableAutoClose = false,
 	disableDateValues,
 	editingFilter,
 	editingObjectFieldName,
@@ -449,7 +451,7 @@ export function ModalAddFilter({
 			selectedFilterBy?.businessType === 'Relationship');
 
 	return (
-		<ClayModal observer={observer}>
+		<ClayModal disableAutoClose={disableAutoClose} observer={observer}>
 			<ClayModal.Header>{header}</ClayModal.Header>
 
 			<ClayModal.Body>

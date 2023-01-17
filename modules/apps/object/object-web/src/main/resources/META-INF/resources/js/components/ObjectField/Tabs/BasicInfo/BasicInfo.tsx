@@ -649,6 +649,7 @@ export function BasicInfo({
 				<ModalAddFilter
 					aggregationFilter
 					currentFilters={[]}
+					disableAutoClose
 					editingFilter={editingFilter}
 					editingObjectFieldName={editingObjectFieldName}
 					filterOperators={filterOperators}

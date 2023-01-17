@@ -20,6 +20,7 @@ interface IProps {
 	aggregationFilter?: boolean;
 	creationLanguageId?: Locale;
 	currentFilters: CurrentFilter[];
+	disableAutoClose?: boolean;
 	disableDateValues?: boolean;
 	editingFilter: boolean;
 	editingObjectFieldName: string;
@@ -86,6 +87,7 @@ export declare function ModalAddFilter({
 	aggregationFilter,
 	creationLanguageId,
 	currentFilters,
+	disableAutoClose,
 	disableDateValues,
 	editingFilter,
 	editingObjectFieldName,

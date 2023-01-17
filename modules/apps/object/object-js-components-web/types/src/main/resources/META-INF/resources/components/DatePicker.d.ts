@@ -13,19 +13,7 @@
  */
 
 import React from 'react';
-export declare function DatePicker({
-	className,
-	disabled,
-	error,
-	feedbackMessage,
-	id,
-	label,
-	onChange,
-	range,
-	required,
-	value,
-}: IProps): JSX.Element;
-interface IProps
+interface DatePickerProps
 	extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
 	className?: string;
 	disabled?: boolean;
@@ -39,4 +27,16 @@ interface IProps
 	required?: boolean;
 	value?: string;
 }
+export declare function DatePicker({
+	className,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	label,
+	onChange,
+	range,
+	required,
+	value,
+}: DatePickerProps): JSX.Element;
 export {};

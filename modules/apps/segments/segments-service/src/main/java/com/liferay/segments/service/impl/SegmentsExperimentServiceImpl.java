@@ -29,11 +29,10 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentServiceBaseImpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -223,17 +222,19 @@ public class SegmentsExperimentServiceImpl
 		Set<Map.Entry<String, Double>> segmentsExperienceKeySplits =
 			segmentsExperienceKeySplitMap.entrySet();
 
-		Stream<Map.Entry<String, Double>> segmentsExperienceKeySplitsStream =
-			segmentsExperienceKeySplits.stream();
+		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
 
-		Map<Long, Double> segmentsExperienceIdSplitMap =
-			segmentsExperienceKeySplitsStream.collect(
-				Collectors.toMap(
-					entry -> _getSegmentsExperienceId(
-						segmentsExperiment.getGroupId(), entry.getKey(),
-						segmentsExperiment.getClassNameId(),
-						segmentsExperiment.getClassPK()),
-					Map.Entry::getValue));
+		for (Map.Entry<String, Double> segmentsExperienceKeySplit :
+				segmentsExperienceKeySplits) {
+
+			segmentsExperienceIdSplitMap.put(
+				_getSegmentsExperienceId(
+					segmentsExperiment.getGroupId(),
+					segmentsExperienceKeySplit.getKey(),
+					segmentsExperiment.getClassNameId(),
+					segmentsExperiment.getClassPK()),
+				segmentsExperienceKeySplit.getValue());
+		}
 
 		return segmentsExperimentLocalService.runSegmentsExperiment(
 			segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,

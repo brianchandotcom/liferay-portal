@@ -139,12 +139,14 @@ public class AssetRendererFactoryRegistryUtil {
 				assetRendererFactories.getService(key);
 
 			if (key.startsWith("com.liferay.object.model.ObjectDefinition#")) {
-
-				if (key.split("#")[2].equals(Long.toString(companyId))) {
-					filteredAssetRendererFactories.put(key, assetRendererFactory);
+				if (key.split("#")[2].equals(String.valueOf(companyId))) {
+					filteredAssetRendererFactories.put(
+						key, assetRendererFactory);
 				}
-			} else if (assetRendererFactory.isActive(companyId) &&
-				(!filterSelectable || assetRendererFactory.isSelectable())) {
+			}
+			else if (assetRendererFactory.isActive(companyId) &&
+					 (!filterSelectable ||
+					  assetRendererFactory.isSelectable())) {
 
 				filteredAssetRendererFactories.put(key, assetRendererFactory);
 			}
@@ -172,9 +174,16 @@ public class AssetRendererFactoryRegistryUtil {
 
 					String className = assetRendererFactory.getClassName();
 
-					if (className.startsWith("com.liferay.object.model.ObjectDefinition#")) {
-						emitter.emit(className + "#" + GetterUtil.getLong(serviceReference.getProperty("company.id")));
-					} else {
+					if (className.startsWith(
+							"com.liferay.object.model.ObjectDefinition#")) {
+
+						emitter.emit(
+							className + "#" +
+								GetterUtil.getLong(
+									serviceReference.getProperty(
+										"company.id")));
+					}
+					else {
 						emitter.emit(className);
 					}
 				});

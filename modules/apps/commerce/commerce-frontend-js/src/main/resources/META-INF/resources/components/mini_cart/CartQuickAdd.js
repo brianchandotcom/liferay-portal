@@ -56,7 +56,7 @@ export default function CartQuickAdd() {
 	const [productsQuery, setProductsQuery] = useState('');
 	const [quickAddToCartError, setQuickAddToCartError] = useState(false);
 	const [selectedProducts, setSelectedProducts] = useState([]);
-	const [products, setProducts] = useState();
+	const [productsWithOptions, setProductsWithOptions] = useState([]);
 
 	const {cartItems = [], channel} = cartState;
 	const accountId = cartState.accountId;
@@ -96,28 +96,17 @@ export default function CartQuickAdd() {
 
 				setFormattedProducts(formattedProducts);
 
-				const productsWithOptions = availableProducts.items.filter(
-					(product) => {
-						if (product.skus.length > 1) {
-							return product.skus.map((sku) => sku);
-						}
-					}
+				setProductsWithOptions(
+					availableProducts.items.filter(
+						(product) => product.skus.length > 1
+					)
 				);
-
-				setProducts([
-					...availableProducts.items,
-					...productsWithOptions,
-				]);
 			});
 	}, [accountId, channelId]);
 
 	const handleAddToCartClick = () => {
 		const readyProducts = selectedProducts.map((product) => {
 			if (product.sku) {
-				const productsWithOptions = products.filter(
-					(item) => item.skus && item.skus.length > 1
-				);
-
 				const parentProduct = productsWithOptions.find((item) =>
 					item.skus.find((childSku) => childSku.sku === product.sku)
 				);

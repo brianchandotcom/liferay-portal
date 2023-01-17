@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -100,6 +102,16 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		return company.getWebId() + "-lxc-dxp-metadata";
 	}
 
+	private String _getWebServerProtocol() {
+		String webServerProtocol = PropsValues.WEB_SERVER_PROTOCOL;
+
+		if (Validator.isNull(webServerProtocol)) {
+			return Http.HTTP;
+		}
+
+		return webServerProtocol;
+	}
+
 	private void _modifyConfigMap(Company company) {
 		List<String> virtualHostNames = new ArrayList<>();
 
@@ -120,6 +132,9 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 				data.put(
 					"com.liferay.lxc.dxp.mainDomain",
 					company.getVirtualHostname());
+				data.put(
+					"com.liferay.lxc.dxp.server.protocol",
+					_getWebServerProtocol());
 
 				Map<String, String> labels = configMapModel.labels();
 

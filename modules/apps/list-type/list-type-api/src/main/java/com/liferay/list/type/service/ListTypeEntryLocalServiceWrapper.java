@@ -125,6 +125,14 @@ public class ListTypeEntryLocalServiceWrapper
 		return _listTypeEntryLocalService.deleteListTypeEntry(listTypeEntryId);
 	}
 
+	@Override
+	public void deleteListTypeEntryByListTypeDefinitionId(
+		long listTypeDefinitionId) {
+
+		_listTypeEntryLocalService.deleteListTypeEntryByListTypeDefinitionId(
+			listTypeDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

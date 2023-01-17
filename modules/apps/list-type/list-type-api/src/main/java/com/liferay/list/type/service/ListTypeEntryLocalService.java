@@ -128,6 +128,9 @@ public interface ListTypeEntryLocalService
 	public ListTypeEntry deleteListTypeEntry(long listTypeEntryId)
 		throws PortalException;
 
+	public void deleteListTypeEntryByListTypeDefinitionId(
+		long listTypeDefinitionId);
+
 	/**
 	 * @throws PortalException
 	 */

@@ -15,6 +15,7 @@
 package com.liferay.list.type.service;
 
 import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -54,7 +55,8 @@ public interface ListTypeDefinitionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the list type definition remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ListTypeDefinitionServiceUtil} if injection and service tracking are not available.
 	 */
 	public ListTypeDefinition addListTypeDefinition(
-			String externalReferenceCode, Map<Locale, String> nameMap)
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			List<ListTypeEntry> listTypeEntries)
 		throws PortalException;
 
 	public ListTypeDefinition deleteListTypeDefinition(
@@ -89,7 +91,7 @@ public interface ListTypeDefinitionService extends BaseService {
 
 	public ListTypeDefinition updateListTypeDefinition(
 			String externalReferenceCode, long listTypeDefinitionId,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, List<ListTypeEntry> listTypeEntries)
 		throws PortalException;
 
 }

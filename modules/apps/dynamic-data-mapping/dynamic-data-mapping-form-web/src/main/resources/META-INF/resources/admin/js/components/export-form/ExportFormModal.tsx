@@ -17,7 +17,6 @@ import ClayModal from '@clayui/modal';
 import React from 'react';
 
 import ExportFormModalBody from './ExportFormModalBody';
-import {TFileExtensions} from './types';
 
 const ExportFormModal: React.FC<IProps> = ({
 	csvExport,
@@ -70,7 +69,7 @@ const ExportFormModal: React.FC<IProps> = ({
 interface IProps {
 	csvExport: string;
 	exportFormURL: string;
-	fileExtensions: TFileExtensions;
+	fileExtensions: string[];
 	observer: any;
 	onClose: () => void;
 	portletNamespace: string;

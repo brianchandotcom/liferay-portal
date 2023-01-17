@@ -13,11 +13,10 @@
  */
 
 import React from 'react';
-import {TFileExtensions} from './types';
 declare const ExportForm: React.FC<IProps>;
 interface IProps {
 	csvExport: string;
-	fileExtensions: TFileExtensions;
+	fileExtensions: string[];
 	portletNamespace: string;
 }
 export default ExportForm;

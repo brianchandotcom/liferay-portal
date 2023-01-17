@@ -48,8 +48,7 @@ public class FunctionActionExecutorImplFactory {
 
 		_componentInstance = _componentFactory.newInstance(
 			HashMapDictionaryBuilder.<String, Object>put(
-				"com.liferay.portal.workflow.kaleo.runtime.action.executor." +
-					"language",
+				FunctionActionExecutorImpl.KEY,
 				"function#" + externalReferenceCode
 			).putAll(
 				properties

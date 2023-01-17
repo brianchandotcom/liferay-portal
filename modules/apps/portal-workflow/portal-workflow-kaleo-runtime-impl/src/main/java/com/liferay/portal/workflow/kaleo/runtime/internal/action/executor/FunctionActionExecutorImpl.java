@@ -51,6 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FunctionActionExecutorImpl implements ActionExecutor {
 
+	public static final String KEY = "actionExecutorLanguage";
+
 	@Override
 	public void execute(
 			KaleoAction kaleoAction, ExecutionContext executionContext)
@@ -64,8 +66,14 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 		}
 	}
 
+	@Override
+	public String[] getActionExecutorLanguages() {
+		return _actionExecutorLanguages;
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
+		_actionExecutorLanguages[0] = (String)properties.get(KEY);
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionActionExecutorImplConfiguration =
@@ -183,6 +191,7 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FunctionActionExecutorImpl.class);
 
+	private final String[] _actionExecutorLanguages = new String[1];
 	private long _companyId;
 
 	@Reference

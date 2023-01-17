@@ -1,0 +1,118 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Create DXP Site with Commerce") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium Demo");
+		}
+
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+
+        task ("Click on sync all contacts and accounts") {
+			ACDXPSettings.syncContactsAndAccountstData();
+		}
+
+        task ("Go to the next page to configure attributes") {
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.tearDownNonDefaultGroups();
+
+			ACUtils.tearDownCommerce();
+		}
+	}
+
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12777 | Test Summary: Select Attributes for People"
+	@priority = "5"
+	test CanSelectAttributesForPeople {
+		task ("Get the number of attributes currently synced") {
+			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
+		}
+
+        task ("Enable two attributes for People") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "comments,externalReferenceCode");
+		}
+
+        task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				increaseAttributeNumber = "2",
+				currentAttributeNumber = "${syncPeopleNumberStart}");
+		}
+
+        task ("Save and Finish the wizard") {
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		}
+
+        task ("Go to the attributes page in the sidebar") {
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
+        task ("Check selected account group number") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				increaseAttributeNumber = "2",
+				currentAttributeNumber = "${syncPeopleNumberStart}");
+		}
+	}
+
+
+}

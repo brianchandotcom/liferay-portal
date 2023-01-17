@@ -29,10 +29,6 @@ definition {
 	@priority = "3"
 	test CanStylingContentPagesProperlyInPublications {
 		task ("Enable Publications and add Content Page") {
-			Publications.enablePublications();
-
-			Navigator.openURL();
-
 			ContentPages.addPage(pageName = "Example Page");
 
 			PageEditor.addFragment(
@@ -69,8 +65,6 @@ definition {
 				paddingRight = "2");
 
 			PageEditor.publish();
-
-			Navigator.openURL();
 		}
 
 		task ("Go to edit Content Page again and assert that 'spacing' is changed") {
@@ -84,8 +78,6 @@ definition {
 				fragmentName = "Button",
 				paddingLeft = "2",
 				paddingRight = "2");
-
-			Navigator.openURL();
 		}
 	}
 

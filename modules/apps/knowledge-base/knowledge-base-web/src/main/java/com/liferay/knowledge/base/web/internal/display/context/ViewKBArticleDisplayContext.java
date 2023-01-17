@@ -93,6 +93,12 @@ public class ViewKBArticleDisplayContext {
 		).buildActionURL();
 	}
 
+	public boolean isKBArticleDescriptionEnabled() {
+		return GetterUtil.getBoolean(
+			_liferayPortletRequest.getAttribute(
+				"init.jsp-enableKBArticleDescription"));
+	}
+
 	public boolean isSubscriptionEnabled(KBArticle kbArticle) throws Exception {
 		if (_isSubscriptionEnabled() && _hasSubscriptionPermission(kbArticle)) {
 			return true;

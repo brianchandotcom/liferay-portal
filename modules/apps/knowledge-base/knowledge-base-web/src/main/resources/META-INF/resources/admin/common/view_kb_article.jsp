@@ -50,14 +50,14 @@ if (portletTitleBasedNavigation) {
 	portletDisplay.setURLBack(redirect);
 	renderResponse.setTitle(kbArticle.getTitle());
 }
+
+ViewKBArticleDisplayContext viewKBArticleDisplayContext = new ViewKBArticleDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
 
 	<%
 	KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
-
-	ViewKBArticleDisplayContext viewKBArticleDisplayContext = new ViewKBArticleDisplayContext(liferayPortletRequest, liferayPortletResponse);
 	%>
 
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
@@ -164,22 +164,24 @@ if (portletTitleBasedNavigation) {
 					<%= kbArticle.getContent() %>
 				</div>
 
-				<liferay-ui:panel-container
-					cssClass="mt-5 panel-group-flush panel-group-sm"
-					extended="<%= true %>"
-					markupView="lexicon"
-					persistState="<%= true %>"
-				>
-					<liferay-frontend:fieldset
-						collapsible="<%= false %>"
-						cssClass="panel-unstyled"
-						label="description"
+				<c:if test="<%= viewKBArticleDisplayContext.isKBArticleDescriptionEnabled() && Validator.isNotNull(kbArticle.getDescription()) %>">
+					<liferay-ui:panel-container
+						cssClass="mt-5 panel-group-flush panel-group-sm"
+						extended="<%= true %>"
+						markupView="lexicon"
+						persistState="<%= true %>"
 					>
-						<div class="lfr-asset-description">
-							<%= HtmlUtil.escape(kbArticle.getDescription()) %>
-						</div>
-					</liferay-frontend:fieldset>
-				</liferay-ui:panel-container>
+						<liferay-frontend:fieldset
+							collapsible="<%= false %>"
+							cssClass="panel-unstyled"
+							label="description"
+						>
+							<div class="lfr-asset-description">
+								<%= HtmlUtil.escape(kbArticle.getDescription()) %>
+							</div>
+						</liferay-frontend:fieldset>
+					</liferay-ui:panel-container>
+				</c:if>
 
 				<clay:content-row>
 					<clay:content-col>

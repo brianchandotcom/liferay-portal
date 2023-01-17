@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -137,7 +138,12 @@ public class AssetRendererFactoryRegistryUtil {
 			AssetRendererFactory<?> assetRendererFactory =
 				assetRendererFactories.getService(key);
 
-			if (assetRendererFactory.isActive(companyId) &&
+			if (key.startsWith("com.liferay.object.model.ObjectDefinition#")) {
+
+				if (key.split("#")[2].equals(Long.toString(companyId))) {
+					filteredAssetRendererFactories.put(key, assetRendererFactory);
+				}
+			} else if (assetRendererFactory.isActive(companyId) &&
 				(!filterSelectable || assetRendererFactory.isSelectable())) {
 
 				filteredAssetRendererFactories.put(key, assetRendererFactory);
@@ -164,7 +170,13 @@ public class AssetRendererFactoryRegistryUtil {
 					AssetRendererFactory<?> assetRendererFactory =
 						_bundleContext.getService(serviceReference);
 
-					emitter.emit(assetRendererFactory.getClassName());
+					String className = assetRendererFactory.getClassName();
+
+					if (className.startsWith("com.liferay.object.model.ObjectDefinition#")) {
+						emitter.emit(className + "#" + GetterUtil.getLong(serviceReference.getProperty("company.id")));
+					} else {
+						emitter.emit(className);
+					}
 				});
 
 	private static final ServiceTrackerMap<String, AssetRendererFactory<?>>

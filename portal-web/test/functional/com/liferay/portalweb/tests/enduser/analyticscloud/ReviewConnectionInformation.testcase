@@ -112,10 +112,14 @@ definition {
 			ACDXPSettings.navToSyncedAttributes();
 		}
 
+		task ("Get the number of attributes currently synced") {
+			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
+		}
+
 		task ("Check the current amount of selected attributes before editing") {
 			ACDXPSettings.viewSyncNumberPreview(
 				syncFieldName = "People",
-				syncNumber = "31 Selected");
+				syncNumber = "${syncPeopleNumberStart} Selected");
 		}
 
 		task ("Deselect some attributes") {
@@ -125,9 +129,14 @@ definition {
 		}
 
 		task ("Check that the correct amount of attributes appear as selected after editing") {
-			ACDXPSettings.viewSyncNumberPreview(
-				syncFieldName = "People",
-				syncNumber = "29 Selected");
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				decreaseAttributeNumber = "2",
+				currentAttributeNumber = "${syncPeopleNumberStart}");
+		}
+
+		task ("Get the number of attributes currently synced") {
+			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
 		}
 
 		task ("Deselect some attributes") {
@@ -137,15 +146,20 @@ definition {
 		}
 
 		task ("Check that the correct amount of attributes appear as selected after editing") {
-			ACDXPSettings.viewSyncNumberPreview(
-				syncFieldName = "People",
-				syncNumber = "30 Selected");
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				increaseAttributeNumber = "1",
+				currentAttributeNumber = "${syncPeopleNumberStart}");
+		}
+
+		task ("Get the number of attributes currently synced") {
+			var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
 		}
 
 		task ("Check the current amount of selected attributes before editing") {
 			ACDXPSettings.viewSyncNumberPreview(
 				syncFieldName = "Account",
-				syncNumber = "23 Selected");
+				syncNumber = "${syncAccountNumberStart} Selected");
 		}
 
 		task ("Deselect some attributes") {
@@ -155,9 +169,14 @@ definition {
 		}
 
 		task ("Check that the correct amount of attributes appear as selected after editing") {
-			ACDXPSettings.viewSyncNumberPreview(
-				syncFieldName = "Account",
-				syncNumber = "21 Selected");
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "Account",
+				decreaseAttributeNumber = "2",
+				currentAttributeNumber = "${syncAccountNumberStart}");
+		}
+
+		task ("Get the number of attributes currently synced") {
+			var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
 		}
 
 		task ("Deselect some attributes") {
@@ -167,21 +186,30 @@ definition {
 		}
 
 		task ("Check that the correct amount of attributes appear as selected after editing") {
-			ACDXPSettings.viewSyncNumberPreview(
-				syncFieldName = "Account",
-				syncNumber = "22 Selected");
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "Account",
+				increaseAttributeNumber = "1",
+				currentAttributeNumber = "${syncAccountNumberStart}");
+		}
+
+		task ("Get the number of attributes currently synced") {
+			var syncProductsNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Products");
 		}
 
 		task ("Check the current amount of selected attributes before editing") {
 			ACDXPSettings.viewSyncNumberPreview(
 				syncFieldName = "Products",
-				syncNumber = "34 Selected");
+				syncNumber = "${syncProductsNumberStart} Selected");
+		}
+
+		task ("Get the number of attributes currently synced") {
+			var syncOrderNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Order");
 		}
 
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewSyncNumberPreview(
 				syncFieldName = "Order",
-				syncNumber = "35 Selected");
+				syncNumber = "${syncOrderNumberStart} Selected");
 		}
 	}
 

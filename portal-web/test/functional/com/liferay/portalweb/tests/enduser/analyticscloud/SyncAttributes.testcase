@@ -150,4 +150,36 @@ definition {
 		}
 	}
 
+    @description = "Story: LRAC-10860 | Automation ID: LRAC-12781 | Test Summary: Check that it is possible to search the Attribute for People list"
+	@priority = "4"
+	test CanSearchAttributeForPeopleList {
+        var foundPeopleAttribute = "birthday";
+		var notFoundPeopleAttribute = "createDate,firstName";
+
+        task ("Click to select attribute for people") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+		}
+
+        task ("Search for people attributes") {
+			ACUtils.searchBar(searchItem = "${foundPeopleAttribute}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundPeopleAttribute}");
+		}
+
+		task ("Check that unsearched people attributes do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundPeopleAttribute}");
+		}
+
+		task ("Search by name of a people attributes that does not exist") {
+			ACUtils.searchBar(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No attributes were found.");
+		}
+	}
 }

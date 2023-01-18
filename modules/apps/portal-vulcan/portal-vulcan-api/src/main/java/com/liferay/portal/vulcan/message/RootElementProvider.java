@@ -12,31 +12,13 @@
  * details.
  */
 
-package com.liferay.apibuilder.rest.dto;
-
-import com.liferay.portal.vulcan.message.RootElementProvider;
-
-import java.util.HashMap;
+package com.liferay.portal.vulcan.message;
 
 /**
  * @author Carlos Correa
  */
-public class APIBuilderElement
-	extends HashMap<String, Object> implements RootElementProvider {
+public interface RootElementProvider {
 
-	public String getName() {
-		return _name;
-	}
-
-	@Override
-	public String getRootElement() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	private String _name;
+	public String getRootElement();
 
 }

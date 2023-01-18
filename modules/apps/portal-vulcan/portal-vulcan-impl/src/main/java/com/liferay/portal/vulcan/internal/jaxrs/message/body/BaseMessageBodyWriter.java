@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
 import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanPropertyFilter;
+import com.liferay.portal.vulcan.message.RootElementProvider;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -74,11 +76,17 @@ public abstract class BaseMessageBodyWriter
 
 		ObjectMapper objectMapper = _getObjectMapper(clazz);
 
-		objectMapper.writer(
-			_getSimpleFilterProvider()
-		).writeValue(
-			outputStream, object
-		);
+		ObjectWriter objectWriter = objectMapper.writer(
+			_getSimpleFilterProvider());
+
+		if (object instanceof RootElementProvider) {
+			RootElementProvider rootElementProvider =
+				(RootElementProvider)object;
+
+			objectWriter.withRootName(rootElementProvider.getRootElement());
+		}
+
+		objectWriter.writeValue(outputStream, object);
 
 		outputStream.flush();
 	}

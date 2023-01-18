@@ -76,9 +76,6 @@ export default function () {
 		getLeads();
 	}, []);
 
-	// eslint-disable-next-line no-console
-	console.log(leads);
-
 	const QUARTER_1_INDEX = 0;
 	const QUARTER_2_INDEX = 1;
 	const QUARTER_3_INDEX = 2;

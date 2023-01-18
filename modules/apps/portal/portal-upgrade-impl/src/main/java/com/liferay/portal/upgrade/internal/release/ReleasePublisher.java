@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = ReleasePublisher.class)
+@Component(service = ReleasePublisher.class)
 public class ReleasePublisher {
 
 	public ServiceRegistration<Release> publish(

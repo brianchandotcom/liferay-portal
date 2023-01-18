@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.db.partition.internal.configuration.DBPartitionConfiguration",
-	immediate = true, service = MessageBusInterceptor.class
+	service = MessageBusInterceptor.class
 )
 public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 

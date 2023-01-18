@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Ricardo Couso
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.command.function=updateIndexes",
 		"osgi.command.function=updateIndexesAll", "osgi.command.scope=upgrade"

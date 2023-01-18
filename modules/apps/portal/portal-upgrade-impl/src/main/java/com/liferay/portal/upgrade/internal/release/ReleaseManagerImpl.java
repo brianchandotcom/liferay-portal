@@ -59,9 +59,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Alberto Chaparro
  * @author Samuel Ziemer
  */
-@Component(
-	immediate = true, service = {ReleaseManager.class, ReleaseManagerImpl.class}
-)
+@Component(service = {ReleaseManager.class, ReleaseManagerImpl.class})
 public class ReleaseManagerImpl implements ReleaseManager {
 
 	public Set<String> getBundleSymbolicNames() {

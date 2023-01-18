@@ -24,8 +24,11 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.info.display.url.provider.InfoEditURLProviderUtil;
+import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.layout.display.page.LayoutDisplayPageProviderRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
@@ -35,6 +38,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
@@ -272,6 +276,25 @@ public class ContentUtil {
 					className));
 	}
 
+	private static List<String> _getChildrenItemIds(
+		LayoutStructureItem layoutStructureItem,
+		LayoutStructure layoutStructure) {
+
+		List<String> childrenItemIds = new ArrayList<>();
+
+		for (String childItemId : layoutStructureItem.getChildrenItemIds()) {
+			childrenItemIds.add(childItemId);
+
+			LayoutStructureItem childLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			childrenItemIds.addAll(
+				_getChildrenItemIds(childLayoutStructureItem, layoutStructure));
+		}
+
+		return childrenItemIds;
+	}
+
 	private static Set<LayoutDisplayPageObjectProvider<?>>
 		_getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
@@ -441,6 +464,9 @@ public class ContentUtil {
 
 		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
 
+		List<String> restrictedItemIds = _getRestrictedItemIds(
+			layoutStructure, themeDisplay);
+
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			LayoutClassedModelUsageLocalServiceUtil.
 				getLayoutClassedModelUsagesByPlid(plid);
@@ -482,7 +508,9 @@ public class ContentUtil {
 						fragmentEntryLink.getFragmentEntryLinkId());
 
 				if ((layoutStructureItem == null) ||
-					fragmentEntryLink.isDeleted()) {
+					fragmentEntryLink.isDeleted() ||
+					restrictedItemIds.contains(
+						layoutStructureItem.getItemId())) {
 
 					continue;
 				}
@@ -734,6 +762,45 @@ public class ContentUtil {
 					layoutClassedModelUsage.getClassNameId(),
 					layoutClassedModelUsage.getClassPK())
 		);
+	}
+
+	private static List<String> _getRestrictedItemIds(
+		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
+
+		List<String> restrictedItemIds = new ArrayList<>();
+
+		for (FormStyledLayoutStructureItem formStyledLayoutStructureItem :
+				layoutStructure.getFormStyledLayoutStructureItems()) {
+
+			if (layoutStructure.isItemMarkedForDeletion(
+					formStyledLayoutStructureItem.getItemId()) ||
+				(formStyledLayoutStructureItem.getClassNameId() <= 0)) {
+
+				continue;
+			}
+
+			InfoItemServiceRegistry infoItemServiceRegistry =
+				InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
+
+			InfoPermissionProvider infoPermissionProvider =
+				infoItemServiceRegistry.getFirstInfoItemService(
+					InfoPermissionProvider.class,
+					PortalUtil.getClassName(
+						formStyledLayoutStructureItem.getClassNameId()));
+
+			if ((infoPermissionProvider == null) ||
+				infoPermissionProvider.hasViewPermission(
+					themeDisplay.getPermissionChecker())) {
+
+				continue;
+			}
+
+			restrictedItemIds.addAll(
+				_getChildrenItemIds(
+					formStyledLayoutStructureItem, layoutStructure));
+		}
+
+		return restrictedItemIds;
 	}
 
 	private static JSONObject _getStatusJSONObject(

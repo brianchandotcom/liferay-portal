@@ -15,6 +15,8 @@
 package com.liferay.commerce.machine.learning.internal.search.instance.lifecycle;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
@@ -23,17 +25,13 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Marco Leo
@@ -45,7 +43,7 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		try {
-			for (CommerceMLIndexer commerceMLIndexer : _commerceMLIndexers) {
+			for (CommerceMLIndexer commerceMLIndexer : _serviceTrackerList) {
 				commerceMLIndexer.createIndex(company.getCompanyId());
 			}
 		}
@@ -59,7 +57,7 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
 		try {
-			for (CommerceMLIndexer commerceMLIndexer : _commerceMLIndexers) {
+			for (CommerceMLIndexer commerceMLIndexer : _serviceTrackerList) {
 				commerceMLIndexer.dropIndex(company.getCompanyId());
 			}
 		}
@@ -71,50 +69,48 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		service = CommerceMLIndexer.class
-	)
-	protected void setCommerceMachineLearningIndexer(
-		CommerceMLIndexer commerceMLIndexer) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, CommerceMLIndexer.class, null,
+			new ServiceTrackerCustomizer
+				<CommerceMLIndexer, CommerceMLIndexer>() {
 
-		_commerceMLIndexers.add(commerceMLIndexer);
+				@Override
+				public CommerceMLIndexer addingService(
+					ServiceReference<CommerceMLIndexer> serviceReference) {
 
-		if (_companyLocalService == null) {
-			_queuedCommerceMLIndexers.add(commerceMLIndexer);
+					CommerceMLIndexer commerceMLIndexer =
+						bundleContext.getService(serviceReference);
 
-			return;
-		}
+					_verifyCompanies(commerceMLIndexer);
 
-		_verifyCompanies(commerceMLIndexer);
+					return commerceMLIndexer;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<CommerceMLIndexer> serviceReference,
+					CommerceMLIndexer commerceMLIndexer) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<CommerceMLIndexer> serviceReference,
+					CommerceMLIndexer commerceMLIndexer) {
+				}
+
+			});
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-
-		for (CommerceMLIndexer queuedCommerceMLIndexer :
-				_queuedCommerceMLIndexers) {
-
-			_verifyCompanies(queuedCommerceMLIndexer);
-		}
-
-		_queuedCommerceMLIndexers.clear();
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	protected void unsetCommerceMachineLearningIndexer(
-		CommerceMLIndexer commerceMLIndexer) {
-
-		_commerceMLIndexers.remove(commerceMLIndexer);
 	}
 
 	private void _verifyCompanies(CommerceMLIndexer commerceMLIndexer) {
@@ -125,10 +121,9 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMLIndexerPortalInstanceLifecycleListener.class);
 
-	private final List<CommerceMLIndexer> _commerceMLIndexers =
-		new CopyOnWriteArrayList<>();
+	@Reference
 	private CompanyLocalService _companyLocalService;
-	private final Set<CommerceMLIndexer> _queuedCommerceMLIndexers =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+	private ServiceTrackerList<CommerceMLIndexer> _serviceTrackerList;
 
 }

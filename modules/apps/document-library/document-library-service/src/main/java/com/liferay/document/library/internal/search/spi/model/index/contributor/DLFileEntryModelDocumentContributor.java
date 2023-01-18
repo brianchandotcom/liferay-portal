@@ -18,10 +18,13 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -50,6 +53,8 @@ import com.liferay.trash.TrashHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 import java.util.Locale;
@@ -166,26 +171,16 @@ public class DLFileEntryModelDocumentContributor
 	private void _addFile(
 		Document document, String fieldName, DLFileEntry dlFileEntry) {
 
-		InputStream inputStream = _getInputStream(dlFileEntry);
-
-		if (inputStream == null) {
-			return;
-		}
-
 		try {
-			document.addText(
-				fieldName,
-				FileUtil.extractText(
-					inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE));
-		}
-		finally {
-			try {
-				inputStream.close();
+			String text = _extractText(dlFileEntry);
+
+			if (text != null) {
+				document.addText(fieldName, text);
 			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
+		}
+		catch (IOException | PortalException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
 		}
 	}
@@ -253,6 +248,45 @@ public class DLFileEntryModelDocumentContributor
 		}
 
 		return sb.toString();
+	}
+
+	private String _extractText(DLFileEntry dlFileEntry)
+		throws IOException, PortalException {
+
+		if (DLStoreUtil.hasFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), _getIndexVersionLabel(dlFileEntry))) {
+
+			return StreamUtil.toString(
+				DLStoreUtil.getFileAsStream(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					_getIndexVersionLabel(dlFileEntry)));
+		}
+
+		InputStream inputStream = _getInputStream(dlFileEntry);
+
+		if (inputStream == null) {
+			return null;
+		}
+
+		String text = FileUtil.extractText(
+			inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE);
+
+		DLStoreUtil.addFile(
+			DLStoreRequest.builder(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName()
+			).versionLabel(
+				_getIndexVersionLabel(dlFileEntry)
+			).build(),
+			text.getBytes(StandardCharsets.UTF_8));
+
+		return text;
+	}
+
+	private String _getIndexVersionLabel(DLFileEntry dlFileEntry) {
+		return dlFileEntry.getVersion() + ".index";
 	}
 
 	private InputStream _getInputStream(DLFileEntry dlFileEntry) {

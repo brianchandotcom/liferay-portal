@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,9 +62,24 @@ public class ObjectEntryVariablesUtil {
 		// TODO Remove all references to version 1 after March 2023
 
 		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
-			return _getVariables(
-				dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				systemObjectDefinitionMetadataRegistry);
+			return HashMapBuilder.<String, Object>put(
+				"objectEntry",
+				_getVariables(
+					dtoConverterRegistry, objectDefinition, false,
+					payloadJSONObject, systemObjectDefinitionMetadataRegistry)
+			).put(
+				"originalObjectEntry",
+				() -> {
+					if (payloadJSONObject.has("originalObjectEntry")) {
+						return _getVariables(
+							dtoConverterRegistry, objectDefinition, true,
+							payloadJSONObject,
+							systemObjectDefinitionMetadataRegistry);
+					}
+
+					return Collections.emptyMap();
+				}
+			).build();
 		}
 
 		if (objectDefinition.isSystem()) {
@@ -125,9 +141,24 @@ public class ObjectEntryVariablesUtil {
 		throws PortalException {
 
 		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
-			return _getVariables(
-				dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				systemObjectDefinitionMetadataRegistry);
+			return HashMapBuilder.<String, Object>put(
+				"objectEntry",
+				_getVariables(
+					dtoConverterRegistry, objectDefinition, false,
+					payloadJSONObject, systemObjectDefinitionMetadataRegistry)
+			).put(
+				"originalObjectEntry",
+				() -> {
+					if (payloadJSONObject.has("originalObjectEntry")) {
+						return _getVariables(
+							dtoConverterRegistry, objectDefinition, true,
+							payloadJSONObject,
+							systemObjectDefinitionMetadataRegistry);
+					}
+
+					return Collections.emptyMap();
+				}
+			).build();
 		}
 
 		Map<String, Object> variables = HashMapBuilder.<String, Object>putAll(
@@ -224,7 +255,8 @@ public class ObjectEntryVariablesUtil {
 
 	private static Map<String, Object> _getVariables(
 		DTOConverterRegistry dtoConverterRegistry,
-		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
+		ObjectDefinition objectDefinition, boolean oldValues,
+		JSONObject payloadJSONObject,
 		SystemObjectDefinitionMetadataRegistry
 			systemObjectDefinitionMetadataRegistry) {
 
@@ -277,8 +309,15 @@ public class ObjectEntryVariablesUtil {
 			}
 		}
 		else {
-			variables.putAll(
-				(Map<String, Object>)payloadJSONObject.get("objectEntry"));
+			if (oldValues) {
+				variables.putAll(
+					(Map<String, Object>)payloadJSONObject.get(
+						"originalObjectEntry"));
+			}
+			else {
+				variables.putAll(
+					(Map<String, Object>)payloadJSONObject.get("objectEntry"));
+			}
 
 			variables.putAll((Map<String, Object>)variables.get("values"));
 

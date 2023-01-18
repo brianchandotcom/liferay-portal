@@ -29,7 +29,11 @@ export default getAlloyEditorProcessor(
 		const link = getEditableLinkValue(editableConfig, languageId);
 
 		if (anchor) {
-			anchor.href = link.href || '#';
+			const href = link.href
+				? `${editableConfig.prefix || ''}${link.href}`
+				: '#';
+
+			anchor.href = href;
 			anchor.target = link.target;
 
 			if (!isNullOrUndefined(value)) {

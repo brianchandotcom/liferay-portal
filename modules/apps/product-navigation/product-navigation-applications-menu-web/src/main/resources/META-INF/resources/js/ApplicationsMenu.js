@@ -246,6 +246,9 @@ const AppsPanel = ({
 
 								<ClayLayout.ContentCol>
 									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'close'
+										)}
 										displayType="unstyled"
 										onClick={handleCloseButtonClick}
 										size="sm"

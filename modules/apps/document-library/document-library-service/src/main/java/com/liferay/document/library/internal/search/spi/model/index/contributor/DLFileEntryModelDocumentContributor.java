@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -172,14 +173,10 @@ public class DLFileEntryModelDocumentContributor
 		}
 
 		try {
-			document.addFile(
-				fieldName, inputStream, dlFileEntry.getFileName(),
-				PropsValues.DL_FILE_INDEXING_MAX_SIZE);
-		}
-		catch (IOException ioException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to index content", ioException);
-			}
+			document.addText(
+				fieldName,
+				FileUtil.extractText(
+					inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE));
 		}
 		finally {
 			try {

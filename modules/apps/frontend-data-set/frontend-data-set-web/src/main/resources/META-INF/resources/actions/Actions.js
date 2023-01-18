@@ -71,6 +71,7 @@ export function handleAction(
 		onClick,
 		setLoading,
 		size,
+		status,
 		successMessage,
 		target,
 		title,
@@ -149,6 +150,8 @@ export function handleAction(
 					doAction();
 				}
 			},
+			status,
+			title,
 		});
 	}
 	else {
@@ -220,8 +223,10 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 					onClick,
 					setLoading,
 					size,
+					status: data?.status,
 					successMessage: data?.successMessage,
 					target,
+					title: data?.title,
 					url: formatActionURL(action.href, itemData),
 				},
 				frontendDataSetContext

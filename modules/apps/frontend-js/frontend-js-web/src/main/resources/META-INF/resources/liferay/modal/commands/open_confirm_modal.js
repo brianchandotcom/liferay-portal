@@ -15,7 +15,7 @@
 import {escapeHTML} from '../../util/html_util';
 import {openModal} from '../Modal';
 
-const openConfirmModal = ({message, onConfirm, title}) => {
+const openConfirmModal = ({message, onConfirm, status, title}) => {
 	if (Liferay.CustomDialogs.enabled) {
 		openModal({
 			bodyHTML: escapeHTML(message),
@@ -27,6 +27,7 @@ const openConfirmModal = ({message, onConfirm, title}) => {
 				},
 				{
 					autoFocus: true,
+					displayType: status ? status : 'primary',
 					label: Liferay.Language.get('ok'),
 					onClick: ({processClose}) => {
 						processClose();
@@ -36,8 +37,11 @@ const openConfirmModal = ({message, onConfirm, title}) => {
 				},
 			],
 			center: true,
-			disableHeader: true,
+			disableHeader: !title,
+			footerCssClass: 'border-0',
+			headerCssClass: 'border-0',
 			onClose: () => onConfirm(false),
+			status,
 			title,
 		});
 	}

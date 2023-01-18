@@ -182,23 +182,6 @@ export default function ({
 	}
 }
 
-function setBannerVisibility(cookieBanner) {
-	if (getCookie(userConfigCookieName)) {
-		cookieBanner.style.display = 'none';
-	}
-	else {
-		cookieBanner.style.display = 'block';
-	}
-}
-
-function isCookieTypesAccepted(cookieTypes) {
-	if (!Array.isArray(cookieTypes)) {
-		cookieTypes = [cookieTypes];
-	}
-
-	return cookieTypes.every((cookieType) => checkConsent(cookieType));
-}
-
 function checkCookieConsentForTypes(cookieTypes, modalOptions) {
 	return new Promise((resolve, reject) => {
 		if (isCookieTypesAccepted(cookieTypes)) {
@@ -214,6 +197,23 @@ function checkCookieConsentForTypes(cookieTypes, modalOptions) {
 			});
 		}
 	});
+}
+
+function isCookieTypesAccepted(cookieTypes) {
+	if (!Array.isArray(cookieTypes)) {
+		cookieTypes = [cookieTypes];
+	}
+
+	return cookieTypes.every((cookieType) => checkConsent(cookieType));
+}
+
+function setBannerVisibility(cookieBanner) {
+	if (getCookie(userConfigCookieName)) {
+		cookieBanner.style.display = 'none';
+	}
+	else {
+		cookieBanner.style.display = 'block';
+	}
 }
 
 export {checkCookieConsentForTypes, openCookieConsentModal};

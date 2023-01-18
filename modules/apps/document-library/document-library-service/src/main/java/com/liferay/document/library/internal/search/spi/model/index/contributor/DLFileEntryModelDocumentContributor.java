@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,67 +68,19 @@ public class DLFileEntryModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, DLFileEntry dlFileEntry) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing document " + dlFileEntry);
-		}
-
-		boolean indexContent = true;
-
-		String[] ignoreExtensions = _prefsProps.getStringArray(
-			PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS, StringPool.COMMA);
-
-		if (ArrayUtil.contains(
-				ignoreExtensions,
-				StringPool.PERIOD + dlFileEntry.getExtension())) {
-
-			indexContent = false;
-		}
-
-		InputStream inputStream = null;
-
-		if (indexContent) {
-			try {
-				DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-				inputStream = _inputStreamSanitizer.sanitize(
-					dlFileVersion.getContentStream(false));
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve document stream", exception);
-				}
-			}
-		}
-
 		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Indexing document " + dlFileEntry);
+			}
+
 			Locale defaultLocale = _portal.getSiteDefaultLocale(
 				dlFileEntry.getGroupId());
 
 			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-			if (indexContent) {
-				if (inputStream != null) {
-					try {
-						String localizedField = Field.getLocalizedName(
-							defaultLocale, Field.CONTENT);
-
-						document.addFile(
-							localizedField, inputStream,
-							dlFileEntry.getFileName(),
-							PropsValues.DL_FILE_INDEXING_MAX_SIZE);
-					}
-					catch (IOException ioException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Unable to index content", ioException);
-						}
-					}
-				}
-				else if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Document " + dlFileEntry +
-							" does not have any content");
-				}
-			}
+			_addFile(
+				document, Field.getLocalizedName(defaultLocale, Field.CONTENT),
+				dlFileEntry);
 
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
@@ -210,15 +163,34 @@ public class DLFileEntryModelDocumentContributor
 		catch (Exception exception) {
 			throw new SystemException(exception);
 		}
+	}
+
+	private void _addFile(
+		Document document, String fieldName, DLFileEntry dlFileEntry) {
+
+		InputStream inputStream = _getInputStream(dlFileEntry);
+
+		if (inputStream == null) {
+			return;
+		}
+
+		try {
+			document.addFile(
+				fieldName, inputStream, dlFileEntry.getFileName(),
+				PropsValues.DL_FILE_INDEXING_MAX_SIZE);
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to index content", ioException);
+			}
+		}
 		finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				}
-				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException);
-					}
+			try {
+				inputStream.close();
+			}
+			catch (IOException ioException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
 				}
 			}
 		}
@@ -287,6 +259,41 @@ public class DLFileEntryModelDocumentContributor
 		}
 
 		return sb.toString();
+	}
+
+	private InputStream _getInputStream(DLFileEntry dlFileEntry) {
+		try {
+			if (!_isIndexContent(dlFileEntry)) {
+				return null;
+			}
+
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			return _inputStreamSanitizer.sanitize(
+				dlFileVersion.getContentStream(false));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to retrieve document stream", portalException);
+			}
+
+			return null;
+		}
+	}
+
+	private boolean _isIndexContent(DLFileEntry dlFileEntry) {
+		String[] ignoreExtensions = _prefsProps.getStringArray(
+			PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS, StringPool.COMMA);
+
+		if (ArrayUtil.contains(
+				ignoreExtensions,
+				StringPool.PERIOD + dlFileEntry.getExtension())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -24,8 +24,6 @@ List<FragmentCollection> systemFragmentCollections = (List<FragmentCollection>)r
 List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDisplayContext.getFragmentCollectionContributors(locale);
 %>
 
-<liferay-ui:success key="fragmentEntryCopied" message="the-fragment-was-copied-successfully" />
-
 <clay:container-fluid
 	cssClass="container-view"
 >

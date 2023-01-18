@@ -451,6 +451,7 @@
 		<check name="JavaElseStatementCheck">
 			<category name="Miscellaneous" />
 			<description name="Finds unnecessary `else` statements (when the `if` statement ends with a `return` statement)." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaEmptyLineAfterSuperCallCheck">
 			<category name="Miscellaneous" />

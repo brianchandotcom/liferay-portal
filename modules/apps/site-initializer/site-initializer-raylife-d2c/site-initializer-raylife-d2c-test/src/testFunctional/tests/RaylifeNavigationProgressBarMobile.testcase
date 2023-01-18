@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "false";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 

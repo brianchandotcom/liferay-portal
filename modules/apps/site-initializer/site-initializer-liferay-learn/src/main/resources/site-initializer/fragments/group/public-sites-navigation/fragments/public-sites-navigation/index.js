@@ -208,14 +208,23 @@ function navSearch(query) {
 					'.search-suggestion-item-content'
 				);
 
-				const highlightedTerm = '<b>' + query + '</b>';
-
 				if (searchSuggestionItemContents) {
 					for (const searchSuggestionItemContent of searchSuggestionItemContents) {
-						searchSuggestionItemContent.innerHTML = searchSuggestionItemContent.innerHTML.replaceAll(
-							query,
-							highlightedTerm
-						);
+
+						const searchTerm = new RegExp(query, 'ig');
+
+						const matchedTerms = searchSuggestionItemContent.textContent.matchAll(searchTerm);
+
+						if (matchedTerms) {
+							for (const matchedTerm of matchedTerms) {
+								const highlightedSearchTerm = '<b>' + matchedTerm + '</b>';
+
+								searchSuggestionItemContent.innerHTML = searchSuggestionItemContent.innerHTML.replaceAll(
+									matchedTerm,
+									highlightedSearchTerm
+								);
+							}
+						}
 					}
 				}
 			}
@@ -244,10 +253,3 @@ async function postData(url = '', data = {}) {
 
 	return response.json();
 }
-
-String.prototype.replaceAll = function (strReplace, strWith) {
-	const esc = strReplace.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-	const reg = new RegExp(esc, 'ig');
-
-	return this.replace(reg, strWith);
-};

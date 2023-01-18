@@ -117,6 +117,10 @@ definition {
 				locator1 = "CKEditor#BODY_FIELD_IFRAME",
 				value1 = "${emailBody}");
 		}
+
+		if (isSet(externalReferenceCode)) {
+			ObjectAdmin.editExternalReferenceCode(externalReferenceCode = "${externalReferenceCode}");
+		}
 	}
 
 	macro resendNotificationInTheQueue {
@@ -180,6 +184,12 @@ definition {
 				key_text = "Subject",
 				locator1 = "TextInput#ANY",
 				value1 = "${subject}");
+		}
+
+		if (isSet(externalReferenceCode)) {
+			AssertElementPresent(
+				key_externalReferenceCode = "${externalReferenceCode}",
+				locator1 = "ObjectAdmin#EXTERNAL_REFERENCE_CODE_HEADER");
 		}
 
 		if (isSet(emailBody)) {

@@ -28,9 +28,7 @@ import java.util.Map;
 public class ObjectDDMExpressionParameterAccessor
 	implements DDMExpressionParameterAccessor {
 
-	public ObjectDDMExpressionParameterAccessor(
-		Map<String, Object> oldValues) {
-
+	public ObjectDDMExpressionParameterAccessor(Map<String, Object> oldValues) {
 		_oldValues = oldValues;
 	}
 

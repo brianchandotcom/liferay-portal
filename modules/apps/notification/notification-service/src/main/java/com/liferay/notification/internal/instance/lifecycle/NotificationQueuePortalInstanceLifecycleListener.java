@@ -18,8 +18,6 @@ import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.internal.messaging.CheckNotificationQueueEntryMessageListener;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -92,16 +91,19 @@ public class NotificationQueuePortalInstanceLifecycleListener
 		_serviceRegistrations.clear();
 	}
 
-	private String _getClassName(long companyId) {
-		return StringBundler.concat(
-			CheckNotificationQueueEntryMessageListener.class.getName(),
-			StringPool.POUND, companyId);
-	}
-
 	private void _unregisterService(
-		long companyId, ServiceRegistration<?> serviceRegistration) {
+		long companyId,
+		ServiceRegistration<MessageListener> serviceRegistration) {
 
-		_schedulerEngineHelper.unregister(_getClassName(companyId));
+		ServiceReference<MessageListener> serviceReference =
+			serviceRegistration.getReference();
+
+		MessageListener messageListener = _bundleContext.getService(
+			serviceReference);
+
+		_schedulerEngineHelper.unregister(messageListener);
+
+		_bundleContext.ungetService(serviceReference);
 
 		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
@@ -129,8 +131,8 @@ public class NotificationQueuePortalInstanceLifecycleListener
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	private final Map<Long, ServiceRegistration<?>> _serviceRegistrations =
-		new HashMap<>();
+	private final Map<Long, ServiceRegistration<MessageListener>>
+		_serviceRegistrations = new HashMap<>();
 
 	@Reference
 	private TriggerFactory _triggerFactory;

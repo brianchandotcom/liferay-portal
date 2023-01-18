@@ -152,6 +152,11 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>uniformActionsDisplay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>headless-display</name>
@@ -296,6 +301,11 @@
 		</attribute>
 		<attribute>
 			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>uniformActionsDisplay</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

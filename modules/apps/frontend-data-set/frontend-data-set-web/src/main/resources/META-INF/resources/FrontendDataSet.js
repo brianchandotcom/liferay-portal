@@ -95,6 +95,7 @@ const FrontendDataSet = ({
 	sidePanelId,
 	sorting: sortingProp,
 	style,
+	uniformActionsDisplay,
 	views,
 }) => {
 	const wrapperRef = useRef(null);
@@ -768,6 +769,7 @@ const FrontendDataSet = ({
 				sorting,
 				style,
 				toggleItemInlineEdit,
+				uniformActionsDisplay,
 				updateDataSetItems,
 				updateItem,
 				updateSearchParam: setSearchParam,

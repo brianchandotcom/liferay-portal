@@ -127,7 +127,11 @@ function ActionsDropdown({
 		return null;
 	}
 
-	if (!inlineEditingAlwaysOn && actions.length === 1) {
+	if (
+		!inlineEditingAlwaysOn &&
+		!context.uniformActionsDisplay &&
+		actions.length === 1
+	) {
 		const [action] = actions;
 		const {data: actionData} = action;
 

@@ -135,6 +135,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		return _selectedItems;
 	}
 
+	public boolean getUniformActionsDisplay() {
+		return _uniformActionsDisplay;
+	}
+
 	public void setAdditionalProps(Map<String, Object> additionalProps) {
 		_additionalProps = additionalProps;
 	}
@@ -181,6 +185,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		_selectedItems = selectedItems;
 	}
 
+	public void setUniformActionsDisplay(boolean uniformActionsDisplay) {
+		_uniformActionsDisplay = uniformActionsDisplay;
+	}
+
 	protected void cleanUp() {
 		_additionalProps = null;
 		_fdsPaginationEntries = null;
@@ -193,6 +201,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		_propsTransformerServletContext = null;
 		_randomNamespace = null;
 		_selectedItems = null;
+		_uniformActionsDisplay = false;
 	}
 
 	protected void doClearTag() {
@@ -225,6 +234,8 @@ public class BaseDisplayTag extends AttributesTagSupport {
 			}
 		).put(
 			"customViews", _getCustomViews()
+		).put(
+			"uniformActionsDisplay", getUniformActionsDisplay()
 		).put(
 			"namespace", getNamespace()
 		).put(
@@ -323,5 +334,6 @@ public class BaseDisplayTag extends AttributesTagSupport {
 	private ServletContext _propsTransformerServletContext;
 	private String _randomNamespace;
 	private List<Object> _selectedItems;
+	private boolean _uniformActionsDisplay;
 
 }

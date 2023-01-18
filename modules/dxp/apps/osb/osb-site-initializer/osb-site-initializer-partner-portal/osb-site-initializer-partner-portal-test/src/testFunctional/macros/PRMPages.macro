@@ -14,7 +14,7 @@ definition {
 		Click(
 			key_linkText = "${linkText}",
 			locator1 = "PRMPages#BANNER_LINK");
-	}	
+	}
 
 	macro dismissBanner {
 		Click(

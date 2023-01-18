@@ -39,7 +39,6 @@ definition {
 
 			PRMUtils.gotoPRM();
 		}
-
 	}
 
 	tearDown {
@@ -60,7 +59,7 @@ definition {
 			PRMNavigator.goToNavItem(navItem = "Sales");
 		}
 
-		task ("And I click on Register a New Deal button on banner") {
+		task ("When I click on Register a New Deal button on banner") {
 			PRMPages.clickBannerLink(linkText = "Register a New Deal");
 		}
 

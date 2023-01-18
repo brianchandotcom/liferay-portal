@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupTable;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
@@ -22,6 +23,7 @@ import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ContactAc
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ContactAccountGroupDTOConverterContext;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactAccountGroupResource;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -56,23 +58,24 @@ public class ContactAccountGroupResourceImpl
 
 		Sort sort = sorts[0];
 
+		BaseModelSearchResult<AccountGroup> accountGroupBaseModelSearchResult =
+			_accountGroupLocalService.searchAccountGroups(
+				contextCompany.getCompanyId(), keywords, null,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				OrderByComparatorFactoryUtil.create(
+					AccountGroupTable.INSTANCE.getTableName(),
+					sort.getFieldName(), !sort.isReverse()));
+
 		return Page.of(
 			transform(
-				_accountGroupLocalService.getAccountGroups(
-					contextCompany.getCompanyId(), keywords,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					OrderByComparatorFactoryUtil.create(
-						AccountGroupTable.INSTANCE.getTableName(),
-						sort.getFieldName(), !sort.isReverse())),
+				accountGroupBaseModelSearchResult.getBaseModels(),
 				accountGroup -> _contactAccountGroupDTOConverter.toDTO(
 					new ContactAccountGroupDTOConverterContext(
 						accountGroup.getAccountGroupId(),
 						contextAcceptLanguage.getPreferredLocale(),
 						analyticsConfiguration.syncedAccountGroupIds()),
 					accountGroup)),
-			pagination,
-			_accountGroupLocalService.getAccountGroupsCount(
-				contextCompany.getCompanyId(), keywords));
+			pagination, accountGroupBaseModelSearchResult.getLength());
 	}
 
 	@Reference

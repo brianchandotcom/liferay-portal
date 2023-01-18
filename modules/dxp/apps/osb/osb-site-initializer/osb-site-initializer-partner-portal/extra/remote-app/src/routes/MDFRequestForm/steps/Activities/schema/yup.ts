@@ -88,13 +88,19 @@ const activitiesSchema = object({
 							if (endDate) {
 								const startDate = testContext.parent.startDate;
 
+								const futureDate = new Date(startDate);
+								futureDate.setMonth(startDate.getMonth() + 6);
+
+								if (
+									endDate.getMonth() < futureDate.getMonth()
+								) {
+									return true;
+								}
+
 								return (
-									endDate.getMonth() -
-										startDate.getMonth() +
-										12 *
-											(endDate.getFullYear() -
-												startDate.getFullYear()) <
-									6
+									endDate.getMonth() ===
+										futureDate.getMonth() &&
+									endDate.getDay() < futureDate.getDay()
 								);
 							}
 

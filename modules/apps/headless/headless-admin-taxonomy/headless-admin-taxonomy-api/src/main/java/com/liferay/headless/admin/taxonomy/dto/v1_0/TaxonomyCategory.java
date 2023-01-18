@@ -453,7 +453,7 @@ public class TaxonomyCategory implements Serializable {
 	}
 
 	@GraphQLField(description = "The category's parent category, if it exists.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ParentTaxonomyCategory parentTaxonomyCategory;
 
 	@Schema(

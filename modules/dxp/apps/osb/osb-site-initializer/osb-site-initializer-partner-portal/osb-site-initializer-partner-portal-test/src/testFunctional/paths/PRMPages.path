@@ -26,6 +26,11 @@
 	<td>//button[contains(@class,'video-tour-button')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BANNER_LINK</td>
+	<td>//a[contains(@data-lfr-editable-id,'link') and contains(.,'${key_linkText}')]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

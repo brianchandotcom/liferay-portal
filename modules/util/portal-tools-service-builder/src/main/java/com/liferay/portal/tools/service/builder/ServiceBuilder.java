@@ -4786,6 +4786,7 @@ public class ServiceBuilder {
 		OutputFormat outputFormat = new OutputFormat(StringPool.TAB, true);
 
 		outputFormat.setOmitEncoding(true);
+		outputFormat.setPadText(true);
 		outputFormat.setTrimText(true);
 
 		XMLWriter xmlWriter = new XMLWriter(
@@ -4811,6 +4812,10 @@ public class ServiceBuilder {
 
 		xml = StringUtil.trimTrailing(
 			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
+
+		while (xml.contains(" \n")) {
+			xml = StringUtil.replace(xml, " \n", "\n");
+		}
 
 		xml = StringUtil.replace(xml, "\"/>", "\" />");
 

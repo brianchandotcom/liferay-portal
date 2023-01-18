@@ -15,7 +15,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
-
 const colors = {
 	approved: '#8FB5FF',
 	closedwon: '#002C62',
@@ -35,7 +34,7 @@ export default function () {
 	useEffect(() => {
 		const getOpportunities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			const response = await fetch('/o/c/opportunitysfs', {
+			const response = await fetch('/o/c/opportunitysfs?pageSize=200', {
 				headers: {
 					'accept': 'application/json',
 					'x-csrf-token': Liferay.authToken,
@@ -55,7 +54,7 @@ export default function () {
 
 		const getLeads = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			const response = await fetch('/o/c/leadsfs', {
+			const response = await fetch('/o/c/leadsfs?pageSize=200', {
 				headers: {
 					'accept': 'application/json',
 					'x-csrf-token': Liferay.authToken,
@@ -77,11 +76,13 @@ export default function () {
 		getLeads();
 	}, []);
 
+	// eslint-disable-next-line no-console
+	console.log(leads);
+
 	const QUARTER_1_INDEX = 0;
 	const QUARTER_2_INDEX = 1;
 	const QUARTER_3_INDEX = 2;
 	const QUARTER_4_INDEX = 3;
-
 	const JANUARY = 1;
 	const FEBRUARY = 2;
 	const MARCH = 3;
@@ -94,17 +95,15 @@ export default function () {
 	const OCTOBER = 10;
 	const NOVEMBER = 11;
 	const DECEMBER = 12;
-
 	const STAGE_OPEN = 'Open';
 	const STAGE_CLOSEDWON = 'Closed Won';
 	const STAGE_REJECTED = 'Rejected';
 	const STATUS_CAMREJECTED = 'CAM rejected';
 	const STATUS_SALES_QUALIFIED_OPPORTUNITY = 'Sales Qualified Opportunity';
-	const TYPE_PARTNER_PROSPECT_LEAD = 'Partner Prospect Lead (PPL)';
+	const TYPE_PARTNER_QUALIFIED_LEAD = 'Partner Qualified Lead (PQL)';
 
 	const getChartQuarterCount = (values, dateCreated) => {
 		const month = new Date(dateCreated).getMonth() + 1;
-
 		if (month === JANUARY || month === FEBRUARY || month === MARCH) {
 			values[QUARTER_1_INDEX] = values[QUARTER_1_INDEX] + 1;
 		}
@@ -169,7 +168,7 @@ export default function () {
 				);
 			}
 			if (
-				item.leadType === TYPE_PARTNER_PROSPECT_LEAD &&
+				item.leadType === TYPE_PARTNER_QUALIFIED_LEAD &&
 				(item.leadStatus !== STATUS_SALES_QUALIFIED_OPPORTUNITY ||
 					item.leadStatus !== STATUS_CAMREJECTED)
 			) {
@@ -185,7 +184,7 @@ export default function () {
 
 	const totalRejectedChartValues = useMemo(() => {
 		return (
-			opportunitiesChartValues?.rejected.map(
+			opportunitiesChartValues?.rejected?.map(
 				(chartValue, index) =>
 					chartValue + leadsChartValues.rejected[index]
 			) || []
@@ -254,7 +253,6 @@ export default function () {
 					>
 						View All
 					</ClayButton>
-
 					<ClayButton
 						className="btn btn-primary ml-4 mt-2"
 						displayType="primary"

@@ -1218,10 +1218,10 @@ definition {
 		Click(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION");
 
 		if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX")) {
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
 		}
 		else {
-			Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
 		}
 
 		Staging.configureScheduleTime(scheduleTitleName = "${scheduleTitleName}");

@@ -302,6 +302,17 @@ public class ContentUtil {
 		return childrenItemIds;
 	}
 
+	private static long _getFragmentEntryLinkClassNameId() {
+		if (_fragmentEntryLinkClassNameId != null) {
+			return _fragmentEntryLinkClassNameId;
+		}
+
+		_fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
+			FragmentEntryLink.class.getName());
+
+		return _fragmentEntryLinkClassNameId;
+	}
+
 	private static Set<LayoutDisplayPageObjectProvider<?>>
 		_getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
@@ -457,10 +468,6 @@ public class ContentUtil {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		long fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
-			FragmentEntryLink.class);
-		long portletClassNameId = PortalUtil.getClassNameId(Portlet.class);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -492,7 +499,7 @@ public class ContentUtil {
 			}
 
 			if (layoutClassedModelUsage.getContainerType() ==
-					fragmentEntryLinkClassNameId) {
+					_getFragmentEntryLinkClassNameId()) {
 
 				FragmentEntryLink fragmentEntryLink =
 					FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
@@ -527,7 +534,7 @@ public class ContentUtil {
 			}
 
 			if ((layoutClassedModelUsage.getContainerType() ==
-					portletClassNameId) ||
+					_getPortletClassNameId()) ||
 				layoutStructure.isPortletMarkedForDeletion(
 					layoutClassedModelUsage.getContainerKey()) ||
 				restrictedPortletIds.contains(
@@ -776,6 +783,17 @@ public class ContentUtil {
 		);
 	}
 
+	private static long _getPortletClassNameId() {
+		if (_portletClassNameId != null) {
+			return _portletClassNameId;
+		}
+
+		_portletClassNameId = PortalUtil.getClassNameId(
+			Portlet.class.getName());
+
+		return _portletClassNameId;
+	}
+
 	private static List<String> _getRestrictedItemIds(
 		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
 
@@ -972,5 +990,8 @@ public class ContentUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
+
+	private static Long _fragmentEntryLinkClassNameId;
+	private static Long _portletClassNameId;
 
 }

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>PAGES_SPECIFIC_PAGE_NAME</td>
-	<td>//li/div[contains(.,'${key_pageName}')]//input[contains(@type,'checkbox')]</td>
+	<td>//span[contains(.,'${key_pageName}')]//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

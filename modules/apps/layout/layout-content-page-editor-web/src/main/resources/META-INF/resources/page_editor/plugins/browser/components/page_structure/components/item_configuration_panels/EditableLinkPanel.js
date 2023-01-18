@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
 import LinkField from '../../../../../../app/components/fragment_configuration_fields/LinkField';
@@ -28,7 +29,23 @@ import updateEditableValues from '../../../../../../app/thunks/updateEditableVal
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import isMapped from '../../../../../../app/utils/editable_value/isMapped';
 import {getEditableLinkValue} from '../../../../../../app/utils/getEditableLinkValue';
+import {useId} from '../../../../../../common/hooks/useId';
 import {getEditableItemPropTypes} from '../../../../../../prop_types/index';
+
+const PREFIX_OPTIONS = [
+	{
+		label: Liferay.Language.get('none'),
+		value: '',
+	},
+	{
+		label: Liferay.Language.get('email'),
+		value: 'mailto:',
+	},
+	{
+		label: Liferay.Language.get('phone'),
+		value: 'tel:',
+	},
+];
 
 export default function EditableLinkPanel({item}) {
 	const dispatch = useDispatch();
@@ -54,6 +71,9 @@ export default function EditableLinkPanel({item}) {
 	const [linkConfig, setLinkConfig] = useState({});
 	const [linkValue, setLinkValue] = useState({href: '', target: ''});
 	const [imageConfig, setImageConfig] = useState({});
+	const [linkPrefix, setLinkPrefix] = useState('');
+
+	const prefixId = useId();
 
 	useEffect(() => {
 		const linkConfig = {
@@ -65,9 +85,11 @@ export default function EditableLinkPanel({item}) {
 				alt: linkConfig.alt || '',
 				imageConfiguration: linkConfig.imageConfiguration || {},
 			});
+			setLinkPrefix(linkConfig.prefix);
 
 			delete linkConfig.alt;
 			delete linkConfig.imageConfiguration;
+			delete linkConfig.prefix;
 
 			setLinkConfig(linkConfig);
 			setLinkValue(getEditableLinkValue(linkConfig, languageId));
@@ -75,11 +97,12 @@ export default function EditableLinkPanel({item}) {
 		else {
 			setImageConfig({});
 			setLinkConfig({});
+			setLinkPrefix('');
 			setLinkValue({href: '', target: ''});
 		}
 	}, [editableValue.config, languageId]);
 
-	const handleValueSelect = (_, nextLinkConfig) => {
+	const handleValueSelect = (nextLinkConfig) => {
 		let nextConfig;
 
 		if (isMapped(nextLinkConfig) || isMapped(linkConfig)) {
@@ -125,11 +148,35 @@ export default function EditableLinkPanel({item}) {
 	};
 
 	return (
-		<LinkField
-			field={{name: 'link'}}
-			onValueSelect={handleValueSelect}
-			value={linkValue}
-		/>
+		<>
+			<LinkField
+				field={{name: 'link'}}
+				onValueSelect={(_, nextLinkConfig) =>
+					handleValueSelect(nextLinkConfig)
+				}
+				value={linkValue}
+			/>
+
+			{isMapped(linkConfig) && (
+				<ClayForm.Group small>
+					<label htmlFor={prefixId}>
+						{Liferay.Language.get('prefix')}
+					</label>
+
+					<ClaySelectWithOption
+						id={prefixId}
+						onChange={(event) =>
+							handleValueSelect({
+								...editableValue.config,
+								prefix: event.target.value,
+							})
+						}
+						options={PREFIX_OPTIONS}
+						value={linkPrefix || ''}
+					/>
+				</ClayForm.Group>
+			)}
+		</>
 	);
 }
 

@@ -33,7 +33,7 @@ export default getAlloyEditorProcessor(
 				anchor = document.createElement('a');
 			}
 
-			anchor.href = link.href;
+			anchor.href = `${editableConfig.prefix || ''}${link.href}`;
 			anchor.target = link.target || '';
 			anchor.innerHTML = value;
 

@@ -141,6 +141,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>EXTERNAL_REFERENCE_CODE_HEADER</td>
+		<td>//ul[contains(@class,'navbar')]//strong[contains(text(),'${key_externalReferenceCode}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LABEL_FIELD_GROUP_TITLE</td>
 		<td>//div[@class='ddm-field-types-fieldset__nested']//label[@class = 'text-uppercase' and contains(text(),'${key_labelName}')]</td>
 		<td></td>

@@ -140,11 +140,11 @@ definition {
 			content = "WC content",
 			description = "WC description",
 			groupName = "Site Name",
-			title = "WC title");
+			title = "Article title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		Translations.gotoTranslate(webContentTitle = "WC title");
+		Translations.gotoTranslate(webContentTitle = "Article title");
 
 		Translations.changeTargetLocale(
 			currentTargetLocale = "ar-SA",
@@ -155,7 +155,7 @@ definition {
 		Translations.viewTargetFields(
 			webContentContent = "Contenido de WC",
 			webContentDescription = "Descripción del WC",
-			webContentTitle = "Título del WC");
+			webContentTitle = "Título del artículo");
 
 		PortletEntry.publish();
 
@@ -164,12 +164,12 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "es_ES",
-			webContentTitle = "WC title");
+			webContentTitle = "Article title");
 
 		Translations.viewTargetFields(
 			webContentContent = "Contenido de WC",
 			webContentDescription = "Descripción del WC",
-			webContentTitle = "Título del WC");
+			webContentTitle = "Título del artículo");
 	}
 
 	@description = "This ensures that the web content title can be translated independently"

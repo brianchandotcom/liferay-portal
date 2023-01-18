@@ -36,7 +36,6 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -84,14 +83,13 @@ public class AssetListEntryUsagesUtil {
 
 	public static JSONArray getPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long plid,
-			long segmentsExperienceId)
+			HttpServletResponse httpServletResponse,
+			LayoutStructure layoutStructure, long plid,
+			List<String> restrictedItemIds)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			httpServletRequest, plid, segmentsExperienceId);
 		Set<String> uniqueAssetListEntryUsagesKeys = new HashSet<>();
 
 		List<AssetListEntryUsage> assetListEntryUsages =
@@ -106,8 +104,9 @@ public class AssetListEntryUsagesUtil {
 
 			if (uniqueAssetListEntryUsagesKeys.contains(uniqueKey) ||
 				_isCollectionStyledLayoutStructureItemDeleted(
-					assetListEntryUsage, layoutStructure) ||
-				_isFragmentEntryLinkDeleted(assetListEntryUsage)) {
+					assetListEntryUsage, layoutStructure, restrictedItemIds) ||
+				_isFragmentEntryLinkDeleted(
+					assetListEntryUsage, layoutStructure, restrictedItemIds)) {
 
 				continue;
 			}
@@ -449,19 +448,6 @@ public class AssetListEntryUsagesUtil {
 		return portletURL.toString();
 	}
 
-	private static LayoutStructure _getLayoutStructure(
-			HttpServletRequest httpServletRequest, long plid,
-			long segmentsExperienceId)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return LayoutStructureUtil.getLayoutStructure(
-			themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
-	}
-
 	private static JSONObject _getPageContentJSONObject(
 		AssetListEntryUsage assetListEntryUsage,
 		HttpServletRequest httpServletRequest,
@@ -611,7 +597,7 @@ public class AssetListEntryUsagesUtil {
 
 	private static boolean _isCollectionStyledLayoutStructureItemDeleted(
 		AssetListEntryUsage assetListEntryUsage,
-		LayoutStructure layoutStructure) {
+		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
 
 		if (assetListEntryUsage.getContainerType() !=
 				_getCollectionStyledLayoutStructureItemClassNameId()) {
@@ -631,7 +617,8 @@ public class AssetListEntryUsagesUtil {
 		}
 
 		if (layoutStructure.isItemMarkedForDeletion(
-				layoutStructureItem.getItemId())) {
+				layoutStructureItem.getItemId()) ||
+			restrictedItemIds.contains(layoutStructureItem.getItemId())) {
 
 			return true;
 		}
@@ -640,7 +627,8 @@ public class AssetListEntryUsagesUtil {
 	}
 
 	private static boolean _isFragmentEntryLinkDeleted(
-		AssetListEntryUsage assetListEntryUsage) {
+		AssetListEntryUsage assetListEntryUsage,
+		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
 
 		if (assetListEntryUsage.getContainerType() !=
 				_getFragmentEntryLinkClassNameId()) {
@@ -663,7 +651,19 @@ public class AssetListEntryUsagesUtil {
 			return true;
 		}
 
-		return true;
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		if ((layoutStructureItem == null) ||
+			layoutStructure.isItemMarkedForDeletion(
+				layoutStructureItem.getItemId()) ||
+			restrictedItemIds.contains(layoutStructureItem.getItemId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

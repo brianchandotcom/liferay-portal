@@ -10,6 +10,12 @@ definition {
 		Click(locator1 = "PRMPages#VIDEO_BUTTON");
 	}
 
+	macro clickBannerLink {
+		Click(
+			key_linkText = "${linkText}",
+			locator1 = "PRMPages#BANNER_LINK");
+	}	
+
 	macro dismissBanner {
 		Click(
 			key_text = "Dismiss",

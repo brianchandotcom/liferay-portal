@@ -317,7 +317,11 @@ public abstract class Base${schemaName}ResourceImpl
 				/>
 
 				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
-					${javaDataType} existing${schemaName} = get${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
+					<#if configYAML.forcePredictableOperationId>
+						${javaDataType} existing${schemaName} = getByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
+					<#else>
+						${javaDataType} existing${schemaName} = get${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
+					</#if>
 				<#else>
 					${javaDataType} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
 				</#if>
@@ -335,7 +339,11 @@ public abstract class Base${schemaName}ResourceImpl
 				preparePatch(${schemaVarName}, existing${schemaName});
 
 				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
-					return put${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+					<#if configYAML.forcePredictableOperationId>
+						return putByExternalReferenceCode(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+					<#else>
+						return put${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+					</#if>
 				<#else>
 					return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
 				</#if>

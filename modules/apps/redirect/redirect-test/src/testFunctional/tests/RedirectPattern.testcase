@@ -145,9 +145,30 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "www.liferay.com");
 	}
 
-	@description = "This test checks that when there are multiple Patterns, the first one that matches the URL will be applied."
+	@description = "This test checks that an error appears when an invalid input is typed into the destination field."
 	@priority = "5"
-	test WillGenerateErrorIfInvalid {
+	test WillGenerateErrorIfDestinationInputIsInvalid {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site");
+
+		AssertElementPresent(
+			key_tab = "Aliases",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		Redirect.gotoPatternsTab();
+
+		Redirect.addPattern(
+			destinationFieldError = "true",
+			destinationIndex = "0",
+			destinationURL = "(",
+			pattern = "(.*)/child1$",
+			patternIndex = "0");
+	}
+
+	@description = "This test checks that an error appears after publishing if there is an invalid input in the pattern field."
+	@priority = "5"
+	test WillGenerateErrorIfPatternInputIsInvalid {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site");
@@ -161,8 +182,8 @@ definition {
 		Redirect.addPattern(
 			destinationIndex = "0",
 			destinationURL = "https://www.liferay.com",
-			error = "true",
 			pattern = "(",
+			patternFieldError = "true",
 			patternIndex = "0");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");

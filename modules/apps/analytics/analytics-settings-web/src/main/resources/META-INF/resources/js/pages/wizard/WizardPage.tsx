@@ -81,6 +81,9 @@ const WizardPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 						<ClayMultiStepNav.Item
 							active={nextStep === step}
 							complete={step > nextStep}
+							data-testid={
+								nextStep === step && 'multi-step-item-active'
+							}
 							expand={index + 1 !== STEPS.length}
 							key={nextStep}
 						>

@@ -69,6 +69,7 @@ const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
 					</label>
 
 					<ClayInput
+						data-testid="input-token"
 						disabled={connected}
 						id="inputToken"
 						onChange={({target: {value}}) => setToken(value)}

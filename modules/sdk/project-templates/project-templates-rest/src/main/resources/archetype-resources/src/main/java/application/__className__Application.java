@@ -23,7 +23,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
  */
 #if (${liferayVersion.startsWith("7.0")})
 @ApplicationPath("/greetings")
-@Component(immediate = true, #else
+@Component(#else
 @Component(
 	property = {
 		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/greetings",

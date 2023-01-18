@@ -13,7 +13,6 @@ import org.osgi.service.component.annotations.Component;
  * @author ${author}
  */
 @Component(
-	immediate = true,
 	property = {
 	},
 	service = ServiceWrapper.class

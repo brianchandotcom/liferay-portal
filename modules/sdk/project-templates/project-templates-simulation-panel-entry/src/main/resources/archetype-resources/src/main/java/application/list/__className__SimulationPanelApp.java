@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author ${author}
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=500",
 		"panel.category.key=" + ProductNavigationSimulationConstants.SIMULATION_PANEL_CATEGORY_KEY

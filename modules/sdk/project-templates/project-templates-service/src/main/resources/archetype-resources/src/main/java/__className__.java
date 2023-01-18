@@ -11,7 +11,6 @@ import org.osgi.service.component.annotations.Component;
  * @author ${author}
  */
 @Component(
-	immediate = true,
 	property = {
 		// TODO enter required service properties
 	},

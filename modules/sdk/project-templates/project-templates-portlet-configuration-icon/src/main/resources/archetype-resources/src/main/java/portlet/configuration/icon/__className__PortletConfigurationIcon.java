@@ -16,7 +16,6 @@ import org.osgi.service.component.annotations.Component;
  * @author ${author}
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + "com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 	},

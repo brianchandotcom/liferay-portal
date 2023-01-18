@@ -821,7 +821,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		Long folderId = null;
 
-		if ((document != null) &&
+		if ((document != null) && (document.getDocumentFolderId() != null) &&
 			(document.getDocumentFolderId() !=
 				existingFileEntry.getFolderId())) {
 

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pablo Molina
  */
-@Component(immediate = true, service = InfoFilterProvider.class)
+@Component(service = InfoFilterProvider.class)
 public class TagsInfoFilterProvider
 	implements InfoFilterProvider<TagsInfoFilter> {
 

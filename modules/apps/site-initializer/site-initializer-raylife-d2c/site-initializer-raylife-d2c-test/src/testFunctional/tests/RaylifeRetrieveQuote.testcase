@@ -34,6 +34,9 @@ definition {
 	@description = "LPS-143993 - Check if entering a valid email address, user can retrieve all his/her quote information"
 	@priority = "4"
 	test CanRetrieveAllQuote {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanRetrieveAllQuote";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -76,6 +79,9 @@ definition {
 	@description = "LPS-143994 -  Verify if entering a valid email address, the Email Sent Fragment is shown"
 	@priority = "3"
 	test CanViewEmailFragmentSent {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewEmailFragmentSent";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -102,6 +108,9 @@ definition {
 	@description = "LPS-143992 - Check if you put in a different email address, the error message appears We could not find your quote. Please start a new one."
 	@priority = "3"
 	test CanViewErrorMessageForEmailDifferent {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewErrorMessageForEmailDifferent";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -120,6 +129,9 @@ definition {
 	@description = "LPS-143991 - Check that the error message 'Please enter a valid e-mail address' appears, when an invalid e-mail address is entered in Retrieve a Quote."
 	@priority = "3"
 	test CanViewErrorMessageForEmailInvalid {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewErrorMessageForEmailInvalid";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -138,6 +150,9 @@ definition {
 	@description = "LPS-144000 -  Verify if on the Email Sent Fragment, the Start a New Quote link goes to Get a Quote Fragment"
 	@priority = "3"
 	test CanViewQuoteFragment {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewQuoteFragment";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -154,6 +169,9 @@ definition {
 	@description = "LPS-143983 - Verify that when clicking on Retrieve a Quote link, users will be navigated to view the Retrieve Quote Fragment on the Homepage"
 	@priority = "5"
 	test CanViewRetrieveAQuoteInHomePage {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewRetrieveAQuoteInHomePage";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -164,6 +182,9 @@ definition {
 	@description = "LPS-143984 - Verify that when clicking on Start a New Quote, users will be navigated to the home page"
 	@priority = "3"
 	test ClickingStartNewQuoteGoesHomePage {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#ClickingStartNewQuoteGoesHomePage";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -176,6 +197,9 @@ definition {
 	@description = "LPS-143998 - Verify if on the Email Sent Fragment, the user’s email is the same entered from the previous fragment"
 	@priority = "4"
 	test EmailEqualsApplication {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#EmailEqualsApplication";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -202,6 +226,9 @@ definition {
 	@description = "LPS-143990 - Check that when entering a valid email address, the 'Continue Quote' button is enabled"
 	@priority = "3"
 	test IsContinueQuoteButtonEnabledOnRetrieveAQuote {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#IsContinueQuoteButtonEnabledOnRetrieveAQuote";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -226,6 +253,9 @@ definition {
 	@description = "LPS-143998 - Verify if on the Email Sent Fragment, the user’s first name is the same entered from their matched quote application"
 	@priority = "4"
 	test NameEqualsApplication {
+		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#NameEqualsApplication";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

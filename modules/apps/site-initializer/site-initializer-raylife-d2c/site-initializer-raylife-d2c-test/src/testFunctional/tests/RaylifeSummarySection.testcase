@@ -33,6 +33,9 @@ definition {
 	@description = "LPS-144587 - Verify if its possible to see the user application number."
 	@priority = "4"
 	test CanSeeUserApplicationNumber {
+		property test.name.skip.portal.instance = "RaylifeSummarySection#CanSeeUserApplicationNumber";
+   
+   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

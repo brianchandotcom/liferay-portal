@@ -42,6 +42,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -244,14 +245,14 @@ public class DownstreamBuild extends BaseBuild {
 		return messageElement;
 	}
 
-	public HashMap<String, List<String>> getTestClassMethodsMap() {
-		HashMap<String, List<String>> testClassMethodsMap = new HashMap<>();
+	public Map<String, List<String>> getTestClassMethodsMap() {
+		String batchName = getBatchName();
 
-		if (!getBatchName().contains("integration") &&
-			!getBatchName().contains("unit")) {
-
-			return testClassMethodsMap;
+		if (!batchName.contains("integration") && !batchName.contains("unit")) {
+			return Collections.emptyMap();
 		}
+
+		HashMap<String, List<String>> testClassMethodsMap = new HashMap<>();
 
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
 
@@ -325,18 +326,18 @@ public class DownstreamBuild extends BaseBuild {
 		return uniqueFailureTestResults;
 	}
 
-	public HashMap<String, List<String>> getUntestedTestClassMethodsMap() {
-		HashMap<String, List<String>> untestedTestClassMethodsMap =
+	public Map<String, List<String>> getUntestedTestClassMethodsMap() {
+		Map<String, List<String>> untestedTestClassMethodsMap =
 			getTestClassMethodsMap();
 
 		if (untestedTestClassMethodsMap.isEmpty()) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
 		List<TestResult> testResults = getTestResults();
 
 		if (testResults.isEmpty()) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
 		for (TestResult testResult : testResults) {
@@ -357,11 +358,11 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	public List<TestResult> getUntestedTestResults() {
-		HashMap<String, List<String>> untestedTestsMap =
+		Map<String, List<String>> untestedTestsMap =
 			getUntestedTestClassMethodsMap();
 
 		if (untestedTestsMap.isEmpty()) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		List<TestResult> untestedTestResults = new ArrayList<>();
@@ -679,7 +680,7 @@ public class DownstreamBuild extends BaseBuild {
 			!batchName.startsWith("modules-unit") &&
 			!batchName.startsWith("unit")) {
 
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		String urlSuffix = "testDurationsElements";

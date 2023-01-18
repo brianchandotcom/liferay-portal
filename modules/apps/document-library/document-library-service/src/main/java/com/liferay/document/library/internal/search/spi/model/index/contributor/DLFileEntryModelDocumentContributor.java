@@ -108,9 +108,6 @@ public class DLFileEntryModelDocumentContributor
 
 			document.addKeyword(
 				"dataRepositoryId", dlFileEntry.getDataRepositoryId());
-
-			// TODO inputStream this necessary?
-
 			document.addText(
 				"ddmContent",
 				_extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));

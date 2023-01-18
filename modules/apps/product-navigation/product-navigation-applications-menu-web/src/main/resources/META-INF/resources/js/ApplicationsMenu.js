@@ -20,6 +20,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import {ReactDOMServer, useEventListener} from '@liferay/frontend-js-react-web';
+import {useId} from '@liferay/layout-content-page-editor-web';
 import classNames from 'classnames';
 import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -397,6 +398,7 @@ const ApplicationsMenu = ({
 }) => {
 	const [appsPanelData, setAppsPanelData] = useState({});
 	const buttonRef = useRef();
+	const buttonTitleId = useId();
 	const [visible, setVisible] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -498,15 +500,7 @@ const ApplicationsMenu = ({
 			)}
 
 			<ClayButtonWithIcon
-				aria-label={
-					Liferay.Browser.isMac()
-						? Liferay.Language.get(
-								'open-applications-menu-or-use-cmd-shift-m'
-						  )
-						: Liferay.Language.get(
-								'open-applications-menu-or-use-ctrl-shift-m'
-						  )
-				}
+				aria-labelledby={buttonTitleId}
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
 				data-title={ReactDOMServer.renderToString(buttonTitle)}
@@ -520,6 +514,10 @@ const ApplicationsMenu = ({
 				size="sm"
 				symbol="grid"
 			/>
+
+			<p className="sr-only" id={buttonTitleId}>
+				{buttonTitle}
+			</p>
 		</>
 	);
 };

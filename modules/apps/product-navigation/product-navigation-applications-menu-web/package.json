@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/layout-content-page-editor-web": "*"
 	},
 	"name": "product-navigation-applications-menu",
 	"scripts": {

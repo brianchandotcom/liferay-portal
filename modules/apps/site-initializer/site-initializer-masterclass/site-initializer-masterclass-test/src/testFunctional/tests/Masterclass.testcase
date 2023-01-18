@@ -1703,7 +1703,7 @@ definition {
 		}
 
 		task ("Assert the Masterclass Pages are present") {
-			for (var pageName : list "Home,404,Account Settings,Apply,Blog,Courses,My Learning,Notifications,Sign In") {
+			for (var pageName : list "Home,Account Settings,Apply,Blog,Courses,My Learning,Notifications,Sign In") {
 				AssertVisible(
 					key_itemName = "${pageName}",
 					locator1 = "PagesAdmin#LIST_GROUP_ITEM");

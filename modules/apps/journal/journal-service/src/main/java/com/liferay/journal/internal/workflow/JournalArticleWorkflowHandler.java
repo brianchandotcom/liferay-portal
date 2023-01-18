@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
@@ -136,6 +137,8 @@ public class JournalArticleWorkflowHandler
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
+
+		serviceContext.setCommand(Constants.UPDATE);
 
 		String articleURL = _portal.getControlPanelFullURL(
 			serviceContext.getScopeGroupId(),

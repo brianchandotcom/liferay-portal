@@ -33,12 +33,14 @@ import com.liferay.saml.runtime.servlet.profile.SamlSpIdpConnectionsProfile;
 import com.liferay.saml.util.JspUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -58,6 +60,12 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		}
 
 		return false;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_hideIdpRedirectMessage = GetterUtil.getBoolean(
+			properties.get("hide.idp.redirect.message"));
 	}
 
 	@Override
@@ -153,6 +161,8 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 		return JSONUtil.put("relevantIdpConnections", jsonArray);
 	}
+
+	private boolean _hideIdpRedirectMessage;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -14,7 +14,7 @@
 		"name_i18n": {
 			"en_US": "Customer Portal"
 		},
-		"portletCategoryName": "category.remote-apps",
+		"portletCategoryName": "category.client-extensions",
 		"properties": {
 			"okta-session-api": "https://login-dev.liferay.com/api/v1/sessions",
 			"provisioning-server-api": "https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0"

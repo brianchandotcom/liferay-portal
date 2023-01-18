@@ -281,11 +281,13 @@ definition {
 		}
 
 		task ("Go and Log into AC and assert the segment page is open") {
-			Navigator.selectSpecificWindow(windowTitle = "Analytics Cloud");
+			Navigator.selectSpecificWindow(windowTitle = "Dynamic Segment Test - Segment - Analytics Cloud");
 
-			AnalyticsCloud.loginAnalyticsCloud(
-				emailAddress = "test@liferay.com",
-				password = "test");
+			if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
+				AnalyticsCloud.loginAnalyticsCloud(
+					emailAddress = "test@liferay.com",
+					password = "test");
+			}
 
 			ACUtils.assertPageTitle(pageTitle = "Dynamic Segment Test");
 		}

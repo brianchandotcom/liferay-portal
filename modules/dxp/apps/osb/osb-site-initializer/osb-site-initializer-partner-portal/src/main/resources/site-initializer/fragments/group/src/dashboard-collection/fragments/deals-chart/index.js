@@ -92,7 +92,11 @@ export default function () {
 	const OCTOBER = 10;
 	const NOVEMBER = 11;
 	const DECEMBER = 12;
-	const STAGE_OPEN = 'Open';
+
+	const STAGE_CLOSEDLOST = 'Closed Lost';
+	const STAGE_DISQUALIFIED = 'Disqualified';
+	const STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY =
+		'Rolled into another opportunity';
 	const STAGE_CLOSEDWON = 'Closed Won';
 	const STAGE_REJECTED = 'Rejected';
 	const STATUS_CAMREJECTED = 'CAM rejected';
@@ -126,7 +130,14 @@ export default function () {
 
 		return opportunities?.reduce(
 			(accumulatedChartValues, currentOpportunity) => {
-				if (currentOpportunity.stage === STAGE_OPEN) {
+				if (
+					currentOpportunity.stage !== STAGE_CLOSEDWON ||
+					currentOpportunity.stage !== STAGE_CLOSEDLOST ||
+					currentOpportunity.stage !== STAGE_DISQUALIFIED ||
+					currentOpportunity.stage !==
+						STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY ||
+					currentOpportunity.stage !== STAGE_REJECTED
+				) {
 					accumulatedChartValues.approved = getChartQuarterCount(
 						accumulatedChartValues.approved,
 						currentOpportunity.dateCreated

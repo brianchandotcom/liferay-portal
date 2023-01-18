@@ -207,7 +207,6 @@ components:
                             type: integer
                         name:
                             type: string
-                    readOnly: true
                     type: object
                 parentTaxonomyVocabulary:
                     description:

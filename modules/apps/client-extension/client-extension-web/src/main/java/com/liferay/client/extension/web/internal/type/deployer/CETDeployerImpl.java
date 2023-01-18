@@ -96,7 +96,7 @@ public class CETDeployerImpl implements CETDeployer {
 		}
 
 		if (Validator.isNull(portletCategoryName)) {
-			portletCategoryName = "category.remote-apps";
+			portletCategoryName = "category.client-extensions";
 		}
 
 		if (!instanceable && Validator.isNotNull(friendlyURLMapping)) {
@@ -167,7 +167,8 @@ public class CETDeployerImpl implements CETDeployer {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.company", cet.getCompanyId()
 			).put(
-				"com.liferay.portlet.css-class-wrapper", "portlet-remote-app"
+				"com.liferay.portlet.css-class-wrapper",
+				"portlet-client-extension"
 			).put(
 				"com.liferay.portlet.display-category", portletCategoryName
 			).put(
@@ -215,7 +216,7 @@ public class CETDeployerImpl implements CETDeployer {
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Invalid remote app entry type: " + cet.getType());
+				"Invalid client extension entry type: " + cet.getType());
 		}
 
 		return _bundleContext.registerService(

@@ -95,7 +95,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 		boolean found = false;
 
 		if (Validator.isBlank(selectedPortletCategoryName)) {
-			selectedPortletCategoryName = "category.remote-apps";
+			selectedPortletCategoryName = "category.client-extensions";
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
@@ -116,7 +116,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 						portletCategory.getName())));
 
 			if (Objects.equals(
-					portletCategory.getName(), "category.remote-apps")) {
+					portletCategory.getName(), "category.client-extensions")) {
 
 				found = true;
 			}
@@ -126,10 +126,11 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 			selectOptions.add(
 				new SelectOption(
 					LanguageUtil.get(
-						themeDisplay.getLocale(), "category.remote-apps"),
-					"category.remote-apps",
+						themeDisplay.getLocale(), "category.client-extensions"),
+					"category.client-extensions",
 					Objects.equals(
-						selectedPortletCategoryName, "category.remote-apps")));
+						selectedPortletCategoryName,
+						"category.client-extensions")));
 		}
 
 		return ListUtil.sort(

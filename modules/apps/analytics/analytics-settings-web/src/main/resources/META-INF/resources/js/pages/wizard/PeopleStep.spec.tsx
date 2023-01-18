@@ -14,6 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {act, render} from '@testing-library/react';
+import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import PeopleStep from './PeopleStep';

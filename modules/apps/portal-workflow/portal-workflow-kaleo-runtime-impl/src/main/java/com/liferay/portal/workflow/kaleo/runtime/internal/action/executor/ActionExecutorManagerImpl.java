@@ -14,20 +14,19 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Leonardo Barros
@@ -42,7 +41,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 
 		String scriptLanguage = kaleoAction.getScriptLanguage();
 
-		ActionExecutor actionExecutor = _actionExecutors.get(scriptLanguage);
+		ActionExecutor actionExecutor = _serviceTrackerMap.getService(
+			scriptLanguage);
 
 		if (actionExecutor == null) {
 			throw new PortalException(
@@ -52,28 +52,26 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		actionExecutor.execute(kaleoAction, executionContext);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected synchronized void registerActionExecutor(
-		ActionExecutor actionExecutor) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ActionExecutor.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(actionExecutor, emitter) -> {
+					for (String actionExecutorLanguage :
+							actionExecutor.getActionExecutorLanguages()) {
 
-		for (String language : actionExecutor.getActionExecutorLanguages()) {
-			_actionExecutors.put(language, actionExecutor);
-		}
+						emitter.emit(actionExecutorLanguage);
+					}
+				}));
 	}
 
-	protected synchronized void unregisterActionExecutor(
-		ActionExecutor actionExecutor) {
-
-		for (String language : actionExecutor.getActionExecutorLanguages()) {
-			_actionExecutors.remove(language);
-		}
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, ActionExecutor> _actionExecutors =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, ActionExecutor> _serviceTrackerMap;
 
 }

@@ -102,14 +102,20 @@ export const BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION = {
 
 export const CUSTOM_JSON_SXP_ELEMENT = {
 	description_i18n: {
-		en_US: Liferay.Language.get('editable-json-text-area'),
+		[Liferay.ThemeDisplay.getDefaultLanguageId()]: Liferay.Language.get(
+			'editable-json-text-area'
+		),
 	},
 	elementDefinition: {
 		category: 'custom',
 		configuration: {},
 		icon: 'custom-field',
 	},
-	title_i18n: {en_US: Liferay.Language.get('custom-json-element')},
+	title_i18n: {
+		[Liferay.ThemeDisplay.getDefaultLanguageId()]: Liferay.Language.get(
+			'custom-json-element'
+		),
+	},
 };
 
 export const DEFAULT_ADVANCED_CONFIGURATION = {};

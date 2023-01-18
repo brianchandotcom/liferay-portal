@@ -31,15 +31,15 @@ const getOpenMenuTooltip = (keyLabel) => (
 	<>
 		<div>{Liferay.Language.get('open-applications-menu')}</div>
 		<kbd className="c-kbd c-kbd-dark">
+			<kbd className="c-kbd">Ctrl</kbd>
+
+			<span className="c-kbd-separator">+</span>
+
 			<kbd className="c-kbd">{keyLabel}</kbd>
 
 			<span className="c-kbd-separator">+</span>
 
-			<kbd className="c-kbd">⇧</kbd>
-
-			<span className="c-kbd-separator">+</span>
-
-			<kbd className="c-kbd">M</kbd>
+			<kbd className="c-kbd">A</kbd>
 		</kbd>
 	</>
 );
@@ -407,7 +407,7 @@ const ApplicationsMenu = ({
 	});
 
 	const buttonTitle = useMemo(() => {
-		const keyLabel = Liferay.Browser.isMac() ? '⌘' : 'Ctrl';
+		const keyLabel = Liferay.Browser.isMac() ? '⌥' : 'Alt';
 
 		return getOpenMenuTooltip(keyLabel);
 	}, []);
@@ -440,14 +440,12 @@ const ApplicationsMenu = ({
 	useEventListener(
 		'keydown',
 		(event) => {
-			const isCMDPressed = Liferay.Browser.isMac()
-				? event.metaKey
-				: event.ctrlKey;
+			const AKey = Liferay.Browser.isMac() ? 'å' : 'a';
 
 			if (
-				isCMDPressed &&
-				event.shiftKey &&
-				event.key.toLowerCase() === 'm'
+				event.ctrlKey &&
+				event.altKey &&
+				event.key.toLowerCase() === AKey
 			) {
 				event.preventDefault();
 

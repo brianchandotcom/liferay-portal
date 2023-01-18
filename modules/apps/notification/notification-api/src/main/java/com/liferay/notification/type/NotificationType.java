@@ -50,7 +50,7 @@ public interface NotificationType {
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException;
 
-	public default void sendUnsentNotifications() {
+	public default void sendUnsentNotifications(long companyId) {
 	}
 
 	public Object[] toRecipients(

@@ -109,17 +109,15 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteNotificationQueueEntries(Date sentDate)
+	public void deleteNotificationQueueEntries(long companyId, Date sentDate)
 		throws PortalException {
 
 		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntryPersistence.findByLtSentDate(sentDate)) {
+				notificationQueueEntryPersistence.findByC_LtSentDate(
+					companyId, sentDate)) {
 
-			notificationQueueEntryPersistence.remove(notificationQueueEntry);
-
-			_notificationQueueEntryAttachmentLocalService.
-				deleteNotificationQueueEntryAttachments(
-					notificationQueueEntry.getNotificationQueueEntryId());
+			notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+				notificationQueueEntry);
 		}
 	}
 
@@ -136,6 +134,7 @@ public class NotificationQueueEntryLocalServiceImpl
 			notificationQueueEntry);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationQueueEntry deleteNotificationQueueEntry(
@@ -171,10 +170,10 @@ public class NotificationQueueEntryLocalServiceImpl
 
 	@Override
 	public List<NotificationQueueEntry> getUnsentNotificationEntries(
-		String type) {
+		long companyId, String type) {
 
-		return notificationQueueEntryPersistence.findByT_S(
-			type, NotificationQueueEntryConstants.STATUS_UNSENT);
+		return notificationQueueEntryPersistence.findByC_T_S(
+			companyId, type, NotificationQueueEntryConstants.STATUS_UNSENT);
 	}
 
 	@Override

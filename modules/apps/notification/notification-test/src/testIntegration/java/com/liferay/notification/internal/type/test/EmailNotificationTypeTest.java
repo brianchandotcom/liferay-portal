@@ -78,7 +78,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getUnsentNotificationEntries(
-				NotificationConstants.TYPE_EMAIL);
+				user.getCompanyId(), NotificationConstants.TYPE_EMAIL);
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(), 1,

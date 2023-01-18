@@ -87,6 +87,11 @@ AUI.add(
 					value:
 						'dd[data-selectable="true"],li[data-selectable="true"],tr[data-selectable="true"]',
 				},
+
+				searchContainerId: {
+					validator: Lang.isString,
+					value: '',
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -218,6 +223,10 @@ AUI.add(
 				_notifyRowToggle() {
 					const instance = this;
 
+					if (!Liferay.SPA) {
+						instance._storeSelections();
+					}
+
 					const allSelectedElements = instance.getAllSelectedElements();
 
 					const payload = {
@@ -252,6 +261,48 @@ AUI.add(
 					) {
 						instance._addRestoreTask();
 						instance._addRestoreTaskState();
+					}
+				},
+
+				_storeSelections() {
+					const instance = this;
+
+					let selectedItems = [];
+
+					if (instance.getAllSelectedElements().size() > 0) {
+						selectedItems = instance.getAllSelectedElements().val();
+					}
+
+					if (
+						sessionStorage.getItem(
+							instance.get('searchContainerId') +
+								Liferay.ThemeDisplay.getUserId() +
+								'_selections'
+						)
+					) {
+						if (selectedItems.length) {
+							sessionStorage.setItem(
+								instance.get('searchContainerId') +
+									Liferay.ThemeDisplay.getUserId() +
+									'_selections',
+								selectedItems
+							);
+						}
+						else {
+							sessionStorage.removeItem(
+								instance.get('searchContainerId') +
+									Liferay.ThemeDisplay.getUserId() +
+									'_selections'
+							);
+						}
+					}
+					else if (selectedItems.length) {
+						sessionStorage.setItem(
+							instance.get('searchContainerId') +
+								Liferay.ThemeDisplay.getUserId() +
+								'_selections',
+							selectedItems
+						);
 					}
 				},
 
@@ -290,6 +341,8 @@ AUI.add(
 						'bulkSelection',
 						hostContentBox.getData('bulkSelection')
 					);
+
+					instance.set('searchContainerId', host.get('id'));
 
 					const toggleRowFn = A.bind(
 						'_onClickRowSelector',

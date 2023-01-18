@@ -511,6 +511,7 @@ const ApplicationsMenu = ({
 				}
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
+				data-title={ReactDOMServer.renderToString(buttonTitle)}
 				data-title-set-as-html
 				data-tooltip-align="bottom-left"
 				displayType="unstyled"
@@ -520,7 +521,6 @@ const ApplicationsMenu = ({
 				ref={buttonRef}
 				size="sm"
 				symbol="grid"
-				title={ReactDOMServer.renderToString(buttonTitle)}
 			/>
 		</>
 	);

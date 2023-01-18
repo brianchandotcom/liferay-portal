@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -385,6 +386,14 @@ public class CommerceDiscountLocalServiceImpl
 			commerceDiscount, serviceContext);
 
 		// Workflow
+
+		if (_isWorkflowEnabled(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				CommerceDiscount.class.getName())) {
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
 
 		return _startWorkflowInstance(
 			user.getUserId(), commerceDiscount, serviceContext);
@@ -1834,6 +1843,18 @@ public class CommerceDiscountLocalServiceImpl
 			predicate.and(_toTargetPredicate(cpDefinitionId, cpInstanceId)));
 	}
 
+	private boolean _isWorkflowEnabled(
+		long companyId, long groupId, String className) {
+
+		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				companyId, groupId, className, 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private CommerceDiscount _startWorkflowInstance(
 			long userId, CommerceDiscount commerceDiscount,
 			ServiceContext serviceContext)
@@ -2036,6 +2057,10 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

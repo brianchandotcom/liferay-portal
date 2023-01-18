@@ -518,7 +518,7 @@ public class RoleLocalServiceTest {
 			userId, new long[0]);
 
 		Assert.assertTrue(userRelatedRoles.contains(role1));
-		Assert.assertTrue(userRelatedRoles.contains(role2));
+		Assert.assertFalse(userRelatedRoles.contains(role2));
 
 		userRelatedRoles = _roleLocalService.getUserRelatedRoles(
 			userId, new long[] {groupId});

@@ -188,7 +188,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 
 		<c:if test="<%= panelApp.isShow(permissionChecker, themeDisplay.getScopeGroup()) %>">
 			<li class="list-group" role="none">
-				<div class="list-group-heading panel-app-root panel-header <%= Objects.equals(themeDisplay.getPpid(), panelApp.getPortletId()) ? "active" : StringPool.BLANK %>">
+				<div class="list-group-heading panel-app-root panel-header <%= PanelAppUtil.isActive(request, panelApp) ? "active" : StringPool.BLANK %>">
 					<%@ include file="/panel/panel_app.jspf" %>
 				</div>
 			</li>

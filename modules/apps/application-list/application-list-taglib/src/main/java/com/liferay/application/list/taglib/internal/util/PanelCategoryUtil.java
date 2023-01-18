@@ -23,6 +23,7 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -127,7 +128,8 @@ public class PanelCategoryUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String portletId = themeDisplay.getPpid();
+		String portletId = ParamUtil.getString(
+			httpServletRequest, "selPpid", themeDisplay.getPpid());
 
 		if (Validator.isNotNull(portletId) &&
 			panelCategoryHelper.containsPortlet(

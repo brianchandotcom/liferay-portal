@@ -43,7 +43,6 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Objects" %>
+<%@ page import="java.util.List" %>
 
 <liferay-theme:defineObjects />

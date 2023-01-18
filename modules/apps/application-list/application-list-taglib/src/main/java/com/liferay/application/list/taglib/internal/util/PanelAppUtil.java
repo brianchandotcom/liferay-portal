@@ -95,7 +95,9 @@ public class PanelAppUtil {
 
 		if (Validator.isNull(portletResource)) {
 			active = Objects.equals(
-				themeDisplay.getPpid(), panelApp.getPortletId());
+				ParamUtil.getString(
+					httpServletRequest, "selPpid", themeDisplay.getPpid()),
+				panelApp.getPortletId());
 		}
 
 		return active;

@@ -169,6 +169,7 @@ public class NotificationTemplateServiceTest {
 		notificationTemplate.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplate.setName(RandomTestUtil.randomString());
+		notificationTemplate.setSubject("Subject [%term%]");
 		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
 
 		notificationContext.setNotificationTemplate(notificationTemplate);

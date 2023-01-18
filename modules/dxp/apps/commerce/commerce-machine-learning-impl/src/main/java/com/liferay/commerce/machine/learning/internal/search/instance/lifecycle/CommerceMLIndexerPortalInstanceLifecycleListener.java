@@ -109,16 +109,14 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 		_serviceTrackerList.close();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMLIndexerPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private ServiceTrackerList<CommerceMLIndexer> _serviceTrackerList;
 

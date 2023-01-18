@@ -1142,7 +1142,13 @@ definition {
 
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
 
-		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA");
+		if (IsElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA")) {
+			Click(
+				key_selectType = "${selectType}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#TIMERS_BUTTON_CHOOSE_SCRIPT_LANGUAGE");
+
+			AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
+		}
 
 		AssertElementPresent(
 			key_inputOption = "Priority",

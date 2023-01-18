@@ -277,7 +277,8 @@ definition {
 			newSection = "New Timer",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
-			sectionOptionList = "1,2,3");
+			sectionOptionList = "1,2,3",
+			selectType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -443,6 +444,7 @@ definition {
 			durationValue = "2",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -775,6 +777,7 @@ definition {
 			durationValue = "2",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -808,6 +811,7 @@ definition {
 			durationValue = "2",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -854,6 +858,7 @@ definition {
 			durationValue = "2",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -1058,6 +1063,7 @@ definition {
 			durationValue = "2",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -1139,7 +1145,8 @@ definition {
 			newSection = "New Timer",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
-			sectionOptionList = "1,2,3");
+			sectionOptionList = "1,2,3",
+			selectType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1506,6 +1513,7 @@ definition {
 			durationValue = "1",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -1535,6 +1543,7 @@ definition {
 			durationValue = "2",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -1934,6 +1943,7 @@ definition {
 			durationValue = "1",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -1977,6 +1987,7 @@ definition {
 			durationValue = "1",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -2031,6 +2042,7 @@ definition {
 			name = "Name of Workflow Timer",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -2075,6 +2087,7 @@ definition {
 			recurrenceOption = "True",
 			recurrenceScaleTypeOption = "Hour",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -2719,6 +2732,7 @@ definition {
 			durationValue = "2",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
+			selectType = "Groovy",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -3329,6 +3343,7 @@ definition {
 			recurrenceOption = "True",
 			recurrenceScaleTypeOption = "Hour",
 			scaleTypeOption = "Minute",
+			selectType = "Java",
 			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -3682,7 +3697,9 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(newTimer = "true");
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			newTimer = "true",
+			selectType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.viewToolTip(tooltipMessage = "Repeat the action at a given duration until the workflow task is completed.");
 	}

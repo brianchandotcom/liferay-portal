@@ -22,11 +22,13 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.fragment.processor.PortletRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.info.display.url.provider.InfoEditURLProviderUtil;
 import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
@@ -39,6 +41,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
@@ -72,11 +75,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -467,6 +473,9 @@ public class ContentUtil {
 		List<String> restrictedItemIds = _getRestrictedItemIds(
 			layoutStructure, themeDisplay);
 
+		List<String> restrictedPortletIds = _getRestrictedPortletIds(
+			layoutStructure, restrictedItemIds);
+
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			LayoutClassedModelUsageLocalServiceUtil.
 				getLayoutClassedModelUsagesByPlid(plid);
@@ -517,8 +526,10 @@ public class ContentUtil {
 			}
 
 			if ((layoutClassedModelUsage.getContainerType() ==
-					portletClassNameId) &&
+					portletClassNameId) ||
 				layoutStructure.isPortletMarkedForDeletion(
+					layoutClassedModelUsage.getContainerKey()) ||
+				restrictedPortletIds.contains(
 					layoutClassedModelUsage.getContainerKey())) {
 
 				continue;
@@ -801,6 +812,74 @@ public class ContentUtil {
 		}
 
 		return restrictedItemIds;
+	}
+
+	private static List<String> _getRestrictedPortletIds(
+		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
+
+		if (restrictedItemIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Map<String, List<String>> portletIds = new HashMap<>();
+
+		for (Map.Entry<Long, LayoutStructureItem> entry :
+				fragmentLayoutStructureItems.entrySet()) {
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)entry.getValue();
+
+			if (layoutStructure.isItemMarkedForDeletion(
+					fragmentStyledLayoutStructureItem.getItemId())) {
+
+				continue;
+			}
+
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					GetterUtil.getLong(entry.getKey()));
+
+			if ((fragmentEntryLink == null) || fragmentEntryLink.isDeleted()) {
+				continue;
+			}
+
+			PortletRegistry portletRegistry =
+				PortletRegistryUtil.getPortletRegistry();
+
+			for (String portletId :
+					portletRegistry.getFragmentEntryLinkPortletIds(
+						fragmentEntryLink)) {
+
+				List<String> itemIds = portletIds.computeIfAbsent(
+					portletId, key -> new ArrayList<>());
+
+				itemIds.add(fragmentStyledLayoutStructureItem.getItemId());
+			}
+		}
+
+		List<String> restrictedPortletIds = new ArrayList<>();
+
+		for (Map.Entry<String, List<String>> entry : portletIds.entrySet()) {
+			boolean restrictedPortletId = true;
+
+			for (String itemId : entry.getValue()) {
+				if (!restrictedItemIds.contains(itemId)) {
+					restrictedPortletId = false;
+
+					break;
+				}
+			}
+
+			if (restrictedPortletId) {
+				restrictedPortletIds.add(entry.getKey());
+			}
+		}
+
+		return restrictedPortletIds;
 	}
 
 	private static JSONObject _getStatusJSONObject(

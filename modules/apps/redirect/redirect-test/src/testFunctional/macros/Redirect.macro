@@ -162,7 +162,7 @@ definition {
 			locator1 = "TextInput#DESTINATION_URL",
 			value1 = "${destinationURL}");
 
-		Click(locator1 = "Button#SAVE");
+		ClickNoError(locator1 = "Button#SAVE");
 
 		if (isSet(destinationFieldError)) {
 			AssertTextEquals(

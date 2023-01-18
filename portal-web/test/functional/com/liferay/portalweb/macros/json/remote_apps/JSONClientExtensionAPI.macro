@@ -39,7 +39,7 @@ definition {
 				-d properties=${customElementPropertiesModified} \
 				-d sourceCodeURL= \
 				-d type='customElement' \
-				-d typeSettings=cssURLs=${customElementCssurlModified}%0AhtmlElementName=${htmlNameModified}%0Aurls=${customElementURLModified}%0AuseESM=${customElementUseESMValue}%0Ainstanceable=true%0AportletCategoryName=category.remote-apps
+				-d typeSettings=cssURLs=${customElementCssurlModified}%0AhtmlElementName=${htmlNameModified}%0Aurls=${customElementURLModified}%0AuseESM=${customElementUseESMValue}%0Ainstanceable=true%0AportletCategoryName=category.client-extensions
 		''';
 
 		JSONCurlUtil.post("${curl}");

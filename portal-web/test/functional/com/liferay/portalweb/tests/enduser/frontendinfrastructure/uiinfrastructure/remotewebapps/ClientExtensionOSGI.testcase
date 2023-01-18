@@ -48,7 +48,7 @@ definition {
 				entryFriendlyURLMapping = "vanilla",
 				entryHTMLElementName = "vanilla-counter",
 				entryName = "Vanilla Counter",
-				entryPortletCategoryName = "category.remote-apps",
+				entryPortletCategoryName = "category.client-extensions",
 				entryproperties = "test-data-user=QAuser",
 				entrySourceCodeURL = "",
 				entryType = "Custom Element");
@@ -100,7 +100,7 @@ definition {
 				entryFriendlyURLMapping = "vanilla",
 				entryHTMLElementName = "vanilla-counter",
 				entryName = "Vanilla Counter",
-				entryPortletCategoryName = "category.remote-apps",
+				entryPortletCategoryName = "category.client-extensions",
 				entryproperties = "test-data-user=QAuser",
 				entrySourceCodeURL = "",
 				entryType = "Custom Element");

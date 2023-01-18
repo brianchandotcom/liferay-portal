@@ -180,7 +180,7 @@ description=&quot;Custom Element Description&quot;
 name=&quot;Vanilla Counter&quot;
 properties=&#91;&quot;test-data-user=QAuser&quot;&#93;
 type=&quot;customElement&quot;
-typeSettings=&#91;&quot;friendlyURLMapping=vanilla&quot;,&quot;instanceable=true&quot;,&quot;portletCategoryName=category.remote-apps&quot;,&quot;urls=https:&#47;&#47;liferay.github.io&#47;liferay-frontend-projects&#47;vanilla-counter&#47;index.js&quot;,&quot;htmlElementName=vanilla-counter&quot;,&quot;cssURLs=https:&#47;&#47;liferay.github.io&#47;liferay-frontend-projects&#47;index.css&quot;,&quot;useESM=true&quot;&#93;</echo>
+typeSettings=&#91;&quot;friendlyURLMapping=vanilla&quot;,&quot;instanceable=true&quot;,&quot;portletCategoryName=category.client-extensions&quot;,&quot;urls=https:&#47;&#47;liferay.github.io&#47;liferay-frontend-projects&#47;vanilla-counter&#47;index.js&quot;,&quot;htmlElementName=vanilla-counter&quot;,&quot;cssURLs=https:&#47;&#47;liferay.github.io&#47;liferay-frontend-projects&#47;index.css&quot;,&quot;useESM=true&quot;&#93;</echo>
 		</sequential>
 	</macrodef>
 
@@ -193,7 +193,7 @@ name=&quot;My Pretty IFrame&quot;
 properties=&#91;&quot;a=1&quot;,&quot;b=2&quot;&#93;
 sourceCodeURL=&quot;&quot;
 type=&quot;iframe&quot;
-typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false&quot;,&quot;portletCategoryName=category.remote-apps&quot;,&quot;url=https:&#47;&#47;liferay.github.io&#47;liferay-frontend-projects&#47;index.html&quot;&#93;</echo>
+typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false&quot;,&quot;portletCategoryName=category.client-extensions&quot;,&quot;url=https:&#47;&#47;liferay.github.io&#47;liferay-frontend-projects&#47;index.html&quot;&#93;</echo>
 		</sequential>
 	</macrodef>
 

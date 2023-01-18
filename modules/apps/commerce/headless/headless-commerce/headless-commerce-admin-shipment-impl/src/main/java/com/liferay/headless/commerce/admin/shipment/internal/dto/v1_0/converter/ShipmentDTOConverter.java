@@ -14,10 +14,14 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -48,6 +52,16 @@ public class ShipmentDTOConverter
 			_commerceShipmentService.getCommerceShipment(
 				(Long)dtoConverterContext.getId());
 
+		String commerceShipmentStatusLabel =
+			CommerceShipmentConstants.getShipmentStatusLabel(
+				commerceShipment.getStatus());
+
+		String commerceShipmentStatusLabelI18n = _language.get(
+			LanguageResources.getResourceBundle(
+				dtoConverterContext.getLocale()),
+			CommerceShipmentConstants.getShipmentStatusLabel(
+				commerceShipment.getStatus()));
+
 		return new Shipment() {
 			{
 				accountId = commerceShipment.getCommerceAccountId();
@@ -70,6 +84,9 @@ public class ShipmentDTOConverter
 				shippingMethodId =
 					commerceShipment.getCommerceShippingMethodId();
 				shippingOptionName = commerceShipment.getShippingOptionName();
+				status = _toStatus(
+					commerceShipment.getStatus(), commerceShipmentStatusLabel,
+					commerceShipmentStatusLabelI18n);
 				trackingNumber = commerceShipment.getTrackingNumber();
 				trackingURL = commerceShipment.getTrackingURL();
 				userName = commerceShipment.getUserName();
@@ -77,7 +94,23 @@ public class ShipmentDTOConverter
 		};
 	}
 
+	private Status _toStatus(
+		int statusCode, String shipmentStatusLabel,
+		String shipmentStatusLabelI18n) {
+
+		return new Status() {
+			{
+				code = statusCode;
+				label = shipmentStatusLabel;
+				label_i18n = shipmentStatusLabelI18n;
+			}
+		};
+	}
+
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
+
+	@Reference
+	private Language _language;
 
 }

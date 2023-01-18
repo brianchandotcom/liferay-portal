@@ -390,8 +390,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				"destination.name", destinationName
 			).build();
 
-		Class<?> messageListenerClass = messageListener.getClass();
-
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper =
 				new SchedulerEventMessageListenerWrapper();
@@ -406,8 +404,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				SchedulerEventMessageListener.class,
 				schedulerEventMessageListenerWrapper, properties);
 
-		_serviceRegistrations.put(
-			messageListenerClass.getName(), serviceRegistration);
+		_serviceRegistrations.put(messageListener, serviceRegistration);
 	}
 
 	@Override
@@ -473,10 +470,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Override
 	public void unregister(MessageListener messageListener) {
-		Class<?> messageListenerClass = messageListener.getClass();
-
 		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(messageListenerClass.getName());
+			_serviceRegistrations.remove(messageListener);
 
 		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
@@ -689,7 +684,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private volatile SchedulerEngineHelperConfiguration
 		_schedulerEngineHelperConfiguration;
 	private final Map
-		<String, ServiceRegistration<SchedulerEventMessageListener>>
+		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
 			_serviceRegistrations = new ConcurrentHashMap<>();
 	private volatile ServiceTracker
 		<SchedulerEventMessageListener, SchedulerEventMessageListener>

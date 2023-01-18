@@ -1542,7 +1542,10 @@ public class DDMStructureLocalServiceImpl
 
 		structure.setUserId(userId);
 		structure.setParentStructureId(parentStructureId);
-		structure.setStructureKey(structureKey);
+
+		if (structureKey != null) {
+			structure.setStructureKey(structureKey);
+		}
 
 		DDMStructureVersion latestStructureVersion =
 			_ddmStructureVersionLocalService.getLatestStructureVersion(

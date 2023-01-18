@@ -1039,9 +1039,7 @@ public class DDMFormEvaluatorHelper {
 							ddmFormField.getName())) {
 
 				if (!_isObjectRelationshipFieldInvalid(
-						ddmFormEvaluatorFieldContextKey) ||
-					(getDDMFormFieldValue(ddmFormEvaluatorFieldContextKey) !=
-						null)) {
+						ddmFormEvaluatorFieldContextKey)) {
 
 					continue;
 				}

@@ -164,7 +164,14 @@ definition {
 
 		Click(locator1 = "Button#SAVE");
 
-		if (isSet(error)) {
+		if (isSet(destinationFieldError)) {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "Please enter a valid URL.");
+
+			AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");
+		}
+		else if (isSet(patternFieldError)) {
 			Alert.viewErrorMessage(errorMessage = "Error:Patterns must be valid regular expressions.");
 		}
 		else {

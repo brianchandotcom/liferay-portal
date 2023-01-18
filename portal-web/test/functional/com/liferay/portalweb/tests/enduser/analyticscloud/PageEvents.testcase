@@ -57,11 +57,7 @@ definition {
 		}
 
 		task ("Add 10 blogs entries with long content") {
-			var n = "0";
-
-			while ("${n}" != "10") {
-				var n = ${n} + 1;
-
+			for (var n: list "1,2,3,4,5,6,7,8,9") {
 				ACUtils.createBlogsAndAddToPage(
 					entryContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lacus nunc. Etiam et volutpat est. Quisque quis mi erat. Donec maximus mauris augue, nec convallis metus aliquet vitae. Nullam venenatis a nisl in tincidunt. Aliquam venenatis, enim in venenatis aliquam, mauris erat blandit nulla, sit amet tincidunt elit enim sit amet dolor. Aliquam fringilla condimentum varius. Maecenas tincidunt elit eget lacinia aliquam. Proin congue diam lorem. Vestibulum tristique elit mi, non dapibus erat lobortis.",
 					entryTitle = "Blogs Entry Title ${n}",
@@ -134,11 +130,7 @@ definition {
 		}
 
 		task ("Add 10 blogs entries with long content") {
-			var n = "0";
-
-			while ("${n}" != "10") {
-				var n = ${n} + 1;
-
+			for (var n: list "1,2,3,4,5,6,7,8,9") {
 				ACUtils.createBlogsAndAddToPage(
 					entryContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lacus nunc. Etiam et volutpat est. Quisque quis mi erat. Donec maximus mauris augue, nec convallis metus aliquet vitae. Nullam venenatis a nisl in tincidunt. Aliquam venenatis, enim in venenatis aliquam, mauris erat blandit nulla, sit amet tincidunt elit enim sit amet dolor. Aliquam fringilla condimentum varius. Maecenas tincidunt elit eget lacinia aliquam. Proin congue diam lorem. Vestibulum tristique elit mi, non dapibus erat lobortis.",
 					entryTitle = "Blogs Entry Title ${n}",
@@ -211,11 +203,7 @@ definition {
 		}
 
 		task ("Add 10 blogs entries with long content") {
-			var n = "0";
-
-			while ("${n}" != "10") {
-				var n = ${n} + 1;
-
+			for (var n: list "1,2,3,4,5,6,7,8,9") {
 				ACUtils.createBlogsAndAddToPage(
 					entryContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lacus nunc. Etiam et volutpat est. Quisque quis mi erat. Donec maximus mauris augue, nec convallis metus aliquet vitae. Nullam venenatis a nisl in tincidunt. Aliquam venenatis, enim in venenatis aliquam, mauris erat blandit nulla, sit amet tincidunt elit enim sit amet dolor. Aliquam fringilla condimentum varius. Maecenas tincidunt elit eget lacinia aliquam. Proin congue diam lorem. Vestibulum tristique elit mi, non dapibus erat lobortis.",
 					entryTitle = "Blogs Entry Title ${n}",
@@ -288,11 +276,7 @@ definition {
 		}
 
 		task ("Add 10 blogs entries with long content") {
-			var n = "0";
-
-			while ("${n}" != "10") {
-				var n = ${n} + 1;
-
+			for (var n: list "1,2,3,4,5,6,7,8,9") {
 				ACUtils.createBlogsAndAddToPage(
 					entryContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lacus nunc. Etiam et volutpat est. Quisque quis mi erat. Donec maximus mauris augue, nec convallis metus aliquet vitae. Nullam venenatis a nisl in tincidunt. Aliquam venenatis, enim in venenatis aliquam, mauris erat blandit nulla, sit amet tincidunt elit enim sit amet dolor. Aliquam fringilla condimentum varius. Maecenas tincidunt elit eget lacinia aliquam. Proin congue diam lorem. Vestibulum tristique elit mi, non dapibus erat lobortis.",
 					entryTitle = "Blogs Entry Title ${n}",
@@ -365,11 +349,7 @@ definition {
 		}
 
 		task ("Add 10 blogs entries with long content") {
-			var n = "0";
-
-			while ("${n}" != "10") {
-				var n = ${n} + 1;
-
+			for (var n: list "1,2,3,4,5,6,7,8,9") {
 				ACUtils.createBlogsAndAddToPage(
 					entryContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in lacus nunc. Etiam et volutpat est. Quisque quis mi erat. Donec maximus mauris augue, nec convallis metus aliquet vitae. Nullam venenatis a nisl in tincidunt. Aliquam venenatis, enim in venenatis aliquam, mauris erat blandit nulla, sit amet tincidunt elit enim sit amet dolor. Aliquam fringilla condimentum varius. Maecenas tincidunt elit eget lacinia aliquam. Proin congue diam lorem. Vestibulum tristique elit mi, non dapibus erat lobortis.",
 					entryTitle = "Blogs Entry Title ${n}",

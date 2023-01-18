@@ -288,7 +288,7 @@ definition {
 	@description = "LPS-161918 - Verify that it's possible to edit an e-mail notification template"
 	@priority = "3"
 	test CanEditEmailTemplate {
-		task ("Go to Templates and add a new Notification Template") {
+		task ("Given a user creates an email notification template") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Notifications",
 				panel = "Control Panel",
@@ -306,24 +306,29 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Edit the created notification Template") {
+		task ("When the user edits the template") {
 			ObjectNotifications.editNotificationTemplate(
-				name = "New Notification Edited",
-				notificationTemplateName = "Notification Template");
+				emailBody = "Email Body Edit",
+				entryTo = "test2@liferay.com",
+				externalReferenceCode = "ERC Edit",
+				fromAddress = "Liferay Edit",
+				fromName = "Test Test Edit",
+				name = "New Notification Edit",
+				notificationTemplateName = "Notification Template",
+				subject = "Subject Edit");
 
 			PortletEntry.save();
 		}
 
-		task ("Assert only the edited Notification Template is present") {
-			Refresh();
-
-			AssertElementPresent(
-				key_name = "New Notification Edited",
-				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
-
-			AssertElementNotPresent(
-				key_name = "Notification Template",
-				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		task ("Then the notification template will have all edited values") {
+			ObjectNotifications.viewNotificationTemplateDetails(
+				emailBody = "Email Body Edit",
+				entryTo = "test2@liferay.com",
+				externalReferenceCode = "ERC Edit",
+				fromAddress = "Liferay Edit",
+				fromName = "Test Test Edit",
+				name = "New Notification Edit",
+				subject = "Subject Edit");
 		}
 	}
 

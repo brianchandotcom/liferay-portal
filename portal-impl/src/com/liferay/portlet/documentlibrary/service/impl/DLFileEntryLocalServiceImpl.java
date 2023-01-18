@@ -912,7 +912,7 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 
-			DLStoreUtil.deleteFile(
+			_deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), version);
 		}
@@ -2488,6 +2488,15 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	private void _deleteFile(
+			long companyId, long repositoryId, String name, String versionLabel)
+		throws PortalException {
+
+		DLStoreUtil.deleteFile(companyId, repositoryId, name, versionLabel);
+		DLStoreUtil.deleteFile(
+			companyId, repositoryId, name, versionLabel + ".index");
+	}
+
 	private void _expireFileEntriesByCompanyId(
 			long companyId, Date expirationDate,
 			Map<String, Serializable> workflowContext,
@@ -3178,7 +3187,7 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
-		DLStoreUtil.deleteFile(
+		_deleteFile(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), lastDLFileVersion.getVersion());
 
@@ -3196,7 +3205,7 @@ public class DLFileEntryLocalServiceImpl
 	private void _registerPWCDeletionCallback(DLFileEntry dlFileEntry) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				DLStoreUtil.deleteFile(
+				_deleteFile(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -3226,7 +3235,7 @@ public class DLFileEntryLocalServiceImpl
 		_assetEntryLocalService.deleteEntry(
 			DLFileEntryConstants.getClassName(), dlFileVersion.getPrimaryKey());
 
-		DLStoreUtil.deleteFile(
+		_deleteFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(),
 			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -3345,7 +3354,7 @@ public class DLFileEntryLocalServiceImpl
 			// File
 
 			if ((file != null) || (inputStream != null)) {
-				DLStoreUtil.deleteFile(
+				_deleteFile(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 					dlFileEntry.getName(), version);
 

@@ -13,6 +13,8 @@ import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {DEFAULT_LANGUAGE} from '../../../source-builder/constants';
+
 const scriptLanguageOptions = [
 	{
 		label: Liferay.Language.get('groovy'),
@@ -28,43 +30,36 @@ const ScriptInput = ({
 	defaultScriptLanguage,
 	handleClickCapture,
 	inputValue,
-	showSelectScriptLanguage = false,
 	updateSelectedItem,
 }) => {
 	const [script, setScript] = useState(inputValue);
 	const [scriptLanguage, setScriptLanguage] = useState(
-		defaultScriptLanguage || 'groovy'
+		defaultScriptLanguage || DEFAULT_LANGUAGE
 	);
 
 	return (
 		<>
-			{showSelectScriptLanguage && (
-				<>
-					<label htmlFor="script-language">
-						{Liferay.Language.get('script-language')}
-					</label>
+			<label htmlFor="script-language">
+				{Liferay.Language.get('script-language')}
+			</label>
 
-					<ClaySelect
-						aria-label="Select"
-						defaultValue={scriptLanguage}
-						id="script-language"
-						onChange={({target}) => {
-							setScriptLanguage(target.value);
-						}}
-						onClickCapture={() =>
-							handleClickCapture(scriptLanguage)
-						}
-					>
-						{scriptLanguageOptions.map((item) => (
-							<ClaySelect.Option
-								key={item.value}
-								label={item.label}
-								value={item.value}
-							/>
-						))}
-					</ClaySelect>
-				</>
-			)}
+			<ClaySelect
+				aria-label="Select"
+				defaultValue={scriptLanguage}
+				id="script-language"
+				onChange={({target}) => {
+					setScriptLanguage(target.value);
+				}}
+				onClickCapture={() => handleClickCapture(scriptLanguage)}
+			>
+				{scriptLanguageOptions.map((item) => (
+					<ClaySelect.Option
+						key={item.value}
+						label={item.label}
+						value={item.value}
+					/>
+				))}
+			</ClaySelect>
 
 			<ClayForm.Group>
 				<label htmlFor="nodeScript">

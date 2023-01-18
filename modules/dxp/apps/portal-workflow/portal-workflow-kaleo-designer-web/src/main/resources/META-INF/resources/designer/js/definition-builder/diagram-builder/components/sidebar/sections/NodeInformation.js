@@ -169,6 +169,16 @@ export default function NodeInformation({errors, setErrors}) {
 
 			{selectedItem?.type === 'condition' && (
 				<ScriptInput
+					defaultScriptLanguage={selectedItem?.data.scriptLanguage}
+					handleClickCapture={(scriptLanguage) =>
+						setSelectedItem({
+							...selectedItem,
+							data: {
+								...selectedItem.data,
+								scriptLanguage,
+							},
+						})
+					}
 					inputValue={selectedItem?.data.script || ''}
 					updateSelectedItem={({target}) =>
 						setSelectedItem({

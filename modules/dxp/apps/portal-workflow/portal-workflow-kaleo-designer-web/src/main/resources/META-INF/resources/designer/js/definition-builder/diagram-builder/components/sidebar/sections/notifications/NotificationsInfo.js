@@ -580,7 +580,6 @@ const NotificationsInfo = ({
 									notificationIndex={notificationIndex}
 									sectionsLength={internalSections.length}
 									setSections={setInternalSections}
-									showSelectScriptLanguage
 									updateSelectedItem={
 										scriptedRecipientUpdateSelectedItem
 									}

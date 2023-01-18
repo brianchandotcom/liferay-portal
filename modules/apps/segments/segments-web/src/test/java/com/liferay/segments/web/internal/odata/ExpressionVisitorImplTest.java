@@ -88,7 +88,7 @@ public class ExpressionVisitorImplTest {
 		Date date = ISO8601Utils.parse(
 			(String)_expressionVisitorImpl.visitBinaryExpressionOperation(
 				BinaryExpression.Operation.SUB,
-				MethodExpression.Type.NOW.toString(), duration),
+				ExpressionVisitorImpl.MethodType.NOW, duration),
 			new ParsePosition(0));
 
 		Instant instant = Instant.ofEpochMilli(date.getTime());
@@ -103,6 +103,17 @@ public class ExpressionVisitorImplTest {
 			instant.getEpochSecond() >= initialInstant.getEpochSecond());
 		Assert.assertTrue(
 			instant.getEpochSecond() <= finalInstant.getEpochSecond());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationSubwithDate()
+		throws ExpressionVisitException {
+
+		Assert.assertEquals(
+			"2022-12-27T23:00:00Z",
+			_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.SUB, "2022-12-28T23:00:00.000Z",
+				Duration.ofDays(1)));
 	}
 
 	@Test
@@ -520,7 +531,7 @@ public class ExpressionVisitorImplTest {
 	@Test
 	public void testVisitMethodExpressionWithNow() {
 		Assert.assertEquals(
-			String.valueOf(MethodExpression.Type.NOW),
+			ExpressionVisitorImpl.MethodType.NOW,
 			_expressionVisitorImpl.visitMethodExpression(
 				Collections.emptyList(), MethodExpression.Type.NOW));
 	}

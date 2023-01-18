@@ -249,7 +249,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 						"type ", type, " and ", expressions.size(), "params"));
 			}
 
-			return String.valueOf(type);
+			return MethodType.NOW;
 		}
 
 		throw new UnsupportedOperationException(
@@ -286,6 +286,12 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throw new UnsupportedOperationException(
 			"Unsupported method visitUnaryExpressionOperation with operation " +
 				operation);
+	}
+
+	public enum MethodType {
+
+		NOW
+
 	}
 
 	private JSONObject _getConjunctionJSONObject(
@@ -386,13 +392,13 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Object _sub(Object left, Object right)
 		throws ExpressionVisitException {
 
-		if ((left instanceof String) && (right instanceof Duration)) {
+		if ((left instanceof MethodType || left instanceof String) &&
+			(right instanceof Duration)) {
+
 			try {
 				Date date = null;
 
-				if (Objects.equals(
-						MethodExpression.Type.NOW.toString(), left)) {
-
+				if (Objects.equals(MethodType.NOW, left)) {
 					date = _date;
 				}
 				else {

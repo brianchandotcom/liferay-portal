@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -132,7 +132,7 @@ public class NotificationQueuePortalInstanceLifecycleListener
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	private final Map<Long, ServiceRegistration<MessageListener>>
-		_serviceRegistrations = new HashMap<>();
+		_serviceRegistrations = new ConcurrentHashMap<>();
 
 	@Reference
 	private TriggerFactory _triggerFactory;

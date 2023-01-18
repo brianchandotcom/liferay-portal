@@ -34,8 +34,9 @@ definition {
 	@priority = "5"
 	test CanPurchaseBasicPolicy {
 		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanPurchaseBasicPolicy";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -67,8 +68,9 @@ definition {
 	@priority = "5"
 	test CanPurchasePremiumPolicy {
 		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanPurchasePremiumPolicy";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -100,8 +102,9 @@ definition {
 	@priority = "5"
 	test CanPurchaseStandardPolicy {
 		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanPurchaseStandardPolicy";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -133,8 +136,9 @@ definition {
 	@priority = "4"
 	test CanViewUserNameInTitle {
 		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanViewUserNameInTitle";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

@@ -34,8 +34,9 @@ definition {
 	@priority = "3"
 	test CanContinueQuoteAfterClickOnButton {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#CanContinueQuoteAfterClickOnButton";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -71,8 +72,9 @@ definition {
 	@priority = "3"
 	test CanContinueQuoteAfterClickOnX {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#CanContinueQuoteAfterClickOnX";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -110,8 +112,9 @@ definition {
 	@priority = "4"
 	test CanSendLinkAndExit {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#CanSendLinkAndExit";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -131,8 +134,9 @@ definition {
 	@priority = "4"
 	test CanViewErrorMessageForInactiveRaylifeObject {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#CanViewErrorMessageForInactiveRaylifeObject";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -169,8 +173,9 @@ definition {
 	@priority = "4"
 	test CanViewSavedProgressModal {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#CanViewSavedProgressModal";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -194,8 +199,9 @@ definition {
 	@priority = "2"
 	test IsContinueButtonEnabledAfterNotSavingAndExiting {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#IsContinueButtonEnabledAfterNotSavingAndExiting";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -219,8 +225,9 @@ definition {
 	@priority = "4"
 	test IsModalEmailEqualsToBusinessEmail {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#IsModalEmailEqualsToBusinessEmail";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -256,8 +263,9 @@ definition {
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnBusiness {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnBusiness";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -279,8 +287,9 @@ definition {
 	@priority = "5"
 	test IsSaveAndExitButtonEnabledOnContactInfo {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnContactInfo";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -312,8 +321,9 @@ definition {
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnEmployees {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnEmployees";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -339,8 +349,9 @@ definition {
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnProductSelection {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnProductSelection";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -362,8 +373,9 @@ definition {
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnProperty {
 		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnProperty";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

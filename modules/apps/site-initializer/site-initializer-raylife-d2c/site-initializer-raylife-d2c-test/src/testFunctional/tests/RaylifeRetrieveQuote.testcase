@@ -35,8 +35,9 @@ definition {
 	@priority = "4"
 	test CanRetrieveAllQuote {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanRetrieveAllQuote";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -80,8 +81,9 @@ definition {
 	@priority = "3"
 	test CanViewEmailFragmentSent {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewEmailFragmentSent";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -109,8 +111,9 @@ definition {
 	@priority = "3"
 	test CanViewErrorMessageForEmailDifferent {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewErrorMessageForEmailDifferent";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -130,8 +133,9 @@ definition {
 	@priority = "3"
 	test CanViewErrorMessageForEmailInvalid {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewErrorMessageForEmailInvalid";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -151,8 +155,9 @@ definition {
 	@priority = "3"
 	test CanViewQuoteFragment {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewQuoteFragment";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -170,8 +175,9 @@ definition {
 	@priority = "5"
 	test CanViewRetrieveAQuoteInHomePage {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewRetrieveAQuoteInHomePage";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -183,8 +189,9 @@ definition {
 	@priority = "3"
 	test ClickingStartNewQuoteGoesHomePage {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#ClickingStartNewQuoteGoesHomePage";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -198,8 +205,9 @@ definition {
 	@priority = "4"
 	test EmailEqualsApplication {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#EmailEqualsApplication";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -227,8 +235,9 @@ definition {
 	@priority = "3"
 	test IsContinueQuoteButtonEnabledOnRetrieveAQuote {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#IsContinueQuoteButtonEnabledOnRetrieveAQuote";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
@@ -254,8 +263,9 @@ definition {
 	@priority = "4"
 	test NameEqualsApplication {
 		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#NameEqualsApplication";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

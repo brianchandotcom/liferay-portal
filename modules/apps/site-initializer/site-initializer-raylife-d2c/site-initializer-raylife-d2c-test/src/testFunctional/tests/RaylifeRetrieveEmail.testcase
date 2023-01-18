@@ -36,8 +36,9 @@ definition {
 	@priority = "5"
 	test CanConfirmEmailSent {
 		property test.name.skip.portal.instance = "RaylifeRetrieveEmail#CanConfirmEmailSent";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -74,8 +75,9 @@ definition {
 	@priority = "4"
 	test CanRecoverQuotationThroughEmailLink {
 		property test.name.skip.portal.instance = "RaylifeRetrieveEmail#CanRecoverQuotationThroughEmailLink";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

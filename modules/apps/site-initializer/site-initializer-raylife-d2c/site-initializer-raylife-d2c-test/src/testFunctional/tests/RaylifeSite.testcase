@@ -33,8 +33,9 @@ definition {
 	@priority = "5"
 	test AllObjectsIsCreatedForRaylifeD2c {
 		property test.name.skip.portal.instance = "RaylifeSite#AllObjectsIsCreatedForRaylifeD2c";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		task ("Add site Raylife D2C") {
 			Raylife.createRaylifeSite(siteName = "${testSiteName}");
 		}
@@ -48,8 +49,9 @@ definition {
 	@priority = "5"
 	test CanRaylifeBeCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#CanRaylifeBeCreated";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		task ("Create a new Raylife D2C Site") {
 			Site.openSitesAdmin();
 
@@ -63,8 +65,9 @@ definition {
 	@priority = "5"
 	test CatalogForRaylifeIsCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#CatalogForRaylifeIsCreated";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 
 		CommerceNavigator.gotoPortlet(
@@ -88,8 +91,9 @@ definition {
 	@priority = "5"
 	test ProductsForRaylifeIsCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#ProductsForRaylifeIsCreated";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 
 		CommerceNavigator.gotoPortlet(

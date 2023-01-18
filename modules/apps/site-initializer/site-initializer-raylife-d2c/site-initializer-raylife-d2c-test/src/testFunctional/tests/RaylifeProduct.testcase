@@ -34,8 +34,9 @@ definition {
 	@priority = "3"
 	test CanDismissProductInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProduct#CanDismissProductInfoPanel";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
@@ -55,8 +56,9 @@ definition {
 	@priority = "3"
 	test CanGoBackOnProductSelectionKeepingAllData {
 		property test.name.skip.portal.instance = "RaylifeProduct#CanGoBackOnProductSelectionKeepingAllData";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -80,8 +82,9 @@ definition {
 	@priority = "3"
 	test CanSelectOnlyOneProduct {
 		property test.name.skip.portal.instance = "RaylifeProduct#CanSelectOnlyOneProduct";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
@@ -95,8 +98,9 @@ definition {
 	@priority = "3"
 	test CanViewProductInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProduct#CanViewProductInfoPanel";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();

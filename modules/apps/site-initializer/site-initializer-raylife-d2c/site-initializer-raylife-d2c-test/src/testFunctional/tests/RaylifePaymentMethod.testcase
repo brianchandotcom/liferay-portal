@@ -34,8 +34,9 @@ definition {
 	@priority = "5"
 	test CanViewConfirmSuccessfulPayment {
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#CanViewConfirmSuccessfulPayment";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.configurationPaypal();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -69,8 +70,9 @@ definition {
 	@priority = "3"
 	test CanViewPaymentMethodNotSelected {
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#CanViewPaymentMethodNotSelected";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -98,8 +100,9 @@ definition {
 	@priority = "3"
 	test CheckRaylifeTermsAndConditionsNotSelected {
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#CheckRaylifeTermsAndConditionsNotSelected";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");

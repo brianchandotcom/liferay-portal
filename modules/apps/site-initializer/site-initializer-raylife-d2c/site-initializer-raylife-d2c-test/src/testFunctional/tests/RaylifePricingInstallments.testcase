@@ -34,8 +34,9 @@ definition {
 	@priority = "4"
 	test CanContinueFlowOnePortion {
 		property test.name.skip.portal.instance = "RaylifePricingInstallments#CanContinueFlowOnePortion";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -73,8 +74,9 @@ definition {
 	@priority = "4"
 	test CanContinueFlowTwoPortion {
 		property test.name.skip.portal.instance = "RaylifePricingInstallments#CanContinueFlowTwoPortion";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -112,8 +114,9 @@ definition {
 	@priority = "3"
 	test CanViewDiscountAppearsOnPaypal {
 		property test.name.skip.portal.instance = "RaylifePricingInstallments#CanViewDiscountAppearsOnPaypal";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -145,8 +148,9 @@ definition {
 	@priority = "3"
 	test IfDiscountAppearsSplit {
 		property test.name.skip.portal.instance = "RaylifePricingInstallments#IfDiscountAppearsSplit";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");

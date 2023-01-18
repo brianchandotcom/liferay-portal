@@ -34,8 +34,9 @@ definition {
 	@priority = "4"
 	test CanNavigateByClickingInSections {
 		property test.name.skip.portal.instance = "RaylifeNavigation#CanNavigateByClickingInSections";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -75,8 +76,9 @@ definition {
 	@priority = "5"
 	test SectionIsCompleted {
 		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsCompleted";
-   
-  	 	// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -100,8 +102,9 @@ definition {
 	@priority = "5"
 	test SectionIsHighlighted {
 		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsHighlighted";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -121,8 +124,9 @@ definition {
 	@priority = "5"
 	test SectionIsIncomplete {
 		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsHighlighted";
-   
-  		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

@@ -34,8 +34,9 @@ definition {
 	@priority = "4"
 	test CanGoToPropertyPageByEditButton {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanGoToPropertyPageByEditButton";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -71,8 +72,9 @@ definition {
 	@priority = "4"
 	test CanViewQuoteProfileInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewQuoteProfileInfoPanel";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -110,8 +112,9 @@ definition {
 	@priority = "4"
 	test CanViewUserDataAnnualRevenue {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataAnnualRevenue";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -149,8 +152,9 @@ definition {
 	@priority = "4"
 	test CanViewUserDataCity {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataCity";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -188,8 +192,9 @@ definition {
 	@priority = "4"
 	test CanViewUserDataPrimaryIndustry {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataPrimaryIndustry";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -227,8 +232,9 @@ definition {
 	@priority = "4"
 	test CanViewUserDataState {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataState";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -266,8 +272,9 @@ definition {
 	@priority = "4"
 	test CanViewUserDataStreetAddress {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataStreetAddress";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -305,8 +312,9 @@ definition {
 	@priority = "4"
 	test CanViewUserDataTotalEmployees {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataTotalEmployees";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -344,8 +352,9 @@ definition {
 	@priority = "4"
 	test CanViewUserDataZipCode {
 		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataZipCode";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

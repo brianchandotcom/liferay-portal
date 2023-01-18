@@ -34,8 +34,9 @@ definition {
 	@priority = "4"
 	test CanSeeUserApplicationNumber {
 		property test.name.skip.portal.instance = "RaylifeSummarySection#CanSeeUserApplicationNumber";
-   
-   		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

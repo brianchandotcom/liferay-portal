@@ -5,6 +5,10 @@
 		overflow: hidden;
 	}
 
+	.partner-portal-announcements picture, .partner-portal-announcements img{
+		display:none;
+	}
+
 	.partner-portal-announcements-title:hover {
 	  text-decoration: underline;
 		cursor: pointer;

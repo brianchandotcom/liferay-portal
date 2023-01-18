@@ -106,6 +106,7 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 					</div>
 				);
 			}
+			const {totalCount: totalPagination} = data;
 
 			return (
 				<div className="mt-3">
@@ -117,7 +118,7 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 
 					<ClayPaginationBarWithBasicItems
 						{...pagination}
-						totalItems={totalCount}
+						totalItems={totalPagination as number}
 					/>
 				</div>
 			);

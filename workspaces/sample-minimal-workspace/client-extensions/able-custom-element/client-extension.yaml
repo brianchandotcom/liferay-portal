@@ -5,7 +5,7 @@ able-custom-element:
     htmlElementName: vanilla-counter
     instanceable: false
     name: Able Custom Element
-    portletCategoryName: category.remote-apps
+    portletCategoryName: category.client-extensions
     type: customElement
     urls:
         - index.js

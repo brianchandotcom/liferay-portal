@@ -5,7 +5,7 @@ ${id}:
     htmlElementName: vanilla-counter
     instanceable: false
     name: ${name}
-    portletCategoryName: category.remote-apps
+    portletCategoryName: category.client-extensions
     type: customElement
     urls:
         - index.js

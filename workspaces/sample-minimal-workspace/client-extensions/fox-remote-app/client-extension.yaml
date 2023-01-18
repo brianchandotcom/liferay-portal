@@ -9,7 +9,7 @@ fox-remote-app:
     htmlElementName: fox-remote-app
     instanceable: false
     name: fox-remote-app
-    portletCategoryName: category.remote-apps
+    portletCategoryName: category.client-extensions
     type: customElement
     urls:
         - static/js/main.*.js

@@ -383,8 +383,7 @@ public class PortalK8sAgentImplTest {
 				(long)properties.get("companyId"));
 			Assert.assertEquals("test.value", properties.get("test.key"));
 
-			String serviceFactoryPid = (String)properties.get(
-				"service.factoryPid");
+			String factoryPid = (String)properties.get("service.factoryPid");
 
 			List<String> servicePids = StringPlus.asList(
 				properties.get(Constants.SERVICE_PID));
@@ -392,7 +391,7 @@ public class PortalK8sAgentImplTest {
 			Assert.assertEquals(
 				"foo",
 				ConfigurationFactoryUtil.getExternalReferenceCode(
-					serviceFactoryPid, servicePids));
+					factoryPid, servicePids));
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(configuration);

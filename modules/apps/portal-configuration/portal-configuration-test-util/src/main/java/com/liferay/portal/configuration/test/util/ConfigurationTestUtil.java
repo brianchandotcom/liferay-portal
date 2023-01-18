@@ -129,10 +129,9 @@ public class ConfigurationTestUtil {
 			String pid, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		String serviceFactoryPid =
-			ConfigurationFactoryUtil.getFactoryPidFromPid(pid);
+		String factoryPid = ConfigurationFactoryUtil.getFactoryPidFromPid(pid);
 
-		Assert.assertNotNull(serviceFactoryPid);
+		Assert.assertNotNull(factoryPid);
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
@@ -141,9 +140,8 @@ public class ConfigurationTestUtil {
 				ManagedServiceFactory.class,
 				new InternalManagerServiceFactory(
 					(servicePid, props) -> countDownLatch.countDown(),
-					serviceFactoryPid),
-				MapUtil.singletonDictionary(
-					Constants.SERVICE_PID, serviceFactoryPid));
+					factoryPid),
+				MapUtil.singletonDictionary(Constants.SERVICE_PID, factoryPid));
 
 		unsafeRunnable.run();
 
@@ -174,10 +172,10 @@ public class ConfigurationTestUtil {
 			UnsafeBiConsumer
 				<String, Dictionary<String, ?>, ConfigurationException>
 					consumer,
-			String factoryServicePid) {
+			String factoryPid) {
 
 			_consumer = consumer;
-			_factoryServicePid = factoryServicePid;
+			_factoryPid = factoryPid;
 		}
 
 		@Override
@@ -186,7 +184,7 @@ public class ConfigurationTestUtil {
 
 		@Override
 		public String getName() {
-			return _factoryServicePid;
+			return _factoryPid;
 		}
 
 		@Override
@@ -198,7 +196,7 @@ public class ConfigurationTestUtil {
 
 		private final UnsafeBiConsumer
 			<String, Dictionary<String, ?>, ConfigurationException> _consumer;
-		private final String _factoryServicePid;
+		private final String _factoryPid;
 
 	}
 

@@ -86,6 +86,8 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
@@ -908,6 +910,17 @@ public class BundleSiteInitializerTest {
 			GetterUtil.getBoolean(
 				publicLayoutSetUnicodeProperties.getProperty(
 					"lfr-theme:regular:show-header")));
+	}
+
+	private void _assertLayoutUtilityPageEntries(Group group) {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByExternalReferenceCode(
+					"test-utility-page", group.getGroupId());
+
+		Assert.assertNotNull(layoutUtilityPageEntry);
+		Assert.assertEquals(
+			"Test Utility Page", layoutUtilityPageEntry.getName());
 	}
 
 	private void _assertListTypeDefinitions(ServiceContext serviceContext)
@@ -1843,6 +1856,7 @@ public class BundleSiteInitializerTest {
 			_assertLayoutPageTemplateEntries(group);
 			_assertLayoutSets(group);
 			_assertLayouts(group, serviceContext);
+			_assertLayoutUtilityPageEntries(group);
 			_assertListTypeDefinitions(serviceContext);
 			_assertNotificationTemplate(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
@@ -1993,6 +2007,10 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Inject
 	private ListTypeDefinitionResource.Factory

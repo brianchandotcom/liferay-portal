@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -779,6 +780,10 @@ public class ContentUtil {
 		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
 
 		List<String> restrictedItemIds = new ArrayList<>();
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169923"))) {
+			return restrictedItemIds;
+		}
 
 		for (FormStyledLayoutStructureItem formStyledLayoutStructureItem :
 				layoutStructure.getFormStyledLayoutStructureItems()) {

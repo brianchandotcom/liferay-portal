@@ -44,7 +44,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.StringUtils;
@@ -73,20 +72,22 @@ public class PredicateExpressionVisitorImpl<T extends Map>
 	public Predicate<T> visitBinaryExpressionOperation(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
-		Optional<Predicate<T>> predicateOptional = Optional.empty();
+		Predicate<T> predicate = null;
 
 		if (_lambdaCollectionEntityField != null) {
-			predicateOptional = _getLambdaPredicateOptional(
-				operation, left, right);
+			predicate = _getLambdaPredicate(operation, left, right);
 		}
 		else {
-			predicateOptional = _getPredicateOptional(operation, left, right);
+			predicate = _getPredicate(operation, left, right);
 		}
 
-		return predicateOptional.orElseThrow(
-			() -> new UnsupportedOperationException(
-				"Unsupported method visitBinaryExpressionOperation with " +
-					"operation " + operation));
+		if (predicate != null) {
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitBinaryExpressionOperation with " +
+				"operation " + operation);
 	}
 
 	@Override
@@ -455,14 +456,14 @@ public class PredicateExpressionVisitorImpl<T extends Map>
 				entityField.getType());
 	}
 
-	private Optional<Predicate<T>> _getLambdaPredicateOptional(
+	private Predicate<T> _getLambdaPredicate(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-			return Optional.of(_getLambdaEQPredicate((EntityField)left, right));
+			return _getLambdaEQPredicate((EntityField)left, right);
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private Predicate<T> _getLEPredicate(
@@ -517,7 +518,7 @@ public class PredicateExpressionVisitorImpl<T extends Map>
 		return leftPredicate.or(rightPredicate);
 	}
 
-	private Optional<Predicate<T>> _getPredicateOptional(
+	private Predicate<T> _getPredicate(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
 		Predicate<T> predicate = null;
@@ -546,10 +547,10 @@ public class PredicateExpressionVisitorImpl<T extends Map>
 				(Predicate<T>)left, (Predicate<T>)right);
 		}
 		else {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(predicate);
+		return predicate;
 	}
 
 	private Object _normalizeStringLiteral(String literal) {

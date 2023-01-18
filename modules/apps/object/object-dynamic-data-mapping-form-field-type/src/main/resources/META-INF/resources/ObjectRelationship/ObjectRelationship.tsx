@@ -247,12 +247,6 @@ export default function ObjectRelationship({
 		if (active) {
 			document.addEventListener('mousedown', handleClick);
 		}
-		else {
-			setState((prevState) => ({
-				...prevState,
-				searchTerm: '',
-			}));
-		}
 
 		return () => {
 			document.removeEventListener('mousedown', handleClick);
@@ -299,11 +293,21 @@ export default function ObjectRelationship({
 							return state;
 						});
 
+						const getValue = () => {
+							if (!value) {
+								return value;
+							}
+
+							if (selected) {
+								return String(selected[valueKey]);
+							}
+
+							return null;
+						};
+
 						onChange({
 							target: {
-								value: selected
-									? String(selected[valueKey])
-									: null,
+								value: getValue(),
 							},
 						});
 					}}

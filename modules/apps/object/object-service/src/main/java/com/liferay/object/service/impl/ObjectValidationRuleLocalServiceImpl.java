@@ -47,9 +47,11 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -216,13 +218,25 @@ public class ObjectValidationRuleLocalServiceImpl
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
 
+			Map<String, Object> results = new HashMap<>();
+
 			ObjectValidationRuleEngine objectValidationRuleEngine =
 				_objectValidationRuleEngineRegistry.
 					getObjectValidationRuleEngine(
 						objectValidationRule.getEngine());
 
-			Map<String, Object> results = objectValidationRuleEngine.execute(
-				variables, objectValidationRule.getScript());
+			if (StringUtil.equals(
+					objectValidationRuleEngine.getName(),
+					ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
+
+				results = objectValidationRuleEngine.execute(
+					variables, objectValidationRule.getScript());
+			}
+			else {
+				results = objectValidationRuleEngine.execute(
+					(Map<String, Object>)variables.get("objectEntry"),
+					objectValidationRule.getScript());
+			}
 
 			if (GetterUtil.getBoolean(results.get("invalidScript"))) {
 				throw new ObjectValidationRuleEngineException();

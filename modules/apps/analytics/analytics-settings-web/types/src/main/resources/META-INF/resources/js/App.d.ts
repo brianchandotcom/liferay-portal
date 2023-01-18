@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-declare type TData = {
+export declare type TData = {
 	connected: boolean;
 	liferayAnalyticsURL: string;
 	pageView: EPageView;
@@ -27,6 +27,12 @@ export declare enum EPageView {
 	Default = 'VIEW_DEFAULT_MODE',
 }
 export declare const View: TView;
+export declare const initialState: {
+	connected: boolean;
+	liferayAnalyticsURL: string;
+	pageView: EPageView;
+	token: string;
+};
 export declare const AppContextData: React.Context<TData>;
 declare const useData: () => TData;
 declare const useDispatch: () => any;
@@ -39,6 +45,7 @@ interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	liferayAnalyticsURL: string;
 	token: string;
 }
+declare const AppContextProvider: React.FC<IAppProps>;
 declare const App: React.FC<IAppProps>;
-export {useData, useDispatch};
+export {AppContextProvider, useData, useDispatch};
 export default App;

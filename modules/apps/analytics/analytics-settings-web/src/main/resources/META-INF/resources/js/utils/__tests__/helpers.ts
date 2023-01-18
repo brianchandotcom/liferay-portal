@@ -17,3 +17,7 @@ import {screen, waitForElementToBeRemoved} from '@testing-library/react';
 export function loadingElement() {
 	return waitForElementToBeRemoved(() => screen.getByTestId(/loading/i));
 }
+
+export function mockResponse(mock: any) {
+	return Promise.resolve(new Response(JSON.stringify(mock)));
+}

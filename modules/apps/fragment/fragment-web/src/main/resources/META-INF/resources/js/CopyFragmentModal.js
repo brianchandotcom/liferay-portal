@@ -75,6 +75,13 @@ export default function CopyFragmentModal({
 				if (response.redirected) {
 					navigate(response.url);
 				}
+
+				openToast({
+					message: Liferay.Language.get(
+						'the-fragment-was-copied-successfully'
+					),
+					type: 'success',
+				});
 			})
 			.catch(() => {
 				openToast({

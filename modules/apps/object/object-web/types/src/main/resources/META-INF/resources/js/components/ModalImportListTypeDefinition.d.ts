@@ -14,16 +14,14 @@
 
 /// <reference types="react" />
 
-interface ModalImportWarningProps {
-	bodyText: string[];
-	handleImport: () => void;
-	headerText: string;
-	onClose: (value: boolean) => void;
+interface ModalImportListTypeDefinitionProps {
+	importListTypeDefinitionURL: string;
+	nameMaxLength: string;
+	portletNamespace: string;
 }
-export declare function ModalImportWarning({
-	bodyText,
-	handleImport,
-	headerText,
-	onClose,
-}: ModalImportWarningProps): JSX.Element;
+export default function ModalImportListTypeDefinition({
+	importListTypeDefinitionURL,
+	nameMaxLength,
+	portletNamespace,
+}: ModalImportListTypeDefinitionProps): JSX.Element | null;
 export {};

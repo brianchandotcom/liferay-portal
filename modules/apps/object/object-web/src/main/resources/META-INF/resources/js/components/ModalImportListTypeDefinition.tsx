@@ -21,8 +21,8 @@ import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useRef, useState} from 'react';
 
 import {ModalImportWarning} from './ModalImportWarning';
-interface ModalImportObjectDefinitionProps {
-	importObjectDefinitionURL: string;
+interface ModalImportListTypeDefinitionProps {
+	importListTypeDefinitionURL: string;
 	nameMaxLength: string;
 	portletNamespace: string;
 }
@@ -33,11 +33,11 @@ type TFile = {
 	inputFileValue?: string;
 };
 
-export default function ModalImportObjectDefinition({
-	importObjectDefinitionURL,
+export default function ModalImportListTypeDefinition({
+	importListTypeDefinitionURL,
 	nameMaxLength,
 	portletNamespace,
-}: ModalImportObjectDefinitionProps) {
+}: ModalImportListTypeDefinitionProps) {
 	const [error, setError] = useState<string>('');
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		''
@@ -47,15 +47,17 @@ export default function ModalImportObjectDefinition({
 	const [warningModalVisible, setWarningModalVisible] = useState(false);
 	const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const [name, setName] = useState('');
-	const importObjectDefinitionModalComponentId = `${portletNamespace}importObjectDefinitionModal`;
-	const importObjectDefinitionFormId = `${portletNamespace}importObjectDefinitionForm`;
+	const importListTypeDefinitionModalComponentId = `${portletNamespace}importListTypeDefinitionModal`;
+	const importListTypeDefinitionFormId = `${portletNamespace}importListTypeDefinitionForm`;
 	const nameInputId = `${portletNamespace}name`;
+	const listTypeDefinitionJSONInputId = `${portletNamespace}listTypeDefinitionJSON`;
 	const objectDefinitionJSONInputId = `${portletNamespace}objectDefinitionJSON`;
 	const [{fileName, inputFile, inputFileValue}, setFile] = useState<TFile>(
 		{}
 	);
 	const {observer, onClose} = useModal({
 		onClose: () => {
+			setError('');
 			setVisible(false);
 			setExternalReferenceCode('');
 			setFile({
@@ -70,7 +72,7 @@ export default function ModalImportObjectDefinition({
 
 	const handleImport = async (formData: FormData) => {
 		try {
-			await API.save(importObjectDefinitionURL, formData, 'POST');
+			await API.save(importListTypeDefinitionURL, formData, 'POST');
 
 			window.location.reload();
 		}
@@ -84,10 +86,10 @@ export default function ModalImportObjectDefinition({
 
 		const formData = new FormData(event.currentTarget);
 		const response = await fetch(
-			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}`
+			`/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`
 		);
 
-		if (response.status === 204) {
+		if (!response.ok) {
 			handleImport(formData);
 		}
 		else {
@@ -99,7 +101,7 @@ export default function ModalImportObjectDefinition({
 
 	useEffect(() => {
 		Liferay.component(
-			importObjectDefinitionModalComponentId,
+			importListTypeDefinitionModalComponentId,
 			{
 				open: () => {
 					setVisible(true);
@@ -111,13 +113,13 @@ export default function ModalImportObjectDefinition({
 		);
 
 		return () =>
-			Liferay.destroyComponent(importObjectDefinitionModalComponentId);
-	}, [importObjectDefinitionModalComponentId, setVisible]);
+			Liferay.destroyComponent(importListTypeDefinitionModalComponentId);
+	}, [importListTypeDefinitionModalComponentId, setVisible]);
 
 	return visible ? (
 		<ClayModal center observer={observer}>
 			<ClayModal.Header>
-				{Liferay.Language.get('import-object')}
+				{Liferay.Language.get('import-picklist')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -125,11 +127,16 @@ export default function ModalImportObjectDefinition({
 
 					// @ts-ignore
 
-					id={importObjectDefinitionFormId}
+					id={importListTypeDefinitionFormId}
 					onSubmit={handleSubmit}
 				>
 					{error && (
-						<ClayAlert displayType="danger">{error}</ClayAlert>
+						<ClayAlert
+							displayType="danger"
+							title={`${Liferay.Language.get('error')}:`}
+						>
+							{error}
+						</ClayAlert>
 					)}
 
 					<ClayAlert
@@ -204,7 +211,7 @@ export default function ModalImportObjectDefinition({
 						<Input
 							disabled
 							feedbackMessage={Liferay.Language.get(
-								'internal-key-to-reference-the-object-definition'
+								'internal-key-to-reference-the-picklist'
 							)}
 							id="externalReferenceCode"
 							label={Liferay.Language.get(
@@ -217,7 +224,7 @@ export default function ModalImportObjectDefinition({
 
 					<input
 						className="d-none"
-						name={objectDefinitionJSONInputId}
+						name={listTypeDefinitionJSONInputId}
 						onChange={({target}) => {
 							const inputFile = target.files?.item(0);
 
@@ -261,7 +268,7 @@ export default function ModalImportObjectDefinition({
 
 						<ClayButton
 							disabled={!inputFile || !name}
-							form={importObjectDefinitionFormId}
+							form={importListTypeDefinitionFormId}
 							type="submit"
 						>
 							{Liferay.Language.get('import')}

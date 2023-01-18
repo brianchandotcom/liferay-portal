@@ -4,9 +4,11 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderRadius": "",
 						"borderWidth": "0",
 						"marginBottom": "9",
 						"paddingTop": "10",
+						"shadow": "",
 						"textAlign": "center"
 					},
 					"fragmentViewports": [
@@ -31,14 +33,16 @@
 							"id": "tablet"
 						}
 					],
+					"indexed": true,
 					"layout": {
 						"align": "Center",
 						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
-						"marginBottom": 10,
+						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -50,7 +54,8 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "masterclass-heading"
+								"key": "masterclass-heading",
+								"siteKey": "nnn"
 							},
 							"fragmentConfig": {
 								"displayLevel": "1",
@@ -61,8 +66,6 @@
 									"id": "element-text",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {
-											}
 										},
 										"text": {
 											"value_i18n": {
@@ -73,17 +76,22 @@
 								}
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"fontFamily": "fontFamilySansSerif",
 								"marginBottom": "3",
-								"marginTop": "5"
-							}
+								"marginTop": "5",
+								"shadow": "",
+								"textAlign": ""
+							},
+							"indexed": true
 						},
 						"type": "Fragment"
 					},
 					{
 						"definition": {
 							"fragment": {
-								"key": "masterclass-heading"
+								"key": "masterclass-heading",
+								"siteKey": "nnn"
 							},
 							"fragmentConfig": {
 								"displayLevel": "0",
@@ -94,8 +102,6 @@
 									"id": "element-text",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {
-											}
 										},
 										"text": {
 											"value_i18n": {
@@ -106,16 +112,21 @@
 								}
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"fontFamily": "fontFamilySansSerif",
-								"marginBottom": "3"
-							}
+								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": ""
+							},
+							"indexed": true
 						},
 						"type": "Fragment"
 					},
 					{
 						"definition": {
 							"fragment": {
-								"key": "masterclass-text-block"
+								"key": "masterclass-text-block",
+								"siteKey": "nnn"
 							},
 							"fragmentConfig": {
 							},
@@ -124,8 +135,6 @@
 									"id": "element-text",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {
-											}
 										},
 										"text": {
 											"value_i18n": {
@@ -136,20 +145,25 @@
 								}
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"fontSize": "fontSizeLg",
 								"marginBottom": "4",
 								"maxWidth": "100%",
 								"paddingLeft": "2",
 								"paddingRight": "2",
+								"shadow": "",
+								"textAlign": "",
 								"width": "600px"
-							}
+							},
+							"indexed": true
 						},
 						"type": "Fragment"
 					},
 					{
 						"definition": {
 							"fragment": {
-								"key": "masterclass-button"
+								"key": "masterclass-button",
+								"siteKey": "nnn"
 							},
 							"fragmentConfig": {
 								"buttonSize": "nm",
@@ -160,8 +174,6 @@
 									"id": "link",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {
-											}
 										},
 										"text": {
 											"value_i18n": {
@@ -170,7 +182,8 @@
 										}
 									}
 								}
-							]
+							],
+							"indexed": true
 						},
 						"type": "Fragment"
 					}
@@ -181,8 +194,11 @@
 		"type": "Root"
 	},
 	"settings": {
+		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "main-2"
-		}
-	}
+		},
+		"themeName": "Classic"
+	},
+	"version": 1.1
 }

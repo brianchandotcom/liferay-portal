@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.action.executor;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -43,9 +44,18 @@ public class FunctionActionExecutorServiceWrapperTracker {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ActionExecutor.class, "(" + KEY + "=function*)",
-			(serviceReference, emitter) -> emitter.emit(
-				(String)serviceReference.getProperty(KEY)),
+			bundleContext, ActionExecutor.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(actionExecutor, emitter) -> {
+					for (String actionExecutorLanguage :
+							actionExecutor.getActionExecutorLanguages()) {
+
+						if (actionExecutorLanguage.startsWith("function")) {
+							emitter.emit(actionExecutorLanguage);
+						}
+					}
+				}),
 			ServiceTrackerCustomizerFactory.<ActionExecutor>serviceWrapper(
 				bundleContext));
 	}

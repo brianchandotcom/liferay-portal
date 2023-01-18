@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
@@ -66,17 +65,10 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void registerActionExecutor(
-			ActionExecutor actionExecutor, Map<String, Object> properties)
+			ActionExecutor actionExecutor)
 		throws KaleoDefinitionValidationException {
 
-		Object value = properties.get(
-			"com.liferay.portal.workflow.kaleo.runtime.action.executor." +
-				"language");
-
-		String[] languages = GetterUtil.getStringValues(
-			value, new String[] {String.valueOf(value)});
-
-		for (String language : languages) {
+		for (String language : actionExecutor.getActionExecutorLanguages()) {
 			_actionExecutors.put(
 				_getActionExecutorKey(
 					language, ClassUtil.getClassName(actionExecutor)),
@@ -85,17 +77,10 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 	}
 
 	protected synchronized void unregisterActionExecutor(
-			ActionExecutor actionExecutor, Map<String, Object> properties)
+			ActionExecutor actionExecutor)
 		throws KaleoDefinitionValidationException {
 
-		Object value = properties.get(
-			"com.liferay.portal.workflow.kaleo.runtime.action.executor." +
-				"language");
-
-		String[] languages = GetterUtil.getStringValues(
-			value, new String[] {String.valueOf(value)});
-
-		for (String language : languages) {
+		for (String language : actionExecutor.getActionExecutorLanguages()) {
 			_actionExecutors.remove(
 				_getActionExecutorKey(
 					language, ClassUtil.getClassName(actionExecutor)));

@@ -17,6 +17,8 @@ package com.liferay.blogs.demo.internal;
 import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +35,8 @@ import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +50,7 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		BlogsEntryDemoDataCreator randomBlogsEntryDemoDataCreator =
-			_getRandomElement(_blogsEntryDemoDataCreators);
+			_getRandomElement(_serviceTrackerList.toList());
 
 		User user1 = _basicUserDemoDataCreator.create(
 			company.getCompanyId(), "nikki.prudencio@liferay.com");
@@ -82,7 +86,7 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 
 		for (int i = 0; i < 10; i++) {
 			BlogsEntryDemoDataCreator blogsEntryDemoDataCreator =
-				_getRandomElement(_blogsEntryDemoDataCreators);
+				_getRandomElement(_serviceTrackerList.toList());
 
 			User user = _getRandomElement(users);
 
@@ -93,33 +97,27 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, BlogsEntryDemoDataCreator.class);
+	}
+
 	@Deactivate
 	protected void deactivate() throws PortalException {
 		_multipleCommentDemoDataCreator.delete();
 
 		for (BlogsEntryDemoDataCreator blogsEntryDemoDataCreator :
-				_blogsEntryDemoDataCreators) {
+				_serviceTrackerList) {
 
 			blogsEntryDemoDataCreator.delete();
 		}
 
+		_serviceTrackerList.close();
+
 		_basicUserDemoDataCreator.delete();
 		_omniAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
-	}
-
-	@Reference(target = "(source=creative-commons)", unbind = "-")
-	protected void setCreativeCommonsBlogsEntryDemoDataCreator(
-		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
-
-		_blogsEntryDemoDataCreators.add(blogsEntryDemoDataCreator);
-	}
-
-	@Reference(target = "(source=lorem-ipsum)", unbind = "-")
-	protected void setLoremIpsumBlogsEntryDemoDataCreator(
-		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
-
-		_blogsEntryDemoDataCreators.add(blogsEntryDemoDataCreator);
 	}
 
 	private <T> T _getRandomElement(List<T> list) {
@@ -128,9 +126,6 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
-
-	private final List<BlogsEntryDemoDataCreator> _blogsEntryDemoDataCreators =
-		new ArrayList<>();
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -143,6 +138,8 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;
+
+	private ServiceTrackerList<BlogsEntryDemoDataCreator> _serviceTrackerList;
 
 	@Reference
 	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;

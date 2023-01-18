@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=help", "osgi.command.function=list",
 		"osgi.command.function=show", "osgi.command.scope=verify"
 	},
-	service = VerifyProcessTrackerOSGiCommands.class
+	service = {}
 )
 public class VerifyProcessTrackerOSGiCommands {
 

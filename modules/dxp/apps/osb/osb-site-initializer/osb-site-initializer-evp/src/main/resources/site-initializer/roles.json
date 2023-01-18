@@ -6,5 +6,21 @@
 		"name": "EVP Manager",
 		"subtype": "",
 		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Employee",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Finance User",
+		"subtype": "",
+		"type": 1
 	}
 ]

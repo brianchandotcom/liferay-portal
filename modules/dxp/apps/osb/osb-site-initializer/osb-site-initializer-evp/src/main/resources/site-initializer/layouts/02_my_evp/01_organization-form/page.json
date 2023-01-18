@@ -22,6 +22,27 @@
 			],
 			"roleName": "Site Member",
 			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "EVP Manager",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Employee",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Finance User",
+			"scope": 4
 		}
 	],
 	"private": false,

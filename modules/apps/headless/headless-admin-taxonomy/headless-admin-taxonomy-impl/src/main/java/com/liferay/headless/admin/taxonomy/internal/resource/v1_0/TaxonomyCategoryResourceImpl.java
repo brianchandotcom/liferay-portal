@@ -293,6 +293,8 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
 
+		long vocabularyId = _getVocabularyId(assetCategory, taxonomyCategory);
+
 		if (!ArrayUtil.contains(
 				assetCategory.getAvailableLanguageIds(),
 				contextAcceptLanguage.getPreferredLanguageId())) {
@@ -328,7 +330,7 @@ public class TaxonomyCategoryResourceImpl
 				contextUser.getUserId(), assetCategory.getCategoryId(),
 				assetCategory.getParentCategoryId(),
 				assetCategory.getTitleMap(), assetCategory.getDescriptionMap(),
-				assetCategory.getVocabularyId(),
+				vocabularyId,
 				_merge(
 					_assetCategoryPropertyLocalService.getCategoryProperties(
 						assetCategory.getCategoryId()),
@@ -524,6 +526,21 @@ public class TaxonomyCategoryResourceImpl
 		return _assetCategoryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
+	private long _getVocabularyId(
+			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		if (taxonomyCategory.getTaxonomyVocabularyId() != null) {
+			AssetVocabulary newAssetVocabulary =
+				_assetVocabularyService.fetchVocabulary(
+					taxonomyCategory.getTaxonomyVocabularyId());
+
+			return newAssetVocabulary.getVocabularyId();
+		}
+
+		return assetCategory.getVocabularyId();
+	}
+
 	private String[] _merge(
 		List<AssetCategoryProperty> assetCategoryProperties,
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
@@ -630,6 +647,8 @@ public class TaxonomyCategoryResourceImpl
 			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
+		long vocabularyId = _getVocabularyId(assetCategory, taxonomyCategory);
+
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			taxonomyCategory.getName(), taxonomyCategory.getName_i18n(),
@@ -651,7 +670,7 @@ public class TaxonomyCategoryResourceImpl
 
 		return _assetCategoryService.updateCategory(
 			assetCategory.getCategoryId(), assetCategory.getParentCategoryId(),
-			titleMap, descriptionMap, assetCategory.getVocabularyId(),
+			titleMap, descriptionMap, vocabularyId,
 			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
 			ServiceContextRequestUtil.createServiceContext(
 				assetCategory.getGroupId(), contextHttpServletRequest,

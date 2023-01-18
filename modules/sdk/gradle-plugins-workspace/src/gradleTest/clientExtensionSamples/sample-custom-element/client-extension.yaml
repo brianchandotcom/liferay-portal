@@ -5,7 +5,7 @@ sample-custom-element:
     htmlElementName: vanilla-counter
     instanceable: false
     name: Sample Custom Element
-    portletCategoryName: category.remote-apps
+    portletCategoryName: category.client-extensions
     properties:
         fizz: buzz
         foo: bar

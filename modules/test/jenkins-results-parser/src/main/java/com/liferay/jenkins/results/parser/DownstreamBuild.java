@@ -244,13 +244,13 @@ public class DownstreamBuild extends BaseBuild {
 		return messageElement;
 	}
 
-	public HashMap<String, List<String>> getTestClassMap() {
-		HashMap<String, List<String>> classNamesMethodsMap = new HashMap<>();
+	public HashMap<String, List<String>> getTestClassMethodsMap() {
+		HashMap<String, List<String>> testClassMethodsMap = new HashMap<>();
 
 		if (!getBatchName().contains("integration") &&
 			!getBatchName().contains("unit")) {
 
-			return classNamesMethodsMap;
+			return testClassMethodsMap;
 		}
 
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
@@ -276,13 +276,13 @@ public class DownstreamBuild extends BaseBuild {
 						}
 					}
 
-					classNamesMethodsMap.put(
+					testClassMethodsMap.put(
 						jUnitTestClass.getTestClassName(), methodNames);
 				}
 			}
 		}
 
-		return classNamesMethodsMap;
+		return testClassMethodsMap;
 	}
 
 	@Override
@@ -325,8 +325,40 @@ public class DownstreamBuild extends BaseBuild {
 		return uniqueFailureTestResults;
 	}
 
+	public HashMap<String, List<String>> getUntestedTestClassMethodsMap() {
+		HashMap<String, List<String>> untestedTestClassMethodsMap =
+			getTestClassMethodsMap();
+
+		if (untestedTestClassMethodsMap.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		List<TestResult> testResults = getTestResults();
+
+		if (testResults.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		for (TestResult testResult : testResults) {
+			String testResultClassName = testResult.getClassName();
+
+			if (untestedTestClassMethodsMap.containsKey(testResultClassName)) {
+				List<String> testClassMethods = untestedTestClassMethodsMap.get(
+					testResultClassName);
+
+				testClassMethods.remove(testResult.getTestName());
+
+				untestedTestClassMethodsMap.put(
+					testResultClassName, testClassMethods);
+			}
+		}
+
+		return untestedTestClassMethodsMap;
+	}
+
 	public List<TestResult> getUntestedTestResults() {
-		HashMap<String, List<String>> untestedTestsMap = getUntestedTestsMap();
+		HashMap<String, List<String>> untestedTestsMap =
+			getUntestedTestClassMethodsMap();
 
 		if (untestedTestsMap.isEmpty()) {
 			return new ArrayList<>();
@@ -361,35 +393,6 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		return untestedTestResults;
-	}
-
-	public HashMap<String, List<String>> getUntestedTestsMap() {
-		HashMap<String, List<String>> testClassMap = getTestClassMap();
-
-		if (testClassMap.isEmpty()) {
-			return new HashMap<>();
-		}
-
-		List<TestResult> testResults = getTestResults();
-
-		if (testResults.isEmpty()) {
-			return new HashMap<>();
-		}
-
-		for (TestResult testResult : testResults) {
-			String testResultClassName = testResult.getClassName();
-
-			if (testClassMap.containsKey(testResultClassName)) {
-				List<String> classMethods = testClassMap.get(
-					testResultClassName);
-
-				classMethods.remove(testResult.getTestName());
-
-				testClassMap.put(testResultClassName, classMethods);
-			}
-		}
-
-		return testClassMap;
 	}
 
 	@Override

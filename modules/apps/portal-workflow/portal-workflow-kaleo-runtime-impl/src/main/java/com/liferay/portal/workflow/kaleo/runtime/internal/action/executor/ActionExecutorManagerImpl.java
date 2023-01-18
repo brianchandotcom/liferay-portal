@@ -14,12 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
-import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
@@ -45,15 +40,13 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws PortalException {
 
-		String actionExecutorKey = _getActionExecutorKey(
-			kaleoAction.getScriptLanguage(),
-			StringUtil.trim(kaleoAction.getScript()));
+		String scriptLanguage = kaleoAction.getScriptLanguage();
 
-		ActionExecutor actionExecutor = _actionExecutors.get(actionExecutorKey);
+		ActionExecutor actionExecutor = _actionExecutors.get(scriptLanguage);
 
 		if (actionExecutor == null) {
 			throw new PortalException(
-				"No action executor for " + actionExecutorKey);
+				"No action executor for " + scriptLanguage);
 		}
 
 		actionExecutor.execute(kaleoAction, executionContext);
@@ -65,39 +58,19 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void registerActionExecutor(
-			ActionExecutor actionExecutor)
-		throws KaleoDefinitionValidationException {
+		ActionExecutor actionExecutor) {
 
 		for (String language : actionExecutor.getActionExecutorLanguages()) {
-			_actionExecutors.put(
-				_getActionExecutorKey(
-					language, ClassUtil.getClassName(actionExecutor)),
-				actionExecutor);
+			_actionExecutors.put(language, actionExecutor);
 		}
 	}
 
 	protected synchronized void unregisterActionExecutor(
-			ActionExecutor actionExecutor)
-		throws KaleoDefinitionValidationException {
+		ActionExecutor actionExecutor) {
 
 		for (String language : actionExecutor.getActionExecutorLanguages()) {
-			_actionExecutors.remove(
-				_getActionExecutorKey(
-					language, ClassUtil.getClassName(actionExecutor)));
+			_actionExecutors.remove(language);
 		}
-	}
-
-	private String _getActionExecutorKey(
-			String language, String actionExecutorClassName)
-		throws KaleoDefinitionValidationException {
-
-		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
-
-		if (scriptLanguage.equals(ScriptLanguage.JAVA)) {
-			return language + StringPool.COLON + actionExecutorClassName;
-		}
-
-		return language;
 	}
 
 	private final Map<String, ActionExecutor> _actionExecutors =

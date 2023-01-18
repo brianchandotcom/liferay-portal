@@ -1261,21 +1261,18 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			roles.addAll(userRoles);
 		}
 
-		JoinStep joinStep = DSLQueryFactoryUtil.select(
-			RoleTable.INSTANCE
-		).from(
-			RoleTable.INSTANCE
-		).innerJoinON(
-			Groups_RolesTable.INSTANCE,
-			Groups_RolesTable.INSTANCE.roleId.eq(RoleTable.INSTANCE.roleId)
-		);
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			JoinStep joinStep = DSLQueryFactoryUtil.select(
+				RoleTable.INSTANCE
+			).from(
+				RoleTable.INSTANCE
+			).innerJoinON(
+				Groups_RolesTable.INSTANCE,
+				Groups_RolesTable.INSTANCE.roleId.eq(RoleTable.INSTANCE.roleId)
+			);
 
-		List<Role> groupRoles = new ArrayList<>();
+			List<Role> groupRoles = new ArrayList<>();
 
-		if (ArrayUtil.isEmpty(groupIds)) {
-			groupRoles.addAll(dslQuery(joinStep));
-		}
-		else {
 			int chunk = 2000;
 
 			for (int i = 0; i < groupIds.length; i += chunk) {
@@ -1287,10 +1284,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 									Arrays.copyOfRange(
 										groupIds, i, i + chunk))))));
 			}
-		}
 
-		if (!groupRoles.isEmpty()) {
-			roles.addAll(groupRoles);
+			if (!groupRoles.isEmpty()) {
+				roles.addAll(groupRoles);
+			}
 		}
 
 		return new ArrayList<>(roles);

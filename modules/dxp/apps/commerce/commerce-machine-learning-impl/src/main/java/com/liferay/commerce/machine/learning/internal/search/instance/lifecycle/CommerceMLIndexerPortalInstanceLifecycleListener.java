@@ -83,7 +83,8 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 					CommerceMLIndexer commerceMLIndexer =
 						bundleContext.getService(serviceReference);
 
-					_verifyCompanies(commerceMLIndexer);
+					_companyLocalService.forEachCompanyId(
+						companyId -> commerceMLIndexer.createIndex(companyId));
 
 					return commerceMLIndexer;
 				}
@@ -111,11 +112,6 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	private void _verifyCompanies(CommerceMLIndexer commerceMLIndexer) {
-		_companyLocalService.forEachCompanyId(
-			companyId -> commerceMLIndexer.createIndex(companyId));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

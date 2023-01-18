@@ -138,12 +138,24 @@ public class ContentUtil {
 			long segmentsExperienceId)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
+
+		List<String> restrictedItemIds = _getRestrictedItemIds(
+			layoutStructure, themeDisplay);
+
 		return JSONUtil.concat(
 			_getLayoutClassedModelPageContentsJSONArray(
-				httpServletRequest, plid, segmentsExperienceId),
+				httpServletRequest, layoutStructure, plid, restrictedItemIds,
+				segmentsExperienceId),
 			AssetListEntryUsagesUtil.getPageContentsJSONArray(
-				httpServletRequest, httpServletResponse, plid,
-				segmentsExperienceId));
+				httpServletRequest, httpServletResponse, layoutStructure, plid,
+				restrictedItemIds));
 	}
 
 	private static String _generateUniqueLayoutClassedModelUsageKey(
@@ -462,24 +474,14 @@ public class ContentUtil {
 	}
 
 	private static JSONArray _getLayoutClassedModelPageContentsJSONArray(
-			HttpServletRequest httpServletRequest, long plid,
-			long segmentsExperienceId)
+			HttpServletRequest httpServletRequest,
+			LayoutStructure layoutStructure, long plid,
+			List<String> restrictedItemIds, long segmentsExperienceId)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		LayoutStructure layoutStructure =
-			LayoutStructureUtil.getLayoutStructure(
-				themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
-
 		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
-
-		List<String> restrictedItemIds = _getRestrictedItemIds(
-			layoutStructure, themeDisplay);
 
 		List<String> restrictedPortletIds = _getRestrictedPortletIds(
 			layoutStructure, restrictedItemIds);

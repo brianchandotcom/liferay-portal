@@ -3513,12 +3513,33 @@ definition {
 	}
 
 	@description = "Verify that the Details tab displays the Created date, Last Modified and Total Modifications"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewFieldsAtDetailsTab {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewFieldsAtDetailsTab";
 
-		// TODO CanViewFieldsAtDetailsTab pending implementation
+		task ("Given publishing a new workflow with a transition from Start node to End node") {
+			Workflow.openWorkflowListView();
 
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Start-End Connector",
+				connectorOut = "start",
+				key_direction = "right");
+
+			PortletEntry.publish();
+
+			Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+		}
+
+		task ("When clicking on the information button on the published workflow") {
+			ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
+		}
+
+		task ("Then assert that the Created date, Last Modified and Total Modifications fields are displayed") {
+			ProcessBuilderKaleoDesignerReact.viewDetailsFieldsPresent();
+		}
 	}
 
 	@description = "Verify that the Revision History tab displays a list of the previous definition versions in descending order (3,2,1)"

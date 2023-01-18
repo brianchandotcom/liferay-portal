@@ -28,4 +28,5 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 	itemsPerPage="<%= 10 %>"
 	selectedItemsKey="externalReferenceCode"
 	style="fluid"
+	uniformActionsDisplay="<%= true %>"
 />

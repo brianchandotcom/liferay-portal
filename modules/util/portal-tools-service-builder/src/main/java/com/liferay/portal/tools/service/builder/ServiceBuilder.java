@@ -4809,7 +4809,7 @@ public class ServiceBuilder {
 
 		xmlWriter.write(saxReader.read(new XMLSafeReader(xml)));
 
-		xml = StringUtil.trim(
+		xml = StringUtil.trimTrailing(
 			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
 
 		xml = StringUtil.replace(xml, "\"/>", "\" />");

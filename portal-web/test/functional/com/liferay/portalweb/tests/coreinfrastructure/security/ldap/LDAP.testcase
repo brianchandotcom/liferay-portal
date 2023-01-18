@@ -451,7 +451,13 @@ definition {
 
 			Navigator.gotoAccountSettings();
 
-			User.editUserInformation(userFirstNameEdit = "changedfirstname");
+			AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "changedfirstname");
+
+			PortletEntry.save();
 		}
 
 		task ("Then: The new user information will be present in the LDAP database") {

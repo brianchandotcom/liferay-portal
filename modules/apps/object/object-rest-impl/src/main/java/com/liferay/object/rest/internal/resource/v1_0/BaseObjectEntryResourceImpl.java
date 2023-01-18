@@ -307,7 +307,7 @@ public abstract class BaseObjectEntryResourceImpl
 			ObjectEntry objectEntry)
 		throws Exception {
 
-		ObjectEntry existingObjectEntry = getObjectEntryByExternalReferenceCode(
+		ObjectEntry existingObjectEntry = getByExternalReferenceCode(
 			externalReferenceCode);
 
 		if (objectEntry.getActions() != null) {
@@ -337,7 +337,7 @@ public abstract class BaseObjectEntryResourceImpl
 
 		preparePatch(objectEntry, existingObjectEntry);
 
-		return putObjectEntryByExternalReferenceCode(
+		return putByExternalReferenceCode(
 			externalReferenceCode, existingObjectEntry);
 	}
 

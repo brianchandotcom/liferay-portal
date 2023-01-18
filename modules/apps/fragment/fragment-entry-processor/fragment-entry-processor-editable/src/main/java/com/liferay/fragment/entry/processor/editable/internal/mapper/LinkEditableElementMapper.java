@@ -93,6 +93,12 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			return;
 		}
 
+		String prefix = configJSONObject.getString("prefix");
+
+		if (Validator.isNotNull(prefix)) {
+			href = prefix + href;
+		}
+
 		Element linkElement = new Element("a");
 
 		Elements elements = element.children();

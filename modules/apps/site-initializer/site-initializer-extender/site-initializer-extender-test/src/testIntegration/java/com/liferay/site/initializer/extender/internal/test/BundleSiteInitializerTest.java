@@ -404,7 +404,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"liferay-test-remote-app", customElementCET.getHTMLElementName());
 		Assert.assertEquals(
-			"category.remote-apps", customElementCET.getPortletCategoryName());
+			"category.client-extensions",
+			customElementCET.getPortletCategoryName());
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {

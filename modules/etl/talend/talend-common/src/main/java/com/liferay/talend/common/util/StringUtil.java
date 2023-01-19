@@ -14,10 +14,9 @@
 
 package com.liferay.talend.common.util;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Zoltán Takács
@@ -56,19 +55,18 @@ public class StringUtil {
 	}
 
 	public static Set<String> stripPrefix(String prefix, Set<String> values) {
-		Stream<String> stream = values.stream();
+		Set<String> prefixs = new HashSet<>();
 
-		return stream.map(
-			t -> {
-				if (t.startsWith(prefix)) {
-					return t.substring(prefix.length());
-				}
-
-				return t;
+		for (String value : values) {
+			if (value.startsWith(prefix)) {
+				prefixs.add(value.substring(prefix.length()));
 			}
-		).collect(
-			Collectors.toSet()
-		);
+			else {
+				prefixs.add(value);
+			}
+		}
+
+		return prefixs;
 	}
 
 	public static String toLowerCase(String value) {

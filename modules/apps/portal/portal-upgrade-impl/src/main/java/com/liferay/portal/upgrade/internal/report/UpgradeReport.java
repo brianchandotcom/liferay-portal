@@ -107,9 +107,18 @@ public class UpgradeReport {
 		warningMessages.put(message, count);
 	}
 
+	public void filterMessages() {
+		for (String filteredClass : _FILTERED_LOG_CLASSES) {
+			_warningMessages.remove(filteredClass);
+			_errorMessages.remove(filteredClass);
+		}
+	}
+
 	public void generateReport(
 		PersistenceManager persistenceManager,
 		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
+
+		filterMessages();
 
 		_persistenceManager = persistenceManager;
 
@@ -648,6 +657,11 @@ public class UpgradeReport {
 	private static final String _CONFIGURATION_PID_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemStoreConfiguration";
+
+	private static final String[] _FILTERED_LOG_CLASSES = {
+		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
+			"SidecarManager"
+	};
 
 	private static final String _UNDERLINE = "--------------";
 

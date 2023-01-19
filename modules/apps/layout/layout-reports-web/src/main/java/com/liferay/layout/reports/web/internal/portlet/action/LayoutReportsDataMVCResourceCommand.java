@@ -253,7 +253,7 @@ public class LayoutReportsDataMVCResourceCommand
 		}
 
 		return JSONUtil.putAll(
-			TransformUtil.transformToArray(
+			(Object[])TransformUtil.transformToArray(
 				ListUtil.sort(
 					availableLocales,
 					(locale1, locale2) -> {

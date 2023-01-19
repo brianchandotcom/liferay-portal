@@ -211,6 +211,32 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="FragmentEntryContributed" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="fragmentEntryContributedId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="fragmentEntryKey" type="String" />
+		<column name="css" type="String" />
+		<column name="html" type="String" />
+		<column name="js" type="String" />
+		<column name="configuration" type="String" />
+		<column name="type" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="FragmentEntryKey" return-type="FragmentEntryContributed" unique="true">
+			<finder-column name="fragmentEntryKey" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="FragmentEntryLink" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

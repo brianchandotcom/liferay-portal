@@ -26,8 +26,7 @@ const getDocumentLibrarySelectorURL = (portletNamespace) => {
 
 	const documentLibrarySelectorParameters = {
 		'0_json': JSON.stringify(criterionJSON),
-		'criteria':
-			'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
+		'criteria': 'file',
 		'itemSelectedEventName': `${portletNamespace}selectDocumentLibrary`,
 		'p_p_id': Liferay.PortletKeys.ITEM_SELECTOR,
 		'p_p_state': 'pop_up',

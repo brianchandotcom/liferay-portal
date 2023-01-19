@@ -60,7 +60,7 @@ definition {
 			name = "${name}",
 			objectDefinitionId = "${objectDefinitionId}");
 
-		var objectFieldId = JSONCurlUtil.get("${response}", "$.id");
+		var objectFieldId = JSONUtil.getWithJSONPath("${response}", "$.id");	
 
 		return "${objectFieldId}";
 	}

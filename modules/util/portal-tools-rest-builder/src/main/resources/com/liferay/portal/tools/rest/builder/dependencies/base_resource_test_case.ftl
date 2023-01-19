@@ -2216,6 +2216,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	}
 
+	protected void assertValid(Page<${schemaClientJavaType}> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
 	<#list relatedSchemaNames as relatedSchemaName>
 		<#assign
 			relatedSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, relatedSchemaName)

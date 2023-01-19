@@ -91,12 +91,21 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 						<ClayTooltipProvider>
 							<ClayButton
 								{...primaryButtonProps}
+								className={
+									primaryButtonProps?.disabled
+										? 'btn btn-light'
+										: ''
+								}
 								disabled={
 									primaryButtonProps?.disabled || loading
 								}
 								displayType="primary"
 								onClick={onSubmit}
-								title={tooltipText}
+								title={
+									primaryButtonProps?.disabled
+										? ''
+										: tooltipText
+								}
 							>
 								{i18n.translate(
 									primaryButtonProps?.title as string

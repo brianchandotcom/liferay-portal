@@ -40,6 +40,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CompanyFeatureFlagsProvider
 	implements Clusterable, PortalInstanceLifecycleListener {
 
+	public CompanyFeatureFlags getCompanyFeatureFlags(long companyId) {
+		return _companyFeatureFlagsMap.get(companyId);
+	}
+
 	@Override
 	public void portalInstanceRegistered(Company company) {
 		_companyFeatureFlagsMap.put(

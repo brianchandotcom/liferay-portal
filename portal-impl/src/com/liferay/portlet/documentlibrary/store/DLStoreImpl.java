@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -405,7 +406,7 @@ public class DLStoreImpl implements DLStore {
 			dlStoreRequest.getSourceFileName(),
 			dlStoreRequest.isValidateFileExtension());
 
-		DLValidatorUtil.validateVersionLabel(dlStoreRequest.getVersionLabel());
+		_validateVersionLabel(dlStoreRequest.getVersionLabel());
 
 		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(file);
@@ -432,12 +433,11 @@ public class DLStoreImpl implements DLStore {
 			dlStoreRequest.getSourceFileName(),
 			dlStoreRequest.isValidateFileExtension());
 
+		_validateVersionLabel(dlStoreRequest.getVersionLabel());
+
 		if (inputStream1 instanceof ByteArrayFileInputStream) {
 			ByteArrayFileInputStream byteArrayFileInputStream =
 				(ByteArrayFileInputStream)inputStream1;
-
-			DLValidatorUtil.validateVersionLabel(
-				dlStoreRequest.getVersionLabel());
 
 			if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 				AntivirusScannerUtil.scan(byteArrayFileInputStream.getFile());
@@ -450,8 +450,6 @@ public class DLStoreImpl implements DLStore {
 
 			return;
 		}
-
-		DLValidatorUtil.validateVersionLabel(dlStoreRequest.getVersionLabel());
 
 		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED &&
 			AntivirusScannerUtil.isActive()) {
@@ -674,7 +672,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidatorUtil.validateVersionLabel(versionLabel);
+		_validateVersionLabel(versionLabel);
 	}
 
 	protected void validate(
@@ -686,7 +684,7 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			file);
 
-		DLValidatorUtil.validateVersionLabel(versionLabel);
+		_validateVersionLabel(versionLabel);
 	}
 
 	protected void validate(
@@ -699,7 +697,14 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			inputStream);
 
-		DLValidatorUtil.validateVersionLabel(versionLabel);
+		_validateVersionLabel(versionLabel);
+	}
+
+	private void _validateVersionLabel(String versionLabel)
+		throws PortalException {
+
+		DLValidatorUtil.validateVersionLabel(
+			StringUtil.removeLast(versionLabel, ".index"));
 	}
 
 	private static volatile Store _store =

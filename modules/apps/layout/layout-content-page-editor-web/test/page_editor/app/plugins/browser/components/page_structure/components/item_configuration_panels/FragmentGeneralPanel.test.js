@@ -319,7 +319,9 @@ describe('FragmentGeneralPanel', () => {
 
 		const input = getByLabelText('Heading Level');
 
-		const wrapperDiv = input.parentElement.parentElement.parentElement;
+		const wrapperDiv = input.closest(
+			'.page-editor__sidebar__fieldset__field'
+		);
 
 		expect(wrapperDiv.querySelector('.sr-only')).toHaveTextContent('en-US');
 	});

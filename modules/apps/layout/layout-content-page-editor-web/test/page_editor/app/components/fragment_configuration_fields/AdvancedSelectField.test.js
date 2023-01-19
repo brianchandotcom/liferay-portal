@@ -18,6 +18,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {AdvancedSelectField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment_configuration_fields/AdvancedSelectField';
+import StoreMother from '../../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 const FIELD = {
 	cssProperty: 'font-size',
@@ -94,23 +95,28 @@ const ITEM = {
 };
 
 const renderAdvancedSelectField = ({
+	canDetachTokenValues = true,
 	field = FIELD,
 	onValueSelect = () => {},
 	selectedViewportSize = 'desktop',
 	value = '',
-	canDetachTokenValues = true,
 } = {}) =>
 	render(
-		<AdvancedSelectField
-			canDetachTokenValues={canDetachTokenValues}
-			field={field}
-			item={ITEM}
-			onValueSelect={onValueSelect}
-			options={OPTIONS}
-			selectedViewportSize={selectedViewportSize}
-			tokenValues={TOKEN_VALUES}
-			value={value}
-		/>
+		<StoreMother.Component
+			getState={() => ({
+				permissions: {UPDATE: canDetachTokenValues ? true : false},
+				selectedViewportSize,
+			})}
+		>
+			<AdvancedSelectField
+				field={field}
+				item={ITEM}
+				onValueSelect={onValueSelect}
+				options={OPTIONS}
+				tokenValues={TOKEN_VALUES}
+				value={value}
+			/>
+		</StoreMother.Component>
 	);
 
 jest.mock(

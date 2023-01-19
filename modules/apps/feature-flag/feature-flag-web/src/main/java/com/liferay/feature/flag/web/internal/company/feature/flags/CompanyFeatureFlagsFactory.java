@@ -16,20 +16,29 @@ package com.liferay.feature.flag.web.internal.company.feature.flags;
 
 import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
+import com.liferay.feature.flag.web.internal.model.DependencyAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,10 +85,57 @@ public class CompanyFeatureFlagsFactory {
 				featureFlagsMap.put(featureFlag.getKey(), featureFlag);
 			}
 
+			for (Map.Entry<String, FeatureFlag> entry :
+					featureFlagsMap.entrySet()) {
+
+				List<FeatureFlag> dependencies = new ArrayList<>();
+
+				FeatureFlag featureFlag = entry.getValue();
+
+				for (String dependency : featureFlag.getDependencies()) {
+					if (Objects.equals(featureFlag.getKey(), dependency)) {
+						_log.error(
+							"A feature flag cannot depend on itself: " +
+								dependency);
+
+						continue;
+					}
+
+					FeatureFlag dependencyFeatureFlag = featureFlagsMap.get(
+						dependency);
+
+					if (dependencyFeatureFlag != null) {
+						if (!ArrayUtil.contains(
+								dependencyFeatureFlag.getDependencies(),
+								featureFlag.getKey())) {
+
+							dependencies.add(dependencyFeatureFlag);
+						}
+						else {
+							_log.error(
+								StringBundler.concat(
+									"Skipping adding circular dependency ",
+									dependency, " for feature flag ",
+									featureFlag.getKey()));
+						}
+					}
+				}
+
+				if (ListUtil.isNotEmpty(dependencies)) {
+					entry.setValue(
+						new DependencyAwareFeatureFlag(
+							featureFlag,
+							dependencies.toArray(new FeatureFlag[0])));
+				}
+			}
+
 			return new CompanyFeatureFlags(
 				Collections.unmodifiableMap(featureFlagsMap));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyFeatureFlagsFactory.class);
 
 	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
 

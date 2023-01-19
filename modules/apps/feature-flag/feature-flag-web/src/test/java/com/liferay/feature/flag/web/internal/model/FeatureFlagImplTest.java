@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsUtil;
@@ -54,6 +55,24 @@ public class FeatureFlagImplTest {
 			CompanyThreadLocal.class, "_companyId");
 
 		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+	}
+
+	@Test
+	public void testGetDependencies() {
+		String key = "ABC-123";
+		String value = "ABC-456,XYZ-789";
+
+		withFeatureFlag(
+			featureFlag -> Assert.assertArrayEquals(
+				new String[0], featureFlag.getDependencies()),
+			key);
+
+		PropsUtil.set(FeatureFlagConstants.getKey(key, "dependencies"), value);
+
+		withFeatureFlag(
+			featureFlag -> Assert.assertArrayEquals(
+				StringUtil.split(value), featureFlag.getDependencies()),
+			key);
 	}
 
 	@Test

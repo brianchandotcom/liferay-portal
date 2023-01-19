@@ -19,9 +19,11 @@ import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryContributed;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.service.FragmentEntryContributedLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -40,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -275,6 +278,10 @@ public class FragmentCollectionContributorRegistryImpl
 		FragmentCollectionContributorRegistryImpl.class);
 
 	@Reference
+	private FragmentEntryContributedLocalService
+		_fragmentEntryContributedLocalService;
+
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	private ServiceTrackerMap<String, FragmentCollectionBag> _serviceTrackerMap;
@@ -330,10 +337,43 @@ public class FragmentCollectionContributorRegistryImpl
 						continue;
 					}
 
+					FragmentEntryContributed fragmentEntryContributed =
+						_fragmentEntryContributedLocalService.
+							fetchByFragmentEntryKey(
+								fragmentEntry.getFragmentEntryKey());
+
+					if ((fragmentEntryContributed != null) &&
+						Objects.equals(
+							fragmentEntry.getCss(),
+							fragmentEntryContributed.getCss()) &&
+						Objects.equals(
+							fragmentEntry.getHtml(),
+							fragmentEntryContributed.getHtml()) &&
+						Objects.equals(
+							fragmentEntry.getJs(),
+							fragmentEntryContributed.getJs()) &&
+						Objects.equals(
+							fragmentEntry.getConfiguration(),
+							fragmentEntryContributed.getConfiguration()) &&
+						Objects.equals(
+							fragmentEntry.getType(),
+							fragmentEntryContributed.getType())) {
+
+						continue;
+					}
+
 					fragmentEntries.put(
 						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
 
 					_updateFragmentEntryLinks(fragmentEntry);
+
+					_fragmentEntryContributedLocalService.
+						addOrUpdateFragmentEntryContributed(
+							fragmentEntry.getFragmentEntryKey(),
+							fragmentEntry.getCss(), fragmentEntry.getHtml(),
+							fragmentEntry.getJs(),
+							fragmentEntry.getConfiguration(),
+							fragmentEntry.getType());
 				}
 			}
 

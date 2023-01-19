@@ -75,6 +75,21 @@ create table FragmentEntry (
 	primary key (fragmentEntryId, ctCollectionId)
 );
 
+create table FragmentEntryContributed (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	fragmentEntryContributedId LONG not null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	fragmentEntryKey VARCHAR(75) null,
+	css VARCHAR(75) null,
+	html VARCHAR(75) null,
+	js VARCHAR(75) null,
+	configuration VARCHAR(75) null,
+	type_ INTEGER,
+	primary key (fragmentEntryContributedId, ctCollectionId)
+);
+
 create table FragmentEntryLink (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,

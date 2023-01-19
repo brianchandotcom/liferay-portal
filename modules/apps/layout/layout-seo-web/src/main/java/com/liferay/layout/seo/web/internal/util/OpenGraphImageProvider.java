@@ -222,8 +222,12 @@ public class OpenGraphImageProvider {
 					InfoLocalizedValue<String> altInfoLocalizedValue =
 						mappedWebImage.getAltInfoLocalizedValue();
 
-					return altInfoLocalizedValue.getValue(
-						themeDisplay.getLocale());
+					if (altInfoLocalizedValue != null) {
+						return altInfoLocalizedValue.getValue(
+							themeDisplay.getLocale());
+					}
+
+					return null;
 				}
 
 				@Override

@@ -5,8 +5,9 @@
 		overflow: hidden;
 	}
 
-	.partner-portal-announcements picture, .partner-portal-announcements img{
-		display:none;
+	.partner-portal-announcements img,
+	.partner-portal-announcements picture {
+		display: none;
 	}
 
 	.partner-portal-announcements-title:hover {

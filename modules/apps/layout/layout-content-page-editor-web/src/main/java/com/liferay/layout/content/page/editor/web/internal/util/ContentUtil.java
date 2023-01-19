@@ -536,11 +536,11 @@ public class ContentUtil {
 			}
 
 			if ((layoutClassedModelUsage.getContainerType() ==
-					_getPortletClassNameId()) ||
-				layoutStructure.isPortletMarkedForDeletion(
+					_getPortletClassNameId()) &&
+				(layoutStructure.isPortletMarkedForDeletion(
 					layoutClassedModelUsage.getContainerKey()) ||
-				restrictedPortletIds.contains(
-					layoutClassedModelUsage.getContainerKey())) {
+				 restrictedPortletIds.contains(
+					 layoutClassedModelUsage.getContainerKey()))) {
 
 				continue;
 			}

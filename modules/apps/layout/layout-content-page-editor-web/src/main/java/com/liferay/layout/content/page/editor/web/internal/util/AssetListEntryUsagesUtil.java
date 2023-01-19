@@ -103,9 +103,9 @@ public class AssetListEntryUsagesUtil {
 				assetListEntryUsage);
 
 			if (uniqueAssetListEntryUsagesKeys.contains(uniqueKey) ||
-				_isCollectionStyledLayoutStructureItemDeleted(
+				_isCollectionStyledLayoutStructureItemDeletedOrRestricted(
 					assetListEntryUsage, layoutStructure, restrictedItemIds) ||
-				_isFragmentEntryLinkDeleted(
+				_isFragmentEntryLinkDeletedOrRestricted(
 					assetListEntryUsage, layoutStructure, restrictedItemIds)) {
 
 				continue;
@@ -595,9 +595,10 @@ public class AssetListEntryUsagesUtil {
 		}
 	}
 
-	private static boolean _isCollectionStyledLayoutStructureItemDeleted(
-		AssetListEntryUsage assetListEntryUsage,
-		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
+	private static boolean
+		_isCollectionStyledLayoutStructureItemDeletedOrRestricted(
+			AssetListEntryUsage assetListEntryUsage,
+			LayoutStructure layoutStructure, List<String> restrictedItemIds) {
 
 		if (assetListEntryUsage.getContainerType() !=
 				_getCollectionStyledLayoutStructureItemClassNameId()) {
@@ -626,7 +627,7 @@ public class AssetListEntryUsagesUtil {
 		return false;
 	}
 
-	private static boolean _isFragmentEntryLinkDeleted(
+	private static boolean _isFragmentEntryLinkDeletedOrRestricted(
 		AssetListEntryUsage assetListEntryUsage,
 		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
 

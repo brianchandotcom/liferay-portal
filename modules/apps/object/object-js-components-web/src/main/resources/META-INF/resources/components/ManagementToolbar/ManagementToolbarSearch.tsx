@@ -30,12 +30,12 @@ export function ManagementToolbarSearch({query, setQuery}: IProps) {
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayInput
-						aria-label="Search"
+						aria-label={Liferay.Language.get('search')}
 						className="form-control input-group-inset input-group-inset-after"
 						onChange={({target}) => {
 							setQuery(target.value);
 						}}
-						placeholder="Search"
+						placeholder={Liferay.Language.get('search')}
 						type="text"
 						value={query}
 					/>

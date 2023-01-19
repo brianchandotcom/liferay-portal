@@ -44,9 +44,7 @@ definition {
 		for (var pageName : list "${checkPublicPages}") {
 			var key_pageName = "${pageName}";
 
-			if (IsElementNotPresent(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED")) {
-				Click(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
-			}
+			Check.checkNotVisible(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}
 	}
 

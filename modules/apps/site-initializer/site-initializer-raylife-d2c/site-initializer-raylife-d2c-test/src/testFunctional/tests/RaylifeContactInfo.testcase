@@ -81,6 +81,7 @@ definition {
 	@priority = "4"
 	test CanViewErrorMessageForInvalidZipCode {
 		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForInvalidZipCode";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -110,6 +111,7 @@ definition {
 	@priority = "4"
 	test CanViewErrorMessageForPhoneNumber {
 		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForPhoneNumber";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -139,6 +141,7 @@ definition {
 	@priority = "3"
 	test CanViewFirstNameInTip {
 		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewFirstNameInTip";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -165,6 +168,7 @@ definition {
 	@priority = "3"
 	test FirstNameMaxNumber {
 		property test.name.skip.portal.instance = "RaylifeContactInfo#FirstNameMaxNumber";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -184,6 +188,7 @@ definition {
 	@priority = "3"
 	test LastNameMaxNumber {
 		property test.name.skip.portal.instance = "RaylifeContactInfo#LastNameMaxNumber";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

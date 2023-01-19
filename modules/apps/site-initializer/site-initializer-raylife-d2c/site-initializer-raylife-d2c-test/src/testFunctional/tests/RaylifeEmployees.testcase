@@ -34,6 +34,7 @@ definition {
 	@priority = "4"
 	test AnnualPayrollForEmployeesIsRequired {
 		property test.name.skip.portal.instance = "RaylifeEmployees#AnnualPayrollForEmployeesIsRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -69,6 +70,7 @@ definition {
 	@priority = "4"
 	test AnnualPayrollForOwnerIsRequired {
 		property test.name.skip.portal.instance = "RaylifeEmployees#AnnualPayrollForOwnersIsRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -104,6 +106,7 @@ definition {
 	@priority = "4"
 	test CanContinueOnEmployeeInfoWithAllFilled {
 		property test.name.skip.portal.instance = "RaylifeEmployees#CanContinueOnEmployeeInfoWihAllFilled";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -305,7 +308,7 @@ definition {
 	@priority = "4"
 	test DoesFEINInputFieldShowsUp {
 		property test.name.skip.portal.instance = "RaylifeEmployees#DoesFEINInputFieldShowsUp";
-		
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -337,7 +340,7 @@ definition {
 	@priority = "4"
 	test EstimatedAnnualGrossRevenueIsRequired {
 		property test.name.skip.portal.instance = "RaylifeEmployees#EstimatedAnnualGrossRevenueIsRequired";
-		
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

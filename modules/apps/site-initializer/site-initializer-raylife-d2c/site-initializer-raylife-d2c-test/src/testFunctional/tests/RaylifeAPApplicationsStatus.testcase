@@ -34,7 +34,7 @@ definition {
 	@description = "LPS-154592 - Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
 	@priority = "4"
 	test IfStatusOpenAppearsInApplicationsStatus {
-        property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusOpenAppearsInApplicationStatus";
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusOpenAppearsInApplicationStatus";
 
 		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 

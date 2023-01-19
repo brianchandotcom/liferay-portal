@@ -48,6 +48,7 @@ definition {
 	@priority = "5"
 	test CanViewSentEmail {
 		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#CanViewSentEmail";
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -87,6 +88,7 @@ definition {
 	@priority = "3"
 	test EmailOnTheEnvelopeEqualOnTheForm {
 		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#EmailOnTheEnvelopeEqualOnTheForm";
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -128,6 +130,7 @@ definition {
 	@priority = "3"
 	test FirstNameOnEnvelopeSameAsForm {
 		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#FirstNameOnEnvelopeSameAsForm";
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -165,6 +168,7 @@ definition {
 	@priority = "3"
 	test LastNameOnEnvelopeSameAsForm {
 		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#LastNameOnEnvelopeSameAsForm";
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");

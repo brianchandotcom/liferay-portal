@@ -34,6 +34,7 @@ definition {
 	@priority = "4"
 	test ArePasswordTheSame {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#ArePasswordTheSame";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -77,6 +78,7 @@ definition {
 	@priority = "3"
 	test CreateAccountSectionCompleted {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#CreateAccountSectionCompleted";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -126,6 +128,7 @@ definition {
 	@priority = "5"
 	test ErrorMessageAppearInEmailField {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#ErrorMessageAppearInEmailField";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -161,6 +164,7 @@ definition {
 	@priority = "5"
 	test IsCreateAccountButtonActive {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsAccountButtonActive";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -206,6 +210,7 @@ definition {
 	@priority = "3"
 	test IsCreateAccountButtonDisabled {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsCreateAccountButtonDisabled";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -237,6 +242,7 @@ definition {
 	@priority = "4"
 	test IsEightCharactersRequired {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsEightCharactersRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -280,6 +286,7 @@ definition {
 	@priority = "4"
 	test IsFiveUniqueCharactersRequired {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsFiveUniqueCharactersRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -323,6 +330,7 @@ definition {
 	@priority = "4"
 	test IsOneSymbolRequired {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsOneSymbolRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -366,6 +374,7 @@ definition {
 	@priority = "4"
 	test NoSpacesAreAllowed {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#NoSpacesAreAllowed";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

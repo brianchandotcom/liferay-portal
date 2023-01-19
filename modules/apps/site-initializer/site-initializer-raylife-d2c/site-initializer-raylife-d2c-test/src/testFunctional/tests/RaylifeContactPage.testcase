@@ -34,6 +34,7 @@ definition {
 	@priority = "3"
 	test CanDismissContactAgentPageInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeContactPage#CanDismissContactAgentPageInfoPanel";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -65,6 +66,7 @@ definition {
 	@priority = "5"
 	test CanReachContactPageByBusinessPage {
 		property test.name.skip.portal.instance = "RaylifeContactPage#CanReachContactPageByBusinessPage";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -94,6 +96,7 @@ definition {
 	@priority = "5"
 	test CanReachContactPageByEmployeesPage {
 		property test.name.skip.portal.instance = "RaylifeContactPage#CanReachContactPageByEmployeesPage";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -126,7 +129,8 @@ definition {
 	@description = "LPS-142610 - Verify if you can reach the contact page by 'More about... <Business Street Address>' page"
 	@priority = "5"
 	test CanReachContactPageByPropertyPage {
-	    property test.name.skip.portal.instance = "RaylifeContactPage#CanReachContactPageByPropertyPage";
+		property test.name.skip.portal.instance = "RaylifeContactPage#CanReachContactPageByPropertyPage";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
@@ -174,6 +178,7 @@ definition {
 	@priority = "5"
 	test CanViewApplicationId {
 		property test.name.skip.portal.instance = "RaylifeContactPage#CanViewApplicationId";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -201,6 +206,7 @@ definition {
 	@priority = "5"
 	test DataPersistsWhenTryToEditInfo {
 		property test.name.skip.portal.instance = "RaylifeContactPage#DataPersistsWhenTryToEditInfo";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

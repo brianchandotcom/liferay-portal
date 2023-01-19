@@ -34,6 +34,7 @@ definition {
 	@priority = "4"
 	test CanClickInContinueButton {
 		property test.name.skip.portal.instance = "RaylifeIndustry#CanClickInContinueButton";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();

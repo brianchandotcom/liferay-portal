@@ -33,7 +33,6 @@ definition {
 	@description = "LPS-142371 - Verify if Continue Button is only enabled when all required fields have been filled in."
 	@priority = "4"
 	test CanContinueOnBusinessInfoWithAllFilled {
-
 		property test.name.skip.portal.instance = "RaylifeBusiness#CanCountinueOnBusinessInfoWithAllFilled";
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -61,7 +60,6 @@ definition {
 	@priority = "3"
 	test CanDismissSalesMerchandiseInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeBusiness#CanDismissSalesMerchandiseInfoPanel";
-
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
@@ -93,7 +91,6 @@ definition {
 	test CanDismissYearsOfExperienceInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeBusiness#CanDismissYearsOfExperienceInfoPanel";
 
-
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -124,7 +121,6 @@ definition {
 	test CanGoBackOnBusinessInfoKeepingAllData {
 		property test.name.skip.portal.instance = "RaylifeBusiness#CanGoBackOnBusinessInfoKeepingAllData";
 
-
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -152,7 +148,6 @@ definition {
 	@priority = "3"
 	test CanViewSalesMerchandiseInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeBusiness#CanViewSalesMerchandiseInfoPanel";
-
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
@@ -182,7 +177,6 @@ definition {
 	test CanViewYearsOfExperienceInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeBusiness#CanViewYearsOfExperienceInfoPanel";
 
-
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -209,9 +203,7 @@ definition {
 	@description = "LPS-142387 - Verify error message 'Percent of overall sales is required.' in the 'What percentage of overall sales involve delivery?' field"
 	@priority = "4"
 	test OverallSalesIsRequired {
-
 		property test.name.skip.portal.instance = "RaylifeBusiness#OverallSalesIsRequired";
-
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
@@ -268,7 +260,6 @@ definition {
 	@priority = "4"
 	test OverallSalesNotAbove100 {
 		property test.name.skip.portal.instance = "RaylifeBusiness#OverallSalesNotAbove100";
-
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 

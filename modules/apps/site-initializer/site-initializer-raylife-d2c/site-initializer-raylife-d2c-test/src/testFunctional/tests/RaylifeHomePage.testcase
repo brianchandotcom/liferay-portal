@@ -53,6 +53,7 @@ definition {
 	@priority = "4"
 	test ZipCodeIsRequired {
 		property test.name.skip.portal.instance = "RaylifeHomePage#ZipCodeIsRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");

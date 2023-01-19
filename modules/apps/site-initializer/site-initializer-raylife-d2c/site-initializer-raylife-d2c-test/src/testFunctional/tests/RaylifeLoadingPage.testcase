@@ -74,6 +74,7 @@ definition {
 	@priority = "5"
 	test CanReachLoadingPageByPropertyPage {
 		property test.name.skip.portal.instance = "RaylifeLoadingPage#CanReachLoadingPageByPropertyPage";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -109,6 +110,7 @@ definition {
 	@priority = "5"
 	test CanRedirectToQuotePage {
 		property test.name.skip.portal.instance = "RaylifeLoadingPage#CanRedirectToQuotePage";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

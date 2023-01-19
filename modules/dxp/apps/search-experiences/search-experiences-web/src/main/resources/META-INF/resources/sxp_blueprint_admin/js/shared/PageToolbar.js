@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import {useModal} from '@clayui/modal';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayToolbar from '@clayui/toolbar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -78,6 +79,10 @@ export default function PageToolbar({
 	const [modalFieldFocus, setModalFieldFocus] = useState('title');
 	const [modalVisible, setModalVisible] = useState(false);
 
+	const {observer, onClose} = useModal({
+		onClose: () => setModalVisible(false),
+	});
+
 	const displayLocale = getDisplayLocale(
 		title,
 		locale,
@@ -107,8 +112,9 @@ export default function PageToolbar({
 									fieldFocus={modalFieldFocus}
 									initialDescription={description}
 									initialTitle={title}
+									observer={observer}
+									onClose={onClose}
 									onSubmit={onTitleAndDescriptionChange}
-									setVisible={setModalVisible}
 								/>
 							)}
 

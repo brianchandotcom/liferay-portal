@@ -20,12 +20,13 @@ import React, {useState} from 'react';
 import sub from '../../utils/language/sub';
 
 function SearchableTypesModal({
+	children,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes,
 	selectedTypes,
-	setVisible,
 }) {
+	const [visible, setVisible] = useState(false);
 	const [modalSelectedTypes, setModalSelectedTypes] = useState(selectedTypes);
 
 	const {observer, onClose} = useModal({
@@ -55,159 +56,176 @@ function SearchableTypesModal({
 	};
 
 	return (
-		<ClayModal
-			className="modal-height-xl sxp-searchable-types-modal-root"
-			observer={observer}
-			size="lg"
-		>
-			<ClayModal.Header>
-				{Liferay.Language.get('select-types')}
-			</ClayModal.Header>
+		<>
+			{visible && (
+				<ClayModal
+					className="modal-height-xl sxp-searchable-types-modal-root"
+					observer={observer}
+					size="lg"
+				>
+					<ClayModal.Header>
+						{Liferay.Language.get('select-types')}
+					</ClayModal.Header>
 
-			{searchableTypes.length ? (
-				<>
-					<ManagementToolbar.Container
-						className={
-							!!modalSelectedTypes.length &&
-							'management-bar-primary'
-						}
-					>
-						<div className="navbar-form navbar-form-autofit navbar-overlay">
-							<ManagementToolbar.ItemList>
-								<ManagementToolbar.Item>
-									<ClayCheckbox
-										checked={!!modalSelectedTypes.length}
-										indeterminate={
-											!!modalSelectedTypes.length &&
-											modalSelectedTypes.length !==
-												searchableTypes.length
-										}
-										onChange={() =>
-											setModalSelectedTypes(
-												!modalSelectedTypes.length
-													? searchableTypesClassNames
-													: []
-											)
-										}
-									/>
-								</ManagementToolbar.Item>
+					{searchableTypes.length ? (
+						<>
+							<ManagementToolbar.Container
+								className={
+									!!modalSelectedTypes.length &&
+									'management-bar-primary'
+								}
+							>
+								<div className="navbar-form navbar-form-autofit navbar-overlay">
+									<ManagementToolbar.ItemList>
+										<ManagementToolbar.Item>
+											<ClayCheckbox
+												checked={
+													!!modalSelectedTypes.length
+												}
+												indeterminate={
+													!!modalSelectedTypes.length &&
+													modalSelectedTypes.length !==
+														searchableTypes.length
+												}
+												onChange={() =>
+													setModalSelectedTypes(
+														!modalSelectedTypes.length
+															? searchableTypesClassNames
+															: []
+													)
+												}
+											/>
+										</ManagementToolbar.Item>
 
-								<ManagementToolbar.Item>
-									{modalSelectedTypes.length ? (
-										<>
-											<span className="component-text">
-												{sub(
-													Liferay.Language.get(
-														'x-of-x-selected'
-													),
-													[
-														modalSelectedTypes.length,
-														searchableTypes.length,
-													],
-													false
-												)}
-											</span>
+										<ManagementToolbar.Item>
+											{modalSelectedTypes.length ? (
+												<>
+													<span className="component-text">
+														{sub(
+															Liferay.Language.get(
+																'x-of-x-selected'
+															),
+															[
+																modalSelectedTypes.length,
+																searchableTypes.length,
+															],
+															false
+														)}
+													</span>
 
-											{modalSelectedTypes.length <
-												searchableTypes.length && (
-												<ClayButton
-													displayType="link"
-													onClick={() => {
-														setModalSelectedTypes(
-															searchableTypesClassNames
-														);
-													}}
-													small
-												>
+													{modalSelectedTypes.length <
+														searchableTypes.length && (
+														<ClayButton
+															displayType="link"
+															onClick={() => {
+																setModalSelectedTypes(
+																	searchableTypesClassNames
+																);
+															}}
+															small
+														>
+															{Liferay.Language.get(
+																'select-all'
+															)}
+														</ClayButton>
+													)}
+												</>
+											) : (
+												<span className="component-text">
 													{Liferay.Language.get(
 														'select-all'
 													)}
-												</ClayButton>
+												</span>
 											)}
-										</>
-									) : (
-										<span className="component-text">
-											{Liferay.Language.get('select-all')}
-										</span>
-									)}
-								</ManagementToolbar.Item>
-							</ManagementToolbar.ItemList>
-						</div>
-					</ManagementToolbar.Container>
+										</ManagementToolbar.Item>
+									</ManagementToolbar.ItemList>
+								</div>
+							</ManagementToolbar.Container>
 
-					<ClayModal.Body scrollable>
-						<ClayTable>
-							<ClayTable.Body>
-								{searchableTypes.map(
-									({className, displayName}) => {
-										const isSelected = modalSelectedTypes.includes(
-											className
-										);
-
-										return (
-											<ClayTable.Row
-												active={isSelected}
-												key={className}
-												onClick={_handleRowCheck(
+							<ClayModal.Body scrollable>
+								<ClayTable>
+									<ClayTable.Body>
+										{searchableTypes.map(
+											({className, displayName}) => {
+												const isSelected = modalSelectedTypes.includes(
 													className
-												)}
-											>
-												<ClayTable.Cell>
-													<ClayCheckbox
-														checked={isSelected}
-														onChange={_handleRowCheck(
+												);
+
+												return (
+													<ClayTable.Row
+														active={isSelected}
+														key={className}
+														onClick={_handleRowCheck(
 															className
 														)}
-													/>
-												</ClayTable.Cell>
+													>
+														<ClayTable.Cell>
+															<ClayCheckbox
+																checked={
+																	isSelected
+																}
+																onChange={_handleRowCheck(
+																	className
+																)}
+															/>
+														</ClayTable.Cell>
 
-												<ClayTable.Cell
-													expanded
-													headingTitle
-												>
-													{displayName}
-												</ClayTable.Cell>
-											</ClayTable.Row>
-										);
-									}
+														<ClayTable.Cell
+															expanded
+															headingTitle
+														>
+															{displayName}
+														</ClayTable.Cell>
+													</ClayTable.Row>
+												);
+											}
+										)}
+									</ClayTable.Body>
+								</ClayTable>
+							</ClayModal.Body>
+						</>
+					) : (
+						<ClayModal.Body>
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'an-error-has-occurred-and-we-were-unable-to-load-the-results'
 								)}
-							</ClayTable.Body>
-						</ClayTable>
-					</ClayModal.Body>
-				</>
-			) : (
-				<ClayModal.Body>
-					<ClayEmptyState
-						description={Liferay.Language.get(
-							'an-error-has-occurred-and-we-were-unable-to-load-the-results'
-						)}
-						imgSrc="/o/admin-theme/images/states/empty_state.gif"
-						title={Liferay.Language.get('no-items-were-found')}
-					>
-						<ClayButton
-							displayType="secondary"
-							onClick={onFetchSearchableTypes}
-						>
-							{Liferay.Language.get('refresh')}
-						</ClayButton>
-					</ClayEmptyState>
-				</ClayModal.Body>
+								imgSrc="/o/admin-theme/images/states/empty_state.gif"
+								title={Liferay.Language.get(
+									'no-items-were-found'
+								)}
+							>
+								<ClayButton
+									displayType="secondary"
+									onClick={onFetchSearchableTypes}
+								>
+									{Liferay.Language.get('refresh')}
+								</ClayButton>
+							</ClayEmptyState>
+						</ClayModal.Body>
+					)}
+
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={onClose}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+
+								<ClayButton onClick={_handleModalDone}>
+									{Liferay.Language.get('done')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</ClayModal>
 			)}
 
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton displayType="secondary" onClick={onClose}>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton onClick={_handleModalDone}>
-							{Liferay.Language.get('done')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</ClayModal>
+			<span onClick={() => setVisible(!visible)}>{children}</span>
+		</>
 	);
 }
 

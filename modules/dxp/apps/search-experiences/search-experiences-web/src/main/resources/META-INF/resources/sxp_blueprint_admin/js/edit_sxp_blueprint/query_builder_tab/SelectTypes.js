@@ -12,7 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
 import SearchableTypesModal from './SearchableTypesModal';
@@ -24,8 +24,6 @@ function SelectTypes({
 	selectedTypes = [],
 }) {
 	const {locale} = useContext(ThemeContext);
-
-	const [visible, setVisible] = useState(false);
 
 	const searchableTypesSorted = searchableTypes.sort((a, b) =>
 		a.displayName.localeCompare(b.displayName, locale.replace('_', '-'))
@@ -41,16 +39,20 @@ function SelectTypes({
 
 	return (
 		<>
-			<ClayButton
-				className="select-types-button"
-				displayType="secondary"
-				onClick={() => {
-					setVisible(true);
-				}}
-				small
+			<SearchableTypesModal
+				onFetchSearchableTypes={onFetchSearchableTypes}
+				onFrameworkConfigChange={onFrameworkConfigChange}
+				searchableTypes={searchableTypesSorted}
+				selectedTypes={selectedTypes}
 			>
-				{Liferay.Language.get('select-asset-types')}
-			</ClayButton>
+				<ClayButton
+					className="select-types-button"
+					displayType="secondary"
+					small
+				>
+					{Liferay.Language.get('select-asset-types')}
+				</ClayButton>
+			</SearchableTypesModal>
 
 			{!!selectedTypes.length && (
 				<ClayTable>
@@ -82,16 +84,6 @@ function SelectTypes({
 							))}
 					</ClayTable.Body>
 				</ClayTable>
-			)}
-
-			{visible && (
-				<SearchableTypesModal
-					onFetchSearchableTypes={onFetchSearchableTypes}
-					onFrameworkConfigChange={onFrameworkConfigChange}
-					searchableTypes={searchableTypesSorted}
-					selectedTypes={selectedTypes}
-					setVisible={setVisible}
-				/>
 			)}
 		</>
 	);

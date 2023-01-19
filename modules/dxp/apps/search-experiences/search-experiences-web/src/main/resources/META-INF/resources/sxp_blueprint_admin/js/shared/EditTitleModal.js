@@ -14,7 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLocalizedInput from '@clayui/localized-input';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal from '@clayui/modal';
 import getCN from 'classnames';
 import React, {useContext, useRef, useState} from 'react';
 
@@ -40,14 +40,11 @@ export default function EditTitleModal({
 	fieldFocus,
 	initialDescription,
 	initialTitle,
+	observer,
+	onClose,
 	onSubmit,
-	setVisible,
 }) {
 	const {availableLanguages, defaultLocale} = useContext(ThemeContext);
-
-	const {observer, onClose} = useModal({
-		onClose: () => setVisible(false),
-	});
 
 	// Converts the availableLanguages into the list expected for
 	// Clay's localized input. Positions defaultLocale first in order

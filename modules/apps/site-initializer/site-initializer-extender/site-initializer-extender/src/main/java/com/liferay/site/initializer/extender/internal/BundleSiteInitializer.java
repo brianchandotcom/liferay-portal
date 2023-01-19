@@ -514,6 +514,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext,
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
+			_invoke(
+				() -> _addLayoutUtilityPageEntries(
+					assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					serviceContext,
+					taxonomyCategoryIdsStringUtilReplaceValues));
+
 			// TODO Review order/dependency
 
 			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues =
@@ -1060,6 +1068,98 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getScopeGroupId());
 
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
+	}
+
+	private void _addLayoutUtilityPageEntries(
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String>
+				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+			ServiceContext serviceContext,
+			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
+		throws Exception {
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			"/site-initializer/layout-utility-page-entries", StringPool.STAR,
+			true);
+
+		if (enumeration == null) {
+			return;
+		}
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			String fileName = url.getFile();
+
+			if (fileName.endsWith("/")) {
+				continue;
+			}
+
+			String urlPath = url.getPath();
+
+			if (StringUtil.endsWith(urlPath, "page-definition.json")) {
+				String json = StringUtil.read(url.openStream());
+
+				json = _replace(
+					json, assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					taxonomyCategoryIdsStringUtilReplaceValues);
+
+				Group group = serviceContext.getScopeGroup();
+
+				json = _replace(
+					json,
+					new String[] {
+						"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+						"[$GROUP_KEY$]"
+					},
+					new String[] {
+						group.getFriendlyURL(),
+						String.valueOf(serviceContext.getScopeGroupId()),
+						group.getGroupKey()
+					});
+
+				String css = _replace(
+					SiteInitializerUtil.read(
+						FileUtil.getPath(urlPath) + "/css.css",
+						_servletContext),
+					documentsStringUtilReplaceValues);
+
+				if (Validator.isNotNull(css)) {
+					JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+					JSONObject settingsJSONObject = jsonObject.getJSONObject(
+						"settings");
+
+					settingsJSONObject.put("css", css);
+
+					jsonObject.put("settings", settingsJSONObject);
+
+					json = jsonObject.toString();
+				}
+
+				zipWriter.addEntry(
+					_removeFirst(
+						urlPath,
+						"/site-initializer/layout-utility-page-entries"),
+					json);
+			}
+			else {
+				zipWriter.addEntry(
+					_removeFirst(
+						urlPath,
+						"/site-initializer/layout-utility-page-entries"),
+					url.openStream());
+			}
+		}
+
+		_layoutsImporter.importFile(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			zipWriter.getFile(), true);
 	}
 
 	private Map<String, String> _addObjectDefinitions(

@@ -19,7 +19,9 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -88,6 +90,25 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ConfigurableInfoCollectionProvider<?>
+			configurableInfoCollectionProvider =
+				(ConfigurableInfoCollectionProvider<?>)infoCollectionProvider;
+
+		JSONObject jsonObject = InfoFormUtil.getConfigurationJSONObject(
+			configurableInfoCollectionProvider.getConfigurationInfoForm(),
+			themeDisplay.getLocale());
+
+		if (JSONUtil.isEmpty(jsonObject.getJSONArray("fieldSets"))) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				_jsonFactory.createJSONObject());
+
+			return;
+		}
+
 		String redirect = HttpComponentsUtil.removeParameter(
 			ParamUtil.getString(resourceRequest, "redirect"), "itemId");
 
@@ -116,14 +137,7 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 				).setParameter(
 					"itemId", itemId
 				).setParameter(
-					"plid",
-					() -> {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)resourceRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
-						return themeDisplay.getPlid();
-					}
+					"plid", themeDisplay.getPlid()
 				).setParameter(
 					"segmentsExperienceId",
 					ParamUtil.getLong(resourceRequest, "segmentsExperienceId")

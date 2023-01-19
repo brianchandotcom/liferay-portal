@@ -33,12 +33,11 @@ import org.opensaml.xmlsec.impl.BasicSignatureValidationConfiguration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(service = SecurityConfigurationBootstrap.class)
+@Component(service = {})
 public class SecurityConfigurationBootstrap {
 
 	@Activate
@@ -106,8 +105,5 @@ public class SecurityConfigurationBootstrap {
 
 		return combinedCollection;
 	}
-
-	@Reference
-	private OpenSamlBootstrap _openSamlBootstrap;
 
 }

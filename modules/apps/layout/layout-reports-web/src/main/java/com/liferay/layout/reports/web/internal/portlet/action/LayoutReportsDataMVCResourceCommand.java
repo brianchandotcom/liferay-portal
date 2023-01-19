@@ -250,10 +250,6 @@ public class LayoutReportsDataMVCResourceCommand
 		if (group != null) {
 			availableLocales = _language.getAvailableLocales(
 				group.getGroupId());
-
-			if (availableLocales == null) {
-				availableLocales = Collections.emptySet();
-			}
 		}
 
 		return JSONUtil.putAll(

@@ -14,9 +14,12 @@
 
 import TableChart from '../../components/TableChart';
 import useTableChartData from '../../data/useTableChartData';
+import i18n from '../../i18n';
 
 const CompareRunsComponents: React.FC = () => {
 	const {colors, columns, data} = useTableChartData();
+
+	document.title = i18n.sub('compare-x', 'cases');
 
 	return (
 		<div className="d-flex flex-wrap mt-5">

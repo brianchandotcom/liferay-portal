@@ -24,6 +24,8 @@ import {TestrayRun} from '../../services/rest';
 const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 	const {colors, columns, data} = useTableChartData();
 
+	document.title = i18n.translate('compare-cases');
+
 	const [runA, runB] = runs;
 
 	const getRun = (
@@ -66,7 +68,7 @@ const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 	};
 
 	return (
-		<Container collapsable title={i18n.translate('compare-details')}>
+		<Container collapsable title={i18n.sub('compare-x', 'details')}>
 			<div className="d-flex flex-wrap">
 				<div className="col-8 col-lg-8 col-md-12">
 					<QATable

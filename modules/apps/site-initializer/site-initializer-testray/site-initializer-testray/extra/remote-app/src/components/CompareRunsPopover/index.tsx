@@ -82,7 +82,7 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 			<div className="align-items d-flex flex-column justify-content-between m-3">
 				<div className="align-items-center d-flex justify-content-between">
 					<label className="mb-0">
-						{i18n.translate('compare-runs')}
+						{i18n.sub('compare-x', 'runs')}
 					</label>
 
 					<span
@@ -144,7 +144,7 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 								disabled={validateCompareButtons}
 								displayType="primary"
 							>
-								{i18n.translate('compare-runs')}
+								{i18n.sub('compare-x', 'runs')}
 							</ClayButton>
 
 							<ClayButton

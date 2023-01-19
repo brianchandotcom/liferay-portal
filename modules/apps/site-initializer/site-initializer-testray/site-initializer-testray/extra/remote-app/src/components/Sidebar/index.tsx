@@ -46,7 +46,7 @@ const Sidebar = () => {
 					'testray-sidebar-text-expanded': expanded,
 				})}
 			>
-				{i18n.translate('compare-runs')}
+				{i18n.sub('compare-x', 'runs')}
 			</span>
 		</div>
 	);

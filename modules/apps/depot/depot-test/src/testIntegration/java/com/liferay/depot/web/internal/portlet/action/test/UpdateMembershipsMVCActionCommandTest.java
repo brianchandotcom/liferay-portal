@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,10 +55,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -105,13 +103,19 @@ public class UpdateMembershipsMVCActionCommandTest {
 				_user, new long[] {_depotEntry.getGroupId()}, null),
 			null);
 
-		long[] groupIds = _userLocalService.getGroupPrimaryKeys(
-			_user.getUserId());
+		boolean match = false;
 
-		LongStream longStream = Arrays.stream(groupIds);
+		for (long groupId :
+				_userLocalService.getGroupPrimaryKeys(_user.getUserId())) {
 
-		Assert.assertTrue(
-			longStream.anyMatch(value -> value == _depotEntry.getGroupId()));
+			if (groupId == _depotEntry.getGroupId()) {
+				match = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(match);
 	}
 
 	@Test
@@ -157,13 +161,19 @@ public class UpdateMembershipsMVCActionCommandTest {
 				_user, null, new long[] {_depotEntry.getGroupId()}),
 			null);
 
-		long[] finalGroupIds = _userLocalService.getGroupPrimaryKeys(
-			_user.getUserId());
+		boolean match = false;
 
-		LongStream longStream = Arrays.stream(finalGroupIds);
+		for (long groupId :
+				_userLocalService.getGroupPrimaryKeys(_user.getUserId())) {
 
-		Assert.assertFalse(
-			longStream.anyMatch(value -> value == _depotEntry.getGroupId()));
+			if (groupId == _depotEntry.getGroupId()) {
+				match = true;
+
+				break;
+			}
+		}
+
+		Assert.assertFalse(match);
 
 		Assert.assertEquals(
 			0,
@@ -236,38 +246,33 @@ public class UpdateMembershipsMVCActionCommandTest {
 			_parameters = HashMapBuilder.put(
 				"addDepotGroupIds",
 				() -> {
-					LongStream addDepotGroupIdLongStream = Arrays.stream(
-						Optional.ofNullable(
-							addDepotGroupIds
-						).orElse(
-							new long[0]
-						));
+					if (addDepotGroupIds == null) {
+						return new String[] {""};
+					}
 
-					return new String[] {
-						addDepotGroupIdLongStream.mapToObj(
-							String::valueOf
-						).collect(
-							Collectors.joining()
-						)
-					};
+					StringBundler sb = new StringBundler(
+						addDepotGroupIds.length);
+
+					for (long addDepotGroupId : addDepotGroupIds) {
+						sb.append(String.valueOf(addDepotGroupId));
+					}
+
+					return new String[] {sb.toString()};
 				}
 			).put(
 				"deleteDepotGroupIds",
 				() -> {
-					LongStream deleteDepotGroupIdLongStream = Arrays.stream(
-						Optional.ofNullable(
-							deleteGroupIds
-						).orElse(
-							new long[0]
-						));
+					if (deleteGroupIds == null) {
+						return new String[] {""};
+					}
 
-					return new String[] {
-						deleteDepotGroupIdLongStream.mapToObj(
-							String::valueOf
-						).collect(
-							Collectors.joining()
-						)
-					};
+					StringBundler sb = new StringBundler(deleteGroupIds.length);
+
+					for (long deleteGroupId : deleteGroupIds) {
+						sb.append(String.valueOf(deleteGroupId));
+					}
+
+					return new String[] {sb.toString()};
 				}
 			).put(
 				"p_u_i_d", new String[] {String.valueOf(_user.getUserId())}
@@ -300,13 +305,13 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 		@Override
 		public String getParameter(String name) {
-			return Optional.ofNullable(
-				_parameters.get(name)
-			).map(
-				parameter -> parameter[0]
-			).orElse(
-				null
-			);
+			String[] parameter = _parameters.get(name);
+
+			if (parameter == null) {
+				return null;
+			}
+
+			return parameter[0];
 		}
 
 		@Override

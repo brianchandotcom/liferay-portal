@@ -43,9 +43,9 @@ public class PreferenceAwareFeatureFlagTest {
 	@Before
 	public void setUp() throws Exception {
 		_featureFlag = new FeatureFlagImpl(
-			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
-			FeatureFlagStatus.BETA, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			new String[0], RandomTestUtil.randomString(),
+			RandomTestUtil.randomBoolean(), FeatureFlagStatus.BETA,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -55,6 +55,9 @@ public class PreferenceAwareFeatureFlagTest {
 		withPreferenceAwareFeatureFlag(
 			0L,
 			preferenceAwareFeatureFlag -> {
+				Assert.assertArrayEquals(
+					_featureFlag.getDependencies(),
+					preferenceAwareFeatureFlag.getDependencies());
 				Assert.assertEquals(
 					_featureFlag.getDescription(locale),
 					preferenceAwareFeatureFlag.getDescription(locale));

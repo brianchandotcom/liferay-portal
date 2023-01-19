@@ -119,8 +119,9 @@ public class CompanyFeatureFlagsTest {
 		FeatureFlagStatus featureFlagStatus) {
 
 		return new FeatureFlagImpl(
-			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
-			featureFlagStatus, _createKey(), RandomTestUtil.randomString());
+			new String[0], RandomTestUtil.randomString(),
+			RandomTestUtil.randomBoolean(), featureFlagStatus, _createKey(),
+			RandomTestUtil.randomString());
 	}
 
 	private String _createKey() {

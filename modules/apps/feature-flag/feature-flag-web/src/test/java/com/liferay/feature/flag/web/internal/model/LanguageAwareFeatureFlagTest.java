@@ -43,8 +43,9 @@ public class LanguageAwareFeatureFlagTest {
 	@Before
 	public void setUp() {
 		_featureFlag = new FeatureFlagImpl(
-			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
-			FeatureFlagStatus.BETA, "ABC-123", RandomTestUtil.randomString());
+			new String[0], RandomTestUtil.randomString(),
+			RandomTestUtil.randomBoolean(), FeatureFlagStatus.BETA, "ABC-123",
+			RandomTestUtil.randomString());
 
 		_languageAwareFeatureFlag = new LanguageAwareFeatureFlag(
 			_featureFlag, _language);
@@ -71,6 +72,9 @@ public class LanguageAwareFeatureFlagTest {
 
 	@Test
 	public void testGetOtherValues() {
+		Assert.assertArrayEquals(
+			_featureFlag.getDependencies(),
+			_languageAwareFeatureFlag.getDependencies());
 		Assert.assertEquals(
 			_featureFlag.getKey(), _languageAwareFeatureFlag.getKey());
 		Assert.assertEquals(

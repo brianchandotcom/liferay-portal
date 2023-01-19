@@ -613,7 +613,9 @@ definition {
 
 		Click(locator1 = "CKEditor#BODY");
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+		Type.sendKeys(
+			locator1 = "CKEditor#BODY",
+			value1 = "keys=CONTROL,v");
 
 		WaitForElementPresent(
 			key_text = "${text}",

@@ -190,33 +190,40 @@ public class AssetTagsSearchFacetDisplayContextTest
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
 		_testOrderBy(
-			"alpha:4|bravo:5|delta:5|charlie:6", new int[] {4, 5, 5, 6},
-			"count:asc", new String[] {"alpha", "delta", "bravo", "charlie"});
+			new String[] {"charlie", "delta", "bravo", "alpha"},
+			new int[] {6, 5, 5, 4}, "count:asc",
+			expectedTermsFrequencyAscending,
+			expectedFrequenciesFrequencyAscending);
 	}
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
 		_testOrderBy(
-			"charlie:6|bravo:5|delta:5|alpha:4", new int[] {4, 5, 5, 6},
-			"count:desc", new String[] {"alpha", "delta", "bravo", "charlie"});
+			new String[] {"alpha", "delta", "bravo", "charlie"},
+			new int[] {4, 5, 5, 6}, "count:desc",
+			expectedTermsFrequencyDescending,
+			expectedFrequenciesFrequencyDescending);
 	}
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		_testOrderBy(
-			"alpha:4|alpha:3|bravo:6|delta:5", new int[] {6, 5, 4, 3},
-			"key:asc", new String[] {"bravo", "delta", "alpha", "alpha"});
+			new String[] {"bravo", "alpha", "bravo", "charlie"},
+			new int[] {2, 3, 4, 5}, "key:asc", expectedTermsValueAscending,
+			expectedFrequenciesValueAscending);
 	}
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
 		_testOrderBy(
-			"charlie:6|bravo:3|alpha:5|alpha:4", new int[] {3, 4, 5, 6},
-			"key:desc", new String[] {"bravo", "alpha", "alpha", "charlie"});
+			new String[] {"bravo", "alpha", "bravo", "charlie"},
+			new int[] {2, 3, 4, 5}, "key:desc", expectedTermsValueDescending,
+			expectedFrequenciesValueDescending);
 	}
 
 	private void _testOrderBy(
-			String expected, int[] frequencies, String order, String[] terms)
+			String[] terms, int[] frequencies, String order,
+			String[] expectedTerms, int[] expectedFrequencies)
 		throws Exception {
 
 		setUpTermCollectors(
@@ -225,14 +232,9 @@ public class AssetTagsSearchFacetDisplayContextTest
 		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
 			StringPool.BLANK, order);
 
-		List<BucketDisplayContext> bucketDisplayContexts2 =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		String nameFrequencyString = buildNameFrequencyString(
-			bucketDisplayContexts2);
-
-		Assert.assertEquals(
-			bucketDisplayContexts2.toString(), expected, nameFrequencyString);
+		assertFacetOrder(
+			facetDisplayContext.getBucketDisplayContexts(), expectedTerms,
+			expectedFrequencies);
 	}
 
 	private final Facet _facet = Mockito.mock(Facet.class);

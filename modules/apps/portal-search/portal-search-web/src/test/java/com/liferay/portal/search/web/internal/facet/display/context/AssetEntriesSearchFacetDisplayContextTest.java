@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -27,10 +26,8 @@ import com.liferay.portal.search.web.internal.facet.display.context.builder.Asse
 import com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.List;
 import java.util.Locale;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -71,6 +68,8 @@ public class AssetEntriesSearchFacetDisplayContextTest
 
 		String[] classNames = {type1, type2, type3};
 
+		int[] expectedFrequencies = {1, 2, 3};
+
 		_mockResourceActions(classNames);
 
 		_setUpTermCollectors(_facetCollector, classNames);
@@ -79,16 +78,9 @@ public class AssetEntriesSearchFacetDisplayContextTest
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
 				classNames, "count:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		String nameFrequencyString = buildNameFrequencyString(
-			bucketDisplayContexts);
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			StringBundler.concat(type1, ":1|", type2, ":2|", type3, ":3"),
-			nameFrequencyString);
+		assertFacetOrder(
+			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
+			classNames, expectedFrequencies);
 	}
 
 	@Test
@@ -98,6 +90,9 @@ public class AssetEntriesSearchFacetDisplayContextTest
 		String type3 = RandomTestUtil.randomString();
 
 		String[] classNames = {type1, type2, type3};
+		String[] expectedClassNames = {type3, type2, type1};
+
+		int[] expectedFrequencies = {3, 2, 1};
 
 		_mockResourceActions(classNames);
 
@@ -107,21 +102,17 @@ public class AssetEntriesSearchFacetDisplayContextTest
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
 				classNames, "count:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		String nameFrequencyString = buildNameFrequencyString(
-			bucketDisplayContexts);
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			StringBundler.concat(type3, ":3|", type2, ":2|", type1, ":1"),
-			nameFrequencyString);
+		assertFacetOrder(
+			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
+			expectedClassNames, expectedFrequencies);
 	}
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		String[] classNames = {"bravo", "delta", "alpha", "charlie"};
+		String[] expectedClassNames = {"alpha", "bravo", "charlie", "delta"};
+
+		int[] expectedFrequencies = {3, 1, 4, 2};
 
 		_mockResourceActions(classNames);
 
@@ -131,38 +122,29 @@ public class AssetEntriesSearchFacetDisplayContextTest
 			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
 				classNames, "key:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		String nameFrequencyString = buildNameFrequencyString(
-			bucketDisplayContexts);
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			"alpha:3|bravo:1|charlie:4|delta:2", nameFrequencyString);
+		assertFacetOrder(
+			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
+			expectedClassNames, expectedFrequencies);
 	}
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
 		String[] classNames = {"bravo", "delta", "alpha", "charlie"};
+		String[] expectedClassNames = {"delta", "charlie", "bravo", "alpha"};
+
+		int[] expectedFrequencies = {2, 4, 1, 3};
 
 		_mockResourceActions(classNames);
 
 		_setUpTermCollectors(_facetCollector, classNames);
 
 		AssetEntriesSearchFacetDisplayContext
-			assetEntriesSearchFacetDisplayContext1 = _createDisplayContext(
+			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
 				classNames, "key:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetEntriesSearchFacetDisplayContext1.getBucketDisplayContexts();
-
-		String nameFrequencyString = buildNameFrequencyString(
-			bucketDisplayContexts);
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			"delta:2|charlie:4|bravo:1|alpha:3", nameFrequencyString);
+		assertFacetOrder(
+			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
+			expectedClassNames, expectedFrequencies);
 	}
 
 	private AssetEntriesSearchFacetDisplayContext _createDisplayContext(

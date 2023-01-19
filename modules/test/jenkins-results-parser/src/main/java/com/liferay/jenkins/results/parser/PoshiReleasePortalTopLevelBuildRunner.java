@@ -17,7 +17,11 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,10 +38,19 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			GitWorkingDirectory gitWorkingDirectory)
 		throws IOException {
 
-		File buildTestGradleFile = getBuildTestGradleFile(gitWorkingDirectory);
+		File buildGradleFile = null;
+
+		if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+			buildGradleFile = getBuildTestGradleFile(gitWorkingDirectory);
+		}
+
+		if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+			buildGradleFile = new File(
+				gitWorkingDirectory.getWorkingDirectory(), "lxc");
+		}
 
 		gitWorkingDirectory.commitFileToCurrentBranch(
-			buildTestGradleFile.getCanonicalPath(),
+			buildGradleFile.getCanonicalPath(),
 			"POSHI-0 CI TESTING ONLY: Use latest gradle-plugins-poshi-runner");
 
 		gitWorkingDirectory.commitFileToCurrentBranch(
@@ -48,14 +61,23 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			GitWorkingDirectory gitWorkingDirectory)
 		throws IOException {
 
-		String upstreamBranchName = gitWorkingDirectory.getUpstreamBranchName();
+		LocalGitBranch pullRequestLocalGitBranch = null;
 
-		LocalGitBranch pullRequestLocalGitBranch =
-			gitWorkingDirectory.createLocalGitBranch(
-				upstreamBranchName + "-temp-pr-" + System.currentTimeMillis(),
-				true,
-				_getDistPortalBundlesBuildSHA(
-					gitWorkingDirectory.getUpstreamBranchName()));
+		String branchName =
+			gitWorkingDirectory.getUpstreamBranchName() + "-temp-pr-" +
+				System.currentTimeMillis();
+
+		if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+			pullRequestLocalGitBranch =
+				gitWorkingDirectory.createLocalGitBranch(branchName, true);
+		}
+		else {
+			pullRequestLocalGitBranch =
+				gitWorkingDirectory.createLocalGitBranch(
+					branchName, true,
+					_getDistPortalBundlesBuildSHA(
+						gitWorkingDirectory.getUpstreamBranchName()));
+		}
 
 		gitWorkingDirectory.checkoutLocalGitBranch(pullRequestLocalGitBranch);
 
@@ -93,6 +115,26 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		}
 	}
 
+	public List<File> getBuildGradleFiles(
+		GitWorkingDirectory gitWorkingDirectory) {
+
+		if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+			return new ArrayList<>(
+				Arrays.asList(
+					new File(
+						gitWorkingDirectory.getWorkingDirectory(),
+						"portal-web/build-test.gradle")));
+		}
+
+		if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+			return JenkinsResultsParserUtil.findFiles(
+				new File(gitWorkingDirectory.getWorkingDirectory(), "lxc"),
+				"build\\.gradle");
+		}
+
+		return Collections.emptyList();
+	}
+
 	public File getBuildTestGradleFile(
 		GitWorkingDirectory gitWorkingDirectory) {
 
@@ -102,21 +144,16 @@ public class PoshiReleasePortalTopLevelBuildRunner
 	}
 
 	public RemoteGitRepository getPullRequestRemoteGitRepository(
-		String upstreamBranchName) {
+		GitWorkingDirectory gitWorkingDirectory) {
 
 		String portalGitHubURL = _getPortalGitHubURL();
 
 		Matcher matcher = GitRemote.getRemoteURLMatcher(portalGitHubURL);
 
 		if (matcher.find()) {
-			String repositoryName = "liferay-portal";
-
-			if (!upstreamBranchName.equals("master")) {
-				repositoryName = repositoryName + "-ee";
-			}
-
 			return GitRepositoryFactory.getRemoteGitRepository(
-				matcher.group("hostname"), repositoryName,
+				matcher.group("hostname"),
+				gitWorkingDirectory.getGitRepositoryName(),
 				matcher.group("username"));
 		}
 
@@ -181,17 +218,41 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		FileUtils.copyDirectory(sourceCacheDir, targetCacheDir);
 
-		File file = getBuildTestGradleFile(gitWorkingDirectory);
+		List<File> buildGradleFiles = getBuildGradleFiles(gitWorkingDirectory);
 
-		String fileContent = JenkinsResultsParserUtil.read(file);
+		updateGradlePluginsPoshiRunnerDependency(buildGradleFiles);
 
-		JenkinsResultsParserUtil.write(
-			file,
-			fileContent.replaceAll(
-				"([\\s]*)(.*\"com\\.liferay\\.gradle\\.plugins\\.defaults\".*)",
-				"$1$2$1classpath group: \"com.liferay\", name: " +
-					"\"com.liferay.gradle.plugins.poshi.runner\", version: \"" +
-						getGradlePluginsPoshiRunnerVersion() + "\""));
+		if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+			for (File buildGradleFile : buildGradleFiles) {
+				String buildGradleFileContent = JenkinsResultsParserUtil.read(
+					buildGradleFile);
+
+				JenkinsResultsParserUtil.write(
+					buildGradleFile,
+					buildGradleFileContent.replaceAll(
+						"([\\s]*)(mavenLocal\\(\\))",
+						"$1$2\n$1maven {$1\turl file(\"" +
+							gitWorkingDirectory.getWorkingDirectory() +
+								"/.m2-tmp\")$1}"));
+			}
+		}
+	}
+
+	public void updateGradlePluginsPoshiRunnerDependency(List<File> files)
+		throws IOException {
+
+		for (File file : files) {
+			String fileContent = JenkinsResultsParserUtil.read(file);
+
+			JenkinsResultsParserUtil.write(
+				file,
+				fileContent.replaceAll(
+					_BUILD_GRADLE_PLUGINS_REGEX,
+					"$1$2$1classpath group: \"com.liferay\", name: " +
+						"\"com.liferay.gradle.plugins.poshi.runner\", " +
+							"version: \"" +
+								getGradlePluginsPoshiRunnerVersion() + "\""));
+		}
 	}
 
 	protected PoshiReleasePortalTopLevelBuildRunner(
@@ -210,14 +271,17 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			String upstreamBranchName =
 				gitWorkingDirectory.getUpstreamBranchName();
 
-			if (!upstreamBranchName.equals("master")) {
+			if ((gitWorkingDirectory instanceof
+					QAWebsitesGitWorkingDirectory) ||
+				!upstreamBranchName.equals("master")) {
+
 				localGitBranch = createLocalGitBranch(gitWorkingDirectory);
 			}
 
 			RemoteGitBranch remoteGitBranch =
 				gitWorkingDirectory.pushToRemoteGitRepository(
 					true, localGitBranch, localGitBranch.getName(),
-					getPullRequestRemoteGitRepository(upstreamBranchName));
+					getPullRequestRemoteGitRepository(gitWorkingDirectory));
 
 			_remoteGitBranches.put(gitWorkingDirectory, remoteGitBranch);
 
@@ -283,13 +347,14 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		for (Map.Entry<String, PullRequest> entry : _pullRequests.entrySet()) {
+		for (Map.Entry<GitWorkingDirectory, PullRequest> entry :
+				_pullRequests.entrySet()) {
+
+			GitWorkingDirectory gitWorkingDirectory = entry.getKey();
+
 			StringBuilder sb = new StringBuilder();
 
-			String jobName =
-				"test-portal-acceptance-pullrequest(" + entry.getKey() + ")";
-
-			sb.append(getJobInvocationURL(jobName));
+			sb.append(getJobInvocationURL(_getJobName(gitWorkingDirectory)));
 
 			sb.append("/buildWithParameters?");
 			sb.append("token=");
@@ -301,36 +366,7 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 				Map<String, String> invocationParameters = new HashMap<>();
 
-				String upstreamBranchName = entry.getKey();
-
-				invocationParameters.put(
-					"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
-				invocationParameters.put(
-					"GITHUB_UPSTREAM_BRANCH_NAME", upstreamBranchName);
-				invocationParameters.put(
-					"GITHUB_UPSTREAM_BRANCH_SHA",
-					_getDistPortalBundlesBuildSHA(upstreamBranchName));
-				invocationParameters.put(
-					"JENKINS_JOB_VARIANT", _getCITestSuite(upstreamBranchName));
-				invocationParameters.put(
-					"PORTAL_BUNDLES_DIST_URL",
-					JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
-						upstreamBranchName));
-
 				PullRequest pullRequest = entry.getValue();
-
-				invocationParameters.put(
-					"GITHUB_PULL_REQUEST_NUMBER", pullRequest.getNumber());
-				invocationParameters.put(
-					"GITHUB_RECEIVER_USERNAME",
-					pullRequest.getReceiverUsername());
-				invocationParameters.put(
-					"GITHUB_SENDER_BRANCH_NAME",
-					pullRequest.getSenderBranchName());
-				invocationParameters.put(
-					"GITHUB_SENDER_BRANCH_SHA", pullRequest.getSenderSHA());
-				invocationParameters.put(
-					"GITHUB_SENDER_USERNAME", pullRequest.getSenderUsername());
 
 				invocationParameters.put(
 					"JENKINS_GITHUB_BRANCH_NAME",
@@ -338,8 +374,48 @@ public class PoshiReleasePortalTopLevelBuildRunner
 				invocationParameters.put(
 					"JENKINS_GITHUB_BRANCH_USERNAME",
 					_getGitHubBranchUsername("JENKINS_GITHUB_URL"));
+
+				String upstreamBranchName =
+					gitWorkingDirectory.getUpstreamBranchName();
+
+				invocationParameters.put(
+					"JENKINS_JOB_VARIANT", _getCITestSuite(upstreamBranchName));
+
 				invocationParameters.put(
 					"JENKINS_TOP_LEVEL_BUILD_URL", buildData.getBuildURL());
+
+				if (gitWorkingDirectory instanceof
+						QAWebsitesGitWorkingDirectory) {
+
+					invocationParameters.put(
+						"PULL_REQUEST_URL", pullRequest.getHtmlURL());
+				}
+				else {
+					invocationParameters.put(
+						"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
+					invocationParameters.put(
+						"GITHUB_PULL_REQUEST_NUMBER", pullRequest.getNumber());
+					invocationParameters.put(
+						"GITHUB_RECEIVER_USERNAME",
+						pullRequest.getReceiverUsername());
+					invocationParameters.put(
+						"GITHUB_SENDER_BRANCH_NAME",
+						pullRequest.getSenderBranchName());
+					invocationParameters.put(
+						"GITHUB_SENDER_BRANCH_SHA", pullRequest.getSenderSHA());
+					invocationParameters.put(
+						"GITHUB_SENDER_USERNAME",
+						pullRequest.getSenderUsername());
+					invocationParameters.put(
+						"GITHUB_UPSTREAM_BRANCH_NAME", upstreamBranchName);
+					invocationParameters.put(
+						"GITHUB_UPSTREAM_BRANCH_SHA",
+						_getDistPortalBundlesBuildSHA(upstreamBranchName));
+					invocationParameters.put(
+						"PORTAL_BUNDLES_DIST_URL",
+						JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
+							upstreamBranchName));
+				}
 
 				for (Map.Entry<String, String> invocationParameter :
 						invocationParameters.entrySet()) {
@@ -394,13 +470,15 @@ public class PoshiReleasePortalTopLevelBuildRunner
 				workspace.getWorkspaceGitRepositories()) {
 
 			if (workspaceGitRepository instanceof
-					PortalWorkspaceGitRepository) {
+					PortalWorkspaceGitRepository ||
+				workspaceGitRepository instanceof
+					QAWebsitesWorkspaceGitRepository) {
 
 				GitWorkingDirectory gitWorkingDirectory =
 					workspaceGitRepository.getGitWorkingDirectory();
 
 				_pullRequests.put(
-					gitWorkingDirectory.getUpstreamBranchName(),
+					gitWorkingDirectory,
 					createPortalPullRequest(gitWorkingDirectory));
 			}
 		}
@@ -469,6 +547,15 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		return matcher.group("username");
 	}
 
+	private String _getJobName(GitWorkingDirectory gitWorkingDirectory) {
+		if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+			return "test-qa-websites-source-format";
+		}
+
+		return "test-portal-acceptance-pullrequest(" +
+			gitWorkingDirectory.getUpstreamBranchName() + ")";
+	}
+
 	private String _getPortalGitHubURL() {
 		return getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
 	}
@@ -499,6 +586,9 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		}
 	}
 
+	private static final String _BUILD_GRADLE_PLUGINS_REGEX =
+		"([\\s]*)(.*\"com\\.liferay\\.gradle\\.plugins\\.defaults\".*)";
+
 	private static final String _DEFAULT_CI_TEST_SUITE = "poshi-release";
 
 	private static final String _NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL =
@@ -515,7 +605,8 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			"(commits|tree)/(?<branch>[^/]+)");
 
 	private String _gradlePluginsPoshiRunnerVersion;
-	private final Map<String, PullRequest> _pullRequests = new HashMap<>();
+	private final Map<GitWorkingDirectory, PullRequest> _pullRequests =
+		new HashMap<>();
 	private final Map<GitWorkingDirectory, RemoteGitBranch> _remoteGitBranches =
 		new HashMap<>();
 

@@ -2040,6 +2040,24 @@
 		"PageWidgetInstanceDefinition": {
 			"additionalProperties": false,
 			"properties": {
+				"cssClasses": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The CSS Classes Schema",
+					"type": "array"
+				},
+				"customCSS": {
+					"title": "The Custom CSS Schema",
+					"type": "string"
+				},
+				"customCSSViewports": {
+					"items": {
+						"$ref": "#/definitions/CustomCSSViewport"
+					},
+					"title": "The customCSSViewports Schema",
+					"type": "array"
+				},
 				"fragmentStyle": {
 					"$ref": "#/definitions/FragmentStyle"
 				},
@@ -2049,6 +2067,10 @@
 					},
 					"title": "The fragmentViewports Schema",
 					"type": "array"
+				},
+				"name": {
+					"title": "The name Schema",
+					"type": "string"
 				},
 				"widgetInstance": {
 					"$ref": "#/definitions/WidgetInstance",

@@ -169,8 +169,11 @@ public class ComboServlet extends HttpServlet {
 					name = name.replaceFirst(contextPath, StringPool.BLANK);
 				}
 			}
+			else {
+				name = modulePortletId.concat(name);
+			}
 
-			modulePathsSet.add(modulePortletId.concat(name));
+			modulePathsSet.add(name);
 		}
 
 		if (modulePathsSet.isEmpty()) {

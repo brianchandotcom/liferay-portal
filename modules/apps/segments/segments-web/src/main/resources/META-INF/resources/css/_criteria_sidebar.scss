@@ -21,7 +21,15 @@
 		padding: 1rem 1.5rem;
 	}
 
-	.sidebar-collapse,
+	.sidebar-collapse {
+		flex-basis: 0;
+		flex-grow: 1;
+		flex-shrink: 1;
+		min-height: 100%;
+		overflow-y: auto;
+		position: relative;
+	}
+
 	.sidebar-collapse-groups,
 	.empty-message {
 		height: 100%;

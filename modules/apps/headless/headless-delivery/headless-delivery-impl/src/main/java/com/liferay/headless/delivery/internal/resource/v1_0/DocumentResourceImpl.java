@@ -101,7 +101,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
@@ -336,15 +335,15 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		FileEntry existingFileEntry = _dlAppService.getFileEntry(documentId);
 
-		BinaryFile binaryFile = Optional.ofNullable(
-			multipartBody.getBinaryFile("file")
-		).orElse(
-			new BinaryFile(
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		if (binaryFile == null) {
+			binaryFile = new BinaryFile(
 				existingFileEntry.getMimeType(),
 				existingFileEntry.getFileName(),
 				existingFileEntry.getContentStream(),
-				existingFileEntry.getSize())
-		);
+				existingFileEntry.getSize());
+		}
 
 		Document document = multipartBody.getValueAsNullableInstance(
 			"document", Document.class);

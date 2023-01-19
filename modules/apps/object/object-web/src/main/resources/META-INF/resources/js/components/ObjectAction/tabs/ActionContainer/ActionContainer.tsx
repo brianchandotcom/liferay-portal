@@ -66,6 +66,8 @@ export function ActionContainer({
 		ObjectDefinitionsRelationship[]
 	>([]);
 
+	const [creationLanguageId, setCreationLanguageId] = useState<Locale>();
+
 	const isValidField = ({
 		businessType,
 		objectFieldSettings,
@@ -184,6 +186,18 @@ export function ActionContainer({
 		values.objectActionExecutorKey,
 	]);
 
+	useEffect(() => {
+		const makeFetch = async () => {
+			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
+			);
+
+			setCreationLanguageId(objectDefinition.defaultLanguageId);
+		};
+
+		makeFetch();
+	}, [objectDefinitionExternalReferenceCode]);
+
 	return (
 		<Card title={Liferay.Language.get('action')}>
 			<ThenContainer
@@ -212,6 +226,7 @@ export function ActionContainer({
 				values.objectActionExecutorKey === 'update-object-entry') &&
 				values.parameters?.objectDefinitionExternalReferenceCode && (
 					<PredefinedValuesTable
+						creationLanguageId={creationLanguageId as Locale}
 						currentObjectDefinitionFields={
 							currentObjectDefinitionFields
 						}

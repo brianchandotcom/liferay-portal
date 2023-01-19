@@ -22,6 +22,7 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	Card,
 	ExpressionBuilder,
+	getLocalizableLabel,
 	onActionDropdownItemClick,
 	openToast,
 
@@ -32,9 +33,8 @@ import React, {useEffect, useMemo} from 'react';
 
 import './PredefinedValuesTable.scss';
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
 export default function PredefinedValuesTable({
+	creationLanguageId,
 	currentObjectDefinitionFields,
 	disableRequiredChecked,
 	errors,
@@ -109,7 +109,7 @@ export default function PredefinedValuesTable({
 
 				label: (
 					<div className="lfr-object-web__predefined-values-table-field">
-						{label[defaultLanguageId]}
+						{getLocalizableLabel(creationLanguageId, label, name)}
 
 						{objectFieldsMap.get(name)?.required === true && (
 							<span className="lfr-object-web__predefined-values-table-reference-mark">
@@ -174,6 +174,7 @@ export default function PredefinedValuesTable({
 			};
 		});
 	}, [
+		creationLanguageId,
 		errors,
 		objectFieldsMap,
 		predefinedValues,
@@ -228,7 +229,8 @@ export default function PredefinedValuesTable({
 			parentWindow.Liferay.fire('openModalAddColumns', {
 				disableRequired: true,
 				disableRequiredChecked,
-				getLabel: ({label}: ObjectField) => label[defaultLanguageId],
+				getLabel: ({label, name}: ObjectField) =>
+					getLocalizableLabel(creationLanguageId, label, name),
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
 				items: currentObjectDefinitionFields,
@@ -274,6 +276,7 @@ export default function PredefinedValuesTable({
 			Liferay.detach('handleAddFields');
 		};
 	}, [
+		creationLanguageId,
 		currentObjectDefinitionFields,
 		disableRequiredChecked,
 		objectFieldsMap,
@@ -355,6 +358,7 @@ export default function PredefinedValuesTable({
 }
 
 interface IProps {
+	creationLanguageId: Locale;
 	currentObjectDefinitionFields: ObjectField[];
 	disableRequiredChecked?: boolean;
 	errors: {[key: string]: string};

@@ -16,6 +16,7 @@
 
 import './PredefinedValuesTable.scss';
 export default function PredefinedValuesTable({
+	creationLanguageId,
 	currentObjectDefinitionFields,
 	disableRequiredChecked,
 	errors,
@@ -26,6 +27,7 @@ export default function PredefinedValuesTable({
 	values,
 }: IProps): JSX.Element;
 interface IProps {
+	creationLanguageId: Locale;
 	currentObjectDefinitionFields: ObjectField[];
 	disableRequiredChecked?: boolean;
 	errors: {

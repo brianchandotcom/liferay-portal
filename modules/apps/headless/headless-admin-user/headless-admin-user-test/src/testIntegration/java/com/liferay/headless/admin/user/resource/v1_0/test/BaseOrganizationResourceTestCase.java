@@ -3062,6 +3062,10 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 	}
 
+	protected void assertValid(Page<Organization> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
 	protected void assertValid(UserAccount userAccount) {
 		boolean valid = true;
 

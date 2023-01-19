@@ -1639,6 +1639,10 @@ public abstract class BaseAccountResourceTestCase {
 		}
 	}
 
+	protected void assertValid(Page<Account> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];
 	}

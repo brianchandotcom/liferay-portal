@@ -75,10 +75,33 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		Expression leftBinaryOperationExpression,
 		Expression rightBinaryOperationExpression) {
 
-		BinaryExpression.Operation binaryExpressionOperation = _getOperation(
-			binaryOperatorKind);
+		BinaryExpression.Operation binaryExpressionOperation = null;
 
-		if (binaryExpressionOperation == null) {
+		if (binaryOperatorKind == BinaryOperatorKind.AND) {
+			binaryExpressionOperation = BinaryExpression.Operation.AND;
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.EQ) {
+			binaryExpressionOperation = BinaryExpression.Operation.EQ;
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.GE) {
+			binaryExpressionOperation = BinaryExpression.Operation.GE;
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.GT) {
+			binaryExpressionOperation = BinaryExpression.Operation.GT;
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.LE) {
+			binaryExpressionOperation = BinaryExpression.Operation.LE;
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.LT) {
+			binaryExpressionOperation = BinaryExpression.Operation.LT;
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.NE) {
+			binaryExpressionOperation = BinaryExpression.Operation.NE;
+		}
+		else if (binaryOperatorKind == BinaryOperatorKind.OR) {
+			binaryExpressionOperation = BinaryExpression.Operation.OR;
+		}
+		else {
 			throw new UnsupportedOperationException(
 				"Binary operator: " + binaryOperatorKind);
 		}
@@ -295,37 +318,6 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		throw new UnsupportedOperationException(
 			"An expression cannot be obtained from URI resources " +
 				uriResources);
-	}
-
-	private BinaryExpression.Operation _getOperation(
-		BinaryOperatorKind binaryOperatorKind) {
-
-		if (binaryOperatorKind == BinaryOperatorKind.AND) {
-			return BinaryExpression.Operation.AND;
-		}
-		else if (binaryOperatorKind == BinaryOperatorKind.EQ) {
-			return BinaryExpression.Operation.EQ;
-		}
-		else if (binaryOperatorKind == BinaryOperatorKind.GE) {
-			return BinaryExpression.Operation.GE;
-		}
-		else if (binaryOperatorKind == BinaryOperatorKind.GT) {
-			return BinaryExpression.Operation.GT;
-		}
-		else if (binaryOperatorKind == BinaryOperatorKind.LE) {
-			return BinaryExpression.Operation.LE;
-		}
-		else if (binaryOperatorKind == BinaryOperatorKind.LT) {
-			return BinaryExpression.Operation.LT;
-		}
-		else if (binaryOperatorKind == BinaryOperatorKind.NE) {
-			return BinaryExpression.Operation.NE;
-		}
-		else if (binaryOperatorKind == BinaryOperatorKind.OR) {
-			return BinaryExpression.Operation.OR;
-		}
-
-		return null;
 	}
 
 	private NavigationPropertyExpression.Type _getType(

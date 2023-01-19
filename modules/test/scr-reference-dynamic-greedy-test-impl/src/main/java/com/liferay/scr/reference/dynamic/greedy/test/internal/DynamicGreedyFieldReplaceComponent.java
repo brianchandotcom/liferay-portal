@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	enabled = false, immediate = true, property = "field.option=replace",
+	enabled = false, property = "field.option=replace",
 	service = DynamicGreedyComponent.class
 )
 public class DynamicGreedyFieldReplaceComponent

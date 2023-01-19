@@ -21,14 +21,12 @@ import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryContributed;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryContributedLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -225,15 +223,8 @@ public class FragmentCollectionContributorRegistryImpl
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
 		List<Long> fragmentEntryLinkIds =
-			_fragmentEntryLinkLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId
-				).from(
-					FragmentEntryLinkTable.INSTANCE
-				).where(
-					FragmentEntryLinkTable.INSTANCE.rendererKey.eq(
-						fragmentEntry.getFragmentEntryKey())
-				));
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkIds(
+				fragmentEntry.getFragmentEntryKey());
 
 		for (long fragmentEntryLinkId : fragmentEntryLinkIds) {
 			try {

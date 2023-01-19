@@ -86,7 +86,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
@@ -871,25 +870,11 @@ public class ContentDashboardAdminPortletTest {
 
 			List<Object> results = searchContainer.getResults();
 
-			Stream<Object> stream = results.stream();
+			_assertContainsTitle(
+				results, journalArticle1.getTitle(LocaleUtil.US));
 
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle1.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
-
-			stream = results.stream();
-
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle2.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
+			_assertContainsTitle(
+				results, journalArticle2.getTitle(LocaleUtil.US));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
@@ -953,25 +938,9 @@ public class ContentDashboardAdminPortletTest {
 
 		List<Object> results = searchContainer.getResults();
 
-		Stream<Object> stream = results.stream();
+		_assertContainsTitle(results, journalArticle1.getTitle(LocaleUtil.US));
 
-		Assert.assertTrue(
-			stream.anyMatch(
-				result -> Objects.equals(
-					journalArticle1.getTitle(LocaleUtil.US),
-					ReflectionTestUtil.invoke(
-						result, "getTitle", new Class<?>[] {Locale.class},
-						LocaleUtil.US))));
-
-		stream = results.stream();
-
-		Assert.assertTrue(
-			stream.anyMatch(
-				result -> Objects.equals(
-					journalArticle2.getTitle(LocaleUtil.US),
-					ReflectionTestUtil.invoke(
-						result, "getTitle", new Class<?>[] {Locale.class},
-						LocaleUtil.US))));
+		_assertContainsTitle(results, journalArticle2.getTitle(LocaleUtil.US));
 	}
 
 	@Test
@@ -1204,25 +1173,9 @@ public class ContentDashboardAdminPortletTest {
 
 		List<Object> results = searchContainer.getResults();
 
-		Stream<Object> stream = results.stream();
+		_assertContainsTitle(results, journalArticle1.getTitle(LocaleUtil.US));
 
-		Assert.assertTrue(
-			stream.anyMatch(
-				result -> Objects.equals(
-					journalArticle1.getTitle(LocaleUtil.US),
-					ReflectionTestUtil.invoke(
-						result, "getTitle", new Class<?>[] {Locale.class},
-						LocaleUtil.US))));
-
-		stream = results.stream();
-
-		Assert.assertTrue(
-			stream.anyMatch(
-				result -> Objects.equals(
-					journalArticle2.getTitle(LocaleUtil.US),
-					ReflectionTestUtil.invoke(
-						result, "getTitle", new Class<?>[] {Locale.class},
-						LocaleUtil.US))));
+		_assertContainsTitle(results, journalArticle2.getTitle(LocaleUtil.US));
 	}
 
 	@Test
@@ -1594,6 +1547,25 @@ public class ContentDashboardAdminPortletTest {
 			MimeTypesUtil.getExtensionContentType(fileExtension), new byte[0],
 			null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private void _assertContainsTitle(List<Object> results, String title) {
+		boolean containsTitle = false;
+
+		for (Object result : results) {
+			if (Objects.equals(
+					title,
+					ReflectionTestUtil.invoke(
+						result, "getTitle", new Class<?>[] {Locale.class},
+						LocaleUtil.US))) {
+
+				containsTitle = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(containsTitle);
 	}
 
 	private String _getAuditGraphTitle(

@@ -19,7 +19,6 @@ import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationE
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,12 +35,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DataDefinitionContentTypeRegistry {
 
 	public Long getClassNameId(String contentType) {
-		return Optional.ofNullable(
-			_classNameIds.get(contentType)
-		).orElseThrow(
-			() -> new DataDefinitionValidationException.MustSetValidContentType(
-				contentType)
-		);
+		Long id = _classNameIds.get(contentType);
+
+		if (id == null) {
+			throw new DataDefinitionValidationException.MustSetValidContentType(
+				contentType);
+		}
+
+		return id;
 	}
 
 	public DataDefinitionContentType getDataDefinitionContentType(
@@ -53,12 +54,15 @@ public class DataDefinitionContentTypeRegistry {
 	public DataDefinitionContentType getDataDefinitionContentType(
 		String contentType) {
 
-		return Optional.ofNullable(
-			_dataDefinitionContentTypesByContentType.get(contentType)
-		).orElseThrow(
-			() -> new DataDefinitionValidationException.MustSetValidContentType(
-				contentType)
-		);
+		DataDefinitionContentType dataDefinitionContentType =
+			_dataDefinitionContentTypesByContentType.get(contentType);
+
+		if (dataDefinitionContentType == null) {
+			throw new DataDefinitionValidationException.MustSetValidContentType(
+				contentType);
+		}
+
+		return dataDefinitionContentType;
 	}
 
 	@Reference(

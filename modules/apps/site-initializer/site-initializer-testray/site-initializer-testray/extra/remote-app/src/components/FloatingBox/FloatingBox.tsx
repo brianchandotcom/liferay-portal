@@ -91,11 +91,10 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 						<ClayTooltipProvider>
 							<ClayButton
 								{...primaryButtonProps}
-								className={
-									primaryButtonProps?.disabled
-										? 'btn btn-light'
-										: ''
-								}
+								className={classNames('btn', {
+									'btn btn-light':
+										primaryButtonProps?.disabled,
+								})}
 								disabled={
 									primaryButtonProps?.disabled || loading
 								}

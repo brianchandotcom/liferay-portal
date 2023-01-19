@@ -108,7 +108,6 @@ const TestFlowTasks = () => {
 					user.id.toString() !== Liferay.ThemeDisplay.getUserId()
 			)
 			.map(({name}) => ({
-				header: name,
 				text: i18n.sub(
 					'subtask-x-must-be-assigned-to-you-to-be-user-in-a-merge',
 					name

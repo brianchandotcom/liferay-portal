@@ -24,7 +24,7 @@ import {TestrayRun} from '../../services/rest';
 const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 	const {colors, columns, data} = useTableChartData();
 
-	document.title = i18n.translate('compare-cases');
+	document.title = i18n.sub('compare-x', 'cases');
 
 	const [runA, runB] = runs;
 

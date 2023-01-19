@@ -32,6 +32,7 @@ public class PageWidgetInstanceDefinitionUtil {
 	public static PageWidgetInstanceDefinition toPageWidgetInstanceDefinition(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+		String nameValue,
 		FragmentStyle pageWidgetInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageWidgetInstanceDefinitionFragmentViewports,
 		String portletId, WidgetInstanceMapper widgetInstanceMapper) {
@@ -52,6 +53,7 @@ public class PageWidgetInstanceDefinitionUtil {
 				fragmentStyle = pageWidgetInstanceDefinitionFragmentStyle;
 				fragmentViewports =
 					pageWidgetInstanceDefinitionFragmentViewports;
+				name = nameValue;
 				widgetInstance = widgetInstanceMapper.getWidgetInstance(
 					fragmentEntryLink, portletId);
 			}

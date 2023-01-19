@@ -108,8 +108,8 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" title="image" type="text" value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
 
 						<aui:button-row cssClass="mt-0">
-							<aui:button name="openGraphImageButton" value="select" />
-							<aui:button name="openGraphClearImageButton" value="clear" />
+							<aui:button aria-label='<%= LanguageUtil.format(locale, "select-x", "image") %>' name="openGraphImageButton" value="select" />
+							<aui:button aria-label='<%= LanguageUtil.format(locale, "clear-x", "image") %>' name="openGraphClearImageButton" value="clear" />
 						</aui:button-row>
 					</div>
 

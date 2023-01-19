@@ -19,7 +19,9 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryContributed;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryContributedLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -45,6 +47,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -168,6 +171,103 @@ public class FragmentCollectionContributorTest {
 	}
 
 	@Test
+	public void testPropagateContributedFragmentEntryTwiceWithNoChanges()
+		throws Exception {
+
+		String fragmentCollectionContributorKey = RandomTestUtil.randomString();
+
+		String fragmentEntryKey = StringBundler.concat(
+			fragmentCollectionContributorKey, StringPool.DASH,
+			RandomTestUtil.randomString());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		String html = RandomTestUtil.randomString();
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				segmentsExperienceId, layout.getPlid(), StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, null,
+				StringPool.BLANK, 0, fragmentEntryKey,
+				FragmentConstants.TYPE_COMPONENT, _serviceContext);
+
+		ServiceRegistration<?> serviceRegistration = _getServiceRegistration(
+			new TestFragmentCollectionContributor(
+				fragmentCollectionContributorKey,
+				HashMapBuilder.put(
+					FragmentConstants.TYPE_COMPONENT,
+					_getFragmentEntry(
+						fragmentEntryKey, html,
+						FragmentConstants.TYPE_COMPONENT)
+				).build()));
+
+		Date fragmentEntryContributedModifiedDate = null;
+		Date fragmentEntryLinkModifiedDate = null;
+
+		try {
+			FragmentEntryLink persistedFragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertEquals(html, persistedFragmentEntryLink.getHtml());
+
+			fragmentEntryLinkModifiedDate =
+				persistedFragmentEntryLink.getModifiedDate();
+
+			FragmentEntryContributed persistedFragmentEntryContributed =
+				_fragmentEntryContributedLocalService.fetchByFragmentEntryKey(
+					fragmentEntryKey);
+
+			Assert.assertNotNull(persistedFragmentEntryContributed);
+
+			Assert.assertEquals(
+				html, persistedFragmentEntryContributed.getHtml());
+
+			fragmentEntryContributedModifiedDate =
+				persistedFragmentEntryContributed.getModifiedDate();
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		serviceRegistration = _getServiceRegistration(
+			new TestFragmentCollectionContributor(
+				fragmentCollectionContributorKey,
+				HashMapBuilder.put(
+					FragmentConstants.TYPE_COMPONENT,
+					_getFragmentEntry(
+						fragmentEntryKey, html,
+						FragmentConstants.TYPE_COMPONENT)
+				).build()));
+
+		try {
+			FragmentEntryLink persistedFragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertEquals(
+				fragmentEntryLinkModifiedDate,
+				persistedFragmentEntryLink.getModifiedDate());
+
+			FragmentEntryContributed persistedFragmentEntryContributed =
+				_fragmentEntryContributedLocalService.fetchByFragmentEntryKey(
+					fragmentEntryKey);
+
+			Assert.assertEquals(
+				fragmentEntryContributedModifiedDate,
+				persistedFragmentEntryContributed.getModifiedDate());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
 	public void testRegisterContributedFragmentEntries() {
 		String fragmentCollectionContributorKey = RandomTestUtil.randomString();
 
@@ -273,6 +373,10 @@ public class FragmentCollectionContributorTest {
 	@Inject
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
+
+	@Inject
+	private FragmentEntryContributedLocalService
+		_fragmentEntryContributedLocalService;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

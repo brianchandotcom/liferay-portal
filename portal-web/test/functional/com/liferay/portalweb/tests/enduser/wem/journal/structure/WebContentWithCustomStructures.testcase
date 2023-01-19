@@ -1346,7 +1346,7 @@ definition {
 				structureDescription = "WC Structure Description",
 				structureName = "WC Structure Name");
 
-			DataEngine.addFields(fieldNameList = "Date,Numeric,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text");
+			DataEngine.addFields(fieldNameList = "Date,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text");
 
 			WebContentStructures.saveCP();
 		}
@@ -1357,7 +1357,7 @@ definition {
 			WebContentTemplates.addCP(
 				structureName = "WC Structure Name",
 				templateDescription = "WC Template Description",
-				templateFieldNames = "Date,Numeric,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text",
+				templateFieldNames = "Date,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text",
 				templateName = "WC Template Name");
 		}
 

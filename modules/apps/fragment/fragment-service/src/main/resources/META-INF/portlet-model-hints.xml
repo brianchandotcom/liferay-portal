@@ -98,10 +98,18 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="fragmentEntryKey" type="String" />
-		<field name="css" type="String" />
-		<field name="html" type="String" />
-		<field name="js" type="String" />
-		<field name="configuration" type="String" />
+		<field name="css" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="html" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="js" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="configuration" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntryLink">

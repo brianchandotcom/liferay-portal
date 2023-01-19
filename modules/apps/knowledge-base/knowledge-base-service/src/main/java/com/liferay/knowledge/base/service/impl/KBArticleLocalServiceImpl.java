@@ -1853,6 +1853,21 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
 	}
 
+	private ServiceContext _getMinimalServiceContext(
+			Company company, KBArticle kbArticle)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setPlid(LayoutConstants.DEFAULT_PLID);
+		serviceContext.setPortalURL(
+			company.getPortalURL(kbArticle.getGroupId()));
+		serviceContext.setPortletId(KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
+		serviceContext.setScopeGroupId(kbArticle.getGroupId());
+
+		return serviceContext;
+	}
+
 	private int _getNotificationType(String action) {
 		if (Objects.equals(action, Constants.ADD)) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
@@ -2145,19 +2160,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 						kbArticle.getReviewDate()));
 			}
 
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setPlid(LayoutConstants.DEFAULT_PLID);
-			serviceContext.setPortalURL(
-				company.getPortalURL(kbArticle.getGroupId()));
-			serviceContext.setPortletId(KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
-			serviceContext.setScopeGroupId(kbArticle.getGroupId());
-
 			_notify(
 				SetUtil.fromArray(
 					_NOTIFICATION_RECEIVER_OWNER,
 					_NOTIFICATION_RECEIVER_SUBSCRIBER),
-				userId, kbArticle, _NOTIFICATION_ACTION_REVIEW, serviceContext);
+				userId, kbArticle, _NOTIFICATION_ACTION_REVIEW,
+				_getMinimalServiceContext(company, kbArticle));
 		}
 	}
 

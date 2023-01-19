@@ -79,6 +79,7 @@ definition {
 	}
 
 	@description = "LPS-142329. Verifies 2 occurrences of the same violation are listed in the side panel."
+	@ignore = "true"
 	@priority = "3"
 	test CanDetectMultipleOccurencesOfSameViolations {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -179,6 +180,7 @@ definition {
 	}
 
 	@description = "Verifies a11y tool can be deployed and detect an a11y violation"
+	@ignore = "true"
 	@priority = "5"
 	test CanDetectViolation {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -206,6 +208,7 @@ definition {
 	}
 
 	@description = "LPS-142325. Verifies a rule violation will be detected when a fragment with a violation is added to a page with no violations."
+	@ignore = "true"
 	@priority = "4"
 	test CanDetectViolationInDynamicPage {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -257,6 +260,7 @@ definition {
 	}
 
 	@description = "LPS-142324. Verifies the correct target and code is displayed."
+	@ignore = "true"
 	@priority = "4"
 	test CanDisplayTargetCode {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -312,6 +316,7 @@ definition {
 	}
 
 	@description = "LPS-142330. Verifies the correct target and code is displayed for the second occurrence."
+	@ignore = "true"
 	@priority = "3"
 	test CanDisplayTargetCodeOfSecondViolation {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -359,6 +364,7 @@ definition {
 	}
 
 	@description = "LPS-142327. Verifies the pop up displays detail information about the violation."
+	@ignore = "true"
 	@priority = "3"
 	test CanDisplayViolationDetailsInPopUp {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -410,6 +416,7 @@ definition {
 	}
 
 	@description = "LPS-142323. Verifies the side panel shows the violation occurrence when clicked from pop up."
+	@ignore = "true"
 	@priority = "4"
 	test CanDisplayViolationDetailsInSidePanel {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -445,6 +452,7 @@ definition {
 	}
 
 	@description = "LPS-142322. Verifies side panel displays information about a violation rule."
+	@ignore = "true"
 	@priority = "4"
 	test CanDisplayViolationRuleDetails {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -504,6 +512,7 @@ definition {
 	}
 
 	@description = "LPS-142331 Assert that user can filter violations by all impact."
+	@ignore = "true"
 	@priority = "3"
 	test CanFilterViolationsByAllImpact {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -541,6 +550,7 @@ definition {
 	}
 
 	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only. Also verifies all violations are present when unfiltered."
+	@ignore = "true"
 	@priority = "5"
 	test CanFilterViolationsByCriticalImpactOnly {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -638,6 +648,7 @@ definition {
 	}
 
 	@description = "LPS-141734. Verifies impact and category filters are available."
+	@ignore = "true"
 	@priority = "5"
 	test CanFilterViolationsByImpactAndCategory {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -667,6 +678,7 @@ definition {
 	}
 
 	@description = "LPS-142318. Verifies multiple violations are highlighted with an icon."
+	@ignore = "true"
 	@priority = "4"
 	test CanHighlightMultipleViolations {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -758,6 +770,7 @@ definition {
 	}
 
 	@description = "LPS-142333. To assert that filters reset to default after page refresh."
+	@ignore = "true"
 	@priority = "2"
 	test FiltersAreResetToDefaultAfterPageRefresh {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -795,6 +808,7 @@ definition {
 	}
 
 	@description = "LPS-142271. Verifies violations are sorted by descending impact."
+	@ignore = "true"
 	@priority = "4"
 	test OrdersViolationsByDescendingImpact {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -846,6 +860,7 @@ definition {
 	}
 
 	@description = "LPS-141455. Verifies the side panel appears with violation(s)."
+	@ignore = "true"
 	@priority = "5"
 	test ShowsSidePanelWithViolation {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";

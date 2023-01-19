@@ -189,6 +189,88 @@ definition {
 			actionName = "ActionName");
 	}
 
+	@description = "LPS-145665 - Verify it's possible to add an object entry with the trigger On Order Status Update"
+	@priority = "4"
+	test CanCreateActionAddObjectEntryWithOnOrderStatusUpdate {
+		task ("Given an action in the Commerce Order triggered with Custom Object.") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 171861",
+				objectName = "CustomObject171861",
+				pluralLabelName = "Custom Objects 171861");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject171861");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171861");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Name",
+				actionName = "ActionName",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Value Test",
+				objectLabel = "Custom Object 171861",
+				thenAction = "Add an Object Entry",
+				whenAction = "On Order Status Update");
+		}
+
+		task ("And given the user creates a request.") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name Test",
+				accountEntryType = "Business");
+
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When The user changes the order status.") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Then the action is triggered to add an object entry.") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject171861");
+
+			ObjectPortlet.viewEntry(entry = "Value Test");
+		}
+	}
+
 	@description = "LPS-171793 - Verify it's possible to create a notification action with the trigger On Order Status Update"
 	@priority = "5"
 	test CanCreateActionNotificationWithOnOrderStatusUpdate {

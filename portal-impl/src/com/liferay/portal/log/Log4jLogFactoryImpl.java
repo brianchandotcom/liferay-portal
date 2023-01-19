@@ -40,7 +40,7 @@ public class Log4jLogFactoryImpl implements LogFactory {
 	@Override
 	public Log getLog(String name) {
 		Log log = new Log4jLogContextLogWrapper(
-			new Log4jLogImpl(LogManager.getLogger(name)));
+			name, new Log4jLogImpl(LogManager.getLogger(name)));
 
 		if (_upgradeLogContextEnabled && _isUpgradeClass(name)) {
 			log = new Log4jLogContextUpgradeLogWrapper(log);

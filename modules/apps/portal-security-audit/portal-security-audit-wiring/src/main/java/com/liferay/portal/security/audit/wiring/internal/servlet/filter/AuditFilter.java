@@ -261,7 +261,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		}
 
 		@Override
-		public Map<String, String> getContext() {
+		public Map<String, String> getContext(String logName) {
 			return _contexts.get();
 		}
 

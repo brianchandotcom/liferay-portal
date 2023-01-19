@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -245,12 +244,11 @@ public class LiferayBatchFileProperties
 		SortedMap<String, String> entityClassNames = new TreeMap<>();
 
 		for (String name : names) {
-			Optional<String> entityClassNameOptional =
-				_oasExplorer.getEntityClassNameOptional(
-					name, _getOASJsonObject());
+			String entityClassName = _oasExplorer.getEntityClassName(
+				name, _getOASJsonObject());
 
-			if (entityClassNameOptional.isPresent()) {
-				entityClassNames.put(name, entityClassNameOptional.get());
+			if (entityClassName != null) {
+				entityClassNames.put(name, entityClassName);
 
 				continue;
 			}

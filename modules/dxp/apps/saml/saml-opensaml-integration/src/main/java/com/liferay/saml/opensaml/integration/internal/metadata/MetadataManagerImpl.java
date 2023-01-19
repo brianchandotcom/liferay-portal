@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
@@ -591,8 +590,5 @@ public class MetadataManagerImpl
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
-
-	@Reference
-	private SecurityConfigurationBootstrap _securityConfigurationBootstrap;
 
 }

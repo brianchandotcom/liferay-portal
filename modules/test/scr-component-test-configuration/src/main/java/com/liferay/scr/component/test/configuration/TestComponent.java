@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 		"com.liferay.scr.component.test.configuration.SecondConfiguration"
 	},
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
-	immediate = true, service = TestComponent.class
+	service = TestComponent.class
 )
 public class TestComponent {
 

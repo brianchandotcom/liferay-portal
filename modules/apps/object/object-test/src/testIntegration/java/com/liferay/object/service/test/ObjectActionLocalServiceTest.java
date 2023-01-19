@@ -41,17 +41,23 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -81,6 +87,8 @@ import java.util.Objects;
 import java.util.Queue;
 
 import jodd.util.StringUtil;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -320,9 +328,11 @@ public class ObjectActionLocalServiceTest {
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+			User user = UserTestUtil.addUser();
+
+			PrincipalThreadLocal.setName(user.getUserId());
 			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+				PermissionCheckerFactoryUtil.create(user));
 
 			// Add object entry
 
@@ -344,7 +354,28 @@ public class ObjectActionLocalServiceTest {
 
 			// Execute standalone action to run a groovy script
 
-			ObjectEntryResource objectEntryResource = _getObjectEntryResource();
+			ObjectEntryResource objectEntryResource = _getObjectEntryResource(
+				user);
+
+			try {
+				objectEntryResource.putObjectEntryObjectActionObjectActionName(
+					objectEntry.getObjectEntryId(), objectAction4.getName());
+
+				Assert.fail();
+			}
+			catch (PrincipalException.MustHavePermission principalException) {
+				Assert.assertThat(
+					principalException.getMessage(),
+					CoreMatchers.containsString(
+						StringBundler.concat(
+							"User ", String.valueOf(user.getUserId()),
+							" must have ", objectAction4.getName(),
+							" permission for")));
+			}
+
+			_addModelResourcePermission(
+				objectAction4.getName(), objectEntry.getObjectEntryId(),
+				user.getUserId());
 
 			objectEntryResource.putObjectEntryObjectActionObjectActionName(
 				objectEntry.getObjectEntryId(), objectAction4.getName());
@@ -369,6 +400,28 @@ public class ObjectActionLocalServiceTest {
 				"John", WorkflowConstants.STATUS_APPROVED);
 
 			// Execute standalone action to update the current object entry
+
+			try {
+				objectEntryResource.
+					putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+						objectEntry.getExternalReferenceCode(),
+						objectAction5.getName());
+
+				Assert.fail();
+			}
+			catch (PrincipalException.MustHavePermission principalException) {
+				Assert.assertThat(
+					principalException.getMessage(),
+					CoreMatchers.containsString(
+						StringBundler.concat(
+							"User ", String.valueOf(user.getUserId()),
+							" must have ", objectAction5.getName(),
+							" permission for")));
+			}
+
+			_addModelResourcePermission(
+				objectAction5.getName(), objectEntry.getObjectEntryId(),
+				user.getUserId());
 
 			objectEntryResource.
 				putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
@@ -592,6 +645,21 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionConstants.STATUS_NEVER_RAN);
 	}
 
+	private void _addModelResourcePermission(
+			String objectActionName, long objectEntryId, long userId)
+		throws Exception {
+
+		_resourcePermissionLocalService.addModelResourcePermissions(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			userId, _objectDefinition.getClassName(),
+			String.valueOf(objectEntryId),
+			ModelPermissionsFactory.create(
+				HashMapBuilder.put(
+					RoleConstants.USER, new String[] {objectActionName}
+				).build(),
+				_objectDefinition.getClassName()));
+	}
+
 	private void _addObjectAction(
 			String errorMessage, String externalReferenceCode, String label,
 			String name, String objectActionTriggerKey)
@@ -754,7 +822,9 @@ public class ObjectActionLocalServiceTest {
 				}));
 	}
 
-	private ObjectEntryResource _getObjectEntryResource() throws Exception {
+	private ObjectEntryResource _getObjectEntryResource(User user)
+		throws Exception {
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			ObjectActionLocalServiceTest.class);
 
@@ -793,7 +863,7 @@ public class ObjectActionLocalServiceTest {
 			objectEntryResource.setContextCompany(
 				_companyLocalService.getCompany(
 					_objectDefinition.getCompanyId()));
-			objectEntryResource.setContextUser(TestPropsValues.getUser());
+			objectEntryResource.setContextUser(user);
 
 			Class<?> clazz = objectEntryResource.getClass();
 
@@ -840,5 +910,8 @@ public class ObjectActionLocalServiceTest {
 
 	private Http _originalHttp;
 	private ObjectScriptingExecutor _originalObjectScriptingExecutor;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

@@ -57,23 +57,25 @@ definition {
 		}
 	}
 
-	@priority = "5"
-	@refactordone
-	test CanEditGoogleDocInSite {
-		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanEditGoogleDocInSite";
+	@description = "This test makes sure that the Google Drive Shortcut can be added in a depot."
+	@priority = "4"
+	test CanDeleteGoogleDocInDepot {
+		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanDeleteGoogleDocInDepot";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
 
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		MenuItem.click(menuItem = "Google Drive Shortcut");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Google Drive Shortcut");
 
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.4"),
 			userPassword = PropsUtil.get("email.password.4"),
-			windowTitle = "New Google Drive Shortcut - ${siteName}");
+			windowTitle = "New Google Drive Shortcut - Test Depot Name - ${siteName}");
 
 		GoogleDrive.selectDocument(
 			googleDocName = "liferay.txt",
@@ -81,23 +83,9 @@ definition {
 
 		PortletEntry.publish();
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "liferay",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		GoogleDrive.gotoDrive(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"),
-			windowTitle = "New Google Drive Shortcut - ${siteName}");
-
-		GoogleDrive.selectDocument(
-			googleDocName = "liferay2.xls",
-			googleDocTitle = "liferay2");
-
-		PortletEntry.publish();
-
-		DMDocument.viewPG(dmDocumentTitle = "liferay2");
+		DMDocument.deleteCP(dmDocumentTitle = "liferay");
 	}
 
 	@priority = "5"
@@ -178,25 +166,23 @@ definition {
 			dmDocumentTitle = "liferay");
 	}
 
-	@description = "This test makes sure that the Google Drive Shortcut can be added in a depot."
-	@priority = "4"
-	test CanDeleteGoogleDocInDepot {
-		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanDeleteGoogleDocInDepot";
+	@priority = "5"
+	@refactordone
+	test CanEditGoogleDocInSite {
+		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanEditGoogleDocInSite";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Google Drive Shortcut");
+		MenuItem.click(menuItem = "Google Drive Shortcut");
 
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.4"),
 			userPassword = PropsUtil.get("email.password.4"),
-			windowTitle = "New Google Drive Shortcut - Test Depot Name - ${siteName}");
+			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
 		GoogleDrive.selectDocument(
 			googleDocName = "liferay.txt",
@@ -204,9 +190,23 @@ definition {
 
 		PortletEntry.publish();
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "liferay",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
-		DMDocument.deleteCP(dmDocumentTitle = "liferay");
+		GoogleDrive.gotoDrive(
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
+			windowTitle = "New Google Drive Shortcut - ${siteName}");
+
+		GoogleDrive.selectDocument(
+			googleDocName = "liferay2.xls",
+			googleDocTitle = "liferay2");
+
+		PortletEntry.publish();
+
+		DMDocument.viewPG(dmDocumentTitle = "liferay2");
 	}
 
 	@description = "This ensures that a user can move a Google Doc to a folder in a content page."

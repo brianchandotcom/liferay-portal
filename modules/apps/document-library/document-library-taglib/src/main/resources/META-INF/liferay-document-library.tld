@@ -38,11 +38,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>customFileEntryModelResourcePermission</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>folderId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

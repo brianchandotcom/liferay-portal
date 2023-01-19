@@ -57,12 +57,6 @@ public class RepositoryBrowserTag extends IncludeTag {
 		return _actions;
 	}
 
-	public ModelResourcePermission<FileEntry>
-		getCustomFileEntryModelResourcePermission() {
-
-		return _customFileEntryModelResourcePermission;
-	}
-
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -73,14 +67,6 @@ public class RepositoryBrowserTag extends IncludeTag {
 
 	public void setActions(String actions) {
 		_actions = actions;
-	}
-
-	public void setCustomFileEntryModelResourcePermission(
-		ModelResourcePermission<FileEntry>
-			customFileEntryModelResourcePermission) {
-
-		_customFileEntryModelResourcePermission =
-			customFileEntryModelResourcePermission;
 	}
 
 	public void setFolderId(long folderId) {
@@ -103,7 +89,6 @@ public class RepositoryBrowserTag extends IncludeTag {
 		super.cleanUp();
 
 		_actions = StringPool.BLANK;
-		_customFileEntryModelResourcePermission = null;
 		_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		_repositoryId = 0;
 	}
@@ -127,7 +112,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 			RepositoryBrowserTagDisplayContext.class.getName(),
 			new RepositoryBrowserTagDisplayContext(
 				_getActionsSet(), DLAppServiceUtil.getService(),
-				_getFileEntryModelResourcePermission(),
+				_fileEntryModelResourcePermission,
 				_fileShortcutModelResourcePermission,
 				_folderModelResourcePermission, _getFolderId(),
 				httpServletRequest,
@@ -154,16 +139,6 @@ public class RepositoryBrowserTag extends IncludeTag {
 		}
 
 		return actionsSet;
-	}
-
-	private ModelResourcePermission<FileEntry>
-		_getFileEntryModelResourcePermission() {
-
-		if (getCustomFileEntryModelResourcePermission() == null) {
-			return _fileEntryModelResourcePermission;
-		}
-
-		return getCustomFileEntryModelResourcePermission();
 	}
 
 	private long _getFolderId() {
@@ -209,8 +184,6 @@ public class RepositoryBrowserTag extends IncludeTag {
 				"(model.class.name=" + Folder.class.getName() + ")", false);
 
 	private String _actions = StringPool.BLANK;
-	private ModelResourcePermission<FileEntry>
-		_customFileEntryModelResourcePermission;
 	private long _folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	private long _repositoryId;
 

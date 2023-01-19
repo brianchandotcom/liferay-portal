@@ -88,20 +88,20 @@ const Goals = ({
 	}, [errors]);
 
 	const getRequestPage = () => {
-		const canEditRoles = [
-			'Channel General Manager',
-			'Channel Account Manager',
-			'Channel Regional Marketing Manager',
-			'Channel Global Marketing Manager',
-			'Channel Finance Manager',
-		];
-
-		const userAccountRolesCanEdit = userAccountRoles?.filter(
-			(userAccountRole) =>
-				canEditRoles.includes(userAccountRole.label as string)
-		).length;
-
 		if (values.id && userAccountRoles) {
+			const canEditRoles = [
+				'Channel General Manager',
+				'Channel Account Manager',
+				'Channel Regional Marketing Manager',
+				'Channel Global Marketing Manager',
+				'Channel Finance Manager',
+			];
+
+			const userAccountRolesCanEdit = userAccountRoles.filter(
+				(userAccountRole) =>
+					canEditRoles.includes(userAccountRole.label as string)
+			).length;
+
 			if (
 				!userAccountRolesCanEdit &&
 				values.mdfRequestStatus?.key !== 'draft' &&
@@ -135,144 +135,130 @@ const Goals = ({
 			}
 		}
 
-		if (
-			userAccountRolesCanEdit ||
-			values.mdfRequestStatus?.key === 'draft' ||
-			values.mdfRequestStatus?.key === 'moreInfoRequested' ||
-			!values.mdfRequestStatus?.key
-		) {
-			return (
-				<PRMForm name="Goals" title="Campaign Information">
-					<PRMForm.Section title="Partner">
-						<PRMForm.Group>
-							<PRMFormik.Field
-								component={PRMForm.Select}
-								label="Company Name"
-								name="company"
-								onChange={onCompanySelected}
-								options={companyOptions}
-								required
-							/>
-
-							<PRMFormik.Field
-								component={PRMForm.Select}
-								label="Country"
-								name="country"
-								onChange={onCountrySelected}
-								options={countryOptions}
-								required
-							/>
-						</PRMForm.Group>
-					</PRMForm.Section>
-
-					<PRMForm.Section title="Campaign">
+		return (
+			<PRMForm name="Goals" title="Campaign Information">
+				<PRMForm.Section title="Partner">
+					<PRMForm.Group>
 						<PRMFormik.Field
-							component={PRMForm.InputText}
-							label="Provide the name of the campaign"
-							name="overallCampaignName"
+							component={PRMForm.Select}
+							label="Company Name"
+							name="company"
+							onChange={onCompanySelected}
+							options={companyOptions}
 							required
 						/>
 
 						<PRMFormik.Field
-							component={PRMForm.InputText}
-							label="Provide a short description of the overall campaign"
-							name="overallCampaignDescription"
+							component={PRMForm.Select}
+							label="Country"
+							name="country"
+							onChange={onCountrySelected}
+							options={countryOptions}
 							required
 						/>
+					</PRMForm.Group>
+				</PRMForm.Section>
 
-						<PRMFormik.Field
-							component={PRMForm.CheckboxGroup}
-							items={
-								fieldEntries[
-									LiferayPicklistName
-										.LIFERAY_BUSINESS_SALES_GOALS
-								]
+				<PRMForm.Section title="Campaign">
+					<PRMFormik.Field
+						component={PRMForm.InputText}
+						label="Provide the name of the campaign"
+						name="overallCampaignName"
+						required
+					/>
+
+					<PRMFormik.Field
+						component={PRMForm.InputText}
+						label="Provide a short description of the overall campaign"
+						name="overallCampaignDescription"
+						required
+					/>
+
+					<PRMFormik.Field
+						component={PRMForm.CheckboxGroup}
+						items={
+							fieldEntries[
+								LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS
+							]
+						}
+						label="Select Liferay business/sales goals this Campaign serves (choose up to three)"
+						name="liferayBusinessSalesGoals"
+						required
+					/>
+				</PRMForm.Section>
+
+				<PRMForm.Section title="Target Market">
+					<PRMFormik.Field
+						component={PRMForm.CheckboxGroup}
+						items={fieldEntries[LiferayPicklistName.TARGET_MARKETS]}
+						label="Please select the target market(s) for this campaign (choose up to three)"
+						name="targetMarkets"
+						required
+					/>
+
+					<PRMFormik.Field
+						component={PRMForm.RadioGroup}
+						items={additionalOptions}
+						label="Additional options? Choose one if applicable"
+						name="additionalOption"
+						onChange={onAdditionalOptionSelected}
+					/>
+
+					<PRMFormik.Field
+						component={PRMForm.CheckboxGroup}
+						items={
+							fieldEntries[
+								LiferayPicklistName.TARGET_AUDIENCE_ROLES
+							]
+						}
+						label="Choose your target audience/role (Select all that apply)"
+						name="targetAudienceRoles"
+						required
+					/>
+				</PRMForm.Section>
+
+				<PRMForm.Footer>
+					<div className="d-flex justify-content-end mr-auto">
+						<Button
+							className="inline-item inline-item-after"
+							disabled={isSubmitting}
+							displayType={null}
+							onClick={() =>
+								onSaveAsDraft?.(values, formikHelpers)
 							}
-							label="Select Liferay business/sales goals this Campaign serves (choose up to three)"
-							name="liferayBusinessSalesGoals"
-							required
-						/>
-					</PRMForm.Section>
+						>
+							Save as Draft
+							{isSubmitting &&
+								values.mdfRequestStatus === Status.DRAFT && (
+									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+								)}
+						</Button>
+					</div>
 
-					<PRMForm.Section title="Target Market">
-						<PRMFormik.Field
-							component={PRMForm.CheckboxGroup}
-							items={
-								fieldEntries[LiferayPicklistName.TARGET_MARKETS]
+					<div className="d-flex justify-content-between px-2 px-md-0">
+						<Button
+							className="mr-4"
+							displayType="secondary"
+							onClick={onCancel}
+						>
+							Cancel
+						</Button>
+
+						<Button
+							disabled={
+								(!isValid && !isObjectEmpty(goalsErrors)) ||
+								isSubmitting
 							}
-							label="Please select the target market(s) for this campaign (choose up to three)"
-							name="targetMarkets"
-							required
-						/>
-
-						<PRMFormik.Field
-							component={PRMForm.RadioGroup}
-							items={additionalOptions}
-							label="Additional options? Choose one if applicable"
-							name="additionalOption"
-							onChange={onAdditionalOptionSelected}
-						/>
-
-						<PRMFormik.Field
-							component={PRMForm.CheckboxGroup}
-							items={
-								fieldEntries[
-									LiferayPicklistName.TARGET_AUDIENCE_ROLES
-								]
+							onClick={() =>
+								onContinue?.(formikHelpers, StepType.ACTIVITIES)
 							}
-							label="Choose your target audience/role (Select all that apply)"
-							name="targetAudienceRoles"
-							required
-						/>
-					</PRMForm.Section>
-
-					<PRMForm.Footer>
-						<div className="d-flex justify-content-end mr-auto">
-							<Button
-								className="inline-item inline-item-after"
-								disabled={isSubmitting}
-								displayType={null}
-								onClick={() =>
-									onSaveAsDraft?.(values, formikHelpers)
-								}
-							>
-								Save as Draft
-								{isSubmitting &&
-									values.mdfRequestStatus ===
-										Status.DRAFT && (
-										<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
-									)}
-							</Button>
-						</div>
-
-						<div className="d-flex justify-content-between px-2 px-md-0">
-							<Button
-								className="mr-4"
-								displayType="secondary"
-								onClick={onCancel}
-							>
-								Cancel
-							</Button>
-
-							<Button
-								disabled={
-									(!isValid && !isObjectEmpty(goalsErrors)) ||
-									isSubmitting
-								}
-								onClick={() =>
-									onContinue?.(
-										formikHelpers,
-										StepType.ACTIVITIES
-									)
-								}
-							>
-								Continue
-							</Button>
-						</div>
-					</PRMForm.Footer>
-				</PRMForm>
-			);
-		}
+						>
+							Continue
+						</Button>
+					</div>
+				</PRMForm.Footer>
+			</PRMForm>
+		);
 	};
 
 	return getRequestPage();

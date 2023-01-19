@@ -25,7 +25,6 @@
 
 		<liferay-document-library:repository-browser
 			actions="delete"
-			customFileEntryModelResourcePermission="<%= blogImagesDisplayContext.getCustomFileEntryModelResourcePermission() %>"
 			folderId="<%= blogImagesDisplayContext.getFolderId() %>"
 			repositoryId="<%= blogImagesDisplayContext.getRepositoryId() %>"
 		/>

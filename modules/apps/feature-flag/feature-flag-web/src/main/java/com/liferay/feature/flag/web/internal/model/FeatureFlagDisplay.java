@@ -14,6 +14,7 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -21,9 +22,13 @@ import java.util.Locale;
  */
 public class FeatureFlagDisplay extends FeatureFlagWrapper {
 
-	public FeatureFlagDisplay(FeatureFlag featureFlag, Locale locale) {
+	public FeatureFlagDisplay(
+		List<FeatureFlag> dependencyFeatureFlags, FeatureFlag featureFlag,
+		Locale locale) {
+
 		super(featureFlag);
 
+		_dependencyFeatureFlags = dependencyFeatureFlags;
 		_locale = locale;
 	}
 
@@ -35,6 +40,17 @@ public class FeatureFlagDisplay extends FeatureFlagWrapper {
 		return super.getTitle(_locale);
 	}
 
+	public boolean isDependenciesFulfilled() {
+		for (FeatureFlag dependencyFeatureFlag : _dependencyFeatureFlags) {
+			if (!dependencyFeatureFlag.isEnabled()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private final List<FeatureFlag> _dependencyFeatureFlags;
 	private final Locale _locale;
 
 }

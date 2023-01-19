@@ -207,9 +207,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 		String contextPath = servletContext.getContextPath();
 
-		if (!Validator.isBlank(contextPath) &&
-			path.startsWith(contextPath)) {
-
+		if (!Validator.isBlank(contextPath) && path.startsWith(contextPath)) {
 			path = path.substring(contextPath.length());
 		}
 

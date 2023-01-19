@@ -427,6 +427,81 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10529. Buyer user can delete selected product chips from the search bar of the quick add-to-cart"
+	@priority = "3"
+	test CanDeleteSelectedSKUs {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And the buyer selects multiple skus on the quick add-to-cart") {
+			for (var productSku : list "MIN55861,MIN55860,MIN55859") {
+				FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "${productSku}");
+			}
+		}
+
+		task ("Then the buyer removes selected skus one by one") {
+			for (var productSku : list "MIN55861,MIN55860,MIN55859") {
+				Click(
+					key_productSku = "${productSku}",
+					locator1 = "CommerceAccelerators#PRODUCT_CHIP_REMOVE_ICON");
+			}
+		}
+
+		task ("And in the search bar no sku is left") {
+			AssertElementPresent(
+				key_searchBarValue = "Search Products",
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_EMPTY_SEARCH_BAR");
+
+			for (var productSku : list "MIN55861,MIN55860,MIN55859") {
+				AssertElementNotPresent(
+					key_searchBarValue = "${productSku}",
+					locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_EMPTY_SEARCH_BAR");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10389. Buyer user cannot select invalid SKUs on quick add to cart"
 	@priority = "4"
 	test CannotSelectInvalidSkusOnQuickAddToCart {

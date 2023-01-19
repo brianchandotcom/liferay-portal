@@ -16,28 +16,30 @@ import {ClayToggle} from '@clayui/form';
 import React, {useState} from 'react';
 
 interface IProps {
-	enabled: boolean;
+	disabled: boolean;
 	featureFlagKey: string;
 	inputName: string;
 	labelOff: string;
 	labelOn: string;
+	toggled: boolean;
 }
 
 const FeatureFlagToggle = ({
-	enabled: initialEnabled,
+	disabled,
 	featureFlagKey,
 	inputName,
 	labelOff,
 	labelOn,
+	toggled: initialToggled,
 }: IProps) => {
-	const [enabled, setEnabled] = useState(initialEnabled);
+	const [toggled, setToggled] = useState(initialToggled);
 
-	async function updateEnabled(newEnabled: boolean) {
+	async function updateToggled(newToggled: boolean) {
 		const response = await Liferay.Util.fetch(
 			'/o/com-liferay-feature-flag-web/set-enabled',
 			{
 				body: Liferay.Util.objectToFormData({
-					enabled: newEnabled,
+					enabled: newToggled,
 					key: featureFlagKey,
 				}),
 				method: 'POST',
@@ -45,7 +47,7 @@ const FeatureFlagToggle = ({
 		);
 
 		if (response.ok) {
-			setEnabled(newEnabled);
+			setToggled(newToggled);
 		}
 		else {
 			Liferay.Util.openToast({
@@ -58,10 +60,11 @@ const FeatureFlagToggle = ({
 	return (
 		<>
 			<ClayToggle
+				disabled={disabled}
 				id={inputName}
-				label={enabled ? labelOn : labelOff}
-				onToggle={updateEnabled}
-				toggled={enabled}
+				label={toggled ? labelOn : labelOff}
+				onToggle={updateToggled}
+				toggled={toggled}
 				type="checkbox"
 			/>
 		</>

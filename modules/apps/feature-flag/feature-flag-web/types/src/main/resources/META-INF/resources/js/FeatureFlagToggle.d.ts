@@ -15,17 +15,19 @@
 /// <reference types="react" />
 
 interface IProps {
-	enabled: boolean;
+	disabled: boolean;
 	featureFlagKey: string;
 	inputName: string;
 	labelOff: string;
 	labelOn: string;
+	toggled: boolean;
 }
 declare const FeatureFlagToggle: ({
-	enabled: initialEnabled,
+	disabled,
 	featureFlagKey,
 	inputName,
 	labelOff,
 	labelOn,
+	toggled: initialToggled,
 }: IProps) => JSX.Element;
 export default FeatureFlagToggle;

@@ -134,6 +134,7 @@ definition {
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#CheckSelectInstallmentPayment";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -171,6 +172,7 @@ definition {
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#IsPayNowButtonEnabled";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -204,6 +206,7 @@ definition {
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#ViewExtendedPaymentSection";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -233,6 +236,7 @@ definition {
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#ViewPaymentCollectionOptions";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");

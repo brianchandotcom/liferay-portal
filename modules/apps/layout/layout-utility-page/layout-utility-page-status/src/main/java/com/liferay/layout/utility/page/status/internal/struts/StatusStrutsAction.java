@@ -74,8 +74,6 @@ public class StatusStrutsAction implements StrutsAction {
 
 		requestDispatcher.include(httpServletRequest, pipingServletResponse);
 
-		String output = unsyncStringWriter.toString();
-
 		SessionErrors.clear(httpServletRequest);
 
 		Document document = Jsoup.parse(
@@ -89,7 +87,7 @@ public class StatusStrutsAction implements StrutsAction {
 
 		Element contentElement = document.getElementById("content");
 
-		contentElement.html(output);
+		contentElement.html(unsyncStringWriter.toString());
 
 		ServletResponseUtil.write(httpServletResponse, document.html());
 

@@ -14,14 +14,11 @@
 			"accountEntryRestricted": false,
 			"accountEntryRestrictedObjectFieldName": "",
 			"active": true,
-			"dateCreated": "2022-12-06T21:07:22Z",
-			"dateModified": "2022-12-06T21:09:39Z",
 			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "1b437c8e-abd4-26e7-5473-2e8c68aa93e1",
-			"id": 43762,
 			"label": {
 				"en_US": "Foo"
 			},
@@ -30,12 +27,9 @@
 				{
 					"active": true,
 					"conditionExpression": "",
-					"dateCreated": "2022-12-06T21:09:13Z",
-					"dateModified": "2022-12-06T21:09:13Z",
 					"description": "",
 					"errorMessage": {
 					},
-					"id": 43790,
 					"label": {
 						"en_US": "Foo Update 1"
 					},
@@ -53,12 +47,9 @@
 				{
 					"active": true,
 					"conditionExpression": "",
-					"dateCreated": "2022-12-06T21:09:27Z",
-					"dateModified": "2022-12-06T21:09:27Z",
 					"description": "",
 					"errorMessage": {
 					},
-					"id": 43792,
 					"label": {
 						"en_US": "Foo Update 2"
 					},
@@ -80,7 +71,6 @@
 					"businessType": "Date",
 					"defaultValue": "",
 					"externalReferenceCode": "b861207e-9044-8956-39ca-a4f90acaf256",
-					"id": 43766,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -102,7 +92,6 @@
 					"businessType": "Text",
 					"defaultValue": "",
 					"externalReferenceCode": "91f88c9c-eb8c-fcc1-dc30-fdf06a741c19",
-					"id": 43764,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -124,7 +113,6 @@
 					"businessType": "Text",
 					"defaultValue": "",
 					"externalReferenceCode": "dccc9c01-a0a5-e929-548b-8a3dde20a2a6",
-					"id": 43768,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -146,7 +134,6 @@
 					"businessType": "Text",
 					"defaultValue": "",
 					"externalReferenceCode": "47356a30-ea5e-997b-6e7f-6e92247310dc",
-					"id": 43777,
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -172,7 +159,6 @@
 					"businessType": "LongInteger",
 					"defaultValue": "",
 					"externalReferenceCode": "bfb3f0ee-46ff-9102-f4bf-480eab078946",
-					"id": 43770,
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
@@ -194,7 +180,6 @@
 					"businessType": "Date",
 					"defaultValue": "",
 					"externalReferenceCode": "88f5019f-2c55-80e6-c19b-27a451985caf",
-					"id": 43772,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -216,7 +201,6 @@
 					"businessType": "Text",
 					"defaultValue": "",
 					"externalReferenceCode": "2b96046e-6510-0a04-1dec-fe3e23b0f586",
-					"id": 43774,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",

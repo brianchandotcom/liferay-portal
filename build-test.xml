@@ -569,7 +569,8 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 						/ENGINE/ {f=0; n=asort(a); print a[length(a)]; for (i=1;i<n;i++) print a[i]}
 						!f
 						f{a[$0]=$0}' ${1} |
-					sed 's=/[^/]*$==;s/\,$//'
+					sed 's=/[^/]*$==;s/\,$//' |
+					sed 's/_x_.*//'
 				]]>
 			</echo>
 

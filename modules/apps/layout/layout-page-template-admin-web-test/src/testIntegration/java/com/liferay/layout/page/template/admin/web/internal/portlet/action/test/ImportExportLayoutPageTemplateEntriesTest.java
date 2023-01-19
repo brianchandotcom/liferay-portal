@@ -1036,6 +1036,17 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_validateImportExport(expectedFile, inputFile);
 	}
 
+	@Test
+	public void testImportExportLayoutPageTemplateEntryWidgetName()
+		throws Exception {
+
+		File expectedFile = _generateZipFile(
+			"widget/name/expected", null, null);
+		File inputFile = _generateZipFile("widget/name/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
 	private AssetListEntry _addAssetListEntry(long groupId)
 		throws PortalException {
 

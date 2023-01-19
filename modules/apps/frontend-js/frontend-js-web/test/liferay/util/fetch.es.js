@@ -215,6 +215,7 @@ describe('Liferay.Util.fetch', () => {
 		};
 
 		window.Liferay.ThemeDisplay = {
+			getDoAsUserIdEncoded: () => '',
 			getPathContext: () => '/myportal',
 		};
 

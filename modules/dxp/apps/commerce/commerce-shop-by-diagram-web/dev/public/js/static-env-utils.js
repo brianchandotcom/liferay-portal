@@ -23,6 +23,7 @@ const Liferay = {
 		getBCP47LanguageId: () => 'en-US',
 		getCanonicalURL: () => '/',
 		getDefaultLanguageId: () => 'en_US',
+		getDoAsUserIdEncoded: () => '',
 		getLanguageId: () => 'en_US',
 		getPathContext: () => '',
 		getPathThemeImages: () => '/assets',

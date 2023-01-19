@@ -82,10 +82,10 @@ create table FragmentEntryContributed (
 	createDate DATE null,
 	modifiedDate DATE null,
 	fragmentEntryKey VARCHAR(75) null,
-	css VARCHAR(75) null,
-	html VARCHAR(75) null,
-	js VARCHAR(75) null,
-	configuration VARCHAR(75) null,
+	css TEXT null,
+	html TEXT null,
+	js TEXT null,
+	configuration TEXT null,
 	type_ INTEGER,
 	primary key (fragmentEntryContributedId, ctCollectionId)
 );

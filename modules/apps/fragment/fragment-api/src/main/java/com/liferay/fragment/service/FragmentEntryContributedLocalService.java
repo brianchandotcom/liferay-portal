@@ -82,6 +82,10 @@ public interface FragmentEntryContributedLocalService
 	public FragmentEntryContributed addFragmentEntryContributed(
 		FragmentEntryContributed fragmentEntryContributed);
 
+	public FragmentEntryContributed addOrUpdateFragmentEntryContributed(
+		String fragmentEntryKey, String css, String html, String js,
+		String configuration, int type);
+
 	/**
 	 * Creates a new fragment entry contributed with the primary key. Does not add the fragment entry contributed to the database.
 	 *
@@ -206,6 +210,10 @@ public interface FragmentEntryContributedLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntryContributed fetchByFragmentEntryKey(
+		String fragmentEntryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntryContributed fetchFragmentEntryContributed(

@@ -60,6 +60,16 @@ public class FragmentEntryContributedLocalServiceWrapper
 			addFragmentEntryContributed(fragmentEntryContributed);
 	}
 
+	@Override
+	public FragmentEntryContributed addOrUpdateFragmentEntryContributed(
+		String fragmentEntryKey, String css, String html, String js,
+		String configuration, int type) {
+
+		return _fragmentEntryContributedLocalService.
+			addOrUpdateFragmentEntryContributed(
+				fragmentEntryKey, css, html, js, configuration, type);
+	}
+
 	/**
 	 * Creates a new fragment entry contributed with the primary key. Does not add the fragment entry contributed to the database.
 	 *
@@ -238,6 +248,14 @@ public class FragmentEntryContributedLocalServiceWrapper
 
 		return _fragmentEntryContributedLocalService.dynamicQueryCount(
 			dynamicQuery, projection);
+	}
+
+	@Override
+	public FragmentEntryContributed fetchByFragmentEntryKey(
+		String fragmentEntryKey) {
+
+		return _fragmentEntryContributedLocalService.fetchByFragmentEntryKey(
+			fragmentEntryKey);
 	}
 
 	@Override

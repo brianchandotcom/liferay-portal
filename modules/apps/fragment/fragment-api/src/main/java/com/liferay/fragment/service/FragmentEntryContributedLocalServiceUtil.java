@@ -62,6 +62,14 @@ public class FragmentEntryContributedLocalServiceUtil {
 			fragmentEntryContributed);
 	}
 
+	public static FragmentEntryContributed addOrUpdateFragmentEntryContributed(
+		String fragmentEntryKey, String css, String html, String js,
+		String configuration, int type) {
+
+		return getService().addOrUpdateFragmentEntryContributed(
+			fragmentEntryKey, css, html, js, configuration, type);
+	}
+
 	/**
 	 * Creates a new fragment entry contributed with the primary key. Does not add the fragment entry contributed to the database.
 	 *
@@ -214,6 +222,12 @@ public class FragmentEntryContributedLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static FragmentEntryContributed fetchByFragmentEntryKey(
+		String fragmentEntryKey) {
+
+		return getService().fetchByFragmentEntryKey(fragmentEntryKey);
 	}
 
 	public static FragmentEntryContributed fetchFragmentEntryContributed(

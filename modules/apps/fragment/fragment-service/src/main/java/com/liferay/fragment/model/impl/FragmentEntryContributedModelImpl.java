@@ -69,9 +69,9 @@ public class FragmentEntryContributedModelImpl
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"fragmentEntryContributedId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"fragmentEntryKey", Types.VARCHAR}, {"css", Types.VARCHAR},
-		{"html", Types.VARCHAR}, {"js", Types.VARCHAR},
-		{"configuration", Types.VARCHAR}, {"type_", Types.INTEGER}
+		{"fragmentEntryKey", Types.VARCHAR}, {"css", Types.CLOB},
+		{"html", Types.CLOB}, {"js", Types.CLOB}, {"configuration", Types.CLOB},
+		{"type_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,15 +84,15 @@ public class FragmentEntryContributedModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("fragmentEntryKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("configuration", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("html", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("js", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("configuration", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryContributed (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fragmentEntryContributedId LONG not null,createDate DATE null,modifiedDate DATE null,fragmentEntryKey VARCHAR(75) null,css VARCHAR(75) null,html VARCHAR(75) null,js VARCHAR(75) null,configuration VARCHAR(75) null,type_ INTEGER,primary key (fragmentEntryContributedId, ctCollectionId))";
+		"create table FragmentEntryContributed (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fragmentEntryContributedId LONG not null,createDate DATE null,modifiedDate DATE null,fragmentEntryKey VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,type_ INTEGER,primary key (fragmentEntryContributedId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentEntryContributed";

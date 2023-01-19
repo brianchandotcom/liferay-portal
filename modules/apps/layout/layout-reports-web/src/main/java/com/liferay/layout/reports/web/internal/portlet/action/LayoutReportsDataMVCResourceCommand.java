@@ -57,10 +57,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -245,17 +245,17 @@ public class LayoutReportsDataMVCResourceCommand
 
 		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
 
-		Set<Locale> availableLocales = Collections.emptySet();
+		List<Locale> availableLocales = new ArrayList<>();
 
 		if (group != null) {
-			availableLocales = _language.getAvailableLocales(
-				group.getGroupId());
+			availableLocales.addAll(
+				_language.getAvailableLocales(group.getGroupId()));
 		}
 
 		return JSONUtil.putAll(
 			TransformUtil.transformToArray(
 				ListUtil.sort(
-					TransformUtil.transform(availableLocales, locale -> locale),
+					availableLocales,
 					(locale1, locale2) -> {
 						if (Objects.equals(locale1, defaultLocale)) {
 							return -1;

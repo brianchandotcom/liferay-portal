@@ -45,9 +45,8 @@ public abstract class BaseTextEmbeddingProvider {
 		else if (truncationStrategy.equals("middle")) {
 			sentences = _extractSentencesFromMiddle(maxCharacterCount, text);
 		}
-		else {
-			sentences = _extractSentencesFromBeginning(maxCharacterCount, text);
-		}
+
+		sentences = _extractSentencesFromBeginning(maxCharacterCount, text);
 
 		if ((sentences.length() == 0) ||
 			(sentences.length() >= maxCharacterCount)) {

@@ -1215,6 +1215,10 @@ public abstract class BaseUserGroupResourceTestCase {
 		}
 	}
 
+	protected void assertValid(Page<UserGroup> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];
 	}

@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -555,6 +556,10 @@ public abstract class BaseSubscriptionResourceTestCase {
 				expectedAction.get("method"), action.get("method"));
 			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
 		}
+	}
+
+	protected void assertValid(Page<Subscription> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

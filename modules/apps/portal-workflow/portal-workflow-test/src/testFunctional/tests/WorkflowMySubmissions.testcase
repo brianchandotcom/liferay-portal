@@ -292,6 +292,8 @@ definition {
 
 	@priority = "3"
 	test WithdrawTaskCompletedNoByDetails {
+		property portal.upstream = "quarantine";
+
 		var webContentContent = "WC WebContent Content";
 		var webContentTitle = "WC WebContent Title";
 

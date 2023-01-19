@@ -167,6 +167,8 @@ definition {
 	@description = "This is a test for LRQA-70151. Verify that the user cannot reply to a Pending Thread."
 	@priority = "3"
 	test CannotReplyToPendingThread {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -188,6 +190,8 @@ definition {
 	@description = "This is a test for LRQA-69701. Verify that the user can reject a thread."
 	@priority = "4"
 	test CanRejectAThread {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -220,6 +224,8 @@ definition {
 	@description = "This is a test for LRQA-69703. Verify that user can reply to an approved thread."
 	@priority = "5"
 	test CanReplyToApprovedThread {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -262,6 +268,8 @@ definition {
 	@description = "This is a test for LRQA-70153. Verify that the user can review the thread through My Workflow Tasks."
 	@priority = "3"
 	test CanReviewThreadThroughMyWorkflowTasks {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -329,6 +337,8 @@ definition {
 	@description = "This is a test for LRQA-70152. Verify that the reply to a thread has workflow associated."
 	@priority = "4"
 	test ReplyHasWorkflow {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -394,6 +404,8 @@ definition {
 	@description = "This is a test for LRQA-70150. Verify that the user can edit an approved thread and the status returns to Pending."
 	@priority = "3"
 	test StatusReturnstoPendingWhenApprovedThreadIsEdited {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -434,6 +446,8 @@ definition {
 	@description = "This is a test for LRQA-69694. Verify that the process status is Pending when the user creates a new thread with workflow associated."
 	@priority = "4"
 	test WorkflowPendingForMessageBoard {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",

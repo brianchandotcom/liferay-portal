@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -101,16 +100,23 @@ public class ContentDashboardItemFilterProviderRegistryTest {
 				_contentDashboardItemFilterProviderRegistry,
 				"getContentDashboardItemFilterProviders", new Class<?>[0]);
 
-		Stream<ContentDashboardItemFilterProvider> stream =
-			contentDashboardItemFilterProviders.stream();
+		boolean containsMockFilter = false;
 
-		Assert.assertTrue(
-			stream.filter(
-				contentDashboardItemFilterProvider -> Objects.equals(
+		for (ContentDashboardItemFilterProvider
+				contentDashboardItemFilterProvider :
+					contentDashboardItemFilterProviders) {
+
+			if (Objects.equals(
 					contentDashboardItemFilterProvider.getKey(),
-					"mockContentDashboardItemFilter")
-			).findAny(
-			).isPresent());
+					"mockContentDashboardItemFilter")) {
+
+				containsMockFilter = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(containsMockFilter);
 	}
 
 	private BundleContext _bundleContext;

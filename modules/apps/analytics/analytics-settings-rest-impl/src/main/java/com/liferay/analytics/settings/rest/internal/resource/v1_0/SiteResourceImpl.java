@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -69,17 +70,19 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			Collectors.toMap(
 				AnalyticsChannel::getId, AnalyticsChannel::getName));
 
+		Locale preferredLocale = contextAcceptLanguage.getPreferredLocale();
+
 		return Page.of(
 			transform(
 				_groupService.search(
 					contextCompany.getCompanyId(), _classNameIds, keywords,
 					_getParams(), pagination.getStartPosition(),
 					pagination.getEndPosition(),
-					SortUtil.getIgnoreCaseOrderByComparator(sorts)),
+					SortUtil.getIgnoreCaseOrderByComparator(
+						preferredLocale, sorts)),
 				group -> _siteDTOConverter.toDTO(
 					new SiteDTOConverterContext(
-						group.getGroupId(),
-						contextAcceptLanguage.getPreferredLocale(),
+						group.getGroupId(), preferredLocale,
 						analyticsChannelsMap),
 					group)),
 			pagination,

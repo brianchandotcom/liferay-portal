@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Riccardo Ferrari
@@ -28,7 +29,7 @@ import java.util.List;
 public class SortUtil {
 
 	public static OrderByComparator<Group> getIgnoreCaseOrderByComparator(
-		Sort[] sorts) {
+		Locale locale, Sort[] sorts) {
 
 		if (sorts == null) {
 			return null;
@@ -41,7 +42,7 @@ public class SortUtil {
 			columns.add(!sort.isReverse());
 		}
 
-		return new IgnoreCaseOrderByComparator<>(columns.toArray());
+		return new IgnoreCaseOrderByComparator<>(columns.toArray(), locale);
 	}
 
 }

@@ -15,20 +15,29 @@
 package com.liferay.analytics.settings.rest.internal.util.comparator;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.util.CollatorUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.text.Collator;
+
+import java.util.Locale;
 
 /**
  * @author Thiago Buarque
  */
 public class IgnoreCaseOrderByComparator<T> extends OrderByComparator<T> {
 
-	public IgnoreCaseOrderByComparator(Object... columns) {
+	public IgnoreCaseOrderByComparator(Object[] columns, Locale locale) {
 		if ((columns.length == 0) || ((columns.length % 2) != 0)) {
 			throw new IllegalArgumentException(
 				"Columns length is not an even number");
 		}
 
 		_columns = columns;
+		_locale = locale;
 	}
 
 	@Override
@@ -47,9 +56,24 @@ public class IgnoreCaseOrderByComparator<T> extends OrderByComparator<T> {
 				(columnValue2 instanceof String)) {
 
 				String columnValue1String = (String)columnValue1;
+				String columnValue2String = (String)columnValue2;
 
-				value = columnValue1String.compareToIgnoreCase(
-					(String)columnValue2);
+				if (Validator.isXml(columnValue1String)) {
+					columnValue1String = LocalizationUtil.getLocalization(
+						columnValue1String, _locale.getLanguage());
+					columnValue2String = LocalizationUtil.getLocalization(
+						columnValue2String, _locale.getLanguage());
+
+					Collator collator = CollatorUtil.getInstance(_locale);
+
+					value = collator.compare(
+						StringUtil.toLowerCase(columnValue1String),
+						StringUtil.toLowerCase(columnValue2String));
+				}
+				else {
+					value = columnValue1String.compareToIgnoreCase(
+						columnValue2String);
+				}
 			}
 			else {
 				Comparable<Object> columnValueComparable1 =
@@ -79,5 +103,6 @@ public class IgnoreCaseOrderByComparator<T> extends OrderByComparator<T> {
 	}
 
 	private final Object[] _columns;
+	private final Locale _locale;
 
 }

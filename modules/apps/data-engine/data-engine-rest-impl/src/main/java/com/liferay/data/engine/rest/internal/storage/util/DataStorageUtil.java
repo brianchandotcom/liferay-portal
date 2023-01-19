@@ -46,10 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Jeyvison Nascimento
@@ -98,13 +94,14 @@ public class DataStorageUtil {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		Map<String, DataDefinitionField> dataDefinitionFields = Stream.of(
-			dataDefinition.getDataDefinitionFields()
-		).collect(
-			Collectors.toMap(
-				dataDefinitionField -> dataDefinitionField.getName(),
-				Function.identity())
-		);
+		Map<String, DataDefinitionField> dataDefinitionFields = new HashMap<>();
+
+		for (DataDefinitionField dataDefinitionField :
+				dataDefinition.getDataDefinitionFields()) {
+
+			dataDefinitionFields.put(
+				dataDefinitionField.getName(), dataDefinitionField);
+		}
 
 		for (Map.Entry<String, DataDefinitionField> entry :
 				dataDefinitionFields.entrySet()) {
@@ -284,22 +281,24 @@ public class DataStorageUtil {
 	private static Map<String, Object> _toLocalizedMap(
 		String fieldType, LocalizedValue localizedValue) {
 
-		Set<Locale> availableLocales = localizedValue.getAvailableLocales();
+		Map<String, Object> localizedMap = new HashMap<>();
 
-		Stream<Locale> stream = availableLocales.stream();
+		for (Locale locale : localizedValue.getAvailableLocales()) {
+			if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
+				fieldType.equals(DDMFormFieldType.SELECT)) {
 
-		if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
-			fieldType.equals(DDMFormFieldType.SELECT)) {
-
-			return stream.collect(
-				Collectors.toMap(
-					LanguageUtil::getLanguageId,
-					locale -> _toStringList(locale, localizedValue)));
+				localizedMap.put(
+					LanguageUtil.getLanguageId(locale),
+					_toStringList(locale, localizedValue));
+			}
+			else {
+				localizedMap.put(
+					LanguageUtil.getLanguageId(locale),
+					localizedValue.getString(locale));
+			}
 		}
 
-		return stream.collect(
-			Collectors.toMap(
-				LanguageUtil::getLanguageId, localizedValue::getString));
+		return localizedMap;
 	}
 
 	private static List<String> _toStringList(

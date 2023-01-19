@@ -189,12 +189,16 @@ definition {
 			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
 			navItem = "Configuration");
 
-		for (var labels : list "URL,Key,Password,Account Number,Meter Number") {
+		for (var labels : list "URL,Key,Account Number,Meter Number") {
 			Type(
 				key_fieldLabel = "${labels}",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "Test");
 		}
+
+		Type(
+			locator1 = "TextInput#PASSWORD_TYPE",
+			value1 = "Test");
 
 		for (var key_value : list "FedEx Europe First International Priority,FedEx 1Day Freight,FedEx 2Day,FedEx 2Day AM,FedEx 2Day Freight,FedEx 3Day Freight,FedEx Distance Deferred,FedEx Express Saver,FedEx First Freight,FedEx Freight Economy,FedEx Freight Priority,FedEx Ground,FedEx Next Day Afternoon,FedEx Next Day Early Morning,FedEx Next Day End of Day,FedEx Next Day Freight,FedEx Next Day Mid-Morning,FedEx First Overnight,FedEx Ground Home Delivery,FedEx International Economy,FedEx International Economy Freight,FedEx International First,FedEx International Priority,FedEx International Priority Express,FedEx International Priority Freight,FedEx Priority Overnight,FedEx Same Day,FedEx Same Day City,FedEx SmartPost,FedEx Standard Overnight") {
 			Check.checkToggleSwitch(

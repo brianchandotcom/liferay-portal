@@ -225,6 +225,7 @@ public class RestHighLevelClientFactory {
 					_proxyConfig.getHost(), _proxyConfig.getPort(), "http"));
 		}
 
+		httpClientBuilder.disableContentCompression();
 		httpClientBuilder.setMaxConnPerRoute(
 			RestClientBuilder.DEFAULT_MAX_CONN_PER_ROUTE);
 		httpClientBuilder.setMaxConnTotal(

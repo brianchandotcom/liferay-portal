@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,12 +44,27 @@ public class ListTypeEntryResourceTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-168886", "true"
+			).build());
+
 		super.setUp();
 
 		_listTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-168886", "false"
+			).build());
+
+		super.tearDown();
 	}
 
 	@Override

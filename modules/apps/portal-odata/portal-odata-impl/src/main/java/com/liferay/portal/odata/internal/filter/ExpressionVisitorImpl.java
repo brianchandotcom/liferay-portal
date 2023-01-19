@@ -82,9 +82,33 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	public Filter visitBinaryExpressionOperation(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
-		Filter filter = _getFilter(operation, left, right, _locale);
+		Filter filter = null;
 
-		if (filter == null) {
+		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
+			filter = _getANDFilter((Filter)left, (Filter)right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
+			filter = _getEQFilter((EntityField)left, right, _locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
+			filter = _getGEFilter((EntityField)left, right, _locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
+			filter = _getGTFilter((EntityField)left, right, _locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
+			filter = _getLEFilter((EntityField)left, right, _locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
+			filter = _getLTFilter((EntityField)left, right, _locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
+			filter = _getNEFilter((EntityField)left, right, _locale);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
+			filter = _getORFilter((Filter)left, (Filter)right);
+		}
+		else {
 			throw new UnsupportedOperationException(
 				"Unsupported method visitBinaryExpressionOperation with " +
 					"operation " + operation);
@@ -320,40 +344,6 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				entityField.getFilterableName(locale),
 				fieldName -> new TermQueryImpl(
 					fieldName, entityField.getFilterableValue(fieldValue))));
-	}
-
-	private Filter _getFilter(
-		BinaryExpression.Operation operation, Object left, Object right,
-		Locale locale) {
-
-		Filter filter = null;
-
-		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
-			filter = _getANDFilter((Filter)left, (Filter)right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-			filter = _getEQFilter((EntityField)left, right, locale);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
-			filter = _getGEFilter((EntityField)left, right, locale);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
-			filter = _getGTFilter((EntityField)left, right, locale);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
-			filter = _getLEFilter((EntityField)left, right, locale);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
-			filter = _getLTFilter((EntityField)left, right, locale);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
-			filter = _getNEFilter((EntityField)left, right, locale);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
-			filter = _getORFilter((Filter)left, (Filter)right);
-		}
-
-		return filter;
 	}
 
 	private Filter _getGEFilter(

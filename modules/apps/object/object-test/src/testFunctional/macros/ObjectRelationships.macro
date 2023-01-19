@@ -4,7 +4,7 @@ definition {
 		Click(locator1 = "ObjectRelationships#SELECT_PARAMETER_FORM");
 
 		ClickNoError.clickNoMouseOver(
-			key_parameterOption = "${parameter}",
+			key_parameterOption = "${parameterOption}",
 			locator1 = "ObjectRelationships#SELECT_PARAMETER_OPTION");
 	}
 

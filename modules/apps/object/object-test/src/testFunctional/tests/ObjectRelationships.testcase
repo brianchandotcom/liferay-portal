@@ -860,14 +860,14 @@ definition {
 			ObjectAdmin.addObjectRelationshipViaUI(
 				label = "Relationship with Custom Object",
 				object = "Custom Object",
-				parameter = "Self Relationship",
+				parameterOption = "Self Relationship",
 				type = "One to Many");
 		}
 
 		task ("Verify it's possible to edit a relationship parameter") {
 			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship with Custom Object");
 
-			ObjectRelationships.editRelationshipsParameter(parameter = "Relationship with Custom Object");
+			ObjectRelationships.editRelationshipsParameter(parameterOption = "Relationship with Custom Object");
 
 			PortletEntry.save();
 		}

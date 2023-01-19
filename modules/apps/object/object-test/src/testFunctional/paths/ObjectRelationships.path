@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_PARAMETER_OPTION</td>
-		<td>//button[@class = 'dropdown-item']//div[contains(text(),'${key_parameterOption}')]</td>
+		<td>//button[@class = 'dropdown-item']//div[contains(@class, 'd-flex')][contains(text(),'${key_parameterOption}')]</td>
 		<td></td>
 	</tr>
 	<tr>

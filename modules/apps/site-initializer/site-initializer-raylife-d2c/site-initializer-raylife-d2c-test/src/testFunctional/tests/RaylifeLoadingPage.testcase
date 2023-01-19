@@ -33,6 +33,8 @@ definition {
 	@description = "LPS-142582 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Hang tight...' page)"
 	@priority = "3"
 	test CanDismissLoadingPageInfoPanel {
+		property test.name.skip.portal.instance = "RaylifeLoadingPage#CanDismissLoadingPageInfoPanel";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -71,6 +73,7 @@ definition {
 	@description = "LPS-142580 - Verify Loading Page is reachable after pressing Continue on Property page"
 	@priority = "5"
 	test CanReachLoadingPageByPropertyPage {
+		property test.name.skip.portal.instance = "RaylifeLoadingPage#CanReachLoadingPageByPropertyPage";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -105,6 +108,7 @@ definition {
 	@description = "LPS-142581 - Verify Loading Page redirects automatically to Quote Profile Page"
 	@priority = "5"
 	test CanRedirectToQuotePage {
+		property test.name.skip.portal.instance = "RaylifeLoadingPage#CanRedirectToQuotePage";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

@@ -33,6 +33,7 @@ definition {
 	@description = "LPS-142450 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all employees over the next 12 months?' field"
 	@priority = "4"
 	test AnnualPayrollForEmployeesIsRequired {
+		property test.name.skip.portal.instance = "RaylifeEmployees#AnnualPayrollForEmployeesIsRequired";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -67,6 +68,7 @@ definition {
 	@description = "LPS-142449 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?' field"
 	@priority = "4"
 	test AnnualPayrollForOwnerIsRequired {
+		property test.name.skip.portal.instance = "RaylifeEmployees#AnnualPayrollForOwnersIsRequired";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -101,6 +103,7 @@ definition {
 	@description = "LPS-142422 - Verify if Continue Button is only enabled when all required fields have been filled in."
 	@priority = "4"
 	test CanContinueOnEmployeeInfoWithAllFilled {
+		property test.name.skip.portal.instance = "RaylifeEmployees#CanContinueOnEmployeeInfoWihAllFilled";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -129,6 +132,8 @@ definition {
 	@description = "LPS-142541 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Federal Employer Identification Number (FEIN)')"
 	@priority = "3"
 	test CanDismissFEINInfoPanel {
+		property test.name.skip.portal.instance = "RaylifeEmployees#CanDismissFEINInfoPanel";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -165,6 +170,8 @@ definition {
 	@description = "LPS-142546 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many full or part time employees do you have?')"
 	@priority = "3"
 	test CanDismissPartTimeEmployeesInfoPanel {
+		property test.name.skip.portal.instance = "RaylifeEmployees#CanDismissPartTimeEmployeesInfoPanel";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -197,6 +204,8 @@ definition {
 	@description = "LPS-142423 - Verify if clicking on Previous returns to Previous Screen (Business Info/'Let's get to know your business!') and all information is maintained in the Employee Info page"
 	@priority = "5"
 	test CanGoBackOnEmployeeInfoKeepingAllData {
+		property test.name.skip.portal.instance = "RaylifeEmployees#CanGoBackOnEmployeeInfoKeepingAllData";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -227,6 +236,8 @@ definition {
 	@description = "LPS-142454 - Verify clicking 'More Info' in the 'Federal Employer Identification Number (FEIN)' field opens an Information Panel"
 	@priority = "3"
 	test CanViewFEINInfoPanel {
+		property test.name.skip.portal.instance = "RaylifeEmployees#CanViewFEINInfoPanel";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -261,6 +272,8 @@ definition {
 	@description = "LPS-142542 - Verify clicking 'More Info' in the 'How many full or part time employees do you have?' field opens an Information Panel"
 	@priority = "3"
 	test CanViewPartTimeEmployeesInfoPanel {
+		property test.name.skip.portal.instance = "RaylifeEmployees#CanViewPartTimeEmployeeInfoPanel";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -291,6 +304,8 @@ definition {
 	@description = "LPS-142424 - Verify if 'Does your business have a Federal Employer Identification Number (FEIN)?' = 'Yes', then field 'Federal Employer Identification Number (FEIN)' is shown"
 	@priority = "4"
 	test DoesFEINInputFieldShowsUp {
+		property test.name.skip.portal.instance = "RaylifeEmployees#DoesFEINInputFieldShowsUp";
+		
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -321,6 +336,8 @@ definition {
 	@description = "LPS-142447 - Verify error message 'This field is required' in the 'What is your estimated annual gross revenue for the next 12 months?' field"
 	@priority = "4"
 	test EstimatedAnnualGrossRevenueIsRequired {
+		property test.name.skip.portal.instance = "RaylifeEmployees#EstimatedAnnualGrossRevenueIsRequired";
+		
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -355,6 +372,8 @@ definition {
 	@description = "LPS-142426 - Verify error message 'FEIN is required.' in the 'Federal Employer Identification Number (FEIN)' field"
 	@priority = "4"
 	test FEINIsRequired {
+		property test.name.skip.portal.instance = "RaylifeEmployees#FEINIsRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -393,6 +412,8 @@ definition {
 	@description = "LPS-142427 - Verify error message 'Please enter a valid FEIN.' in the 'Federal Employer Identification Number (FEIN)' field"
 	@priority = "4"
 	test FEINIsValid {
+		property test.name.skip.portal.instance = "RaylifeEmployees#FEINIsValid";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -427,6 +448,8 @@ definition {
 	@description = "LPS-142444 - Verify error message 'This field is required' in the 'How many full or part time employees do you have?' field"
 	@priority = "4"
 	test PartTimeEmployeeIsRequired {
+		property test.name.skip.portal.instance = "RaylifeEmployees#PartTimeEmployeeIsRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -461,6 +484,8 @@ definition {
 	@description = "LPS-142446 - Verify error message 'You must have at least one employee.' in the 'How many full or part time employees do you have?' field"
 	@priority = "4"
 	test PartTimeEmployeeNotBelowOne {
+		property test.name.skip.portal.instance = "RaylifeEmployees#PartTimeEmployeeNotBelowOne";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -491,6 +516,8 @@ definition {
 	@description = "LPS-142435 - Verify error message 'You cannot enter a future year.' in the 'What year did you start your business?' field"
 	@priority = "4"
 	test StartBusinessYearIsNotFuture {
+		property test.name.skip.portal.instance = "RaylifeEmployees#StartBusinessYearIsNotFuture";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -521,6 +548,8 @@ definition {
 	@description = "LPS-142433 - Verify error message 'This field is required' in the 'What year did you start your business?' field"
 	@priority = "4"
 	test StartBusinessYearIsRequired {
+		property test.name.skip.portal.instance = "RaylifeEmployees#StartBusinessYearIsRequired";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

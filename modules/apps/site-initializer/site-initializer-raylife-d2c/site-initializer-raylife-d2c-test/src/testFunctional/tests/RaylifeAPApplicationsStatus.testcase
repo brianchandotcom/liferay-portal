@@ -34,6 +34,8 @@ definition {
 	@description = "LPS-154592 - Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
 	@priority = "4"
 	test IfStatusOpenAppearsInApplicationsStatus {
+        property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusOpenAppearsInApplicationStatus";
+
 		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
@@ -65,6 +67,8 @@ definition {
 	@description = "LPS-154593 - Check if when making an incomplete flow until the page Quote Comparison in Raylife d2c, the status 'Quoted' appears in the Applications status of Raylife ap"
 	@priority = "4"
 	test IfStatusQuotedAppearsInApplicationsStatus {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusQuotedAppearsInApplicationStatus";
+
 		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
@@ -92,6 +96,8 @@ definition {
 	@description = "LPS-154587 - Verify that the number in the center of the graph is equal to the total amount of registered status"
 	@priority = "4"
 	test NumberCenterGraphEqualNumberOfStatus {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#NumberCenterGraphEqualNumberOfStatus";
+
 		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");

@@ -33,6 +33,8 @@ definition {
 	@description = "LPS-142532 - Verify if Continue Button is only enabled when all required fields have been filled in."
 	@priority = "4"
 	test CanContinueOnContactsInfoWithAllFilled {
+		property test.name.skip.portal.instance = "RaylifeContactInfo#CanContinueOnContactsInfoWithAllFilled";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -53,6 +55,8 @@ definition {
 	@description = "LPS-142208 - Verify e-mail validation is required (Must have '@' and a '.' or else display, 'Please enter a valid email address.')"
 	@priority = "4"
 	test CanViewErrorMessageForEmail {
+		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForEmail";
+
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -76,6 +80,7 @@ definition {
 	@description = "LPS-142538 - Verify if Zip Code field shows error message when filling in an invalid Zip Code"
 	@priority = "4"
 	test CanViewErrorMessageForInvalidZipCode {
+		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForInvalidZipCode";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -104,6 +109,7 @@ definition {
 	@description = "LPS-142536 - Verify if Phone field shows error message when filling in an invalid Phone number"
 	@priority = "4"
 	test CanViewErrorMessageForPhoneNumber {
+		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForPhoneNumber";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -132,6 +138,7 @@ definition {
 	@description = "LPS-142207 - Verify name persistence in tip (information panel) in Basics section"
 	@priority = "3"
 	test CanViewFirstNameInTip {
+		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewFirstNameInTip";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -157,6 +164,7 @@ definition {
 	@description = "LPS-142209 - Verify Max number of characters in the First Name field (max chars 256)"
 	@priority = "3"
 	test FirstNameMaxNumber {
+		property test.name.skip.portal.instance = "RaylifeContactInfo#FirstNameMaxNumber";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
@@ -175,6 +183,7 @@ definition {
 	@description = "LPS-142533 - Verify Max number of characters in the Last Name field (max chars 256)"
 	@priority = "3"
 	test LastNameMaxNumber {
+		property test.name.skip.portal.instance = "RaylifeContactInfo#LastNameMaxNumber";
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();

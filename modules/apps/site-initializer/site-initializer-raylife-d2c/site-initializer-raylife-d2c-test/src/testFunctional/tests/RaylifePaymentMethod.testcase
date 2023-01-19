@@ -131,6 +131,9 @@ definition {
 	@description = "LPS-144579 - Check if user can select the option to pay in installments"
 	@priority = "3"
 	test CheckSelectInstallmentPayment {
+		property test.name.skip.portal.instance = "RaylifePaymentMethod#CheckSelectInstallmentPayment";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -165,6 +168,9 @@ definition {
 	@description = "LPS-144581 - Check if the Pay Now button is enabled when selecting Raylife terms and conditions"
 	@priority = "4"
 	test IsPayNowButtonEnabled {
+		property test.name.skip.portal.instance = "RaylifePaymentMethod#IsPayNowButtonEnabled";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -195,6 +201,9 @@ definition {
 	@description = "LPS-144577 - Check if after you finish uploading the documents the payment section is expanded"
 	@priority = "4"
 	test ViewExtendedPaymentSection {
+		property test.name.skip.portal.instance = "RaylifePaymentMethod#ViewExtendedPaymentSection";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
@@ -221,6 +230,9 @@ definition {
 	@description = "LPS-144578 - Verify that when selecting the PayPal payment method, the payment collection options are displayed"
 	@priority = "4"
 	test ViewPaymentCollectionOptions {
+		property test.name.skip.portal.instance = "RaylifePaymentMethod#ViewPaymentCollectionOptions";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");

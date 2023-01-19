@@ -123,7 +123,7 @@ definition {
 	@description = "LPS-142191 - Verify if when a section has not yet been started and the user is not currently viewing this section, that section will be grayed out."
 	@priority = "5"
 	test SectionIsIncomplete {
-		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsHighlighted";
+		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsIncomplete";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

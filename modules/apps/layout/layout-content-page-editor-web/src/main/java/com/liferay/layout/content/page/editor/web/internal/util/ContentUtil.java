@@ -296,8 +296,8 @@ public class ContentUtil {
 	}
 
 	private static List<String> _getChildrenItemIds(
-		LayoutStructureItem layoutStructureItem,
-		LayoutStructure layoutStructure) {
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem) {
 
 		List<String> childrenItemIds = new ArrayList<>();
 
@@ -308,7 +308,7 @@ public class ContentUtil {
 				layoutStructure.getLayoutStructureItem(childItemId);
 
 			childrenItemIds.addAll(
-				_getChildrenItemIds(childLayoutStructureItem, layoutStructure));
+				_getChildrenItemIds(layoutStructure, childLayoutStructureItem));
 		}
 
 		return childrenItemIds;
@@ -833,7 +833,7 @@ public class ContentUtil {
 
 			restrictedItemIds.addAll(
 				_getChildrenItemIds(
-					formStyledLayoutStructureItem, layoutStructure));
+					layoutStructure, formStyledLayoutStructureItem));
 		}
 
 		return restrictedItemIds;

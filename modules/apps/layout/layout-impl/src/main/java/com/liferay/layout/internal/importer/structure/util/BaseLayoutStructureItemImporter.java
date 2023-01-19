@@ -391,7 +391,8 @@ public abstract class BaseLayoutStructureItemImporter {
 				borderColor, (String)borderColor);
 		}
 
-		String borderRadius = GetterUtil.getString(styles.get("borderRadius"));
+		String borderRadius = GetterUtil.getString(
+			styles.get("borderRadius"), null);
 
 		boolean hidden = GetterUtil.getBoolean(styles.get("hidden"));
 
@@ -401,7 +402,7 @@ public abstract class BaseLayoutStructureItemImporter {
 
 		Object shadow = styles.getOrDefault("boxShadow", styles.get("shadow"));
 
-		String textAlign = GetterUtil.getString(styles.get("textAlign"));
+		String textAlign = GetterUtil.getString(styles.get("textAlign"), null);
 
 		if (Validator.isNull(textAlign)) {
 			for (String alignKey : _ALIGN_KEYS) {
@@ -464,7 +465,7 @@ public abstract class BaseLayoutStructureItemImporter {
 			"paddingTop", styles.get("paddingTop")
 		).put(
 			"shadow",
-			_shadows.getOrDefault(shadow, GetterUtil.getString(shadow))
+			_shadows.getOrDefault(shadow, GetterUtil.getString(shadow, null))
 		).put(
 			"textAlign", textAlign
 		).put(

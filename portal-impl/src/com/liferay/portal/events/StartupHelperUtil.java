@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
@@ -50,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -211,10 +213,8 @@ public class StartupHelperUtil {
 
 		private boolean _isUpgradeClass(String name) {
 			try {
-				for (String className : _classNamesUpgrade) {
-					if (name.equals(className)) {
-						return true;
-					}
+				if (_classNamesUpgrade.contains(name)) {
+					return true;
 				}
 
 				Thread thread = Thread.currentThread();
@@ -244,12 +244,11 @@ public class StartupHelperUtil {
 			BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
 			LoggingTimer.class, UpgradeStep.class
 		};
-		private final String[] _classNamesUpgrade = {
+		private final Set<String> _classNamesUpgrade = SetUtil.fromArray(
 			DBUpgrader.class.getName(), VerifyProperties.class.getName(),
 			"com.liferay.portal.upgrade.internal.registry." +
 				"UpgradeStepRegistratorTracker",
-			"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl"
-		};
+			"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl");
 		private final Map<String, String> _context = Collections.singletonMap(
 			PropsValues.UPGRADE_LOG_CONTEXT_NAME,
 			PropsValues.UPGRADE_LOG_CONTEXT_NAME);

@@ -34,14 +34,13 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -223,30 +222,29 @@ public interface ${schemaName}Resource {
 						/>
 
 						<#if bodyJavaMethodParameters?has_content>
-							httpInvoker.body(
 								<#list bodyJavaMethodParameters as javaMethodParameter>
 									<#if javaMethodParameter?is_last>
 										<#if javaMethodParameter.parameterType?starts_with("[L")>
-											Stream.of(
-												${javaMethodParameter.parameterName}
-											).map(
-												value ->
+											List<String> values = new ArrayList<>();
 
+											for (${javaMethodParameter.parameterType?keep_after_last(".")?keep_before(";")}
+												${javaMethodParameter.parameterName?remove_ending("s")}Value :
+													${javaMethodParameter.parameterName}) {
+												values.add(
 												<#if javaMethodParameter.parameterType?contains("String")>
-													"\"" + String.valueOf(value) + "\""
+													"\"" + String.valueOf(${javaMethodParameter.parameterName?remove_ending("s")}Value) + "\""
 												<#else>
-													String.valueOf(value)
-												</#if>
-											).collect(
-												Collectors.toList()
-											).toString()
+													String.valueOf(${javaMethodParameter.parameterName?remove_ending("s")}Value)
+												</#if>);
+											}
+
+											httpInvoker.body(values.toString(), "application/json");
 										<#else>
-											${javaMethodParameter.parameterName}.toString()
+											httpInvoker.body(
+												${javaMethodParameter.parameterName}.toString(), "application/json");
 										</#if>
 									</#if>
 								</#list>
-
-								, "application/json");
 						</#if>
 					</#if>
 				</#if>

@@ -331,10 +331,9 @@ definition {
 					fieldFieldLabel = "Open page ${num}",
 					fieldName = "Text");
 
-				DataEngine.addFieldNested(
+				DataEngine.addField(
 					fieldFieldLabel = "URL${num}",
-					fieldName = "Text",
-					targetFieldLabel = "Open page ${num}");
+					fieldName = "Text");
 			}
 
 			WebContentStructures.saveCP();
@@ -342,16 +341,16 @@ definition {
 			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure 1");
 
 			var templateScript = '''
-<p> <a href="${Openpage1.URL1.getData()}">${Openpage1.getData()}</a> </p>
-<p> <a href="${Openpage2.URL2.getData()}">${Openpage2.getData()}</a> </p>
-<p> <a href="${Openpage3.URL3.getData()}">${Openpage3.getData()}</a> </p>
-<p> <a href="${Openpage11.URL11.getData()}">${Openpage11.getData()}</a> </p>
-<p> <a href="${Openpage12.URL12.getData()}">${Openpage12.getData()}</a> </p>
-<p> <a href="${Openpage111.URL111.getData()}">${Openpage111.getData()}</a> </p>
-<p> <a href="${Openpage21.URL21.getData()}">${Openpage21.getData()}</a> </p>
-<p> <a href="${Openpage22.URL22.getData()}">${Openpage22.getData()}</a> </p>
-<p> <a href="${Openpage31.URL31.getData()}">${Openpage31.getData()}</a> </p>
-<p> <a href="${Openpage32.URL32.getData()}">${Openpage32.getData()}</a> </p>
+<p> <a href="${URL1.getData()}">${Openpage1.getData()}</a> </p>
+<p> <a href="${URL2.getData()}">${Openpage2.getData()}</a> </p>
+<p> <a href="${URL3.getData()}">${Openpage3.getData()}</a> </p>
+<p> <a href="${URL11.getData()}">${Openpage11.getData()}</a> </p>
+<p> <a href="${URL12.getData()}">${Openpage12.getData()}</a> </p>
+<p> <a href="${URL111.getData()}">${Openpage111.getData()}</a> </p>
+<p> <a href="${URL21.getData()}">${Openpage21.getData()}</a> </p>
+<p> <a href="${URL22.getData()}">${Openpage22.getData()}</a> </p>
+<p> <a href="${URL31.getData()}">${Openpage31.getData()}</a> </p>
+<p> <a href="${URL32.getData()}">${Openpage32.getData()}</a> </p>
 ''';
 
 			WebContentTemplates.addCP(

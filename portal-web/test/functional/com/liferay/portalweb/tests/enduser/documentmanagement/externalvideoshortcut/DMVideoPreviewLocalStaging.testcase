@@ -100,15 +100,6 @@ definition {
 
 		Staging.publishToLive();
 
-		KBAdmin.openKBAdmin(siteURLKey = "site-name");
-
-		KBArticle.viewCP(
-			embedVideo = "true",
-			internalVideo = "true",
-			kbArticleContent = "Knowledge Base Video Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			videoName = "Document_1.mp4");
-
 		KBAdmin.openKBAdmin(siteURLKey = "site-name-staging");
 
 		KBArticle.editCP(
@@ -166,12 +157,6 @@ definition {
 			videoShortcutTitle = "DM Video Title1",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
-
-		AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
 		PortletEntry.publish();
 

@@ -1207,19 +1207,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, List<Group> groups) {
-		if (ListUtil.isEmpty(groups)) {
-			return Collections.emptyList();
-		}
-
-		long[] groupIds = new long[groups.size()];
-
-		for (int i = 0; i < groups.size(); i++) {
-			Group group = groups.get(i);
-
-			groupIds[i] = group.getGroupId();
-		}
-
-		return getUserRelatedRoles(userId, groupIds);
+		return getUserRelatedRoles(
+			userId, ListUtil.toLongArray(groups, Group.GROUP_ID_ACCESSOR));
 	}
 
 	/**

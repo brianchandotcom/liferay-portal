@@ -1605,9 +1605,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					expirationDate);
 		}
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> _expireKBArticlesByCompanyId(
-				companyId, expirationDate, new ServiceContext()));
+		_companyLocalService.forEachCompany(
+			company -> _expireKBArticlesByCompany(
+				company, expirationDate, new ServiceContext()));
 	}
 
 	private void _checkKBArticlesByReviewDate(Date reviewDate)
@@ -1655,14 +1655,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	private void _expireKBArticlesByCompanyId(
-			long companyId, Date expirationDate, ServiceContext serviceContext)
+	private void _expireKBArticlesByCompany(
+			Company company, Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
-		long userId = _userLocalService.getDefaultUserId(companyId);
+		long userId = _userLocalService.getDefaultUserId(
+			company.getCompanyId());
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndExpirationDate(
-			companyId, expirationDate);
+			company.getCompanyId(), expirationDate);
 
 		for (KBArticle kbArticle : kbArticles) {
 			if (_log.isDebugEnabled()) {

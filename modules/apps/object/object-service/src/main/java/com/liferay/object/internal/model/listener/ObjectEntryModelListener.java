@@ -100,7 +100,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, objectEntry,
 			objectEntry);
 	}
 

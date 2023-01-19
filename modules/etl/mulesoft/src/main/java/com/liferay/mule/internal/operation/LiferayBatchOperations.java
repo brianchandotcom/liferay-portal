@@ -31,10 +31,7 @@ import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
 import org.mule.runtime.api.util.MultiMap;
@@ -433,19 +430,18 @@ public class LiferayBatchOperations {
 		MultiMap<String, String> queryParams = new MultiMap<>();
 
 		if (!fieldNameMappings.isEmpty()) {
-			Set<Map.Entry<String, String>> fieldNameMappingsEntries =
-				fieldNameMappings.entrySet();
+			StringBuilder sb = new StringBuilder();
 
-			Stream<Map.Entry<String, String>> fieldNameMappingsStream =
-				fieldNameMappingsEntries.stream();
+			for (Map.Entry<String, String> entry :
+					fieldNameMappings.entrySet()) {
 
-			queryParams.put(
-				"fieldNameMappings",
-				fieldNameMappingsStream.map(
-					entry -> entry.getKey() + "=" + entry.getValue()
-				).collect(
-					Collectors.joining(",")
-				));
+				sb.append(entry.getKey() + "=" + entry.getValue());
+				sb.append(",");
+			}
+
+			sb.setLength(sb.length() - 1);
+
+			queryParams.put("fieldNameMappings", sb.toString());
 		}
 
 		HttpResponse httpResponse = connection.post(

@@ -32,7 +32,7 @@ public class SearchIndexPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	public void portalInstancePreregistered(Company company) throws Exception {
 		try {
 			_searchEngineHelper.initialize(company.getCompanyId());
 		}

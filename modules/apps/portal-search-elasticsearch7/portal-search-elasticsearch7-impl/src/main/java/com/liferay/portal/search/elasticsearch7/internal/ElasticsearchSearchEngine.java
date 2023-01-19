@@ -20,13 +20,11 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -230,10 +228,6 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 			}
 		}
 
-		for (Company company : _companyLocalService.getCompanies()) {
-			initialize(company.getCompanyId());
-		}
-
 		initialize(CompanyConstants.SYSTEM);
 	}
 
@@ -408,9 +402,6 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSearchEngine.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogContextRegistryUtil;
 import com.liferay.portal.kernel.log.LogWrapper;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -207,9 +208,15 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 			Map<String, String> context = logContext.getContext(_name);
 
 			for (Map.Entry<String, String> entry : context.entrySet()) {
-				ThreadContext.put(
-					logContext.getName() + "." + entry.getKey(),
-					entry.getValue());
+				String key = entry.getKey();
+
+				String logContextName = logContext.getName();
+
+				if (Validator.isNotNull(logContextName)) {
+					key = logContextName + "." + key;
+				}
+
+				ThreadContext.put(key, entry.getValue());
 			}
 		}
 	}

@@ -55,7 +55,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/json-server",
 		"osgi.http.whiteboard.servlet.name=com.liferay.json.server.internal.servlet.JSONServerServlet",

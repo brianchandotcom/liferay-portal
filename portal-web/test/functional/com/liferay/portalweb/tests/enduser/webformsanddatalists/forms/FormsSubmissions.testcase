@@ -887,6 +887,63 @@ definition {
 			successPageTitle = "You have already responded.");
 	}
 
+	@description = "Verify that with the option 'Limit to one submission per user' activated and the form is on the page, the user cannot send more than one submission."
+	@priority = "4"
+	test CheckCantSendMoreThanOneSubmitPerUserOnPages {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Test Form");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Form.selectOptionSubmissions(checkboxOption = "Limit to One Submission per User");
+
+		Button.clickDone();
+
+		Form.publishForm();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm(formName = "Test Form");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "test");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		Refresh();
+
+		Form.viewSubmitNotPresent();
+	}
+
 	@description = "Verify if there is an option to allow submitters to see partial form results after submission."
 	@priority = "5"
 	test CheckSeePartialResultsButton {

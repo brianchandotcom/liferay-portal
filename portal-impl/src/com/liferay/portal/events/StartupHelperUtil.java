@@ -227,12 +227,6 @@ public class StartupHelperUtil {
 						return true;
 					}
 				}
-
-				for (Class<?> staticClazz : _classesStaticUpgrade) {
-					if (name.equals(staticClazz.getName())) {
-						return true;
-					}
-				}
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
@@ -250,10 +244,8 @@ public class StartupHelperUtil {
 			BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
 			LoggingTimer.class, UpgradeStep.class
 		};
-		private final Class<?>[] _classesStaticUpgrade = {
-			DBUpgrader.class, VerifyProperties.class
-		};
 		private final String[] _classNamesUpgrade = {
+			DBUpgrader.class.getName(), VerifyProperties.class.getName(),
 			"com.liferay.portal.upgrade.internal.registry." +
 				"UpgradeStepRegistratorTracker",
 			"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl"

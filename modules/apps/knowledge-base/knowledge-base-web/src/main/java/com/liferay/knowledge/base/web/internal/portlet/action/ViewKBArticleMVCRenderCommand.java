@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.web.internal.configuration.KBSearchPortletInstanceConfiguration;
+import com.liferay.knowledge.base.web.internal.configuration.KBSectionPortletInstanceConfiguration;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -67,26 +68,41 @@ public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 			return "/display/view_kb_article.jsp";
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
 			try {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
 				KBSearchPortletInstanceConfiguration
 					kbSearchPortletInstanceConfiguration =
 						portletDisplay.getPortletInstanceConfiguration(
 							KBSearchPortletInstanceConfiguration.class);
 
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(renderRequest);
-
 				httpServletRequest.setAttribute(
 					"init.jsp-enableKBArticleDescription",
 					kbSearchPortletInstanceConfiguration.
+						enableKBArticleDescription());
+			}
+			catch (ConfigurationException configurationException) {
+				throw new RuntimeException(configurationException);
+			}
+		}
+
+		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+			try {
+				KBSectionPortletInstanceConfiguration
+					kbSectionPortletInstanceConfiguration =
+						portletDisplay.getPortletInstanceConfiguration(
+							KBSectionPortletInstanceConfiguration.class);
+
+				httpServletRequest.setAttribute(
+					"init.jsp-enableKBArticleDescription",
+					kbSectionPortletInstanceConfiguration.
 						enableKBArticleDescription());
 			}
 			catch (ConfigurationException configurationException) {

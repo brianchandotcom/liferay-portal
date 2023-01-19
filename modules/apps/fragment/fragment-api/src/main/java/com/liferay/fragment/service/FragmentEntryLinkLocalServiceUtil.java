@@ -371,6 +371,10 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().getFragmentEntryLinkByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<Long> getFragmentEntryLinkIds(String rendererKey) {
+		return getService().getFragmentEntryLinkIds(rendererKey);
+	}
+
 	/**
 	 * Returns a range of all the fragment entry links.
 	 *

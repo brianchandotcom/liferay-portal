@@ -312,6 +312,9 @@ public interface FragmentEntryLinkLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getFragmentEntryLinkIds(String rendererKey);
+
 	/**
 	 * Returns a range of all the fragment entry links.
 	 *

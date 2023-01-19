@@ -116,6 +116,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -132,14 +133,13 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -1737,11 +1737,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		String action,
 		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
-		if (Constants.ADD.equals(action)) {
+		if (Objects.equals(action, Constants.ADD)) {
 			return kbGroupServiceConfiguration.emailKBArticleAddedBody();
 		}
 
-		if (_NOTIFICATION_ACTION_REVIEW.equals(action)) {
+		if (Objects.equals(action, _NOTIFICATION_ACTION_REVIEW)) {
 			return kbGroupServiceConfiguration.emailKBArticleReviewBody();
 		}
 
@@ -1855,11 +1855,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	private int _getNotificationType(String action) {
-		if (Constants.ADD.equals(action)) {
+		if (Objects.equals(action, Constants.ADD)) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 		}
 
-		if (_NOTIFICATION_ACTION_REVIEW.equals(action)) {
+		if (Objects.equals(action, _NOTIFICATION_ACTION_REVIEW)) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
 		}
 
@@ -1917,11 +1917,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		String action,
 		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
-		if (Constants.ADD.equals(action)) {
+		if (Objects.equals(action, Constants.ADD)) {
 			return kbGroupServiceConfiguration.emailKBArticleAddedSubject();
 		}
 
-		if (_NOTIFICATION_ACTION_REVIEW.equals(action)) {
+		if (Objects.equals(action, _NOTIFICATION_ACTION_REVIEW)) {
 			return kbGroupServiceConfiguration.emailKBArticleReviewSubject();
 		}
 
@@ -2022,19 +2022,19 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
 			_getKBGroupServiceConfiguration(kbArticle.getGroupId());
 
-		if (Constants.ADD.equals(action) &&
+		if (Objects.equals(action, Constants.ADD) &&
 			!kbGroupServiceConfiguration.emailKBArticleAddedEnabled()) {
 
 			return;
 		}
 
-		if (Constants.UPDATE.equals(action) &&
+		if (Objects.equals(action, Constants.UPDATE) &&
 			!kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled()) {
 
 			return;
 		}
 
-		if (_NOTIFICATION_ACTION_REVIEW.equals(action) &&
+		if (Objects.equals(action, _NOTIFICATION_ACTION_REVIEW) &&
 			!kbGroupServiceConfiguration.emailKBArticleReviewEnabled()) {
 
 			return;
@@ -2155,10 +2155,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			serviceContext.setScopeGroupId(kbArticle.getGroupId());
 
 			_notify(
-				new HashSet<>(
-					Arrays.asList(
-						_NOTIFICATION_RECEIVER_OWNER,
-						_NOTIFICATION_RECEIVER_SUBSCRIBER)),
+				SetUtil.fromArray(
+					_NOTIFICATION_RECEIVER_OWNER,
+					_NOTIFICATION_RECEIVER_SUBSCRIBER),
 				userId, kbArticle, _NOTIFICATION_ACTION_REVIEW, serviceContext);
 		}
 	}

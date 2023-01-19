@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -38,8 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -101,26 +98,20 @@ public class RenderFragmentEntryStrutsActionTest {
 		URL htmlURL = _bundle.getEntry(
 			_RESOURCES_PATH + "fragments/card/index.html");
 
-		String html = StringUtil.read(htmlURL.openStream());
-
 		mockHttpServletRequest.setParameter(
-			"html", Base64.encode(html.getBytes(StandardCharsets.UTF_8)));
+			"html", StringUtil.read(htmlURL.openStream()));
 
 		URL cssURL = _bundle.getEntry(
 			_RESOURCES_PATH + "fragments/card/index.css");
 
-		String css = StringUtil.read(cssURL.openStream());
-
 		mockHttpServletRequest.setParameter(
-			"css", Base64.encode(css.getBytes(StandardCharsets.UTF_8)));
+			"css", StringUtil.read(cssURL.openStream()));
 
 		URL jsURL = _bundle.getEntry(
 			_RESOURCES_PATH + "fragments/card/index.js");
 
-		String js = StringUtil.read(jsURL.openStream());
-
 		mockHttpServletRequest.setParameter(
-			"js", Base64.encode(js.getBytes(StandardCharsets.UTF_8)));
+			"js", StringUtil.read(jsURL.openStream()));
 
 		_processEvents(mockHttpServletRequest, mockHttpServletResponse, _user);
 

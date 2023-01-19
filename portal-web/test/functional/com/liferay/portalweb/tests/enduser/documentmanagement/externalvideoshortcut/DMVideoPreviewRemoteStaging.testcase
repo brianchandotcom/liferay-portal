@@ -60,10 +60,10 @@ definition {
 	@description = "This test ensures that a blog entry can be published successfully."
 	@e2etest
 	@priority = "5"
-	@refactorneeded
-	test PublishBlogWithEmbeddedVideo {
+	@refactordone
+	test CanPublishBlogWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DLVideoRemoteStaging#PublishBlogWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DLVideoRemoteStaging#CanPublishBlogWithEmbeddedVideo";
 
 		User.logoutPG();
 

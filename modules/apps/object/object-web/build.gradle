@@ -23,6 +23,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
+	compileOnly project(":apps:headless:headless-admin-list-type:headless-admin-list-type-api")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:info:info-taglib")
 	compileOnly project(":apps:item-selector:item-selector-api")

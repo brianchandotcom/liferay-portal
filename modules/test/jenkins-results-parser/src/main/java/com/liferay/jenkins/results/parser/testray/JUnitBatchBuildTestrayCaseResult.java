@@ -157,7 +157,8 @@ public class JUnitBatchBuildTestrayCaseResult
 			String result = build.getResult();
 
 			if ((result == null) || result.equals("SUCCESS") ||
-				result.equals("UNSTABLE")) {
+				result.equals("UNSTABLE") || result.equals("FAILURE") ||
+				result.equals("ABORTED")) {
 
 				return Status.UNTESTED;
 			}

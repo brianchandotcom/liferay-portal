@@ -14,24 +14,23 @@
 
 package com.liferay.portal.search.internal.hits;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistry;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.Collections;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -43,7 +42,7 @@ public class HitsProcessorRegistryImpl implements HitsProcessorRegistry {
 	public boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		if (_hitsProcessors.isEmpty() ||
+		if ((_serviceTrackerList.size() == 0) ||
 			Validator.isNull(searchContext.getKeywords())) {
 
 			return false;
@@ -55,7 +54,7 @@ public class HitsProcessorRegistryImpl implements HitsProcessorRegistry {
 			return false;
 		}
 
-		for (HitsProcessor hitsProcessor : _hitsProcessors) {
+		for (HitsProcessor hitsProcessor : _serviceTrackerList) {
 			if (!hitsProcessor.process(searchContext, hits)) {
 				break;
 			}
@@ -64,102 +63,19 @@ public class HitsProcessorRegistryImpl implements HitsProcessorRegistry {
 		return true;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addHitsProcessor(
-		HitsProcessor hitsProcessor, Map<String, Object> properties) {
-
-		String sortOrderString = (String)properties.get("sort.order");
-
-		Integer sortOrder = null;
-
-		if (Validator.isNotNull(sortOrderString)) {
-			sortOrder = GetterUtil.getInteger(sortOrderString);
-		}
-
-		SortableHitsProcessor sortableHitsProcessor = new SortableHitsProcessor(
-			hitsProcessor, sortOrder);
-
-		_hitsProcessors.add(sortableHitsProcessor);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, HitsProcessor.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>("sort.order")));
 	}
 
-	protected void removeHitsProcessor(
-		HitsProcessor hitsProcessor, Map<String, Object> properties) {
-
-		String sortOrderString = (String)properties.get("sort.order");
-
-		Integer sortOrder = null;
-
-		if (Validator.isNotNull(sortOrderString)) {
-			sortOrder = GetterUtil.getInteger(sortOrderString);
-		}
-
-		SortableHitsProcessor sortableHitsProcessor = new SortableHitsProcessor(
-			hitsProcessor, sortOrder);
-
-		_hitsProcessors.remove(sortableHitsProcessor);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
-	private final Set<SortableHitsProcessor> _hitsProcessors =
-		new ConcurrentSkipListSet<>();
-
-	private static class SortableHitsProcessor
-		implements Comparable<SortableHitsProcessor>, HitsProcessor {
-
-		public SortableHitsProcessor(
-			HitsProcessor hitsProcessor, Integer sortOrder) {
-
-			_hitsProcessor = hitsProcessor;
-			_sortOrder = sortOrder;
-		}
-
-		@Override
-		public int compareTo(SortableHitsProcessor sortableHitsProcessor) {
-			if ((sortableHitsProcessor._sortOrder == null) &&
-				(_sortOrder != null)) {
-
-				return 1;
-			}
-			else if ((sortableHitsProcessor._sortOrder != null) &&
-					 (_sortOrder == null)) {
-
-				return -1;
-			}
-			else if ((sortableHitsProcessor._sortOrder == null) &&
-					 (_sortOrder == null)) {
-
-				return 0;
-			}
-
-			return _sortOrder.compareTo(sortableHitsProcessor._sortOrder);
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			SortableHitsProcessor sortableHitsProcessor =
-				(SortableHitsProcessor)object;
-
-			return sortableHitsProcessor._hitsProcessor.equals(_hitsProcessor);
-		}
-
-		@Override
-		public int hashCode() {
-			return _hitsProcessor.hashCode();
-		}
-
-		@Override
-		public boolean process(SearchContext searchContext, Hits hits)
-			throws SearchException {
-
-			return _hitsProcessor.process(searchContext, hits);
-		}
-
-		private final HitsProcessor _hitsProcessor;
-		private Integer _sortOrder;
-
-	}
+	private ServiceTrackerList<HitsProcessor> _serviceTrackerList;
 
 }

@@ -345,7 +345,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		}
 		catch (DateTimeParseException dateTimeParseException) {
 			throw new ExpressionVisitException(
-				"Invalid duration, use a correct format:" +
+				"Invalid duration, use a correct format " +
 					dateTimeParseException.getMessage());
 		}
 	}
@@ -416,17 +416,17 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			}
 			catch (ParseException parseException) {
 				throw new ExpressionVisitException(
-					"Invalid date format,only a date with ISO 8601 format is " +
-						"supported as a left operator:" +
+					"Invalid date format, only a date with ISO 8601 format " +
+						"is supported as a left operator " +
 							parseException.getMessage());
 			}
 		}
 
 		throw new UnsupportedOperationException(
 			StringBundler.concat(
-				"Unsupported types in _getSubOperationObject with  Arithmetic ",
-				"Operator SUB with left type", left.getClass(),
-				"and right type", right.getClass()));
+				"Unsupported types in _sub with Arithmetic Operator SUB with ",
+				"left type ", left.getClass(), "and right type ",
+				right.getClass()));
 	}
 
 	private final Date _date = new Date();

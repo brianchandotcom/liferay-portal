@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = TemplateHandler.class)
+@Component(service = TemplateHandler.class)
 public class TestEmbeddedPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 

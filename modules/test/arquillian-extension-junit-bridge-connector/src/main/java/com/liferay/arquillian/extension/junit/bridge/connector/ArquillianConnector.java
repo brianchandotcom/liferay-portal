@@ -33,7 +33,7 @@ import org.osgi.service.log.LoggerFactory;
  */
 @Component(
 	configurationPid = "com.liferay.arquillian.extension.junit.bridge.connector.ArquillianConnectorConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class ArquillianConnector {
 

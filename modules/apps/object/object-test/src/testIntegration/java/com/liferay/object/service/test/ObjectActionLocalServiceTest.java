@@ -24,6 +24,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
+import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -273,7 +275,45 @@ public class ObjectActionLocalServiceTest {
 				"script", "println \"Hello World\""
 			).build());
 
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+			"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+		).put(
+			"predefinedValues",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"inputAsValue", true
+				).put(
+					"name", "firstName"
+				).put(
+					"value", "Peter"
+				)
+			).toString()
+		).build();
+
+		try {
+			_addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+				ObjectActionTriggerConstants.KEY_STANDALONE, unicodeProperties);
+
+			Assert.fail();
+		}
+		catch (ObjectActionParametersException
+					objectActionParametersException) {
+
+			Assert.assertEquals(
+				"invalid",
+				MapUtil.getString(
+					objectActionParametersException.getMessageKeys(),
+					"objectDefinitionId"));
+		}
+
 		_publishCustomObjectDefinition();
+
+		ObjectAction objectAction5 = _addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_STANDALONE, unicodeProperties);
 
 		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =
@@ -302,6 +342,8 @@ public class ObjectActionLocalServiceTest {
 				"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
 				WorkflowConstants.STATUS_DRAFT);
 
+			// Execute standalone action to run a groovy script
+
 			ObjectEntryResource objectEntryResource = _getObjectEntryResource();
 
 			objectEntryResource.putObjectEntryObjectActionObjectActionName(
@@ -326,12 +368,19 @@ public class ObjectActionLocalServiceTest {
 				"João", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				"John", WorkflowConstants.STATUS_APPROVED);
 
+			// Execute standalone action to update the current object entry
+
 			objectEntryResource.
 				putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
 					objectEntry.getExternalReferenceCode(),
-					objectAction4.getName());
+					objectAction5.getName());
 
-			_assertGroovyObjectActionExecutorArguments("João", objectEntry);
+			Assert.assertEquals(
+				"Peter",
+				MapUtil.getString(
+					_objectEntryLocalService.getValues(
+						objectEntry.getObjectEntryId()),
+					"firstName"));
 
 			// Delete object entry
 
@@ -342,7 +391,7 @@ public class ObjectActionLocalServiceTest {
 			// On after remove
 
 			_assertWebhookObjectAction(
-				"João", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
+				"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
 				WorkflowConstants.STATUS_APPROVED);
 		}
 		finally {

@@ -21,9 +21,8 @@ import com.liferay.mule.internal.oas.constants.OASConstants;
 
 import java.io.InputStream;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -150,13 +149,13 @@ public class MetadataKeysBuilderTest {
 	}
 
 	private Set<String> toMetadataKeyIdSet(Set<MetadataKey> metadataKeys) {
-		Stream<MetadataKey> stream = metadataKeys.stream();
+		Set<String> metadataKeyIds = new HashSet<>();
 
-		return stream.map(
-			MetadataKey::getId
-		).collect(
-			Collectors.toSet()
-		);
+		for (MetadataKey metadataKey : metadataKeys) {
+			metadataKeyIds.add(metadataKey.getId());
+		}
+
+		return metadataKeyIds;
 	}
 
 	private static final String OPERATION_HEAD = "head";

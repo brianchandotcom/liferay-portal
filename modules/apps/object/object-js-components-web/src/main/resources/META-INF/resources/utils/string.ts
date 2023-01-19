@@ -13,6 +13,7 @@
  */
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+const userLanguageId = Liferay.ThemeDisplay.getLanguageId();
 
 /**
  * Get the label according to the locale
@@ -28,6 +29,7 @@ export function getLocalizableLabel(
 	}
 
 	return (
+		labels[userLanguageId] ??
 		labels[defaultLanguageId] ??
 		labels[creationLanguageId] ??
 		fallback ??

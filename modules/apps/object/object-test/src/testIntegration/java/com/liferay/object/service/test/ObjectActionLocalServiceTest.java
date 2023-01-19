@@ -40,6 +40,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -271,66 +275,81 @@ public class ObjectActionLocalServiceTest {
 
 		_publishCustomObjectDefinition();
 
-		// Add object entry
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		Assert.assertEquals(0, _argumentsList.size());
+		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"firstName", "John"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			// Add object entry
 
-		// On after create
+			Assert.assertEquals(0, _argumentsList.size());
 
-		_assertWebhookObjectAction(
-			"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
-			WorkflowConstants.STATUS_DRAFT);
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				_objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "John"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
 
-		ObjectEntryResource objectEntryResource = _getObjectEntryResource();
+			// On after create
 
-		objectEntryResource.putObjectEntryObjectActionObjectActionName(
-			objectEntry.getObjectEntryId(), objectAction4.getName());
+			_assertWebhookObjectAction(
+				"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
+				WorkflowConstants.STATUS_DRAFT);
 
-		_assertGroovyObjectActionExecutorArguments("John", objectEntry);
+			ObjectEntryResource objectEntryResource = _getObjectEntryResource();
 
-		// Update object entry
+			objectEntryResource.putObjectEntryObjectActionObjectActionName(
+				objectEntry.getObjectEntryId(), objectAction4.getName());
 
-		Assert.assertEquals(0, _argumentsList.size());
+			_assertGroovyObjectActionExecutorArguments("John", objectEntry);
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"firstName", "João"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			// Update object entry
 
-		// On after update
+			Assert.assertEquals(0, _argumentsList.size());
 
-		_assertWebhookObjectAction(
-			"João", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, "John",
-			WorkflowConstants.STATUS_APPROVED);
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "João"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
 
-		objectEntryResource.
-			putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
-				objectEntry.getExternalReferenceCode(),
-				objectAction4.getName());
+			// On after update
 
-		_assertGroovyObjectActionExecutorArguments("João", objectEntry);
+			_assertWebhookObjectAction(
+				"João", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				"John", WorkflowConstants.STATUS_APPROVED);
 
-		// Delete object entry
+			objectEntryResource.
+				putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+					objectEntry.getExternalReferenceCode(),
+					objectAction4.getName());
 
-		Assert.assertEquals(0, _argumentsList.size());
+			_assertGroovyObjectActionExecutorArguments("João", objectEntry);
 
-		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+			// Delete object entry
 
-		// On after remove
+			Assert.assertEquals(0, _argumentsList.size());
 
-		_assertWebhookObjectAction(
-			"João", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
-			WorkflowConstants.STATUS_APPROVED);
+			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+			// On after remove
+
+			_assertWebhookObjectAction(
+				"João", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
+				WorkflowConstants.STATUS_APPROVED);
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 
 		// Delete object actions
 

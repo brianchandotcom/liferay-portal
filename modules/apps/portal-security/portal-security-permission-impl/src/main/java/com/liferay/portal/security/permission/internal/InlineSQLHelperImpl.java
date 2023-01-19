@@ -113,12 +113,19 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	@Override
 	public boolean isEnabled() {
-		return isEnabled(0, 0);
+		return isEnabled(0);
 	}
 
 	@Override
 	public boolean isEnabled(long groupId) {
-		return isEnabled(0, groupId);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			throw new IllegalStateException("Permission checker is null");
+		}
+
+		return isEnabled(permissionChecker.getCompanyId(), groupId);
 	}
 
 	@Override

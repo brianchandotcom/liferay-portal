@@ -352,7 +352,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX</td>
-	<td>//div[contains(@class,'searchable-types-modal')]//tr[contains(@class,'cursor-pointer')][.//*[contains(.,'${assetType}')]]//input</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//tr[.//*[contains(.,'${assetType}')]]//input</td>
 	<td></td>
 </tr>
 <tr>

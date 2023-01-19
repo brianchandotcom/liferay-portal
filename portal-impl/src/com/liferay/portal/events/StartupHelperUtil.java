@@ -242,10 +242,11 @@ public class StartupHelperUtil {
 
 		private final Class<?>[] _classesBaseUpgrade = new Class<?>[] {
 			BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
-			LoggingTimer.class, UpgradeStep.class
+			UpgradeStep.class
 		};
 		private final Set<String> _classNamesUpgrade = SetUtil.fromArray(
-			DBUpgrader.class.getName(), VerifyProperties.class.getName(),
+			DBUpgrader.class.getName(), LoggingTimer.class.getName(),
+			VerifyProperties.class.getName(),
 			"com.liferay.portal.upgrade.internal.registry." +
 				"UpgradeStepRegistratorTracker",
 			"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl");

@@ -133,7 +133,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -487,14 +486,14 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataLayoutResource dataLayoutResource = _getDataLayoutResource(
 				false);
 
+			Long id = dataLayout.getId();
+
+			if (id == null) {
+				id = _getDefaultDataLayoutId(dataDefinitionId);
+			}
+
 			dataDefinition.setDefaultDataLayout(
-				dataLayoutResource.putDataLayout(
-					Optional.ofNullable(
-						dataLayout.getId()
-					).orElseGet(
-						() -> _getDefaultDataLayoutId(dataDefinitionId)
-					),
-					dataLayout));
+				dataLayoutResource.putDataLayout(id, dataLayout));
 		}
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
@@ -550,13 +549,14 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				Map<String, Object> customProperties =
 					dataDefinitionField.getCustomProperties();
 
+				Long id = dataLayout.getId();
+
+				if (id == null) {
+					id = _getDefaultDataLayoutId(dataDefinitionId);
+				}
+
 				DDMStructureLayout ddmStructureLayout =
-					_ddmStructureLayoutLocalService.getStructureLayout(
-						Optional.ofNullable(
-							dataLayout.getId()
-						).orElseGet(
-							() -> _getDefaultDataLayoutId(dataDefinitionId)
-						));
+					_ddmStructureLayoutLocalService.getStructureLayout(id);
 
 				JSONArray jsonArray = JSONUtil.getValueAsJSONArray(
 					_jsonFactory.createJSONObject(
@@ -599,13 +599,14 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
 			_portal.getClassNameId(DDMStructure.class), dataDefinitionId);
 
+		Long id = dataDefinition.getSiteId();
+
+		if (id == null) {
+			id = getPermissionCheckerGroupId(dataDefinitionId);
+		}
+
 		_addDataDefinitionFieldLinks(
-			dataDefinitionId, ddmForm.getDDMFormFields(),
-			Optional.ofNullable(
-				dataDefinition.getSiteId()
-			).orElse(
-				getPermissionCheckerGroupId(dataDefinitionId)
-			));
+			dataDefinitionId, ddmForm.getDDMFormFields(), id);
 
 		return _updateDataDefinition(dataDefinition, dataDefinitionId, ddmForm);
 	}
@@ -673,12 +674,13 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				availableLocales = ddmForm.getAvailableLocales();
 			}
 			else {
-				availableLocales = Collections.singleton(
-					Optional.ofNullable(
-						LocaleThreadLocal.getSiteDefaultLocale()
-					).orElse(
-						LocaleThreadLocal.getDefaultLocale()
-					));
+				Locale defaultLocal = LocaleThreadLocal.getSiteDefaultLocale();
+
+				if (defaultLocal == null) {
+					defaultLocal = LocaleThreadLocal.getDefaultLocale();
+				}
+
+				availableLocales = Collections.singleton(defaultLocal);
 			}
 
 			ddmFormFieldTypeSettingsDDMForm.setAvailableLocales(
@@ -787,11 +789,13 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			return LocaleUtil.fromLanguageId(i18nLanguageId);
 		}
 
-		return Optional.ofNullable(
-			LocaleThreadLocal.getSiteDefaultLocale()
-		).orElse(
-			LocaleThreadLocal.getDefaultLocale()
-		);
+		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
+
+		if (locale != null) {
+			return locale;
+		}
+
+		return LocaleThreadLocal.getDefaultLocale();
 	}
 
 	private JSONObject _getFieldTypeMetadataJSONObject(

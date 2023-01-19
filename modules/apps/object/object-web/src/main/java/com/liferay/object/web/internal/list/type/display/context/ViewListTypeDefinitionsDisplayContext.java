@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -98,6 +99,17 @@ public class ViewListTypeDefinitionsDisplayContext {
 				getAPIURL() + "/{id}", "trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"),
+			new FDSActionDropdownItem(
+				ResourceURLBuilder.createResourceURL(
+					_objectRequestHelper.getLiferayPortletResponse()
+				).setParameter(
+					"listTypeDefinitionId", "{id}"
+				).setResourceID(
+					"/list_type_definitions/export_list_type_definition"
+				).buildString(),
+				"export", "export",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "export"),
+				"get", null, null),
 			new FDSActionDropdownItem(
 				_getPermissionsURL(), null, "permissions",
 				LanguageUtil.get(

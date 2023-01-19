@@ -83,7 +83,7 @@ public class WidgetLayoutStructureItemImporter
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());
 
-		if (definitionMap != null) {
+		if (definitionMap == null) {
 			return fragmentStyledLayoutStructureItem;
 		}
 

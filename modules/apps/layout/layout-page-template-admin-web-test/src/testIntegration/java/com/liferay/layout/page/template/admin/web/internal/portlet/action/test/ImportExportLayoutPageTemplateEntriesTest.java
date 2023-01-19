@@ -1013,6 +1013,18 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_validateImportExport(expectedFile, inputFile);
 	}
 
+	@Test
+	public void testImportExportLayoutPageTemplateEntryWidgetCustomCSS()
+		throws Exception {
+
+		File expectedFile = _generateZipFile(
+			"widget/custom_css/expected", null, null);
+		File inputFile = _generateZipFile(
+			"widget/custom_css/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
 	private AssetListEntry _addAssetListEntry(long groupId)
 		throws PortalException {
 

@@ -2675,9 +2675,14 @@ definition {
 
 			UserNavigator.gotoUser(userScreenName = "usera");
 
-			User.editUserInformation(
-				userCustomField = "textChanged",
-				userCustomFieldLabel = "inputfield");
+			AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
+
+			Type(
+				key_fieldLabel = "inputfield",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "textChanged");
+
+			PortletEntry.save();
 
 			User.logoutPG();
 		}

@@ -2337,58 +2337,6 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-chrome-driver">
-		<sequential>
-			<if>
-				<os family="mac" />
-				<then>
-					<property name="selenium.chrome.driver.zip" value="chromedriver_mac64.zip" />
-				</then>
-				<elseif>
-					<os family="unix" />
-					<then>
-						<property name="selenium.chrome.driver.zip" value="chromedriver_linux64.zip" />
-					</then>
-				</elseif>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<property name="selenium.chrome.driver.zip" value="chromedriver_win32.zip" />
-					</then>
-				</elseif>
-				<else>
-					<then>
-						<fail message="Operating system is not supported." />
-					</then>
-				</else>
-			</if>
-
-			<propertycopy from="selenium.chrome.driver.version[${browser.chrome.version}]" name="selenium.chrome.driver.version" silent="true" />
-
-			<mirrors-get
-				dest="tools/selenium/${selenium.chrome.driver.zip}"
-				src="http://chromedriver.storage.googleapis.com/${selenium.chrome.driver.version}/${selenium.chrome.driver.zip}"
-			/>
-
-			<stop-chrome-driver />
-
-			<unzip
-				dest="tools/selenium"
-				src="tools/selenium/${selenium.chrome.driver.zip}"
-			/>
-
-			<if>
-				<os family="unix" />
-				<then>
-					<chmod
-						file="tools/selenium/chromedriver"
-						perm="a+x"
-					/>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-custom-properties">
 		<attribute name="custom.properties" />
 		<attribute default="portal-impl/src/portal-ext.properties" name="properties.file" />
@@ -2864,134 +2812,6 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-edge-driver">
-		<sequential>
-			<if>
-				<os family="windows" />
-				<then>
-					<stop-edge-driver />
-
-					<mirrors-get
-						dest="tools/selenium/edgedriver.zip"
-						src="${selenium.edge.driver.zip.url}"
-					/>
-
-					<unzip
-						dest="tools/selenium"
-						src="tools/selenium/edgedriver.zip"
-					>
-						<globmapper
-							from="*/${selenium.edge.driver.executable}"
-							to="${selenium.edge.driver.executable}"
-						/>
-						<patternset>
-							<include name="${selenium.edge.driver.executable}" />
-							<exclude name="*/*" />
-						</patternset>
-					</unzip>
-				</then>
-				<else>
-					<if>
-						<not>
-							<isset property="selenium.remote.driver.url" />
-						</not>
-						<then>
-							<fail message="Operating system is not supported." />
-						</then>
-					</if>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-gecko-driver">
-		<sequential>
-			<stop-gecko-driver />
-
-			<if>
-				<os family="mac" />
-				<then>
-					<property name="selenium.gecko.driver.archive" value="geckodriver-v${selenium.gecko.driver.version}-macos.tar.gz" />
-				</then>
-				<elseif>
-					<os family="unix" />
-					<then>
-						<property name="selenium.gecko.driver.archive" value="geckodriver-v${selenium.gecko.driver.version}-linux32.tar.gz" />
-					</then>
-				</elseif>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<property name="selenium.gecko.driver.archive" value="geckodriver-v${selenium.gecko.driver.version}-win32.zip" />
-					</then>
-				</elseif>
-				<else>
-					<then>
-						<fail message="Operating system is not supported." />
-					</then>
-				</else>
-			</if>
-
-			<mirrors-get
-				dest="tools/selenium/${selenium.gecko.driver.archive}"
-				src="https://github.com/mozilla/geckodriver/releases/download/v${selenium.gecko.driver.version}/${selenium.gecko.driver.archive}"
-			/>
-
-			<if>
-				<os family="unix" />
-				<then>
-					<untar
-						compression="gzip"
-						dest="tools/selenium"
-						src="tools/selenium/${selenium.gecko.driver.archive}"
-					/>
-
-					<chmod
-						file="tools/selenium/geckodriver"
-						perm="a+x"
-					/>
-				</then>
-				<else>
-					<unzip
-						dest="tools/selenium"
-						src="tools/selenium/${selenium.gecko.driver.archive}"
-					/>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-ie-driver">
-		<sequential>
-			<if>
-				<os family="windows" />
-				<then>
-					<stop-ie-driver />
-
-					<mirrors-get
-						dest="tools/selenium/iedriver.zip"
-						src="${selenium.ie.driver.zip.url}"
-					/>
-
-					<unzip
-						dest="tools/selenium"
-						src="tools/selenium/iedriver.zip"
-					/>
-				</then>
-				<else>
-					<if>
-						<not>
-							<isset property="selenium.remote.driver.url" />
-						</not>
-						<then>
-							<fail message="Operating system is not supported." />
-						</then>
-					</if>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-liferay-online-properties">
 		<sequential>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
@@ -3448,22 +3268,7 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<equals arg1="${browser.type}" arg2="edge" />
-				<then>
-					<prepare-edge-driver />
-
-					<echo append="true" file="${test.ext.properties.file}">
-						selenium.edge.driver.executable=${selenium.edge.driver.executable}
-						selenium.executable.dir.name=${selenium.executable.dir.name}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<and>
-					<equals arg1="${browser.firefox.version}" arg2="52.0" />
-					<equals arg1="${browser.type}" arg2="firefox" />
-				</and>
+				<equals arg1="${browser.type}" arg2="firefox" />
 				<then>
 					<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
 
@@ -3475,26 +3280,6 @@ tell application "Safari" to quit
 							</echo>
 						</then>
 					</if>
-
-					<prepare-gecko-driver />
-
-					<echo append="true" file="${test.ext.properties.file}">
-						selenium.executable.dir.name=${selenium.executable.dir.name}
-						selenium.gecko.driver.executable=${selenium.gecko.driver.executable}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${browser.type}" arg2="internetexplorer" />
-				<then>
-					<prepare-ie-driver />
-
-					<echo append="true" file="${test.ext.properties.file}">
-						selenium.executable.dir.name=${selenium.executable.dir.name}
-						selenium.ie.driver.executable=${selenium.ie.driver.executable}
-						selenium.ie.driver.version=${selenium.ie.driver.version}
-					</echo>
 				</then>
 			</if>
 
@@ -7712,40 +7497,6 @@ ${docker.start.error}</fail>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="stop-edge-driver">
-		<sequential>
-			<exec executable="taskkill.exe">
-				<arg line="/F /IM ${selenium.edge.driver.executable}" />
-			</exec>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-gecko-driver">
-		<sequential>
-			<if>
-				<os family="unix" />
-				<then>
-					<execute failonerror="false">
-						killall geckodriver
-					</execute>
-				</then>
-				<else>
-					<execute failonerror="false">
-						taskkill.exe /F /IM geckodriver.exe
-					</execute>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-ie-driver">
-		<sequential>
-			<exec executable="taskkill.exe">
-				<arg line="/F /IM IEDriverServer.exe" />
-			</exec>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="stop-one-java-process">
 		<attribute name="process.name" />
 
@@ -8968,27 +8719,6 @@ go</echo>
 			<equals arg1="${browser.type}" arg2="chrome" />
 			<then>
 				<stop-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="edge" />
-			<then>
-				<stop-edge-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="firefox" />
-			<then>
-				<stop-gecko-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="internetexplorer" />
-			<then>
-				<stop-ie-driver />
 			</then>
 		</if>
 	</target>
@@ -11030,10 +10760,6 @@ ${update.properties}</echo>
 				<echo>The file ${liferay.config.xml} is not exist.</echo>
 			</else>
 		</if>
-	</target>
-
-	<target name="prepare-chrome-driver">
-		<prepare-chrome-driver />
 	</target>
 
 	<target name="prepare-database-upgrade-configuration">

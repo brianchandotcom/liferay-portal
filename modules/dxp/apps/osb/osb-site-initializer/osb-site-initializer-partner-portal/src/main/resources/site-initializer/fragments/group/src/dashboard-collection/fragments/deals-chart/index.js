@@ -194,7 +194,7 @@ export default function () {
 		return (
 			opportunitiesChartValues?.rejected?.map(
 				(chartValue, index) =>
-					chartValue + leadsChartValues.rejected[index]
+					chartValue + leadsChartValues?.rejected[index]
 			) || []
 		);
 	}, [leadsChartValues?.rejected, opportunitiesChartValues?.rejected]);

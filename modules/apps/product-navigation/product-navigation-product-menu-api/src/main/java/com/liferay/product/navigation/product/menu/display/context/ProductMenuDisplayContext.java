@@ -176,7 +176,9 @@ public class ProductMenuDisplayContext {
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(_httpServletRequest);
 
-		String ppid = ParamUtil.getString(originalHttpServletRequest, "p_p_id");
+		String ppid = ParamUtil.getString(
+			_httpServletRequest, "selPpid",
+			ParamUtil.getString(originalHttpServletRequest, "p_p_id"));
 		String mvcRenderCommandName = ParamUtil.getString(
 			originalHttpServletRequest,
 			PortalUtil.getPortletNamespace(_PORTLET_NAME) +

@@ -77,6 +77,10 @@ public interface ObjectEntryResource {
 	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
+	public ObjectEntry patchByExternalReferenceCode(
+			String externalReferenceCode, ObjectEntry objectEntry)
+		throws Exception;
+
 	public ObjectEntry putByExternalReferenceCode(
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;

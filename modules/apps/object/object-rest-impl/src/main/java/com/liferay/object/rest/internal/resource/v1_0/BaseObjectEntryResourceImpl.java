@@ -295,6 +295,64 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry patchByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (objectEntry.getActions() != null) {
+			existingObjectEntry.setActions(objectEntry.getActions());
+		}
+
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+		}
+
+		if (objectEntry.getProperties() != null) {
+			existingObjectEntry.setProperties(objectEntry.getProperties());
+		}
+
+		if (objectEntry.getScopeKey() != null) {
+			existingObjectEntry.setScopeKey(objectEntry.getScopeKey());
+		}
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return putByExternalReferenceCode(
+			externalReferenceCode, existingObjectEntry);
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

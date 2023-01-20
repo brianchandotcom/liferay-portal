@@ -112,6 +112,26 @@ definition {
 			objectName = "CustomObject184");
 	}
 
+	@description = "LPS-142175 - Verify it's possible to export imported object with custom views"
+	@priority = "4"
+	test CanImportAndExportCustomViewsStructure {
+		task ("When import object with custom views") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedObjectWithCustomViews",
+				objectName = "ImportedObjectWithCustomViews170541");
+
+			CreateObject.assertCustomObject(labelName = "Imported Object With Custom Views");
+		}
+
+		task ("Then the imported object with custom views can be exported") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectExportImport.exportObject(
+				objectLabel = "Imported Object With Custom Views",
+				objectName = "ImportedObjectWithCustomViews");
+		}
+	}
+
 	@description = "LPS-142175 - Verify it's possible to export imported object with validation structure"
 	@priority = "4"
 	test CanImportAndExportValidationStructure {

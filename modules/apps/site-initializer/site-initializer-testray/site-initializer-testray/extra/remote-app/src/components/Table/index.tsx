@@ -37,6 +37,7 @@ type Column<T = any> = {
 	) => String | React.ReactNode;
 	size?: 'sm' | 'md' | 'lg' | 'xl' | 'none';
 	sorteable?: boolean;
+	truncate?: boolean;
 	value: string;
 };
 
@@ -44,6 +45,7 @@ export type TableProps<T = any> = {
 	actions?: Action[];
 	allRowsChecked?: boolean;
 	columns: Column<T>[];
+	highlight?: (item: T) => boolean;
 	items: T[];
 	mutate: KeyedMutator<T>;
 	navigateTo?: (item: T) => string;
@@ -51,6 +53,7 @@ export type TableProps<T = any> = {
 	onSelectAllRows: () => void;
 	onSelectRow?: (row: any) => void;
 	onSort: (columnTable: string, direction: SortDirection) => void;
+	responsive?: boolean;
 	rowSelectable?: boolean;
 	rowWrap?: boolean;
 	selectedRows?: number[];
@@ -61,6 +64,7 @@ const Table: React.FC<TableProps> = ({
 	allRowsChecked = false,
 	actions,
 	columns,
+	highlight,
 	items,
 	mutate,
 	navigateTo,
@@ -68,6 +72,7 @@ const Table: React.FC<TableProps> = ({
 	onSelectAllRows,
 	onSelectRow,
 	onSort,
+	responsive,
 	rowSelectable = false,
 	rowWrap = false,
 	selectedRows = [],
@@ -114,7 +119,12 @@ const Table: React.FC<TableProps> = ({
 
 	return (
 		<>
-			<ClayTable borderless className="testray-table" hover>
+			<ClayTable
+				borderless
+				className="testray-table"
+				hover
+				responsive={responsive}
+			>
 				<ClayTable.Head>
 					<ClayTable.Row>
 						{rowSelectable && (
@@ -130,9 +140,9 @@ const Table: React.FC<TableProps> = ({
 
 						{columns.map((column, index) => (
 							<ClayTable.Cell
-								className="align-items-center text-nowrap"
 								headingTitle
 								key={index}
+								truncate={!column.truncate}
 							>
 								<>
 									{column.value}
@@ -160,6 +170,7 @@ const Table: React.FC<TableProps> = ({
 								contextMenuState.visible
 							}
 							className={classNames('table-row', {
+								'hightligth-bar': highlight && highlight(item),
 								'text-nowrap': !rowWrap,
 								'text-wrap': rowWrap,
 							})}

@@ -12,7 +12,7 @@
  * details.
  */
 
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import Code from '../../../components/Code';
 import ListView, {ListViewProps} from '../../../components/ListView';
@@ -31,103 +31,99 @@ type CaseResultHistoryProps = {
 const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 	listViewProps,
 	tableProps,
-
-	
-}) => { 
+}) => {
 	const {caseResultId} = useParams();
 
-	return(
-	<ListView
-		initialContext={{
-			columns: {
-				caseType: false,
-				dateCreated: true,
-				dateModified: false,
-				issues: false,
-				team: false,
-			},
-		}}
-		managementToolbarProps={{
-			title: i18n.translate('test-history'),
-			visible: true,
-		}}
-		resource={testrayCaseResultImpl.resource}
-		tableProps={{
-			columns: [
-				{
-					clickable: true,
-					key: 'dateCreated',
-					render: (date) => ( <p style={{maxWidth: "11ch"}}> {dayjs(date).format('lll')}</p>),
-					size: 'sm',
-					value: i18n.translate('create-date'),
-				},
-				{
-					clickable: true,
-					key: 'build',
-					render: (build) => {
-						return build?.gitHash;
+	return (
+		<ListView
+			managementToolbarProps={{
+				title: i18n.translate('test-history'),
+				visible: true,
+			}}
+			resource={testrayCaseResultImpl.resource}
+			tableProps={{
+				columns: [
+					{
+						clickable: true,
+						key: 'dateCreated',
+						render: (date) => (
+							<p style={{maxWidth: '11ch'}}>
+								{dayjs(date).format('lll')}
+							</p>
+						),
+						size: 'sm',
+						value: i18n.translate('create-date'),
 					},
-					value: i18n.translate('git-hash'),
-				},
-				{
-					clickable: true,
-					key: 'product-version',
-					render: (_, {build}) => build?.productVersion?.name,
-					thunkableTitle: true,
-					value: i18n.translate('product-version'),
-				},
-				{
-					clickable: true,
-					key: 'run',
-					render: (run) => run?.externalReferencePK,
-					value: i18n.translate('environment'),
-				},
-				{
-					clickable: true,
-					key: 'routine',
-					render: (_, {build}) => build?.routine?.name,
-					value: i18n.translate('routine'),
-				},
-				{
-					key: 'dueStatus',
-					render: (dueStatus: PickList) => {
-						return (
+					{
+						clickable: true,
+						key: 'build',
+						render: (build) => build?.gitHash,
+						value: i18n.translate('git-hash'),
+					},
+					{
+						clickable: true,
+						key: 'product-version',
+						render: (_, {build}) => build?.productVersion?.name,
+						truncate: true,
+						value: i18n.translate('product-version'),
+					},
+					{
+						clickable: true,
+						key: 'run',
+						render: (run) => run?.externalReferencePK,
+						value: i18n.translate('environment'),
+					},
+					{
+						clickable: true,
+						key: 'routine',
+						render: (_, {build}) => build?.routine?.name,
+						value: i18n.translate('routine'),
+					},
+					{
+						key: 'dueStatus',
+						render: (dueStatus: PickList) => (
 							<StatusBadge
 								type={dueStatus.key as StatusBadgeType}
 							>
 								{dueStatus.name}
 							</StatusBadge>
-						);
+						),
+						value: i18n.translate('status'),
 					},
-					value: i18n.translate('status'),
-				},
-				{
-					key: 'warnings',
-					value: i18n.translate('warnings'),
-				},
-				{key: 'issues', value: i18n.translate('issues')},
-				{
-				key: 'errors', 				
-				render: (errors: string) => (errors && <Code>{errors.substring(0, errors.length)}</Code>),
-				size: 'xl',
-				value: i18n.translate('errors'),				
-			},
-		],
-		highlight : (items) => {
-			if (items.id === Number(caseResultId)) {
-				return true;
-			}
+					{
+						key: 'warnings',
+						value: i18n.translate('warnings'),
+					},
+					{key: 'issues', value: i18n.translate('issues')},
+					{
+						key: 'errors',
+						render: (errors: string) =>
+							errors && (
+								<Code>
+									{errors.substring(0, errors.length)}
+								</Code>
+							),
+						size: 'xl',
+						value: i18n.translate('errors'),
+					},
+				],
+				highlight: (items) => {
+					if (items.id === Number(caseResultId)) {
+						return true;
+					}
 
-			return false;
-		},
-			rowWrap: true,
-			...tableProps,
-		}}
-		transformData={(response) =>
-			testrayCaseResultImpl.transformDataFromList(response)
-		}
-		{...listViewProps}
-	/>
-)};
+					return false;
+				},
+				responsive: true,
+				rowWrap: true,
+				...tableProps,
+			}}
+			transformData={(response) =>
+				testrayCaseResultImpl.transformDataFromList(response)
+			}
+			{...listViewProps}
+		/>
+	);
+};
 
 export default CaseResultHistory;

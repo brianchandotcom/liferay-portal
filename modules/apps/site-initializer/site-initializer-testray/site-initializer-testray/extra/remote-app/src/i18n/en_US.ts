@@ -150,7 +150,7 @@ export default {
 	'demote': 'Demote',
 	'description': 'Description',
 	'description-type': 'Description type',
-	'deselect-items': 'Deselect Items',
+	'deselect-items': 'Deselect Items.',
 	'details': 'Details',
 	'edit': 'Edit',
 	'edit-build': 'Edit Build',

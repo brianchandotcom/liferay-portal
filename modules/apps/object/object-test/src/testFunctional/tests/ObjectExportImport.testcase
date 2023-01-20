@@ -132,6 +132,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-142175 - Verify it's possible to export imported object with state"
+	@priority = "4"
+	test CanImportAndExportStateManagerStructure {
+		task ("When import object with state") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedObjectWithState",
+				objectName = "ImportedObjectWithState170543");
+
+			CreateObject.assertCustomObject(labelName = "Imported Object With State");
+		}
+
+		task ("Then the imported object with state can be exported") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectExportImport.exportObject(
+				objectLabel = "Imported Object With State",
+				objectName = "ImportedObjectWithState");
+		}
+	}
+
 	@description = "LPS-142175 - Verify it's possible to export imported object with validation structure"
 	@priority = "4"
 	test CanImportAndExportValidationStructure {

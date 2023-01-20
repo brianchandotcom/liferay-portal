@@ -88,51 +88,55 @@ const Goals = ({
 	}, [errors]);
 
 	const getRequestPage = () => {
-		if (values.id && userAccountRoles) {
-			const canEditRoles = [
-				'Channel General Manager',
-				'Channel Account Manager',
-				'Channel Regional Marketing Manager',
-				'Channel Global Marketing Manager',
-				'Channel Finance Manager',
-			];
+		const canEditRoles = [
+			'Channel General Manager',
+			'Channel Account Manager',
+			'Channel Regional Marketing Manager',
+			'Channel Global Marketing Manager',
+			'Channel Finance Manager',
+		];
 
-			const userAccountRolesCanEdit = userAccountRoles.filter(
-				(userAccountRole) =>
-					canEditRoles.includes(userAccountRole.label as string)
-			).length;
+		const userAccountRolesCanEdit = userAccountRoles?.filter(
+			(userAccountRole) =>
+				canEditRoles.includes(userAccountRole.label as string)
+		).length;
 
-			if (
-				!userAccountRolesCanEdit &&
-				values.mdfRequestStatus?.key !== 'draft' &&
-				values.mdfRequestStatus?.key !== 'moreInfoRequested'
-			) {
-				return (
-					<PRMForm name="" title="MDF Request">
-						<div className="d-flex justify-content-center mt-4">
-							<ClayAlert
-								className="m-0 w-100"
-								displayType="info"
-								title="Info:"
+		if (!fieldEntries || !userAccountRoles || !companiesEntries) {
+			return <ClayLoadingIndicator />;
+		}
+
+		if (
+			values.id &&
+			userAccountRoles &&
+			!userAccountRolesCanEdit &&
+			values.mdfRequestStatus?.key !== 'draft' &&
+			values.mdfRequestStatus?.key !== 'moreInfoRequested'
+		) {
+			return (
+				<PRMForm name="" title="MDF Request">
+					<div className="d-flex justify-content-center mt-4">
+						<ClayAlert
+							className="m-0 w-100"
+							displayType="info"
+							title="Info:"
+						>
+							This MDF Request can not be edited.
+						</ClayAlert>
+					</div>
+
+					<PRMForm.Footer>
+						<div className="d-flex mr-auto">
+							<Button
+								className="mr-4"
+								displayType="secondary"
+								onClick={() => onCancel()}
 							>
-								This MDF Request can not be edited.
-							</ClayAlert>
+								Cancel
+							</Button>
 						</div>
-
-						<PRMForm.Footer>
-							<div className="d-flex mr-auto">
-								<Button
-									className="mr-4"
-									displayType="secondary"
-									onClick={() => onCancel()}
-								>
-									Cancel
-								</Button>
-							</div>
-						</PRMForm.Footer>
-					</PRMForm>
-				);
-			}
+					</PRMForm.Footer>
+				</PRMForm>
+			);
 		}
 
 		return (
@@ -263,5 +267,4 @@ const Goals = ({
 
 	return getRequestPage();
 };
-
 export default Goals;

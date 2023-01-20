@@ -91,7 +91,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		Assert.assertNotNull(amImageConfigurationEntry2);
-
 		Assert.assertEquals(
 			StringPool.BLANK, amImageConfigurationEntry2.getDescription());
 	}
@@ -304,7 +303,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		Assert.assertNotNull(amImageConfigurationEntry);
-
 		Assert.assertEquals(
 			"desc:;desc", amImageConfigurationEntry.getDescription());
 	}
@@ -331,7 +329,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		Assert.assertNotNull(amImageConfigurationEntry);
-
 		Assert.assertEquals("one:;one", amImageConfigurationEntry.getName());
 	}
 
@@ -696,22 +693,14 @@ public class AMImageUpdateConfigurationTest
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "1-bis");
 
-		Assert.assertNotNull(amImageConfigurationEntry2);
-
 		assertDisabled(amImageConfigurationEntry2);
 
-		Assert.assertNotNull(amImageConfigurationEntry2);
-
-		AMImageConfigurationEntry actualAMImageConfigurationEntry =
-			amImageConfigurationEntry2;
-
+		Assert.assertEquals("one-bis", amImageConfigurationEntry2.getName());
 		Assert.assertEquals(
-			"one-bis", actualAMImageConfigurationEntry.getName());
-		Assert.assertEquals(
-			"desc-bis", actualAMImageConfigurationEntry.getDescription());
+			"desc-bis", amImageConfigurationEntry2.getDescription());
 
 		Map<String, String> actualConfigurationEntry1Properties =
-			actualAMImageConfigurationEntry.getProperties();
+			amImageConfigurationEntry2.getProperties();
 
 		Assert.assertEquals(
 			"100", actualConfigurationEntry1Properties.get("max-height"));
@@ -801,8 +790,6 @@ public class AMImageUpdateConfigurationTest
 
 		assertEnabled(actualAMImageConfigurationEntry1);
 
-		Assert.assertNotNull(actualAMImageConfigurationEntry1);
-
 		Assert.assertEquals(
 			"one-bis", actualAMImageConfigurationEntry1.getName());
 		Assert.assertEquals(
@@ -821,8 +808,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "2");
 
 		assertEnabled(actualAMImageConfigurationEntry2);
-
-		Assert.assertNotNull(actualAMImageConfigurationEntry2);
 
 		Assert.assertEquals(
 			amImageConfigurationEntry2.getName(),
@@ -878,8 +863,6 @@ public class AMImageUpdateConfigurationTest
 
 		assertEnabled(actualAMImageConfigurationEntry1);
 
-		Assert.assertNotNull(actualAMImageConfigurationEntry1);
-
 		Assert.assertEquals(
 			amImageConfigurationEntry1.getName(),
 			actualAMImageConfigurationEntry1.getName());
@@ -900,8 +883,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "2");
 
 		assertEnabled(actualAMImageConfigurationEntry2);
-
-		Assert.assertNotNull(actualAMImageConfigurationEntry2);
 
 		Assert.assertEquals(
 			amImageConfigurationEntry2.getName(),
@@ -957,8 +938,6 @@ public class AMImageUpdateConfigurationTest
 
 		assertEnabled(actualAMImageConfigurationEntry1);
 
-		Assert.assertNotNull(actualAMImageConfigurationEntry1);
-
 		Assert.assertEquals(
 			amImageConfigurationEntry1.getName(),
 			actualAMImageConfigurationEntry1.getName());
@@ -979,8 +958,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "2");
 
 		assertEnabled(actualAMImageConfigurationEntry2);
-
-		Assert.assertNotNull(actualAMImageConfigurationEntry2);
 
 		Assert.assertEquals(
 			amImageConfigurationEntry2.getName(),
@@ -1046,8 +1023,6 @@ public class AMImageUpdateConfigurationTest
 
 		assertEnabled(actualAMImageConfigurationEntry2);
 
-		Assert.assertNotNull(actualAMImageConfigurationEntry2);
-
 		Assert.assertEquals(
 			"two-bis", actualAMImageConfigurationEntry2.getName());
 		Assert.assertEquals(
@@ -1066,8 +1041,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		assertEnabled(actualAMImageConfigurationEntry1);
-
-		Assert.assertNotNull(actualAMImageConfigurationEntry1);
 
 		Assert.assertEquals(
 			amImageConfigurationEntry1.getName(),
@@ -1125,8 +1098,6 @@ public class AMImageUpdateConfigurationTest
 
 		assertEnabled(actualAMImageConfigurationEntry2);
 
-		Assert.assertNotNull(actualAMImageConfigurationEntry2);
-
 		Assert.assertEquals(
 			amImageConfigurationEntry2.getName(),
 			actualAMImageConfigurationEntry2.getName());
@@ -1147,8 +1118,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		assertEnabled(actualAMImageConfigurationEntry1);
-
-		Assert.assertNotNull(actualAMImageConfigurationEntry1);
 
 		Assert.assertEquals(
 			amImageConfigurationEntry1.getName(),
@@ -1204,8 +1173,6 @@ public class AMImageUpdateConfigurationTest
 
 		assertEnabled(actualAMImageConfigurationEntry2);
 
-		Assert.assertNotNull(actualAMImageConfigurationEntry2);
-
 		Assert.assertEquals(
 			amImageConfigurationEntry2.getName(),
 			actualAMImageConfigurationEntry2.getName());
@@ -1226,8 +1193,6 @@ public class AMImageUpdateConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		assertEnabled(actualAMImageConfigurationEntry1);
-
-		Assert.assertNotNull(actualAMImageConfigurationEntry1);
 
 		Assert.assertEquals(
 			amImageConfigurationEntry1.getName(),

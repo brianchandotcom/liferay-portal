@@ -45,7 +45,6 @@ public abstract class BaseAMImageConfigurationTestCase {
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		Assert.assertNotNull(amImageConfigurationEntry);
-
 		Assert.assertFalse(amImageConfigurationEntry.isEnabled());
 	}
 
@@ -53,7 +52,6 @@ public abstract class BaseAMImageConfigurationTestCase {
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		Assert.assertNotNull(amImageConfigurationEntry);
-
 		Assert.assertTrue(amImageConfigurationEntry.isEnabled());
 	}
 

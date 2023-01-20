@@ -229,7 +229,6 @@ public class AMImageAddConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		Assert.assertNotNull(amImageConfigurationEntry);
-
 		Assert.assertEquals(
 			"desc:;desc", amImageConfigurationEntry.getDescription());
 	}
@@ -249,7 +248,6 @@ public class AMImageAddConfigurationTest
 				TestPropsValues.getCompanyId(), "1");
 
 		Assert.assertNotNull(amImageConfigurationEntry);
-
 		Assert.assertEquals("one:;one", amImageConfigurationEntry.getName());
 	}
 

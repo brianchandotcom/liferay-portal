@@ -161,42 +161,42 @@ function refresh_sample_minimal_workspace {
 
 	cat <<EOF >client-extension.yaml
 assemble:
-    - from: dist
-      include: angular-custom-element/
-      into: static/
+	- from: dist
+	  include: angular-custom-element/
+	  into: static/
 
 angular-custom-element:
-    cssURLs:
-        - angular-custom-element/styles.*.css
-    friendlyURLMapping: angular-custom-element
-    htmlElementName: app-component
-    instanceable: true
-    name: Angular Custom Element
-    portletCategoryName: category.remote-apps
-    type: customElement
-    urls:
-        - angular-custom-element/main.*.js
-        - angular-custom-element/polyfills.*.js
-        - angular-custom-element/runtime.*.js
-    useESM: true
+	cssURLs:
+		- angular-custom-element/styles.*.css
+	friendlyURLMapping: angular-custom-element
+	htmlElementName: app-component
+	instanceable: true
+	name: Angular Custom Element
+	portletCategoryName: category.remote-apps
+	type: customElement
+	urls:
+		- angular-custom-element/main.*.js
+		- angular-custom-element/polyfills.*.js
+		- angular-custom-element/runtime.*.js
+	useESM: true
 
 #
 # To enable live development replace the configuration sections cssURLs and urls
 # above with the following ones:
 #
 # cssURLs:
-#     - http://localhost:4200/styles.js
+# - http://localhost:4200/styles.js
 #
 # urls:
-#     - http://localhost:4200/runtime.js
-#     - http://localhost:4200/polyfills.js
-#     - http://localhost:4200/styles.js
-#     - http://localhost:4200/vendor.js
-#     - http://localhost:4200/main.js
+# - http://localhost:4200/runtime.js
+# - http://localhost:4200/polyfills.js
+# - http://localhost:4200/styles.js
+# - http://localhost:4200/vendor.js
+# - http://localhost:4200/main.js
 #
 # Then run the following command:
 #
-#        blade gw deploy && yarn start
+# blade gw deploy && yarn start
 #
 # This will deploy the client extension pointing to Angular's live development
 # server (which is usually started at http://localhost:4200) instead of bundling

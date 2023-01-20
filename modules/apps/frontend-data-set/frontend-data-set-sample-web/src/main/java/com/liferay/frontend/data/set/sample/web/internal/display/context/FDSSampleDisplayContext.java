@@ -91,7 +91,12 @@ public class FDSSampleDisplayContext {
 				"get", null, "async"),
 			new FDSActionDropdownItem(
 				portalURL + "/abc", "staging", "asyncErrorResourceNotFound",
-				"Async Resource Not Found", "get", null, "async"));
+				"Async Resource Not Found", "get", null, "async"),
+			new FDSActionDropdownItem(
+				null, "reload", "reload", "Reload Data", null, null, null),
+			new FDSActionDropdownItem(
+				null, "rectangle-split", "openSidePanel", "Open Side Panel",
+				null, null, null));
 	}
 
 	private final FDSRequestHelper _fdsRequestHelper;

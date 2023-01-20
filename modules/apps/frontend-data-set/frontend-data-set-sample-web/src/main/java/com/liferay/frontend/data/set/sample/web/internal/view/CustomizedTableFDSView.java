@@ -50,6 +50,10 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
+			"creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"sampleCustomDataRenderer")
+		).add(
 			"description", "description"
 		).add(
 			"date", "date"
@@ -68,10 +72,6 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"status")
-		).add(
-			"creator.name", "author",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"sampleCustomDataRenderer")
 		).build();
 	}
 

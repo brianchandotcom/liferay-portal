@@ -12,14 +12,76 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
+import {openModal} from 'frontend-js-web';
 import React from 'react';
 
-const SampleCustomDataRenderer = ({value}) => {
+const SampleCustomDataRenderer = ({
+	actions,
+	itemData,
+	itemId,
+	loadData,
+	openSidePanel,
+	options,
+	rootPropertyName,
+	value,
+	valuePath,
+}) => {
+	const ModalBody = ({closeModal}) => {
+		return (
+			<>
+				<div>First action label: {actions[0].label}</div>
+				<div>Item ID: {itemId}</div>
+				<div>Item color: {itemData.color}</div>
+				<div>Field label: {options.label}</div>
+				<div>First field name: {rootPropertyName}</div>
+				<div>Second field name: {valuePath[1]}</div>
+				<br />
+				<div>
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => {
+								closeModal();
+
+								loadData();
+							}}
+						>
+							Reload Data
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={() => {
+								closeModal();
+
+								openSidePanel({
+									url: 'about:blank',
+								});
+							}}
+						>
+							Open Side Panel
+						</ClayButton>
+					</ClayButton.Group>
+				</div>
+			</>
+		);
+	};
+
 	return (
 		<>
-			<ClayIcon symbol="user" />
-			{value}
+			<ClayLink
+				onClick={() =>
+					openModal({
+						bodyComponent: ModalBody,
+						title: Liferay.Language.get('details'),
+					})
+				}
+				style={{cursor: 'pointer'}}
+			>
+				{value}
+			</ClayLink>
 		</>
 	);
 };

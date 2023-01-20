@@ -26,12 +26,22 @@ export default function propsTransformer({
 		customDataRenderers: {
 			sampleCustomDataRenderer: SampleCustomDataRenderer,
 		},
-		onActionDropdownItemClick({action, itemData}) {
+		onActionDropdownItemClick({action, itemData, loadData, openSidePanel}) {
 			if (action.data.id === 'sampleMessage') {
 				alert(`${greeting} ${itemData.title}!`);
 			}
+			else if (action.data.id === 'reload') {
+				loadData();
+			}
+			else if (action.data.id === 'openSidePanel') {
+				openSidePanel({url: 'about:blank'});
+			}
 		},
-		onBulkActionItemClick({action, selectedData: {items, keyValues}}) {
+		onBulkActionItemClick({
+			action,
+			loadData,
+			selectedData: {items, keyValues},
+		}) {
 			if (action.data.id === 'sampleBulkAction') {
 				openModal({
 					bodyHTML: `
@@ -52,6 +62,8 @@ export default function propsTransformer({
 							label: 'OK',
 							onClick: ({processClose}) => {
 								processClose();
+
+								loadData();
 							},
 						},
 					],

@@ -50,7 +50,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 				{
 					clickable: true,
 					key: 'dateCreated',
-					render: (date) => dayjs(date).format('lll'),
+					render: (date) => ( <p style={{maxWidth: "11ch"}}> {dayjs(date).format('lll')}</p>),
 					size: 'sm',
 					value: i18n.translate('create-date'),
 				},

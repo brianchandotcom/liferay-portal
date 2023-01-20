@@ -233,70 +233,6 @@ public class FolderSearchFacetDisplayContextTest
 	}
 
 	@Test
-	public void testOrderByTermFrequencyAscending() throws Exception {
-		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
-			new String[] {"charlie", "delta", "bravo", "alpha"},
-			new int[] {6, 5, 5, 4});
-
-		setUpTermCollectors(_facetCollector, termCollectors);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			null, "count:asc");
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsFrequencyAscending,
-			expectedFrequenciesFrequencyAscending);
-	}
-
-	@Test
-	public void testOrderByTermFrequencyDescending() throws Exception {
-		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
-			new String[] {"alpha", "delta", "bravo", "charlie"},
-			new int[] {4, 5, 5, 6});
-
-		setUpTermCollectors(_facetCollector, termCollectors);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			null, "count:desc");
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsFrequencyDescending,
-			expectedFrequenciesFrequencyDescending);
-	}
-
-	@Test
-	public void testOrderByTermValueAscending() throws Exception {
-		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
-			"zeroFolderId", "bravo", "alpha", "bravo", "charlie");
-
-		setUpTermCollectors(_facetCollector, termCollectors);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			null, "key:asc");
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsValueAscending, expectedFrequenciesValueAscending);
-	}
-
-	@Test
-	public void testOrderByTermValueDescending() throws Exception {
-		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
-			"zeroFolderId", "bravo", "alpha", "bravo", "charlie");
-
-		setUpTermCollectors(_facetCollector, termCollectors);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			null, "key:desc");
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsValueDescending, expectedFrequenciesValueDescending);
-	}
-
-	@Test
 	public void testViewPermissionGrantedForSearchResultButDeniedForParentFolder()
 		throws Exception {
 
@@ -325,6 +261,24 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 21,
 			_getTotalBucketDisplayContextFrequencyCount(bucketDisplayContexts));
+	}
+
+	@Override
+	protected void testOrderBy(
+			String[] terms, int[] frequencies, String order,
+			String[] expectedTerms, int[] expectedFrequencies)
+		throws Exception {
+
+		setUpTermCollectors(
+			_facetCollector,
+			_addFoldersAndCreateTermCollectors(terms, frequencies));
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			null, order);
+
+		assertFacetOrder(
+			facetDisplayContext.getBucketDisplayContexts(), expectedTerms,
+			expectedFrequencies);
 	}
 
 	private void _addFolder(long folderId, String title) throws Exception {

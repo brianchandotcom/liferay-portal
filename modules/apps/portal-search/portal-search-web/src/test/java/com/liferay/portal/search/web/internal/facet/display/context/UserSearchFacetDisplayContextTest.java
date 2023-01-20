@@ -181,70 +181,21 @@ public class UserSearchFacetDisplayContextTest
 		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
-	@Test
-	public void testOrderByTermFrequencyAscending() throws Exception {
-		String[] userNames = {"charlie", "delta", "bravo", "alpha"};
+	@Override
+	protected void testOrderBy(
+			String[] userNames, int[] frequencies, String order,
+			String[] expectedUserNames, int[] expectedFrequencies)
+		throws Exception {
 
 		setUpTermCollectors(
-			_facetCollector,
-			getTermCollectors(userNames, new int[] {6, 5, 5, 4}));
+			_facetCollector, getTermCollectors(userNames, frequencies));
 
 		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			StringPool.BLANK, "count:asc");
+			StringPool.BLANK, order);
 
 		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsFrequencyAscending,
-			expectedFrequenciesFrequencyAscending);
-	}
-
-	@Test
-	public void testOrderByTermFrequencyDescending() throws Exception {
-		String[] userNames = {"alpha", "delta", "bravo", "charlie"};
-
-		setUpTermCollectors(
-			_facetCollector,
-			getTermCollectors(userNames, new int[] {4, 5, 5, 6}));
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			StringPool.BLANK, "count:desc");
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsFrequencyDescending,
-			expectedFrequenciesFrequencyDescending);
-	}
-
-	@Test
-	public void testOrderByTermValueAscending() throws Exception {
-		setUpTermCollectors(
-			_facetCollector,
-			getTermCollectors(
-				new String[] {"bravo", "alpha", "bravo", "charlie"},
-				new int[] {2, 3, 4, 5}));
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			StringPool.BLANK, "key:asc");
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsValueAscending, expectedFrequenciesValueAscending);
-	}
-
-	@Test
-	public void testOrderByTermValueDescending() throws Exception {
-		setUpTermCollectors(
-			_facetCollector,
-			getTermCollectors(
-				new String[] {"bravo", "alpha", "bravo", "charlie"},
-				new int[] {2, 3, 4, 5}));
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			StringPool.BLANK, "key:desc");
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(),
-			expectedTermsValueDescending, expectedFrequenciesValueDescending);
+			facetDisplayContext.getBucketDisplayContexts(), expectedUserNames,
+			expectedFrequencies);
 	}
 
 	private final Facet _facet = Mockito.mock(Facet.class);

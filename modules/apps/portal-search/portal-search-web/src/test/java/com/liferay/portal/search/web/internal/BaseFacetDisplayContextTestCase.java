@@ -84,6 +84,40 @@ public abstract class BaseFacetDisplayContextTestCase {
 		Assert.assertTrue(facetDisplayContext.isRenderNothing());
 	}
 
+	@Test
+	public void testOrderByTermFrequencyAscending() throws Exception {
+		testOrderBy(
+			new String[] {"charlie", "delta", "bravo", "alpha"},
+			new int[] {6, 5, 5, 4}, "count:asc",
+			expectedTermsFrequencyAscending,
+			expectedFrequenciesFrequencyAscending);
+	}
+
+	@Test
+	public void testOrderByTermFrequencyDescending() throws Exception {
+		testOrderBy(
+			new String[] {"alpha", "delta", "bravo", "charlie"},
+			new int[] {4, 5, 5, 6}, "count:desc",
+			expectedTermsFrequencyDescending,
+			expectedFrequenciesFrequencyDescending);
+	}
+
+	@Test
+	public void testOrderByTermValueAscending() throws Exception {
+		testOrderBy(
+			new String[] {"bravo", "alpha", "bravo", "charlie"},
+			new int[] {2, 3, 4, 5}, "key:asc", expectedTermsValueAscending,
+			expectedFrequenciesValueAscending);
+	}
+
+	@Test
+	public void testOrderByTermValueDescending() throws Exception {
+		testOrderBy(
+			new String[] {"bravo", "alpha", "bravo", "charlie"},
+			new int[] {2, 3, 4, 5}, "key:desc", expectedTermsValueDescending,
+			expectedFrequenciesValueDescending);
+	}
+
 	protected static void assertFacetOrder(
 		List<BucketDisplayContext> bucketDisplayContexts,
 		String[] expectedDisplayText, int[] expectedFrequencies) {
@@ -249,6 +283,12 @@ public abstract class BaseFacetDisplayContextTestCase {
 		).when(
 			facetCollector
 		).getTermCollectors();
+	}
+
+	protected void testOrderBy(
+			String[] terms, int[] frequencies, String order,
+			String[] expectedTerms, int[] expectedFrequencies)
+		throws Exception {
 	}
 
 	protected int[] expectedFrequenciesFrequencyAscending = {4, 5, 5, 6};

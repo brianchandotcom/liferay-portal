@@ -187,41 +187,8 @@ public class AssetTagsSearchFacetDisplayContextTest
 		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
-	@Test
-	public void testOrderByTermFrequencyAscending() throws Exception {
-		_testOrderBy(
-			new String[] {"charlie", "delta", "bravo", "alpha"},
-			new int[] {6, 5, 5, 4}, "count:asc",
-			expectedTermsFrequencyAscending,
-			expectedFrequenciesFrequencyAscending);
-	}
-
-	@Test
-	public void testOrderByTermFrequencyDescending() throws Exception {
-		_testOrderBy(
-			new String[] {"alpha", "delta", "bravo", "charlie"},
-			new int[] {4, 5, 5, 6}, "count:desc",
-			expectedTermsFrequencyDescending,
-			expectedFrequenciesFrequencyDescending);
-	}
-
-	@Test
-	public void testOrderByTermValueAscending() throws Exception {
-		_testOrderBy(
-			new String[] {"bravo", "alpha", "bravo", "charlie"},
-			new int[] {2, 3, 4, 5}, "key:asc", expectedTermsValueAscending,
-			expectedFrequenciesValueAscending);
-	}
-
-	@Test
-	public void testOrderByTermValueDescending() throws Exception {
-		_testOrderBy(
-			new String[] {"bravo", "alpha", "bravo", "charlie"},
-			new int[] {2, 3, 4, 5}, "key:desc", expectedTermsValueDescending,
-			expectedFrequenciesValueDescending);
-	}
-
-	private void _testOrderBy(
+	@Override
+	protected void testOrderBy(
 			String[] terms, int[] frequencies, String order,
 			String[] expectedTerms, int[] expectedFrequencies)
 		throws Exception {

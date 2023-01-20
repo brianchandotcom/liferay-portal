@@ -60,6 +60,7 @@ public class AssetEntriesSearchFacetDisplayContextTest
 	public void testEmptySearchResults() throws Exception {
 	}
 
+	@Override
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
 		String type1 = RandomTestUtil.randomString();
@@ -70,19 +71,10 @@ public class AssetEntriesSearchFacetDisplayContextTest
 
 		int[] expectedFrequencies = {1, 2, 3};
 
-		_mockResourceActions(classNames);
-
-		_setUpTermCollectors(_facetCollector, classNames);
-
-		AssetEntriesSearchFacetDisplayContext
-			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
-				classNames, "count:asc");
-
-		assertFacetOrder(
-			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
-			classNames, expectedFrequencies);
+		_testOrderBy(classNames, "count:asc", classNames, expectedFrequencies);
 	}
 
+	@Override
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
 		String type1 = RandomTestUtil.randomString();
@@ -94,19 +86,11 @@ public class AssetEntriesSearchFacetDisplayContextTest
 
 		int[] expectedFrequencies = {3, 2, 1};
 
-		_mockResourceActions(classNames);
-
-		_setUpTermCollectors(_facetCollector, classNames);
-
-		AssetEntriesSearchFacetDisplayContext
-			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
-				classNames, "count:desc");
-
-		assertFacetOrder(
-			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
-			expectedClassNames, expectedFrequencies);
+		_testOrderBy(
+			classNames, "count:desc", expectedClassNames, expectedFrequencies);
 	}
 
+	@Override
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		String[] classNames = {"bravo", "delta", "alpha", "charlie"};
@@ -114,19 +98,11 @@ public class AssetEntriesSearchFacetDisplayContextTest
 
 		int[] expectedFrequencies = {3, 1, 4, 2};
 
-		_mockResourceActions(classNames);
-
-		_setUpTermCollectors(_facetCollector, classNames);
-
-		AssetEntriesSearchFacetDisplayContext
-			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
-				classNames, "key:asc");
-
-		assertFacetOrder(
-			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
-			expectedClassNames, expectedFrequencies);
+		_testOrderBy(
+			classNames, "key:asc", expectedClassNames, expectedFrequencies);
 	}
 
+	@Override
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
 		String[] classNames = {"bravo", "delta", "alpha", "charlie"};
@@ -134,17 +110,8 @@ public class AssetEntriesSearchFacetDisplayContextTest
 
 		int[] expectedFrequencies = {2, 4, 1, 3};
 
-		_mockResourceActions(classNames);
-
-		_setUpTermCollectors(_facetCollector, classNames);
-
-		AssetEntriesSearchFacetDisplayContext
-			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
-				classNames, "key:desc");
-
-		assertFacetOrder(
-			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
-			expectedClassNames, expectedFrequencies);
+		_testOrderBy(
+			classNames, "key:desc", expectedClassNames, expectedFrequencies);
 	}
 
 	private AssetEntriesSearchFacetDisplayContext _createDisplayContext(
@@ -206,6 +173,24 @@ public class AssetEntriesSearchFacetDisplayContextTest
 
 			frequency++;
 		}
+	}
+
+	private void _testOrderBy(
+			String[] classNames, String order, String[] expectedClassNames,
+			int[] expectedFrequencies)
+		throws Exception {
+
+		_mockResourceActions(classNames);
+
+		_setUpTermCollectors(_facetCollector, classNames);
+
+		AssetEntriesSearchFacetDisplayContext
+			assetEntriesSearchFacetDisplayContext = _createDisplayContext(
+				classNames, order);
+
+		assertFacetOrder(
+			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts(),
+			expectedClassNames, expectedFrequencies);
 	}
 
 	private final Facet _facet = Mockito.mock(Facet.class);

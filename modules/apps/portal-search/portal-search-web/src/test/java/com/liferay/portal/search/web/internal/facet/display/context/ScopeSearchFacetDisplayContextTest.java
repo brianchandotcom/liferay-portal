@@ -202,40 +202,6 @@ public class ScopeSearchFacetDisplayContextTest
 		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
-	@Test
-	public void testOrderByTermFrequencyAscending() throws Exception {
-		_testOrderBy(
-			new String[] {"charlie", "delta", "bravo", "alpha"},
-			new int[] {6, 5, 5, 4}, "count:asc",
-			expectedTermsFrequencyAscending,
-			expectedFrequenciesFrequencyAscending);
-	}
-
-	@Test
-	public void testOrderByTermFrequencyDescending() throws Exception {
-		_testOrderBy(
-			new String[] {"alpha", "delta", "bravo", "charlie"},
-			new int[] {4, 5, 5, 6}, "count:desc",
-			expectedTermsFrequencyDescending,
-			expectedFrequenciesFrequencyDescending);
-	}
-
-	@Test
-	public void testOrderByTermValueAscending() throws Exception {
-		_testOrderBy(
-			new String[] {"bravo", "alpha", "bravo", "charlie"},
-			new int[] {2, 3, 4, 5}, "key:asc", expectedTermsValueAscending,
-			expectedFrequenciesValueAscending);
-	}
-
-	@Test
-	public void testOrderByTermValueDescending() throws Exception {
-		_testOrderBy(
-			new String[] {"bravo", "alpha", "bravo", "charlie"},
-			new int[] {2, 3, 4, 5}, "key:desc", expectedTermsValueDescending,
-			expectedFrequenciesValueDescending);
-	}
-
 	protected Group createGroup(long groupId, String name) throws Exception {
 		Group group = Mockito.mock(Group.class);
 
@@ -254,6 +220,23 @@ public class ScopeSearchFacetDisplayContextTest
 		).getGroupId();
 
 		return group;
+	}
+
+	@Override
+	protected void testOrderBy(
+			String[] groupNames, int[] frequencies, String order,
+			String[] expectedGroupNames, int[] expectedFrequencies)
+		throws Exception {
+
+		setUpTermCollectors(
+			_facetCollector, _getTermCollectors(groupNames, frequencies));
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			StringPool.BLANK, order);
+
+		assertFacetOrder(
+			facetDisplayContext.getBucketDisplayContexts(), expectedGroupNames,
+			expectedFrequencies);
 	}
 
 	private void _addGroup(long groupId, String name) throws Exception {
@@ -280,22 +263,6 @@ public class ScopeSearchFacetDisplayContextTest
 		}
 
 		return termCollectors;
-	}
-
-	private void _testOrderBy(
-			String[] groupNames, int[] frequencies, String order,
-			String[] expectedGroupNames, int[] expectedFrequencies)
-		throws Exception {
-
-		setUpTermCollectors(
-			_facetCollector, _getTermCollectors(groupNames, frequencies));
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			StringPool.BLANK, order);
-
-		assertFacetOrder(
-			facetDisplayContext.getBucketDisplayContexts(), expectedGroupNames,
-			expectedFrequencies);
 	}
 
 	private final Facet _facet = Mockito.mock(Facet.class);

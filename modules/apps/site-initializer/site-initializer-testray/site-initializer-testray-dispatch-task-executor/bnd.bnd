@@ -17,4 +17,3 @@ Import-Package:\
 	!org.joda.convert,\
 	\
 	*
--dsannotations-options: inherit

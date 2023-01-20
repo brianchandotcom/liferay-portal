@@ -19,6 +19,8 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -31,8 +33,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayDispatchTaskExecutorHelper;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.autofill.SiteInitializerTestrayAutoFillHelper;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutoFillUtil;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayObjectUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,8 +74,7 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 
 		User user = _userLocalService.getUser(dispatchTrigger.getUserId());
 
-		_siteInitializerTestrayDispatchTaskExecutorHelper.
-			createDefaultDTOConverterContext(user);
+		SiteInitializerTestrayObjectUtil.createDefaultDTOConverterContext(user);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -86,8 +87,8 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
-			_siteInitializerTestrayDispatchTaskExecutorHelper.
-				loadObjectDefinitions(dispatchTrigger.getCompanyId());
+			SiteInitializerTestrayObjectUtil.loadObjectDefinitions(
+				dispatchTrigger.getCompanyId(), _objectDefinitionLocalService);
 
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 		}
@@ -120,19 +121,19 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 			unicodeProperties.getProperty("objectEntryId2"));
 
 		ObjectEntry objectEntry1 =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
-				autoFillType, objectEntryId1);
+			SiteInitializerTestrayObjectUtil.getObjectEntry(
+				autoFillType, objectEntryId1, _objectEntryManager);
 		ObjectEntry objectEntry2 =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
-				autoFillType, objectEntryId2);
+			SiteInitializerTestrayObjectUtil.getObjectEntry(
+				autoFillType, objectEntryId2, _objectEntryManager);
 
 		if (StringUtil.equals(autoFillType, "Build")) {
-			_siteInitializerTestrayAutoFillHelper.testrayAutoFillBuilds(
-				companyId, objectEntry1, objectEntry2);
+			SiteInitializerTestrayAutoFillUtil.testrayAutoFillBuilds(
+				companyId, objectEntry1, objectEntry2, _objectEntryManager);
 		}
 		else if (StringUtil.equals(autoFillType, "Run")) {
-			_siteInitializerTestrayAutoFillHelper.testrayAutoFillRuns(
-				companyId, objectEntry1, objectEntry2);
+			SiteInitializerTestrayAutoFillUtil.testrayAutoFillRuns(
+				companyId, objectEntry1, objectEntry2, _objectEntryManager);
 		}
 		else {
 			_log.error("Auto fill type selected is not available");
@@ -143,12 +144,10 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		SiteInitializerTestrayAutoFillDispatchTaskExecutor.class);
 
 	@Reference
-	private SiteInitializerTestrayAutoFillHelper
-		_siteInitializerTestrayAutoFillHelper;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Reference
-	private SiteInitializerTestrayDispatchTaskExecutorHelper
-		_siteInitializerTestrayDispatchTaskExecutorHelper;
+	@Reference(target = "(object.entry.manager.storage.type=default)")
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

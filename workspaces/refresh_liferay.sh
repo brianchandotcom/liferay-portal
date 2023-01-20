@@ -14,11 +14,13 @@ function main {
 
 		cp -R sample-minimal-workspace/ ${dir}
 
-		rm -fr ${dir}/client-extensions/*
+		rm -fr ${dir}/client-extensions/
 
 		if [ -e ${dir}.temp/client-extensions ]
 		then
-			cp -R ${dir}.temp/client-extensions/* ${dir}/client-extensions
+			cp -R ${dir}.temp/client-extensions/ ${dir}
+		else
+			mkdir -p ${dir}/client-extensions
 		fi
 
 		rm -fr ${dir}.temp

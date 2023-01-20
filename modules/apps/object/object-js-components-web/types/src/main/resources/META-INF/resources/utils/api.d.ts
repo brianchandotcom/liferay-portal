@@ -12,6 +12,33 @@
  * details.
  */
 
+interface HTTPMethod {
+	href: string;
+	method: string;
+}
+interface Actions {
+	delete: HTTPMethod;
+	get: HTTPMethod;
+	permissions: HTTPMethod;
+	update: HTTPMethod;
+}
+interface PickListItem {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
+interface PickList {
+	actions: Actions;
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	listTypeEntries: PickListItem[];
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
+declare type NotificationTemplateType = 'email' | 'userNotification';
 export interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
@@ -32,16 +59,7 @@ export interface NotificationTemplate {
 	to: LocalizedValue<string>;
 	type: NotificationTemplateType;
 }
-declare type Recipients = {
-	bcc: string;
-	cc: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	to: LocalizedValue<string>;
-};
 declare type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
-declare type RecipientType = 'role' | 'term' | 'user';
-declare type NotificationTemplateType = 'email' | 'userNotification';
 interface ObjectRelationship {
 	deletionType: string;
 	id: number;
@@ -57,38 +75,23 @@ interface ObjectRelationship {
 	reverse: boolean;
 	type: ObjectRelationshipType;
 }
-interface PickListItem {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-interface PickList {
-	actions: Actions;
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	listTypeEntries: PickListItem[];
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-interface Actions {
-	delete: HTTPMethod;
-	get: HTTPMethod;
-	permissions: HTTPMethod;
-	update: HTTPMethod;
-}
-interface HTTPMethod {
-	href: string;
-	method: string;
-}
+declare type RecipientType = 'role' | 'term' | 'user';
+declare type Recipients = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};
 export declare function deleteObjectDefinitions(id: number): Promise<void>;
 export declare function deleteObjectRelationships(id: number): Promise<void>;
+export declare function deletePickList(pickListId: number): Promise<void>;
+export declare function deletePickListItem(id: number): Promise<void>;
 export declare function fetchJSON<T>(
 	input: RequestInfo,
 	init?: RequestInit
 ): Promise<T>;
+export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getList<T>(url: string): Promise<T[]>;
 export declare function getNotificationTemplateByExternalReferenceCode(
 	notificationTemplateExternalReferenceCode: string
@@ -105,63 +108,60 @@ export declare function getObjectDefinitionByExternalReferenceCode(
 export declare function getObjectDefinitionById(
 	objectDefinitionId: number
 ): Promise<ObjectDefinition>;
-export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getObjectDefinitions(
 	parameters?: string
 ): Promise<ObjectDefinition[]>;
 export declare function getObjectField(
 	objectFieldId: number
 ): Promise<ObjectField>;
-export declare function getObjectFieldsById(
-	objectDefinitionId: number
-): Promise<ObjectField[]>;
 export declare function getObjectFieldsByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectField[]>;
-export declare function getObjectRelationshipsById(
+export declare function getObjectFieldsById(
 	objectDefinitionId: number
-): Promise<ObjectRelationship[]>;
+): Promise<ObjectField[]>;
 export declare function getObjectRelationshipsByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectRelationship[]>;
+export declare function getObjectRelationshipsById(
+	objectDefinitionId: number
+): Promise<ObjectRelationship[]>;
 export declare function getPickList(pickListId: number): Promise<PickList>;
-export declare function getPickLists(): Promise<PickList[]>;
 export declare function getPickListItems(
 	pickListId: number
 ): Promise<PickListItem[]>;
-export declare function save(
-	url: string,
-	item: unknown,
-	method?: 'PUT' | 'POST'
-): Promise<void>;
-export declare function updateRelationship({
-	objectRelationshipId,
-	...others
-}: ObjectRelationship): Promise<void>;
+export declare function getPickLists(): Promise<PickList[]>;
 export declare function getRelationship<T>(
 	objectRelationshipId: number
 ): Promise<T>;
-export declare function updatePickList({
-	externalReferenceCode,
-	id,
-	name_i18n,
-}: Partial<PickList>): Promise<void>;
-export declare function deletePickList(pickListId: number): Promise<void>;
-export declare function addPickListItem({
-	id,
-	key,
-	name_i18n,
-}: Partial<PickListItem>): Promise<void>;
-export declare function deletePickListItem(id: number): Promise<void>;
-export declare function updatePickListItem({
-	externalReferenceCode,
-	id,
-	name_i18n,
-}: Partial<PickListItem>): Promise<void>;
 export declare function publishObjectDefinitionById(
 	objectDefinitionId: number
 ): Promise<Response>;
 export declare function putObjectDefinitionByExternalReferenceCode(
 	values: Partial<ObjectDefinition>
 ): Promise<Response>;
+export declare function save(
+	url: string,
+	item: unknown,
+	method?: 'PUT' | 'POST'
+): Promise<void>;
+export declare function addPickListItem({
+	id,
+	key,
+	name_i18n,
+}: Partial<PickListItem>): Promise<void>;
+export declare function updatePickList({
+	externalReferenceCode,
+	id,
+	name_i18n,
+}: Partial<PickList>): Promise<void>;
+export declare function updatePickListItem({
+	externalReferenceCode,
+	id,
+	name_i18n,
+}: Partial<PickListItem>): Promise<void>;
+export declare function updateRelationship({
+	objectRelationshipId,
+	...others
+}: ObjectRelationship): Promise<void>;
 export {};

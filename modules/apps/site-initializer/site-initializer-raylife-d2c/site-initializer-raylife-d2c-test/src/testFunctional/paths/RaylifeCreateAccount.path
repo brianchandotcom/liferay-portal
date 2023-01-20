@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CREATE_NEW_ACCOUNT</td>
+	<td>//*[@class= 'align-items-center d-flex mr-3 mt-6 btn btn-secondary' and contains(.,'CREATE NEW ACCOUNT')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_FIELD</td>
 	<td>//input[contains(@name, 'email')]</td>
 	<td></td>

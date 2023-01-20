@@ -1532,6 +1532,11 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 		top: 3.5rem;
 		width: 2rem;
 
+		svg {
+			fill: var(--white);
+			margin-top: 0;
+		}
+
 		&:hover {
 			border-color: var(--white);
 			opacity: 1;

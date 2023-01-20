@@ -78,7 +78,7 @@ public class EditImageConfigurationEntryMVCActionCommand
 			"max-width", ParamUtil.getString(actionRequest, "maxWidth")
 		).build();
 
-		AMImageConfigurationEntry nullableAMImageConfigurationEntry =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				themeDisplay.getCompanyId(), uuid);
 
@@ -111,10 +111,7 @@ public class EditImageConfigurationEntryMVCActionCommand
 		try {
 			String message = "";
 
-			if (nullableAMImageConfigurationEntry != null) {
-				AMImageConfigurationEntry amImageConfigurationEntry =
-					nullableAMImageConfigurationEntry;
-
+			if (amImageConfigurationEntry != null) {
 				if (!_isConfigurationEntryEditable(
 						themeDisplay.getCompanyId(),
 						amImageConfigurationEntry)) {
@@ -149,7 +146,7 @@ public class EditImageConfigurationEntryMVCActionCommand
 				}
 			}
 			else {
-				AMImageConfigurationEntry amImageConfigurationEntry =
+				amImageConfigurationEntry =
 					_amImageConfigurationHelper.addAMImageConfigurationEntry(
 						themeDisplay.getCompanyId(), name, description, newUuid,
 						properties);

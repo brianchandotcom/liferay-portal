@@ -18,6 +18,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.web.internal.constants.AMPortletKeys;
 import com.liferay.adaptive.media.web.internal.constants.AMWebKeys;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -86,20 +87,11 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		String[] rowIdsAMImageConfigurationEntry = ParamUtil.getStringValues(
 			resourceRequest, "rowIdsAMImageConfigurationEntry");
 
-		List<AMImageConfigurationEntry> amImageConfigurationEntries =
-			new ArrayList<>();
-
-		for (String entryUuid : rowIdsAMImageConfigurationEntry) {
-			AMImageConfigurationEntry amImageConfigurationEntry =
+		return TransformUtil.transformToList(
+			rowIdsAMImageConfigurationEntry,
+			entryUuid ->
 				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					themeDisplay.getCompanyId(), entryUuid);
-
-			if (amImageConfigurationEntry != null) {
-				amImageConfigurationEntries.add(amImageConfigurationEntry);
-			}
-		}
-
-		return amImageConfigurationEntries;
+					themeDisplay.getCompanyId(), entryUuid));
 	}
 
 	@Reference

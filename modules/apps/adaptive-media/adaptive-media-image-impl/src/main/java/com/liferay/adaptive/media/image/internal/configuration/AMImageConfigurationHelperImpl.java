@@ -237,17 +237,16 @@ public class AMImageConfigurationHelperImpl
 	public Collection<AMImageConfigurationEntry> getAMImageConfigurationEntries(
 		long companyId) {
 
-		List<AMImageConfigurationEntry> amImageConfigurationEntryList =
+		List<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_getAMImageConfigurationEntries(companyId);
 
-		amImageConfigurationEntryList = ListUtil.filter(
-			amImageConfigurationEntryList,
-			AMImageConfigurationEntry::isEnabled);
+		amImageConfigurationEntries = ListUtil.filter(
+			amImageConfigurationEntries, AMImageConfigurationEntry::isEnabled);
 
-		amImageConfigurationEntryList.sort(
+		amImageConfigurationEntries.sort(
 			Comparator.comparing(AMImageConfigurationEntry::getName));
 
-		return amImageConfigurationEntryList;
+		return amImageConfigurationEntries;
 	}
 
 	@Override
@@ -255,36 +254,36 @@ public class AMImageConfigurationHelperImpl
 		long companyId,
 		Predicate<? super AMImageConfigurationEntry> predicate) {
 
-		List<AMImageConfigurationEntry> amImageConfigurationEntryList =
+		List<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_getAMImageConfigurationEntries(companyId);
 
-		amImageConfigurationEntryList = ListUtil.filter(
-			amImageConfigurationEntryList,
+		amImageConfigurationEntries = ListUtil.filter(
+			amImageConfigurationEntries,
 			(Predicate<AMImageConfigurationEntry>)predicate);
 
-		amImageConfigurationEntryList.sort(
+		amImageConfigurationEntries.sort(
 			Comparator.comparing(AMImageConfigurationEntry::getName));
 
-		return amImageConfigurationEntryList;
+		return amImageConfigurationEntries;
 	}
 
 	@Override
 	public AMImageConfigurationEntry getAMImageConfigurationEntry(
 		long companyId, String configurationEntryUUID) {
 
-		List<AMImageConfigurationEntry> amImageConfigurationEntryList =
+		List<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_getAMImageConfigurationEntries(companyId);
 
-		amImageConfigurationEntryList = ListUtil.filter(
-			amImageConfigurationEntryList,
+		amImageConfigurationEntries = ListUtil.filter(
+			amImageConfigurationEntries,
 			amImageConfigurationEntry -> configurationEntryUUID.equals(
 				amImageConfigurationEntry.getUUID()));
 
-		if (amImageConfigurationEntryList.isEmpty()) {
+		if (amImageConfigurationEntries.isEmpty()) {
 			return null;
 		}
 
-		return amImageConfigurationEntryList.get(0);
+		return amImageConfigurationEntries.get(0);
 	}
 
 	@Override

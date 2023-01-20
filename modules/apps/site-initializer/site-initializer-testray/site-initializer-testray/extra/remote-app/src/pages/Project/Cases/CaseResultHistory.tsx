@@ -12,6 +12,8 @@
  * details.
  */
 
+import { useParams } from 'react-router-dom';
+
 import Code from '../../../components/Code';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
@@ -29,12 +31,17 @@ type CaseResultHistoryProps = {
 const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 	listViewProps,
 	tableProps,
-}) => (
+
+	
+}) => { 
+	const {caseResultId} = useParams();
+
+	return(
 	<ListView
 		initialContext={{
 			columns: {
 				caseType: false,
-				dateCreated: false,
+				dateCreated: true,
 				dateModified: false,
 				issues: false,
 				team: false,
@@ -66,13 +73,13 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					clickable: true,
 					key: 'product-version',
 					render: (_, {build}) => build?.productVersion?.name,
+					thunkableTitle: true,
 					value: i18n.translate('product-version'),
 				},
 				{
 					clickable: true,
 					key: 'run',
 					render: (run) => run?.externalReferencePK,
-					size: 'lg',
 					value: i18n.translate('environment'),
 				},
 				{
@@ -105,6 +112,15 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 				size: 'xl',
 				value: i18n.translate('errors'),				
 			},
+		],
+		highlight : (items) => {
+			if (items.id === Number(caseResultId)) {
+				return true;
+			}
+
+			return false;
+		},
+			rowWrap: true,
 			...tableProps,
 		}}
 		transformData={(response) =>
@@ -112,6 +128,6 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 		}
 		{...listViewProps}
 	/>
-);
+)};
 
 export default CaseResultHistory;

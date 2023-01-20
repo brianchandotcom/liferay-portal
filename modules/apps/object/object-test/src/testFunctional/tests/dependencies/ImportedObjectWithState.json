@@ -1,0 +1,201 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableObjectEntryHistory": false,
+	"externalReferenceCode": "dbda8d2c-d51e-beac-0a7f-3fe93228957c",
+	"label": {
+		"en_US": "Imported Object With State"
+	},
+	"name": "ImportedObjectWithState",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "6f2a7dfb-f226-6583-2596-0022cafe10b8",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "d8885768-b088-480b-0e9e-46fb5ccce450",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "5dc26343-a958-e712-1cbb-9e60cc52835d",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "externalReferenceCode",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"defaultValue": "PicklistItemTest",
+			"externalReferenceCode": "7d33b6e7-a937-b3a6-4d09-b43f1872f3ac",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Field Picklist"
+			},
+			"listTypeDefinitionExternalReferenceCode": "dfce98ab-b69a-34cb-f27d-3fb5ceda65a5",
+			"name": "fieldPicklist",
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow",
+					"value": {
+						"objectStates": [
+							{
+								"key": "PicklistItemTest",
+								"objectStateTransitions": [
+								]
+							}
+						]
+					}
+				}
+			],
+			"required": true,
+			"state": true,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"externalReferenceCode": "0a6f140b-347c-4540-85f4-b5fafd683f7c",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "d0480a50-2ef0-4cdb-e744-c40c607d6708",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "df2badee-d43d-57e4-0546-9033da5fd86d",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "control_panel.object",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Imported Object With State"
+	},
+	"portlet": false,
+	"restContextPath": "/o/c/importedobjectwithstates",
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": false,
+	"titleObjectFieldName": "id"
+}

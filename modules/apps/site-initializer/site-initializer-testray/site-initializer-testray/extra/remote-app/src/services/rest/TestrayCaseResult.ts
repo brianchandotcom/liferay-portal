@@ -193,12 +193,17 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 	public async update(
 		id: number,
 		data: Partial<
-			CaseResultForm & {defaultMessageId?: number; issues: string[]}
+			CaseResultForm & {
+				defaultMessageId?: number;
+				issues: string[];
+			}
 		>
 	): Promise<TestrayCaseResult> {
 		const issues = data.issues || [];
 
-		await this.assignCaseResultIssue(id, issues);
+		if (data.issues) {
+			await this.assignCaseResultIssue(id, issues);
+		}
 
 		if (data.comment) {
 			const {mbMessage, mbThreadId} = await this.addComment(data);

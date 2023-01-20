@@ -80,6 +80,7 @@ export default function CartQuickAdd() {
 						product.skus.forEach((sku) =>
 							formattedProducts.push({
 								...sku,
+								chipLabel: sku.sku,
 								label: name,
 								value: sku.sku,
 							})
@@ -88,6 +89,7 @@ export default function CartQuickAdd() {
 					else {
 						formattedProducts.push({
 							...product,
+							chipLabel: skus[0].sku,
 							label: name,
 							value: skus[0].sku,
 						});
@@ -163,6 +165,10 @@ export default function CartQuickAdd() {
 						className="p3"
 						inputName="searchProducts"
 						items={selectedProducts}
+						locator={{
+							label: 'chipLabel',
+							value: 'value',
+						}}
 						menuRenderer={ProductAutocompleteList}
 						onChange={setProductsQuery}
 						onItemsChange={(newItems) => {
@@ -184,11 +190,19 @@ export default function CartQuickAdd() {
 						sourceItems={formattedProducts.filter((product) => {
 							const {label, value} = product;
 							const lowerCaseValue = productsQuery.toLowerCase();
+							const purchasableProduct = product.sku
+								? product.purchasable
+								: product.skus[0].purchasable;
 
-							if (!selectedProducts.includes(product)) {
+							if (
+								!selectedProducts.includes(product) &&
+								purchasableProduct
+							) {
 								return (
-									label.toLowerCase().match(lowerCaseValue) ||
-									value.toLowerCase().match(lowerCaseValue)
+									label
+										.toLowerCase()
+										.includes(lowerCaseValue) ||
+									value.toLowerCase().includes(lowerCaseValue)
 								);
 							}
 						})}

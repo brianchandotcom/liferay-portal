@@ -241,7 +241,8 @@ public class ObjectFieldUtil {
 				}
 
 				listTypeEntryLocalService.addListTypeEntry(
-					userId, listTypeDefinition.getListTypeDefinitionId(), key,
+					null, userId, listTypeDefinition.getListTypeDefinitionId(),
+					key,
 					Collections.singletonMap(LocaleUtil.getDefault(), key));
 			}
 		}

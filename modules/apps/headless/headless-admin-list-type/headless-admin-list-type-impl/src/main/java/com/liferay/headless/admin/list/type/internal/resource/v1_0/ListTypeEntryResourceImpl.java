@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -124,14 +125,35 @@ public class ListTypeEntryResourceImpl
 	}
 
 	@Override
-	public ListTypeEntry postListTypeDefinitionListTypeEntry(
-			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
+	public ListTypeEntry getListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception {
 
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),
+			_listTypeEntryService.getListTypeEntryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId()));
+	}
+
+	@Override
+	public ListTypeEntry postListTypeDefinitionListTypeEntry(
+			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886"))) {
+			return ListTypeEntryUtil.toListTypeEntry(
+				null, contextAcceptLanguage.getPreferredLocale(),
+				_listTypeEntryService.addListTypeEntry(
+					null, listTypeDefinitionId, listTypeEntry.getKey(),
+					LocalizedMapUtil.getLocalizedMap(
+						listTypeEntry.getName_i18n())));
+		}
+
+		return ListTypeEntryUtil.toListTypeEntry(
+			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.addListTypeEntry(
-				listTypeDefinitionId, listTypeEntry.getKey(),
+				listTypeEntry.getExternalReferenceCode(), listTypeDefinitionId,
+				listTypeEntry.getKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeEntry.getName_i18n())));
 	}
@@ -141,12 +163,34 @@ public class ListTypeEntryResourceImpl
 			Long listTypeEntryId, ListTypeEntry listTypeEntry)
 		throws Exception {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886"))) {
+			return ListTypeEntryUtil.toListTypeEntry(
+				null, contextAcceptLanguage.getPreferredLocale(),
+				_listTypeEntryService.updateListTypeEntry(
+					null, listTypeEntryId,
+					LocalizedMapUtil.getLocalizedMap(
+						listTypeEntry.getName_i18n())));
+		}
+
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.updateListTypeEntry(
-				listTypeEntryId,
+				listTypeEntry.getExternalReferenceCode(), listTypeEntryId,
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeEntry.getName_i18n())));
+	}
+
+	@Override
+	public ListTypeEntry putListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode, ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderlistTypeEntry =
+			_listTypeEntryService.getListTypeEntryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return putListTypeEntry(
+			serviceBuilderlistTypeEntry.getListTypeEntryId(), listTypeEntry);
 	}
 
 	private Map<String, Map<String, String>> _getActions(

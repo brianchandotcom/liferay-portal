@@ -896,6 +896,76 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
+
+		return getPersistence().findByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C(
+			externalReferenceCode, companyId, useFinderCache);
+	}
+
+	/**
+	 * Removes the list type entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the list type entry that was removed
+	 */
+	public static ListTypeEntry removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
+
+		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the number of list type entries where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching list type entries
+	 */
+	public static int countByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().countByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
 	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -961,6 +1031,91 @@ public class ListTypeEntryUtil {
 	 */
 	public static int countByLTDI_K(long listTypeDefinitionId, String key) {
 		return getPersistence().countByLTDI_K(listTypeDefinitionId, key);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry findByERC_C_LTDI(
+			String externalReferenceCode, long companyId,
+			long listTypeDefinitionId)
+		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
+
+		return getPersistence().findByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByERC_C_LTDI(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId) {
+
+		return getPersistence().fetchByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByERC_C_LTDI(
+		String externalReferenceCode, long companyId, long listTypeDefinitionId,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the list type entry that was removed
+	 */
+	public static ListTypeEntry removeByERC_C_LTDI(
+			String externalReferenceCode, long companyId,
+			long listTypeDefinitionId)
+		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
+
+		return getPersistence().removeByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns the number of list type entries where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the number of matching list type entries
+	 */
+	public static int countByERC_C_LTDI(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId) {
+
+		return getPersistence().countByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
 	}
 
 	/**

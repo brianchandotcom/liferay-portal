@@ -52,6 +52,8 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -124,6 +126,51 @@ paths:
             tags: ["ListTypeDefinition"]
         post:
             operationId: postListTypeDefinition
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+            tags: ["ListTypeDefinition"]
+    "/list-type-definitions/by-external-reference-code/{externalReferenceCode}":
+        get:
+            operationId: getListTypeDefinitionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+            tags: ["ListTypeDefinition"]
+        put:
+            operationId: putListTypeDefinitionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -352,6 +399,51 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+            tags: ["ListTypeEntry"]
+    "/list-type-entry/by-external-reference-code/{externalReferenceCode}":
+        get:
+            operationId: getListTypeEntryByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+            tags: ["ListTypeEntry"]
+        put:
+            operationId: putListTypeEntryByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

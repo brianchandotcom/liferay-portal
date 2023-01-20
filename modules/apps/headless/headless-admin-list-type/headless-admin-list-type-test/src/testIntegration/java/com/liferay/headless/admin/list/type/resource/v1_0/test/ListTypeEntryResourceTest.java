@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,12 +44,27 @@ public class ListTypeEntryResourceTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-168886", "true"
+			).build());
+
 		super.setUp();
 
 		_listTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-168886", "false"
+			).build());
+
+		super.tearDown();
 	}
 
 	@Override
@@ -77,6 +95,18 @@ public class ListTypeEntryResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetListTypeEntry() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeEntryByExternalReferenceCode() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeEntryByExternalReferenceCodeNotFound() {
 	}
 
 	@Ignore
@@ -117,6 +147,14 @@ public class ListTypeEntryResourceTest
 	}
 
 	@Override
+	protected ListTypeEntry
+			testGetListTypeEntryByExternalReferenceCode_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
 	protected ListTypeEntry testGraphQLListTypeEntry_addListTypeEntry()
 		throws Exception {
 
@@ -125,6 +163,22 @@ public class ListTypeEntryResourceTest
 
 	@Override
 	protected ListTypeEntry testPutListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
+	protected ListTypeEntry
+			testPutListTypeEntryByExternalReferenceCode_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
+	protected ListTypeEntry
+			testPutListTypeEntryByExternalReferenceCode_createListTypeEntry()
 		throws Exception {
 
 		return _addListTypeEntry();

@@ -25,6 +25,7 @@ import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -76,6 +77,17 @@ public class ListTypeDefinitionResourceImpl
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.getListTypeDefinition(
 				listTypeDefinitionId));
+	}
+
+	@Override
+	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return _toListTypeDefinition(
+			_listTypeDefinitionService.
+				getListTypeDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId()));
 	}
 
 	@Override
@@ -138,6 +150,24 @@ public class ListTypeDefinitionResourceImpl
 				listTypeDefinitionId,
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeDefinition.getName_i18n())));
+	}
+
+	@Override
+	public ListTypeDefinition putListTypeDefinitionByExternalReferenceCode(
+			String listTypeDefinitionExternalReferenceCode,
+			ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		com.liferay.list.type.model.ListTypeDefinition
+			serviceBuilderListTypeDefinition =
+				_listTypeDefinitionService.
+					getListTypeDefinitionByExternalReferenceCode(
+						listTypeDefinitionExternalReferenceCode,
+						contextCompany.getCompanyId());
+
+		return putListTypeDefinition(
+			serviceBuilderListTypeDefinition.getListTypeDefinitionId(),
+			listTypeDefinition);
 	}
 
 	private Locale _getLocale() {

@@ -9262,38 +9262,6 @@ org.apache.catalina.tribes.level = FINE]]>
 		</execute>
 	</target>
 
-	<target name="deploy-analytics-cloud-demo-data-creator">
-		<if>
-			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
-			<then>
-				<ant dir="portal-kernel" target="clean" />
-
-				<ant dir="portal-kernel" target="compile" />
-
-				<ant dir="portal-kernel" target="deploy" />
-
-				<ant dir="portal-kernel" target="install-portal-snapshot" />
-
-				<gradle-execute dir="modules/apps/analytics/analytics-demo-data-creator-api" task="deploy">
-					<arg value="clean" />
-				</gradle-execute>
-
-				<gradle-execute dir="modules/apps/analytics/analytics-demo-data-creator-impl" task="deploy">
-					<arg value="clean" />
-				</gradle-execute>
-
-				<property location="${analytics.cloud.faro.data.csv}" name="analytics.cloud.faro.data.csv.file.path" />
-
-				<echo file="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration.config">
-pathToUsersCSV="${analytics.cloud.faro.data.csv.file.path}"
-virtualHostname="localhost"
-				</echo>
-
-				<print-file file.name="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration.config" />
-			</then>
-		</if>
-	</target>
-
 	<target name="deploy-commerce-license-xml">
 		<if>
 			<matches pattern="https?://" string="${test.commerce.license.url}" />
@@ -14938,13 +14906,6 @@ mail.send.blacklist=</echo>
 			<istrue value="${liferay.data.guard.enabled}" />
 			<then>
 				<antcall target="deploy-data-guard" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
-			<then>
-				<antcall target="deploy-analytics-cloud-demo-data-creator" />
 			</then>
 		</if>
 

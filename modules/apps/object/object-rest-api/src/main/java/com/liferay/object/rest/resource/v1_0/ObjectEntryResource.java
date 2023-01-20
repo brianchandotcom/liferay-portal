@@ -99,6 +99,11 @@ public interface ObjectEntryResource {
 			String scopeKey, String externalReferenceCode)
 		throws Exception;
 
+	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode,
+			ObjectEntry objectEntry)
+		throws Exception;
+
 	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode,
 			ObjectEntry objectEntry)

@@ -35,13 +35,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -123,12 +122,15 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId(), false);
 
+		Map<String, Object> objectEntry = (Map<String, Object>)variables.get(
+			"objectEntry");
+
 		objectFields.forEach(
 			objectField -> {
 				if (!values.containsKey(objectField.getName())) {
 					values.put(
 						objectField.getName(),
-						variables.get(objectField.getName()));
+						objectEntry.get(objectField.getName()));
 				}
 			});
 

@@ -32,17 +32,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Nilton Vieira
  */
-@Component(service = SiteInitializerTestrayDispatchTaskExecutorHelper.class)
-public class SiteInitializerTestrayDispatchTaskExecutorHelperImpl
-	implements SiteInitializerTestrayDispatchTaskExecutorHelper {
+public class SiteInitializerTestrayObjectUtil {
 
-	public ObjectEntry addObjectEntry(
+	public static ObjectEntry addObjectEntry(
+			ObjectEntryManager objectEntryManager,
 			String objectDefinitionShortName, Map<String, Object> properties)
 		throws Exception {
 
@@ -53,60 +49,66 @@ public class SiteInitializerTestrayDispatchTaskExecutorHelperImpl
 
 		objectEntry.setProperties(properties);
 
-		return _objectEntryManager.addObjectEntry(
+		return objectEntryManager.addObjectEntry(
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
-	public void createDefaultDTOConverterContext(User user) {
+	public static void createDefaultDTOConverterContext(User user) {
 		_defaultDTOConverterContext = new DefaultDTOConverterContext(
 			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
 			user);
 	}
 
-	public List<ObjectEntry> getObjectEntries(
+	public static List<ObjectEntry> getObjectEntries(
 			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionShortName, Sort[] sorts)
+			String objectDefinitionShortName, Sort[] sorts,
+			ObjectEntryManager objectEntryManager)
 		throws Exception {
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			aggregation, companyId, filter, objectDefinitionShortName, sorts);
+			aggregation, companyId, filter, objectDefinitionShortName, sorts,
+			objectEntryManager);
 
 		return (List<ObjectEntry>)objectEntriesPage.getItems();
 	}
 
-	public Page<ObjectEntry> getObjectEntriesPage(
+	public static Page<ObjectEntry> getObjectEntriesPage(
 			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionShortName, Sort[] sorts)
+			String objectDefinitionShortName, Sort[] sorts,
+			ObjectEntryManager objectEntryManager)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntries(
+		return objectEntryManager.getObjectEntries(
 			companyId, _getObjectDefinition(objectDefinitionShortName), null,
 			aggregation, _defaultDTOConverterContext, filter, null, null,
 			sorts);
 	}
 
-	public ObjectEntry getObjectEntry(
-			String objectDefinitionShortName, long objectEntryId)
+	public static ObjectEntry getObjectEntry(
+			String objectDefinitionShortName, long objectEntryId,
+			ObjectEntryManager objectEntryManager)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntry(
+		return objectEntryManager.getObjectEntry(
 			_defaultDTOConverterContext,
 			_getObjectDefinition(objectDefinitionShortName), objectEntryId);
 	}
 
-	public Object getProperty(String key, ObjectEntry objectEntry) {
+	public static Object getProperty(String key, ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return properties.get(key);
 	}
 
-	public long incrementTestrayFieldValue(
+	public static long incrementTestrayFieldValue(
 			long companyId, String fieldName, String filterString,
-			String objectDefinitionShortName, Sort[] sorts)
+			String objectDefinitionShortName, Sort[] sorts,
+			ObjectEntryManager objectEntryManager)
 		throws Exception {
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			null, companyId, filterString, objectDefinitionShortName, sorts);
+			null, companyId, filterString, objectDefinitionShortName, sorts,
+			objectEntryManager);
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -123,9 +125,12 @@ public class SiteInitializerTestrayDispatchTaskExecutorHelperImpl
 		return fieldValue.longValue() + 1;
 	}
 
-	public void loadObjectDefinitions(long companyId) {
+	public static void loadObjectDefinitions(
+		long companyId,
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
+
 		List<ObjectDefinition> objectDefinitions =
-			_objectDefinitionLocalService.getObjectDefinitions(
+			objectDefinitionLocalService.getObjectDefinitions(
 				companyId, true, WorkflowConstants.STATUS_APPROVED);
 
 		if (ListUtil.isEmpty(objectDefinitions)) {
@@ -138,18 +143,18 @@ public class SiteInitializerTestrayDispatchTaskExecutorHelperImpl
 		}
 	}
 
-	public void updateObjectEntry(
+	public static void updateObjectEntry(
 			String objectDefinitionShortName, ObjectEntry objectEntry,
-			long objectEntryId)
+			long objectEntryId, ObjectEntryManager objectEntryManager)
 		throws Exception {
 
-		_objectEntryManager.updateObjectEntry(
+		objectEntryManager.updateObjectEntry(
 			_defaultDTOConverterContext,
 			_getObjectDefinition(objectDefinitionShortName), objectEntryId,
 			objectEntry);
 	}
 
-	private ObjectDefinition _getObjectDefinition(
+	private static ObjectDefinition _getObjectDefinition(
 			String objectDefinitionShortName)
 		throws Exception {
 
@@ -165,15 +170,8 @@ public class SiteInitializerTestrayDispatchTaskExecutorHelperImpl
 		return objectDefinition;
 	}
 
-	private DefaultDTOConverterContext _defaultDTOConverterContext;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private final Map<String, ObjectDefinition> _objectDefinitionsMap =
+	private static DefaultDTOConverterContext _defaultDTOConverterContext;
+	private static final Map<String, ObjectDefinition> _objectDefinitionsMap =
 		new HashMap<>();
-
-	@Reference(target = "(object.entry.manager.storage.type=default)")
-	private ObjectEntryManager _objectEntryManager;
 
 }

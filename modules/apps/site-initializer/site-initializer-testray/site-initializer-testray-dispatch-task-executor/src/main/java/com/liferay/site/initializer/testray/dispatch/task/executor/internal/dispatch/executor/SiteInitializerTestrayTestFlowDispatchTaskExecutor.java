@@ -19,6 +19,8 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -40,7 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayDispatchTaskExecutorHelper;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayObjectUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -88,8 +90,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		User user = _userLocalService.getUser(dispatchTrigger.getUserId());
 
-		_siteInitializerTestrayDispatchTaskExecutorHelper.
-			createDefaultDTOConverterContext(user);
+		SiteInitializerTestrayObjectUtil.createDefaultDTOConverterContext(user);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -102,8 +103,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
-			_siteInitializerTestrayDispatchTaskExecutorHelper.
-				loadObjectDefinitions(dispatchTrigger.getCompanyId());
+			SiteInitializerTestrayObjectUtil.loadObjectDefinitions(
+				dispatchTrigger.getCompanyId(), _objectDefinitionLocalService);
 
 			_updateTestrayTaskStatus(unicodeProperties, "PROCESSING");
 
@@ -134,11 +135,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		throws Exception {
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
 				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
 					"'",
-				"CaseResultsIssues", null);
+				"CaseResultsIssues", null, _objectEntryManager);
 
 		if (testrayCaseResultsIssuesObjectEntries.isEmpty()) {
 			return StringPool.BLANK;
@@ -149,22 +150,18 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (ObjectEntry testrayCaseResultsIssuesObjectEntry :
 				testrayCaseResultsIssuesObjectEntries) {
 
-			long issueId =
-				(long)
-					_siteInitializerTestrayDispatchTaskExecutorHelper.
-						getProperty(
-							"r_issueToCaseResultsIssues_c_issueId",
-							testrayCaseResultsIssuesObjectEntry);
+			long issueId = (long)SiteInitializerTestrayObjectUtil.getProperty(
+				"r_issueToCaseResultsIssues_c_issueId",
+				testrayCaseResultsIssuesObjectEntry);
 
 			ObjectEntry testrayIssueObjectEntry =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					getObjectEntry("Issue", issueId);
+				SiteInitializerTestrayObjectUtil.getObjectEntry(
+					"Issue", issueId, _objectEntryManager);
 
 			sb.append(
 				StringUtil.removeSubstring(
-					(String)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty("name", testrayIssueObjectEntry),
+					(String)SiteInitializerTestrayObjectUtil.getProperty(
+						"name", testrayIssueObjectEntry),
 					StringPool.DASH));
 
 			sb.append(StringPool.COMMA);
@@ -182,18 +179,15 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			Long testrayCaseId =
-				(Long)
-					_siteInitializerTestrayDispatchTaskExecutorHelper.
-						getProperty("r_caseToCaseResult_c_caseId", objectEntry);
+				(Long)SiteInitializerTestrayObjectUtil.getProperty(
+					"r_caseToCaseResult_c_caseId", objectEntry);
 
 			ObjectEntry testrayCaseObjectEntry =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					getObjectEntry("Case", testrayCaseId);
+				SiteInitializerTestrayObjectUtil.getObjectEntry(
+					"Case", testrayCaseId, _objectEntryManager);
 
-			score +=
-				(int)
-					_siteInitializerTestrayDispatchTaskExecutorHelper.
-						getProperty("priority", testrayCaseObjectEntry);
+			score += (int)SiteInitializerTestrayObjectUtil.getProperty(
+				"priority", testrayCaseObjectEntry);
 		}
 
 		return score;
@@ -227,10 +221,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayBuildId"));
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.
-				getObjectEntriesPage(
-					aggregation, companyId,
-					"buildId eq '" + testrayBuildId + "'", "CaseResult", null);
+			SiteInitializerTestrayObjectUtil.getObjectEntriesPage(
+				aggregation, companyId, "buildId eq '" + testrayBuildId + "'",
+				"CaseResult", null, _objectEntryManager);
 
 		List<Facet> testrayCaseResultFacets =
 			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
@@ -241,8 +234,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			testrayCaseResultFacet.getFacetValues();
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
-				null, companyId, sb.toString(), "Case", null),
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
+				null, companyId, sb.toString(), "Case", null,
+				_objectEntryManager),
 			ObjectEntry::getId);
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
@@ -255,25 +249,22 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			}
 
 			List<ObjectEntry> testrayCaseResultObjectEntries =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					getObjectEntries(
-						null, companyId,
-						StringBundler.concat(
-							"buildId eq '", testrayBuildId, "' and errors eq '",
-							StringUtil.removeChar(
-								StringUtil.replace(
-									testrayCaseResultFacetValue.getTerm(), '\'',
-									"''"),
-								'\\'),
-							"'"),
-						"CaseResult", null);
+				SiteInitializerTestrayObjectUtil.getObjectEntries(
+					null, companyId,
+					StringBundler.concat(
+						"buildId eq '", testrayBuildId, "' and errors eq '",
+						StringUtil.removeChar(
+							StringUtil.replace(
+								testrayCaseResultFacetValue.getTerm(), '\'',
+								"''"),
+							'\\'),
+						"'"),
+					"CaseResult", null, _objectEntryManager);
 
 			testrayCaseResultObjectEntries.removeIf(
 				objectEntry -> !testrayCaseObjectEntriesIds.contains(
-					(Long)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty(
-								"r_caseToCaseResult_c_caseId", objectEntry)));
+					(Long)SiteInitializerTestrayObjectUtil.getProperty(
+						"r_caseToCaseResult_c_caseId", objectEntry)));
 
 			Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
 				new HashMap<>();
@@ -342,13 +333,13 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				testrayCaseResultGroups) {
 
 			long testraySubtaskNumber =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					incrementTestrayFieldValue(
-						companyId, "number",
-						"taskId eq '" + testrayTaskId + "'", "Subtask",
-						new Sort[] {
-							new Sort("nestedFieldArray.value_long#number", true)
-						});
+				SiteInitializerTestrayObjectUtil.incrementTestrayFieldValue(
+					companyId, "number", "taskId eq '" + testrayTaskId + "'",
+					"Subtask",
+					new Sort[] {
+						new Sort("nestedFieldArray.value_long#number", true)
+					},
+					_objectEntryManager);
 
 			ObjectEntry firstTestrayCaseResultObjectEntry =
 				testrayCaseResultObjectEntry.get(0);
@@ -357,36 +348,33 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				firstTestrayCaseResultObjectEntry.getProperties();
 
 			ObjectEntry testraySubtaskObjectEntry =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					addObjectEntry(
-						"Subtask",
-						HashMapBuilder.<String, Object>put(
-							"dueStatus", "OPEN"
-						).put(
-							"errors", map.get("errors")
-						).put(
-							"name", "ST-" + testraySubtaskNumber
-						).put(
-							"number", testraySubtaskNumber
-						).put(
-							"r_taskToSubtasks_c_taskId", testrayTaskId
-						).put(
-							"score",
-							_getTestraySubtaskScore(
-								testrayCaseResultObjectEntry)
-						).build());
+				SiteInitializerTestrayObjectUtil.addObjectEntry(
+					_objectEntryManager, "Subtask",
+					HashMapBuilder.<String, Object>put(
+						"dueStatus", "OPEN"
+					).put(
+						"errors", map.get("errors")
+					).put(
+						"name", "ST-" + testraySubtaskNumber
+					).put(
+						"number", testraySubtaskNumber
+					).put(
+						"r_taskToSubtasks_c_taskId", testrayTaskId
+					).put(
+						"score",
+						_getTestraySubtaskScore(testrayCaseResultObjectEntry)
+					).build());
 
 			for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					addObjectEntry(
-						"SubtasksCasesResults",
-						HashMapBuilder.<String, Object>put(
-							"r_caseResultToSubtasksCasesResults_c_caseResultId",
-							objectEntry.getId()
-						).put(
-							"r_subtaskToSubtasksCasesResults_c_subtaskId",
-							String.valueOf(testraySubtaskObjectEntry.getId())
-						).build());
+				SiteInitializerTestrayObjectUtil.addObjectEntry(
+					_objectEntryManager, "SubtasksCasesResults",
+					HashMapBuilder.<String, Object>put(
+						"r_caseResultToSubtasksCasesResults_c_caseResultId",
+						objectEntry.getId()
+					).put(
+						"r_subtaskToSubtasksCasesResults_c_subtaskId",
+						String.valueOf(testraySubtaskObjectEntry.getId())
+					).build());
 			}
 		}
 	}
@@ -399,8 +387,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayTaskId"));
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
-				"Task", testrayTaskId);
+			SiteInitializerTestrayObjectUtil.getObjectEntry(
+				"Task", testrayTaskId, _objectEntryManager);
 
 		Map<String, Object> map = objectEntry.getProperties();
 
@@ -408,16 +396,18 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		objectEntry.setProperties(map);
 
-		_siteInitializerTestrayDispatchTaskExecutorHelper.updateObjectEntry(
-			"Task", objectEntry, testrayTaskId);
+		SiteInitializerTestrayObjectUtil.updateObjectEntry(
+			"Task", objectEntry, testrayTaskId, _objectEntryManager);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayTestFlowDispatchTaskExecutor.class);
 
 	@Reference
-	private SiteInitializerTestrayDispatchTaskExecutorHelper
-		_siteInitializerTestrayDispatchTaskExecutorHelper;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference(target = "(object.entry.manager.storage.type=default)")
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -25,6 +25,8 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -45,8 +47,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayDispatchTaskExecutorHelper;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.autofill.SiteInitializerTestrayAutoFillHelper;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutoFillUtil;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayObjectUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -116,8 +118,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 		User user = _userLocalService.getUser(dispatchTrigger.getUserId());
 
-		_siteInitializerTestrayDispatchTaskExecutorHelper.
-			createDefaultDTOConverterContext(user);
+		SiteInitializerTestrayObjectUtil.createDefaultDTOConverterContext(user);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -230,44 +231,42 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 		if (testrayCaseId == 0) {
 			long testrayNumber =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					incrementTestrayFieldValue(
-						companyId, "number",
-						"projectId eq '" + testrayProjectId + "'", "Case",
-						new Sort[] {
-							new Sort("nestedFieldArray.value_long#number", true)
-						});
+				SiteInitializerTestrayObjectUtil.incrementTestrayFieldValue(
+					companyId, "number",
+					"projectId eq '" + testrayProjectId + "'", "Case",
+					new Sort[] {
+						new Sort("nestedFieldArray.value_long#number", true)
+					},
+					_objectEntryManager);
 
 			ObjectEntry objectEntry =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					addObjectEntry(
-						"Case",
-						HashMapBuilder.<String, Object>put(
-							"description",
-							testrayCasePropertiesMap.get(
-								"testray.testcase.description")
-						).put(
-							"name",
+				SiteInitializerTestrayObjectUtil.addObjectEntry(
+					_objectEntryManager, "Case",
+					HashMapBuilder.<String, Object>put(
+						"description",
+						testrayCasePropertiesMap.get(
+							"testray.testcase.description")
+					).put(
+						"name",
+						(String)testrayCasePropertiesMap.get(
+							"testray.testcase.name")
+					).put(
+						"number", testrayNumber
+					).put(
+						"priority",
+						testrayCasePropertiesMap.get(
+							"testray.testcase.priority")
+					).put(
+						"r_caseTypeToCases_c_caseTypeId",
+						_getTestrayCaseTypeId(
+							companyId,
 							(String)testrayCasePropertiesMap.get(
-								"testray.testcase.name")
-						).put(
-							"number", testrayNumber
-						).put(
-							"priority",
-							testrayCasePropertiesMap.get(
-								"testray.testcase.priority")
-						).put(
-							"r_caseTypeToCases_c_caseTypeId",
-							_getTestrayCaseTypeId(
-								companyId,
-								(String)testrayCasePropertiesMap.get(
-									"testray.case.type.name"))
-						).put(
-							"r_componentToCases_c_componentId",
-							testrayComponentId
-						).put(
-							"r_projectToCases_c_projectId", testrayProjectId
-						).build());
+								"testray.case.type.name"))
+					).put(
+						"r_componentToCases_c_componentId", testrayComponentId
+					).put(
+						"r_projectToCases_c_projectId", testrayProjectId
+					).build());
 
 			testrayCaseId = objectEntry.getId();
 
@@ -278,12 +277,14 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			testcaseNode, testrayBuildId, testrayBuildTime, testrayCaseId,
 			testrayCasePropertiesMap, testrayComponentId, testrayRunId);
 
-		_siteInitializerTestrayAutoFillHelper.addTestrayCaseResultIssue(
+		SiteInitializerTestrayAutoFillUtil.addTestrayCaseResultIssue(
 			companyId, testrayCaseResultId,
-			(String)testrayCasePropertiesMap.get("testray.case.defect"));
-		_siteInitializerTestrayAutoFillHelper.addTestrayCaseResultIssue(
+			(String)testrayCasePropertiesMap.get("testray.case.defect"),
+			_objectEntryManager);
+		SiteInitializerTestrayAutoFillUtil.addTestrayCaseResultIssue(
 			companyId, testrayCaseResultId,
-			(String)testrayCasePropertiesMap.get("testray.case.issue"));
+			(String)testrayCasePropertiesMap.get("testray.case.issue"),
+			_objectEntryManager);
 	}
 
 	private void _addTestrayCases(
@@ -311,8 +312,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			long testrayRunId)
 		throws Exception {
 
-		_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-			"Factor",
+		SiteInitializerTestrayObjectUtil.addObjectEntry(
+			_objectEntryManager, "Factor",
 			HashMapBuilder.<String, Object>put(
 				"r_factorCategoryToFactors_c_factorCategoryId",
 				testrayFactorCategoryId
@@ -334,17 +335,18 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		throws Exception {
 
 		List<ObjectEntry> testrayBuildsObjectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
 				null, companyId, "routineId eq '" + testrayRoutineId + "'",
-				"Build", null);
+				"Build", null, _objectEntryManager);
 
 		List<ObjectEntry> testrayRunsObjectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
 				null, companyId,
 				StringBundler.concat(
 					"environmentHash eq '", environmentHash, "' and id ne '",
 					testrayRunId, "'"),
-				"Run", new Sort[] {new Sort("createDate", 3, true)});
+				"Run", new Sort[] {new Sort("createDate", 3, true)},
+				_objectEntryManager);
 
 		for (ObjectEntry testrayRunObjectEntry : testrayRunsObjectEntries) {
 			for (ObjectEntry testrayBuildObjectEntry :
@@ -352,10 +354,9 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 				if (Objects.equals(
 						testrayBuildObjectEntry.getId(),
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty(
-								"r_buildToRuns_c_buildId",
-								testrayRunObjectEntry))) {
+						SiteInitializerTestrayObjectUtil.getProperty(
+							"r_buildToRuns_c_buildId",
+							testrayRunObjectEntry))) {
 
 					return testrayRunObjectEntry;
 				}
@@ -394,10 +395,9 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
 			objectEntriesPage =
-				_siteInitializerTestrayDispatchTaskExecutorHelper.
-					getObjectEntriesPage(
-						null, companyId, filterString,
-						objectDefinitionShortName, null);
+				SiteInitializerTestrayObjectUtil.getObjectEntriesPage(
+					null, companyId, filterString, objectDefinitionShortName,
+					null, _objectEntryManager);
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -496,8 +496,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			testrayProjectId);
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"Build",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "Build",
 				HashMapBuilder.<String, Object>put(
 					"description", _getTestrayBuildDescription(propertiesMap)
 				).put(
@@ -623,8 +623,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"CaseResult", properties);
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "CaseResult", properties);
 
 		return objectEntry.getId();
 	}
@@ -644,8 +644,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"CaseType",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "CaseType",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayCaseTypeName
 				).build());
@@ -678,8 +678,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"Component",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "Component",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayComponentName
 				).put(
@@ -711,8 +711,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"FactorCategory",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "FactorCategory",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayFactorCategoryName
 				).build());
@@ -745,8 +745,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"FactorOption",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "FactorOption",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayFactorOptionName
 				).put(
@@ -778,8 +778,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"ProductVersion",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "ProductVersion",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayProductVersionName
 				).put(
@@ -807,8 +807,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"Project",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "Project",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayProjectName
 				).build());
@@ -839,8 +839,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"Routine",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "Routine",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayRoutineName
 				).put(
@@ -913,8 +913,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"Run",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "Run",
 				HashMapBuilder.<String, Object>put(
 					"externalReferencePK", propertiesMap.get("testray.run.id")
 				).put(
@@ -925,14 +925,13 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 					"name", testrayRunName
 				).put(
 					"number",
-					_siteInitializerTestrayDispatchTaskExecutorHelper.
-						incrementTestrayFieldValue(
-							companyId, "number",
-							"buildId eq '" + testrayBuildId + "'", "Run",
-							new Sort[] {
-								new Sort(
-									"nestedFieldArray.value_long#number", true)
-							})
+					SiteInitializerTestrayObjectUtil.incrementTestrayFieldValue(
+						companyId, "number",
+						"buildId eq '" + testrayBuildId + "'", "Run",
+						new Sort[] {
+							new Sort("nestedFieldArray.value_long#number", true)
+						},
+						_objectEntryManager)
 				).put(
 					"r_buildToRuns_c_buildId", testrayBuildId
 				).build());
@@ -945,8 +944,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			_getTestrayRunEnvironmentHash(companyId, element, testrayRunId)
 		);
 
-		_siteInitializerTestrayDispatchTaskExecutorHelper.updateObjectEntry(
-			"Run", objectEntry, objectEntry.getId());
+		SiteInitializerTestrayObjectUtil.updateObjectEntry(
+			"Run", objectEntry, objectEntry.getId(), _objectEntryManager);
 
 		_objectEntryIds.put(objectEntryIdsKey, testrayRunId);
 
@@ -972,8 +971,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		}
 
 		ObjectEntry objectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
-				"Team",
+			SiteInitializerTestrayObjectUtil.addObjectEntry(
+				_objectEntryManager, "Team",
 				HashMapBuilder.<String, Object>put(
 					"name", testrayTeamName
 				).put(
@@ -1005,8 +1004,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 	}
 
 	private void _load(long companyId) throws Exception {
-		_siteInitializerTestrayDispatchTaskExecutorHelper.loadObjectDefinitions(
-			companyId);
+		SiteInitializerTestrayObjectUtil.loadObjectDefinitions(
+			companyId, _objectDefinitionLocalService);
 
 		_loadTestrayCaseTypes(companyId);
 		_loadTestrayComponents(companyId);
@@ -1018,8 +1017,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 	private void _loadTestrayCaseTypes(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
-				null, companyId, null, "CaseType", null);
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
+				null, companyId, null, "CaseType", null, _objectEntryManager);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1028,17 +1027,16 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		for (ObjectEntry objectEntry : objectEntries) {
 			_objectEntryIds.put(
 				"CaseType#" +
-					(String)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty("name", objectEntry),
+					(String)SiteInitializerTestrayObjectUtil.getProperty(
+						"name", objectEntry),
 				objectEntry.getId());
 		}
 	}
 
 	private void _loadTestrayComponents(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
-				null, companyId, null, "Component", null);
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
+				null, companyId, null, "Component", null, _objectEntryManager);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1048,22 +1046,20 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			_objectEntryIds.put(
 				StringBundler.concat(
 					"Component#",
-					(String)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty("name", objectEntry),
+					(String)SiteInitializerTestrayObjectUtil.getProperty(
+						"name", objectEntry),
 					"#TeamId#",
-					(Long)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty(
-								"r_teamToComponents_c_teamId", objectEntry)),
+					(Long)SiteInitializerTestrayObjectUtil.getProperty(
+						"r_teamToComponents_c_teamId", objectEntry)),
 				objectEntry.getId());
 		}
 	}
 
 	private void _loadTestrayFactorCategories(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
-				null, companyId, null, "FactorCategory", null);
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
+				null, companyId, null, "FactorCategory", null,
+				_objectEntryManager);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1072,17 +1068,17 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		for (ObjectEntry objectEntry : objectEntries) {
 			_objectEntryIds.put(
 				"FactorCategory#" +
-					(String)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty("name", objectEntry),
+					(String)SiteInitializerTestrayObjectUtil.getProperty(
+						"name", objectEntry),
 				objectEntry.getId());
 		}
 	}
 
 	private void _loadTestrayFactorOptions(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
-				null, companyId, null, "FactorOption", null);
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
+				null, companyId, null, "FactorOption", null,
+				_objectEntryManager);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1092,23 +1088,20 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			_objectEntryIds.put(
 				StringBundler.concat(
 					"FactorOption#",
-					(String)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty("name", objectEntry),
+					(String)SiteInitializerTestrayObjectUtil.getProperty(
+						"name", objectEntry),
 					"#FactorCategoryId#",
-					(Long)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty(
-								"r_factorCategoryToOptions_c_factorCategoryId",
-								objectEntry)),
+					(Long)SiteInitializerTestrayObjectUtil.getProperty(
+						"r_factorCategoryToOptions_c_factorCategoryId",
+						objectEntry)),
 				objectEntry.getId());
 		}
 	}
 
 	private void _loadTestrayProjects(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
-				null, companyId, null, "Project", null);
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
+				null, companyId, null, "Project", null, _objectEntryManager);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1117,17 +1110,16 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		for (ObjectEntry objectEntry : objectEntries) {
 			_objectEntryIds.put(
 				"Project#" +
-					(String)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty("name", objectEntry),
+					(String)SiteInitializerTestrayObjectUtil.getProperty(
+						"name", objectEntry),
 				objectEntry.getId());
 		}
 	}
 
 	private void _loadTestrayTeams(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
-				null, companyId, null, "Team", null);
+			SiteInitializerTestrayObjectUtil.getObjectEntries(
+				null, companyId, null, "Team", null, _objectEntryManager);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1137,14 +1129,11 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			_objectEntryIds.put(
 				StringBundler.concat(
 					"Team#",
-					(String)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty("name", objectEntry),
+					(String)SiteInitializerTestrayObjectUtil.getProperty(
+						"name", objectEntry),
 					"#ProjectId#",
-					(Long)
-						_siteInitializerTestrayDispatchTaskExecutorHelper.
-							getProperty(
-								"r_projectToTeams_c_projectIds", objectEntry)),
+					(Long)SiteInitializerTestrayObjectUtil.getProperty(
+						"r_projectToTeams_c_projectIds", objectEntry)),
 				objectEntry.getId());
 		}
 	}
@@ -1227,33 +1216,32 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			testrayRunId);
 
 		ObjectEntry testrayRoutineObjectEntry =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
-				"Routine", testrayRoutineId);
+			SiteInitializerTestrayObjectUtil.getObjectEntry(
+				"Routine", testrayRoutineId, _objectEntryManager);
 
-		if (!(Boolean)
-				_siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
-					"autoanalyze", testrayRoutineObjectEntry)) {
+		if (!(Boolean)SiteInitializerTestrayObjectUtil.getProperty(
+				"autoanalyze", testrayRoutineObjectEntry)) {
 
 			return;
 		}
 
 		ObjectEntry testrayRunObjectEntry1 =
-			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
-				"Run", testrayRunId);
+			SiteInitializerTestrayObjectUtil.getObjectEntry(
+				"Run", testrayRunId, _objectEntryManager);
 
 		ObjectEntry testrayRunObjectEntry2 = _fetchLatestTestrayRunObjectEntry(
 			companyId,
-			(String)
-				_siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
-					"environmentHash", testrayRunObjectEntry1),
+			(String)SiteInitializerTestrayObjectUtil.getProperty(
+				"environmentHash", testrayRunObjectEntry1),
 			testrayRoutineObjectEntry.getId(), testrayRunId);
 
 		if (testrayRunObjectEntry2 == null) {
 			return;
 		}
 
-		_siteInitializerTestrayAutoFillHelper.testrayAutoFillRuns(
-			companyId, testrayRunObjectEntry1, testrayRunObjectEntry2);
+		SiteInitializerTestrayAutoFillUtil.testrayAutoFillRuns(
+			companyId, testrayRunObjectEntry1, testrayRunObjectEntry2,
+			_objectEntryManager);
 	}
 
 	private void _uploadToTestray(
@@ -1319,15 +1307,13 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayImportResultsDispatchTaskExecutor.class);
 
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 
-	@Reference
-	private SiteInitializerTestrayAutoFillHelper
-		_siteInitializerTestrayAutoFillHelper;
-
-	@Reference
-	private SiteInitializerTestrayDispatchTaskExecutorHelper
-		_siteInitializerTestrayDispatchTaskExecutorHelper;
+	@Reference(target = "(object.entry.manager.storage.type=default)")
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

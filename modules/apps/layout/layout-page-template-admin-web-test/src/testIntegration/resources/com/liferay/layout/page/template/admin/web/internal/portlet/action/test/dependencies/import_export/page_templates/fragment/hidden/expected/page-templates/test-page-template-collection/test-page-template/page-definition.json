@@ -24,10 +24,7 @@
 						}
 					],
 					"fragmentStyle": {
-						"borderRadius": "",
-						"hidden": true,
-						"shadow": "",
-						"textAlign": ""
+						"hidden": true
 					},
 					"fragmentViewports": [
 						{

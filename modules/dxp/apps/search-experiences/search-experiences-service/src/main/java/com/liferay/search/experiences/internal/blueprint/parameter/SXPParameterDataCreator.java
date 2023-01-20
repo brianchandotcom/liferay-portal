@@ -163,10 +163,6 @@ public class SXPParameterDataCreator
 
 		String keywords = GetterUtil.getString(searchContext.getKeywords());
 
-		_add(
-			new StringSXPParameter("keywords.raw", true, keywords),
-			sxpParameters);
-
 		if ((StringUtil.count(keywords, CharPool.QUOTE) % 2) != 0) {
 			keywords = StringUtil.replace(
 				keywords, CharPool.QUOTE, StringPool.BLANK);

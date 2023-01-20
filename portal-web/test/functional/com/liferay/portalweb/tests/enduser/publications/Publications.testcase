@@ -274,6 +274,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Node",
+			changeOrder = "2",
 			changeSite = "Guest",
 			changeTitle = "Wiki Node Name",
 			changeType = "Added",
@@ -281,7 +282,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Page",
-			changeOrder = "2",
+			changeOrder = "3",
 			changeSite = "Guest",
 			changeTitle = "Wiki Page Title",
 			changeType = "Added",

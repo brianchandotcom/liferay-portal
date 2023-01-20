@@ -268,6 +268,47 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry =
+			getScopeScopeKeyByExternalReferenceCode(
+				scopeKey, externalReferenceCode);
+
+		if (objectEntry.getActions() != null) {
+			existingObjectEntry.setActions(objectEntry.getActions());
+		}
+
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+		}
+
+		if (objectEntry.getProperties() != null) {
+			existingObjectEntry.setProperties(objectEntry.getProperties());
+		}
+
+		if (objectEntry.getScopeKey() != null) {
+			existingObjectEntry.setScopeKey(objectEntry.getScopeKey());
+		}
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return putScopeScopeKeyByExternalReferenceCode(
+			scopeKey, externalReferenceCode, existingObjectEntry);
+	}
+
+	@Override
 	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 

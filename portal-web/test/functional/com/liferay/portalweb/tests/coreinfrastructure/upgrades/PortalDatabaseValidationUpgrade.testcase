@@ -166,9 +166,9 @@ definition {
 	}
 
 	@priority = "4"
-	test CompareUpgradedAndFreshDatabaseSchemas621015 {
+	test CompareUpgradedAndFreshDatabaseSchemas621021 {
 		property data.archive.type = "data-archive-portal";
-		property portal.version = "6.2.10.15";
+		property portal.version = "6.2.10.21";
 
 		Portlet.shutdownServer();
 

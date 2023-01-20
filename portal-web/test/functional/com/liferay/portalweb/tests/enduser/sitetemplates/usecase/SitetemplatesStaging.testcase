@@ -152,17 +152,11 @@ definition {
 		task ("Then: User can publish the staging site") {
 			Navigator.openSiteURL(siteName = "Test Speedwell Site");
 
-			var key_tabName = "Staging";
+			Staging.openStagingAdmin(siteURLKey = "test-speedwell-site-staging");
 
-			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
-				Refresh();
-			}
+			WaitForElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL");
 
-			Click(locator1 = "StagingPublishToLive#TAB_NAME");
-
-			Staging.gotoPublishToLive();
-
-			Staging.publishToLive();
+			Staging.publishCustomPublication();
 		}
 	}
 

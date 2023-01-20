@@ -86,6 +86,7 @@ function BulkActions({
 		else if (onBulkActionItemClick) {
 			onBulkActionItemClick({
 				action: actionDefinition,
+				loadData,
 				selectedData: {
 					items: selectedItems,
 					keyValues: selectedItemsValue,

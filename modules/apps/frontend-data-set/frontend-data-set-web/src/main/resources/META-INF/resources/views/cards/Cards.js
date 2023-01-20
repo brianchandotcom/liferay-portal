@@ -58,6 +58,7 @@ const Card = ({item, schema}) => {
 		executeAsyncItemAction,
 		highlightItems,
 		itemsActions,
+		loadData,
 		onActionDropdownItemClick,
 		openModal,
 		openSidePanel,
@@ -80,6 +81,8 @@ const Card = ({item, schema}) => {
 							action,
 							event,
 							itemData: item,
+							loadData,
+							openSidePanel,
 						});
 					}
 

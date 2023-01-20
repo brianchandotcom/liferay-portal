@@ -76,9 +76,12 @@ function TableCell({
 	valuePath,
 	view,
 }) {
-	const {customDataRenderers, inlineEditingSettings} = useContext(
-		FrontendDataSetContext
-	);
+	const {
+		customDataRenderers,
+		inlineEditingSettings,
+		loadData,
+		openSidePanel,
+	} = useContext(FrontendDataSetContext);
 
 	const [loading, setLoading] = useState(false);
 
@@ -146,6 +149,8 @@ function TableCell({
 					actions={actions}
 					itemData={itemData}
 					itemId={itemId}
+					loadData={loadData}
+					openSidePanel={openSidePanel}
 					options={options}
 					rootPropertyName={rootPropertyName}
 					value={value}

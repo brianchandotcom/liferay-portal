@@ -29,22 +29,15 @@ import java.util.function.Function;
 public class Relationship<T extends ClassedModel> {
 
 	public List<? extends ClassedModel> getInboundRelatedModels(long primKey) {
-		return _getInboundRelatedModels(_modelSupplier.supply(primKey));
+		return _getRelatedModels(_modelSupplier.supply(primKey), true, false);
 	}
 
 	public List<? extends ClassedModel> getOutboundRelatedModels(long primKey) {
-		return _getOutboundRelatedModels(_modelSupplier.supply(primKey));
+		return _getRelatedModels(_modelSupplier.supply(primKey), false, true);
 	}
 
 	public List<? extends ClassedModel> getRelatedModels(long primKey) {
-		T model = _modelSupplier.supply(primKey);
-
-		List<ClassedModel> relatedModels = new ArrayList<>();
-
-		relatedModels.addAll(_getInboundRelatedModels(model));
-		relatedModels.addAll(_getOutboundRelatedModels(model));
-
-		return relatedModels;
+		return _getRelatedModels(_modelSupplier.supply(primKey), true, true);
 	}
 
 	public static class Builder<T extends ClassedModel> {
@@ -125,29 +118,29 @@ public class Relationship<T extends ClassedModel> {
 	private Relationship() {
 	}
 
-	private List<? extends ClassedModel> _getInboundRelatedModels(T model) {
-		List<ClassedModel> inboundRelatedModels = new ArrayList<>();
+	private List<? extends ClassedModel> _getRelatedModels(
+		T model, boolean inbound, boolean outbound) {
 
-		_inboundMultiRelationshipFunctions.forEach(
-			multiRelationshipFunction -> inboundRelatedModels.addAll(
-				multiRelationshipFunction.apply(model)));
+		List<ClassedModel> relatedModels = new ArrayList<>();
 
-		_inboundSingleRelationshipFunctions.forEach(
-			function -> inboundRelatedModels.add(function.apply(model)));
+		if (inbound) {
+			_inboundMultiRelationshipFunctions.forEach(
+				multiRelationshipFunction -> relatedModels.addAll(
+					multiRelationshipFunction.apply(model)));
 
-		return inboundRelatedModels;
-	}
+			_inboundSingleRelationshipFunctions.forEach(
+				function -> relatedModels.add(function.apply(model)));
+		}
 
-	private List<? extends ClassedModel> _getOutboundRelatedModels(T model) {
-		List<ClassedModel> outboundRelatedModels = new ArrayList<>();
+		if (outbound) {
+			_outboundMultiRelationshipFunctions.forEach(
+				function -> relatedModels.addAll(function.apply(model)));
 
-		_outboundMultiRelationshipFunctions.forEach(
-			function -> outboundRelatedModels.addAll(function.apply(model)));
+			_outboundSingleRelationshipFunctions.forEach(
+				function -> relatedModels.add(function.apply(model)));
+		}
 
-		_outboundSingleRelationshipFunctions.forEach(
-			function -> outboundRelatedModels.add(function.apply(model)));
-
-		return outboundRelatedModels;
+		return relatedModels;
 	}
 
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>

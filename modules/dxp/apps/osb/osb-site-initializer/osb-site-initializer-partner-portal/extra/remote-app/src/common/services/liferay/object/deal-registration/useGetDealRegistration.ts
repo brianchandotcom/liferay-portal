@@ -26,7 +26,7 @@ export default function useGetDealRegistration(
 ) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/${apiOption}?${filtersTerm}&page=${page}&pageSize=200&sort=${sort}
+			`/o/${LiferayAPIs.OBJECT}/${apiOption}?${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}
 			 `,
 			Liferay.authToken,
 		],

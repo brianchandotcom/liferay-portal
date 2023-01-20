@@ -24,12 +24,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Javier de Arcos
@@ -46,29 +46,30 @@ public class DTOMapperImpl implements DTOMapper {
 	protected void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
-		bundleContext.addServiceListener(
-			_serviceListener,
-			"(objectClass=" + DTOConverter.class.getName() + ")");
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			(Class<DTOConverter<?, ?>>)(Class<?>)DTOConverter.class,
+			new DTOConverterServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_bundleContext.removeServiceListener(_serviceListener);
+		_serviceTracker.close();
 	}
 
 	private BundleContext _bundleContext;
 	private final Map<String, String> _externalInternalDTOClassNameMap =
 		new HashMap<>();
-	private final ServiceListener _serviceListener =
-		new DTOConverterServiceListener();
+	private ServiceTracker<DTOConverter<?, ?>, String> _serviceTracker;
 
-	private class DTOConverterServiceListener implements ServiceListener {
+	private class DTOConverterServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<DTOConverter<?, ?>, String> {
 
 		@Override
-		public void serviceChanged(ServiceEvent serviceEvent) {
-			ServiceReference<DTOConverter<?, ?>> serviceReference =
-				(ServiceReference<DTOConverter<?, ?>>)
-					serviceEvent.getServiceReference();
+		public String addingService(
+			ServiceReference<DTOConverter<?, ?>> serviceReference) {
 
 			DTOConverter<?, ?> dtoConverter = _bundleContext.getService(
 				serviceReference);
@@ -94,18 +95,29 @@ public class DTOMapperImpl implements DTOMapper {
 
 				_bundleContext.ungetService(serviceReference);
 
-				return;
+				return null;
 			}
 
-			if (serviceEvent.getType() == ServiceEvent.REGISTERED) {
-				_externalInternalDTOClassNameMap.put(
-					externalDTOClassName, internalDTOClassName);
-			}
-			else if (serviceEvent.getType() == ServiceEvent.UNREGISTERING) {
-				_externalInternalDTOClassNameMap.remove(externalDTOClassName);
-			}
+			_externalInternalDTOClassNameMap.put(
+				externalDTOClassName, internalDTOClassName);
 
 			_bundleContext.ungetService(serviceReference);
+
+			return externalDTOClassName;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<DTOConverter<?, ?>> serviceReference,
+			String externalDTOClassName) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<DTOConverter<?, ?>> serviceReference,
+			String externalDTOClassName) {
+
+			_externalInternalDTOClassNameMap.remove(externalDTOClassName);
 		}
 
 		private String _getDTOConverterGenericType(

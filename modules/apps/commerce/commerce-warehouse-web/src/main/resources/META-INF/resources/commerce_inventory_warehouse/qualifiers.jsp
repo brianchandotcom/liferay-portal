@@ -48,7 +48,7 @@ String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", cIW
 			>
 				<div class="row">
 					<aui:fieldset markupView="lexicon">
-						<aui:input checked='<%= Objects.equals(channelQualifiers, "all") %>' label="all-channels" name="qualifiers--channel--" type="radio" value="all" />
+						<aui:input checked='<%= Objects.equals(channelQualifiers, "none") %>' label="no-channel" name="qualifiers--channel--" type="radio" value="none" />
 						<aui:input checked='<%= Objects.equals(channelQualifiers, "channels") %>' label="specific-channels" name="qualifiers--channel--" type="radio" value="channels" />
 					</aui:fieldset>
 				</div>

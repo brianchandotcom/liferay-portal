@@ -71,7 +71,7 @@ public class EditCommerceInventoryWarehouseQualifiersMVCActionCommand
 		String channelQualifiers = ParamUtil.getString(
 			actionRequest, "channelQualifiers");
 
-		if (Objects.equals(channelQualifiers, "all")) {
+		if (Objects.equals(channelQualifiers, "none")) {
 			long commerceInventoryWarehouseId = ParamUtil.getLong(
 				actionRequest, "commerceInventoryWarehouseId");
 

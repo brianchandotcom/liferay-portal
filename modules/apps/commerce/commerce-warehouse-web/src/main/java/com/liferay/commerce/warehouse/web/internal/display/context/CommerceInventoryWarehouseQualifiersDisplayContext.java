@@ -65,7 +65,7 @@ public class CommerceInventoryWarehouseQualifiersDisplayContext
 			return "channels";
 		}
 
-		return "all";
+		return "none";
 	}
 
 	public List<FDSActionDropdownItem>

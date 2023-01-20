@@ -153,19 +153,20 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 		if (StringUtil.equals(type, "checkbox_multiple") ||
 			StringUtil.equals(type, "select")) {
 
-			return new CheckboxMultipleDDMFormFieldTypeReportProcessor();
+			return new CheckboxMultipleDDMFormFieldTypeReportProcessor(
+				_jsonFactory);
 		}
 		else if (StringUtil.equals(type, "color") ||
 				 StringUtil.equals(type, "date") ||
 				 StringUtil.equals(type, "text")) {
 
-			return new TextDDMFormFieldTypeReportProcessor();
+			return new TextDDMFormFieldTypeReportProcessor(_jsonFactory);
 		}
 		else if (StringUtil.equals(type, "grid")) {
 			return new UpgradeGridDDMFormFieldTypeReportProcessor(ddmFormField);
 		}
 		else if (StringUtil.equals(type, "numeric")) {
-			return new NumericDDMFormFieldTypeReportProcessor();
+			return new NumericDDMFormFieldTypeReportProcessor(_jsonFactory);
 		}
 		else if (StringUtil.equals(type, "radio")) {
 			return new RadioDDMFormFieldTypeReportProcessor();

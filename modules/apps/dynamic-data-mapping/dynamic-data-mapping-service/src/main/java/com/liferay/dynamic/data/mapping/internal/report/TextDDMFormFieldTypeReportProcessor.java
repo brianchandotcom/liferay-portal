@@ -60,6 +60,13 @@ import org.osgi.service.component.annotations.Reference;
 public class TextDDMFormFieldTypeReportProcessor
 	implements DDMFormFieldTypeReportProcessor {
 
+	public TextDDMFormFieldTypeReportProcessor() {
+	}
+
+	public TextDDMFormFieldTypeReportProcessor(JSONFactory jsonFactory) {
+		this.jsonFactory = jsonFactory;
+	}
+
 	@Override
 	public JSONObject process(
 			DDMFormFieldValue ddmFormFieldValue, JSONObject fieldJSONObject,

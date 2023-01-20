@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,13 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NumericDDMFormFieldTypeReportProcessor
 	extends TextDDMFormFieldTypeReportProcessor {
+
+	public NumericDDMFormFieldTypeReportProcessor() {
+	}
+
+	public NumericDDMFormFieldTypeReportProcessor(JSONFactory jsonFactory) {
+		super(jsonFactory);
+	}
 
 	@Override
 	public JSONObject process(

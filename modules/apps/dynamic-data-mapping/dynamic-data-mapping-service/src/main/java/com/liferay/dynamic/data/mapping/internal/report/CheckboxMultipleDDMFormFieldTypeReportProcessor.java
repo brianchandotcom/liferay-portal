@@ -39,6 +39,15 @@ import org.osgi.service.component.annotations.Reference;
 public class CheckboxMultipleDDMFormFieldTypeReportProcessor
 	implements DDMFormFieldTypeReportProcessor {
 
+	public CheckboxMultipleDDMFormFieldTypeReportProcessor() {
+	}
+
+	public CheckboxMultipleDDMFormFieldTypeReportProcessor(
+		JSONFactory jsonFactory) {
+
+		_jsonFactory = jsonFactory;
+	}
+
 	@Override
 	public JSONObject process(
 			DDMFormFieldValue ddmFormFieldValue, JSONObject fieldJSONObject,

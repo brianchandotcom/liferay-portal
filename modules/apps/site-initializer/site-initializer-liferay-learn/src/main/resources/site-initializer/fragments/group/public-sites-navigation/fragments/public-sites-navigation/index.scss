@@ -1446,8 +1446,11 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 			border: 1px solid transparent;
 			border-radius: var(--border-radius-sm);
 			cursor: pointer;
+			display: block;
 			margin-bottom: 1.5rem;
 			padding: 1rem;
+			text-decoration: none;
+			width: 100%;
 
 			.search-suggestion-item-title {
 				color: var(--white);
@@ -1477,6 +1480,9 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 				font-weight: var(--font-weight-semi-bold);
 				opacity: 0.8;
 				padding-top: 1rem;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
 			}
 
 			&:hover {

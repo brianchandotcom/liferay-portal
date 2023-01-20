@@ -150,7 +150,7 @@ function navSearch(query) {
 				for (const suggestion of myjson.suggestions) {
 					searchSuggestionsResult.classList.remove('d-none');
 
-					const newSuggestion = document.createElement('div');
+					const newSuggestion = document.createElement('a');
 					newSuggestion.classList.add('search-suggestion-item');
 
 					const suggestionTitle = document.createElement('div');
@@ -210,14 +210,16 @@ function navSearch(query) {
 
 				if (searchSuggestionItemContents) {
 					for (const searchSuggestionItemContent of searchSuggestionItemContents) {
-
 						const searchTerm = new RegExp(query, 'ig');
 
-						const matchedTerms = searchSuggestionItemContent.textContent.matchAll(searchTerm);
+						const matchedTerms = searchSuggestionItemContent.textContent.matchAll(
+							searchTerm
+						);
 
 						if (matchedTerms) {
 							for (const matchedTerm of matchedTerms) {
-								const highlightedSearchTerm = '<b>' + matchedTerm + '</b>';
+								const highlightedSearchTerm =
+									'<b>' + matchedTerm + '</b>';
 
 								searchSuggestionItemContent.innerHTML = searchSuggestionItemContent.innerHTML.replaceAll(
 									matchedTerm,

@@ -247,67 +247,55 @@ public class PredicateExpressionVisitorImpl
 	public Object visitMethodExpression(
 		List<Object> expressions, MethodExpression.Type type) {
 
-		if (type == MethodExpression.Type.CONTAINS) {
-			if (expressions.size() != 2) {
-				throw new UnsupportedOperationException(
-					StringBundler.concat(
-						"Unsupported method visitMethodExpression with method ",
-						"type ", type, " and ", expressions.size(), "params"));
-			}
-
+		if (expressions.size() == 2) {
 			String left = (String)expressions.get(0);
 			Object fieldValue = expressions.get(1);
 
 			Predicate predicate = null;
 
-			if (_isComplexProperExpression(left)) {
-				predicate = _getPredicateForRelationships(
-					left,
-					(objectFieldName, relatedObjectDefinitionId) -> _contains(
-						objectFieldName, fieldValue,
-						relatedObjectDefinitionId));
-			}
-			else {
-				predicate = _contains(left, fieldValue, _objectDefinitionId);
-			}
+			if (type == MethodExpression.Type.CONTAINS) {
+				if (_isComplexProperExpression(left)) {
+					predicate = _getPredicateForRelationships(
+						left,
+						(objectFieldName, relatedObjectDefinitionId) ->
+							_contains(
+								objectFieldName, fieldValue,
+								relatedObjectDefinitionId));
+				}
+				else {
+					predicate = _contains(
+						left, fieldValue, _objectDefinitionId);
+				}
 
-			if (predicate != null) {
-				return predicate;
-			}
-		}
-
-		if (type == MethodExpression.Type.STARTS_WITH) {
-			if (expressions.size() != 2) {
-				throw new UnsupportedOperationException(
-					StringBundler.concat(
-						"Unsupported method visitMethodExpression with method",
-						"type ", type, " and ", expressions.size(), "params"));
+				if (predicate != null) {
+					return predicate;
+				}
 			}
 
-			String left = (String)expressions.get(0);
-			Object fieldValue = expressions.get(1);
+			if (type == MethodExpression.Type.STARTS_WITH) {
+				if (_isComplexProperExpression(left)) {
+					predicate = _getPredicateForRelationships(
+						left,
+						(objectFieldName, relatedObjectDefinitionId) ->
+							_startsWith(
+								objectFieldName, fieldValue,
+								relatedObjectDefinitionId));
+				}
+				else {
+					predicate = _startsWith(
+						left, fieldValue, _objectDefinitionId);
+				}
 
-			Predicate predicate = null;
-
-			if (_isComplexProperExpression(left)) {
-				predicate = _getPredicateForRelationships(
-					left,
-					(objectFieldName, relatedObjectDefinitionId) -> _startsWith(
-						objectFieldName, fieldValue,
-						relatedObjectDefinitionId));
-			}
-			else {
-				predicate = _startsWith(left, fieldValue, _objectDefinitionId);
-			}
-
-			if (predicate != null) {
-				return predicate;
+				if (predicate != null) {
+					return predicate;
+				}
 			}
 		}
 
 		throw new UnsupportedOperationException(
-			"Unsupported method visitMethodExpression with method type " +
-				type);
+			StringBundler.concat(
+				"Unsupported method visitMethodExpression with method type ",
+				type, " and ", expressions.size(), "params"));
 	}
 
 	@Override

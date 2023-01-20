@@ -127,30 +127,38 @@ definition {
 	test CanGetNestedFieldsNodeInOneToManyRelationship {
 		property portal.acceptance = "true";
 
-		task ("When requesting GET /o/c/students/{studentId}?nestedFields=universityStudents") {
+		task ("When requesting GET /o/c/universities/{universityId}?nestedFields=universityStudents") {
 			var response = ObjectDefinitionAPI.getObjectEntryById(
-				en_US_plural_label = "students",
-				objectEntryId = "${staticStudentId}",
+				en_US_plural_label = "universities",
+				objectEntryId = "${staticUniversityId}",
 				parameter = "nestedFields",
 				parameterValue = "universityStudents");
 		}
 
-		task ("Then the value r_universityStudents_c_university.id in r_universityStudents_c_university node and r_universityStudents_c_universityId have the value of universityId") {
-			var actualId = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.id==${staticUniversityId})].id");
-			var expectedId = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityId");
+		task ("Then the value universityStudents.id in universityStudents node and r_universityStudents_c_universityId have the value of universityId") {
+			var actualStudentId = JSONUtil.getWithJSONPath("${response}", "$..universityStudents[?(@.id==${staticStudentId})].id");
+			var actualUniversityId = JSONUtil.getWithJSONPath("${response}", "$..universityStudents..r_universityStudents_c_universityId");
 
 			TestUtils.assertEquals(
-				actual = "${actualId}",
-				expected = "${expectedId}");
+				actual = "${actualStudentId}",
+				expected = "${staticStudentId}");
+
+			TestUtils.assertEquals(
+				actual = "${actualUniversityId}",
+				expected = "${staticUniversityId}");
 		}
 
-		task ("And Then the value r_universityStudents_c_university.externalReferenceCode and r_universityStudents_c_universityERC have the value of universityErc") {
-			var actualErc = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.externalReferenceCode=='${staticUniversityErc}')].externalReferenceCode");
-			var expectedErc = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityERC");
+		task ("And Then the value universityStudents.externalReferenceCode and r_universityStudents_c_universityERC have the value of universityErc") {
+			var actualStudentErc = JSONUtil.getWithJSONPath("${response}", "$..universityStudents[?(@.externalReferenceCode=='${staticStudentErc}')].externalReferenceCode");
+			var actualUniversityErc = JSONUtil.getWithJSONPath("${response}", "$..universityStudents..r_universityStudents_c_universityERC");
 
 			TestUtils.assertEquals(
-				actual = "${actualErc}",
-				expected = "${expectedErc}");
+				actual = "${actualStudentErc}",
+				expected = "${staticStudentErc}");
+
+			TestUtils.assertEquals(
+				actual = "${actualUniversityErc}",
+				expected = "${staticUniversityErc}");
 		}
 	}
 

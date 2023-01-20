@@ -118,19 +118,6 @@ public abstract class BaseFacetDisplayContextTestCase {
 			expectedFrequenciesValueDescending);
 	}
 
-	protected static void assertFacetOrder(
-		List<BucketDisplayContext> bucketDisplayContexts,
-		String[] expectedDisplayText, int[] expectedFrequencies) {
-
-		String expectedResult = buildExpectedNameFrequencyString(
-			expectedDisplayText, expectedFrequencies);
-
-		String actualNameFrequencyString = buildNameFrequencyString(
-			bucketDisplayContexts);
-
-		Assert.assertEquals(expectedResult, actualNameFrequencyString);
-	}
-
 	protected static String buildExpectedNameFrequencyString(
 		String[] expectedDisplayText, int[] expectedFrequencies) {
 
@@ -140,25 +127,6 @@ public abstract class BaseFacetDisplayContextTestCase {
 			sb.append(expectedDisplayText[i]);
 			sb.append(StringPool.COLON);
 			sb.append(expectedFrequencies[i]);
-			sb.append(StringPool.PIPE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
-	protected static String buildNameFrequencyString(
-		List<BucketDisplayContext> bucketDisplayContexts) {
-
-		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
-
-		for (BucketDisplayContext bucketDisplayContext :
-				bucketDisplayContexts) {
-
-			sb.append(bucketDisplayContext.getBucketText());
-			sb.append(StringPool.COLON);
-			sb.append(bucketDisplayContext.getFrequency());
 			sb.append(StringPool.PIPE);
 		}
 
@@ -283,6 +251,38 @@ public abstract class BaseFacetDisplayContextTestCase {
 		).when(
 			facetCollector
 		).getTermCollectors();
+	}
+
+	protected void assertFacetOrder(
+		List<BucketDisplayContext> bucketDisplayContexts,
+		String[] expectedDisplayText, int[] expectedFrequencies) {
+
+		String expectedResult = buildExpectedNameFrequencyString(
+			expectedDisplayText, expectedFrequencies);
+
+		String actualNameFrequencyString = buildNameFrequencyString(
+			bucketDisplayContexts);
+
+		Assert.assertEquals(expectedResult, actualNameFrequencyString);
+	}
+
+	protected String buildNameFrequencyString(
+		List<BucketDisplayContext> bucketDisplayContexts) {
+
+		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
+
+		for (BucketDisplayContext bucketDisplayContext :
+				bucketDisplayContexts) {
+
+			sb.append(bucketDisplayContext.getBucketText());
+			sb.append(StringPool.COLON);
+			sb.append(bucketDisplayContext.getFrequency());
+			sb.append(StringPool.PIPE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	protected void testOrderBy(

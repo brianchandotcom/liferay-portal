@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
+import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionChecker;
 
@@ -56,359 +56,18 @@ import org.mockito.Mockito;
 /**
  * @author André de Oliveira
  */
-public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
-
-	@Before
-	public void setUp() throws Exception {
-		setUpAssetVocabularyLocalService();
-		setUpConfigurationProvider();
-		setUpFacet();
-	}
-
-	@Test
-	public void testEmptySearchResults() throws Exception {
-		String facetParam = StringPool.BLANK;
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			facetParam,
-			assetCategoriesSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(
-			assetCategoriesSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertTrue(
-			assetCategoriesSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategory(assetCategoryId, 0);
-
-		String facetParam = String.valueOf(assetCategoryId);
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			facetParam,
-			assetCategoriesSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(
-			assetCategoriesSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(
-			assetCategoriesSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testExcludedGroup() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		long groupId = RandomTestUtil.randomLong();
-
-		long stagingGroupId = RandomTestUtil.randomLong();
-
-		createGroup(groupId, stagingGroupId);
-
-		_setUpAssetCategory(assetCategoryId, stagingGroupId);
-
-		_excludedGroupId = stagingGroupId;
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpOneTermCollector(assetCategoryId, frequency);
-
-		String facetParam = StringPool.BLANK;
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		_excludedGroupId = 0;
-	}
-
-	@Test
-	public void testOneTerm() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategory(assetCategoryId, 0);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpOneTermCollector(assetCategoryId, frequency);
-
-		String facetParam = StringPool.BLANK;
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertFalse(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			facetParam,
-			assetCategoriesSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(
-			assetCategoriesSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(
-			assetCategoriesSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTermWithPreviousSelection() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategory(assetCategoryId, 0);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpOneTermCollector(assetCategoryId, frequency);
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				String.valueOf(assetCategoryId));
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			assetCategoryId,
-			GetterUtil.getLong(
-				assetCategoriesSearchFacetDisplayContext.getParameterValue()));
-		Assert.assertFalse(
-			assetCategoriesSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(
-			assetCategoriesSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOrderByTermFrequencyAscending() throws Exception {
-		long[] assetCategoryIds = {3L, 4L, 2L, 1L};
-
-		List<TermCollector> termCollectors = _getTermCollectors(
-			assetCategoryIds, new int[] {6, 5, 5, 4});
-
-		_setUpMultipleAssetCategory(assetCategoryIds);
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				StringPool.BLANK, "count:asc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			assetCategoriesSearchFacetDisplayContext.
-				getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"categoryId1:4|categoryId2:5|categoryId4:5|categoryId3:6",
-			nameFrequencyString);
-	}
-
-	@Test
-	public void testOrderByTermFrequencyDescending() throws Exception {
-		long[] assetCategoryIds = {3L, 4L, 2L, 1L};
-
-		List<TermCollector> termCollectors = _getTermCollectors(
-			assetCategoryIds, new int[] {6, 5, 5, 4});
-
-		_setUpMultipleAssetCategory(assetCategoryIds);
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				StringPool.BLANK, "count:desc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			assetCategoriesSearchFacetDisplayContext.
-				getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"categoryId3:6|categoryId2:5|categoryId4:5|categoryId1:4",
-			nameFrequencyString);
-	}
-
-	@Test
-	public void testOrderByTermValueAscending() throws Exception {
-		long[] assetCategoryIds = {2L, 1L, 2L, 3L};
-
-		List<TermCollector> termCollectors = _getTermCollectors(
-			assetCategoryIds);
-
-		_setUpMultipleAssetCategory(assetCategoryIds);
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				StringPool.BLANK, "key:asc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			assetCategoriesSearchFacetDisplayContext.
-				getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"categoryId1:2|categoryId2:3|categoryId2:1|categoryId3:4",
-			nameFrequencyString);
-	}
-
-	@Test
-	public void testOrderByTermValueDescending() throws Exception {
-		long[] assetCategoryIds = {2L, 1L, 2L, 3L};
-
-		List<TermCollector> termCollectors = _getTermCollectors(
-			assetCategoryIds);
-
-		_setUpMultipleAssetCategory(assetCategoryIds);
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				StringPool.BLANK, "key:desc");
-
-		String nameFrequencyString = _buildNameFrequencyString(
-			assetCategoriesSearchFacetDisplayContext.
-				getBucketDisplayContexts());
-
-		Assert.assertEquals(
-			"categoryId3:4|categoryId2:3|categoryId2:1|categoryId1:2",
-			nameFrequencyString);
-	}
-
-	@Test
-	public void testUnauthorized() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategoryUnauthorized(assetCategoryId);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpOneTermCollector(assetCategoryId, frequency);
-
-		String facetParam = StringPool.BLANK;
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			facetParam,
-			assetCategoriesSearchFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(
-			assetCategoriesSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertTrue(
-			assetCategoriesSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testUnauthorizedWithPreviousSelection() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategoryUnauthorized(assetCategoryId);
-
-		String facetParam = String.valueOf(assetCategoryId);
-
-		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-				facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			facetParam,
-			assetCategoriesSearchFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(
-			assetCategoriesSearchFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(
-			assetCategoriesSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	protected AssetCategoriesSearchFacetDisplayContext createDisplayContext(
+public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
+	extends BaseFacetDisplayContextTestCase {
+
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(
 		String parameterValue) {
 
-		return createDisplayContext(parameterValue, "count:desc");
+		return createFacetDisplayContext(parameterValue, "count:desc");
 	}
 
-	protected AssetCategoriesSearchFacetDisplayContext createDisplayContext(
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(
 		String parameterValue, String order) {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
@@ -447,6 +106,279 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		}
 
 		return assetCategoriesSearchFacetDisplayContextBuilder.build();
+	}
+
+	@Override
+	public String getFacetDisplayContextParameterValue() {
+		return StringPool.BLANK;
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		setUpAssetVocabularyLocalService();
+		setUpConfigurationProvider();
+		setUpFacet();
+	}
+
+	@Test
+	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategory(assetCategoryId, 0);
+
+		String facetParam = String.valueOf(assetCategoryId);
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
+
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
+
+		Assert.assertEquals(
+			String.valueOf(assetCategoryId),
+			bucketDisplayContext.getBucketText());
+		Assert.assertEquals(
+			String.valueOf(assetCategoryId),
+			bucketDisplayContext.getFilterValue());
+		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(bucketDisplayContext.isSelected());
+
+		Assert.assertEquals(
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
+	}
+
+	@Test
+	public void testExcludedGroup() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		long groupId = RandomTestUtil.randomLong();
+
+		long stagingGroupId = RandomTestUtil.randomLong();
+
+		createGroup(groupId, stagingGroupId);
+
+		_setUpAssetCategory(assetCategoryId, stagingGroupId);
+
+		_excludedGroupId = stagingGroupId;
+
+		int frequency = RandomTestUtil.randomInt();
+
+		setUpOneTermCollector(assetCategoryId, frequency);
+
+		String facetParam = StringPool.BLANK;
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		_excludedGroupId = 0;
+	}
+
+	@Test
+	public void testOneTerm() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategory(assetCategoryId, 0);
+
+		int frequency = RandomTestUtil.randomInt();
+
+		setUpOneTermCollector(assetCategoryId, frequency);
+
+		String facetParam = StringPool.BLANK;
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
+
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
+
+		Assert.assertEquals(
+			String.valueOf(assetCategoryId),
+			bucketDisplayContext.getBucketText());
+		Assert.assertEquals(
+			String.valueOf(assetCategoryId),
+			bucketDisplayContext.getFilterValue());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
+		Assert.assertFalse(bucketDisplayContext.isSelected());
+
+		Assert.assertEquals(
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertTrue(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
+	}
+
+	@Test
+	public void testOneTermWithPreviousSelection() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategory(assetCategoryId, 0);
+
+		int frequency = RandomTestUtil.randomInt();
+
+		setUpOneTermCollector(assetCategoryId, frequency);
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			String.valueOf(assetCategoryId));
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
+
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
+
+		Assert.assertEquals(
+			String.valueOf(assetCategoryId),
+			bucketDisplayContext.getBucketText());
+		Assert.assertEquals(
+			String.valueOf(assetCategoryId),
+			bucketDisplayContext.getFilterValue());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(bucketDisplayContext.isSelected());
+
+		Assert.assertEquals(
+			assetCategoryId,
+			GetterUtil.getLong(facetDisplayContext.getParameterValue()));
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
+	}
+
+	@Override
+	@Test
+	public void testOrderByTermFrequencyAscending() throws Exception {
+		long[] assetCategoryIds = {3L, 4L, 2L, 1L};
+
+		List<TermCollector> termCollectors = _getTermCollectors(
+			assetCategoryIds, new int[] {6, 5, 5, 4});
+
+		String[] expectedCategoryIds = {"1", "2", "4", "3"};
+		int[] expectedFrequencies = {4, 5, 5, 6};
+
+		_testOrderBy(
+			assetCategoryIds, termCollectors, "count:asc", expectedCategoryIds,
+			expectedFrequencies);
+	}
+
+	@Override
+	@Test
+	public void testOrderByTermFrequencyDescending() throws Exception {
+		long[] assetCategoryIds = {3L, 4L, 2L, 1L};
+
+		List<TermCollector> termCollectors = _getTermCollectors(
+			assetCategoryIds, new int[] {6, 5, 5, 4});
+
+		String[] expectedCategoryIds = {"3", "2", "4", "1"};
+		int[] expectedFrequencies = {6, 5, 5, 4};
+
+		_testOrderBy(
+			assetCategoryIds, termCollectors, "count:desc", expectedCategoryIds,
+			expectedFrequencies);
+	}
+
+	@Override
+	@Test
+	public void testOrderByTermValueAscending() throws Exception {
+		long[] assetCategoryIds = {2L, 1L, 2L, 3L};
+
+		List<TermCollector> termCollectors = _getTermCollectors(
+			assetCategoryIds);
+
+		String[] expectedCategoryIds = {"1", "2", "2", "3"};
+		int[] expectedFrequencies = {2, 3, 1, 4};
+
+		_testOrderBy(
+			assetCategoryIds, termCollectors, "key:asc", expectedCategoryIds,
+			expectedFrequencies);
+	}
+
+	@Override
+	@Test
+	public void testOrderByTermValueDescending() throws Exception {
+		long[] assetCategoryIds = {2L, 1L, 2L, 3L};
+
+		List<TermCollector> termCollectors = _getTermCollectors(
+			assetCategoryIds);
+
+		String[] expectedCategoryIds = {"3", "2", "2", "1"};
+		int[] expectedFrequencies = {4, 3, 1, 2};
+
+		_testOrderBy(
+			assetCategoryIds, termCollectors, "key:desc", expectedCategoryIds,
+			expectedFrequencies);
+	}
+
+	@Test
+	public void testUnauthorized() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategoryUnauthorized(assetCategoryId);
+
+		int frequency = RandomTestUtil.randomInt();
+
+		setUpOneTermCollector(assetCategoryId, frequency);
+
+		String facetParam = StringPool.BLANK;
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		Assert.assertEquals(
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertTrue(facetDisplayContext.isNothingSelected());
+		Assert.assertTrue(facetDisplayContext.isRenderNothing());
+	}
+
+	@Test
+	public void testUnauthorizedWithPreviousSelection() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategoryUnauthorized(assetCategoryId);
+
+		String facetParam = String.valueOf(assetCategoryId);
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		Assert.assertEquals(
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	protected Group createGroup(long groupId, long stagingGroupId) {
@@ -565,27 +497,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		).when(
 			_facetCollector
 		).getTermCollectors();
-	}
-
-	private String _buildNameFrequencyString(
-			List<BucketDisplayContext> bucketDisplayContexts)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(bucketDisplayContexts.size() * 4);
-
-		for (BucketDisplayContext bucketDisplayContext :
-				bucketDisplayContexts) {
-
-			sb.append("categoryId");
-			sb.append(bucketDisplayContext.getFilterValue());
-			sb.append(StringPool.COLON);
-			sb.append(bucketDisplayContext.getFrequency());
-			sb.append(StringPool.PIPE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
 	}
 
 	private AssetCategory _createAssetCategory(
@@ -722,14 +633,21 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		}
 	}
 
-	private void _setUpMultipleTermCollectors(
-		List<TermCollector> termCollectors) {
+	private void _testOrderBy(
+			long[] assetCategoryIds, List<TermCollector> termCollectors,
+			String order, String[] expectedTerms, int[] expectedFrequencies)
+		throws Exception {
 
-		Mockito.doReturn(
-			termCollectors
-		).when(
-			_facetCollector
-		).getTermCollectors();
+		_setUpMultipleAssetCategory(assetCategoryIds);
+
+		setUpTermCollectors(_facetCollector, termCollectors);
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			StringPool.BLANK, order);
+
+		assertFacetOrder(
+			facetDisplayContext.getBucketDisplayContexts(), expectedTerms,
+			expectedFrequencies);
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService =

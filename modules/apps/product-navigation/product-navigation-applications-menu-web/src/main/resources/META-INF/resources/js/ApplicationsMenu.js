@@ -518,9 +518,9 @@ const ApplicationsMenu = ({
 				symbol="grid"
 			/>
 
-			<p className="sr-only" id={buttonTitleId}>
+			<div className="sr-only" id={buttonTitleId}>
 				{buttonTitle}
-			</p>
+			</div>
 		</>
 	);
 };

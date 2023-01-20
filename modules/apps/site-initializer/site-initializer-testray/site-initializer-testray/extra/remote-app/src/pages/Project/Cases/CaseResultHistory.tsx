@@ -12,6 +12,7 @@
  * details.
  */
 
+import Code from '../../../components/Code';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
@@ -98,8 +99,12 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					value: i18n.translate('warnings'),
 				},
 				{key: 'issues', value: i18n.translate('issues')},
-				{key: 'errors', value: i18n.translate('errors')},
-			],
+				{
+				key: 'errors', 				
+				render: (errors: string) => (errors && <Code>{errors.substring(0, errors.length)}</Code>),
+				size: 'xl',
+				value: i18n.translate('errors'),				
+			},
 			...tableProps,
 		}}
 		transformData={(response) =>

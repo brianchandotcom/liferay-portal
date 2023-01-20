@@ -272,6 +272,102 @@ definition {
 		}
 	}
 
+	@description = "LPS-171913 - Verify it's possible to add an object entry with the trigger On Payment Status Update"
+	@priority = 4
+	test CanCreateActionAddObjectEntryWithOnPaymentStatusUpdate {
+		task ("Given: An object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 171913",
+				objectName = "CustomObject171913",
+				pluralLabelName = "Custom Objects 171913");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject171913");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171913");
+		}
+
+		task ("And given: An Action is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Action shot on add",
+				objectLabel = "Custom Object 171913",
+				thenAction = "Add an Object Entry",
+				whenAction = "On Payment Status Update");
+		}
+
+		task ("And given: An account, minium site and an order is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name",
+				accountEntryType = "Business");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			Refresh();
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("When: The user changes the payment status") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			Click(
+				key_index = "Edit",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Select(
+				key_fieldLabel = "Payment Status",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Pending");
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then: The action is triggered") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject171913");
+
+			ObjectPortlet.viewEntry(entry = "Action shot on add");
+		}
+	}
+
 	@description = "LPS-175191 - Verify if actions works with oldValue function when trigger is On After Update (Notification) using any field"
 	@priority = 5
 	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTrigger {

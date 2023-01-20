@@ -334,6 +334,13 @@ export default function () {
 		type: 'line',
 	};
 
+	const chartDataValue = chartData.columns.map((period) => period.slice(1));
+
+	const hasData = chartDataValue[0].reduce(
+		(sum, value) => Number(sum) + Number(value),
+		0
+	);
+
 	const commissionPercentual = getData()[0]?.percentcommission;
 	const getDataDate = getData()[0]?.periodDate;
 	const commissionValue = getData()[0]?.commissionValue;
@@ -404,13 +411,11 @@ export default function () {
 				</ClaySelect>
 			</div>
 
-			{!!chartData.columns.length && currentMonthData && (
+			{hasData > 0 ? (
 				<LineChart LegendElement={buildLegend} chartData={chartData} />
-			)}
-
-			{!chartData.columns.length && loadData && (
+			) : (
 				<div className="align-items-center d-flex flex-grow-1 justify-content-center">
-					<span>No Data Applications</span>
+					<span>No Data</span>
 				</div>
 			)}
 		</div>

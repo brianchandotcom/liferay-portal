@@ -72,7 +72,7 @@ export default function () {
 	];
 
 	function getDaysUntilGoal(currentDay, currentMonth, filterOption) {
-		if (filterOption === '4') {
+		if (filterOption === PERIOD.YTD) {
 			return 365 - getDayOfYear;
 		}
 		else {
@@ -363,9 +363,15 @@ export default function () {
 		type: 'donut',
 	};
 
+	const chartDataValue = chartData.columns.map((period) => period.slice(1));
+
+	const hasData = chartDataValue
+		.map((arrayValue) => arrayValue[0])
+		.reduce((sum, value) => Number(sum) + Number(value));
+
 	const LegendElement = () => (
 		<div className="d-flex dashboard-sales-space-legend flex-column h-100 justify-content-end mt-5">
-			<div className="font-weight-bolder h5">
+			<div className="dashboard-sales-screen font-weight-bolder h5">
 				{new Intl.NumberFormat('en-US', {
 					currency: 'USD',
 					style: 'currency',
@@ -421,7 +427,7 @@ export default function () {
 				</ClaySelect>
 			</div>
 
-			{!!chartData.columns.length && (
+			{hasData > 0 ? (
 				<DonutChart
 					LegendElement={LegendElement}
 					chartData={chartData}
@@ -429,11 +435,9 @@ export default function () {
 					maxValue={getGoalValue}
 					title={getSalesPercentual}
 				/>
-			)}
-
-			{!chartData.columns.length && (
+			) : (
 				<div className="align-items-center d-flex flex-grow-1 justify-content-center">
-					<span>No Data Applications</span>
+					<span>No Data</span>
 				</div>
 			)}
 		</div>

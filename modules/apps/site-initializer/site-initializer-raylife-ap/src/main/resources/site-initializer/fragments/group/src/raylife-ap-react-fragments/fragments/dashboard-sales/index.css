@@ -1,5 +1,5 @@
 .dashboard-sales-container {
-	min-height: 257px;
+	min-height: 267px;
 }
 
 .dashboard-sales-container
@@ -32,18 +32,23 @@
 
 .dashboard-sales-space-legend {
 	margin-left: 32px;
-}
-
-@media screen and (max-width: 1845px) {
-	.dashboard-sales-space-legend {
-		flex-direction: row !important;
-		justify-content: space-evenly !important;
-		margin-left: none !important;
-	}
+	width: 120px;
 }
 
 @media screen and (max-width: 1280px) {
 	.dashboard-sales-title {
 		word-break: break-word;
+	}
+
+	.dashboard-sales-space-legend {
+		flex-direction: row !important;
+		justify-content: space-evenly !important;
+		margin-left: 0px !important;
+		width: 100%;
+	}
+
+	.dashboard-sales-screen {
+		padding-left: 24px;
+		padding-right: 24px;
 	}
 }

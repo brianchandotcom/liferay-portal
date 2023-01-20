@@ -172,12 +172,12 @@ public class SXPParameterDataCreator
 				keywords, CharPool.QUOTE, StringPool.BLANK);
 		}
 
-		keywords = keywords.replaceAll("\\\\", "&#92;");
 		keywords = keywords.replaceAll("/", "&#8725;");
-		keywords = keywords.replaceAll("\"", "\\\\\"");
-		keywords = keywords.replaceAll("\\[", "&#91;");
-		keywords = keywords.replaceAll("\\]", "&#93;");
+		keywords = keywords.replaceAll("\"", "&#34;");
 		keywords = keywords.replaceAll("\\$", "&#36;");
+		keywords = keywords.replaceAll("\\[", "&#91;");
+		keywords = keywords.replaceAll("\\\\", "&#92;");
+		keywords = keywords.replaceAll("\\]", "&#93;");
 
 		_add(new StringSXPParameter("keywords", true, keywords), sxpParameters);
 

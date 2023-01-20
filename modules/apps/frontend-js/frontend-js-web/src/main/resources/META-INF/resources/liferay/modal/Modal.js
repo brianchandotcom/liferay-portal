@@ -136,7 +136,7 @@ const Modal = ({
 
 		return (
 			<div className="liferay-modal-body" ref={bodyRef}>
-				{BodyComponent && <BodyComponent />}
+				{BodyComponent && <BodyComponent closeModal={processClose} />}
 			</div>
 		);
 	};

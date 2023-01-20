@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ADD_MENULIST_LANGUAGE</td>
-	<td>//div[contains(@class,'dropdown-menu')]//button[contains(text(),'${key_localizedLanguage}')] | //span[contains(text(),' ${key_localizedLanguage} ')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(text(),'${key_localizedLanguage}')] | //span[contains(text(),'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

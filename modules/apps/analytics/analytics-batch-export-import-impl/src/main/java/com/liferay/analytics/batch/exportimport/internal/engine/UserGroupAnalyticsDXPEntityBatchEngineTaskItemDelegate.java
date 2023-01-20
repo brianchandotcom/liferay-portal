@@ -60,12 +60,7 @@ public class UserGroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				filter, UserGroup.class.getName(), null, vulcanPagination,
 				queryConfig -> queryConfig.setSelectedFieldNames(
 					Field.ENTRY_CLASS_PK),
-				searchContext -> {
-					searchContext.setCompanyId(contextCompany.getCompanyId());
-					searchContext.setUserId(0);
-					searchContext.setVulcanCheckPermissions(false);
-				},
-				null,
+				this::getSearchContext, null,
 				document -> _dxpEntityDTOConverter.toDTO(
 					_userGroupLocalService.getUserGroup(
 						GetterUtil.getLong(

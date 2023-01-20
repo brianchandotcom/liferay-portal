@@ -60,9 +60,7 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				filter, AccountEntry.class.getName(), null, vulcanPagination,
 				queryConfig -> queryConfig.setSelectedFieldNames(
 					Field.ENTRY_CLASS_PK),
-				searchContext -> searchContext.setCompanyId(
-					contextCompany.getCompanyId()),
-				null,
+				this::getSearchContext, null,
 				document -> _dxpEntityDTOConverter.toDTO(
 					_accountEntryLocalService.getAccountEntry(
 						GetterUtil.getLong(

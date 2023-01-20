@@ -60,11 +60,7 @@ public class OrganizationAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				filter, Organization.class.getName(), null, vulcanPagination,
 				queryConfig -> queryConfig.setSelectedFieldNames(
 					Field.ENTRY_CLASS_PK),
-				searchContext -> {
-					searchContext.setCompanyId(contextCompany.getCompanyId());
-					searchContext.setUserId(0);
-				},
-				null,
+				this::getSearchContext, null,
 				document -> _dxpEntityDTOConverter.toDTO(
 					_organizationLocalService.getOrganization(
 						GetterUtil.getLong(

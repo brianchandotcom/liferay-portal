@@ -14,7 +14,6 @@
 
 package com.liferay.portal.relationship;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 
 import java.util.ArrayList;
@@ -126,62 +125,29 @@ public class Relationship<T extends ClassedModel> {
 	private Relationship() {
 	}
 
-	private List<? extends ClassedModel> _getInboundMultiRelatedModels(
-		T model) {
-
-		List<ClassedModel> inboundMultiRelatedModels = new ArrayList<>();
-
-		_inboundMultiRelationshipFunctions.forEach(
-			multiRelationshipFunction -> inboundMultiRelatedModels.addAll(
-				multiRelationshipFunction.apply(model)));
-
-		return inboundMultiRelatedModels;
-	}
-
 	private List<? extends ClassedModel> _getInboundRelatedModels(T model) {
 		List<ClassedModel> inboundRelatedModels = new ArrayList<>();
 
-		inboundRelatedModels.addAll(_getInboundMultiRelatedModels(model));
-		inboundRelatedModels.addAll(_getSingleInboundRelatedModels(model));
-
-		return inboundRelatedModels;
-	}
-
-	private List<? extends ClassedModel> _getOutboundMultiRelatedModels(
-		T model) {
-
-		List<ClassedModel> outboundMultiRelatedModels = new ArrayList<>();
-
-		_outboundMultiRelationshipFunctions.forEach(
-			multiRelationshipFunction -> outboundMultiRelatedModels.addAll(
+		_inboundMultiRelationshipFunctions.forEach(
+			multiRelationshipFunction -> inboundRelatedModels.addAll(
 				multiRelationshipFunction.apply(model)));
 
-		return outboundMultiRelatedModels;
+		_inboundSingleRelationshipFunctions.forEach(
+			function -> inboundRelatedModels.add(function.apply(model)));
+
+		return inboundRelatedModels;
 	}
 
 	private List<? extends ClassedModel> _getOutboundRelatedModels(T model) {
 		List<ClassedModel> outboundRelatedModels = new ArrayList<>();
 
-		outboundRelatedModels.addAll(_getOutboundMultiRelatedModels(model));
-		outboundRelatedModels.addAll(_getSingleOutboudRelatedModels(model));
+		_outboundMultiRelationshipFunctions.forEach(
+			function -> outboundRelatedModels.addAll(function.apply(model)));
+
+		_outboundSingleRelationshipFunctions.forEach(
+			function -> outboundRelatedModels.add(function.apply(model)));
 
 		return outboundRelatedModels;
-	}
-
-	private List<? extends ClassedModel> _getSingleInboundRelatedModels(
-		T model) {
-
-		return TransformUtil.transform(
-			_inboundSingleRelationshipFunctions,
-			function -> function.apply(model));
-	}
-
-	private List<? extends ClassedModel> _getSingleOutboudRelatedModels(
-		T model) {
-
-		return TransformUtil.transform(
-			_outboundSingleRelationshipFunctions,
-			function -> function.apply(model));
 	}
 
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>

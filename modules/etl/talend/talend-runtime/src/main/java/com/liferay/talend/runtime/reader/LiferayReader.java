@@ -27,7 +27,6 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -224,16 +223,14 @@ public class LiferayReader implements Reader<IndexedRecord> {
 					resourceURI.toString());
 		}
 
-		Optional<JsonObject> jsonObjectOptional = liferaySource.doGetRequest(
+		JsonObject jsonObject = liferaySource.doGetRequest(
 			resourceURI.toString());
 
-		if (!jsonObjectOptional.isPresent()) {
+		if (jsonObject == null) {
 			throw new IOException(
 				"Unable to get JSON object for resource at " +
 					resourceURI.toASCIIString());
 		}
-
-		JsonObject jsonObject = jsonObjectOptional.get();
 
 		if (jsonObject.containsKey("page")) {
 			if (jsonObject.containsKey("items")) {

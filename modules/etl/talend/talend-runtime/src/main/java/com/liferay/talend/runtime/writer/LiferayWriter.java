@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import javax.json.JsonObject;
 
@@ -86,26 +85,24 @@ public class LiferayWriter
 	}
 
 	public void doDelete(IndexedRecord indexedRecord) {
-		Optional<JsonObject> jsonObjectOptional = _liferaySink.doDeleteRequest(
-			_getEndpointUrl());
+		JsonObject jsonObject = _liferaySink.doDeleteRequest(_getEndpointUrl());
 
-		if (!jsonObjectOptional.isPresent()) {
+		if (jsonObject == null) {
 			_handleSuccessRecord(indexedRecord);
 
 			return;
 		}
 
 		_handleSuccessRecord(
-			_jsonObjectIndexedRecordConverter.toIndexedRecord(
-				jsonObjectOptional.get()));
+			_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
 	}
 
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
-		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPostRequest(
+		JsonObject jsonObject = _liferaySink.doPostRequest(
 			_getEndpointUrl(),
 			_indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
-		if (!jsonObjectOptional.isPresent()) {
+		if (jsonObject == null) {
 			_handleSuccessRecord(indexedRecord);
 
 			return;
@@ -113,15 +110,15 @@ public class LiferayWriter
 
 		_handleSuccessRecord(
 			_jsonObjectIndexedRecordConverter.toIndexedRecord(
-				jsonObjectOptional.get()));
+				jsonObject.get()));
 	}
 
 	public void doReplace(IndexedRecord indexedRecord) throws IOException {
-		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPutRequest(
+		JsonObject jsonObject = _liferaySink.doPutRequest(
 			_getEndpointUrl(),
 			_indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
-		if (!jsonObjectOptional.isPresent()) {
+		if (jsonObject == null) {
 			_handleSuccessRecord(indexedRecord);
 
 			return;
@@ -129,15 +126,15 @@ public class LiferayWriter
 
 		_handleSuccessRecord(
 			_jsonObjectIndexedRecordConverter.toIndexedRecord(
-				jsonObjectOptional.get()));
+				jsonObject.get()));
 	}
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
-		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPatchRequest(
+		JsonObject jsonObject = _liferaySink.doPatchRequest(
 			_getEndpointUrl(),
 			_indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
-		if (!jsonObjectOptional.isPresent()) {
+		if (jsonObject == null) {
 			_handleSuccessRecord(indexedRecord);
 
 			return;
@@ -145,7 +142,7 @@ public class LiferayWriter
 
 		_handleSuccessRecord(
 			_jsonObjectIndexedRecordConverter.toIndexedRecord(
-				jsonObjectOptional.get()));
+				jsonObject.get()));
 	}
 
 	@Override

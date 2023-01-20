@@ -236,7 +236,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
 			objectEntryId);
 
-		_checkPermission(ActionKeys.VIEW, objectEntry);
+		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
+			_checkPermission(ActionKeys.VIEW, objectEntry);
+		}
 
 		return objectEntry;
 	}
@@ -249,7 +251,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
 			externalReferenceCode, companyId, groupId);
 
-		_checkPermission(ActionKeys.VIEW, objectEntry);
+		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
+			_checkPermission(ActionKeys.VIEW, objectEntry);
+		}
 
 		return objectEntry;
 	}

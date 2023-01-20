@@ -71,11 +71,18 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			objectDefinition, payloadJSONObject,
 			_userLocalService.getUser(userId));
 
-		_executeObjectAction(
-			objectAction, objectDefinition, payloadJSONObject, userId,
-			ObjectEntryVariablesUtil.getActionVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataRegistry));
+		try {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
+			_executeObjectAction(
+				objectAction, objectDefinition, payloadJSONObject, userId,
+				ObjectEntryVariablesUtil.getActionVariables(
+					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+					_systemObjectDefinitionMetadataRegistry));
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
+		}
 	}
 
 	@Override

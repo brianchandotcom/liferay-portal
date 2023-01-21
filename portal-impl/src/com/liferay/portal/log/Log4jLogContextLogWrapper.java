@@ -14,15 +14,10 @@
 
 package com.liferay.portal.log;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContext;
+import com.liferay.portal.kernel.log.LogContextRegistryUtil;
 import com.liferay.portal.kernel.log.LogWrapper;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 
 import java.util.Map;
 
@@ -206,13 +201,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	}
 
 	private void _populateThreadContext() {
-		ServiceTrackerList<LogContext> serviceTrackerList = _serviceTrackerList;
-
-		if (serviceTrackerList == null) {
-			return;
-		}
-
-		for (LogContext logContext : serviceTrackerList) {
+		for (LogContext logContext : LogContextRegistryUtil.getLogContexts()) {
 			Map<String, String> context = logContext.getContext();
 
 			for (Map.Entry<String, String> entry : context.entrySet()) {
@@ -221,34 +210,6 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 					entry.getValue());
 			}
 		}
-	}
-
-	private static volatile ServiceTrackerList<LogContext> _serviceTrackerList;
-
-	static {
-		PortalLifecycleUtil.register(
-			new BasePortalLifecycle() {
-
-				@Override
-				protected void doPortalDestroy() {
-					ServiceTrackerList<LogContext> serviceTrackerList =
-						_serviceTrackerList;
-
-					_serviceTrackerList = null;
-
-					if (serviceTrackerList != null) {
-						serviceTrackerList.close();
-					}
-				}
-
-				@Override
-				protected void doPortalInit() {
-					_serviceTrackerList = ServiceTrackerListFactory.open(
-						SystemBundleUtil.getBundleContext(), LogContext.class);
-				}
-
-			},
-			PortalLifecycle.METHOD_ALL);
 	}
 
 }

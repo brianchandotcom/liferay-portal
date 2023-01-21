@@ -71,7 +71,6 @@
 					"DBType": "Integer",
 					"businessType": "Integer",
 					"indexed": true,
-					"indexedLanguageId": "en_US",
 					"label": {
 						"en_US": "Priority"
 					},

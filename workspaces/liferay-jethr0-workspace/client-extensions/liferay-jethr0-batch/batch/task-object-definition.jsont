@@ -3,5 +3,36 @@
     "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
     "version": "v1.0"
   },
-  "items": []
+  "items": [
+    {
+      "label": {
+        "en_US": "Task Parameter"
+      },
+      "name": "TaskParameter",
+      "pluralLabel": {
+        "en_US": "Task Parameters"
+      },
+      "scope": "company",
+      "status": {
+        "code": 0,
+        "label": "approved",
+        "label_i18n": "Approved"
+      }
+    },
+    {
+      "label": {
+        "en_US": "Task"
+      },
+      "name": "Task",
+      "pluralLabel": {
+        "en_US": "Tasks"
+      },
+      "scope": "company",
+      "status": {
+        "code": 0,
+        "label": "approved",
+        "label_i18n": "Approved"
+      }
+    }
+  ]
 }

@@ -34,9 +34,11 @@
           "type": "String"
         }
       ],
+      "panelCategoryKey": "control_panel.object",
       "pluralLabel": {
         "en_US": "Task Parameters"
       },
+      "portlet": true,
       "scope": "company",
       "status": {
         "code": 0,
@@ -122,9 +124,11 @@
           "type": "oneToMany"
         }
       ],
+      "panelCategoryKey": "control_panel.object",
       "pluralLabel": {
         "en_US": "Tasks"
       },
+      "portlet": true,
       "scope": "company",
       "status": {
         "code": 0,

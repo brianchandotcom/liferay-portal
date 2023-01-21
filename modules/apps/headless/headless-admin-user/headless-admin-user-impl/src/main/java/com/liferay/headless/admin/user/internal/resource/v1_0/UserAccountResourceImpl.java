@@ -1067,19 +1067,17 @@ public class UserAccountResourceImpl
 			EmailAddress[] emailAddresses =
 				userAccountContactInformation.getEmailAddresses();
 
-			if (emailAddresses == null) {
-				return Collections.emptyList();
+			if (emailAddresses != null) {
+				return ListUtil.filter(
+					transformToList(
+						emailAddresses,
+						emailAddress ->
+							ServiceBuilderEmailAddressUtil.
+								toServiceBuilderEmailAddress(
+									emailAddress,
+									ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
+					Objects::nonNull);
 			}
-
-			return ListUtil.filter(
-				transformToList(
-					emailAddresses,
-					emailAddress ->
-						ServiceBuilderEmailAddressUtil.
-							toServiceBuilderEmailAddress(
-								emailAddress,
-								ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
-				Objects::nonNull);
 		}
 
 		return Collections.emptyList();
@@ -1094,16 +1092,15 @@ public class UserAccountResourceImpl
 		if (userAccountContactInformation != null) {
 			Phone[] phones = userAccountContactInformation.getTelephones();
 
-			if (phones == null) {
-				return Collections.emptyList();
+			if (phones != null) {
+				return ListUtil.filter(
+					transformToList(
+						phones,
+						telephone ->
+							ServiceBuilderPhoneUtil.toServiceBuilderPhone(
+								telephone, ListTypeConstants.CONTACT_PHONE)),
+					Objects::nonNull);
 			}
-
-			return ListUtil.filter(
-				transformToList(
-					phones,
-					telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
-						telephone, ListTypeConstants.CONTACT_PHONE)),
-				Objects::nonNull);
 		}
 
 		return Collections.emptyList();
@@ -1146,16 +1143,15 @@ public class UserAccountResourceImpl
 		if (userAccountContactInformation != null) {
 			WebUrl[] webUrls = userAccountContactInformation.getWebUrls();
 
-			if (webUrls == null) {
-				return Collections.emptyList();
+			if (webUrls != null) {
+				return ListUtil.filter(
+					transformToList(
+						webUrls,
+						webUrl ->
+							ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+								ListTypeConstants.CONTACT_WEBSITE, webUrl)),
+					Objects::nonNull);
 			}
-
-			return ListUtil.filter(
-				transformToList(
-					webUrls,
-					webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
-						ListTypeConstants.CONTACT_WEBSITE, webUrl)),
-				Objects::nonNull);
 		}
 
 		return Collections.emptyList();

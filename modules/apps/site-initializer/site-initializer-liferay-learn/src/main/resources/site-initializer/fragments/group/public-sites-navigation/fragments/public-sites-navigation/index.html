@@ -367,18 +367,31 @@
 				</div>
 			</div>
 
-			<div class="d-none mb-4 suggested-text">
+			<div class="mb-4 suggested-text">
 				${languageUtil.get(locale, "suggested", "Suggested")}
 			</div>
 
 			<div class="search-suggestions">
+				<template>
+					<a class="search-suggestion-item" href="">
+						<div class="search-suggestion-item-title">
+						</div>
+
+						<div class="search-suggestion-item-content">
+							${languageUtil.get(locale, "no-preview-available", "No Preview Available")}
+						</div>
+
+						<div class="search-suggestion-item-link">
+						</div>
+					</a>
+				</template>
 			</div>
 
-			<div class="d-none no-results-message">
+			<div class="no-results-message">
 				${languageUtil.get(locale, "there-are-no-results", "There are no results.")}
 			</div>
 
-			<div class="d-none mt-3 search-suggestions-see-all-results">
+			<div class="mt-3 search-suggestions-see-all-results">
 				<a class="d-inline-block search-suggestions-see-all-results-text text-decoration-none" data-lfr-editable-id="searchSeeAllResultsButton" data-lfr-editable-type="link" href="/search">
 					${languageUtil.get(locale, "see-all-results", "See All Results")}
 				</a>

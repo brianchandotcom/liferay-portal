@@ -1396,6 +1396,25 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	.suggestions {
 		max-width: 480px;
 
+		&.performing-search {
+			.no-results-message {
+				display: block;
+			}
+		}
+		&.search-results-found {
+			.no-results-message,
+			.suggestions-popular {
+				display: none;
+			}
+
+			.suggested-text {
+				display: block;
+			}
+			.search-suggestions-see-all-results {
+				display: table;
+			}
+		}
+
 		.suggestions-popular {
 			.suggestions-popular-text {
 				color: var(--white);
@@ -1435,6 +1454,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 
 		.suggested-text {
 			color: #fff;
+			display: none;
 			font-size: var(--text-small-caps-font-size);
 			letter-spacing: 0.05em;
 			opacity: 0.7;
@@ -1496,7 +1516,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 			border: 1px solid transparent;
 			border-radius: var(--border-radius-sm);
 			cursor: pointer;
-			display: table;
+			display: none;
 			margin: 0 auto;
 			padding: 0.5rem 1rem;
 
@@ -1545,5 +1565,6 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 
 	.no-results-message {
 		color: var(--white);
+		display: none;
 	}
 }

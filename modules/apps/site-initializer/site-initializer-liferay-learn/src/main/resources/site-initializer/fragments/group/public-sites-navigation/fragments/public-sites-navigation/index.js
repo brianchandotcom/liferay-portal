@@ -91,35 +91,40 @@ window.addEventListener('load', () => {
 const searchSuggestionsInput = fragmentElement.querySelector(
 	'.search-suggestions-input'
 );
-const searchSuggestionsResult = fragmentElement.querySelector(
-	'.search-suggestions'
+const suggestions = fragmentElement.querySelector('.suggestions');
+const searchSuggestions = fragmentElement.querySelector('.search-suggestions');
+
+const searchSuggestionItemTemplate = suggestions.querySelector('template');
+
+const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
+	'a'
 );
-const noResultsMessage = fragmentElement.querySelector('.no-results-message');
 
 searchSuggestionsInput.oninput = function () {
-	searchSuggestionsResult.innerHTML = '';
+	searchSuggestions.innerHTML = '';
 
-	if (!searchSuggestionsInput.value) {
-		noResultsMessage.classList.add('d-none');
+	if (searchSuggestionsInput.value) {
+		suggestions.classList.add('performing-search');
+		performSearch(searchSuggestionsInput.value);
 	}
-
-	const query = searchSuggestionsInput.value;
-	navSearch(query);
+	else {
+		suggestions.classList.remove(
+			'performing-search',
+			'search-results-found'
+		);
+	}
 };
 
-function navSearch(query) {
-	const postDataUrl =
-		window.location.origin +
-		`/o/portal-search-rest/v1.0/suggestions?currentURL=${
-			window.location.origin
-		}&destinationFriendlyURL=/search&groupId=${Liferay.ThemeDisplay.getScopeGroupId()}&plid=${Liferay.ThemeDisplay.getPlid()}&scope=this-site&search=${query}`;
+function performSearch(query) {
+	const postDataURL = `/o/portal-search-rest/v1.0/suggestions?currentURL=${
+		window.location.href
+	}&destinationFriendlyURL=/search&groupId=${Liferay.ThemeDisplay.getScopeGroupId()}&plid=${Liferay.ThemeDisplay.getPlid()}&scope=this-site&search=${query}`;
 
-	postData(postDataUrl, [
+	postData(postDataURL, [
 		{
 			attributes: {
-				fields: ['content_en_US'],
 				includeAssetSearchSummary: true,
-				includeAssetURL: true,
+				includeassetURL: true,
 				sxpBlueprintId: configuration.searchBlueprintId,
 			},
 			contributorName: 'sxpBlueprint',
@@ -127,115 +132,66 @@ function navSearch(query) {
 			size: '3',
 		},
 	]).then((data) => {
-		const searchSuggestions = fragmentElement.querySelector(
-			'.search-suggestions'
-		);
-		const searchSuggestionsSeeAllResults = fragmentElement.querySelector(
-			'.search-suggestions-see-all-results'
-		);
-		const suggestionsPopular = fragmentElement.querySelector(
-			'.suggestions-popular'
-		);
-		const suggestedText = fragmentElement.querySelector('.suggested-text');
-
-		const searchSuggestionsResult = fragmentElement.querySelector(
-			'.search-suggestions'
-		);
-
 		if (data && data.items && data.items[0]) {
-			const myjson = JSON.parse(JSON.stringify(data.items[0]));
-			if (myjson) {
-				searchSuggestionsResult.innerHTML = '';
+			const items = JSON.parse(JSON.stringify(data.items[0]));
+			if (items) {
+				searchSuggestions.innerHTML = '';
 
-				for (const suggestion of myjson.suggestions) {
-					searchSuggestionsResult.classList.remove('d-none');
+				const searchTermRegExp = new RegExp(query, 'ig');
 
-					const newSuggestion = document.createElement('a');
-					newSuggestion.classList.add('search-suggestion-item');
-
-					const suggestionTitle = document.createElement('div');
-					const suggestionTitleText = document.createTextNode(
-						suggestion.text
+				for (const suggestion of items.suggestions) {
+					const suggestionLink = document.importNode(
+						searchSuggestionItem,
+						true
 					);
-					suggestionTitle.classList.add(
-						'search-suggestion-item-title'
-					);
-					suggestionTitle.appendChild(suggestionTitleText);
 
-					const suggestionContent = document.createElement('div');
+					const assetURL = suggestion.attributes.assetURL;
+
+					suggestionLink.href = assetURL;
+
+					const suggestionTitle = suggestionLink.querySelector(
+						'.search-suggestion-item-title'
+					);
+
+					suggestionTitle.appendChild(
+						document.createTextNode(suggestion.text)
+					);
+
+					const suggestionContent = suggestionLink.querySelector(
+						'.search-suggestion-item-content'
+					);
+
 					let suggestionContentTextValue =
 						suggestion.attributes.assetSearchSummary;
 
-					if (!suggestionContentTextValue) {
-						suggestionContentTextValue = Liferay.Language.get(
-							'no-preview-available'
+					if (suggestionContentTextValue) {
+						suggestionContentTextValue = suggestionContentTextValue.substring(
+							0,
+							500
+						);
+
+						suggestionContent.innerHTML = suggestionContentTextValue.replace(
+							searchTermRegExp,
+							`<b>${query}</b>`
 						);
 					}
 
-					const suggestionContentText = document.createTextNode(
-						suggestionContentTextValue
+					const suggestionURL = suggestionLink.querySelector(
+						'.search-suggestion-item-link'
 					);
-					suggestionContent.classList.add(
-						'search-suggestion-item-content'
+
+					suggestionURL.appendChild(
+						document.createTextNode(assetURL.replace(/\?.*$/, ''))
 					);
-					suggestionContent.appendChild(suggestionContentText);
 
-					const assetUrl = suggestion.attributes.assetURL;
+					searchSuggestions.appendChild(suggestionLink);
 
-					const suggestionUrl = document.createElement('div');
-
-					const suggestionUrlText = document.createTextNode(assetUrl);
-
-					newSuggestion.href = assetUrl;
-					suggestionUrl.classList.add('search-suggestion-item-link');
-					suggestionUrl.appendChild(suggestionUrlText);
-
-					newSuggestion.appendChild(suggestionTitle);
-					newSuggestion.appendChild(suggestionContent);
-					newSuggestion.appendChild(suggestionUrl);
-
-					searchSuggestions.appendChild(newSuggestion);
-
-					searchSuggestionsSeeAllResults.classList.remove('d-none');
-					suggestedText.classList.remove('d-none');
-					noResultsMessage.classList.add('d-none');
-					suggestionsPopular.classList.add('d-none');
-				}
-
-				// search highlighting
-
-				const searchSuggestionItemContents = document.querySelectorAll(
-					'.search-suggestion-item-content'
-				);
-
-				if (searchSuggestionItemContents) {
-					for (const searchSuggestionItemContent of searchSuggestionItemContents) {
-						const searchTerm = new RegExp(query, 'ig');
-
-						const matchedTerms = searchSuggestionItemContent.textContent.matchAll(
-							searchTerm
-						);
-
-						if (matchedTerms) {
-							for (const matchedTerm of matchedTerms) {
-								const highlightedSearchTerm =
-									'<b>' + matchedTerm + '</b>';
-
-								searchSuggestionItemContent.innerHTML = searchSuggestionItemContent.innerHTML.replaceAll(
-									matchedTerm,
-									highlightedSearchTerm
-								);
-							}
-						}
-					}
+					suggestions.classList.add('search-results-found');
 				}
 			}
 		}
 		else {
-			searchSuggestionsSeeAllResults.classList.add('d-none');
-			suggestedText.classList.add('d-none');
-			noResultsMessage.classList.remove('d-none');
-			suggestionsPopular.classList.remove('d-none');
+			suggestions.classList.remove('search-results-found');
 		}
 	});
 }

@@ -15,6 +15,7 @@
           "businessType": "Text",
           "DBType": "String",
           "indexed": true,
+          "indexedLanguageId": "en_US",
           "label": {
             "en_US": "Name"
           },
@@ -26,6 +27,7 @@
           "businessType": "Text",
           "DBType": "String",
           "indexed": true,
+          "indexedLanguageId": "en_US",
           "label": {
             "en_US": "Value"
           },
@@ -57,6 +59,7 @@
           "businessType": "Text",
           "DBType": "String",
           "indexed": true,
+          "indexedLanguageId": "en_US",
           "label": {
             "en_US": "Name"
           },
@@ -79,6 +82,7 @@
           "businessType": "Picklist",
           "DBType": "String",
           "indexed": true,
+          "indexedLanguageId": "en_US",
           "label": {
             "en_US": "Type"
           },

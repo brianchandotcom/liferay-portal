@@ -553,18 +553,16 @@ public class OrganizationResourceImpl
 			PostalAddress[] postalAddresses =
 				organizationContactInformation.getPostalAddresses();
 
-			if (postalAddresses == null) {
-				return Collections.emptyList();
+			if (postalAddresses != null) {
+				return ListUtil.filter(
+					transformToList(
+						postalAddresses,
+						_postalAddress ->
+							ServiceBuilderAddressUtil.toServiceBuilderAddress(
+								contextCompany.getCompanyId(), _postalAddress,
+								ListTypeConstants.ORGANIZATION_ADDRESS)),
+					Objects::nonNull);
 			}
-
-			return ListUtil.filter(
-				transformToList(
-					postalAddresses,
-					_postalAddress ->
-						ServiceBuilderAddressUtil.toServiceBuilderAddress(
-							contextCompany.getCompanyId(), _postalAddress,
-							ListTypeConstants.ORGANIZATION_ADDRESS)),
-				Objects::nonNull);
 		}
 
 		return Collections.emptyList();
@@ -643,19 +641,18 @@ public class OrganizationResourceImpl
 			EmailAddress[] emailAddresses =
 				organizationContactInformation.getEmailAddresses();
 
-			if (emailAddresses == null) {
-				return Collections.emptyList();
+			if (emailAddresses != null) {
+				return ListUtil.filter(
+					transformToList(
+						emailAddresses,
+						emailAddress ->
+							ServiceBuilderEmailAddressUtil.
+								toServiceBuilderEmailAddress(
+									emailAddress,
+									ListTypeConstants.
+										ORGANIZATION_EMAIL_ADDRESS)),
+					Objects::nonNull);
 			}
-
-			return ListUtil.filter(
-				transformToList(
-					emailAddresses,
-					emailAddress ->
-						ServiceBuilderEmailAddressUtil.
-							toServiceBuilderEmailAddress(
-								emailAddress,
-								ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS)),
-				Objects::nonNull);
 		}
 
 		return Collections.emptyList();
@@ -730,16 +727,16 @@ public class OrganizationResourceImpl
 		if (organizationContactInformation != null) {
 			Phone[] telephones = organizationContactInformation.getTelephones();
 
-			if (telephones == null) {
-				return Collections.emptyList();
+			if (telephones != null) {
+				return ListUtil.filter(
+					transformToList(
+						telephones,
+						telephone ->
+							ServiceBuilderPhoneUtil.toServiceBuilderPhone(
+								telephone,
+								ListTypeConstants.ORGANIZATION_PHONE)),
+					Objects::nonNull);
 			}
-
-			return ListUtil.filter(
-				transformToList(
-					telephones,
-					telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
-						telephone, ListTypeConstants.ORGANIZATION_PHONE)),
-				Objects::nonNull);
 		}
 
 		return Collections.emptyList();
@@ -781,16 +778,16 @@ public class OrganizationResourceImpl
 		if (organizationContactInformation != null) {
 			WebUrl[] webUrls = organizationContactInformation.getWebUrls();
 
-			if (webUrls == null) {
-				return Collections.emptyList();
+			if (webUrls != null) {
+				return ListUtil.filter(
+					transformToList(
+						webUrls,
+						webUrl ->
+							ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+								ListTypeConstants.ORGANIZATION_WEBSITE,
+								webUrl)),
+					Objects::nonNull);
 			}
-
-			return ListUtil.filter(
-				transformToList(
-					webUrls,
-					webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
-						ListTypeConstants.ORGANIZATION_WEBSITE, webUrl)),
-				Objects::nonNull);
 		}
 
 		return Collections.emptyList();

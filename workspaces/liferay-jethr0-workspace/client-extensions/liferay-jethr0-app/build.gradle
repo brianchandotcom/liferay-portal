@@ -18,6 +18,7 @@ apply plugin: "java"
 apply plugin: "org.springframework.boot"
 
 dependencies {
+	compile group: "org.json", name: "json", version: "20220320"
 	compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.3"
 }
 

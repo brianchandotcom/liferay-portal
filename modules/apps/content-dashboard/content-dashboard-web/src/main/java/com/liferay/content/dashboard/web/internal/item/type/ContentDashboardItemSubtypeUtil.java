@@ -111,18 +111,16 @@ public class ContentDashboardItemSubtypeUtil {
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory,
 		Long classPK) {
 
-		if (contentDashboardItemSubtypeFactory == null) {
-			return null;
-		}
-
 		try {
-			return contentDashboardItemSubtypeFactory.create(classPK);
+			if (contentDashboardItemSubtypeFactory != null) {
+				return contentDashboardItemSubtypeFactory.create(classPK);
+			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
-
-			return null;
 		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

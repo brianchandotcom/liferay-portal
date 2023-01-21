@@ -70,6 +70,42 @@
           "name": "priority",
           "required": false,
           "type": "Integer"
+        },
+        {
+          "businessType": "Picklist",
+          "DBType": "String",
+          "indexed": true,
+          "label": {
+            "en_US": "Type"
+          },
+          "listTypeDefinitionExternalReferenceCode": "taskType",
+          "name": "type",
+          "objectFieldSettings": [
+            {
+              "name": "stateFlow",
+              "value": {
+                "objectStates": [
+                  {
+                    "key": "downstreamBuild",
+                    "name": "Downstream Build",
+                    "name_i18n": {
+                      "en-US": "Downstream Build"
+                    }
+                  },
+                  {
+                    "key": "topLevelBuild",
+                    "name": "Top Level Build",
+                    "name_i18n": {
+                      "en-US": "Top Level Build"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "required": true,
+          "state": false,
+          "type": "String"
         }
       ],
       "pluralLabel": {

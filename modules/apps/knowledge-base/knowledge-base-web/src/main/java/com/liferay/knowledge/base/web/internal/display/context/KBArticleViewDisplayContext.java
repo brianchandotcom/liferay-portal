@@ -126,14 +126,11 @@ public class KBArticleViewDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		int expirationDateNotificationDateWeeks =
-			KBServiceConfigurationProviderUtil.
-				getExpirationDateNotificationDateWeeks(
-					themeDisplay.getCompanyId());
-
 		if (nowLocalDateTime.isAfter(
 				expirationDateLocalDateTime.minusWeeks(
-					expirationDateNotificationDateWeeks))) {
+					KBServiceConfigurationProviderUtil.
+						getExpirationDateNotificationDateWeeks(
+							themeDisplay.getCompanyId())))) {
 
 			return true;
 		}

@@ -1,144 +1,145 @@
 {
-  "configuration": {
-    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-    "version": "v1.0"
-  },
-  "items": [
-    {
-      "externalReferenceCode": "taskParameter",
-      "label": {
-        "en_US": "Task Parameter"
-      },
-      "name": "TaskParameter",
-      "objectFields": [
-        {
-          "businessType": "Text",
-          "DBType": "String",
-          "indexed": true,
-          "indexedLanguageId": "en_US",
-          "label": {
-            "en_US": "Name"
-          },
-          "name": "name",
-          "required": true,
-          "type": "String"
-        },
-        {
-          "businessType": "Text",
-          "DBType": "String",
-          "indexed": true,
-          "indexedLanguageId": "en_US",
-          "label": {
-            "en_US": "Value"
-          },
-          "name": "value",
-          "required": false,
-          "type": "String"
-        }
-      ],
-      "panelCategoryKey": "control_panel.object",
-      "pluralLabel": {
-        "en_US": "Task Parameters"
-      },
-      "portlet": true,
-      "scope": "company",
-      "status": {
-        "code": 0,
-        "label": "approved",
-        "label_i18n": "Approved"
-      }
-    },
-    {
-      "externalReferenceCode": "task",
-      "label": {
-        "en_US": "Task"
-      },
-      "name": "Task",
-      "objectFields": [
-        {
-          "businessType": "Text",
-          "DBType": "String",
-          "indexed": true,
-          "indexedLanguageId": "en_US",
-          "label": {
-            "en_US": "Name"
-          },
-          "name": "name",
-          "required": true,
-          "type": "String"
-        },
-        {
-          "businessType": "Integer",
-          "DBType": "Integer",
-          "indexed": true,
-          "label": {
-            "en_US": "Priority"
-          },
-          "name": "priority",
-          "required": false,
-          "type": "Integer"
-        },
-        {
-          "businessType": "Picklist",
-          "DBType": "String",
-          "indexed": true,
-          "indexedLanguageId": "en_US",
-          "label": {
-            "en_US": "Type"
-          },
-          "listTypeDefinitionExternalReferenceCode": "taskType",
-          "name": "type",
-          "objectFieldSettings": [
-            {
-              "name": "stateFlow",
-              "value": {
-                "objectStates": [
-                  {
-                    "key": "downstreamBuild",
-                    "name": "Downstream Build",
-                    "name_i18n": {
-                      "en-US": "Downstream Build"
-                    }
-                  },
-                  {
-                    "key": "topLevelBuild",
-                    "name": "Top Level Build",
-                    "name_i18n": {
-                      "en-US": "Top Level Build"
-                    }
-                  }
-                ]
-              }
-            }
-          ],
-          "required": true,
-          "state": false,
-          "type": "String"
-        }
-      ],
-      "objectRelationships": [
-        {
-          "deletionType": "cascade",
-          "label": {
-            "en_US": "Task to Task Parameters"
-          },
-          "objectDefinitionExternalReferenceCode1": "task",
-          "objectDefinitionExternalReferenceCode2": "taskParameter",
-          "name": "taskToTaskParameters",
-          "type": "oneToMany"
-        }
-      ],
-      "panelCategoryKey": "control_panel.object",
-      "pluralLabel": {
-        "en_US": "Tasks"
-      },
-      "portlet": true,
-      "scope": "company",
-      "status": {
-        "code": 0,
-        "label": "approved",
-        "label_i18n": "Approved"
-      }
-    }
-  ]
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "taskParameter",
+			"label": {
+				"en_US": "Task Parameter"
+			},
+			"name": "TaskParameter",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Value"
+					},
+					"name": "value",
+					"required": false,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Task Parameters"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "task",
+			"label": {
+				"en_US": "Task"
+			},
+			"name": "Task",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"required": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "taskType",
+					"name": "type",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "downstreamBuild",
+										"name": "Downstream Build",
+										"name_i18n": {
+											"en-US": "Downstream Build"
+										}
+									},
+									{
+										"key": "topLevelBuild",
+										"name": "Top Level Build",
+										"name_i18n": {
+											"en-US": "Top Level Build"
+										}
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": false,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Task to Task Parameters"
+					},
+					"name": "taskToTaskParameters",
+					"objectDefinitionExternalReferenceCode1": "task",
+					"objectDefinitionExternalReferenceCode2": "taskParameter",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Tasks"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		}
+	]
 }

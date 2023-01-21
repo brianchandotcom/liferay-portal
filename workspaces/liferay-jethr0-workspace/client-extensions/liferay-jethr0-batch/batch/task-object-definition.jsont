@@ -9,6 +9,30 @@
         "en_US": "Task Parameter"
       },
       "name": "TaskParameter",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "DBType": "String",
+          "indexed": true,
+          "label": {
+            "en_US": "Name"
+          },
+          "name": "name",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Text",
+          "DBType": "String",
+          "indexed": true,
+          "label": {
+            "en_US": "Value"
+          },
+          "name": "value",
+          "required": false,
+          "type": "String"
+        }
+      ],
       "pluralLabel": {
         "en_US": "Task Parameters"
       },
@@ -24,6 +48,30 @@
         "en_US": "Task"
       },
       "name": "Task",
+      "objectFields": [
+        {
+          "businessType": "Text",
+          "DBType": "String",
+          "indexed": true,
+          "label": {
+            "en_US": "Name"
+          },
+          "name": "name",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "businessType": "Integer",
+          "DBType": "Integer",
+          "indexed": true,
+          "label": {
+            "en_US": "Priority"
+          },
+          "name": "priority",
+          "required": false,
+          "type": "Integer"
+        }
+      ],
       "pluralLabel": {
         "en_US": "Tasks"
       },

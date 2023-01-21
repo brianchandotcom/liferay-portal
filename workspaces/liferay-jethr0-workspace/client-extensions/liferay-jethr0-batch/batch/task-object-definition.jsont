@@ -5,6 +5,7 @@
   },
   "items": [
     {
+      "externalReferenceCode": "taskParameter",
       "label": {
         "en_US": "Task Parameter"
       },
@@ -44,6 +45,7 @@
       }
     },
     {
+      "externalReferenceCode": "task",
       "label": {
         "en_US": "Task"
       },
@@ -106,6 +108,18 @@
           "required": true,
           "state": false,
           "type": "String"
+        }
+      ],
+      "objectRelationships": [
+        {
+          "deletionType": "cascade",
+          "label": {
+            "en_US": "Task to Task Parameters"
+          },
+          "objectDefinitionExternalReferenceCode1": "task",
+          "objectDefinitionExternalReferenceCode2": "taskParameter",
+          "name": "taskToTaskParameters",
+          "type": "oneToMany"
         }
       ],
       "pluralLabel": {

@@ -14,8 +14,6 @@
 
 package com.liferay.layout.internal.util;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.internal.action.provider.LayoutActionProvider;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.LayoutsTree;
@@ -29,33 +27,24 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutRevision;
-import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
-import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,14 +94,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		boolean hasManageLayoutsPermission = _groupPermission.contains(
-			themeDisplay.getPermissionChecker(), groupId,
-			ActionKeys.MANAGE_LAYOUTS);
-
 		return _toJSONArray(
-			hasManageLayoutsPermission, httpServletRequest, groupId,
-			includeActions, layoutTreeNodes,
-			_browserSniffer.isMobile(httpServletRequest), themeDisplay);
+			httpServletRequest, groupId, includeActions, layoutTreeNodes,
+			themeDisplay);
 	}
 
 	private Layout _fetchCurrentLayout(HttpServletRequest httpServletRequest) {
@@ -360,32 +344,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			groupId, privateLayout, parentLayoutId, incomplete, start, end);
 	}
 
-	private boolean _isDeleteable(Layout layout, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (!_layoutPermission.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.DELETE)) {
-
-			return false;
-		}
-
-		Group group = layout.getGroup();
-
-		if (group.isGuest() && !layout.isPrivateLayout() &&
-			layout.isRootLayout()) {
-
-			int count = _layoutLocalService.getLayoutsCount(
-				group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (count == 1) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private boolean _isExpandableLayout(
 		List<Layout> ancestorLayouts, long[] expandedLayoutIds, Layout layout) {
 
@@ -414,10 +372,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONArray _toJSONArray(
-			boolean hasManageLayoutsPermission,
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
-			boolean mobile, ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -449,8 +406,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				layoutTreeNode.getChildLayoutTreeNodes();
 
 			JSONArray childrenJSONArray = _toJSONArray(
-				hasManageLayoutsPermission, httpServletRequest, groupId,
-				includeActions, childLayoutTreeNodes, mobile, themeDisplay);
+				httpServletRequest, groupId, includeActions,
+				childLayoutTreeNodes, themeDisplay);
 
 			Layout layout = layoutTreeNode.getLayout();
 
@@ -486,185 +443,90 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				_layoutPermission.containsLayoutUpdatePermission(
 					themeDisplay.getPermissionChecker(), layout);
 
-			JSONObject jsonObject = JSONUtil.put(
-				"actions", actionsJSONArray
-			).put(
-				"children",
-				() -> {
-					if (childrenJSONArray.length() > 0) {
-						return childrenJSONArray;
-					}
-
-					return null;
-				}
-			).put(
-				"collectionPK",
-				() -> {
-					if (layout.isTypeCollection()) {
-						return layout.getTypeSettingsProperty("collectionPK");
-					}
-
-					return null;
-				}
-			).put(
-				"collectionType",
-				() -> {
-					if (layout.isTypeCollection()) {
-						return layout.getTypeSettingsProperty("collectionType");
-					}
-
-					return null;
-				}
-			).put(
-				"contentDisplayPage", layout.isContentDisplayPage()
-			).put(
-				"deleteable", _isDeleteable(layout, themeDisplay)
-			).put(
-				"draftStatus",
-				() -> {
-					if ((draftLayout != null) && hasUpdatePermission) {
-						return "draft";
-					}
-
-					return null;
-				}
-			).put(
-				"draftURL",
-				() -> {
-					if ((draftLayout != null) && hasUpdatePermission) {
-						return _portal.getLayoutFriendlyURL(
-							draftLayout, themeDisplay);
-					}
-
-					return null;
-				}
-			).put(
-				"friendlyURL", layout.getFriendlyURL()
-			).put(
-				"groupId",
-				() -> {
-					if (layout instanceof VirtualLayout) {
-						VirtualLayout virtualLayout = (VirtualLayout)layout;
-
-						return virtualLayout.getSourceGroupId();
-					}
-
-					return layout.getGroupId();
-				}
-			).put(
-				"hasChildren", layout.hasChildren()
-			).put(
-				"icon", layout.getIcon()
-			).put(
-				"id", layout.getPlid()
-			).put(
-				"layoutId", layout.getLayoutId()
-			).put(
-				"name",
-				() -> {
-					if ((draftLayout != null) &&
-						(hasUpdatePermission || !layout.isPublished() ||
-						 _layoutContentModelResourcePermission.contains(
-							 themeDisplay.getPermissionChecker(),
-							 layout.getPlid(), ActionKeys.UPDATE))) {
-
-						return layout.getName(themeDisplay.getLocale()) +
-							StringPool.STAR;
-					}
-
-					return layout.getName(themeDisplay.getLocale());
-				}
-			).put(
-				"paginated",
-				() -> {
-					List<LayoutTreeNode> layoutTreeNodesList =
-						childLayoutTreeNodes.getLayoutTreeNodesList();
-
-					if (childLayoutTreeNodes.getTotal() !=
-							layoutTreeNodesList.size()) {
-
-						return true;
-					}
-
-					return null;
-				}
-			).put(
-				"parentable",
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.ADD_LAYOUT)
-			).put(
-				"parentLayoutId", layout.getParentLayoutId()
-			).put(
-				"plid", layout.getPlid()
-			).put(
-				"priority", layout.getPriority()
-			).put(
-				"privateLayout", layout.isPrivateLayout()
-			).put(
-				"regularURL",
-				() -> {
-					if (hasUpdatePermission || layout.isPublished()) {
-						return layout.getRegularURL(httpServletRequest);
-					}
-
-					return StringPool.BLANK;
-				}
-			).put(
-				"sortable",
-				hasManageLayoutsPermission && !mobile &&
-				_sites.isLayoutSortable(layout)
-			).put(
-				"target",
-				GetterUtil.getString(
-					HtmlUtil.escape(layout.getTypeSettingsProperty("target")),
-					"_self")
-			).put(
-				"type", layout.getType()
-			).put(
-				"updateable", hasUpdatePermission
-			).put(
-				"uuid", layout.getUuid()
-			);
-
-			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
-				layout);
-
-			if (layoutRevision != null) {
-				long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
-
-				if (_staging.isIncomplete(layout, layoutSetBranchId)) {
-					jsonObject.put("incomplete", true);
-				}
-
-				LayoutSetBranch boundLayoutSetBranch =
-					_layoutSetBranchLocalService.getLayoutSetBranch(
-						layoutSetBranchId);
-
-				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
-
-				if (!layoutBranch.isMaster()) {
-					jsonObject.put(
-						"layoutBranchId", layoutBranch.getLayoutBranchId()
-					).put(
-						"layoutBranchName", layoutBranch.getName()
-					);
-				}
-
-				if (layoutRevision.isHead()) {
-					jsonObject.put("layoutRevisionHead", true);
-				}
-
-				jsonObject.put(
-					"layoutRevisionId", layoutRevision.getLayoutRevisionId()
+			jsonArray.put(
+				JSONUtil.put(
+					"actions", actionsJSONArray
 				).put(
-					"layoutSetBranchId", layoutSetBranchId
-				).put(
-					"layoutSetBranchName", boundLayoutSetBranch.getName()
-				);
-			}
+					"children",
+					() -> {
+						if (childrenJSONArray.length() > 0) {
+							return childrenJSONArray;
+						}
 
-			jsonArray.put(jsonObject);
+						return null;
+					}
+				).put(
+					"groupId",
+					() -> {
+						if (layout instanceof VirtualLayout) {
+							VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+							return virtualLayout.getSourceGroupId();
+						}
+
+						return layout.getGroupId();
+					}
+				).put(
+					"hasChildren", layout.hasChildren()
+				).put(
+					"icon", layout.getIcon()
+				).put(
+					"id", layout.getPlid()
+				).put(
+					"layoutId", layout.getLayoutId()
+				).put(
+					"name",
+					() -> {
+						if ((draftLayout != null) &&
+							(hasUpdatePermission || !layout.isPublished() ||
+							 _layoutContentModelResourcePermission.contains(
+								 themeDisplay.getPermissionChecker(),
+								 layout.getPlid(), ActionKeys.UPDATE))) {
+
+							return layout.getName(themeDisplay.getLocale()) +
+								StringPool.STAR;
+						}
+
+						return layout.getName(themeDisplay.getLocale());
+					}
+				).put(
+					"paginated",
+					() -> {
+						List<LayoutTreeNode> layoutTreeNodesList =
+							childLayoutTreeNodes.getLayoutTreeNodesList();
+
+						if (childLayoutTreeNodes.getTotal() !=
+								layoutTreeNodesList.size()) {
+
+							return true;
+						}
+
+						return null;
+					}
+				).put(
+					"plid", layout.getPlid()
+				).put(
+					"priority", layout.getPriority()
+				).put(
+					"privateLayout", layout.isPrivateLayout()
+				).put(
+					"regularURL",
+					() -> {
+						if (hasUpdatePermission || layout.isPublished()) {
+							return layout.getRegularURL(httpServletRequest);
+						}
+
+						return StringPool.BLANK;
+					}
+				).put(
+					"target",
+					GetterUtil.getString(
+						HtmlUtil.escape(
+							layout.getTypeSettingsProperty("target")),
+						"_self")
+				).put(
+					"type", layout.getType()
+				));
 		}
 
 		return jsonArray;
@@ -674,13 +536,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		LayoutsTreeImpl.class);
 
 	@Reference
-	private BrowserSniffer _browserSniffer;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -702,19 +558,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private LayoutService _layoutService;
 
 	@Reference
-	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
-
-	@Reference
-	private Sites _sites;
-
-	@Reference
-	private Staging _staging;
 
 	private static class LayoutTreeNode {
 

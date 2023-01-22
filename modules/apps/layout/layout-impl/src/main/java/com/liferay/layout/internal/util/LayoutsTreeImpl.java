@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -60,7 +61,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -454,7 +454,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			Layout layout = layoutTreeNode.getLayout();
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
+			JSONArray actionsJSONArray = null;
 
 			if (includeActions) {
 				LayoutActionProvider layoutActionProvider =
@@ -474,23 +474,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					afterDeleteSelectedLayout = secondLayout;
 				}
 
-				jsonObject.put(
-					"actions",
-					layoutActionProvider.getActionsJSONArray(
-						layout, afterDeleteSelectedLayout));
+				actionsJSONArray = layoutActionProvider.getActionsJSONArray(
+					layout, afterDeleteSelectedLayout);
 
 				afterDeleteSelectedLayout = layout;
 			}
-
-			if (childrenJSONArray.length() > 0) {
-				jsonObject.put("children", childrenJSONArray);
-			}
-
-			jsonObject.put(
-				"contentDisplayPage", layout.isContentDisplayPage()
-			).put(
-				"deleteable", _isDeleteable(layout, themeDisplay)
-			);
 
 			Layout draftLayout = _getDraftLayout(layout);
 
@@ -498,59 +486,109 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				_layoutPermission.containsLayoutUpdatePermission(
 					themeDisplay.getPermissionChecker(), layout);
 
-			if ((draftLayout != null) && hasUpdatePermission) {
-				jsonObject.put("draftStatus", "draft");
+			JSONObject jsonObject = JSONUtil.put(
+				"actions", actionsJSONArray
+			).put(
+				"children",
+				() -> {
+					if (childrenJSONArray.length() > 0) {
+						return childrenJSONArray;
+					}
 
-				String draftLayoutURL = _portal.getLayoutFriendlyURL(
-					draftLayout, themeDisplay);
+					return null;
+				}
+			).put(
+				"collectionPK",
+				() -> {
+					if (layout.isTypeCollection()) {
+						return layout.getTypeSettingsProperty("collectionPK");
+					}
 
-				jsonObject.put("draftURL", draftLayoutURL);
-			}
+					return null;
+				}
+			).put(
+				"collectionType",
+				() -> {
+					if (layout.isTypeCollection()) {
+						return layout.getTypeSettingsProperty("collectionType");
+					}
 
-			jsonObject.put("friendlyURL", layout.getFriendlyURL());
+					return null;
+				}
+			).put(
+				"contentDisplayPage", layout.isContentDisplayPage()
+			).put(
+				"deleteable", _isDeleteable(layout, themeDisplay)
+			).put(
+				"draftStatus",
+				() -> {
+					if ((draftLayout != null) && hasUpdatePermission) {
+						return "draft";
+					}
 
-			if (layout instanceof VirtualLayout) {
-				VirtualLayout virtualLayout = (VirtualLayout)layout;
+					return null;
+				}
+			).put(
+				"draftURL",
+				() -> {
+					if ((draftLayout != null) && hasUpdatePermission) {
+						return _portal.getLayoutFriendlyURL(
+							draftLayout, themeDisplay);
+					}
 
-				jsonObject.put("groupId", virtualLayout.getSourceGroupId());
-			}
-			else {
-				jsonObject.put("groupId", layout.getGroupId());
-			}
+					return null;
+				}
+			).put(
+				"friendlyURL", layout.getFriendlyURL()
+			).put(
+				"groupId",
+				() -> {
+					if (layout instanceof VirtualLayout) {
+						VirtualLayout virtualLayout = (VirtualLayout)layout;
 
-			jsonObject.put(
+						return virtualLayout.getSourceGroupId();
+					}
+
+					return layout.getGroupId();
+				}
+			).put(
 				"hasChildren", layout.hasChildren()
+			).put(
+				"icon", layout.getIcon()
 			).put(
 				"id", layout.getPlid()
 			).put(
 				"layoutId", layout.getLayoutId()
-			);
-
-			String layoutName = layout.getName(themeDisplay.getLocale());
-
-			if ((draftLayout != null) &&
-				(hasUpdatePermission || !layout.isPublished() ||
-				 _layoutContentModelResourcePermission.contains(
-					 themeDisplay.getPermissionChecker(), layout.getPlid(),
-					 ActionKeys.UPDATE))) {
-
-				layoutName = layoutName + StringPool.STAR;
-			}
-
-			jsonObject.put(
-				"icon", layout.getIcon()
 			).put(
-				"name", layoutName
-			);
+				"name",
+				() -> {
+					if ((draftLayout != null) &&
+						(hasUpdatePermission || !layout.isPublished() ||
+						 _layoutContentModelResourcePermission.contains(
+							 themeDisplay.getPermissionChecker(),
+							 layout.getPlid(), ActionKeys.UPDATE))) {
 
-			List<LayoutTreeNode> layoutTreeNodesList =
-				childLayoutTreeNodes.getLayoutTreeNodesList();
+						return layout.getName(themeDisplay.getLocale()) +
+							StringPool.STAR;
+					}
 
-			if (childLayoutTreeNodes.getTotal() != layoutTreeNodesList.size()) {
-				jsonObject.put("paginated", true);
-			}
+					return layout.getName(themeDisplay.getLocale());
+				}
+			).put(
+				"paginated",
+				() -> {
+					List<LayoutTreeNode> layoutTreeNodesList =
+						childLayoutTreeNodes.getLayoutTreeNodesList();
 
-			jsonObject.put(
+					if (childLayoutTreeNodes.getTotal() !=
+							layoutTreeNodesList.size()) {
+
+						return true;
+					}
+
+					return null;
+				}
+			).put(
 				"parentable",
 				_layoutPermission.contains(
 					themeDisplay.getPermissionChecker(), layout,
@@ -623,18 +661,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					"layoutSetBranchId", layoutSetBranchId
 				).put(
 					"layoutSetBranchName", boundLayoutSetBranch.getName()
-				);
-			}
-
-			if (Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
-
-				jsonObject.put(
-					"collectionPK",
-					layout.getTypeSettingsProperty("collectionPK")
-				).put(
-					"collectionType",
-					layout.getTypeSettingsProperty("collectionType")
 				);
 			}
 

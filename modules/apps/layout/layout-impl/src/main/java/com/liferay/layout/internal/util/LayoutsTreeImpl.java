@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
@@ -84,8 +83,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	public JSONArray getLayoutsJSONArray(
 			long[] expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
-			boolean incomplete, LayoutSetBranch layoutSetBranch,
-			long parentLayoutId, boolean privateLayout, String treeId)
+			boolean incomplete, long parentLayoutId, boolean privateLayout,
+			String treeId)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -112,7 +111,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		return _toJSONArray(
 			hasManageLayoutsPermission, httpServletRequest, groupId,
-			includeActions, layoutTreeNodes, layoutSetBranch,
+			includeActions, layoutTreeNodes,
 			_browserSniffer.isMobile(httpServletRequest), themeDisplay);
 	}
 
@@ -361,9 +360,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			groupId, privateLayout, parentLayoutId, incomplete, start, end);
 	}
 
-	private boolean _isDeleteable(
-			Layout layout, ThemeDisplay themeDisplay,
-			LayoutSetBranch layoutSetBranch)
+	private boolean _isDeleteable(Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (!_layoutPermission.contains(
@@ -383,20 +380,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			if (count == 1) {
 				return false;
-			}
-		}
-
-		if (layoutSetBranch != null) {
-			List<LayoutRevision> layoutRevisions =
-				_layoutRevisionLocalService.getLayoutRevisions(
-					layoutSetBranch.getLayoutSetBranchId(), layout.getPlid());
-
-			if (layoutRevisions.size() == 1) {
-				LayoutRevision layoutRevision = layoutRevisions.get(0);
-
-				if (layoutRevision.isIncomplete()) {
-					return false;
-				}
 			}
 		}
 
@@ -434,8 +417,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			boolean hasManageLayoutsPermission,
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
-			LayoutSetBranch layoutSetBranch, boolean mobile,
-			ThemeDisplay themeDisplay)
+			boolean mobile, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -468,8 +450,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			JSONArray childrenJSONArray = _toJSONArray(
 				hasManageLayoutsPermission, httpServletRequest, groupId,
-				includeActions, childLayoutTreeNodes, layoutSetBranch, mobile,
-				themeDisplay);
+				includeActions, childLayoutTreeNodes, mobile, themeDisplay);
 
 			Layout layout = layoutTreeNode.getLayout();
 
@@ -508,8 +489,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			jsonObject.put(
 				"contentDisplayPage", layout.isContentDisplayPage()
 			).put(
-				"deleteable",
-				_isDeleteable(layout, themeDisplay, layoutSetBranch)
+				"deleteable", _isDeleteable(layout, themeDisplay)
 			);
 
 			Layout draftLayout = _getDraftLayout(layout);
@@ -691,9 +671,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private LayoutPermission _layoutPermission;
-
-	@Reference
-	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

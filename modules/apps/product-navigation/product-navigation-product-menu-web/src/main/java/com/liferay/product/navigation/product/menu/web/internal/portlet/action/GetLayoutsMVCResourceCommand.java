@@ -107,8 +107,8 @@ public class GetLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 					return _layoutsTree.getLayoutsJSONArray(
 						null, themeDisplay.getScopeGroupId(),
-						httpServletRequest, true, incomplete, null,
-						parentLayoutId, privateLayout, "productMenuPagesTree");
+						httpServletRequest, true, incomplete, parentLayoutId,
+						privateLayout, "productMenuPagesTree");
 				}
 			));
 	}

@@ -96,7 +96,7 @@ public class LayoutsTreeDisplayContext {
 				"children",
 				layoutsTree.getLayoutsJSONArray(
 					_selectedLayoutIds, _groupId, _httpServletRequest, false,
-					true, null, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+					true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 					_privateLayout, _treeId)
 			).put(
 				"hasChildren", true

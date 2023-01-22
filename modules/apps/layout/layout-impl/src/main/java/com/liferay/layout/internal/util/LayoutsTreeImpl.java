@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
@@ -76,16 +74,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			String treeId)
 		throws Exception {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"getLayoutsJSONArray(groupId=", groupId, ", privateLayout=",
-					privateLayout, ", parentLayoutId=", parentLayoutId,
-					", expandedLayoutIds=", expandedLayoutIds, ", incomplete=",
-					incomplete, ", treeId=", treeId,
-					StringPool.CLOSE_PARENTHESIS));
-		}
-
 		LayoutTreeNodes layoutTreeNodes = _getLayoutTreeNodes(
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
 			incomplete, expandedLayoutIds, treeId, false);
@@ -132,13 +120,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		List<Layout> ancestorLayouts = _layoutService.getAncestorLayouts(
 			layout.getPlid());
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Get ancestor layouts ", ancestorLayouts, " for layout ",
-					layout));
-		}
-
 		ancestorLayouts.add(layout);
 
 		return ancestorLayouts;
@@ -167,16 +148,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			boolean privateLayout, long parentLayoutId, boolean incomplete,
 			long[] expandedLayoutIds, String treeId, boolean childLayout)
 		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"_getLayoutTreeNodes(groupId=", groupId, ", privateLayout=",
-					privateLayout, ", parentLayoutId=", parentLayoutId,
-					", expandedLayoutIds=", expandedLayoutIds, ", incomplete=",
-					incomplete, ", treeId=", treeId,
-					StringPool.CLOSE_PARENTHESIS));
-		}
 
 		int count = _layoutService.getLayoutsCount(
 			groupId, privateLayout, parentLayoutId);
@@ -251,15 +222,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		JSONObject paginationJSONObject = _jsonFactory.createJSONObject(
 			paginationJSON);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"_getLoadedLayoutsCount(key=", key, ", layoutId=", layoutId,
-					", paginationJSON=", paginationJSON,
-					", paginationJSONObject", paginationJSONObject,
-					StringPool.CLOSE_PARENTHESIS));
-		}
-
 		return paginationJSONObject.getInt(String.valueOf(layoutId), 0);
 	}
 
@@ -317,14 +279,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		end = Math.max(start, Math.min(end, count));
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"_getPaginatedLayouts(loadedLayoutsCount=",
-					loadedLayoutsCount, ", start=", start, ", end=", end,
-					StringPool.CLOSE_PARENTHESIS));
-		}
-
 		if (childLayout &&
 			(count > PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) &&
 			(start == PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)) {
@@ -376,13 +330,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			boolean includeActions, LayoutTreeNodes layoutTreeNodes,
 			ThemeDisplay themeDisplay)
 		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Group ", groupId, " and layout tree nodes ",
-					layoutTreeNodes));
-		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
@@ -531,9 +478,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		return jsonArray;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutsTreeImpl.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

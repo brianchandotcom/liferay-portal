@@ -82,10 +82,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Override
 	public JSONArray getLayoutsJSONArray(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean includeActions, boolean privateLayout, long parentLayoutId,
-			long[] expandedLayoutIds, boolean incomplete, String treeId,
-			LayoutSetBranch layoutSetBranch)
+			long[] expandedLayoutIds, long groupId,
+			HttpServletRequest httpServletRequest, boolean includeActions,
+			boolean incomplete, LayoutSetBranch layoutSetBranch,
+			long parentLayoutId, boolean privateLayout, String treeId)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {

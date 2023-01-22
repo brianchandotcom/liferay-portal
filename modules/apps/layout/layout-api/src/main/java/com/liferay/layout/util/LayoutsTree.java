@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 public interface LayoutsTree {
 
 	public JSONArray getLayoutsJSONArray(
-			HttpServletRequest httpServletRequest, long groupId,
-			boolean includeActions, boolean privateLayout, long parentLayoutId,
-			long[] expandedLayoutIds, boolean incomplete, String treeId,
-			LayoutSetBranch layoutSetBranch)
+			long[] expandedLayoutIds, long groupId,
+			HttpServletRequest httpServletRequest, boolean includeActions,
+			boolean incomplete, LayoutSetBranch layoutSetBranch,
+			long parentLayoutId, boolean privateLayout, String treeId)
 		throws Exception;
 
 }

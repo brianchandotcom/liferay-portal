@@ -15,6 +15,7 @@
 package com.liferay.analytics.settings.internal.configuration;
 
 import com.liferay.analytics.batch.exportimport.AnalyticsDXPEntityBatchExporter;
+import com.liferay.analytics.batch.exportimport.constants.AnalyticsDXPEntityBatchExporterConstants;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinationNames;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
@@ -24,6 +25,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.internal.model.AnalyticsUserImpl;
 import com.liferay.analytics.settings.internal.util.EntityModelListenerRegistry;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -380,7 +382,9 @@ public class AnalyticsConfigurationRegistryImpl
 						PropsUtil.get("feature.flag.LRAC-10632"))) {
 
 					_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
-						companyId);
+						companyId,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAMES);
 				}
 				else {
 					_analyticsMessageLocalService.deleteAnalyticsMessages(
@@ -462,7 +466,14 @@ public class AnalyticsConfigurationRegistryImpl
 						PropsUtil.get("feature.flag.LRAC-10632"))) {
 
 					_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
-						(Long)dictionary.get("companyId"));
+						(Long)dictionary.get("companyId"),
+						AnalyticsDXPEntityBatchExporterConstants.
+							BASE_DISPATCH_TRIGGER_NAMES);
+
+					_analyticsDXPEntityBatchExporter.export(
+						(Long)dictionary.get("companyId"),
+						AnalyticsDXPEntityBatchExporterConstants.
+							BASE_DISPATCH_TRIGGER_NAMES);
 				}
 				else {
 					Collection<EntityModelListener<?>> entityModelListeners =
@@ -475,6 +486,120 @@ public class AnalyticsConfigurationRegistryImpl
 							(Long)dictionary.get("companyId"));
 					}
 				}
+			}
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LRAC-10632"))) {
+
+				Set<String> refreshDispatchTriggerNames = new HashSet<>();
+				Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
+
+				if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
+						(Long)dictionary.get("companyId"))) {
+
+					if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
+							(Long)dictionary.get("companyId"))) {
+
+						Collections.addAll(
+							refreshDispatchTriggerNames,
+							AnalyticsDXPEntityBatchExporterConstants.
+								ORDER_DISPATCH_TRIGGER_NAME,
+							AnalyticsDXPEntityBatchExporterConstants.
+								PRODUCT_DISPATCH_TRIGGER_NAME);
+					}
+					else {
+						Collections.addAll(
+							unscheduleDispatchTriggerNames,
+							AnalyticsDXPEntityBatchExporterConstants.
+								ORDER_DISPATCH_TRIGGER_NAME,
+							AnalyticsDXPEntityBatchExporterConstants.
+								PRODUCT_DISPATCH_TRIGGER_NAME);
+					}
+				}
+
+				if (_analyticsSettingsManager.syncedContactSettingsChanged(
+						(Long)dictionary.get("companyId"))) {
+
+					if (_analyticsSettingsManager.syncedContactSettingsEnabled(
+							(Long)dictionary.get("companyId"))) {
+
+						refreshDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								USER_DISPATCH_TRIGGER_NAME);
+					}
+					else {
+						unscheduleDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								USER_DISPATCH_TRIGGER_NAME);
+					}
+				}
+
+				if (_analyticsSettingsManager.syncedAccountSettingsChanged(
+						(Long)dictionary.get("companyId"))) {
+
+					if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
+							(Long)dictionary.get("companyId"))) {
+
+						refreshDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+					}
+					else {
+						unscheduleDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+					}
+				}
+
+				if (_analyticsSettingsManager.syncedUserFieldsChanged(
+						(Long)dictionary.get("companyId"))) {
+
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							USER_DISPATCH_TRIGGER_NAME);
+				}
+
+				if (_analyticsSettingsManager.syncedAccountFieldsChanged(
+						(Long)dictionary.get("companyId"))) {
+
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+				}
+
+				if (_analyticsSettingsManager.syncedOrderFieldsChanged(
+						(Long)dictionary.get("companyId"))) {
+
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							ORDER_DISPATCH_TRIGGER_NAME);
+				}
+
+				if (_analyticsSettingsManager.syncedProductFieldsChanged(
+						(Long)dictionary.get("companyId"))) {
+
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							PRODUCT_DISPATCH_TRIGGER_NAME);
+				}
+
+				if (!refreshDispatchTriggerNames.isEmpty()) {
+					_analyticsDXPEntityBatchExporter.refreshExportTriggers(
+						(Long)dictionary.get("companyId"),
+						refreshDispatchTriggerNames.toArray(new String[0]));
+
+					_analyticsDXPEntityBatchExporter.export(
+						(Long)dictionary.get("companyId"),
+						refreshDispatchTriggerNames.toArray(new String[0]));
+				}
+
+				if (!unscheduleDispatchTriggerNames.isEmpty()) {
+					_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
+						(Long)dictionary.get("companyId"),
+						unscheduleDispatchTriggerNames.toArray(new String[0]));
+				}
+
+				return;
 			}
 
 			String[] previousSyncedContactFieldNames =
@@ -491,28 +616,6 @@ public class AnalyticsConfigurationRegistryImpl
 			Arrays.sort(previousSyncedUserFieldNames);
 			Arrays.sort(syncedContactFieldNames);
 			Arrays.sort(syncedUserFieldNames);
-
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LRAC-10632"))) {
-
-				if (!Arrays.equals(
-						previousSyncedUserFieldNames, syncedUserFieldNames) ||
-					!Arrays.equals(
-						previousSyncedContactFieldNames,
-						syncedContactFieldNames) ||
-					!Arrays.equals(
-						previousSyncedUserFieldNames, syncedUserFieldNames)) {
-
-					_analyticsDXPEntityBatchExporter.refreshExportTrigger(
-						(Long)dictionary.get("companyId"),
-						"export-user-analytics-dxp-entities");
-				}
-
-				_analyticsDXPEntityBatchExporter.export(
-					(Long)dictionary.get("companyId"));
-
-				return;
-			}
 
 			if (!Arrays.equals(
 					previousSyncedUserFieldNames, syncedUserFieldNames)) {
@@ -847,6 +950,9 @@ public class AnalyticsConfigurationRegistryImpl
 
 	@Reference
 	private AnalyticsMessageLocalService _analyticsMessageLocalService;
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

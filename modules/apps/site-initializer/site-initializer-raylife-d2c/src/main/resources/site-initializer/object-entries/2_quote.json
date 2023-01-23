@@ -1,0 +1,95 @@
+{
+	"object-entries": [
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-56-334-5276",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-02-25",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-040"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-98-258-0324",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-03-05",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-043"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-77-438-3546",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-09-16",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-044"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-10-358-3844",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-07-28",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-047"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-93-244-2869",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-01-05",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-050"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-12-528-6979",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-05-20",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-054"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-99-949-8202",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-08-07",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-055"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-26-085-7597",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-01-22",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-056"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-99-571-6655",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-10-06",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-057"
+		},
+		{
+			"billingOption": "payInFull",
+			"dataJSON": "",
+			"externalReferenceCode": "QT-08-398-3226",
+			"policyTerm": "yearToYear",
+			"quoteBillingOption": "payInFull",
+			"quoteCreateDate": "2022-10-30",
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-059"
+		}
+	],
+	"objectDefinitionName": "RaylifeQuote"
+}

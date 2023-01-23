@@ -60,17 +60,23 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 						</div>
 					</aui:field-wrapper>
 
-					<aui:input id="file" label="upload-your-zip-file" name="file" type="file" />
+					<aui:input id="file" label="upload-your-zip-file" name="file" type="file">
+						<aui:validator name="required" />
+
+						<aui:validator name="acceptFiles">
+							'zip'
+						</aui:validator>
+					</aui:input>
 
 					<aui:input helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help" label="apply-numerical-prefixes-of-article-files-as-priorities" name="prioritizeByNumericalPrefix" type="checkbox" value="true" />
 				</aui:fieldset>
+
+				<aui:button-row>
+					<aui:button name="submit" type="submit" />
+
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</aui:button-row>
 			</div>
 		</div>
-
-		<aui:button-row>
-			<aui:button name="submit" type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </clay:container-fluid>

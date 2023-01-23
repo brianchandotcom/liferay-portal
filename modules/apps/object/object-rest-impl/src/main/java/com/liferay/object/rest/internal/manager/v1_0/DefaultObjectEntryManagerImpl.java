@@ -146,7 +146,7 @@ public class DefaultObjectEntryManagerImpl
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
-		Map<String, ObjectRelationship> objectRelationshipMap =
+		Map<String, ObjectRelationship> objectRelationships =
 			_getObjectRelationships(objectDefinition, objectEntry);
 
 		com.liferay.object.model.ObjectEntry newObjectEntry =
@@ -162,7 +162,7 @@ public class DefaultObjectEntryManagerImpl
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153117"))) {
 			_addNestedObjectEntries(
 				dtoConverterContext, objectDefinition, newObjectEntry,
-				objectEntry, objectRelationshipMap);
+				objectEntry, objectRelationships);
 		}
 
 		return _toObjectEntry(
@@ -691,75 +691,71 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntryModel,
 			ObjectEntry objectEntry,
-			Map<String, ObjectRelationship> objectRelationshipMap)
+			Map<String, ObjectRelationship> objectRelationships)
 		throws Exception {
 
 		Map<String, Object> objectEntryProperties = objectEntry.getProperties();
 
 		for (Map.Entry<String, ObjectRelationship> property :
-				objectRelationshipMap.entrySet()) {
+				objectRelationships.entrySet()) {
 
-			if (objectRelationshipMap.containsKey(property.getKey())) {
-				ObjectRelationship objectRelationship =
-					objectRelationshipMap.get(property.getKey());
+			if (!objectRelationships.containsKey(property.getKey())) {
+				continue;
+			}
 
-				Object propertyValue = objectEntryProperties.get(
-					property.getKey());
+			ObjectRelationship objectRelationship =
+				objectRelationships.get(property.getKey());
 
-				if ((propertyValue instanceof Map) &&
-					StringUtil.equals(
+			Object propertyValue = objectEntryProperties.get(
+				property.getKey());
+
+			if ((propertyValue instanceof Map) &&
+				StringUtil.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+				(objectRelationship.getObjectDefinitionId2() ==
+					objectDefinition.getObjectDefinitionId())) {
+
+				Map<String, Object> nestedObjectEntry =
+					(Map<String, Object>)propertyValue;
+
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						_getNestedEntityObjectDefinitionId(
+							objectDefinition, objectRelationship));
+
+				_createAndRelateNestedObjectEntry(
+					dtoConverterContext, nestedObjectEntry,
+					relatedObjectDefinition, true, objectEntryModel,
+					objectRelationship);
+			}
+			else if (propertyValue instanceof List) {
+				if ((StringUtil.equals(
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-					(objectRelationship.getObjectDefinitionId2() ==
-						objectDefinition.getObjectDefinitionId())) {
+					 (objectRelationship.getObjectDefinitionId1() ==
+						 objectDefinition.getObjectDefinitionId())) ||
+					StringUtil.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					Map<String, Object> nestedObjectEntry =
-						(Map<String, Object>)propertyValue;
+					List<LinkedHashMap<String, Object>>
+						nestedObjectEntries =
+							(List<LinkedHashMap<String, Object>>)
+								propertyValue;
 
 					ObjectDefinition relatedObjectDefinition =
 						_objectDefinitionLocalService.getObjectDefinition(
 							_getNestedEntityObjectDefinitionId(
 								objectDefinition, objectRelationship));
 
-					_createAndRelateNestedObjectEntry(
-						dtoConverterContext, nestedObjectEntry,
-						relatedObjectDefinition, true, objectEntryModel,
-						objectRelationship);
-				}
-				else if (propertyValue instanceof List) {
-					if ((StringUtil.equals(
-							objectRelationship.getType(),
-							ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-						 (objectRelationship.getObjectDefinitionId1() ==
-							 objectDefinition.getObjectDefinitionId())) ||
-						StringUtil.equals(
-							objectRelationship.getType(),
-							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+					for (Map<String, Object> nestedObjectEntry :
+							nestedObjectEntries) {
 
-						List<LinkedHashMap<String, Object>>
-							nestedObjectEntries =
-								(List<LinkedHashMap<String, Object>>)
-									propertyValue;
-
-						ObjectDefinition relatedObjectDefinition =
-							_objectDefinitionLocalService.getObjectDefinition(
-								_getNestedEntityObjectDefinitionId(
-									objectDefinition, objectRelationship));
-
-						for (Map<String, Object> nestedObjectEntry :
-								nestedObjectEntries) {
-
-							_createAndRelateNestedObjectEntry(
-								dtoConverterContext, nestedObjectEntry,
-								relatedObjectDefinition, false,
-								objectEntryModel, objectRelationship);
-						}
-					}
-					else {
-						throw new BadRequestException(
-							"Object Entry with id " +
-								objectEntryModel.getObjectEntryId() +
-									" can not create nested entities");
+						_createAndRelateNestedObjectEntry(
+							dtoConverterContext, nestedObjectEntry,
+							relatedObjectDefinition, false,
+							objectEntryModel, objectRelationship);
 					}
 				}
 				else {
@@ -768,6 +764,12 @@ public class DefaultObjectEntryManagerImpl
 							objectEntryModel.getObjectEntryId() +
 								" can not create nested entities");
 				}
+			}
+			else {
+				throw new BadRequestException(
+					"Object Entry with id " +
+						objectEntryModel.getObjectEntryId() +
+							" can not create nested entities");
 			}
 		}
 	}

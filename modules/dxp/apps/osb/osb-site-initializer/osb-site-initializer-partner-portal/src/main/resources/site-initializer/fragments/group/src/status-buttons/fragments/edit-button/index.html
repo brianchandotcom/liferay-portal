@@ -23,7 +23,7 @@
 
 [#list userRoles as userRoles]
 	[#if approvedRoles?seq_contains(userRoles.name)]
-		<button class="btn btn-primary d-flex edit-button-manager mr-2 mt-2">
+		<button class="btn btn-primary d-flex mr-2 mt-2" id="edit-button-manager">
 			<div>
 				[@clay["icon"] symbol="pencil"/]
 				Edit
@@ -33,7 +33,7 @@
 	[/#if]
 [/#list]
 
-<button class="btn btn-primary d-none edit-button-user mr-2 mt-2">
+<button class="btn btn-primary d-none mr-2 mt-2" id="edit-button-user">
 	<div>
 		[@clay["icon"] symbol="pencil"/]
 		Edit

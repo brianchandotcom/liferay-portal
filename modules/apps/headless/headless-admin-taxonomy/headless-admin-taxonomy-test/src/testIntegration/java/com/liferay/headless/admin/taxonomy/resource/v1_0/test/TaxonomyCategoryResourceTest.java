@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -107,15 +104,6 @@ public class TaxonomyCategoryResourceTest
 
 		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
-	}
-
-	@Override
-	protected Map<String, Map>
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getExpectedActions(
-				String taxonomyCategoryId)
-		throws Exception {
-
-		return Collections.emptyMap();
 	}
 
 	@Override

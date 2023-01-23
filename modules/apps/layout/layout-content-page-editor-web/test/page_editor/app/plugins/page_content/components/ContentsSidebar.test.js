@@ -27,7 +27,7 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
-					hasPermission: false,
+					isRestricted: true,
 					label: 'Form Type 1',
 					subtypes: [
 						{

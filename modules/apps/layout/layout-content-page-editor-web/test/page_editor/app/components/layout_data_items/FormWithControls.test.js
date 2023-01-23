@@ -35,7 +35,7 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
-					hasPermission: true,
+					isRestricted: false,
 					label: 'Form Type 1',
 					subtypes: [
 						{
@@ -46,7 +46,7 @@ jest.mock(
 					value: '11111',
 				},
 				{
-					hasPermission: false,
+					isRestricted: true,
 					label: 'Form Type 2',
 					subtypes: [
 						{
@@ -231,7 +231,7 @@ describe('FormWithControls', () => {
 
 		expect(
 			screen.getByText(
-				'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+				'this-content-cannot-be-displayed-due-to-permission-restrictions'
 			)
 		).toBeInTheDocument();
 	});

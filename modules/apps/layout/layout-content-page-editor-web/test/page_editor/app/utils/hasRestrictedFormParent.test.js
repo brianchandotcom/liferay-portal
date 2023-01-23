@@ -12,7 +12,7 @@
  * details.
  */
 
-import {hasFormParentWithPermissions} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/hasFormParentWithPermissions';
+import {hasRestrictedFormParent} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/hasRestrictedFormParent';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -20,12 +20,12 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
-					hasPermission: true,
+					isRestricted: true,
 					label: 'Form Type 1',
 					value: '11111',
 				},
 				{
-					hasPermission: false,
+					isRestricted: false,
 					label: 'Form Type 2',
 					value: '22222',
 				},
@@ -63,24 +63,24 @@ const DEFAULT_LAYOUT_DATA = {
 	},
 };
 
-describe('hasFormParentWithPermissions', () => {
+describe('hasRestrictedFormParent', () => {
 	it('checks if the item has a form parent mapped to a item with permissions', () => {
 		expect(
-			hasFormParentWithPermissions(
+			hasRestrictedFormParent(
 				DEFAULT_LAYOUT_DATA.items.fragment1,
 				DEFAULT_LAYOUT_DATA
 			)
 		).toBe(true);
 
 		expect(
-			hasFormParentWithPermissions(
+			hasRestrictedFormParent(
 				DEFAULT_LAYOUT_DATA.items.fragment2,
-				DEFAULT_LAYOUT_DATA.items
+				DEFAULT_LAYOUT_DATA
 			)
 		).toBe(true);
 
 		expect(
-			hasFormParentWithPermissions(DEFAULT_LAYOUT_DATA.items.fragment1, {
+			hasRestrictedFormParent(DEFAULT_LAYOUT_DATA.items.fragment1, {
 				items: {
 					...DEFAULT_LAYOUT_DATA.items,
 					form: {

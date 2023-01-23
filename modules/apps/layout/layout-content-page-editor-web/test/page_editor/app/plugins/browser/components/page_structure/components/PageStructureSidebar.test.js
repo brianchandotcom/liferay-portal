@@ -44,12 +44,12 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
-					hasPermission: true,
+					isRestricted: false,
 					label: 'Form Type 1',
 					value: '11111',
 				},
 				{
-					hasPermission: false,
+					isRestricted: true,
 					label: 'Form Type 2',
 					value: '22222',
 				},
@@ -442,7 +442,7 @@ describe('PageStructureSidebar', () => {
 			expect(screen.getByText('form-container')).toBeInTheDocument();
 			expect(
 				screen.queryByText(
-					'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+					'this-content-cannot-be-displayed-due-to-permission-restrictions'
 				)
 			).not.toBeInTheDocument();
 		});
@@ -460,7 +460,7 @@ describe('PageStructureSidebar', () => {
 			expect(screen.getByText('form-container')).toBeInTheDocument();
 			expect(
 				screen.getByText(
-					'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+					'this-content-cannot-be-displayed-due-to-permission-restrictions'
 				)
 			).toBeInTheDocument();
 			expect(

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {formHasPermissions} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/formHasPermissions';
+import {formIsRestricted} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/formIsRestricted';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -20,12 +20,12 @@ jest.mock(
 		config: {
 			formTypes: [
 				{
-					hasPermission: false,
+					isRestricted: false,
 					label: 'Form Type 1',
 					value: '11111',
 				},
 				{
-					hasPermission: true,
+					isRestricted: true,
 					label: 'Form Type 2',
 					value: '22222',
 				},
@@ -34,10 +34,10 @@ jest.mock(
 	})
 );
 
-describe('formHasPermissions', () => {
+describe('formIsRestricted', () => {
 	it('checks if the item mapped to the form has permissions', () => {
 		expect(
-			formHasPermissions({
+			formIsRestricted({
 				config: {
 					classNameId: '11111',
 					classTypeId: '0',
@@ -47,7 +47,7 @@ describe('formHasPermissions', () => {
 			})
 		).toBe(false);
 		expect(
-			formHasPermissions({
+			formIsRestricted({
 				config: {
 					classNameId: '22222',
 					classTypeId: '0',

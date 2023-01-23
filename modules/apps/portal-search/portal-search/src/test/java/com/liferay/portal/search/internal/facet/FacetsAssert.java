@@ -14,14 +14,13 @@
 
 package com.liferay.portal.search.internal.facet;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 
@@ -39,15 +38,10 @@ public class FacetsAssert {
 
 		Assert.assertNotNull(termCollectors);
 
-		Stream<TermCollector> stream = termCollectors.stream();
+		List<String> termCollectorStrings = TransformUtil.transform(
+			termCollectors, FacetsAssert::toString);
 
-		Assert.assertEquals(
-			message, expected,
-			stream.map(
-				FacetsAssert::toString
-			).collect(
-				Collectors.toList()
-			).toString());
+		Assert.assertEquals(message, expected, termCollectorStrings.toString());
 	}
 
 	public static void assertFrequencies(

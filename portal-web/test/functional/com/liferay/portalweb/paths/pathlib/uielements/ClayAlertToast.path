@@ -11,8 +11,18 @@
 
 <tbody>
 <tr>
+	<td>ALERT_TOAST_CONTAINER</td>
+	<td>//*[@id='ToastAlertContainer']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALERT_TOAST_ICON</td>
 	<td>//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-${key_icon}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_TOAST_CLOSE_BUTTON</td>
+	<td>//*[@id='ToastAlertContainer']//button[@class='close']</td>
 	<td></td>
 </tr>
 <tr>

@@ -149,7 +149,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Alert.closeMessage(messageType = "SUCCESS");
+		Alert.closeToastMessage(messageType = "SUCCESS");
 	}
 
 	macro addCP {
@@ -801,35 +801,6 @@ definition {
 		else {
 			AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_PAGE_2");
 		}
-	}
-
-	macro editComment {
-		var key_entryComment = "${entryComment}";
-
-		MouseOver(
-			key_commentBody = "${entryComment}",
-			locator1 = "Comments#COMMENT_BODY_ASSET");
-
-		Click.clickNoMouseOverNoWaitForVisible(locator1 = "Comments#COMMENT_ACTIONS");
-
-		MenuItem.click(menuItem = "Edit");
-
-		WaitForVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "${entryCommentEdit}");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClick(
-			key_text = "Save",
-			locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
-			value1 = "Save");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro editFrontPagePG {

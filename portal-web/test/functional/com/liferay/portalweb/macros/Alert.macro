@@ -12,6 +12,12 @@ definition {
 		Pause(locator1 = "2000");
 	}
 
+	macro closeToastMessage {
+		if ((IsElementPresent(locator1 = "ClayAlertToast#ALERT_TOAST_CONTAINER")) && (IsVisible(locator1 = "ClayAlertToast#ALERT_TOAST_CONTAINER")) && (IsVisible(locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON"))) {
+			Click(locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON");
+		}
+	}
+
 	macro confirmSecurity {
 		if (IsElementPresent(key_title = "Your connection is not private", locator1 = "Header#H1_TITLE")) {
 			Click(locator1 = "Button#ADVANCED");

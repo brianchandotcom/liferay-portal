@@ -18,6 +18,12 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			PagesAdmin.tearDownCP();
+
+			WikiPage.tearDownCP();
+
+			WikiNode.tearDownCP();
+
 			User.logoutPG();
 		}
 	}
@@ -235,6 +241,11 @@ definition {
 			groupName = "Guest",
 			layoutName = "Wiki Test Page");
 
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			layoutTemplate = "1 Column");
+
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
@@ -259,7 +270,7 @@ definition {
 			commentRating = "true",
 			ratingResult = "Rate this as good");
 
-		WikiPage.editComment(
+		Comments.edit(
 			entryComment = "Wiki Page Comment",
 			entryCommentEdit = "Wiki Page Comment Edited");
 

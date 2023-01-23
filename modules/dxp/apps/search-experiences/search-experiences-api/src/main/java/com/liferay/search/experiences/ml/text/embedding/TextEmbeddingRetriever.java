@@ -14,20 +14,15 @@
 
 package com.liferay.search.experiences.ml.text.embedding;
 
-import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-
-import java.util.List;
+import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
+import com.liferay.search.experiences.ml.embedding.EmbeddingRetriever;
 
 /**
  * @author Petteri Karttunen
  */
-public interface TextEmbeddingRetriever {
+public interface TextEmbeddingRetriever
+	extends EmbeddingProviderInformation, EmbeddingRetriever {
 
-	public List<String> getAvailableProviderNames();
-
-	public Double[] getTextEmbedding(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text);
-
-	public Double[] getTextEmbedding(String text);
+	public Double[] getTextEmbedding(String providerName, String text);
 
 }

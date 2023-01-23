@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.frontend.taglib.internal.servlet;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
@@ -30,6 +31,7 @@ import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import javax.servlet.ServletContext;
 
@@ -61,6 +63,12 @@ public class ServletContextUtil {
 		getCommerceOrderItemLocalService() {
 
 		return _servletContextUtil._getCommerceOrderItemLocalService();
+	}
+
+	public static PortletResourcePermission
+		getCommerceOrderPortletResourcePermission() {
+
+		return _servletContextUtil._getCommerceOrderPortletResourcePermission();
 	}
 
 	public static CommerceOrderTypeLocalService
@@ -164,6 +172,17 @@ public class ServletContextUtil {
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 	}
 
+	@Reference(
+		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")",
+		unbind = "-"
+	)
+	protected void setCommerceOrderPortletResourcePermission(
+		PortletResourcePermission commerceOrderPortletResourcePermission) {
+
+		_commerceOrderPortletResourcePermission =
+			commerceOrderPortletResourcePermission;
+	}
+
 	@Reference(unbind = "-")
 	protected void setCommerceProductPriceCalculation(
 		CommerceProductPriceCalculation commerceProductPriceCalculation) {
@@ -253,6 +272,12 @@ public class ServletContextUtil {
 		return _commerceOrderItemLocalService;
 	}
 
+	private PortletResourcePermission
+		_getCommerceOrderPortletResourcePermission() {
+
+		return _commerceOrderPortletResourcePermission;
+	}
+
 	private CommerceOrderTypeLocalService _getCommerceOrderTypeLocalService() {
 		return _commerceOrderTypeLocalService;
 	}
@@ -313,6 +338,7 @@ public class ServletContextUtil {
 	private CommerceInventoryEngine _commerceInventoryEngine;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+	private PortletResourcePermission _commerceOrderPortletResourcePermission;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private ConfigurationProvider _configurationProvider;

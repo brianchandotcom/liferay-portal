@@ -14,9 +14,18 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus;
+import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -30,4 +39,56 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class EmbeddingProviderValidationResultResourceImpl
 	extends BaseEmbeddingProviderValidationResultResourceImpl {
+
+	@Override
+	public EmbeddingProviderValidationResult
+		postTextEmbeddingValidateProviderConfiguration(
+			EmbeddingProviderConfiguration embeddingProviderConfiguration) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+			return null;
+		}
+
+		return _validate(embeddingProviderConfiguration);
+	}
+
+	private EmbeddingProviderValidationResult _validate(
+		EmbeddingProviderConfiguration embeddingProviderConfiguration) {
+
+		try {
+			EmbeddingProviderStatus embeddingProviderStatus =
+				_textEmbeddingRetriever.getEmbeddingProviderStatus(
+					embeddingProviderConfiguration.toString());
+
+			return new EmbeddingProviderValidationResult() {
+				{
+					if (!Validator.isBlank(
+							embeddingProviderStatus.getErrorMessage())) {
+
+						errorMessage =
+							embeddingProviderStatus.getErrorMessage();
+					}
+					else {
+						expectedDimensions =
+							embeddingProviderStatus.
+								getEmbeddingVectorDimensions();
+					}
+				}
+			};
+		}
+		catch (Exception exception) {
+			return new EmbeddingProviderValidationResult() {
+				{
+					errorMessage = exception.getMessage();
+				}
+			};
+		}
+	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private TextEmbeddingRetriever _textEmbeddingRetriever;
+
 }

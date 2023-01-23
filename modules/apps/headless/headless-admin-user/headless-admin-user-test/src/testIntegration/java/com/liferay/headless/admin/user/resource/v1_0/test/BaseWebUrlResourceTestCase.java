@@ -245,15 +245,6 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/web-urls/batch".
-				replace("{organizationId}", String.valueOf(organizationId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
@@ -329,15 +320,6 @@ public abstract class BaseWebUrlResourceTestCase {
 		throws Exception {
 
 		Map<String, Map> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/web-urls/batch".
-				replace("{userAccountId}", String.valueOf(userAccountId)));
-
-		expectedActions.put("createBatch", createBatchAction);
 
 		return expectedActions;
 	}

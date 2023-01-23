@@ -221,7 +221,10 @@ public abstract class BasePinResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantPin), (List<Pin>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetChannelProductPinsPage_getExpectedActions(
+					irrelevantChannelId, irrelevantProductId));
 		}
 
 		Pin pin1 = testGetChannelProductPinsPage_addPin(
@@ -237,7 +240,19 @@ public abstract class BasePinResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(pin1, pin2), (List<Pin>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetChannelProductPinsPage_getExpectedActions(
+				channelId, productId));
+	}
+
+	protected Map<String, Map> testGetChannelProductPinsPage_getExpectedActions(
+			Long channelId, Long productId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -550,7 +565,9 @@ public abstract class BasePinResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Pin> page) {
+	protected void assertValid(
+		Page<Pin> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Pin> pins = page.getItems();
@@ -565,6 +582,25 @@ public abstract class BasePinResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Pin> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

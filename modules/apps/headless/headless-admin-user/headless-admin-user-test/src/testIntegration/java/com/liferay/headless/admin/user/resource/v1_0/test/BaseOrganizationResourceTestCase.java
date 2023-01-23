@@ -282,17 +282,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations/batch".
-				replace(
-					"{externalReferenceCode}",
-					String.valueOf(externalReferenceCode)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
@@ -748,15 +737,6 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		Map<String, Map> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/organizations/batch".
-				replace("{accountId}", String.valueOf(accountId)));
-
-		expectedActions.put("createBatch", createBatchAction);
 
 		return expectedActions;
 	}
@@ -1967,15 +1947,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/child-organizations/batch".
-				replace("{organizationId}", String.valueOf(organizationId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
@@ -2423,17 +2394,6 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		Map<String, Map> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{parentOrganizationId}/organizations/batch".
-				replace(
-					"{parentOrganizationId}",
-					String.valueOf(parentOrganizationId)));
-
-		expectedActions.put("createBatch", createBatchAction);
 
 		return expectedActions;
 	}

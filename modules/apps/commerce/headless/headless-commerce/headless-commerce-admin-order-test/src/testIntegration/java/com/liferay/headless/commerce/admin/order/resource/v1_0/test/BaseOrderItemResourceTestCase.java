@@ -233,11 +233,19 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		assertContains(orderItem1, (List<OrderItem>)page.getItems());
 		assertContains(orderItem2, (List<OrderItem>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetOrderItemsPage_getExpectedActions());
 
 		orderItemResource.deleteOrderItem(orderItem1.getId());
 
 		orderItemResource.deleteOrderItem(orderItem2.getId());
+	}
+
+	protected Map<String, Map> testGetOrderItemsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -892,7 +900,10 @@ public abstract class BaseOrderItemResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderItem),
 				(List<OrderItem>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderByExternalReferenceCodeOrderItemsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		OrderItem orderItem1 =
@@ -911,11 +922,24 @@ public abstract class BaseOrderItemResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderItem1, orderItem2),
 			(List<OrderItem>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrderByExternalReferenceCodeOrderItemsPage_getExpectedActions(
+				externalReferenceCode));
 
 		orderItemResource.deleteOrderItem(orderItem1.getId());
 
 		orderItemResource.deleteOrderItem(orderItem2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetOrderByExternalReferenceCodeOrderItemsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1034,7 +1058,9 @@ public abstract class BaseOrderItemResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderItem),
 				(List<OrderItem>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderIdOrderItemsPage_getExpectedActions(irrelevantId));
 		}
 
 		OrderItem orderItem1 = testGetOrderIdOrderItemsPage_addOrderItem(
@@ -1051,11 +1077,20 @@ public abstract class BaseOrderItemResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderItem1, orderItem2),
 			(List<OrderItem>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetOrderIdOrderItemsPage_getExpectedActions(id));
 
 		orderItemResource.deleteOrderItem(orderItem1.getId());
 
 		orderItemResource.deleteOrderItem(orderItem2.getId());
+	}
+
+	protected Map<String, Map> testGetOrderIdOrderItemsPage_getExpectedActions(
+			Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1588,7 +1623,9 @@ public abstract class BaseOrderItemResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<OrderItem> page) {
+	protected void assertValid(
+		Page<OrderItem> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<OrderItem> orderItems = page.getItems();
@@ -1603,6 +1640,25 @@ public abstract class BaseOrderItemResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<OrderItem> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

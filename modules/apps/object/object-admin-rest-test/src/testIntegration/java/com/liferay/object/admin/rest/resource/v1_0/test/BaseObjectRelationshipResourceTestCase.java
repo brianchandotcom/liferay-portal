@@ -242,7 +242,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantObjectRelationship),
 				(List<ObjectRelationship>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		ObjectRelationship objectRelationship1 =
@@ -263,13 +266,26 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectRelationship1, objectRelationship2),
 			(List<ObjectRelationship>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExpectedActions(
+				externalReferenceCode));
 
 		objectRelationshipResource.deleteObjectRelationship(
 			objectRelationship1.getId());
 
 		objectRelationshipResource.deleteObjectRelationship(
 			objectRelationship2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -517,7 +533,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantObjectRelationship),
 				(List<ObjectRelationship>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetObjectDefinitionObjectRelationshipsPage_getExpectedActions(
+					irrelevantObjectDefinitionId));
 		}
 
 		ObjectRelationship objectRelationship1 =
@@ -538,13 +557,37 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectRelationship1, objectRelationship2),
 			(List<ObjectRelationship>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetObjectDefinitionObjectRelationshipsPage_getExpectedActions(
+				objectDefinitionId));
 
 		objectRelationshipResource.deleteObjectRelationship(
 			objectRelationship1.getId());
 
 		objectRelationshipResource.deleteObjectRelationship(
 			objectRelationship2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetObjectDefinitionObjectRelationshipsPage_getExpectedActions(
+				Long objectDefinitionId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-relationships/batch".
+				replace(
+					"{objectDefinitionId}",
+					String.valueOf(objectDefinitionId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1170,7 +1213,9 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ObjectRelationship> page) {
+	protected void assertValid(
+		Page<ObjectRelationship> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ObjectRelationship> objectRelationships =
@@ -1186,6 +1231,25 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ObjectRelationship> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

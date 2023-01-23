@@ -262,7 +262,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantStructuredContent),
 				(List<StructuredContent>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAssetLibraryStructuredContentsPage_getExpectedActions(
+					irrelevantAssetLibraryId));
 		}
 
 		StructuredContent structuredContent1 =
@@ -281,13 +284,35 @@ public abstract class BaseStructuredContentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(structuredContent1, structuredContent2),
 			(List<StructuredContent>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAssetLibraryStructuredContentsPage_getExpectedActions(
+				assetLibraryId));
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent1.getId());
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetAssetLibraryStructuredContentsPage_getExpectedActions(
+				Long assetLibraryId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-contents/batch".
+				replace("{assetLibraryId}", String.valueOf(assetLibraryId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -978,7 +1003,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantStructuredContent),
 				(List<StructuredContent>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetContentStructureStructuredContentsPage_getExpectedActions(
+					irrelevantContentStructureId));
 		}
 
 		StructuredContent structuredContent1 =
@@ -999,13 +1027,26 @@ public abstract class BaseStructuredContentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(structuredContent1, structuredContent2),
 			(List<StructuredContent>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetContentStructureStructuredContentsPage_getExpectedActions(
+				contentStructureId));
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent1.getId());
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetContentStructureStructuredContentsPage_getExpectedActions(
+				Long contentStructureId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1370,7 +1411,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantStructuredContent),
 				(List<StructuredContent>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteStructuredContentsPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		StructuredContent structuredContent1 =
@@ -1389,13 +1433,32 @@ public abstract class BaseStructuredContentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(structuredContent1, structuredContent2),
 			(List<StructuredContent>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSiteStructuredContentsPage_getExpectedActions(siteId));
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent1.getId());
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteStructuredContentsPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/structured-contents/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2266,7 +2329,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantStructuredContent),
 				(List<StructuredContent>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetStructuredContentFolderStructuredContentsPage_getExpectedActions(
+					irrelevantStructuredContentFolderId));
 		}
 
 		StructuredContent structuredContent1 =
@@ -2288,13 +2354,37 @@ public abstract class BaseStructuredContentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(structuredContent1, structuredContent2),
 			(List<StructuredContent>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetStructuredContentFolderStructuredContentsPage_getExpectedActions(
+				structuredContentFolderId));
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent1.getId());
 
 		structuredContentResource.deleteStructuredContent(
 			structuredContent2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetStructuredContentFolderStructuredContentsPage_getExpectedActions(
+				Long structuredContentFolderId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/structured-contents/batch".
+				replace(
+					"{structuredContentFolderId}",
+					String.valueOf(structuredContentFolderId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3556,7 +3646,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<StructuredContent> page) {
+	protected void assertValid(
+		Page<StructuredContent> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<StructuredContent> structuredContents =
@@ -3572,6 +3664,25 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<StructuredContent> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(Rating rating) {

@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -238,7 +239,10 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPriceListOrderType),
 				(List<PriceListOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		PriceListOrderType priceListOrderType1 =
@@ -259,7 +263,20 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(priceListOrderType1, priceListOrderType2),
 			(List<PriceListOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -392,7 +409,10 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPriceListOrderType),
 				(List<PriceListOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetPriceListIdPriceListOrderTypesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		PriceListOrderType priceListOrderType1 =
@@ -411,7 +431,19 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(priceListOrderType1, priceListOrderType2),
 			(List<PriceListOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetPriceListIdPriceListOrderTypesPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetPriceListIdPriceListOrderTypesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -680,7 +712,9 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<PriceListOrderType> page) {
+	protected void assertValid(
+		Page<PriceListOrderType> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<PriceListOrderType> priceListOrderTypes =
@@ -696,6 +730,25 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<PriceListOrderType> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

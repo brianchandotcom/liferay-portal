@@ -58,6 +58,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -574,7 +575,10 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWikiPageAttachment),
 				(List<WikiPageAttachment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWikiPageWikiPageAttachmentsPage_getExpectedActions(
+					irrelevantWikiPageId));
 		}
 
 		WikiPageAttachment wikiPageAttachment1 =
@@ -593,13 +597,35 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(wikiPageAttachment1, wikiPageAttachment2),
 			(List<WikiPageAttachment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWikiPageWikiPageAttachmentsPage_getExpectedActions(
+				wikiPageId));
 
 		wikiPageAttachmentResource.deleteWikiPageAttachment(
 			wikiPageAttachment1.getId());
 
 		wikiPageAttachmentResource.deleteWikiPageAttachment(
 			wikiPageAttachment2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetWikiPageWikiPageAttachmentsPage_getExpectedActions(
+				Long wikiPageId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments/batch".
+				replace("{wikiPageId}", String.valueOf(wikiPageId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected WikiPageAttachment
@@ -836,7 +862,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<WikiPageAttachment> page) {
+	protected void assertValid(
+		Page<WikiPageAttachment> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WikiPageAttachment> wikiPageAttachments =
@@ -852,6 +880,25 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WikiPageAttachment> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

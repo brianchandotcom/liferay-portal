@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -298,7 +299,10 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPlacedOrderItem),
 				(List<PlacedOrderItem>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetPlacedOrderPlacedOrderItemsPage_getExpectedActions(
+					irrelevantPlacedOrderId));
 		}
 
 		PlacedOrderItem placedOrderItem1 =
@@ -317,7 +321,20 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(placedOrderItem1, placedOrderItem2),
 			(List<PlacedOrderItem>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetPlacedOrderPlacedOrderItemsPage_getExpectedActions(
+				placedOrderId));
+	}
+
+	protected Map<String, Map>
+			testGetPlacedOrderPlacedOrderItemsPage_getExpectedActions(
+				Long placedOrderId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -642,7 +659,9 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<PlacedOrderItem> page) {
+	protected void assertValid(
+		Page<PlacedOrderItem> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<PlacedOrderItem> placedOrderItems =
@@ -658,6 +677,25 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<PlacedOrderItem> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

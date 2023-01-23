@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -209,7 +210,10 @@ public abstract class BaseRoleResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantRole), (List<Role>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProcessRolesPage_getExpectedActions(
+					irrelevantProcessId));
 		}
 
 		Role role1 = testGetProcessRolesPage_addRole(processId, randomRole());
@@ -222,7 +226,17 @@ public abstract class BaseRoleResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(role1, role2), (List<Role>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetProcessRolesPage_getExpectedActions(processId));
+	}
+
+	protected Map<String, Map> testGetProcessRolesPage_getExpectedActions(
+			Long processId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected Role testGetProcessRolesPage_addRole(Long processId, Role role)
@@ -332,7 +346,9 @@ public abstract class BaseRoleResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Role> page) {
+	protected void assertValid(
+		Page<Role> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Role> roles = page.getItems();
@@ -347,6 +363,25 @@ public abstract class BaseRoleResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Role> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

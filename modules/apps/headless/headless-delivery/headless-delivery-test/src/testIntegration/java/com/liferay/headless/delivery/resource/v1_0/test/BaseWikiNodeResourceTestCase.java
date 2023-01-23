@@ -227,7 +227,9 @@ public abstract class BaseWikiNodeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWikiNode),
 				(List<WikiNode>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteWikiNodesPage_getExpectedActions(irrelevantSiteId));
 		}
 
 		WikiNode wikiNode1 = testGetSiteWikiNodesPage_addWikiNode(
@@ -244,11 +246,29 @@ public abstract class BaseWikiNodeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(wikiNode1, wikiNode2),
 			(List<WikiNode>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetSiteWikiNodesPage_getExpectedActions(siteId));
 
 		wikiNodeResource.deleteWikiNode(wikiNode1.getId());
 
 		wikiNodeResource.deleteWikiNode(wikiNode2.getId());
+	}
+
+	protected Map<String, Map> testGetSiteWikiNodesPage_getExpectedActions(
+			Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1337,7 +1357,9 @@ public abstract class BaseWikiNodeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WikiNode> page) {
+	protected void assertValid(
+		Page<WikiNode> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WikiNode> wikiNodes = page.getItems();
@@ -1352,6 +1374,25 @@ public abstract class BaseWikiNodeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WikiNode> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -224,7 +225,17 @@ public abstract class BaseKeywordQueryContributorResourceTestCase {
 		assertContains(
 			keywordQueryContributor2,
 			(List<KeywordQueryContributor>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetKeywordQueryContributorsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetKeywordQueryContributorsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected KeywordQueryContributor
@@ -351,7 +362,9 @@ public abstract class BaseKeywordQueryContributorResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<KeywordQueryContributor> page) {
+	protected void assertValid(
+		Page<KeywordQueryContributor> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<KeywordQueryContributor> keywordQueryContributors =
@@ -367,6 +380,25 @@ public abstract class BaseKeywordQueryContributorResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<KeywordQueryContributor> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

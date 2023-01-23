@@ -224,7 +224,9 @@ public abstract class BaseSitePageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantSitePage),
 				(List<SitePage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteSitePagesPage_getExpectedActions(irrelevantSiteId));
 		}
 
 		SitePage sitePage1 = testGetSiteSitePagesPage_addSitePage(
@@ -241,7 +243,16 @@ public abstract class BaseSitePageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(sitePage1, sitePage2),
 			(List<SitePage>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetSiteSitePagesPage_getExpectedActions(siteId));
+	}
+
+	protected Map<String, Map> testGetSiteSitePagesPage_getExpectedActions(
+			Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -567,7 +578,10 @@ public abstract class BaseSitePageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantSitePage),
 				(List<SitePage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteSitePagesExperiencesPage_getExpectedActions(
+					irrelevantSiteId, irrelevantFriendlyUrlPath));
 		}
 
 		SitePage sitePage1 = testGetSiteSitePagesExperiencesPage_addSitePage(
@@ -584,7 +598,20 @@ public abstract class BaseSitePageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(sitePage1, sitePage2),
 			(List<SitePage>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteSitePagesExperiencesPage_getExpectedActions(
+				siteId, friendlyUrlPath));
+	}
+
+	protected Map<String, Map>
+			testGetSiteSitePagesExperiencesPage_getExpectedActions(
+				Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected SitePage testGetSiteSitePagesExperiencesPage_addSitePage(
@@ -912,7 +939,9 @@ public abstract class BaseSitePageResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SitePage> page) {
+	protected void assertValid(
+		Page<SitePage> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<SitePage> sitePages = page.getItems();
@@ -927,6 +956,25 @@ public abstract class BaseSitePageResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<SitePage> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -61,6 +61,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -517,7 +518,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantKnowledgeBaseFolder),
 				(List<KnowledgeBaseFolder>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getExpectedActions(
+					irrelevantParentKnowledgeBaseFolderId));
 		}
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
@@ -538,13 +542,26 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(knowledgeBaseFolder1, knowledgeBaseFolder2),
 			(List<KnowledgeBaseFolder>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getExpectedActions(
+				parentKnowledgeBaseFolderId));
 
 		knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
 			knowledgeBaseFolder1.getId());
 
 		knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
 			knowledgeBaseFolder2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getExpectedActions(
+				Long parentKnowledgeBaseFolderId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -679,7 +696,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantKnowledgeBaseFolder),
 				(List<KnowledgeBaseFolder>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteKnowledgeBaseFoldersPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
@@ -698,13 +718,33 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(knowledgeBaseFolder1, knowledgeBaseFolder2),
 			(List<KnowledgeBaseFolder>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteKnowledgeBaseFoldersPage_getExpectedActions(siteId));
 
 		knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
 			knowledgeBaseFolder1.getId());
 
 		knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
 			knowledgeBaseFolder2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteKnowledgeBaseFoldersPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1468,7 +1508,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<KnowledgeBaseFolder> page) {
+	protected void assertValid(
+		Page<KnowledgeBaseFolder> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<KnowledgeBaseFolder> knowledgeBaseFolders =
@@ -1484,6 +1526,25 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<KnowledgeBaseFolder> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

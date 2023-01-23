@@ -227,7 +227,10 @@ public abstract class BaseInstanceResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantInstance),
 				(List<Instance>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProcessInstancesPage_getExpectedActions(
+					irrelevantProcessId));
 		}
 
 		Instance instance1 = testGetProcessInstancesPage_addInstance(
@@ -245,7 +248,26 @@ public abstract class BaseInstanceResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(instance1, instance2),
 			(List<Instance>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetProcessInstancesPage_getExpectedActions(processId));
+	}
+
+	protected Map<String, Map> testGetProcessInstancesPage_getExpectedActions(
+			Long processId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/batch".
+				replace("{processId}", String.valueOf(processId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -830,7 +852,9 @@ public abstract class BaseInstanceResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Instance> page) {
+	protected void assertValid(
+		Page<Instance> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Instance> instances = page.getItems();
@@ -845,6 +869,25 @@ public abstract class BaseInstanceResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Instance> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

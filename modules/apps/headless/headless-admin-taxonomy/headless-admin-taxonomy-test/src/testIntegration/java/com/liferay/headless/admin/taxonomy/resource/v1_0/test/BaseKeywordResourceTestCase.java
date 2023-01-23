@@ -1665,6 +1665,10 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 	}
 
+	protected void assertValid(Page<Keyword> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];
 	}

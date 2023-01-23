@@ -242,7 +242,10 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWarehouseChannel),
 				(List<WarehouseChannel>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWarehouseByExternalReferenceCodeWarehouseChannelsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		WarehouseChannel warehouseChannel1 =
@@ -263,7 +266,20 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(warehouseChannel1, warehouseChannel2),
 			(List<WarehouseChannel>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWarehouseByExternalReferenceCodeWarehouseChannelsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetWarehouseByExternalReferenceCodeWarehouseChannelsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -392,7 +408,10 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWarehouseChannel),
 				(List<WarehouseChannel>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWarehouseIdWarehouseChannelsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		WarehouseChannel warehouseChannel1 =
@@ -411,7 +430,18 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(warehouseChannel1, warehouseChannel2),
 			(List<WarehouseChannel>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWarehouseIdWarehouseChannelsPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetWarehouseIdWarehouseChannelsPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -917,7 +947,9 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WarehouseChannel> page) {
+	protected void assertValid(
+		Page<WarehouseChannel> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WarehouseChannel> warehouseChannels =
@@ -933,6 +965,25 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WarehouseChannel> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -218,11 +218,19 @@ public abstract class BaseCountryResourceTestCase {
 
 		assertContains(country1, (List<Country>)page.getItems());
 		assertContains(country2, (List<Country>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetCountriesPage_getExpectedActions());
 
 		countryResource.deleteCountry(country1.getId());
 
 		countryResource.deleteCountry(country2.getId());
+	}
+
+	protected Map<String, Map> testGetCountriesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1071,7 +1079,9 @@ public abstract class BaseCountryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Country> page) {
+	protected void assertValid(
+		Page<Country> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Country> countries = page.getItems();
@@ -1086,6 +1096,25 @@ public abstract class BaseCountryResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Country> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

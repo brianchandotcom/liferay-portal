@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -217,7 +218,10 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantTaxCategory),
 				(List<TaxCategory>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getExpectedActions(
+					irrelevantGroupId));
 		}
 
 		TaxCategory taxCategory1 =
@@ -237,11 +241,24 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(taxCategory1, taxCategory2),
 			(List<TaxCategory>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getExpectedActions(
+				groupId));
 
 		taxCategoryResource.deleteTaxCategory(taxCategory1.getId());
 
 		taxCategoryResource.deleteTaxCategory(taxCategory2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getExpectedActions(
+				Long groupId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -587,7 +604,9 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<TaxCategory> page) {
+	protected void assertValid(
+		Page<TaxCategory> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<TaxCategory> taxCategories = page.getItems();
@@ -602,6 +621,25 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<TaxCategory> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

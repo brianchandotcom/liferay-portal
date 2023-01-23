@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -208,7 +209,15 @@ public abstract class BaseReindexStatusResourceTestCase {
 
 		assertContains(reindexStatus1, (List<ReindexStatus>)page.getItems());
 		assertContains(reindexStatus2, (List<ReindexStatus>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetReindexStatusesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map> testGetReindexStatusesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected ReindexStatus testGetReindexStatusesPage_addReindexStatus(
@@ -326,7 +335,9 @@ public abstract class BaseReindexStatusResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ReindexStatus> page) {
+	protected void assertValid(
+		Page<ReindexStatus> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ReindexStatus> reindexStatuses = page.getItems();
@@ -341,6 +352,25 @@ public abstract class BaseReindexStatusResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ReindexStatus> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -237,7 +237,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDataDefinition),
 				(List<DataDefinition>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDataDefinitionByContentTypeContentTypePage_getExpectedActions(
+					irrelevantContentType));
 		}
 
 		DataDefinition dataDefinition1 =
@@ -258,11 +261,24 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataDefinition1, dataDefinition2),
 			(List<DataDefinition>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDataDefinitionByContentTypeContentTypePage_getExpectedActions(
+				contentType));
 
 		dataDefinitionResource.deleteDataDefinition(dataDefinition1.getId());
 
 		dataDefinitionResource.deleteDataDefinition(dataDefinition2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetDataDefinitionByContentTypeContentTypePage_getExpectedActions(
+				String contentType)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -837,7 +853,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDataDefinition),
 				(List<DataDefinition>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteDataDefinitionByContentTypeContentTypePage_getExpectedActions(
+					irrelevantSiteId, irrelevantContentType));
 		}
 
 		DataDefinition dataDefinition1 =
@@ -858,11 +877,24 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataDefinition1, dataDefinition2),
 			(List<DataDefinition>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteDataDefinitionByContentTypeContentTypePage_getExpectedActions(
+				siteId, contentType));
 
 		dataDefinitionResource.deleteDataDefinition(dataDefinition1.getId());
 
 		dataDefinitionResource.deleteDataDefinition(dataDefinition2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteDataDefinitionByContentTypeContentTypePage_getExpectedActions(
+				Long siteId, String contentType)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1441,7 +1473,9 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DataDefinition> page) {
+	protected void assertValid(
+		Page<DataDefinition> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DataDefinition> dataDefinitions = page.getItems();
@@ -1456,6 +1490,25 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DataDefinition> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

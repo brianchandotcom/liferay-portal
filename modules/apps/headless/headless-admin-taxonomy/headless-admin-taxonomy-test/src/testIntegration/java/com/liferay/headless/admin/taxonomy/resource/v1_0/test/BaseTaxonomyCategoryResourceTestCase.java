@@ -393,17 +393,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories/batch".
-				replace(
-					"{parentTaxonomyCategoryId}",
-					String.valueOf(parentTaxonomyCategoryId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
@@ -1983,6 +1972,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				expectedAction.get("method"), action.get("method"));
 			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
 		}
+	}
+
+	protected void assertValid(Page<TaxonomyCategory> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

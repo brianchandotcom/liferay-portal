@@ -256,15 +256,6 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/user-groups/batch".
-				replace("{userAccountId}", String.valueOf(userAccountId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 

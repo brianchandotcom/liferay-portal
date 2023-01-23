@@ -227,11 +227,19 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			measurementUnit1, (List<MeasurementUnit>)page.getItems());
 		assertContains(
 			measurementUnit2, (List<MeasurementUnit>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetMeasurementUnitsPage_getExpectedActions());
 
 		measurementUnitResource.deleteMeasurementUnit(measurementUnit1.getId());
 
 		measurementUnitResource.deleteMeasurementUnit(measurementUnit2.getId());
+	}
+
+	protected Map<String, Map> testGetMeasurementUnitsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -850,7 +858,10 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMeasurementUnit),
 				(List<MeasurementUnit>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetMeasurementUnitsByType_getExpectedActions(
+					irrelevantMeasurementUnitType));
 		}
 
 		MeasurementUnit measurementUnit1 =
@@ -869,11 +880,23 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(measurementUnit1, measurementUnit2),
 			(List<MeasurementUnit>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetMeasurementUnitsByType_getExpectedActions(
+				measurementUnitType));
 
 		measurementUnitResource.deleteMeasurementUnit(measurementUnit1.getId());
 
 		measurementUnitResource.deleteMeasurementUnit(measurementUnit2.getId());
+	}
+
+	protected Map<String, Map> testGetMeasurementUnitsByType_getExpectedActions(
+			String measurementUnitType)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1395,7 +1418,9 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<MeasurementUnit> page) {
+	protected void assertValid(
+		Page<MeasurementUnit> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<MeasurementUnit> measurementUnits =
@@ -1411,6 +1436,25 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<MeasurementUnit> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

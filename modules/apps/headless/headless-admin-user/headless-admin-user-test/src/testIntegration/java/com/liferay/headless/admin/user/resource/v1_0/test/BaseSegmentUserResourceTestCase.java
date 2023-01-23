@@ -249,15 +249,6 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/segments/{segmentId}/user-accounts/batch".
-				replace("{segmentId}", String.valueOf(segmentId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 

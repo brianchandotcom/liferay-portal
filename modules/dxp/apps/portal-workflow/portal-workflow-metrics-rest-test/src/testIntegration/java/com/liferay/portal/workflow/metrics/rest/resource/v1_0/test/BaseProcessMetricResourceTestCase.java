@@ -211,7 +211,15 @@ public abstract class BaseProcessMetricResourceTestCase {
 
 		assertContains(processMetric1, (List<ProcessMetric>)page.getItems());
 		assertContains(processMetric2, (List<ProcessMetric>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetProcessMetricsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map> testGetProcessMetricsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -548,7 +556,9 @@ public abstract class BaseProcessMetricResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ProcessMetric> page) {
+	protected void assertValid(
+		Page<ProcessMetric> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ProcessMetric> processMetrics = page.getItems();
@@ -563,6 +573,25 @@ public abstract class BaseProcessMetricResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ProcessMetric> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -41,7 +41,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -569,14 +568,17 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	private SearchRequestImpl _getSearchRequestImpl(
 		SearchContext searchContext) {
 
-		return Optional.ofNullable(
+		SearchRequestImpl searchRequestImpl =
 			(SearchRequestImpl)searchContext.getAttribute(
-				_SEARCH_CONTEXT_KEY_SEARCH_REQUEST)
-		).orElseGet(
-			() -> setAttribute(
-				searchContext, _SEARCH_CONTEXT_KEY_SEARCH_REQUEST,
-				new SearchRequestImpl(searchContext))
-		);
+				_SEARCH_CONTEXT_KEY_SEARCH_REQUEST);
+
+		if (searchRequestImpl != null) {
+			return searchRequestImpl;
+		}
+
+		return setAttribute(
+			searchContext, _SEARCH_CONTEXT_KEY_SEARCH_REQUEST,
+			new SearchRequestImpl(searchContext));
 	}
 
 	private SearchRequestBuilder _newFederatedSearchRequestBuilder(

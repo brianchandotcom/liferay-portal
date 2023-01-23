@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.ml.text.embedding;
+package com.liferay.search.experiences.ml.embedding.text;
 
 import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
 import com.liferay.search.experiences.ml.embedding.EmbeddingRetriever;

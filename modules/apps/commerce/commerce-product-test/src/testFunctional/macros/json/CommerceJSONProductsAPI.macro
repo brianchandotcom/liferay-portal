@@ -940,6 +940,12 @@ definition {
 			ListUtil.add("${fieldsList}", "${published}");
 		}
 
+		if (isSet(purchasable)) {
+			var purchasable = '''"purchasable": ${purchasable}''';
+
+			ListUtil.add("${fieldsList}", "${purchasable}");
+		}
+
 		if (isSet(replacementSku)) {
 			var replacementSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${replacementSku}");
 

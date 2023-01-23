@@ -43,7 +43,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
@@ -388,13 +387,11 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 	@Override
 	public SearchRequestBuilder modelIndexerClasses(Class<?>... classes) {
-		String[] classNames = Stream.of(
-			classes
-		).map(
-			clazz -> clazz.getCanonicalName()
-		).toArray(
-			String[]::new
-		);
+		String[] classNames = new String[classes.length];
+
+		for (int i = 0; i < classNames.length; i++) {
+			classNames[i] = classes[i].getCanonicalName();
+		}
 
 		_withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setModelIndexerClassNames(
@@ -532,12 +529,11 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	public SearchRequestBuilder withSearchRequestBuilder(
 		Consumer<SearchRequestBuilder>... searchRequestBuilderConsumers) {
 
-		Stream.of(
-			searchRequestBuilderConsumers
-		).forEach(
-			searchRequestBuilderConsumer -> searchRequestBuilderConsumer.accept(
-				this)
-		);
+		for (Consumer<SearchRequestBuilder> searchRequestBuilderConsumer :
+				searchRequestBuilderConsumers) {
+
+			searchRequestBuilderConsumer.accept(this);
+		}
 
 		return this;
 	}

@@ -5906,6 +5906,7 @@ public class JournalArticleLocalServiceImpl
 				articleURL, groupId, folderId, articleId);
 
 			serviceContext.setAttribute("articleURL", articleURL);
+
 			serviceContext.setCommand(Constants.UPDATE);
 
 			sendEmail(article, articleURL, "requested", serviceContext);

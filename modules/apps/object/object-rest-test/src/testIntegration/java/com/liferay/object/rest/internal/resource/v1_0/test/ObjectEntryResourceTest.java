@@ -76,11 +76,11 @@ public class ObjectEntryResourceTest {
 	public static void setUpClass() throws Exception {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164801", "true"
+				"feature.flag.LPS-153117", "true"
 			).build());
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-153117", "true"
+				"feature.flag.LPS-164801", "true"
 			).build());
 	}
 
@@ -88,11 +88,11 @@ public class ObjectEntryResourceTest {
 	public static void tearDownClass() throws Exception {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164801", "false"
+				"feature.flag.LPS-153117", "false"
 			).build());
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-153117", "false"
+				"feature.flag.LPS-164801", "false"
 			).build());
 	}
 

@@ -45,8 +45,10 @@ public class AnalyticsDXPEntityBatchExporterImpl
 	implements AnalyticsDXPEntityBatchExporter {
 
 	@Override
-	public void export(long companyId) throws Exception {
-		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
+	public void export(long companyId, String[] dispatchTriggerNames)
+		throws Exception {
+
+		for (String dispatchTriggerName : dispatchTriggerNames) {
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
 					companyId, dispatchTriggerName);
@@ -73,32 +75,42 @@ public class AnalyticsDXPEntityBatchExporterImpl
 	}
 
 	@Override
-	public void refreshExportTrigger(long companyId, String dispatchTriggerName)
+	public void refreshExportTriggers(
+			long companyId, String[] dispatchTriggerNames)
 		throws Exception {
 
-		DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.fetchDispatchTrigger(
-				companyId, dispatchTriggerName);
+		for (String dispatchTriggerName : dispatchTriggerNames) {
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					companyId, dispatchTriggerName);
 
-		if (dispatchTrigger == null) {
-			return;
+			if (dispatchTrigger == null) {
+				scheduleExportTriggers(
+					companyId, new String[] {dispatchTriggerName});
+
+				continue;
+			}
+
+			Date nextFireDate = dispatchTrigger.getNextFireDate();
+
+			Instant instant = nextFireDate.toInstant();
+
+			ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
+
+			_addDispatchTrigger(
+				companyId, dispatchTriggerName,
+				zonedDateTime.toLocalDateTime());
 		}
-
-		Date nextFireDate = dispatchTrigger.getNextFireDate();
-
-		Instant instant = nextFireDate.toInstant();
-
-		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
-
-		_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
-
-		_addDispatchTrigger(
-			companyId, dispatchTriggerName, zonedDateTime.toLocalDateTime());
 	}
 
 	@Override
-	public void scheduleExportTriggers(long companyId) throws Exception {
-		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
+	public void scheduleExportTriggers(
+			long companyId, String[] dispatchTriggerNames)
+		throws Exception {
+
+		for (String dispatchTriggerName : dispatchTriggerNames) {
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
 					companyId, dispatchTriggerName);
@@ -113,8 +125,11 @@ public class AnalyticsDXPEntityBatchExporterImpl
 	}
 
 	@Override
-	public void unscheduleExportTriggers(long companyId) throws Exception {
-		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
+	public void unscheduleExportTriggers(
+			long companyId, String[] dispatchTriggerNames)
+		throws Exception {
+
+		for (String dispatchTriggerName : dispatchTriggerNames) {
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
 					companyId, dispatchTriggerName);
@@ -155,21 +170,6 @@ public class AnalyticsDXPEntityBatchExporterImpl
 	}
 
 	private static final String _CRON_EXPRESSION = "0 0 * * * ?";
-
-	private static final String[] _DISPATCH_TRIGGER_NAMES = {
-		"analytics-upload-order", "analytics-upload-product",
-		"export-account-entry-analytics-dxp-entities",
-		"export-account-group-analytics-dxp-entities",
-		"export-analytics-association-analytics-dxp-entities",
-		"export-analytics-delete-message-analytics-dxp-entities",
-		"export-expando-column-analytics-dxp-entities",
-		"export-group-analytics-dxp-entities",
-		"export-organization-analytics-dxp-entities",
-		"export-role-analytics-dxp-entities",
-		"export-team-analytics-dxp-entities",
-		"export-user-analytics-dxp-entities",
-		"export-user-group-analytics-dxp-entities"
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsDXPEntityBatchExporterImpl.class);

@@ -30,7 +30,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -174,14 +173,17 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 	private SearchResponseImpl _getSearchResponseImpl(
 		SearchContext searchContext) {
 
-		return Optional.ofNullable(
+		SearchResponseImpl searchResponseImpl =
 			(SearchResponseImpl)searchContext.getAttribute(
-				_SEARCH_CONTEXT_KEY_SEARCH_RESPONSE)
-		).orElseGet(
-			() -> setAttribute(
-				searchContext, _SEARCH_CONTEXT_KEY_SEARCH_RESPONSE,
-				new SearchResponseImpl(searchContext))
-		);
+				_SEARCH_CONTEXT_KEY_SEARCH_RESPONSE);
+
+		if (searchResponseImpl != null) {
+			return searchResponseImpl;
+		}
+
+		return setAttribute(
+			searchContext, _SEARCH_CONTEXT_KEY_SEARCH_RESPONSE,
+			new SearchResponseImpl(searchContext));
 	}
 
 	private <T> T _withSearchResponseGet(Function<SearchResponse, T> function) {

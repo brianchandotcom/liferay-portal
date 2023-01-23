@@ -37,14 +37,24 @@ public abstract class BaseTextEmbeddingProvider {
 			return text;
 		}
 
+		String sentences;
+
 		if (truncationStrategy.equals("end")) {
-			return _extractSentencesFromEnd(maxCharacterCount, text);
+			sentences = _extractSentencesFromEnd(maxCharacterCount, text);
 		}
 		else if (truncationStrategy.equals("middle")) {
-			return _extractSentencesFromMiddle(maxCharacterCount, text);
+			sentences = _extractSentencesFromMiddle(maxCharacterCount, text);
 		}
 
-		return _extractSentencesFromBeginning(maxCharacterCount, text);
+		sentences = _extractSentencesFromBeginning(maxCharacterCount, text);
+
+		if ((sentences.length() == 0) ||
+			(sentences.length() >= maxCharacterCount)) {
+
+			return text.substring(0, maxCharacterCount);
+		}
+
+		return sentences;
 	}
 
 	private String _extractSentencesFromBeginning(

@@ -2513,7 +2513,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="modifiedDate" />
 		</finder>
-		<finder name="C_DU" return-type="User">
+		<finder name="C_DU" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="defaultUser" />
 		</finder>
@@ -2545,6 +2545,11 @@
 			<finder-column name="companyId" />
 			<finder-column name="createDate" />
 			<finder-column name="modifiedDate" />
+		</finder>
+		<finder name="C_DU_T" return-type="User">
+			<finder-column name="companyId" />
+			<finder-column name="defaultUser" />
+			<finder-column name="type" />
 		</finder>
 		<finder name="C_DU_S" return-type="Collection">
 			<finder-column name="companyId" />

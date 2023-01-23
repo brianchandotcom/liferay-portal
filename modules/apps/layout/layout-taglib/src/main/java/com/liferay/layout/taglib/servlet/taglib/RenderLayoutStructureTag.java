@@ -257,6 +257,19 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext)
 		throws Exception {
 
+		HttpServletRequest httpServletRequest = getRequest();
+
+		RenderCollectionLayoutStructureItemDisplayContext
+			renderCollectionLayoutStructureItemDisplayContext =
+				new RenderCollectionLayoutStructureItemDisplayContext(
+					collectionStyledLayoutStructureItem, httpServletRequest);
+
+		if (!renderCollectionLayoutStructureItemDisplayContext.
+				hasViewPermission()) {
+
+			return;
+		}
+
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<div class=\"");
@@ -265,13 +278,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(collectionStyledLayoutStructureItem.getCssClass());
 		jspWriter.write("\" style=\"");
-
-		HttpServletRequest httpServletRequest = getRequest();
-
-		RenderCollectionLayoutStructureItemDisplayContext
-			renderCollectionLayoutStructureItemDisplayContext =
-				new RenderCollectionLayoutStructureItemDisplayContext(
-					collectionStyledLayoutStructureItem, httpServletRequest);
 
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getStyle(

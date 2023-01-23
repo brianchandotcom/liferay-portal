@@ -17,12 +17,18 @@ package com.liferay.search.experiences.internal.ml.text.embedding;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
+import com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
+import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +42,8 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(
 	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
-	enabled = false, service = TextEmbeddingRetriever.class
+	enabled = false,
+	service = {EmbeddingProviderInformation.class, TextEmbeddingRetriever.class}
 )
 public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
@@ -47,30 +54,112 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	}
 
 	@Override
-	public Double[] getTextEmbedding(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+	public EmbeddingProviderStatus getEmbeddingProviderStatus(
+		String configurationJSON) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
-			!semanticSearchConfiguration.textEmbeddingsEnabled()) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+			return null;
+		}
 
+		EmbeddingProviderConfiguration embeddingProviderConfiguration;
+
+		try {
+			embeddingProviderConfiguration =
+				EmbeddingProviderConfiguration.unsafeToDTO(configurationJSON);
+		}
+		catch (Exception exception) {
+			return new EmbeddingProviderStatus.EmbeddingProviderStatusBuilder(
+			).errorMessage(
+				exception.getMessage()
+			).build();
+		}
+
+		String providerName = embeddingProviderConfiguration.getProviderName();
+
+		try {
+			TextEmbeddingProvider textEmbeddingProvider =
+				_textEmbeddingProviderServiceTrackerMap.getService(
+					providerName);
+
+			if (textEmbeddingProvider == null) {
+				return new EmbeddingProviderStatus.
+					EmbeddingProviderStatusBuilder(
+				).errorMessage(
+					"Embedding provider " + providerName + " was not found"
+				).providerName(
+					providerName
+				).build();
+			}
+
+			Double[] textEmbedding = textEmbeddingProvider.getEmbedding(
+				embeddingProviderConfiguration, "hello liferay");
+
+			return new EmbeddingProviderStatus.EmbeddingProviderStatusBuilder(
+			).embeddingVectorDimensions(
+				textEmbedding.length
+			).providerName(
+				providerName
+			).build();
+		}
+		catch (Exception exception) {
+			return new EmbeddingProviderStatus.EmbeddingProviderStatusBuilder(
+			).errorMessage(
+				exception.getMessage()
+			).providerName(
+				providerName
+			).build();
+		}
+	}
+
+	@Override
+	public EmbeddingProviderStatus[] getEmbeddingProviderStatuses() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+			return new EmbeddingProviderStatus[0];
+		}
+
+		List<EmbeddingProviderStatus> embeddingProviderStatuses =
+			new ArrayList<>();
+
+		for (String configurationJSON :
+				_semanticSearchConfiguration.
+					textEmbeddingProviderConfigurations()) {
+
+			embeddingProviderStatuses.add(
+				getEmbeddingProviderStatus(configurationJSON));
+		}
+
+		return embeddingProviderStatuses.toArray(
+			new EmbeddingProviderStatus[0]);
+	}
+
+	@Override
+	public Double[] getTextEmbedding(String providerName, String text) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
 			return new Double[0];
 		}
 
 		TextEmbeddingProvider textEmbeddingProvider =
-			_textEmbeddingProviderServiceTrackerMap.getService(
-				semanticSearchConfiguration.textEmbeddingProvider());
+			_textEmbeddingProviderServiceTrackerMap.getService(providerName);
 
 		if (textEmbeddingProvider == null) {
 			return new Double[0];
 		}
 
-		return textEmbeddingProvider.getEmbedding(
-			semanticSearchConfiguration, text);
-	}
+		EmbeddingProviderConfiguration embeddingProviderConfiguration =
+			_getEmbeddingProviderConfiguration(providerName);
 
-	@Override
-	public Double[] getTextEmbedding(String text) {
-		return getTextEmbedding(_semanticSearchConfiguration, text);
+		if (embeddingProviderConfiguration == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Configuration for provider " + providerName +
+						" not found");
+			}
+
+			return new Double[0];
+		}
+
+		return textEmbeddingProvider.getEmbedding(
+			embeddingProviderConfiguration, text);
 	}
 
 	@Activate
@@ -90,6 +179,29 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	protected void deactivate() {
 		_textEmbeddingProviderServiceTrackerMap.close();
 	}
+
+	private EmbeddingProviderConfiguration _getEmbeddingProviderConfiguration(
+		String providerName) {
+
+		for (String configurationJSON :
+				_semanticSearchConfiguration.
+					textEmbeddingProviderConfigurations()) {
+
+			EmbeddingProviderConfiguration embeddingProviderConfiguration =
+				EmbeddingProviderConfiguration.toDTO(configurationJSON);
+
+			if (providerName.equals(
+					embeddingProviderConfiguration.getProviderName())) {
+
+				return embeddingProviderConfiguration;
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TextEmbeddingRetrieverImpl.class);
 
 	private volatile SemanticSearchConfiguration _semanticSearchConfiguration;
 	private ServiceTrackerMap<String, TextEmbeddingProvider>

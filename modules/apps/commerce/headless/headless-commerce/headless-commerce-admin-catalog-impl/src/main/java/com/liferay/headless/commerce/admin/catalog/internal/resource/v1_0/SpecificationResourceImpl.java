@@ -221,7 +221,9 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			GetterUtil.getBoolean(
 				cpSpecificationOption.isFacetable(),
 				_isFacetable(specification)),
-			specification.getKey(), _serviceContextHelper.getServiceContext());
+			GetterUtil.getString(
+				specification.getKey(), cpSpecificationOption.getKey()),
+			_serviceContextHelper.getServiceContext());
 	}
 
 	private CPSpecificationOption _updateSpecification(

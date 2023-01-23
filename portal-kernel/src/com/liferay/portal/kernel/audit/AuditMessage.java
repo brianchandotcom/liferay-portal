@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 
 import java.io.Serializable;
 
@@ -135,7 +136,10 @@ public class AuditMessage implements Serializable {
 		if (userId == realUserId) {
 			_userLogin = auditRequestThreadLocal.getRealUserLogin();
 		}
-		else if (realUserId > 0) {
+
+		// LPS-172507: Suppress error that happens during testing
+
+		else if ((realUserId > 0) && !PortalRunMode.isTestMode()) {
 			_log.error(
 				"Impersonated actions must be audited on the real user's ID");
 		}

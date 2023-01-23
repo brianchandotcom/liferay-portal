@@ -27,6 +27,8 @@
 		<aui:input helpMessage="saml-ssl-required-description" label="saml-ssl-required" name='<%= "settings--" + PortletPropsKeys.SAML_SSL_REQUIRED + "--" %>' type="checkbox" value="<%= samlProviderConfiguration.sslRequired() %>" />
 
 		<aui:input helpMessage="saml-idp-authn-request-signature-required-description" label="saml-idp-authn-request-signature-required" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_AUTHN_REQUEST_SIGNATURE_REQUIRED + "--" %>' type="checkbox" value="<%= samlProviderConfiguration.authnRequestSignatureRequired() %>" />
+
+		<aui:input helpMessage="saml-idp-authn-request-signing-allows-dynamic-acs-url-description" label="saml-idp-authn-request-signing-allows-dynamic-acs-url" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_AUTHN_REQUEST_SIGNING_ALLOWS_DYNAMIC_ACS_URL + "--" %>' type="checkbox" value="<%= samlProviderConfiguration.authnRequestSigningAllowsDynamicAcsUrl() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset label="session">

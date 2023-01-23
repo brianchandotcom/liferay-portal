@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.ml.text.embedding;
+package com.liferay.search.experiences.internal.ml.embedding.text;
 
 import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 

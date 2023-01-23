@@ -18,9 +18,10 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
@@ -54,15 +55,19 @@ public class SearchStringUtil {
 	}
 
 	public static String[] splitAndUnquote(String s) {
-		return Stream.of(
-			StringUtil.split(s.trim(), CharPool.COMMA)
-		).map(
-			String::trim
-		).map(
-			StringUtil::unquote
-		).toArray(
-			String[]::new
-		);
+		List<String> finalStringsList = new ArrayList<>();
+
+		for (String splitString : StringUtil.split(s.trim(), CharPool.COMMA)) {
+			finalStringsList.add(StringUtil.unquote(splitString.trim()));
+		}
+
+		String[] finalStringsArray = new String[finalStringsList.size()];
+
+		for (int i = 0; i < finalStringsArray.length; i++) {
+			finalStringsArray[i] = finalStringsList.get(i);
+		}
+
+		return finalStringsArray;
 	}
 
 }

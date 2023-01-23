@@ -75,7 +75,7 @@ public class MappingTypesUtil {
 
 			mappingTypesJSONArray.put(
 				JSONUtil.put(
-					"hasPermission",
+					"isRestricted",
 					() -> {
 						InfoPermissionProvider infoPermissionProvider =
 							infoItemServiceRegistry.getFirstInfoItemService(
@@ -86,10 +86,10 @@ public class MappingTypesUtil {
 							infoPermissionProvider.hasViewPermission(
 								themeDisplay.getPermissionChecker())) {
 
-							return true;
+							return false;
 						}
 
-						return false;
+						return true;
 					}
 				).put(
 					"label",

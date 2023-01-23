@@ -592,7 +592,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					Map<String, Map> expectedActions = new HashMap<>();
 
-					<#if (javaMethodSignature.pathJavaMethodParameters?size == 1)>
+					<#if (javaMethodSignature.pathJavaMethodParameters?size == 1) && freeMarkerTool.hasPath(javaMethodSignatures, javaMethodSignature.path + "/batch")>
 						<#assign firstPathJavaMethodParameter = javaMethodSignature.pathJavaMethodParameters[0] />
 
 						Map createBatchAction = new HashMap<>();

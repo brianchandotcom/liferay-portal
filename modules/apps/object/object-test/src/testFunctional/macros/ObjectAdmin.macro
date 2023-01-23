@@ -1104,6 +1104,16 @@ definition {
 			value = ${value});
 	}
 
+	macro getObjectSortedEntry {
+		var entrySort = JSONObject.getObjectSortedEntry(
+			objectName = ${objectName},
+			sortString = ${sortString});
+
+		var entrySortValue = JSONUtil.getWithJSONPath(${entrySort}, "$..items..${sortString}");
+
+		return ${entrySortValue};
+	}
+
 	macro goToActionDetails {
 		Click(
 			key_objectLabel = ${viewEntry},

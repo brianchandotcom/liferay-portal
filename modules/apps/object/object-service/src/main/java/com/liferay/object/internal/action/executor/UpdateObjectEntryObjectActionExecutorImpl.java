@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
+import com.liferay.object.internal.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -67,22 +68,38 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				objectEntryManager.updateObjectEntry(
-					new DefaultDTOConverterContext(
-						false, Collections.emptyMap(), _dtoConverterRegistry,
-						null, user.getLocale(), null, user),
-					objectDefinition,
-					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
-					new ObjectEntry() {
-						{
-							properties = _getValues(
-								objectDefinition, parametersUnicodeProperties,
-								ObjectEntryVariablesUtil.getActionVariables(
-									_dtoConverterRegistry, objectDefinition,
-									payloadJSONObject,
-									_systemObjectDefinitionMetadataRegistry));
-						}
-					});
+				boolean skipObjectEntryResourcePermission =
+					ObjectEntryThreadLocal.
+						isSkipObjectEntryResourcePermission();
+
+				try {
+					ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+						true);
+
+					objectEntryManager.updateObjectEntry(
+						new DefaultDTOConverterContext(
+							false, Collections.emptyMap(),
+							_dtoConverterRegistry, null, user.getLocale(), null,
+							user),
+						objectDefinition,
+						GetterUtil.getLong(
+							payloadJSONObject.getLong("classPK")),
+						new ObjectEntry() {
+							{
+								properties = _getValues(
+									objectDefinition,
+									parametersUnicodeProperties,
+									ObjectEntryVariablesUtil.getActionVariables(
+										_dtoConverterRegistry, objectDefinition,
+										payloadJSONObject,
+										_systemObjectDefinitionMetadataRegistry));
+							}
+						});
+				}
+				finally {
+					ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+						skipObjectEntryResourcePermission);
+				}
 
 				return null;
 			});

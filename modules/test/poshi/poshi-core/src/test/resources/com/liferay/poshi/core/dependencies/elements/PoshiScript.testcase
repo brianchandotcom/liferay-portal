@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "Ensure that a user can add multiple Blogs Entries."
-	@priority = "4"
+	@priority = 4
 	@simple-annotation
 	test AddBlogsEntries {
 		property testray.component.names = "Blogs";
@@ -75,7 +75,7 @@ definition {
 		var portalInstanceIds = StringUtil.regexReplaceAll(${portalInstanceIds}, "[\[\]\"]", "");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUser {
 
 		// This is a comment
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
-	@priority = "5"
+	@priority = 5
 	test Smoke {
 		property portal.smoke = "true";
 		property test.assert.warning.exceptions = "true";

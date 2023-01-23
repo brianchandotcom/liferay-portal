@@ -94,6 +94,10 @@ public class CommandPoshiElement extends PoshiElement {
 				continue;
 			}
 
+			if (value.startsWith("\"") && value.endsWith("\"")) {
+				value = getDoubleQuotedContent(value);
+			}
+
 			addAttribute(name, value);
 		}
 

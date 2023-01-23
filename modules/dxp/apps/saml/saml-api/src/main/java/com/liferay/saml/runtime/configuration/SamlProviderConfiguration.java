@@ -19,6 +19,8 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Mika Koivisto
  */
@@ -29,6 +31,7 @@ import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 	id = "com.liferay.saml.runtime.configuration.SamlProviderConfiguration",
 	localization = "content/Language", name = "saml-provider-configuration-name"
 )
+@ProviderType
 public interface SamlProviderConfiguration {
 
 	@Meta.AD(deflt = "0", name = "company-id", required = false)

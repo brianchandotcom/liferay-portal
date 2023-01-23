@@ -15,21 +15,22 @@
 package com.liferay.portal.search.internal.indexer;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
  */
 public class IncludeExcludeUtil {
 
-	public static <T> Stream<T> stream(
-		Stream<T> stream, Collection<String> includeIds,
+	public static <T> List<T> filterIncludeExclude(
+		List<T> includeExcludeList, Collection<String> includeIds,
 		Collection<String> excludeIds, Function<T, String> function) {
 
 		return _exclude(
-			_include(stream, includeIds, function), excludeIds, function);
+			_include(includeExcludeList, includeIds, function), excludeIds,
+			function);
 	}
 
 	protected static <T> boolean isPresent(
@@ -38,29 +39,33 @@ public class IncludeExcludeUtil {
 		return ids.contains(function.apply(t));
 	}
 
-	private static <T> Stream<T> _exclude(
-		Stream<T> stream, Collection<String> ids,
+	private static <T> List<T> _exclude(
+		List<T> includeExcludeList, Collection<String> ids,
 		Function<T, String> function) {
 
-		return _filter(stream, ids, t -> !isPresent(t, ids, function));
+		return _filter(
+			includeExcludeList, ids, t -> !isPresent(t, ids, function));
 	}
 
-	private static <T> Stream<T> _filter(
-		Stream<T> stream, Collection<String> ids,
+	private static <T> List<T> _filter(
+		List<T> includeExcludeList, Collection<String> ids,
 		Predicate<? super T> predicate) {
 
 		if ((ids == null) || ids.isEmpty()) {
-			return stream;
+			return includeExcludeList;
 		}
 
-		return stream.filter(predicate);
+		includeExcludeList.removeIf(cur -> !predicate.test(cur));
+
+		return includeExcludeList;
 	}
 
-	private static <T> Stream<T> _include(
-		Stream<T> stream, Collection<String> ids,
+	private static <T> List<T> _include(
+		List<T> includeExcludeList, Collection<String> ids,
 		Function<T, String> function) {
 
-		return _filter(stream, ids, t -> isPresent(t, ids, function));
+		return _filter(
+			includeExcludeList, ids, t -> isPresent(t, ids, function));
 	}
 
 }

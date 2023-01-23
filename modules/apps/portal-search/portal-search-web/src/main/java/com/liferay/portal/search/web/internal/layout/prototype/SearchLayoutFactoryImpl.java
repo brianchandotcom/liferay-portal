@@ -70,11 +70,11 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	@Override
-	public void createSearchLayoutPrototype(Company company) {
+	public Layout createSearchLayoutPrototype(Company company) {
 		long companyId = company.getCompanyId();
 
 		try {
-			createSearchLayoutPrototype(
+			return createSearchLayoutPrototype(
 				companyId, userLocalService.getDefaultUserId(companyId));
 		}
 		catch (RuntimeException runtimeException) {
@@ -137,7 +137,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		}
 	}
 
-	protected void createSearchLayoutPrototype(
+	protected Layout createSearchLayoutPrototype(
 			long companyId, long defaultUserId)
 		throws Exception {
 
@@ -155,7 +155,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			if ((name == null) ||
 				name.equals(layoutPrototype.getName(defaultLocale))) {
 
-				return;
+				return null;
 			}
 		}
 
@@ -177,6 +177,8 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		if (_log.isInfoEnabled()) {
 			_log.info("Search Page Template created");
 		}
+
+		return layout;
 	}
 
 	protected void customize(Layout layout) throws Exception {

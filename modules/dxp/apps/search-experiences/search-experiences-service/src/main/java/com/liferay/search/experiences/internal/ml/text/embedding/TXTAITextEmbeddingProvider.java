@@ -16,16 +16,21 @@ package com.liferay.search.experiences.internal.ml.text.embedding;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,33 +47,43 @@ public class TXTAITextEmbeddingProvider
 	extends BaseTextEmbeddingProvider implements TextEmbeddingProvider {
 
 	public Double[] getEmbedding(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+		EmbeddingProviderConfiguration embeddingProviderConfiguration,
+		String text) {
+
+		Map<String, Object> attributes =
+			(Map<String, Object>)embeddingProviderConfiguration.getAttributes();
+
+		if ((attributes == null) || !attributes.containsKey("hostAddress")) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Attributes do not contain host address");
+			}
+
+			return new Double[0];
+		}
 
 		String sentences = extractSentences(
-			semanticSearchConfiguration.maxCharacterCount(), text,
-			semanticSearchConfiguration.textTruncationStrategy());
+			MapUtil.getInteger(attributes, "maxCharacterCount", 1000), text,
+			MapUtil.getString(
+				attributes, "textTruncationStrategy", "beginning"));
 
 		if (Validator.isBlank(sentences)) {
 			return new Double[0];
 		}
 
-		return _getEmbedding(semanticSearchConfiguration, sentences);
+		return _getEmbedding(attributes, sentences);
 	}
 
 	private Double[] _getEmbedding(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+		Map<String, Object> attributes, String text) {
 
 		try {
 			Http.Options options = new Http.Options();
 
-			if (!Validator.isBlank(
-					semanticSearchConfiguration.txtaiUsername())) {
+			String hostAddress = MapUtil.getString(attributes, "hostAddress");
 
-				_setAuthOptions(options, semanticSearchConfiguration);
-			}
+			options.setLocation(_getLocation(hostAddress, text));
 
-			options.setLocation(
-				_getLocation(semanticSearchConfiguration, text));
+			_setAuthOptions(attributes, hostAddress, options);
 
 			String responseJSON = _http.URLtoString(options);
 
@@ -86,11 +101,7 @@ public class TXTAITextEmbeddingProvider
 		}
 	}
 
-	private String _getLocation(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
-
-		String hostAddress = semanticSearchConfiguration.txtaiHostAddress();
-
+	private String _getLocation(String hostAddress, String text) {
 		if (!hostAddress.endsWith("/")) {
 			hostAddress += "/";
 		}
@@ -108,15 +119,25 @@ public class TXTAITextEmbeddingProvider
 	}
 
 	private void _setAuthOptions(
-		Http.Options options,
-		SemanticSearchConfiguration semanticSearchConfiguration) {
+		Map<String, Object> attributes, String hostAddress,
+		Http.Options options) {
+
+		String basicAuthUsername = MapUtil.getString(
+			attributes, "basicAuthUsername");
+
+		if (Validator.isBlank(basicAuthUsername)) {
+			return;
+		}
 
 		options.setAuth(
-			HttpComponentsUtil.getDomain(
-				semanticSearchConfiguration.txtaiHostAddress()),
-			-1, null, semanticSearchConfiguration.txtaiUsername(),
-			semanticSearchConfiguration.txtaiPassword());
+			HttpComponentsUtil.getDomain(hostAddress), -1, null,
+			basicAuthUsername,
+			MapUtil.getString(
+				attributes, "basicAuthPassword", StringPool.BLANK));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TXTAITextEmbeddingProvider.class);
 
 	@Reference
 	private Http _http;

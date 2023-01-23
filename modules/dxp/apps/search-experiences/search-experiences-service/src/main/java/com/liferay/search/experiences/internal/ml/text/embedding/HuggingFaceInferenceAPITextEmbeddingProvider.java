@@ -25,13 +25,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.net.HttpURLConnection;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,21 +50,34 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 	extends BaseTextEmbeddingProvider implements TextEmbeddingProvider {
 
 	public Double[] getEmbedding(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+		EmbeddingProviderConfiguration embeddingProviderConfiguration,
+		String text) {
+
+		Map<String, Object> attributes =
+			(Map<String, Object>)embeddingProviderConfiguration.getAttributes();
+
+		if ((attributes == null) || !attributes.containsKey("accessToken")) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Attributes do not contain access token");
+			}
+
+			return new Double[0];
+		}
 
 		String sentences = extractSentences(
-			semanticSearchConfiguration.maxCharacterCount(), text,
-			semanticSearchConfiguration.textTruncationStrategy());
+			MapUtil.getInteger(attributes, "maxCharacterCount", 1000), text,
+			MapUtil.getString(
+				attributes, "textTruncationStrategy", "beginning"));
 
 		if (Validator.isBlank(sentences)) {
 			return new Double[0];
 		}
 
-		return _getEmbedding(semanticSearchConfiguration, sentences);
+		return _getEmbedding(attributes, sentences);
 	}
 
 	private Double[] _getEmbedding(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+		Map<String, Object> attributes, String text) {
 
 		try {
 			Http.Options options = new Http.Options();
@@ -71,8 +86,7 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 
 			options.addHeader(
 				HttpHeaders.AUTHORIZATION,
-				"Bearer " +
-					semanticSearchConfiguration.huggingFaceAccessToken());
+				"Bearer " + MapUtil.getString(attributes, "accessToken"));
 			options.addHeader(
 				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 			options.setBody(
@@ -81,7 +95,7 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 			options.setCookieSpec(Http.CookieSpec.STANDARD);
 			options.setLocation(
 				"https://api-inference.huggingface.co/models/" +
-					semanticSearchConfiguration.model());
+					MapUtil.getString(attributes, "model"));
 			options.setPost(true);
 
 			String responseJSON = _http.URLtoString(options);
@@ -93,7 +107,7 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 
 				options.addHeader("x-wait-for-model", "true");
 				options.setTimeout(
-					semanticSearchConfiguration.modelTimeout() * 1000);
+					MapUtil.getInteger(attributes, "modelTimeout", 30) * 1000);
 
 				responseJSON = _http.URLtoString(options);
 			}

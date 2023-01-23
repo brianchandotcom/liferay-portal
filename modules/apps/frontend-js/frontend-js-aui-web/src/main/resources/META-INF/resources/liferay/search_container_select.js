@@ -153,6 +153,16 @@ AUI.add(
 					});
 				},
 
+				_clearSessionStorage() {
+					const instance = this;
+
+					sessionStorage.removeItem(
+						instance.get('searchContainerId') +
+							Liferay.ThemeDisplay.getUserId() +
+							'_selections'
+					);
+				},
+
 				_getActions(elements) {
 					const instance = this;
 
@@ -224,10 +234,6 @@ AUI.add(
 
 				_notifyRowToggle() {
 					const instance = this;
-
-					if (!Liferay.SPA) {
-						instance._storeSelections();
-					}
 
 					const allSelectedElements = instance.getAllSelectedElements();
 
@@ -313,10 +319,12 @@ AUI.add(
 						});
 
 						container.append(offScreenElementsHtml);
+
+						instance._clearSessionStorage();
 					}
 				},
 
-				_storeSelections() {
+				_updateSessionWithSelections() {
 					const instance = this;
 
 					let selectedItems = [];
@@ -341,11 +349,7 @@ AUI.add(
 							);
 						}
 						else {
-							sessionStorage.removeItem(
-								instance.get('searchContainerId') +
-									Liferay.ThemeDisplay.getUserId() +
-									'_selections'
-							);
+							instance._clearSessionStorage();
 						}
 					}
 					else if (selectedItems.length) {
@@ -440,6 +444,19 @@ AUI.add(
 
 					if (!Liferay.SPA) {
 						instance._restoreFromSessionStorage(host);
+
+						window.addEventListener('beforeunload', () => {
+							if (
+								document
+									.getElementById(
+										instance.get('searchContainerId') +
+											'PageIteratorBottom'
+									)
+									.contains(document.activeElement)
+							) {
+								instance._updateSessionWithSelections();
+							}
+						});
 					}
 				},
 

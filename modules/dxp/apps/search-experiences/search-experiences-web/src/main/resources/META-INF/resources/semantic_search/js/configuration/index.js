@@ -68,6 +68,22 @@ function parseArrayOfJSONStrings(array) {
 }
 
 /**
+ * Gets the valid string that should be set for providerName. This covers cases
+ * where the providerName should not be set to a provider that's been
+ * blacklisted.
+ * @param {object} availableProviders
+ * @param {string} [providerName]
+ * @returns {string}
+ */
+function resolveProviderName(availableProviders, providerName) {
+	if (!providerName || !availableProviders[providerName]) {
+		return Object.keys(availableProviders)[0];
+	}
+
+	return providerName;
+}
+
+/**
  * Formats the object into an array of label and value, important for inputs
  * that offer selection. If object is actually a flat array, this formats
  * the items into label-value pairs.
@@ -317,8 +333,20 @@ export default function ({
 			textEmbeddingCacheTimeout: initialTextEmbeddingCacheTimeout,
 			textEmbeddingProviderConfigurationJSONs: !initialTextEmbeddingProviderConfigurationJSONsRef
 				.current?.length
-				? DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS
-				: initialTextEmbeddingProviderConfigurationJSONsRef.current,
+				? {
+						...DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS,
+						providerName: resolveProviderName(
+							availableTextEmbeddingProviders
+						),
+				  }
+				: {
+						...initialTextEmbeddingProviderConfigurationJSONsRef.current,
+						providerName: resolveProviderName(
+							availableTextEmbeddingProviders,
+							initialTextEmbeddingProviderConfigurationJSONsRef
+								.current.providerName
+						),
+				  },
 			textEmbeddingsEnabled: initialTextEmbeddingsEnabled,
 		},
 		validate: _handleFormikValidate,

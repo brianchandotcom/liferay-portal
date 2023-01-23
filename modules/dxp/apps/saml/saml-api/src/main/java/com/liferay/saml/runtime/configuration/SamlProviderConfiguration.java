@@ -66,6 +66,15 @@ public interface SamlProviderConfiguration {
 	public boolean authnRequestSignatureRequired();
 
 	@Meta.AD(
+		deflt = "true",
+		description = "saml-idp-authn-request-signing-allows-dynamic-acs-url-description",
+		id = "saml.idp.authn.request.signing.allows.dynamic.acs.url",
+		name = "saml-idp-authn-request-signing-allows-dynamic-acs-url",
+		required = false
+	)
+	public boolean authnRequestSigningAllowsDynamicAcsUrl();
+
+	@Meta.AD(
 		deflt = "3000", description = "saml-sp-clock-skew-description",
 		id = "saml.sp.clock.skew", name = "saml-sp-clock-skew", required = false
 	)

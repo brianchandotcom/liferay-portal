@@ -288,6 +288,51 @@ definition {
 			value1 = "Input does not match");
 	}
 
+	@description = "Verify it's possible to search object entries by API"
+	@priority = 4
+	test CanSearchObjectEntriesViaAPI {
+		task ("Given: An custom object with a text field and three object entries") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 163069",
+				objectName = "CustomObject163069",
+				pluralLabelName = "Custom Objects 163069");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject163069");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163069");
+
+			var entryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject163069",
+				value = "EntryA");
+
+			for (var letter : list "B,C") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject163069",
+					value = "Entry${letter}");
+			}
+		}
+
+		task ("When: An object entry is searched for using the API") {
+			var entrySearchId = JSONObject.getObjectSearchEntry(
+				objectName = "CustomObject163069",
+				searchString = "EntryA");
+		}
+
+		task ("Then: one object entry is returned based on the search parameter") {
+			TestUtils.assertEquals(
+				actual = ${entrySearchId},
+				expected = ${entryId});
+		}
+	}
+
 	@description = "Verify it's possible to sort object entries by API"
 	@priority = 4
 	test CanSortObjectEntriesViaAPI {

@@ -1000,7 +1000,7 @@
 																			{
 																				"definition": {
 																					"cssClasses": [
-																						"grantMoney"
+																						"grant-money"
 																					],
 																					"fragment": {
 																						"key": "DIALECT-dialect-text"

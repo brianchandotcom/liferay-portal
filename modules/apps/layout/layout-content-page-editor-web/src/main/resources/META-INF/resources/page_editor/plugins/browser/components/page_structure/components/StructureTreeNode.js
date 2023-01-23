@@ -581,7 +581,7 @@ const NameLabel = React.forwardRef(
 						/>
 						<span className="sr-only">
 							{Liferay.Language.get(
-								'due-to-permission-restrictions,-this-content-cannot-be-displayed'
+								'this-content-cannot-be-displayed-due-to-permission-restrictions'
 							)}
 						</span>
 					</>

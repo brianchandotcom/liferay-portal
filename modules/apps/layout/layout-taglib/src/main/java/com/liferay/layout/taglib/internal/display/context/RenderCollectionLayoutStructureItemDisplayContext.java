@@ -326,6 +326,16 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_collectionStyledLayoutStructureItem.getPaginationType());
 	}
 
+	public boolean hasViewPermission() {
+		ListObjectReference listObjectReference = _getListObjectReference();
+
+		if (listObjectReference == null) {
+			return true;
+		}
+
+		return _hasViewPermission(listObjectReference);
+	}
+
 	private Map<String, String[]> _getConfiguration() {
 		JSONObject collectionJSONObject =
 			_collectionStyledLayoutStructureItem.getCollectionJSONObject();

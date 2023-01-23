@@ -140,7 +140,16 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		User user = userLocalService.getUser(notificationContext.getUserId());
 
-		siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
+		Group userGroup = user.getGroup();
+
+		long groupId = 0;
+
+		if (userGroup != null) {
+			groupId = userGroup.getGroupId();
+		}
+
+		siteDefaultLocale = portal.getSiteDefaultLocale(groupId);
+
 		userLocale = user.getLocale();
 
 		notificationContext.setFileEntryIds(

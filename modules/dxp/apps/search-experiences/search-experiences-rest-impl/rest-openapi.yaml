@@ -312,6 +312,29 @@ components:
                         type: object
                     type: object
             type: object
+        EmbeddingProviderConfiguration:
+            properties:
+                attributes:
+                    type: object
+                embeddingVectorDimensions:
+                    type: integer
+                languageIds:
+                    items:
+                        type: string
+                    type: array
+                modelClassNames:
+                    items:
+                        type: string
+                    type: array
+                providerName:
+                    type: string
+            type: object
+        EmbeddingProviderValidationResult:
+            properties:
+                errorMessage:
+                    type: string
+                expectedDimensions:
+                    type: integer
         FieldMappingInfo:
             properties:
                 languageIdPosition:
@@ -535,12 +558,6 @@ components:
                 displayName:
                     type: string
             type: object
-        TextEmbeddingProviderValidationResult:
-            properties:
-                errorMessage:
-                    type: string
-                expectedDimensions:
-                    type: integer
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -1149,24 +1166,24 @@ paths:
                                     $ref: "#/components/schemas/SXPParameterContributorDefinition"
                                 type: array
             tags: ["SXPParameterContributorDefinition"]
-    /text-embedding/validate-configuration:
+    /text-embeddings/validate-provider-configuration:
         post:
-            operationId: postTextEmbeddingValidateConfiguration
+            operationId: postTextEmbeddingValidateProviderConfiguration
             requestBody:
                 content:
                     application/json:
                         schema:
-                            type: string
+                            $ref: "#/components/schemas/EmbeddingProviderConfiguration"
                     application/xml:
                         schema:
-                            type: string
+                            $ref: "#/components/schemas/EmbeddingProviderConfiguration"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/TextEmbeddingProviderValidationResult"
+                                $ref: "#/components/schemas/EmbeddingProviderValidationResult"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/TextEmbeddingProviderValidationResult"
-            tags: ["TextEmbeddingProviderValidationResult"]
+                                $ref: "#/components/schemas/EmbeddingProviderValidationResult"
+            tags: ["EmbeddingProviderValidationResult"]

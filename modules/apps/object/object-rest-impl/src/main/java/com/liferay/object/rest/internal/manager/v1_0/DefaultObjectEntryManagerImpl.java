@@ -961,13 +961,13 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
+		Map<String, ObjectRelationship> objectRelationships = new HashMap<>();
+
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		Map<String, ObjectRelationship> objectRelationshipMap = new HashMap<>();
-
-		for (String property : properties.keySet()) {
+		for (String key : properties.keySet()) {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(), property);
+				objectDefinition.getObjectDefinitionId(), key);
 
 			if (objectField != null) {
 				continue;
@@ -976,14 +976,14 @@ public class DefaultObjectEntryManagerImpl
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
 					fetchObjectRelationshipByObjectDefinitionId(
-						objectDefinition.getObjectDefinitionId(), property);
+						objectDefinition.getObjectDefinitionId(), key);
 
 			if (objectRelationship != null) {
-				objectRelationshipMap.put(property, objectRelationship);
+				objectRelationships.put(key, objectRelationship);
 			}
 		}
 
-		return objectRelationshipMap;
+		return objectRelationships;
 	}
 
 	private ObjectDefinition _getRelatedObjectDefinition(

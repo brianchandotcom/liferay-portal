@@ -32,7 +32,7 @@ public interface RawMetadataProcessor {
 
 	public static final String TIKA_RAW_METADATA = "TIKARAWMETADATA";
 
-	public Map<String, Set<String>> getFieldNames();
+	public Set<String> getFieldNames();
 
 	public Map<String, DDMFormValues> getRawMetadataMap(
 			String mimeType, InputStream inputStream)

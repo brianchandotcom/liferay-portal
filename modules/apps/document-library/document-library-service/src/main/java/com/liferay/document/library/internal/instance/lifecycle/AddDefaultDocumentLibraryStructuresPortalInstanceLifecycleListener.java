@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -87,40 +86,36 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		serviceContext.setUserId(defaultUserId);
 
-		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
+		String name =
+			com.liferay.portal.kernel.metadata.RawMetadataProcessor.
+				TIKA_RAW_METADATA;
 
-		Map<String, Set<String>> fieldNames =
-			RawMetadataProcessorUtil.getFieldNames();
+		if (!_ddmStructureLocalService.hasStructure(
+				group.getGroupId(),
+				_portal.getClassNameId(RawMetadataProcessor.class), name)) {
 
-		for (Map.Entry<String, Set<String>> entry : fieldNames.entrySet()) {
-			String name = entry.getKey();
+			Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
 
-			if (!_ddmStructureLocalService.hasStructure(
-					group.getGroupId(),
-					_portal.getClassNameId(RawMetadataProcessor.class), name)) {
+			Map<Locale, String> nameMap = HashMapBuilder.put(
+				locale, name
+			).build();
 
-				Map<Locale, String> nameMap = HashMapBuilder.put(
-					locale, name
-				).build();
+			Map<Locale, String> descriptionMap = HashMapBuilder.put(
+				locale, name
+			).build();
 
-				Map<Locale, String> descriptionMap = HashMapBuilder.put(
-					locale, name
-				).build();
+			DDMForm ddmForm = DDMFormUtil.buildDDMForm(
+				RawMetadataProcessorUtil.getFieldNames(), locale);
 
-				DDMForm ddmForm = DDMFormUtil.buildDDMForm(
-					entry.getValue(), locale);
+			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
-				DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(
-					ddmForm);
-
-				_ddmStructureLocalService.addStructure(
-					defaultUserId, group.getGroupId(),
-					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-					_portal.getClassNameId(RawMetadataProcessor.class), name,
-					nameMap, descriptionMap, ddmForm, ddmFormLayout,
-					StorageType.DEFAULT.toString(),
-					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
-			}
+			_ddmStructureLocalService.addStructure(
+				defaultUserId, group.getGroupId(),
+				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+				_portal.getClassNameId(RawMetadataProcessor.class), name,
+				nameMap, descriptionMap, ddmForm, ddmFormLayout,
+				StorageType.DEFAULT.toString(),
+				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 		}
 	}
 

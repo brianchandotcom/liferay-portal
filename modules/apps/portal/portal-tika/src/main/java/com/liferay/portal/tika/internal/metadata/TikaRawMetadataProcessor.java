@@ -44,7 +44,6 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -92,8 +91,8 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	@Override
-	public Map<String, Set<String>> getFieldNames() {
-		return Collections.singletonMap(TIKA_RAW_METADATA, _fields.keySet());
+	public Set<String> getFieldNames() {
+		return _fields.keySet();
 	}
 
 	@Override

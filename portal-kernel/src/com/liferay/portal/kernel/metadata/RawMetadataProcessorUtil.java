@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class RawMetadataProcessorUtil {
 
-	public static Map<String, Set<String>> getFieldNames() {
+	public static Set<String> getFieldNames() {
 		return _rawMetadataProcessor.getFieldNames();
 	}
 

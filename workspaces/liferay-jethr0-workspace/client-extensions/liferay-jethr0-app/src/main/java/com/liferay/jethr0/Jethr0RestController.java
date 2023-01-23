@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class Jethr0RestController {
 
 	@GetMapping("/")
-	public ResponseEntity<String> home() {
+	public ResponseEntity<String> home(@AuthenticationPrincipal Jwt jwt) {
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+		}
+
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("name", "value");

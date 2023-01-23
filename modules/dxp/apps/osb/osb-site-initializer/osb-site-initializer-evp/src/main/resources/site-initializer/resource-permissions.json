@@ -100,5 +100,11 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "Finance User",
 		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPData$]",
+		"roleName": "Guest",
+		"scope": "1"
 	}
 ]

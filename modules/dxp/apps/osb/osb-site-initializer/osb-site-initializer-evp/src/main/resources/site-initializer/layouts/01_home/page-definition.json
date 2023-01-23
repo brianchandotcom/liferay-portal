@@ -5,6 +5,7 @@
 				"definition": {
 					"indexed": true,
 					"layout": {
+						"opacity": 100,
 						"widthType": "Fluid"
 					},
 					"name": "Home Container"
@@ -13,7 +14,8 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "home-welcome-banner"
+								"key": "home-welcome-banner",
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 							},
@@ -34,6 +36,7 @@
 							"indexed": true,
 							"layout": {
 								"marginBottom": 4,
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "News Section"
@@ -96,7 +99,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h3"
+														"textType": "h3",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -131,6 +135,7 @@
 													"layout": {
 														"contentDisplay": "FlexColumn",
 														"justify": "SpaceBetween",
+														"opacity": 100,
 														"widthType": "Fluid"
 													},
 													"name": "News Container"
@@ -139,7 +144,8 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "news"
+																"key": "news",
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 															},
@@ -193,7 +199,8 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "news"
+																"key": "news",
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 															},
@@ -247,7 +254,8 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "news"
+																"key": "news",
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 															},
@@ -311,6 +319,8 @@
 													"layout": {
 														"contentDisplay": "FlexRow",
 														"justify": "Center",
+														"marginTop": 2,
+														"opacity": 100,
 														"widthType": "Fluid"
 													},
 													"name": "Button Container"
@@ -382,7 +392,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h3"
+														"textType": "h3",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -418,6 +429,7 @@
 														"align": "Start",
 														"contentDisplay": "FlexColumn",
 														"justify": "Center",
+														"opacity": 100,
 														"widthType": "Fluid"
 													},
 													"name": "Slider Container"
@@ -426,7 +438,8 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "evp-slider"
+																"key": "evp-slider",
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"numberOfSlides": 3
@@ -507,11 +520,13 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderWidth": "0",
 								"marginBottom": "5"
 							},
 							"indexed": true,
 							"layout": {
 								"marginBottom": 4,
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "Data on EVP Section"
@@ -523,7 +538,8 @@
 										"key": "DIALECT-dialect-text"
 									},
 									"fragmentConfig": {
-										"textType": "h3"
+										"textType": "h3",
+										"truncateText": false
 									},
 									"fragmentFields": [
 										{
@@ -551,745 +567,843 @@
 							},
 							{
 								"definition": {
-									"fragmentStyle": {
+									"collectionConfig": {
+										"collectionReference": {
+											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_20097_C_EVPData"
+										},
+										"collectionType": "CollectionProvider"
 									},
-									"indexed": true,
-									"layout": {
-										"align": "Center",
-										"contentDisplay": "FlexRow",
-										"justify": "SpaceBetween",
-										"widthType": "Fluid"
-									},
-									"name": "Data Container"
+									"collectionViewports": [
+										{
+											"collectionViewportDefinition": {
+												"numberOfColumns": 1
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"collectionViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"collectionViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"displayAllItems": false,
+									"displayAllPages": true,
+									"listItemStyle": "",
+									"listStyle": "",
+									"numberOfColumns": 1,
+									"numberOfItems": 1,
+									"numberOfItemsPerPage": 10,
+									"numberOfPages": 5,
+									"paginationType": "None",
+									"showAllItems": false,
+									"templateKey": ""
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragmentStyle": {
-												"backgroundColor": "colorNeutral1",
-												"borderRadius": "borderRadiusLg",
-												"height": "180px",
-												"maxHeight": "180px",
-												"maxWidth": "208px",
-												"paddingTop": "4",
-												"width": "208px"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Center",
-												"contentDisplay": "FlexColumn",
-												"paddingTop": 2,
-												"widthType": "Fluid"
-											},
-											"name": "Data Card"
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
 												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-														"imageSize": "w-0"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/calendar_icon.svg$]"
-																			}
-																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
-																		}
-																	},
-																	"title": {
-																		"value": "calendar_icon"
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
 													"fragmentStyle": {
-														"marginBottom": "3"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
+														"borderWidth": "0"
 													},
 													"indexed": true,
 													"layout": {
-														"widthType": "Fixed"
-													}
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "SpaceBetween",
+														"opacity": 100,
+														"widthType": "Fluid"
+													},
+													"name": "Data Container"
 												},
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral1",
+																"borderRadius": "borderRadiusLg",
+																"height": "180px",
+																"maxHeight": "180px",
+																"maxWidth": "208px",
+																"paddingTop": "4",
+																"width": "208px"
 															},
-															"fragmentConfig": {
-																"textType": "h2"
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"contentDisplay": "FlexColumn",
+																"opacity": 100,
+																"paddingTop": 2,
+																"widthType": "Fluid"
 															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "12"
+															"name": "Data Card"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"description": {
+																						"value_i18n": {
+																							"en_US": ""
+																						}
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/evp/calendar_icon-svg?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
 																			}
 																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"marginBottom": "2",
-																"textAlign": "center",
-																"textColor": "colorNeutral10"
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
 															},
-															"indexed": true
-														},
-														"type": "Fragment"
+															{
+																"definition": {
+																	"fragmentStyle": {
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"opacity": 100,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": ""
+																									}
+																								},
+																								"target": "Self"
+																							}
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "ObjectField_yearsEVP",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "2",
+																				"textAlign": "center",
+																				"textColor": "colorNeutral10"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Years EVP has been active"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
 													},
 													{
 														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral1",
+																"borderRadius": "borderRadiusLg",
+																"height": "180px",
+																"maxHeight": "180px",
+																"maxWidth": "208px",
+																"paddingTop": "4",
+																"width": "208px"
 															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"contentDisplay": "FlexColumn",
+																"opacity": 100,
+																"paddingTop": 2,
+																"widthType": "Fluid"
 															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Years EVP has been active"
+															"name": "Data Card"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"description": {
+																						"value_i18n": {
+																							"en_US": ""
+																						}
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/evp/watch_icon-svg?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
 																			}
 																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "center"
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
 															},
-															"indexed": true
+															{
+																"definition": {
+																	"fragmentStyle": {
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"opacity": 100,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "ObjectField_serviceHoursCompleted",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "2",
+																				"textAlign": "center",
+																				"textColor": "colorNeutral10"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Service Hours Completed"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral1",
+																"borderRadius": "borderRadiusLg",
+																"height": "180px",
+																"maxHeight": "180px",
+																"maxWidth": "208px",
+																"paddingTop": "4",
+																"width": "208px"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"contentDisplay": "FlexColumn",
+																"opacity": 100,
+																"paddingTop": 2,
+																"widthType": "Fluid"
+															},
+															"name": "Data Card"
 														},
-														"type": "Fragment"
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"description": {
+																						"value_i18n": {
+																							"en_US": ""
+																						}
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/evp/money_icon-svg?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"opacity": 100,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"indexed": true,
+																			"layout": {
+																				"align": "Center",
+																				"contentDisplay": "FlexRow",
+																				"justify": "Center",
+																				"opacity": 100,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"cssClasses": [
+																						"grantMoney"
+																					],
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h2",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"mapping": {
+																										"fieldKey": "ObjectField_grantMoneyDistributed",
+																										"itemReference": {
+																											"contextSource": "CollectionItem"
+																										}
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"fontWeight": "fontWeightBold",
+																						"marginBottom": "2",
+																						"marginRight": "1",
+																						"shadow": "",
+																						"textAlign": "center",
+																						"textColor": "colorNeutral10"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "DIALECT-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h2",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"mapping": {
+																										"fieldKey": "ObjectField_currency",
+																										"itemReference": {
+																											"contextSource": "CollectionItem"
+																										}
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBold",
+																						"marginBottom": "2",
+																						"textAlign": "center",
+																						"textColor": "colorNeutral10"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Grant Money Distributed"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral1",
+																"borderRadius": "borderRadiusLg",
+																"height": "180px",
+																"maxHeight": "180px",
+																"maxWidth": "208px",
+																"paddingTop": "4",
+																"width": "208px"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"contentDisplay": "FlexColumn",
+																"opacity": 100,
+																"paddingTop": 2,
+																"widthType": "Fluid"
+															},
+															"name": "Data Card"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"description": {
+																						"value_i18n": {
+																							"en_US": ""
+																						}
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/evp/heart_icon-svg?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"opacity": 100,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "ObjectField_numberOfNonprofitsServed",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "2",
+																				"textAlign": "center",
+																				"textColor": "colorNeutral10"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Number of nonprofits served"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral1",
+																"borderRadius": "borderRadiusLg",
+																"height": "180px",
+																"maxHeight": "180px",
+																"maxWidth": "208px",
+																"paddingTop": "4",
+																"width": "208px"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"contentDisplay": "FlexColumn",
+																"opacity": 100,
+																"paddingTop": 2,
+																"widthType": "Fluid"
+															},
+															"name": "Data Card"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"description": {
+																						"value_i18n": {
+																							"en_US": ""
+																						}
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/evp/community_icon-svg?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"opacity": 100,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "ObjectField_employeesParticipatedEVP",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "2",
+																				"textAlign": "center",
+																				"textColor": "colorNeutral10"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Employees that participated on EVP"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
 													}
 												],
 												"type": "Section"
 											}
 										],
-										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragmentStyle": {
-												"backgroundColor": "colorNeutral1",
-												"borderRadius": "borderRadiusLg",
-												"height": "180px",
-												"maxHeight": "180px",
-												"maxWidth": "208px",
-												"paddingTop": "4",
-												"width": "208px"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Center",
-												"contentDisplay": "FlexColumn",
-												"paddingTop": 2,
-												"widthType": "Fluid"
-											},
-											"name": "Data Card"
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-														"imageSize": "w-0"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/watch_icon.svg$]"
-																			}
-																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
-																		}
-																	},
-																	"title": {
-																		"value": "watch_icon"
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "3"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-													},
-													"indexed": true,
-													"layout": {
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "28676"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"marginBottom": "2",
-																"textAlign": "center",
-																"textColor": "colorNeutral10"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Service Hours Completed"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "center"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragmentStyle": {
-												"backgroundColor": "colorNeutral1",
-												"borderRadius": "borderRadiusLg",
-												"height": "180px",
-												"maxHeight": "180px",
-												"maxWidth": "208px",
-												"paddingTop": "4",
-												"width": "208px"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Center",
-												"contentDisplay": "FlexColumn",
-												"paddingTop": 2,
-												"widthType": "Fluid"
-											},
-											"name": "Data Card"
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-														"imageSize": "w-0"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/money_icon.svg$]"
-																			}
-																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
-																		}
-																	},
-																	"title": {
-																		"value": "money_icon"
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "3"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-													},
-													"indexed": true,
-													"layout": {
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "6.09M BRL"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"marginBottom": "2",
-																"textAlign": "center",
-																"textColor": "colorNeutral10"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Grant Money Distributed"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "center"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragmentStyle": {
-												"backgroundColor": "colorNeutral1",
-												"borderRadius": "borderRadiusLg",
-												"height": "180px",
-												"maxHeight": "180px",
-												"maxWidth": "208px",
-												"paddingTop": "4",
-												"width": "208px"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Center",
-												"contentDisplay": "FlexColumn",
-												"paddingTop": 2,
-												"widthType": "Fluid"
-											},
-											"name": "Data Card"
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-														"imageSize": "w-0"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/heart_icon.svg$]"
-																			}
-																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
-																		}
-																	},
-																	"title": {
-																		"value": "heart_icon"
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "3"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-													},
-													"indexed": true,
-													"layout": {
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "1064"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"marginBottom": "2",
-																"textAlign": "center",
-																"textColor": "colorNeutral10"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Number of nonprofits served"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "center"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragmentStyle": {
-												"backgroundColor": "colorNeutral1",
-												"borderRadius": "borderRadiusLg",
-												"height": "180px",
-												"maxHeight": "180px",
-												"maxWidth": "208px",
-												"paddingTop": "4",
-												"width": "208px"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Center",
-												"contentDisplay": "FlexColumn",
-												"paddingTop": 2,
-												"widthType": "Fluid"
-											},
-											"name": "Data Card"
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-														"imageSize": "w-0"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"description": {
-																		"value_i18n": {
-																			"en_US": ""
-																		}
-																	},
-																	"fragmentImageClassPKReference": {
-																		"classPKReferences": {
-																			"en_US": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/community_icon.svg$]"
-																			}
-																		},
-																		"fragmentImageConfiguration": {
-																			"landscapeMobile": "auto",
-																			"portraitMobile": "auto",
-																			"tablet": "auto"
-																		}
-																	},
-																	"title": {
-																		"value": "community_icon"
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "3"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-													},
-													"indexed": true,
-													"layout": {
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "1229"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"marginBottom": "2",
-																"textAlign": "center",
-																"textColor": "colorNeutral10"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Employees that participated on EVP"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "center"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Section"
+										"type": "CollectionItem"
 									}
 								],
-								"type": "Section"
+								"type": "Collection"
 							}
 						],
 						"type": "Section"
@@ -1302,6 +1416,7 @@
 							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "Process Section"
@@ -1363,6 +1478,7 @@
 													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexColumn",
+														"opacity": 100,
 														"widthType": "Fluid"
 													},
 													"name": "Process Left Container"
@@ -1374,6 +1490,7 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexRow",
+																"opacity": 100,
 																"widthType": "Fluid"
 															},
 															"name": "Process Title Container"
@@ -1392,21 +1509,10 @@
 																			"id": "image-square",
 																			"value": {
 																				"fragmentImage": {
-																					"fragmentImageClassPKReference": {
-																						"classPKReferences": {
-																							"en_US": {
-																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/evp_process_icon.svg$]"
-																							}
-																						},
-																						"fragmentImageConfiguration": {
-																							"landscapeMobile": "auto",
-																							"portraitMobile": "auto",
-																							"tablet": "auto"
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/evp/evp_process_icon-svg?download=true"
 																						}
-																					},
-																					"title": {
-																						"value": "evp_process_icon.svg"
 																					}
 																				},
 																				"fragmentLink": {
@@ -1429,7 +1535,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h2"
+																		"textType": "h2",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -1461,6 +1568,7 @@
 														"definition": {
 															"indexed": true,
 															"layout": {
+																"opacity": 100,
 																"widthType": "Fluid"
 															},
 															"name": "Process Description Container"
@@ -1472,7 +1580,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -1503,7 +1612,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -1562,6 +1672,7 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexColumn",
+																"opacity": 100,
 																"widthType": "Fluid"
 															},
 															"name": "Process Image Container"
@@ -1649,6 +1760,7 @@
 														"align": "Center",
 														"contentDisplay": "FlexRow",
 														"justify": "Center",
+														"opacity": 100,
 														"widthType": "Fluid"
 													},
 													"name": "Process Slider Container"
@@ -1657,7 +1769,8 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "evp-process-steps-slider"
+																"key": "evp-process-steps-slider",
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"numberOfSlides": 5,
@@ -1940,6 +2053,20 @@
 							}
 						],
 						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "evp-data-money",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
 					}
 				],
 				"type": "Section"

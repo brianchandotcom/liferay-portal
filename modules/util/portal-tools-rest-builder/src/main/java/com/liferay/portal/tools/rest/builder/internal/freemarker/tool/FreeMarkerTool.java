@@ -842,6 +842,20 @@ public class FreeMarkerTool {
 		return false;
 	}
 
+	public boolean hasPath(
+		List<JavaMethodSignature> javaMethodSignatures, String path) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			String javaMethodSignaturePath = javaMethodSignature.getPath();
+
+			if (javaMethodSignaturePath.equals(path)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasPathParameter(JavaMethodSignature javaMethodSignature) {
 		List<JavaMethodParameter> javaMethodParameters =
 			javaMethodSignature.getJavaMethodParameters();

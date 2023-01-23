@@ -59,6 +59,44 @@ const removeEmptyFields = (fields) =>
 		);
 	});
 
+function BasicAttributes({onChange, value}) {
+	const _handleChangeAttribute = (property) => (event) => {
+		onChange({
+			attributes: {...value.attributes, [property]: event.target.value},
+		});
+	};
+
+	return (
+		<div className="form-group-autofit">
+			<ClayInput.GroupItem>
+				<label>
+					{Liferay.Language.get('character-threshold')}
+
+					<ClayTooltipProvider>
+						<span
+							className="ml-2"
+							data-tooltip-align="top"
+							title={Liferay.Language.get(
+								'character-threshold-for-displaying-suggestions-contributor-help'
+							)}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</ClayTooltipProvider>
+				</label>
+
+				<ClayInput
+					aria-label={Liferay.Language.get('character-threshold')}
+					min="0"
+					onChange={_handleChangeAttribute('characterThreshold')}
+					type="number"
+					value={value.attributes?.characterThreshold || ''}
+				/>
+			</ClayInput.GroupItem>
+		</div>
+	);
+}
+
 function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 	const [showModal, setShowModal] = useState(false);
 	const [sxpBlueprint, setSXPBlueprint] = useState({
@@ -246,7 +284,21 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 
 			<div className="form-group-autofit">
 				<ClayInput.GroupItem>
-					<label>{Liferay.Language.get('character-threshold')}</label>
+					<label>
+						{Liferay.Language.get('character-threshold')}
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'character-threshold-for-displaying-suggestions-contributor-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
+					</label>
 
 					<ClayInput
 						aria-label={Liferay.Language.get('character-threshold')}
@@ -543,6 +595,10 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 					)}
 				</ClayInput.GroupItem>
 			</div>
+
+			{value.contributorName === CONTRIBUTOR_TYPES.BASIC && (
+				<BasicAttributes onChange={onChange} value={value} />
+			)}
 
 			{value.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT && (
 				<SXPBlueprintAttributes

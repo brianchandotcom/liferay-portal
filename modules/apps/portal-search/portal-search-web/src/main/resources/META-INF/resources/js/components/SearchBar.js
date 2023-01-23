@@ -65,12 +65,9 @@ export default function SearchBar({
 	 */
 
 	const _getLowestSuggestionsDisplayThreshold = useCallback(() => {
-		if (!isSearchExperiencesSupported) {
-			return parseInt(suggestionsDisplayThreshold, 10);
-		}
-
-		const characterThresholdArray = JSON.parse(
-			suggestionsContributorConfiguration
+		const characterThresholdArray = cleanSuggestionsContributorConfiguration(
+			suggestionsContributorConfiguration,
+			isSearchExperiencesSupported
 		)
 			.filter((config) => config.attributes?.characterThreshold)
 			.map((config) =>

@@ -202,7 +202,7 @@ export function ModalAddFilter({
 				const makeFetch = async () => {
 					if (objectField.listTypeDefinitionId) {
 						const items = await API.getPickListItems(
-							objectField.listTypeDefinitionId
+							objectField.listTypeDefinitionExternalReferenceCode
 						);
 
 						if (editingFilter) {

@@ -51,7 +51,6 @@ export default function ModalImportListTypeDefinition({
 	const importListTypeDefinitionFormId = `${portletNamespace}importListTypeDefinitionForm`;
 	const nameInputId = `${portletNamespace}name`;
 	const listTypeDefinitionJSONInputId = `${portletNamespace}listTypeDefinitionJSON`;
-	const objectDefinitionJSONInputId = `${portletNamespace}objectDefinitionJSON`;
 	const [{fileName, inputFile, inputFileValue}, setFile] = useState<TFile>(
 		{}
 	);
@@ -69,6 +68,16 @@ export default function ModalImportListTypeDefinition({
 			setImportFormData(undefined);
 		},
 	});
+
+	const warningModalBody: string[] = [
+		Liferay.Language.get(
+			'there-is-a-picklist-with-the-same-external-reference-code-as-the-imported-one'
+		),
+		Liferay.Language.get(
+			'before-importing-the-new-picklist-you-may-want-to-back-up-its-entries-to-prevent-data-loss'
+		),
+		Liferay.Language.get('do-you-want-to-proceed-with-the-import-process'),
+	];
 
 	const handleImport = async (formData: FormData) => {
 		try {
@@ -164,7 +173,7 @@ export default function ModalImportListTypeDefinition({
 					</ClayForm.Group>
 
 					<ClayForm.Group>
-						<label htmlFor={objectDefinitionJSONInputId}>
+						<label htmlFor={listTypeDefinitionJSONInputId}>
 							{Liferay.Language.get('json-file')}
 						</label>
 
@@ -172,7 +181,7 @@ export default function ModalImportListTypeDefinition({
 							<ClayInput.GroupItem prepend>
 								<ClayInput
 									disabled
-									id={objectDefinitionJSONInputId}
+									id={listTypeDefinitionJSONInputId}
 									type="text"
 									value={fileName}
 								/>
@@ -279,17 +288,13 @@ export default function ModalImportListTypeDefinition({
 		</ClayModal>
 	) : warningModalVisible ? (
 		<ModalImportWarning
-			bodyText={[
-				'there-is-an-object-definition-with-the-same-external-reference-code-as-the-imported-one',
-				'before-importing-the-new-object-definition-you-may-want-to-back-up-its-entries-to-prevent-data-loss',
-				'do-you-want-to-proceed-with-the-import-process',
-			]}
 			handleImport={() => handleImport(importFormData as FormData)}
-			headerText={Liferay.Language.get('update-existing-picklist')}
+			header={Liferay.Language.get('update-existing-picklist')}
 			onClose={() => {
 				setWarningModalVisible(false);
 				setImportFormData(undefined);
 			}}
+			paragraphs={warningModalBody}
 		/>
 	) : null;
 }

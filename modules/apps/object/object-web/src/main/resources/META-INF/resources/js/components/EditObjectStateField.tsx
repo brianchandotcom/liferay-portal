@@ -29,11 +29,15 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 
 	useEffect(() => {
 		if (objectField?.listTypeDefinitionId) {
-			API.getPickListItems(objectField.listTypeDefinitionId).then(
-				setPickListItems
-			);
+			API.getPickListItems(
+				objectField.listTypeDefinitionExternalReferenceCode
+			).then(setPickListItems);
 		}
-	}, [objectField.listTypeDefinitionId, setPickListItems]);
+	}, [
+		objectField.listTypeDefinitionId,
+		objectField.listTypeDefinitionExternalReferenceCode,
+		setPickListItems,
+	]);
 
 	const isStateOptionChecked = ({
 		currentKey,

@@ -18,33 +18,31 @@ import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
 interface ModalImportWarningProps {
-	bodyText: string[];
 	handleImport: () => void;
-	headerText: string;
+	header: string;
 	onClose: (value: boolean) => void;
+	paragraphs: string[];
 }
 
 export function ModalImportWarning({
-	bodyText,
 	handleImport,
-	headerText,
+	header,
 	onClose,
+	paragraphs,
 }: ModalImportWarningProps) {
 	const {observer} = useModal();
 
 	return (
 		<ClayModal center observer={observer} status="warning">
-			<ClayModal.Header>{headerText}</ClayModal.Header>
+			<ClayModal.Header>{header}</ClayModal.Header>
 
 			<ClayModal.Body>
 				<div className="text-secondary">
-					{bodyText.map((text) => {
-						return (
-							<Text as="p" color="secondary">
-								{text}
-							</Text>
-						);
-					})}
+					{paragraphs.map((paragraph, index) => (
+						<Text as="p" color="secondary" key={index}>
+							{paragraph}
+						</Text>
+					))}
 				</div>
 			</ClayModal.Body>
 

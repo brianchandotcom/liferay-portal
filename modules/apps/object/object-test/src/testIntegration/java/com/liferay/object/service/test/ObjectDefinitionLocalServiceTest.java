@@ -73,7 +73,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

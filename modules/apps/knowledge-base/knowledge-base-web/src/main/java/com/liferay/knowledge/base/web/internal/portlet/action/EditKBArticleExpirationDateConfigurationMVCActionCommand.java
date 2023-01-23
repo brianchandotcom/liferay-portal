@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/instance_settings/edit_kb_article_expiration_date_configuration"
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+		"mvc.command.name=/system_settings/edit_kb_article_expiration_date_configuration"
 	},
 	service = MVCActionCommand.class
 )

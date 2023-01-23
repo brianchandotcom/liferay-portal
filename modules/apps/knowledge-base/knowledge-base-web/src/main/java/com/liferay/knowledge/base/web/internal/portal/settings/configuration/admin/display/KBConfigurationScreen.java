@@ -62,7 +62,7 @@ public class KBConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
+		return ExtendedObjectClassDefinition.Scope.SYSTEM.getValue();
 	}
 
 	@Override

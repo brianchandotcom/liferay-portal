@@ -52,7 +52,7 @@ public class KBArticleCompanyConfigurationDisplayContext {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
-			"/instance_settings/edit_kb_article_expiration_date_configuration"
+			"/system_settings/edit_kb_article_expiration_date_configuration"
 		).setRedirect(
 			PortalUtil.getCurrentURL(_httpServletRequest)
 		).buildString();

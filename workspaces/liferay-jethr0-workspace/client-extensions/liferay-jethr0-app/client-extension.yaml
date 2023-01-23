@@ -1,0 +1,5 @@
+jethr0-oauth-application-headless-server:
+    homePageURL: http://localhost:58081
+    name: Jethr0 OAuth Application Headless Server
+    type: oAuthApplicationHeadlessServer
+    userAccountEmailAddress: test@liferay.com

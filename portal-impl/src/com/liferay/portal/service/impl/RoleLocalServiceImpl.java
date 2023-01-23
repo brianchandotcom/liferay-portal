@@ -1273,6 +1273,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				long[] curGroupIds = Arrays.copyOfRange(
 					groupIds, i, Math.min(groupIds.length, i + chunk));
 
+				// LPS-173475 we cannot use an "in" clause here because more
+				// than 1000 items in the list causes a syntax error when using
+				// Oracle (ORA-01795).
+
 				Predicate predicate = null;
 
 				for (long curGroupId : curGroupIds) {

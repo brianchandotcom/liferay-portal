@@ -48,7 +48,6 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Michael C. Han
@@ -326,8 +325,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 
 		return Arrays.asList(
 			SearchStringUtil.splitAndUnquote(
-				Optional.ofNullable(
-					(String)searchContext.getAttribute(string))));
+				(String)searchContext.getAttribute(string)));
 	}
 
 	private void _postProcessFullQuery(

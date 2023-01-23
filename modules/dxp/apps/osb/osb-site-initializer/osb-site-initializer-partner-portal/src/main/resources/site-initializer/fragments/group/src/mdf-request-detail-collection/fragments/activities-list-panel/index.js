@@ -238,6 +238,7 @@ const Table = ({items, title}) => (
 const DATE_FORMAT_OPTION = {
 	day: 'numeric',
 	month: 'short',
+	timeZone: 'UTC',
 };
 
 const RangeDate = ({endDate, startDate}) => (

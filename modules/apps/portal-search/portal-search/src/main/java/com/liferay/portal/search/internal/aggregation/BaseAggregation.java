@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * @author Michael C. Han
@@ -39,11 +38,9 @@ public abstract class BaseAggregation implements Aggregation {
 
 	@Override
 	public void addChildrenAggregations(Aggregation... aggregations) {
-		Stream.of(
-			aggregations
-		).forEach(
-			this::addChildAggregation
-		);
+		for (Aggregation aggregation : aggregations) {
+			addChildAggregation(aggregation);
+		}
 	}
 
 	@Override
@@ -58,11 +55,9 @@ public abstract class BaseAggregation implements Aggregation {
 	public void addPipelineAggregations(
 		PipelineAggregation... pipelineAggregations) {
 
-		Stream.of(
-			pipelineAggregations
-		).forEach(
-			this::addPipelineAggregation
-		);
+		for (PipelineAggregation pipelineAggregation : pipelineAggregations) {
+			addPipelineAggregation(pipelineAggregation);
+		}
 	}
 
 	@Override

@@ -146,9 +146,6 @@ public class DefaultObjectEntryManagerImpl
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
-		Map<String, ObjectRelationship> objectRelationships =
-			_getObjectRelationships(objectDefinition, objectEntry);
-
 		com.liferay.object.model.ObjectEntry newObjectEntry =
 			_objectEntryService.addObjectEntry(
 				groupId, objectDefinition.getObjectDefinitionId(),
@@ -162,7 +159,8 @@ public class DefaultObjectEntryManagerImpl
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153117"))) {
 			_addNestedObjectEntries(
 				dtoConverterContext, objectDefinition, newObjectEntry,
-				objectEntry, objectRelationships);
+				objectEntry,
+				_getObjectRelationships(objectDefinition, objectEntry));
 		}
 
 		return _toObjectEntry(

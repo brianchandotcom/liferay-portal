@@ -32,6 +32,8 @@ import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.helper.CollectionPaginationHelper;
+import com.liferay.layout.list.provider.LayoutListPermissionProvider;
+import com.liferay.layout.list.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -112,7 +115,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_getLayoutListRetriever();
 		ListObjectReference listObjectReference = _getListObjectReference();
 
-		if ((layoutListRetriever == null) || (listObjectReference == null)) {
+		if ((layoutListRetriever == null) || (listObjectReference == null) ||
+			!_hasViewPermission(listObjectReference)) {
+
 			return Collections.emptyList();
 		}
 
@@ -146,7 +151,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_getLayoutListRetriever();
 		ListObjectReference listObjectReference = _getListObjectReference();
 
-		if ((layoutListRetriever == null) || (listObjectReference == null)) {
+		if ((layoutListRetriever == null) || (listObjectReference == null) ||
+			!_hasViewPermission(listObjectReference)) {
+
 			return 0;
 		}
 
@@ -609,6 +616,32 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			requestContextMapper.map(_httpServletRequest));
 
 		return _segmentsEntryIds;
+	}
+
+	private boolean _hasViewPermission(
+		ListObjectReference listObjectReference) {
+
+		LayoutListPermissionProviderRegistry
+			layoutListPermissionProviderRegistry =
+				ServletContextUtil.getLayoutListPermissionProviderRegistry();
+
+		Class<? extends ListObjectReference> listObjectReferenceClass =
+			listObjectReference.getClass();
+
+		LayoutListPermissionProvider<ListObjectReference>
+			layoutListPermissionProvider =
+				(LayoutListPermissionProvider<ListObjectReference>)
+					layoutListPermissionProviderRegistry.
+						getLayoutListPermissionProvider(
+							listObjectReferenceClass.getName());
+
+		if (layoutListPermissionProvider == null) {
+			return true;
+		}
+
+		return layoutListPermissionProvider.hasPermission(
+			_themeDisplay.getPermissionChecker(), listObjectReference,
+			ActionKeys.VIEW);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

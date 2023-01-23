@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.document;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.document.Document;
@@ -27,8 +28,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Michael C. Han
@@ -162,15 +161,7 @@ public class DocumentImpl implements Document {
 	}
 
 	public <T> List<T> getValues(String name, Function<Object, T> function) {
-		List<Object> values = getValues(name);
-
-		Stream<Object> stream = values.stream();
-
-		return stream.map(
-			function
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(getValues(name), function::apply);
 	}
 
 	public void setFieldValues(String name, Collection<Object> values) {

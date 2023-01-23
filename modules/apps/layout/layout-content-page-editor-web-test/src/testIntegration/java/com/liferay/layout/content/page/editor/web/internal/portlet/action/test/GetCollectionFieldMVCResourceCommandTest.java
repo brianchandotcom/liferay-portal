@@ -24,6 +24,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -156,8 +159,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				String.class, String.class, String.class, int.class, int.class,
 				int.class, String.class, String.class
 			},
-			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
-			false, false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
+			false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
 			).put(
@@ -188,12 +191,6 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
-		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, _user.getUserId());
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
@@ -202,7 +199,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				String.class, String.class, String.class, int.class, int.class,
 				int.class, String.class, String.class
 			},
-			mockHttpServletRequest, new MockHttpServletResponse(), 0, false,
+			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
 			false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
@@ -245,8 +242,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				String.class, String.class, String.class, int.class, int.class,
 				int.class, String.class, String.class
 			},
-			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
-			false, false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
+			false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				String.valueOf(
@@ -299,8 +296,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				String.class, String.class, String.class, int.class, int.class,
 				int.class, String.class, String.class
 			},
-			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
-			false, false, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
+			false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"classNameId",
 				String.valueOf(
@@ -348,6 +345,25 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			User.class.getName());
 	}
 
+	private HttpServletRequest _getHttpServletRequest() throws Exception {
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, _user.getUserId());
+
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_companyLocalService.fetchCompany(_group.getCompanyId()), _group,
+			_layout);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
 	private String _getTypeSettings() {
 		return UnicodePropertiesBuilder.create(
 			true
@@ -374,6 +390,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

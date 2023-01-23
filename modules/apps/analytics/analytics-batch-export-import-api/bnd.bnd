@@ -3,5 +3,6 @@ Bundle-SymbolicName: com.liferay.analytics.batch.exportimport.api
 Bundle-Version: 4.0.1
 Export-Package:\
 	com.liferay.analytics.batch.exportimport,\
+	com.liferay.analytics.batch.exportimport.constants,\
 	com.liferay.analytics.batch.exportimport.manager,\
 	com.liferay.analytics.batch.exportimport.model.listener

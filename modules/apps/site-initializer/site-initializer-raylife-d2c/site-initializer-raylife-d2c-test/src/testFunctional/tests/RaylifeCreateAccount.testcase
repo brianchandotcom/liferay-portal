@@ -235,7 +235,8 @@ definition {
 			locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
 			title = "standard");
 
-		Click(locator1 = "RaylifeCreateAccount#CREATE_NEW_ACCOUNT");
+		Click(key_text = "CREATE NEW ACCOUNT",
+			locator1 = "Button#ANY");
 
 		AssertElementPresent(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT_DISABLED");
 	}

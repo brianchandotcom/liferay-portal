@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CREATE_NEW_ACCOUNT</td>
-	<td>//*[not(self::div)][contains(@class,'btn')][normalize-space()='CREATE NEW ACCOUNT'][not(contains(@class,'navbar'))]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EMAIL_FIELD</td>
 	<td>//input[contains(@name, 'email')]</td>
 	<td></td>

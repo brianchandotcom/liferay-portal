@@ -37,7 +37,7 @@ public class ModelPreFilterContributorsRegistryImpl
 	implements ModelPreFilterContributorsRegistry {
 
 	@Override
-	public Stream<ModelPreFilterContributor> stream(
+	public List<ModelPreFilterContributor> filter(
 		String entryClassName, Collection<String> excludes,
 		Collection<String> includes, boolean mandatoryOnly) {
 
@@ -78,7 +78,7 @@ public class ModelPreFilterContributorsRegistryImpl
 			}
 		}
 
-		return list.stream();
+		return list;
 	}
 
 	@Activate

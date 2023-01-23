@@ -52,7 +52,7 @@ const updateStatus = async (status) => {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
-		method: 'PATCH',
+		method: 'PUT',
 	});
 
 	if (statusManagerResponse.ok) {

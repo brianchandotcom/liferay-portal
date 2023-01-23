@@ -83,24 +83,18 @@ const activitiesSchema = object({
 				endDate: date()
 					.test(
 						'end-date-six-month',
-						'End date must be less than six month after start date',
+						'The activity period can not be longer than 6 months',
 						(endDate, testContext) => {
 							if (endDate) {
 								const startDate = testContext.parent.startDate;
 
-								const futureDate = new Date(startDate);
-								futureDate.setMonth(startDate.getMonth() + 6);
-
-								if (
-									endDate.getMonth() < futureDate.getMonth()
-								) {
-									return true;
-								}
-
 								return (
-									endDate.getMonth() ===
-										futureDate.getMonth() &&
-									endDate.getDay() < futureDate.getDay()
+									endDate.getMonth() -
+										startDate.getMonth() +
+										12 *
+											(endDate.getFullYear() -
+												startDate.getFullYear()) <=
+									6
 								);
 							}
 

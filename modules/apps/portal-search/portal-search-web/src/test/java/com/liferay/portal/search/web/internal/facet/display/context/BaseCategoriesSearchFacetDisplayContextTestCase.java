@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -32,9 +33,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
+import com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionChecker;
 
@@ -44,8 +45,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.RenderRequest;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,15 +59,16 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 	extends BaseFacetDisplayContextTestCase {
 
 	@Override
-	public FacetDisplayContext createFacetDisplayContext(
-		String parameterValue) {
+	public FacetDisplayContext createFacetDisplayContext(String parameterValue)
+		throws ConfigurationException {
 
 		return createFacetDisplayContext(parameterValue, "count:desc");
 	}
 
 	@Override
 	public FacetDisplayContext createFacetDisplayContext(
-		String parameterValue, String order) {
+			String parameterValue, String order)
+		throws ConfigurationException {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
@@ -535,26 +535,12 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		return assetCategory;
 	}
 
-	private HttpServletRequest _getHttpServletRequest() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		Mockito.doReturn(
-			getThemeDisplay()
-		).when(
-			httpServletRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
-		return httpServletRequest;
-	}
-
-	private Portal _getPortal() {
+	private Portal _getPortal() throws ConfigurationException {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.doReturn(
-			_getHttpServletRequest()
+			getHttpServletRequest(
+				CategoryFacetPortletInstanceConfiguration.class)
 		).when(
 			portal
 		).getHttpServletRequest(

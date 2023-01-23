@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
 
@@ -155,14 +154,15 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return termCollector;
 	}
 
-	protected static HttpServletRequest getHttpServletRequest()
+	protected static HttpServletRequest getHttpServletRequest(
+			Class<?> facetPortletConfiguration)
 		throws ConfigurationException {
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay(CustomFacetPortletInstanceConfiguration.class)
+			getThemeDisplay(facetPortletConfiguration)
 		).when(
 			httpServletRequest
 		).getAttribute(

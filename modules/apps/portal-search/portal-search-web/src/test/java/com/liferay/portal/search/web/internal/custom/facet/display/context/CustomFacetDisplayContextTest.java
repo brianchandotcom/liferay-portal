@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
+import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.builder.CustomFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -215,7 +216,9 @@ public class CustomFacetDisplayContextTest
 		throws Exception {
 
 		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
-			new CustomFacetDisplayContextBuilder(getHttpServletRequest());
+			new CustomFacetDisplayContextBuilder(
+				getHttpServletRequest(
+					CustomFacetPortletInstanceConfiguration.class));
 
 		customFacetDisplayContextBuilder.setFacet(_facet);
 		customFacetDisplayContextBuilder.setParameterName("custom");

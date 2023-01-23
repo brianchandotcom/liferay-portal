@@ -28,19 +28,24 @@ const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 const updateStatusToApproved = fragmentElement.querySelector(
 	'#status-approved'
 );
+
 const updateStatusToRequestMoreInfo = fragmentElement.querySelector(
 	'#status-request'
 );
 const updateStatusToMarketingDirectorReview = fragmentElement.querySelector(
 	'#status-marketing-director-review'
 );
+
+const updateStatusPendingMarketingReview = fragmentElement.querySelector(
+	'#pending-marketing-review'
+);
 const updateStatusToReject = fragmentElement.querySelector('#status-reject');
 
 const updateStatusToCanceled = fragmentElement.querySelector('#status-cancel');
 
-const editButtonManager = fragmentElement.querySelector('.edit-button-manager');
+const editButtonManager = fragmentElement.querySelector('#edit-button-manager');
 
-const editButton = fragmentElement.querySelector('.edit-button-user');
+const editButton = fragmentElement.querySelector('#edit-button-user');
 
 const updateStatus = async (status) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -52,18 +57,11 @@ const updateStatus = async (status) => {
 				'content-type': 'application/json',
 				'x-csrf-token': Liferay.authToken,
 			},
-			method: 'PUT',
+			method: 'PATCH',
 		}
 	);
 	if (statusManagerResponse.ok) {
-		const data = await statusManagerResponse.json();
-		document.getElementById(
-			'mdf-request-status-display'
-		).innerHTML = `Status: ${Liferay.Util.escape(
-			data.mdfRequestStatus.name
-		)}`;
-
-		updateButtons(data.mdfRequestStatus.key);
+		location.reload();
 
 		return;
 	}
@@ -93,6 +91,18 @@ if (updateStatusToRequestMoreInfo) {
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					updateStatus('moreInfoRequested');
+				}
+			},
+		});
+}
+
+if (updateStatusPendingMarketingReview) {
+	updateStatusPendingMarketingReview.onclick = () =>
+		Liferay.Util.openConfirmModal({
+			message: 'Do you want to Pending Marketing Review for this MDF?',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					updateStatus('pendingMarketingReview');
 				}
 			},
 		});
@@ -172,10 +182,57 @@ const updateButtons = (mdfRequestStatusKey) => {
 		editButton.classList.toggle('d-flex');
 	}
 
+	if (mdfRequestStatusKey === 'pendingMarketingReview') {
+		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		updateStatusToReject.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
+		updateStatusToApproved.classList.toggle('d-flex');
+	}
+
+	if (mdfRequestStatusKey === 'approved') {
+		updateStatusToCanceled.classList.toggle('d-flex');
+	}
+
+	if (mdfRequestStatusKey === 'marketingDirectorReview') {
+		updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		updateStatusToApproved.classList.toggle('d-flex');
+		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		updateStatusToReject.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
+	}
+
+	if (mdfRequestStatusKey === 'moreInfoRequested') {
+		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
+	}
+
+	if (mdfRequestStatusKey === 'expired') {
+		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
+		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+	}
+	if (mdfRequestStatusKey === 'rejected') {
+		updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
+	}
+
+	if (mdfRequestStatusKey === 'canceled') {
+		updateStatusToApproved.classList.toggle('d-flex');
+	}
+
+	if (mdfRequestStatusKey === 'draft') {
+		updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
+	}
+
 	if (editButton) {
 		editButton.onclick = () =>
 			Liferay.Util.navigate(
-				`${siteURL}/marketing/mdf-requests/new/#/${mdfRequestId}`
+				`${siteURL}/marketing/mdf-requests/new/#/${mdfClaimId}`
 			);
 	}
 

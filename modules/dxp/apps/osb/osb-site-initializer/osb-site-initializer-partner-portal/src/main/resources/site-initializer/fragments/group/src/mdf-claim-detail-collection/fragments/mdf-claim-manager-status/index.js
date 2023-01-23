@@ -32,6 +32,10 @@ const updateInFinanceReview = fragmentElement.querySelector(
 	'#status-in-finance-review'
 );
 
+const updateStatusPendingMarketingReview = fragmentElement.querySelector(
+	'#pending-marketing-review'
+);
+
 const updateInDirectorReview = fragmentElement.querySelector(
 	'#status-in-director-review'
 );
@@ -39,10 +43,6 @@ const updateInDirectorReview = fragmentElement.querySelector(
 const updateClaimPaid = fragmentElement.querySelector('#status-claim-paid');
 
 const updateStatusToCanceled = fragmentElement.querySelector('#status-cancel');
-
-const editButtonManager = fragmentElement.querySelector('.edit-button-manager');
-
-const editButton = fragmentElement.querySelector('.edit-button-user');
 
 const updateStatus = async (status) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -52,19 +52,11 @@ const updateStatus = async (status) => {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
-		method: 'PUT',
+		method: 'PATCH',
 	});
 
 	if (statusManagerResponse.ok) {
-		const data = await statusManagerResponse.json();
-
-		document.getElementById(
-			'mdf-claim-status-display'
-		).innerHTML = `Status: ${Liferay.Util.escape(
-			data.mdfClaimStatus.name
-		)}`;
-
-		updateButtons(data.mdfClaimStatus.key);
+		location.reload();
 
 		return;
 	}
@@ -94,6 +86,18 @@ if (updateStatusToRequestMoreInfo) {
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					updateStatus('moreInfoRequested');
+				}
+			},
+		});
+}
+
+if (updateStatusPendingMarketingReview) {
+	updateStatusPendingMarketingReview.onclick = () =>
+		Liferay.Util.openConfirmModal({
+			message: 'Do you want to Pending Marketing Review for this MDF?',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					updateStatus('pendingMarketingReview');
 				}
 			},
 		});
@@ -189,12 +193,45 @@ const getMDFClaimStatus = async () => {
 };
 
 const updateButtons = (mdfClaimStatusKey) => {
-	if (
-		!editButtonManager &&
-		(mdfClaimStatusKey === 'draft' ||
-			mdfClaimStatusKey === 'moreInfoRequested')
-	) {
-		editButton.classList.toggle('d-flex');
+	if (mdfClaimStatusKey === 'pendingMarketingReview') {
+		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		updateStatusToReject.classList.toggle('d-flex');
+		updateStatusToApproved.classList.toggle('d-flex');
+		updateInFinanceReview.classList.toggle('d-flex');
+	}
+	if (mdfClaimStatusKey === 'approved') {
+		updateInFinanceReview.classList.toggle('d-flex');
+	}
+
+	if (mdfClaimStatusKey === 'inFinanceReview') {
+		updateStatusToApproved.classList.toggle('d-flex');
+		updateClaimPaid.classList.toggle('d-flex');
+		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		updateStatusToReject.classList.toggle('d-flex');
+		updateInDirectorReview.classList.toggle('d-flex');
+	}
+
+	if (mdfClaimStatusKey === 'moreInfoRequested') {
+		updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		updateStatusToApproved.classList.toggle('d-flex');
+		updateClaimPaid.classList.toggle('d-flex');
+		updateInFinanceReview.classList.toggle('d-flex');
+		updateStatusToReject.classList.toggle('d-flex');
+	}
+	if (mdfClaimStatusKey === 'rejected') {
+		updateStatusPendingMarketingReview.classList.toggle('d-flex');
+	}
+	if (mdfClaimStatusKey === 'draft') {
+		updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
+	}
+	if (mdfClaimStatusKey === 'inDirectorReview') {
+		updateStatusToApproved.classList.toggle('d-flex');
+		updateInFinanceReview.classList.toggle('d-flex');
+		updateStatusToReject.classList.toggle('d-flex');
+	}
+	if (mdfClaimStatusKey === 'canceled') {
+		updateStatusToApproved.classList.toggle('d-flex');
 	}
 };
 

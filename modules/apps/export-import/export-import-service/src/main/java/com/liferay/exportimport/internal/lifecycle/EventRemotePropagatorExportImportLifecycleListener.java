@@ -230,8 +230,8 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		}
 		catch (PortalException portalException) {
 			_log.error(
-				"Unable to propagate staging lifecycle event to the " +
-					"remote live site",
+				"Unable to propagate staging lifecycle event to the remote " +
+					"live site",
 				portalException);
 		}
 	}

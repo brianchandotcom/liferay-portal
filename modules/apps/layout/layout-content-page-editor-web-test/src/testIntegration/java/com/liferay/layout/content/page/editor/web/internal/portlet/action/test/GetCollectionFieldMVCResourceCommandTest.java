@@ -108,6 +108,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		_serviceContext.setScopeGroupId(_group.getGroupId());
 		_serviceContext.setUserId(_user.getUserId());
 
+		_serviceContext.setAddGroupPermissions(true);
+		_serviceContext.setAddGuestPermissions(true);
+
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		Bundle bundle = FrameworkUtil.getBundle(

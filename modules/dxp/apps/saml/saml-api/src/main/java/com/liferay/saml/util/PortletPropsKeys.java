@@ -29,6 +29,10 @@ public interface PortletPropsKeys {
 	public static final String SAML_IDP_AUTHN_REQUEST_SIGNATURE_REQUIRED =
 		"saml.idp.authn.request.signature.required";
 
+	public static final String
+		SAML_IDP_AUTHN_REQUEST_SIGNING_ALLOWS_DYNAMIC_ACS_URL =
+			"saml.idp.authn.request.signing.allows.dynamic.acs.url";
+
 	public static final String SAML_IDP_METADATA_ATTRIBUTE_NAMES =
 		"saml.idp.metadata.attribute.names";
 

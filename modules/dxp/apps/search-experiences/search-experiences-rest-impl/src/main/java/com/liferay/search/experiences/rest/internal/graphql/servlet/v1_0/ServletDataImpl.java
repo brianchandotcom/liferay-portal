@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.search.experiences.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.search.experiences.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.search.experiences.rest.internal.resource.v1_0.EmbeddingProviderValidationResultResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.FieldMappingInfoResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.KeywordQueryContributorResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.MLModelResourceImpl;
@@ -30,7 +31,7 @@ import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchIndexRes
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchResponseResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchableAssetNameDisplayResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchableAssetNameResourceImpl;
-import com.liferay.search.experiences.rest.internal.resource.v1_0.TextEmbeddingProviderValidationResultResourceImpl;
+import com.liferay.search.experiences.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.MLModelResource;
@@ -43,7 +44,6 @@ import com.liferay.search.experiences.rest.resource.v1_0.SearchIndexResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameDisplayResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
-import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,15 +67,15 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.
+			setEmbeddingProviderValidationResultResourceComponentServiceObjects(
+				_embeddingProviderValidationResultResourceComponentServiceObjects);
 		Mutation.setSXPBlueprintResourceComponentServiceObjects(
 			_sxpBlueprintResourceComponentServiceObjects);
 		Mutation.setSXPElementResourceComponentServiceObjects(
 			_sxpElementResourceComponentServiceObjects);
 		Mutation.setSearchResponseResourceComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects);
-		Mutation.
-			setTextEmbeddingProviderValidationResultResourceComponentServiceObjects(
-				_textEmbeddingProviderValidationResultResourceComponentServiceObjects);
 
 		Query.setFieldMappingInfoResourceComponentServiceObjects(
 			_fieldMappingInfoResourceComponentServiceObjects);
@@ -136,6 +136,11 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#createTextEmbeddingValidateProviderConfiguration",
+						new ObjectValuePair<>(
+							EmbeddingProviderValidationResultResourceImpl.class,
+							"postTextEmbeddingValidateProviderConfiguration"));
 					put(
 						"mutation#createSXPBlueprint",
 						new ObjectValuePair<>(
@@ -207,12 +212,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createSearch",
 						new ObjectValuePair<>(
 							SearchResponseResourceImpl.class, "postSearch"));
-					put(
-						"mutation#createTextEmbeddingValidateConfiguration",
-						new ObjectValuePair<>(
-							TextEmbeddingProviderValidationResultResourceImpl.
-								class,
-							"postTextEmbeddingValidateConfiguration"));
 
 					put(
 						"query#fieldMappingInfos",
@@ -291,6 +290,10 @@ public class ServletDataImpl implements ServletData {
 			};
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<EmbeddingProviderValidationResultResource>
+		_embeddingProviderValidationResultResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SXPBlueprintResource>
 		_sxpBlueprintResourceComponentServiceObjects;
 
@@ -301,11 +304,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects
-		<TextEmbeddingProviderValidationResultResource>
-			_textEmbeddingProviderValidationResultResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FieldMappingInfoResource>

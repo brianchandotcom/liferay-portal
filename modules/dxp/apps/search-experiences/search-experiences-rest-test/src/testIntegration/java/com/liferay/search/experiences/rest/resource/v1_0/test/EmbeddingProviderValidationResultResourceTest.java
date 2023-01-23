@@ -24,6 +24,6 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class TextEmbeddingProviderValidationResultResourceTest
-	extends BaseTextEmbeddingProviderValidationResultResourceTestCase {
+public class EmbeddingProviderValidationResultResourceTest
+	extends BaseEmbeddingProviderValidationResultResourceTestCase {
 }

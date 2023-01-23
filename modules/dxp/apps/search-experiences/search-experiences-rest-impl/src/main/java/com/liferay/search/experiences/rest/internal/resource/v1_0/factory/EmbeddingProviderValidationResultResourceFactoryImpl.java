@@ -35,7 +35,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
+import com.liferay.search.experiences.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -62,24 +62,24 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/search-experiences-rest/v1.0/TextEmbeddingProviderValidationResult",
-	service = TextEmbeddingProviderValidationResultResource.Factory.class
+	property = "resource.locator.key=/search-experiences-rest/v1.0/EmbeddingProviderValidationResult",
+	service = EmbeddingProviderValidationResultResource.Factory.class
 )
 @Generated("")
-public class TextEmbeddingProviderValidationResultResourceFactoryImpl
-	implements TextEmbeddingProviderValidationResultResource.Factory {
+public class EmbeddingProviderValidationResultResourceFactoryImpl
+	implements EmbeddingProviderValidationResultResource.Factory {
 
 	@Override
-	public TextEmbeddingProviderValidationResultResource.Builder create() {
-		return new TextEmbeddingProviderValidationResultResource.Builder() {
+	public EmbeddingProviderValidationResultResource.Builder create() {
+		return new EmbeddingProviderValidationResultResource.Builder() {
 
 			@Override
-			public TextEmbeddingProviderValidationResultResource build() {
+			public EmbeddingProviderValidationResultResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _textEmbeddingProviderValidationResultResourceProxyProviderFunction.
+				return _embeddingProviderValidationResultResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -88,7 +88,7 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public TextEmbeddingProviderValidationResultResource.Builder
+			public EmbeddingProviderValidationResultResource.Builder
 				checkPermissions(boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -97,7 +97,7 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public TextEmbeddingProviderValidationResultResource.Builder
+			public EmbeddingProviderValidationResultResource.Builder
 				httpServletRequest(HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -106,7 +106,7 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public TextEmbeddingProviderValidationResultResource.Builder
+			public EmbeddingProviderValidationResultResource.Builder
 				httpServletResponse(HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -115,7 +115,7 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public TextEmbeddingProviderValidationResultResource.Builder
+			public EmbeddingProviderValidationResultResource.Builder
 				preferredLocale(Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -124,7 +124,7 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public TextEmbeddingProviderValidationResultResource.Builder user(
+			public EmbeddingProviderValidationResultResource.Builder user(
 				User user) {
 
 				_user = user;
@@ -142,19 +142,17 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 	}
 
 	private static Function
-		<InvocationHandler, TextEmbeddingProviderValidationResultResource>
+		<InvocationHandler, EmbeddingProviderValidationResultResource>
 			_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			TextEmbeddingProviderValidationResultResource.class.
-				getClassLoader(),
-			TextEmbeddingProviderValidationResultResource.class);
+			EmbeddingProviderValidationResultResource.class.getClassLoader(),
+			EmbeddingProviderValidationResultResource.class);
 
 		try {
-			Constructor<TextEmbeddingProviderValidationResultResource>
-				constructor =
-					(Constructor<TextEmbeddingProviderValidationResultResource>)
-						proxyClass.getConstructor(InvocationHandler.class);
+			Constructor<EmbeddingProviderValidationResultResource> constructor =
+				(Constructor<EmbeddingProviderValidationResultResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
 				try {
@@ -195,48 +193,47 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		TextEmbeddingProviderValidationResultResource
-			textEmbeddingProviderValidationResultResource =
+		EmbeddingProviderValidationResultResource
+			embeddingProviderValidationResultResource =
 				_componentServiceObjects.getService();
 
-		textEmbeddingProviderValidationResultResource.setContextAcceptLanguage(
+		embeddingProviderValidationResultResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		textEmbeddingProviderValidationResultResource.setContextCompany(
-			company);
+		embeddingProviderValidationResultResource.setContextCompany(company);
 
-		textEmbeddingProviderValidationResultResource.
-			setContextHttpServletRequest(httpServletRequest);
-		textEmbeddingProviderValidationResultResource.
-			setContextHttpServletResponse(httpServletResponse);
-		textEmbeddingProviderValidationResultResource.setContextUser(user);
-		textEmbeddingProviderValidationResultResource.setExpressionConvert(
+		embeddingProviderValidationResultResource.setContextHttpServletRequest(
+			httpServletRequest);
+		embeddingProviderValidationResultResource.setContextHttpServletResponse(
+			httpServletResponse);
+		embeddingProviderValidationResultResource.setContextUser(user);
+		embeddingProviderValidationResultResource.setExpressionConvert(
 			_expressionConvert);
-		textEmbeddingProviderValidationResultResource.setFilterParserProvider(
+		embeddingProviderValidationResultResource.setFilterParserProvider(
 			_filterParserProvider);
-		textEmbeddingProviderValidationResultResource.setGroupLocalService(
+		embeddingProviderValidationResultResource.setGroupLocalService(
 			_groupLocalService);
-		textEmbeddingProviderValidationResultResource.
-			setResourceActionLocalService(_resourceActionLocalService);
-		textEmbeddingProviderValidationResultResource.
+		embeddingProviderValidationResultResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		embeddingProviderValidationResultResource.
 			setResourcePermissionLocalService(_resourcePermissionLocalService);
-		textEmbeddingProviderValidationResultResource.setRoleLocalService(
+		embeddingProviderValidationResultResource.setRoleLocalService(
 			_roleLocalService);
-		textEmbeddingProviderValidationResultResource.setSortParserProvider(
+		embeddingProviderValidationResultResource.setSortParserProvider(
 			_sortParserProvider);
 
 		try {
 			return method.invoke(
-				textEmbeddingProviderValidationResultResource, arguments);
+				embeddingProviderValidationResultResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
 			_componentServiceObjects.ungetService(
-				textEmbeddingProviderValidationResultResource);
+				embeddingProviderValidationResultResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -245,17 +242,16 @@ public class TextEmbeddingProviderValidationResultResourceFactoryImpl
 	}
 
 	private static final Function
-		<InvocationHandler, TextEmbeddingProviderValidationResultResource>
-			_textEmbeddingProviderValidationResultResourceProxyProviderFunction =
+		<InvocationHandler, EmbeddingProviderValidationResultResource>
+			_embeddingProviderValidationResultResourceProxyProviderFunction =
 				_getProxyProviderFunction();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects
-		<TextEmbeddingProviderValidationResultResource>
-			_componentServiceObjects;
+	private ComponentServiceObjects<EmbeddingProviderValidationResultResource>
+		_componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

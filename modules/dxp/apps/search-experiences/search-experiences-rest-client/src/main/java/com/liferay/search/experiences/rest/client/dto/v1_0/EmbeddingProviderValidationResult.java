@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.TextEmbeddingProviderValidationResultSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.EmbeddingProviderValidationResultSerDes;
 
 import java.io.Serializable;
 
@@ -28,11 +28,11 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TextEmbeddingProviderValidationResult
+public class EmbeddingProviderValidationResult
 	implements Cloneable, Serializable {
 
-	public static TextEmbeddingProviderValidationResult toDTO(String json) {
-		return TextEmbeddingProviderValidationResultSerDes.toDTO(json);
+	public static EmbeddingProviderValidationResult toDTO(String json) {
+		return EmbeddingProviderValidationResultSerDes.toDTO(json);
 	}
 
 	public String getErrorMessage() {
@@ -78,10 +78,10 @@ public class TextEmbeddingProviderValidationResult
 	protected Integer expectedDimensions;
 
 	@Override
-	public TextEmbeddingProviderValidationResult clone()
+	public EmbeddingProviderValidationResult clone()
 		throws CloneNotSupportedException {
 
-		return (TextEmbeddingProviderValidationResult)super.clone();
+		return (EmbeddingProviderValidationResult)super.clone();
 	}
 
 	@Override
@@ -90,16 +90,15 @@ public class TextEmbeddingProviderValidationResult
 			return true;
 		}
 
-		if (!(object instanceof TextEmbeddingProviderValidationResult)) {
+		if (!(object instanceof EmbeddingProviderValidationResult)) {
 			return false;
 		}
 
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult =
-				(TextEmbeddingProviderValidationResult)object;
+		EmbeddingProviderValidationResult embeddingProviderValidationResult =
+			(EmbeddingProviderValidationResult)object;
 
 		return Objects.equals(
-			toString(), textEmbeddingProviderValidationResult.toString());
+			toString(), embeddingProviderValidationResult.toString());
 	}
 
 	@Override
@@ -110,7 +109,7 @@ public class TextEmbeddingProviderValidationResult
 	}
 
 	public String toString() {
-		return TextEmbeddingProviderValidationResultSerDes.toJSON(this);
+		return EmbeddingProviderValidationResultSerDes.toJSON(this);
 	}
 
 }

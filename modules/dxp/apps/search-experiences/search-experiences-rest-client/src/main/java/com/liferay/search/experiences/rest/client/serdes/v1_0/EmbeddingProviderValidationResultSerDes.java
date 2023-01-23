@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.TextEmbeddingProviderValidationResult;
+import com.liferay.search.experiences.rest.client.dto.v1_0.EmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,30 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TextEmbeddingProviderValidationResultSerDes {
+public class EmbeddingProviderValidationResultSerDes {
 
-	public static TextEmbeddingProviderValidationResult toDTO(String json) {
-		TextEmbeddingProviderValidationResultJSONParser
-			textEmbeddingProviderValidationResultJSONParser =
-				new TextEmbeddingProviderValidationResultJSONParser();
+	public static EmbeddingProviderValidationResult toDTO(String json) {
+		EmbeddingProviderValidationResultJSONParser
+			embeddingProviderValidationResultJSONParser =
+				new EmbeddingProviderValidationResultJSONParser();
 
-		return textEmbeddingProviderValidationResultJSONParser.parseToDTO(json);
+		return embeddingProviderValidationResultJSONParser.parseToDTO(json);
 	}
 
-	public static TextEmbeddingProviderValidationResult[] toDTOs(String json) {
-		TextEmbeddingProviderValidationResultJSONParser
-			textEmbeddingProviderValidationResultJSONParser =
-				new TextEmbeddingProviderValidationResultJSONParser();
+	public static EmbeddingProviderValidationResult[] toDTOs(String json) {
+		EmbeddingProviderValidationResultJSONParser
+			embeddingProviderValidationResultJSONParser =
+				new EmbeddingProviderValidationResultJSONParser();
 
-		return textEmbeddingProviderValidationResultJSONParser.parseToDTOs(
-			json);
+		return embeddingProviderValidationResultJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult) {
+		EmbeddingProviderValidationResult embeddingProviderValidationResult) {
 
-		if (textEmbeddingProviderValidationResult == null) {
+		if (embeddingProviderValidationResult == null) {
 			return "null";
 		}
 
@@ -61,7 +59,7 @@ public class TextEmbeddingProviderValidationResultSerDes {
 
 		sb.append("{");
 
-		if (textEmbeddingProviderValidationResult.getErrorMessage() != null) {
+		if (embeddingProviderValidationResult.getErrorMessage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -71,15 +69,12 @@ public class TextEmbeddingProviderValidationResultSerDes {
 			sb.append("\"");
 
 			sb.append(
-				_escape(
-					textEmbeddingProviderValidationResult.getErrorMessage()));
+				_escape(embeddingProviderValidationResult.getErrorMessage()));
 
 			sb.append("\"");
 		}
 
-		if (textEmbeddingProviderValidationResult.getExpectedDimensions() !=
-				null) {
-
+		if (embeddingProviderValidationResult.getExpectedDimensions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -87,7 +82,7 @@ public class TextEmbeddingProviderValidationResultSerDes {
 			sb.append("\"expectedDimensions\": ");
 
 			sb.append(
-				textEmbeddingProviderValidationResult.getExpectedDimensions());
+				embeddingProviderValidationResult.getExpectedDimensions());
 		}
 
 		sb.append("}");
@@ -96,73 +91,66 @@ public class TextEmbeddingProviderValidationResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		TextEmbeddingProviderValidationResultJSONParser
-			textEmbeddingProviderValidationResultJSONParser =
-				new TextEmbeddingProviderValidationResultJSONParser();
+		EmbeddingProviderValidationResultJSONParser
+			embeddingProviderValidationResultJSONParser =
+				new EmbeddingProviderValidationResultJSONParser();
 
-		return textEmbeddingProviderValidationResultJSONParser.parseToMap(json);
+		return embeddingProviderValidationResultJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		TextEmbeddingProviderValidationResult
-			textEmbeddingProviderValidationResult) {
+		EmbeddingProviderValidationResult embeddingProviderValidationResult) {
 
-		if (textEmbeddingProviderValidationResult == null) {
+		if (embeddingProviderValidationResult == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (textEmbeddingProviderValidationResult.getErrorMessage() == null) {
+		if (embeddingProviderValidationResult.getErrorMessage() == null) {
 			map.put("errorMessage", null);
 		}
 		else {
 			map.put(
 				"errorMessage",
 				String.valueOf(
-					textEmbeddingProviderValidationResult.getErrorMessage()));
+					embeddingProviderValidationResult.getErrorMessage()));
 		}
 
-		if (textEmbeddingProviderValidationResult.getExpectedDimensions() ==
-				null) {
-
+		if (embeddingProviderValidationResult.getExpectedDimensions() == null) {
 			map.put("expectedDimensions", null);
 		}
 		else {
 			map.put(
 				"expectedDimensions",
 				String.valueOf(
-					textEmbeddingProviderValidationResult.
-						getExpectedDimensions()));
+					embeddingProviderValidationResult.getExpectedDimensions()));
 		}
 
 		return map;
 	}
 
-	public static class TextEmbeddingProviderValidationResultJSONParser
-		extends BaseJSONParser<TextEmbeddingProviderValidationResult> {
+	public static class EmbeddingProviderValidationResultJSONParser
+		extends BaseJSONParser<EmbeddingProviderValidationResult> {
 
 		@Override
-		protected TextEmbeddingProviderValidationResult createDTO() {
-			return new TextEmbeddingProviderValidationResult();
+		protected EmbeddingProviderValidationResult createDTO() {
+			return new EmbeddingProviderValidationResult();
 		}
 
 		@Override
-		protected TextEmbeddingProviderValidationResult[] createDTOArray(
-			int size) {
-
-			return new TextEmbeddingProviderValidationResult[size];
+		protected EmbeddingProviderValidationResult[] createDTOArray(int size) {
+			return new EmbeddingProviderValidationResult[size];
 		}
 
 		@Override
 		protected void setField(
-			TextEmbeddingProviderValidationResult
-				textEmbeddingProviderValidationResult,
+			EmbeddingProviderValidationResult embeddingProviderValidationResult,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "errorMessage")) {
 				if (jsonParserFieldValue != null) {
-					textEmbeddingProviderValidationResult.setErrorMessage(
+					embeddingProviderValidationResult.setErrorMessage(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -170,7 +158,7 @@ public class TextEmbeddingProviderValidationResultSerDes {
 						jsonParserFieldName, "expectedDimensions")) {
 
 				if (jsonParserFieldValue != null) {
-					textEmbeddingProviderValidationResult.setExpectedDimensions(
+					embeddingProviderValidationResult.setExpectedDimensions(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}

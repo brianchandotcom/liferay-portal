@@ -98,6 +98,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(EmbeddingProviderValidationResultResourceImpl.class);
+
 			add(FieldMappingInfoResourceImpl.class);
 
 			add(KeywordQueryContributorResourceImpl.class);
@@ -121,8 +123,6 @@ public class OpenAPIResourceImpl {
 			add(SearchableAssetNameResourceImpl.class);
 
 			add(SearchableAssetNameDisplayResourceImpl.class);
-
-			add(TextEmbeddingProviderValidationResultResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

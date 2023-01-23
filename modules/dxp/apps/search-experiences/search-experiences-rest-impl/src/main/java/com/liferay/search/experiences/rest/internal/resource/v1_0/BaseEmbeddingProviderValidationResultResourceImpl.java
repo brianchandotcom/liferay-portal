@@ -29,8 +29,9 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.search.experiences.rest.dto.v1_0.TextEmbeddingProviderValidationResult;
-import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderValidationResult;
+import com.liferay.search.experiences.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 
 import java.util.List;
 import java.util.Map;
@@ -48,31 +49,32 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseTextEmbeddingProviderValidationResultResourceImpl
-	implements TextEmbeddingProviderValidationResultResource {
+public abstract class BaseEmbeddingProviderValidationResultResourceImpl
+	implements EmbeddingProviderValidationResultResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/text-embedding/validate-configuration'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/text-embeddings/validate-provider-configuration' -d $'{"attributes": ___, "embeddingVectorDimensions": ___, "languageIds": ___, "modelClassNames": ___, "providerName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "TextEmbeddingProviderValidationResult"
+				name = "EmbeddingProviderValidationResult"
 			)
 		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/text-embedding/validate-configuration")
+	@javax.ws.rs.Path("/text-embeddings/validate-provider-configuration")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TextEmbeddingProviderValidationResult
-			postTextEmbeddingValidateConfiguration(String string)
+	public EmbeddingProviderValidationResult
+			postTextEmbeddingValidateProviderConfiguration(
+				EmbeddingProviderConfiguration embeddingProviderConfiguration)
 		throws Exception {
 
-		return new TextEmbeddingProviderValidationResult();
+		return new EmbeddingProviderValidationResult();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -252,6 +254,6 @@ public abstract class BaseTextEmbeddingProviderValidationResultResourceImpl
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(
-			BaseTextEmbeddingProviderValidationResultResourceImpl.class);
+			BaseEmbeddingProviderValidationResultResourceImpl.class);
 
 }

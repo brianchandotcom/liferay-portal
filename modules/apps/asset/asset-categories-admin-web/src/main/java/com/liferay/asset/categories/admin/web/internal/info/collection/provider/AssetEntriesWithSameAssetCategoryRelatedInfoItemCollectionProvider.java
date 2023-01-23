@@ -191,7 +191,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 								getClass(), "a-specific-category"),
 							"specificAssetCategory"))
 				).labelInfoLocalizedValue(
-					InfoLocalizedValue.localize(getClass(), "and-contains")
+					InfoLocalizedValue.localize(getClass(), "and-contains-rule")
 				).localizable(
 					true
 				).build()

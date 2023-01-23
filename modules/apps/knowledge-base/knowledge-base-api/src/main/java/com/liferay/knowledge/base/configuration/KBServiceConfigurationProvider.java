@@ -16,6 +16,8 @@ package com.liferay.knowledge.base.configuration;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
+import java.io.IOException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -24,14 +26,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface KBServiceConfigurationProvider {
 
-	public int getCheckInterval(long companyId) throws ConfigurationException;
+	public int getCheckInterval() throws ConfigurationException;
 
-	public int getExpirationDateNotificationDateWeeks(long companyId)
+	public int getExpirationDateNotificationDateWeeks()
 		throws ConfigurationException;
 
 	public void updateExpirationDateConfiguration(
-			int checkInterval, long companyId,
-			int expirationDateNotificationDateWeeks)
-		throws Exception;
+			int checkInterval, int expirationDateNotificationDateWeeks)
+		throws IOException;
 
 }

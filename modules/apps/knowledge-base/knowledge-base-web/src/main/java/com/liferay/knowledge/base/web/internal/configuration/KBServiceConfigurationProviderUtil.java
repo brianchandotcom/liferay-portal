@@ -26,11 +26,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class KBServiceConfigurationProviderUtil {
 
-	public static int getExpirationDateNotificationDateWeeks(long companyId)
+	public static int getExpirationDateNotificationDateWeeks()
 		throws ConfigurationException {
 
 		return _kbServiceConfigurationProvider.
-			getExpirationDateNotificationDateWeeks(companyId);
+			getExpirationDateNotificationDateWeeks();
 	}
 
 	@Reference(unbind = "-")

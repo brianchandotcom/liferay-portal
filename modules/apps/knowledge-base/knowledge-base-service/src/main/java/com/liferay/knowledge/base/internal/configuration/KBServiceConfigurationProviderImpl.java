@@ -16,10 +16,11 @@ package com.liferay.knowledge.base.internal.configuration;
 
 import com.liferay.knowledge.base.configuration.KBServiceConfigurationProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.io.IOException;
 
 import java.util.Dictionary;
 
@@ -36,48 +37,37 @@ public class KBServiceConfigurationProviderImpl
 	implements KBServiceConfigurationProvider {
 
 	@Override
-	public int getCheckInterval(long companyId) throws ConfigurationException {
+	public int getCheckInterval() throws ConfigurationException {
 		KBServiceConfiguration kbServiceConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				KBServiceConfiguration.class, companyId);
+			_configurationProvider.getSystemConfiguration(
+				KBServiceConfiguration.class);
 
 		return kbServiceConfiguration.checkInterval();
 	}
 
 	@Override
-	public int getExpirationDateNotificationDateWeeks(long companyId)
+	public int getExpirationDateNotificationDateWeeks()
 		throws ConfigurationException {
 
 		KBServiceConfiguration kbServiceConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				KBServiceConfiguration.class, companyId);
+			_configurationProvider.getSystemConfiguration(
+				KBServiceConfiguration.class);
 
 		return kbServiceConfiguration.expirationDateNotificationDateWeeks();
 	}
 
 	@Override
 	public void updateExpirationDateConfiguration(
-			int checkInterval, long companyId,
-			int expirationDateNotificationDateWeeks)
-		throws Exception {
+			int checkInterval, int expirationDateNotificationDateWeeks)
+		throws IOException {
 
-		Dictionary<String, Object> properties = null;
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			KBServiceConfiguration.class.getName(), StringPool.QUESTION);
 
-		Configuration configuration = _getScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+		Dictionary<String, Object> properties = configuration.getProperties();
 
-		if (configuration == null) {
-			configuration = _configurationAdmin.createFactoryConfiguration(
-				KBServiceConfiguration.class.getName() + ".scoped",
-				StringPool.QUESTION);
-
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				companyId
-			).build();
-		}
-		else {
-			properties = configuration.getProperties();
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
 		}
 
 		properties.put("checkInterval", checkInterval);
@@ -87,23 +77,6 @@ public class KBServiceConfigurationProviderImpl
 			expirationDateNotificationDateWeeks);
 
 		configuration.update(properties);
-	}
-
-	private Configuration _getScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope scope, long scopePK)
-		throws Exception {
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(service.factoryPid=%s)(%s=%d))",
-				KBServiceConfiguration.class.getName() + ".scoped",
-				scope.getPropertyKey(), scopePK));
-
-		if (configurations == null) {
-			return null;
-		}
-
-		return configurations[0];
 	}
 
 	@Reference

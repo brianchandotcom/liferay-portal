@@ -24,10 +24,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.time.Instant;
@@ -122,15 +120,10 @@ public class KBArticleViewDisplayContext {
 
 		LocalDateTime nowLocalDateTime = LocalDateTime.now();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (nowLocalDateTime.isAfter(
 				expirationDateLocalDateTime.minusWeeks(
 					KBServiceConfigurationProviderUtil.
-						getExpirationDateNotificationDateWeeks(
-							themeDisplay.getCompanyId())))) {
+						getExpirationDateNotificationDateWeeks()))) {
 
 			return true;
 		}

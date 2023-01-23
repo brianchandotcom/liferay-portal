@@ -18,9 +18,7 @@ import com.liferay.knowledge.base.configuration.KBServiceConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,12 +38,7 @@ public class KBArticleCompanyConfigurationDisplayContext {
 	}
 
 	public int getCheckInterval() throws ConfigurationException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _kbServiceConfigurationProvider.getCheckInterval(
-			themeDisplay.getCompanyId());
+		return _kbServiceConfigurationProvider.getCheckInterval();
 	}
 
 	public String getEditKBArticleConfigurationURL() {
@@ -61,12 +54,8 @@ public class KBArticleCompanyConfigurationDisplayContext {
 	public int getExpirationDateNotificationDateWeeks()
 		throws ConfigurationException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _kbServiceConfigurationProvider.
-			getExpirationDateNotificationDateWeeks(themeDisplay.getCompanyId());
+			getExpirationDateNotificationDateWeeks();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -227,7 +228,10 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDSEnvelope),
 				(List<DSEnvelope>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteDSEnvelopesPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		DSEnvelope dsEnvelope1 = testGetSiteDSEnvelopesPage_addDSEnvelope(
@@ -244,7 +248,26 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dsEnvelope1, dsEnvelope2),
 			(List<DSEnvelope>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSiteDSEnvelopesPage_getExpectedActions(siteId));
+	}
+
+	protected Map<String, Map> testGetSiteDSEnvelopesPage_getExpectedActions(
+			Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -663,7 +686,9 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DSEnvelope> page) {
+	protected void assertValid(
+		Page<DSEnvelope> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DSEnvelope> dsEnvelopes = page.getItems();
@@ -678,6 +703,25 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DSEnvelope> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

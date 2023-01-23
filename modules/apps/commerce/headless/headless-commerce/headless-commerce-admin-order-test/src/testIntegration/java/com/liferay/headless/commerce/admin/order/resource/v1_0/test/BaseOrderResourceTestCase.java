@@ -278,11 +278,19 @@ public abstract class BaseOrderResourceTestCase {
 
 		assertContains(order1, (List<Order>)page.getItems());
 		assertContains(order2, (List<Order>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetOrdersPage_getExpectedActions());
 
 		orderResource.deleteOrder(order1.getId());
 
 		orderResource.deleteOrder(order2.getId());
+	}
+
+	protected Map<String, Map> testGetOrdersPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1903,7 +1911,9 @@ public abstract class BaseOrderResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Order> page) {
+	protected void assertValid(
+		Page<Order> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Order> orders = page.getItems();
@@ -1918,6 +1928,25 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Order> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -362,17 +362,6 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/batch".
-				replace(
-					"{externalReferenceCode}",
-					String.valueOf(externalReferenceCode)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
@@ -1437,15 +1426,6 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/user-accounts/batch".
-				replace("{organizationId}", String.valueOf(organizationId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
@@ -1821,15 +1801,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		Map<String, Map> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/sites/{siteId}/user-accounts/batch".
-				replace("{siteId}", String.valueOf(siteId)));
-
-		expectedActions.put("createBatch", createBatchAction);
 
 		return expectedActions;
 	}

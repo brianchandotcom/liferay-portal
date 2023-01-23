@@ -255,7 +255,10 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPaymentMethodGroupRelOrderType),
 				(List<PaymentMethodGroupRelOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType1 =
@@ -278,7 +281,20 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 				paymentMethodGroupRelOrderType1,
 				paymentMethodGroupRelOrderType2),
 			(List<PaymentMethodGroupRelOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -857,7 +873,10 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<PaymentMethodGroupRelOrderType> page) {
+	protected void assertValid(
+		Page<PaymentMethodGroupRelOrderType> page,
+		Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<PaymentMethodGroupRelOrderType>
@@ -873,6 +892,25 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<PaymentMethodGroupRelOrderType> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

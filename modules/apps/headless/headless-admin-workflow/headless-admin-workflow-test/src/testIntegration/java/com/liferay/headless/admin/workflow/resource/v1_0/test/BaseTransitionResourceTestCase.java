@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -222,7 +223,10 @@ public abstract class BaseTransitionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantTransition),
 				(List<Transition>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWorkflowInstanceNextTransitionsPage_getExpectedActions(
+					irrelevantWorkflowInstanceId));
 		}
 
 		Transition transition1 =
@@ -241,7 +245,20 @@ public abstract class BaseTransitionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(transition1, transition2),
 			(List<Transition>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowInstanceNextTransitionsPage_getExpectedActions(
+				workflowInstanceId));
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowInstanceNextTransitionsPage_getExpectedActions(
+				Long workflowInstanceId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -340,7 +357,10 @@ public abstract class BaseTransitionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantTransition),
 				(List<Transition>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWorkflowTaskNextTransitionsPage_getExpectedActions(
+					irrelevantWorkflowTaskId));
 		}
 
 		Transition transition1 =
@@ -359,7 +379,20 @@ public abstract class BaseTransitionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(transition1, transition2),
 			(List<Transition>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowTaskNextTransitionsPage_getExpectedActions(
+				workflowTaskId));
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTaskNextTransitionsPage_getExpectedActions(
+				Long workflowTaskId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -543,7 +576,9 @@ public abstract class BaseTransitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Transition> page) {
+	protected void assertValid(
+		Page<Transition> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Transition> transitions = page.getItems();
@@ -558,6 +593,25 @@ public abstract class BaseTransitionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Transition> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -242,13 +242,21 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			objectDefinition1, (List<ObjectDefinition>)page.getItems());
 		assertContains(
 			objectDefinition2, (List<ObjectDefinition>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetObjectDefinitionsPage_getExpectedActions());
 
 		objectDefinitionResource.deleteObjectDefinition(
 			objectDefinition1.getId());
 
 		objectDefinitionResource.deleteObjectDefinition(
 			objectDefinition2.getId());
+	}
+
+	protected Map<String, Map> testGetObjectDefinitionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1339,7 +1347,9 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ObjectDefinition> page) {
+	protected void assertValid(
+		Page<ObjectDefinition> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ObjectDefinition> objectDefinitions =
@@ -1355,6 +1365,25 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ObjectDefinition> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

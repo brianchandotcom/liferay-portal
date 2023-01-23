@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -215,7 +216,16 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 			searchableAssetName1, (List<SearchableAssetName>)page.getItems());
 		assertContains(
 			searchableAssetName2, (List<SearchableAssetName>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetSearchableAssetNamesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetSearchableAssetNamesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected SearchableAssetName
@@ -336,7 +346,9 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SearchableAssetName> page) {
+	protected void assertValid(
+		Page<SearchableAssetName> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<SearchableAssetName> searchableAssetNames =
@@ -352,6 +364,25 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<SearchableAssetName> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

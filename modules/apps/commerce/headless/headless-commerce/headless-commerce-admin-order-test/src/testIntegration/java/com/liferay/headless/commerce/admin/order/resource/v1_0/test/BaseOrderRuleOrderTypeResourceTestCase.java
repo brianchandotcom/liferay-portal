@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -238,7 +239,10 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderRuleOrderType),
 				(List<OrderRuleOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		OrderRuleOrderType orderRuleOrderType1 =
@@ -259,7 +263,20 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderRuleOrderType1, orderRuleOrderType2),
 			(List<OrderRuleOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -392,7 +409,10 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderRuleOrderType),
 				(List<OrderRuleOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderRuleIdOrderRuleOrderTypesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		OrderRuleOrderType orderRuleOrderType1 =
@@ -411,7 +431,19 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderRuleOrderType1, orderRuleOrderType2),
 			(List<OrderRuleOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrderRuleIdOrderRuleOrderTypesPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetOrderRuleIdOrderRuleOrderTypesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -672,7 +704,9 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<OrderRuleOrderType> page) {
+	protected void assertValid(
+		Page<OrderRuleOrderType> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<OrderRuleOrderType> orderRuleOrderTypes =
@@ -688,6 +722,25 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<OrderRuleOrderType> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

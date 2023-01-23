@@ -2368,6 +2368,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 	}
 
+	protected void assertValid(Page<TaxonomyVocabulary> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];
 	}

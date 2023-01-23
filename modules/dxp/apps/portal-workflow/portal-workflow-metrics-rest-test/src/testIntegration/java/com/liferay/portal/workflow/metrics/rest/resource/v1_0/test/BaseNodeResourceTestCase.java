@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -217,7 +218,10 @@ public abstract class BaseNodeResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantNode), (List<Node>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProcessNodesPage_getExpectedActions(
+					irrelevantProcessId));
 		}
 
 		Node node1 = testGetProcessNodesPage_addNode(processId, randomNode());
@@ -230,7 +234,26 @@ public abstract class BaseNodeResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(node1, node2), (List<Node>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetProcessNodesPage_getExpectedActions(processId));
+	}
+
+	protected Map<String, Map> testGetProcessNodesPage_getExpectedActions(
+			Long processId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/batch".
+				replace("{processId}", String.valueOf(processId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
@@ -426,7 +449,9 @@ public abstract class BaseNodeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Node> page) {
+	protected void assertValid(
+		Page<Node> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Node> nodes = page.getItems();
@@ -441,6 +466,25 @@ public abstract class BaseNodeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Node> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

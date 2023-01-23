@@ -242,7 +242,10 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderRuleAccount),
 				(List<OrderRuleAccount>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderRuleByExternalReferenceCodeOrderRuleAccountsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		OrderRuleAccount orderRuleAccount1 =
@@ -263,7 +266,20 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderRuleAccount1, orderRuleAccount2),
 			(List<OrderRuleAccount>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrderRuleByExternalReferenceCodeOrderRuleAccountsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetOrderRuleByExternalReferenceCodeOrderRuleAccountsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -392,7 +408,10 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderRuleAccount),
 				(List<OrderRuleAccount>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderRuleIdOrderRuleAccountsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		OrderRuleAccount orderRuleAccount1 =
@@ -411,7 +430,18 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderRuleAccount1, orderRuleAccount2),
 			(List<OrderRuleAccount>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrderRuleIdOrderRuleAccountsPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetOrderRuleIdOrderRuleAccountsPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -917,7 +947,9 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<OrderRuleAccount> page) {
+	protected void assertValid(
+		Page<OrderRuleAccount> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<OrderRuleAccount> orderRuleAccounts =
@@ -933,6 +965,25 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<OrderRuleAccount> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

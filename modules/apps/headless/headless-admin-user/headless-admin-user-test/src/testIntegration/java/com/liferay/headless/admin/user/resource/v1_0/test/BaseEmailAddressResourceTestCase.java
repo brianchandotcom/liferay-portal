@@ -321,15 +321,6 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		Map<String, Map> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/email-addresses/batch".
-				replace("{organizationId}", String.valueOf(organizationId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
@@ -416,15 +407,6 @@ public abstract class BaseEmailAddressResourceTestCase {
 		throws Exception {
 
 		Map<String, Map> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/email-addresses/batch".
-				replace("{userAccountId}", String.valueOf(userAccountId)));
-
-		expectedActions.put("createBatch", createBatchAction);
 
 		return expectedActions;
 	}

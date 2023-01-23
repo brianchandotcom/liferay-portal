@@ -611,7 +611,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardMessage),
 				(List<MessageBoardMessage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetMessageBoardMessageMessageBoardMessagesPage_getExpectedActions(
+					irrelevantParentMessageBoardMessageId));
 		}
 
 		MessageBoardMessage messageBoardMessage1 =
@@ -633,13 +636,26 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
 			(List<MessageBoardMessage>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetMessageBoardMessageMessageBoardMessagesPage_getExpectedActions(
+				parentMessageBoardMessageId));
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage1.getId());
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetMessageBoardMessageMessageBoardMessagesPage_getExpectedActions(
+				Long parentMessageBoardMessageId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1046,7 +1062,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardMessage),
 				(List<MessageBoardMessage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetMessageBoardThreadMessageBoardMessagesPage_getExpectedActions(
+					irrelevantMessageBoardThreadId));
 		}
 
 		MessageBoardMessage messageBoardMessage1 =
@@ -1068,13 +1087,37 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
 			(List<MessageBoardMessage>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetMessageBoardThreadMessageBoardMessagesPage_getExpectedActions(
+				messageBoardThreadId));
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage1.getId());
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetMessageBoardThreadMessageBoardMessagesPage_getExpectedActions(
+				Long messageBoardThreadId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages/batch".
+				replace(
+					"{messageBoardThreadId}",
+					String.valueOf(messageBoardThreadId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1473,7 +1516,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardMessage),
 				(List<MessageBoardMessage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteMessageBoardMessagesPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		MessageBoardMessage messageBoardMessage1 =
@@ -1492,13 +1538,24 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
 			(List<MessageBoardMessage>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteMessageBoardMessagesPage_getExpectedActions(siteId));
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage1.getId());
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteMessageBoardMessagesPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2639,7 +2696,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<MessageBoardMessage> page) {
+	protected void assertValid(
+		Page<MessageBoardMessage> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<MessageBoardMessage> messageBoardMessages =
@@ -2655,6 +2714,25 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<MessageBoardMessage> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(Rating rating) {

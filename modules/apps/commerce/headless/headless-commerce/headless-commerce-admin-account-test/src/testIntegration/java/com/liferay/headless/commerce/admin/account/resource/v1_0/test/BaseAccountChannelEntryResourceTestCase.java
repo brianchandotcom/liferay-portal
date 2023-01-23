@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1503,7 +1504,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelBillingAddressesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -1524,7 +1528,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelBillingAddressesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelBillingAddressesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1665,7 +1682,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelCurrenciesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -1686,7 +1706,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelCurrenciesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelCurrenciesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1827,7 +1860,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -1848,7 +1884,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1989,7 +2038,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelDiscountsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -2010,7 +2062,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelDiscountsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelDiscountsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2151,7 +2216,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -2172,7 +2240,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2313,7 +2394,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelPaymentTermsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -2334,7 +2418,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentTermsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentTermsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2475,7 +2572,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelPriceListsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -2496,7 +2596,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelPriceListsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelPriceListsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2637,7 +2750,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelShippingAddressesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -2658,7 +2774,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelShippingAddressesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelShippingAddressesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2799,7 +2928,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountChannelUsersPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -2820,7 +2952,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountChannelUsersPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountChannelUsersPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2959,7 +3104,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelBillingAddressesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -2980,7 +3128,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelBillingAddressesPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelBillingAddressesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3116,7 +3277,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelCurrenciesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -3137,7 +3301,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelCurrenciesPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelCurrenciesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3271,7 +3448,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelDeliveryTermsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -3292,7 +3472,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelDeliveryTermsPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelDeliveryTermsPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3423,7 +3616,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelDiscountsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -3443,7 +3639,19 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelDiscountsPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelDiscountsPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3573,7 +3781,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelPaymentMethodsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -3594,7 +3805,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelPaymentMethodsPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelPaymentMethodsPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3730,7 +3954,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelPaymentTermsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -3751,7 +3978,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelPaymentTermsPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelPaymentTermsPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3885,7 +4125,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelPriceListsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -3906,7 +4149,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelPriceListsPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelPriceListsPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -4040,7 +4296,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelShippingAddressesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -4061,7 +4320,20 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelShippingAddressesPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelShippingAddressesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -4193,7 +4465,10 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountChannelEntry),
 				(List<AccountChannelEntry>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountChannelUsersPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountChannelEntry accountChannelEntry1 =
@@ -4212,7 +4487,18 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
 			(List<AccountChannelEntry>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountIdAccountChannelUsersPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountChannelUsersPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -4510,7 +4796,9 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AccountChannelEntry> page) {
+	protected void assertValid(
+		Page<AccountChannelEntry> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<AccountChannelEntry> accountChannelEntries =
@@ -4526,6 +4814,25 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<AccountChannelEntry> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

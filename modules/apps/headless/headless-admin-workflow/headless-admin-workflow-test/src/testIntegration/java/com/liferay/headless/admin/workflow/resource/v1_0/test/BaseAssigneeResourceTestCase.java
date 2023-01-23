@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -216,7 +217,10 @@ public abstract class BaseAssigneeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAssignee),
 				(List<Assignee>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWorkflowTaskAssignableUsersPage_getExpectedActions(
+					irrelevantWorkflowTaskId));
 		}
 
 		Assignee assignee1 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
@@ -233,7 +237,20 @@ public abstract class BaseAssigneeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(assignee1, assignee2),
 			(List<Assignee>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowTaskAssignableUsersPage_getExpectedActions(
+				workflowTaskId));
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTaskAssignableUsersPage_getExpectedActions(
+				Long workflowTaskId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -395,7 +412,9 @@ public abstract class BaseAssigneeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Assignee> page) {
+	protected void assertValid(
+		Page<Assignee> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Assignee> assignees = page.getItems();
@@ -410,6 +429,25 @@ public abstract class BaseAssigneeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Assignee> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

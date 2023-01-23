@@ -242,7 +242,10 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDiscountChannel),
 				(List<DiscountChannel>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		DiscountChannel discountChannel1 =
@@ -263,7 +266,20 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(discountChannel1, discountChannel2),
 			(List<DiscountChannel>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -391,7 +407,10 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDiscountChannel),
 				(List<DiscountChannel>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDiscountIdDiscountChannelsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		DiscountChannel discountChannel1 =
@@ -410,7 +429,17 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(discountChannel1, discountChannel2),
 			(List<DiscountChannel>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetDiscountIdDiscountChannelsPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetDiscountIdDiscountChannelsPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -910,7 +939,9 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DiscountChannel> page) {
+	protected void assertValid(
+		Page<DiscountChannel> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DiscountChannel> discountChannels =
@@ -926,6 +957,25 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DiscountChannel> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

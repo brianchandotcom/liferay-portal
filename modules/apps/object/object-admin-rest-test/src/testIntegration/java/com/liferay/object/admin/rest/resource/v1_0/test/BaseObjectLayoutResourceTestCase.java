@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -227,7 +228,10 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantObjectLayout),
 				(List<ObjectLayout>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		ObjectLayout objectLayout1 =
@@ -248,11 +252,24 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectLayout1, objectLayout2),
 			(List<ObjectLayout>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getExpectedActions(
+				externalReferenceCode));
 
 		objectLayoutResource.deleteObjectLayout(objectLayout1.getId());
 
 		objectLayoutResource.deleteObjectLayout(objectLayout2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -382,7 +399,10 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantObjectLayout),
 				(List<ObjectLayout>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetObjectDefinitionObjectLayoutsPage_getExpectedActions(
+					irrelevantObjectDefinitionId));
 		}
 
 		ObjectLayout objectLayout1 =
@@ -401,11 +421,35 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectLayout1, objectLayout2),
 			(List<ObjectLayout>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetObjectDefinitionObjectLayoutsPage_getExpectedActions(
+				objectDefinitionId));
 
 		objectLayoutResource.deleteObjectLayout(objectLayout1.getId());
 
 		objectLayoutResource.deleteObjectLayout(objectLayout2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetObjectDefinitionObjectLayoutsPage_getExpectedActions(
+				Long objectDefinitionId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-layouts/batch".
+				replace(
+					"{objectDefinitionId}",
+					String.valueOf(objectDefinitionId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -818,7 +862,9 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ObjectLayout> page) {
+	protected void assertValid(
+		Page<ObjectLayout> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ObjectLayout> objectLayouts = page.getItems();
@@ -833,6 +879,25 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ObjectLayout> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

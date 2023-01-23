@@ -226,7 +226,10 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProductOptionValue),
 				(List<ProductOptionValue>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductOptionIdProductOptionValuesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		ProductOptionValue productOptionValue1 =
@@ -247,7 +250,20 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productOptionValue1, productOptionValue2),
 			(List<ProductOptionValue>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductOptionIdProductOptionValuesPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetProductOptionIdProductOptionValuesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -628,7 +644,9 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ProductOptionValue> page) {
+	protected void assertValid(
+		Page<ProductOptionValue> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ProductOptionValue> productOptionValues =
@@ -644,6 +662,25 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ProductOptionValue> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

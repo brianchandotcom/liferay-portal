@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -228,7 +229,17 @@ public abstract class BaseModelPrefilterContributorResourceTestCase {
 		assertContains(
 			modelPrefilterContributor2,
 			(List<ModelPrefilterContributor>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetModelPrefilterContributorsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetModelPrefilterContributorsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected ModelPrefilterContributor
@@ -362,7 +373,10 @@ public abstract class BaseModelPrefilterContributorResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ModelPrefilterContributor> page) {
+	protected void assertValid(
+		Page<ModelPrefilterContributor> page,
+		Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ModelPrefilterContributor>
@@ -378,6 +392,25 @@ public abstract class BaseModelPrefilterContributorResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ModelPrefilterContributor> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

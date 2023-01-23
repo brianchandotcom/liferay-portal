@@ -227,13 +227,22 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			listTypeDefinition1, (List<ListTypeDefinition>)page.getItems());
 		assertContains(
 			listTypeDefinition2, (List<ListTypeDefinition>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetListTypeDefinitionsPage_getExpectedActions());
 
 		listTypeDefinitionResource.deleteListTypeDefinition(
 			listTypeDefinition1.getId());
 
 		listTypeDefinitionResource.deleteListTypeDefinition(
 			listTypeDefinition2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetListTypeDefinitionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1141,7 +1150,9 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ListTypeDefinition> page) {
+	protected void assertValid(
+		Page<ListTypeDefinition> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ListTypeDefinition> listTypeDefinitions =
@@ -1157,6 +1168,25 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ListTypeDefinition> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

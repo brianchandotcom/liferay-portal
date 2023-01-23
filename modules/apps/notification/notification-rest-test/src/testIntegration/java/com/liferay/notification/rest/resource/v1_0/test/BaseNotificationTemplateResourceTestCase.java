@@ -242,13 +242,23 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			notificationTemplate1, (List<NotificationTemplate>)page.getItems());
 		assertContains(
 			notificationTemplate2, (List<NotificationTemplate>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetNotificationTemplatesPage_getExpectedActions());
 
 		notificationTemplateResource.deleteNotificationTemplate(
 			notificationTemplate1.getId());
 
 		notificationTemplateResource.deleteNotificationTemplate(
 			notificationTemplate2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetNotificationTemplatesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1295,7 +1305,9 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<NotificationTemplate> page) {
+	protected void assertValid(
+		Page<NotificationTemplate> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<NotificationTemplate> notificationTemplates =
@@ -1311,6 +1323,25 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<NotificationTemplate> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

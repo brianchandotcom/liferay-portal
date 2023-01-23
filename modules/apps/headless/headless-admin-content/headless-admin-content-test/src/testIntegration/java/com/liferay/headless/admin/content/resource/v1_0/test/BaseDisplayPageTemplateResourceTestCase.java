@@ -226,7 +226,10 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDisplayPageTemplate),
 				(List<DisplayPageTemplate>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteDisplayPageTemplatesPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		DisplayPageTemplate displayPageTemplate1 =
@@ -245,7 +248,18 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(displayPageTemplate1, displayPageTemplate2),
 			(List<DisplayPageTemplate>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteDisplayPageTemplatesPage_getExpectedActions(siteId));
+	}
+
+	protected Map<String, Map>
+			testGetSiteDisplayPageTemplatesPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -686,7 +700,9 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DisplayPageTemplate> page) {
+	protected void assertValid(
+		Page<DisplayPageTemplate> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DisplayPageTemplate> displayPageTemplates =
@@ -702,6 +718,25 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DisplayPageTemplate> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

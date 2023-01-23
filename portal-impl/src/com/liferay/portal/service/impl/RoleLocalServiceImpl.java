@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -1269,13 +1270,21 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			int chunk = 2000;
 
 			for (int i = 0; i < groupIds.length; i += chunk) {
-				groupRoles.addAll(
-					dslQuery(
-						joinStep.where(
-							Groups_RolesTable.INSTANCE.groupId.in(
-								ArrayUtil.toLongArray(
-									Arrays.copyOfRange(
-										groupIds, i, i + chunk))))));
+				long[] curGroupIds = Arrays.copyOfRange(
+					groupIds, i, Math.min(groupIds.length, i + chunk));
+
+				Predicate predicate = null;
+
+				for (long curGroupId : curGroupIds) {
+					predicate = Predicate.or(
+						predicate,
+						Groups_RolesTable.INSTANCE.groupId.eq(curGroupId));
+				}
+
+				if (predicate != null) {
+					groupRoles.addAll(
+						dslQuery(joinStep.where(predicate.withParentheses())));
+				}
 			}
 
 			if (!groupRoles.isEmpty()) {

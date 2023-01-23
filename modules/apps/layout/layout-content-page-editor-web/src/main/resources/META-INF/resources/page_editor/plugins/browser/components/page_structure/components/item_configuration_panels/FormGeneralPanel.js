@@ -25,8 +25,8 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import updateFormItemConfig from '../../../../../../app/thunks/updateFormItemConfig';
-import {formHasPermissions} from '../../../../../../app/utils/formHasPermissions';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
+import {formIsRestricted} from '../../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../../app/utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import Collapse from '../../../../../../common/components/Collapse';
@@ -66,7 +66,7 @@ export function FormGeneralPanel({item}) {
 				</ClayAlert>
 			);
 		}
-		else if (!formHasPermissions(item)) {
+		else if (formIsRestricted(item)) {
 			return <PermissionRestrictionMessage />;
 		}
 	}

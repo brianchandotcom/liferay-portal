@@ -29,7 +29,7 @@ export default function FormMappingOptions({
 			value: '0',
 		},
 		...(Liferay.FeatureFlags['LPS-169923']
-			? config.formTypes.filter((formType) => formType.hasPermission)
+			? config.formTypes.filter((formType) => !formType?.isRestricted)
 			: config.formTypes),
 	];
 

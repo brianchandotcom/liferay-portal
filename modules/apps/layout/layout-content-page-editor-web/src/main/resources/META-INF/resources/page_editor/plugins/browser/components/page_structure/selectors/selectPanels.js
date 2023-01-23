@@ -24,7 +24,7 @@ import selectCanUpdateCSSAdvancedOptions from '../../../../../app/selectors/sele
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
-import {formHasPermissions} from '../../../../../app/utils/formHasPermissions';
+import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import getFragmentItem from '../../../../../app/utils/getFragmentItem';
 import isEditableSubmit from '../../../../../app/utils/isEditableSubmit';
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item_configuration_panels/CollectionAppliedFiltersGeneralPanel';
@@ -270,8 +270,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
 		panelsIds =
-			Liferay.FeatureFlags['LPS-169923'] &&
-			!formHasPermissions(activeItem)
+			Liferay.FeatureFlags['LPS-169923'] && formIsRestricted(activeItem)
 				? {
 						[PANEL_IDS.formGeneral]:
 							state.selectedViewportSize ===

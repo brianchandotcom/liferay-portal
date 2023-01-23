@@ -19,7 +19,7 @@ import {useSetFormValidations} from '../contexts/FormValidationContext';
 import {useGlobalContext} from '../contexts/GlobalContext';
 import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
-import {formHasPermissions} from '../utils/formHasPermissions';
+import {formIsRestricted} from '../utils/formIsRestricted';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
 import {getDescendantIds} from './getDescendantIds';
 import {FORM_ERROR_TYPES} from './getFormErrorDescription';
@@ -146,7 +146,7 @@ export default function useCheckFormsValidity() {
 }
 
 function addError(validations, formItem, type) {
-	if (Liferay.FeatureFlags['LPS-169923'] && !formHasPermissions(formItem)) {
+	if (Liferay.FeatureFlags['LPS-169923'] && formIsRestricted(formItem)) {
 		return;
 	}
 

@@ -72,8 +72,8 @@ import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../../../../app/utils/drag_and_drop/useDragAndDrop';
-import {formHasPermissions} from '../../../../../app/utils/formHasPermissions';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
+import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import {
@@ -440,7 +440,7 @@ function StructureTreeNodeContent({
 				showPermissionRestriction={
 					Liferay.FeatureFlags['LPS-169923'] &&
 					node.type === LAYOUT_DATA_ITEM_TYPES.form &&
-					!formHasPermissions(item)
+					formIsRestricted(item)
 				}
 				showUnavailableWarning={
 					Liferay.FeatureFlags['LPS-169923'] &&

@@ -22,7 +22,7 @@ import {selectPageContents} from '../../../app/selectors/selectPageContents';
 import isMapped from '../../../app/utils/editable_value/isMapped';
 import {getEditableLocalizedValue} from '../../../app/utils/getEditableLocalizedValue';
 import getFragmentItem from '../../../app/utils/getFragmentItem';
-import {hasFormParentWithPermissions} from '../../../app/utils/hasFormParentWithPermissions';
+import {hasRestrictedFormParent} from '../../../app/utils/hasRestrictedFormParent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
@@ -48,7 +48,7 @@ const getEditableValues = (
 					fragmentEntryLink.fragmentEntryLinkId
 				);
 
-				if (item && !hasFormParentWithPermissions(item, layoutData)) {
+				if (item && hasRestrictedFormParent(item, layoutData)) {
 					return;
 				}
 			}

@@ -26,8 +26,8 @@ import {
 } from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import updateFormItemConfig from '../../thunks/updateFormItemConfig';
-import {formHasPermissions} from '../../utils/formHasPermissions';
 import {formIsMapped} from '../../utils/formIsMapped';
+import {formIsRestricted} from '../../utils/formIsRestricted';
 import {formIsUnavailable} from '../../utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../utils/getEditableLocalizedValue';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -77,7 +77,7 @@ function Form({children, item}) {
 				</ClayAlert>
 			);
 		}
-		else if (!formHasPermissions(item)) {
+		else if (formIsRestricted(item)) {
 			return <PermissionRestrictionMessage />;
 		}
 	}

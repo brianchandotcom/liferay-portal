@@ -15,17 +15,17 @@
 import {config} from '../config/index';
 import {formIsMapped} from './formIsMapped';
 
-export function formHasPermissions(item) {
+export function formIsRestricted(item) {
 	const {classNameId} = item.config;
 	const {formTypes} = config;
 
 	if (classNameId === '0') {
-		return true;
+		return false;
 	}
 
 	return (
 		formIsMapped(item) &&
 		formTypes.find((formType) => formType.value === classNameId)
-			?.hasPermission
+			?.isRestricted
 	);
 }

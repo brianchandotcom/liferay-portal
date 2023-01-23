@@ -13,18 +13,18 @@
  */
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {formHasPermissions} from './formHasPermissions';
+import {formIsRestricted} from './formIsRestricted';
 
-export function hasFormParentWithPermissions(item, layoutData) {
+export function hasRestrictedFormParent(item, layoutData) {
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
-		return formHasPermissions(item);
+		return formIsRestricted(item);
 	}
 
 	const parent = layoutData?.items?.[item.parentId];
 
 	if (!parent) {
-		return true;
+		return false;
 	}
 
-	return hasFormParentWithPermissions(parent, layoutData);
+	return hasRestrictedFormParent(parent, layoutData);
 }

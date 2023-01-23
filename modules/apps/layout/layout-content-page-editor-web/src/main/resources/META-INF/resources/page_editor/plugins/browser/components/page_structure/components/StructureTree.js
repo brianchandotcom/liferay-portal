@@ -41,8 +41,8 @@ import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag_and_drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable_value/isMapped';
 import isMappedToCollection from '../../../../../app/utils/editable_value/isMappedToCollection';
-import {formHasPermissions} from '../../../../../app/utils/formHasPermissions';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
+import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
@@ -496,7 +496,7 @@ function visit(
 				(item.type === LAYOUT_DATA_ITEM_TYPES.form &&
 					(!formIsMapped(item) ||
 						(Liferay.FeatureFlags['LPS-169923'] &&
-							!formHasPermissions(item))))
+							formIsRestricted(item))))
 			) {
 				return;
 			}

@@ -19,13 +19,19 @@ package com.liferay.analytics.batch.exportimport;
  */
 public interface AnalyticsDXPEntityBatchExporter {
 
-	public void export(long companyId) throws Exception;
-
-	public void refreshExportTrigger(long companyId, String dispatchTriggerName)
+	public void export(long companyId, String[] dispatchTriggerNames)
 		throws Exception;
 
-	public void scheduleExportTriggers(long companyId) throws Exception;
+	public void refreshExportTriggers(
+			long companyId, String[] dispatchTriggerNames)
+		throws Exception;
 
-	public void unscheduleExportTriggers(long companyId) throws Exception;
+	public void scheduleExportTriggers(
+			long companyId, String[] dispatchTriggerNames)
+		throws Exception;
+
+	public void unscheduleExportTriggers(
+			long companyId, String[] dispatchTriggerNames)
+		throws Exception;
 
 }

@@ -45,6 +45,32 @@ public interface AnalyticsSettingsManager {
 	public boolean isSiteIdSynced(long companyId, long groupId)
 		throws Exception;
 
+	public boolean syncedAccountFieldsChanged(long companyId) throws Exception;
+
+	public boolean syncedAccountSettingsChanged(long companyId)
+		throws Exception;
+
+	public boolean syncedAccountSettingsEnabled(long companyId)
+		throws Exception;
+
+	public boolean syncedCommerceSettingsChanged(long companyId)
+		throws Exception;
+
+	public boolean syncedCommerceSettingsEnabled(long companyId)
+		throws Exception;
+
+	public boolean syncedContactSettingsChanged(long companyId)
+		throws Exception;
+
+	public boolean syncedContactSettingsEnabled(long companyId)
+		throws Exception;
+
+	public boolean syncedOrderFieldsChanged(long companyId) throws Exception;
+
+	public boolean syncedProductFieldsChanged(long companyId) throws Exception;
+
+	public boolean syncedUserFieldsChanged(long companyId) throws Exception;
+
 	public String[] updateCommerceChannelIds(
 			String analyticsChannelId, long companyId,
 			Long[] dataSourceCommerceChannelIds)

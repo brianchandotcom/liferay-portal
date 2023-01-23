@@ -316,36 +316,44 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 				docker volume prune -f
 			</echo>
 
-			<retry retrycount="${analytics.cloud.retry.count}" retrydelay="30000">
-				<sequential>
-					<trycatch property="analytics.cloud.error">
-						<try>
-							<local name="analytics.cloud.start.result" />
+		<trycatch>	
+			<try>
+				<retry retrycount="${analytics.cloud.retry.count}" retrydelay="30000">
+					<sequential>
+						<trycatch property="analytics.cloud.error">
+							<try>
+								<local name="analytics.cloud.start.result" />
 
-							<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash" resultproperty="analytics.cloud.start.result" timeout="${analytics.cloud.start.timeout}">
-								<arg value="${analytics.cloud.start.sh}" />
-							</exec>
+								<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash" resultproperty="analytics.cloud.start.result" timeout="${analytics.cloud.start.timeout}">
+									<arg value="${analytics.cloud.start.sh}" />
+								</exec>
 
-							<if>
-								<not>
-									<equals arg1="${analytics.cloud.start.result}" arg2="0" />
-								</not>
-								<then>
-									<fail message="Failed to start analytics cloud with error code ${analytics.cloud.start.result}" />
-								</then>
-							</if>
-						</try>
-						<catch>
-							<print-analytics-cloud-logs />
+								<if>
+									<not>
+										<equals arg1="${analytics.cloud.start.result}" arg2="0" />
+									</not>
+									<then>
+										<fail message="Failed to start analytics cloud with error code ${analytics.cloud.start.result}" />
+									</then>
+								</if>
+							</try>
+							<catch>
+								<print-analytics-cloud-logs />
 
-							<stop-analytics-cloud />
+								<stop-analytics-cloud />
 
-							<fail message="${analytics.cloud.error}" />
-						</catch>
-					</trycatch>
-				</sequential>
-			</retry>
-
+								<fail message="${analytics.cloud.error}" />
+							</catch>
+						</trycatch>
+					</sequential>
+				</retry>
+			</try>
+			<catch>
+				<echo>Failed to create analytics cloud demo data.</echo>
+				<fail message="${analytics.cloud.error}" />
+			</catch>
+		</trycatch>
+		
 			<delete file="${analytics.cloud.start.sh}" />
 		</sequential>
 	</macrodef>

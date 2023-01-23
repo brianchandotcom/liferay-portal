@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -152,23 +151,23 @@ public class FacetDiscounterTest {
 	private void _discount(
 		FacetDiscounter facetDiscounter, Document... documents) {
 
-		_discount(facetDiscounter, Stream.of(documents));
+		_discount(facetDiscounter, Arrays.asList(documents));
 	}
 
 	private void _discount(
-		FacetDiscounter facetDiscounter, Stream<Document> documentsStream) {
+		FacetDiscounter facetDiscounter, List<Document> documents) {
 
-		facetDiscounter.discount(documentsStream.collect(Collectors.toList()));
+		facetDiscounter.discount(documents);
 	}
 
 	private void _discount(FacetDiscounter facetDiscounter, String... terms) {
-		Stream<Document> documentsStream = Stream.of(
-			terms
-		).map(
-			this::_createDocument
-		);
+		Document[] documents = new Document[terms.length];
 
-		_discount(facetDiscounter, documentsStream);
+		for (int i = 0; i < documents.length; i++) {
+			documents[i] = _createDocument(terms[i]);
+		}
+
+		_discount(facetDiscounter, documents);
 	}
 
 	private void _populate(Facet facet, TermCollector... termCollectors) {

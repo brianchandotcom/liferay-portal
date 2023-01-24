@@ -60,7 +60,6 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -295,12 +294,11 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 
 		IndexerPermissionPostFilter indexerPermissionPostFilter =
 			new IndexerPermissionPostFilterImpl(
-				() -> Optional.ofNullable(
+				() ->
 					ModelResourcePermissionRegistryUtil.
 						getModelResourcePermission(
-							modelSearchConfigurator.getClassName())),
-				() -> Optional.ofNullable(
-					modelSearchConfigurator.getModelVisibilityContributor()));
+							modelSearchConfigurator.getClassName()),
+				modelSearchConfigurator::getModelVisibilityContributor);
 
 		serviceRegistrationHolder.
 			setIndexerPermissionPostFilterServiceRegistration(

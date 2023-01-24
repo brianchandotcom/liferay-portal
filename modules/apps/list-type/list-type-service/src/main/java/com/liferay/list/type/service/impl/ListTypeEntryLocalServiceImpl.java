@@ -148,7 +148,6 @@ public class ListTypeEntryLocalServiceImpl
 		_validateName(nameMap);
 
 		listTypeEntry.setExternalReferenceCode(externalReferenceCode);
-
 		listTypeEntry.setNameMap(nameMap);
 
 		return listTypeEntryPersistence.update(listTypeEntry);

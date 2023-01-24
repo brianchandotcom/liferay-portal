@@ -120,8 +120,6 @@ public class ListTypeEntryLocalServiceTest {
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
-		// Generate External Reference Code
-
 		Assert.assertEquals(
 			listTypeEntry.getUuid(), listTypeEntry.getExternalReferenceCode());
 

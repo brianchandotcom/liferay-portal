@@ -154,8 +154,7 @@ public class ListTypeDefinitionResourceImpl
 
 	@Override
 	public ListTypeDefinition putListTypeDefinitionByExternalReferenceCode(
-			String externalReferenceCode,
-			ListTypeDefinition listTypeDefinition)
+			String externalReferenceCode, ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
 		com.liferay.list.type.model.ListTypeDefinition

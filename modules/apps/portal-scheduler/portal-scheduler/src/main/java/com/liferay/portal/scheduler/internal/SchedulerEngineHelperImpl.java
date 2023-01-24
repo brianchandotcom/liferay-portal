@@ -160,21 +160,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public Date getEndTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = getScheduledJob(
-			jobName, groupName, storageType);
-
-		if (schedulerResponse != null) {
-			return getEndTime(schedulerResponse);
-		}
-
-		return null;
-	}
-
-	@Override
 	public Date getFinalFireTime(SchedulerResponse schedulerResponse) {
 		Message message = schedulerResponse.getMessage();
 

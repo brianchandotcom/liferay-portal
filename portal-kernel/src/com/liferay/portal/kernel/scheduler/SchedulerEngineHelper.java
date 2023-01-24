@@ -43,10 +43,6 @@ public interface SchedulerEngineHelper {
 
 	public Date getEndTime(SchedulerResponse schedulerResponse);
 
-	public Date getEndTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
-
 	public Date getFinalFireTime(SchedulerResponse schedulerResponse);
 
 	public Date getFinalFireTime(

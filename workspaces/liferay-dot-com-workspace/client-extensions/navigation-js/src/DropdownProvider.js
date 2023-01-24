@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate} from './delegate';
+import {default as delegate} from './delegate.es';
 
 const KEYCODES = {
 	ENTER: 13,

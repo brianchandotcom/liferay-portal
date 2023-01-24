@@ -1004,9 +1004,9 @@ definition {
 
 			ObjectField.selectType(fieldType = "Lista de seleção");
 
-			Select(
-				locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST",
-				value1 = "Teste na lista");
+			ObjectField.selectPicklist(
+				dropdownLabel = "Lista de seleção",
+				picklistName = "Teste na lista");
 
 			Button.click(button = "Salvar");
 		}

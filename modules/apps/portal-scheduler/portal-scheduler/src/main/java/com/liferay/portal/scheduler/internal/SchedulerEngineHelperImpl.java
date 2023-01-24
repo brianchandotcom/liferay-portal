@@ -160,38 +160,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public Date getFinalFireTime(SchedulerResponse schedulerResponse) {
-		Message message = schedulerResponse.getMessage();
-
-		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
-
-		TriggerState triggerState = jobState.getTriggerState();
-
-		if (triggerState.equals(TriggerState.NORMAL) ||
-			triggerState.equals(TriggerState.PAUSED)) {
-
-			return (Date)message.get(SchedulerEngine.FINAL_FIRE_TIME);
-		}
-
-		return jobState.getTriggerDate(SchedulerEngine.FINAL_FIRE_TIME);
-	}
-
-	@Override
-	public Date getFinalFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = getScheduledJob(
-			jobName, groupName, storageType);
-
-		if (schedulerResponse != null) {
-			return getFinalFireTime(schedulerResponse);
-		}
-
-		return null;
-	}
-
-	@Override
 	public TriggerState getJobState(SchedulerResponse schedulerResponse) {
 		Message message = schedulerResponse.getMessage();
 

@@ -60,18 +60,6 @@ public class SchedulerEngineHelperUtil {
 		return _schedulerEngineHelper.getEndTime(schedulerResponse);
 	}
 
-	public static Date getFinalFireTime(SchedulerResponse schedulerResponse) {
-		return _schedulerEngineHelper.getFinalFireTime(schedulerResponse);
-	}
-
-	public static Date getFinalFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		return _schedulerEngineHelper.getFinalFireTime(
-			jobName, groupName, storageType);
-	}
-
 	public static TriggerState getJobState(
 		SchedulerResponse schedulerResponse) {
 

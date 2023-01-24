@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -96,6 +97,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	public static final String SIKULI_CONFIGURATION_NAME = "sikuli";
 
+	public static final String STOP_WEB_DRIVER_PROCESS_TASK_NAME =
+		"stopWebDriverProcess";
+
 	public static final String VALIDATE_POSHI_TASK_NAME = "validatePoshi";
 
 	public static final String WRITE_POSHI_PROPERTIES_TASK_NAME =
@@ -119,6 +123,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			project);
 
 		_addTaskExpandPoshiRunner(project);
+
+		_addTaskStopWebDriverProcess(project, poshiRunnerExtension);
 
 		final Task downloadWebDriverBrowserBinaryTask =
 			_addTaskDownloadWebDriverBrowserBinary(
@@ -263,6 +269,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		Task task = GradleUtil.addTask(
 			project, DOWNLOAD_WEB_DRIVER_BROWSER_BINARY_TASK_NAME, Task.class);
+
+		task.dependsOn(STOP_WEB_DRIVER_PROCESS_TASK_NAME);
 
 		task.doLast(
 			new Action<Task>() {
@@ -419,6 +427,55 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			});
 
 		return test;
+	}
+
+	private Task _addTaskStopWebDriverProcess(
+		Project project, PoshiRunnerExtension poshiRunnerExtension) {
+
+		Task task = GradleUtil.addTask(
+			project, STOP_WEB_DRIVER_PROCESS_TASK_NAME, Task.class);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					project.exec(
+						new Action<ExecSpec>() {
+
+							@Override
+							public void execute(ExecSpec execSpec) {
+								String webDriverBrowserBinaryName =
+									_webDriverBrowserBinaryNames.get(
+										_getBrowserType(
+											_getPoshiProperties(
+												poshiRunnerExtension)));
+
+								if (OSDetector.isWindows()) {
+									execSpec.commandLine(
+										"cmd", "/c",
+										"taskkill.exe /F /IM " +
+											webDriverBrowserBinaryName +
+												".exe + 2>nul 1>nul");
+								}
+								else {
+									execSpec.setArgs(
+										Arrays.asList(
+											"-q", webDriverBrowserBinaryName));
+									execSpec.setExecutable("killall");
+								}
+
+								execSpec.setIgnoreExitValue(true);
+							}
+
+						});
+				}
+
+			});
+
+		return task;
 	}
 
 	private JavaExec _addTaskValidatePoshi(Project project) {

@@ -60,32 +60,6 @@ public class SchedulerEngineHelperUtil {
 		return _schedulerEngineHelper.getEndTime(schedulerResponse);
 	}
 
-	public static Date getNextFireTime(SchedulerResponse schedulerResponse) {
-		return _schedulerEngineHelper.getNextFireTime(schedulerResponse);
-	}
-
-	public static Date getNextFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		return _schedulerEngineHelper.getNextFireTime(
-			jobName, groupName, storageType);
-	}
-
-	public static Date getPreviousFireTime(
-		SchedulerResponse schedulerResponse) {
-
-		return _schedulerEngineHelper.getPreviousFireTime(schedulerResponse);
-	}
-
-	public static Date getPreviousFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		return _schedulerEngineHelper.getPreviousFireTime(
-			jobName, groupName, storageType);
-	}
-
 	public static SchedulerResponse getScheduledJob(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {

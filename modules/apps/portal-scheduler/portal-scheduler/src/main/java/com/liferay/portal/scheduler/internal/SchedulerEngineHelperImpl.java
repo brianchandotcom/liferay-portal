@@ -186,21 +186,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public Date getNextFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = getScheduledJob(
-			jobName, groupName, storageType);
-
-		if (schedulerResponse != null) {
-			return getNextFireTime(schedulerResponse);
-		}
-
-		return null;
-	}
-
-	@Override
 	public Date getPreviousFireTime(SchedulerResponse schedulerResponse) {
 		Message message = schedulerResponse.getMessage();
 
@@ -215,21 +200,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		}
 
 		return jobState.getTriggerDate(SchedulerEngine.PREVIOUS_FIRE_TIME);
-	}
-
-	@Override
-	public Date getPreviousFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = getScheduledJob(
-			jobName, groupName, storageType);
-
-		if (schedulerResponse != null) {
-			return getPreviousFireTime(schedulerResponse);
-		}
-
-		return null;
 	}
 
 	@Override

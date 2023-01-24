@@ -47,15 +47,7 @@ public interface SchedulerEngineHelper {
 
 	public Date getNextFireTime(SchedulerResponse schedulerResponse);
 
-	public Date getNextFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
-
 	public Date getPreviousFireTime(SchedulerResponse schedulerResponse);
-
-	public Date getPreviousFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
 
 	public SchedulerResponse getScheduledJob(
 			String jobName, String groupName, StorageType storageType)

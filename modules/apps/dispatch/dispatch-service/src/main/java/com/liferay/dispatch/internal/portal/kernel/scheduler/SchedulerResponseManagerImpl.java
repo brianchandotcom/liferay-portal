@@ -46,8 +46,15 @@ public class SchedulerResponseManagerImpl implements SchedulerResponseManager {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _schedulerEngineHelper.getNextFireTime(
-			jobName, groupName, storageType);
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				jobName, groupName, storageType);
+
+		if (schedulerResponse == null) {
+			return null;
+		}
+
+		return _schedulerEngineHelper.getNextFireTime(schedulerResponse);
 	}
 
 	@Override

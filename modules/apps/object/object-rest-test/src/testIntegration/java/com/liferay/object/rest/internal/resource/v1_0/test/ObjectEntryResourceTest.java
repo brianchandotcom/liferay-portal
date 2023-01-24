@@ -259,7 +259,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostCustomObjectWithCustomNestedEntityDetailsInManyToManyRelationship()
+	public void testPostCustomObjectWithCustomNestedObjectEntriesDetailsInManyToManyRelationship()
 		throws Exception {
 
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
@@ -268,7 +268,7 @@ public class ObjectEntryResourceTest {
 
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
-			_createObjectNestedEntityJSONArray(_OBJECT_FIELD_NAME_2));
+			_createNestedObjectEntriesJSONArray(_OBJECT_FIELD_NAME_2));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(),
@@ -292,7 +292,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostCustomObjectWithCustomNestedEntityDetailsInManyToOneRelationship()
+	public void testPostCustomObjectWithCustomNestedObjectEntriesDetailsInManyToOneRelationship()
 		throws Exception {
 
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
@@ -332,7 +332,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostCustomObjectWithCustomNestedEntityDetailsInOneToManyRelationship()
+	public void testPostCustomObjectWithCustomNestedObjectEntriesDetailsInOneToManyRelationship()
 		throws Exception {
 
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
@@ -341,7 +341,7 @@ public class ObjectEntryResourceTest {
 
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
-			_createObjectNestedEntityJSONArray(_OBJECT_FIELD_NAME_2));
+			_createNestedObjectEntriesJSONArray(_OBJECT_FIELD_NAME_2));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(),
@@ -435,7 +435,7 @@ public class ObjectEntryResourceTest {
 		return objectRelationship;
 	}
 
-	private List<Object> _createObjectNestedEntityJSONArray(
+	private List<Object> _createNestedObjectEntriesJSONArray(
 		String objectField) {
 
 		JsonArray jsonArray = new JsonArray();

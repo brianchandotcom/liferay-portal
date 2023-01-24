@@ -113,8 +113,15 @@ public class SchedulerResponseManagerImpl implements SchedulerResponseManager {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _schedulerEngineHelper.getJobState(
-			jobName, groupName, storageType);
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				jobName, groupName, storageType);
+
+		if (schedulerResponse == null) {
+			return null;
+		}
+
+		return _schedulerEngineHelper.getJobState(schedulerResponse);
 	}
 
 	@Override

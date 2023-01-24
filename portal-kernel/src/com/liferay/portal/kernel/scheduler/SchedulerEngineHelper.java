@@ -45,10 +45,6 @@ public interface SchedulerEngineHelper {
 
 	public TriggerState getJobState(SchedulerResponse schedulerResponse);
 
-	public TriggerState getJobState(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
-
 	public Date getNextFireTime(SchedulerResponse schedulerResponse);
 
 	public Date getNextFireTime(

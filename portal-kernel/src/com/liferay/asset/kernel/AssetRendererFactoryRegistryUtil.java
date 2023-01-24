@@ -152,17 +152,7 @@ public class AssetRendererFactoryRegistryUtil {
 			if (assetRendererFactory.isActive(companyId) &&
 				(!filterSelectable || assetRendererFactory.isSelectable())) {
 
-				if (key.startsWith(
-						"com.liferay.object.model.ObjectDefinition#")) {
-
-					if (key.split("#")[2].equals(String.valueOf(companyId))) {
-						filteredAssetRendererFactories.add(
-							assetRendererFactory);
-					}
-				}
-				else {
-					filteredAssetRendererFactories.add(assetRendererFactory);
-				}
+				filteredAssetRendererFactories.add(assetRendererFactory);
 			}
 		}
 

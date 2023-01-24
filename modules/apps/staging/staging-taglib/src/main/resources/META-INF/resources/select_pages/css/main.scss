@@ -1,3 +1,9 @@
+@import 'cadmin-variables';
+
+.layout-incomplete {
+	color: $cadmin-secondary-l2;
+}
+
 .layout-selector-options {
 	flex-basis: 50%;
 	flex-grow: 1;

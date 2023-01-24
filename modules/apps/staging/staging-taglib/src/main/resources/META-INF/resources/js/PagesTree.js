@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
@@ -166,7 +167,15 @@ function TreeItem({
 
 				{item.icon && <ClayIcon symbol={item.icon} />}
 
-				<span id={getId(namespace, item.id)}>{item.name}</span>
+				<span
+					className={classNames({
+						'layout-incomplete': item.incomplete,
+					})}
+					id={getId(namespace, item.id)}
+					title={getItemTitle(item)}
+				>
+					{getItemName(item)}
+				</span>
 			</ClayTreeView.ItemStack>
 
 			<ClayTreeView.Group items={item.children}>
@@ -191,8 +200,14 @@ function TreeItem({
 
 						{childItem.icon && <ClayIcon symbol={childItem.icon} />}
 
-						<span id={getId(namespace, childItem.id)}>
-							{childItem.name}
+						<span
+							className={classNames({
+								'layout-incomplete': childItem.incomplete,
+							})}
+							id={getId(namespace, childItem.id)}
+							title={getItemTitle(childItem)}
+						>
+							{getItemName(childItem)}
 						</span>
 					</ClayTreeView.Item>
 				)}
@@ -225,6 +240,38 @@ TreeItem.propTypes = {
 
 function getId(namespace, key) {
 	return `${namespace}pages-tree-${key}`;
+}
+
+function getItemName(item) {
+	if (item.layoutBranchName) {
+		return `${item.name} [${item.layoutBranchName}]`;
+	}
+
+	return item.name;
+}
+
+function getItemTitle(item) {
+	if (!item.layoutRevisionId) {
+		return null;
+	}
+
+	if (!item.layoutRevisionHead) {
+		return Liferay.Language.get(
+			'there-is-not-a-version-of-this-page-marked-as-ready-for-publication'
+		);
+	}
+
+	if (item.layoutBranchName) {
+		return Liferay.Language.get(
+			'this-is-the-page-variation-that-is-marked-as-ready-for-publication'
+		);
+	}
+
+	if (item.incomplete) {
+		return Liferay.Language.get(
+			'this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations'
+		);
+	}
 }
 
 function openErrorToast() {

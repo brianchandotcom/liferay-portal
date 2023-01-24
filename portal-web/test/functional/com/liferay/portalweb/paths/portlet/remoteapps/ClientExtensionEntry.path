@@ -66,7 +66,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REMOTE_APPS_WIDGET_CATEGORY_NAME</td>
+	<td>REMOTE_APPS_PORTLET_CATEGORY_NAME</td>
 	<td>//div[label[contains(.,'Widget Category Name')]]/select</td>
 	<td></td>
 </tr>

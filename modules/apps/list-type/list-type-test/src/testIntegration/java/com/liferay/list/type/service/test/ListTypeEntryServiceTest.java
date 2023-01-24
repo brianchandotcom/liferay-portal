@@ -147,7 +147,7 @@ public class ListTypeEntryServiceTest {
 						" must have VIEW permission for"));
 		}
 
-		_testGetListTypeEntry(_user);
+		_testGetListTypeEntryByExternalReferenceCode(_user);
 	}
 
 	@Test

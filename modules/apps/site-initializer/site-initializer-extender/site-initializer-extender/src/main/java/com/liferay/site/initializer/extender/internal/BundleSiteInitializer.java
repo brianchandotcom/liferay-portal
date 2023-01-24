@@ -3368,8 +3368,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_accountRoleLocalService.addAccountRole(
 						serviceContext.getUserId(),
 						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
-						Collections.singletonMap(
-							serviceContext.getLocale(), name),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("name_i18n")),
 						SiteInitializerUtil.toMap(
 							jsonObject.getString("description")));
 
@@ -3378,7 +3378,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			else {
 				role = _roleLocalService.addRole(
 					serviceContext.getUserId(), null, 0, name,
-					Collections.singletonMap(serviceContext.getLocale(), name),
+					SiteInitializerUtil.toMap(
+						jsonObject.getString("name_i18n")),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("description")),
 					jsonObject.getInt("type"), jsonObject.getString("subtype"),

@@ -41,11 +41,12 @@ definition {
 	}
 
 	tearDown {
+		ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 

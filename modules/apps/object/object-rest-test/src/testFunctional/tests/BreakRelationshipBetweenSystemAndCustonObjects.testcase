@@ -1,7 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
-	property custom.properties = "feature.flag.LPS-153324=true";
+	property custom.properties = "feature.flag.LPS-153324=true${line.separator}feature.flag.LPS-162966=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Object";
@@ -63,10 +63,15 @@ definition {
 		}
 
 		JSONUser.deleteUserByUserId(userId = "${staticUserAccountId}");
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
 	}
 
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = "4"
 	test CanBreakManyToManyRelationship {
 		property portal.acceptance = "true";
@@ -94,7 +99,6 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = "4"
 	test CanBreakOneToManyRelationship {
 		property portal.acceptance = "true";
@@ -122,7 +126,6 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = "4"
 	test CanBreakOneToManyRelationshipKeepingOtherEntriesRelated {
 		property portal.acceptance = "true";

@@ -34,13 +34,14 @@ definition {
 	}
 
 	tearDown {
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Manager");
+		ObjectAdmin.deleteObjectViaAPI(objectName = "Manager");
 
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Employee");
+		ObjectAdmin.deleteObjectViaAPI(objectName = "Employee");
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 

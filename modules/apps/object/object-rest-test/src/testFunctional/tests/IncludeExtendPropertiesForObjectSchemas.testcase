@@ -31,6 +31,12 @@ definition {
 		}
 
 		ObjectFieldAPI.deleteObjectField();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
 	}
 
 	@priority = "4"

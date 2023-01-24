@@ -320,6 +320,36 @@ definition {
 		return "${userIds}";
 	}
 
+	macro _getUserIdsNoSelenium {
+		var companyId = JSONCompany.getCompanyIdNoSelenium(authenticationMethod = "${authenticationMethod}");
+
+		if (isSet(specificURL)) {
+			var portalURL = "${specificURL}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/get-company-users \
+				-u ${userName}:test \
+				-d companyId=${companyId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA>
+		''';
+
+		var userIds = JSONCurlUtil.post("${curl}", "$..['userId']");
+
+		return "${userIds}";
+	}
+
 	macro _removeUserFromUserGroup {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 

@@ -29,6 +29,12 @@ definition {
 		JSONUser.deleteUserByUserId(userId = "${staticUserAccountId}");
 
 		ObjectFieldAPI.deleteObjectField();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
 	}
 
 	@disable-webdriver = "true"

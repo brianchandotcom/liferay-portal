@@ -296,6 +296,22 @@ definition {
 		}
 	}
 
+	macro tearDownNonAdminUsersNoSelenium {
+		var userIds = JSONUserAPI._getUserIdsNoSelenium(authenticationMethod = "${authenticationMethod}");
+
+		for (var userId : list "${userIds}") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddress(
+				authenticationMethod = "${authenticationMethod}",
+				userId = "${userId}");
+
+			if ("${currentEmailAddress}" != "test@liferay.com") {
+				JSONUser.deleteUserByUserId(
+					authenticationMethod = "${authenticationMethod}",
+					userId = "${userId}");
+			}
+		}
+	}
+
 	macro updateStatus {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 

@@ -494,55 +494,7 @@ public class ClusterSchedulerEngineTest {
 			_clusterInvokeAcceptor.accept(
 				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
-		// Test 2, MEMORY_CLUSTERED jobs by groupName
-
-		List<SchedulerResponse> schedulerResponses =
-			_clusterSchedulerEngine.getScheduledJobs(
-				_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
-		}
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		_clusterSchedulerEngine.pause(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
-		}
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertTrue(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		_clusterSchedulerEngine.resume(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
-		}
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertTrue(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		// Test 3, PERSISTED job by jobName and groupName
+		// Test 2, PERSISTED job by jobName and groupName
 
 		schedulerResponse = _clusterSchedulerEngine.getScheduledJob(
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
@@ -579,53 +531,6 @@ public class ClusterSchedulerEngineTest {
 			StorageType.PERSISTED);
 
 		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertFalse(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		// Test 4, PERSISTED jobs by groupName
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
-		}
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		_clusterSchedulerEngine.pause(
-			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
-		}
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertFalse(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		_clusterSchedulerEngine.resume(
-			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
-		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -697,67 +602,7 @@ public class ClusterSchedulerEngineTest {
 			_clusterInvokeAcceptor.accept(
 				ClusterableContextThreadLocal.collectThreadLocalContext()));
 
-		// Test 2, MEMORY_CLUSTERED jobs by groupName
-
-		List<SchedulerResponse> schedulerResponses =
-			_clusterSchedulerEngine.getScheduledJobs(
-				_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertTrue(
-			schedulerResponses.toString(), schedulerResponses.isEmpty());
-
-		schedulerResponses = _getMemoryClusteredJobs(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
-		}
-
-		_clusterSchedulerEngine.pause(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertTrue(
-			schedulerResponses.toString(), schedulerResponses.isEmpty());
-
-		schedulerResponses = _getMemoryClusteredJobs(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
-		}
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertTrue(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		_clusterSchedulerEngine.resume(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertTrue(
-			schedulerResponses.toString(), schedulerResponses.isEmpty());
-
-		schedulerResponses = _getMemoryClusteredJobs(
-			_MEMORY_CLUSTER_TEST_GROUP_NAME);
-
-		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
-		}
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertTrue(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		// Test 3, not existed job
+		// Test 2, not existed job
 
 		Assert.assertNull(
 			_clusterSchedulerEngine.getScheduledJob(
@@ -776,39 +621,6 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED));
 		Assert.assertNull(
 			_getMemoryClusteredJob(_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME));
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertTrue(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		// Test 4, not existed group
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_NOT_EXISTED_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertTrue(
-			schedulerResponses.toString(), schedulerResponses.isEmpty());
-
-		schedulerResponses = _getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
-
-		Assert.assertTrue(
-			schedulerResponses.toString(), schedulerResponses.isEmpty());
-
-		_clusterSchedulerEngine.pause(
-			_NOT_EXISTED_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			_NOT_EXISTED_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertTrue(
-			schedulerResponses.toString(), schedulerResponses.isEmpty());
-
-		schedulerResponses = _getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
-
-		Assert.assertTrue(
-			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 
@@ -2019,19 +1831,6 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void pause(String groupName, StorageType storageType) {
-			for (SchedulerResponse schedulerResponse :
-					getScheduledJobs(groupName, storageType)) {
-
-				Message message = schedulerResponse.getMessage();
-
-				message.put(
-					SchedulerEngine.JOB_STATE,
-					new JobState(TriggerState.PAUSED));
-			}
-		}
-
-		@Override
 		public void pause(
 			String jobName, String groupName, StorageType storageType) {
 
@@ -2059,19 +1858,6 @@ public class ClusterSchedulerEngineTest {
 					_TEST_JOB_NAME_PREFIX.concat(String.valueOf(i)),
 					_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED, null,
 					null);
-			}
-		}
-
-		@Override
-		public void resume(String groupName, StorageType storageType) {
-			for (SchedulerResponse schedulerResponse :
-					getScheduledJobs(groupName, storageType)) {
-
-				Message message = schedulerResponse.getMessage();
-
-				message.put(
-					SchedulerEngine.JOB_STATE,
-					new JobState(TriggerState.NORMAL));
 			}
 		}
 

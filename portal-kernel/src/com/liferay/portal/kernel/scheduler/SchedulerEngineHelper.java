@@ -93,18 +93,12 @@ public interface SchedulerEngineHelper {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public void pause(String groupName, StorageType storageType)
-		throws SchedulerException;
-
 	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
 	public void register(
 		MessageListener messageListener, SchedulerEntry schedulerEntry,
 		String destinationName);
-
-	public void resume(String groupName, StorageType storageType)
-		throws SchedulerException;
 
 	public void resume(
 			String jobName, String groupName, StorageType storageType)

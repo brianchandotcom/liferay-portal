@@ -167,12 +167,6 @@ public class SchedulerEngineHelperUtil {
 			jobName, groupName, storageType);
 	}
 
-	public static void pause(String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.pause(groupName, storageType);
-	}
-
 	public static void pause(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
@@ -186,12 +180,6 @@ public class SchedulerEngineHelperUtil {
 
 		_schedulerEngineHelper.register(
 			messageListener, schedulerEntry, destinationName);
-	}
-
-	public static void resume(String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.resume(groupName, storageType);
 	}
 
 	public static void resume(

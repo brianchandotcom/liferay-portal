@@ -315,38 +315,7 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testPauseAndResume1() throws Exception {
-		List<SchedulerResponse> schedulerResponses =
-			_quartzSchedulerEngine.getScheduledJobs(
-				_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-		}
-
-		_quartzSchedulerEngine.pause(
-			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
-			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			_assertTriggerState(schedulerResponse, TriggerState.PAUSED);
-		}
-
-		_quartzSchedulerEngine.resume(
-			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
-			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-		}
-	}
-
-	@Test
-	public void testPauseAndResume2() throws Exception {
+	public void testPauseAndResume() throws Exception {
 		SchedulerResponse schedulerResponse =
 			_quartzSchedulerEngine.getScheduledJob(
 				_TEST_JOB_NAME_0, _PERSISTED_TEST_GROUP_NAME,

@@ -253,10 +253,12 @@ const Export = () => {
 	const {data: casesData, loading} = useFetch<APIResponse<TestrayCase>>(
 		'/cases',
 		{
-			filter: searchUtil.in('id', caseIds),
-			nestedFields: 'caseType,component,project,team',
-			nestedFieldsDepth: 3,
-			pageSize: 1000,
+			params: {
+				filter: searchUtil.in('id', caseIds),
+				nestedFields: 'caseType,component,project,team',
+				nestedFieldsDepth: 3,
+				pageSize: 1000,
+			},
 			transformData: (response) =>
 				testrayCaseRest.transformDataFromList(response),
 		}
@@ -265,10 +267,12 @@ const Export = () => {
 	const {data: requirementCasesData} = useFetch<
 		APIResponse<TestrayRequirementCase>
 	>(loading ? null : '/requirementscaseses', {
-		filter: searchUtil.in('caseId', caseIds),
-		nestedFields: 'case.component,requirement,team',
-		nestedFieldsDepth: 3,
-		pageSize: 1000,
+		params: {
+			filter: searchUtil.in('caseId', caseIds),
+			nestedFields: 'case.component,requirement,team',
+			nestedFieldsDepth: 3,
+			pageSize: 1000,
+		},
 		transformData: (response) =>
 			testrayCaseRequirementsImpl.transformDataFromList(response),
 	});
@@ -289,8 +293,7 @@ const Export = () => {
 
 			if (requirement && casesWithRequirement[caseId]) {
 				casesWithRequirement[caseId].push(requirement);
-			}
-			else {
+			} else {
 				casesWithRequirement[caseId] = [requirement];
 			}
 		});

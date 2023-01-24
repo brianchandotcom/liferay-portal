@@ -51,7 +51,9 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 		data: subTaskIssuesResponse,
 		revalidate: revalidateSubtaskIssues,
 	} = useFetch(testraySubtaskIssuesImpl.resource, {
-		filter: searchUtil.eq('subtaskId', subtask.id),
+		params: {
+			filter: searchUtil.eq('subtaskId', subtask.id),
+		},
 		transformData: (response) =>
 			testraySubtaskIssuesImpl.transformDataFromList(response),
 	});
@@ -108,8 +110,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			revalidateSubtaskIssues();
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -144,10 +145,22 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 					label={i18n.translate('case-results-status')}
 					name="dueStatus"
 					options={[
-						{label: 'Blocked', value: CaseResultStatuses.BLOCKED},
-						{label: 'Failed', value: CaseResultStatuses.FAILED},
-						{label: 'Passed', value: CaseResultStatuses.PASSED},
-						{label: 'Test Fix', value: CaseResultStatuses.TEST_FIX},
+						{
+							label: i18n.translate('blocked'),
+							value: CaseResultStatuses.BLOCKED,
+						},
+						{
+							label: i18n.translate('failed'),
+							value: CaseResultStatuses.FAILED,
+						},
+						{
+							label: i18n.translate('passed'),
+							value: CaseResultStatuses.PASSED,
+						},
+						{
+							label: i18n.translate('test-fix'),
+							value: CaseResultStatuses.TEST_FIX,
+						},
 					]}
 					register={register}
 				/>

@@ -67,8 +67,10 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
 		testrayFactorRest.resource,
 		{
-			filter: searchUtil.eq('routineId', routineId as string),
-			pageSize: 100,
+			params: {
+				filter: searchUtil.eq('routineId', routineId as string),
+				pageSize: 100,
+			},
 			transformData: (response) =>
 				testrayFactorRest.transformDataFromList(response),
 		}

@@ -164,9 +164,11 @@ const HeaderContextProvider: React.FC<{children: ReactNode}> = ({children}) => {
 	const {data: testrayDispatchTriggers} = useFetch<
 		APIResponse<TestrayDispatchTrigger>
 	>(testrayDispatchTriggerImpl.resource, {
-		aggregationTerms: 'dueStatus',
-		pageSize: 10,
-		sort: 'dateCreated:asc',
+		params: {
+			aggregationTerms: 'dueStatus',
+			pageSize: 10,
+			sort: 'dateCreated:asc',
+		},
 	});
 
 	useEffect(() => {

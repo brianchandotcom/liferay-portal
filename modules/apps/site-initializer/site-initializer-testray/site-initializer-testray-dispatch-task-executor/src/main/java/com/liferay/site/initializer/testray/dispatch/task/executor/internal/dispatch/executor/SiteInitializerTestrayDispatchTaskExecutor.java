@@ -253,9 +253,9 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 			ObjectEntry objectEntry = _addObjectEntry(
 				"Case",
 				HashMapBuilder.<String, Object>put(
-					"caseNumber",
+					"number",
 					_increment(
-						companyId, "caseNumber",
+						companyId, "number",
 						"projectId eq '" + testrayProjectId + "'", "Case")
 				).put(
 					"description",

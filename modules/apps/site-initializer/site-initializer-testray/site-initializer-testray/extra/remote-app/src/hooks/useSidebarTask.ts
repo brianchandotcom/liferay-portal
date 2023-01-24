@@ -42,7 +42,9 @@ export function useSidebarTask() {
 	const {data: tasksUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
 		testrayTaskUsersImpl.resource,
 		{
-			filter: taskFilters,
+			params: {
+				filter: taskFilters,
+			},
 			transformData: (response) =>
 				testrayTaskUsersImpl.transformDataFromList(response),
 		}
@@ -51,7 +53,9 @@ export function useSidebarTask() {
 	const {data: subtasksResponse} = useFetch<APIResponse<TestraySubTask>>(
 		testraySubTaskImpl.resource,
 		{
-			filter: subTasksFilter,
+			params: {
+				filter: subTasksFilter,
+			},
 			transformData: (response) =>
 				testraySubTaskImpl.transformDataFromList(response),
 		}

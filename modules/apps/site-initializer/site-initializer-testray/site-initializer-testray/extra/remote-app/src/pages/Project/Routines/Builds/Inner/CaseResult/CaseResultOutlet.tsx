@@ -69,7 +69,9 @@ const CaseResultOutlet = () => {
 	const {data, mutate: mutateCaseResultIssues} = useFetch(
 		testrayCaseResultsIssuesImpl.resource,
 		{
-			filter: searchUtil.eq('caseResultId', caseResultId as string),
+			params: {
+				filter: searchUtil.eq('caseResultId', caseResultId as string),
+			},
 			transformData: (response) =>
 				testrayCaseResultsIssuesImpl.transformDataFromList(response),
 		}

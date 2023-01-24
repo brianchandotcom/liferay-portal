@@ -58,10 +58,12 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 	});
 
 	const {data: teamsResponse} = useFetch<APIResponse<TestrayTeam>>(`/teams`, {
-		fields: 'id,name',
-		filter: searchUtil.eq('projectId', projectId),
-		pageSize: 100,
-		sort: 'name:asc',
+		params: {
+			fields: 'id,name',
+			filter: searchUtil.eq('projectId', projectId),
+			pageSize: 100,
+			sort: 'name:asc',
+		},
 	});
 
 	const teamId = watch('teamId');

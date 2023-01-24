@@ -59,12 +59,14 @@ const SubtaskOutlet = () => {
 	const {data: testraySubtaskToMerged} = useFetch<
 		APIResponse<TestraySubTask>
 	>(testraySubTaskImpl.resource, {
-		fields: 'name',
-		filter: searchUtil.eq(
-			'r_mergedToTestraySubtask_c_subtaskId',
-			subtaskId as string
-		),
-		pageSize: 100,
+		params: {
+			fields: 'name',
+			filter: searchUtil.eq(
+				'r_mergedToTestraySubtask_c_subtaskId',
+				subtaskId as string
+			),
+			pageSize: 100,
+		},
 		transformData: (response) =>
 			testraySubTaskImpl.transformDataFromList(response),
 	});
@@ -72,7 +74,9 @@ const SubtaskOutlet = () => {
 	const {data, mutate: mutateSubtaskIssues} = useFetch(
 		testraySubtaskIssuesImpl.resource,
 		{
-			filter: searchUtil.eq('subtaskId', subtaskId as string),
+			params: {
+				filter: searchUtil.eq('subtaskId', subtaskId as string),
+			},
 			transformData: (response) =>
 				testraySubtaskIssuesImpl.transformDataFromList(response),
 		}
@@ -89,12 +93,14 @@ const SubtaskOutlet = () => {
 	const {data: testraySubtaskToSplit} = useFetch<APIResponse<TestraySubTask>>(
 		testraySubTaskImpl.resource,
 		{
-			fields: 'name',
-			filter: searchUtil.eq(
-				'r_splitFromTestraySubtask_c_subtaskId',
-				subtaskId as string
-			),
-			pageSize: 100,
+			params: {
+				fields: 'name',
+				filter: searchUtil.eq(
+					'r_splitFromTestraySubtask_c_subtaskId',
+					subtaskId as string
+				),
+				pageSize: 100,
+			},
 			transformData: (response) =>
 				testraySubTaskImpl.transformDataFromList(response),
 		}

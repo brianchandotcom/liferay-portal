@@ -75,15 +75,19 @@ const CaseForm = () => {
 	const {data: testrayComponentsData} = useFetch<
 		APIResponse<TestrayComponent>
 	>('/components', {
-		fields: 'id,name',
-		pageSize: 1000,
+		params: {
+			fields: 'id,name',
+			pageSize: 1000,
+		},
 	});
 
 	const {data: testrayCaseTypesData} = useFetch<APIResponse<TestrayCaseType>>(
 		'/casetypes',
 		{
-			fields: 'id,name',
-			pageSize: 1000,
+			params: {
+				fields: 'id,name',
+				pageSize: 1000,
+			},
 		}
 	);
 
@@ -139,11 +143,11 @@ const CaseForm = () => {
 			.catch(onError);
 	};
 
+	const addAnother = watch('addAnother');
 	const caseTypeId = watch('caseTypeId');
 	const componentId = watch('componentId');
 	const description = watch('description');
 	const steps = watch('steps');
-	const addAnother = watch('addAnother');
 
 	const inputProps = {
 		errors,

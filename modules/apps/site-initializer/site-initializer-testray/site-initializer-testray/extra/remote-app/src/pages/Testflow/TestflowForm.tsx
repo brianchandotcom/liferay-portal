@@ -82,8 +82,10 @@ const TestflowForm = () => {
 	} = outletContext ?? {data: {}, mutate: {}, revalidate: {}};
 
 	const {data} = useFetch('/casetypes', {
-		fields: 'id,name',
-		pageSize: 100,
+		params: {
+			fields: 'id,name',
+			pageSize: 100,
+		},
 	});
 
 	const caseTypes = useMemo(() => data?.items || [], [
@@ -172,8 +174,7 @@ const TestflowForm = () => {
 			}
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

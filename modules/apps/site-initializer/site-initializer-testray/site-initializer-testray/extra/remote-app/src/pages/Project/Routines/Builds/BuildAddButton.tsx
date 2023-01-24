@@ -54,14 +54,20 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 
 	const {data: buildResponseWithSearch} = useFetch<APIResponse<TestrayBuild>>(
 		testrayBuildImpl.resource,
-		{filter: searchFilter}
+		{
+			params: {
+				filter: searchFilter,
+			},
+		}
 	);
 
 	const {data: buildResponse} = useFetch<APIResponse<TestrayBuild>>(
 		testrayBuildImpl.resource,
 		{
-			fields: 'id',
-			filter: totalFilter,
+			params: {
+				fields: 'id',
+				filter: totalFilter,
+			},
 		}
 	);
 

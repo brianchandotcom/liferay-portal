@@ -74,8 +74,10 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
 		testrayFactorRest.resource,
 		{
-			filter,
-			pageSize: 1000,
+			params: {
+				filter,
+				pageSize: 1000,
+			},
 			transformData: (response) =>
 				testrayFactorRest.transformDataFromList(response),
 		}
@@ -84,8 +86,10 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 	const {data: runResponse} = useFetch<APIResponse<RunForm>>(
 		selectedRun ? null : testrayRunImpl.resource,
 		{
-			filter: searchUtil.eq('buildId', buildId as string),
-			pageSize: 1000,
+			params: {
+				filter: searchUtil.eq('buildId', buildId as string),
+				pageSize: 1000,
+			},
 		}
 	);
 

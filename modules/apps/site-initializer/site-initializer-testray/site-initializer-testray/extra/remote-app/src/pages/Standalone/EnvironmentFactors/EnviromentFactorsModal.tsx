@@ -68,7 +68,9 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 	const {data: factorResponse, mutate} = useFetch<APIResponse<TestrayFactor>>(
 		testrayFactorRest.resource,
 		{
-			filter: searchUtil.eq('routineId', routineId),
+			params: {
+				filter: searchUtil.eq('routineId', routineId),
+			},
 			transformData: (response) =>
 				testrayFactorRest.transformDataFromList(response),
 		}
@@ -98,8 +100,7 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 
 	useEffect(() => {
 		getCategoryDualBox();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [getCategoryDualBox]);
 
 	const lastStep = step === 1;
 

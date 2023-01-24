@@ -13,7 +13,7 @@
  */
 
 import ClayForm from '@clayui/form';
-import {FocusEvent, useEffect} from 'react';
+import {FocusEvent, useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -82,8 +82,10 @@ const RequirementsForm = () => {
 		)}&pageSize=1000`
 	);
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const testrayComponents = testrayComponentsData?.items || [];
+	const testrayComponents = useMemo(
+		() => testrayComponentsData?.items ?? [],
+		[testrayComponentsData?.items]
+	);
 
 	const _onSubmit = (form: RequirementsFormType) => {
 		if (!form.id) {

@@ -59,21 +59,25 @@ const SelectComponents: React.FC<SelectComponentsProps> = ({
 	const {data: unassigned, isValidating} = useFetch<
 		APIResponse<TestrayComponent>
 	>('/components', {
-		filter: new SearchBuilder()
-			.eq('projectId', projectId)
-			.and()
-			.eq('teamId', testrayComponentImpl.UNASSIGNED_TEAM_ID)
-			.build(),
+		params: {
+			filter: new SearchBuilder()
+				.eq('projectId', projectId)
+				.and()
+				.eq('teamId', testrayComponentImpl.UNASSIGNED_TEAM_ID)
+				.build(),
+		},
 	});
 
 	const {data: current} = useFetch<APIResponse<TestrayComponent>>(
 		teamId && !isValidating ? '/components' : null,
 		{
-			filter: new SearchBuilder()
-				.eq('projectId', projectId)
-				.and()
-				.eq('teamId', teamId)
-				.build(),
+			params: {
+				filter: new SearchBuilder()
+					.eq('projectId', projectId)
+					.and()
+					.eq('teamId', teamId)
+					.build(),
+			},
 		}
 	);
 
@@ -98,6 +102,7 @@ const SelectComponents: React.FC<SelectComponentsProps> = ({
 		/>
 	);
 };
+
 export type State = Boxes<{teamId: number}>;
 
 const TeamFormModal: React.FC<TeamProps> = ({

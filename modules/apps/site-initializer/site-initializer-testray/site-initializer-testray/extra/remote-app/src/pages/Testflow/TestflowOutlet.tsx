@@ -84,7 +84,9 @@ const TestflowOutlet = () => {
 	const {data: testrayTaskCaseTypes} = useFetch<
 		APIResponse<TestrayTaskCaseTypes>
 	>(testrayTaskCaseTypesImpl.resource, {
-		filter: searchUtil.eq('taskId', taskId),
+		params: {
+			filter: searchUtil.eq('taskId', taskId),
+		},
 		transformData: (response) =>
 			testrayTaskCaseTypesImpl.transformDataFromList(response),
 	});
@@ -97,7 +99,9 @@ const TestflowOutlet = () => {
 			Number(taskId)
 		)}`,
 		{
-			nestedFields: 'task,user',
+			params: {
+				nestedFields: 'task,user',
+			},
 			transformData: (response) =>
 				testrayTaskUsersImpl.transformDataFromList(response),
 		}
@@ -117,10 +121,12 @@ const TestflowOutlet = () => {
 
 	const {data: testraySubtasks, revalidate: revalidateSubtask} = useFetch<
 		APIResponse<TestraySubTask>
-	>(`${testraySubTaskImpl.resource}`, {
-		fields: 'id',
-		filter: subTaskFilter,
-		pageSize: 1,
+	>(testraySubTaskImpl.resource, {
+		params: {
+			fields: 'id',
+			filter: subTaskFilter,
+			pageSize: 1,
+		},
 	});
 
 	if (!testrayTask) {

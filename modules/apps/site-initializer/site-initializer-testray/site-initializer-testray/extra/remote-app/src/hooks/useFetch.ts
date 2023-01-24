@@ -18,10 +18,11 @@ import useSWR from 'swr';
 import Rest, {APIParametersOptions} from '../services/rest/Rest';
 
 type FetchOptions<Data> = {
+	params?: APIParametersOptions;
 	transformData?: (data: Data) => Data;
-} & APIParametersOptions;
+};
 
-const getBaseURL = (url: string | null, options: APIParametersOptions) => {
+const getBaseURL = (url: string | null, options?: APIParametersOptions) => {
 	if (!url) {
 		return null;
 	}
@@ -45,10 +46,10 @@ export function useFetch<Data = any, Error = any>(
 	url: string | null,
 	fetchParameters?: FetchOptions<Data>
 ) {
-	const {transformData, ...options} = fetchParameters ?? {};
+	const {params, transformData} = fetchParameters ?? {};
 
 	const {data, error, isValidating, mutate} = useSWR<Data, Error>(() =>
-		getBaseURL(url, options)
+		getBaseURL(url, params)
 	);
 
 	const memoizedData = useMemo(() => {

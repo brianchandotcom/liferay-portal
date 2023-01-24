@@ -120,8 +120,8 @@ const ListView: React.FC<ListViewProps> = ({
 	);
 
 	const {data: response, error, loading, mutate} = useFetch(resource, {
+		params: getURLSearchParams(),
 		transformData,
-		...getURLSearchParams(),
 	});
 
 	const {actions = {}, items = [], page, pageSize, totalCount = 0} =

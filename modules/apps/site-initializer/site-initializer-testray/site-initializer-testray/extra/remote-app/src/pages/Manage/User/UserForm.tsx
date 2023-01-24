@@ -18,6 +18,7 @@ import ClayLayout from '@clayui/layout';
 import {useCallback, useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
@@ -26,7 +27,7 @@ import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {Liferay} from '../../../services/liferay';
-import {liferayUserAccountsRest} from '../../../services/rest';
+import {UserAccount, liferayUserAccountsRest} from '../../../services/rest';
 import {liferayUserRolesRest} from '../../../services/rest/TestrayRolesUser';
 import {RoleTypes} from '../../../util/constants';
 
@@ -43,15 +44,20 @@ type UserFormDefault = {
 	testrayUser: boolean;
 };
 
-interface Action {
+type Action = {
 	href: string;
 	method: string;
-}
+};
 
 type ActionsType = {
 	actions: {
 		[key: string]: Action;
 	};
+};
+
+type OutletContext = {
+	mutateUser: KeyedMutator<UserAccount>;
+	userAccount: UserFormDefault;
 };
 
 const UserForm = () => {
@@ -61,7 +67,8 @@ const UserForm = () => {
 	const {pathname} = useLocation();
 	const isCreateForm = pathname.includes('create');
 
-	const {mutateUser = () => {}, userAccount} = useOutletContext<any>() || {};
+	const {mutateUser = () => {}, userAccount} =
+		useOutletContext<OutletContext>() || {};
 
 	const {
 		form: {onClose, onError, onSave, onSubmit},
@@ -80,7 +87,7 @@ const UserForm = () => {
 
 	const rolesWatch = watch('roles') as number[];
 
-	const _onSubmit = (form: UserFormDefault) => {
+	const _onSubmit = async (form: UserFormDefault) => {
 		if (!rolesWatch?.length) {
 			return Liferay.Util.openToast({
 				message: i18n.translate('please-select-one-or-more-roles'),
@@ -88,26 +95,30 @@ const UserForm = () => {
 			});
 		}
 
-		onSubmit(
-			{...form, userId: userAccount?.id},
-			{
-				create: (...params) =>
-					liferayUserAccountsRest.create(...params),
-				update: (...params) =>
-					liferayUserAccountsRest.update(...params),
-			}
-		)
-			.then((response) =>
-				liferayUserRolesRest.rolesToUser(
-					form.roles,
-					form.roleBriefs,
-					response
-				)
-			)
-			.then(mutateUser)
-			.then(() => onSave())
-			.catch(onError);
+		try {
+			const response = await onSubmit(
+				{...form, userId: userAccount?.id},
+				{
+					create: (data) => liferayUserAccountsRest.create(data),
+					update: (id, data) =>
+						liferayUserAccountsRest.update(id, data),
+				}
+			);
+
+			const _userAccount = liferayUserRolesRest.rolesToUser(
+				form.roles,
+				form.roleBriefs,
+				response
+			);
+
+			mutateUser(_userAccount);
+
+			onSave();
+		} catch (error) {
+			onError(error);
+		}
 	};
+
 	const roles = data?.items || [];
 
 	const checkPermissionRoles = roles.map((role: ActionsType) => {

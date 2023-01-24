@@ -142,7 +142,7 @@ const Table: React.FC<TableProps> = ({
 							<ClayTable.Cell
 								headingTitle
 								key={index}
-								truncate={!column.truncate}
+								truncate={column.truncate}
 							>
 								<>
 									{column.value}

@@ -42,9 +42,11 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 	const {data, loading} = useFetch<
 		APIResponse<TestrayBuild> & FacetAggregation
 	>('/caseresults', {
-		aggregationTerms: 'dueStatus',
-		fields: 'id',
-		filter: searchUtil.eq('buildId', buildId as number),
+		params: {
+			aggregationTerms: 'dueStatus',
+			fields: 'id',
+			filter: searchUtil.eq('buildId', buildId as number),
+		},
 	});
 
 	const statuses = useMemo(() => getStatusesMap(data), [data]);

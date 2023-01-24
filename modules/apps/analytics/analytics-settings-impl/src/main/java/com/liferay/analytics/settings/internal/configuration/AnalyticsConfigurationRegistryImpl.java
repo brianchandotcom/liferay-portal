@@ -551,7 +551,9 @@ public class AnalyticsConfigurationRegistryImpl
 					}
 				}
 
-				if (_analyticsSettingsManager.syncedUserFieldsChanged(
+				if (_analyticsSettingsManager.syncedContactSettingsEnabled(
+						(Long)dictionary.get("companyId")) &&
+					_analyticsSettingsManager.syncedUserFieldsChanged(
 						(Long)dictionary.get("companyId"))) {
 
 					refreshDispatchTriggerNames.add(
@@ -559,7 +561,9 @@ public class AnalyticsConfigurationRegistryImpl
 							USER_DISPATCH_TRIGGER_NAME);
 				}
 
-				if (_analyticsSettingsManager.syncedAccountFieldsChanged(
+				if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
+						(Long)dictionary.get("companyId")) &&
+					_analyticsSettingsManager.syncedAccountFieldsChanged(
 						(Long)dictionary.get("companyId"))) {
 
 					refreshDispatchTriggerNames.add(
@@ -567,20 +571,24 @@ public class AnalyticsConfigurationRegistryImpl
 							ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
 				}
 
-				if (_analyticsSettingsManager.syncedOrderFieldsChanged(
+				if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
 						(Long)dictionary.get("companyId"))) {
 
-					refreshDispatchTriggerNames.add(
-						AnalyticsDXPEntityBatchExporterConstants.
-							ORDER_DISPATCH_TRIGGER_NAME);
-				}
+					if (_analyticsSettingsManager.syncedOrderFieldsChanged(
+							(Long)dictionary.get("companyId"))) {
 
-				if (_analyticsSettingsManager.syncedProductFieldsChanged(
-						(Long)dictionary.get("companyId"))) {
+						refreshDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								ORDER_DISPATCH_TRIGGER_NAME);
+					}
 
-					refreshDispatchTriggerNames.add(
-						AnalyticsDXPEntityBatchExporterConstants.
-							PRODUCT_DISPATCH_TRIGGER_NAME);
+					if (_analyticsSettingsManager.syncedProductFieldsChanged(
+							(Long)dictionary.get("companyId"))) {
+
+						refreshDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								PRODUCT_DISPATCH_TRIGGER_NAME);
+					}
 				}
 
 				if (!refreshDispatchTriggerNames.isEmpty()) {

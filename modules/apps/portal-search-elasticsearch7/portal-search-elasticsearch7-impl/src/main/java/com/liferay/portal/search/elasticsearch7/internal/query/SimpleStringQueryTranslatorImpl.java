@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.query.SimpleStringQuery;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.elasticsearch.index.query.AbstractQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
@@ -58,16 +55,16 @@ public class SimpleStringQueryTranslatorImpl
 		Map<String, Float> fieldBoostMap = simpleStringQuery.getFieldBoostMap();
 
 		if (MapUtil.isNotEmpty(fieldBoostMap)) {
-			Map<String, Float> fieldBoostMapWithDefaultValue = new HashMap<>();
-
 			for (Map.Entry<String, Float> entry : fieldBoostMap.entrySet()) {
-				fieldBoostMapWithDefaultValue.put(
-					entry.getKey(),
-					GetterUtil.getFloat(
-						entry.getValue(), AbstractQueryBuilder.DEFAULT_BOOST));
-			}
+				Float value = entry.getValue();
 
-			simpleQueryStringBuilder.fields(fieldBoostMapWithDefaultValue);
+				if (value != null) {
+					simpleQueryStringBuilder.field(entry.getKey(), value);
+				}
+				else {
+					simpleQueryStringBuilder.field(entry.getKey());
+				}
+			}
 		}
 
 		if (simpleStringQuery.getDefaultOperator() != null) {

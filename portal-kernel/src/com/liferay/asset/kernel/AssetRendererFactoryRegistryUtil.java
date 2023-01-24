@@ -143,10 +143,10 @@ public class AssetRendererFactoryRegistryUtil {
 			new CopyOnWriteArrayList<>();
 
 		for (String key :
-				_companyAssetRenderFactoriesServiceTrackerMap.keySet()) {
+				_classNameAssetRenderFactoriesServiceTrackerMap.keySet()) {
 
 			AssetRendererFactory<?> assetRendererFactory =
-				_companyAssetRenderFactoriesServiceTrackerMap.getService(key);
+				_classNameAssetRenderFactoriesServiceTrackerMap.getService(key);
 
 			if (assetRendererFactory.isActive(companyId) &&
 				(!filterSelectable || assetRendererFactory.isSelectable())) {
@@ -166,20 +166,6 @@ public class AssetRendererFactoryRegistryUtil {
 
 	private static final ServiceTrackerMap<String, AssetRendererFactory<?>>
 		_classNameAssetRenderFactoriesServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext,
-				(Class<AssetRendererFactory<?>>)
-					(Class<?>)AssetRendererFactory.class,
-				null,
-				(serviceReference, emitter) -> {
-					AssetRendererFactory<?> assetRendererFactory =
-						_bundleContext.getService(serviceReference);
-
-					emitter.emit(assetRendererFactory.getClassName());
-				});
-
-	private static final ServiceTrackerMap<String, AssetRendererFactory<?>>
-		_companyAssetRenderFactoriesServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext,
 				(Class<AssetRendererFactory<?>>)

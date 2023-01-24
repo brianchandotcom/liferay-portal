@@ -120,12 +120,12 @@ public class UserSearchFacetDisplayContextTest
 	public void testOneTerm() throws Exception {
 		String userName = RandomTestUtil.randomString();
 
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
 			Collections.singletonList(
-				createTermCollector(String.valueOf(userName), count)));
+				createTermCollector(String.valueOf(userName), frequency)));
 
 		String paramValue = "";
 
@@ -142,7 +142,7 @@ public class UserSearchFacetDisplayContextTest
 			0);
 
 		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertFalse(bucketDisplayContext.isSelected());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
@@ -156,12 +156,12 @@ public class UserSearchFacetDisplayContextTest
 	public void testOneTermWithPreviousSelection() throws Exception {
 		String userName = RandomTestUtil.randomString();
 
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
 			Collections.singletonList(
-				createTermCollector(String.valueOf(userName), count)));
+				createTermCollector(String.valueOf(userName), frequency)));
 
 		String paramValue = userName;
 
@@ -178,7 +178,7 @@ public class UserSearchFacetDisplayContextTest
 			0);
 
 		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 

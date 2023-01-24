@@ -117,11 +117,11 @@ public class CustomFacetDisplayContextTest
 	@Test
 	public void testOneTerm() throws Exception {
 		String fieldName = RandomTestUtil.randomString();
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
-			Collections.singletonList(createTermCollector(fieldName, count)));
+			Collections.singletonList(createTermCollector(fieldName, frequency)));
 
 		String parameterValue = "";
 
@@ -140,7 +140,7 @@ public class CustomFacetDisplayContextTest
 
 		Assert.assertEquals(fieldName, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(fieldName, bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertFalse(bucketDisplayContext.isSelected());
 
@@ -153,11 +153,11 @@ public class CustomFacetDisplayContextTest
 	@Test
 	public void testOneTermWithPreviousSelection() throws Exception {
 		String fieldName = RandomTestUtil.randomString();
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
-			Collections.singletonList(createTermCollector(fieldName, count)));
+			Collections.singletonList(createTermCollector(fieldName, frequency)));
 
 		String parameterValue = fieldName;
 
@@ -176,7 +176,7 @@ public class CustomFacetDisplayContextTest
 
 		Assert.assertEquals(fieldName, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(fieldName, bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 

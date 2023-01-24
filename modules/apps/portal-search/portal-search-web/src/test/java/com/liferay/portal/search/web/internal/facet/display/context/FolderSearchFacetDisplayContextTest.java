@@ -163,12 +163,12 @@ public class FolderSearchFacetDisplayContextTest
 
 		_addFolder(folderId, title);
 
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
 			Collections.singletonList(
-				createTermCollector(String.valueOf(folderId), count)));
+				createTermCollector(String.valueOf(folderId), frequency)));
 
 		String facetParam = "";
 
@@ -187,7 +187,7 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertEquals(title, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertFalse(bucketDisplayContext.isSelected());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
@@ -204,12 +204,12 @@ public class FolderSearchFacetDisplayContextTest
 
 		_addFolder(folderId, title);
 
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
 			Collections.singletonList(
-				createTermCollector(String.valueOf(folderId), count)));
+				createTermCollector(String.valueOf(folderId), frequency)));
 
 		String facetParam = String.valueOf(folderId);
 
@@ -228,7 +228,7 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertEquals(title, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 

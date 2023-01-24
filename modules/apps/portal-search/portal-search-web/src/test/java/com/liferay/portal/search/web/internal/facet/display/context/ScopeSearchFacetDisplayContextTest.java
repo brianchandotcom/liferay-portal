@@ -134,12 +134,12 @@ public class ScopeSearchFacetDisplayContextTest
 
 		_addGroup(groupId, name);
 
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
 			Collections.singletonList(
-				createTermCollector(String.valueOf(groupId), count)));
+				createTermCollector(String.valueOf(groupId), frequency)));
 
 		String parameterValue = "0";
 
@@ -158,7 +158,7 @@ public class ScopeSearchFacetDisplayContextTest
 		Assert.assertEquals(name, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(groupId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertFalse(bucketDisplayContext.isSelected());
 
@@ -175,12 +175,12 @@ public class ScopeSearchFacetDisplayContextTest
 
 		_addGroup(groupId, name);
 
-		int count = RandomTestUtil.randomInt();
+		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
 			_facetCollector,
 			Collections.singletonList(
-				createTermCollector(String.valueOf(groupId), count)));
+				createTermCollector(String.valueOf(groupId), frequency)));
 
 		String parameterValue = String.valueOf(groupId);
 
@@ -199,7 +199,7 @@ public class ScopeSearchFacetDisplayContextTest
 		Assert.assertEquals(name, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(groupId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
 		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertTrue(bucketDisplayContext.isSelected());
 

@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String tabsNames = "email-from,article-added-email,article-updated-email,article-review-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
+String tabsNames = "email-from,article-added-email,article-updated-email,article-review-email,article-expired-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
 
 if (PortalUtil.isRSSFeedsEnabled()) {
 	tabsNames += ",rss";
@@ -38,14 +38,16 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-	<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="emailKBArticleReviewBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailKBArticleReviewSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+		<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailKBArticleExpiredBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailKBArticleExpiredSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailKBArticleReviewBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailKBArticleReviewSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
@@ -185,6 +187,16 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 				/>
 			</liferay-ui:section>
 
+			<liferay-ui:section>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= kbGroupServiceConfiguration.emailKBArticleExpiredBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleExpiredEnabled() %>"
+					emailParam="emailKBArticleExpired"
+					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleExpiredSubject() %>"
+				/>
+			</liferay-ui:section>
+
 			<%
 			emailDefinitionTerms = LinkedHashMapBuilder.put(
 				"[$ARTICLE_CONTENT$]", LanguageUtil.get(resourceBundle, "the-article-content")
@@ -261,10 +273,11 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 
 		if (form) {
 			var emailKBArticleAddedEditor = window.<portlet:namespace />emailKBArticleAdded.getHTML();
+			var emailKBArticleExpiredEditor = window.<portlet:namespace />emailKBArticleExpired.getHTML();
+			var emailKBArticleReviewEditor = window.<portlet:namespace />emailKBArticleReview.getHTML();
 			var emailKBArticleSuggestionInProgressEditor = window.<portlet:namespace />emailKBArticleSuggestionInProgress.getHTML();
 			var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived.getHTML();
 			var emailKBArticleSuggestionResolvedEditor = window.<portlet:namespace />emailKBArticleSuggestionResolved.getHTML();
-			var emailKBArticleReviewEditor = window.<portlet:namespace />emailKBArticleReview.getHTML();
 			var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated.getHTML();
 
 			document.getElementById(
@@ -276,6 +289,9 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 			document.getElementById(
 				'<portlet:namespace />emailKBArticleReviewBody'
 			).value = emailKBArticleReviewEditor;
+			document.getElementById(
+				'<portlet:namespace />emailKBArticleExpiredBody'
+			).value = emailKBArticleExpiredEditor;
 			document.getElementById(
 				'<portlet:namespace />emailKBArticleSuggestionReceivedBody'
 			).value = emailKBArticleSuggestionReceivedEditor;

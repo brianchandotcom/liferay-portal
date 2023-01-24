@@ -1753,6 +1753,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return kbGroupServiceConfiguration.emailKBArticleAddedBody();
 		}
 
+		if (Objects.equals(action, Constants.EXPIRE)) {
+			return kbGroupServiceConfiguration.emailKBArticleExpiredBody();
+		}
+
 		if (Objects.equals(action, _NOTIFICATION_ACTION_REVIEW)) {
 			return kbGroupServiceConfiguration.emailKBArticleReviewBody();
 		}
@@ -1885,6 +1889,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 		}
 
+		if (Objects.equals(action, Constants.EXPIRE)) {
+			return UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY;
+		}
+
 		if (Objects.equals(action, _NOTIFICATION_ACTION_REVIEW)) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
 		}
@@ -1945,6 +1953,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (Objects.equals(action, Constants.ADD)) {
 			return kbGroupServiceConfiguration.emailKBArticleAddedSubject();
+		}
+
+		if (Objects.equals(action, Constants.EXPIRE)) {
+			return kbGroupServiceConfiguration.emailKBArticleExpiredSubject();
 		}
 
 		if (Objects.equals(action, _NOTIFICATION_ACTION_REVIEW)) {
@@ -2050,6 +2062,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (Objects.equals(action, Constants.ADD) &&
 			!kbGroupServiceConfiguration.emailKBArticleAddedEnabled()) {
+
+			return;
+		}
+
+		if (Objects.equals(action, Constants.EXPIRE) &&
+			!kbGroupServiceConfiguration.emailKBArticleExpiredEnabled()) {
 
 			return;
 		}

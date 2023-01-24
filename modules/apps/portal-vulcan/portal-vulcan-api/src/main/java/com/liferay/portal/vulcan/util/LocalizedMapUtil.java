@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -167,6 +168,27 @@ public class LocalizedMapUtil {
 		}
 
 		return merge(localizedMap, entry.getKey(), entry.getValue());
+	}
+
+	public static Map<String, String> mergeI18nMap(
+		Map<String, String> i18nMap, String locale, String value) {
+
+		if (Validator.isNull(locale)) {
+			return i18nMap;
+		}
+
+		if (i18nMap == null) {
+			return Collections.singletonMap(locale, value);
+		}
+
+		if (Validator.isNotNull(value)) {
+			i18nMap.put(locale, value);
+		}
+		else {
+			i18nMap.remove(locale);
+		}
+
+		return i18nMap;
 	}
 
 	public static Map<Locale, String> patch(

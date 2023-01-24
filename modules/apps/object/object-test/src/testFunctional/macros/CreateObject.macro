@@ -30,6 +30,8 @@ definition {
 		WaitForSPARefresh();
 
 		WaitForPageLoad();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro assertAccountRestrictedFieldDisabled {

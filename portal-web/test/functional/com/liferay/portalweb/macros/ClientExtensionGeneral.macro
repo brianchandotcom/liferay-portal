@@ -13,10 +13,10 @@ definition {
 	macro addApp {
 		ClientExtensionEntry.addEntry(
 			entryHTMLElementName = "${entryHTMLElementName}",
+			entryHTMLElementName = "${entryHTMLElementName}",
 			entryName = "${entryName}",
 			entryURL = "${entryURL}",
-			mainURL = "${mainURL}",
-			entryHTMLElementName = "${entryHTMLElementName}");
+			mainURL = "${mainURL}");
 
 		PortletEntry.publish();
 	}

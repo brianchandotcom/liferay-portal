@@ -15,9 +15,9 @@
 package com.liferay.layout.type.controller.node.internal.layout.type.controller;
 
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
-import com.liferay.layout.type.controller.node.internal.constants.NodeLayoutTypeControllerConstants;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juergen Kappler
  */
 @Component(
-	property = "layout.type=" + NodeLayoutTypeControllerConstants.LAYOUT_TYPE_NODE,
+	property = "layout.type=" + LayoutConstants.TYPE_NODE,
 	service = LayoutTypeController.class
 )
 public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {

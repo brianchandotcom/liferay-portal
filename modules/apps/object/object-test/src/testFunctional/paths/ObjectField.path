@@ -8,6 +8,11 @@
 <thead><tr><td rowspan="1" colspan="3">ObjectField</td></tr></thead>
 <tbody>
 	<tr>
+		<td>ANY_DROPDOWN_LABEL</td>
+		<td>//*[@class='form-group' and contains(.,'${dropdownLabel}')] //*[@class="dropdown"]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DOCUMENT_NAME</td>
 		<td>//p[contains(@class,'card-title text-truncate')]//a</td>
 		<td></td>

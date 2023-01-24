@@ -161,6 +161,18 @@ definition {
 			locator1 = "ObjectField#TYPE_OPTION");
 	}
 
+	macro selectPicklist {
+		if (!(isSet(dropdownLabel))) {
+			var dropdownLabel = "Picklist";
+		}
+
+		Click(
+			dropdownLabel = "${dropdownLabel}",
+			locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+		MenuItem.click(menuItem = "${picklistName}");
+	}
+
 	macro selectSearchableLanguage {
 		Click(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",

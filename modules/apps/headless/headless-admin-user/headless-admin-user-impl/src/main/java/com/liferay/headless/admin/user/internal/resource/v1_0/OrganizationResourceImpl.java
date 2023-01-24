@@ -549,34 +549,36 @@ public class OrganizationResourceImpl
 		OrganizationContactInformation organizationContactInformation =
 			organization.getOrganizationContactInformation();
 
-		if (organizationContactInformation != null) {
-			PostalAddress[] postalAddresses =
-				organizationContactInformation.getPostalAddresses();
-
-			if (postalAddresses != null) {
-				return ListUtil.filter(
-					transformToList(
-						postalAddresses,
-						_postalAddress ->
-							ServiceBuilderAddressUtil.toServiceBuilderAddress(
-								contextCompany.getCompanyId(), _postalAddress,
-								ListTypeConstants.ORGANIZATION_ADDRESS)),
-					Objects::nonNull);
-			}
+		if (organizationContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		PostalAddress[] postalAddresses =
+			organizationContactInformation.getPostalAddresses();
+
+		if (postalAddresses == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				postalAddresses,
+				_postalAddress ->
+					ServiceBuilderAddressUtil.toServiceBuilderAddress(
+						contextCompany.getCompanyId(), _postalAddress,
+						ListTypeConstants.ORGANIZATION_ADDRESS)),
+			Objects::nonNull);
 	}
 
 	private long _getCountryId(Organization organization) {
 		Location location = organization.getLocation();
 
-		if (location != null) {
-			return ServiceBuilderCountryUtil.toServiceBuilderCountryId(
-				contextCompany.getCompanyId(), location.getAddressCountry());
+		if (location == null) {
+			return 0;
 		}
 
-		return 0L;
+		return ServiceBuilderCountryUtil.toServiceBuilderCountryId(
+			contextCompany.getCompanyId(), location.getAddressCountry());
 	}
 
 	private long _getDefaultParentOrganizationId(Organization organization) {
@@ -637,25 +639,25 @@ public class OrganizationResourceImpl
 		OrganizationContactInformation organizationContactInformation =
 			organization.getOrganizationContactInformation();
 
-		if (organizationContactInformation != null) {
-			EmailAddress[] emailAddresses =
-				organizationContactInformation.getEmailAddresses();
-
-			if (emailAddresses != null) {
-				return ListUtil.filter(
-					transformToList(
-						emailAddresses,
-						emailAddress ->
-							ServiceBuilderEmailAddressUtil.
-								toServiceBuilderEmailAddress(
-									emailAddress,
-									ListTypeConstants.
-										ORGANIZATION_EMAIL_ADDRESS)),
-					Objects::nonNull);
-			}
+		if (organizationContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		EmailAddress[] emailAddresses =
+			organizationContactInformation.getEmailAddresses();
+
+		if (emailAddresses == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				emailAddresses,
+				emailAddress ->
+					ServiceBuilderEmailAddressUtil.toServiceBuilderEmailAddress(
+						emailAddress,
+						ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS)),
+			Objects::nonNull);
 	}
 
 	private Page<Organization> _getOrganizationsPage(

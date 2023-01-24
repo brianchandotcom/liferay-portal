@@ -226,7 +226,7 @@ public class AnalyticsConfigurationRegistryImpl
 				_enable((Long)dictionary.get("companyId"));
 			}
 
-			_sync(dictionary);
+			_sync(dictionary, (Long)dictionary.get("companyId"));
 		}
 	}
 
@@ -457,7 +457,7 @@ public class AnalyticsConfigurationRegistryImpl
 		return false;
 	}
 
-	private void _sync(Dictionary<String, ?> dictionary) {
+	private void _sync(Dictionary<String, ?> dictionary, long companyId) {
 		try {
 			if (Validator.isNotNull(dictionary.get("token")) &&
 				Validator.isNull(dictionary.get("previousToken"))) {
@@ -466,12 +466,12 @@ public class AnalyticsConfigurationRegistryImpl
 						PropsUtil.get("feature.flag.LRAC-10632"))) {
 
 					_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
-						(Long)dictionary.get("companyId"),
+						companyId,
 						AnalyticsDXPEntityBatchExporterConstants.
 							BASE_DISPATCH_TRIGGER_NAMES);
 
 					_analyticsDXPEntityBatchExporter.export(
-						(Long)dictionary.get("companyId"),
+						companyId,
 						AnalyticsDXPEntityBatchExporterConstants.
 							BASE_DISPATCH_TRIGGER_NAMES);
 				}
@@ -482,8 +482,7 @@ public class AnalyticsConfigurationRegistryImpl
 					for (EntityModelListener<?> entityModelListener :
 							entityModelListeners) {
 
-						entityModelListener.syncAll(
-							(Long)dictionary.get("companyId"));
+						entityModelListener.syncAll(companyId);
 					}
 				}
 			}
@@ -495,10 +494,10 @@ public class AnalyticsConfigurationRegistryImpl
 				Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
 
 				if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
-						(Long)dictionary.get("companyId"))) {
+						companyId)) {
 
 					if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
-							(Long)dictionary.get("companyId"))) {
+							companyId)) {
 
 						Collections.addAll(
 							refreshDispatchTriggerNames,
@@ -518,10 +517,10 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 
 				if (_analyticsSettingsManager.syncedContactSettingsChanged(
-						(Long)dictionary.get("companyId"))) {
+						companyId)) {
 
 					if (_analyticsSettingsManager.syncedContactSettingsEnabled(
-							(Long)dictionary.get("companyId"))) {
+							companyId)) {
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
@@ -535,10 +534,10 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 
 				if (_analyticsSettingsManager.syncedAccountSettingsChanged(
-						(Long)dictionary.get("companyId"))) {
+						companyId)) {
 
 					if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-							(Long)dictionary.get("companyId"))) {
+							companyId)) {
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
@@ -552,9 +551,9 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 
 				if (_analyticsSettingsManager.syncedContactSettingsEnabled(
-						(Long)dictionary.get("companyId")) &&
+						companyId) &&
 					_analyticsSettingsManager.syncedUserFieldsChanged(
-						(Long)dictionary.get("companyId"))) {
+						companyId)) {
 
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
@@ -562,9 +561,9 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 
 				if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-						(Long)dictionary.get("companyId")) &&
+						companyId) &&
 					_analyticsSettingsManager.syncedAccountFieldsChanged(
-						(Long)dictionary.get("companyId"))) {
+						companyId)) {
 
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
@@ -572,10 +571,10 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 
 				if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
-						(Long)dictionary.get("companyId"))) {
+						companyId)) {
 
 					if (_analyticsSettingsManager.syncedOrderFieldsChanged(
-							(Long)dictionary.get("companyId"))) {
+							companyId)) {
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
@@ -583,7 +582,7 @@ public class AnalyticsConfigurationRegistryImpl
 					}
 
 					if (_analyticsSettingsManager.syncedProductFieldsChanged(
-							(Long)dictionary.get("companyId"))) {
+							companyId)) {
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
@@ -593,17 +592,17 @@ public class AnalyticsConfigurationRegistryImpl
 
 				if (!refreshDispatchTriggerNames.isEmpty()) {
 					_analyticsDXPEntityBatchExporter.refreshExportTriggers(
-						(Long)dictionary.get("companyId"),
+						companyId,
 						refreshDispatchTriggerNames.toArray(new String[0]));
 
 					_analyticsDXPEntityBatchExporter.export(
-						(Long)dictionary.get("companyId"),
+						companyId,
 						refreshDispatchTriggerNames.toArray(new String[0]));
 				}
 
 				if (!unscheduleDispatchTriggerNames.isEmpty()) {
 					_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
-						(Long)dictionary.get("companyId"),
+						companyId,
 						unscheduleDispatchTriggerNames.toArray(new String[0]));
 				}
 
@@ -628,8 +627,7 @@ public class AnalyticsConfigurationRegistryImpl
 			if (!Arrays.equals(
 					previousSyncedUserFieldNames, syncedUserFieldNames)) {
 
-				_syncUserCustomFields(
-					(Long)dictionary.get("companyId"), syncedUserFieldNames);
+				_syncUserCustomFields(companyId, syncedUserFieldNames);
 			}
 
 			if (!Arrays.equals(
@@ -638,33 +636,29 @@ public class AnalyticsConfigurationRegistryImpl
 					previousSyncedUserFieldNames, syncedUserFieldNames)) {
 
 				_syncDefaultFields(
-					(Long)dictionary.get("companyId"), syncedContactFieldNames,
-					syncedUserFieldNames);
+					companyId, syncedContactFieldNames, syncedUserFieldNames);
 			}
 
 			if (GetterUtil.getBoolean(dictionary.get("syncAllContacts"))) {
 				if (!GetterUtil.getBoolean(
 						dictionary.get("previousSyncAllContacts"))) {
 
-					_syncContacts((Long)dictionary.get("companyId"));
+					_syncContacts(companyId);
 				}
 			}
 			else {
 				_syncOrganizationUsers(
-					(Long)dictionary.get("companyId"),
+					companyId,
 					(String[])dictionary.get("syncedOrganizationIds"));
 				_syncUserGroupUsers(
-					(Long)dictionary.get("companyId"),
-					(String[])dictionary.get("syncedUserGroupIds"));
+					companyId, (String[])dictionary.get("syncedUserGroupIds"));
 			}
 
 			Message message = new Message();
 
 			message.put("command", AnalyticsMessagesProcessorCommand.SEND);
 			message.put("companyId", dictionary.get("companyId"));
-			message.put(
-				"principalName",
-				_getAnalyticsAdminUserId((Long)dictionary.get("companyId")));
+			message.put("principalName", _getAnalyticsAdminUserId(companyId));
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Queueing send analytics messages message");

@@ -721,7 +721,7 @@
 						"definition": {
 							"fragment": {
 								"key": "request-form-handler",
-								"siteKey": "$GROUP_KEY$"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 							},

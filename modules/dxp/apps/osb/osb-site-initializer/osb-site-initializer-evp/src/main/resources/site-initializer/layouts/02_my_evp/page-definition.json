@@ -62,7 +62,7 @@
 																		},
 																		{
 																			"fieldName": "siteKey",
-																			"fieldValue": "EVP"
+																			"fieldValue": "[$GROUP_KEY$]"
 																		}
 																	]
 																}
@@ -117,7 +117,7 @@
 																		},
 																		{
 																			"fieldName": "siteKey",
-																			"fieldValue": "EVP"
+																			"fieldValue": "[$GROUP_KEY$]"
 																		}
 																	]
 																}

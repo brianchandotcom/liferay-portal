@@ -1,0 +1,146 @@
+{
+	"DBType": "String",
+	"businessType": "Picklist",
+	"defaultValue": "pendingEVPApproval",
+	"externalReferenceCode": "EVP-REQUEST-STATUS-DEFAULT",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"indexedLanguageId": "en_US",
+	"label": {
+		"en_US": "Request Status"
+	},
+	"listTypeDefinitionExternalReferenceCode": "OBJECT-EVP-REQUEST-STATUS",
+	"name": "requestStatus",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPRequest$]",
+	"objectFieldSettings": [
+		{
+			"name": "stateFlow",
+			"value": {
+				"objectStates": [
+					{
+						"key": "rejected",
+						"objectStateTransitions": [
+							{
+								"key": "closed"
+							},
+							{
+								"key": "pendingFinanceApproval"
+							},
+							{
+								"key": "needMoreInfo"
+							},
+							{
+								"key": "pendingEVPApproval"
+							},
+							{
+								"key": "pendingCompanyApproval"
+							}
+						]
+					},
+					{
+						"key": "closed",
+						"objectStateTransitions": [
+							{
+								"key": "rejected"
+							},
+							{
+								"key": "pendingFinanceApproval"
+							},
+							{
+								"key": "needMoreInfo"
+							},
+							{
+								"key": "pendingEVPApproval"
+							},
+							{
+								"key": "pendingCompanyApproval"
+							}
+						]
+					},
+					{
+						"key": "pendingFinanceApproval",
+						"objectStateTransitions": [
+							{
+								"key": "rejected"
+							},
+							{
+								"key": "closed"
+							},
+							{
+								"key": "needMoreInfo"
+							},
+							{
+								"key": "pendingEVPApproval"
+							},
+							{
+								"key": "pendingCompanyApproval"
+							}
+						]
+					},
+					{
+						"key": "needMoreInfo",
+						"objectStateTransitions": [
+							{
+								"key": "rejected"
+							},
+							{
+								"key": "closed"
+							},
+							{
+								"key": "pendingFinanceApproval"
+							},
+							{
+								"key": "pendingEVPApproval"
+							},
+							{
+								"key": "pendingCompanyApproval"
+							}
+						]
+					},
+					{
+						"key": "pendingEVPApproval",
+						"objectStateTransitions": [
+							{
+								"key": "rejected"
+							},
+							{
+								"key": "closed"
+							},
+							{
+								"key": "pendingFinanceApproval"
+							},
+							{
+								"key": "needMoreInfo"
+							},
+							{
+								"key": "pendingCompanyApproval"
+							}
+						]
+					},
+					{
+						"key": "pendingCompanyApproval",
+						"objectStateTransitions": [
+							{
+								"key": "rejected"
+							},
+							{
+								"key": "closed"
+							},
+							{
+								"key": "pendingFinanceApproval"
+							},
+							{
+								"key": "needMoreInfo"
+							},
+							{
+								"key": "pendingEVPApproval"
+							}
+						]
+					}
+				]
+			}
+		}
+	],
+	"required": true,
+	"state": true
+}

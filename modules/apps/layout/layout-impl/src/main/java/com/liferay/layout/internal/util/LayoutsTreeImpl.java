@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
-import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -483,24 +482,16 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				layout);
 
 			if (layoutRevision != null) {
-				long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
+				if (_staging.isIncomplete(
+						layout, layoutRevision.getLayoutSetBranchId())) {
 
-				if (_staging.isIncomplete(layout, layoutSetBranchId)) {
 					jsonObject.put("incomplete", true);
 				}
-
-				LayoutSetBranch boundLayoutSetBranch =
-					_layoutSetBranchLocalService.getLayoutSetBranch(
-						layoutSetBranchId);
 
 				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
 
 				if (!layoutBranch.isMaster()) {
-					jsonObject.put(
-						"layoutBranchId", layoutBranch.getLayoutBranchId()
-					).put(
-						"layoutBranchName", layoutBranch.getName()
-					);
+					jsonObject.put("layoutBranchName", layoutBranch.getName());
 				}
 
 				if (layoutRevision.isHead()) {
@@ -508,12 +499,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				}
 
 				jsonObject.put(
-					"layoutRevisionId", layoutRevision.getLayoutRevisionId()
-				).put(
-					"layoutSetBranchId", layoutSetBranchId
-				).put(
-					"layoutSetBranchName", boundLayoutSetBranch.getName()
-				);
+					"layoutRevisionId", layoutRevision.getLayoutRevisionId());
 			}
 
 			jsonArray.put(jsonObject);

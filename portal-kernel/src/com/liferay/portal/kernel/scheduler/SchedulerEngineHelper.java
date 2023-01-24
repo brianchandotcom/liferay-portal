@@ -88,10 +88,6 @@ public interface SchedulerEngineHelper {
 			String destinationName, Object payload)
 		throws SchedulerException;
 
-	public void shutdown() throws SchedulerException;
-
-	public void start() throws SchedulerException;
-
 	public void unregister(MessageListener messageListener);
 
 	public void unschedule(String groupName, StorageType storageType)

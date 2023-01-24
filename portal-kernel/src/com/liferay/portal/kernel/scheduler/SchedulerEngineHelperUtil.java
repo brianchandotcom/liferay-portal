@@ -132,14 +132,6 @@ public class SchedulerEngineHelperUtil {
 			trigger, storageType, description, destinationName, payload);
 	}
 
-	public static void shutdown() throws SchedulerException {
-		_schedulerEngineHelper.shutdown();
-	}
-
-	public static void start() throws SchedulerException {
-		_schedulerEngineHelper.start();
-	}
-
 	public static void unregister(MessageListener messageListener) {
 		_schedulerEngineHelper.unregister(messageListener);
 	}

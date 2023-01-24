@@ -329,16 +329,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public void shutdown() throws SchedulerException {
-		_schedulerEngine.shutdown();
-	}
-
-	@Override
-	public void start() throws SchedulerException {
-		_schedulerEngine.start();
-	}
-
-	@Override
 	public void unregister(MessageListener messageListener) {
 		ServiceRegistration<?> serviceRegistration =
 			_serviceRegistrations.remove(messageListener);
@@ -404,7 +394,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		DependencyManagerSyncUtil.registerSyncCallable(
 			() -> {
-				start();
+				_schedulerEngine.start();
 
 				return null;
 			});
@@ -421,7 +411,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		}
 
 		try {
-			shutdown();
+			_schedulerEngine.shutdown();
 		}
 		catch (SchedulerException schedulerException) {
 			if (_log.isWarnEnabled()) {

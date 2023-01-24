@@ -16,11 +16,13 @@ import parseJSONString from './parse_json_string';
 import {CONTRIBUTOR_TYPES} from './types/contributorTypes';
 
 /**
- * Filters out blueprint suggestion contributors in the fields array
- * if search experiences are not supported.
- * @param {Array} fields The list of fields.
+ * Filters out blueprint suggestion contributors in the
+ * `suggestionsContributorConfiguration` array if search experiences
+ * are not supported.
+ * @param {string} suggestionsContributorConfiguration Stringified array of
+ * suggestion contributor configurations.
  * @param {boolean} isSearchExperiencesSupported
- * @return {Array} The cleaned up list of fields.
+ * @return {Array} The cleaned up list of suggestion contributor configurations.
  */
 export default function cleanSuggestionsContributorConfiguration(
 	suggestionsContributorConfiguration,
@@ -32,11 +34,11 @@ export default function cleanSuggestionsContributorConfiguration(
 				return true;
 			}
 
-			if (item.contributorName === CONTRIBUTOR_TYPES.BASIC) {
-				return true;
+			if (item.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 	);
 }

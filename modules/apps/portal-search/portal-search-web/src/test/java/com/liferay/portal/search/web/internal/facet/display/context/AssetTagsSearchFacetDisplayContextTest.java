@@ -78,11 +78,6 @@ public class AssetTagsSearchFacetDisplayContextTest
 		return assetTagsSearchFacetDisplayContextBuilder.build();
 	}
 
-	@Override
-	public String getFacetDisplayContextParameterValue() {
-		return "";
-	}
-
 	@Before
 	public void setUp() {
 		Mockito.doReturn(

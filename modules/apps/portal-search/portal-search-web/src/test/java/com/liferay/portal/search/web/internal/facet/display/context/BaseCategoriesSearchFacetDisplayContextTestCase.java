@@ -108,11 +108,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		return assetCategoriesSearchFacetDisplayContextBuilder.build();
 	}
 
-	@Override
-	public String getFacetDisplayContextParameterValue() {
-		return StringPool.BLANK;
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		setUpAssetVocabularyLocalService();

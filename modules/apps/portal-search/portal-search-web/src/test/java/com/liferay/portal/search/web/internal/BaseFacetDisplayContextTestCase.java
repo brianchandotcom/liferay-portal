@@ -56,7 +56,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 	}
 
 	public String getFacetDisplayContextParameterValue() {
-		return null;
+		return StringPool.BLANK;
 	}
 
 	@Test

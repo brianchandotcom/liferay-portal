@@ -60,11 +60,11 @@ public class CustomFacetDisplayContextTest
 	public void testEmptyCustomDisplayCaption() throws Exception {
 		String customDisplayCaption = "";
 		String fieldToAggregate = "groupId";
-		String parameterValue = "";
 
 		CustomFacetDisplayContext customFacetDisplayContext =
 			_createDisplayContext(
-				customDisplayCaption, fieldToAggregate, parameterValue);
+				customDisplayCaption, fieldToAggregate,
+				getFacetDisplayContextParameterValue());
 
 		List<BucketDisplayContext> bucketDisplayContexts =
 			customFacetDisplayContext.getBucketDisplayContexts();
@@ -123,11 +123,10 @@ public class CustomFacetDisplayContextTest
 			_facetCollector,
 			Collections.singletonList(createTermCollector(fieldName, frequency)));
 
-		String parameterValue = "";
-
 		CustomFacetDisplayContext customFacetDisplayContext =
 			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate", parameterValue);
+				"customDisplayCaption", "fieldToAggregate",
+				getFacetDisplayContextParameterValue());
 
 		List<BucketDisplayContext> bucketDisplayContexts =
 			customFacetDisplayContext.getBucketDisplayContexts();
@@ -145,7 +144,8 @@ public class CustomFacetDisplayContextTest
 		Assert.assertFalse(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
-			parameterValue, customFacetDisplayContext.getParameterValue());
+			getFacetDisplayContextParameterValue(),
+			customFacetDisplayContext.getParameterValue());
 		Assert.assertTrue(customFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(customFacetDisplayContext.isRenderNothing());
 	}

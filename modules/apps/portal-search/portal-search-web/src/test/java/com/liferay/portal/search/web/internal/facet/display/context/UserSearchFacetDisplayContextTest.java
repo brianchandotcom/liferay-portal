@@ -73,10 +73,6 @@ public class UserSearchFacetDisplayContextTest
 		return userSearchFacetDisplayContextBuilder.build();
 	}
 
-	@Override
-	public String getFacetDisplayContextParameterValue() {
-		return "";
-	}
 
 	@Before
 	public void setUp() {

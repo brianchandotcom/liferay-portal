@@ -7,19 +7,25 @@ $opacity-transition: all 0.3s ease;
 	flex-direction: column;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	padding: 0 20px 20px;
+	padding: 0 25px 20px;
+
+	li {
+		overflow-x: hidden;
+		width: 200px;
+	}
+
 	&-expanded {
 		opacity: 1;
 		transition: $opacity-transition;
 		visibility: visible;
-		width: 199px;
+		width: 220px;
 	}
 
 	&-hidden {
 		opacity: 0;
 		transition: $opacity-transition;
 		visibility: hidden;
-		width: 65px;
+		width: 60px;
 	}
 
 	.task-sidebar-title {
@@ -38,11 +44,28 @@ $opacity-transition: all 0.3s ease;
 		}
 	}
 
+	.ellipsis-text {
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		display: -webkit-box;
+		line-clamp: 2;
+		max-width: 25ch;
+		overflow: hidden;
+		text-align: justify;
+		text-overflow: ellipsis;
+		white-space: break-spaces;
+		word-wrap: break-word;
+	}
+
 	.quantity-task-badge {
+		align-items: center;
 		background-color: #303376;
 		color: #fff;
-		height: 22px;
-		width: 22px;
+		display: inline-flex;
+		height: 25px;
+		justify-content: center;
+		padding: 4px;
+		width: 25px;
 	}
 
 	.subtask-sidebar {
@@ -76,9 +99,9 @@ $opacity-transition: all 0.3s ease;
 	}
 
 	.notification {
-		margin-left: 10px;
-		position: fixed;
-		top: 315px;
+		margin-left: 3px;
+		position: absolute;
+		top: 10px;
 		user-select: none;
 
 		.task-sidebar-notification {
@@ -153,11 +176,4 @@ $opacity-transition: all 0.3s ease;
 
 .task-sidebar-divider {
 	border-top: solid #8b8db2 1px;
-}
-
-.ellipsis-text {
-	overflow: hidden;
-	text-align: justify;
-	text-overflow: ellipsis;
-	white-space: nowrap;
 }

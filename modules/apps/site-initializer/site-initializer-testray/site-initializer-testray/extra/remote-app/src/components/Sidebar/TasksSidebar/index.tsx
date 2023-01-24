@@ -42,12 +42,7 @@ type SubtaskCardProps = {
 };
 
 const TaskBadge: React.FC<TaskBadgeProps> = ({className, count}) => (
-	<span
-		className={classNames(
-			'align-items-center d-flex justify-content-center quantity-task-badge',
-			className
-		)}
-	>
+	<span className={classNames('quantity-task-badge', className)}>
 		{count}
 	</span>
 );
@@ -104,7 +99,7 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 					>
 						<span>{i18n.translate('tasks')}</span>
 
-						<TaskBadge className="c-p-3 h6" count={tasks.length} />
+						<TaskBadge className="mr-4 p-3" count={tasks.length} />
 					</div>
 
 					<div
@@ -133,30 +128,30 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 						<Tooltip position="right" title={task?.name}>
 							<Link
 								className={classNames(
-									'sidebar-link d-flex mb-2',
+									'sidebar-link mb-4 ',
 									sidebarVisibility
 								)}
 								to={`testflow/${task?.id}`}
 							>
-								<TaskBadge
-									className="mr-2 p-2"
-									count={task?.subTasks?.length as number}
-								/>
+								<p className="ellipsis-text">
+									<TaskBadge
+										count={task?.subTasks?.length as number}
+									/>
 
-								<div className="ellipsis-text">
-									{task?.name}
-								</div>
+									<span className="ml-2">{task?.name}</span>
+								</p>
 							</Link>
 						</Tooltip>
 
 						<Tooltip position="right" title={task?.build?.name}>
-							<div className="ellipsis-text">
-								<Link
-									to={`/project/${task?.build?.project?.id}/routines/${task?.build?.routine?.id}/build/${task?.build?.id}`}
-								>
+							<Link
+								className="mt-3"
+								to={`/project/${task?.build?.project?.id}/routines/${task?.build?.routine?.id}/build/${task?.build?.id}`}
+							>
+								<p className="ellipsis-text">
 									{task?.build?.name}
-								</Link>
-							</div>
+								</p>
+							</Link>
 						</Tooltip>
 
 						<div

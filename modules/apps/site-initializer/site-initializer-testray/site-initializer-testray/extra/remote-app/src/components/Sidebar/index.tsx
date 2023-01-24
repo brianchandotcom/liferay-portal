@@ -74,7 +74,11 @@ const Sidebar = () => {
 				>
 					<Tooltip
 						position="right"
-						title={expanded ? undefined : i18n.translate('tasks')}
+						title={
+							expanded
+								? undefined
+								: i18n.translate('compare-runs')
+						}
 					>
 						{CompareRunsContent}
 					</Tooltip>

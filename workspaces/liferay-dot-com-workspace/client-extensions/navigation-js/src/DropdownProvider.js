@@ -39,19 +39,9 @@ class DropdownProvider {
 		this.showCallback = showCallback;
 		this.hideCallback = hideCallback;
 
-		delegate(
-			document.body,
-			'click',
-			triggerSelector,
-			this._onTriggerClick
-		);
+		delegate(document.body, 'click', triggerSelector, this._onTriggerClick);
 
-		delegate(
-			document.body,
-			'keydown',
-			triggerSelector,
-			this._onKeyDown
-		);
+		delegate(document.body, 'keydown', triggerSelector, this._onKeyDown);
 	}
 
 	hide = ({menu, trigger}) => {

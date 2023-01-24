@@ -19,5 +19,5 @@ import SpatialNavigationProvider from './SpatialNavigation';
 export default {
 	ClassToggle,
 	DropdownProvider,
-	SpatialNavigationProvider
+	SpatialNavigationProvider,
 };

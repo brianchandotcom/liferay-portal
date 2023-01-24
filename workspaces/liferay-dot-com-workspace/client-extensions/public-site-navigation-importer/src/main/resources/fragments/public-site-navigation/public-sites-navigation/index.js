@@ -96,9 +96,8 @@ const searchSuggestions = fragmentElement.querySelector('.search-suggestions');
 
 const searchSuggestionItemTemplate = suggestions.querySelector('template');
 
-const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
-	'a'
-);
+const searchSuggestionItem =
+	searchSuggestionItemTemplate.content.querySelector('a');
 
 searchSuggestionsInput.oninput = function () {
 	searchSuggestions.innerHTML = '';
@@ -132,72 +131,75 @@ function performSearch(query) {
 			displayGroupName: 'Public Nav Search Recommendations',
 			size: '3',
 		},
-	]).then((data) => {
-		if (data && data.items && data.items[0]) {
-			const items = JSON.parse(JSON.stringify(data.items[0]));
-			if (items) {
-				searchSuggestions.innerHTML = '';
+	])
+		.then((data) => {
+			if (data && data.items && data.items[0]) {
+				const items = JSON.parse(JSON.stringify(data.items[0]));
+				if (items) {
+					searchSuggestions.innerHTML = '';
 
-				const searchTermRegExp = new RegExp(query, 'ig');
+					const searchTermRegExp = new RegExp(query, 'ig');
 
-				for (const suggestion of items.suggestions) {
-					const suggestionLink = document.importNode(
-						searchSuggestionItem,
-						true
-					);
-
-					const assetURL = suggestion.attributes.assetURL;
-
-					suggestionLink.href = assetURL;
-
-					const suggestionTitle = suggestionLink.querySelector(
-						'.search-suggestion-item-title'
-					);
-
-					suggestionTitle.appendChild(
-						document.createTextNode(suggestion.text)
-					);
-
-					const suggestionContent = suggestionLink.querySelector(
-						'.search-suggestion-item-content'
-					);
-
-					let suggestionContentTextValue =
-						suggestion.attributes.assetSearchSummary;
-
-					if (suggestionContentTextValue) {
-						suggestionContentTextValue = suggestionContentTextValue.substring(
-							0,
-							500
+					for (const suggestion of items.suggestions) {
+						const suggestionLink = document.importNode(
+							searchSuggestionItem,
+							true
 						);
 
-						suggestionContent.innerHTML = suggestionContentTextValue.replace(
-							searchTermRegExp,
-							`<b>${query}</b>`
+						const assetURL = suggestion.attributes.assetURL;
+
+						suggestionLink.href = assetURL;
+
+						const suggestionTitle = suggestionLink.querySelector(
+							'.search-suggestion-item-title'
 						);
+
+						suggestionTitle.appendChild(
+							document.createTextNode(suggestion.text)
+						);
+
+						const suggestionContent = suggestionLink.querySelector(
+							'.search-suggestion-item-content'
+						);
+
+						let suggestionContentTextValue =
+							suggestion.attributes.assetSearchSummary;
+
+						if (suggestionContentTextValue) {
+							suggestionContentTextValue =
+								suggestionContentTextValue.substring(0, 500);
+
+							suggestionContent.innerHTML =
+								suggestionContentTextValue.replace(
+									searchTermRegExp,
+									`<b>${query}</b>`
+								);
+						}
+
+						const suggestionURL = suggestionLink.querySelector(
+							'.search-suggestion-item-link'
+						);
+
+						suggestionURL.appendChild(
+							document.createTextNode(
+								assetURL.replace(/\?.*$/, '')
+							)
+						);
+
+						searchSuggestions.appendChild(suggestionLink);
+
+						suggestions.classList.add('search-results-found');
 					}
-
-					const suggestionURL = suggestionLink.querySelector(
-						'.search-suggestion-item-link'
-					);
-
-					suggestionURL.appendChild(
-						document.createTextNode(assetURL.replace(/\?.*$/, ''))
-					);
-
-					searchSuggestions.appendChild(suggestionLink);
-
-					suggestions.classList.add('search-results-found');
 				}
 			}
-		}
-		else {
-			suggestions.classList.remove('search-results-found');
-		}
-		suggestions.classList.remove('search-error');
-	}).catch(() => {
-		suggestions.classList.add('search-error');
-	} );
+			else {
+				suggestions.classList.remove('search-results-found');
+			}
+			suggestions.classList.remove('search-error');
+		})
+		.catch(() => {
+			suggestions.classList.add('search-error');
+		});
 }
 
 async function postData(url = '', data = {}) {

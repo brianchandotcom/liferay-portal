@@ -102,9 +102,6 @@ public interface SchedulerEngine {
 
 	public void start() throws SchedulerException;
 
-	public void unschedule(String groupName, StorageType storageType)
-		throws SchedulerException;
-
 	public void unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;

@@ -339,13 +339,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public void unschedule(String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngine.unschedule(groupName, storageType);
-	}
-
-	@Override
 	public void unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {

@@ -136,12 +136,6 @@ public class SchedulerEngineHelperUtil {
 		_schedulerEngineHelper.unregister(messageListener);
 	}
 
-	public static void unschedule(String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.unschedule(groupName, storageType);
-	}
-
 	public static void unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {

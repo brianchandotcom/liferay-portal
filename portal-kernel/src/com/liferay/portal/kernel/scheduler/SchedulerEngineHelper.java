@@ -90,9 +90,6 @@ public interface SchedulerEngineHelper {
 
 	public void unregister(MessageListener messageListener);
 
-	public void unschedule(String groupName, StorageType storageType)
-		throws SchedulerException;
-
 	public void unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;

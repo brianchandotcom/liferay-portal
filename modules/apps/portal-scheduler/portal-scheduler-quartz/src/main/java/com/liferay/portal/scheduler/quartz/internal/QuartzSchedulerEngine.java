@@ -401,29 +401,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	}
 
 	@Override
-	public void unschedule(String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		try {
-			Scheduler scheduler = _getScheduler(storageType);
-
-			groupName = _fixMaxLength(
-				groupName, _groupNameMaxLength, storageType);
-
-			Set<JobKey> jobKeys = scheduler.getJobKeys(
-				GroupMatcher.jobGroupEquals(groupName));
-
-			for (JobKey jobKey : jobKeys) {
-				unschedule(scheduler, jobKey);
-			}
-		}
-		catch (Exception exception) {
-			throw new SchedulerException(
-				"Unable to unschedule jobs in group " + groupName, exception);
-		}
-	}
-
-	@Override
 	public void unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {

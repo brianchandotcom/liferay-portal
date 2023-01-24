@@ -16,7 +16,7 @@ package com.liferay.portal.upgrade.internal.index.updater.osgi.commands;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
-import com.liferay.portal.module.util.BundleUtil;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 
 import org.apache.felix.service.command.Descriptor;
 

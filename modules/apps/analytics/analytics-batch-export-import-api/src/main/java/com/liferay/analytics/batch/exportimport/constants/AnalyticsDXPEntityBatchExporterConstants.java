@@ -14,6 +14,8 @@
 
 package com.liferay.analytics.batch.exportimport.constants;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 /**
  * @author Marcos Martins
  */
@@ -34,20 +36,16 @@ public class AnalyticsDXPEntityBatchExporterConstants {
 		"export-user-group-analytics-dxp-entities"
 	};
 
-	public static final String[] DISPATCH_TRIGGER_NAMES = {
-		"analytics-upload-order", "analytics-upload-product",
-		"export-account-entry-analytics-dxp-entities",
-		"export-account-group-analytics-dxp-entities",
-		"export-analytics-association-analytics-dxp-entities",
-		"export-analytics-delete-message-analytics-dxp-entities",
-		"export-expando-column-analytics-dxp-entities",
-		"export-group-analytics-dxp-entities",
-		"export-organization-analytics-dxp-entities",
-		"export-role-analytics-dxp-entities",
-		"export-team-analytics-dxp-entities",
-		"export-user-analytics-dxp-entities",
-		"export-user-group-analytics-dxp-entities"
-	};
+	public static final String[] DISPATCH_TRIGGER_NAMES = ArrayUtil.append(
+		BASE_DISPATCH_TRIGGER_NAMES,
+		new String[] {
+			ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME,
+			AnalyticsDXPEntityBatchExporterConstants.
+				ORDER_DISPATCH_TRIGGER_NAME,
+			AnalyticsDXPEntityBatchExporterConstants.
+				PRODUCT_DISPATCH_TRIGGER_NAME,
+			AnalyticsDXPEntityBatchExporterConstants.USER_DISPATCH_TRIGGER_NAME
+		});
 
 	public static final String ORDER_DISPATCH_TRIGGER_NAME =
 		"analytics-upload-order";

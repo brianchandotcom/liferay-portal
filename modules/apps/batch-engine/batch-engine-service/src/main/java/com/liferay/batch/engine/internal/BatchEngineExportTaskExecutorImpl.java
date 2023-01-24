@@ -46,6 +46,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.util.Collection;
 import java.util.Date;
@@ -139,17 +140,8 @@ public class BatchEngineExportTaskExecutorImpl
 				batchEngineExportTask.getContentType(),
 				unsyncByteArrayOutputStream);
 			BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
-				_batchEngineExportTaskItemWriterFactory.create(
-					BatchEngineTaskContentType.valueOf(
-						batchEngineExportTask.getContentType()),
-					GetterUtil.getString(
-						_getCSVFileColumnDelimiter(
-							batchEngineExportTask.getCompanyId()),
-						StringPool.COMMA),
-					batchEngineExportTask.getFieldNamesList(),
-					_batchEngineTaskMethodRegistry.getItemClass(
-						batchEngineExportTask.getClassName()),
-					zipOutputStream, batchEngineExportTask.getParameters())) {
+				_getBatchEngineExportTaskItemWriter(
+					batchEngineExportTask, zipOutputStream)) {
 
 			int exportBatchSize = _getExportBatchSize(
 				batchEngineExportTask.getCompanyId());
@@ -198,9 +190,35 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineExportTask);
 	}
 
-	private String _getCSVFileColumnDelimiter(long companyId)
-		throws ConfigurationException {
+	private BatchEngineExportTaskItemWriter _getBatchEngineExportTaskItemWriter(
+			BatchEngineExportTask batchEngineExportTask,
+			OutputStream outputStream)
+		throws Exception {
 
+		BatchEngineExportTaskItemWriterFactory.Builder builder =
+			new BatchEngineExportTaskItemWriterFactory.Builder();
+
+		return builder.batchEngineTaskContentType(
+			BatchEngineTaskContentType.valueOf(
+				batchEngineExportTask.getContentType())
+		).csvFileColumnDelimiter(
+			GetterUtil.getString(
+				_getCSVFileColumnDelimiter(
+					batchEngineExportTask.getCompanyId()),
+				StringPool.COMMA)
+		).fieldNames(
+			batchEngineExportTask.getFieldNamesList()
+		).itemClass(
+			_batchEngineTaskMethodRegistry.getItemClass(
+				batchEngineExportTask.getClassName())
+		).outputStream(
+			outputStream
+		).parameters(
+			batchEngineExportTask.getParameters()
+		).build();
+	}
+
+	private String _getCSVFileColumnDelimiter(long companyId) throws Exception {
 		BatchEngineTaskCompanyConfiguration
 			batchEngineTaskCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
@@ -256,10 +274,6 @@ public class BatchEngineExportTaskExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskExecutorImpl.class);
-
-	private final BatchEngineExportTaskItemWriterFactory
-		_batchEngineExportTaskItemWriterFactory =
-			new BatchEngineExportTaskItemWriterFactory();
 
 	@Reference
 	private BatchEngineExportTaskLocalService

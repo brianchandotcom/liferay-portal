@@ -21,23 +21,19 @@ definition {
 				userFirstName = "partner",
 				userLastName = "partner",
 				userScreenName = "partner");
-
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "partner@liferay.com");
 		}
-
 		task ("Add a new account and assign the created user to the account") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Company Name 1",
 				accountEntryType = "Business");
-
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 1",
 				userEmailAddress = "partner@liferay.com");
 		}
-
 		task ("Create a new Partner Portal Site") {
 			PRMUtils.addPRMSite();
 		}
@@ -57,7 +53,6 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -116,6 +111,41 @@ definition {
 
 		task ("Then an alert will appear") {
 			FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Choose your target audience");
+		}
+	}
+
+	@description = "This is a test for LPS-172891. Verify that the start date cannot be equals to the current date"
+	@priority = "5"
+	test StartDateCannotBeEqualsToCurrentDate {
+		task ("Given I go to add a new MDF Request and fill all Goals form with my information") {
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Company Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("When the user goes to add a new activity") {
+			PRMMDFRequest.addNewActivity();
+		}
+
+		task ("And a date is set on 'Start Date' field") {
+			PRMMDFRequest.insertDate(
+				dateFormat = "MMddYYYY",
+				dateRange = "-1",
+				fieldName = "startDate");
+		}
+
+		task ("Then an error message will be displayed") {
+			PRMMDFRequest.viewErrorMessage(errorMessage = "Start date need to be after today");
 		}
 	}
 

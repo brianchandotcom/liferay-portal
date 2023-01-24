@@ -28,14 +28,14 @@ export const DATA_COLORS = {
 	'metrics.failed': '#E73A45',
 	'metrics.incomplete': '#E3E9EE',
 	'metrics.passed': '#3CD587',
-	'metrics.test-fix': '#59BBFC',
+	'metrics.testfix': '#59BBFC',
 };
 
 export enum Statuses {
 	PASSED = 'PASSED',
 	FAILED = 'FAILED',
 	BLOCKED = 'BLOCKED',
-	TEST_FIX = 'TEST FIX',
+	TEST_FIX = 'TESTFIX',
 	INCOMPLETE = 'INCOMPLETE',
 	SELF = 'SELF COMPLETED',
 	OTHER = 'OTHERS COMPLETED',
@@ -52,7 +52,7 @@ export const chartColors = {
 	[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
 	[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
 	[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
-	[Statuses.TEST_FIX]: DATA_COLORS['metrics.test-fix'],
+	[Statuses.TEST_FIX]: DATA_COLORS['metrics.testfix'],
 };
 
 export const chartClassNames = {
@@ -61,7 +61,7 @@ export const chartClassNames = {
 	[Statuses.INCOMPLETE]: 'test-incomplete',
 	[Statuses.PASSED]: 'passed',
 	[Statuses.SELF]: 'self-completed',
-	[Statuses.TEST_FIX]: 'test-fix',
+	[Statuses.TEST_FIX]: 'testfix',
 	[Statuses.OTHER]: 'others-completed',
 };
 

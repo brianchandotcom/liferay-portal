@@ -11,8 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import DropdownProvider from './DropdownProvider';
+
 import ClassToggle from './ClassToggle';
+import DropdownProvider from './DropdownProvider';
 import SpatialNavigationProvider from './SpatialNavigation';
 
 export default {

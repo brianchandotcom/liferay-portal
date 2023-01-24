@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 import dom from 'metal-dom';
 
 class ClassToggle {
@@ -29,40 +30,40 @@ class ClassToggle {
 	}
 
 	syncUI = function () {
-		var instance = this;
+		const instance = this;
 
-		var wrapper = document.getElementById('wrapper');
+		let wrapper = document.getElementById('wrapper');
 
 		if (!wrapper) {
 			wrapper = document.querySelector('body');
 		}
 
-		var trigger = this.trigger;
+		let trigger = this.trigger;
 
 		if (!trigger) {
 			trigger = this.item;
 		}
 
 		dom.delegate(wrapper, 'click', trigger, (event) => {
-			var node = event.delegateTarget;
+			let node = event.delegateTarget;
 
 			if (!node) {
 				node = event.currentTarget;
 			}
 
-			var targetClass = instance._getTargetClass(node);
-			var targetNodes = instance._getTargetNodes(node);
+			const targetClass = instance._getTargetClass(node);
+			const targetNodes = instance._getTargetNodes(node);
 
-			var active = false;
+			let active = false;
 
 			if (dom.hasClass(targetNodes[0], targetClass)) {
 				active = true;
 			}
 
-			var toggleType = this.toggleType;
+			let toggleType = this.toggleType;
 
-			if (node.getAttribute('data-toggle-type')) {
-				toggleType = node.getAttribute('data-toggle-type');
+			if (node.dataset.toggleType) {
+				toggleType = node.dataset.toggleType;
 			}
 
 			if (toggleType == 'offclick') {
@@ -93,11 +94,11 @@ class ClassToggle {
 	};
 
 	_activate = function (node, targetNodes, targetClass) {
-		var instance = this;
+		const instance = this;
 
 		dom.addClasses(targetNodes, targetClass);
 
-		var activateCallback = this.activateCallback;
+		const activateCallback = this.activateCallback;
 
 		if (activateCallback instanceof Function) {
 			activateCallback(instance, node, targetNodes, targetClass);
@@ -105,9 +106,9 @@ class ClassToggle {
 	};
 
 	_carouselAction = function (node, targetNodes) {
-		var instance = this;
+		const instance = this;
 
-		var curActiveNode = targetNodes[0]._activeNode;
+		const curActiveNode = targetNodes[0]._activeNode;
 
 		if (curActiveNode && curActiveNode != node) {
 			instance._deactivate(
@@ -121,11 +122,11 @@ class ClassToggle {
 	};
 
 	_deactivate = function (node, targetNodes, targetClass) {
-		var instance = this;
+		const instance = this;
 
 		dom.removeClasses(targetNodes, targetClass);
 
-		var deactivateCallback = this.deactivateCallback;
+		const deactivateCallback = this.deactivateCallback;
 
 		if (deactivateCallback instanceof Function) {
 			deactivateCallback(instance, node, targetNodes, targetClass);
@@ -133,10 +134,10 @@ class ClassToggle {
 	};
 
 	_getTargetClass = function (node) {
-		var className = this.baseClassName + '-active';
+		let className = this.baseClassName + '-active';
 
-		if (node.getAttribute('data-target-class')) {
-			className = node.getAttribute('data-target-class');
+		if (node.dataset.targetClass) {
+			className = node.dataset.targetClass;
 		}
 		else if (this.targetClass) {
 			className = this.targetClass;
@@ -148,9 +149,9 @@ class ClassToggle {
 	_getTargetNodes = function (node) {
 		let nodes;
 
-		if (node.getAttribute('data-target-nodes')) {
+		if (node.dataset.targetNodes) {
 			nodes = document.querySelectorAll(
-				node.getAttribute('data-target-nodes')
+				node.dataset.targetNodes
 			);
 		}
 		else if (this.targetNodes) {
@@ -165,20 +166,20 @@ class ClassToggle {
 	};
 
 	_offclickAction = function (node, targetNodes, targetClass, event) {
-		var instance = this;
+		const instance = this;
 
 		event.stopPropagation();
 
 		let nodeContent;
 
-		if (node.getAttribute('data-offclick-content')) {
+		if (node.dataset.offclickContent) {
 			nodeContent = document.querySelectorAll(
-				node.getAttribute('data-offclick-content')
+				node.dataset.offclickContent
 			);
 		}
-		else if (node.getAttribute('data-target-nodes')) {
-			var offclickContent =
-				node.getAttribute('data-target-nodes') +
+		else if (node.dataset.targetNodes) {
+			const offclickContent =
+				node.dataset.targetNodes +
 				' .' +
 				this.baseClassName +
 				'-content';
@@ -199,7 +200,7 @@ class ClassToggle {
 		}
 
 		function handleOffclick(event) {
-			for (var i = 0; i < nodeContent.length; i++) {
+			for (let i = 0; i < nodeContent.length; i++) {
 				if (!nodeContent[i].contains(event.target)) {
 					instance._deactivate(node, targetNodes, targetClass);
 					document.removeEventListener('click', handleOffclick);

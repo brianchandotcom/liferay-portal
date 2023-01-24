@@ -1,5 +1,12 @@
 definition {
 
+	@summary = "Add a new activity"
+	macro addNewActivity {
+		Click(
+			key_buttonText = "Add Activity",
+			locator1 = "PRMMDFRequest#ADD_BUTTON");
+	}
+
 	@summary = "Add a new MDF Request filling the goals and activity pages"
 	macro createNewRequest {
 		PRMMDFRequest.fillGoalsPage(
@@ -117,6 +124,37 @@ definition {
 		return "${nextDayDate}";
 	}
 
+	@summary = "Fill the date fields on Activity Form"
+	macro insertDate {
+		if (!(isSet(activityIndex))) {
+			var activityIndex = "0";
+		}
+
+		var currentDate = DateUtil.getFormattedDate("${dateRange}", "${dateFormat}");
+
+		if ("${fieldName}" == "startDate") {
+			Type.sendKeys(
+				key_fieldName = "activities[${activityIndex}].startDate",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "${currentDate}");
+
+			Click(
+				key_fieldName = "activities[${activityIndex}].endDate",
+				locator1 = "PRMMDFRequest#TEXT_FIELD");
+		}
+
+		if ("${fieldName}" == "endDate") {
+			Type.sendKeys(
+				key_fieldName = "activities[${activityIndex}].endDate",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "${currentDate}");
+
+			Click(
+				key_fieldName = "activities[${activityIndex}].startDate",
+				locator1 = "PRMMDFRequest#TEXT_FIELD");
+		}
+	}
+
 	@summary = "Add a new activity"
 	macro newActivity {
 		if (!(isSet(activityIndex))) {
@@ -214,6 +252,13 @@ definition {
 		AssertElementPresent(
 			key_text = "${buttonName}",
 			locator1 = "Button#ANY_DISABLED");
+	}
+
+	@summary = "Verify error messages"
+	macro viewErrorMessage {
+		var key_errorMessage = "${errorMessage}";
+
+		AssertElementPresent(locator1 = "PRMMDFRequest#ERROR_MESSAGE");
 	}
 
 }

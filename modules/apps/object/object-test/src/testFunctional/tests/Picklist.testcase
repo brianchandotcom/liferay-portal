@@ -698,6 +698,7 @@ definition {
 	@priority = "3"
 	test ViewTranslatedPicklistItemNameOnForms {
 		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "Picklist#ViewTranslatedPicklistItemNameOnForms";
 
 		task ("Add a Custom Picklist and a Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
@@ -951,6 +952,7 @@ definition {
 	@priority = "3"
 	test ViewTranslatedPicklistNameOnObjectAdmin {
 		property portal.acceptance = "quarantine";
+		property test.name.skip.portal.instance = "Picklist#ViewTranslatedPicklistNameOnObjectAdmin";
 
 		task ("Add a Custom Picklist (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");

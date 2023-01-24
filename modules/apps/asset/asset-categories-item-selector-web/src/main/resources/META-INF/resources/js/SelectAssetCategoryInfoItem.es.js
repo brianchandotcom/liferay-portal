@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
@@ -98,15 +99,13 @@ function SelectAssetCategory({
 								onSelectedItemsCount={setSelectedItemsCount}
 							/>
 						) : (
-							<div className="border-0 pt-0 sheet taglib-empty-result-message">
-								<div className="taglib-empty-result-message-header"></div>
-
-								<div className="sheet-text text-center">
-									{Liferay.Language.get(
-										'no-categories-were-found'
-									)}
-								</div>
-							</div>
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'no-categories-were-found'
+								)}
+								imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+								title={null}
+							/>
 						)}
 					</div>
 				</ClayLayout.ContainerFluid>

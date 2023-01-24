@@ -88,9 +88,7 @@ public class CETFDSActionProvider implements FDSActionProvider {
 				"status", "warning"
 			).put(
 				"title",
-				_language.get(
-					httpServletRequest,
-					"delete-client-extension")
+				_language.get(httpServletRequest, "delete-client-extension")
 			).build());
 		dropdownItem.setHref(
 			PortletURLBuilder.create(
@@ -141,6 +139,7 @@ public class CETFDSActionProvider implements FDSActionProvider {
 			).setParameter(
 				"externalReferenceCode", cetFDSEntry.getExternalReferenceCode()
 			).buildPortletURL());
+		dropdownItem.setIcon("view");
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "view"));
 	}
 

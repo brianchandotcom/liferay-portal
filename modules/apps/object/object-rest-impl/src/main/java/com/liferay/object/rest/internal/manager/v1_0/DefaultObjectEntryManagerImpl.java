@@ -701,11 +701,10 @@ public class DefaultObjectEntryManagerImpl
 				continue;
 			}
 
-			ObjectRelationship objectRelationship =
-				objectRelationships.get(property.getKey());
-
-			Object propertyValue = objectEntryProperties.get(
+			ObjectRelationship objectRelationship = objectRelationships.get(
 				property.getKey());
+
+			Object propertyValue = objectEntryProperties.get(property.getKey());
 
 			if ((propertyValue instanceof Map) &&
 				StringUtil.equals(
@@ -719,7 +718,7 @@ public class DefaultObjectEntryManagerImpl
 
 				ObjectDefinition relatedObjectDefinition =
 					_objectDefinitionLocalService.getObjectDefinition(
-						_getNestedEntityObjectDefinitionId(
+						_getNestedObjectDefinitionId(
 							objectDefinition, objectRelationship));
 
 				_createAndRelateNestedObjectEntry(
@@ -737,14 +736,12 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					List<LinkedHashMap<String, Object>>
-						nestedObjectEntries =
-							(List<LinkedHashMap<String, Object>>)
-								propertyValue;
+					List<LinkedHashMap<String, Object>> nestedObjectEntries =
+						(List<LinkedHashMap<String, Object>>)propertyValue;
 
 					ObjectDefinition relatedObjectDefinition =
 						_objectDefinitionLocalService.getObjectDefinition(
-							_getNestedEntityObjectDefinitionId(
+							_getNestedObjectDefinitionId(
 								objectDefinition, objectRelationship));
 
 					for (Map<String, Object> nestedObjectEntry :
@@ -752,8 +749,8 @@ public class DefaultObjectEntryManagerImpl
 
 						_createAndRelateNestedObjectEntry(
 							dtoConverterContext, nestedObjectEntry,
-							relatedObjectDefinition, false,
-							objectEntryModel, objectRelationship);
+							relatedObjectDefinition, false, objectEntryModel,
+							objectRelationship);
 					}
 				}
 				else {
@@ -920,7 +917,7 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext.getUserId());
 	}
 
-	private long _getNestedEntityObjectDefinitionId(
+	private long _getNestedObjectDefinitionId(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship) {
 
@@ -958,8 +955,7 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, ObjectRelationship> _getObjectRelationships(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
-		throws Exception {
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
 		Map<String, ObjectRelationship> objectRelationships = new HashMap<>();
 

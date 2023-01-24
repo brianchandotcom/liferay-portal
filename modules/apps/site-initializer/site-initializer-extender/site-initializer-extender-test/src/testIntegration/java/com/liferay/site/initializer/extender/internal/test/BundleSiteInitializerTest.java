@@ -1403,19 +1403,38 @@ public class BundleSiteInitializerTest {
 
 		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(
-				group.getCompanyId(), "com.liferay.commerce.product", 1,
+				group.getCompanyId(), "com.liferay.commerce.product",
+				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(group.getCompanyId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
+		Assert.assertEquals(32, resourcePermission.getActionIds());
 
 		role = _roleLocalService.fetchRole(group.getCompanyId(), "Test Role 2");
 
 		resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(
-				group.getCompanyId(), "com.liferay.commerce.product", 2,
+				group.getCompanyId(), "com.liferay.commerce.product",
+				ResourceConstants.SCOPE_GROUP,
 				String.valueOf(group.getGroupId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
+		Assert.assertEquals(32, resourcePermission.getActionIds());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				group.getCompanyId(), "C_TestObjectDefinition3");
+
+		resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				group.getCompanyId(),
+				"com.liferay.object.model.ObjectDefinition#" +
+					objectDefinition.getObjectDefinitionId(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(group.getCompanyId()), role.getRoleId());
+
+		Assert.assertNotNull(resourcePermission);
+		Assert.assertEquals(11, resourcePermission.getActionIds());
 	}
 
 	private void _assertRoles(Group group) {

@@ -17,8 +17,11 @@ package com.liferay.change.tracking.internal.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactTable;
+import com.liferay.portal.kernel.model.EmailAddressTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ContactPersistence;
@@ -37,6 +40,22 @@ public class ContactTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<ContactTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				EmailAddressTable.INSTANCE
+			).innerJoinON(
+				ContactTable.INSTANCE,
+				ContactTable.INSTANCE.contactId.eq(
+					EmailAddressTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					EmailAddressTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(Contact.class.getName())
+				)
+			));
 	}
 
 	@Override

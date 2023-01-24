@@ -281,7 +281,7 @@ public class DispatchTriggerLocalServiceTest {
 			}
 
 			Assert.assertNull(
-				_schedulerEngineHelper.getJobState(
+				_schedulerEngineHelper.getScheduledJob(
 					String.format(
 						"DISPATCH_JOB_%07d",
 						dispatchTrigger.getDispatchTriggerId()),

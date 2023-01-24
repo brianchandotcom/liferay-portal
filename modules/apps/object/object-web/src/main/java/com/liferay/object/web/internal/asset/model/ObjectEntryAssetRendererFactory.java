@@ -86,6 +86,15 @@ public class ObjectEntryAssetRendererFactory
 		}
 	}
 
+	@Override
+	public boolean isActive(long companyId) {
+		if (_objectDefinition.getCompanyId() == companyId) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryAssetRendererFactory.class);
 

@@ -77,15 +77,17 @@ function ListTypeEntriesModal() {
 		}));
 	};
 
-	const handleNameChange = (name_i18n: LocalizedValue<string>) => {
+	const handleNameChange = (newName_i18n: LocalizedValue<string>) => {
+		let newItemKey = itemKey;
+
+		if (modalType !== 'edit' && keyChanged === false) {
+			newItemKey = toCamelCase(newName_i18n[defaultLanguageId] as string);
+		}
+
 		setState((previousValues) => ({
 			...previousValues,
-			...(modalType !== 'edit' &&
-				keyChanged === false &&
-				name_i18n?.[defaultLanguageId] && {
-					itemKey: toCamelCase(name_i18n[defaultLanguageId]!),
-				}),
-			name_i18n: {...name_i18n},
+			itemKey: newItemKey,
+			name_i18n: newName_i18n,
 		}));
 	};
 
@@ -236,7 +238,7 @@ function ListTypeEntriesModal() {
 					error={errors.name_i18n}
 					id="locale"
 					label={Liferay.Language.get('name')}
-					onChange={(name_i18n) => handleNameChange(name_i18n)}
+					onChange={handleNameChange}
 					required
 					translations={name_i18n ?? {[defaultLanguageId]: ''}}
 				/>

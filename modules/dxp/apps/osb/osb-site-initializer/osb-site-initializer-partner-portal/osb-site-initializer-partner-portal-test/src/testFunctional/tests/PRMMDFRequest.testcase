@@ -118,6 +118,53 @@ definition {
 			FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Choose your target audience");
 		}
 	}
+	@description = "This is a test for LPS-172479. Verify that the difference between the start date and end date cannot be higher than six months."
+	@priority = "5"
+	test DifferenceBetweenStartAndEndDateCannotExceedSixMonths {
+		task ("Given I go to add a new MDF Request") {
+			PRMMarketing.gotoAddNewMDF();
+		}
+
+		task ("And I fill all Goals form with my informations") {
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Company Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("And I add a new activity") {
+			PRMMDFRequest.newActivity(
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				followUpStrategy = "test",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetOfLeads = "test",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When I put an end date that is higher than six months from the start date") {
+			PRMMDFRequest.insertDate(
+				dateFormat = "MMddYYYY",
+				dateRange = "+185",
+				fieldName = "endDate");
+		}
+		
+		task ("Then a feedback message will appear") {
+		AssertElementPresent(
+			key_feedbackMessage = "End date must be less than six month after start date",
+			locator1 = "Form#FEEDBACK_MESSAGE");
+		}
+	}
 
 	@description = "This is test is for LPS-173510. Verify that the start date cannot be before the current date"
 	@priority = "5"

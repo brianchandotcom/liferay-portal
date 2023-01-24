@@ -154,7 +154,7 @@ public class ListTypeDefinitionResourceImpl
 
 	@Override
 	public ListTypeDefinition putListTypeDefinitionByExternalReferenceCode(
-			String listTypeDefinitionExternalReferenceCode,
+			String externalReferenceCode,
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
@@ -162,8 +162,7 @@ public class ListTypeDefinitionResourceImpl
 			serviceBuilderListTypeDefinition =
 				_listTypeDefinitionService.
 					getListTypeDefinitionByExternalReferenceCode(
-						listTypeDefinitionExternalReferenceCode,
-						contextCompany.getCompanyId());
+						externalReferenceCode, contextCompany.getCompanyId());
 
 		return putListTypeDefinition(
 			serviceBuilderListTypeDefinition.getListTypeDefinitionId(),

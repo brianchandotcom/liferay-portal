@@ -14,16 +14,17 @@
 
 package com.liferay.wiki.internal.change.tracking.spi.search;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.spi.search.CTSearchExcludeModelClassPKContributor;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageTable;
 import com.liferay.wiki.service.WikiPageLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Truong
@@ -41,26 +42,25 @@ public class WikiPageCTSearchExcludeModelClassPKContributor
 			return;
 		}
 
-		List<WikiPage> wikiPages =
-			_wikiPageLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					WikiPageTable.INSTANCE
-				).from(
-					WikiPageTable.INSTANCE
-				).where(
-					WikiPageTable.INSTANCE.ctCollectionId.eq(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION
-					).and(
-						WikiPageTable.INSTANCE.resourcePrimKey.in(
-							DSLQueryFactoryUtil.select(
-								WikiPageTable.INSTANCE.resourcePrimKey
-							).from(
-								WikiPageTable.INSTANCE
-							).where(
-								WikiPageTable.INSTANCE.pageId.eq(classPK)
-							))
-					)
-				));
+		List<WikiPage> wikiPages = _wikiPageLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				WikiPageTable.INSTANCE
+			).from(
+				WikiPageTable.INSTANCE
+			).where(
+				WikiPageTable.INSTANCE.ctCollectionId.neq(
+					CTCollectionThreadLocal.getCTCollectionId()
+				).and(
+					WikiPageTable.INSTANCE.resourcePrimKey.in(
+						DSLQueryFactoryUtil.select(
+							WikiPageTable.INSTANCE.resourcePrimKey
+						).from(
+							WikiPageTable.INSTANCE
+						).where(
+							WikiPageTable.INSTANCE.pageId.eq(classPK)
+						))
+				)
+			));
 
 		for (WikiPage wikiPage : wikiPages) {
 			excludeProductionModelClassPKs.add(wikiPage.getPageId());

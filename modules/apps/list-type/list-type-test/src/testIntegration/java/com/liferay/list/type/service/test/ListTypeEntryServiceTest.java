@@ -192,8 +192,7 @@ public class ListTypeEntryServiceTest {
 			_setUser(user);
 
 			listTypeEntry = _listTypeEntryService.addListTypeEntry(
-				RandomTestUtil.randomString(),
-				_listTypeDefinition.getListTypeDefinitionId(),
+				null, _listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));

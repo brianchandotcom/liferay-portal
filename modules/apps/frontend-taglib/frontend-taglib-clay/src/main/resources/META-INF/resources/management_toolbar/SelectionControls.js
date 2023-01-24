@@ -127,13 +127,30 @@ const SelectionControls = ({
 				);
 			});
 
+			const allSelectedElements = select.getAllSelectedElements();
+
+			const elements = {
+				allSelectedElements,
+				currentPageElements: select._getCurrentPageElements(),
+				currentPageSelectedElements: select.getCurrentPageSelectedElements(),
+			};
+
+			if (allSelectedElements.size()) {
+				const payload = {
+					actions: select._getActions(allSelectedElements),
+					elements,
+				};
+
+				setActionDropdownItems(
+					actionDropdownItems?.map((item) =>
+						disableActionIfNeeded(item, payload, bulkSelection)
+					)
+				);
+			}
+
 			updateControls({
 				bulkSelection,
-				elements: {
-					allSelectedElements: select.getAllSelectedElements(),
-					currentPageElements: select.getCurrentPageElements(),
-					currentPageSelectedElements: select.getCurrentPageSelectedElements(),
-				},
+				elements,
 			});
 		});
 

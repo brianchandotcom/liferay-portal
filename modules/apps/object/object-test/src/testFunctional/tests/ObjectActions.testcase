@@ -1469,6 +1469,76 @@ definition {
 		}
 	}
 
+	@description = "LPS-173219 - Assert an Action with an Expression can be triggered after updating an entry."
+	@priority = "4"
+	test CanTriggerActionWithExpressionByUpdatingEntry {
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object173219",
+				objectName = "CustomObject173219",
+				pluralLabelName = "Custom Objects 173219");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject173219");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject173219");
+		}
+
+		task ("And given an action is created with an expression") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object173219");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Update Action",
+				actionName = "CustomUpdateAction",
+				active = "true",
+				inputExpression = "customObjectField == 'Entry Test'",
+				inputMethod = "true",
+				inputValue = " New Entry Test",
+				objectLabel = "Custom Object173219",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Update");
+		}
+
+		task ("When an object entry is updated") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject173219",
+				value = "Entry");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject173219");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry");
+
+			ObjectAdmin.editEntryName(newEntryValue = "Entry Test");
+		}
+
+		task ("Then the action will be triggered after updating the entry.") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject173219");
+
+			ObjectPortlet.viewEntry(entry = "New Entry Test");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object173219");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "CustomUpdateAction",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-139008 - Verify it is possible to update an Action"
 	@priority = "4"
 	test CanUpdateAction {

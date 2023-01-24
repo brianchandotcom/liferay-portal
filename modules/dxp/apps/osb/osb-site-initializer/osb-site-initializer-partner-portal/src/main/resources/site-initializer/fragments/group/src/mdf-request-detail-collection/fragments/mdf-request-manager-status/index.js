@@ -232,7 +232,7 @@ const updateButtons = (mdfRequestStatusKey) => {
 	if (editButton) {
 		editButton.onclick = () =>
 			Liferay.Util.navigate(
-				`${siteURL}/marketing/mdf-requests/new/#/${mdfClaimId}`
+				`${siteURL}/marketing/mdf-requests/new/#/${mdfRequestId}`
 			);
 	}
 

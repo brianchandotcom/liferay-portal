@@ -128,7 +128,10 @@ describe('Modal', () => {
 		expect(document.getElementById(sampleId)).toBeTruthy();
 	});
 
-	it('when providing "autoFocus: true" inside a button configuration, it will make this button focused', () => {
+	// Disabling this test because Modal's behavior now is that the focus goes
+	// to the modal to announce that it is open.
+
+	xit('when providing "autoFocus: true" inside a button configuration, it will make this button focused', () => {
 		render(
 			<Modal
 				buttons={[

@@ -19,7 +19,6 @@ exports[`Modal renders markup based on given configuration 1`] = `
     <div
       class="fade modal d-block liferay-modal show"
       id="abcd"
-      role="dialog"
     >
       <div
         aria-labelledby="clay-modal-label-1"
@@ -34,12 +33,12 @@ exports[`Modal renders markup based on given configuration 1`] = `
           <div
             class="modal-header"
           >
-            <div
+            <h1
               class="modal-title"
               id="clay-modal-label-1"
             >
               My Modal
-            </div>
+            </h1>
             <button
               aria-label="close"
               class="close btn btn-unstyled"

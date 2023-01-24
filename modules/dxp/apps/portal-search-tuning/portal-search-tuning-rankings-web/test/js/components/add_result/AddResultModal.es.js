@@ -208,6 +208,7 @@ describe('AddResultModal', () => {
 
 		await findByTestId(RESULTS_LIST_ID);
 
+		fireEvent.click(queryAllByText('x-items')[0]);
 		fireEvent.click(queryAllByText('x-items')[4]);
 
 		await findByTestId('110');

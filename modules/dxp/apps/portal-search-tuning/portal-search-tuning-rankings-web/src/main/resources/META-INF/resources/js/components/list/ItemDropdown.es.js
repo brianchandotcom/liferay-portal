@@ -67,6 +67,7 @@ class ItemDropdown extends Component {
 					<ClayButton
 						aria-expanded="false"
 						aria-haspopup="true"
+						aria-label={Liferay.Language.get('actions')}
 						className="btn-outline-borderless component-action"
 						title={Liferay.Language.get('actions')}
 					>

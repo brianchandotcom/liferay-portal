@@ -59,6 +59,7 @@ class FilterInput extends Component {
 
 						<ClayInput.GroupInsetItem after tag="span">
 							<ClayButton
+								aria-label={Liferay.Language.get('search-icon')}
 								displayType="unstyled"
 								onClick={onSubmit}
 								title={Liferay.Language.get('search-icon')}

@@ -212,16 +212,17 @@ describe('Variants', () => {
 
 		await findByText('create-new-variant');
 
-		const variantNameInput = getByLabelText('name');
+		const variantNameInput = getByLabelText(/name/);
 		expect(variantNameInput.value).toBe('');
 
+		fireEvent.focus(variantNameInput);
 		await userEvent.type(variantNameInput, 'Variant Name');
 
 		const saveButton = getByText('save');
 
-		userEvent.click(saveButton);
+		fireEvent.click(saveButton);
 
-		await waitForElementToBeRemoved(() => getByLabelText('name'));
+		await waitForElementToBeRemoved(() => getByLabelText(/name/));
 		await findByText('Variant Name');
 
 		expect(createVariant).toHaveBeenCalledWith(

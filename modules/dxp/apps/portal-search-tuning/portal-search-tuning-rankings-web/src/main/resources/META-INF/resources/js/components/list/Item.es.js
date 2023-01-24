@@ -58,6 +58,7 @@ const ROOT_CLASS = 'list-item-root';
 const ResultPinIconDisplay = () => (
 	<div className="quick-action-menu result-pin-icon-display">
 		<ClayButton
+			aria-label={Liferay.Language.get('pinned-result')}
 			className="btn-outline-borderless component-action quick-action-item"
 			displayType="secondary"
 			monospaced
@@ -526,6 +527,11 @@ class Item extends PureComponent {
 					<div className="quick-action-menu">
 						{onClickHide && (
 							<ClayButton
+								aria-label={
+									hidden
+										? Liferay.Language.get('show-result')
+										: Liferay.Language.get('hide-result')
+								}
 								className="btn-outline-borderless component-action quick-action-item"
 								displayType="secondary"
 								monospaced
@@ -542,6 +548,11 @@ class Item extends PureComponent {
 
 						{onClickPin && (
 							<ClayButton
+								aria-label={
+									pinned
+										? Liferay.Language.get('unpin-result')
+										: Liferay.Language.get('pin-result')
+								}
 								className="btn-outline-borderless component-action quick-action-item"
 								displayType="secondary"
 								monospaced

@@ -48,7 +48,7 @@ describe('The PaginationBar component should', () => {
 
 		expect(pageSizeOptions.length).toBe(6);
 
-		let pageLinks = baseElement.querySelectorAll('a.page-link');
+		let pageLinks = baseElement.querySelectorAll('.page-link');
 
 		expect(pageLinks.length).toBe(3);
 
@@ -58,7 +58,7 @@ describe('The PaginationBar component should', () => {
 
 		fireEvent.click(pageSizeOptions[0]);
 
-		pageLinks = baseElement.querySelectorAll('a.page-link');
+		pageLinks = baseElement.querySelectorAll('.page-link');
 		let pageItems = baseElement.querySelectorAll('.page-item');
 
 		expect(pageLinks.length).toBe(6);
@@ -95,7 +95,7 @@ describe('The PaginationBar component should', () => {
 
 		expect(pageSizeOptions.length).toBe(6);
 
-		let pageLinks = baseElement.querySelectorAll('a.page-link');
+		let pageLinks = baseElement.querySelectorAll('.page-link');
 		let pageItems = baseElement.querySelectorAll('.page-item');
 
 		expect(pageLinks.length).toBe(5);
@@ -121,7 +121,7 @@ describe('The PaginationBar component should', () => {
 
 		fireEvent.click(pageSizeOptions[4]);
 
-		pageLinks = baseElement.querySelectorAll('a.page-link');
+		pageLinks = baseElement.querySelectorAll('.page-link');
 		pageItems = baseElement.querySelectorAll('.page-item');
 
 		expect(pageLinks.length).toBe(3);

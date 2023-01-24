@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.portal.tools.wsdd.builder.util.Java2WsddTask;
 import com.liferay.portal.xml.SAXReaderFactory;
-import com.liferay.util.ant.Java2WsddTask;
 import com.liferay.util.xml.XMLSafeReader;
 
 import java.io.File;

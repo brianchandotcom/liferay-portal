@@ -47,6 +47,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -130,6 +131,68 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 	}
 
 	public static final class BatchEngineImportConfiguration {
+
+		public String getCallbackURL() {
+			return callbackURL;
+		}
+
+		public String getClassName() {
+			return className;
+		}
+
+		public long getCompanyId() {
+			return companyId;
+		}
+
+		public Map<String, String> getFieldNameMappingMap() {
+			return fieldNameMappingMap;
+		}
+
+		public Map<String, Serializable> getParameters() {
+			return parameters;
+		}
+
+		public String getTaskItemDelegateName() {
+			return taskItemDelegateName;
+		}
+
+		public long getUserId() {
+			return userId;
+		}
+
+		public String getVersion() {
+			return version;
+		}
+
+		public void setClassName(String className) {
+			this.className = className;
+		}
+
+		public void setFieldNameMappingMap(
+			Map<String, String> fieldNameMappingMap) {
+
+			if (fieldNameMappingMap == null) {
+				fieldNameMappingMap = Collections.emptyMap();
+			}
+
+			this.fieldNameMappingMap = new HashMap<>(fieldNameMappingMap);
+		}
+
+		public void setParameters(Map<String, Serializable> parameters) {
+			if (parameters == null) {
+				parameters = Collections.emptyMap();
+			}
+
+			this.parameters = new HashMap<>(parameters);
+		}
+
+		public void setTaskItemDelegateName(String taskItemDelegateName) {
+			this.taskItemDelegateName = taskItemDelegateName;
+		}
+
+		public void setVersion(String version) {
+			this.version = version;
+		}
 
 		@JsonProperty
 		protected String callbackURL;

@@ -372,7 +372,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				Serializable value = field.getValue(locale);
 
-				if (Validator.isNull(value)) {
+				if (value == null) {
 					continue;
 				}
 

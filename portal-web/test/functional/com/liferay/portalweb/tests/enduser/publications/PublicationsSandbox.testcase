@@ -75,6 +75,11 @@ definition {
 
 		Publications.createNewPublication(publicationName = "Publication Name");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
 		Publications.deletePublication(publicationName = "Publication Name");
 
 		var currentPublicationName = Publications.getPublicationName();

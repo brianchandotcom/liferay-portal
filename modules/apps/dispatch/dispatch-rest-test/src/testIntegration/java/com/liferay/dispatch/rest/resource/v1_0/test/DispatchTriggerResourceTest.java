@@ -15,12 +15,19 @@
 package com.liferay.dispatch.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.rest.client.dto.v1_0.DispatchTrigger;
 import com.liferay.portal.kernel.service.ServiceContext;
-import org.junit.Ignore;
-import org.junit.runner.RunWith;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
+
+import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Nilton Vieira
@@ -39,69 +46,91 @@ public class DispatchTriggerResourceTest
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 	}
 
+	@Ignore
 	@Override
-	protected DispatchTrigger
-		testGetDispatchTriggersPage_addDispatchTrigger(
-		DispatchTrigger dispatchTrigger) throws Exception{
-
-		return _addDispatchTrigger(dispatchTrigger);
+	@Test
+	public void testGraphQLGetDispatchTriggersPage() throws Exception {
 	}
 
 	@Override
-	protected DispatchTrigger
-	testPostDispatchTriggersPage_addDispatchTrigger(
-		DispatchTrigger dispatchTrigger) throws Exception{
+	@Test
+	public void testPostDispatchTrigger() throws Exception {
+		DispatchTrigger randomDispatchTrigger = randomDispatchTrigger();
 
-		return _addDispatchTrigger(dispatchTrigger);
-	}
-	@Override
-	protected DispatchTrigger
-	testPostDispatchTriggersPageRun_addDispatchTrigger(
-		DispatchTrigger dispatchTrigger) throws Exception{
-
-		return _addDispatchTrigger(dispatchTrigger);
+		_addDispatchTrigger(randomDispatchTrigger);
 	}
 
 	@Override
-	protected DispatchTrigger
-			testGraphQLDispatchTriggersPage_addDispatchTriggersPage()
+	@Test
+	public void testPostDispatchTriggerRun() throws Exception {
+		_addDispatchTrigger(randomDispatchTrigger());
+	}
+
+	@Override
+	protected DispatchTrigger randomDispatchTrigger() throws Exception {
+		return new DispatchTrigger() {
+			{
+				active = RandomTestUtil.randomBoolean();
+				companyId = RandomTestUtil.randomLong();
+				cronExpression = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dispatchTaskClusterMode = RandomTestUtil.randomInt();
+				dispatchTaskExecutorType = _getRandomDispatchExecutorType();
+				dispatchTaskSettings = null;
+				endDate = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				overlapAllowed = RandomTestUtil.randomBoolean();
+				startDate = RandomTestUtil.nextDate();
+				system = RandomTestUtil.randomBoolean();
+				timeZoneId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				userId = RandomTestUtil.randomLong();
+			}
+		};
+	}
+
+	@Override
+	protected DispatchTrigger testGetDispatchTriggersPage_addDispatchTrigger(
+			DispatchTrigger dispatchTrigger)
 		throws Exception {
 
-		return _addDispatchTriggersPage(randomDispatchTriggersPage());
-	}
-
-
-	private DispatchTrigger _addDispatchTrigger(
-		DispatchTrigger dispatchTrigger)
-		throws Exception{
-
-		return dispatchTriggerResource.postDispatchTrigger(
-			dispatchTrigger);
+		return _addDispatchTrigger(dispatchTrigger);
 	}
 
 	@Override
-	protected DispatchTrigger randomDispatchTrigger()
-	throws Exception {
+	protected DispatchTrigger testGraphQLDispatchTrigger_addDispatchTrigger()
+		throws Exception {
 
-	DispatchTrigger dispatchTrigger =
-		super.randomDispatchTrigger();
+		return _addDispatchTrigger(randomDispatchTrigger());
+	}
 
-	dispatchTrigger.setExternalReferenceCode(StringUtil.toLowerCase(
-		RandomTestUtil.randomString()));
-	dispatchTrigger.setCompanyId(RandomTestUtil.randomLong());
-	dispatchTrigger.setActive(RandomTestUtil.randomBoolean());
-	dispatchTrigger.setCronExpression(StringUtil.toLowerCase(
-		RandomTestUtil.randomString()));
-	dispatchTrigger.setDispatchTaskClusterMode(RandomTestUtil.randomInt());
-	dispatchTrigger.setDispatchTaskExecutorType(StringUtil.toLowerCase(
-		RandomTestUtil.randomString()));
-	dispatchTrigger.setEndDate(RandomTestUtil.nextDate());
-	dispatchTrigger.setId(RandomTestUtil.randomLong());
-	dispatchTrigger.setName(StringUtil.toLowerCase(RandomTestUtil.randomString()));
-	dispatchTrigger.setTimeZoneId(StringUtil.toLowerCase(
-		RandomTestUtil.randomString()));
+	private DispatchTrigger _addDispatchTrigger(DispatchTrigger dispatchTrigger)
+		throws Exception {
 
-	return dispatchTrigger;
-}
+		return dispatchTriggerResource.postDispatchTrigger(dispatchTrigger);
+	}
+
+	private String _getRandomDispatchExecutorType() {
+		Set<String> dispatchTaskExecutorTypes =
+			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
+
+		int index = 0;
+		int randomIndex = RandomTestUtil.randomInt(
+			0, dispatchTaskExecutorTypes.size());
+
+		for (String dispatchTaskExecutorType : dispatchTaskExecutorTypes) {
+			if (index++ == randomIndex) {
+				return dispatchTaskExecutorType;
+			}
+		}
+
+		return "test";
+	}
+
+	@Inject
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 }

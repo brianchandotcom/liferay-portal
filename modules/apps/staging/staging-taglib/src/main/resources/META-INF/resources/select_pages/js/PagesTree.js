@@ -21,6 +21,8 @@ import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
+import '../css/PagesTree.scss';
+
 const ROOT_ITEM_ID = '0';
 const SPACE_KEYCODE = 32;
 

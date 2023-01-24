@@ -134,7 +134,7 @@
 
 							<div>
 								<react:component
-									module="js/PagesTree"
+									module="select_pages/js/PagesTree"
 									props="<%= layoutsTreeDisplayContext.getPagesTreeData() %>"
 								/>
 							</div>

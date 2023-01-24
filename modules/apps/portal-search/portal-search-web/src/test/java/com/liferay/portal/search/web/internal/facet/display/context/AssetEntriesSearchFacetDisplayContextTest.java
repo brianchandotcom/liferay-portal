@@ -49,6 +49,21 @@ public class AssetEntriesSearchFacetDisplayContextTest
 
 	@Override
 	@Test
+	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testOneTerm() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testOneTermWithPreviousSelection() throws Exception {
+	}
+
+	@Override
+	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		testOrderBy(
 			new String[] {"bravo", "alpha", "charlie"}, new int[] {2, 3, 4},

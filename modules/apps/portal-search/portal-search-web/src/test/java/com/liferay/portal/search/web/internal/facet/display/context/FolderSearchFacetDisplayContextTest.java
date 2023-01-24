@@ -95,40 +95,6 @@ public class FolderSearchFacetDisplayContextTest
 	}
 
 	@Test
-	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
-		long folderId = RandomTestUtil.randomLong();
-		String title = RandomTestUtil.randomString();
-
-		_addFolder(folderId, title);
-
-		String facetParam = String.valueOf(folderId);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(title, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(folderId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-
-		Assert.assertEquals(
-			facetParam, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
 	public void testEmptySearchResultsWithUnmatchedTermCollector()
 		throws Exception {
 
@@ -142,88 +108,6 @@ public class FolderSearchFacetDisplayContextTest
 			null);
 
 		Assert.assertTrue(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTerm() throws Exception {
-		long folderId = RandomTestUtil.randomLong();
-		String title = RandomTestUtil.randomString();
-
-		_addFolder(folderId, title);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(String.valueOf(folderId), frequency)));
-
-		String facetParam = "";
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(title, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(folderId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertFalse(bucketDisplayContext.isSelected());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-
-		Assert.assertEquals(
-			facetParam, facetDisplayContext.getParameterValue());
-		Assert.assertTrue(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTermWithPreviousSelection() throws Exception {
-		long folderId = RandomTestUtil.randomLong();
-		String title = RandomTestUtil.randomString();
-
-		_addFolder(folderId, title);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(String.valueOf(folderId), frequency)));
-
-		String facetParam = String.valueOf(folderId);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(title, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(folderId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-
-		Assert.assertEquals(
-			facetParam, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Test
@@ -255,6 +139,18 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 21,
 			_getTotalBucketDisplayContextFrequencyCount(bucketDisplayContexts));
+	}
+
+	@Override
+	protected String getFilterValue(String term) {
+		return String.valueOf(_folderId);
+	}
+
+	@Override
+	protected void setUpAsset(String term) throws Exception {
+		_folderId = RandomTestUtil.randomLong();
+
+		_addFolder(_folderId, term);
 	}
 
 	@Override
@@ -349,6 +245,7 @@ public class FolderSearchFacetDisplayContextTest
 		return total;
 	}
 
+	private long _folderId;
 	private final FolderTitleLookup _folderTitleLookup = Mockito.mock(
 		FolderTitleLookup.class);
 

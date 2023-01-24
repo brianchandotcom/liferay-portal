@@ -15,19 +15,13 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.user.facet.configuration.UserFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Lino Alves
@@ -66,107 +60,6 @@ public class UserSearchFacetDisplayContextTest
 		userSearchFacetDisplayContextBuilder.setParamValue(parameterValue);
 
 		return userSearchFacetDisplayContextBuilder.build();
-	}
-
-	@Test
-	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
-		String userName = RandomTestUtil.randomString();
-
-		String paramValue = userName;
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			paramValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			paramValue, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTerm() throws Exception {
-		String userName = RandomTestUtil.randomString();
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(String.valueOf(userName), frequency)));
-
-		String paramValue = "";
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			paramValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertFalse(bucketDisplayContext.isSelected());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-
-		Assert.assertEquals(
-			paramValue, facetDisplayContext.getParameterValue());
-		Assert.assertTrue(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTermWithPreviousSelection() throws Exception {
-		String userName = RandomTestUtil.randomString();
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(String.valueOf(userName), frequency)));
-
-		String paramValue = userName;
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			paramValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			paramValue, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	@Override

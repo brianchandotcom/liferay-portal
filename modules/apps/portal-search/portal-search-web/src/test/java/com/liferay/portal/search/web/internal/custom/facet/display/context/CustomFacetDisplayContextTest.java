@@ -15,14 +15,13 @@
 package com.liferay.portal.search.web.internal.custom.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.builder.CustomFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +40,15 @@ public class CustomFacetDisplayContextTest
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Override
+	public FacetDisplayContext createFacetDisplayContext(String parameterValue)
+		throws Exception {
+
+		return _createDisplayContext(
+			"customDisplayCaption", "fieldToAggregate", parameterValue,
+			"count:desc");
+	}
 
 	@Test
 	public void testEmptyCustomDisplayCaption() throws Exception {
@@ -67,111 +75,6 @@ public class CustomFacetDisplayContextTest
 	@Override
 	@Test
 	public void testEmptySearchResults() throws Exception {
-	}
-
-	@Test
-	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
-		String fieldName = RandomTestUtil.randomString();
-
-		String parameterValue = fieldName;
-
-		CustomFacetDisplayContext customFacetDisplayContext =
-			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate", parameterValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(fieldName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(fieldName, bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			parameterValue, customFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(customFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(customFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTerm() throws Exception {
-		String fieldName = RandomTestUtil.randomString();
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(fieldName, frequency)));
-
-		CustomFacetDisplayContext customFacetDisplayContext =
-			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate",
-				getFacetDisplayContextParameterValue());
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(fieldName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(fieldName, bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertFalse(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			getFacetDisplayContextParameterValue(),
-			customFacetDisplayContext.getParameterValue());
-		Assert.assertTrue(customFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(customFacetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTermWithPreviousSelection() throws Exception {
-		String fieldName = RandomTestUtil.randomString();
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(fieldName, frequency)));
-
-		String parameterValue = fieldName;
-
-		CustomFacetDisplayContext customFacetDisplayContext =
-			_createDisplayContext(
-				"customDisplayCaption", "fieldToAggregate", parameterValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(fieldName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(fieldName, bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			parameterValue, customFacetDisplayContext.getParameterValue());
-		Assert.assertFalse(customFacetDisplayContext.isNothingSelected());
-		Assert.assertFalse(customFacetDisplayContext.isRenderNothing());
 	}
 
 	@Override

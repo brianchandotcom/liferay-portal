@@ -26,14 +26,11 @@ import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacet
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 
 import org.mockito.Mockito;
 
@@ -81,122 +78,6 @@ public class ScopeSearchFacetDisplayContextTest
 		return "0";
 	}
 
-	@Test
-	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
-		long groupId = RandomTestUtil.randomLong();
-		String name = RandomTestUtil.randomString();
-
-		_addGroup(groupId, name);
-
-		String parameterValue = String.valueOf(groupId);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			parameterValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(name, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(groupId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			parameterValue, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTerm() throws Exception {
-		long groupId = RandomTestUtil.randomLong();
-		String name = RandomTestUtil.randomString();
-
-		_addGroup(groupId, name);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(String.valueOf(groupId), frequency)));
-
-		String parameterValue = "0";
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			parameterValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(name, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(groupId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertFalse(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			parameterValue, facetDisplayContext.getParameterValue());
-		Assert.assertTrue(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testOneTermWithPreviousSelection() throws Exception {
-		long groupId = RandomTestUtil.randomLong();
-		String name = RandomTestUtil.randomString();
-
-		_addGroup(groupId, name);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpTermCollectors(
-			facetCollector,
-			Collections.singletonList(
-				createTermCollector(String.valueOf(groupId), frequency)));
-
-		String parameterValue = String.valueOf(groupId);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			parameterValue);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(name, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(groupId), bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			parameterValue, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
 	protected Group createGroup(long groupId, String name) throws Exception {
 		Group group = Mockito.mock(Group.class);
 
@@ -215,6 +96,17 @@ public class ScopeSearchFacetDisplayContextTest
 		).getGroupId();
 
 		return group;
+	}
+
+	protected String getFilterValue(String term) {
+		return String.valueOf(_groupId);
+	}
+
+	@Override
+	protected void setUpAsset(String term) throws Exception {
+		_groupId = RandomTestUtil.randomLong();
+
+		_addGroup(_groupId, term);
 	}
 
 	@Override
@@ -260,6 +152,7 @@ public class ScopeSearchFacetDisplayContextTest
 		return termCollectors;
 	}
 
+	private long _groupId;
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
 

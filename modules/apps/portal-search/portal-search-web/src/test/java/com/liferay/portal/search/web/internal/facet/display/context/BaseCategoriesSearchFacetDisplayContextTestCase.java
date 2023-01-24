@@ -115,42 +115,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 	}
 
 	@Test
-	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategory(assetCategoryId, 0);
-
-		String facetParam = String.valueOf(assetCategoryId);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
-
-		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
-			0);
-
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			String.valueOf(assetCategoryId),
-			bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(bucketDisplayContext.isSelected());
-
-		Assert.assertEquals(
-			facetParam, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
 	public void testExcludedGroup() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
 
@@ -182,6 +146,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		_excludedGroupId = 0;
 	}
 
+	@Override
 	@Test
 	public void testOneTerm() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
@@ -222,6 +187,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
+	@Override
 	@Test
 	public void testOneTermWithPreviousSelection() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
@@ -387,6 +353,11 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		return group;
 	}
 
+	@Override
+	protected String createTerm() {
+		return String.valueOf(RandomTestUtil.randomLong());
+	}
+
 	protected TermCollector createTermCollector(
 		long assetCategoryId, int frequency) {
 
@@ -428,6 +399,13 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		).getPortletDisplay();
 
 		return themeDisplay;
+	}
+
+	@Override
+	protected void setUpAsset(String assetCategoryId) throws Exception {
+		_groupId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategory(GetterUtil.getLong(assetCategoryId), _groupId);
 	}
 
 	protected void setUpAssetVocabularyLocalService() {
@@ -639,5 +617,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 	private final ConfigurationProvider _configurationProvider = Mockito.mock(
 		ConfigurationProvider.class);
 	private long _excludedGroupId;
+	private long _groupId;
 
 }

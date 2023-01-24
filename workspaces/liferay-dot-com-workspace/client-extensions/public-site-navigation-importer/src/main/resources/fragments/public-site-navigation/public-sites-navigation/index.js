@@ -110,6 +110,7 @@ searchSuggestionsInput.oninput = function () {
 	else {
 		suggestions.classList.remove(
 			'performing-search',
+			'search-error',
 			'search-results-found'
 		);
 	}
@@ -193,7 +194,10 @@ function performSearch(query) {
 		else {
 			suggestions.classList.remove('search-results-found');
 		}
-	});
+		suggestions.classList.remove('search-error');
+	}).catch(() => {
+		suggestions.classList.add('search-error');
+	} );
 }
 
 async function postData(url = '', data = {}) {

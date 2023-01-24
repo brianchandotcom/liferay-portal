@@ -12,7 +12,7 @@
  * details.
  */
 
-import dom from 'metal-dom';
+import {delegate} from './delegate';
 
 const KEYCODES = {
 	ENTER: 13,
@@ -39,14 +39,14 @@ class DropdownProvider {
 		this.showCallback = showCallback;
 		this.hideCallback = hideCallback;
 
-		dom.delegate(
+		delegate(
 			document.body,
 			'click',
 			triggerSelector,
 			this._onTriggerClick
 		);
 
-		dom.delegate(
+		delegate(
 			document.body,
 			'keydown',
 			triggerSelector,
@@ -112,9 +112,9 @@ class DropdownProvider {
 		};
 
 		document.addEventListener('mousedown', clickOutsideHandler);
-		document.addEventListener('keypress', (e) => {
-			if (e.key === 'Enter' || e.key === ' ') {
-				clickOutsideHandler(e);
+		document.addEventListener('keypress', (event) => {
+			if (event.key === 'Enter' || event.key === ' ') {
+				clickOutsideHandler(event);
 			}
 		});
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import dom from 'metal-dom';
+import {delegate} from './delegate';
 
 class ClassToggle {
 	constructor() {
@@ -44,7 +44,7 @@ class ClassToggle {
 			trigger = this.item;
 		}
 
-		dom.delegate(wrapper, 'click', trigger, (event) => {
+		delegate(wrapper, 'click', trigger, (event) => {
 			let node = event.delegateTarget;
 
 			if (!node) {
@@ -56,7 +56,7 @@ class ClassToggle {
 
 			let active = false;
 
-			if (dom.hasClass(targetNodes[0], targetClass)) {
+			if (targetNodes[0].classList.contains(targetClass)) {
 				active = true;
 			}
 
@@ -66,7 +66,7 @@ class ClassToggle {
 				toggleType = node.dataset.toggleType;
 			}
 
-			if (toggleType == 'offclick') {
+			if (toggleType === 'offclick') {
 				if (active) {
 					return;
 				}
@@ -75,7 +75,7 @@ class ClassToggle {
 
 				instance._offclickAction(node, targetNodes, targetClass, event);
 			}
-			else if (toggleType == 'carousel') {
+			else if (toggleType === 'carousel') {
 				if (active) {
 					return;
 				}
@@ -96,7 +96,9 @@ class ClassToggle {
 	_activate = function (node, targetNodes, targetClass) {
 		const instance = this;
 
-		dom.addClasses(targetNodes, targetClass);
+		for (const targetNode in targetNodes) {
+			targetNode.classList.add(targetClass);
+		}
 
 		const activateCallback = this.activateCallback;
 
@@ -110,7 +112,7 @@ class ClassToggle {
 
 		const curActiveNode = targetNodes[0]._activeNode;
 
-		if (curActiveNode && curActiveNode != node) {
+		if (curActiveNode && curActiveNode !== node) {
 			instance._deactivate(
 				curActiveNode,
 				instance._getTargetNodes(curActiveNode),
@@ -124,7 +126,9 @@ class ClassToggle {
 	_deactivate = function (node, targetNodes, targetClass) {
 		const instance = this;
 
-		dom.removeClasses(targetNodes, targetClass);
+		for (const targetNode in targetNodes) {
+			targetNode.classList.remove(targetClass);
+		}
 
 		const deactivateCallback = this.deactivateCallback;
 
@@ -158,7 +162,7 @@ class ClassToggle {
 			nodes = document.querySelectorAll(this.targetNodes);
 		}
 
-		if (!nodes || nodes.length == 0) {
+		if (!nodes || !nodes.length) {
 			return [node];
 		}
 
@@ -195,7 +199,7 @@ class ClassToggle {
 			);
 		}
 
-		if (!nodeContent || nodeContent.length == 0) {
+		if (!nodeContent || !nodeContent.length) {
 			nodeContent = [node];
 		}
 

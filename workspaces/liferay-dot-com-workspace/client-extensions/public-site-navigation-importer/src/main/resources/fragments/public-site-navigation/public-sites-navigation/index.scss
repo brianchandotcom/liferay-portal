@@ -1401,6 +1401,15 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 				display: block;
 			}
 		}
+		&.search-error {
+			.no-results-message,
+			.suggestions-popular {
+				display: none;
+			}
+			.search-error-message {
+				display: block;
+			}
+		}
 		&.search-results-found {
 			.no-results-message,
 			.suggestions-popular {
@@ -1565,6 +1574,10 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 
 	.no-results-message {
 		color: var(--white);
+		display: none;
+	}
+
+	.search-error-message {
 		display: none;
 	}
 }

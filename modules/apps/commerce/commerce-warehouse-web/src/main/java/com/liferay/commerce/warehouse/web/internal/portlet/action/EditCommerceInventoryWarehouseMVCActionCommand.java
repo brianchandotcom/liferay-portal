@@ -97,22 +97,16 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			}
 		}
 		catch (Throwable throwable) {
-			if (throwable instanceof CommerceGeocoderException) {
-				hideDefaultErrorMessage(actionRequest);
-
-				SessionErrors.add(
-					actionRequest, throwable.getClass(),
-					throwable.getMessage());
-			}
-			else if (throwable instanceof NoSuchWarehouseException ||
-					 throwable instanceof PrincipalException) {
+			if (throwable instanceof NoSuchWarehouseException ||
+				throwable instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (throwable instanceof
-						CommerceInventoryWarehouseActiveException ||
+			else if (throwable instanceof CommerceGeocoderException ||
+					 throwable instanceof
+						 CommerceInventoryWarehouseActiveException ||
 					 throwable instanceof
 						 CommerceInventoryWarehouseNameException ||
 					 throwable instanceof MVCCException) {

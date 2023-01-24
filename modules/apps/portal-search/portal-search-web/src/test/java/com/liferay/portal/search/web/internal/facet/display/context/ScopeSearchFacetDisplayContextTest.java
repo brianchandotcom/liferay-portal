@@ -28,6 +28,7 @@ import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacet
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -135,7 +136,10 @@ public class ScopeSearchFacetDisplayContextTest
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, String.valueOf(groupId), count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(
+				createTermCollector(String.valueOf(groupId), count)));
 
 		String parameterValue = "0";
 
@@ -173,7 +177,10 @@ public class ScopeSearchFacetDisplayContextTest
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, String.valueOf(groupId), count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(
+				createTermCollector(String.valueOf(groupId), count)));
 
 		String parameterValue = String.valueOf(groupId);
 

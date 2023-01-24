@@ -24,6 +24,7 @@ import com.liferay.portal.search.web.internal.facet.display.context.builder.Asse
 import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -126,7 +127,9 @@ public class AssetTagsSearchFacetDisplayContextTest
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, term, frequency);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(createTermCollector(term, frequency)));
 
 		String facetParam = StringPool.BLANK;
 
@@ -159,7 +162,9 @@ public class AssetTagsSearchFacetDisplayContextTest
 		String term = RandomTestUtil.randomString();
 		int frequency = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, term, frequency);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(createTermCollector(term, frequency)));
 
 		String facetParam = term;
 

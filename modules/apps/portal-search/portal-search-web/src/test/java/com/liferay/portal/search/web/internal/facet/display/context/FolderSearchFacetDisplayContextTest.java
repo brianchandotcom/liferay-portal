@@ -165,7 +165,10 @@ public class FolderSearchFacetDisplayContextTest
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, String.valueOf(folderId), count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(
+				createTermCollector(String.valueOf(folderId), count)));
 
 		String facetParam = "";
 
@@ -203,7 +206,10 @@ public class FolderSearchFacetDisplayContextTest
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, String.valueOf(folderId), count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(
+				createTermCollector(String.valueOf(folderId), count)));
 
 		String facetParam = String.valueOf(folderId);
 

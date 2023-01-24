@@ -26,7 +26,6 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
 import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
@@ -139,17 +138,17 @@ public abstract class BaseFacetDisplayContextTestCase {
 
 		TermCollector termCollector = Mockito.mock(TermCollector.class);
 
-		Mockito.doReturn(
+		Mockito.when(
+			termCollector.getFrequency()
+		).thenReturn(
 			frequency
-		).when(
-			termCollector
-		).getFrequency();
+		);
 
-		Mockito.doReturn(
+		Mockito.when(
+			termCollector.getTerm()
+		).thenReturn(
 			term
-		).when(
-			termCollector
-		).getTerm();
+		);
 
 		return termCollector;
 	}
@@ -233,18 +232,16 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return themeDisplay;
 	}
 
-	protected static void setUpTermCollector(
-		FacetCollector facetCollector, String term, int frequency) {
-
-		Mockito.doReturn(
-			Collections.singletonList(createTermCollector(term, frequency))
-		).when(
-			facetCollector
-		).getTermCollectors();
-	}
-
 	protected static void setUpTermCollectors(
 		FacetCollector facetCollector, List<TermCollector> termCollectors) {
+
+		for (TermCollector termCollector : termCollectors) {
+			Mockito.when(
+				facetCollector.getTermCollector(termCollector.getTerm())
+			).thenReturn(
+				termCollector
+			);
+		}
 
 		Mockito.doReturn(
 			termCollectors
@@ -289,6 +286,8 @@ public abstract class BaseFacetDisplayContextTestCase {
 			String[] terms, int[] frequencies, String order,
 			String[] expectedTerms, int[] expectedFrequencies)
 		throws Exception {
+
+		throw new UnsupportedOperationException();
 	}
 
 	protected int[] expectedFrequenciesFrequencyAscending = {4, 5, 5, 6};

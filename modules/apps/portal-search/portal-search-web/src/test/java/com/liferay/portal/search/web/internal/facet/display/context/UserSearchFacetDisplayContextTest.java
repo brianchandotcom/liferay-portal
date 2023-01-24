@@ -23,6 +23,7 @@ import com.liferay.portal.search.web.internal.facet.display.context.builder.User
 import com.liferay.portal.search.web.internal.user.facet.configuration.UserFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -121,7 +122,10 @@ public class UserSearchFacetDisplayContextTest
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, userName, count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(
+				createTermCollector(String.valueOf(userName), count)));
 
 		String paramValue = "";
 
@@ -154,7 +158,10 @@ public class UserSearchFacetDisplayContextTest
 
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, userName, count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(
+				createTermCollector(String.valueOf(userName), count)));
 
 		String paramValue = userName;
 

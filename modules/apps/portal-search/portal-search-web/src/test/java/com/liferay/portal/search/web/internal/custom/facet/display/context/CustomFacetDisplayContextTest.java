@@ -24,6 +24,7 @@ import com.liferay.portal.search.web.internal.custom.facet.display.context.build
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,7 +119,9 @@ public class CustomFacetDisplayContextTest
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, fieldName, count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(createTermCollector(fieldName, count)));
 
 		String parameterValue = "";
 
@@ -152,7 +155,9 @@ public class CustomFacetDisplayContextTest
 		String fieldName = RandomTestUtil.randomString();
 		int count = RandomTestUtil.randomInt();
 
-		setUpTermCollector(_facetCollector, fieldName, count);
+		setUpTermCollectors(
+			_facetCollector,
+			Collections.singletonList(createTermCollector(fieldName, count)));
 
 		String parameterValue = fieldName;
 

@@ -2,93 +2,93 @@
 	"object-entries": [
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-56-334-5276",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-040",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-02-25",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-040"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-98-258-0324",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-043",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-03-05",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-043"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-77-438-3546",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-044",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-09-16",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-044"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-10-358-3844",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-047",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-07-28",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-047"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-93-244-2869",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-050",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-01-05",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-050"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-12-528-6979",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-054",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-05-20",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-054"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-99-949-8202",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-055",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-08-07",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-055"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-26-085-7597",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-056",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-01-22",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-056"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-99-571-6655",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-057",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-10-06",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-057"
 		},
 		{
 			"billingOption": "payInFull",
+			"dataJSON": "",
 			"externalReferenceCode": "QT-08-398-3226",
 			"policyTerm": "yearToYear",
-			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-059",
-			"dataJSON": "",
+			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-10-30",
-			"quoteBillingOption": "payInFull"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "RAYAPP-059"
 		}
 	],
 	"objectDefinitionName": "RaylifeQuote"

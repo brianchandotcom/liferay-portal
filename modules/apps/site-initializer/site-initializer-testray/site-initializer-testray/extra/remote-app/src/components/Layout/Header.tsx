@@ -94,7 +94,7 @@ const Header = () => {
 				<BreadcrumbFinder heading={heading} />
 
 				<div className="d-flex flex-row justify-content-between w-100">
-					<div className="d-flex flex-1 flex-wrap">
+					<div className="d-flex flex-1">
 						{heading.map((header, index) => {
 							const isClickable =
 								header.path && index !== heading.length - 1;
@@ -124,7 +124,7 @@ const Header = () => {
 
 									<div className="d-flex flex-row">
 										<p
-											className="header-title text-paragraph-xl"
+											className="header-title text-nowrap text-paragraph-xl"
 											title={header.title}
 										>
 											{header.title}

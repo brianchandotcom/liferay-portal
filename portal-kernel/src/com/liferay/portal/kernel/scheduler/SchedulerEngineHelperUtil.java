@@ -157,15 +157,6 @@ public class SchedulerEngineHelperUtil {
 		_schedulerEngineHelper.unschedule(jobName, groupName, storageType);
 	}
 
-	public static void update(
-			String jobName, String groupName, StorageType storageType,
-			String description, String language, String script)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.update(
-			jobName, groupName, storageType, description, language, script);
-	}
-
 	public static void update(Trigger trigger, StorageType storageType)
 		throws SchedulerException {
 

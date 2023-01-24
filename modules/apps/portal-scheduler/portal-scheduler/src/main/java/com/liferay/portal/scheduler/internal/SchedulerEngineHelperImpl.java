@@ -364,34 +364,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public void update(
-			String jobName, String groupName, StorageType storageType,
-			String description, String language, String script)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = getScheduledJob(
-			jobName, groupName, storageType);
-
-		if (schedulerResponse == null) {
-			return;
-		}
-
-		Trigger trigger = schedulerResponse.getTrigger();
-
-		if (trigger == null) {
-			return;
-		}
-
-		Message message = schedulerResponse.getMessage();
-
-		if (message == null) {
-			return;
-		}
-
-		addScriptingJob(trigger, storageType, description, language, script);
-	}
-
-	@Override
 	public void update(Trigger trigger, StorageType storageType)
 		throws SchedulerException {
 

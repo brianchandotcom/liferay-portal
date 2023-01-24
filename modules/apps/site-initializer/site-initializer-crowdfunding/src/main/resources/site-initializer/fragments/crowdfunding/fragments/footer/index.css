@@ -1,0 +1,48 @@
+footer{
+  background: #28282B;
+	padding: 50px 0;
+}
+
+footer h1{
+  color: #84848B;
+	font-size: 1.125rem;
+	margin-bottom: 16px;
+	font-weight: 600;
+}
+
+footer hr{
+  background: #84848B;
+	height: 2px;
+	width: 40px;
+	margin: 0;
+}
+
+footer ul{
+  padding: 0;
+	list-style: none;
+	margin-top: 15px;
+}
+
+footer ul.social-media{
+  display:flex;
+}
+
+footer ul.social-media li{
+  margin-right: 15px;
+}
+
+footer li{
+	margin-bottom: 5px;
+}
+
+footer li a{
+  color: #84848B;
+	font-weight: 400;
+	font-size: 1rem;
+	text-decoration: none !important;
+}
+
+
+footer li a:hover{
+  color: #84848B;
+}

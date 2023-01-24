@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Initializer Crowdfunding
+Bundle-SymbolicName: com.liferay.site.initializer.crowdfunding
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Crowdfunding
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-crowdfunding

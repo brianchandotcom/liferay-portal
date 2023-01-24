@@ -1,0 +1,452 @@
+[
+	{
+		"active": true,
+		"externalReferenceCode": "CRW001",
+		"productAccountGroupFilter": false,
+		"productChannelFilter": false,
+		"shippable": false,
+		"backOrders": true,
+		"displayAvailability": false,
+		"displayStockQuantity": false,
+		"maxOrderQuantity": 10000,
+		"minOrderQuantity": 1,
+		"minStockQuantity": 0,
+		"multipleOrderQuantity": 1,
+		"productStatus": 0,
+		"productType": "simple",
+		"productTypeI18n": "Simples",
+		"sku": "default",
+		"urls": "sonata-at-columbia-stations",
+		"description": "<p>\n  <b>The Sponsor</b></p>\n<p>Mussum Ipsum, cacilds vidis litro abertis. Paisis, filhis, espiritis\n  santis.Quem num gosta di mé, boa gentis num é.Mé faiz elementum\n  girarzis, nisi eros vermeio.Aenean aliquam molestie leo, vitae iaculis\n  nisl.<br />  </p>\n<p>\n  <b>The Location</b></p>\n<p>Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed\n  non consequat odio.Si u mundo tá muito paradis? Toma um mé que o mundo\n  vai girarzis!Copo furadis é disculpa de bebadis, arcu quam euismod\n  magna.Mais vale um bebadis conhecidiss, que um alcoolatra\n  anonimis.<br />  </p>\n<p>\n  <b>The Investment</b>\n  <br /> Paisis, filhis, espiritis santis.Quem num gosta di mé, boa\n  gentis num é.Interessantiss quisso pudia ce receita de bolis, mais\n  bolis eu num gostis.Nullam volutpat risus nec leo commodo, ut interdum\n  diam laoreet. Sed non consequat odio.<br /> Nec orci ornare consequat.\n  Praesent lacinia ultrices consectetur. Sed non ipsum felis.Atirei o\n  pau no gatis, per gatis num morreus.Quem manda na minha terra sou\n  euzis!Leite de capivaris, leite de mula manquis sem cabeça.<br />\n  <b>Disclaimer and Footnotes</b>\n  <br /> Quem num gosta di mim que vai caçá sua turmis!Si num tem leite\n  então bota uma pinga aí cumpadi!Diuretics paradis num copo é motivis\n  de denguis.Mé faiz elementum girarzis, nisi eros vermeio.</p>",
+		"name": "Sonata At Columbia Stations",
+		"images": [
+			{
+			"priority": 0,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/onemillion.jpg]",
+			"title": "onemillion.jpg",
+			"type": 0
+			},
+			{
+			"priority": 1,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/twomillion.jpg]",
+			"title": "twomillion.jpg",
+			"type": 0
+			},
+			{
+			"priority": 2,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/treemillions.jpg]",
+			"title": "treemillions.jpg",
+			"type": 0
+			},
+			{
+			"priority": 3,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/fourmillion.jpg]",
+			"title": "fourmillion.jpeg",
+			"type": 0
+			}
+		],
+		"attachments": [
+			{
+			"priority": 0,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/ProductAttachments/sample.pdf]",
+			"title": "sample.pdf",
+			"type": 1
+			}
+		],
+		"categories": [
+			"Tenured"
+		],
+		"productSpecifications": [
+			{
+				"specificationKey": "distribuition-period",
+				"value": {
+					"en_US": "Quartely"
+				}
+			},
+			{
+				"specificationKey": "loan-to-cost",
+				"value": {
+				  "en_US": "60.0% - 70.0%"
+				}
+			},
+			{
+				"specificationKey": "capital-growth",
+				"value": {
+				  "en_US": "7.00%"
+				}
+			},
+			{
+				"specificationKey": "location",
+				"value": {
+				  "en_US": "San Francisco - California - USA"
+				}
+			},
+			{
+				"specificationKey": "floors",
+				"value": {
+				  "en_US": "2"
+				}
+			},
+			{
+				"specificationKey": "area",
+				"value": {
+				  "en_US": "387 m2"
+				}
+			},
+			{
+				"specificationKey": "payment-date",
+				"value": {
+				  "en_US": "06.22.2021"
+				}
+			},
+			{
+				"specificationKey": "property-type",
+				"value": {
+				  "en_US": "Multifamily"
+				}
+			},
+			{
+				"specificationKey": "investiment-profile",
+				"value": {
+				  "en_US": "Core-Plus"
+				}
+			},
+			{
+				"specificationKey": "funding-target",
+				"value": {
+				  "en_US": "$1,600,00"
+				}
+			},
+			{
+				"specificationKey": "minimum-hold-period",
+				"value": {
+				  "en_US": "2 - 4 years"
+				}
+			},
+			{
+				"specificationKey": "yield",
+				"value": {
+				  "en_US": "7.03%"
+				}
+			},
+			{
+				"specificationKey": "sponsor-historic-net-irr",
+				"value": {
+				  "en_US": "20.4%"
+				}
+			},
+			{
+				"specificationKey": "sponsor-historic-equity-multiple",
+				"value": {
+				  "en_US": "2.4x"
+				}
+			},
+			{
+				"specificationKey": "funder",
+				"value": {
+				  "en_US": "BDR Capital LLC"
+				}
+			}
+		]
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "CRW002",
+		"productAccountGroupFilter": false,
+		"productChannelFilter": false,
+		"shippable": false,
+		"backOrders": true,	
+		"displayAvailability": false,
+		"displayStockQuantity": false,
+		"maxOrderQuantity": 10000,
+		"minOrderQuantity": 1,
+		"minStockQuantity": 0,
+		"multipleOrderQuantity": 1,
+		"productStatus": 0,
+		"productType": "simple",
+		"productTypeI18n": "Simples",
+		"sku": "default",
+		"urls": "california-house",
+		"description": "<p>\n  <b>The Sponsor</b></p>\n<p>Mussum Ipsum, cacilds vidis litro abertis. Paisis, filhis, espiritis\n  santis.Quem num gosta di mé, boa gentis num é.Mé faiz elementum\n  girarzis, nisi eros vermeio.Aenean aliquam molestie leo, vitae iaculis\n  nisl.<br />  </p>\n<p>\n  <b>The Location</b></p>\n<p>Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed\n  non consequat odio.Si u mundo tá muito paradis? Toma um mé que o mundo\n  vai girarzis!Copo furadis é disculpa de bebadis, arcu quam euismod\n  magna.Mais vale um bebadis conhecidiss, que um alcoolatra\n  anonimis.<br />  </p>\n<p>\n  <b>The Investment</b>\n  <br /> Paisis, filhis, espiritis santis.Quem num gosta di mé, boa\n  gentis num é.Interessantiss quisso pudia ce receita de bolis, mais\n  bolis eu num gostis.Nullam volutpat risus nec leo commodo, ut interdum\n  diam laoreet. Sed non consequat odio.<br /> Nec orci ornare consequat.\n  Praesent lacinia ultrices consectetur. Sed non ipsum felis.Atirei o\n  pau no gatis, per gatis num morreus.Quem manda na minha terra sou\n  euzis!Leite de capivaris, leite de mula manquis sem cabeça.<br />\n  <b>Disclaimer and Footnotes</b>\n  <br /> Quem num gosta di mim que vai caçá sua turmis!Si num tem leite\n  então bota uma pinga aí cumpadi!Diuretics paradis num copo é motivis\n  de denguis.Mé faiz elementum girarzis, nisi eros vermeio.</p>",
+		"name": "California House",
+		"images": [
+			{
+			"priority": 1,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/onemillion.jpg]",
+			"title": "onemillion.jpg",
+			"type": 0
+			},
+			{
+			"priority": 0,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/twomillion.jpg]",
+			"title": "twomillion.jpg",
+			"type": 0
+			},
+			{
+			"priority": 2,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/treemillions.jpg]",
+			"title": "treemillions.jpg",
+			"type": 0
+			},
+			{
+			"priority": 3,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/fourmillion.jpg]",
+			"title":"fourmillion.jpeg",
+			"type": 0
+			}
+		],
+		"attachments": [
+			{
+			"priority": 0,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/ProductAttachments/sample.pdf]",
+			"title": "sample.pdf",
+			"type": 1
+			}
+		],
+		"categories": [
+		  "Tenured"
+		],
+		"productSpecifications": [
+			{
+				"specificationKey": "distribuition-period",
+				"value": {
+					"en_US": "Yearly"
+				}
+			},
+			{
+				"specificationKey": "loan-to-cost",
+				"value": {
+				  "en_US": "50.0% - 60.0%"
+				}
+			},
+			{
+				"specificationKey": "capital-growth",
+				"value": {
+				  "en_US": "7.80%"
+				}
+			},
+			{
+				"specificationKey": "location",
+				"value": {
+				  "en_US": "Los Angeles - California - USA"
+				}
+			},
+			{
+				"specificationKey": "floors",
+				"value": {
+				  "en_US": "1"
+				}
+			},
+			{
+				"specificationKey": "area",
+				"value": {
+				  "en_US": "450 m2"
+				}
+			},
+			{
+				"specificationKey": "payment-date",
+				"value": {
+				  "en_US": "06.22.2021"
+				}
+			},
+			{
+				"specificationKey": "property-type",
+				"value": {
+				  "en_US": "Multifamily"
+				}
+			},
+			{
+				"specificationKey": "investiment-profile",
+				"value": {
+				  "en_US": "Core-Plus"
+				}
+			},
+			{
+				"specificationKey": "funding-target",
+				"value": {
+				  "en_US": "$1,000,00"
+				}
+			},
+			{
+				"specificationKey": "minimum-hold-period",
+				"value": {
+				  "en_US": "4 - 6 years"
+				}
+			},
+			{
+				"specificationKey": "yield",
+				"value": {
+				  "en_US": "6.03%"
+				}
+			},
+			{
+				"specificationKey": "sponsor-historic-net-irr",
+				"value": {
+				  "en_US": "15.4%"
+				}
+			},
+			{
+				"specificationKey": "sponsor-historic-equity-multiple",
+				"value": {
+				  "en_US": "1.4x"
+				}
+			},
+			{
+				"specificationKey": "funder",
+				"value": {
+				  "en_US": "American BDD"
+				}
+			}
+		]
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "CRW003",
+		"productAccountGroupFilter": false,
+		"productChannelFilter": false,
+		"shippable": false,
+		"backOrders": true,	
+		"displayAvailability": false,
+		"displayStockQuantity": false,
+		"maxOrderQuantity": 10000,
+		"minOrderQuantity": 1,
+		"minStockQuantity": 0,
+		"multipleOrderQuantity": 1,
+		"productStatus": 0,
+		"productType": "simple",
+		"productTypeI18n": "Simples",
+		"sku": "default",
+		"urls":"new-modern-villa-in-nueva-andalusia",
+		"description": "<p>\n  <b>The Sponsor</b></p>\n<p>Mussum Ipsum, cacilds vidis litro abertis. Paisis, filhis, espiritis\n  santis.Quem num gosta di mé, boa gentis num é.Mé faiz elementum\n  girarzis, nisi eros vermeio.Aenean aliquam molestie leo, vitae iaculis\n  nisl.<br />  </p>\n<p>\n  <b>The Location</b></p>\n<p>Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed\n  non consequat odio.Si u mundo tá muito paradis? Toma um mé que o mundo\n  vai girarzis!Copo furadis é disculpa de bebadis, arcu quam euismod\n  magna.Mais vale um bebadis conhecidiss, que um alcoolatra\n  anonimis.<br />  </p>\n<p>\n  <b>The Investment</b>\n  <br /> Paisis, filhis, espiritis santis.Quem num gosta di mé, boa\n  gentis num é.Interessantiss quisso pudia ce receita de bolis, mais\n  bolis eu num gostis.Nullam volutpat risus nec leo commodo, ut interdum\n  diam laoreet. Sed non consequat odio.<br /> Nec orci ornare consequat.\n  Praesent lacinia ultrices consectetur. Sed non ipsum felis.Atirei o\n  pau no gatis, per gatis num morreus.Quem manda na minha terra sou\n  euzis!Leite de capivaris, leite de mula manquis sem cabeça.<br />\n  <b>Disclaimer and Footnotes</b>\n  <br /> Quem num gosta di mim que vai caçá sua turmis!Si num tem leite\n  então bota uma pinga aí cumpadi!Diuretics paradis num copo é motivis\n  de denguis.Mé faiz elementum girarzis, nisi eros vermeio.</p>",
+		"name": "New Modern Villa in Nueva Andalusia",
+		"images": [
+			{
+			"priority": 1,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/onemillion.jpg]",
+			"title": "onemillion.jpg",
+			"type": 0
+			},
+			{
+			"priority": 2,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/twomillion.jpg]",
+			"title": "twomillion.jpg",
+			"type": 0
+			},
+			{
+			"priority": 0,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/treemillions.jpg]",
+			"title": "treemillions.jpg",
+			"type": 0
+			},
+			{
+			"priority": 3,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/fourmillion.jpg]",
+			"title": "fourmillion.jpeg",
+			"type": 0
+			}
+		],
+		"attachments": [
+			{
+			"priority": 0,
+			"src":"[$DOCUMENT_URL:/site-initializer/documents/group/ProductAttachments/sample.pdf]",
+			"title": "sample.pdf",
+			"type": 1
+			}
+		],
+		"categories": [
+		  "Tenured"
+		],
+		"productSpecifications": [
+			{
+				"specificationKey": "distribuition-period",
+				"value": {
+					"en_US": "Monthly"
+				}
+			},
+			{
+				"specificationKey": "loan-to-cost",
+				"value": {
+				  "en_US": "70.0% - 80.0%"
+				}
+			},
+			{
+				"specificationKey": "capital-growth",
+				"value": {
+				  "en_US": "8.50%"
+				}
+			},
+			{
+				"specificationKey": "location",
+				"value": {
+				  "en_US": "Diamond Bar - California - USA"
+				}
+			},
+			{
+				"specificationKey": "floors",
+				"value": {
+				  "en_US": "3"
+				}
+			},
+			{
+				"specificationKey": "area",
+				"value": {
+				  "en_US": "580 m2"
+				}
+			},
+			{
+				"specificationKey": "payment-date",
+				"value": {
+				  "en_US": "06.22.2021"
+				}
+			},
+			{
+				"specificationKey": "property-type",
+				"value": {
+				  "en_US": "Multifamily"
+				}
+			},
+			{
+				"specificationKey": "investiment-profile",
+				"value": {
+				  "en_US": "Core-Plus"
+				}
+			},
+			{
+				"specificationKey": "funding-target",
+				"value": {
+				  "en_US": "$3,200,00"
+				}
+			},
+			{
+				"specificationKey": "minimum-hold-period",
+				"value": {
+				  "en_US": "4 - 8 years"
+				}
+			},
+			{
+				"specificationKey": "yield",
+				"value": {
+				  "en_US": "10.05%"
+				}
+			},
+			{
+				"specificationKey": "sponsor-historic-net-irr",
+				"value": {
+				  "en_US": "20.4%"
+				}
+			},
+			{
+				"specificationKey": "sponsor-historic-equity-multiple",
+				"value": {
+				  "en_US": "2.4x"
+				}
+			},
+			{
+				"specificationKey": "funder",
+				"value": {
+				  "en_US": "BDR Capital LLC"
+				}
+			}
+		]
+	}
+]

@@ -1,0 +1,57 @@
+.crowse-container{
+	border-top: solid 2px #F4F7F6;
+	padding: 18px 0;
+	background: #fff;
+}
+
+.crowse-input{
+	background: #F4F7F6;
+	border: 2px solid rgba(40, 40, 43, 0.08);
+	border-radius: 8px;
+	display:flex;
+	padding: 10px;
+	align-items: center;
+	justify-content: space-between;
+	color: #8E9090;
+}
+
+.crowse-input span{
+	overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crowse-input .dropdown{
+	position: absolute;
+	left:0;
+	top:0;
+}
+
+.crowse-input .circle{
+	width: 20px;
+	height: 20px;
+	background: #8275D3;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 14px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 10px;
+	display:none;
+}
+
+.crowse-container .dropdown{
+	position: absolute;
+	top: 85px;
+	left: 0;
+	right: 0;
+	background: #fff;
+	z-index: 1000;
+	padding: 10px 0 0 30px;
+	display:none;
+}
+
+.crowse-container .dropdown .portlet-body{
+	display:flex;
+}

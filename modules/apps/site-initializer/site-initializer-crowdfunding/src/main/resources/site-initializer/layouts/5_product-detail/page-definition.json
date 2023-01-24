@@ -1,0 +1,53 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+                "definition": {
+                    "fragmentStyle": {
+                        "marginTop": "5"
+                    },
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 0,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 4,
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "widthType": "Fixed"
+                    }
+                },
+				"pageElements": [
+                    {
+                        "definition": {
+                            "widgetInstance": {
+                                "widgetConfig": {
+                                    "portletSetupUseCustomTitle": "true",
+                                    "selectionStyle": "adt",
+                                    "displayStyle": "ddmTemplate_49177",
+                                    "simple--cpTypeRendererKey": "default",
+                                    "portletSetupTitle_en_US": ".",
+                                    "grouped--cpTypeRendererKey": "default",
+                                    "virtual--cpTypeRendererKey": "virtual",
+                                    "displayStyleGroupId": "45315",
+                                    "portletSetupPortletDecoratorId": "borderless"
+                                },
+                                "widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
+                            }
+                        },
+                        "type": "Widget"
+                    }
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "Crowdfunding"
+		}
+	}
+}

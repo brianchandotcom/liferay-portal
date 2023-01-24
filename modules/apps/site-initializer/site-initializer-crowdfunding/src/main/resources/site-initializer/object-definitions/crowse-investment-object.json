@@ -1,0 +1,80 @@
+{
+    "active": true,
+    "objectActions": [],
+    "label": {
+        "en_US": "Crowse Investment Object"
+    },
+    "panelCategoryKey": "control_panel.object",
+    "pluralLabel": {
+        "en_US": "Crowse Investment Object"
+    },
+    "objectLayouts": [],
+    "system": false,
+    "objectViews": [],
+    "objectFields": [
+        {
+            "indexedAsKeyword": false,
+            "indexed": true,
+            "indexedLanguageId": "",
+            "name": "investimentCommitment",
+            "DBType": "Double",
+            "label": {
+                "en_US": "Investiment Commitment"
+            },
+            "businessType": "Decimal",
+            "type": "Double",
+            "required": true
+        },
+        {
+            "indexedAsKeyword": false,
+            "indexed": true,
+            "indexedLanguageId": "",
+            "name": "orderId",
+            "DBType": "String",
+            "label": {
+                "en_US": "Order Id"
+            },
+            "businessType": "Text",
+            "type": "String",
+            "required": true
+        },
+        {
+            "indexedAsKeyword": false,
+            "indexed": true,
+            "indexedLanguageId": "",
+            "name": "phoneNumber",
+            "DBType": "String",
+            "label": {
+                "en_US": "Phone Number"
+            },
+            "businessType": "Text",
+            "type": "String",
+            "required": true
+        },
+        {
+            "indexedAsKeyword": false,
+            "indexed": true,
+            "indexedLanguageId": "",
+            "name": "productId",
+            "DBType": "String",
+            "label": {
+                "en_US": "Product Id"
+            },
+            "businessType": "Text",
+            "type": "String",
+            "required": true
+        }
+    ],
+    "scope": "company",
+    "name": "CrowseInvestmentObject",
+    "portlet": false,
+    "actions": {
+        "get": {},
+        "update": {}
+    },
+    "status": {
+        "label_i18n": "Approved",
+        "code": 0,
+        "label": "approved"
+    }
+}

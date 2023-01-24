@@ -1,0 +1,18 @@
+[
+	{
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]"
+		],
+		"externalReferenceCode": "CRW001",
+		"htmlElementName": "liferay-remote-app-crowdfunding",
+		"name_i18n": {
+			"en_US": "Crowdfunding"
+		},
+		"portletCategoryName": "category.remote-apps",
+		"remoteAppEntryKey": "CROWDFUNDING",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CROWDFUNDING$]"
+	}
+]

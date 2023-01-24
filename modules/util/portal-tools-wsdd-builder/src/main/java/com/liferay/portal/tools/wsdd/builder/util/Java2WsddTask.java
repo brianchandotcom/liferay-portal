@@ -16,7 +16,7 @@ package com.liferay.portal.tools.wsdd.builder.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xml.SAXReaderFactory;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -44,12 +45,39 @@ import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class Java2WsddTask {
+
+	public static String documentToString(Node node) throws IOException {
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputFormat outputFormat = new OutputFormat(StringPool.TAB, true);
+
+		outputFormat.setOmitEncoding(true);
+		outputFormat.setPadText(true);
+		outputFormat.setTrimText(true);
+
+		XMLWriter xmlWriter = new XMLWriter(
+			unsyncByteArrayOutputStream, outputFormat);
+
+		xmlWriter.write(node);
+
+		String content = StringUtil.trimTrailing(
+			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
+
+		while (content.contains(" \n")) {
+			content = StringUtil.replace(content, " \n", "\n");
+		}
+
+		return content;
+	}
 
 	public static String[] generateWsdd(
 			String className, String classPath, String serviceName)
@@ -197,7 +225,7 @@ public class Java2WsddTask {
 			if (elementName.equals("arrayMapping")) {
 				element.detach();
 
-				arrayMappingElements.put(_formattedString(element), element);
+				arrayMappingElements.put(documentToString(element), element);
 			}
 			else if (elementName.equals("operation")) {
 				element.detach();
@@ -255,7 +283,7 @@ public class Java2WsddTask {
 			else if (elementName.equals("typeMapping")) {
 				element.detach();
 
-				typeMappingElements.put(_formattedString(element), element);
+				typeMappingElements.put(documentToString(element), element);
 			}
 		}
 
@@ -264,11 +292,7 @@ public class Java2WsddTask {
 		_addElements(serviceElement, operationElements);
 		_addElements(serviceElement, parameterElements);
 
-		return StringUtil.replace(_formattedString(document), "\"/>", "\" />");
-	}
-
-	private static String _formattedString(Node node) throws Exception {
-		return Dom4jUtil.toString(node);
+		return StringUtil.replace(documentToString(document), "\"/>", "\" />");
 	}
 
 	private static String _stripComments(String text) {

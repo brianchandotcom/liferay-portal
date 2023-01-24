@@ -2,8 +2,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Remote Apps";
-	property testray.main.component.name = "Remote Apps";
+	property testray.component.names = "Client Extension";
+	property testray.main.component.name = "Client Extension";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -530,7 +530,7 @@ definition {
 	@priority = "4"
 	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Remote Apps";
+		property testray.component.names = "Client Extension";
 
 		task ("Given a custom element with "Use ES Modules" option created") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(

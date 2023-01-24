@@ -2,8 +2,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Remote Apps";
-	property testray.main.component.name = "Remote Apps";
+	property testray.component.names = "Client Extension";
+	property testray.main.component.name = "Client Extension";
 
 	setUp {
 		task ("Given a Liferay DXP instance") {

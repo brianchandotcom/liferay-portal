@@ -4,7 +4,7 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Remote Apps";
+	property testray.main.component.name = "Client Extension";
 
 	setUp {
 		TestCase.setUpPortalInstance();

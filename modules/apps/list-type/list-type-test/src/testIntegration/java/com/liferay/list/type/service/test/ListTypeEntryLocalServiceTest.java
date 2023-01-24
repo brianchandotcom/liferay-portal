@@ -21,13 +21,15 @@ import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
-import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
@@ -56,15 +58,20 @@ public class ListTypeEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_listTypeDefinition =
-			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
+			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		_listTypeEntry = _listTypeEntryLocalService.addListTypeEntry(
+			null, TestPropsValues.getUserId(),
+			_listTypeDefinition.getListTypeDefinitionId(), "able",
+			Collections.singletonMap(LocaleUtil.US, "Able"));
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		ListTypeDefinitionLocalServiceUtil.deleteListTypeDefinition(
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			_listTypeDefinition);
 	}
 
@@ -113,15 +120,9 @@ public class ListTypeEntryLocalServiceTest {
 				listTypeEntryKeyException.getMessage());
 		}
 
-		ListTypeEntry listTypeEntry =
-			ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				null, TestPropsValues.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(), "able",
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
-
 		Assert.assertEquals(
-			listTypeEntry.getUuid(), listTypeEntry.getExternalReferenceCode());
+			_listTypeEntry.getUuid(),
+			_listTypeEntry.getExternalReferenceCode());
 
 		// Duplicate key
 
@@ -137,24 +138,14 @@ public class ListTypeEntryLocalServiceTest {
 				duplicateListTypeEntryException.getMessage());
 		}
 
-		ListTypeEntryLocalServiceUtil.deleteListTypeEntry(listTypeEntry);
-
-		listTypeEntry = ListTypeEntryLocalServiceUtil.addListTypeEntry(
-			"bakerExternalReferenceCode", TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(), "baker",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
-
-		Assert.assertEquals(
-			"bakerExternalReferenceCode",
-			listTypeEntry.getExternalReferenceCode());
-
-		// Duplicate external reference code
+		String externalReferenceCode =
+			_listTypeEntry.getExternalReferenceCode();
 
 		try {
-			ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				"bakerExternalReferenceCode", TestPropsValues.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(), "charlie",
+			_listTypeEntryLocalService.addListTypeEntry(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 		}
@@ -162,104 +153,107 @@ public class ListTypeEntryLocalServiceTest {
 					duplicateListTypeEntryExternalReferenceCodeException) {
 
 			Assert.assertEquals(
-				"Duplicate external reference code bakerExternalReferenceCode",
+				"Duplicate external reference code " + externalReferenceCode,
 				duplicateListTypeEntryExternalReferenceCodeException.
 					getMessage());
 		}
 
-		ListTypeEntryLocalServiceUtil.deleteListTypeEntry(listTypeEntry);
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				"externalReferenceCode", TestPropsValues.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(), "baker",
+				Collections.singletonMap(LocaleUtil.US, "Baker"));
+
+		Assert.assertEquals(
+			"externalReferenceCode", listTypeEntry.getExternalReferenceCode());
+		Assert.assertEquals("baker", listTypeEntry.getKey());
+		Assert.assertEquals(
+			Collections.singletonMap(LocaleUtil.US, "Baker"),
+			listTypeEntry.getNameMap());
+
+		_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
 	}
 
 	@Test
-	public void testFetchListTypeEntryByExternalReferenceCode()
-		throws Exception {
+	public void testFetchListTypeEntry() throws Exception {
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.fetchListTypeEntry(
+				_listTypeEntry.getListTypeEntryId());
 
-		ListTypeEntry ablelistTypeEntry =
-			ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				null, TestPropsValues.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(), "able",
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+		Assert.assertNotNull(listTypeEntry);
 
-		ListTypeEntry bakerListTypeEntry =
-			ListTypeEntryLocalServiceUtil.
+		listTypeEntry = _listTypeEntryLocalService.fetchListTypeEntry(0);
+
+		Assert.assertNull(listTypeEntry);
+
+		listTypeEntry =
+			_listTypeEntryLocalService.
 				fetchListTypeEntryByExternalReferenceCode(
-					ablelistTypeEntry.getExternalReferenceCode(),
-					ablelistTypeEntry.getCompanyId());
+					_listTypeEntry.getExternalReferenceCode(),
+					_listTypeEntry.getCompanyId());
 
-		Assert.assertNotNull(bakerListTypeEntry);
+		Assert.assertNotNull(listTypeEntry);
 
-		bakerListTypeEntry =
-			ListTypeEntryLocalServiceUtil.
+		listTypeEntry =
+			_listTypeEntryLocalService.
 				fetchListTypeEntryByExternalReferenceCode(
-					null, ablelistTypeEntry.getCompanyId());
+					null, _listTypeEntry.getCompanyId());
 
-		Assert.assertNull(bakerListTypeEntry);
-
-		ListTypeEntryLocalServiceUtil.deleteListTypeEntry(ablelistTypeEntry);
+		Assert.assertNull(listTypeEntry);
 	}
 
 	@Test
-	public void testGetListTypeEntryByExternalReferenceCode() throws Exception {
-		ListTypeEntry ablelistTypeEntry =
-			ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				null, TestPropsValues.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(), "able",
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+	public void testGetListTypeEntry() throws Exception {
+		try {
+			_listTypeEntryLocalService.getListTypeEntry(0, "able");
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"No ListTypeEntry exists with the key " +
+					"{listTypeDefinitionId=0, key=able}",
+				exception.getMessage());
+		}
 
-		ListTypeEntry bakerListTypeEntry =
-			ListTypeEntryLocalServiceUtil.
-				getListTypeEntryByExternalReferenceCode(
-					ablelistTypeEntry.getExternalReferenceCode(),
-					ablelistTypeEntry.getCompanyId());
-
-		Assert.assertNotNull(bakerListTypeEntry);
+		Assert.assertNotNull(
+			_listTypeEntryLocalService.getListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId(),
+				_listTypeEntry.getKey()));
 
 		try {
-			ListTypeEntryLocalServiceUtil.
-				getListTypeEntryByExternalReferenceCode(
-					"noERC", ablelistTypeEntry.getCompanyId());
+			_listTypeEntryLocalService.getListTypeEntryByExternalReferenceCode(
+				"noERC", _listTypeEntry.getCompanyId());
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"No ListTypeEntry exists with the key ",
 					"{externalReferenceCode=noERC, companyId=",
-					String.valueOf(ablelistTypeEntry.getCompanyId()), "}"),
+					String.valueOf(_listTypeEntry.getCompanyId()), "}"),
 				exception.getMessage());
 		}
 
-		ListTypeEntryLocalServiceUtil.deleteListTypeEntry(ablelistTypeEntry);
+		Assert.assertNotNull(
+			_listTypeEntryLocalService.getListTypeEntryByExternalReferenceCode(
+				_listTypeEntry.getExternalReferenceCode(),
+				_listTypeEntry.getCompanyId()));
 	}
 
 	@Test
 	public void testUpdateListTypeEntry() throws Exception {
-		ListTypeEntry ablelistTypeEntry =
-			ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				null, TestPropsValues.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(), "able",
-				Collections.singletonMap(LocaleUtil.US, "Able"));
+		String externalReferenceCode = "externalReferenceCode";
 
-		String listTypeEntryExternalReferenceCode =
-			"listTypeEntryExternalReferenceCode";
-
-		Map<Locale, String> updatedNameMap = Collections.singletonMap(
+		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.US, "Updated Able");
 
-		ListTypeEntry updatedAblelistTypeEntry =
-			ListTypeEntryLocalServiceUtil.updateListTypeEntry(
-				listTypeEntryExternalReferenceCode,
-				ablelistTypeEntry.getListTypeEntryId(), updatedNameMap);
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.updateListTypeEntry(
+				externalReferenceCode, _listTypeEntry.getListTypeEntryId(),
+				nameMap);
 
 		Assert.assertEquals(
-			listTypeEntryExternalReferenceCode,
-			updatedAblelistTypeEntry.getExternalReferenceCode());
+			externalReferenceCode, listTypeEntry.getExternalReferenceCode());
 
-		Assert.assertEquals(
-			updatedNameMap, updatedAblelistTypeEntry.getNameMap());
-
-		ListTypeEntryLocalServiceUtil.deleteListTypeEntry(ablelistTypeEntry);
+		Assert.assertEquals(nameMap, listTypeEntry.getNameMap());
 	}
 
 	private void _testAddListTypeEntry(long listTypeDefinitionId, String key)
@@ -268,19 +262,28 @@ public class ListTypeEntryLocalServiceTest {
 		ListTypeEntry listTypeEntry = null;
 
 		try {
-			listTypeEntry = ListTypeEntryLocalServiceUtil.addListTypeEntry(
+			listTypeEntry = _listTypeEntryLocalService.addListTypeEntry(
 				null, TestPropsValues.getUserId(), listTypeDefinitionId, key,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 		}
 		finally {
 			if (listTypeEntry != null) {
-				ListTypeEntryLocalServiceUtil.deleteListTypeEntry(
-					listTypeEntry);
+				_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
 			}
 		}
 	}
 
+	@DeleteAfterTestRun
 	private ListTypeDefinition _listTypeDefinition;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private ListTypeEntry _listTypeEntry;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

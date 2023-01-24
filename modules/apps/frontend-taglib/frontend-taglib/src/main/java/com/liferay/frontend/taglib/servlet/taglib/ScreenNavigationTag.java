@@ -68,6 +68,10 @@ public class ScreenNavigationTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getAriaCurrent() {
+		return _ariaCurrent;
+	}
+
 	public String getContainerCssClass() {
 		return _containerCssClass;
 	}
@@ -122,6 +126,10 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	public boolean isInverted() {
 		return _inverted;
+	}
+
+	public void setAriaCurrent(String ariaCurrent) {
+		_ariaCurrent = ariaCurrent;
 	}
 
 	public void setContainerCssClass(String containerCssClass) {
@@ -183,6 +191,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_ariaCurrent = "page";
 		_containerCssClass = "col-md-9";
 		_containerWrapperCssClass = StringPool.BLANK;
 		_context = null;
@@ -245,6 +254,8 @@ public class ScreenNavigationTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:screen-navigation:id", id);
 
+		httpServletRequest.setAttribute(
+			"liferay-frontend:screen-navigation:ariaCurrent", _ariaCurrent);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:screen-navigation:containerWrapperCssClass",
 			_containerWrapperCssClass);
@@ -371,6 +382,7 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	private static final String _PAGE = "/screen_navigation/page.jsp";
 
+	private String _ariaCurrent = "page";
 	private String _containerCssClass = "col-md-9";
 	private String _containerWrapperCssClass = StringPool.BLANK;
 	private Object _context;

@@ -17,6 +17,7 @@
 <%@ include file="/screen_navigation/init.jsp" %>
 
 <%
+String ariaCurrent = (String)request.getAttribute("liferay-frontend:screen-navigation:ariaCurrent");
 String containerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:containerCssClass");
 String containerWrapperCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:containerWrapperCssClass");
 String fullContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:fullContainerCssClass");
@@ -93,6 +94,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 
 								<li class="nav-item">
 									<a
+										aria-current="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? ariaCurrent : "false" %>"
 										class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>" href="<%=
 PortletURLBuilder.create(
 									PortletURLUtil.clone(portletURL, liferayPortletResponse)

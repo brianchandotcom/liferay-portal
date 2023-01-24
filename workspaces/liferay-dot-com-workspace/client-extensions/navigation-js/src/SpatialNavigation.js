@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 import SpatialNavigation from 'spatial-navigation-js';
 
 class SpatialNavigationProvider {
@@ -34,12 +35,12 @@ class SpatialNavigationProvider {
 		this.toggleFocusableClasses(focusableLinkParent, false);
 
 	toggleFocusableClasses = (focusableLinkParent, add) => {
-		var focusableLinks = focusableLinkParent.querySelectorAll(
+		const focusableLinks = focusableLinkParent.querySelectorAll(
 			this.focusableLinkSelector
 		);
 
-		for (var i = 0; i < focusableLinks.length; i++) {
-			var focusableLink = focusableLinks[i];
+		for (let i = 0; i < focusableLinks.length; i++) {
+			const focusableLink = focusableLinks[i];
 
 			if (add) {
 				focusableLink.classList.add(this.FOCUS_CSS_CLASS);

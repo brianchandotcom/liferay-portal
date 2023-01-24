@@ -91,15 +91,17 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 				}
 
+				String description = fileEntry.getDescription();
+
 				String title = fileEntry.getTitle();
 
-				if (Validator.isNotNull(fileEntry.getDescription())) {
-					title += " - " + fileEntry.getDescription();
+				if (Validator.isNotNull(description)) {
+					title += " - " + description;
 				}
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= imageURL %>" tabindex="0" thumbnailId="<%= thumbnailId %>" title="<%= title %>">
+					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> description="<%= description %>" href="<%= imageURL %>" tabindex="0" thumbnailId="<%= thumbnailId %>" title="<%= title %>">
 						<div class="card-type-asset entry-display-style">
 							<div class="card card-interactive card-interactive-secondary">
 								<div class="aspect-ratio card-item-first">
@@ -108,7 +110,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 											<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="documents-and-media" markupView="lexicon" />
 										</c:when>
 										<c:otherwise>
-											<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= thumbnailSrc %>" />
+											<img alt="<%= description %>" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= thumbnailSrc %>" />
 										</c:otherwise>
 									</c:choose>
 								</div>

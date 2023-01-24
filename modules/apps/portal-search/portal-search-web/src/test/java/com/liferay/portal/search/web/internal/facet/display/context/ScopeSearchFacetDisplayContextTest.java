@@ -17,8 +17,6 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,7 +31,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,7 +66,7 @@ public class ScopeSearchFacetDisplayContextTest
 					getRenderRequest(
 						SiteFacetPortletInstanceConfiguration.class));
 
-		scopeSearchFacetDisplayContextBuilder.setFacet(_facet);
+		scopeSearchFacetDisplayContextBuilder.setFacet(facet);
 		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(
 			_groupLocalService);
@@ -82,15 +79,6 @@ public class ScopeSearchFacetDisplayContextTest
 	@Override
 	public String getFacetDisplayContextParameterValue() {
 		return "0";
-	}
-
-	@Before
-	public void setUp() {
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
 	}
 
 	@Test
@@ -137,7 +125,7 @@ public class ScopeSearchFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
+			facetCollector,
 			Collections.singletonList(
 				createTermCollector(String.valueOf(groupId), frequency)));
 
@@ -178,7 +166,7 @@ public class ScopeSearchFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
+			facetCollector,
 			Collections.singletonList(
 				createTermCollector(String.valueOf(groupId), frequency)));
 
@@ -236,7 +224,7 @@ public class ScopeSearchFacetDisplayContextTest
 		throws Exception {
 
 		setUpTermCollectors(
-			_facetCollector, _getTermCollectors(groupNames, frequencies));
+			facetCollector, _getTermCollectors(groupNames, frequencies));
 
 		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
 			StringPool.BLANK, order);
@@ -272,9 +260,6 @@ public class ScopeSearchFacetDisplayContextTest
 		return termCollectors;
 	}
 
-	private final Facet _facet = Mockito.mock(Facet.class);
-	private final FacetCollector _facetCollector = Mockito.mock(
-		FacetCollector.class);
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
 

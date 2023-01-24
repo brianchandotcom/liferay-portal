@@ -15,8 +15,6 @@
 package com.liferay.portal.search.web.internal.custom.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
@@ -29,12 +27,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Wade Cao
@@ -46,15 +41,6 @@ public class CustomFacetDisplayContextTest
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
-	}
 
 	@Test
 	public void testEmptyCustomDisplayCaption() throws Exception {
@@ -120,8 +106,9 @@ public class CustomFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
-			Collections.singletonList(createTermCollector(fieldName, frequency)));
+			facetCollector,
+			Collections.singletonList(
+				createTermCollector(fieldName, frequency)));
 
 		CustomFacetDisplayContext customFacetDisplayContext =
 			_createDisplayContext(
@@ -156,8 +143,9 @@ public class CustomFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
-			Collections.singletonList(createTermCollector(fieldName, frequency)));
+			facetCollector,
+			Collections.singletonList(
+				createTermCollector(fieldName, frequency)));
 
 		String parameterValue = fieldName;
 
@@ -193,7 +181,7 @@ public class CustomFacetDisplayContextTest
 		throws Exception {
 
 		setUpTermCollectors(
-			_facetCollector, getTermCollectors(terms, frequencies));
+			facetCollector, getTermCollectors(terms, frequencies));
 
 		CustomFacetDisplayContext customFacetDisplayContext =
 			_createDisplayContext(
@@ -225,7 +213,7 @@ public class CustomFacetDisplayContextTest
 				getHttpServletRequest(
 					CustomFacetPortletInstanceConfiguration.class));
 
-		customFacetDisplayContextBuilder.setFacet(_facet);
+		customFacetDisplayContextBuilder.setFacet(facet);
 		customFacetDisplayContextBuilder.setParameterName("custom");
 		customFacetDisplayContextBuilder.setParameterValue(parameterValue);
 		customFacetDisplayContextBuilder.setFrequenciesVisible(true);
@@ -240,9 +228,5 @@ public class CustomFacetDisplayContextTest
 
 		return customFacetDisplayContextBuilder.build();
 	}
-
-	private final Facet _facet = Mockito.mock(Facet.class);
-	private final FacetCollector _facetCollector = Mockito.mock(
-		FacetCollector.class);
 
 }

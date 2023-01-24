@@ -15,8 +15,6 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,7 +25,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,15 +41,6 @@ public class AssetEntriesSearchFacetDisplayContextTest
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
-	}
 
 	@Override
 	@Test
@@ -86,7 +74,7 @@ public class AssetEntriesSearchFacetDisplayContextTest
 		_mockResourceActions(classNames);
 
 		setUpTermCollectors(
-			_facetCollector, getTermCollectors(classNames, frequencies));
+			facetCollector, getTermCollectors(classNames, frequencies));
 
 		FacetDisplayContext facetDisplayContext = _createFacetDisplayContext(
 			classNames, order);
@@ -107,14 +95,14 @@ public class AssetEntriesSearchFacetDisplayContextTest
 						TypeFacetPortletInstanceConfiguration.class));
 
 		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(classNames);
-		assetEntriesSearchFacetDisplayContextBuilder.setFacet(_facet);
+		assetEntriesSearchFacetDisplayContextBuilder.setFacet(facet);
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			true);
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		assetEntriesSearchFacetDisplayContextBuilder.setLocale(LocaleUtil.US);
 		assetEntriesSearchFacetDisplayContextBuilder.setOrder(order);
 		assetEntriesSearchFacetDisplayContextBuilder.setParameterName(
-			_facet.getFieldId());
+			facet.getFieldId());
 		assetEntriesSearchFacetDisplayContextBuilder.setParameterValue(
 			StringPool.BLANK);
 
@@ -138,9 +126,5 @@ public class AssetEntriesSearchFacetDisplayContextTest
 			);
 		}
 	}
-
-	private final Facet _facet = Mockito.mock(Facet.class);
-	private final FacetCollector _facetCollector = Mockito.mock(
-		FacetCollector.class);
 
 }

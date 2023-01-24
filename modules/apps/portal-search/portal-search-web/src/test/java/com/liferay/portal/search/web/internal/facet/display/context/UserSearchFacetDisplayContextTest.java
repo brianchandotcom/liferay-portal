@@ -15,8 +15,6 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder;
@@ -27,12 +25,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Lino Alves
@@ -63,7 +58,7 @@ public class UserSearchFacetDisplayContextTest
 					getRenderRequest(
 						UserFacetPortletInstanceConfiguration.class));
 
-		userSearchFacetDisplayContextBuilder.setFacet(_facet);
+		userSearchFacetDisplayContextBuilder.setFacet(facet);
 		userSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		userSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		userSearchFacetDisplayContextBuilder.setMaxTerms(0);
@@ -71,16 +66,6 @@ public class UserSearchFacetDisplayContextTest
 		userSearchFacetDisplayContextBuilder.setParamValue(parameterValue);
 
 		return userSearchFacetDisplayContextBuilder.build();
-	}
-
-
-	@Before
-	public void setUp() {
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
 	}
 
 	@Test
@@ -119,7 +104,7 @@ public class UserSearchFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
+			facetCollector,
 			Collections.singletonList(
 				createTermCollector(String.valueOf(userName), frequency)));
 
@@ -155,7 +140,7 @@ public class UserSearchFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
+			facetCollector,
 			Collections.singletonList(
 				createTermCollector(String.valueOf(userName), frequency)));
 
@@ -191,7 +176,7 @@ public class UserSearchFacetDisplayContextTest
 		throws Exception {
 
 		setUpTermCollectors(
-			_facetCollector, getTermCollectors(userNames, frequencies));
+			facetCollector, getTermCollectors(userNames, frequencies));
 
 		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
 			StringPool.BLANK, order);
@@ -200,9 +185,5 @@ public class UserSearchFacetDisplayContextTest
 			facetDisplayContext.getBucketDisplayContexts(), expectedUserNames,
 			expectedFrequencies);
 	}
-
-	private final Facet _facet = Mockito.mock(Facet.class);
-	private final FacetCollector _facetCollector = Mockito.mock(
-		FacetCollector.class);
 
 }

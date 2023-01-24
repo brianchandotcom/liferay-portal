@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -85,7 +83,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 			setAssetVocabularyLocalService(_assetVocabularyLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle(
 			"cloud");
-		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(_facet);
+		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(facet);
 		assetCategoriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			true);
 		assetCategoriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(
@@ -95,7 +93,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		assetCategoriesSearchFacetDisplayContextBuilder.setMaxTerms(0);
 		assetCategoriesSearchFacetDisplayContextBuilder.setOrder(order);
 		assetCategoriesSearchFacetDisplayContextBuilder.setParameterName(
-			_facet.getFieldId());
+			facet.getFieldId());
 		assetCategoriesSearchFacetDisplayContextBuilder.setParameterValue(
 			parameterValue);
 		assetCategoriesSearchFacetDisplayContextBuilder.setPortal(_getPortal());
@@ -109,6 +107,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		setUpAssetVocabularyLocalService();
 		setUpConfigurationProvider();
@@ -471,17 +470,13 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 			_configurationProvider);
 	}
 
-	protected void setUpFacet() {
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
+	protected void setUpFacet() throws Exception {
+		super.setUp();
 
 		Mockito.doReturn(
 			getFacetFieldName()
 		).when(
-			_facet
+			facet
 		).getFieldName();
 	}
 
@@ -490,7 +485,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 			Collections.singletonList(
 				createTermCollector(assetCategoryId, frequency))
 		).when(
-			_facetCollector
+			facetCollector
 		).getTermCollectors();
 	}
 
@@ -621,7 +616,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 
 		_setUpMultipleAssetCategory(assetCategoryIds);
 
-		setUpTermCollectors(_facetCollector, termCollectors);
+		setUpTermCollectors(facetCollector, termCollectors);
 
 		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
 			StringPool.BLANK, order);
@@ -644,8 +639,5 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 	private final ConfigurationProvider _configurationProvider = Mockito.mock(
 		ConfigurationProvider.class);
 	private long _excludedGroupId;
-	private final Facet _facet = Mockito.mock(Facet.class);
-	private final FacetCollector _facetCollector = Mockito.mock(
-		FacetCollector.class);
 
 }

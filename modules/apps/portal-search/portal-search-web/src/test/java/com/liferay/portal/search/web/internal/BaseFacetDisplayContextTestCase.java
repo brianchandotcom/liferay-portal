@@ -17,6 +17,7 @@ package com.liferay.portal.search.web.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -33,6 +34,7 @@ import javax.portlet.RenderRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -57,6 +59,15 @@ public abstract class BaseFacetDisplayContextTestCase {
 
 	public String getFacetDisplayContextParameterValue() {
 		return StringPool.BLANK;
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		Mockito.doReturn(
+			facetCollector
+		).when(
+			facet
+		).getFacetCollector();
 	}
 
 	@Test
@@ -306,5 +317,8 @@ public abstract class BaseFacetDisplayContextTestCase {
 	protected String[] expectedTermsValueDescending = {
 		"charlie", "bravo", "bravo", "alpha"
 	};
+	protected final Facet facet = Mockito.mock(Facet.class);
+	protected final FacetCollector facetCollector = Mockito.mock(
+		FacetCollector.class);
 
 }

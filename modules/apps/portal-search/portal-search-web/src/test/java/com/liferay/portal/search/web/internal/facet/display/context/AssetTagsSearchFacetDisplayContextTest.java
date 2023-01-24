@@ -16,8 +16,6 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
@@ -28,12 +26,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author André de Oliveira
@@ -65,26 +60,17 @@ public class AssetTagsSearchFacetDisplayContextTest
 						TagFacetPortletInstanceConfiguration.class));
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
-		assetTagsSearchFacetDisplayContextBuilder.setFacet(_facet);
+		assetTagsSearchFacetDisplayContextBuilder.setFacet(facet);
 		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		assetTagsSearchFacetDisplayContextBuilder.setMaxTerms(0);
 		assetTagsSearchFacetDisplayContextBuilder.setOrder(order);
 		assetTagsSearchFacetDisplayContextBuilder.setParameterName(
-			_facet.getFieldId());
+			facet.getFieldId());
 		assetTagsSearchFacetDisplayContextBuilder.setParameterValue(
 			parameterValue);
 
 		return assetTagsSearchFacetDisplayContextBuilder.build();
-	}
-
-	@Before
-	public void setUp() {
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
 	}
 
 	@Test
@@ -123,7 +109,7 @@ public class AssetTagsSearchFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
+			facetCollector,
 			Collections.singletonList(createTermCollector(term, frequency)));
 
 		String facetParam = StringPool.BLANK;
@@ -158,7 +144,7 @@ public class AssetTagsSearchFacetDisplayContextTest
 		int frequency = RandomTestUtil.randomInt();
 
 		setUpTermCollectors(
-			_facetCollector,
+			facetCollector,
 			Collections.singletonList(createTermCollector(term, frequency)));
 
 		String facetParam = term;
@@ -194,7 +180,7 @@ public class AssetTagsSearchFacetDisplayContextTest
 		throws Exception {
 
 		setUpTermCollectors(
-			_facetCollector, getTermCollectors(terms, frequencies));
+			facetCollector, getTermCollectors(terms, frequencies));
 
 		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
 			StringPool.BLANK, order);
@@ -203,9 +189,5 @@ public class AssetTagsSearchFacetDisplayContextTest
 			facetDisplayContext.getBucketDisplayContexts(), expectedTerms,
 			expectedFrequencies);
 	}
-
-	private final Facet _facet = Mockito.mock(Facet.class);
-	private final FacetCollector _facetCollector = Mockito.mock(
-		FacetCollector.class);
 
 }

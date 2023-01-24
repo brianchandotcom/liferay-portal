@@ -14,6 +14,8 @@
 
 package com.liferay.layout.internal.util;
 
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.internal.action.provider.LayoutActionProvider;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.LayoutsTree;
@@ -26,12 +28,16 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -390,90 +396,127 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				_layoutPermission.containsLayoutUpdatePermission(
 					themeDisplay.getPermissionChecker(), layout);
 
-			jsonArray.put(
-				JSONUtil.put(
-					"actions", actionsJSONArray
-				).put(
-					"children",
-					() -> {
-						if (childrenJSONArray.length() > 0) {
-							return childrenJSONArray;
-						}
-
-						return null;
+			JSONObject jsonObject = JSONUtil.put(
+				"actions", actionsJSONArray
+			).put(
+				"children",
+				() -> {
+					if (childrenJSONArray.length() > 0) {
+						return childrenJSONArray;
 					}
-				).put(
-					"groupId",
-					() -> {
-						if (layout instanceof VirtualLayout) {
-							VirtualLayout virtualLayout = (VirtualLayout)layout;
 
-							return virtualLayout.getSourceGroupId();
-						}
+					return null;
+				}
+			).put(
+				"groupId",
+				() -> {
+					if (layout instanceof VirtualLayout) {
+						VirtualLayout virtualLayout = (VirtualLayout)layout;
 
-						return layout.getGroupId();
+						return virtualLayout.getSourceGroupId();
 					}
-				).put(
-					"hasChildren", layout.hasChildren()
-				).put(
-					"icon", layout.getIcon()
-				).put(
-					"id", layout.getPlid()
-				).put(
-					"layoutId", layout.getLayoutId()
-				).put(
-					"name",
-					() -> {
-						if ((draftLayout != null) &&
-							(hasUpdatePermission || !layout.isPublished() ||
-							 _layoutContentModelResourcePermission.contains(
-								 themeDisplay.getPermissionChecker(),
-								 layout.getPlid(), ActionKeys.UPDATE))) {
 
-							return layout.getName(themeDisplay.getLocale()) +
-								StringPool.STAR;
-						}
+					return layout.getGroupId();
+				}
+			).put(
+				"hasChildren", layout.hasChildren()
+			).put(
+				"icon", layout.getIcon()
+			).put(
+				"id", layout.getPlid()
+			).put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"name",
+				() -> {
+					if ((draftLayout != null) &&
+						(hasUpdatePermission || !layout.isPublished() ||
+						 _layoutContentModelResourcePermission.contains(
+							 themeDisplay.getPermissionChecker(),
+							 layout.getPlid(), ActionKeys.UPDATE))) {
 
-						return layout.getName(themeDisplay.getLocale());
+						return layout.getName(themeDisplay.getLocale()) +
+							StringPool.STAR;
 					}
-				).put(
-					"paginated",
-					() -> {
-						List<LayoutTreeNode> layoutTreeNodesList =
-							childLayoutTreeNodes.getLayoutTreeNodesList();
 
-						if (childLayoutTreeNodes.getTotal() !=
-								layoutTreeNodesList.size()) {
+					return layout.getName(themeDisplay.getLocale());
+				}
+			).put(
+				"paginated",
+				() -> {
+					List<LayoutTreeNode> layoutTreeNodesList =
+						childLayoutTreeNodes.getLayoutTreeNodesList();
 
-							return true;
-						}
+					if (childLayoutTreeNodes.getTotal() !=
+							layoutTreeNodesList.size()) {
 
-						return null;
+						return true;
 					}
-				).put(
-					"plid", layout.getPlid()
-				).put(
-					"priority", layout.getPriority()
-				).put(
-					"privateLayout", layout.isPrivateLayout()
-				).put(
-					"regularURL",
-					() -> {
-						if (hasUpdatePermission || layout.isPublished()) {
-							return layout.getRegularURL(httpServletRequest);
-						}
 
-						return StringPool.BLANK;
+					return null;
+				}
+			).put(
+				"plid", layout.getPlid()
+			).put(
+				"priority", layout.getPriority()
+			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"regularURL",
+				() -> {
+					if (hasUpdatePermission || layout.isPublished()) {
+						return layout.getRegularURL(httpServletRequest);
 					}
+
+					return StringPool.BLANK;
+				}
+			).put(
+				"target",
+				GetterUtil.getString(
+					HtmlUtil.escape(layout.getTypeSettingsProperty("target")),
+					"_self")
+			).put(
+				"type", layout.getType()
+			);
+
+			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+				layout);
+
+			if (layoutRevision != null) {
+				long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
+
+				if (_staging.isIncomplete(layout, layoutSetBranchId)) {
+					jsonObject.put("incomplete", true);
+				}
+
+				LayoutSetBranch boundLayoutSetBranch =
+					_layoutSetBranchLocalService.getLayoutSetBranch(
+						layoutSetBranchId);
+
+				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+
+				if (!layoutBranch.isMaster()) {
+					jsonObject.put(
+						"layoutBranchId", layoutBranch.getLayoutBranchId()
+					).put(
+						"layoutBranchName", layoutBranch.getName()
+					);
+				}
+
+				if (layoutRevision.isHead()) {
+					jsonObject.put("layoutRevisionHead", true);
+				}
+
+				jsonObject.put(
+					"layoutRevisionId", layoutRevision.getLayoutRevisionId()
 				).put(
-					"target",
-					GetterUtil.getString(
-						HtmlUtil.escape(
-							layout.getTypeSettingsProperty("target")),
-						"_self")
+					"layoutSetBranchId", layoutSetBranchId
 				).put(
-					"type", layout.getType()
-				));
+					"layoutSetBranchName", boundLayoutSetBranch.getName()
+				);
+			}
+
+			jsonArray.put(jsonObject);
 		}
 
 		return jsonArray;
@@ -502,7 +545,13 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private LayoutService _layoutService;
 
 	@Reference
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Reference
+	private Staging _staging;
 
 	private static class LayoutTreeNode {
 

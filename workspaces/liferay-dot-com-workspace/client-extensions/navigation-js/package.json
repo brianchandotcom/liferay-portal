@@ -1,7 +1,6 @@
 {
 	"author": "",
 	"dependencies": {
-		"metal-dom": "^2.16.8",
 		"spatial-navigation-js": "^1.0.0"
 	},
 	"description": "",

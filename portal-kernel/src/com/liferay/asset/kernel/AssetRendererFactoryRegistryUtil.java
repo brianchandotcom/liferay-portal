@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
@@ -190,20 +189,7 @@ public class AssetRendererFactoryRegistryUtil {
 					AssetRendererFactory<?> assetRendererFactory =
 						_bundleContext.getService(serviceReference);
 
-					String className = assetRendererFactory.getClassName();
-
-					if (className.startsWith(
-							"com.liferay.object.model.ObjectDefinition#")) {
-
-						emitter.emit(
-							className + "#" +
-								GetterUtil.getLong(
-									serviceReference.getProperty(
-										"company.id")));
-					}
-					else {
-						emitter.emit(className);
-					}
+					emitter.emit(assetRendererFactory.getClassName());
 				});
 
 	private static final ServiceTrackerMap<String, AssetRendererFactory<?>>

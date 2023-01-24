@@ -1280,9 +1280,7 @@ definition {
 	macro selectKebabMenuOption {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
-		Click(
-			key_kebabOption = "${kebabOption}",
-			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		MenuItem.click(menuItem = "${kebabOption}");
 	}
 
 	macro selectMySite {

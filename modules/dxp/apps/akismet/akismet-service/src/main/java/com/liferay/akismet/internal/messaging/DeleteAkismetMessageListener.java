@@ -78,8 +78,11 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 				_log.debug("Unscheduling trigger");
 			}
 
+			Trigger trigger = _schedulerEntryImpl.getTrigger();
+
 			_schedulerEngineHelper.unschedule(
-				_schedulerEntryImpl, StorageType.MEMORY_CLUSTERED);
+				trigger.getJobName(), trigger.getGroupName(),
+				StorageType.MEMORY_CLUSTERED);
 		}
 		catch (SchedulerException schedulerException) {
 			if (_log.isWarnEnabled()) {

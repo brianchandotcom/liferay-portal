@@ -174,7 +174,8 @@ const TestflowForm = () => {
 			}
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

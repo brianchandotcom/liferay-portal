@@ -293,7 +293,8 @@ const Export = () => {
 
 			if (requirement && casesWithRequirement[caseId]) {
 				casesWithRequirement[caseId].push(requirement);
-			} else {
+			}
+			else {
 				casesWithRequirement[caseId] = [requirement];
 			}
 		});

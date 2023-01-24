@@ -17,6 +17,8 @@ const urlPaths = pathname.split('/').filter(Boolean);
 const siteName = `/${urlPaths.slice(0, urlPaths.length - 1).join('/')}`;
 const applicationId = localStorage.getItem('raylife-application-id');
 
+const NEXT_STEP_DELAY = 1000;
+
 const fetchHeadless = async (url, options) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${window.location.origin}/${url}`, {
@@ -92,7 +94,9 @@ const main = async () => {
 		});
 	}
 
-	window.location.href = `${siteName}/quote-comparison`;
+	setTimeout(() => {
+		window.location.href = `${siteName}/quote-comparison`;
+	}, NEXT_STEP_DELAY);
 };
 
 main();

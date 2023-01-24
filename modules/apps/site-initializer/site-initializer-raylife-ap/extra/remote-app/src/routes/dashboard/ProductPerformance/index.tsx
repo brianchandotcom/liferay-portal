@@ -138,7 +138,8 @@ const ProductPerformance = () => {
 						const tooltipGoals = (value = currentTooltip[x]);
 
 						return tooltipGoals;
-					} else {
+					}
+					else {
 						return value;
 					}
 				}
@@ -152,7 +153,8 @@ const ProductPerformance = () => {
 		const exceededValue = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] <= 0) {
 				return (goal - salesValue[index]) * -1;
-			} else {
+			}
+			else {
 				return 0;
 			}
 		});
@@ -164,7 +166,8 @@ const ProductPerformance = () => {
 		const goalsValues = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] >= 0) {
 				return goal - salesValue[index];
-			} else {
+			}
+			else {
 				return 0;
 			}
 		});
@@ -176,7 +179,8 @@ const ProductPerformance = () => {
 		const achievedValues = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] <= 0) {
 				return goal;
-			} else {
+			}
+			else {
 				return salesValue[index];
 			}
 		});

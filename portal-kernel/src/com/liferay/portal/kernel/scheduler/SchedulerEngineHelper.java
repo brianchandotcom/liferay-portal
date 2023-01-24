@@ -34,9 +34,6 @@ public interface SchedulerEngineHelper {
 	public void auditSchedulerJobs(Message message, TriggerState triggerState)
 		throws SchedulerException;
 
-	public void delete(SchedulerEntry schedulerEntry, StorageType storageType)
-		throws SchedulerException;
-
 	public void delete(String groupName, StorageType storageType)
 		throws SchedulerException;
 

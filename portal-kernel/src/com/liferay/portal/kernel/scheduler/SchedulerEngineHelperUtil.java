@@ -43,13 +43,6 @@ public class SchedulerEngineHelperUtil {
 		_schedulerEngineHelper.auditSchedulerJobs(message, triggerState);
 	}
 
-	public static void delete(
-			SchedulerEntry schedulerEntry, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.delete(schedulerEntry, storageType);
-	}
-
 	public static void delete(String groupName, StorageType storageType)
 		throws SchedulerException {
 

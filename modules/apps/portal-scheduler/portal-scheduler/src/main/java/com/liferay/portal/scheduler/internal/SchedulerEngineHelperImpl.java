@@ -128,15 +128,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public void delete(SchedulerEntry schedulerEntry, StorageType storageType)
-		throws SchedulerException {
-
-		Trigger trigger = schedulerEntry.getTrigger();
-
-		delete(trigger.getJobName(), trigger.getGroupName(), storageType);
-	}
-
-	@Override
 	public void delete(String groupName, StorageType storageType)
 		throws SchedulerException {
 
@@ -777,8 +768,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			ClusterableContextThreadLocal.putThreadLocalContext(
 				SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, false);
 
+			Trigger trigger = schedulerEntry.getTrigger();
+
 			try {
-				delete(schedulerEntry, storageType);
+				delete(
+					trigger.getJobName(), trigger.getGroupName(), storageType);
 			}
 			catch (SchedulerException schedulerException) {
 				_log.error(schedulerException);

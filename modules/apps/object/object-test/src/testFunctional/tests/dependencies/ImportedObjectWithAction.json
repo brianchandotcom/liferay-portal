@@ -18,7 +18,7 @@
 	"enableCategorization": true,
 	"enableComments": false,
 	"enableObjectEntryHistory": false,
-	"externalReferenceCode": "7c7b7350-1cb3-bfa8-9ec1-03349d8efe32",
+	"externalReferenceCode": "7cf5bc10-1c5a-6c93-7e7d-1d0c46002b5f",
 	"label": {
 		"en_US": "Imported Object With Action"
 	},
@@ -30,9 +30,11 @@
 			"description": "",
 			"errorMessage": {
 			},
+			"externalReferenceCode": "5f40ec86-bf81-5e3f-cbeb-d2da9c0d739e",
 			"label": {
+				"en_US": "CanImportObjectWithAction"
 			},
-			"name": "Action Name",
+			"name": "canImportObjectWithAction",
 			"objectActionExecutorKey": "webhook",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
@@ -47,10 +49,30 @@
 	],
 	"objectFields": [
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "b28aa538-7200-aa5d-e769-695eb757871e",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "AnyName"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "anyname",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
 			"DBType": "Date",
 			"businessType": "Date",
 			"defaultValue": "",
-			"externalReferenceCode": "194486e2-1979-1590-2539-3ec840e0d9e9",
+			"externalReferenceCode": "2906327d-5772-7b8f-a3f9-9a69e107cabd",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -70,7 +92,7 @@
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "",
-			"externalReferenceCode": "8802101b-58e9-48c6-370e-5c11e9597e24",
+			"externalReferenceCode": "a36a4c89-ab68-3c5f-6569-bc870310cf45",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -90,7 +112,7 @@
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "",
-			"externalReferenceCode": "6cd72f20-cb83-972c-98bf-8fe4795cf2fe",
+			"externalReferenceCode": "e3f455c2-85db-10ce-666a-f99973f6f673",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -110,7 +132,7 @@
 			"DBType": "Long",
 			"businessType": "LongInteger",
 			"defaultValue": "",
-			"externalReferenceCode": "dd63a0b5-96e8-a8a7-c06b-ca69f5c41de4",
+			"externalReferenceCode": "ff8acf69-8159-192c-b895-d2525f1d7b69",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"indexedLanguageId": "",
@@ -130,7 +152,7 @@
 			"DBType": "Date",
 			"businessType": "Date",
 			"defaultValue": "",
-			"externalReferenceCode": "41a6196b-573f-b32b-521f-a9f1613ec2e2",
+			"externalReferenceCode": "3f9f0f44-4506-ec60-564c-215d66c2861b",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -150,7 +172,7 @@
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "",
-			"externalReferenceCode": "0fdad1eb-42c1-72ff-f9e5-fb2a48c890d8",
+			"externalReferenceCode": "0d889dae-ce72-b1d1-a755-ca45f6aa59a1",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -173,7 +195,7 @@
 	],
 	"objectViews": [
 	],
-	"panelCategoryKey": "control_panel.object",
+	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "Imported Object With Action"

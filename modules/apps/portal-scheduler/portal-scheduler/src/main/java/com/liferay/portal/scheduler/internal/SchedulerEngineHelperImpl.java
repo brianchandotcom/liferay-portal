@@ -281,21 +281,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public Date getStartTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = getScheduledJob(
-			jobName, groupName, storageType);
-
-		if (schedulerResponse != null) {
-			return getStartTime(schedulerResponse);
-		}
-
-		return null;
-	}
-
-	@Override
 	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 

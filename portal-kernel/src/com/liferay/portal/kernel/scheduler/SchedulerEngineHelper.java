@@ -72,10 +72,6 @@ public interface SchedulerEngineHelper {
 
 	public Date getStartTime(SchedulerResponse schedulerResponse);
 
-	public Date getStartTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
-
 	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 

@@ -118,14 +118,6 @@ public class SchedulerEngineHelperUtil {
 		return _schedulerEngineHelper.getStartTime(schedulerResponse);
 	}
 
-	public static Date getStartTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		return _schedulerEngineHelper.getStartTime(
-			jobName, groupName, storageType);
-	}
-
 	public static void pause(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {

@@ -1383,6 +1383,18 @@ definition {
 
 			var dataSourceName = StringUtil.trim("${dataSourceName}");
 
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",

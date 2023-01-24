@@ -17,12 +17,12 @@ package com.liferay.portal.tools.wsdd.builder.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xml.SAXReaderFactory;
-import com.liferay.util.xml.XMLSafeReader;
 
 import java.io.File;
 
@@ -178,7 +178,7 @@ public class Java2WsddTask {
 
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
-		Document document = saxReader.read(new XMLSafeReader(content));
+		Document document = saxReader.read(new UnsyncStringReader(content));
 
 		Element rootElement = document.getRootElement();
 

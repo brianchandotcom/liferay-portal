@@ -71,6 +71,11 @@ type ProductTypes = {
 	totalSales: number;
 };
 
+export type ProductPropertiesTypes = {
+	externalReferenceCode: string;
+	name: string;
+};
+
 export type SalesGoalTypes = {
 	finalReferenceDate: string;
 	goalValue: number;

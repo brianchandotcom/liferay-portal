@@ -26,6 +26,7 @@ import ProductList, {
 	ProductCell,
 } from '../../../common/components/product-list';
 import {getPoliciesForSalesGoal, getSalesGoal} from '../../../common/services';
+import {getProducts} from '../../../common/services/Products';
 import {
 	currentDateString,
 	december,
@@ -37,6 +38,7 @@ import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import {
 	PolicyTypes,
 	ProductListType,
+	ProductPropertiesTypes,
 	SalesGoalTypes,
 } from './ProductPerformanceTypes';
 import {annualRule, sixMonthRule, threeMonthRule} from './businessRules';
@@ -70,18 +72,6 @@ const colors: {[keys: string]: {}} = {
 };
 
 let widthValue = 15;
-
-const productERCList: Array<{externalReferenceCode: string; name: string}> = [
-	{externalReferenceCode: 'RAY004', name: 'Business Owners Policy'},
-	{externalReferenceCode: 'RAY003', name: 'Workers Compensation'},
-	{externalReferenceCode: 'RAY002', name: 'Professional Liability'},
-	{externalReferenceCode: 'RAY001', name: 'General Liability'},
-	{externalReferenceCode: 'RAYAP-005', name: 'Health'},
-	{externalReferenceCode: 'RAYAP-004', name: 'Life'},
-	{externalReferenceCode: 'RAYAP-003', name: 'Property'},
-	{externalReferenceCode: 'RAYAP-002', name: 'Home'},
-	{externalReferenceCode: 'RAYAP-001', name: 'Auto'},
-];
 
 const ProductPerformance = () => {
 	const [products, setProducts] = useState<ProductCell[]>([]);
@@ -148,8 +138,7 @@ const ProductPerformance = () => {
 						const tooltipGoals = (value = currentTooltip[x]);
 
 						return tooltipGoals;
-					}
-					else {
+					} else {
 						return value;
 					}
 				}
@@ -163,8 +152,7 @@ const ProductPerformance = () => {
 		const exceededValue = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] <= 0) {
 				return (goal - salesValue[index]) * -1;
-			}
-			else {
+			} else {
 				return 0;
 			}
 		});
@@ -176,8 +164,7 @@ const ProductPerformance = () => {
 		const goalsValues = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] >= 0) {
 				return goal - salesValue[index];
-			}
-			else {
+			} else {
 				return 0;
 			}
 		});
@@ -189,8 +176,7 @@ const ProductPerformance = () => {
 		const achievedValues = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] <= 0) {
 				return goal;
-			}
-			else {
+			} else {
 				return salesValue[index];
 			}
 		});
@@ -345,6 +331,10 @@ const ProductPerformance = () => {
 	};
 
 	const productsBaseSetup = async () => {
+		const productsData = await getProducts();
+
+		const productERCList = productsData.data.items;
+
 		const yearlyPolicies = await getPoliciesForSalesGoal(
 			currentDateString[0],
 			currentDateString[1],
@@ -362,23 +352,25 @@ const ProductPerformance = () => {
 		const newProductList: ProductCell[] = [];
 		const yearlyProductsTotal: ProductListType = {};
 
-		productERCList.forEach(({externalReferenceCode, name}) => {
-			let productNameAbbrevation = name;
+		productERCList?.forEach(
+			({externalReferenceCode, name}: ProductPropertiesTypes) => {
+				let productNameAbbrevation = name;
 
-			if (name.length > 8) {
-				productNameAbbrevation = name
-					.split(' ')
-					.map((product: string) => product.charAt(0))
-					.join('');
+				if (name.length > 8) {
+					productNameAbbrevation = name
+						.split(' ')
+						.map((product: string) => product.charAt(0))
+						.join('');
+				}
+
+				yearlyProductsTotal[externalReferenceCode] = {
+					goalValue: 0,
+					productExternalReferenceCode: externalReferenceCode,
+					productName: productNameAbbrevation,
+					totalSales: 0,
+				};
 			}
-
-			yearlyProductsTotal[externalReferenceCode] = {
-				goalValue: 0,
-				productExternalReferenceCode: externalReferenceCode,
-				productName: productNameAbbrevation,
-				totalSales: 0,
-			};
-		});
+		);
 
 		yearlyPolicies?.data?.items?.forEach(
 			({
@@ -427,7 +419,7 @@ const ProductPerformance = () => {
 
 	const settingLabelsPeriod = () => {
 		if (isLoading === true) {
-			labelRef.current.categories(getData()[0]?.label);
+			labelRef?.current?.categories(getData()[0]?.label);
 		}
 	};
 	const settingAnnualRules = async () => {
@@ -487,6 +479,7 @@ const ProductPerformance = () => {
 	};
 	useEffect(() => {
 		productsBaseSetup();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {

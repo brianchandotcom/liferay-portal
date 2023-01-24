@@ -25,7 +25,7 @@ export function getProducts() {
 		const channelId = items[0].id;
 
 		return axios.get(
-			`${headlessAPI}/channels/${channelId}/products?nestedFields=skus,catalog&fields=name&page=1&pageSize=50`
+			`${headlessAPI}/channels/${channelId}/products?nestedFields=skus,catalog&fields=name,externalReferenceCode&page=1&pageSize=50`
 		);
 	});
 

@@ -7,8 +7,8 @@ module.exports = {
 		globalObject: 'this',
 		library: {
 			name: 'navigation',
-			type: 'umd'
+			type: 'umd',
 		},
-		path: path.resolve(__dirname, 'build/static')
-	}
+		path: path.resolve(__dirname, 'build/static'),
+	},
 };

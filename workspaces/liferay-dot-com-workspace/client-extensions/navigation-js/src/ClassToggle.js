@@ -154,9 +154,7 @@ class ClassToggle {
 		let nodes;
 
 		if (node.dataset.targetNodes) {
-			nodes = document.querySelectorAll(
-				node.dataset.targetNodes
-			);
+			nodes = document.querySelectorAll(node.dataset.targetNodes);
 		}
 		else if (this.targetNodes) {
 			nodes = document.querySelectorAll(this.targetNodes);

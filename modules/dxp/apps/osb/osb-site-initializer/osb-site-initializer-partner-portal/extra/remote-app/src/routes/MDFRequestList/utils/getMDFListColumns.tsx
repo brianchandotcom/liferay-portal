@@ -20,10 +20,25 @@ import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFListColumns(
 	columns?: TableColumn<MDFRequestListItem>[],
-	siteURL?: string
+	siteURL?: string,
+	userAccountRoles?: React.OptionHTMLAttributes<HTMLOptionElement>[]
 ): TableColumn<MDFRequestListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFRequestListItem) => {
+		const canEditRoles = [
+			'Channel General Manager',
+			'Channel Account Manager',
+			'Channel Regional Marketing Manager',
+			'Channel Global Marketing Manager',
+			'Channel Finance Manager',
+		];
+
+		const userAccountRolesCanEdit = userAccountRoles?.filter(
+			(userAccountRole) =>
+				canEditRoles.includes(userAccountRole.label as string)
+		).length;
+
 		if (
+			!userAccountRolesCanEdit &&
 			row[MDFColumnKey.STATUS] !== Status.DRAFT.name &&
 			row[MDFColumnKey.STATUS] !== Status.REQUEST_MORE_INFO.name
 		) {

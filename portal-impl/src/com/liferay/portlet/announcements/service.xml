@@ -129,7 +129,7 @@
 		<finder name="EntryId" return-type="Collection">
 			<finder-column name="entryId" />
 		</finder>
-		<finder name="U_E_V" return-type="AnnouncementFlag" unique="true">
+		<finder name="U_E_V" return-type="AnnouncementFlag">
 			<finder-column name="userId" />
 			<finder-column name="entryId" />
 			<finder-column name="value" />

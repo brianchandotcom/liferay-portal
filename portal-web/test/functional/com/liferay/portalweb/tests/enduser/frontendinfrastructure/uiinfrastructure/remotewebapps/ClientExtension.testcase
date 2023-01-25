@@ -670,7 +670,7 @@ definition {
 		}
 
 		task ("When type 'vanilla counter' in HTML Element field and attempt to save the remote app") {
-			RemoteApps.addApp(
+			ClientExtensionGeneral.addApp(
 				entryHTMLElementName = "vanilla counter",
 				entryName = "RemoteApp Test Name",
 				entryURL = "${testURL}");
@@ -693,7 +693,7 @@ definition {
 		}
 
 		task ("When type 'vanilla.counter' in HTML Element Name field and attempt to save the remote app") {
-			RemoteApps.addApp(
+			ClientExtensionGeneral.addApp(
 				entryHTMLElementName = "vanilla.counter",
 				entryName = "RemoteApp Test",
 				entryURL = "${testURL}");
@@ -716,12 +716,10 @@ definition {
 		}
 
 		task ("When type 'Vanilla counter' in HTML Element Name field") {
-			Type(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY",
-				value1 = "Vanilla counter");
-
-			Button.clickPublish();
+			ClientExtensionGeneral.addApp(
+				entryHTMLElementName = "Vanilla counter",
+				entryName = "RemoteApp Test",
+				entryURL = "${testURL}");
 		}
 
 		task ("And When attempt to save the remote app") {

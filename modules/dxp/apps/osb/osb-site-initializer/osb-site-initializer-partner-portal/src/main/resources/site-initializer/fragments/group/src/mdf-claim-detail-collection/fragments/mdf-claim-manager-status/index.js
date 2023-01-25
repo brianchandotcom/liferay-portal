@@ -201,6 +201,7 @@ const updateButtons = (mdfClaimStatusKey) => {
 	}
 	if (mdfClaimStatusKey === 'approved') {
 		updateInFinanceReview.classList.toggle('d-flex');
+		updateStatusToCanceled.classList.toggle('d-flex');
 	}
 
 	if (mdfClaimStatusKey === 'inFinanceReview') {
@@ -229,6 +230,7 @@ const updateButtons = (mdfClaimStatusKey) => {
 		updateStatusToApproved.classList.toggle('d-flex');
 		updateInFinanceReview.classList.toggle('d-flex');
 		updateStatusToReject.classList.toggle('d-flex');
+		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
 	}
 	if (mdfClaimStatusKey === 'canceled') {
 		updateStatusToApproved.classList.toggle('d-flex');

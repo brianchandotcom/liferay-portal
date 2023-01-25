@@ -143,6 +143,9 @@
 								"objectStateTransitions": [
 									{
 										"key": "inFinanceReview"
+									},
+									{
+										"key": "canceled"
 									}
 								]
 							},
@@ -224,6 +227,9 @@
 									},
 									{
 										"key": "rejected"
+									},
+									{
+										"key": "moreInfoRequested"
 									}
 								]
 							},

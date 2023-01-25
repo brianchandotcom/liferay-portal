@@ -1377,7 +1377,7 @@ definition {
 		task ("Create a blog page and view page") {
 			ACUtils.createBlogsAndAddToPage();
 
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
 

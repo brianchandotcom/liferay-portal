@@ -931,6 +931,7 @@
 		<exception>CommerceOrderPaymentMethod</exception>
 		<exception>CommerceOrderPrice</exception>
 		<exception>CommerceOrderPurchaseOrderNumber</exception>
+		<exception>CommerceOrderQuantity</exception>
 		<exception>CommerceOrderRequestedDeliveryDate</exception>
 		<exception>CommerceOrderShippingAddress</exception>
 		<exception>CommerceOrderShippingAndBilling</exception>

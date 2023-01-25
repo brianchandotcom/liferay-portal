@@ -256,6 +256,9 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(25, 1, 1),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.questions.web"}, null));
+
+		upgradeVersionTreeMap.put(
+			new Version(25, 1, 2), new DummyUpgradeProcess());
 	}
 
 }

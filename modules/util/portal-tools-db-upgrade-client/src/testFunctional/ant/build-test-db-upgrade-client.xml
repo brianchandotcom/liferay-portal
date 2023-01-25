@@ -571,10 +571,9 @@ upgrade.database.auto.run=false</echo>
 	</target>
 
 	<target name="execute-all-pending-upgrades-from-gogo-shell">
-
 		<get-database-upgrade-client-paths />
 
-		<antcall target="check-upgrade-client-upgrade-core-only"/>
+		<antcall target="check-upgrade-client-upgrade-core-only" />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
@@ -583,6 +582,5 @@ upgrade.database.auto.run=false</echo>
 		/>
 
 		<clean-database-upgrade-client />
-
-	</target>	
+	</target>
 </project>

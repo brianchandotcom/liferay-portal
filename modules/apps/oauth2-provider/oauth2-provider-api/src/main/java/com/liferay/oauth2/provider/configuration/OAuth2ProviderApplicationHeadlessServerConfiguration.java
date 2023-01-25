@@ -43,4 +43,10 @@ public interface OAuth2ProviderApplicationHeadlessServerConfiguration {
 	)
 	public String userAccountEmailAddress();
 
+	@Meta.AD(
+		deflt = "<company.default.user>", required = false,
+		type = Meta.Type.String
+	)
+	public String userAccountScreenName();
+
 }

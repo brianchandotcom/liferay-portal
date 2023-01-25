@@ -515,15 +515,15 @@ public class PredicateExpressionVisitorImpl
 
 		String leftString = (String)left;
 
-		String[] complexPropertyChunks = leftString.split(StringPool.SLASH);
+		String[] leftStringParts = leftString.split(StringPool.SLASH);
 
-		String relationshipName = complexPropertyChunks[0];
+		String relationshipName = leftStringParts[0];
 
 		ObjectRelationship objectRelationship = _fetchObjectRelationship(
 			relationshipName);
 
 		if (objectRelationship != null) {
-			String objectFieldName = complexPropertyChunks[1];
+			String objectFieldName = leftStringParts[1];
 
 			try {
 				return _getPredicateForRelationships(

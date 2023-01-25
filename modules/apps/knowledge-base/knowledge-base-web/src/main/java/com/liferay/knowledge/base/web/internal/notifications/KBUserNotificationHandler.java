@@ -26,8 +26,11 @@ import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,11 +72,24 @@ public class KBUserNotificationHandler
 			message = "x-added-a-new-x";
 		}
 		else if (notificationType ==
+					UserNotificationDefinition.
+						NOTIFICATION_TYPE_EXPIRED_ENTRY) {
+
+			String command = jsonObject.getString("command");
+
+			if (Objects.equals(command, Constants.EXPIRE)) {
+				message = "x-has-been-expired-by-x";
+			}
+			else {
+				return _getFormattedMessage(
+					serviceContext, "x-has-expired", typeName);
+			}
+		}
+		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY) {
 
-			return _language.format(
-				serviceContext.getLocale(), "x-needs-review",
-				StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
+			return _getFormattedMessage(
+				serviceContext, "x-needs-review", typeName);
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
@@ -83,6 +99,14 @@ public class KBUserNotificationHandler
 
 		return getFormattedMessage(
 			jsonObject, serviceContext, message, typeName);
+	}
+
+	private String _getFormattedMessage(
+		ServiceContext serviceContext, String message, String typeName) {
+
+		return _language.format(
+			serviceContext.getLocale(), message,
+			StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
 	}
 
 	@Reference

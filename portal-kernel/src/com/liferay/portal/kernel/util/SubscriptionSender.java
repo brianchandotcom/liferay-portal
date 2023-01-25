@@ -812,10 +812,17 @@ public class SubscriptionSender implements Serializable {
 	protected void populateNotificationEventJSONObject(
 		JSONObject notificationEventJSONObject) {
 
+		String command = null;
+		if (serviceContext != null) {
+			command = serviceContext.getCommand();
+		}
+
 		notificationEventJSONObject.put(
 			"className", _className
 		).put(
 			"classPK", _classPK
+		).put(
+			"command", command
 		).put(
 			"context", _context
 		).put(

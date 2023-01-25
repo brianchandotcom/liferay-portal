@@ -517,6 +517,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticleLocalService.updateKBArticle(kbArticle);
 
+		serviceContext.setCommand(Constants.EXPIRE);
+
 		return updateStatus(
 			userId, resourcePrimKey, WorkflowConstants.STATUS_EXPIRED,
 			serviceContext);

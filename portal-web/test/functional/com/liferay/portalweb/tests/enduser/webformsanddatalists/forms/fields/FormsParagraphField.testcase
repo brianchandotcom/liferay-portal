@@ -461,7 +461,7 @@ definition {
 	@priority = "5"
 	test CannotBeSavedOrPublishedWithoutBodyText {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		FormsAdmin.addForm();
 

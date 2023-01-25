@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletWrapper;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceWrapper;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.language.LanguageImpl;
@@ -32,11 +32,8 @@ import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portlet.PortalPreferencesWrapper;
 
 import java.util.Objects;
-
-import javax.portlet.PortletPreferences;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -73,32 +70,6 @@ public class ComboServletTest {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
-
-		ReflectionTestUtil.setFieldValue(
-			PrefsPropsUtil.class, "_portalPreferencesLocalService",
-			new PortalPreferencesLocalServiceWrapper() {
-
-				@Override
-				public PortletPreferences getPreferences(
-					long ownerId, int ownerType) {
-
-					return new PortalPreferencesWrapper(null) {
-
-						@Override
-						public String getValue(String key, String def) {
-							if (PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS.equals(
-									key)) {
-
-								return ".css,.js";
-							}
-
-							return null;
-						}
-
-					};
-				}
-
-			});
 	}
 
 	@Before
@@ -125,6 +96,16 @@ public class ComboServletTest {
 				}
 
 			});
+
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_prefsProps", _prefsProps);
+
+		Mockito.when(
+			_prefsProps.getStringArray(
+				PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS, StringPool.COMMA)
+		).thenReturn(
+			new String[] {".css", ".js"}
+		);
 
 		setUpComboServlet();
 
@@ -290,7 +271,7 @@ public class ComboServletTest {
 
 			@Override
 			public String getContextPath() {
-				return "portal";
+				return "/portal";
 			}
 
 			@Override
@@ -314,7 +295,7 @@ public class ComboServletTest {
 	protected void setUpPortalServletContext() {
 		_portalServletContext = Mockito.spy(new MockServletContext());
 
-		_portalServletContext.setContextPath("portal");
+		_portalServletContext.setContextPath("/portal");
 	}
 
 	protected void setUpTestPortlet() {
@@ -354,6 +335,7 @@ public class ComboServletTest {
 	private PortletApp _portalPortletApp;
 	private MockServletContext _portalServletContext;
 	private Portlet _portletUndeployed;
+	private final PrefsProps _prefsProps = Mockito.mock(PrefsProps.class);
 	private Portlet _testPortlet;
 	private PortletApp _testPortletApp;
 

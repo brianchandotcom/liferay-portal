@@ -3631,6 +3631,10 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
+		task ("Filter by site") {
+			ContentDashboard.filterBySite(siteName = "Test Site Name");
+		}
+
 		task ("Assert the Export XLS button is disabled") {
 			AssertNotEditable(
 				key_text = "Export XLS",

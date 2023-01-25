@@ -1320,7 +1320,7 @@ definition {
 	macro viewCategorizationInObjectEntry {
 		AssertElementPresent(locator1 = "ObjectAdmin#CATEGORIZATION_TITLE_INTO_OBJECT");
 
-		AssertElementPresent(locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD");
+		AssertElementPresent(locator1 = "AssetCategorization#TAGS_FIELD");
 
 		for (var vocabularyName : list "Topic,Audience,Stage") {
 			AssertElementPresent(

@@ -25,6 +25,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -51,6 +52,12 @@ public class KBArticleLayoutDisplayPageProvider
 		try {
 			KBArticle kbArticle = _kbArticleLocalService.fetchKBArticle(
 				infoItemReference.getClassPK());
+
+			if (kbArticle == null) {
+				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
+					infoItemReference.getClassPK(),
+					WorkflowConstants.STATUS_ANY);
+			}
 
 			if ((kbArticle == null) || kbArticle.isDraft()) {
 				return null;

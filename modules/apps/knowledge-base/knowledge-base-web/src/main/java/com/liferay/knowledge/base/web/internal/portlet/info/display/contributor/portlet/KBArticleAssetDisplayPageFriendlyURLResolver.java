@@ -14,7 +14,10 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.info.display.contributor.portlet;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -31,6 +34,28 @@ public class KBArticleAssetDisplayPageFriendlyURLResolver
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.
 			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
+	}
+
+	@Override
+	protected AssetDisplayPageEntry getAssetDisplayPageEntry(
+		long groupId,
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
+
+		KBArticle kbArticle =
+			(KBArticle)layoutDisplayPageObjectProvider.getDisplayObject();
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+				kbArticle.getKbArticleId());
+
+		if (assetDisplayPageEntry != null) {
+			return assetDisplayPageEntry;
+		}
+
+		return assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+			groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+			kbArticle.getResourcePrimKey());
 	}
 
 }

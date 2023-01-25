@@ -29,15 +29,30 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= objectDefinitionsFieldsDisplayContext.getAPIURL() %>"
-	creationMenu="<%= objectDefinitionsFieldsDisplayContext.getCreationMenu(objectDefinition) %>"
-	fdsActionDropdownItems="<%= objectDefinitionsFieldsDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= ObjectDefinitionsFDSNames.OBJECT_FIELDS %>"
-	propsTransformer="js/components/FDSPropsTransformer/ObjectFieldsFDSPropsTransformer"
-	style="fluid"
-/>
+<div>
+	<react:component
+		module="js/components/ObjectField/Fields"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
+			).put(
+				"creationMenu", objectDefinitionsFieldsDisplayContext.getCreationMenu(objectDefinition)
+			).put(
+				"formName", "fm"
+			).put(
+				"id", ObjectDefinitionsFDSNames.OBJECT_FIELDS
+			).put(
+				"items", objectDefinitionsFieldsDisplayContext.getFDSActionDropdownItems()
+			).put(
+				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
+			).put(
+				"style", "fluid"
+			).put(
+				"url", objectDefinitionsFieldsDisplayContext.getEditObjectFieldURL()
+			).build()
+		%>'
+	/>
+</div>
 
 <div id="<portlet:namespace />AddObjectField">
 	<react:component

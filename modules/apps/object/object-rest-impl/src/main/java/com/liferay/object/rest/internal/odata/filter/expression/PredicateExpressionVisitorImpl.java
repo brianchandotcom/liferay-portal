@@ -175,12 +175,12 @@ public class PredicateExpressionVisitorImpl
 				predicate = _getPredicateForRelationships(
 					left,
 					(objectFieldName, relatedObjectDefinitionId) ->
-						_getINPredicate(
+						_getInPredicate(
 							objectFieldName, relatedObjectDefinitionId,
 							rights));
 			}
 			else {
-				predicate = _getINPredicate(left, _objectDefinitionId, rights);
+				predicate = _getInPredicate(left, _objectDefinitionId, rights);
 			}
 
 			return predicate;
@@ -444,7 +444,7 @@ public class PredicateExpressionVisitorImpl
 		return null;
 	}
 
-	private Predicate _getINPredicate(
+	private Predicate _getInPredicate(
 		Object left, long objectDefinitionId, List<Object> rights) {
 
 		return _getColumn(

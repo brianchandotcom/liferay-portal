@@ -31,7 +31,6 @@ import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,13 +38,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo García
  */
-@Component(service = ConditionEvaluator.class)
+@Component(
+	property = "scripting.language=java", service = ConditionEvaluator.class
+)
 public class MBModerationConditionEvaluator implements ConditionEvaluator {
-
-	@Override
-	public boolean canEvaluate(String scriptingLanguage) {
-		return Objects.equals(scriptingLanguage, "java");
-	}
 
 	@Override
 	public String evaluate(

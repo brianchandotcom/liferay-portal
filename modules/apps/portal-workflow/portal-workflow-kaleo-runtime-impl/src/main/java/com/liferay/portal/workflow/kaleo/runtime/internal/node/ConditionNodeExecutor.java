@@ -16,9 +16,14 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -53,7 +58,36 @@ public class ConditionNodeExecutor extends BaseNodeExecutor {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ConditionEvaluator.class, "component.name");
+			bundleContext, ConditionEvaluator.class, "(scripting.language=*)",
+			(serviceReference, emitter) -> {
+				Object propertyValue = serviceReference.getProperty(
+					"scripting.language");
+
+				ConditionEvaluator conditionEvaluator =
+					bundleContext.getService(serviceReference);
+
+				try {
+					for (String scriptingLanguage :
+							GetterUtil.getStringValues(
+								propertyValue,
+								new String[] {String.valueOf(propertyValue)})) {
+
+						emitter.emit(
+							_getConditionEvaluatorKey(
+								scriptingLanguage,
+								ClassUtil.getClassName(conditionEvaluator)));
+					}
+				}
+				catch (KaleoDefinitionValidationException
+							kaleoDefinitionValidationException) {
+
+					throw new RuntimeException(
+						kaleoDefinitionValidationException);
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 	}
 
 	@Deactivate
@@ -112,19 +146,33 @@ public class ConditionNodeExecutor extends BaseNodeExecutor {
 			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
 
-		ConditionEvaluator conditionEvaluator = _serviceTrackerMap.getService(
+		String conditionEvaluatorKey = _getConditionEvaluatorKey(
+			kaleoCondition.getScriptLanguage(),
 			StringUtil.trim(kaleoCondition.getScript()));
 
-		if ((conditionEvaluator == null) ||
-			!conditionEvaluator.canEvaluate(
-				kaleoCondition.getScriptLanguage())) {
+		ConditionEvaluator conditionEvaluator = _serviceTrackerMap.getService(
+			conditionEvaluatorKey);
 
+		if (conditionEvaluator == null) {
 			throw new IllegalArgumentException(
 				"No condition evaluator found for script language " +
-					kaleoCondition.getScriptLanguage());
+					conditionEvaluatorKey);
 		}
 
 		return conditionEvaluator.evaluate(kaleoCondition, executionContext);
+	}
+
+	private String _getConditionEvaluatorKey(
+			String language, String conditionEvaluatorClassName)
+		throws KaleoDefinitionValidationException {
+
+		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
+
+		if (scriptLanguage.equals(ScriptLanguage.JAVA)) {
+			return language + StringPool.COLON + conditionEvaluatorClassName;
+		}
+
+		return language;
 	}
 
 	@Reference

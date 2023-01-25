@@ -30,7 +30,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,13 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(enabled = false, service = ConditionEvaluator.class)
+@Component(
+	enabled = false, property = "scripting.language=drl",
+	service = ConditionEvaluator.class
+)
 public class DRLConditionEvaluator implements ConditionEvaluator {
-
-	@Override
-	public boolean canEvaluate(String scriptingLanguage) {
-		return Objects.equals(scriptingLanguage, "drl");
-	}
 
 	@Override
 	public String evaluate(

@@ -117,7 +117,7 @@ definition {
 	}
 
 	macro deletePublication {
-		PublicationsNavigator._gotoPublicationEllipsisItem(
+		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Delete",
 			publicationName = "${publicationName}");
 
@@ -234,14 +234,14 @@ definition {
 
 	macro inviteUsers {
 		if ("${gotoReviewChanges}" == "true") {
-			PublicationsNavigator._gotoPublicationEllipsisItem(
+			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Review Changes",
 				publicationName = "${publicationName}");
 
 			Click(locator1 = "PublicationsChanges#INVITE_USERS_ICON");
 		}
 		else {
-			PublicationsNavigator._gotoPublicationEllipsisItem(
+			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Invite Users",
 				publicationName = "${publicationName}");
 		}
@@ -339,14 +339,14 @@ definition {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
-			PublicationsNavigator._gotoPublicationEllipsisItem(
+			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Schedule",
 				publicationName = "${publicationName}");
 		}
 		else if ("${reschedule}" == "true") {
 			PublicationsNavigator.openPublicationsScheduled();
 
-			PublicationsNavigator._gotoPublicationEllipsisItem(
+			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Reschedule",
 				publicationName = "${publicationName}");
 
@@ -425,7 +425,7 @@ definition {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
-			PublicationsNavigator._gotoPublicationEllipsisItem(
+			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Work on Publication",
 				publicationName = "${publicationName}");
 		}
@@ -451,7 +451,7 @@ definition {
 	macro unschedulePublication {
 		PublicationsNavigator.openPublicationsScheduled();
 
-		PublicationsNavigator._gotoPublicationEllipsisItem(
+		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Unschedule",
 			publicationName = "${publicationName}");
 	}

@@ -789,7 +789,7 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		PublicationsNavigator._gotoPublicationEllipsisItem(
+		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Permissions",
 			publicationName = "Publication Name");
 
@@ -805,7 +805,7 @@ definition {
 
 		Publications.workOnProduction();
 
-		PublicationsNavigator._gotoPublicationEllipsisItem(
+		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Permissions",
 			publicationName = "Publication Name");
 

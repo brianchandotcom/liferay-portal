@@ -1,6 +1,12 @@
 definition {
 
-	macro _gotoPublicationEllipsisItem {
+	macro gotoNavbar {
+		Click(
+			key_navBarTitle = "${navBarTitle}",
+			locator1 = "Publications#MANAGE_PUBLICATIONS_NAVBAR_TITLE");
+	}
+
+	macro gotoPublicationEllipsisItem {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
@@ -10,17 +16,11 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
-	macro gotoNavbar {
-		Click(
-			key_navBarTitle = "${navBarTitle}",
-			locator1 = "Publications#MANAGE_PUBLICATIONS_NAVBAR_TITLE");
-	}
-
 	macro gotoPublish {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
-			PublicationsNavigator._gotoPublicationEllipsisItem(
+			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Publish",
 				publicationName = "${publicationName}");
 		}
@@ -35,7 +35,7 @@ definition {
 		if ("${gotoPublicationsAdmin}" == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
-			PublicationsNavigator._gotoPublicationEllipsisItem(
+			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Review Changes",
 				publicationName = "${publicationName}");
 		}

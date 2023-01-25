@@ -1,7 +1,7 @@
 definition {
 
 	macro assertAdminPermissions {
-		PublicationsNavigator._gotoPublicationEllipsisItem(
+		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Edit",
 			publicationName = "${publicationName}");
 
@@ -110,7 +110,7 @@ definition {
 	}
 
 	macro assertPublisherPermissions {
-		PublicationsNavigator._gotoPublicationEllipsisItem(
+		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Edit",
 			publicationName = "${publicationName}");
 

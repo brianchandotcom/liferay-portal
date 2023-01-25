@@ -77,7 +77,7 @@ definition {
 			publicationName = "Publication Name test",
 			templateName = "Template Name");
 
-		PublicationsNavigator._gotoPublicationEllipsisItem(
+		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Invite Users",
 			publicationName = "Publication Name test");
 

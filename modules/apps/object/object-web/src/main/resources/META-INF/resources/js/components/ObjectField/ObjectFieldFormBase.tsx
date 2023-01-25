@@ -227,7 +227,9 @@ export default function ObjectFieldFormBase({
 			fieldSettingsMap.get(option.businessType) || [];
 
 		const isSearchableByText =
-			option.businessType === 'Attachment' || option.dbType === 'String';
+			option.businessType === 'Attachment' ||
+			option.dbType === 'Clob' ||
+			option.dbType === 'String';
 
 		const indexedAsKeyword = isSearchableByText && values.indexedAsKeyword;
 

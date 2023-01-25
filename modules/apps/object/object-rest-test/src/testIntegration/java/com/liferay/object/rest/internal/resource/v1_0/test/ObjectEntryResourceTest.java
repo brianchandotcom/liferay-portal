@@ -91,14 +91,14 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testFilterObjectEntriesByRelatedObjects() throws Exception {
+	public void testFilterObjectEntriesByRelatedObjectEntries() throws Exception {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-154672", "true"
 			).build());
 
 		for (FilterOperator operator : FilterOperator.values()) {
-			_testFilterObjectEntriesByRelatedObjects(operator);
+			_testFilterObjectEntriesByRelatedObjectEntries(operator);
 		}
 
 		PropsUtil.addProperties(
@@ -312,18 +312,18 @@ public class ObjectEntryResourceTest {
 			objectRelationship.getName(), "/id%20", operator.getValue(), "%20'",
 			String.valueOf(relatedObjectEntryId), StringPool.APOSTROPHE);
 
-		_testFilterObjectEntriesByRelatedObjectsUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjects(
+	private void _testFilterObjectEntriesByRelatedObjectEntries(
 			FilterOperator operator)
 		throws Exception {
 
 		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testFilterObjectEntriesByRelatedObjectsInBothSidesOfRelationship(
+		_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
 			_objectRelationship, operator);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
@@ -332,27 +332,27 @@ public class ObjectEntryResourceTest {
 		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_testFilterObjectEntriesByRelatedObjectsInBothSidesOfRelationship(
+		_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
 			_objectRelationship, operator);
 	}
 
 	private void
-			_testFilterObjectEntriesByRelatedObjectsInBothSidesOfRelationship(
+			_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
 				ObjectRelationship objectRelationship, FilterOperator operator)
 		throws Exception {
 
-		_testFilterObjectEntriesByRelatedObjectsUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, objectRelationship,
 			_objectDefinition1, operator, _OBJECT_FIELD_NAME_2,
 			_OBJECT_FIELD_VALUE_2);
 
-		_testFilterObjectEntriesByRelatedObjectsUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, objectRelationship,
 			_objectDefinition2, operator, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_1);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjectsUsingAnOperator(
+	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			String expectedObjectFieldName, String expectedObjectFieldValue,
 			ObjectRelationship objectRelationship,
 			ObjectDefinition objectDefinition, FilterOperator operator,
@@ -406,11 +406,11 @@ public class ObjectEntryResourceTest {
 				"Operation " + operator.name() + "is not supported");
 		}
 
-		_testFilterObjectEntriesByRelatedObjectsUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjectsUsingAnOperator(
+	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			String endpoint, String expectedObjectFieldName,
 			String expectedObjectFieldValue)
 		throws Exception {

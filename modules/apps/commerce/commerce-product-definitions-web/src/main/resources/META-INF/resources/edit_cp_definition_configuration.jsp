@@ -110,6 +110,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 
 						<aui:input name="minOrderQuantity" value="<%= (cpDefinitionInventory == null) ? String.valueOf(CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY) : String.valueOf(cpDefinitionInventory.getMinOrderQuantity()) %>">
 							<aui:validator name="digits" />
+							<aui:validator name="required" />
 							<aui:validator name="min">1</aui:validator>
 						</aui:input>
 
@@ -143,11 +144,13 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 
 						<aui:input name="maxOrderQuantity" value="<%= (cpDefinitionInventory == null) ? String.valueOf(CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY) : String.valueOf(cpDefinitionInventory.getMaxOrderQuantity()) %>">
 							<aui:validator name="digits" />
+							<aui:validator name="required" />
 							<aui:validator name="min">1</aui:validator>
 						</aui:input>
 
 						<aui:input name="multipleOrderQuantity" value="<%= (cpDefinitionInventory == null) ? String.valueOf(CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY) : String.valueOf(cpDefinitionInventory.getMultipleOrderQuantity()) %>">
 							<aui:validator name="digits" />
+							<aui:validator name="required" />
 							<aui:validator name="min">1</aui:validator>
 						</aui:input>
 					</div>

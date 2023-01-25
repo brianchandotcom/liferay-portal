@@ -99,6 +99,8 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 				public void removedService(
 					ServiceReference<CommerceMLIndexer> serviceReference,
 					CommerceMLIndexer commerceMLIndexer) {
+
+					bundleContext.ungetService(serviceReference);
 				}
 
 			});

@@ -25,7 +25,6 @@ import BreadcrumbFinder from '../BreadcrumbFinder';
 import DropDown from '../DropDown';
 import DropDownWithActions from '../DropDown/DropDown';
 import TestrayIcons from '../Icons/TestrayIcon';
-import NotificationPopover from '../NotificationPopover';
 
 const Divider = () => <p className="mx-2 text-paragraph-lg">/</p>;
 
@@ -34,16 +33,9 @@ type BreadCrumbTriggerProps = {
 };
 
 const Header = () => {
-	const [
-		{
-			dropdown,
-			headerActions,
-			heading,
-			symbol,
-			tabs,
-			testrayDispatchTriggers,
-		},
-	] = useContext(HeaderContext);
+	const [{dropdown, headerActions, heading, symbol, tabs}] = useContext(
+		HeaderContext
+	);
 	const navigate = useNavigate();
 
 	const filteredHeaderActions = Permission.filterActions(
@@ -149,10 +141,6 @@ const Header = () => {
 								position={Align.BottomLeft}
 							/>
 						)}
-
-						<NotificationPopover
-							testrayDispatchTriggers={testrayDispatchTriggers}
-						/>
 					</div>
 				</div>
 			</div>

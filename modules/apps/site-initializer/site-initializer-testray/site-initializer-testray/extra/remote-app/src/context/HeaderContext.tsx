@@ -14,10 +14,7 @@
 
 import {ReactNode, createContext, useEffect, useReducer} from 'react';
 
-import {useFetch} from '../hooks/useFetch';
 import i18n from '../i18n';
-import {APIResponse, TestrayDispatchTrigger} from '../services/rest';
-import {testrayDispatchTriggerImpl} from '../services/rest/TestrayDispatchTrigger';
 import {Action, ActionMap} from '../types';
 
 export type HeaderActions = {
@@ -59,7 +56,6 @@ type InitialState = {
 	heading: HeaderTitle[];
 	symbol: string;
 	tabs: HeaderTabs[];
-	testrayDispatchTriggers: APIResponse<TestrayDispatchTrigger>;
 };
 
 export const initialState: InitialState = {
@@ -73,15 +69,6 @@ export const initialState: InitialState = {
 	],
 	symbol: '',
 	tabs: [],
-	testrayDispatchTriggers: {
-		actions: {},
-		facets: [],
-		items: [],
-		lastPage: 1,
-		page: 1,
-		pageSize: 1,
-		totalCount: 1,
-	},
 };
 
 export const HeaderContext = createContext<
@@ -161,16 +148,6 @@ const reducer = (state: InitialState, action: AppActions): InitialState => {
 const HeaderContextProvider: React.FC<{children: ReactNode}> = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const {data: testrayDispatchTriggers} = useFetch<
-		APIResponse<TestrayDispatchTrigger>
-	>(testrayDispatchTriggerImpl.resource, {
-		params: {
-			aggregationTerms: 'dueStatus',
-			pageSize: 10,
-			sort: 'dateCreated:asc',
-		},
-	});
-
 	useEffect(() => {
 		const {title} = state.heading[state.heading.length - 1];
 
@@ -178,17 +155,7 @@ const HeaderContextProvider: React.FC<{children: ReactNode}> = ({children}) => {
 	}, [state.heading]);
 
 	return (
-		<HeaderContext.Provider
-			value={[
-				{
-					...state,
-					testrayDispatchTriggers: testrayDispatchTriggers as APIResponse<
-						TestrayDispatchTrigger
-					>,
-				},
-				dispatch,
-			]}
-		>
+		<HeaderContext.Provider value={[state, dispatch]}>
 			{children}
 		</HeaderContext.Provider>
 	);

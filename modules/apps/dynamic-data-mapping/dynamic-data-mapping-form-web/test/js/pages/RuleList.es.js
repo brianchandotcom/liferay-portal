@@ -120,7 +120,7 @@ describe('RuleList', () => {
 			const {container} = render(<RuleList />);
 
 			expect(
-				container.querySelector('.sheet-text > .text-default').innerHTML
+				container.querySelector('.c-empty-state-text').innerHTML
 			).toBe(
 				'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
 			);

@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -52,16 +53,14 @@ const OPERAND_TEXT = {
 };
 
 const EmptyState = () => (
-	<ClayLayout.Sheet className="taglib-empty-result-message">
-		<div className="taglib-empty-result-message-header"></div>
-
-		<div className="sheet-text text-center text-muted">
-			<p className="text-default">
-				{Liferay.Language.get(
-					'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
-				)}
-			</p>
-		</div>
+	<ClayLayout.Sheet>
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
+			)}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+			title={null}
+		/>
 	</ClayLayout.Sheet>
 );
 

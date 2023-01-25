@@ -101,7 +101,7 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			_dlReferencesExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, layoutPageTemplateStructureRel,
-					layoutPageTemplateStructureRel.getData(), false, false);
+					layoutPageTemplateStructureRel.getData(), true, false);
 
 		data =
 			_layoutPageTemplateStructureRelReferencesExportImportContentProcessor.

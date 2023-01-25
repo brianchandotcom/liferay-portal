@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.search.aggregations.Aggregations;
@@ -46,19 +46,9 @@ public class ElasticsearchAggregationResultsTranslator {
 	public List<AggregationResult> translate(
 		Aggregations elasticsearchAggregations) {
 
-		List<AggregationResult> aggregationResults = new ArrayList<>();
-
-		for (org.elasticsearch.search.aggregations.Aggregation aggregation :
-				elasticsearchAggregations.asList()) {
-
-			AggregationResult aggregationResult = translate(aggregation);
-
-			if (aggregationResult != null) {
-				aggregationResults.add(aggregationResult);
-			}
-		}
-
-		return aggregationResults;
+		return TransformUtil.transform(
+			elasticsearchAggregations.asList(),
+			aggregation -> translate(aggregation));
 	}
 
 	public interface AggregationLookup {

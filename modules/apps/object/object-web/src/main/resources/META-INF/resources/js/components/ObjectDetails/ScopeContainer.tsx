@@ -61,7 +61,7 @@ export function ScopeContainer({
 		''
 	);
 
-	const filteredPanelCaretogyKey = useMemo(() => {
+	const filteredPanelCategoryKey = useMemo(() => {
 		return filterArrayByQuery({
 			array:
 				values.scope === 'company'
@@ -130,6 +130,7 @@ export function ScopeContainer({
 				/>
 
 				<AutoComplete
+					creationLanguageId={values.defaultLanguageId as Locale}
 					disabled={
 						values.system || !hasUpdateObjectDefinitionPermission
 					}
@@ -137,7 +138,7 @@ export function ScopeContainer({
 						'no-options-were-found'
 					)}
 					error={errors.titleObjectFieldId}
-					items={filteredPanelCaretogyKey}
+					items={filteredPanelCategoryKey}
 					label={Liferay.Language.get('panel-category-key')}
 					onChangeQuery={setPanelCategoryKeyQuery}
 					onSelectItem={({key, value}: KeyValuePair) => {

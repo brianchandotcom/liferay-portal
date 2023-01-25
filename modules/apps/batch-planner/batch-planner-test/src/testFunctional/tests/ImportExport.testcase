@@ -861,7 +861,7 @@ definition {
 		}
 	}
 
-	@description = "Verify users cannot import an entity without mapping the required fields."
+	@description = "Ignored due to LPS-171830"
 	@ignore = "true"
 	@priority = "3"
 	test CannotImportWithoutRequiredFields {
@@ -1191,7 +1191,7 @@ definition {
 		}
 	}
 
-	@description = "Verify users can search Import/Exports executions by name and action."
+	@description = "Ignored due to LPS-171830"
 	@ignore = "true"
 	@priority = "3"
 	test CanSearchExecutions {

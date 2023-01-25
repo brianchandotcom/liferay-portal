@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -144,7 +143,7 @@ public class SearcherImpl implements Searcher {
 		}
 	}
 
-	private Stream<Function<SearchRequest, SearchRequest>> _getContributors(
+	private Collection<Function<SearchRequest, SearchRequest>> _getContributors(
 		SearchRequest searchRequest) {
 
 		List<String> contributors = searchRequest.getIncludeContributors();
@@ -161,10 +160,14 @@ public class SearcherImpl implements Searcher {
 			collection.addAll(_serviceTrackerMap.getService(contributor));
 		}
 
-		Stream<SearchRequestContributor> stream = collection.stream();
+		Collection<Function<SearchRequest, SearchRequest>> finalContributors =
+			new ArrayList<>();
 
-		return stream.map(
-			searchRequestContributor -> searchRequestContributor::contribute);
+		for (SearchRequestContributor searchRequestContributor : collection) {
+			finalContributors.add(searchRequestContributor::contribute);
+		}
+
+		return finalContributors;
 	}
 
 	private String _getSingleIndexerClassName(
@@ -285,15 +288,14 @@ public class SearcherImpl implements Searcher {
 		}
 	}
 
-	private <T> T _transform(T t, Stream<Function<T, T>> stream) {
-		return stream.reduce(
-			(beforeFunction, afterFunction) -> beforeFunction.andThen(
-				afterFunction)
-		).orElse(
-			Function.identity()
-		).apply(
-			t
-		);
+	private <T> T _transform(T t, Collection<Function<T, T>> collection) {
+		Function<T, T> function = Function.identity();
+
+		for (Function<T, T> f : collection) {
+			function = function.andThen(f);
+		}
+
+		return function.apply(t);
 	}
 
 	private SearchRequest _transformSearchRequest(SearchRequest searchRequest) {

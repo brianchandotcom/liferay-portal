@@ -34,7 +34,7 @@ const TriggerLabel = React.forwardRef(({selectedItem, ...otherProps}, ref) => {
 				title={Liferay.Language.get('experience-selector')}
 			>
 				<Layout.ContentRow className="flex-wrap" verticalAlign="center">
-					<Layout.ContentCol className="mr-2" expand>
+					<Layout.ContentCol className="experience-picker-text mr-2" expand>
 						<Text size={4}>
 							{selectedItem.segmentsExperienceName}
 						</Text>

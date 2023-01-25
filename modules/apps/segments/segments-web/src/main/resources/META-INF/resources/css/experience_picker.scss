@@ -8,3 +8,7 @@ a.experience-picker-option {
 		text-decoration: none;
 	}
 }
+
+html#{$cadmin-selector} .cadmin .experience-picker-text {
+	white-space: initial;
+}

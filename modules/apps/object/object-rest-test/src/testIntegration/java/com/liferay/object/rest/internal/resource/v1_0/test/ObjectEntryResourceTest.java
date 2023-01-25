@@ -97,8 +97,8 @@ public class ObjectEntryResourceTest {
 				"feature.flag.LPS-154672", "true"
 			).build());
 
-		for (FilterOperator operator : FilterOperator.values()) {
-			_testFilterObjectEntriesByRelatedObjectEntries(operator);
+		for (FilterOperator filterOperator : FilterOperator.values()) {
+			_testFilterObjectEntriesByRelatedObjectEntries(filterOperator);
 		}
 
 		PropsUtil.addProperties(
@@ -288,28 +288,28 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
-			ObjectRelationship objectRelationship, FilterOperator operator)
+			ObjectRelationship objectRelationship, FilterOperator filterOperator)
 		throws Exception {
 
 		_testFilterByRelatedObjectDefinitionSystemObjectField(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, _objectDefinition1,
-			objectRelationship, operator, _objectEntry2.getObjectEntryId());
+			objectRelationship, filterOperator, _objectEntry2.getObjectEntryId());
 
 		_testFilterByRelatedObjectDefinitionSystemObjectField(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, _objectDefinition2,
-			objectRelationship, operator, _objectEntry1.getObjectEntryId());
+			objectRelationship, filterOperator, _objectEntry1.getObjectEntryId());
 	}
 
 	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
 			String expectedObjectFieldName, String expectedObjectFieldValue,
 			ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship, FilterOperator operator,
+			ObjectRelationship objectRelationship, FilterOperator filterOperator,
 			long relatedObjectEntryId)
 		throws Exception {
 
 		String endpoint = StringBundler.concat(
 			objectDefinition.getRESTContextPath(), "?filter=",
-			objectRelationship.getName(), "/id%20", operator.getValue(), "%20'",
+			objectRelationship.getName(), "/id%20", filterOperator.getValue(), "%20'",
 			String.valueOf(relatedObjectEntryId), StringPool.APOSTROPHE);
 
 		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
@@ -317,14 +317,14 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _testFilterObjectEntriesByRelatedObjectEntries(
-			FilterOperator operator)
+			FilterOperator filterOperator)
 		throws Exception {
 
 		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-			_objectRelationship, operator);
+			_objectRelationship, filterOperator);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			_objectRelationship);
@@ -333,68 +333,68 @@ public class ObjectEntryResourceTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-			_objectRelationship, operator);
+			_objectRelationship, filterOperator);
 	}
 
 	private void
 			_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-				ObjectRelationship objectRelationship, FilterOperator operator)
+				ObjectRelationship objectRelationship, FilterOperator filterOperator)
 		throws Exception {
 
 		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, objectRelationship,
-			_objectDefinition1, operator, _OBJECT_FIELD_NAME_2,
+			_objectDefinition1, filterOperator, _OBJECT_FIELD_NAME_2,
 			_OBJECT_FIELD_VALUE_2);
 
 		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, objectRelationship,
-			_objectDefinition2, operator, _OBJECT_FIELD_NAME_1,
+			_objectDefinition2, filterOperator, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_1);
 	}
 
 	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			String expectedObjectFieldName, String expectedObjectFieldValue,
 			ObjectRelationship objectRelationship,
-			ObjectDefinition objectDefinition, FilterOperator operator,
+			ObjectDefinition objectDefinition, FilterOperator filterOperator,
 			String relatedObjectFieldName, String relatedObjectFieldValue)
 		throws Exception {
 
 		String endpoint = objectDefinition.getRESTContextPath() + "?filter=";
 
-		if (operator == FilterOperator.CONTAINS) {
+		if (filterOperator == FilterOperator.CONTAINS) {
 			endpoint = endpoint.concat(
 				StringBundler.concat(
-					operator.getValue(), StringPool.OPEN_PARENTHESIS,
+					filterOperator.getValue(), StringPool.OPEN_PARENTHESIS,
 					objectRelationship.getName(), StringPool.SLASH,
 					relatedObjectFieldName, StringPool.COMMA,
 					StringPool.APOSTROPHE,
 					relatedObjectFieldValue.substring(1, 2),
 					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
 		}
-		else if (operator == FilterOperator.EQ) {
+		else if (filterOperator == FilterOperator.EQ) {
 			_testFilterByRelatedObjectDefinitionSystemObjectField(
-				objectRelationship, operator);
+				objectRelationship, filterOperator);
 
 			endpoint = endpoint.concat(
 				StringBundler.concat(
 					objectRelationship.getName(), StringPool.SLASH,
-					relatedObjectFieldName, "%20", operator.getValue(), "%20'",
+					relatedObjectFieldName, "%20", filterOperator.getValue(), "%20'",
 					relatedObjectFieldValue, StringPool.APOSTROPHE));
 		}
-		else if (operator == FilterOperator.IN) {
+		else if (filterOperator == FilterOperator.IN) {
 			endpoint = endpoint.concat(
 				StringBundler.concat(
 					objectRelationship.getName(), StringPool.SLASH,
-					relatedObjectFieldName, "%20", operator.getValue(), "%20('",
+					relatedObjectFieldName, "%20", filterOperator.getValue(), "%20('",
 					RandomTestUtil.randomString(), StringPool.APOSTROPHE,
 					StringPool.COMMA, StringPool.APOSTROPHE,
 					relatedObjectFieldValue, StringPool.APOSTROPHE,
 					StringPool.CLOSE_PARENTHESIS));
 		}
-		else if (operator == FilterOperator.STARTS_WITH) {
+		else if (filterOperator == FilterOperator.STARTS_WITH) {
 			endpoint = endpoint.concat(
 				StringBundler.concat(
-					operator.getValue(), StringPool.OPEN_PARENTHESIS,
+					filterOperator.getValue(), StringPool.OPEN_PARENTHESIS,
 					objectRelationship.getName(), StringPool.SLASH,
 					relatedObjectFieldName, StringPool.COMMA,
 					StringPool.APOSTROPHE,
@@ -403,7 +403,7 @@ public class ObjectEntryResourceTest {
 		}
 		else {
 			throw new NotSupportedException(
-				"Operation " + operator.name() + "is not supported");
+				"Operation " + filterOperator.name() + "is not supported");
 		}
 
 		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(

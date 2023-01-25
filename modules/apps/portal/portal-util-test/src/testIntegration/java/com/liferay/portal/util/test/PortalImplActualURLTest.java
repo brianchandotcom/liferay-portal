@@ -128,7 +128,8 @@ public class PortalImplActualURLTest {
 		Layout nodeLayout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), _group.getGroupId(), true,
 			homeLayout.getLayoutId(), "Node", StringPool.BLANK,
-			StringPool.BLANK, "node", false, StringPool.BLANK, serviceContext);
+			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
+			StringPool.BLANK, serviceContext);
 
 		Layout childLayout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), _group.getGroupId(), true,

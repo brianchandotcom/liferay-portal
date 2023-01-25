@@ -108,7 +108,7 @@ public class CommerceCartContentDisplayContext {
 		_portal = portal;
 	}
 
-	public CommerceOrder getCommerceOrder() throws PortalException {
+	public CommerceOrder getCommerceOrder() {
 		if (_commerceOrder != null) {
 			return _commerceOrder;
 		}

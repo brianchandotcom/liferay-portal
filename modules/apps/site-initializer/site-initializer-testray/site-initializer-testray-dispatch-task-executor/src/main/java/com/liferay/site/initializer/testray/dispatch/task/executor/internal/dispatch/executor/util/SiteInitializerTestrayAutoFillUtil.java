@@ -18,6 +18,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
@@ -32,8 +33,10 @@ import java.util.Objects;
 public class SiteInitializerTestrayAutoFillUtil {
 
 	public static void addTestrayCaseResultIssue(
-			long companyId, long testrayCaseResultId, String testrayIssueName,
-			ObjectEntryManager objectEntryManager)
+			long companyId,
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			ObjectEntryManager objectEntryManager, long testrayCaseResultId,
+			String testrayIssueName)
 		throws Exception {
 
 		if (Validator.isNull(testrayIssueName)) {
@@ -41,7 +44,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 		}
 
 		SiteInitializerTestrayObjectUtil.addObjectEntry(
-			objectEntryManager, "CaseResultsIssues",
+			defaultDTOConverterContext, "CaseResultsIssues", objectEntryManager,
 			HashMapBuilder.<String, Object>put(
 				"r_caseResultToCaseResultsIssues_c_caseResultId",
 				testrayCaseResultId
@@ -50,9 +53,9 @@ public class SiteInitializerTestrayAutoFillUtil {
 				() -> {
 					Page<ObjectEntry> objectEntriesPage =
 						SiteInitializerTestrayObjectUtil.getObjectEntriesPage(
-							null, companyId,
-							"name eq '" + testrayIssueName + "'", "Issue", null,
-							objectEntryManager);
+							null, companyId, defaultDTOConverterContext,
+							"name eq '" + testrayIssueName + "'", "Issue",
+							objectEntryManager, null);
 
 					ObjectEntry objectEntry =
 						objectEntriesPage.fetchFirstItem();
@@ -63,7 +66,8 @@ public class SiteInitializerTestrayAutoFillUtil {
 
 					objectEntry =
 						SiteInitializerTestrayObjectUtil.addObjectEntry(
-							objectEntryManager, "Issue",
+							defaultDTOConverterContext, "Issue",
+							objectEntryManager,
 							HashMapBuilder.<String, Object>put(
 								"name", testrayIssueName
 							).build());
@@ -74,18 +78,22 @@ public class SiteInitializerTestrayAutoFillUtil {
 	}
 
 	public static void testrayAutoFillBuilds(
-			long companyId, ObjectEntry testrayBuildObjectEntry1,
-			ObjectEntry testrayBuildObjectEntry2,
-			ObjectEntryManager objectEntryManager)
+			long companyId,
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			ObjectEntryManager objectEntryManager,
+			ObjectEntry testrayBuildObjectEntry1,
+			ObjectEntry testrayBuildObjectEntry2)
 		throws Exception {
 
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries1 =
 			_getTestrayCaseResultObjectEntriesByBuild(
-				companyId, testrayBuildObjectEntry1, objectEntryManager);
+				companyId, defaultDTOConverterContext, objectEntryManager,
+				testrayBuildObjectEntry1);
 
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries2 =
 			_getTestrayCaseResultObjectEntriesByBuild(
-				companyId, testrayBuildObjectEntry2, objectEntryManager);
+				companyId, defaultDTOConverterContext, objectEntryManager,
+				testrayBuildObjectEntry2);
 
 		for (Map.Entry<Long, List<ObjectEntry>> entry :
 				testrayCaseResultObjectEntries1.entrySet()) {
@@ -126,26 +134,31 @@ public class SiteInitializerTestrayAutoFillUtil {
 					}
 
 					_testrayAutoFillCaseResults(
-						companyId, testrayCaseResultCompositeA,
-						testrayCaseResultCompositeB, objectEntryManager);
+						companyId, defaultDTOConverterContext,
+						objectEntryManager, testrayCaseResultCompositeA,
+						testrayCaseResultCompositeB);
 				}
 			}
 		}
 	}
 
 	public static void testrayAutoFillRuns(
-			long companyId, ObjectEntry testrayRunObjectEntry1,
-			ObjectEntry testrayRunObjectEntry2,
-			ObjectEntryManager objectEntryManager)
+			long companyId,
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			ObjectEntryManager objectEntryManager,
+			ObjectEntry testrayRunObjectEntry1,
+			ObjectEntry testrayRunObjectEntry2)
 		throws Exception {
 
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries1 =
 			_getTestrayCaseResultObjectEntriesByRun(
-				companyId, testrayRunObjectEntry1, objectEntryManager);
+				companyId, defaultDTOConverterContext, objectEntryManager,
+				testrayRunObjectEntry1);
 
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries2 =
 			_getTestrayCaseResultObjectEntriesByRun(
-				companyId, testrayRunObjectEntry2, objectEntryManager);
+				companyId, defaultDTOConverterContext, objectEntryManager,
+				testrayRunObjectEntry2);
 
 		for (Map.Entry<Long, ObjectEntry> entry :
 				testrayCaseResultObjectEntries1.entrySet()) {
@@ -176,15 +189,17 @@ public class SiteInitializerTestrayAutoFillUtil {
 			}
 
 			_testrayAutoFillCaseResults(
-				companyId, testrayCaseResultObjectEntry1,
-				testrayCaseResultObjectEntry2, objectEntryManager);
+				companyId, defaultDTOConverterContext, objectEntryManager,
+				testrayCaseResultObjectEntry1, testrayCaseResultObjectEntry2);
 		}
 	}
 
 	private static Map<Long, List<ObjectEntry>>
 			_getTestrayCaseResultObjectEntriesByBuild(
-				long companyId, ObjectEntry testrayBuildObjectEntry,
-				ObjectEntryManager objectEntryManager)
+				long companyId,
+				DefaultDTOConverterContext defaultDTOConverterContext,
+				ObjectEntryManager objectEntryManager,
+				ObjectEntry testrayBuildObjectEntry)
 		throws Exception {
 
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries =
@@ -192,9 +207,9 @@ public class SiteInitializerTestrayAutoFillUtil {
 
 		List<ObjectEntry> objectEntries =
 			SiteInitializerTestrayObjectUtil.getObjectEntries(
-				null, companyId,
+				null, companyId, defaultDTOConverterContext,
 				"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
-				"CaseResult", null, objectEntryManager);
+				"CaseResult", objectEntryManager, null);
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			long testrayCaseId =
@@ -219,17 +234,19 @@ public class SiteInitializerTestrayAutoFillUtil {
 
 	private static Map<Long, ObjectEntry>
 			_getTestrayCaseResultObjectEntriesByRun(
-				long companyId, ObjectEntry testrayRunObjectEntry,
-				ObjectEntryManager objectEntryManager)
+				long companyId,
+				DefaultDTOConverterContext defaultDTOConverterContext,
+				ObjectEntryManager objectEntryManager,
+				ObjectEntry testrayRunObjectEntry)
 		throws Exception {
 
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries = new HashMap<>();
 
 		for (ObjectEntry objectEntry :
 				SiteInitializerTestrayObjectUtil.getObjectEntries(
-					null, companyId,
+					null, companyId, defaultDTOConverterContext,
 					"runId eq '" + testrayRunObjectEntry.getId() + "'",
-					"CaseResult", null, objectEntryManager)) {
+					"CaseResult", objectEntryManager, null)) {
 
 			testrayCaseResultObjectEntries.put(
 				(Long)SiteInitializerTestrayObjectUtil.getProperty(
@@ -241,9 +258,11 @@ public class SiteInitializerTestrayAutoFillUtil {
 	}
 
 	private static void _testrayAutoFillCaseResults(
-			long companyId, ObjectEntry testrayCaseResultObjectEntry1,
-			ObjectEntry testrayCaseResultObjectEntry2,
-			ObjectEntryManager objectEntryManager)
+			long companyId,
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			ObjectEntryManager objectEntryManager,
+			ObjectEntry testrayCaseResultObjectEntry1,
+			ObjectEntry testrayCaseResultObjectEntry2)
 		throws Exception {
 
 		ObjectEntry destinationTestrayCaseResultObjectEntry = null;
@@ -252,17 +271,17 @@ public class SiteInitializerTestrayAutoFillUtil {
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries1 =
 			SiteInitializerTestrayObjectUtil.getObjectEntries(
-				null, companyId,
+				null, companyId, defaultDTOConverterContext,
 				"caseResultId eq '" + testrayCaseResultObjectEntry1.getId() +
 					"'",
-				"CaseResultsIssues", null, objectEntryManager);
+				"CaseResultsIssues", objectEntryManager, null);
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries2 =
 			SiteInitializerTestrayObjectUtil.getObjectEntries(
-				null, companyId,
+				null, companyId, defaultDTOConverterContext,
 				"caseResultId eq '" + testrayCaseResultObjectEntry2.getId() +
 					"'",
-				"CaseResultsIssues", null, objectEntryManager);
+				"CaseResultsIssues", objectEntryManager, null);
 
 		if (((Long)SiteInitializerTestrayObjectUtil.getProperty(
 				"r_userToCaseResults_userId", testrayCaseResultObjectEntry1) >
@@ -315,7 +334,8 @@ public class SiteInitializerTestrayAutoFillUtil {
 				sourceTestrayCaseResultObjectEntry));
 
 		SiteInitializerTestrayObjectUtil.updateObjectEntry(
-			"CaseResult", destinationTestrayCaseResultObjectEntry,
+			defaultDTOConverterContext, "CaseResult",
+			destinationTestrayCaseResultObjectEntry,
 			destinationTestrayCaseResultObjectEntry.getId(),
 			objectEntryManager);
 
@@ -329,17 +349,18 @@ public class SiteInitializerTestrayAutoFillUtil {
 
 			ObjectEntry testrayIssueObjectEntry =
 				SiteInitializerTestrayObjectUtil.getObjectEntry(
-					"Issue", testrayIssueId, objectEntryManager);
+					defaultDTOConverterContext, "Issue", testrayIssueId,
+					objectEntryManager);
 
 			if (testrayIssueObjectEntry == null) {
 				continue;
 			}
 
 			addTestrayCaseResultIssue(
-				companyId, destinationTestrayCaseResultObjectEntry.getId(),
+				companyId, defaultDTOConverterContext, objectEntryManager,
+				destinationTestrayCaseResultObjectEntry.getId(),
 				(String)SiteInitializerTestrayObjectUtil.getProperty(
-					"name", testrayIssueObjectEntry),
-				objectEntryManager);
+					"name", testrayIssueObjectEntry));
 		}
 	}
 

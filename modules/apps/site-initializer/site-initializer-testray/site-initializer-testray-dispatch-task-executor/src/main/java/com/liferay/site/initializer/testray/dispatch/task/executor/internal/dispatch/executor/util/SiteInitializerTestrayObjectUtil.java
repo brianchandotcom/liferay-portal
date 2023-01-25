@@ -19,10 +19,8 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -38,8 +36,10 @@ import java.util.Map;
 public class SiteInitializerTestrayObjectUtil {
 
 	public static ObjectEntry addObjectEntry(
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			String objectDefinitionShortName,
 			ObjectEntryManager objectEntryManager,
-			String objectDefinitionShortName, Map<String, Object> properties)
+			Map<String, Object> properties)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _getObjectDefinition(
@@ -50,47 +50,43 @@ public class SiteInitializerTestrayObjectUtil {
 		objectEntry.setProperties(properties);
 
 		return objectEntryManager.addObjectEntry(
-			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
-	}
-
-	public static void createDefaultDTOConverterContext(User user) {
-		_defaultDTOConverterContext = new DefaultDTOConverterContext(
-			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
-			user);
+			defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
 	public static List<ObjectEntry> getObjectEntries(
-			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionShortName, Sort[] sorts,
-			ObjectEntryManager objectEntryManager)
+			Aggregation aggregation, long companyId,
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			String filter, String objectDefinitionShortName,
+			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			aggregation, companyId, filter, objectDefinitionShortName, sorts,
-			objectEntryManager);
+			aggregation, companyId, defaultDTOConverterContext, filter,
+			objectDefinitionShortName, objectEntryManager, sorts);
 
 		return (List<ObjectEntry>)objectEntriesPage.getItems();
 	}
 
 	public static Page<ObjectEntry> getObjectEntriesPage(
-			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionShortName, Sort[] sorts,
-			ObjectEntryManager objectEntryManager)
+			Aggregation aggregation, long companyId,
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			String filter, String objectDefinitionShortName,
+			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
 		return objectEntryManager.getObjectEntries(
 			companyId, _getObjectDefinition(objectDefinitionShortName), null,
-			aggregation, _defaultDTOConverterContext, filter, null, null,
-			sorts);
+			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
 	}
 
 	public static ObjectEntry getObjectEntry(
+			DefaultDTOConverterContext defaultDTOConverterContext,
 			String objectDefinitionShortName, long objectEntryId,
 			ObjectEntryManager objectEntryManager)
 		throws Exception {
 
 		return objectEntryManager.getObjectEntry(
-			_defaultDTOConverterContext,
+			defaultDTOConverterContext,
 			_getObjectDefinition(objectDefinitionShortName), objectEntryId);
 	}
 
@@ -101,14 +97,16 @@ public class SiteInitializerTestrayObjectUtil {
 	}
 
 	public static long incrementTestrayFieldValue(
-			long companyId, String fieldName, String filterString,
-			String objectDefinitionShortName, Sort[] sorts,
-			ObjectEntryManager objectEntryManager)
+			long companyId,
+			DefaultDTOConverterContext defaultDTOConverterContext,
+			String fieldName, String filterString,
+			String objectDefinitionShortName,
+			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			null, companyId, filterString, objectDefinitionShortName, sorts,
-			objectEntryManager);
+			null, companyId, defaultDTOConverterContext, filterString,
+			objectDefinitionShortName, objectEntryManager, sorts);
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -138,18 +136,25 @@ public class SiteInitializerTestrayObjectUtil {
 		}
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			if (_objectDefinitionsMap.get(objectDefinition.getShortName()) !=
+					null) {
+
+				continue;
+			}
+
 			_objectDefinitionsMap.put(
 				objectDefinition.getShortName(), objectDefinition);
 		}
 	}
 
 	public static void updateObjectEntry(
+			DefaultDTOConverterContext defaultDTOConverterContext,
 			String objectDefinitionShortName, ObjectEntry objectEntry,
 			long objectEntryId, ObjectEntryManager objectEntryManager)
 		throws Exception {
 
 		objectEntryManager.updateObjectEntry(
-			_defaultDTOConverterContext,
+			defaultDTOConverterContext,
 			_getObjectDefinition(objectDefinitionShortName), objectEntryId,
 			objectEntry);
 	}
@@ -170,7 +175,6 @@ public class SiteInitializerTestrayObjectUtil {
 		return objectDefinition;
 	}
 
-	private static DefaultDTOConverterContext _defaultDTOConverterContext;
 	private static final Map<String, ObjectDefinition> _objectDefinitionsMap =
 		new HashMap<>();
 

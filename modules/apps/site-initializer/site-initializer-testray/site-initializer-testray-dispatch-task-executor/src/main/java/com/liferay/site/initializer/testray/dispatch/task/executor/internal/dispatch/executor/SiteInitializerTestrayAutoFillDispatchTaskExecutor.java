@@ -30,9 +30,11 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutoFillUtil;
 import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayObjectUtil;
 
@@ -74,7 +76,9 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 
 		User user = _userLocalService.getUser(dispatchTrigger.getUserId());
 
-		SiteInitializerTestrayObjectUtil.createDefaultDTOConverterContext(user);
+		_defaultDTOConverterContext = new DefaultDTOConverterContext(
+			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
+			user);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -122,18 +126,22 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 
 		ObjectEntry objectEntry1 =
 			SiteInitializerTestrayObjectUtil.getObjectEntry(
-				autoFillType, objectEntryId1, _objectEntryManager);
+				_defaultDTOConverterContext, autoFillType, objectEntryId1,
+				_objectEntryManager);
 		ObjectEntry objectEntry2 =
 			SiteInitializerTestrayObjectUtil.getObjectEntry(
-				autoFillType, objectEntryId2, _objectEntryManager);
+				_defaultDTOConverterContext, autoFillType, objectEntryId2,
+				_objectEntryManager);
 
 		if (StringUtil.equals(autoFillType, "Build")) {
 			SiteInitializerTestrayAutoFillUtil.testrayAutoFillBuilds(
-				companyId, objectEntry1, objectEntry2, _objectEntryManager);
+				companyId, _defaultDTOConverterContext, _objectEntryManager,
+				objectEntry1, objectEntry2);
 		}
 		else if (StringUtil.equals(autoFillType, "Run")) {
 			SiteInitializerTestrayAutoFillUtil.testrayAutoFillRuns(
-				companyId, objectEntry1, objectEntry2, _objectEntryManager);
+				companyId, _defaultDTOConverterContext, _objectEntryManager,
+				objectEntry1, objectEntry2);
 		}
 		else {
 			_log.error("Auto fill type selected is not available");
@@ -142,6 +150,8 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayAutoFillDispatchTaskExecutor.class);
+
+	private DefaultDTOConverterContext _defaultDTOConverterContext;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

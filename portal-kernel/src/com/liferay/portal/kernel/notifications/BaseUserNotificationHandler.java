@@ -73,8 +73,7 @@ public abstract class BaseUserNotificationHandler
 					new String[] {
 						LanguageUtil.format(
 							locale, "notification-for-x-was-deleted",
-							PortalUtil.getPortletTitle(
-								getPortletId(), locale),
+							PortalUtil.getPortletTitle(getPortletId(), locale),
 							false),
 						title
 					});

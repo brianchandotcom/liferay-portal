@@ -2584,15 +2584,13 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell colSpan={6}>
-							<div className="taglib-empty-result-message">
-								<div className="taglib-empty-search-result-message-header" />
-
-								<div className="sheet-text text-center">
-									{Liferay.Language.get(
-										'there-are-no-changes-to-display-in-this-view'
-									)}
-								</div>
-							</div>
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'there-are-no-changes-to-display-in-this-view'
+								)}
+								imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+								title={null}
+							/>
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				</ClayTable.Head>

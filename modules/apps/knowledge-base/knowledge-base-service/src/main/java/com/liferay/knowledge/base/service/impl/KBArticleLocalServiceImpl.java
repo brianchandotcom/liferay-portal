@@ -1384,16 +1384,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (status != WorkflowConstants.STATUS_APPROVED) {
 			if (status == WorkflowConstants.STATUS_EXPIRED) {
-				Set<String> receivers = SetUtil.fromArray(
-					_NOTIFICATION_RECEIVER_SUBSCRIBER);
-
-				if (user.getUserId() != kbArticle.getUserId()) {
-					receivers.add(_NOTIFICATION_RECEIVER_OWNER);
-				}
-
 				_notify(
-					receivers, userId, kbArticle, Constants.EXPIRE,
-					serviceContext);
+					SetUtil.fromArray(
+						_NOTIFICATION_RECEIVER_OWNER,
+						_NOTIFICATION_RECEIVER_SUBSCRIBER),
+					userId, kbArticle, Constants.EXPIRE, serviceContext);
 			}
 
 			return kbArticle;
@@ -2167,7 +2162,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 			subscriptionSender.addRuntimeSubscribers(
 				user.getEmailAddress(), user.getFullName());
-			subscriptionSender.setSendToCurrentUser(true);
 		}
 
 		subscriptionSender.flushNotificationsAsync();

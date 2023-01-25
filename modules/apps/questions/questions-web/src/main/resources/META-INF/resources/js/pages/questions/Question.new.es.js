@@ -134,6 +134,7 @@ const Question = ({
 		questionId,
 		sectionTitle,
 		setError,
+		setShowDeleteModalPanel,
 	});
 
 	const fetchMessages = useCallback(() => {

@@ -13,6 +13,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import classNames from 'classnames';
 import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -110,9 +111,16 @@ export default withRouter(
 			data?.messageBoardMessages?.items[0]?.messageBoardThread
 				.messageBoardSection.title;
 
+		const hasActivities = totalCount > 0;
+
 		return (
 			<section className="d-flex justify-content-between p-0 questions-section questions-section-list user-activity-page">
-				<div className="activity-panel col-xl-8 pl-5 pr-3">
+				<div
+					className={classNames('activity-panel pl-5 pr-3', {
+						'col-xl-8': hasActivities,
+						'col-xl-12': !hasActivities,
+					})}
+				>
 					<h2 className="py-2">
 						{Liferay.Language.get('latest-activity')}
 					</h2>
@@ -170,27 +178,29 @@ export default withRouter(
 					</PaginatedList>
 				</div>
 
-				<div className="activity-panel border-left col-xl-4 modal-body">
-					<Question
-						display={{
-							actions: false,
-							addAnswer: false,
-							breadcrumb: false,
-							flags: false,
-							kebab: true,
-							preview: true,
-							rating: false,
-							showAnswer: false,
-							showSignature: true,
-							styled: true,
-							tabs: true,
-						}}
-						history={history}
-						questionId={currentQuestion?.friendlyUrlPath}
-						sectionTitle={sectionTitleQuestion}
-						url={url}
-					/>
-				</div>
+				{hasActivities && (
+					<div className="activity-panel border-left col-xl-4 modal-body">
+						<Question
+							display={{
+								actions: false,
+								addAnswer: false,
+								breadcrumb: false,
+								flags: false,
+								kebab: true,
+								preview: true,
+								rating: false,
+								showAnswer: false,
+								showSignature: true,
+								styled: true,
+								tabs: true,
+							}}
+							history={history}
+							questionId={currentQuestion?.friendlyUrlPath}
+							sectionTitle={sectionTitleQuestion}
+							url={url}
+						/>
+					</div>
+				)}
 			</section>
 		);
 	}

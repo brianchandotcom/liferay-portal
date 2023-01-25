@@ -1259,6 +1259,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="PoshiSourceProcessor">
+		<check name="PoshiAntCommandParametersOrderCheck">
+			<category name="Styling" />
+			<description name="Sorts parameters in AntCommand call in Poshi Script files." />
+		</check>
 		<check name="PoshiDependenciesFileLocationCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that dependencies files are located in the correct directory." />

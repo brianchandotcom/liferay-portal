@@ -13,7 +13,7 @@ import ClayChart from '@clayui/charts';
 import React, {useCallback, useRef} from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-export default function ChartWrapper({data, loading, noDataErrorMessage}) {
+export default function ChartWrapper({data, loading}) {
 	const chartRef = useRef();
 
 	const resize = useCallback(
@@ -34,7 +34,7 @@ export default function ChartWrapper({data, loading, noDataErrorMessage}) {
 		return <span aria-hidden="true" className="loading-animation" />;
 	}
 	else if (!data.data.columns.length) {
-		return <p>{noDataErrorMessage}</p>;
+		return <p>{Liferay.Language.get('no-data-available')}</p>;
 	}
 	else {
 		return (

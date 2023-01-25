@@ -51,7 +51,6 @@ if (commerceAccount != null) {
 			accountIds: <%= accountIds %>,
 			categoryIds: <%= categoryIds %>,
 			noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
-			noDataErrorMessage: Liferay.Language.get('no-data-available'),
 			portletId: '<%= portletDisplay.getId() %>',
 		});
 	</aui:script>

@@ -13,34 +13,27 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
 import {AddItemDropDown} from './AddItemDropdown';
 
 export function EmptyState() {
 	return (
-		<div className="taglib-empty-result-message text-center">
-			<div className="taglib-empty-state" />
-
-			<h1 className="taglib-empty-result-message-title">
-				{Liferay.Language.get('no-element-yet')}
-			</h1>
-
-			<p className="taglib-empty-result-message-description">
-				{Liferay.Language.get(
-					'fortunately-it-is-very-easy-to-add-new-ones'
-				)}
-			</p>
-
-			<div className="taglib-empty-result-message-actionDropdownItems">
-				<AddItemDropDown
-					trigger={
-						<ClayButton displayType="secondary">
-							{Liferay.Language.get('new')}
-						</ClayButton>
-					}
-				/>
-			</div>
-		</div>
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'fortunately-it-is-very-easy-to-add-new-ones'
+			)}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+			title={Liferay.Language.get('no-element-yet')}
+		>
+			<AddItemDropDown
+				trigger={
+					<ClayButton displayType="secondary">
+						{Liferay.Language.get('new')}
+					</ClayButton>
+				}
+			/>
+		</ClayEmptyState>
 	);
 }

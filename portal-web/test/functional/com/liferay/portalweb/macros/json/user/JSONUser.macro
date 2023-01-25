@@ -300,7 +300,7 @@ definition {
 		var userIds = JSONUserAPI._getUserIdsNoSelenium(authenticationMethod = "${authenticationMethod}");
 
 		for (var userId : list "${userIds}") {
-			var currentEmailAddress = JSONUserGetter.getEmailAddress(
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(
 				authenticationMethod = "${authenticationMethod}",
 				userId = "${userId}");
 

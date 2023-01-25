@@ -5753,6 +5753,14 @@ definition {
 		}
 
 		task ("Check if message of No results were found is present") {
+			if (IsElementNotPresent(locator1 = "ContentDashboard#FILTER_BY_EXTENSION_EMPTY", value1 = "No results were found.")) {
+				DMDocument.tearDownCP();
+
+				ContentDashboard.goToContentDashboard();
+
+				ContentDashboard.openFilterModal(filterOption = "Extension");
+			}
+
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_BY_EXTENSION_EMPTY",
 				value1 = "No results were found.");

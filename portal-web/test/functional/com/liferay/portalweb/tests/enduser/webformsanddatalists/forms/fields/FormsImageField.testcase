@@ -291,8 +291,8 @@ definition {
 	@description = "Verify that an image can be uploaded from Liferay Documents and Media"
 	@priority = "5"
 	test CanUploadFromDocumentsAndMedia {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

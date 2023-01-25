@@ -99,6 +99,8 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 				}
 			}
 			else {
+				c = Character.toLowerCase(c);
+
 				if (charsetEncoder == null) {
 					charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
 						StringPool.UTF8);

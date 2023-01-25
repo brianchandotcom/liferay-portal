@@ -72,6 +72,12 @@ definition {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-failed-upgrade-log");
+
+		Log.viewUpgradeLogContentPresent(logContent = "Unable to open Gogo shell");
+
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-failed-gogoshell-connection");
 	}
 
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and display help commands"

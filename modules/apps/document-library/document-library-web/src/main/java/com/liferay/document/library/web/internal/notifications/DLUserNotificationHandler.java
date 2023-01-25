@@ -72,14 +72,14 @@ public class DLUserNotificationHandler
 					UserNotificationDefinition.
 						NOTIFICATION_TYPE_EXPIRED_ENTRY) {
 
-			message = "x-x-has-expired";
+			return _getFormattedMessage(
+				serviceContext, "x-has-expired", typeName);
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY) {
 
-			return _language.format(
-				serviceContext.getLocale(), "x-needs-review",
-				StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
+			return _getFormattedMessage(
+				serviceContext, "x-needs-review", typeName);
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
@@ -89,6 +89,14 @@ public class DLUserNotificationHandler
 
 		return getFormattedMessage(
 			jsonObject, serviceContext, message, typeName);
+	}
+
+	private String _getFormattedMessage(
+		ServiceContext serviceContext, String message, String typeName) {
+
+		return _language.format(
+			serviceContext.getLocale(), message,
+			StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
 	}
 
 	@Reference

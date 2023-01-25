@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,6 +46,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -123,33 +125,33 @@ public class DepotAssetRendererFactoryTrackerTest {
 					assetRendererFactories.toString(), 4,
 					assetRendererFactories.size());
 
-				AssetRendererFactory<?> journalArticleAssetRendererFactory =
-					assetRendererFactories.get(0);
+				Assert.assertTrue(
+					ListUtil.exists(
+						assetRendererFactories,
+						journalArticleAssetRendererFactory -> Objects.equals(
+							journalArticleAssetRendererFactory.getClassName(),
+							JournalArticle.class.getName())));
 
-				Assert.assertEquals(
-					journalArticleAssetRendererFactory.getClassName(),
-					JournalArticle.class.getName());
+				Assert.assertTrue(
+					ListUtil.exists(
+						assetRendererFactories,
+						dlFileEntryAssetRendererFactory -> Objects.equals(
+							dlFileEntryAssetRendererFactory.getClassName(),
+							DLFileEntry.class.getName())));
 
-				AssetRendererFactory<?> dlFileEntryAssetRendererFactory =
-					assetRendererFactories.get(1);
+				Assert.assertTrue(
+					ListUtil.exists(
+						assetRendererFactories,
+						journalFolderAssetRendererFactory -> Objects.equals(
+							journalFolderAssetRendererFactory.getClassName(),
+							JournalFolder.class.getName())));
 
-				Assert.assertEquals(
-					dlFileEntryAssetRendererFactory.getClassName(),
-					DLFileEntry.class.getName());
-
-				AssetRendererFactory<?> journalFolderAssetRendererFactory =
-					assetRendererFactories.get(2);
-
-				Assert.assertEquals(
-					journalFolderAssetRendererFactory.getClassName(),
-					JournalFolder.class.getName());
-
-				AssetRendererFactory<?> dlFolderAssetRendererFactory =
-					assetRendererFactories.get(3);
-
-				Assert.assertEquals(
-					dlFolderAssetRendererFactory.getClassName(),
-					DLFolder.class.getName());
+				Assert.assertTrue(
+					ListUtil.exists(
+						assetRendererFactories,
+						dlFolderAssetRendererFactory -> Objects.equals(
+							dlFolderAssetRendererFactory.getClassName(),
+							DLFolder.class.getName())));
 			});
 	}
 

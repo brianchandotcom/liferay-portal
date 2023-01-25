@@ -21,7 +21,7 @@ import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {SelectTree} from './SelectTree.es';
+import {SelectTree} from './SelectTree';
 function SelectCategory({
 	addCategoryURL,
 	inheritSelection,

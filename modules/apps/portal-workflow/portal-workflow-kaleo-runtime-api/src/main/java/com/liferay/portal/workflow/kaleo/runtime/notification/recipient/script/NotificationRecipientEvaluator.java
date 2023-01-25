@@ -25,8 +25,6 @@ import java.util.Map;
  */
 public interface NotificationRecipientEvaluator {
 
-	public boolean canEvaluate(String scriptingLanguage);
-
 	public Map<String, ?> evaluate(
 			KaleoNotificationRecipient kaleoNotificationRecipient,
 			ExecutionContext executionContext)

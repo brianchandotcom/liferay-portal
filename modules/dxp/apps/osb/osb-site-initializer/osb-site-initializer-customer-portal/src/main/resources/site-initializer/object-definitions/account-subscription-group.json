@@ -79,6 +79,7 @@
 	"pluralLabel": {
 		"en_US": "Account Subscription Groups"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": false
 }

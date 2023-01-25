@@ -59,6 +59,7 @@
 	"pluralLabel": {
 		"en_US": "Admins DXP Cloud"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": false
 }

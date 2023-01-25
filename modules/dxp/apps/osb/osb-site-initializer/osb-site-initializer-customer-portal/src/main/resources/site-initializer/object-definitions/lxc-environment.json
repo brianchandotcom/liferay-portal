@@ -58,6 +58,7 @@
 	"pluralLabel": {
 		"en_US": "Liferay Experience Cloud Environments"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": false
 }

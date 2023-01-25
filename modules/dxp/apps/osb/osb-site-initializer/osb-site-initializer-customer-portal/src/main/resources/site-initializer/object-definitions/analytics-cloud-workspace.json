@@ -89,6 +89,7 @@
 	"pluralLabel": {
 		"en_US": "Analytics Cloud Workspaces"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": false
 }

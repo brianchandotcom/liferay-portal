@@ -48,6 +48,7 @@
 	"pluralLabel": {
 		"en_US": "Admins Liferay Experience Cloud"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": false
 }

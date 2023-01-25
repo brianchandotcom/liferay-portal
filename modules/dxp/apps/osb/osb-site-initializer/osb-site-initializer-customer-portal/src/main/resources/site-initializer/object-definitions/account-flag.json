@@ -36,6 +36,7 @@
 		}
 	],
 	"panelCategoryKey": "control_panel.object",
+	"portlet": true,
 	"pluralLabel": {
 		"en_US": "Account Flags"
 	},

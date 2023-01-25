@@ -29,6 +29,7 @@
 	"pluralLabel": {
 		"en_US": "Team Members Invitation"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": false
 }

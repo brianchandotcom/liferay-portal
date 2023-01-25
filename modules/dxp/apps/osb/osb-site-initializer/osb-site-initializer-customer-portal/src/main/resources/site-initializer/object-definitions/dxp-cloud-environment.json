@@ -49,6 +49,7 @@
 	"pluralLabel": {
 		"en_US": "DXP Cloud Environments"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": false
 }

@@ -230,15 +230,6 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			testrayProjectId, testrayTeamId);
 
 		if (testrayCaseId == 0) {
-			long testrayNumber =
-				SiteInitializerTestrayObjectUtil.incrementTestrayFieldValue(
-					companyId, "number",
-					"projectId eq '" + testrayProjectId + "'", "Case",
-					new Sort[] {
-						new Sort("nestedFieldArray.value_long#number", true)
-					},
-					_objectEntryManager);
-
 			ObjectEntry objectEntry =
 				SiteInitializerTestrayObjectUtil.addObjectEntry(
 					_objectEntryManager, "Case",
@@ -251,7 +242,18 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 						(String)testrayCasePropertiesMap.get(
 							"testray.testcase.name")
 					).put(
-						"number", testrayNumber
+						"number",
+						SiteInitializerTestrayObjectUtil.
+							incrementTestrayFieldValue(
+								companyId, "number",
+								"projectId eq '" + testrayProjectId + "'",
+								"Case",
+								new Sort[] {
+									new Sort(
+										"nestedFieldArray.value_long#number",
+										true)
+								},
+								_objectEntryManager)
 					).put(
 						"priority",
 						testrayCasePropertiesMap.get(

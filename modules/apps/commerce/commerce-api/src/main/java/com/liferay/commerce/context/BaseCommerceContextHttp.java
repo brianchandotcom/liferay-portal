@@ -201,11 +201,20 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	}
 
 	@Override
-	public CommerceOrder getCommerceOrder() throws PortalException {
-		_commerceOrder = _commerceOrderHttpHelper.getCurrentCommerceOrder(
-			_httpServletRequest);
+	public CommerceOrder getCommerceOrder() {
+		try {
+			_commerceOrder = _commerceOrderHttpHelper.getCurrentCommerceOrder(
+				_httpServletRequest);
 
-		return _commerceOrder;
+			return _commerceOrder;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
 	}
 
 	@Override

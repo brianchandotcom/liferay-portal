@@ -147,7 +147,7 @@ definition {
 	@priority = "5"
 	test CanViewErrorMessageForUnsuporttedFiles {
 		property solutions.acceptance = "true";
-	
+
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DigitalSignature.createEnvelope(

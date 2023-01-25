@@ -61,7 +61,7 @@ definition {
 	@priority = "5"
 	test RemoteAppsAreCreatedForTestray {
 		property solutions.acceptance = "true";
-		
+
 		task ("Create Testray") {
 			Testray.addTestraySite();
 

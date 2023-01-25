@@ -142,7 +142,7 @@ definition {
 	@priority = "5"
 	test ChatwootProviderKeepsEnabledAfterLogoutAndLogin {
 		property solutions.acceptance = "true";
-		
+
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");

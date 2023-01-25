@@ -94,7 +94,7 @@ definition {
 	@priority = "5"
 	test CanGetMultipleSignaturesByButton {
 		property solutions.acceptance = "true";
-		
+
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

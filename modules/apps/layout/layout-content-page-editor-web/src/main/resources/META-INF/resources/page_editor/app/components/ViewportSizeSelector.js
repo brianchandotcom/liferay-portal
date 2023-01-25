@@ -73,7 +73,7 @@ export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
 	const {availableViewportSizes} = config;
 
 	return (
-		<ClayButton.Group>
+		<ClayButton.Group className="flex-nowrap flex-shrink-0">
 			{Object.values(availableViewportSizes).map(
 				({icon, label, sizeId}) => (
 					<SelectorButton

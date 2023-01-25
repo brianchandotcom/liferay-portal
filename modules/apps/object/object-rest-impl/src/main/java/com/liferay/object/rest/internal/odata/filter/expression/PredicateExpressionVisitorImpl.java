@@ -295,7 +295,7 @@ public class PredicateExpressionVisitorImpl
 		throw new UnsupportedOperationException(
 			StringBundler.concat(
 				"Unsupported method visitMethodExpression with method type ",
-				type, " and ", expressions.size(), " params"));
+				type, " and ", expressions.size(), " parameters"));
 	}
 
 	@Override

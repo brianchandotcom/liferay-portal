@@ -1433,8 +1433,6 @@ definition {
 			ACSegments.searchSegment(findSegment = "${documentTitle}");
 
 			ACUtils.viewGenericText(textValueList = "${dataSourceName}");
-
-			Click(locator1 = "ACSegments#MODAL_CANCEL_BUTTON");
 		}
 	}
 

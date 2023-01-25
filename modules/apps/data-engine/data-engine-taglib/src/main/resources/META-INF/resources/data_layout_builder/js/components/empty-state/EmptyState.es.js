@@ -12,7 +12,7 @@
  * details.
  */
 
-import classNames from 'classnames';
+import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
 import {sub} from '../../utils/lang.es';
@@ -44,40 +44,18 @@ const EmptyState = ({emptyState, keywords = '', small = false}) => {
 	const {button, description, title} = isSearch ? search : emptyState;
 
 	return (
-		<div className="taglib-empty-result-message">
-			<div className="text-center">
-				<div
-					className={classNames(
-						{
-							'taglib-empty-state': !isSearch,
-							'taglib-search-state': isSearch,
-						},
-						{
-							'empty-state-small': small,
-						}
-					)}
-				/>
-
-				{title && (
-					<h1
-						className={classNames(
-							'taglib-empty-result-message-title',
-							{'empty-state-title-small': small}
-						)}
-					>
-						{title}
-					</h1>
-				)}
-
-				{description && (
-					<p className="empty-message-color taglib-empty-result-message-description">
-						{description}
-					</p>
-				)}
-
-				{button && button()}
-			</div>
-		</div>
+		<ClayEmptyState
+			description={description}
+			imgSrc={
+				isSearch
+					? `${themeDisplay.getPathThemeImages()}/states/search_state.gif`
+					: `${themeDisplay.getPathThemeImages()}/states/empty_state.gif`
+			}
+			small={small}
+			title={title}
+		>
+			{button && button()}
+		</ClayEmptyState>
 	);
 };
 

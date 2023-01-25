@@ -98,6 +98,10 @@ public class PortletPreferenceValueCTDisplayRenderer
 			_portletPreferencesLocalService.fetchPortletPreferences(
 				portletPreferenceValue.getPortletPreferencesId());
 
+		if (portletPreferences == null) {
+			return true;
+		}
+
 		Portlet portlet = _portletLocalService.getPortletById(
 			portletPreferences.getCompanyId(),
 			portletPreferences.getPortletId());

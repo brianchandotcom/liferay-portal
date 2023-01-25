@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,7 +102,11 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 			}
 		).build();
 
-		dropdownItemList.addAll(super.getFilterDropdownItems());
+		List<DropdownItem> filterDropdownItems = super.getFilterDropdownItems();
+
+		if (ListUtil.isNotEmpty(filterDropdownItems)) {
+			dropdownItemList.addAll(filterDropdownItems);
+		}
 
 		return dropdownItemList;
 	}

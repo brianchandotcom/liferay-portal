@@ -401,49 +401,6 @@ public class QuartzSchedulerEngineTest {
 
 		// Unschedule memory job
 
-		List<SchedulerResponse> schedulerResponses =
-			_quartzSchedulerEngine.getScheduledJobs(
-				_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		Assert.assertEquals(
-			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER,
-			schedulerResponses.size());
-
-		_quartzSchedulerEngine.unschedule(
-			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
-			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-		}
-
-		// Unschedule persisted job
-
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
-			_PERSISTED_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-		}
-
-		_quartzSchedulerEngine.unschedule(
-			_PERSISTED_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
-			_PERSISTED_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-		}
-	}
-
-	@Test
-	public void testUnschedule2() throws Exception {
-
-		// Unschedule memory job
-
 		SchedulerResponse schedulerResponse =
 			_quartzSchedulerEngine.getScheduledJob(
 				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
@@ -478,7 +435,7 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testUnschedule3() throws Exception {
+	public void testUnschedule2() throws Exception {
 		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(

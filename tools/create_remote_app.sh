@@ -139,6 +139,8 @@ function main {
 
 	CUSTOM_ELEMENT_NAME="${1}"
 
+	CUSTOM_ELEMENT_DISPLAY_NAME="$(echo ${CUSTOM_ELEMENT_NAME} | sed -r 's/^(.)|-(.)/ \U\1\U\2/g' | sed -r 's/^ (.*)/\1/')"
+
 	REMOTE_APP_DIR="${1}"
 
 	if [ -e ${REMOTE_APP_DIR} ]
@@ -181,7 +183,7 @@ function write_client_extension {
 	echo "    friendlyURLMapping: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
 	echo "    htmlElementName: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
 	echo "    instanceable: false" >> client-extension.yaml
-	echo "    name: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
+	echo "    name: ${CUSTOM_ELEMENT_DISPLAY_NAME}" >> client-extension.yaml
 	echo "    portletCategoryName: category.client-extensions" >> client-extension.yaml
 	echo "    type: customElement" >> client-extension.yaml
 	echo "    urls:" >> client-extension.yaml

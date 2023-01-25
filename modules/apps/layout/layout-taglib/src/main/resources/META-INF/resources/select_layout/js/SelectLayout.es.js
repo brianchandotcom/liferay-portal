@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -81,13 +82,14 @@ const SelectLayout = ({
 
 const EmptyState = () => {
 	return (
-		<div className="sheet taglib-empty-result-message">
-			<div className="taglib-empty-result-message-header"></div>
-
-			<div className="sheet-text text-center">
-				{Liferay.Language.get('there-are-no-pages')}
-			</div>
-		</div>
+		<ClayLayout.Sheet>
+			<ClayEmptyState
+				className="mt-0"
+				description={Liferay.Language.get('there-are-no-pages')}
+				imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+				title={null}
+			/>
+		</ClayLayout.Sheet>
 	);
 };
 

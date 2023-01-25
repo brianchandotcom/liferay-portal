@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
@@ -582,7 +583,7 @@ const PublicationsSearchContainer = ({
 			);
 		}
 		else if (!state.fetchData.entries.length) {
-			let className = 'taglib-empty-result-message';
+			let className = '';
 
 			if (containerView) {
 				className += ' sheet';
@@ -602,19 +603,17 @@ const PublicationsSearchContainer = ({
 				>
 					<div className={containerView ? 'container-view' : ''}>
 						<div className={className}>
-							<div
-								className={
-									resultsKeywords
-										? 'taglib-empty-search-result-message-header'
-										: 'taglib-empty-result-message-header'
-								}
-							/>
-
-							<div className="sheet-text text-center">
-								{Liferay.Language.get(
+							<ClayEmptyState
+								description={Liferay.Language.get(
 									'no-publications-were-found'
 								)}
-							</div>
+								imgSrc={
+									resultsKeywords
+										? `${themeDisplay.getPathThemeImages()}/states/search_state.gif`
+										: `${themeDisplay.getPathThemeImages()}/states/empty_state.gif`
+								}
+								title={null}
+							/>
 						</div>
 					</div>
 				</div>

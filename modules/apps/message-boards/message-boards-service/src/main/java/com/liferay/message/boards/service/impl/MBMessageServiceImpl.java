@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -694,6 +695,17 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBMessage> getSiteUserMessageBoardMessagesActivity(
+			long userId, long siteId, int start, int end)
+		throws PortalException {
+
+		_userPermission.check(getPermissionChecker(), userId, ActionKeys.VIEW);
+
+		return mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(
+			userId, siteId, start, end);
+	}
+
+	@Override
 	public String[] getTempAttachmentNames(long groupId, String folderName)
 		throws PortalException {
 
@@ -1072,5 +1084,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Reference
 	private SyndModelFactory _syndModelFactory;
+
+	private UserPermission _userPermission;
 
 }

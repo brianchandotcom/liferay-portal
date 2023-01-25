@@ -29,7 +29,7 @@ export default function () {
 	const getRevenueData = async () => {
 		setLoading(true);
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await fetch('/o/c/opportunitysfs', {
+		const response = await fetch('/o/c/opportunitysfs?&pageSize=200', {
 			headers: {
 				'accept': 'application/json',
 				'x-csrf-token': Liferay.authToken,

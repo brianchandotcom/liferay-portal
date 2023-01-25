@@ -33,7 +33,7 @@ export default function () {
 	useEffect(() => {
 		const getRenewalsData = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			await fetch('/o/c/opportunitysfs?&sort=closeDate:asc', {
+			await fetch('/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc', {
 				headers: {
 					'accept': 'application/json',
 					'x-csrf-token': Liferay.authToken,
@@ -92,11 +92,9 @@ export default function () {
 	const getCurrentStatusColor = (item) => {
 		if (item?.expirationDays <= 5) {
 			return status[5];
-		}
-		else if (item?.expirationDays <= 15) {
+		} else if (item?.expirationDays <= 15) {
 			return status[15];
-		}
-		else if (item?.expirationDays <= 30) {
+		} else if (item?.expirationDays <= 30) {
 			return status[30];
 		}
 	};

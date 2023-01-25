@@ -177,6 +177,19 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "Type",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type"
+			},
+			"name": "type",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "Growth_ARR__c",
 			"indexed": true,
 			"indexedAsKeyword": false,

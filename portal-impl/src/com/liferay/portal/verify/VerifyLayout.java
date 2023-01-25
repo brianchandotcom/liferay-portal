@@ -59,14 +59,17 @@ public class VerifyLayout extends VerifyProcess {
 			if (reservedLayoutFriendlyURLS.isEmpty()) {
 				reservedLayoutFriendlyURLS += StringBundler.concat(
 					"LIKE '/", likeClause, "' ");
+
 			}
 			else {
 				reservedLayoutFriendlyURLS += StringBundler.concat(
-					"OR friendlyURL LIKE '/", likeClause, "'");
+					"OR friendlyURL LIKE '/", likeClause, "' ");
 			}
-		}
+			if (likeClause.contains("!_")){
+				reservedLayoutFriendlyURLS += "ESCAPE \'!\'";
+			}
 
-		reservedLayoutFriendlyURLS += "ESCAPE \'!\'";
+			}
 
 		return reservedLayoutFriendlyURLS;
 	}

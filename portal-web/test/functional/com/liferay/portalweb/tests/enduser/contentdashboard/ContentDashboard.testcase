@@ -5928,7 +5928,7 @@ definition {
 		task ("Check if the correct number of entries are being displayed") {
 			Pagination.changePagination(itemsPerPage = "8");
 
-			Pagination.viewResults(results = "Showing 1 to 8 of 10 entries.");
+			Pagination.viewResults(results = "Showing 1 to 8 of 14 entries.");
 		}
 	}
 
@@ -5953,11 +5953,11 @@ definition {
 
 			Click(locator1 = "Pagination#NEXT_LINK");
 
-			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+			Pagination.viewResults(results = "Showing 5 to 8 of 10 entries.");
 
 			Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+			Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
 		}
 	}
 
@@ -5982,7 +5982,7 @@ definition {
 
 			ContentDashboard.moveToPage(pageNumber = "2");
 
-			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+			Pagination.viewResults(results = "Showing 5 to 8 of 10 entries.");
 		}
 	}
 

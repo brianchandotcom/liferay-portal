@@ -2,22 +2,13 @@
 $spacer: 1rem;
 
 .select-category-filter {
-	background: #fff;
 	border-bottom: 1px solid #dee2e6;
 	margin-bottom: $spacer * 1.5;
 	padding: $spacer * 0.75;
-
-	&--with-count-feedback {
-		border-bottom: none;
-		margin-bottom: 0;
-		padding: $spacer;
-	}
 }
 
 .select-category-count-feedback {
-	align-items: center;
 	background: $cadmin-primary-l2;
-	display: flex;
 	min-height: 40px;
 }
 

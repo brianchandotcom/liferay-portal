@@ -58,7 +58,7 @@ function SelectCategory({
 
 			<form
 				className={classNames('select-category-filter', {
-					'select-category-filter--with-count-feedback': showSelectedCounter,
+					'mb-0 border-0 p-3': showSelectedCounter,
 				})}
 				onSubmit={(event) => event.preventDefault()}
 				role="search"
@@ -97,7 +97,7 @@ function SelectCategory({
 
 			{showSelectedCounter && selectedItems.size > 0 && (
 				<ClayLayout.Container
-					className="mb-3 px-4 select-category-count-feedback"
+					className="align-items-center d-flex mb-3 px-4 select-category-count-feedback"
 					containerElement="section"
 					fluid
 				>

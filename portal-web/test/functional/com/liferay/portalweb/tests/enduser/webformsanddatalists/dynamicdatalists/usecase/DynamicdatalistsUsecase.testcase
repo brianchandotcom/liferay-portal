@@ -2580,8 +2580,6 @@ definition {
 	@description = "This is a use case for LPS-48913."
 	@priority = "3"
 	test ViewFieldsNestedInDDLRecord {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

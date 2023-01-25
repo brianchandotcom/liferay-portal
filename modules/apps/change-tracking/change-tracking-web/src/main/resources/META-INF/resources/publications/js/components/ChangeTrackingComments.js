@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
@@ -286,13 +287,12 @@ export default function ChangeTrackingComments({
 		}
 		else if (!fetchData.comments || !fetchData.comments.length) {
 			return (
-				<div className="taglib-empty-result-message">
-					<div className="taglib-empty-result-message-header" />
-
-					<div className="sheet-text text-center">
-						{Liferay.Language.get('no-comments-yet')}
-					</div>
-				</div>
+				<ClayEmptyState
+					description={Liferay.Language.get('no-comments-yet')}
+					imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+					small
+					title={null}
+				/>
 			);
 		}
 

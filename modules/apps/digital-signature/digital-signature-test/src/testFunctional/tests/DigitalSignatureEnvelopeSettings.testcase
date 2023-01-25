@@ -146,6 +146,8 @@ definition {
 	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
 	@priority = "5"
 	test CanViewErrorMessageForUnsuporttedFiles {
+		property solutions.acceptance = "true";
+	
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DigitalSignature.createEnvelope(
@@ -170,6 +172,8 @@ definition {
 	@description = "This is a test for LPS-131425. Verify if Success Message appear"
 	@priority = "5"
 	test CanViewSuccessMessage {
+		property solutions.acceptance = "true";
+
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DigitalSignature.createEnvelope(

@@ -37,6 +37,8 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Inherit' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyAlwaysInheritPersistence {
+		property solutions.acceptance = "true";
+
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -89,6 +91,8 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Override' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyAlwaysOverridePersistence {
+		property solutions.acceptance = "true";
+
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Override");
@@ -145,6 +149,8 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Inherit or Override' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyInheritOrOverridePersistence {
+		property solutions.acceptance = "true";
+		
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Inherit or Override");

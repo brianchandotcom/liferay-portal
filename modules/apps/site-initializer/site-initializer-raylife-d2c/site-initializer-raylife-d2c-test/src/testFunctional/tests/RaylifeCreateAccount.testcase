@@ -163,6 +163,7 @@ definition {
 	@description = "LPS-144334 - Verify if after filling in the password and the email with all correct information, the create account button is active"
 	@priority = "5"
 	test IsCreateAccountButtonActive {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsAccountButtonActive";
 
 		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");

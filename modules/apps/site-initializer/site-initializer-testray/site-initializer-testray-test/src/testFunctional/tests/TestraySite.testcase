@@ -60,6 +60,8 @@ definition {
 	@description = "This is a test for LPS-152873. Verify if when Testray is created, Remote Apps will be created for it as well"
 	@priority = "5"
 	test RemoteAppsAreCreatedForTestray {
+		property solutions.acceptance = "true";
+		
 		task ("Create Testray") {
 			Testray.addTestraySite();
 

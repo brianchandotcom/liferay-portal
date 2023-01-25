@@ -33,6 +33,7 @@ definition {
 	@description = "LPS-144582 - Check if I am redirected to the payment confirmation page, after selected payment by PayPal"
 	@priority = "5"
 	test CanViewConfirmSuccessfulPayment {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifePaymentMethod#CanViewConfirmSuccessfulPayment";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved

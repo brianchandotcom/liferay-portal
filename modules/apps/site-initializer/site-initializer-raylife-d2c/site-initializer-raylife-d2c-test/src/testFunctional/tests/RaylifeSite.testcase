@@ -32,6 +32,7 @@ definition {
 	@description = "LPS-155319 - Verify that when Raylife D2C is created, the Objects APIs are created"
 	@priority = "5"
 	test AllObjectsIsCreatedForRaylifeD2c {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifeSite#AllObjectsIsCreatedForRaylifeD2c";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved

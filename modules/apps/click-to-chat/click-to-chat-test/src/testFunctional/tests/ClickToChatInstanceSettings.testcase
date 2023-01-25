@@ -141,6 +141,8 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Chatwoot provider persistence after logout and login"
 	@priority = "5"
 	test ChatwootProviderKeepsEnabledAfterLogoutAndLogin {
+		property solutions.acceptance = "true";
+		
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -455,6 +457,8 @@ definition {
 	@description = "This is a test for LPS-129049. Verify LiveChat provider can be enabled and disabled."
 	@priority = "5"
 	test LiveChatCanBeEnabledAndDisabled {
+		property solutions.acceptance = "true";
+
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");

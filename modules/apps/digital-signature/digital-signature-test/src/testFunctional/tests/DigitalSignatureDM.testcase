@@ -41,6 +41,8 @@ definition {
 	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By button"
 	@priority = "5"
 	test CanCollectDigitalSignatureByButton {
+		property solutions.acceptance = "true";
+
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -91,6 +93,8 @@ definition {
 	@description = "This is a test for LPS-135089. Verify if its possible get multiple signatures from diferent documents in DM"
 	@priority = "5"
 	test CanGetMultipleSignaturesByButton {
+		property solutions.acceptance = "true";
+		
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

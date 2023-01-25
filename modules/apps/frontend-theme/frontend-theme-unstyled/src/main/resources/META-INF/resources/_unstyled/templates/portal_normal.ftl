@@ -18,9 +18,10 @@
 
 <@liferay_util["include"] page=body_top_include />
 
-<@liferay.control_menu />
+<div class="d-flex flex-column min-vh-100">
+	<@liferay.control_menu />
 
-<div class="container-fluid position-relative" id="wrapper">
+	<div class="d-flex flex-column flex-fill position-relative" id="wrapper">
 	<header id="banner" role="banner">
 		<div id="heading">
 			<div aria-level="1" class="site-title" role="heading">
@@ -69,6 +70,7 @@
 			/>
 		</p>
 	</footer>
+	</div>
 </div>
 
 <@liferay_util["include"] page=body_bottom_include />

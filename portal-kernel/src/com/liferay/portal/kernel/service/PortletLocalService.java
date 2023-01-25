@@ -154,6 +154,7 @@ public interface PortletLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Portlet deletePortlet(Portlet portlet);
 
+	@CTAware
 	public void deletePortlets(long companyId, String[] portletIds, long plid)
 		throws PortalException;
 

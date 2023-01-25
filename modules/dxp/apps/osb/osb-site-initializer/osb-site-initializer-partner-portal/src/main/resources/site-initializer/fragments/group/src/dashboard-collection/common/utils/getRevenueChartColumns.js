@@ -17,30 +17,57 @@ export default function getRevenueChartColumns(
 	setValueChart,
 	setColumnsRevenueChart
 ) {
+	const STAGE_CLOSEDLOST = 'Closed Lost';
+	const STAGE_DISQUALIFIED = 'Disqualified';
+	const STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY =
+		'Rolled into another opportunity';
+	const STAGE_CLOSEDWON = 'Closed Won';
+	const STAGE_REJECTED = 'Rejected';
+	const NEW_BUSINESS = 'New Business';
+	const NEW_PROJECT_EXISTING_BUSINESS = 'New Project Existing Business';
+
 	const chartColumns = [];
 
-	const totalRevenueAmount = revenueData?.items?.reduce(
-		(accumulator, currentValue) =>
-			accumulator + currentValue.netSubscriptionArr || 0,
+	const totalGrowthRevenue = revenueData?.items?.reduce(
+		(accumulator, currentValue) => {
+			if (
+				currentValue.stage === STAGE_CLOSEDWON &&
+				(currentValue.type === NEW_BUSINESS ||
+					currentValue.type === NEW_PROJECT_EXISTING_BUSINESS)
+			) {
+				return accumulator + currentValue.growthArr;
+			}
+
+			return accumulator;
+		},
 		0
 	);
+
+	chartColumns.push(['Growth Revenue', totalGrowthRevenue]);
+
+	const totalRenewalRevenue = revenueData?.items?.reduce(
+		(accumulator, currentValue) => {
+			if (
+				currentValue.type !== NEW_BUSINESS &&
+				currentValue.type !== NEW_PROJECT_EXISTING_BUSINESS &&
+				currentValue.stage !== STAGE_REJECTED &&
+				currentValue.stage !== STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY &&
+				currentValue.stage !== STAGE_DISQUALIFIED &&
+				currentValue.stage !== STAGE_CLOSEDLOST
+			) {
+				return accumulator + currentValue.renewalArr;
+			}
+
+			return accumulator;
+		},
+		0
+	);
+
+	chartColumns.push(['Renewal Revenue', totalRenewalRevenue]);
+
+	const totalRevenueAmount = totalGrowthRevenue + totalRenewalRevenue;
+
 	setValueChart(currencyFormat(totalRevenueAmount));
 	setTitleChart(` Total Revenue`);
-
-	const totalNewBusiness = revenueData?.items?.reduce(
-		(accumulator, currentValue) =>
-			accumulator + currentValue.growthArr || 0,
-		0
-	);
-	chartColumns.push(['Growth Revenue', totalNewBusiness]);
-
-	const totalRenewal = revenueData?.items?.reduce(
-		(accumulator, currentValue) =>
-			accumulator + currentValue.renewalArr || 0,
-		0
-	);
-
-	chartColumns.push(['Renewal Revenue', totalRenewal]);
-
 	setColumnsRevenueChart(chartColumns);
 }

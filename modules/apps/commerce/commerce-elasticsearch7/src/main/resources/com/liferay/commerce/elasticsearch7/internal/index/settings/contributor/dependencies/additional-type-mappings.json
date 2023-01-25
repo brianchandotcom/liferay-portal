@@ -96,6 +96,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"orderCreatorEmailAddress": {
+			"store": true,
+			"type": "keyword"
+		},
 		"orderOrganizationId": {
 			"store": true,
 			"type": "keyword"

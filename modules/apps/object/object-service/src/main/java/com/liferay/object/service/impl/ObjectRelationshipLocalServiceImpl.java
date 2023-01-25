@@ -392,7 +392,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	public ObjectRelationship fetchObjectRelationshipByObjectDefinitionId(
-		long objectDefinitionId, String objectRelationshipName) {
+		long objectDefinitionId, String name) {
 
 		List<ObjectRelationship> objectRelationships = dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -407,8 +407,7 @@ public class ObjectRelationshipLocalServiceImpl
 							objectDefinitionId)
 					)
 				).and(
-					ObjectRelationshipTable.INSTANCE.name.eq(
-						objectRelationshipName)
+					ObjectRelationshipTable.INSTANCE.name.eq(name)
 				).and(
 					ObjectRelationshipTable.INSTANCE.reverse.eq(false)
 				)
@@ -494,7 +493,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	public ObjectRelationship getObjectRelationshipByObjectDefinitionId(
-			long objectDefinitionId, String objectRelationshipName)
+			long objectDefinitionId, String name)
 		throws Exception {
 
 		List<ObjectRelationship> objectRelationships = dslQuery(
@@ -510,8 +509,7 @@ public class ObjectRelationshipLocalServiceImpl
 							objectDefinitionId)
 					)
 				).and(
-					ObjectRelationshipTable.INSTANCE.name.eq(
-						objectRelationshipName)
+					ObjectRelationshipTable.INSTANCE.name.eq(name)
 				).and(
 					ObjectRelationshipTable.INSTANCE.reverse.eq(false)
 				)
@@ -519,8 +517,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (objectRelationships.isEmpty()) {
 			throw new NoSuchObjectRelationshipException(
-				"No ObjectRelationship exists with the name " +
-					objectRelationshipName);
+				"No object relationship exists with the name " + name);
 		}
 
 		return objectRelationships.get(0);

@@ -721,10 +721,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		String chromeVersionOutput = byteArrayOutputStream.toString();
 
-		Matcher matcher = _chromeVersionPattern.matcher(chromeVersionOutput);
+		Matcher matcher = _browserVersionPattern.matcher(chromeVersionOutput);
 
 		if (matcher.find()) {
-			String chromeMajorVersion = matcher.group("chromeMajorVersion");
+			String chromeMajorVersion = matcher.group("majorVersion");
 
 			if (_chromeDriverVersions.containsKey(chromeMajorVersion)) {
 				return _chromeDriverVersions.get(chromeMajorVersion);
@@ -732,6 +732,99 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		}
 
 		return _DEFAULT_CHROME_DRIVER_VERSION;
+	}
+
+	private String _getEdgeDriverURL(String edgeDriverVersion) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://msedgedriver.azureedge.net/");
+
+		sb.append(edgeDriverVersion);
+
+		sb.append("/edgedriver_");
+
+		if (OSDetector.isApple()) {
+			sb.append("mac64");
+		}
+		else if (OSDetector.isWindows()) {
+			sb.append("win32");
+		}
+		else {
+			sb.append("linux64");
+		}
+
+		sb.append(".zip");
+
+		return sb.toString();
+	}
+
+	private String _getEdgeDriverVersion(
+		Project project, String edgeBinaryPath) {
+
+		if (edgeBinaryPath == null) {
+			edgeBinaryPath = "/usr/bin/microsoft-edge";
+
+			if (OSDetector.isApple()) {
+				edgeBinaryPath =
+					"/Applications/Microsoft Edge.app/Contents/MacOS" +
+						"/Microsoft Edge";
+			}
+			else if (OSDetector.isWindows()) {
+				edgeBinaryPath =
+					"C:\\Program Files (x86)\\Microsoft\\Edge\\Application" +
+						"\\msedge.exe";
+			}
+
+			if (Files.notExists(Paths.get(edgeBinaryPath))) {
+				throw new IllegalArgumentException(
+					"Unable to find a Microsoft Edge binary");
+			}
+		}
+
+		if (OSDetector.isWindows()) {
+			edgeBinaryPath = edgeBinaryPath.replace("/", "\\");
+
+			edgeBinaryPath = edgeBinaryPath.replace("\\", "\\\\");
+		}
+
+		final String finalEdgeBinaryPath = edgeBinaryPath;
+
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		project.exec(
+			new Action<ExecSpec>() {
+
+				@Override
+				public void execute(ExecSpec execSpec) {
+					System.out.println(
+						"Using Microsoft Edge binary at " +
+							finalEdgeBinaryPath);
+
+					if (OSDetector.isWindows()) {
+						execSpec.commandLine(
+							"cmd", "/c",
+							"wmic datafile where name=\"" +
+								finalEdgeBinaryPath + "\" get Version /value");
+					}
+					else {
+						execSpec.commandLine(finalEdgeBinaryPath, "--version");
+					}
+
+					execSpec.setStandardOutput(byteArrayOutputStream);
+				}
+
+			});
+
+		String edgeVersionOutput = byteArrayOutputStream.toString();
+
+		Matcher matcher = _browserVersionPattern.matcher(edgeVersionOutput);
+
+		if (matcher.find()) {
+			return matcher.group("fullVersion");
+		}
+
+		throw new RuntimeException("Unable to get edgedriver binary");
 	}
 
 	private File _getExpandedPoshiRunnerDir(Project project) {
@@ -845,6 +938,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 			url = _getChromeDriverURL(
 				_getChromeDriverVersion(project, chromeBinaryPath));
+		}
+
+		if (browserType.equals("edge")) {
+			url = _getEdgeDriverURL(_getEdgeDriverVersion(project, null));
 		}
 
 		if (browserType.equals("firefox")) {
@@ -1010,6 +1107,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private static final String _STOP_TESTABLE_TOMCAT_TASK_NAME =
 		"stopTestableTomcat";
 
+	private static final Pattern _browserVersionPattern = Pattern.compile(
+		"[A-z=\\s]+(?<fullVersion>(?<majorVersion>[0-9]+)\\.[0-9\\.]+)");
 	private static final Map<String, String> _chromeDriverVersions =
 		new HashMap<String, String>() {
 			{
@@ -1038,12 +1137,11 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				put("108", "108.0.5359.71");
 			}
 		};
-	private static final Pattern _chromeVersionPattern = Pattern.compile(
-		"[A-z=\\s]+(?<chromeMajorVersion>[0-9]+)\\.");
 	private static final Map<String, String> _webDriverBrowserBinaryNames =
 		new HashMap<String, String>() {
 			{
 				put("chrome", "chromedriver");
+				put("edge", "msedgedriver");
 				put("firefox", "geckodriver");
 			}
 		};
@@ -1051,6 +1149,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		_webDriverBrowserBinaryPropertyNames = new HashMap<String, String>() {
 			{
 				put("chrome", "webdriver.chrome.driver");
+				put("edge", "webdriver.edge.driver");
 				put("firefox", "webdriver.gecko.driver");
 			}
 		};

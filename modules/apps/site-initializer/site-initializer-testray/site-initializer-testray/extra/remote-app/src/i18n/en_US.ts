@@ -188,6 +188,8 @@ export default {
 	'issue': 'Issue',
 	'issues': 'Issues',
 	'jira-components': 'Jira Components',
+	'job-scheduler': 'Job Scheduler',
+	'job-scheduler-x': 'Job Scheduler {0}',
 	'key': 'Key',
 	'last-name': 'Last Name',
 	'last-used-date': 'Last Used Date',

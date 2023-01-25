@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
 export default function EmptyState({
@@ -21,14 +22,10 @@ export default function EmptyState({
 	title = Liferay.Language.get('there-are-no-entries'),
 }) {
 	return (
-		<div className="empty-message taglib-empty-result-message">
-			<div className="taglib-empty-result-message-header"></div>
-
-			<div className="sheet-text text-center text-muted">
-				<h1 className="text-default">{title}</h1>
-
-				<p className="text-default">{description}</p>
-			</div>
-		</div>
+		<ClayEmptyState
+			description={description}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+			title={title}
+		/>
 	);
 }

@@ -32,7 +32,7 @@ const useBuildHistory = () => {
 			[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
 			[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
 			[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
-			[Statuses.TEST_FIX]: DATA_COLORS['metrics.test-fix'],
+			[Statuses.TEST_FIX]: DATA_COLORS['metrics.testfix'],
 		},
 		getColumns: (builds: TestrayBuild[]) => [
 			[

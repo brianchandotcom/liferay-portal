@@ -65,7 +65,7 @@ const baseFilters: Filter = {
 	caseType: {
 		label: i18n.translate('case-type'),
 		name: 'caseType',
-		resource: '/casetypes?fields=id,name',
+		resource: '/casetypes?fields=id,name&sort=name:asc&pageSize=100',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayCaseType>(item));
 		},
@@ -74,7 +74,7 @@ const baseFilters: Filter = {
 	component: {
 		label: i18n.translate('Component'),
 		name: 'componentId',
-		resource: '/components?fields=id,name',
+		resource: '/components?fields=id,name&sort=name:asc&pageSize=100',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayComponent>(item));
 		},
@@ -89,7 +89,7 @@ const baseFilters: Filter = {
 	productVersion: {
 		label: i18n.translate('product-version'),
 		name: 'productVersion',
-		resource: '/productversions?fields=id,name',
+		resource: '/productversions?fields=id,name&sort=name:asc&pageSize=100',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayProductVersion>(item));
 		},
@@ -108,7 +108,7 @@ const baseFilters: Filter = {
 		label: i18n.translate('team'),
 		name: 'teamId',
 		options: [{label: 'Solutions', value: 'solutions'}],
-		resource: '/teams?fields=id,name',
+		resource: '/teams?fields=id,name&sort=name:asc&pageSize=100',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayTeam>(item));
 		},
@@ -201,15 +201,11 @@ const filters = {
 		baseFilters.caseType,
 		{
 			label: i18n.translate('case-name'),
-			name: 'caseName',
+			name: 'name',
 			type: 'text',
 		},
 		baseFilters.team,
-		{
-			label: i18n.translate('component'),
-			name: 'component',
-			type: 'text',
-		},
+		baseFilters.component,
 	],
 	requirement: [
 		{

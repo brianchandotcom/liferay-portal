@@ -41,7 +41,7 @@ const openConfirmModal = ({message, onConfirm, status, title}) => {
 			footerCssClass: 'border-0',
 			headerCssClass: 'border-0',
 			onClose: () => onConfirm(false),
-			role:"alertdialog",
+			role: 'alertdialog',
 			status,
 			title,
 		});

@@ -83,7 +83,8 @@ public class CETFDSActionProvider implements FDSActionProvider {
 				"confirmationMessage",
 				_language.get(
 					httpServletRequest,
-					"deleting-a-client-extension-is-an-action-impossible-to-revert")
+					"deleting-a-client-extension-is-an-action-impossible-to-" +
+						"revert")
 			).put(
 				"status", "warning"
 			).put(

@@ -2,8 +2,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Client Extension";
-	property testray.main.component.name = "Client Extension";
+	property testray.component.names = "Client Extensions";
+	property testray.main.component.name = "Client Extensions";
 
 	setUp {
 		task ("Given a Liferay DXP instance") {
@@ -29,7 +29,7 @@ definition {
 	@description = "LPS-168960 - Validates 'client extensions' is available as a selectable portlet category name"
 	@priority = "3"
 	test HasPortletCategoryNameClientExtension {
-		task ("When access IFrame type client extension") {
+		task ("When access IFrame type client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			ClientExtensionGeneral.addType(type = "IFrame");

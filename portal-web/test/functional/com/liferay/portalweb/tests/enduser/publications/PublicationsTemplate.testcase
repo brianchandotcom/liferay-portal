@@ -73,6 +73,7 @@ definition {
 		PublicationsTemplate.viewPublicationTemplate(templateName = "Template Name");
 
 		Publications.createNewPublicationWithTemplate(
+			gotoPublicationsAdmin = "true",
 			publicationDescription = "Publications Description test",
 			publicationName = "Publication Name test",
 			templateName = "Template Name");

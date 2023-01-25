@@ -573,7 +573,8 @@ upgrade.database.auto.run=false</echo>
 	<target name="execute-all-pending-upgrades-from-gogo-shell">
 		<get-database-upgrade-client-paths />
 
-		<antcall target="check-upgrade-client-upgrade-core-only" />
+		<echo append="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties">
+upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"

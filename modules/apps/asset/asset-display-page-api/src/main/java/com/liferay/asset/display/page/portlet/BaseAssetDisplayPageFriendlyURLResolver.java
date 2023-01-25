@@ -216,6 +216,15 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return new LayoutFriendlyURLComposite(layout, friendlyURL, false);
 	}
 
+	protected AssetDisplayPageEntry getAssetDisplayPageEntry(
+		long groupId,
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
+
+		return assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+			groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+			layoutDisplayPageObjectProvider.getClassPK());
+	}
+
 	protected Locale getLocale(Map<String, Object> requestContext) {
 		Locale locale = (Locale)requestContext.get(WebKeys.LOCALE);
 
@@ -345,10 +354,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
-				layoutDisplayPageObjectProvider.getClassPK());
+		AssetDisplayPageEntry assetDisplayPageEntry = getAssetDisplayPageEntry(
+			groupId, layoutDisplayPageObjectProvider);
 
 		if (assetDisplayPageEntry != null) {
 			if (assetDisplayPageEntry.getType() ==

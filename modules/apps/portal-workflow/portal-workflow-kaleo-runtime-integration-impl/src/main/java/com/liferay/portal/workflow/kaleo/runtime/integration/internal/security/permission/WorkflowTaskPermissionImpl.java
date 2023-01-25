@@ -78,7 +78,7 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 			return true;
 		}
 
-		boolean assignableUser;
+		boolean assignableUser = false;
 
 		try {
 			List<User> assignableUsers =
@@ -90,8 +90,6 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 		}
 		catch (WorkflowException workflowException) {
 			_log.error(workflowException);
-
-			assignableUser = false;
 		}
 
 		if (hasAssetViewPermission(workflowTask, permissionChecker) &&

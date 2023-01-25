@@ -16,10 +16,13 @@ package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -28,11 +31,14 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,6 +71,15 @@ public class OpenAPIResourceTest {
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+	}
+
+	@Test
+	public void testGetNestedEntityInObjectRelationship() throws Exception {
+		_testGetNestedEntityInObjectRelationship(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testGetNestedEntityInObjectRelationship(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@Test
@@ -103,6 +118,83 @@ public class OpenAPIResourceTest {
 			Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+	}
+
+	private String _getNestedEntitySchema(
+		JSONObject jsonObject, ObjectRelationship objectRelationship,
+		ObjectDefinition objectDefinition) {
+
+		String nestedEntitySchema;
+
+		JSONObject nestedEntitySchemaJSONObject = jsonObject.getJSONObject(
+			"components"
+		).getJSONObject(
+			"schemas"
+		).getJSONObject(
+			objectDefinition.getShortName()
+		).getJSONObject(
+			"properties"
+		).getJSONObject(
+			objectRelationship.getName()
+		);
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+			(objectDefinition.getObjectDefinitionId() ==
+				_objectDefinition2.getObjectDefinitionId())) {
+
+			nestedEntitySchema = (String)nestedEntitySchemaJSONObject.get(
+				"$ref");
+		}
+		else {
+			nestedEntitySchema =
+				(String)nestedEntitySchemaJSONObject.getJSONObject(
+					"items"
+				).get(
+					"$ref"
+				);
+		}
+
+		return StringUtil.extractLast(nestedEntitySchema, "/");
+	}
+
+	private void _testGetNestedEntityInObjectRelationship(
+			String objectRelationshipType)
+		throws Exception {
+
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(), objectRelationshipType);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertNotNull(jsonObject.getString("openapi"));
+
+		Assert.assertEquals(
+			_getNestedEntitySchema(
+				jsonObject, objectRelationship, _objectDefinition1),
+			_objectDefinition2.getShortName());
+
+		jsonObject = HTTPTestUtil.invoke(
+			null, _objectDefinition2.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertNotNull(jsonObject.getString("openapi"));
+
+		Assert.assertEquals(
+			_getNestedEntitySchema(
+				jsonObject, objectRelationship, _objectDefinition2),
+			_objectDefinition1.getShortName());
 	}
 
 	private static final String _OBJECT_FIELD_NAME =

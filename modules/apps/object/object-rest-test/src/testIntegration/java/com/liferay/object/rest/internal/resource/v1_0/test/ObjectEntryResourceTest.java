@@ -288,22 +288,22 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
-			ObjectRelationship objectRelationship, FilterOperator filterOperator)
+			FilterOperator filterOperator, ObjectRelationship objectRelationship)
 		throws Exception {
 
 		_testFilterByRelatedObjectDefinitionSystemObjectField(
-			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, _objectDefinition1,
-			objectRelationship, filterOperator, _objectEntry2.getObjectEntryId());
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, filterOperator, _objectDefinition1,
+			objectRelationship, _objectEntry2.getObjectEntryId());
 
 		_testFilterByRelatedObjectDefinitionSystemObjectField(
-			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, _objectDefinition2,
-			objectRelationship, filterOperator, _objectEntry1.getObjectEntryId());
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, filterOperator, _objectDefinition2,
+			objectRelationship, _objectEntry1.getObjectEntryId());
 	}
 
 	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
 			String expectedObjectFieldName, String expectedObjectFieldValue,
-			ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship, FilterOperator filterOperator,
+			FilterOperator filterOperator, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
 			long relatedObjectEntryId)
 		throws Exception {
 
@@ -373,7 +373,7 @@ public class ObjectEntryResourceTest {
 		}
 		else if (filterOperator == FilterOperator.EQ) {
 			_testFilterByRelatedObjectDefinitionSystemObjectField(
-				objectRelationship, filterOperator);
+				filterOperator, objectRelationship);
 
 			endpoint = endpoint.concat(
 				StringBundler.concat(

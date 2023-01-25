@@ -13,6 +13,7 @@
  */
 
 import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -307,15 +308,13 @@ const TreeFilter = ({
 								)}
 							</ClayTreeView>
 						) : (
-							<div className="border-0 pt-0 sheet taglib-empty-result-message">
-								<div className="taglib-empty-result-message-header"></div>
-
-								<div className="sheet-text text-center">
-									{Liferay.Language.get(
-										'no-results-were-found'
-									)}
-								</div>
-							</div>
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'no-results-were-found'
+								)}
+								imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+								title={null}
+							/>
 						)}
 					</div>
 				</ClayLayout.ContainerFluid>

@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipien
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
@@ -127,10 +126,8 @@ public class ScriptNotificationRecipientBuilder
 				kaleoNotificationRecipient.getRecipientScriptLanguage())) {
 
 			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"No notification recipient evaluator found for script ",
-					"language ",
-					kaleoNotificationRecipient.getRecipientScriptLanguage()));
+				"No notification recipient evaluator for script language " +
+					kaleoNotificationRecipient.getRecipientScriptLanguage());
 		}
 
 		return notificationRecipientEvaluator.evaluate(

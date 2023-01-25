@@ -44,7 +44,7 @@ const Panel: React.FC<Props> = ({
 
 				<div className="container-button-panel">
 					<ClayButton
-						className={classNames('', {
+						className={classNames('text-nowrap ml-1', {
 							'font-weight-bold': showPanel,
 						})}
 						displayType="link"

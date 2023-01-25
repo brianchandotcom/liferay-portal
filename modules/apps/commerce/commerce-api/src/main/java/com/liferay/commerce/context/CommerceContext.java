@@ -39,7 +39,7 @@ public interface CommerceContext extends Serializable {
 
 	public CommerceCurrency getCommerceCurrency() throws PortalException;
 
-	public CommerceOrder getCommerceOrder() throws PortalException;
+	public CommerceOrder getCommerceOrder();
 
 	public int getCommerceSiteType();
 

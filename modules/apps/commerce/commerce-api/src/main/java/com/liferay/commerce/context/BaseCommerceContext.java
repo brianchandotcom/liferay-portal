@@ -190,10 +190,19 @@ public class BaseCommerceContext implements CommerceContext {
 	}
 
 	@Override
-	public CommerceOrder getCommerceOrder() throws PortalException {
-		_commerceOrder = _commerceOrderService.fetchCommerceOrder(_orderId);
+	public CommerceOrder getCommerceOrder() {
+		try {
+			_commerceOrder = _commerceOrderService.fetchCommerceOrder(_orderId);
 
-		return _commerceOrder;
+			return _commerceOrder;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
 	}
 
 	@Override

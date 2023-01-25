@@ -31,6 +31,7 @@ import com.liferay.commerce.frontend.internal.account.model.OrderList;
 import com.liferay.commerce.frontend.internal.order.CommerceOrderResource;
 import com.liferay.commerce.frontend.internal.search.model.SearchItemModel;
 import com.liferay.commerce.frontend.internal.search.util.CommerceSearchUtil;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
@@ -173,6 +174,19 @@ public class CommerceSearchResource {
 		return editURL.toString();
 	}
 
+	private CommerceOrder _getCommerceOrder(long commerceOrderId) {
+		try {
+			return _commerceOrderService.getCommerceOrder(commerceOrderId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
+	}
+
 	private SearchItemModel _getSearchItemModel(
 			long commerceAccountId, CPCatalogEntry cpCatalogEntry,
 			ThemeDisplay themeDisplay)
@@ -278,13 +292,13 @@ public class CommerceSearchResource {
 
 			searchItemModel.setIcon("document");
 			searchItemModel.setSubtitle(order.getAccountName());
+
 			searchItemModel.setUrl(
 				String.valueOf(
 					_commerceOrderHttpHelper.getCommerceCartPortletURL(
 						themeDisplay.getScopeGroupId(),
 						themeDisplay.getRequest(),
-						_commerceOrderService.getCommerceOrder(
-							order.getId()))));
+						_getCommerceOrder(order.getId()))));
 
 			searchItemModels.add(searchItemModel);
 		}

@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.test.util.AssertUtils;
@@ -34,6 +34,7 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -85,15 +86,8 @@ public abstract class BaseFacetedSearcherTestCase {
 	protected void assertAllHitsAreUsers(
 		String keywords, Hits hits, SearchContext searchContext) {
 
-		List<Document> documents = TransformUtil.transformToList(
-			hits.getDocs(),
-			document -> {
-				if (isMissingScreenName(document)) {
-					return document;
-				}
-
-				return null;
-			});
+		List<Document> documents = ListUtil.filter(
+			Arrays.asList(hits.getDocs()), this::isMissingScreenName);
 
 		Assert.assertTrue(
 			(String)searchContext.getAttribute("queryString") + "->" +

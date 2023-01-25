@@ -824,7 +824,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			return matcher.group("fullVersion");
 		}
 
-		throw new RuntimeException("Unable to get edgedriver binary");
+		throw new RuntimeException(
+			"Unable to get Microsoft Edge binary version");
 	}
 
 	private File _getExpandedPoshiRunnerDir(Project project) {

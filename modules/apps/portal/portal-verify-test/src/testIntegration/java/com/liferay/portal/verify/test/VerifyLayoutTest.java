@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -70,18 +72,31 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 
 		_connection = DataAccess.getConnection();
 
+		_errorMessages = new ArrayList<>();
+
 		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
-			if (!keyword.contains(StringPool.STAR)) {
-				_keyword = keyword;
+			if (!keyword.contains(StringPool.STAR) &&
+				!keyword.contains(StringPool.UNDERLINE)) {
+
+				_keyword1 = keyword;
+
+				_keyword2 = keyword;
 
 				break;
 			}
 		}
 
-		_layout = _layoutLocalService.addLayout(
+		_layout1 = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false, 0,
 			"name", "title", "description", LayoutConstants.TYPE_PORTLET, false,
-			"/friendlyURL",
+			"/friendlyURL1",
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
+
+		_layout2 = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false, 0,
+			"name", "title", "description", LayoutConstants.TYPE_PORTLET, false,
+			"/friendlyURL2",
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));
 	}
@@ -91,7 +106,9 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 		ReflectionTestUtil.setFieldValue(
 			VerifyLayout.class, "_log", _verifyLayoutLog);
 
-		_layoutLocalService.deleteLayout(_layout);
+		_layoutLocalService.deleteLayout(_layout1);
+
+		_layoutLocalService.deleteLayout(_layout2);
 
 		DataAccess.cleanUp(_connection);
 	}
@@ -100,7 +117,68 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 	public void tearDown() throws Exception {
 		_errorMessages = new ArrayList<>();
 
-		_updateFriendlyURL(_layout.getPlid(), _layout.getFriendlyURL());
+		_updateFriendlyURL(_layout1.getPlid(), _layout1.getFriendlyURL());
+	}
+
+	@Test
+	public void testVerifyLayoutsWithAsteriskReservedLayoutFriendlyURL()
+		throws Exception {
+
+		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
+			if (keyword.contains(StringPool.STAR) &&
+				!keyword.contains(StringPool.UNDERLINE)) {
+
+				_keyword1 = StringUtil.replace(keyword, '*', "12345");
+
+				break;
+			}
+		}
+
+		_updateFriendlyURL(
+			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
+
+		super.testVerify();
+
+		Assert.assertEquals(
+			_errorMessages.toString(), 1, _errorMessages.size());
+
+		String errorMessage = _errorMessages.get(0);
+
+		Assert.assertTrue(errorMessage.contains(_keyword1));
+	}
+
+	@Test
+	public void testVerifyLayoutsWithMultipleReservedLayoutFriendlyURL()
+		throws Exception {
+
+		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
+			if (keyword.contains(StringPool.STAR) &&
+				keyword.contains(StringPool.UNDERLINE)) {
+
+				_keyword1 = StringUtil.replace(keyword, '*', "12345");
+
+				break;
+			}
+		}
+
+		_updateFriendlyURL(
+			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
+
+		_updateFriendlyURL(
+			_layout2.getPlid(), StringPool.FORWARD_SLASH + _keyword2);
+
+		super.testVerify();
+
+		Assert.assertEquals(
+			_errorMessages.toString(), 2, _errorMessages.size());
+
+		String errorMessage1 = _errorMessages.get(0);
+
+		String errorMessage2 = _errorMessages.get(1);
+
+		Assert.assertTrue(errorMessage1.contains(_keyword1));
+
+		Assert.assertTrue(errorMessage2.contains(_keyword2));
 	}
 
 	@Test
@@ -118,7 +196,9 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 		throws Exception {
 
 		_updateFriendlyURL(
-			_layout.getPlid(), StringPool.FORWARD_SLASH + _keyword);
+			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
+
+		_updateFriendlyURL(_layout2.getPlid(), "/friendlyURL2");
 
 		super.testVerify();
 
@@ -127,7 +207,41 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 
 		String errorMessage = _errorMessages.get(0);
 
-		Assert.assertTrue(errorMessage.contains(_keyword));
+		Assert.assertTrue(errorMessage.contains(_keyword1));
+	}
+
+	@Test
+	public void testVerifyLayoutsWithUnderscoreReservedLayoutFriendlyURL()
+		throws Exception {
+
+		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
+			if (keyword.contains(StringPool.UNDERLINE)) {
+				if (keyword.contains(StringPool.STAR)) {
+					_keyword1 = StringUtil.replace(keyword, '*', "12345");
+				}
+				else {
+					_keyword1 = keyword;
+				}
+
+				break;
+			}
+		}
+
+		_updateFriendlyURL(
+			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
+
+		_updateFriendlyURL(
+			_layout2.getPlid(),
+			StringPool.FORWARD_SLASH + StringUtil.replace(_keyword1, '_', "a"));
+
+		super.testVerify();
+
+		Assert.assertEquals(
+			_errorMessages.toString(), 1, _errorMessages.size());
+
+		String errorMessage = _errorMessages.get(0);
+
+		Assert.assertTrue(errorMessage.contains(_keyword1));
 	}
 
 	@Override
@@ -139,7 +253,8 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"update Layout set friendlyURL = ? where plid = ?")) {
+				"update LayoutFriendlyURL set friendlyURL = ? where plid = " +
+					"?")) {
 
 			preparedStatement.setString(1, friendlyURL);
 			preparedStatement.setLong(2, plid);
@@ -150,8 +265,13 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 
 	private static Connection _connection;
 	private static List<String> _errorMessages;
-	private static String _keyword;
-	private static Layout _layout;
+	private static String _keyword1;
+	private static String _keyword2;
+	private static Layout _layout1;
+	private static Layout _layout2;
+
+	@Inject
+	private static LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 	@Inject
 	private static LayoutLocalService _layoutLocalService;

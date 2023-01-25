@@ -287,10 +287,17 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	}
 
 	protected void reindex(List<User> users) {
+		long[] userIds = new long[users.size()];
+
+		for (int i = 0; i < users.size(); i++) {
+			User user = users.get(i);
+
+			userIds[i] = user.getUserId();
+		}
+
 		User user = users.get(0);
 
-		_reindexer.reindex(
-			user.getCompanyId(), _CLASS_NAME, _getUserIds(users));
+		_reindexer.reindex(user.getCompanyId(), _CLASS_NAME, userIds);
 	}
 
 	protected SearchResponse searchUsersInAllGroups(
@@ -336,23 +343,7 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(StringPool.NEW_LINE);
-
 		return sb.toString();
-	}
-
-	private long[] _getUserIds(List<User> users) {
-		long[] userIds = new long[users.size()];
-
-		for (int i = 0; i < users.size(); i++) {
-			User user = users.get(i);
-
-			userIds[i] = user.getUserId();
-		}
-
-		return userIds;
 	}
 
 	private Stream<Long> _getUserIdsStream(List<User> users) {

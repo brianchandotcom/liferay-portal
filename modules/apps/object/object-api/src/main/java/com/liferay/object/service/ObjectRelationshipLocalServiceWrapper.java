@@ -311,11 +311,11 @@ public class ObjectRelationshipLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectRelationship
 		fetchObjectRelationshipByObjectDefinitionId(
-			long objectDefinitionId, String objectRelationshipName) {
+			long objectDefinitionId, String name) {
 
 		return _objectRelationshipLocalService.
 			fetchObjectRelationshipByObjectDefinitionId(
-				objectDefinitionId, objectRelationshipName);
+				objectDefinitionId, name);
 	}
 
 	@Override
@@ -422,12 +422,11 @@ public class ObjectRelationshipLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectRelationship
 			getObjectRelationshipByObjectDefinitionId(
-				long objectDefinitionId, String objectRelationshipName)
+				long objectDefinitionId, String name)
 		throws Exception {
 
 		return _objectRelationshipLocalService.
-			getObjectRelationshipByObjectDefinitionId(
-				objectDefinitionId, objectRelationshipName);
+			getObjectRelationshipByObjectDefinitionId(objectDefinitionId, name);
 	}
 
 	/**

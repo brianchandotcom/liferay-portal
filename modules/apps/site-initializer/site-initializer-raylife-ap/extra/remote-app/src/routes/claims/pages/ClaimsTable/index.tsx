@@ -929,6 +929,7 @@ const ClaimsTable = () => {
 									setFilterProductCheck([]);
 									setFilterStatusCheck([]);
 									setParameters(generateParameters());
+									setIsRemaining(false);
 								}}
 							>
 								<ClayIcon

@@ -18,6 +18,7 @@ import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
@@ -196,7 +197,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	public void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
-		_transformedSQLs = new LRUMap<>(
+		_ctTransformedSQLs = new LRUMap<>(
+			PropsValues.CHANGE_TRACKING_SQL_TRANSFORMER_CACHE_SIZE);
+		_productionTransformedSQLs = new LRUMap<>(
 			PropsValues.CHANGE_TRACKING_SQL_TRANSFORMER_CACHE_SIZE);
 
 		_readTransformedSQLsFile();
@@ -232,12 +235,21 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	public String transform(String sql) {
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-		if (ctCollectionId == 0) {
-			String transformedSQL = _transformedSQLs.get(sql);
+		String key = _getTransformedSQLKey(ctCollectionId, sql);
 
-			if (transformedSQL != null) {
-				return transformedSQL;
-			}
+		String transformedSQL = null;
+
+		if (ctCollectionId ==
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
+
+			transformedSQL = _productionTransformedSQLs.get(key);
+		}
+		else {
+			transformedSQL = _ctTransformedSQLs.get(key);
+		}
+
+		if (transformedSQL != null) {
+			return transformedSQL;
 		}
 
 		boolean foundTable = false;
@@ -251,7 +263,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		}
 
 		if (!foundTable) {
-			_transformedSQLs.put(sql, sql);
+			_productionTransformedSQLs.put(key, sql);
 
 			return sql;
 		}
@@ -260,7 +272,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			Statement statement = _jSqlParser.parse(
 				new UnsyncStringReader(_escape(sql)));
 
-			String transformedSQL = sql;
+			transformedSQL = sql;
 
 			if (statement instanceof Select) {
 				statement.accept(
@@ -278,8 +290,13 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 				transformedSQL = _unescape(statement.toString());
 			}
 
-			if (ctCollectionId == 0) {
-				_transformedSQLs.put(sql, transformedSQL);
+			if (ctCollectionId ==
+					CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
+
+				_productionTransformedSQLs.put(key, transformedSQL);
+			}
+			else {
+				_ctTransformedSQLs.put(key, transformedSQL);
 			}
 
 			return transformedSQL;
@@ -296,6 +313,16 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	private String _escape(String sql) {
 		return StringUtil.replace(
 			sql, "LIKE ? ESCAPE '\\'", "LIKE '[$LFR_LIKE_ESCAPE_STRING$]'");
+	}
+
+	private String _getTransformedSQLKey(long ctCollectionId, String sql) {
+		if (ctCollectionId ==
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
+
+			return sql;
+		}
+
+		return StringBundler.concat(ctCollectionId, StringPool.POUND, sql);
 	}
 
 	private void _readTransformedSQLsFile() {
@@ -319,7 +346,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			int size = deserializer.readInt();
 
 			for (int i = 0; i < size; i++) {
-				_transformedSQLs.put(
+				_productionTransformedSQLs.put(
 					deserializer.readString(), deserializer.readString());
 			}
 		}
@@ -341,7 +368,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	}
 
 	private void _writeTransformedSQLsFile() {
-		if (_transformedSQLs.isEmpty()) {
+		if (_productionTransformedSQLs.isEmpty()) {
 			return;
 		}
 
@@ -352,7 +379,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		serializer.writeLong(bundle.getLastModified());
 
 		Map<String, String> snapshotTransformedSQLs = new HashMap<>(
-			_transformedSQLs);
+			_productionTransformedSQLs);
 
 		serializer.writeInt(snapshotTransformedSQLs.size());
 
@@ -392,8 +419,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	private final Map<Class<?>, CTService<?>> _ctServiceMap =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<?, ?> _ctServiceServiceTracker;
+	private LRUMap<String, String> _ctTransformedSQLs;
+	private LRUMap<String, String> _productionTransformedSQLs;
 	private ServiceTracker<?, ?> _releaseServiceTracker;
-	private LRUMap<String, String> _transformedSQLs;
 
 	private abstract static class BaseStatementVisitor
 		implements ExpressionVisitor, FromItemVisitor, ItemsListVisitor,

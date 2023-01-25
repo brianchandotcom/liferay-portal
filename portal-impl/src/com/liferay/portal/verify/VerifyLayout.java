@@ -59,17 +59,16 @@ public class VerifyLayout extends VerifyProcess {
 			if (reservedLayoutFriendlyURLS.isEmpty()) {
 				reservedLayoutFriendlyURLS += StringBundler.concat(
 					"LIKE '/", likeClause, "' ");
-
 			}
 			else {
 				reservedLayoutFriendlyURLS += StringBundler.concat(
 					"OR friendlyURL LIKE '/", likeClause, "' ");
 			}
-			if (likeClause.contains("!_")){
+
+			if (likeClause.contains("!_")) {
 				reservedLayoutFriendlyURLS += "ESCAPE \'!\'";
 			}
-
-			}
+		}
 
 		return reservedLayoutFriendlyURLS;
 	}
@@ -80,8 +79,8 @@ public class VerifyLayout extends VerifyProcess {
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select plid, friendlyURL from LayoutFriendlyURL where friendlyURL " +
-					_getReservedLayoutFriendlyURLS());
+				"select plid, friendlyURL from LayoutFriendlyURL where " +
+					"friendlyURL " + _getReservedLayoutFriendlyURLS());
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

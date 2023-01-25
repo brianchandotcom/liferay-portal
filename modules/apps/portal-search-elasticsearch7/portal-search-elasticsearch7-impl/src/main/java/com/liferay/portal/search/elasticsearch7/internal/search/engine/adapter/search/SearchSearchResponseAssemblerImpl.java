@@ -38,8 +38,8 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.searcher.SearchTimeValue;
 
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.apache.lucene.search.TotalHits;
 
@@ -142,11 +142,13 @@ public class SearchSearchResponseAssemblerImpl
 					this, this, aggregationsMap::get,
 					pipelineAggregationsMap::get);
 
-		Stream<AggregationResult> stream =
+		List<AggregationResult> aggregationResults =
 			elasticsearchAggregationResultsTranslator.translate(
 				elasticsearchAggregations);
 
-		stream.forEach(searchSearchResponse::addAggregationResult);
+		for (AggregationResult aggregationResult : aggregationResults) {
+			searchSearchResponse.addAggregationResult(aggregationResult);
+		}
 	}
 
 	private void _setScrollId(

@@ -24,6 +24,8 @@ definition {
 	@description = "LPS-151766 - Verify that it's possible to create an object entry related to Commerce Product Group"
 	@priority = "4"
 	test CanCreateEntryRelatedToCommerceProductGroup {
+		property test.name.skip.portal.instance = "ObjectCommerce#CanCreateEntryRelatedToCommerceProductGroup";
+
 		task ("Create a Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 288",
@@ -99,6 +101,8 @@ definition {
 	@description = "LPS-152408 - Verify that it's possible to create an object entry related to Commerce Products"
 	@priority = "4"
 	test CanCreateEntryRelatedToCommerceProducts {
+		property test.name.skip.portal.instance = "ObjectCommerce#CanCreateEntryRelatedToCommerceProducts";
+
 		task ("Create a Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 289",
@@ -174,6 +178,8 @@ definition {
 	@description = "LPS-136741 - Verify that Object scoped by Company is not displayed on the Commerce notification type for Site type Channel"
 	@priority = "4"
 	test ObjectScopedCompanyNotDisplayedSiteChannel {
+		property test.name.skip.portal.instance = "ObjectCommerce#ObjectScopedCompanyNotDisplayedSiteChannel";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145735",
 			objectName = "CustomObject145735",

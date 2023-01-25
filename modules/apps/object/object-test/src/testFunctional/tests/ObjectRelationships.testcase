@@ -24,6 +24,8 @@ definition {
 	@description = "LPS-145393 - Verify it is possible to relate 2 entries from a Custom Object entry with the same Native Object entry in a One-to-Many relation"
 	@priority = "4"
 	test CanAddMultipleOneToManyRelationsWithNativeObject {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanAddMultipleOneToManyRelationsWithNativeObject";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 288",
 			objectName = "CustomObject288",
@@ -86,6 +88,7 @@ definition {
 	@priority = "5"
 	test CanAddOneToManyRelationWithNativeObject {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectRelationships#CanAddOneToManyRelationWithNativeObject";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 289",
@@ -140,6 +143,8 @@ definition {
 	@priority = "4"
 	test CanAddTabsForSelfMMRelationship {
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
+			property test.name.skip.portal.instance = "ObjectRelationships#CanAddTabsForSelfMMRelationship";
+
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
 				objectName = "CustomObject",
@@ -210,6 +215,8 @@ definition {
 	@description = "LPS-146754 - Verify that it's possible to create a Many-to-Many relationship between a Custom Object and Native Object"
 	@priority = "5"
 	test CanCreateManyToManyRelationshipWithNativeObject {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanCreateManyToManyRelationshipWithNativeObject";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 290",
 			objectName = "CustomObject290",
@@ -291,6 +298,7 @@ definition {
 	@priority = "5"
 	test CanCreateObjectWithRelationshipParameter {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectRelationships#CanCreateObjectWithRelationshipParameter";
 
 		task ("Create a custom object, and a self relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -333,6 +341,7 @@ definition {
 	@priority = "5"
 	test CanCreateOneToManyForNativeObject {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectRelationships#CanCreateOneToManyForNativeObject";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 290",
@@ -358,6 +367,8 @@ definition {
 	@description = "LPS-151676 - Verify that it's possible to create a One-to-Many relationship between a Custom Object and Native Object"
 	@priority = "5"
 	test CanCreateOneToManyRelationshipWithNativeObject {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanCreateOneToManyRelationshipWithNativeObject";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 290",
 			objectName = "CustomObject290",
@@ -382,6 +393,8 @@ definition {
 	@description = "LPS-146754 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (Many-to-Many)"
 	@priority = "4"
 	test CanDeleteManyToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanDeleteManyToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry";
+
 		task ("Add two users to relate to Custom Object entries") {
 			for (var userNum : list "1,2") {
 				JSONUser.addUser(
@@ -507,6 +520,8 @@ definition {
 	@description = "LPS-152508 - Verify that it's possible to delete a Many-to-Many relationship from the parent side"
 	@priority = "5"
 	test CanDeleteManyToManyRelationshipFromParentSide {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanDeleteManyToManyRelationshipFromParentSide";
+
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 289",
@@ -545,6 +560,8 @@ definition {
 	@description = "LPS-151676 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (One-to-Many)"
 	@priority = "4"
 	test CanDeleteOneToManyRelationship {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanDeleteOneToManyRelationship";
+
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 289",
@@ -616,6 +633,8 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanDeleteOneToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanDeleteOneToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry";
+
 		task ("Add 2 users entries to relate to custom object entries") {
 			JSONUser.addUser(
 				userEmailAddress = "user1@liferay.com",
@@ -739,6 +758,8 @@ definition {
 	@description = "LPS-147906 - Verify it is possible to do a nested relation in a One-to-Many relationship"
 	@priority = "4"
 	test CanDoNestedRelation {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanDoNestedRelation";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 149249",
 			objectName = "CustomObject149249",
@@ -826,6 +847,8 @@ definition {
 	@description = "LPS-155537 - Verify that it's possible to edit a relationship parameter"
 	@priority = "4"
 	test CanEditRelationshipParameter {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanEditRelationshipParameter";
+
 		task ("Create a custom object, and a self relationship") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -876,6 +899,8 @@ definition {
 	@description = "LPS-163654 - Verify that it's possible to identify the Parent and Child relationship through specific labels"
 	@priority = "4"
 	test CanIdentifyParentChildRelationship {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanIdentifyParentChildRelationship";
+
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object LPS163654",
@@ -961,6 +986,8 @@ definition {
 	@description = "LPS-152508 - Verify that it's not possible to delete a Many-to-Many relationship from the child side"
 	@priority = "4"
 	test CannotDeleteManyToManyRelationshipFromChildSide {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotDeleteManyToManyRelationshipFromChildSide";
+
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 289",
@@ -1001,6 +1028,8 @@ definition {
 	@description = "LPS-152508 - Verify that it's not possible to delete a relationship with an incorrect input"
 	@priority = "4"
 	test CannotDeleteRelationshipWithIncorrectInput {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotDeleteRelationshipWithIncorrectInput";
+
 		task ("Create a custom object and a relationship to itself") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -1047,6 +1076,8 @@ definition {
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Label blank"
 	@priority = "4"
 	test CannotLeaveRelationshipLabelBlank {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotLeaveRelationshipLabelBlank";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147736",
 			objectName = "CustomObject147736",
@@ -1070,6 +1101,8 @@ definition {
 	@description = "LPS-135397 - Verify that it is not possible to leave a layout with a Relationship tab on first place by removing the fields tab"
 	@priority = "4"
 	test CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab";
+
 		task ("Create a custom object and a relationship to itself") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -1141,6 +1174,7 @@ definition {
 	@priority = "5"
 	test CannotRelateAnEntryWithItself {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotRelateAnEntryWithItself";
 
 		task ("Given: An object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1225,6 +1259,8 @@ definition {
 	@description = "LPS-155537 - Verify that it's not possible to see the parameter when adding relationships that don't require it"
 	@priority = "3"
 	test CannotSeeParameterWhenNotRequiredByRelationship {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotSeeParameterWhenNotRequiredByRelationship";
+
 		task ("Create a custom object, and a relationship non-require by API") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -1281,6 +1317,8 @@ definition {
 	@description = "LPS-139803 - It is not possible to select a Relationship field for the Object Entry Title"
 	@priority = "4"
 	test CannotSelectRelationshipFieldForObjectEntryTitle {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotSelectRelationshipFieldForObjectEntryTitle";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147735",
 			objectName = "CustomObject147735",
@@ -1303,6 +1341,8 @@ definition {
 	@description = "LPS-163655 - Verify that the user is not allowed to update the Name, Type or Object from the parent Relationship"
 	@priority = "4"
 	test CannotUpdateNameTypeObjectFromParentRelationship {
+		property test.name.skip.portal.instance = "ObjectRelationships#CannotUpdateNameTypeObjectFromParentRelationship";
+
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object LPS163655",
@@ -1367,6 +1407,7 @@ definition {
 	@priority = "5"
 	test CanRelateManyToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectRelationships#CanRelateManyToManyCustomObjectEntryWithNativeObjectEntries";
 
 		task ("Add 2 users entries to relate to custom object entries") {
 			JSONUser.addUser(
@@ -1496,6 +1537,7 @@ definition {
 	@priority = "5"
 	test CanRelateOneToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectRelationships#CanRelateOneToManyCustomObjectEntryWithNativeObjectEntries";
 
 		task ("Add 3 users entries to relate to custom object entries") {
 			for (var userNum : list "1,2,3") {
@@ -1644,6 +1686,8 @@ definition {
 	@description = "LPS-163660 - Verify that a label is displayed on the creation of a Relationship Tab, to differentiate parent (left side) information from child (right side) information"
 	@priority = "4"
 	test CanSeeLabelWhenCreatingRelationshipTab {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanSeeLabelWhenCreatingRelationshipTab";
+
 		task ("Create an Object and add an attachment field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object LPS163660",
@@ -1725,6 +1769,7 @@ definition {
 	@priority = "5"
 	test CanSeeRelatedEntriesOnTab {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectRelationships#CanSeeRelatedEntriesOnTab";
 
 		task ("Given an object related to itself, in a Many-to-Many relationship and a custom entry") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1827,6 +1872,8 @@ definition {
 	@description = "LPS-143021 - Verify it is possible to view and add entries on an Object after creating a Relationship One to Many for it"
 	@priority = "4"
 	test CanViewAndAddObjectEntriesAfterCreateRelationship {
+		property test.name.skip.portal.instance = "ObjectRelationships#CanViewAndAddObjectEntriesAfterCreateRelationship";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 292",
 			objectName = "CustomObject292",

@@ -29,6 +29,7 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
+import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
@@ -162,7 +163,7 @@ public class ExpressionVisitorImplTest {
 
 			@Override
 			public <T> T accept(ExpressionVisitor<T> expressionVisitor)
-				throws Exception {
+				throws ExpressionVisitException {
 
 				Expression leftOperationExpression =
 					getLeftOperationExpression();
@@ -182,7 +183,7 @@ public class ExpressionVisitorImplTest {
 
 					@Override
 					public <T> T accept(ExpressionVisitor<T> expressionVisitor)
-						throws Exception {
+						throws ExpressionVisitException {
 
 						return expressionVisitor.visitMemberExpression(this);
 					}
@@ -193,7 +194,7 @@ public class ExpressionVisitorImplTest {
 							@Override
 							public <T> T accept(
 									ExpressionVisitor<T> expressionVisitor)
-								throws Exception {
+								throws ExpressionVisitException {
 
 								return expressionVisitor.
 									visitComplexPropertyExpression(this);
@@ -212,7 +213,7 @@ public class ExpressionVisitorImplTest {
 									public <T> T accept(
 											ExpressionVisitor<T>
 												expressionVisitor)
-										throws Exception {
+										throws ExpressionVisitException {
 
 										return expressionVisitor.
 											visitPrimitivePropertyExpression(
@@ -244,7 +245,7 @@ public class ExpressionVisitorImplTest {
 
 					@Override
 					public <T> T accept(ExpressionVisitor<T> expressionVisitor)
-						throws Exception {
+						throws ExpressionVisitException {
 
 						return expressionVisitor.visitLiteralExpression(this);
 					}
@@ -424,7 +425,7 @@ public class ExpressionVisitorImplTest {
 
 			@Override
 			public <T> T accept(ExpressionVisitor<T> expressionVisitor)
-				throws Exception {
+				throws ExpressionVisitException {
 
 				return expressionVisitor.visitLiteralExpression(this);
 			}
@@ -456,7 +457,7 @@ public class ExpressionVisitorImplTest {
 		ListExpression listExpression = new ListExpression() {
 
 			public <T> T accept(ExpressionVisitor<T> expressionVisitor)
-				throws Exception {
+				throws ExpressionVisitException {
 
 				List<Object> objects = Arrays.asList("title1", "title2");
 

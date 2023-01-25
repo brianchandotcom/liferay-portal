@@ -79,7 +79,7 @@ public class UserNotificationDTOConverter
 				read = userNotificationEvent.isArchived();
 
 				setActions(
-					()-> {
+					() -> {
 						if (dtoConverterContext == null) {
 							return null;
 						}
@@ -87,7 +87,7 @@ public class UserNotificationDTOConverter
 						return dtoConverterContext.getActions();
 					});
 				setType(
-					()-> {
+					() -> {
 						if (!jsonObject.has("notificationType")) {
 							return null;
 						}

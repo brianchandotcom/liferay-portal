@@ -83,8 +83,7 @@ public class UserNotificationResourceImpl
 			throw new NotFoundException();
 		}
 
-		return _getPage(
-			filter, pagination, search, sorts, userAccountId);
+		return _getPage(filter, pagination, search, sorts, userAccountId);
 	}
 
 	@Override

@@ -83,7 +83,7 @@ public class CommerceOrderModelDocumentContributor
 
 			User user = _userLocalService.getUser(commerceOrder.getUserId());
 
-			document.addText(
+			document.addKeyword(
 				"orderCreatorEmailAddress", user.getEmailAddress());
 
 			document.addDate("orderDate", commerceOrder.getOrderDate());

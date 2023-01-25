@@ -251,6 +251,9 @@ components:
                     example: 2017-07-21
                     format: date
                     type: string
+                creatorEmailAddress:
+                    format: email
+                    type: string
                 currencyCode:
                     example: USD
                     type: string

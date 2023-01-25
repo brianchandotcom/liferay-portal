@@ -85,6 +85,7 @@ definition {
 	@priority = "3"
 	test CanGetRelationshipDetailsThroughRelationshipEndpointWithoutRelatedEntries {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanGetRelationshipDetailsThroughRelationshipEndpointWithoutRelatedEntries";
 
 		task ("When I call userAccount object GET endpoint with {userAccountId}/usersFoundations") {
 			UserAccountAPI.getRelationshipByUserAccountId(
@@ -192,6 +193,7 @@ definition {
 	@priority = "4"
 	test CanReturnDetailsInOneToManyRelationship {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanReturnDetailsInOneToManyRelationship";
 
 		task ("When I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -213,6 +215,7 @@ definition {
 	@priority = "4"
 	test CanReturnDetailsInOneToManyRelationshipAfterObjectEntryDeletion {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanReturnDetailsInOneToManyRelationshipAfterObjectEntryDeletion";
 
 		task ("And Given I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(

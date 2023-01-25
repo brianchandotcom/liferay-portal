@@ -102,6 +102,7 @@ definition {
 	@priority = "4"
 	test CanBreakOneToManyRelationship {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "BreakRelationshipBetweenSystemAndCustonObjects#CanBreakOneToManyRelationship";
 
 		task ("Given I relate foundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(

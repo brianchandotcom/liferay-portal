@@ -129,6 +129,7 @@ definition {
 	test CanDeleteCustomObjectEntryRelatedToSystemObjectByOneToMany {
 		property portal.acceptance = "true";
 
+
 		task ("Given I relate all the foundation entries with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
 				customObjectId = "${staticObjectEntryId3}",
@@ -160,6 +161,7 @@ definition {
 	@priority = "4"
 	test CanRelateCustomObjectEntriesToSystemObjectEntries {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "MakeRelationshipWithSystemObject#CanRelateCustomObjectEntriesToSystemObjectEntries";
 
 		task ("When I relate each foundation entry with the userAccount entry through the userAccount PUT endpoint with different relationships") {
 			UserAccountAPI.relateObjectEntries(
@@ -192,6 +194,7 @@ definition {
 	@priority = "4"
 	test CanRelateCustomObjectEntriesToSystemObjectEntriesByManyToMany {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "MakeRelationshipWithSystemObject#CanRelateCustomObjectEntriesToSystemObjectEntriesByManyToMany";
 
 		task ("When each foundation is related to each userAccount through userAccounts PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(

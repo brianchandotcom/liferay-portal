@@ -112,7 +112,7 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 		hideDefaultSuccessMessage(actionRequest);
 
 		SessionMessages.add(
-			_portal.getHttpServletRequest(actionRequest), "requestProcessed",
+			actionRequest, "requestProcessed",
 			_language.get(
 				themeDisplay.getLocale(), "the-configuration-has-been-saved"));
 

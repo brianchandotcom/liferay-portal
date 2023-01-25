@@ -11,7 +11,7 @@
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useFormik} from 'formik';
-import React, {useRef} from 'react';
+import React from 'react';
 
 import {LearnMessageWithoutContext} from '../../../sxp_blueprint_admin/js/shared/LearnMessage';
 import sub from '../../../sxp_blueprint_admin/js/utils/language/sub';
@@ -19,23 +19,21 @@ import Input from './Input';
 import TestConfigurationButton from './TestConfigurationButton';
 import {TEXT_EMBEDDING_PROVIDER_TYPES} from './constants';
 
-const DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS = [
-	{
-		attributes: {
-			maxCharacterCount: 500,
-			modelTimeout: 25,
-		},
-		embeddingVectorDimensions: 768,
-		languageIds: ['en_US'],
-		modelClassNames: [
-			'com.liferay.blogs.model.BlogsEntry',
-			'com.liferay.journal.model.JournalArticle',
-			'com.liferay.knowledge.base.model.KBArticle',
-			'com.liferay.wiki.model.WikiPage',
-		],
-		providerName: TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API,
+const DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS = {
+	attributes: {
+		maxCharacterCount: 500,
+		modelTimeout: 25,
 	},
-];
+	embeddingVectorDimensions: 768,
+	languageIds: ['en_US'],
+	modelClassNames: [
+		'com.liferay.blogs.model.BlogsEntry',
+		'com.liferay.journal.model.JournalArticle',
+		'com.liferay.knowledge.base.model.KBArticle',
+		'com.liferay.wiki.model.WikiPage',
+	],
+	providerName: TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API,
+};
 
 function parseJSONString(jsonString) {
 	if (typeof jsonString === 'undefined' || jsonString === '') {
@@ -65,6 +63,45 @@ function parseJSONString(jsonString) {
  */
 function parseArrayOfJSONStrings(array) {
 	return array.map((string) => parseJSONString(string));
+}
+
+/**
+ * Determines the value of textEmbeddingProviderConfigurationJSONs based
+ * on the initial prop and set of available providers.
+ * @param {Array} initialTextEmbeddingProviderConfigurationJSONs
+ * Initial configurations of the text embedding provider, as an
+ * array of stringified objects.
+ * @param {object} availableProviders
+ * @returns {Array} Cleaned up list of provider configurations.
+ */
+function resolveInitialTextEmbeddingProviderConfigurationJSONs(
+	initialTextEmbeddingProviderConfigurationJSONs,
+	availableTextEmbeddingProviders
+) {
+	const initialTextEmbeddingProviderConfigurationsArray = parseArrayOfJSONStrings(
+		initialTextEmbeddingProviderConfigurationJSONs
+	);
+
+	if (!initialTextEmbeddingProviderConfigurationsArray.length) {
+		return [
+			{
+				...DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS,
+				providerName: resolveProviderName(
+					availableTextEmbeddingProviders
+				),
+			},
+		];
+	}
+
+	return initialTextEmbeddingProviderConfigurationsArray.map(
+		(configurations) => ({
+			...configurations,
+			providerName: resolveProviderName(
+				availableTextEmbeddingProviders,
+				configurations.providerName
+			),
+		})
+	);
 }
 
 /**
@@ -132,14 +169,6 @@ export default function ({
 	learnMessages,
 	namespace = '',
 }) {
-	const initialTextEmbeddingProviderConfigurationJSONsRef = useRef(
-		Array.isArray(initialTextEmbeddingProviderConfigurationJSONs)
-			? parseArrayOfJSONStrings(
-					initialTextEmbeddingProviderConfigurationJSONs
-			  )
-			: parseJSONString(initialTextEmbeddingProviderConfigurationJSONs)
-	);
-
 	const _handleFormikValidate = (values) => {
 		const errors = {
 			textEmbeddingProviderConfigurationJSONs: [{attributes: {}}],
@@ -331,22 +360,10 @@ export default function ({
 	const formik = useFormik({
 		initialValues: {
 			textEmbeddingCacheTimeout: initialTextEmbeddingCacheTimeout,
-			textEmbeddingProviderConfigurationJSONs: !initialTextEmbeddingProviderConfigurationJSONsRef
-				.current?.length
-				? {
-						...DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS,
-						providerName: resolveProviderName(
-							availableTextEmbeddingProviders
-						),
-				  }
-				: {
-						...initialTextEmbeddingProviderConfigurationJSONsRef.current,
-						providerName: resolveProviderName(
-							availableTextEmbeddingProviders,
-							initialTextEmbeddingProviderConfigurationJSONsRef
-								.current.providerName
-						),
-				  },
+			textEmbeddingProviderConfigurationJSONs: resolveInitialTextEmbeddingProviderConfigurationJSONs(
+				initialTextEmbeddingProviderConfigurationJSONs,
+				availableTextEmbeddingProviders
+			),
 			textEmbeddingsEnabled: initialTextEmbeddingsEnabled,
 		},
 		validate: _handleFormikValidate,

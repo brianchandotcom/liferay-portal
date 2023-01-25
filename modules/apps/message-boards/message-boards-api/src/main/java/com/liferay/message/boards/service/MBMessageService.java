@@ -219,6 +219,11 @@ public interface MBMessageService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getSiteUserMessageBoardMessagesActivity(
+			long userId, long siteId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getTempAttachmentNames(long groupId, String folderName)
 		throws PortalException;
 

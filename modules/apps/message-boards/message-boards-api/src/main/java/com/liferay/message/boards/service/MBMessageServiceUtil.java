@@ -305,6 +305,14 @@ public class MBMessageServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static List<MBMessage> getSiteUserMessageBoardMessagesActivity(
+			long userId, long siteId, int start, int end)
+		throws PortalException {
+
+		return getService().getSiteUserMessageBoardMessagesActivity(
+			userId, siteId, start, end);
+	}
+
 	public static String[] getTempAttachmentNames(
 			long groupId, String folderName)
 		throws PortalException {

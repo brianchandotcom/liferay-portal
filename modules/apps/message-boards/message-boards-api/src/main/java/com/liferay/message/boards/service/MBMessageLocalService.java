@@ -605,6 +605,14 @@ public interface MBMessageLocalService
 		String className, long classPK, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getSiteUserMessageBoardMessagesActivity(
+		long groupId, long userId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSiteUserMessageBoardMessagesActivityCount(
+		long groupId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getTempAttachmentNames(
 			long groupId, long userId, String folderName)
 		throws PortalException;

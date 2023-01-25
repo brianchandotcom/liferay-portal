@@ -928,6 +928,22 @@ public class MBMessageLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBMessage> getSiteUserMessageBoardMessagesActivity(
+		long groupId, long userId, int start, int end) {
+
+		return _mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(
+			groupId, userId, start, end);
+	}
+
+	@Override
+	public int getSiteUserMessageBoardMessagesActivityCount(
+		long groupId, long userId) {
+
+		return _mbMessageLocalService.
+			getSiteUserMessageBoardMessagesActivityCount(groupId, userId);
+	}
+
+	@Override
 	public String[] getTempAttachmentNames(
 			long groupId, long userId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {

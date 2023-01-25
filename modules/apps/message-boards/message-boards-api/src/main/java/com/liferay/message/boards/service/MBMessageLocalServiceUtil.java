@@ -822,6 +822,20 @@ public class MBMessageLocalServiceUtil {
 			className, classPK, status);
 	}
 
+	public static List<MBMessage> getSiteUserMessageBoardMessagesActivity(
+		long groupId, long userId, int start, int end) {
+
+		return getService().getSiteUserMessageBoardMessagesActivity(
+			groupId, userId, start, end);
+	}
+
+	public static int getSiteUserMessageBoardMessagesActivityCount(
+		long groupId, long userId) {
+
+		return getService().getSiteUserMessageBoardMessagesActivityCount(
+			groupId, userId);
+	}
+
 	public static String[] getTempAttachmentNames(
 			long groupId, long userId, String folderName)
 		throws PortalException {

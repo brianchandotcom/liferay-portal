@@ -85,6 +85,7 @@ definition {
 	@priority = "3"
 	test CanGetRelationshipDetailsInNestedFieldsWithoutRelatedEntries {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveRelatedElementsOfSystemObjectAsNestedFieldsByManyToMany#CanGetRelationshipDetailsInNestedFieldsWithoutRelatedEntries";
 
 		task ("When I call userAccount object GET endpoint with nestedFields=usersFoundations") {
 			var response = UserAccountAPI.getSystemObjectsWithNestedField(
@@ -106,6 +107,7 @@ definition {
 	@priority = "3"
 	test CanNotGetRelationshipDetailsInNestedFieldsAfterRelationshipIsDeleted {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveRelatedElementsOfSystemObjectAsNestedFieldsByManyToMany#CanNotGetRelationshipDetailsInNestedFieldsAfterRelationshipIsDeleted";
 
 		task ("And Given I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -138,6 +140,7 @@ definition {
 	@priority = "4"
 	test CanReturnMultipleNestedFieldsDetailsInManyToManyRelationship {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveRelatedElementsOfSystemObjectAsNestedFieldsByManyToMany#CanReturnMultipleNestedFieldsDetailsInManyToManyRelationship";
 
 		task ("When I relate all the foundation entries with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -170,6 +173,7 @@ definition {
 	@priority = "4"
 	test CanReturnNestedFieldsDetailsInManyToManyRelationship {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveRelatedElementsOfSystemObjectAsNestedFieldsByManyToMany#CanReturnNestedFieldsDetailsInManyToManyRelationship";
 
 		task ("When I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -196,6 +200,7 @@ definition {
 	@priority = "4"
 	test CanReturnNestedFieldsDetailsInManyToManyRelationshipAfterObjectEntryDeletion {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RetrieveRelatedElementsOfSystemObjectAsNestedFieldsByManyToMany#CanReturnNestedFieldsDetailsInManyToManyRelationshipAfterObjectEntryDeletion";
 
 		task ("And Given I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(

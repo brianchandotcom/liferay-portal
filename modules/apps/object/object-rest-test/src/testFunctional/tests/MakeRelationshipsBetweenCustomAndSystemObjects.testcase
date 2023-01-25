@@ -63,6 +63,7 @@ definition {
 	@priority = "5"
 	test CanCreateMultipleManyToManyRelationshipsBetweenTwoObjects {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "MakeRelationshipWithSystemObject#CanCreateMultipleManyToManyRelationshipsBetweenTwoObjects";
 
 		task ("And Given manyToMany accountsUniversities relationship created") {
 			ObjectDefinitionAPI.createRelationship(

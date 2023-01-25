@@ -51,7 +51,6 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 								{dayjs(date).format('lll')}
 							</p>
 						),
-						size: 'sm',
 						value: i18n.translate('create-date'),
 					},
 					{
@@ -64,7 +63,6 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 						clickable: true,
 						key: 'product-version',
 						render: (_, {build}) => build?.productVersion?.name,
-						truncate: true,
 						value: i18n.translate('product-version'),
 					},
 					{
@@ -98,11 +96,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					{
 						key: 'errors',
 						render: (errors: string) =>
-							errors && (
-								<Code>
-									{errors.substring(0, errors.length)}
-								</Code>
-							),
+							errors && <Code italicText={false}>{errors}</Code>,
 						size: 'xl',
 						value: i18n.translate('errors'),
 					},

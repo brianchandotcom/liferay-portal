@@ -139,11 +139,7 @@ const Table: React.FC<TableProps> = ({
 						)}
 
 						{columns.map((column, index) => (
-							<ClayTable.Cell
-								headingTitle
-								key={index}
-								truncate={column.truncate}
-							>
+							<ClayTable.Cell headingTitle key={index}>
 								<>
 									{column.value}
 
@@ -208,6 +204,7 @@ const Table: React.FC<TableProps> = ({
 										'table-cell-expand-smallest':
 											column.size === 'md',
 									})}
+									expanded={column.truncate}
 									key={columnIndex}
 									onClick={() => {
 										if (column.clickable) {
@@ -220,6 +217,7 @@ const Table: React.FC<TableProps> = ({
 											}
 										}
 									}}
+									truncate={column.truncate}
 								>
 									{column.render
 										? column.render(

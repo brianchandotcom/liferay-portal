@@ -92,6 +92,7 @@ const Build = () => {
 								_,
 								{case: testrayCase}: TestrayCaseResult
 							) => testrayCase?.name,
+							size: 'xl',
 							value: i18n.translate('case'),
 						},
 						{
@@ -158,16 +159,14 @@ const Build = () => {
 						},
 						{
 							key: 'issues',
-							size: 'lg',
 							value: i18n.translate('issues'),
 						},
 						{
 							key: 'errors',
 							render: (errors: string) =>
-								errors && (
-									<Code>{errors.substring(0, 100)}...</Code>
-								),
+								errors && <Code>{errors}</Code>,
 							size: 'xl',
+							truncate: true,
 							value: i18n.translate('errors'),
 						},
 						{

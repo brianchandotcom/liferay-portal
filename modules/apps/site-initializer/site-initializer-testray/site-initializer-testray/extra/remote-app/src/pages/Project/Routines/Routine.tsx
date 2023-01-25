@@ -117,7 +117,6 @@ const Routine = () => {
 						{
 							clickable: true,
 							key: 'name',
-							size: 'lg',
 							value: i18n.translate('build'),
 						},
 						{

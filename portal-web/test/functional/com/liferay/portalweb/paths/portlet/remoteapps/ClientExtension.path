@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>REMOTE_TABLE_DELETE</td>
-	<td>//a[contains(@class,'dropdown-item') and contains(.,'Delete')]</td>
+	<td>//*[contains(@class,'dropdown-item') and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

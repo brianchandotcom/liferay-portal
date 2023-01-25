@@ -218,7 +218,9 @@ definition {
 	macro deleteRemoteApp {
 		Click(locator1 = "ClientExtension#REMOTE_TABLE_ELLIPSIS");
 
-		Click(locator1 = "ClientExtension#REMOTE_TABLE_DELETE");
+		ClickNoError(locator1 = "ClientExtension#REMOTE_TABLE_DELETE");
+
+		AssertConfirm(value1 = "Deleting a Client Extension is an action impossible to revert. The content will be removed and it will not be possible to recover it.");
 	}
 
 	macro deleteRemoteAppAPI {

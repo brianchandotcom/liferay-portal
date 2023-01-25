@@ -49,7 +49,8 @@ page import="com.rometools.rome.feed.synd.SyndImage" %>
 
 <%@ page import="java.util.Enumeration" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.ValidatorException" %>
 

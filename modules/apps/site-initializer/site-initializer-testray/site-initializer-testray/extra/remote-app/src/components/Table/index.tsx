@@ -170,7 +170,7 @@ const Table: React.FC<TableProps> = ({
 								contextMenuState.visible
 							}
 							className={classNames('table-row', {
-								'hightligth-bar': highlight && highlight(item),
+								'highligth-bar': highlight && highlight(item),
 								'text-nowrap': !rowWrap,
 								'text-wrap': rowWrap,
 							})}

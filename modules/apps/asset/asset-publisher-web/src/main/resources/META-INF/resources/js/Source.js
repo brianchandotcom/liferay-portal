@@ -21,8 +21,8 @@ import {
 	toggleSelectBox,
 } from 'frontend-js-web';
 
-const ANY = 'any';
-const SELECT_MORE_THAN_ONE = 'select-more-than-one';
+const ANY_VALUE = 'true';
+const SELECT_MORE_THAN_ONE_VALUE = 'false';
 
 export default function ({assetPublisherNamespace, classTypes, namespace}) {
 	const mapDDMStructures = {};
@@ -130,8 +130,8 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 
 		subtypeFieldsWrappers.forEach((subtypeFieldsWrapper) => {
 			if (
-				selectedSubtype !== ANY &&
-				selectedSubtype !== SELECT_MORE_THAN_ONE
+				selectedSubtype !== ANY_VALUE &&
+				selectedSubtype !== SELECT_MORE_THAN_ONE_VALUE
 			) {
 				if (orderingPanel) {
 					removeOptionsOrderByFilter();
@@ -170,7 +170,7 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 		const assetOptions = assetMultipleSelector.options;
 		const showOptions =
 			assetSelector.value === `${classNameId}` ||
-			(assetSelector.value === SELECT_MORE_THAN_ONE &&
+			(assetSelector.value === SELECT_MORE_THAN_ONE_VALUE &&
 				assetOptions.length === 1 &&
 				assetOptions[0].value === `${classNameId}`);
 
@@ -217,7 +217,7 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 	classTypes.forEach(({className, classSubtypes}) => {
 		toggleSelectBox(
 			`${namespace}anyClassType${className}`,
-			SELECT_MORE_THAN_ONE,
+			SELECT_MORE_THAN_ONE_VALUE,
 			`${namespace}${className}Boxes`
 		);
 
@@ -416,7 +416,7 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 
 	toggleSelectBox(
 		`${namespace}anyAssetType`,
-		SELECT_MORE_THAN_ONE,
+		SELECT_MORE_THAN_ONE_VALUE,
 		`${namespace}classNamesBoxes`
 	);
 

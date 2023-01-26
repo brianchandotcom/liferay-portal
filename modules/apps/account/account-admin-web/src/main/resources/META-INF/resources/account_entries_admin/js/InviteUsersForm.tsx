@@ -78,9 +78,7 @@ function InviteUsersForm({
 		inputGroup.accountRoles = accountRoles
 			.filter(deduplicatePredicate)
 			.map((accountRole) => {
-				const validatedAccountRole: ValidatableMultiSelectItem = {
-					...accountRole,
-				};
+				let errorMessage = '';
 
 				if (
 					!availableAccountRoles.some(
@@ -88,13 +86,13 @@ function InviteUsersForm({
 							availableAccountRole.label === accountRole.label
 					)
 				) {
-					validatedAccountRole.errorMessage = sub(
+					errorMessage = sub(
 						Liferay.Language.get('x-is-not-a-valid-role'),
 						accountRole.label
 					);
 				}
 
-				return validatedAccountRole;
+				return {...accountRole, errorMessage};
 			});
 
 		setInputGroups([...inputGroups]);
@@ -109,10 +107,6 @@ function InviteUsersForm({
 		const promises = emailAddresses.filter(deduplicatePredicate).map(
 			(emailAddress) =>
 				new Promise<ValidatableMultiSelectItem>((resolve) => {
-					const validatedEmailAddress: ValidatableMultiSelectItem = {
-						...emailAddress,
-					};
-
 					Liferay.Util.fetch(
 						`/o/com-liferay-account-admin-web/validate-email-address/`,
 						{
@@ -124,13 +118,9 @@ function InviteUsersForm({
 						}
 					)
 						.then((response) => response.json())
-						.then(({errorMessage}) => {
-							if (errorMessage) {
-								validatedEmailAddress.errorMessage = errorMessage;
-							}
-
-							resolve(validatedEmailAddress);
-						});
+						.then(({errorMessage}) =>
+							resolve({...emailAddress, errorMessage})
+						);
 				})
 		);
 

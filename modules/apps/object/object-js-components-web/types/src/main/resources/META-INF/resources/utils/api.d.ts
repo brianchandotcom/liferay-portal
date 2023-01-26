@@ -128,7 +128,7 @@ export declare function getObjectRelationshipsById(
 ): Promise<ObjectRelationship[]>;
 export declare function getPickList(pickListId: number): Promise<PickList>;
 export declare function getPickListItems(
-	externalReferenceCode: string
+	pickListId: number
 ): Promise<PickListItem[]>;
 export declare function getPickLists(): Promise<PickList[]>;
 export declare function getRelationship<T>(

@@ -29,9 +29,9 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 
 	useEffect(() => {
 		if (objectField?.listTypeDefinitionId) {
-			API.getPickListItems(
-				objectField.listTypeDefinitionExternalReferenceCode
-			).then(setPickListItems);
+			API.getPickListItems(objectField.listTypeDefinitionId).then(
+				setPickListItems
+			);
 		}
 	}, [
 		objectField.listTypeDefinitionId,

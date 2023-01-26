@@ -249,9 +249,9 @@ export async function getPickList(pickListId: number): Promise<PickList> {
 	);
 }
 
-export async function getPickListItems(externalReferenceCode: string) {
+export async function getPickListItems(pickListId: number) {
 	return await getList<PickListItem>(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`
+		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}/list-type-entries`
 	);
 }
 

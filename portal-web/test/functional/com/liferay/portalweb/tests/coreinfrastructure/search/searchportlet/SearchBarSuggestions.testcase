@@ -432,13 +432,22 @@ definition {
 
 	@priority = "4"
 	test ShowHTMLAsPlainText {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		JSONLayout.publishLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name");
+
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
 			value1 = "test");
 
 		SearchBarSuggestions.viewSuggestions(
-			searchAssetDescription = "Page: Home",
-			searchAssetTitle = "Home",
+			searchAssetDescription = "Page: Test Content Page Name",
+			searchAssetTitle = "Test Content Page Name",
 			suggestionContributorDisplayGroupName = "Suggestions");
 	}
 

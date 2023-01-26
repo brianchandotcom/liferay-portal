@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.asset.list.item.selector.web.internal.layout.list.provider;
+package com.liferay.asset.list.item.selector.web.internal.layout.list.permission.provider;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.layout.list.provider.LayoutListPermissionProvider;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.layout.list.provider;
-
-import com.liferay.layout.list.retriever.ListObjectReference;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+package com.liferay.layout.list.permission.provider;
 
 /**
  * @author Lourdes Fernández Besada
  */
-public interface LayoutListPermissionProvider<T extends ListObjectReference> {
+public interface LayoutListPermissionProviderRegistry {
 
-	public boolean hasPermission(
-		PermissionChecker permissionChecker, T t, String actionId);
+	public LayoutListPermissionProvider<?> getLayoutListPermissionProvider(
+		String type);
 
 }

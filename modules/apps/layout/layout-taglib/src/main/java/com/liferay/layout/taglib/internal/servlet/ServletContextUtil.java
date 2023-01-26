@@ -24,7 +24,7 @@ import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.helper.CollectionPaginationHelper;
-import com.liferay.layout.list.provider.LayoutListPermissionProviderRegistry;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.provider.LayoutStructureProvider;

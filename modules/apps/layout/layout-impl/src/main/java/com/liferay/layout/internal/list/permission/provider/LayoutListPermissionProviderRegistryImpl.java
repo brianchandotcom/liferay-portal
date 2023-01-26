@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.internal.list.provider;
+package com.liferay.layout.internal.list.permission.provider;
 
-import com.liferay.layout.list.provider.LayoutListPermissionProvider;
-import com.liferay.layout.list.provider.LayoutListPermissionProviderRegistry;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

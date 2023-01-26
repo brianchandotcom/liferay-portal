@@ -863,45 +863,51 @@ definition {
 	test CanBeUnpublished {
 		property portal.acceptance = "true";
 
-		FormsAdmin.addForm();
+		task("Given that a form is published") {
+			FormsAdmin.addForm();
 
-		Form.editName(formName = "Form 1");
+			Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+			Form.addTextField(fieldPositionNumber = "0");
 
-		Form.save();
+			Form.save();
 
-		Form.publishForm();
+			Form.publishForm();
+		}
 
-		FormsAdminNavigator.gotoPublishCopyURLLink();
+		task("When the user unpublishes the form and navigates to the form's published URL") {
+			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+			var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
-		Form.unpublishForm();
+			Form.unpublishForm();
 
-		AssertElementPresent(locator1 = "Form#PUBLISH_FORM_BUTTON");
+			AssertElementPresent(locator1 = "Form#PUBLISH_FORM_BUTTON");
 
-		AssertElementPresent(
-			key_value = "Share",
-			locator1 = "Form#ANY_DISABLED_BUTTON");
+			AssertElementPresent(
+				key_value = "Share",
+				locator1 = "Form#ANY_DISABLED_BUTTON");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+			Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		}
 
-		AssertElementNotPresent(
-			key_fieldLabe = "Text",
-			locator1 = "FormFields#LABEL");
+		task("Then an error should be displayed to inform that the form is unavailable") {
+			AssertElementNotPresent(
+				key_fieldLabe = "Text",
+				locator1 = "FormFields#LABEL");
 
-		AssertElementNotPresent(
-			key_text = "Submit",
-			locator1 = "Button#ANY");
+			AssertElementNotPresent(
+				key_text = "Submit",
+				locator1 = "Button#ANY");
 
-		AssertElementNotPresent(
-			key_fieldName = "Text",
-			locator1 = "FormFields#TEXT_FIELD");
+			AssertElementNotPresent(
+				key_fieldName = "Text",
+				locator1 = "FormFields#TEXT_FIELD");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR_3_ALT",
-			value1 = "This form is not available or it was not published.");
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3_ALT",
+				value1 = "This form is not available or it was not published.");
+		}
 	}
 
 	@description = "LPS-60520 - Verify that a Form can still be viewed after one of the Fields is deleted"

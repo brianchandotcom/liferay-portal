@@ -42,7 +42,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -207,11 +206,11 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 		sb.append("Liferay.component('");
 
-		String componentId = Optional.ofNullable(
-			getComponentId()
-		).orElse(
-			_UNNAMED_COMPONENT_NAME + PortalUUIDUtil.generate()
-		);
+		String componentId = getComponentId();
+
+		if (componentId == null) {
+			componentId = _UNNAMED_COMPONENT_NAME + PortalUUIDUtil.generate();
+		}
 
 		sb.append(componentId);
 

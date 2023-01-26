@@ -268,4 +268,82 @@ definition {
             }
         }
     }
+
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12783 | Test Summary: Check that it is possible to sort the Attribute for People list by attribute and data type"
+    @priority = "3"
+    test CanSortAttributeForPeopleList {
+		var attributesAscendingOrder = "agreedToTermsOfUse,birthday,classNameId,classPK,
+		comments,companyId,contactId,contactId,createDate,createDate,defaultUser,emailAddress,
+		emailAddress,emailAddressVerified,employeeNumber,employeeStatusId,externalReferenceCode,
+		facebookId,facebookSn,firstName,googleUserId,greeting,hoursOfOperation,jabberSn,jobClass,
+		jobTitle,languageId,lastName,ldapServerId,male,middleName,modifiedDate,modifiedDate,openId,
+		parentContactId,portraitId,prefixListTypeId,screenName,skypeSn,smsSn,status,suffixListTypeId,
+		timeZoneId,twitterSn,userId,userName,uuid";
+
+		var attributesDescendingOrder = "uuid,userName,userId,twitterSn,timeZoneId,
+		suffixListTypeId,status,smsSn,skypeSn,screenName,prefixListTypeId,portraitId,
+		parentContactId,openId,modifiedDate,modifiedDate,middleName,male,ldapServerId,
+		lastName,languageId,jobTitle,jobClass,jabberSn,hoursOfOperation,greeting,googleUserId,
+		firstName,facebookSn,facebookId,externalReferenceCode,employeeStatusId,employeeNumber,
+		emailAddressVerified,emailAddress,emailAddress,defaultUser,createDate,createDate,contactId,
+		contactId,companyId,comments,classPK,classNameId,birthday,agreedToTermsOfUse";
+
+		var attributesDataTypeAscending = "male,agreedToTermsOfUse,defaultUser,emailAddressVerified,
+		birthday,createDate,modifiedDate,createDate,modifiedDate,status,classNameId,classPK,contactId,
+		employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,companyId,contactId,facebookId,
+		ldapServerId,portraitId,timeZoneId,userId,emailAddress,employeeNumber,facebookSn,hoursOfOperation,
+		jabberSn,jobClass,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
+		firstName,googleUserId,greeting,jobTitle,languageId,lastName,middleName,openId,screenName,uuid";
+
+		var attributesDataTypeDescending = "emailAddress,employeeNumber,facebookSn,hoursOfOperation,
+		jabberSn,jobClass,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
+		firstName,googleUserId,greeting,jobTitle,languageId,lastName,middleName,openId,screenName,uuid,
+		classNameId,classPK,contactId,employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,
+		companyId,contactId,facebookId,ldapServerId,portraitId,timeZoneId,userId,status,birthday,createDate,
+		modifiedDate,createDate,modifiedDate,male,agreedToTermsOfUse,defaultUser,emailAddressVerified";
+
+		attributesAscendingOrderList = ListUtil.newListFromString("${attributesAscendingOrder}");
+
+		attributesDescendingOrderList = ListUtil.newListFromString("${attributesDescendingOrder}");
+
+		attributesDataTypeAscendingList = ListUtil.newListFromString("${attributesDataTypeAscending}");
+
+		attributesDataTypeDescendingList = ListUtil.newListFromString("${attributesDataTypeDescending}");
+
+		task ("Click to configure people attributes") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+
+			ACUtils.changePagination(itemsPerPage = "50");
+		}
+
+		task ("See that the list is sorted by attributes in the ascending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesAscendingOrderList}");
+		}
+
+		task ("See that the list is sorted by attributes in the descending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDescendingOrderList}");
+		}
+
+		task ("See that the list is sorted by the data type of the attributes in ascending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDataTypeAscendingList}");
+		}
+
+		task ("See that the list is sorted by the data type of the attributes in descending order") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDataTypeDescendingList}");
+		}
+	}
 }

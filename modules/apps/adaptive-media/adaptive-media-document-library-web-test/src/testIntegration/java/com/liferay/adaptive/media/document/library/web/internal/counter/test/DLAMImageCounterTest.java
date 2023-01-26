@@ -221,7 +221,7 @@ public class DLAMImageCounterTest {
 			DLAMImageCounterTest.class, "dependencies/image.jpg");
 	}
 
-	private static final int _WELCOME_SITE_INITIALIZER_IMAGES_COUNT = 1;
+	private static final int _WELCOME_SITE_INITIALIZER_IMAGES_COUNT = 5;
 
 	@Inject(
 		filter = "adaptive.media.key=document-library",

@@ -38,6 +38,7 @@ describe('openConfirmModal', () => {
 		openConfirmModal({
 			message: 'lala',
 			onConfirm: () => {},
+			status: 'danger',
 			title: 'fiona',
 		});
 
@@ -53,13 +54,18 @@ describe('openConfirmModal', () => {
 				},
 				{
 					autoFocus: true,
+					displayType: 'danger',
 					label: 'ok',
 					onClick: expect.anything(),
 				},
 			],
 			center: true,
-			disableHeader: true,
+			disableHeader: false,
+			footerCssClass: 'border-0',
+			headerCssClass: 'border-0',
 			onClose: expect.anything(),
+			role: 'alertdialog',
+			status: 'danger',
 			title: 'fiona',
 		});
 	});

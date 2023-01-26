@@ -42,6 +42,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 		</c:if>
 
 			<clay:navigation-bar
+				activeItemAriaCurrent='<%= ListUtil.isNotEmpty(screenNavigationEntries) && (screenNavigationEntries.size() > 1) ? "false" : "page" %>'
 				inverted="<%= inverted %>"
 				navigationItems='<%=
 					new JSPNavigationItemList(pageContext) {
@@ -94,7 +95,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 
 								<li class="nav-item">
 									<a
-										aria-current="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? ariaCurrent : "false" %>"
+										aria-current="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "page" : "false" %>"
 										class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>" href="<%=
 PortletURLBuilder.create(
 									PortletURLUtil.clone(portletURL, liferayPortletResponse)

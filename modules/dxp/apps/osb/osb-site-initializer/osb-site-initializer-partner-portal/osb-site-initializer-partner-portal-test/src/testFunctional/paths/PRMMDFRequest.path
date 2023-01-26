@@ -38,6 +38,15 @@
 <tr>
 	<td>ERROR_MESSAGE</td>
 	<td>//div[contains(@class, 'error')]//div[(text()='${key_errorMessage}')]</td>
+</tr>
+<tr>
+	<td>TEXT_BUTTON</td>
+	<td>//div[@role='tablist']//h5[contains(text(),'${key_textButton}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUMMARY_FIELD</td>
+	<td>//th//span[@class='text-truncate'][text()='${key_fieldName}']//ancestor::tr//th//span[@class='text-truncate'][text()='${key_fieldValue}']</td>
 	<td></td>
 </tr>
 </tbody>

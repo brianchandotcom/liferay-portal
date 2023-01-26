@@ -15,9 +15,12 @@
 package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 /**
@@ -26,14 +29,34 @@ import javax.ws.rs.core.Response;
 public class ObjectValidationRuleEngineExceptionMapper
 	extends BaseExceptionMapper<ObjectValidationRuleEngineException> {
 
+	public ObjectValidationRuleEngineExceptionMapper(Language language) {
+		_language = language;
+	}
+
 	@Override
 	protected Problem getProblem(
 		ObjectValidationRuleEngineException
 			objectValidationRuleEngineException) {
 
+		String messageKey = objectValidationRuleEngineException.getMessageKey();
+
+		if (messageKey == null) {
+			messageKey = objectValidationRuleEngineException.getMessage();
+		}
+
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			objectValidationRuleEngineException.getMessage());
+			_language.get(_acceptLanguage.getPreferredLocale(), messageKey));
 	}
+
+	@Override
+	protected boolean isSanitize() {
+		return false;
+	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	private final Language _language;
 
 }

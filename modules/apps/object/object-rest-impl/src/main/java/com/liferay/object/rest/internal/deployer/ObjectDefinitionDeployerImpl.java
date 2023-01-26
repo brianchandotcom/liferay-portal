@@ -49,6 +49,7 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -458,7 +459,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).build()),
 				_bundleContext.registerService(
 					ExceptionMapper.class,
-					new ObjectValidationRuleEngineExceptionMapper(),
+					new ObjectValidationRuleEngineExceptionMapper(_language),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"osgi.jaxrs.application.select",
 						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
@@ -652,6 +653,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

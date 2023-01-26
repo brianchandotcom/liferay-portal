@@ -77,6 +77,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConverter;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
@@ -102,6 +104,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -1177,6 +1180,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutsImporter.importFile(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			zipWriter.getFile(), true);
+
+		_setDefaultLayoutUtilityPageEntries(serviceContext);
 	}
 
 	private Map<String, String> _addObjectDefinitions(
@@ -4447,6 +4452,42 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private String _replace(String s, String[] oldSubs, String[] newSubs) {
 		return StringUtil.replace(s, oldSubs, newSubs);
+	}
+
+	private void _setDefaultLayoutUtilityPageEntries(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/layout-utility-page-entries" +
+				"/default-utility-page-entries.json",
+			_servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+		Iterator<String> iterator = jsonObject.keys();
+
+		while (iterator.hasNext()) {
+			String type = iterator.next();
+
+			String name = jsonObject.getString(type);
+
+			LayoutUtilityPageEntry layoutUtilityPageEntry =
+				_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
+					serviceContext.getScopeGroupId(), name,
+					LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
+						type));
+
+			if (layoutUtilityPageEntry != null) {
+				_layoutUtilityPageEntryLocalService.
+					setDefaultLayoutUtilityPageEntry(
+						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+			}
+		}
 	}
 
 	private void _setResourcePermissions(

@@ -48,7 +48,7 @@ public class LayoutUtilityPageEntryTypeConverter {
 		HashMapBuilder.put(
 			"Error", LayoutUtilityPageEntryTypesConstants.STATUS
 		).put(
-			"ErrorCode404", LayoutUtilityPageEntryTypesConstants.LAYOUT
+			"ErrorCode404", LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND
 		).put(
 			"TermsOfUse", LayoutUtilityPageEntryTypesConstants.TERMS_OF_USE
 		).build();

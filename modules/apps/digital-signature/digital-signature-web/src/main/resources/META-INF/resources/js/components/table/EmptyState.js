@@ -12,7 +12,7 @@
  * details.
  */
 
-import classNames from 'classnames';
+import ClayEmptyState from '@clayui/empty-state';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -30,29 +30,22 @@ const DEFAULT_EMPTY = {
 const EmptyState = ({
 	button,
 	className = '',
-	description,
+	description = null,
 	title = DEFAULT_EMPTY.empty.title,
 }) => {
 	return (
-		<div className="taglib-empty-result-message">
-			<div className="text-center">
-				<div className={classNames('taglib-empty-state', className)} />
-
-				{title && (
-					<h1 className="taglib-empty-result-message-title">
-						{title}
-					</h1>
-				)}
-
-				{description && (
-					<p className="empty-message-color taglib-empty-result-message-description">
-						{description}
-					</p>
-				)}
-
-				{button && button()}
-			</div>
-		</div>
+		<ClayEmptyState
+			className={className}
+			description={description}
+			imgSrc={
+				className === DEFAULT_EMPTY.search.className
+					? `${themeDisplay.getPathThemeImages()}/states/search_state.gif`
+					: `${themeDisplay.getPathThemeImages()}/states/empty_state.gif`
+			}
+			title={title}
+		>
+			{button && button()}
+		</ClayEmptyState>
 	);
 };
 

@@ -181,20 +181,37 @@ exports[`DigitalSignature renders 1`] = `
         </div>
       </nav>
       <div
-        class="taglib-empty-result-message"
+        class="c-empty-state c-empty-state-animation"
       >
         <div
-          class="text-center"
+          class="c-empty-state-image"
         >
           <div
-            class="taglib-empty-state"
-          />
-          <h1
-            class="taglib-empty-result-message-title"
+            class="c-empty-state-aspect-ratio"
           >
-            there-are-no-entries
-          </h1>
+            <img
+              alt="c-empty-state-image"
+              class="aspect-ratio-item aspect-ratio-item-fluid"
+              src="http://localhost:8080/o/admin-theme/images/states/empty_state.gif"
+            />
+          </div>
         </div>
+        <div
+          class="c-empty-state-title"
+        >
+          <span
+            class="text-truncate-inline"
+          >
+            <span
+              class="text-truncate"
+            >
+              there-are-no-entries
+            </span>
+          </span>
+        </div>
+        <div
+          class="c-empty-state-text"
+        />
       </div>
     </div>
   </div>

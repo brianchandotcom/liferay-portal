@@ -169,24 +169,38 @@ exports[`DocumentPreviewerWrapper renders with a document without preview 1`] = 
       class="preview-file-container unavailable-preview"
     >
       <div
-        class="taglib-empty-result-message"
+        class="mb-2 mt-4 c-empty-state c-empty-state-animation"
       >
         <div
-          class="text-center"
+          class="c-empty-state-image"
         >
           <div
-            class="taglib-empty-state mb-2 mt-4"
-          />
-          <h1
-            class="taglib-empty-result-message-title"
+            class="c-empty-state-aspect-ratio"
           >
-            no-preview-available
-          </h1>
-          <p
-            class="empty-message-color taglib-empty-result-message-description"
+            <img
+              alt="c-empty-state-image"
+              class="aspect-ratio-item aspect-ratio-item-fluid"
+              src="http://localhost:8080/o/admin-theme/images/states/empty_state.gif"
+            />
+          </div>
+        </div>
+        <div
+          class="c-empty-state-title"
+        >
+          <span
+            class="text-truncate-inline"
           >
-            the-document-x-does-not-have-a-preview
-          </p>
+            <span
+              class="text-truncate"
+            >
+              no-preview-available
+            </span>
+          </span>
+        </div>
+        <div
+          class="c-empty-state-text"
+        >
+          the-document-x-does-not-have-a-preview
         </div>
       </div>
       <div
@@ -441,24 +455,38 @@ exports[`DocumentPreviewerWrapper renders with empty state 1`] = `
       class="preview-file-container unavailable-preview"
     >
       <div
-        class="taglib-empty-result-message"
+        class="mb-2 mt-4 c-empty-state c-empty-state-animation"
       >
         <div
-          class="text-center"
+          class="c-empty-state-image"
         >
           <div
-            class="taglib-empty-state mb-2 mt-4"
-          />
-          <h1
-            class="taglib-empty-result-message-title"
+            class="c-empty-state-aspect-ratio"
           >
-            no-preview-available
-          </h1>
-          <p
-            class="empty-message-color taglib-empty-result-message-description"
+            <img
+              alt="c-empty-state-image"
+              class="aspect-ratio-item aspect-ratio-item-fluid"
+              src="http://localhost:8080/o/admin-theme/images/states/empty_state.gif"
+            />
+          </div>
+        </div>
+        <div
+          class="c-empty-state-title"
+        >
+          <span
+            class="text-truncate-inline"
           >
-            the-envelope-does-not-have-a-document-to-preview
-          </p>
+            <span
+              class="text-truncate"
+            >
+              no-preview-available
+            </span>
+          </span>
+        </div>
+        <div
+          class="c-empty-state-text"
+        >
+          the-envelope-does-not-have-a-document-to-preview
         </div>
       </div>
       <div

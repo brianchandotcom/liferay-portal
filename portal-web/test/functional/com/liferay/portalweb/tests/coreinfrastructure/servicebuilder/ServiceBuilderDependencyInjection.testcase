@@ -36,11 +36,11 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-api -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-api");
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-service -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-service");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.tools.service.builder.spring.sample.service_");
 	}

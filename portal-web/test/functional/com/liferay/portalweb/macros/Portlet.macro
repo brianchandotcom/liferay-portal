@@ -631,7 +631,7 @@ definition {
 		else if ("${noLicense}" == "true") {
 			AntCommand(
 				locator1 = "build-test.xml",
-				value1 = "start-app-server -Dlicense.not.present=true -Ddelete.liferay.home=false");
+				value1 = "start-app-server -Ddelete.liferay.home=false -Dlicense.not.present=true");
 		}
 		else {
 			AntCommand(

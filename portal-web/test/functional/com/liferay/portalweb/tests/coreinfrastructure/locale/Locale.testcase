@@ -374,7 +374,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=locale.prepend.friendly.url.style=3 -Dupdate.properties=locale.prepend.friendly.url.style=0");
+			value1 = "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=0 -Dupdate.properties.original=locale.prepend.friendly.url.style=3");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -392,7 +392,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=locale.prepend.friendly.url.style=0 -Dupdate.properties=locale.prepend.friendly.url.style=1");
+			value1 = "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=1 -Dupdate.properties.original=locale.prepend.friendly.url.style=0");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -416,7 +416,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=locale.prepend.friendly.url.style=1 -Dupdate.properties=locale.prepend.friendly.url.style=2");
+			value1 = "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=2 -Dupdate.properties.original=locale.prepend.friendly.url.style=1");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 

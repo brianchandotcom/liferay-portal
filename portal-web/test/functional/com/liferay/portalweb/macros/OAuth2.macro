@@ -296,7 +296,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-oauth2.xml",
-			value1 = "prepare-oauth2-osgi-configuration -Dosgi.config.file.name=${osgiConfigFileName} -DcompanyId=${companyId}");
+			value1 = "prepare-oauth2-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
 	}
 
 	macro editApplication {

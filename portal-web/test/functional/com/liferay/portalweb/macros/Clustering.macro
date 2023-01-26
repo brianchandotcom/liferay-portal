@@ -31,7 +31,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=modules/apps/portal/portal-cluster-multiple-sample-web -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=modules/apps/portal/portal-cluster-multiple-sample-web");
 	}
 
 	macro enableDebugging {
@@ -214,7 +214,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dapp.server.bundle.index=${bundleIndex} -Dupdate.properties.original=${propertiesOriginal} -Dupdate.properties=${propertiesUpdate}");
+			value1 = "portal-ext-properties-update -Dapp.server.bundle.index=${bundleIndex} -Dupdate.properties=${propertiesUpdate} -Dupdate.properties.original=${propertiesOriginal}");
 	}
 
 	macro viewClusterStatusInConsole {

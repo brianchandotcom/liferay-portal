@@ -35,13 +35,13 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/test/external-data-source-test-api -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/test/external-data-source-test-api");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.external.data.source.test.api_");
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/test/external-data-source-test-service -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/test/external-data-source-test-service");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.external.data.source.test.service_");
 
@@ -69,13 +69,13 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-test-api -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-test-api");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.tools.service.builder.test.api_");
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-test-service -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-test-service");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.tools.service.builder.test.service_");
 	}

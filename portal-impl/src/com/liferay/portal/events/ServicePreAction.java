@@ -1806,13 +1806,13 @@ public class ServicePreAction extends Action {
 	 *         <code>false</code> otherwise
 	 */
 	private boolean _isLoginRequest(HttpServletRequest httpServletRequest) {
-		String requestURI = httpServletRequest.getRequestURI();
-
 		if (GetterUtil.getBoolean(
 				httpServletRequest.getAttribute(WebKeys.LOGIN_REQUEST))) {
 
 			return true;
 		}
+
+		String requestURI = httpServletRequest.getRequestURI();
 
 		String mainPath = _PATH_MAIN;
 

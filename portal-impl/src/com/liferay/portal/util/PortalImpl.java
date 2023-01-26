@@ -1189,7 +1189,7 @@ public class PortalImpl implements Portal {
 			Layout layout)
 		throws PortalException {
 
-		Map<Locale, String> alternateURLs = _getAlternateURLs(
+		Map<Locale, String> alternateURLs = getAlternateURLs(
 			canonicalURL, themeDisplay, layout, Collections.singleton(locale));
 
 		return alternateURLs.get(locale);
@@ -1203,7 +1203,7 @@ public class PortalImpl implements Portal {
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			layout.getGroupId());
 
-		return _getAlternateURLs(
+		return getAlternateURLs(
 			canonicalURL, themeDisplay, layout, availableLocales);
 	}
 
@@ -8101,7 +8101,8 @@ public class PortalImpl implements Portal {
 			explicitlyAddedPortlets, staticPortlets, null);
 	}
 
-	private Map<Locale, String> _getAlternateURLs(
+	@Override
+	public Map<Locale, String> getAlternateURLs(
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout,
 			Set<Locale> availableLocales)
 		throws PortalException {

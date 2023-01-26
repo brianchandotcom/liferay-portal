@@ -53,12 +53,10 @@ SearchContainer<Document> searchContainer = searchResultsPortletDisplayContext.g
 
 <c:choose>
 	<c:when test="<%= searchResultSummaryDisplayContexts.isEmpty() %>">
-		<div class="sheet taglib-empty-result-message">
-			<div class="taglib-empty-result-message-header"></div>
-
-			<div class="sheet-text text-center">
-				<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false) %>
-			</div>
+		<div class="sheet">
+			<liferay-ui:empty-result-message
+				message='<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false) %>'
+			/>
 		</div>
 	</c:when>
 	<c:otherwise>

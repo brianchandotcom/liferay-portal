@@ -15,6 +15,8 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -35,7 +37,6 @@ import com.liferay.template.web.internal.security.permissions.resource.TemplateE
 import com.liferay.template.web.internal.util.TemplateEntryActionDropdownItemsProvider;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Eudaldo Alonso
@@ -127,37 +128,60 @@ public class InformationTemplatesTemplateDisplayContext
 			return StringPool.BLANK;
 		}
 
-		return Optional.ofNullable(
+		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
-				templateEntry.getInfoItemClassName())
-		).map(
-			infoItemFormVariationsProvider ->
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					themeDisplay.getScopeGroupId(),
-					templateEntry.getInfoItemFormVariationKey())
-		).map(
-			infoItemFormVariation -> infoItemFormVariation.getLabel(
-				themeDisplay.getLocale())
-		).orElse(
-			StringPool.BLANK
-		);
+				templateEntry.getInfoItemClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			return StringPool.BLANK;
+		}
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				themeDisplay.getScopeGroupId(),
+				templateEntry.getInfoItemFormVariationKey());
+
+		if (infoItemFormVariation == null) {
+			return StringPool.BLANK;
+		}
+
+		String label = infoItemFormVariation.getLabel(themeDisplay.getLocale());
+
+		if (label == null) {
+			return StringPool.BLANK;
+		}
+
+		return label;
 	}
 
 	public String getTemplateTypeLabel(TemplateEntry templateEntry) {
-		return Optional.ofNullable(
+		String defaultValue = ResourceActionsUtil.getModelResource(
+			themeDisplay.getLocale(), templateEntry.getInfoItemClassName());
+
+		InfoItemDetailsProvider infoItemDetailsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class,
-				templateEntry.getInfoItemClassName())
-		).map(
-			InfoItemDetailsProvider::getInfoItemClassDetails
-		).map(
-			infoItemDetails -> infoItemDetails.getLabel(
-				themeDisplay.getLocale())
-		).orElse(
-			ResourceActionsUtil.getModelResource(
-				themeDisplay.getLocale(), templateEntry.getInfoItemClassName())
-		);
+				templateEntry.getInfoItemClassName());
+
+		if (infoItemDetailsProvider == null) {
+			return defaultValue;
+		}
+
+		InfoItemClassDetails infoItemClassDetails =
+			infoItemDetailsProvider.getInfoItemClassDetails();
+
+		if (infoItemClassDetails == null) {
+			return defaultValue;
+		}
+
+		String label = infoItemClassDetails.getLabel(themeDisplay.getLocale());
+
+		if (label == null) {
+			return defaultValue;
+		}
+
+		return label;
 	}
 
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;

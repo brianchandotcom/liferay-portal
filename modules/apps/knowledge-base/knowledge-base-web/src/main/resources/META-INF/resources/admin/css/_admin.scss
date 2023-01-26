@@ -9,10 +9,43 @@ $toolbarZIndex: 971;
 
 .knowledge-base-portlet-admin {
 	.kb-article {
+		.container-view {
+			padding-bottom: 0;
+			padding-top: 1.5rem;
+		}
+
 		.kb-article-title {
 			font-size: 2.5rem;
 			font-weight: $font-weight-bold;
 			margin-bottom: 1.5rem;
+		}
+
+		.knowledge-base-child-article-title {
+			color: $dark;
+			font-size: 0.875rem;
+		}
+
+		.lfr-search-container-wrapper
+			.lfr-search-container-list
+			+ .taglib-search-iterator-page-iterator-bottom {
+			margin-top: 0;
+		}
+
+		.list-group-notification .list-group-item {
+			border-width: 1px;
+		}
+
+		.panel-unstyled .panel-body {
+			padding: 1.5rem;
+		}
+
+		fieldset > legend {
+			h3 {
+				color: $secondary;
+				font-size: 0.75rem;
+				margin-bottom: 0;
+				padding-top: 0;
+			}
 		}
 	}
 	.knowledge-base-vertical-bar {

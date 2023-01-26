@@ -154,14 +154,14 @@ if (portletTitleBasedNavigation) {
 		</div>
 
 		<div <%= portletTitleBasedNavigation ? "class=\"sheet\"" : StringPool.BLANK %>>
-			<div class="kb-entity-body">
+			<div class="kb-entity-body mb-5">
 				<c:if test="<%= portletTitleBasedNavigation %>">
 					<div class="kb-article-title">
 						<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 					</div>
 				</c:if>
 
-				<div id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">
+				<div class="mb-4" id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">
 					<%= kbArticle.getContent() %>
 				</div>
 
@@ -257,7 +257,7 @@ if (portletTitleBasedNavigation) {
 				<c:choose>
 					<c:when test="<%= portletTitleBasedNavigation %>">
 						<liferay-ui:panel-container
-							cssClass="mt-5 panel-group-flush panel-group-sm"
+							cssClass="panel-group-flush panel-group-sm"
 							extended="<%= true %>"
 							markupView="lexicon"
 							persistState="<%= true %>"
@@ -278,7 +278,7 @@ if (portletTitleBasedNavigation) {
 							<c:if test="<%= !childKBArticles.isEmpty() %>">
 								<liferay-ui:panel
 									collapsible="<%= true %>"
-									cssClass="panel-unstyled"
+									cssClass="knowledge-base-child-article-title panel-unstyled"
 									extended="<%= true %>"
 									markupView="lexicon"
 									persistState="<%= true %>"

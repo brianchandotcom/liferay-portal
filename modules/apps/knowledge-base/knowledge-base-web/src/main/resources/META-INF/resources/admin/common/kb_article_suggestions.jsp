@@ -81,40 +81,38 @@ if (ratingsType == null) {
 
 	<liferay-ui:success key="suggestionSaved" message="suggestion-was-saved-successfully" />
 
-	<c:choose>
-		<c:when test="<%= kbCommentsCount == 1 %>">
-			<c:choose>
-				<c:when test="<%= showAdminSuggestionView %>">
-					<h5>
+	<h5 class="mb-0">
+		<c:choose>
+			<c:when test="<%= kbCommentsCount == 1 %>">
+				<c:choose>
+					<c:when test="<%= !showAdminSuggestionView %>">
 						<liferay-ui:message key="there-is-one-suggestion" />
 
 						<c:if test="<%= pendingKBCommentsCount > 0 %>">
 							(<liferay-ui:message arguments="<%= pendingKBCommentsCount %>" key="x-pending" />)
 						</c:if>
-					</h5>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:message key="you-sent-one-suggestion-for-this-article" />
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:when test="<%= kbCommentsCount > 1 %>">
-			<c:choose>
-				<c:when test="<%= showAdminSuggestionView %>">
-					<h5>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="you-sent-one-suggestion-for-this-article" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:when test="<%= kbCommentsCount > 1 %>">
+				<c:choose>
+					<c:when test="<%= !showAdminSuggestionView %>">
 						<liferay-ui:message arguments="<%= kbCommentsCount %>" key="there-are-x-suggestions" />
 
 						<c:if test="<%= pendingKBCommentsCount > 0 %>">
 							(<liferay-ui:message arguments="<%= pendingKBCommentsCount %>" key="x-pending" />)
 						</c:if>
-					</h5>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:message arguments="<%= kbCommentsCount %>" key="you-sent-x-suggestions-for-this-article" />
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-	</c:choose>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= kbCommentsCount %>" key="you-sent-x-suggestions-for-this-article" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+		</c:choose>
+	</h5>
 
 	<c:if test="<%= kbCommentsCount > 0 %>">
 		<c:choose>

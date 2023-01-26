@@ -29,9 +29,7 @@ describe('The EmptyState component should', () => {
 	test('Be render with message and animation', () => {
 		const {container, getByText} = render(<EmptyState filtered />);
 
-		const animation = container.querySelector(
-			'.taglib-empty-search-result-message-header'
-		);
+		const animation = container.querySelector('.c-empty-state-image');
 		const message = getByText('no-results-were-found');
 
 		expect(animation).toBeTruthy();
@@ -41,9 +39,7 @@ describe('The EmptyState component should', () => {
 	test('Be render with message, title and animation', () => {
 		const {container, getByText} = render(<EmptyState title="No data" />);
 
-		const animation = container.querySelector(
-			'.taglib-empty-result-message-header'
-		);
+		const animation = container.querySelector('.c-empty-state-image');
 		const message = getByText('there-is-no-data-at-the-moment');
 		const title = getByText('No data');
 

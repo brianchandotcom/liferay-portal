@@ -150,6 +150,7 @@ export default function NavigationPanel({
 	return (
 		<>
 			<SearchField />
+
 			<ClayTreeView
 				defaultItems={items}
 				defaultSelectedKeys={new Set([selectedItemId])}

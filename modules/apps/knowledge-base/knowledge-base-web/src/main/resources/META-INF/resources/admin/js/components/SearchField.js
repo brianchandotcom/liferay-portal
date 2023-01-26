@@ -24,7 +24,7 @@ export default function SearchField() {
 	};
 
 	return (
-		<div className="mb-3">
+		<>
 			<ClayInput.Group small>
 				<ClayInput.GroupItem>
 					<ClayInput
@@ -46,6 +46,7 @@ export default function SearchField() {
 					</ClayInput.GroupInsetItem>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
-		</div>
+			<hr className="separator" />
+		</>
 	);
 }

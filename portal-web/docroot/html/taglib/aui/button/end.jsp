@@ -26,6 +26,7 @@
 			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 			href="<%= escapedHREF %>"
 			id="<%= id %>"
+			role="button"
 
 			<c:if test="<%= Validator.isNotNull(onClick) %>">
 				onClick="<%= onClick %>"

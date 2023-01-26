@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-layout:render-layout-utility-page-entry
-	type="<%= LayoutUtilityPageEntryTypesConstants.LAYOUT %>"
+	type="<%= LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND %>"
 >
 	<div class="container pb-3 pt-3">
 		<h3 class="alert alert-danger">

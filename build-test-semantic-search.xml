@@ -41,7 +41,7 @@ RUN python -c "from txtai.api import API; API('config.yml', False)"</echo>
 				<arg value="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${container.prefix}_txtai" />
 			</exec>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.search.experiences.configuration.SemanticSearchConfiguration.config">textEmbeddingCacheTimeout="604800"
-textEmbeddingProviderConfigurations=["\{\"attributes\": \{\"hostAddress\": \"http://${txtai.container.ip}:8000\", \"maxCharacterCount\": 500, \"modelTimeout\": 25\}, \"embeddingVectorDimensions\": 768, \"languageIds\": [\"en_US\"], \"modelClassNames\": [\"com.liferay.blogs.model.BlogsEntry\", \"com.liferay.journal.model.JournalArticle\", \"com.liferay.knowledge.base.model.KBArticle\", \"com.liferay.message.boards.model.MBMessage\", \"com.liferay.wiki.model.WikiPage\"], \"providerName\": \"txtai\"\}"]
+textEmbeddingProviderConfigurationJSONs=["\{\"attributes\": \{\"hostAddress\": \"http://${txtai.container.ip}:8000\", \"maxCharacterCount\": 500, \"modelTimeout\": 25\}, \"embeddingVectorDimensions\": 768, \"languageIds\": [\"en_US\"], \"modelClassNames\": [\"com.liferay.blogs.model.BlogsEntry\", \"com.liferay.journal.model.JournalArticle\", \"com.liferay.knowledge.base.model.KBArticle\", \"com.liferay.message.boards.model.MBMessage\", \"com.liferay.wiki.model.WikiPage\"], \"providerName\": \"txtai\"\}"]
 textEmbeddingsEnabled="true"</echo>
 		</sequential>
 	</macrodef>

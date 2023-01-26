@@ -1693,37 +1693,9 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "");
 
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "tree.png",
-			searchAssetType = "Document");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "stars.png",
-			searchAssetType = "Document");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "satellite.png",
-			searchAssetType = "Document");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "moon.png",
-			searchAssetType = "Document");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "earth.png",
-			searchAssetType = "Document");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Search",
-			searchAssetType = "Page");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Home",
-			searchAssetType = "Page");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test Test",
-			searchAssetType = "User");
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "tree.png/Document,stars.png/Document,satellite.png/Document,moon.png/Document,earth.png/Document,Search/Page,Home/Page,Test Test/User",
+			searchTerm = "");
 	}
 
 	@priority = "4"

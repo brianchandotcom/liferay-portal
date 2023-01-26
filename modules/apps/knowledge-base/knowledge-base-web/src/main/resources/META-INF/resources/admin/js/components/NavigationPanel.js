@@ -21,6 +21,7 @@ import React, {useMemo} from 'react';
 
 import normalizeDropdownItems from '../utils/normalizeDropdownItems';
 import ActionsDropdown from './ActionsDropdown';
+import SearchField from './SearchField';
 
 const ITEM_TYPES_SYMBOL = {
 	article: 'document-text',
@@ -147,59 +148,64 @@ export default function NavigationPanel({
 	};
 
 	return (
-		<ClayTreeView
-			defaultItems={items}
-			defaultSelectedKeys={new Set([selectedItemId])}
-			dragAndDrop
-			nestedKey="children"
-			onItemMove={handleItemMove}
-			showExpanderOnHover={false}
-		>
-			{(item) => {
-				return (
-					<ClayTreeView.Item
-						actions={ActionsDropdown({actions: item.actions})}
-						onClick={(event) => {
-							handleClickItem(event, item);
-						}}
-					>
-						<ClayTreeView.ItemStack
-							className={classnames({
-								'knowledge-base-navigation-item-active':
-									item.id === selectedItemId,
-							})}
-						>
-							<ClayIcon symbol={ITEM_TYPES_SYMBOL[item.type]} />
-
-							{item.name}
-						</ClayTreeView.ItemStack>
-
-						<ClayTreeView.Group items={item.children}>
-							{(item) => {
-								return (
-									<ClayTreeView.Item
-										actions={ActionsDropdown({
-											actions: item.actions,
-										})}
-										onClick={(event) => {
-											handleClickItem(event, item);
-										}}
-									>
-										<ClayIcon
-											symbol={
-												ITEM_TYPES_SYMBOL[item.type]
-											}
-										/>
-
-										{item.name}
-									</ClayTreeView.Item>
-								);
+		<>
+			<SearchField />
+			<ClayTreeView
+				defaultItems={items}
+				defaultSelectedKeys={new Set([selectedItemId])}
+				dragAndDrop
+				nestedKey="children"
+				onItemMove={handleItemMove}
+				showExpanderOnHover={false}
+			>
+				{(item) => {
+					return (
+						<ClayTreeView.Item
+							actions={ActionsDropdown({actions: item.actions})}
+							onClick={(event) => {
+								handleClickItem(event, item);
 							}}
-						</ClayTreeView.Group>
-					</ClayTreeView.Item>
-				);
-			}}
-		</ClayTreeView>
+						>
+							<ClayTreeView.ItemStack
+								className={classnames({
+									'knowledge-base-navigation-item-active':
+										item.id === selectedItemId,
+								})}
+							>
+								<ClayIcon
+									symbol={ITEM_TYPES_SYMBOL[item.type]}
+								/>
+
+								{item.name}
+							</ClayTreeView.ItemStack>
+
+							<ClayTreeView.Group items={item.children}>
+								{(item) => {
+									return (
+										<ClayTreeView.Item
+											actions={ActionsDropdown({
+												actions: item.actions,
+											})}
+											onClick={(event) => {
+												handleClickItem(event, item);
+											}}
+										>
+											<ClayIcon
+												symbol={
+													ITEM_TYPES_SYMBOL[item.type]
+												}
+											/>
+
+											{item.name}
+										</ClayTreeView.Item>
+									);
+								}}
+							</ClayTreeView.Group>
+						</ClayTreeView.Item>
+					);
+				}}
+			</ClayTreeView>
+		</>
 	);
 }
 

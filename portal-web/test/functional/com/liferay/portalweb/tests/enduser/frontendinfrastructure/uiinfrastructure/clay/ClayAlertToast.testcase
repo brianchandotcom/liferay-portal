@@ -77,7 +77,7 @@ definition {
 	test DisappearsAfter5SecsWithoutActions {
 		task ("When a toast alert appears") {
 			Click(
-				key_text = "DisappearsAfter5Secs",
+				key_text = "Disappears After 5 Seconds",
 				locator1 = "Button#ANY");
 		}
 

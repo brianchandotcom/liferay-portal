@@ -31,6 +31,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
+	compileOnly project(":apps:layout:layout-utility-page-api")
 	compileOnly project(":apps:notification:notification-rest-api")
 	compileOnly project(":apps:object:object-admin-rest-api")
 	compileOnly project(":apps:object:object-api")

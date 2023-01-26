@@ -43,6 +43,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
@@ -140,6 +141,7 @@ public class SiteInitializerExtender
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
+				_layoutUtilityPageEntryLocalService,
 				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
@@ -252,6 +254,7 @@ public class SiteInitializerExtender
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
+				_layoutUtilityPageEntryLocalService,
 				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
@@ -373,6 +376,10 @@ public class SiteInitializerExtender
 
 	@Reference
 	private LayoutsImporter _layoutsImporter;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private ListTypeDefinitionResource _listTypeDefinitionResource;

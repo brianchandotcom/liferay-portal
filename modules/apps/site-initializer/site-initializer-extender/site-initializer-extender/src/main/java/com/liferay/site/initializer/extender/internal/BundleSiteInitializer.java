@@ -77,6 +77,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -238,6 +239,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		LayoutPageTemplateStructureRelLocalService
 			layoutPageTemplateStructureRelLocalService,
 		LayoutSetLocalService layoutSetLocalService,
+		LayoutUtilityPageEntryLocalService layoutUtilityPageEntryLocalService,
 		ListTypeDefinitionResource listTypeDefinitionResource,
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ListTypeEntryResource listTypeEntryResource,
@@ -309,6 +311,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutPageTemplateStructureRelLocalService =
 			layoutPageTemplateStructureRelLocalService;
 		_layoutSetLocalService = layoutSetLocalService;
+		_layoutUtilityPageEntryLocalService =
+			layoutUtilityPageEntryLocalService;
 		_listTypeDefinitionResource = listTypeDefinitionResource;
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 		_listTypeEntryResource = listTypeEntryResource;
@@ -4677,6 +4681,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutPageTemplateStructureRelLocalService;
 	private final LayoutSetLocalService _layoutSetLocalService;
 	private final LayoutsImporter _layoutsImporter;
+	private final LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 	private final ListTypeDefinitionResource _listTypeDefinitionResource;
 	private final ListTypeDefinitionResource.Factory
 		_listTypeDefinitionResourceFactory;

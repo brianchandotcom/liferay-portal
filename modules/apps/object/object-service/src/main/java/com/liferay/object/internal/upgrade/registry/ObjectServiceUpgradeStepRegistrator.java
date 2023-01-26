@@ -98,7 +98,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"3.3.0", "3.4.0",
 			UpgradeProcessFactory.addColumns(
-				"ObjectAction", "description STRING null"));
+				"ObjectAction", "description VARCHAR(75) null"));
 
 		registry.register(
 			"3.4.0", "3.5.0",
@@ -258,6 +258,13 @@ public class ObjectServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"3.28.0", "4.0.0",
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectAction", "description", "VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectValidationRule", "script", "TEXT null"));
 	}
 
 	@Reference

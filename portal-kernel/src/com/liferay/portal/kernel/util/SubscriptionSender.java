@@ -813,6 +813,7 @@ public class SubscriptionSender implements Serializable {
 		JSONObject notificationEventJSONObject) {
 
 		String command = null;
+
 		if (serviceContext != null) {
 			command = serviceContext.getCommand();
 		}

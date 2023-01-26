@@ -38,16 +38,16 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-		<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
-		<liferay-ui:error key="emailKBArticleExpiredBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailKBArticleExpiredSubject" message="please-enter-a-valid-subject" />
-		<liferay-ui:error key="emailKBArticleReviewBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailKBArticleReviewSubject" message="please-enter-a-valid-subject" />
-		<liferay-ui:error key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+	<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
+	<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailKBArticleExpiredBody" message="please-enter-a-valid-body" />
+	<liferay-ui:error key="emailKBArticleExpiredSubject" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailKBArticleReviewBody" message="please-enter-a-valid-body" />
+	<liferay-ui:error key="emailKBArticleReviewSubject" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
+	<liferay-ui:error key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs

@@ -1,0 +1,149 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.search.experiences.internal.ml.embedding.instance.lifecycle;
+
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
+import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.index.IndexNameBuilder;
+
+import java.util.Objects;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Petteri Karttunen
+ */
+@Component(enabled = false, service = PortalInstanceLifecycleListener.class)
+public class EmbeddingFieldCreationPortalInstanceLifecycleListener
+	extends BasePortalInstanceLifecycleListener {
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (Objects.equals(
+				_searchEngineInformation.getVendorString(), "Solr")) {
+
+			return;
+		}
+
+		String indexName = _indexNameBuilder.getIndexName(
+			company.getCompanyId());
+
+		if (!_indexExists(indexName)) {
+			return;
+		}
+
+		JSONArray jsonArray = _getDynamicTemplatesJSONArray(indexName);
+
+		if (!_hasTextEmbeddingDynamicTemplates(jsonArray)) {
+			_updateMappings(
+				company.getCompanyId(),
+				JSONUtil.put(
+					"dynamic_templates",
+					JSONUtil.concat(
+						jsonArray,
+						_jsonFactory.createJSONArray(
+							StringUtil.read(
+								getClass(),
+								_TEXT_EMBEDDING_DYNAMIC_TEMPLATES_RESOURCE_NAME)))));
+		}
+	}
+
+	private JSONArray _getDynamicTemplatesJSONArray(String indexName) {
+		try {
+			return JSONUtil.getValueAsJSONArray(
+				_jsonFactory.createJSONObject(
+					_indexInformation.getFieldMappings(indexName)),
+				"JSONObject/" + indexName, "JSONObject/mappings",
+				"JSONArray/dynamic_templates");
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		return _jsonFactory.createJSONArray();
+	}
+
+	private boolean _hasTextEmbeddingDynamicTemplates(JSONArray jsonArray) {
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (jsonObject.has("template_text_embedding_256")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _indexExists(String indexName) {
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
+
+		indicesExistsIndexRequest.setPreferLocalCluster(false);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			_searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
+	private void _updateMappings(long companyId, JSONObject jsonObject) {
+		PutMappingIndexRequest putMappingIndexRequest =
+			new PutMappingIndexRequest(
+				new String[] {_indexNameBuilder.getIndexName(companyId)},
+				"LiferayDocumentType", jsonObject.toString());
+
+		_searchEngineAdapter.execute(putMappingIndexRequest);
+	}
+
+	private static final String
+		_TEXT_EMBEDDING_DYNAMIC_TEMPLATES_RESOURCE_NAME =
+			"dependencies/text-embedding-dynamic-templates.json";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EmbeddingFieldCreationPortalInstanceLifecycleListener.class);
+
+	@Reference
+	private IndexInformation _indexInformation;
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
+
+}

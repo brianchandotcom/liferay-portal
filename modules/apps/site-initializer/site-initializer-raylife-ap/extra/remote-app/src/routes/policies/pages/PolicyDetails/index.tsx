@@ -19,10 +19,10 @@ import {
 	getPolicyByExternalReferenceCode,
 } from '../../../../common/services';
 import {getQuotesById} from '../../../../common/services/Quote';
+import Activities from '../components/Activities';
 import PolicyActiveClaims from '../components/PolicyActiveClaims';
 import PolicyDetail from '../components/PolicyDetail';
 import PolicySummary from '../components/PolicySummary';
-
 interface PolicySummary {
 	boundDate: Date;
 	commission: number;
@@ -100,6 +100,8 @@ const PolicyDetails = () => {
 					</>
 				)}
 			</div>
+
+			<Activities />
 
 			<PolicyActiveClaims
 				dataJSON={policy?.data?.dataJSON}

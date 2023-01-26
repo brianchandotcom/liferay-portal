@@ -969,8 +969,6 @@ definition {
 	@description = "LPS-154872 - Verify that it's possible to filter and sort entries using metadata fields"
 	@priority = "4"
 	test CanFilterAndSortEntriesViaMetadataFields {
-		property portal.upstream = "quarantine";
-
 		task ("Create Custom Object and Custom Field (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 161889",

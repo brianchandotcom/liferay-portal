@@ -435,7 +435,7 @@ definition {
 
 		CalendarEvent.setTimes(
 			endDateTime = "10:00 AM",
-			startDateTime = "06:00 AM");
+			startDateTime = " 6:00 AM");
 
 		CalendarEvent.publishWithUserNotification();
 

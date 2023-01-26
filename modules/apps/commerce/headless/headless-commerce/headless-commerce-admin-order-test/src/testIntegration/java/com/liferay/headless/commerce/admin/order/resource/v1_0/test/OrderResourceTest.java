@@ -28,19 +28,28 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.order.client.pagination.Page;
+import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -117,6 +126,62 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	@Override
 	@Test
 	public void testGetOrdersPageWithFilterDateTimeEquals() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testGetOrdersPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		for (EntityField entityField : entityFields) {
+			String entityFieldName = entityField.getName();
+
+			if (entityFieldName.equals("createdByEmailAddress")) {
+				@SuppressWarnings("PMD.UnusedLocalVariable")
+				Order order1 = testGetOrdersPage_addOrder(randomOrder());
+
+				User user = UserTestUtil.addUser(
+					testCompany.getCompanyId(), testCompany.getUserId(), "test",
+					"UserServiceTest." + RandomTestUtil.nextLong() +
+						"@liferay.com",
+					StringPool.BLANK, LocaleUtil.getDefault(),
+					"UserServiceTest", "UserServiceTest", null,
+					_serviceContext);
+
+				Role role = RoleLocalServiceUtil.getRole(
+					testCompany.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+				UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+
+				OrderResource orderResource2 = OrderResource.builder(
+				).authentication(
+					user.getEmailAddress(), "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).parameters(
+					"nestedFields", "orderItems,orderItems.shippingAddress"
+				).build();
+
+				Order order2 = orderResource2.postOrder(randomOrder());
+
+				Page<Order> page = orderResource2.getOrdersPage(
+					null, getFilterString(entityField, "eq", order2),
+					Pagination.of(1, 2), null);
+
+				assertEquals(
+					Collections.singletonList(order2),
+					(List<Order>)page.getItems());
+
+				return;
+			}
+		}
+
+		super.testGetOrdersPageWithFilterStringEquals();
 	}
 
 	@Override
@@ -208,6 +273,11 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		throws Exception {
 
 		return orderResource.postOrder(randomOrder());
+	}
+
+	@Override
+	protected Order testGetOrdersPage_addOrder(Order order) throws Exception {
+		return orderResource.postOrder(order);
 	}
 
 	@Override

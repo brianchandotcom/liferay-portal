@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,11 +35,11 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = {})
 public class GroupItemSelectorProviderRegistryUtil {
 
-	public static Optional<GroupItemSelectorProvider>
-		getGroupItemSelectorProviderOptional(String groupType) {
+	public static GroupItemSelectorProvider getGroupItemSelectorProvider(
+		String groupType) {
 
 		if (_serviceTrackerMap == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		GroupItemSelectorProvider groupItemSelectorProvider =
@@ -49,10 +48,10 @@ public class GroupItemSelectorProviderRegistryUtil {
 		if ((groupItemSelectorProvider != null) &&
 			groupItemSelectorProvider.isEnabled()) {
 
-			return Optional.of(groupItemSelectorProvider);
+			return groupItemSelectorProvider;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	public static Set<String> getGroupItemSelectorProviderTypes() {

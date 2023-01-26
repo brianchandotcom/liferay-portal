@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -81,10 +82,10 @@ public class CETFDSActionProvider implements FDSActionProvider {
 		dropdownItem.setData(
 			HashMapBuilder.<String, Object>put(
 				"confirmationMessage",
-				_language.get(
+				_language.format(
 					httpServletRequest,
-					"deleting-a-client-extension-is-an-action-impossible-to-" +
-						"revert")
+					"are-you-sure-you-want-to-delete-x-client-extension",
+					HtmlUtil.escape(cetFDSEntry.getName()))
 			).put(
 				"status", "warning"
 			).put(

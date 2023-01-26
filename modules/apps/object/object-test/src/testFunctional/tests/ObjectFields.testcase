@@ -1002,14 +1002,14 @@ definition {
 			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
 		}
 
-		var listMetaData = "Author,Create Date,Custom Field,External Reference Code,ID,Modified Date,Status";
+		var listMetaData = "Author,Create Date,External Reference Code,ID,Modified Date";
 
 		task ("Mark Custom View as default, go to View Builder and add ERC") {
 			ObjectCustomViews.markViewAsDefault();
 
 			ObjectCustomViews.goToViewsBuilderTab();
 
-			ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,Custom Field,External Reference Code,ID,Modified Date");
 		}
 
 		task ("Set order to ERC on Default Sort") {
@@ -1057,7 +1057,7 @@ definition {
 				position = "2");
 
 			Click(
-				key_orderColumn = "External Reference Code",
+				key_orderColumn = "Create Date",
 				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
 
 			ObjectCustomViews.viewFieldsEntryByPosition(

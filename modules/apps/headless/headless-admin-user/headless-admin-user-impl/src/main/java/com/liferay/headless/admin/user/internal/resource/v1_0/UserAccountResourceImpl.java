@@ -933,25 +933,25 @@ public class UserAccountResourceImpl
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
 
-		if (userAccountContactInformation != null) {
-			PostalAddress[] postalAddresses =
-				userAccountContactInformation.getPostalAddresses();
-
-			if (postalAddresses == null) {
-				return Collections.emptyList();
-			}
-
-			return ListUtil.filter(
-				transformToList(
-					postalAddresses,
-					_postalAddress ->
-						ServiceBuilderAddressUtil.toServiceBuilderAddress(
-							contextCompany.getCompanyId(), _postalAddress,
-							ListTypeConstants.CONTACT_ADDRESS)),
-				Objects::nonNull);
+		if (userAccountContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		PostalAddress[] postalAddresses =
+			userAccountContactInformation.getPostalAddresses();
+
+		if (postalAddresses == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				postalAddresses,
+				_postalAddress ->
+					ServiceBuilderAddressUtil.toServiceBuilderAddress(
+						contextCompany.getCompanyId(), _postalAddress,
+						ListTypeConstants.CONTACT_ADDRESS)),
+			Objects::nonNull);
 	}
 
 	private int _getBirthdayDay(UserAccount userAccount) {
@@ -972,15 +972,15 @@ public class UserAccountResourceImpl
 
 		Date date = userAccount.getBirthDate();
 
-		if (date != null) {
-			Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-			calendar.setTime(date);
-
-			return calendar.get(calendarField);
+		if (date == null) {
+			return defaultValue;
 		}
 
-		return defaultValue;
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.setTime(date);
+
+		return calendar.get(calendarField);
 	}
 
 	private Map<String, Map<String, String>> _getCompanyScopeActions(
@@ -1049,12 +1049,12 @@ public class UserAccountResourceImpl
 	private long _getPrefixId(UserAccount userAccount) {
 		String prefix = userAccount.getHonorificPrefix();
 
-		if (prefix != null) {
-			return ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
-				ListTypeConstants.CONTACT_PREFIX, prefix);
+		if (prefix == null) {
+			return 0;
 		}
 
-		return 0L;
+		return ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
+			ListTypeConstants.CONTACT_PREFIX, prefix);
 	}
 
 	private List<com.liferay.portal.kernel.model.EmailAddress>
@@ -1063,24 +1063,24 @@ public class UserAccountResourceImpl
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
 
-		if (userAccountContactInformation != null) {
-			EmailAddress[] emailAddresses =
-				userAccountContactInformation.getEmailAddresses();
-
-			if (emailAddresses != null) {
-				return ListUtil.filter(
-					transformToList(
-						emailAddresses,
-						emailAddress ->
-							ServiceBuilderEmailAddressUtil.
-								toServiceBuilderEmailAddress(
-									emailAddress,
-									ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
-					Objects::nonNull);
-			}
+		if (userAccountContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		EmailAddress[] emailAddresses =
+			userAccountContactInformation.getEmailAddresses();
+
+		if (emailAddresses == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				emailAddresses,
+				emailAddress ->
+					ServiceBuilderEmailAddressUtil.toServiceBuilderEmailAddress(
+						emailAddress, ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
+			Objects::nonNull);
 	}
 
 	private List<com.liferay.portal.kernel.model.Phone>
@@ -1089,32 +1089,33 @@ public class UserAccountResourceImpl
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
 
-		if (userAccountContactInformation != null) {
-			Phone[] phones = userAccountContactInformation.getTelephones();
-
-			if (phones != null) {
-				return ListUtil.filter(
-					transformToList(
-						phones,
-						telephone ->
-							ServiceBuilderPhoneUtil.toServiceBuilderPhone(
-								telephone, ListTypeConstants.CONTACT_PHONE)),
-					Objects::nonNull);
-			}
+		if (userAccountContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		Phone[] phones = userAccountContactInformation.getTelephones();
+
+		if (phones == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				phones,
+				telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
+					telephone, ListTypeConstants.CONTACT_PHONE)),
+			Objects::nonNull);
 	}
 
 	private long _getSuffixId(UserAccount userAccount) {
 		String honorificSuffix = userAccount.getHonorificSuffix();
 
-		if (honorificSuffix != null) {
-			return ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
-				ListTypeConstants.CONTACT_SUFFIX, honorificSuffix);
+		if (honorificSuffix == null) {
+			return 0;
 		}
 
-		return 0L;
+		return ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
+			ListTypeConstants.CONTACT_SUFFIX, honorificSuffix);
 	}
 
 	private Page<UserAccount> _getUserAccountsPage(
@@ -1140,21 +1141,22 @@ public class UserAccountResourceImpl
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
 
-		if (userAccountContactInformation != null) {
-			WebUrl[] webUrls = userAccountContactInformation.getWebUrls();
-
-			if (webUrls != null) {
-				return ListUtil.filter(
-					transformToList(
-						webUrls,
-						webUrl ->
-							ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
-								ListTypeConstants.CONTACT_WEBSITE, webUrl)),
-					Objects::nonNull);
-			}
+		if (userAccountContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		WebUrl[] webUrls = userAccountContactInformation.getWebUrls();
+
+		if (webUrls == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				webUrls,
+				webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+					ListTypeConstants.CONTACT_WEBSITE, webUrl)),
+			Objects::nonNull);
 	}
 
 	private boolean _isPasswordResetRequired(User user) throws Exception {

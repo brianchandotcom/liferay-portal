@@ -197,18 +197,18 @@ public class StructureUtil {
 						DDMFormFieldOptions ddmFormFieldOptions =
 							ddmFormField.getDDMFormFieldOptions();
 
-						if (ddmFormFieldOptions != null) {
-							Map<String, LocalizedValue> ddmFormFieldOptionsMap =
-								ddmFormFieldOptions.getOptions();
-
-							return TransformUtil.transformToArray(
-								ddmFormFieldOptionsMap.entrySet(),
-								entry -> _toFormFieldOption(
-									acceptAllLanguages, entry, locale),
-								FormFieldOption.class);
+						if (ddmFormFieldOptions == null) {
+							return new FormFieldOption[0];
 						}
 
-						return new FormFieldOption[0];
+						Map<String, LocalizedValue> ddmFormFieldOptionsMap =
+							ddmFormFieldOptions.getOptions();
+
+						return TransformUtil.transformToArray(
+							ddmFormFieldOptionsMap.entrySet(),
+							entry -> _toFormFieldOption(
+								acceptAllLanguages, entry, locale),
+							FormFieldOption.class);
 					});
 				setGrid(
 					() -> {

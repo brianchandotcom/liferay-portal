@@ -28,7 +28,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -180,17 +179,13 @@ public class AddressUtilTest {
 	private void _testGetCountryNameOptional(
 		Address address, String expectedName) {
 
-		Optional<String> optional = AddressUtil.getCountryNameOptional(address);
-
-		Assert.assertEquals(expectedName, optional.orElse(null));
+		Assert.assertEquals(expectedName, AddressUtil.getCountryName(address));
 	}
 
 	private void _testGetRegionNameOptional(
 		Address address, String expectedName) {
 
-		Optional<String> optional = AddressUtil.getRegionNameOptional(address);
-
-		Assert.assertEquals(expectedName, optional.orElse(null));
+		Assert.assertEquals(expectedName, AddressUtil.getRegionName(address));
 	}
 
 	private static Locale _locale;

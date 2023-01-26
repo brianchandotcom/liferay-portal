@@ -14,8 +14,10 @@
 
 package com.liferay.segments.context.vocabulary.internal.field.customizer;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -33,8 +35,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -93,29 +93,38 @@ public class SegmentsContextVocabularySegmentsFieldCompanyCustomizer
 
 		Group group = _groupLocalService.fetchCompanyGroup(companyId);
 
-		return Optional.ofNullable(
+		AssetVocabulary groupVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
-				group.getGroupId(), assetVocabulary)
-		).map(
-			AssetVocabulary::getCategories
-		).orElseGet(
-			() -> {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"No vocabulary was found with name ",
-							assetVocabulary, " in company ", companyId));
-				}
+				group.getGroupId(), assetVocabulary);
 
-				return Collections.emptyList();
+		if (groupVocabulary == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"No vocabulary was found with name ", assetVocabulary,
+						" in company ", companyId));
 			}
-		).stream(
-		).map(
+
+			return Collections.emptyList();
+		}
+
+		List<AssetCategory> assetCategories = groupVocabulary.getCategories();
+
+		if (assetCategories == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"No vocabulary was found with name ", assetVocabulary,
+						" in company ", companyId));
+			}
+
+			return Collections.emptyList();
+		}
+
+		return TransformUtil.transform(
+			assetCategories,
 			assetCategory -> new Field.Option(
-				assetCategory.getTitle(locale), assetCategory.getName())
-		).collect(
-			Collectors.toList()
-		);
+				assetCategory.getTitle(locale), assetCategory.getName()));
 	}
 
 	@Activate

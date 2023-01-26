@@ -16,11 +16,30 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
 
-export default function SearchField() {
-	const [searchValue, setSearchValue] = useState('');
+export default function SearchField({items}) {
+	const [state, setState] = useState({
+		filteredItems: [],
+		query: '',
+	});
 
 	const handleChange = (event) => {
-		setSearchValue(event.target.value);
+		const newQuery = event.target.value;
+
+		let results;
+
+		if (newQuery === '') {
+			results = items;
+		}
+		else {
+			results = items.filter((item) =>
+				item.name.toLowerCase().includes(newQuery.toLowerCase())
+			);
+		}
+
+		setState({
+			filteredItems: results,
+			query: newQuery,
+		});
 	};
 
 	return (
@@ -33,14 +52,14 @@ export default function SearchField() {
 						onChange={handleChange}
 						placeholder={Liferay.Language.get('search-for')}
 						type="text"
-						value={searchValue}
+						value={state.query}
 					/>
 
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
 							displayType="unstyled"
 							small
-							symbol={searchValue ? 'times' : 'search'}
+							symbol={state.query ? 'times' : 'search'}
 							title={Liferay.Language.get('clear')}
 						/>
 					</ClayInput.GroupInsetItem>

@@ -72,6 +72,17 @@ const normalizeItems = (items) => {
 	}
 };
 
+const getSearchItems = (items) => {
+	return items.reduce(function reducer(acc, item) {
+		acc.push({href: item.href, id: item.id, name: item.name, type: item.type});
+
+		if (item.children) {
+			item.children.reduce(reducer, acc);
+		}
+
+		return acc;
+	}, []);
+};
 export default function NavigationPanel({
 	items: initialItems,
 	moveKBObjectURL,
@@ -79,6 +90,10 @@ export default function NavigationPanel({
 	selectedItemId,
 }) {
 	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
+
+	const searchItems = useMemo(() => getSearchItems(initialItems), [
+		initialItems,
+	]);
 
 	const handleClickItem = (event, item) => {
 		if (event.defaultPrevented) {
@@ -149,7 +164,7 @@ export default function NavigationPanel({
 
 	return (
 		<>
-			<SearchField />
+			<SearchField items={searchItems} />
 
 			<ClayTreeView
 				defaultItems={items}

@@ -34,7 +34,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -71,62 +70,56 @@ public class BulkSelectionBackgroundTaskExecutor
 			BulkSelectionBackgroundTaskConstants.
 				BULK_SELECTION_ACTION_CLASS_NAME);
 
-		Optional<BulkSelectionAction<Object>> bulkSelectionActionOptional =
-			_getService(
-				(Class<BulkSelectionAction<Object>>)
-					(Class<?>)BulkSelectionAction.class,
-				bulkSelectionActionClassName);
+		BulkSelectionAction<Object> bulkSelectionAction = _getService(
+			(Class<BulkSelectionAction<Object>>)
+				(Class<?>)BulkSelectionAction.class,
+			bulkSelectionActionClassName);
 
-		bulkSelectionActionOptional.ifPresent(
-			bulkSelectionAction -> {
-				Map<String, String[]> parameterMap =
-					(Map<String, String[]>)taskContextMap.get(
-						BulkSelectionBackgroundTaskConstants.
-							BULK_SELECTION_PARAMETER_MAP);
+		if (bulkSelectionAction != null) {
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)taskContextMap.get(
+					BulkSelectionBackgroundTaskConstants.
+						BULK_SELECTION_PARAMETER_MAP);
 
-				String bulkSelectionFactoryClassName =
-					(String)taskContextMap.get(
-						BulkSelectionBackgroundTaskConstants.
-							BULK_SELECTION_FACTORY_CLASS_NAME);
+			String bulkSelectionFactoryClassName = (String)taskContextMap.get(
+				BulkSelectionBackgroundTaskConstants.
+					BULK_SELECTION_FACTORY_CLASS_NAME);
 
-				Optional<BulkSelectionFactory<?>> bulkSelectionFactoryOptional =
-					_getService(
-						(Class<BulkSelectionFactory<?>>)
-							(Class<?>)BulkSelectionFactory.class,
-						bulkSelectionFactoryClassName);
+			BulkSelectionFactory<?> bulkSelectionFactory = _getService(
+				(Class<BulkSelectionFactory<?>>)
+					(Class<?>)BulkSelectionFactory.class,
+				bulkSelectionFactoryClassName);
 
-				bulkSelectionFactoryOptional.ifPresent(
-					bulkSelectionFactory -> {
-						try {
-							BulkSelection<?> bulkSelection =
-								bulkSelectionFactory.create(parameterMap);
+			if (bulkSelectionFactory != null) {
+				try {
+					BulkSelection<?> bulkSelection =
+						bulkSelectionFactory.create(parameterMap);
 
-							Map<String, Serializable> inputMap =
-								(Map<String, Serializable>)taskContextMap.get(
-									BulkSelectionBackgroundTaskConstants.
-										BULK_SELECTION_ACTION_INPUT_MAP);
+					Map<String, Serializable> inputMap =
+						(Map<String, Serializable>)taskContextMap.get(
+							BulkSelectionBackgroundTaskConstants.
+								BULK_SELECTION_ACTION_INPUT_MAP);
 
-							boolean assetEntryBulkSelection =
-								(boolean)inputMap.getOrDefault(
-									BulkSelectionInputParameters.
-										ASSET_ENTRY_BULK_SELECTION,
-									false);
+					boolean assetEntryBulkSelection =
+						(boolean)inputMap.getOrDefault(
+							BulkSelectionInputParameters.
+								ASSET_ENTRY_BULK_SELECTION,
+							false);
 
-							if (assetEntryBulkSelection) {
-								bulkSelection =
-									bulkSelection.toAssetEntryBulkSelection();
-							}
+					if (assetEntryBulkSelection) {
+						bulkSelection =
+							bulkSelection.toAssetEntryBulkSelection();
+					}
 
-							bulkSelectionAction.execute(
-								_userLocalService.getUser(
-									backgroundTask.getUserId()),
-								(BulkSelection<Object>)bulkSelection, inputMap);
-						}
-						catch (Exception exception) {
-							_log.error(exception);
-						}
-					});
-			});
+					bulkSelectionAction.execute(
+						_userLocalService.getUser(backgroundTask.getUserId()),
+						(BulkSelection<Object>)bulkSelection, inputMap);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
+		}
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -143,9 +136,7 @@ public class BulkSelectionBackgroundTaskExecutor
 		_bundleContext = bundleContext;
 	}
 
-	private <T> Optional<T> _getService(
-		Class<T> clazz, String concreteClassName) {
-
+	private <T> T _getService(Class<T> clazz, String concreteClassName) {
 		try {
 			Collection<ServiceReference<T>> serviceReferences =
 				_bundleContext.getServiceReferences(
@@ -155,17 +146,17 @@ public class BulkSelectionBackgroundTaskExecutor
 				serviceReferences.iterator();
 
 			if (iterator.hasNext()) {
-				return Optional.of(_bundleContext.getService(iterator.next()));
+				return _bundleContext.getService(iterator.next());
 			}
 
-			return Optional.empty();
+			return null;
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(invalidSyntaxException);
 			}
 
-			return Optional.empty();
+			return null;
 		}
 	}
 

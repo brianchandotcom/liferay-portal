@@ -17,7 +17,6 @@
 <%@ include file="/screen_navigation/init.jsp" %>
 
 <%
-String ariaCurrent = (String)request.getAttribute("liferay-frontend:screen-navigation:ariaCurrent");
 String containerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:containerCssClass");
 String containerWrapperCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:containerWrapperCssClass");
 String fullContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:fullContainerCssClass");

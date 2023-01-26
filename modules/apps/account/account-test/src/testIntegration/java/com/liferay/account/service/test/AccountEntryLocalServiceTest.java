@@ -208,7 +208,7 @@ public class AccountEntryLocalServiceTest {
 
 			Assert.assertTrue(
 				modelListenerException.getCause() instanceof
-					ObjectValidationRuleEngineException);
+					ObjectValidationRuleEngineException.InvalidFields);
 		}
 
 		try {
@@ -224,7 +224,7 @@ public class AccountEntryLocalServiceTest {
 
 			Assert.assertTrue(
 				modelListenerException.getCause() instanceof
-					ObjectValidationRuleEngineException);
+					ObjectValidationRuleEngineException.InvalidFields);
 		}
 	}
 

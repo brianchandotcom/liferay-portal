@@ -135,7 +135,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validateObjectEntry(objectEntry);
+		_validateObjectEntry(null, objectEntry);
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validateObjectEntry(objectEntry);
+		_validateObjectEntry(originalObjectEntry, objectEntry);
 	}
 
 	private void _executeObjectActions(
@@ -391,7 +391,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
-	private void _validateObjectEntry(ObjectEntry objectEntry)
+	private void _validateObjectEntry(
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
 		try {
@@ -407,7 +408,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 					_dtoConverterRegistry, _jsonFactory, null,
 					_objectDefinitionLocalService.getObjectDefinition(
 						objectEntry.getObjectDefinitionId()),
-					objectEntry, null, _userLocalService.getUser(userId)),
+					objectEntry, originalObjectEntry,
+					_userLocalService.getUser(userId)),
 				userId);
 		}
 		catch (PortalException portalException) {

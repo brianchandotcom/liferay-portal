@@ -21,7 +21,7 @@ import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguratio
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriter;
-import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriterFactory;
+import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriterBuilder;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
@@ -202,27 +202,29 @@ public class BatchEngineExportTaskExecutorImpl
 			OutputStream outputStream)
 		throws Exception {
 
-		BatchEngineExportTaskItemWriterFactory.Builder builder =
-			new BatchEngineExportTaskItemWriterFactory.Builder();
+		BatchEngineExportTaskItemWriterBuilder
+			batchEngineExportTaskItemWriterBuilder =
+				new BatchEngineExportTaskItemWriterBuilder();
 
-		return builder.batchEngineTaskContentType(
-			BatchEngineTaskContentType.valueOf(
-				batchEngineExportTask.getContentType())
-		).csvFileColumnDelimiter(
-			GetterUtil.getString(
-				_getCSVFileColumnDelimiter(
-					batchEngineExportTask.getCompanyId()),
-				StringPool.COMMA)
-		).fieldNames(
-			batchEngineExportTask.getFieldNamesList()
-		).itemClass(
-			_batchEngineTaskMethodRegistry.getItemClass(
-				batchEngineExportTask.getClassName())
-		).outputStream(
-			outputStream
-		).parameters(
-			batchEngineExportTask.getParameters()
-		).build();
+		return batchEngineExportTaskItemWriterBuilder.
+			batchEngineTaskContentType(
+				BatchEngineTaskContentType.valueOf(
+					batchEngineExportTask.getContentType())
+			).csvFileColumnDelimiter(
+				GetterUtil.getString(
+					_getCSVFileColumnDelimiter(
+						batchEngineExportTask.getCompanyId()),
+					StringPool.COMMA)
+			).fieldNames(
+				batchEngineExportTask.getFieldNamesList()
+			).itemClass(
+				_batchEngineTaskMethodRegistry.getItemClass(
+					batchEngineExportTask.getClassName())
+			).outputStream(
+				outputStream
+			).parameters(
+				batchEngineExportTask.getParameters()
+			).build();
 	}
 
 	private String _getCSVFileColumnDelimiter(long companyId) throws Exception {

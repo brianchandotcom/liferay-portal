@@ -10,23 +10,19 @@
  */
 
 import ClayForm from '@clayui/form';
+import dayjs from 'dayjs';
 import {useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 
 import Form from '../../../common/components/Form';
 import LoadingIndicator from '../../../common/components/Form/LoadingIndicator';
 import yupSchema, {yupResolver} from '../../../common/schema/yup';
-import {
-	downloadContentById,
-	exportTask,
-	readyToDownload,
-} from '../../../common/services/export';
 import {getPicklistByName} from '../../../common/services/picklist';
 import {getRequestsByFilter} from '../../../common/services/request';
 import {
 	FIELDSREPORT,
 	LiferayBranchType,
-	STATUS,
+	RequestType,
 	Statustype,
 } from '../../../types/index';
 
@@ -93,23 +89,56 @@ const GenerateReport = () => {
 		return true;
 	};
 
-	const downloadCsvFiltered = async () => {
-		setIsLoading(true);
-		const task = await exportTask('csv');
+	const constructionFieldsCsv = (fields: RequestType) => {
+		let fieldsCsv = '';
 
-		setTimeout(async () => {
-			readyToDownload(task.id)
-				.then(async (response) => {
-					if (response.executeStatus === STATUS.COMPLETED) {
-						await downloadContentById(task.id);
-					}
-					setIsLoading(false);
-				})
-				.catch(console.error);
-		}, 1000);
+		const headers = [
+			'Company ID',
+			'Company Name',
+			'Company Tax ID',
+			'User Name',
+			'Request Date',
+			'Description',
+			'Request Type',
+			'Grant Type',
+			'Value',
+			'Service Hours',
+			'Start Date',
+			'End Date',
+		];
+
+		fieldsCsv += `${headers.join(',')}\n`;
+
+		for (const field of fields) {
+			const body = [
+				field?.r_organization_c_evpOrganizationId,
+				field?.r_organization_c_evpOrganization?.organizationName,
+				field?.r_organization_c_evpOrganization?.taxId,
+				field?.fullName,
+				dayjs(field?.dateCreated).format('MM-DD-YYYY'),
+				field?.requestDescription,
+				field?.requestType?.name,
+				field?.grantRequestType?.name,
+				field?.grantAmount,
+				field?.totalHoursRequested,
+				dayjs(field?.startDate).format('MM-DD-YYYY'),
+				dayjs(field?.endDate).format('MM-DD-YYYY'),
+			];
+
+			fieldsCsv += `${body.join(',')}\n`;
+		}
+
+		const hiddenElement = document.createElement('a');
+		hiddenElement.href =
+			'data:text/csv;charset=utf-8,' + encodeURI(fieldsCsv);
+
+		hiddenElement.target = '_blank';
+		hiddenElement.download = 'request-report.csv';
+		hiddenElement.click();
 	};
 
 	const onSubmit: SubmitHandler<generateReportsType> = async (data: any) => {
+		setIsLoading(true);
 		const dateCheck = validateDate(
 			data.initialRequestDate,
 			data.finalRequestDate
@@ -119,8 +148,12 @@ const GenerateReport = () => {
 			return;
 		}
 
-		await downloadCsvFiltered();
-		await getRequestsByFilter(data).then((response) => response);
+		await getRequestsByFilter(data).then((response) => {
+			setTimeout(() => {
+				constructionFieldsCsv(response?.items);
+				setIsLoading(false);
+			}, 1000);
+		});
 	};
 
 	const branchesWatch = watch('liferayBranch') as string[];

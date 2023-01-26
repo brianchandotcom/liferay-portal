@@ -67,8 +67,31 @@ export enum FIELDSREPORT {
 	REQUESTSTATUS = 'requestStatus',
 }
 
-export enum STATUS {
-	COMPLETED = 'COMPLETED',
-	FAILED = 'FAILED',
-	INITIAL = 'INITIAL',
-}
+export type RequestType = {
+	createDate: string;
+	dateCreated: string;
+	dateModified: string;
+	emailAddress: string;
+	endDate: string;
+	externalReferenceCode: string;
+	fullName: string;
+	grantAmount: number;
+	grantRequestType: {key: string; value: string};
+	id: number;
+	liferayBranch: {key: string; value: string};
+	managerEmailAddress: string;
+	modifiedDate: string;
+	phoneNumber: string;
+	r_organization_c_evpOrganization: OrganizationFilterType;
+	r_organization_c_evpOrganizationERC: string;
+	r_organization_c_evpOrganizationId: number;
+	requestBehalf: {key: string; value: string};
+	requestDescription: string;
+	requestPurposes: {key: string; value: string};
+	requestStatus: {key: string; value: string};
+	requestType: {key: string; value: string};
+	scopeKey: string;
+	startDate: string;
+	status: string;
+	totalHoursRequested: number;
+};

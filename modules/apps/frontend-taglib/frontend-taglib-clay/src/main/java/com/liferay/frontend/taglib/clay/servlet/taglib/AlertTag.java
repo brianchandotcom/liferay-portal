@@ -59,6 +59,10 @@ public class AlertTag extends BaseContainerTag {
 		return _message;
 	}
 
+	public String getSymbol() {
+		return _symbol;
+	}
+
 	public String getTitle() {
 		return _title;
 	}
@@ -87,6 +91,10 @@ public class AlertTag extends BaseContainerTag {
 		_message = message;
 	}
 
+	public void setSymbol(String symbol) {
+		_symbol = symbol;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -104,6 +112,7 @@ public class AlertTag extends BaseContainerTag {
 		_dismissible = false;
 		_displayType = "info";
 		_message = null;
+		_symbol = null;
 		_title = null;
 		_variant = null;
 	}
@@ -179,7 +188,12 @@ public class AlertTag extends BaseContainerTag {
 
 		IconTag iconTag = new IconTag();
 
-		iconTag.setSymbol(_getIcon(_displayType));
+		if (Validator.isNotNull(_symbol)) {
+			iconTag.setSymbol(_symbol);
+		}
+		else {
+			iconTag.setSymbol(_getIcon(_displayType));
+		}
 
 		iconTag.doTag(pageContext);
 
@@ -224,6 +238,9 @@ public class AlertTag extends BaseContainerTag {
 		else if (displayType.equals("warning")) {
 			return "warning-full";
 		}
+		else if (displayType.equals("secondary")) {
+			return "password-policies";
+		}
 
 		return "info-circle";
 	}
@@ -248,6 +265,7 @@ public class AlertTag extends BaseContainerTag {
 	private boolean _dismissible;
 	private String _displayType = "info";
 	private String _message;
+	private String _symbol;
 	private String _title;
 	private String _variant;
 

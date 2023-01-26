@@ -72,9 +72,10 @@ public class DispatchTriggerUtil {
 		Map<String, ?> parameters) {
 
 		Map<String, String> map = new HashMap<>();
-
-		for (Map.Entry<String, ?> entry : parameters.entrySet()) {
-			map.put(entry.getKey(), String.valueOf(entry.getValue()));
+		if(parameters != null) {
+			for (Map.Entry<String, ?> entry : parameters.entrySet()) {
+				map.put(entry.getKey(), String.valueOf(entry.getValue()));
+			}
 		}
 
 		return UnicodePropertiesBuilder.create(

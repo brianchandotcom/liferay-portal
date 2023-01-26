@@ -148,6 +148,11 @@
 	<td>//tr[@data-testid='${key_attributeName}']//input[@type='checkbox']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ATTRIBUTES_CHECKBOX_DISABLED</td>
+	<td>//tr[@class='table-active'and @data-testid='${key_requiredAttribute}']//input[@type='checkbox' and @disabled]</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

@@ -664,6 +664,10 @@ public class DDMFormValuesExportImportContentProcessor
 					continue;
 				}
 
+				if (jsonObject.length() == 0) {
+					continue;
+				}
+
 				Layout importedLayout = fetchImportedLayout(
 					_portletDataContext, jsonObject);
 

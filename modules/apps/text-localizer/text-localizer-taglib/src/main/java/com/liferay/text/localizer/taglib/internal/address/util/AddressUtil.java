@@ -19,41 +19,38 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
-import java.util.Optional;
-
 /**
  * @author Pei-Jung Lan
  * @author Drew Brokke
  */
 public class AddressUtil {
 
-	public static Optional<String> getCountryNameOptional(Address address) {
+	public static String getCountryName(Address address) {
 		if (address == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		Country country = address.getCountry();
 
 		if ((country == null) || country.isNew()) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.ofNullable(
-			country.getTitle(LocaleThreadLocal.getThemeDisplayLocale()));
+		return country.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
 	}
 
-	public static Optional<String> getRegionNameOptional(Address address) {
+	public static String getRegionName(Address address) {
 		if (address == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		Region region = address.getRegion();
 
 		if ((region == null) || region.isNew()) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.ofNullable(region.getName());
+		return region.getName();
 	}
 
 }

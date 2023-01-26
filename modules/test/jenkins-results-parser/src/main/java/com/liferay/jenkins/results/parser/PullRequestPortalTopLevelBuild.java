@@ -215,6 +215,18 @@ public class PullRequestPortalTopLevelBuild
 			_stableJobResult = "SUCCESS";
 		}
 		else {
+			int uniqueBuilds = 0;
+
+			for (Build build : stableJobDownstreamBuilds) {
+				if (build.isUniqueFailure()) {
+					uniqueBuilds += 1;
+				}
+			}
+
+			if (uniqueBuilds == 0) {
+				return "SUCCESS";
+			}
+
 			_stableJobResult = "FAILURE";
 		}
 

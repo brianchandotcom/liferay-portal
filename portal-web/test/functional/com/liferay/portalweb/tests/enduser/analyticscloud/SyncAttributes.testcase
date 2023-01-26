@@ -245,4 +245,27 @@ definition {
             }
         }
     }
+
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12779 | Test Summary: Check that all defaults attributes are being checked for Attribute for People"
+    @priority = "4"
+    test CheckAllDefaultsAttributesAreCheckedForPeopleAttribute {
+		var defaultAttributes = "agreedToTermsOfUse,birthday,companyId,defaultUser,
+		emailAddressVerified,employeeNumber,employeeStatusId,facebookSn,firstName,
+		hoursOfOperation,jabberSn,jobClass,jobTitle,languageId,lastName,male,middleName,
+		parentContactId,skypeSn,smsSn,status,timeZoneId,twitterSn,userName";
+
+		var defaultAttributesList = ListUtil.newListFromString("${defaultAttributes}");
+        
+		task ("Click to configure people attributes") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+        }
+
+        task ("See that the all the default attributes are checked") {
+			ACUtils.changePagination(itemsPerPage = "50");
+
+            for (var attribute : list "${defaultAttributesList}") {	
+				AssertElementPresent(locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE", key_attributeName = "${attribute}");
+            }
+        }
+    }
 }

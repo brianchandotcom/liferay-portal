@@ -144,7 +144,7 @@ definition {
 			PRMMDFRequest.addNewActivity();
 		}
 
-		task ("And a date is set on 'Start Date' field") {
+		task ("And the current date is set on 'Start date' field") {
 			PRMMDFRequest.insertDate(
 				dateFormat = "MMddYYYY",
 				dateRange = "-1",

@@ -29,7 +29,6 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -96,9 +95,9 @@ public class GroupSelectorTag extends IncludeTag {
 	private List<Group> _getGroups(HttpServletRequest httpServletRequest) {
 		String groupType = _getGroupType(httpServletRequest);
 
-		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
-			GroupItemSelectorProviderRegistryUtil.
-				getGroupItemSelectorProviderOptional(groupType);
+		GroupItemSelectorProvider groupItemSelectorProvider =
+			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
+				groupType);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -128,14 +127,21 @@ public class GroupSelectorTag extends IncludeTag {
 			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
 				cur, delta);
 
-			_groups = groupItemSelectorProviderOptional.map(
-				groupItemSelectorProvider ->
-					groupItemSelectorProvider.getGroups(
-						group.getCompanyId(), group.getGroupId(), keywords,
-						startAndEnd[0], startAndEnd[1])
-			).orElse(
-				Collections.emptyList()
-			);
+			if (groupItemSelectorProvider == null) {
+				_groups = Collections.emptyList();
+			}
+			else {
+				List<Group> groups = groupItemSelectorProvider.getGroups(
+					group.getCompanyId(), group.getGroupId(), keywords,
+					startAndEnd[0], startAndEnd[1]);
+
+				if (groups == null) {
+					_groups = Collections.emptyList();
+				}
+				else {
+					_groups = groups;
+				}
+			}
 		}
 
 		return _groups;
@@ -149,9 +155,9 @@ public class GroupSelectorTag extends IncludeTag {
 			_groupsCount = 1;
 		}
 		else {
-			Optional<GroupItemSelectorProvider> groupSelectorProviderOptional =
+			GroupItemSelectorProvider groupSelectorProvider =
 				GroupItemSelectorProviderRegistryUtil.
-					getGroupItemSelectorProviderOptional(
+					getGroupItemSelectorProvider(
 						_getGroupType(httpServletRequest));
 
 			ThemeDisplay themeDisplay =
@@ -163,12 +169,13 @@ public class GroupSelectorTag extends IncludeTag {
 			String keywords = ParamUtil.getString(
 				httpServletRequest, "keywords");
 
-			_groupsCount = groupSelectorProviderOptional.map(
-				groupSelectorProvider -> groupSelectorProvider.getGroupsCount(
-					group.getCompanyId(), group.getGroupId(), keywords)
-			).orElse(
-				0
-			);
+			if (groupSelectorProvider == null) {
+				_groupsCount = 0;
+			}
+			else {
+				_groupsCount = groupSelectorProvider.getGroupsCount(
+					group.getCompanyId(), group.getGroupId(), keywords);
+			}
 		}
 
 		return _groupsCount;

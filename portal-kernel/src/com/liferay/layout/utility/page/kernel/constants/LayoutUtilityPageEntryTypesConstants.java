@@ -19,7 +19,7 @@ package com.liferay.layout.utility.page.kernel.constants;
  */
 public class LayoutUtilityPageEntryTypesConstants {
 
-	public static final String LAYOUT = "LAYOUT";
+	public static final String SC_NOT_FOUND = "SC_NOT_FOUND";
 
 	public static final String STATUS = "STATUS";
 

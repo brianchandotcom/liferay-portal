@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -297,8 +298,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			String articleURL = _portal.getCanonicalURL(
 				sb.toString(), themeDisplay, articleLayout);
 
-			Map<Locale, String> alternateURLs = _sitemap.getAlternateURLs(
-				articleURL, themeDisplay, articleLayout);
+			Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
+				articleURL, themeDisplay, articleLayout,
+				_getAvailableLocales(journalArticle));
 
 			for (String alternateURL : alternateURLs.values()) {
 				_sitemap.addURLElement(
@@ -309,6 +311,19 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 			processedArticleIds.add(journalArticle.getArticleId());
 		}
+	}
+
+	private Set<Locale> _getAvailableLocales(JournalArticle journalArticle) {
+		Set<Locale> availableLocales = new HashSet<>();
+
+		for (String availableLanguageId :
+				journalArticle.getAvailableLanguageIds()) {
+
+			availableLocales.add(
+				LocaleUtil.fromLanguageId(availableLanguageId));
+		}
+
+		return availableLocales;
 	}
 
 	private List<JournalArticle> _getDisplayPageArticles(

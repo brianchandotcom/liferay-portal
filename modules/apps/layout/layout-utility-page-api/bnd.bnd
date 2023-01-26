@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.layout.utility.page.api
 Bundle-Version: 6.2.0
 Export-Package:\
 	com.liferay.layout.utility.page.constants,\
+	com.liferay.layout.utility.page.converter,\
 	com.liferay.layout.utility.page.exception,\
 	com.liferay.layout.utility.page.model,\
 	com.liferay.layout.utility.page.service,\

@@ -2524,7 +2524,7 @@ definition {
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "firstName == 'Approved'");
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "givenName == 'Userfn'");
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 

@@ -1655,7 +1655,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "john adams,test test,carter braxton,jonathan franklin");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "test test,john adams,carter braxton,jonathan franklin");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1663,7 +1663,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,test test,john adams");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,john adams,test test");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",

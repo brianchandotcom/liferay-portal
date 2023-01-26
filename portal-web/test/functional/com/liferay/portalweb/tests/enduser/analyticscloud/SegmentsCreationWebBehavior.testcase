@@ -1418,11 +1418,6 @@ definition {
 			ACUtils.setItemName(itemName = "Dynamic Segment Test");
 
 			ACSegments.addSegmentField(segmentField = "Viewed Page");
-
-			ACSegments.editWebBehaviorCriterion(
-				indexField = "1",
-				occurenceNumber = "4",
-				searchTerm = "Blogs AC Title - Site Name - Liferay DXP");
 		}
 
 		task ("Check for data source origin") {
@@ -1430,7 +1425,7 @@ definition {
 
 			Click(locator1 = "ACSegments#SELECT_BUTTON");
 
-			ACSegments.searchSegment(findSegment = "${documentTitle}");
+			ACSegments.searchSegment(findSegment = "Blogs AC Title - Site Name - Liferay DXP");
 
 			ACUtils.viewGenericText(textValueList = "${dataSourceName}");
 		}

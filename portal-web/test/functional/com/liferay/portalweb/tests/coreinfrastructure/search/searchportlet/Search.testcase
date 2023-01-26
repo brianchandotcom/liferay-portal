@@ -1526,32 +1526,25 @@ definition {
 	@priority = "3"
 	test CanOrderTypeFacetTerms {
 		task ("Add some Wiki Page examples") {
-			for (var wikiNumber : list "1,2,3,4") {
-				JSONWiki.addWikiPage(
-					groupName = "Guest",
-					wikiNodeName = "Main",
-					wikiPageContent = "Wiki Page Content",
-					wikiPageName = "Wiki Page ${wikiNumber}");
+			for (var quantity : list "1,2,3,4") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title ${quantity}");
 			}
 		}
 
-		task ("Add some Documents examples and one new Page") {
-			for (var documentNumber : list "1,2") {
-				JSONDocument.addFile(
-					dmDocumentDescription = "DM Document Description",
-					dmDocumentTitle = "DM Document ${documentNumber}",
-					groupName = "Guest");
+		task ("Add two new Pages") {
+			for (var quantity : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Guest",
+					layoutName = "Test Page ${quantity}");
 			}
-
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page");
 		}
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Type facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,Document,Page,User");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Blogs Entry,Page,User");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term frequency ascending") {
@@ -1561,7 +1554,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Page,Document,Wiki Page");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Page,Blogs Entry,Document");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value ascending") {
@@ -1571,7 +1564,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Page,User,Wiki Page");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Blogs Entry,Document,Page,User");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value descending") {
@@ -1581,7 +1574,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,User,Page,Document");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Page,Document,Blogs Entry");
 		}
 	}
 

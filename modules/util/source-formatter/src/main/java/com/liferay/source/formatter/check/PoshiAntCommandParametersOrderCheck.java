@@ -78,7 +78,7 @@ public class PoshiAntCommandParametersOrderCheck extends BaseFileCheck {
 	private static final Pattern _antCommandCallPattern = Pattern.compile(
 		"\n\t+AntCommand\\((.*?)\\);\n", Pattern.DOTALL);
 	private static final Pattern _parameterPattern = Pattern.compile(
-		" -D[^=]+?=.+?(?= |\\Z)");
+		" -D[^=]+?=(\\\\\"|).+?\\1(?= |\\Z)");
 	private static final Pattern _valuePattern = Pattern.compile(
 		"\t+value1 = \"(.+)\"\\);\n");
 

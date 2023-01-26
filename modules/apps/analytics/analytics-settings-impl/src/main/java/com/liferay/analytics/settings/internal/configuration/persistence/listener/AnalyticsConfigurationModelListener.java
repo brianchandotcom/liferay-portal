@@ -53,20 +53,12 @@ public class AnalyticsConfigurationModelListener
 			commerceSyncEnabledAnalyticsChannelIds);
 
 		properties.put(
-			"previousSyncAllContacts",
-			analyticsConfiguration.syncAllContacts());
-
-		properties.put(
 			"previousSyncAllAccounts",
 			analyticsConfiguration.syncAllAccounts());
 
-		String[] syncedAccountGroupIds =
-			analyticsConfiguration.syncedAccountGroupIds();
-
-		if (!ArrayUtil.isEmpty(syncedAccountGroupIds)) {
-			properties.put(
-				"previousSyncedAccountGroupIds", syncedAccountGroupIds);
-		}
+		properties.put(
+			"previousSyncAllContacts",
+			analyticsConfiguration.syncAllContacts());
 
 		String[] syncedAccountFieldNames =
 			analyticsConfiguration.syncedAccountFieldNames();
@@ -74,6 +66,14 @@ public class AnalyticsConfigurationModelListener
 		if (!ArrayUtil.isEmpty(syncedAccountFieldNames)) {
 			properties.put(
 				"previousSyncedAccountFieldNames", syncedAccountFieldNames);
+		}
+
+		String[] syncedAccountGroupIds =
+			analyticsConfiguration.syncedAccountGroupIds();
+
+		if (!ArrayUtil.isEmpty(syncedAccountGroupIds)) {
+			properties.put(
+				"previousSyncedAccountGroupIds", syncedAccountGroupIds);
 		}
 
 		String[] syncedCommerceChannelIds =
@@ -92,14 +92,6 @@ public class AnalyticsConfigurationModelListener
 		if (!ArrayUtil.isEmpty(syncedContactFieldNames)) {
 			properties.put(
 				"previousSyncedContactFieldNames", syncedContactFieldNames);
-		}
-
-		String[] syncedUserFieldNames =
-			analyticsConfiguration.syncedUserFieldNames();
-
-		if (!ArrayUtil.isEmpty(syncedUserFieldNames)) {
-			properties.put(
-				"previousSyncedUserFieldNames", syncedUserFieldNames);
 		}
 
 		String[] syncedOrderFieldNames =
@@ -124,6 +116,14 @@ public class AnalyticsConfigurationModelListener
 		if (!ArrayUtil.isEmpty(syncedProductFieldNames)) {
 			properties.put(
 				"previousSyncedProductFieldNames", syncedProductFieldNames);
+		}
+
+		String[] syncedUserFieldNames =
+			analyticsConfiguration.syncedUserFieldNames();
+
+		if (!ArrayUtil.isEmpty(syncedUserFieldNames)) {
+			properties.put(
+				"previousSyncedUserFieldNames", syncedUserFieldNames);
 		}
 
 		String[] syncedUserGroupIds =

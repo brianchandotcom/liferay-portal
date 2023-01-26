@@ -226,7 +226,7 @@ public class AnalyticsConfigurationRegistryImpl
 				_enable((Long)dictionary.get("companyId"));
 			}
 
-			_sync(dictionary, (Long)dictionary.get("companyId"));
+			_sync((Long)dictionary.get("companyId"), dictionary);
 		}
 	}
 
@@ -457,7 +457,7 @@ public class AnalyticsConfigurationRegistryImpl
 		return false;
 	}
 
-	private void _sync(Dictionary<String, ?> dictionary, long companyId) {
+	private void _sync(long companyId, Dictionary<String, ?> dictionary) {
 		try {
 			if (Validator.isNotNull(dictionary.get("token")) &&
 				Validator.isNull(dictionary.get("previousToken"))) {
@@ -493,6 +493,33 @@ public class AnalyticsConfigurationRegistryImpl
 				Set<String> refreshDispatchTriggerNames = new HashSet<>();
 				Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
 
+				if (_analyticsSettingsManager.syncedAccountSettingsChanged(
+						companyId)) {
+
+					if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
+							companyId)) {
+
+						refreshDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+					}
+					else {
+						unscheduleDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+					}
+				}
+
+				if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
+						companyId) &&
+					_analyticsSettingsManager.syncedAccountFieldsChanged(
+						companyId)) {
+
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+				}
+
 				if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
 						companyId)) {
 
@@ -516,60 +543,6 @@ public class AnalyticsConfigurationRegistryImpl
 					}
 				}
 
-				if (_analyticsSettingsManager.syncedContactSettingsChanged(
-						companyId)) {
-
-					if (_analyticsSettingsManager.syncedContactSettingsEnabled(
-							companyId)) {
-
-						refreshDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								USER_DISPATCH_TRIGGER_NAME);
-					}
-					else {
-						unscheduleDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								USER_DISPATCH_TRIGGER_NAME);
-					}
-				}
-
-				if (_analyticsSettingsManager.syncedAccountSettingsChanged(
-						companyId)) {
-
-					if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-							companyId)) {
-
-						refreshDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
-					}
-					else {
-						unscheduleDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
-					}
-				}
-
-				if (_analyticsSettingsManager.syncedContactSettingsEnabled(
-						companyId) &&
-					_analyticsSettingsManager.syncedUserFieldsChanged(
-						companyId)) {
-
-					refreshDispatchTriggerNames.add(
-						AnalyticsDXPEntityBatchExporterConstants.
-							USER_DISPATCH_TRIGGER_NAME);
-				}
-
-				if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-						companyId) &&
-					_analyticsSettingsManager.syncedAccountFieldsChanged(
-						companyId)) {
-
-					refreshDispatchTriggerNames.add(
-						AnalyticsDXPEntityBatchExporterConstants.
-							ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
-				}
-
 				if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
 						companyId)) {
 
@@ -588,6 +561,33 @@ public class AnalyticsConfigurationRegistryImpl
 							AnalyticsDXPEntityBatchExporterConstants.
 								PRODUCT_DISPATCH_TRIGGER_NAME);
 					}
+				}
+
+				if (_analyticsSettingsManager.syncedContactSettingsChanged(
+						companyId)) {
+
+					if (_analyticsSettingsManager.syncedContactSettingsEnabled(
+							companyId)) {
+
+						refreshDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								USER_DISPATCH_TRIGGER_NAME);
+					}
+					else {
+						unscheduleDispatchTriggerNames.add(
+							AnalyticsDXPEntityBatchExporterConstants.
+								USER_DISPATCH_TRIGGER_NAME);
+					}
+				}
+
+				if (_analyticsSettingsManager.syncedContactSettingsEnabled(
+						companyId) &&
+					_analyticsSettingsManager.syncedUserFieldsChanged(
+						companyId)) {
+
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							USER_DISPATCH_TRIGGER_NAME);
 				}
 
 				if (!refreshDispatchTriggerNames.isEmpty()) {

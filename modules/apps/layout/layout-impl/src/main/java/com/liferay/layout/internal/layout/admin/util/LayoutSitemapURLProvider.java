@@ -26,14 +26,17 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -128,14 +131,25 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
 			layout);
 
-		Map<Locale, String> alternateURLs = _sitemap.getAlternateURLs(
-			layoutFullURL, themeDisplay, layout);
+		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
+			layoutFullURL, themeDisplay, layout, _getAvailableLocales(layout));
 
 		for (String alternateURL : alternateURLs.values()) {
 			_sitemap.addURLElement(
 				element, alternateURL, typeSettingsUnicodeProperties,
 				layout.getModifiedDate(), layoutFullURL, alternateURLs);
 		}
+	}
+
+	private Set<Locale> _getAvailableLocales(Layout layout) {
+		Set<Locale> availableLocales = new HashSet<>();
+
+		for (String availableLanguageId : layout.getAvailableLanguageIds()) {
+			availableLocales.add(
+				LocaleUtil.fromLanguageId(availableLanguageId));
+		}
+
+		return availableLocales;
 	}
 
 	@Reference

@@ -119,6 +119,43 @@ definition {
 		}
 	}
 
+	@description = "This is test is for LPS-173510. Verify that the start date cannot be before the current date"
+	@priority = "5"
+	test StartDateCannotBeBeforeToCurrentDate {
+		task ("Given I go to add a new MDF Request") {
+			PRMMarketing.gotoAddNewMDF();
+		}
+
+		task ("And I fill all Goals form with my informations") {
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Company Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("And when I got to activity page") {
+			PRMMDFRequest.addNewActivity();
+		}
+
+		task ("And a date is set on 'Start Date' field") {
+			PRMMDFRequest.insertDate(
+				dateFormat = "MMddYYYY",
+				dateRange = "-1",
+				fieldName = "startDate");
+		}
+
+		task ("Then an error message will be displayed") {
+			PRMMDFRequest.viewErrorMessage(errorMessage = "Start date need to be after today");
+		}
+	}
+
 	@description = "This is a test for LPS-172891. Verify that the start date cannot be equals to the current date"
 	@priority = "5"
 	test StartDateCannotBeEqualsToCurrentDate {

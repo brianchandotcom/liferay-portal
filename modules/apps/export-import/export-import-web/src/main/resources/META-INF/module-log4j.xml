@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="WARN" name="com.liferay.exportimport.web.messaging" />
-		<Logger level="ERROR" name="com.liferay.exportimport.web.portlet.action" />
-		<Logger level="ERROR" name="com.liferay.exportimport.web.upgrade" />
-	</Loggers>
-</Configuration>

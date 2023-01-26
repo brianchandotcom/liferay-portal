@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="ERROR" name="com.liferay.wiki.web.wiki.portlet.action.ExportPageMVCActionCommand" />
-	</Loggers>
-</Configuration>

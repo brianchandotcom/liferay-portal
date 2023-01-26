@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.CallFunction" />
-	</Loggers>
-</Configuration>

@@ -37,19 +37,13 @@
 		<Logger level="ERROR" name="com.ecyrd.jspwiki" />
 		<Logger level="ERROR" name="com.liferay" />
 		<Logger level="INFO" name="com.liferay.bean.portlet" />
-		<Logger level="ERROR" name="com.liferay.jdbc" />
 		<Logger level="WARN" name="com.liferay.mail.messaging" />
 		<Logger level="ERROR" name="com.liferay.mail.service.impl.MailServiceImpl" />
-		<Logger level="ERROR" name="com.liferay.mail.util" />
-		<Logger level="ERROR" name="com.liferay.mail.util.DummyHook" />
-		<Logger level="ERROR" name="com.liferay.mail.util.HookFactory" />
-		<Logger level="ERROR" name="com.liferay.mail.util.MailSessionFactoryBean" />
 		<Logger level="INFO" name="com.liferay.portal.action.JSONServiceAction" />
 		<Logger level="WARN" name="com.liferay.portal.action.LayoutAction" />
 		<Logger level="WARN" name="com.liferay.portal.bean.BeanLocatorImpl" />
 		<Logger level="INFO" name="com.liferay.portal.bootstrap.ModuleFrameworkImpl" />
 		<Logger level="INFO" name="com.liferay.portal.bootstrap.log" />
-		<Logger level="INFO" name="com.liferay.portal.captcha.CaptchaImpl" />
 		<Logger level="INFO" name="com.liferay.portal.cluster" />
 		<Logger level="WARN" name="com.liferay.portal.configuration.ConfigurationImpl" />
 		<Logger level="DEBUG" name="com.liferay.portal.convert" />
@@ -69,7 +63,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
 		<Logger level="ERROR" name="com.liferay.portal.editor" />
 		<Logger level="ERROR" name="com.liferay.portal.events.EventsProcessor" />
-		<Logger level="INFO" name="com.liferay.portal.events.FixOracleAction" />
 		<Logger level="ERROR" name="com.liferay.portal.events.GarbageCollectorAction" />
 		<Logger level="ERROR" name="com.liferay.portal.events.GlobalStartupAction" />
 		<Logger level="DEBUG" name="com.liferay.portal.events.LogMemoryUsageAction" />
@@ -80,14 +73,12 @@
 		<Logger level="ERROR" name="com.liferay.portal.events.LogoutPostAction" />
 		<Logger level="ERROR" name="com.liferay.portal.events.LogoutPreAction" />
 		<Logger level="ERROR" name="com.liferay.portal.events.ServicePreAction" />
-		<Logger level="ERROR" name="com.liferay.portal.events.ShutdownHook" />
 		<Logger level="INFO" name="com.liferay.portal.events.StartupAction" />
 		<Logger level="INFO" name="com.liferay.portal.events.StartupHelperUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.image.ImageToolImpl" />
 		<Logger level="INFO" name="com.liferay.portal.internal.servlet.MainServlet" />
 		<Logger level="WARN" name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
-		<Logger level="WARN" name="com.liferay.portal.kernel.cache.cluster.BasePortalCacheClusterChannel" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.cluster" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.dao.orm.QueryUtil" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.deploy" />
@@ -108,7 +99,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.ServletResponseUtil" />
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter" />
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
-		<Logger level="INFO" name="com.liferay.portal.kernel.test.plugins.PluginIntegrationTestHotDeployListener" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.upgrade" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.util.ClassUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.util.JavaDetector" />
@@ -117,32 +107,20 @@
 		<Logger level="INFO" name="com.liferay.portal.kernel.util.ServerDetector" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.util.ServiceProxyFactory" />
 		<Logger level="WARN" name="com.liferay.portal.language.LanguageResources" />
-		<Logger level="ERROR" name="com.liferay.portal.lar" />
 		<Logger level="INFO" name="com.liferay.portal.license" />
-		<Logger level="ERROR" name="com.liferay.portal.microsofttranslator" />
 		<Logger level="ERROR" name="com.liferay.portal.model.DefaultModelHintsImpl" />
 		<Logger level="WARN" name="com.liferay.portal.patcher.PatcherImpl" />
 		<Logger level="INFO" name="com.liferay.portal.plugin.PluginPackageUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.pop" />
-		<Logger level="WARN" name="com.liferay.portal.repository.cmis" />
-		<Logger level="ERROR" name="com.liferay.portal.sanitizer.DummySanitizerImpl" />
-		<Logger level="ERROR" name="com.liferay.portal.search.lucene" />
-		<Logger level="ERROR" name="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
-		<Logger level="ERROR" name="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
 		<Logger level="WARN" name="com.liferay.portal.security" />
 		<Logger level="ERROR" name="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" />
 		<Logger level="ERROR" name="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
-		<Logger level="ERROR" name="com.liferay.portal.security.auth.PrincipalThreadLocal" />
 		<Logger level="ERROR" name="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 		<Logger level="ERROR" name="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
-		<Logger level="WARN" name="com.liferay.portal.security.auth.SiteMinderAutoLogin" />
 		<Logger level="ERROR" name="com.liferay.portal.security.permission.AdvancedPermissionChecker" />
-		<Logger level="INFO" name="com.liferay.portal.security.permission.BasicPermissionChecker" />
 		<Logger level="WARN" name="com.liferay.portal.security.permission.ResourceActionsImpl" />
 		<Logger level="WARN" name="com.liferay.portal.security.pwd.RegExpToolkit" />
-		<Logger level="ERROR" name="com.liferay.portal.server.capabilities.ServerCapabilitiesUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.service.impl.LayoutLocalServiceImpl" />
-		<Logger level="ERROR" name="com.liferay.portal.service.impl.PermissionLocalServiceImpl" />
 		<Logger level="INFO" name="com.liferay.portal.service.impl.PortalLocalServiceImpl" />
 		<Logger level="INFO" name="com.liferay.portal.service.impl.PortalServiceImpl" />
 		<Logger level="WARN" name="com.liferay.portal.service.impl.PortletLocalServiceImpl" />
@@ -152,14 +130,11 @@
 		<Logger level="INFO" name="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" />
 		<Logger level="INFO" name="com.liferay.portal.service.impl.ThemeLocalServiceImpl" />
 		<Logger level="ERROR" name="com.liferay.portal.service.impl.ThemeServiceImpl" />
-		<Logger level="ERROR" name="com.liferay.portal.service.persistence.PermissionPool" />
-		<Logger level="ERROR" name="com.liferay.portal.service.persistence.ResourcePool" />
 		<Logger level="WARN" name="com.liferay.portal.service.persistence.impl" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet" />
 		<Logger level="WARN" name="com.liferay.portal.servlet.LanguageServlet" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.PortalSessionCreator" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.PortalSessionDestroyer" />
-		<Logger level="ERROR" name="com.liferay.portal.servlet.SharedSessionUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.autologin.AutoLoginFilter" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.cache" />
@@ -169,7 +144,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.fragment" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.gzip" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.language" />
-		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.minifier" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.sessionid.SessionIdFilter" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.sessionid.SessionIdServletRequest" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.strip" />
@@ -183,23 +157,15 @@
 		<Logger level="INFO" name="com.liferay.portal.spring.context.PortalContextLoaderListener" />
 		<Logger level="ERROR" name="com.liferay.portal.spring.context.TunnelApplicationContext" />
 		<Logger level="INFO" name="com.liferay.portal.spring.hibernate.DialectDetector" />
-		<Logger level="WARN" name="com.liferay.portal.staging" />
 		<Logger level="ERROR" name="com.liferay.portal.struts" />
 		<Logger level="ERROR" name="com.liferay.portal.struts.JSONAction" />
-		<Logger level="ERROR" name="com.liferay.portal.struts.MultiMessageResources" />
 		<Logger level="ERROR" name="com.liferay.portal.struts.PortalRequestProcessor" />
-		<Logger level="WARN" name="com.liferay.portal.struts.PortletRequestProcessor" />
-		<Logger level="ERROR" name="com.liferay.portal.struts.StrutsURLEncoder" />
 		<Logger level="ERROR" name="com.liferay.portal.struts.StrutsUtil" />
 		<Logger level="INFO" name="com.liferay.portal.template.URLResourceParser" />
 		<Logger level="INFO" name="com.liferay.portal.theme.ThemeLoader" />
 		<Logger level="ERROR" name="com.liferay.portal.tools.DBUpgrader" />
-		<Logger level="INFO" name="com.liferay.portal.tools.deploy.BaseDeployer" />
-		<Logger level="INFO" name="com.liferay.portal.tools.deploy.PortletDeployer" />
-		<Logger level="INFO" name="com.liferay.portal.tools.deploy.ThemeDeployer" />
 		<Logger level="INFO" name="com.liferay.portal.tools.sql" />
 		<Logger level="INFO" name="com.liferay.portal.upgrade" />
-		<Logger level="INFO" name="com.liferay.portal.upgrade.UpgradeProcessUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.upgrade.v6_1_1.UpgradeJournal" />
 		<Logger level="INFO" name="com.liferay.portal.upgrade.v6_2_0.BaseUpgradePortletPreferences" />
 		<Logger level="INFO" name="com.liferay.portal.upgrade.v6_2_0.UpgradePortletPreferences" />
@@ -210,12 +176,9 @@
 		<Logger level="WARN" name="com.liferay.portal.util.FileImpl" />
 		<Logger level="INFO" name="com.liferay.portal.util.JarUtil" />
 		<Logger level="DEBUG" name="com.liferay.portal.util.MaintenanceUtil" />
-		<Logger level="ERROR" name="com.liferay.portal.util.MimeTypesUtil" />
 		<Logger level="INFO" name="com.liferay.portal.util.PortalImpl" />
 		<Logger level="ERROR" name="com.liferay.portal.util.PortalInstances" />
 		<Logger level="INFO" name="com.liferay.portal.util.PropsUtil" />
-		<Logger level="ERROR" name="com.liferay.portal.velocity" />
-		<Logger level="ERROR" name="com.liferay.portal.velocity.LiferayResourceLoader" />
 		<Logger level="INFO" name="com.liferay.portal.verify" />
 		<Logger level="ERROR" name="com.liferay.portal.webdav" />
 		<Logger level="ERROR" name="com.liferay.portal.webserver.WebServerServlet" />
@@ -225,25 +188,12 @@
 		<Logger level="ERROR" name="com.liferay.portlet.RenderResponseFactory" />
 		<Logger level="WARN" name="com.liferay.portlet.SecurityPortletContainerWrapper" />
 		<Logger level="ERROR" name="com.liferay.portlet.admin" />
-		<Logger level="INFO" name="com.liferay.portlet.admin.action.EditServerAction" />
-		<Logger level="INFO" name="com.liferay.portlet.amazonrankings.AmazonRankingsPreferencesValidator" />
 		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.lar" />
 		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.messaging" />
 		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.sharepoint" />
 		<Logger level="INFO" name="com.liferay.portlet.documentlibrary.store" />
 		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.util" />
-		<Logger level="ERROR" name="com.liferay.portlet.documentlibrary.util.DLIndexer" />
 		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.webdav" />
-		<Logger level="WARN" name="com.liferay.portlet.mail" />
-		<Logger level="ERROR" name="com.liferay.portlet.portletconfiguration.action" />
-		<Logger level="ERROR" name="com.liferay.portlet.usersadmin.action.EditUserPortraitAction" />
-		<Logger level="WARN" name="com.liferay.portlet.usersadmin.util.OrganizationSearchTerms" />
-		<Logger level="INFO" name="com.liferay.portlet.webproxy" />
-		<Logger level="INFO" name="com.liferay.resourcesimporter" />
-		<Logger level="INFO" name="com.liferay.samplestruts" />
-		<Logger level="INFO" name="com.liferay.sampletest" />
-		<Logger level="INFO" name="com.liferay.testhook" />
-		<Logger level="ERROR" name="com.liferay.util.JNDIUtil" />
 		<Logger level="ERROR" name="com.liferay.util.dao" />
 		<Logger level="INFO" name="com.liferay.util.dao.orm.CustomSQLUtil" />
 		<Logger level="ERROR" name="com.opensymphony.oscache" />

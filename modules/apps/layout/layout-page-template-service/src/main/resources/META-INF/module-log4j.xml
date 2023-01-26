@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="WARN" name="com.liferay.layout.page.template.internal.upgrade.v1_1_0.UpgradeLayoutPrototype" />
-	</Loggers>
-</Configuration>

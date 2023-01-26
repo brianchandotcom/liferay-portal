@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="ERROR" name="com.liferay.staging.bar.web.portlet.action" />
-		<Logger level="ERROR" name="com.liferay.staging.bar.web.upgrade" />
-	</Loggers>
-</Configuration>

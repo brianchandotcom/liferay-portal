@@ -5,6 +5,5 @@
 		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter" />
 		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider" />
 		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider" />
-		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistry" />
 	</Loggers>
 </Configuration>

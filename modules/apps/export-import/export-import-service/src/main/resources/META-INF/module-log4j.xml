@@ -3,21 +3,11 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="ERROR" name="com.liferay.exportimport" />
-		<Logger level="ERROR" name="com.liferay.exportimport.backgroundtask" />
-		<Logger level="WARN" name="com.liferay.exportimport.content.processor.base" />
 		<Logger level="WARN" name="com.liferay.exportimport.controller" />
 		<Logger level="INFO" name="com.liferay.exportimport.internal.background.task" />
 		<Logger level="ERROR" name="com.liferay.exportimport.internal.background.task.display" />
 		<Logger level="INFO" name="com.liferay.exportimport.lar" />
 		<Logger level="ERROR" name="com.liferay.exportimport.lifecycle" />
-		<Logger level="ERROR" name="com.liferay.exportimport.messaging" />
-		<Logger level="ERROR" name="com.liferay.exportimport.model.listener" />
 		<Logger level="WARN" name="com.liferay.exportimport.portlet.preferences.processor.base" />
-		<Logger level="WARN" name="com.liferay.exportimport.portlet.preferences.processor.capability" />
-		<Logger level="ERROR" name="com.liferay.exportimport.search" />
-		<Logger level="ERROR" name="com.liferay.exportimport.staged.model.repository.base" />
-		<Logger level="WARN" name="com.liferay.exportimport.staging" />
-		<Logger level="WARN" name="com.liferay.exportimport.staging.permission" />
-		<Logger level="WARN" name="com.liferay.exportimport.xstream" />
 	</Loggers>
 </Configuration>

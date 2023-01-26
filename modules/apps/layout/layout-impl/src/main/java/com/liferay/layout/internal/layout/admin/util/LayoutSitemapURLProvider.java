@@ -124,10 +124,9 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			return;
 		}
 
-		String layoutFullURL = _portal.getLayoutFullURL(layout, themeDisplay);
-
-		layoutFullURL = _portal.getCanonicalURL(
-			layoutFullURL, themeDisplay, layout);
+		String layoutFullURL = _portal.getCanonicalURL(
+			_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
+			layout);
 
 		Map<Locale, String> alternateURLs = _sitemap.getAlternateURLs(
 			layoutFullURL, themeDisplay, layout);

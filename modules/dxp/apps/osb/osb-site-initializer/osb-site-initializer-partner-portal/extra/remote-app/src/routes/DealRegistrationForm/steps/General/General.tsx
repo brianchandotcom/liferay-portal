@@ -30,9 +30,13 @@ const General = ({
 	onCancel,
 	onContinue,
 }: PRMFormikPageProps & DealRegistrationStepProps) => {
-	const {isValid, setFieldValue, values, ...formikHelpers} = useFormikContext<
-		DealRegistration
-	>();
+	const {
+		dirty,
+		isValid,
+		setFieldValue,
+		values,
+		...formikHelpers
+	} = useFormikContext<DealRegistration>();
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
@@ -321,7 +325,7 @@ const General = ({
 
 				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
-						disabled={!isValid}
+						disabled={!isValid || !dirty}
 						onClick={() =>
 							onContinue?.(formikHelpers, StepType.REVIEW)
 						}

@@ -52,6 +52,19 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProductSpecificationResourceImpl
 	extends BaseProductSpecificationResourceImpl implements NestedFieldSupport {
 
+	@Override
+	public void deleteProductSpecification(Long id) throws Exception {
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValue(id);
+
+		_cpDefinitionSpecificationOptionValueService.
+			deleteCPDefinitionSpecificationOptionValue(
+				cpDefinitionSpecificationOptionValue.
+					getCPDefinitionSpecificationOptionValueId());
+	}
+
 	@NestedField(parentClass = Product.class, value = "productSpecifications")
 	@Override
 	public Page<ProductSpecification> getProductIdProductSpecificationsPage(
@@ -60,6 +73,34 @@ public class ProductSpecificationResourceImpl
 
 		return _productSpecificationHelper.getProductSpecificationsPage(
 			id, contextAcceptLanguage.getPreferredLocale(), pagination);
+	}
+
+	@Override
+	public ProductSpecification getProductSpecification(Long id)
+		throws Exception {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValue(id);
+
+		return _toProductSpecification(
+			cpDefinitionSpecificationOptionValue.
+				getCPDefinitionSpecificationOptionValueId());
+	}
+
+	@Override
+	public ProductSpecification patchProductSpecification(
+			Long id, ProductSpecification productSpecification)
+		throws Exception {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue = _updateProductSpecification(
+				id, productSpecification);
+
+		return _toProductSpecification(
+			cpDefinitionSpecificationOptionValue.
+				getCPDefinitionSpecificationOptionValueId());
 	}
 
 	@Override

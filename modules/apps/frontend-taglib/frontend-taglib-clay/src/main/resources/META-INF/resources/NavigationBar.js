@@ -17,9 +17,15 @@ import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React from 'react';
 
-export default function NavigationBar({cssClass, inverted, navigationItems}) {
+export default function NavigationBar({
+	activeItemAriaCurrent,
+	cssClass,
+	inverted,
+	navigationItems,
+}) {
 	return (
 		<ClayNavigationBar
+			aria-current={activeItemAriaCurrent}
 			className={cssClass}
 			inverted={inverted}
 			triggerLabel={navigationItems.find(({active}) => active)?.label}

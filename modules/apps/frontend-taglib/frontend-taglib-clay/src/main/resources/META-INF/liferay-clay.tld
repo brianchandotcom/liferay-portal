@@ -1869,6 +1869,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>activeItemAriaCurrent</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

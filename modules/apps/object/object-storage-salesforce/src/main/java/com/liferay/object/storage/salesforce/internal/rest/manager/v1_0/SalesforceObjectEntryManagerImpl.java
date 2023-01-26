@@ -209,7 +209,9 @@ public class SalesforceObjectEntryManagerImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return null;
+		return _getObjectEntries(
+			companyId, objectDefinition, scopeKey, dtoConverterContext,
+			pagination, search, sorts);
 	}
 
 	@Override

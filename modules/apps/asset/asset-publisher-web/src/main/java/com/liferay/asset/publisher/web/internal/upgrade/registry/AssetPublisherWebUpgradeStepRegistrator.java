@@ -60,6 +60,11 @@ public class AssetPublisherWebUpgradeStepRegistrator
 			"1.0.3", "1.0.4",
 			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_4.
 				UpgradePortletPreferences());
+
+		registry.register(
+			"1.0.4", "1.0.5",
+			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_5.
+				UpgradePortletPreferences());
 	}
 
 	@Reference

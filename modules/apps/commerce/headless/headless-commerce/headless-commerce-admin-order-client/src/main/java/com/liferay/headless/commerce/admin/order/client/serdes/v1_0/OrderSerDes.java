@@ -203,6 +203,20 @@ public class OrderSerDes {
 			sb.append("\"");
 		}
 
+		if (order.getCreatedByEmailAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"createdByEmailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getCreatedByEmailAddress()));
+
+			sb.append("\"");
+		}
+
 		if (order.getCurrencyCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1352,6 +1366,15 @@ public class OrderSerDes {
 				liferayToJSONDateFormat.format(order.getCreateDate()));
 		}
 
+		if (order.getCreatedByEmailAddress() == null) {
+			map.put("createdByEmailAddress", null);
+		}
+		else {
+			map.put(
+				"createdByEmailAddress",
+				String.valueOf(order.getCreatedByEmailAddress()));
+		}
+
 		if (order.getCurrencyCode() == null) {
 			map.put("currencyCode", null);
 		}
@@ -2229,6 +2252,14 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "createDate")) {
 				if (jsonParserFieldValue != null) {
 					order.setCreateDate(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "createdByEmailAddress")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setCreatedByEmailAddress(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {

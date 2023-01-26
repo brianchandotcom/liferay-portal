@@ -190,6 +190,7 @@ public abstract class BaseOrderResourceTestCase {
 		order.setAdvanceStatus(regex);
 		order.setChannelExternalReferenceCode(regex);
 		order.setCouponCode(regex);
+		order.setCreatedByEmailAddress(regex);
 		order.setCurrencyCode(regex);
 		order.setDeliveryTermDescription(regex);
 		order.setDeliveryTermName(regex);
@@ -227,6 +228,7 @@ public abstract class BaseOrderResourceTestCase {
 		Assert.assertEquals(regex, order.getAdvanceStatus());
 		Assert.assertEquals(regex, order.getChannelExternalReferenceCode());
 		Assert.assertEquals(regex, order.getCouponCode());
+		Assert.assertEquals(regex, order.getCreatedByEmailAddress());
 		Assert.assertEquals(regex, order.getCurrencyCode());
 		Assert.assertEquals(regex, order.getDeliveryTermDescription());
 		Assert.assertEquals(regex, order.getDeliveryTermName());
@@ -981,6 +983,16 @@ public abstract class BaseOrderResourceTestCase {
 
 			if (Objects.equals("createDate", additionalAssertFieldName)) {
 				if (order.getCreateDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"createdByEmailAddress", additionalAssertFieldName)) {
+
+				if (order.getCreatedByEmailAddress() == null) {
 					valid = false;
 				}
 
@@ -2097,6 +2109,19 @@ public abstract class BaseOrderResourceTestCase {
 			if (Objects.equals("createDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getCreateDate(), order2.getCreateDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"createdByEmailAddress", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getCreatedByEmailAddress(),
+						order2.getCreatedByEmailAddress())) {
 
 					return false;
 				}
@@ -3449,6 +3474,14 @@ public abstract class BaseOrderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("createdByEmailAddress")) {
+			sb.append("'");
+			sb.append(String.valueOf(order.getCreatedByEmailAddress()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("currencyCode")) {
 			sb.append("'");
 			sb.append(String.valueOf(order.getCurrencyCode()));
@@ -4188,6 +4221,8 @@ public abstract class BaseOrderResourceTestCase {
 				couponCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
+				createdByEmailAddress = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				deliveryTermDescription = StringUtil.toLowerCase(

@@ -300,6 +300,27 @@ public class Order implements Cloneable, Serializable {
 
 	protected Date createDate;
 
+	public String getCreatedByEmailAddress() {
+		return createdByEmailAddress;
+	}
+
+	public void setCreatedByEmailAddress(String createdByEmailAddress) {
+		this.createdByEmailAddress = createdByEmailAddress;
+	}
+
+	public void setCreatedByEmailAddress(
+		UnsafeSupplier<String, Exception> createdByEmailAddressUnsafeSupplier) {
+
+		try {
+			createdByEmailAddress = createdByEmailAddressUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String createdByEmailAddress;
+
 	public String getCurrencyCode() {
 		return currencyCode;
 	}

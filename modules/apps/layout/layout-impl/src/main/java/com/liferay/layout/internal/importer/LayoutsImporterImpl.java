@@ -37,7 +37,6 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
-import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.UtilityPageTemplateUtil;
 import com.liferay.layout.internal.importer.exception.DropzoneLayoutStructureItemException;
 import com.liferay.layout.internal.importer.structure.util.LayoutStructureItemImporter;
 import com.liferay.layout.internal.importer.validator.DisplayPageTemplateValidator;
@@ -62,6 +61,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageExportImportConstants;
+import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConverter;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
@@ -2113,7 +2113,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				utilityPageTemplate.getExternalReferenceCode(), _groupId,
 				layoutUtilityPageEntry, utilityPageTemplate.getName(),
 				_utilityPageTemplateEntry.getPageDefinition(),
-				UtilityPageTemplateUtil.convertToInternalValue(
+				LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
 					utilityPageTemplate.getTypeAsString()),
 				_overwrite, _utilityPageTemplateEntry.getThumbnailZipEntry(),
 				_utilityPageTemplateEntry.getZipPath(), _zipFile);

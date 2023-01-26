@@ -222,4 +222,27 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12778 | Test Summary: Cannot deselect required Attributes for People"
+    @priority = "5"
+    test CheckNotPossibleToDeselectRequiredAttributesForPeople {
+		var requiredAttributes = "classNameId,classPK,contactId,contactId,createDate,createDate,
+		emailAddress,emailAddress,modifiedDate,modifiedDate,userId,uuid";
+
+		var requiredAttributesList = ListUtil.newListFromString("${requiredAttributes}");
+		
+		task ("Click to configure people attributes") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+        }
+
+        task ("See that the required attributes can not be deselected (the input is disabled)") {
+			ACUtils.changePagination(itemsPerPage = "50");
+
+
+			for (var attribute : list "${requiredAttributesList}") {
+				AssertElementPresent(
+					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED", 
+					key_requiredAttribute = "${attribute}");
+            }
+        }
+    }
 }

@@ -97,19 +97,16 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "Text");
 
-		var originalFieldReference = DEBuilder.getFieldReference(fieldLabel = "Text");
-
 		DEBuilder.editFieldReference(
 			fieldLabel = "Text",
 			fieldReference = "");
 
-		WebContentStructures.saveCP();
+		Button.click(button = "Save");
 
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DEBuilder.assertFieldReference(
-			fieldLabel = "Text",
-			fieldReference = "${originalFieldReference}");
+		AssertTextEquals.assertPartialText(
+			key_alertMessage = "Invalid characters were defined for field",
+			locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+			value1 = "Invalid characters were defined for field");
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be blank for the Options of a field."

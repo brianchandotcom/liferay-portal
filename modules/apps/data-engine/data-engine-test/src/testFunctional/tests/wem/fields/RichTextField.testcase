@@ -182,10 +182,6 @@ definition {
 	test PublishWebContentWithEmptyRequiredRichText {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
-
 		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
 
 		WebContentStructures.saveCP();

@@ -587,7 +587,7 @@ definition {
 		task ("Then error message 'HTML element name is empty'") {
 			AssertElementPresent(
 				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
-				text = "HTML element name is empty.");
+				text = "HTML Element field is required");
 		}
 
 		task ("And Then Remote App is not added") {

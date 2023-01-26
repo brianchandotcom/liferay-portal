@@ -31,6 +31,8 @@ public class BatchPlannerPlanConstants {
 
 	public static final String EXTERNAL_TYPE_JSONL = "JSONL";
 
+	public static final String EXTERNAL_TYPE_JSONT = "JSONT";
+
 	public static final String EXTERNAL_TYPE_TXT = "TXT";
 
 	public static final String EXTERNAL_TYPE_XLS = "XLS";
@@ -41,8 +43,8 @@ public class BatchPlannerPlanConstants {
 
 	public static final String[] EXTERNAL_TYPES = {
 		EXTERNAL_TYPE_CSV, EXTERNAL_TYPE_JSON, EXTERNAL_TYPE_JSONL,
-		EXTERNAL_TYPE_TXT, EXTERNAL_TYPE_XLS, EXTERNAL_TYPE_XLSX,
-		EXTERNAL_TYPE_XML
+		EXTERNAL_TYPE_JSONT, EXTERNAL_TYPE_TXT, EXTERNAL_TYPE_XLS,
+		EXTERNAL_TYPE_XLSX, EXTERNAL_TYPE_XML
 	};
 
 	public static final String LABEL_COMPLETED = "completed";
@@ -141,6 +143,8 @@ public class BatchPlannerPlanConstants {
 		EXTERNAL_TYPE_JSON, ContentTypes.APPLICATION_JSON
 	).put(
 		EXTERNAL_TYPE_JSONL, "application/x-ndjson"
+	).put(
+		EXTERNAL_TYPE_JSONT, ContentTypes.APPLICATION_JSON
 	).put(
 		EXTERNAL_TYPE_TXT, ContentTypes.TEXT_PLAIN
 	).put(

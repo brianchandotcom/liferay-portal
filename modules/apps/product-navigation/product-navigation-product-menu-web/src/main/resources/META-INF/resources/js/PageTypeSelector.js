@@ -86,8 +86,9 @@ function PageTypeSelector({
 	return (
 		<div className="align-items-center d-flex page-type-selector">
 			<Picker
+				UNSAFE_menuClassName="cadmin"
 				aria-label={Liferay.Language.get('pages-type')}
-				className="form-control-sm w-auto"
+				className="form-control-sm pr-5 w-auto"
 				items={pageTypeOptions.filter((option) => option.items.length)}
 				onSelectionChange={handleSelect}
 				selectedKey={pageTypeSelectedOption}

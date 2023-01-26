@@ -1408,35 +1408,35 @@ definition {
 		}
 	}
 
-	@description = "LPS-156566 - Verify an Action with Groovy Script can be triggered after deleting an entry."
+	@description = "LPS-146871 - Verify an Action with Groovy Script can be triggered after deleting an entry."
 	@priority = "4"
 	test CanTriggerActionDeleteWithGroovyScript {
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 156",
-				objectName = "CustomObject156",
-				pluralLabelName = "Custom Objects 156");
+				labelName = "Custom Object 156566",
+				objectName = "CustomObject156566",
+				pluralLabelName = "Custom Objects 156566");
 
 			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Integer",
-				fieldLabelName = "Custom Integer",
-				fieldName = "customInteger",
-				fieldType = "Integer",
-				isRequired = "false",
-				objectName = "CustomObject156");
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject156566");
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156");
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156566");
 
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customInteger",
-				objectName = "CustomObject156",
-				value = "1234");
+				fieldName = "customField",
+				objectName = "CustomObject156566",
+				value = "Entry Test");
 		}
 
 		task ("When an action is created using Groovy Script and is triggered when an object entry is deleted") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156566");
 
 			ObjectAdmin.goToActionsTab();
 
@@ -1444,17 +1444,28 @@ definition {
 				actionLabel = "Action Label",
 				actionName = "ActionName",
 				active = "true",
-				scriptValidation = "print 'Success'",
+				scriptValidation = "print('Hello world')",
 				thenAction = "Groovy Script",
 				whenAction = "On After Delete");
 		}
 
 		task ("Then deleting an object entry will trigger the action") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject156");
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156566");
 
-			ObjectPortlet.deleteEntry(entry = "1234");
+			ObjectPortlet.deleteEntry(entry = "Entry Test");
 
-			AssertConsoleTextPresent(value1 = "Success");
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156566");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "ActionName",
+				status = "Success");
+
+			AssertConsoleTextPresent(value1 = "Hello world");
 		}
 	}
 

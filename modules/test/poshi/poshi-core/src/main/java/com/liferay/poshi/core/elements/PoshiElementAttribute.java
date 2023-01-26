@@ -104,7 +104,24 @@ public class PoshiElementAttribute
 			return;
 		}
 
-		PoshiNode.super.validatePoshiScript();
+		String originalPoshiScript = getPoshiScript();
+		String generatedPoshiScript = toPoshiScript();
+
+		originalPoshiScript = originalPoshiScript.replaceAll("\\s+", "");
+
+		generatedPoshiScript = generatedPoshiScript.replaceAll("\\s+", "");
+
+		if (!originalPoshiScript.equals(generatedPoshiScript)) {
+			originalPoshiScript = originalPoshiScript.replaceFirst("\"", "");
+
+			originalPoshiScript = originalPoshiScript.substring(
+				0, originalPoshiScript.length() - 1);
+
+			if (!originalPoshiScript.equals(generatedPoshiScript)) {
+				throw new PoshiScriptParserException(
+					PoshiScriptParserException.TRANSLATION_LOSS_MESSAGE, this);
+			}
+		}
 	}
 
 	private String _poshiScript;

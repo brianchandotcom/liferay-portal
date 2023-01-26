@@ -22,6 +22,12 @@ import React, {MouseEventHandler, useState} from 'react';
 import InviteUserFormGroup from './InviteUsersFormGroup';
 import {InputGroup, MultiSelectItem, ValidatableMultiSelectItem} from './types';
 
+const deduplicatePredicate = (
+	multiSelectItem: MultiSelectItem,
+	index: number,
+	array: MultiSelectItem[]
+) => index === array.findIndex((item) => item.value === multiSelectItem.value);
+
 interface IProps {
 	accountEntryId: number;
 	availableAccountRoles: MultiSelectItem[];
@@ -69,25 +75,27 @@ function InviteUsersForm({
 	) {
 		const inputGroup = getInputGroup(inputGroupId);
 
-		inputGroup.accountRoles = accountRoles.map((accountRole) => {
-			const validatedAccountRole: ValidatableMultiSelectItem = {
-				...accountRole,
-			};
+		inputGroup.accountRoles = accountRoles
+			.filter(deduplicatePredicate)
+			.map((accountRole) => {
+				const validatedAccountRole: ValidatableMultiSelectItem = {
+					...accountRole,
+				};
 
-			if (
-				!availableAccountRoles.some(
-					(availableAccountRole) =>
-						availableAccountRole.label === accountRole.label
-				)
-			) {
-				validatedAccountRole.errorMessage = sub(
-					Liferay.Language.get('x-is-not-a-valid-role'),
-					accountRole.label
-				);
-			}
+				if (
+					!availableAccountRoles.some(
+						(availableAccountRole) =>
+							availableAccountRole.label === accountRole.label
+					)
+				) {
+					validatedAccountRole.errorMessage = sub(
+						Liferay.Language.get('x-is-not-a-valid-role'),
+						accountRole.label
+					);
+				}
 
-			return validatedAccountRole;
-		});
+				return validatedAccountRole;
+			});
 
 		setInputGroups([...inputGroups]);
 	}
@@ -98,7 +106,7 @@ function InviteUsersForm({
 	) {
 		const inputGroup = getInputGroup(inputGroupId);
 
-		const promises = emailAddresses.map(
+		const promises = emailAddresses.filter(deduplicatePredicate).map(
 			(emailAddress) =>
 				new Promise<ValidatableMultiSelectItem>((resolve) => {
 					const validatedEmailAddress: ValidatableMultiSelectItem = {

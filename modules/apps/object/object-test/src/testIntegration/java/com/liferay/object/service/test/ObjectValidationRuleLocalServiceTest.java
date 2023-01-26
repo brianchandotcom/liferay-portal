@@ -75,7 +75,7 @@ public class ObjectValidationRuleLocalServiceTest {
 	public void testAddObjectValidationRule() throws Exception {
 		_testAddObjectValidationRuleFailure(
 			"abcdefghijklmnopqrstuvwxyz",
-			ObjectValidationRuleEngineException.class,
+			ObjectValidationRuleEngineException.NoSuchEngine.class,
 			"Engine \"abcdefghijklmnopqrstuvwxyz\" does not exist",
 			RandomTestUtil.randomString(), _VALID_DDM_SCRIPT);
 		_testAddObjectValidationRuleFailure(
@@ -92,7 +92,8 @@ public class ObjectValidationRuleLocalServiceTest {
 			ObjectValidationRuleScriptException.class, "syntax-error",
 			RandomTestUtil.randomString(), "import;\ninvalidFields = false;");
 		_testAddObjectValidationRuleFailure(
-			StringPool.BLANK, ObjectValidationRuleEngineException.class,
+			StringPool.BLANK,
+			ObjectValidationRuleEngineException.MustNotBeNull.class,
 			"Engine is null", RandomTestUtil.randomString(), _VALID_DDM_SCRIPT);
 
 		_testAddObjectValidationRuleSuccess(

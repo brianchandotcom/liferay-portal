@@ -21,21 +21,67 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectValidationRuleEngineException extends PortalException {
 
-	public ObjectValidationRuleEngineException() {
+	public String getMessage() {
+		return _message;
 	}
 
-	public ObjectValidationRuleEngineException(String msg) {
-		super(msg);
+	public String getMessageKey() {
+		return _messageKey;
 	}
 
-	public ObjectValidationRuleEngineException(
-		String msg, Throwable throwable) {
+	public static class InvalidFields
+		extends ObjectValidationRuleEngineException {
 
-		super(msg, throwable);
+		public InvalidFields(String message) {
+			super(message);
+		}
+
 	}
 
-	public ObjectValidationRuleEngineException(Throwable throwable) {
-		super(throwable);
+	public static class InvalidScript
+		extends ObjectValidationRuleEngineException {
+
+		public InvalidScript() {
+			super(
+				"There was an error validating your data.",
+				"there-was-an-error-validating-your-data");
+		}
+
 	}
+
+	public static class MustNotBeNull
+		extends ObjectValidationRuleEngineException {
+
+		public MustNotBeNull() {
+			super("Engine is null");
+		}
+
+	}
+
+	public static class NoSuchEngine
+		extends ObjectValidationRuleEngineException {
+
+		public NoSuchEngine(String engine) {
+			super("Engine \"" + engine + "\" does not exist");
+		}
+
+	}
+
+	private ObjectValidationRuleEngineException(String message) {
+		super(message);
+
+		_message = message;
+	}
+
+	private ObjectValidationRuleEngineException(
+		String message, String messageKey) {
+
+		super(message);
+
+		_messageKey = messageKey;
+	}
+
+	private String _message;
+	private String _messageKey;
 
 }

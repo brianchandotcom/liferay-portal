@@ -24,11 +24,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -193,12 +191,6 @@ public class SitemapImpl implements Sitemap {
 			String layoutUuid, long groupId, boolean privateLayout,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
-
-		Group currentGroup = _groupLocalService.getGroup(groupId);
-
-		if (!currentGroup.isActive()) {
-			return null;
-		}
 
 		if (Validator.isNull(layoutUuid) &&
 			PropsValues.XML_SITEMAP_INDEX_ENABLED) {
@@ -445,9 +437,6 @@ public class SitemapImpl implements Sitemap {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitemapImpl.class.getName());
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

@@ -62,8 +62,6 @@ public class SitemapStrutsAction implements StrutsAction {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			String layoutUuid = ParamUtil.getString(
-				httpServletRequest, "layoutUuid");
 			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 			LayoutSet layoutSet = null;
@@ -120,13 +118,25 @@ public class SitemapStrutsAction implements StrutsAction {
 				}
 			}
 
-			String sitemap = SitemapUtil.getSitemap(
-				layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				themeDisplay);
+			Group currentGroup = _groupLocalService.getGroup(
+				layoutSet.getGroupId());
 
-			ServletResponseUtil.sendFile(
-				httpServletRequest, httpServletResponse, null,
-				sitemap.getBytes(StringPool.UTF8), ContentTypes.TEXT_XML_UTF8);
+			if (currentGroup.isActive()) {
+				String layoutUuid = ParamUtil.getString(
+					httpServletRequest, "layoutUuid");
+
+				String sitemap = SitemapUtil.getSitemap(
+					layoutUuid, layoutSet.getGroupId(),
+					layoutSet.isPrivateLayout(), themeDisplay);
+
+				ServletResponseUtil.sendFile(
+					httpServletRequest, httpServletResponse, null,
+					sitemap.getBytes(StringPool.UTF8),
+					ContentTypes.TEXT_XML_UTF8);
+			}
+			else {
+				throw new NoSuchLayoutSetException();
+			}
 		}
 		catch (NoSuchLayoutSetException noSuchLayoutSetException) {
 			_portal.sendError(

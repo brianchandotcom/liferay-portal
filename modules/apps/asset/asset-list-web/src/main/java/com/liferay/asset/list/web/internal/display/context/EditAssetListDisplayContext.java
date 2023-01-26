@@ -999,6 +999,8 @@ public class EditAssetListDisplayContext {
 		).setParameter(
 			"eventName", _portletResponse.getNamespace() + "selectEntity"
 		).setParameter(
+			"groupId", _themeDisplay.getScopeGroupId()
+		).setParameter(
 			"selectedSegmentsEntryIds",
 			StringUtil.merge(getSelectedSegmentsEntryIds())
 		).setWindowState(

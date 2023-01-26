@@ -14,17 +14,22 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -45,8 +50,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -99,11 +102,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			_validateCriteria(criteria, dynamic);
 
 			if (segmentsEntryId <= 0) {
-				long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-				if (groupId > 0) {
-					serviceContext.setScopeGroupId(groupId);
-				}
+				serviceContext.setScopeGroupId(
+					_getGroupId(actionRequest, serviceContext));
 
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
 					segmentsEntryKey, nameMap, descriptionMap, active,
@@ -159,30 +159,51 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private long _getGroupId(
+			ActionRequest actionRequest, ServiceContext serviceContext)
+		throws PortalException {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		if (groupId == 0) {
+			groupId = serviceContext.getScopeGroupId();
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group.isControlPanel()) {
+			Company company = _companyLocalService.getCompany(
+				group.getCompanyId());
+
+			return company.getGroupId();
+		}
+
+		return groupId;
+	}
+
 	private String _getSaveAndContinueRedirect(
-			ActionRequest actionRequest, SegmentsEntry segmentsEntry,
-			String redirect)
-		throws Exception {
+		ActionRequest actionRequest, SegmentsEntry segmentsEntry,
+		String redirect) {
 
-		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(actionRequest);
 
-		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, portletConfig.getPortletName(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/segments/edit_segments_entry");
-		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
-		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter(
-			"groupId", String.valueOf(segmentsEntry.getGroupId()), false);
-		portletURL.setParameter(
-			"segmentsEntryId",
-			String.valueOf(segmentsEntry.getSegmentsEntryId()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				SegmentsPortletKeys.SEGMENTS)
+		).setMVCRenderCommandName(
+			"/segments/edit_segments_entry"
+		).setCMD(
+			Constants.UPDATE
+		).setRedirect(
+			redirect
+		).setParameter(
+			"groupId", segmentsEntry.getGroupId()
+		).setParameter(
+			"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
+		).setWindowState(
+			actionRequest.getWindowState()
+		).buildString();
 	}
 
 	private void _validateCriteria(Criteria criteria, boolean dynamic)
@@ -192,6 +213,12 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			throw new SegmentsEntryCriteriaException();
 		}
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Localization _localization;

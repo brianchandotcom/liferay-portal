@@ -2524,7 +2524,7 @@ definition {
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "firstName == 'Approved'");
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "givenName == 'Userfn'");
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
@@ -2565,7 +2565,7 @@ definition {
 
 			User.openUsersAdmin();
 
-			AssertElementNotPresent(
+			AssertElementPresent(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
 				value1 = "Userfn Userln");
 		}

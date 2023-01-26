@@ -48,4 +48,9 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {6, 10});
 	}
 
+	@Test
+	public void testSortAntCommandParameters() throws Exception {
+		test("SortAntCommandParameters.testtestcase");
+	}
+
 }

@@ -141,8 +141,10 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
-			if (_objectDefinition.isDefaultStorageType()) {
-				return _getCollectionInfoPageByDefaultStorageType(
+			if (!_objectDefinition.isAccountEntryRestricted() &&
+				_objectDefinition.isDefaultStorageType()) {
+
+				return _getCollectionInfoPageNotAccountEntryRestricted(
 					collectionQuery);
 			}
 
@@ -403,27 +405,6 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		};
 	}
 
-	private InfoPage<ObjectEntry> _getCollectionInfoPageByDefaultStorageType(
-			CollectionQuery collectionQuery)
-		throws Exception {
-
-		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
-			_objectDefinition.getClassName());
-
-		Hits hits = indexer.search(_buildSearchContext(collectionQuery));
-
-		return InfoPage.of(
-			TransformUtil.transformToList(
-				hits.getDocs(),
-				document -> {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.ENTRY_CLASS_PK));
-
-					return _objectEntryLocalService.fetchObjectEntry(classPK);
-				}),
-			collectionQuery.getPagination(), hits.getLength());
-	}
-
 	private InfoPage<ObjectEntry> _getCollectionInfoPageByObjectEntryManager(
 			CollectionQuery collectionQuery)
 		throws Exception {
@@ -462,6 +443,28 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				objectEntry -> _toObjectEntry(
 					_objectDefinition.getObjectDefinitionId(), objectEntry)),
 			collectionQuery.getPagination(), objectEntries.size());
+	}
+
+	private InfoPage<ObjectEntry>
+			_getCollectionInfoPageNotAccountEntryRestricted(
+				CollectionQuery collectionQuery)
+		throws Exception {
+
+		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
+			_objectDefinition.getClassName());
+
+		Hits hits = indexer.search(_buildSearchContext(collectionQuery));
+
+		return InfoPage.of(
+			TransformUtil.transformToList(
+				hits.getDocs(),
+				document -> {
+					long classPK = GetterUtil.getLong(
+						document.get(Field.ENTRY_CLASS_PK));
+
+					return _objectEntryLocalService.fetchObjectEntry(classPK);
+				}),
+			collectionQuery.getPagination(), hits.getLength());
 	}
 
 	private String _getFieldName(ObjectField objectField) {

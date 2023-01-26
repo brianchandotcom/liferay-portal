@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_BUTTON</td>
+	<td>//button//h5[contains(text(),'${key_textButton}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKBOX</td>
 	<td>//input[contains(@name,'${key_fieldName}')][@value='${key_optionValue}']</td>
 	<td></td>
@@ -33,6 +38,11 @@
 <tr>
 	<td>ADD_BUTTON</td>
 	<td>//*[contains(@class,'lexicon-icon-plus')]//ancestor::button[contains(text(),'${key_buttonText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUMMARY_FIELD</td>
+	<td>//th//span[@class='text-truncate'][text()='${key_fieldName}']//ancestor::tr//th//span[@class='text-truncate'][text()='${key_fieldValue}']</td>
 	<td></td>
 </tr>
 </tbody>

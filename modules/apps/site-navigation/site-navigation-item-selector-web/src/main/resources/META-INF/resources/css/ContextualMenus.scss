@@ -1,15 +1,15 @@
-.contextual-menu-selector {
-	font-size: 0.875rem;
+@import 'atlas-variables';
 
+.contextual-menu-selector {
 	.contextual-menu-option {
-		box-shadow: 0 0 0 1px #e7e7ed;
+		box-shadow: 0 0 0 1px $gray-300;
 
 		height: 150px;
 		width: 250px;
 
 		&:hover {
-			border-color: rgba(0, 0, 0, 0);
-			box-shadow: 0 0 0 2px #719aff;
+			border-color: none;
+			box-shadow: 0 0 0 2px $primary-l1;
 		}
 	}
 }

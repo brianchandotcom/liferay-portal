@@ -25,7 +25,7 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 </liferay-util:html-top>
 
 <clay:container-fluid
-	cssClass="contextual-menu-selector p-4"
+	cssClass="contextual-menu-selector p-4 text-3"
 	id='<%= liferayPortletResponse.getNamespace() + "contextualMenuSelector" %>'
 >
 	<div class="alert alert-info">

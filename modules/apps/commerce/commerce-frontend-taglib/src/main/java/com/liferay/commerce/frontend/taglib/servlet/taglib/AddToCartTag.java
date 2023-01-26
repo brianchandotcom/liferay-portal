@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -99,8 +100,21 @@ public class AddToCartTag extends IncludeTag {
 
 				hasChildCPDefinitions = _cpContentHelper.hasChildCPDefinitions(
 					cpDefinitionId);
+
 				_productSettingsModel = _productHelper.getProductSettingsModel(
 					cpDefinitionId);
+
+				int multipleQuantity =
+					_productSettingsModel.getMultipleQuantity();
+
+				int[] allowedQuantities = ArrayUtil.filter(
+					_productSettingsModel.getAllowedQuantities(),
+					quantity ->
+						(quantity >= _productSettingsModel.getMinQuantity()) &&
+						(quantity <= _productSettingsModel.getMaxQuantity()) &&
+						((quantity % multipleQuantity) == 0));
+
+				_productSettingsModel.setAllowedQuantities(allowedQuantities);
 			}
 
 			String sku = null;

@@ -53,80 +53,82 @@ function InviteUsersForm({
 		openerWindow.Liferay.fire('closeModal', modalConfig);
 	}
 
+	function getInputGroup(inputGroupId: string) {
+		const inputGroup = inputGroups.find((item) => item.id === inputGroupId);
+
+		if (inputGroup) {
+			return inputGroup;
+		}
+
+		throw new Error(`No input group found for id ${inputGroupId}`);
+	}
+
 	function setAccountRoles(
 		inputGroupId: string,
 		accountRoles: MultiSelectItem[]
 	) {
-		const inputGroup = inputGroups.find(
-			(inputGroup) => inputGroup.id === inputGroupId
-		);
+		const inputGroup = getInputGroup(inputGroupId);
 
-		if (inputGroup) {
-			inputGroup.accountRoles = accountRoles.map((accountRole) => {
-				const validatedAccountRole: ValidatableMultiSelectItem = {
-					...accountRole,
-				};
+		inputGroup.accountRoles = accountRoles.map((accountRole) => {
+			const validatedAccountRole: ValidatableMultiSelectItem = {
+				...accountRole,
+			};
 
-				if (
-					!availableAccountRoles.some(
-						(availableAccountRole) =>
-							availableAccountRole.label === accountRole.label
-					)
-				) {
-					validatedAccountRole.errorMessage = sub(
-						Liferay.Language.get('x-is-not-a-valid-role'),
-						accountRole.label
-					);
-				}
+			if (
+				!availableAccountRoles.some(
+					(availableAccountRole) =>
+						availableAccountRole.label === accountRole.label
+				)
+			) {
+				validatedAccountRole.errorMessage = sub(
+					Liferay.Language.get('x-is-not-a-valid-role'),
+					accountRole.label
+				);
+			}
 
-				return validatedAccountRole;
-			});
+			return validatedAccountRole;
+		});
 
-			setInputGroups([...inputGroups]);
-		}
+		setInputGroups([...inputGroups]);
 	}
 
 	async function setEmailAddresses(
 		inputGroupId: string,
 		emailAddresses: MultiSelectItem[]
 	) {
-		const inputGroup = inputGroups.find(
-			(inputGroup) => inputGroup.id === inputGroupId
+		const inputGroup = getInputGroup(inputGroupId);
+
+		const promises = emailAddresses.map(
+			(emailAddress) =>
+				new Promise<ValidatableMultiSelectItem>((resolve) => {
+					const validatedEmailAddress: ValidatableMultiSelectItem = {
+						...emailAddress,
+					};
+
+					Liferay.Util.fetch(
+						`/o/com-liferay-account-admin-web/validate-email-address/`,
+						{
+							body: Liferay.Util.objectToFormData({
+								accountEntryId,
+								emailAddress: emailAddress.label,
+							}),
+							method: 'POST',
+						}
+					)
+						.then((response) => response.json())
+						.then(({errorMessage}) => {
+							if (errorMessage) {
+								validatedEmailAddress.errorMessage = errorMessage;
+							}
+
+							resolve(validatedEmailAddress);
+						});
+				})
 		);
 
-		if (inputGroup) {
-			const promises = emailAddresses.map(
-				(emailAddress) =>
-					new Promise<ValidatableMultiSelectItem>((resolve) => {
-						const validatedEmailAddress: ValidatableMultiSelectItem = {
-							...emailAddress,
-						};
+		inputGroup.emailAddresses = await Promise.all(promises);
 
-						Liferay.Util.fetch(
-							`/o/com-liferay-account-admin-web/validate-email-address/`,
-							{
-								body: Liferay.Util.objectToFormData({
-									accountEntryId,
-									emailAddress: emailAddress.label,
-								}),
-								method: 'POST',
-							}
-						)
-							.then((response) => response.json())
-							.then(({errorMessage}) => {
-								if (errorMessage) {
-									validatedEmailAddress.errorMessage = errorMessage;
-								}
-
-								resolve(validatedEmailAddress);
-							});
-					})
-			);
-
-			inputGroup.emailAddresses = await Promise.all(promises);
-
-			setInputGroups([...inputGroups]);
-		}
+		setInputGroups([...inputGroups]);
 	}
 
 	const submitForm: MouseEventHandler<HTMLButtonElement> = async (event) => {

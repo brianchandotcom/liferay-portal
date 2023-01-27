@@ -14,9 +14,11 @@
 
 package com.liferay.segments.internal.criteria.contributor;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.criteria.mapper.SegmentsCriteriaJSONObjectMapper;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.entity.OrganizationEntityModel;
@@ -46,6 +48,13 @@ public class OrganizationSegmentsCriteriaContributor
 	implements SegmentsCriteriaContributor {
 
 	public static final String KEY = "organization";
+
+	@Override
+	public JSONObject getCriteriaJSONObject(Criteria criteria)
+		throws Exception {
+
+		return _segmentsCriteriaJSONObjectMapper.toJSONObject(criteria, this);
+	}
 
 	@Override
 	public EntityModel getEntityModel() {
@@ -82,5 +91,8 @@ public class OrganizationSegmentsCriteriaContributor
 
 	@Reference
 	private EntityModelFieldMapper _entityModelFieldMapper;
+
+	@Reference(target = "(segments.criteria.mapper.key=odata)")
+	private SegmentsCriteriaJSONObjectMapper _segmentsCriteriaJSONObjectMapper;
 
 }

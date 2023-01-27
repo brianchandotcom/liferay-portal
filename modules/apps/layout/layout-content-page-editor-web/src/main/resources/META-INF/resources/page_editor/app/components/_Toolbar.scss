@@ -81,23 +81,52 @@ html#{$cadmin-selector} {
 						}
 					}
 				}
+			}
+		}
+	}
+}
 
-				@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
-					> .navbar-nav {
-						padding: 16px 12px;
+html#{$cadmin-selector}
+	body.open
+	.cadmin
+	.page-editor__toolbar
+	> .container-fluid {
+	@media (min-width: 1400px) {
+		> .navbar-nav {
+			padding: 16px 12px;
 
-						&.middle {
-							flex: 1;
-							justify-content: center;
-							padding-left: $pageEditorSpacing * 1.5;
-						}
+			&.middle {
+				flex: 1;
+				justify-content: center;
+				padding-left: $pageEditorSpacing * 1.5;
+			}
 
-						&.end {
-							box-shadow: none;
-							flex-basis: auto;
-						}
-					}
-				}
+			&.end {
+				box-shadow: none;
+				flex-basis: auto;
+			}
+		}
+	}
+}
+
+html#{$cadmin-selector}
+	body:not(.open)
+	.cadmin
+	.page-editor__toolbar
+	> .container-fluid {
+	@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
+		> .navbar-nav {
+			padding: 16px 12px;
+
+			&.middle {
+				flex: 1;
+				justify-content: center;
+				padding-left: $pageEditorSpacing * 1.5;
+			}
+
+			&.end {
+				box-shadow: none;
+				flex-basis: auto;
 			}
 		}
 	}

@@ -25,12 +25,12 @@ const ITEM_TYPES_SYMBOL = {
 const SEARCH_DELTA = 2;
 
 export default function SearchField({handleSearchChange, items}) {
-	const initialState = {
+	const initialSearchInfo = {
 		filteredItems: [],
 		query: '',
 	};
 
-	const [state, setState] = useState(initialState);
+	const [searchInfo, setSearchInfo] = useState(initialSearchInfo);
 
 	const [searchActive, setSearchActive] = useState(false);
 
@@ -38,7 +38,7 @@ export default function SearchField({handleSearchChange, items}) {
 		handleSearchChange({isSearchActive: searchActive});
 	}, [handleSearchChange, searchActive]);
 
-	const handleChange = (event) => {
+	const handleQueryChange = (event) => {
 		const newQuery = event.target.value;
 		let results = [];
 
@@ -49,20 +49,20 @@ export default function SearchField({handleSearchChange, items}) {
 		}
 
 		setSearchActive(newQuery.length > SEARCH_DELTA);
-		setState({
+		setSearchInfo({
 			filteredItems: results,
 			query: newQuery,
 		});
 	};
 
-	const handleClick = () => {
-		if (state.query) {
-			setState(initialState);
+	const handleSearchClick = () => {
+		if (searchInfo.query) {
+			setSearchInfo(initialSearchInfo);
 			setSearchActive(false);
 		}
 	};
 
-	const iconTitle = state.query
+	const iconTitle = searchInfo.query
 		? Liferay.Language.get('clear')
 		: Liferay.Language.get('search');
 
@@ -73,19 +73,19 @@ export default function SearchField({handleSearchChange, items}) {
 					<ClayInput
 						aria-label={Liferay.Language.get('search-for')}
 						className="form-control input-group-inset input-group-inset-after"
-						onChange={handleChange}
+						onChange={handleQueryChange}
 						placeholder={Liferay.Language.get('search-for')}
 						type="text"
-						value={state.query}
+						value={searchInfo.query}
 					/>
 
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
 							aria-label={iconTitle}
 							displayType="unstyled"
-							onClick={handleClick}
+							onClick={handleSearchClick}
 							small
-							symbol={state.query ? 'times' : 'search'}
+							symbol={searchInfo.query ? 'times' : 'search'}
 							title={iconTitle}
 						/>
 					</ClayInput.GroupInsetItem>
@@ -94,9 +94,9 @@ export default function SearchField({handleSearchChange, items}) {
 
 			<hr className="separator" />
 
-			{searchActive && state.filteredItems && (
+			{searchActive && searchInfo.filteredItems && (
 				<ul className="list-group">
-					{state.filteredItems.map((item) => {
+					{searchInfo.filteredItems.map((item) => {
 						return (
 							<li className="list-group-item" key={item.id}>
 								<ClayIcon

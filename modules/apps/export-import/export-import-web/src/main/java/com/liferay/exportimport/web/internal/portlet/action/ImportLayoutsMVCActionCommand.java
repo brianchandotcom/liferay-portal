@@ -50,8 +50,10 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.InputStream;
@@ -313,10 +315,17 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest.getParameterMap(), themeDisplay.getLocale(),
 					themeDisplay.getTimeZone());
 
+		String name = GetterUtil.getString(
+			importLayoutSettingsMap.get("portletId"));
+
+		if (Validator.isNull(name)) {
+			name = fileName;
+		}
+
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					themeDisplay.getUserId(),
+					themeDisplay.getUserId(), name,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					importLayoutSettingsMap);
 

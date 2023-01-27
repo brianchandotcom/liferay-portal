@@ -271,14 +271,14 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject nestedObjectEntriesJSONObject = JSONUtil.put(
+		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
-			_createNestedObjectEntriesJSONArray(
+			_createObjectEntriesJSONArray(
 				nestedCustomObjectEntryNumber,
 				nestedCustomObjectEntryFieldValues, _OBJECT_FIELD_NAME_2));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
-			nestedObjectEntriesJSONObject.toString(),
+			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -328,7 +328,7 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject nestedObjectEntryJSONObject = JSONUtil.put(
+		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
 			JSONFactoryUtil.createJSONObject(
 				JSONUtil.put(
@@ -336,7 +336,7 @@ public class ObjectEntryResourceTest {
 				).toString()));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
-			nestedObjectEntryJSONObject.toString(),
+			objectEntryJSONObject.toString(),
 			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -387,14 +387,14 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject nestedObjectEntriesJSONObject = JSONUtil.put(
+		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
-			_createNestedObjectEntriesJSONArray(
+			_createObjectEntriesJSONArray(
 				nestedCustomObjectEntryNumber,
 				nestedCustomObjectEntryFieldValues, _OBJECT_FIELD_NAME_2));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
-			nestedObjectEntriesJSONObject.toString(),
+			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -521,7 +521,7 @@ public class ObjectEntryResourceTest {
 			objectFieldValue);
 	}
 
-	private JSONArray _createNestedObjectEntriesJSONArray(
+	private JSONArray _createObjectEntriesJSONArray(
 			int nestedCustomObjectEntryFieldNumber,
 			String[] nestedCustomObjectEntryFieldValues, String objectField)
 		throws Exception {

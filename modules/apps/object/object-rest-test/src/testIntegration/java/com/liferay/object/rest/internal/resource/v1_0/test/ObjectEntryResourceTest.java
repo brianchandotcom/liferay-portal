@@ -518,11 +518,10 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertNotNull(objectEntry);
 
-		Map<String, Serializable> objectEntryProperties =
-			objectEntry.getValues();
+		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
 
 		Assert.assertEquals(
-			objectEntryProperties.get(objectFieldName), objectFieldValue);
+			objectEntryValues.get(objectFieldName), objectFieldValue);
 	}
 
 	private JSONArray _createNestedObjectEntriesStrucutureJSONArray(

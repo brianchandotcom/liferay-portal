@@ -484,7 +484,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 		SearchResultsPortletPreferences searchResultsPortletPreferences) {
 
 		return portletSharedSearchResponse.getFederatedSearchResponse(
-			searchResultsPortletPreferences.getFederatedSearchKeyOptional());
+			searchResultsPortletPreferences.getFederatedSearchKeyString());
 	}
 
 	private String _getURLString(

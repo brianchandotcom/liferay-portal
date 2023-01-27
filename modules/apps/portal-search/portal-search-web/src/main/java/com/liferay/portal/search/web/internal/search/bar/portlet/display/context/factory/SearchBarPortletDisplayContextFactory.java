@@ -420,7 +420,7 @@ public class SearchBarPortletDisplayContextFactory {
 		SearchBarPortletPreferences searchBarPortletPreferences) {
 
 		return portletSharedSearchResponse.getFederatedSearchResponse(
-			searchBarPortletPreferences.getFederatedSearchKeyOptional());
+			searchBarPortletPreferences.getFederatedSearchKeyString());
 	}
 
 	private String _getURLCurrentPath(ThemeDisplay themeDisplay) {

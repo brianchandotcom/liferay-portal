@@ -166,7 +166,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getFederatedSearchResponse(
-				customFacetPortletPreferences.getFederatedSearchKeyOptional());
+				customFacetPortletPreferences.getFederatedSearchKeyString());
 
 		return searchResponse.withFacetContextGet(
 			facetContext -> facetContext.getFacet(

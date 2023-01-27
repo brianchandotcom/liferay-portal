@@ -146,10 +146,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		_layoutsImporterResultEntries = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(file)) {
-			_processLayoutUtilityPageEntries(groupId, overwrite, zipFile);
-
 			_processMasterLayoutPageTemplateEntries(
 				groupId, overwrite, zipFile);
+
+			_processLayoutUtilityPageEntries(groupId, overwrite, zipFile);
 
 			_processDisplayPageTemplatePageTemplateEntries(
 				groupId, overwrite, zipFile);

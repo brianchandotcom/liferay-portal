@@ -271,8 +271,7 @@ public class PredicateExpressionVisitorImpl
 					return predicate;
 				}
 			}
-
-			if (type == MethodExpression.Type.STARTS_WITH) {
+			else if (type == MethodExpression.Type.STARTS_WITH) {
 				if (_isComplexProperExpression(left)) {
 					predicate = _getPredicateForRelationships(
 						left,

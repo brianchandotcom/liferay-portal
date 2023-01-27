@@ -42,20 +42,15 @@ public class SearchableAssetClassNamesProviderImpl
 		for (AssetRendererFactory<?> assetRendererFactory :
 				assetRendererFactories) {
 
-			String className = assetRendererFactory.getClassName();
-
 			if (assetRendererFactory.isSearchable()) {
+				String className = assetRendererFactory.getClassName();
+
 				if (ArrayUtil.contains(
 						searchEngineHelper.getEntryClassNames(), className,
 						false)) {
 
 					classNames.add(className);
 				}
-			}
-			else if (className.startsWith(
-						"com.liferay.object.model.ObjectDefinition#")) {
-
-				classNames.add(className);
 			}
 		}
 

@@ -73,6 +73,11 @@ public class SearchHitImpl implements SearchHit, Serializable {
 	}
 
 	@Override
+	public Object[] getSortValues() {
+		return _sortValues;
+	}
+
+	@Override
 	public Map<String, Object> getSourcesMap() {
 		return _sourcesMap;
 	}
@@ -88,6 +93,7 @@ public class SearchHitImpl implements SearchHit, Serializable {
 		_id = searchHitImpl._id;
 		_matchedQueries = searchHitImpl._matchedQueries;
 		_score = searchHitImpl._score;
+		_sortValues = searchHitImpl._sortValues;
 		_version = searchHitImpl._version;
 
 		_highlightFieldsMap.putAll(searchHitImpl._highlightFieldsMap);
@@ -177,6 +183,13 @@ public class SearchHitImpl implements SearchHit, Serializable {
 		}
 
 		@Override
+		public SearchHitBuilder sortValues(Object[] sortValues) {
+			_searchHitImpl._setSortValues(sortValues);
+
+			return this;
+		}
+
+		@Override
 		public SearchHitBuilder version(long version) {
 			_searchHitImpl._setVersion(version);
 
@@ -215,6 +228,10 @@ public class SearchHitImpl implements SearchHit, Serializable {
 		_score = score;
 	}
 
+	private void _setSortValues(Object[] sort) {
+		_sortValues = sort;
+	}
+
 	private void _setVersion(long version) {
 		_version = version;
 	}
@@ -226,6 +243,7 @@ public class SearchHitImpl implements SearchHit, Serializable {
 	private String _id;
 	private String[] _matchedQueries = new String[0];
 	private float _score;
+	private Object[] _sortValues;
 	private final Map<String, Object> _sourcesMap = new LinkedHashMap<>();
 	private long _version;
 

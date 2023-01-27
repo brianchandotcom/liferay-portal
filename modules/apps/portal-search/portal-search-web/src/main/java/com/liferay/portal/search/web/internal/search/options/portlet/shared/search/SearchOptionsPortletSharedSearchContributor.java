@@ -43,8 +43,7 @@ public class SearchOptionsPortletSharedSearchContributor
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				searchOptionsPortletPreferences.
-					getFederatedSearchKeyOptional());
+				searchOptionsPortletPreferences.getFederatedSearchKeyString());
 
 		searchRequestBuilder.basicFacetSelection(
 			searchOptionsPortletPreferences.isBasicFacetSelection()

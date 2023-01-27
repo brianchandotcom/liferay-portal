@@ -90,8 +90,7 @@ public class SimilarResultsPortletSharedSearchContributor
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				Optional.of(
-					similarResultsPortletPreferences.getFederatedSearchKey()));
+				similarResultsPortletPreferences.getFederatedSearchKey());
 
 		_filterByEntryClassName(
 			criteria, portletSharedSearchSettings, searchRequestBuilder);

@@ -62,7 +62,7 @@ public class CustomFacetPortletSharedSearchContributor
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				customFacetPortletPreferences.getFederatedSearchKeyOptional());
+				customFacetPortletPreferences.getFederatedSearchKeyString());
 
 		String fieldToAggregate = fieldToAggregateOptional.get();
 

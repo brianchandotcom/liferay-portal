@@ -24,8 +24,16 @@ String portletTitle = HtmlUtil.escape(PortalUtil.getPortletTitle(renderResponse)
 if (portletTitle == null) {
 	portletTitle = LanguageUtil.get(request, "portlet");
 }
+
+String key = "is-temporarily-unavailable";
+
+Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+
+if (portlet != null) {
+	key = StringBundler.concat(key, StringPool.OPEN_BRACKET, portlet.getPortletId(), StringPool.CLOSE_BRACKET);
+}
 %>
 
 <div class="alert alert-danger">
-	<liferay-ui:message arguments="<%= portletTitle %>" key="is-temporarily-unavailable" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= portletTitle %>" key="<%= key %>" translateArguments="<%= false %>" />
 </div>

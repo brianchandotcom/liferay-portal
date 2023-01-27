@@ -46,9 +46,6 @@ export default function ForecastChart({
 	return !accountsId ? (
 		<p>{Liferay.Language.get('no-account-selected')}</p>
 	) : (
-		<ChartWrapper
-			data={chartData}
-			loading={loading}
-		/>
+		<ChartWrapper data={chartData} loading={loading} />
 	);
 }

@@ -587,7 +587,7 @@ definition {
 		task ("Export Team") {
 			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
 
-			LAR.exportTeam(larFileName = "Site Team Name");
+			LAR.exportTeam(larFileName = "Site_Team_Name.lar");
 		}
 
 		task ("Import Team in a new site") {
@@ -595,7 +595,7 @@ definition {
 
 			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
-			LAR.importTeam(larFileName = "Site Team Name");
+			LAR.importTeam(larFileName = "Site_Team_Name.lar");
 		}
 
 		task ("Import content page template") {

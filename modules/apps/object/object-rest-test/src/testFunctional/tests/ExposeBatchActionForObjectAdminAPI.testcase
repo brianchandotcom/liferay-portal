@@ -9,7 +9,8 @@ definition {
 		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given an object definition is created") {
-			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+			ObjectUtils.staticObjectDefinitionIdUniversity();
+			ObjectUtils.staticObjectDefinitionIdSubject();
 		}
 	}
 
@@ -46,7 +47,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given subject entry is created") {
-			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -75,7 +76,7 @@ definition {
 		task ("Then the actions block include the information for the updatebatch, deleteBatch action endpoint") {
 			ObjectDefinitionAPI.assertBatchActionsWithGetObjectSchemas(
 				batchActions = "updateBatch,deleteBatch",
-				objectDefinitionId = "${staticObjectId1}",
+				objectDefinitionId = "${staticObjectDefinitionIdUniversity}",
 				objectSchemas = "${objectSchemas}");
 		}
 	}
@@ -102,7 +103,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given subject entry is created") {
-			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -131,7 +132,7 @@ definition {
 		task ("Then the actions block include the information for the createBatch action endpoint") {
 			ObjectDefinitionAPI.assertBatchActionsWithGetObjectSchemas(
 				batchActions = "createBatch",
-				objectDefinitionId = "${staticObjectId1}",
+				objectDefinitionId = "${staticObjectDefinitionIdUniversity}",
 				objectSchemas = "${objectSchemas}");
 		}
 	}

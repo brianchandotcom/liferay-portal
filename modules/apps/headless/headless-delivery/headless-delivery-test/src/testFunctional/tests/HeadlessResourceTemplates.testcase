@@ -65,7 +65,7 @@ definition {
 		}
 
 		task ("And Given University entry created") {
-			var objectDefinitionEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+			var objectDefinitionEntryId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay University");
 		}

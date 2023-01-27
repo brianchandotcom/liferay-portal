@@ -146,9 +146,9 @@ definition {
 
 		var curl = StringUtil.add("${curlWithoutBody}", "-d {${body}}", " ");
 
-		var objectId = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post("${curl}");
 
-		return "${objectId}";
+		return "${response}";
 	}
 
 	macro _createRelationship {
@@ -702,25 +702,6 @@ definition {
 		return "${managerId}";
 	}
 
-	macro createObjectEntryWithName {
-		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
-			en_US_plural_label = "${en_US_plural_label}",
-			name = "${name}",
-			secondFieldValue = "${secondFieldValue}",
-			virtualHost = "${virtualHost}");
-
-		var actualName = ObjectDefinitionAPI._getObjectEntryNameById(
-			en_US_plural_label = "${en_US_plural_label}",
-			objectId = "${objectId}",
-			virtualHost = "${virtualHost}");
-
-		TestUtils.assertEquals(
-			actual = "${actualName}",
-			expected = "${name}");
-
-		return "${objectId}";
-	}
-
 	macro createRelationship {
 		var relationshipId = ObjectDefinitionAPI._createRelationship(
 			deletionType = "${deletionType}",
@@ -765,6 +746,27 @@ definition {
 		}
 
 		ObjectDefinitionAPI._deleteRelationship(relationshipId = "${relationshipId}");
+	}
+
+	macro getIdCreatedObjectEntryWithName {
+		var response = ObjectDefinitionAPI._createObjectEntryWithName(
+			en_US_plural_label = "${en_US_plural_label}",
+			name = "${name}",
+			secondFieldValue = "${secondFieldValue}",
+			virtualHost = "${virtualHost}");
+
+		var objectEntryId = ObjectUtils.getObjectEntryId(response = "${response}");
+
+		var actualName = ObjectDefinitionAPI._getObjectEntryNameById(
+			en_US_plural_label = "${en_US_plural_label}",
+			objectId = "${objectEntryId}",
+			virtualHost = "${virtualHost}");
+
+		TestUtils.assertEquals(
+			actual = "${actualName}",
+			expected = "${name}");
+
+		return "${objectEntryId}";
 	}
 
 	macro getObjectDefinitionIdByName {
@@ -891,25 +893,6 @@ definition {
 		return "${response}";
 	}
 
-	macro setUpGlobalobjectDefinitionId {
-		var objectId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-			en_US_label = "university",
-			en_US_plural_label = "universities",
-			name = "University",
-			requiredStringFieldName = "name");
-		var objectId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-			en_US_label = "subject",
-			en_US_plural_label = "subjects",
-			name = "Subject",
-			requiredStringFieldName = "name");
-		static var staticObjectId1 = "${objectId1}";
-		static var staticObjectId2 = "${objectId2}";
-
-		return "${staticObjectId1}";
-
-		return "${staticObjectId2}";
-	}
-
 	macro setUpGlobalObjectDefinitionIdWithName {
 		Variables.assertDefined(parameterList = "${objectName}");
 
@@ -921,16 +904,16 @@ definition {
 	}
 
 	macro setUpGlobalObjectEntryId {
-		var objectEntryId1 = ObjectDefinitionAPI.createObjectEntryWithName(
+		var objectEntryId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 			en_US_plural_label = "foundations",
 			name = "Foundation First");
-		var objectEntryId2 = ObjectDefinitionAPI.createObjectEntryWithName(
+		var objectEntryId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 			en_US_plural_label = "foundations",
 			name = "Foundation Second");
-		var objectEntryId3 = ObjectDefinitionAPI.createObjectEntryWithName(
+		var objectEntryId3 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 			en_US_plural_label = "secondFoundations",
 			name = "Foundation First-1");
-		var objectEntryId4 = ObjectDefinitionAPI.createObjectEntryWithName(
+		var objectEntryId4 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 			en_US_plural_label = "secondFoundations",
 			name = "Foundation Second-1");
 		static var staticObjectEntryId1 = "${objectEntryId1}";
@@ -948,7 +931,7 @@ definition {
 	}
 
 	macro setUpGlobalStudentId {
-		var studentId = ObjectDefinitionAPI.createObjectEntryWithName(
+		var studentId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 			en_US_plural_label = "students",
 			name = "Student Name");
 
@@ -967,7 +950,7 @@ definition {
 	}
 
 	macro setUpGlobalSubjectId {
-		var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+		var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 			en_US_plural_label = "subjects",
 			name = "Subject Name");
 
@@ -983,25 +966,6 @@ definition {
 		return "${staticSubjectErc}";
 
 		return "${staticSubjectId}";
-	}
-
-	macro setUpGlobalUniversityId {
-		var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
-			en_US_plural_label = "universities",
-			name = "University Name");
-
-		var response = ObjectDefinitionAPI.getObjectEntryById(
-			en_US_plural_label = "universities",
-			objectEntryId = "${universityId}");
-
-		var universityErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
-
-		static var staticUniversityErc = "${universityErc}";
-		static var staticUniversityId = "${universityId}";
-
-		return "${staticUniversityErc}";
-
-		return "${staticUniversityId}";
 	}
 
 	macro updateEmployee {

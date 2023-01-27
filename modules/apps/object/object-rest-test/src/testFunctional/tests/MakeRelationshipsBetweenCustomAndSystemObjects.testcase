@@ -11,7 +11,8 @@ definition {
 		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given University and Subject object definitions created") {
-			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+			ObjectUtils.staticObjectDefinitionIdUniversity();
+			ObjectUtils.staticObjectDefinitionIdSubject();
 		}
 
 		task ("And Given manyToMany universitiesAccounts relationship created") {
@@ -21,7 +22,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "UniversitiesAccounts",
 				name = "universitiesAccounts",
-				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId1 = "${staticObjectDefinitionIdUniversity}",
 				objectDefinitionId2 = "${staticObjectId}",
 				type = "manyToMany");
 		}
@@ -32,7 +33,7 @@ definition {
 				en_US_label = "AccountSubjects",
 				name = "accountSubjects",
 				objectDefinitionId1 = "${staticObjectId}",
-				objectDefinitionId2 = "${staticObjectId2}",
+				objectDefinitionId2 = "${staticObjectDefinitionIdSubject}",
 				type = "oneToMany");
 		}
 
@@ -71,7 +72,7 @@ definition {
 				en_US_label = "AccountsUniversities",
 				name = "accountsUniversities",
 				objectDefinitionId1 = "${staticObjectId}",
-				objectDefinitionId2 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectDefinitionIdUniversity}",
 				type = "manyToMany");
 		}
 
@@ -103,13 +104,13 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "SubjectAccounts",
 				name = "subjectAccounts",
-				objectDefinitionId1 = "${staticObjectId2}",
+				objectDefinitionId1 = "${staticObjectDefinitionIdSubject}",
 				objectDefinitionId2 = "${staticObjectId}",
 				type = "oneToMany");
 		}
 
 		task ("And Given Subject entry created") {
-			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Math");
 		}

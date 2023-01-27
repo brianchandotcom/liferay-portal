@@ -1,0 +1,100 @@
+definition {
+
+	macro getObjectEntryErc {
+		Variables.assertDefined(parameterList = "${response}");
+
+		var objectEntryErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+		return "${objectEntryErc}";
+	}
+
+	macro getObjectEntryId {
+		Variables.assertDefined(parameterList = "${response}");
+
+		var objectEntryId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${objectEntryId}";
+	}
+
+	macro staticObjectDefinitionIdStudent {
+		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "student",
+			en_US_plural_label = "students",
+			name = "Student",
+			requiredStringFieldName = "name");
+
+		static var staticObjectDefinitionIdStudent = "${objectId}";
+
+		return "${staticObjectDefinitionIdStudent}";
+	}
+
+	macro staticObjectDefinitionIdSubject {
+		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "subject",
+			en_US_plural_label = "subjects",
+			name = "Subject",
+			requiredStringFieldName = "name");
+
+		static var staticObjectDefinitionIdSubject = "${objectId}";
+
+		return "${staticObjectDefinitionIdSubject}";
+	}
+
+	macro staticObjectDefinitionIdUniversity {
+		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "university",
+			en_US_plural_label = "universities",
+			name = "University",
+			requiredStringFieldName = "name");
+
+		static var staticObjectDefinitionIdUniversity = "${objectId}";
+
+		return "${staticObjectDefinitionIdUniversity}";
+	}
+
+	macro staticStudentEntry {
+		var response = ObjectDefinitionAPI._createObjectEntryWithName(
+			en_US_plural_label = "students",
+			name = "Student Name");
+
+		var entryErc = ObjectUtils.getObjectEntryErc(response = "${response}");
+		var entryId = ObjectUtils.getObjectEntryId(response = "${response}");
+		static var staticStudentEntryErc = "${entryErc}";
+		static var staticStudentEntryId = "${entryId}";
+
+		return "${staticStudentEntryErc}";
+
+		return "${staticStudentEntryId}";
+	}
+
+	macro staticSubjectEntry {
+		var response = ObjectDefinitionAPI._createObjectEntryWithName(
+			en_US_plural_label = "subjects",
+			name = "Subject Name");
+
+		var entryErc = ObjectUtils.getObjectEntryErc(response = "${response}");
+		var entryId = ObjectUtils.getObjectEntryId(response = "${response}");
+		static var staticSubjectEntryErc = "${entryErc}";
+		static var staticSubjectEntryId = "${entryId}";
+
+		return "${staticSubjectEntryErc}";
+
+		return "${staticSubjectEntryId}";
+	}
+
+	macro staticUniversityEntry {
+		var response = ObjectDefinitionAPI._createObjectEntryWithName(
+			en_US_plural_label = "universities",
+			name = "University Name");
+
+		var entryErc = ObjectUtils.getObjectEntryErc(response = "${response}");
+		var entryId = ObjectUtils.getObjectEntryId(response = "${response}");
+		static var staticUniversityEntryErc = "${entryErc}";
+		static var staticUniversityEntryId = "${entryId}";
+
+		return "${staticUniversityEntryErc}";
+
+		return "${staticUniversityEntryId}";
+	}
+
+}

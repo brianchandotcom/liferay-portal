@@ -127,14 +127,14 @@ definition {
 		}
 
 		task ("And Given Subject entry created in default instance") {
-			ObjectDefinitionAPI.createObjectEntryWithName(
+			ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Object Entry in Default Instance",
 				secondFieldValue = "The other field in Default Instance");
 		}
 
 		task ("And Given Subject entry created in www.baker.com instances") {
-			ObjectDefinitionAPI.createObjectEntryWithName(
+			ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Object Entry in Second Instance",
 				virtualHost = "www.baker.com");

@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property custom.properties = "feature.flag.LPS-161364=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Object";
@@ -9,14 +10,12 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstanceNoSelenium();
 
-		ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+		task ("Given object definitions Student, Subject, University with text field name created") {
+			ObjectUtils.staticObjectDefinitionIdStudent();
 
-		task ("Given objectDefinition Student created") {
-			var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "student",
-				en_US_plural_label = "students",
-				name = "Student",
-				requiredStringFieldName = "name");
+			ObjectUtils.staticObjectDefinitionIdSubject();
+
+			ObjectUtils.staticObjectDefinitionIdUniversity();
 		}
 
 		task ("And Given universityStudents oneToMany relationship is created") {
@@ -24,8 +23,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "UniversityStudents",
 				name = "universityStudents",
-				objectDefinitionId1 = "${staticObjectId1}",
-				objectDefinitionId2 = "${objectDefinitionId}",
+				objectDefinitionId1 = "${staticObjectDefinitionIdUniversity}",
+				objectDefinitionId2 = "${staticObjectDefinitionIdStudent}",
 				type = "oneToMany");
 		}
 
@@ -34,36 +33,32 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "SubjectStudents",
 				name = "subjectStudents",
-				objectDefinitionId1 = "${staticObjectId2}",
-				objectDefinitionId2 = "${objectDefinitionId}",
+				objectDefinitionId1 = "${staticObjectDefinitionIdSubject}",
+				objectDefinitionId2 = "${staticObjectDefinitionIdStudent}",
 				type = "oneToMany");
 		}
 
-		task ("And Given a University entry created") {
-			ObjectDefinitionAPI.setUpGlobalUniversityId();
-		}
+		task ("And Given a Student entry, Subject entry, University entry created") {
+			ObjectUtils.staticStudentEntry();
 
-		task ("And Given a Student entry created") {
-			ObjectDefinitionAPI.setUpGlobalStudentId();
-		}
+			ObjectUtils.staticUniversityEntry();
 
-		task ("And Given a Subject entry created") {
-			ObjectDefinitionAPI.setUpGlobalSubjectId();
+			ObjectUtils.staticSubjectEntry();
 		}
 
 		task ("And Given University entry related to the Student entry") {
 			ObjectDefinitionAPI.relateObjectEntries(
 				en_US_plural_label = "universities",
-				objectEntry1 = "${staticUniversityId}",
-				objectEntry2 = "${staticStudentId}",
+				objectEntry1 = "${staticUniversityEntryId}",
+				objectEntry2 = "${staticStudentEntryId}",
 				relationshipName = "universityStudents");
 		}
 
 		task ("And Given Student entry related to the Subject entry") {
 			ObjectDefinitionAPI.relateObjectEntries(
 				en_US_plural_label = "subjects",
-				objectEntry1 = "${staticSubjectId}",
-				objectEntry2 = "${staticStudentId}",
+				objectEntry1 = "${staticSubjectEntryId}",
+				objectEntry2 = "${staticStudentEntryId}",
 				relationshipName = "subjectStudents");
 		}
 	}
@@ -72,118 +67,92 @@ definition {
 		for (var objectName : list "University,Student,Subject") {
 			ObjectAdmin.deleteObjectViaAPI(objectName = "${objectName}");
 		}
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "3"
-	test CanGetMultipleNestedFieldsInOneToManyRelationship {
+	@priority = "4"
+	test CanGetMultipleNestedFieldsInOneToManyRelationshipFromChild {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ClarifyOneToManyFieldsInformation#CanGetMultipleNestedFieldsInOneToManyRelationshipFromChild";
+
 		task ("When requesting GET /o/c/students/{studentId}?nestedFields=universityStudents,subjectStudents") {
 			var response = ObjectDefinitionAPI.getObjectEntryById(
 				en_US_plural_label = "students",
-				objectEntryId = "${staticStudentId}",
+				objectEntryId = "${staticStudentEntryId}",
 				parameter = "nestedFields",
 				parameterValue = "universityStudents,subjectStudents");
 		}
 
-		task ("Then in r_universityStudents_c_university node the value r_universityStudents_c_university.id and r_universityStudents_c_universityId have the value of universityId") {
-			var actualId = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.id==${staticUniversityId})].id");
-			var expectedId = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityId");
+		task ("Then nodes subjectStudents,universityStudents contain related student entry data") {
+			var universityEntryErc = JSONUtil.getWithJSONPath("${response}", "$..universityStudents[?(@.id==${staticUniversityEntryId})].externalReferenceCode");
+
+			var subjectEntryErc = JSONUtil.getWithJSONPath("${response}", "$..subjectStudents[?(@.id==${staticSubjectEntryId})].externalReferenceCode");
 
 			TestUtils.assertEquals(
-				actual = "${actualId}",
-				expected = "${expectedId}");
-		}
-
-		task ("And Then the value r_universityStudents_c_university.externalReferenceCode and r_universityStudents_c_universityERC have the value of universityErc") {
-			var actualErc = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_university[?(@.externalReferenceCode=='${staticUniversityErc}')].externalReferenceCode");
-			var expectedErc = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityERC");
+				actual = "${universityEntryErc}",
+				expected = "${staticUniversityEntryErc}");
 
 			TestUtils.assertEquals(
-				actual = "${actualErc}",
-				expected = "${expectedErc}");
-		}
-
-		task ("And Then r_subjectStudents_c_subject node the values r_subjectStudents_c_subject.id and r_subjectStudents_c_subjectId have the value of subjectId") {
-			var actualId = JSONUtil.getWithJSONPath("${response}", "$..r_subjectStudents_c_subject[?(@.id==${staticSubjectId})].id");
-			var expectedId = JSONUtil.getWithJSONPath("${response}", "$.r_subjectStudents_c_subjectId");
-
-			TestUtils.assertEquals(
-				actual = "${actualId}",
-				expected = "${expectedId}");
-		}
-
-		task ("And Then the value r_subjectStudents_c_subject.externalReferenceCode and r_subjectStudents_c_subjectERC have the value of subjectErc") {
-			var actualErc = JSONUtil.getWithJSONPath("${response}", "$..r_subjectStudents_c_subject[?(@.externalReferenceCode=='${staticSubjectErc}')].externalReferenceCode");
-			var expectedErc = JSONUtil.getWithJSONPath("${response}", "$.r_subjectStudents_c_subjectERC");
-
-			TestUtils.assertEquals(
-				actual = "${actualErc}",
-				expected = "${expectedErc}");
+				actual = "${subjectEntryErc}",
+				expected = "${staticSubjectEntryErc}");
 		}
 	}
 
 	@disable-webdriver = "true"
 	@priority = "4"
-	test CanGetNestedFieldsNodeInOneToManyRelationship {
+	test CanGetNestedFieldsNodeInOneToManyRelationshipFromParent {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ClarifyOneToManyFieldsInformation#CanGetNestedFieldsNodeInOneToManyRelationshipFromParent";
 
-		task ("When requesting GET /o/c/universities/{universityId}?nestedFields=universityStudents") {
+		task ("When requesting GET /o/c/subjects/{subjectId}?nestedFields=subjectStudents") {
 			var response = ObjectDefinitionAPI.getObjectEntryById(
-				en_US_plural_label = "universities",
-				objectEntryId = "${staticUniversityId}",
+				en_US_plural_label = "subjects",
+				objectEntryId = "${staticSubjectEntryId}",
 				parameter = "nestedFields",
-				parameterValue = "universityStudents");
+				parameterValue = "subjectStudents");
 		}
 
-		task ("Then the value universityStudents.id in universityStudents node and r_universityStudents_c_universityId have the value of universityId") {
-			var actualStudentId = JSONUtil.getWithJSONPath("${response}", "$..universityStudents[?(@.id==${staticStudentId})].id");
-			var actualUniversityId = JSONUtil.getWithJSONPath("${response}", "$..universityStudents..r_universityStudents_c_universityId");
+		task ("Then subjectStudents node contains related student entry data") {
+			var studentEntryIdFromNode = JSONUtil.getWithJSONPath("${response}", "$..subjectStudents.[?(@.externalReferenceCode=='${staticStudentEntryErc}')].id");
 
 			TestUtils.assertEquals(
-				actual = "${actualStudentId}",
-				expected = "${staticStudentId}");
-
-			TestUtils.assertEquals(
-				actual = "${actualUniversityId}",
-				expected = "${staticUniversityId}");
-		}
-
-		task ("And Then the value universityStudents.externalReferenceCode and r_universityStudents_c_universityERC have the value of universityErc") {
-			var actualStudentErc = JSONUtil.getWithJSONPath("${response}", "$..universityStudents[?(@.externalReferenceCode=='${staticStudentErc}')].externalReferenceCode");
-			var actualUniversityErc = JSONUtil.getWithJSONPath("${response}", "$..universityStudents..r_universityStudents_c_universityERC");
-
-			TestUtils.assertEquals(
-				actual = "${actualStudentErc}",
-				expected = "${staticStudentErc}");
-
-			TestUtils.assertEquals(
-				actual = "${actualUniversityErc}",
-				expected = "${staticUniversityErc}");
+				actual = "${studentEntryIdFromNode}",
+				expected = "${staticStudentEntryId}");
 		}
 	}
 
 	@disable-webdriver = "true"
 	@priority = "4"
-	test CanGetRelatedObjectEntryIdInOneToManyRelationship {
+	test CanGetRelatedObjectEntryIdInOneToManyRelationshipFromChild {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ClarifyOneToManyFieldsInformation#CanGetRelatedObjectEntryIdInOneToManyRelationshipFromChild";
 
 		task ("When requesting GET /o/c/students/{studentId}") {
 			var response = ObjectDefinitionAPI.getObjectEntryById(
 				en_US_plural_label = "students",
-				objectEntryId = "${staticStudentId}");
+				objectEntryId = "${staticStudentEntryId}");
 		}
 
-		task ("Then I can see correct value of r_universityStudents_c_universityId and r_universityStudents_c_universityERC") {
-			var actualId = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityId");
-			var actualErc = JSONUtil.getWithJSONPath("${response}", "$.r_universityStudents_c_universityERC");
+		task ("Then the response contains r_universityStudents_c_universityId,r_universityStudents_c_universityERC,universityStudentsERC values") {
+			var r_universityStudents_c_universityErc = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_universityERC");
+
+			var r_universityStudents_c_universityId = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_universityId");
+			
+			var universityStudentsErcValue = JSONUtil.getWithJSONPath("${response}", "$..universityStudentsERC");
 
 			TestUtils.assertEquals(
-				actual = "${actualId}",
-				expected = "${staticUniversityId}");
+				actual = "${r_universityStudents_c_universityErc}",
+				expected = "${universityStudentsErcValue}");
 
 			TestUtils.assertEquals(
-				actual = "${actualErc}",
-				expected = "${staticUniversityErc}");
+				actual = "${r_universityStudents_c_universityId}",
+				expected = "${staticUniversityEntryId}");	
 		}
 	}
 

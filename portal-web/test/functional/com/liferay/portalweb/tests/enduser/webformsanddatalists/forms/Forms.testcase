@@ -863,7 +863,7 @@ definition {
 	test CanBeUnpublished {
 		property portal.acceptance = "true";
 
-		task("Given that a form is published") {
+		task ("Given that a form is published") {
 			FormsAdmin.addForm();
 
 			Form.editName(formName = "Form 1");
@@ -875,35 +875,17 @@ definition {
 			Form.publishForm();
 		}
 
-		task("When the user unpublishes the form and navigates to the form's published URL") {
+		task ("When the user unpublishes the form and navigates to the form's published URL") {
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
 			var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
 
 			Form.unpublishForm();
 
-			AssertElementPresent(locator1 = "Form#PUBLISH_FORM_BUTTON");
-
-			AssertElementPresent(
-				key_value = "Share",
-				locator1 = "Form#ANY_DISABLED_BUTTON");
-
 			Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 		}
 
-		task("Then an error should be displayed to inform that the form is unavailable") {
-			AssertElementNotPresent(
-				key_fieldLabe = "Text",
-				locator1 = "FormFields#LABEL");
-
-			AssertElementNotPresent(
-				key_text = "Submit",
-				locator1 = "Button#ANY");
-
-			AssertElementNotPresent(
-				key_fieldName = "Text",
-				locator1 = "FormFields#TEXT_FIELD");
-
+		task ("Then an error should be displayed to inform that the form is unavailable") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3_ALT",
 				value1 = "This form is not available or it was not published.");

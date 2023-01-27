@@ -8,7 +8,7 @@ fox-remote-app:
     friendlyURLMapping: fox-remote-app
     htmlElementName: fox-remote-app
     instanceable: false
-    name: fox-remote-app
+    name: Fox Remote App
     portletCategoryName: category.client-extensions
     type: customElement
     urls:

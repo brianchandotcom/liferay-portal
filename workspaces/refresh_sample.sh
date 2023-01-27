@@ -65,7 +65,7 @@ function refresh_sample_default_workspace {
 
 	cd sample-default-workspace
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u58
+	${BLADE_PATH} init --liferay-version dxp-7.4-u60
 
 	echo -en "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 
@@ -83,7 +83,7 @@ function refresh_sample_default_workspace {
 
 	mv gradle.properties.tmp gradle.properties
 
-	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.5"/' settings.gradle
+	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.7"/' settings.gradle
 
 	touch modules/.touch
 	touch themes/.touch

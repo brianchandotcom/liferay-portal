@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.extension.sample.internal.odata.entity.KBArticleEntityModel;
+import com.liferay.segments.criteria.mapper.SegmentsCriteriaJSONObjectMapper;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 
@@ -103,6 +105,13 @@ public class UserKBArticleSegmentsCriteriaContributor
 	}
 
 	@Override
+	public JSONObject getCriteriaJSONObject(Criteria criteria)
+		throws Exception {
+
+		return _segmentsCriteriaJSONObjectMapper.toJSONObject(criteria, this);
+	}
+
+	@Override
 	public EntityModel getEntityModel() {
 		return _entityModel;
 	}
@@ -146,5 +155,8 @@ public class UserKBArticleSegmentsCriteriaContributor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(segments.criteria.mapper.key=odata)")
+	private SegmentsCriteriaJSONObjectMapper _segmentsCriteriaJSONObjectMapper;
 
 }

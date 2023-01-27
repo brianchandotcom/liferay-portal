@@ -441,7 +441,12 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				project.getRootProject(),
 				RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
 
-			setUpTestableTomcatTask.dependsOn(initBundleTask);
+			Task copyTestModulesTask = GradleUtil.getTask(
+				project, TestIntegrationPlugin.COPY_TEST_MODULES_TASK_NAME);
+
+			copyTestModulesTask.dependsOn(initBundleTask);
+
+			setUpTestableTomcatTask.dependsOn(copyTestModulesTask);
 		}
 	}
 

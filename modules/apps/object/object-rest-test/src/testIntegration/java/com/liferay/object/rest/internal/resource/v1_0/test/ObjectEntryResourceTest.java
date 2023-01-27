@@ -268,10 +268,10 @@ public class ObjectEntryResourceTest {
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
+				_OBJECT_FIELD_NAME_2,
 				new String[] {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
-				},
-				_OBJECT_FIELD_NAME_2));
+				}));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(),
@@ -372,10 +372,10 @@ public class ObjectEntryResourceTest {
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
+				_OBJECT_FIELD_NAME_2,
 				new String[] {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
-				},
-				_OBJECT_FIELD_NAME_2));
+				}));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(),
@@ -500,17 +500,15 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONArray _createObjectEntriesJSONArray(
-			String[] nestedCustomObjectEntryFieldValues, String objectField)
+			String objectFieldName, String[] objectFieldValues)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (String nestedCustomObjectEntryFieldValue :
-				nestedCustomObjectEntryFieldValues) {
-
+		for (String objectFieldValue : objectFieldValues) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONUtil.put(
-					objectField, nestedCustomObjectEntryFieldValue
+					objectFieldName, objectFieldValue
 				).toString());
 
 			jsonArray.put(jsonObject);

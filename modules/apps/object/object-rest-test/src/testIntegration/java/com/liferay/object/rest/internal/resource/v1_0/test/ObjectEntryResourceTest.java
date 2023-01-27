@@ -261,8 +261,6 @@ public class ObjectEntryResourceTest {
 	public void testPostCustomObjectEntryWithNestedCustomObjectEntriesInManyToManyRelationship()
 		throws Exception {
 
-		int nestedCustomObjectEntryNumber = 2;
-
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
@@ -270,7 +268,6 @@ public class ObjectEntryResourceTest {
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
-				nestedCustomObjectEntryNumber,
 				new String[] {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 				},
@@ -300,9 +297,7 @@ public class ObjectEntryResourceTest {
 		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
 			_objectRelationship.getName());
 
-		Assert.assertEquals(
-			nestedCustomObjectEntryNumber,
-			nestedObjectEntriesJSONArray.length());
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(0),
@@ -370,8 +365,6 @@ public class ObjectEntryResourceTest {
 	public void testPostCustomObjectEntryWithNestedCustomObjectEntriesInOneToManyRelationship()
 		throws Exception {
 
-		int nestedCustomObjectEntryNumber = 2;
-
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -379,7 +372,6 @@ public class ObjectEntryResourceTest {
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
-				nestedCustomObjectEntryNumber,
 				new String[] {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 				},
@@ -508,16 +500,17 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONArray _createObjectEntriesJSONArray(
-			int nestedCustomObjectEntryFieldNumber,
 			String[] nestedCustomObjectEntryFieldValues, String objectField)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (int i = 0; i < nestedCustomObjectEntryFieldNumber; i++) {
+		for (String nestedCustomObjectEntryFieldValue :
+				nestedCustomObjectEntryFieldValues) {
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONUtil.put(
-					objectField, nestedCustomObjectEntryFieldValues[i]
+					objectField, nestedCustomObjectEntryFieldValue
 				).toString());
 
 			jsonArray.put(jsonObject);

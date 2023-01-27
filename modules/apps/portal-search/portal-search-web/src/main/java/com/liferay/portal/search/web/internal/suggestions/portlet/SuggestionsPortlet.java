@@ -29,8 +29,6 @@ import com.liferay.portal.search.web.search.request.SearchSettings;
 import java.io.IOException;
 
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -121,9 +119,11 @@ public class SuggestionsPortlet extends MVCPortlet {
 			suggestionsPortletDisplayContextBuilder =
 				new SuggestionsPortletDisplayContextBuilder(html);
 
-		_copy(
-			portletSharedSearchResponse::getKeywordsOptional,
-			suggestionsPortletDisplayContextBuilder::setKeywords);
+		String keywords = portletSharedSearchResponse.getKeywords();
+
+		if (keywords != null) {
+			suggestionsPortletDisplayContextBuilder.setKeywords(keywords);
+		}
 
 		SearchSettings searchSettings =
 			portletSharedSearchResponse.getSearchSettings();
@@ -145,20 +145,18 @@ public class SuggestionsPortlet extends MVCPortlet {
 		suggestionsPortletDisplayContextBuilder.setSearchURL(
 			portletSharedRequestHelper.getCompleteURL(renderRequest));
 
-		_copy(
-			portletSharedSearchResponse::getSpellCheckSuggestionOptional,
-			suggestionsPortletDisplayContextBuilder::setSpellCheckSuggestion);
+		String spellCheckSuggestion =
+			portletSharedSearchResponse.getSpellCheckSuggestion();
+
+		if (spellCheckSuggestion != null) {
+			suggestionsPortletDisplayContextBuilder.setSpellCheckSuggestion(
+				spellCheckSuggestion);
+		}
 
 		suggestionsPortletDisplayContextBuilder.setSpellCheckSuggestionEnabled(
 			suggestionsPortletPreferences.isSpellCheckSuggestionEnabled());
 
 		return suggestionsPortletDisplayContextBuilder.build();
-	}
-
-	private <T> void _copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
 	}
 
 }

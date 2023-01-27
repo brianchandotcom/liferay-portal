@@ -326,10 +326,10 @@ public class SearchResultsPortletTest {
 
 	private void _setUpPortletSharedSearchResponse() {
 		Mockito.doReturn(
-			Optional.empty()
+			null
 		).when(
 			_portletSharedSearchResponse
-		).getKeywordsOptional();
+		).getKeywords();
 
 		Mockito.doReturn(
 			Optional.empty()

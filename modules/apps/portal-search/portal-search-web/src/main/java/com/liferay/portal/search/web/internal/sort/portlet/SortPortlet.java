@@ -138,10 +138,7 @@ public class SortPortlet extends MVCPortlet {
 	private boolean _isRenderNothing(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
-		Optional<String> keywordsOptional =
-			portletSharedSearchResponse.getKeywordsOptional();
-
-		if (keywordsOptional.isPresent()) {
+		if (portletSharedSearchResponse.getKeywords() != null) {
 			return false;
 		}
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -44,10 +45,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
 
-import java.io.Serializable;
-
 import java.util.Collections;
-import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 
@@ -518,10 +516,9 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertNotNull(objectEntry);
 
-		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
-
 		Assert.assertEquals(
-			objectEntryValues.get(objectFieldName), objectFieldValue);
+			MapUtil.getString(objectEntry.getValues(), objectFieldName),
+			objectFieldValue);
 	}
 
 	private JSONArray _createNestedObjectEntriesStrucutureJSONArray(

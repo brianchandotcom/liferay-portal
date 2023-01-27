@@ -75,7 +75,7 @@ public abstract class BaseActivator implements BundleActivator {
         providerBundleTracker.open();
 
         consumerBundleTracker = new BundleTracker(context,
-                Bundle.RESOLVED | Bundle.STARTING | Bundle.ACTIVE, new ConsumerBundleTrackerCustomizer(this, consumerHeaderName));
+                Bundle.RESOLVED | Bundle.STARTING | Bundle.ACTIVE | Bundle.STOPPING, new ConsumerBundleTrackerCustomizer(this, consumerHeaderName));
         consumerBundleTracker.open();
 
         for (Bundle bundle : context.getBundles()) {

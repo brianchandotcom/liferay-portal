@@ -1,0 +1,13 @@
+diff --git a/org/apache/aries/spifly/BaseActivator.java b/org/apache/aries/spifly/BaseActivator.java
+index f557a7dedb83..785e9e3d6a4a 100644
+--- a/org/apache/aries/spifly/BaseActivator.java
++++ b/org/apache/aries/spifly/BaseActivator.java
+@@ -75,7 +75,7 @@ public abstract class BaseActivator implements BundleActivator {
+         providerBundleTracker.open();
+ 
+         consumerBundleTracker = new BundleTracker(context,
+-                Bundle.RESOLVED | Bundle.STARTING | Bundle.ACTIVE, new ConsumerBundleTrackerCustomizer(this, consumerHeaderName));
++                Bundle.RESOLVED | Bundle.STARTING | Bundle.ACTIVE | Bundle.STOPPING, new ConsumerBundleTrackerCustomizer(this, consumerHeaderName));
+         consumerBundleTracker.open();
+ 
+         for (Bundle bundle : context.getBundles()) {

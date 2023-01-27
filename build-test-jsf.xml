@@ -66,10 +66,6 @@
 
 		<propertycopy from="browser.firefox.bin.file[${liferay.faces.test.browser.version}]" name="browser.firefox.bin.file" silent="true" />
 
-		<prepare-gecko-driver />
-
-		<property location="${selenium.executable.dir.name}${selenium.gecko.driver.executable}" name="gecko.driver.path" />
-
 		<!--
 		LRQA-73302 Temporary workaround until Bridge-Impl 4.3.1 is available
 		-->

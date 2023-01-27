@@ -85,7 +85,7 @@ const PolicyDetail = ({
 		}
 	}, [dataJSON]);
 
-	const ContentDescription = (description: string) => (
+	const ContentDescription = ({description}: {description: string}) => (
 		<div className="d-flex justify-content-between">
 			<div>{description}</div>
 		</div>
@@ -311,28 +311,33 @@ const PolicyDetail = ({
 					arraySortedByDate?.map(
 						(item: InfoPanelType, index: number) => {
 							return (
-								<>
-									<div
-										className="bg-neutral-0 dotted-line flex-row history-detail-border p-6 position-relative"
-										key={index}
-									>
-										<div>
-											<div className="align-items-center d-flex data-panel-hide float-left justify-content-between w-25">
-												{item.date}
-											</div>
+								<div
+									className="bg-neutral-0 dotted-line flex-row history-detail-border p-6 position-relative"
+									key={index}
+								>
+									<div>
+										<div className="align-items-center d-flex data-panel-hide float-left justify-content-between w-25">
+											{item.date}
+										</div>
+										<div className="w-100">
 											<Panel
-												Description={() =>
-													ContentDescription(
-														item.description
-													)
+												Description={
+													<ContentDescription
+														description={
+															item.description
+														}
+													/>
+												}
+												hasExpandedButton={true}
+												isPanelExpanded={
+													showPanel[index]
 												}
 												key={index}
-												setShowPanel={() =>
+												setIsPanelExpanded={() =>
 													displayHistoryPanel(index)
 												}
-												showPanel={showPanel[index]}
 											>
-												<div className="justify-content-between layout-show-details ml-auto mt-4 pb-3 pl-3 pr-3 pt-3 w-75">
+												<div className="justify-content-between layout-show-details ml-auto mt-4 p-3 w-75">
 													<div className="d-flex flex-row justify-content-between">
 														<div className="align-self-start mt-2">
 															<p className="mb-1 text-neutral-7 w-25">
@@ -367,7 +372,7 @@ const PolicyDetail = ({
 											</Panel>
 										</div>
 									</div>
-								</>
+								</div>
 							);
 						}
 					)}

@@ -47,8 +47,8 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 					<h2 className="border-link-active font ml-1">Activies</h2>
 				</div>
 
-				<div className="align-items-center blue-line-activites border-title box-activites col d-flex position-relative">
-					<p className="font ml-2 text-nowrap">
+				<div className="align-items-center blue-line-activites border border-bottom box-activites col d-flex position-relative">
+					<p className="font ml-2 mt-3 text-nowrap">
 						{selectedRow.activity}
 					</p>
 				</div>
@@ -58,7 +58,7 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 				<div className="d-flex w-50">
 					<table className="border-right box-table w-100">
 						<Head>
-							<Row className="border-header">
+							<Row className="border border-header">
 								{headers.map(
 									(header: TableHeaders, index: number) => (
 										<Cell
@@ -116,7 +116,7 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 					</table>
 				</div>
 
-				<div className="bg-neutral-0 box-info col d-flex ml-1 rounded">
+				<div className="bg-neutral-0 box-info d-flex ml-1 rounded w-50">
 					<li className="bg-neutral-0 box-info d-flex flex-column float-right rounded w-100">
 						<div>
 							<p className="font-table ml-0 pt-4">

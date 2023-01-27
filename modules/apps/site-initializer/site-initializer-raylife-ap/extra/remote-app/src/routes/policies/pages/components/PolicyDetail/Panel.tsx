@@ -16,49 +16,65 @@ import ClayButton from '@clayui/button';
 import classNames from 'classnames';
 import React from 'react';
 
+import './index.scss';
+
 type Props = {
-	Description?: () => JSX.Element;
+	Description?: React.ReactNode;
 	children: React.ReactNode;
-	setShowPanel: () => void;
-	showPanel: boolean;
+	hasExpandedButton?: boolean;
+	isPanelExpanded: boolean;
+	setIsPanelExpanded: () => void;
 };
 
 const Panel: React.FC<Props> = ({
 	Description,
 	children,
-	setShowPanel,
-	showPanel,
+	hasExpandedButton,
+	isPanelExpanded,
+	setIsPanelExpanded,
 }) => {
 	const toggleShow = () => {
-		setShowPanel();
+		setIsPanelExpanded();
 	};
 
-	const buttonLabel = showPanel ? 'Hide Detail' : 'View Detail';
+	const hasButtonLabel = isPanelExpanded ? 'Hide Detail' : 'View Detail';
 
 	return (
 		<>
-			<div className="align-items-center d-flex justify-content-between layout-panel ml-auto w-75">
+			<div
+				className={classNames(
+					'align-items-center d-flex justify-content-between layout-panel ml-auto',
+					{
+						'gsdc position-relative box-shadow ':
+							isPanelExpanded && !hasExpandedButton,
+					}
+				)}
+				onClick={!hasExpandedButton ? toggleShow : undefined}
+			>
 				<div className="align-items-center d-flex font-weight-bold">
-					{Description && <Description />}
+					{Description}
 				</div>
 
-				<div className="container-button-panel">
-					<ClayButton
-						className={classNames('text-nowrap ml-1', {
-							'font-weight-bold': showPanel,
-						})}
-						displayType="link"
-						onClick={toggleShow}
-					>
-						{buttonLabel}
-					</ClayButton>
-				</div>
+				{hasExpandedButton && (
+					<div className="container-hasButton-panel">
+						<ClayButton
+							className={classNames('text-nowrap ml-1', {
+								'font-weight-bold': isPanelExpanded,
+							})}
+							displayType="link"
+							onClick={toggleShow}
+						>
+							{hasButtonLabel}
+						</ClayButton>
+					</div>
+				)}
 			</div>
 
 			<div
 				className={classNames('box pb-1', {
-					'show-box': showPanel,
+					'show-box': isPanelExpanded,
 				})}
+				onClick={!hasExpandedButton ? toggleShow : undefined}
 			>
 				{children}
 			</div>

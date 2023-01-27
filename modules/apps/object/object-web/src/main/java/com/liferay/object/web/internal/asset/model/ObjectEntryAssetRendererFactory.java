@@ -40,6 +40,7 @@ public class ObjectEntryAssetRendererFactory
 		ObjectEntryService objectEntryService, ServletContext servletContext) {
 
 		setClassName(objectDefinition.getClassName());
+		setSearchable(true);
 		setPortletId(objectDefinition.getPortletId());
 
 		_objectDefinition = objectDefinition;

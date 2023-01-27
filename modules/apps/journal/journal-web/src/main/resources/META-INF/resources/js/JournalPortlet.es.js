@@ -131,6 +131,12 @@ export default function _JournalPortlet({
 		publishingLock.unlock();
 		console.error(error);
 
+		const workflowActionInput = document.getElementById(
+			`${namespace}workflowAction`
+		);
+
+		workflowActionInput.value = Liferay.Workflow.ACTION_SAVE_DRAFT;
+
 		const titleInputComponent = Liferay.component(
 			`${namespace}titleMapAsXML`
 		);

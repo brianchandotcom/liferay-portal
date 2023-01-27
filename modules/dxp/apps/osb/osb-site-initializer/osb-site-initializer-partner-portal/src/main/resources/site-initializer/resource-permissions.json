@@ -103,30 +103,6 @@
 	},
 	{
 		"actionId": "VIEW",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DealRegistration$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionId": "ADD_OBJECT_ENTRY",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DealRegistration$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionId": "UPDATE",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DealRegistration$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionId": "DELETE",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DealRegistration$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionId": "VIEW",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
 		"roleName": "User",
 		"scope": "1"

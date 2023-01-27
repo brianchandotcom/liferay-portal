@@ -14,6 +14,7 @@
 
 package com.liferay.segments.criteria.contributor;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
@@ -46,6 +47,15 @@ public interface SegmentsCriteriaContributor {
 		criteria.addCriterion(getKey(), getType(), filterString, conjunction);
 		criteria.addFilter(getType(), filterString, conjunction);
 	}
+
+	/**
+	 * Returns a criteria as a JSONObject.
+	 *
+	 * @param  criteria the segment's criteria
+	 * @return the JSONObject from the segment's criteria
+	 * @review
+	 */
+	public JSONObject getCriteriaJSONObject(Criteria criteria) throws Exception;
 
 	/**
 	 * Returns the contributed criterion from the criteria.

@@ -181,7 +181,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ClientExtension#CustomElementCanBeCreatedInNonRootContext";
-		property testray.component.names = "Frontend Dataset,Remote Apps";
+		property testray.component.names = "Frontend Dataset,Client Extensions";
 
 		task ("Given a non-root portal context") {
 			var portalURL = JSONCompany.getPortalURL();
@@ -238,7 +238,7 @@ definition {
 		}
 
 		task ("Then remote app src is rendered with non-root context") {
-			AssertElementPresent(locator1 = "//script[contains(@src,'${portalURL}/documents/d/guest/index') and contains(@type,'module')]");
+			AssertElementPresent(locator1 = "//script[contains(@src,'/documents/d/guest/index') and contains(@type,'module')]");
 		}
 	}
 

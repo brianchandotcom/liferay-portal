@@ -612,7 +612,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private String _getBrowserType(Properties poshiProperties) {
-		String browserType = poshiProperties.getProperty("browser.type");
+		String browserType = _getPoshiPropertyName(
+			"browser.type", poshiProperties);
 
 		if (Validator.isNull(browserType)) {
 			return "chrome";
@@ -910,6 +911,22 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		return poshiProperties;
 	}
 
+	private String _getPoshiPropertyName(
+		String poshiPropertyName, Properties poshiProperties) {
+
+		Properties systemProperties = System.getProperties();
+
+		String poshiPropertyValue = systemProperties.getProperty(
+			poshiPropertyName);
+
+		if (Validator.isNull(poshiPropertyValue)) {
+			poshiPropertyValue = poshiProperties.getProperty(
+				poshiPropertyValue);
+		}
+
+		return poshiPropertyValue;
+	}
+
 	private FileCollection _getPoshiRunnerClasspath(Project project) {
 		Configuration poshiRunnerConfiguration = GradleUtil.getConfiguration(
 			project, POSHI_RUNNER_CONFIGURATION_NAME);
@@ -934,8 +951,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		String browserType = _getBrowserType(poshiProperties);
 
 		if (browserType.equals("chrome")) {
-			String chromeBinaryPath = poshiProperties.getProperty(
-				"browser.chrome.bin.file");
+			String chromeBinaryPath = _getPoshiPropertyName(
+				"browser.chrome.bin.file", poshiProperties);
 
 			url = _getChromeDriverURL(
 				_getChromeDriverVersion(project, chromeBinaryPath));

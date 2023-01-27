@@ -17,8 +17,6 @@ export default function ForecastChart({
 	APIBaseUrl,
 	accountIds: initialAccountsIds = [],
 	categoryIds = [],
-	noAccountErrorMessage,
-	noDataErrorMessage,
 }) {
 	const [loading, setLoading] = useState(true);
 	const [chartData, setChartData] = useState({});
@@ -46,12 +44,11 @@ export default function ForecastChart({
 	useEffect(stopLoading, [chartData]);
 
 	return !accountsId ? (
-		<p>{noAccountErrorMessage}</p>
+		<p>{Liferay.Language.get('no-account-selected')}</p>
 	) : (
 		<ChartWrapper
 			data={chartData}
 			loading={loading}
-			noDataErrorMessage={noDataErrorMessage}
 		/>
 	);
 }

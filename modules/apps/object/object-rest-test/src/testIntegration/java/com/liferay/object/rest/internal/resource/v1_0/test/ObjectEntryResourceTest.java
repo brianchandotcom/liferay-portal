@@ -263,10 +263,6 @@ public class ObjectEntryResourceTest {
 
 		int nestedCustomObjectEntryNumber = 2;
 
-		String[] nestedCustomObjectEntryFieldValues = {
-			_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
-		};
-
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
@@ -275,7 +271,10 @@ public class ObjectEntryResourceTest {
 			_objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
 				nestedCustomObjectEntryNumber,
-				nestedCustomObjectEntryFieldValues, _OBJECT_FIELD_NAME_2));
+				new String[] {
+					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+				},
+				_OBJECT_FIELD_NAME_2));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(),
@@ -305,19 +304,13 @@ public class ObjectEntryResourceTest {
 			nestedCustomObjectEntryNumber,
 			nestedObjectEntriesJSONArray.length());
 
-		JSONObject nestedObjectEntryJSONObject1 =
-			(JSONObject)nestedObjectEntriesJSONArray.get(0);
-
-		JSONObject nestedObjectEntryJSONObject2 =
-			(JSONObject)nestedObjectEntriesJSONArray.get(1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0),
+			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
 
 		_assertObjectEntryField(
-			nestedObjectEntryJSONObject1, _OBJECT_FIELD_NAME_2,
-			_NEW_OBJECT_FIELD_VALUE_1);
-
-		_assertObjectEntryField(
-			nestedObjectEntryJSONObject2, _OBJECT_FIELD_NAME_2,
-			_NEW_OBJECT_FIELD_VALUE_2);
+			(JSONObject)nestedObjectEntriesJSONArray.get(1),
+			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
 	}
 
 	@Test
@@ -379,10 +372,6 @@ public class ObjectEntryResourceTest {
 
 		int nestedCustomObjectEntryNumber = 2;
 
-		String[] nestedCustomObjectEntryFieldValues = {
-			_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
-		};
-
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -391,7 +380,10 @@ public class ObjectEntryResourceTest {
 			_objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
 				nestedCustomObjectEntryNumber,
-				nestedCustomObjectEntryFieldValues, _OBJECT_FIELD_NAME_2));
+				new String[] {
+					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+				},
+				_OBJECT_FIELD_NAME_2));
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(),
@@ -419,19 +411,13 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
-		JSONObject nestedCustomObjectEntryJSONObject1 =
-			(JSONObject)nestedObjectEntriesJSONArray.get(0);
-
-		JSONObject nestedCustomObjectEntryJSONObject2 =
-			(JSONObject)nestedObjectEntriesJSONArray.get(1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0),
+			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
 
 		_assertObjectEntryField(
-			nestedCustomObjectEntryJSONObject1, _OBJECT_FIELD_NAME_2,
-			_NEW_OBJECT_FIELD_VALUE_1);
-
-		_assertObjectEntryField(
-			nestedCustomObjectEntryJSONObject2, _OBJECT_FIELD_NAME_2,
-			_NEW_OBJECT_FIELD_VALUE_2);
+			(JSONObject)nestedObjectEntriesJSONArray.get(1),
+			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
 	}
 
 	@Test

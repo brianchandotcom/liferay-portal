@@ -103,7 +103,7 @@ public class StringTemplateResource implements TemplateResource {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(_lastModified);
-		objectOutput.writeUTF(_templateContent);
+		objectOutput.writeObject(_templateContent);
 		objectOutput.writeUTF(_templateId);
 	}
 

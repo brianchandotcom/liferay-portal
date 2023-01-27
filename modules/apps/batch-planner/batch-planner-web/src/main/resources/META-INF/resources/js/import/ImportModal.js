@@ -92,8 +92,8 @@ const ImportModal = ({closeModal, formDataQuerySelector, formImportURL}) => {
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton displayType={null} onClick={onClose}>
-							{Liferay.Language.get('back-to-the-list')}
+						<ClayButton displayType="secondary" onClick={onClose}>
+							{Liferay.Language.get('close')}
 						</ClayButton>
 
 						{modalStatus === 'danger' && !!externalReferenceCode && (

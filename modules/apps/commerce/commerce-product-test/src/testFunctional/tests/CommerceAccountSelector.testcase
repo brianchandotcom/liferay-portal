@@ -421,7 +421,7 @@ definition {
 		}
 
 		task ("THEN a message that asks to fill the required field(s) appear and when the user closes the modal the account has not been created") {
-			AssertElementPresent(locator1 = "//div[@class='modal-content']/div/div[text()='Create New Account']");
+			AssertElementPresent(locator1 = "//div[@class='modal-content']/div/h1[text()='Create New Account']");
 
 			Click(
 				key_text = "Cancel",

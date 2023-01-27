@@ -348,15 +348,13 @@ public class ObjectEntryResourceTest {
 						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
 			Http.Method.GET);
 
-		JSONObject nestedObjectEntryJSONObject = jsonObject.getJSONObject(
-			StringBundler.concat(
-				"r_", _objectRelationship.getName(), "_",
-				StringUtil.replaceLast(
-					_objectDefinition1.getPKObjectFieldName(), "Id", "")));
-
 		_assertObjectEntryField(
-			nestedObjectEntryJSONObject, _OBJECT_FIELD_NAME_1,
-			_NEW_OBJECT_FIELD_VALUE_1);
+			jsonObject.getJSONObject(
+				StringBundler.concat(
+					"r_", _objectRelationship.getName(), "_",
+					StringUtil.replaceLast(
+						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
+			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	@Test

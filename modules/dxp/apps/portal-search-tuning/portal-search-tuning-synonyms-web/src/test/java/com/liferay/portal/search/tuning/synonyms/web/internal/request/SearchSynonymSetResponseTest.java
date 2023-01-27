@@ -21,7 +21,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,8 +59,7 @@ public class SearchSynonymSetResponseTest {
 		Assert.assertEquals(
 			_documents, _searchSynonymSetResponse.getDocuments());
 		Assert.assertEquals(
-			Optional.of("keywords"),
-			_searchSynonymSetResponse.getKeywordsOptional());
+			"keywords", _searchSynonymSetResponse.getKeywords());
 		Assert.assertEquals(1, _searchSynonymSetResponse.getPaginationDelta());
 		Assert.assertEquals(0, _searchSynonymSetResponse.getPaginationStart());
 		Assert.assertEquals(

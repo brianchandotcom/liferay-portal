@@ -20,7 +20,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Adam Brandizzi
@@ -31,8 +30,8 @@ public class SearchSynonymSetResponse {
 		return _documents;
 	}
 
-	public Optional<String> getKeywordsOptional() {
-		return Optional.ofNullable(_keywords);
+	public String getKeywords() {
+		return _keywords;
 	}
 
 	public int getPaginationDelta() {

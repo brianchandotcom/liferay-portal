@@ -508,14 +508,13 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _assertObjectEntryField(
-		JSONObject nestedObjectEntryJSONObject, String objectFieldName,
+		JSONObject objectEntryJSONObject, String objectFieldName,
 		String objectFieldValue) {
 
-		int nestedCustomObjectEntryId = nestedObjectEntryJSONObject.getInt(
-			"id");
+		int objectEntryId = objectEntryJSONObject.getInt("id");
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			nestedCustomObjectEntryId);
+			objectEntryId);
 
 		Assert.assertNotNull(objectEntry);
 

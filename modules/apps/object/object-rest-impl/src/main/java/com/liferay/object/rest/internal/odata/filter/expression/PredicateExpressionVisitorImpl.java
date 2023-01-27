@@ -545,7 +545,7 @@ public class PredicateExpressionVisitorImpl
 			ObjectRelationship objectRelationship, Predicate predicate)
 		throws Exception {
 
-		ObjectDefinition objectDefinition1 =
+		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 				_objectDefinitionId);
 
@@ -553,7 +553,7 @@ public class PredicateExpressionVisitorImpl
 			objectRelatedModelsPredicateProvider =
 				_objectRelatedModelsPredicateProviderRegistry.
 					getObjectRelatedModelsPredicateProvider(
-						objectDefinition1.getClassName(),
+						objectDefinition.getClassName(),
 						objectRelationship.getType());
 
 		return objectRelatedModelsPredicateProvider.getPredicate(

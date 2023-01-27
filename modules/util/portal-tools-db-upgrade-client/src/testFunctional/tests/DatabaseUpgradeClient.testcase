@@ -213,4 +213,15 @@ definition {
 			value1 = "check-upgrade-client-home-ext-properties");
 	}
 
+	@description = "LPS-171012: Debug support is added for upgrade jvm"
+	@priority = "3"
+	test CheckUpgradeDebugOptions {
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-debug-options");
+	}
+
 }

@@ -484,6 +484,10 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
+		if (configuration == null) {
+			return null;
+		}
+
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				_objectDefinition.getObjectDefinitionId());

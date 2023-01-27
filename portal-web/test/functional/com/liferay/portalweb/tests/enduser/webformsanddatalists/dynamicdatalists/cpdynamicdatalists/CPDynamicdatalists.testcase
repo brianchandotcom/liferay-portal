@@ -300,6 +300,8 @@ definition {
 
 	@priority = "3"
 	test AddListAndRecordWithEventsPredefinedDataDefinition {
+		property portal.upstream = "quarantine";
+
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLList.addCP(
@@ -427,6 +429,8 @@ definition {
 
 	@priority = "3"
 	test AddListAndRecordWithIssuesTrackingPredefinedDataDefinition {
+		property portal.upstream = "quarantine";
+
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLList.addCP(
@@ -497,6 +501,8 @@ definition {
 
 	@priority = "3"
 	test AddListAndRecordWithMeetingMinutesPredefinedDataDefinition {
+		property portal.upstream = "quarantine";
+
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLList.addCP(
@@ -866,6 +872,8 @@ definition {
 
 	@priority = "4"
 	test AddListRecordWithDocumentsAndMediaField {
+		property portal.upstream = "quarantine";
+
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");

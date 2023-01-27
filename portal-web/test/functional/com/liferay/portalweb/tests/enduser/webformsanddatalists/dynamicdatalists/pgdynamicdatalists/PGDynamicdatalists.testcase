@@ -221,6 +221,8 @@ definition {
 	@description = "This is a use case for LPS-58893."
 	@priority = "3"
 	test AddListWithDocumentsAndMediaField {
+		property portal.upstream = "quarantine";
+
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");

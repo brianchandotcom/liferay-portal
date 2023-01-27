@@ -45,7 +45,6 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIn
 import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSetStorageAdapter;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;
@@ -348,12 +347,11 @@ public abstract class BaseSynonymsWebTestCase {
 			new SynonymSet.SynonymSetBuilder();
 
 		Mockito.doReturn(
-			Optional.of(
-				synonymSetBuilder.synonyms(
-					synonyms
-				).synonymSetDocumentId(
-					id
-				).build())
+			synonymSetBuilder.synonyms(
+				synonyms
+			).synonymSetDocumentId(
+				id
+			).build()
 		).when(
 			synonymSetIndexReader
 		).fetch(

@@ -115,6 +115,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -130,6 +131,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1397,6 +1399,25 @@ public class BundleSiteInitializerTest {
 				"[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"));
 	}
 
+	private void _assertResourceAction(
+			String[] actionIds, ResourcePermission resourcePermission)
+		throws Exception {
+
+		long resourceActionBitwiseValue = 0;
+
+		for (String actionId : actionIds) {
+			ResourceAction resourceAction =
+				_resourceActionLocalService.getResourceAction(
+					resourcePermission.getName(), actionId);
+
+			Assert.assertNotNull(resourceAction);
+			resourceActionBitwiseValue += resourceAction.getBitwiseValue();
+		}
+
+		Assert.assertEquals(
+			resourceActionBitwiseValue, resourcePermission.getActionIds());
+	}
+
 	private void _assertResourcePermission(Group group) throws Exception {
 		Role role = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 1");
@@ -1408,7 +1429,7 @@ public class BundleSiteInitializerTest {
 				String.valueOf(group.getCompanyId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
-		Assert.assertEquals(32, resourcePermission.getActionIds());
+		_assertResourceAction(new String[] {"VIEW_PRICE"}, resourcePermission);
 
 		role = _roleLocalService.fetchRole(group.getCompanyId(), "Test Role 2");
 
@@ -1419,7 +1440,7 @@ public class BundleSiteInitializerTest {
 				String.valueOf(group.getGroupId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
-		Assert.assertEquals(32, resourcePermission.getActionIds());
+		_assertResourceAction(new String[] {"VIEW_PRICE"}, resourcePermission);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -1434,7 +1455,8 @@ public class BundleSiteInitializerTest {
 				String.valueOf(group.getCompanyId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
-		Assert.assertEquals(11, resourcePermission.getActionIds());
+		_assertResourceAction(
+			new String[] {"DELETE", "UPDATE", "VIEW"}, resourcePermission);
 	}
 
 	private void _assertRoles(Group group) {
@@ -2093,6 +2115,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private ProductSpecificationResource.Factory
 		_productSpecificationResourceFactory;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

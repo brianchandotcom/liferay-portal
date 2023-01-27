@@ -15,22 +15,22 @@
 
 <tr>
 	<td>INSTANCE_TABLE_WEB_ID</td>
-	<td>//tr[contains(.,'${key_virtualHost}')]/td[2]//a</td>
+	<td>//tr/td[2]//a[contains(.,'${key_virtualHost}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INSTANCE_TABLE_VIRTUAL_HOST</td>
-	<td>//tr[contains(.,'${key_virtualHost}')]/td[3]//a</td>
+	<td>//tr/td[3]//a[contains(.,'${key_virtualHost}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INSTANCE_TABLE_MAIL_DOMAIN</td>
-	<td>//tr[contains(.,'${key_virtualHost}')]/td[4]//a</td>
+	<td>//tr/td[4]//a[contains(.,'${key_virtualHost}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INSTANCE_TABLE_ACTIVE</td>
-	<td>//tr[contains(.,'${key_virtualHost}')]/td[7]//a</td>
+	<td>//tr/td[7]//a[contains(.,'${key_virtualHost}')]</td>
 	<td></td>
 </tr>
 </tbody>

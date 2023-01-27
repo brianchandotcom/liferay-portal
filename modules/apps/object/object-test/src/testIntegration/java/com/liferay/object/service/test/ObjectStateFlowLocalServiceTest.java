@@ -15,6 +15,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -282,18 +283,11 @@ public class ObjectStateFlowLocalServiceTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Collections.emptyList());
-
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(),
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(),
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+				Arrays.asList(
+					ListTypeEntryUtil.createListTypeEntry(
+						RandomTestUtil.randomString()),
+					ListTypeEntryUtil.createListTypeEntry(
+						RandomTestUtil.randomString())));
 
 		ObjectStateFlow objectStateFlow =
 			_objectStateFlowLocalService.updateDefaultObjectStateFlow(

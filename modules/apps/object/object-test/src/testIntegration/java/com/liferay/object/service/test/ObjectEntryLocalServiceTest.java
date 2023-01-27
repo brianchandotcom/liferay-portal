@@ -25,9 +25,9 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
@@ -177,56 +177,43 @@ public class ObjectEntryLocalServiceTest {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				Collections.emptyList());
-
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey1",
-			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 1"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey2",
-			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 2"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey3",
-			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 3"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			"multipleListTypeEntryKey1",
-			Collections.singletonMap(
-				LocaleUtil.US, "Multiple List Type Entry Key 1"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			"multipleListTypeEntryKey2",
-			Collections.singletonMap(
-				LocaleUtil.US, "Multiple List Type Entry Key 2"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			"multipleListTypeEntryKey3",
-			Collections.singletonMap(
-				LocaleUtil.US, "Multiple List Type Entry Key 3"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			"multipleListTypeEntryKey4",
-			Collections.singletonMap(
-				LocaleUtil.US, "Multiple List Type Entry Key 4"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			"multipleListTypeEntryKey5",
-			Collections.singletonMap(
-				LocaleUtil.US, "Multiple List Type Entry Key 5"));
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			"multipleListTypeEntryKey6",
-			Collections.singletonMap(
-				LocaleUtil.US, "Multiple List Type Entry Key 6"));
+				Arrays.asList(
+					ListTypeEntryUtil.createListTypeEntry(
+						"listTypeEntryKey1",
+						Collections.singletonMap(
+							LocaleUtil.US, "List Type Entry Key 1")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"listTypeEntryKey2",
+						Collections.singletonMap(
+							LocaleUtil.US, "List Type Entry Key 1")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"listTypeEntryKey3",
+						Collections.singletonMap(
+							LocaleUtil.US, "List Type Entry Key 3")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"multipleListTypeEntryKey1",
+						Collections.singletonMap(
+							LocaleUtil.US, "Multiple List Type Entry Key 1")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"multipleListTypeEntryKey2",
+						Collections.singletonMap(
+							LocaleUtil.US, "Multiple List Type Entry Key 2")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"multipleListTypeEntryKey3",
+						Collections.singletonMap(
+							LocaleUtil.US, "Multiple List Type Entry Key 3")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"multipleListTypeEntryKey4",
+						Collections.singletonMap(
+							LocaleUtil.US, "Multiple List Type Entry Key 4")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"multipleListTypeEntryKey5",
+						Collections.singletonMap(
+							LocaleUtil.US, "Multiple List Type Entry Key 5")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"multipleListTypeEntryKey6",
+						Collections.singletonMap(
+							LocaleUtil.US, "Multiple List Type Entry Key 6"))));
 
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
@@ -2865,9 +2852,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
-
-	@Inject
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	private final Queue<Message> _messages = new LinkedList<>();
 	private ObjectDefinition _objectDefinition;

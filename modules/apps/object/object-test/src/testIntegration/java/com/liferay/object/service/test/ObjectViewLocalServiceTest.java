@@ -15,9 +15,9 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
@@ -92,12 +92,10 @@ public class ObjectViewLocalServiceTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.US, "Countries"),
-				Collections.emptyList());
-
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(), StringUtil.randomId(),
-			Collections.singletonMap(LocaleUtil.US, "Brazil"));
+				Collections.singletonList(
+					ListTypeEntryUtil.createListTypeEntry(
+						StringUtil.randomId(),
+						Collections.singletonMap(LocaleUtil.US, "Brazil"))));
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
@@ -381,12 +379,10 @@ public class ObjectViewLocalServiceTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.US, "Countries"),
-				Collections.emptyList());
-
-		_listTypeEntryLocalService.addListTypeEntry(
-			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(), StringUtil.randomId(),
-			Collections.singletonMap(LocaleUtil.US, "Brazil"));
+				Collections.singletonList(
+					ListTypeEntryUtil.createListTypeEntry(
+						StringUtil.randomId(),
+						Collections.singletonMap(LocaleUtil.US, "Brazil"))));
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
@@ -739,9 +735,6 @@ public class ObjectViewLocalServiceTest {
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
-
-	@Inject
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

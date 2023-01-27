@@ -365,6 +365,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10663. Single Approver workflow for Commerce Discounts is triggered once the user clicks on 'Submit for Publication'"
+	@priority = "3"
+	test CanAssertCommerceDiscountSingleApproverWorkflowIsApplied {
+		property portal.acceptance = "false";
+
+		task ("Given Single Approver workflow is set for Commerce Discount") {
+			Workflow.openWorkflowProcessBuilderConfiguration();
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Commerce Discount");
+		}
+
+		task ("When a new discount is created") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewDiscountsEntry(
+				discountName = "Test Discount",
+				discountTarget = "Products",
+				discountType = "Percentage",
+				publish = "false");
+		}
+
+		task ("Then the discount status is Draft") {
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("When the user submits the discount for publication") {
+			Click(
+				key_text = "Submit for Publication",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then status for the discount is changed to PENDING (CREATED)") {
+			AssertElementPresent(
+				key_status = "Pending (Created)",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+	}
+
 	@description = "COMMERCE-9789 | Apply coupon code discount to not eligible account group and assert the coupon is not applicable"
 	@priority = "4"
 	test CanAssertNotEligibleAccountGroupCouponCodeDiscountNotApplied {

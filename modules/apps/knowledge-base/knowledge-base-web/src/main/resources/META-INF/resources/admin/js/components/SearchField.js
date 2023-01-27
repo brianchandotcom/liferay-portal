@@ -14,7 +14,13 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
+
+const ITEM_TYPES_SYMBOL = {
+	article: 'document-text',
+	folder: 'folder',
+};
 
 export default function SearchField({items}) {
 	const [state, setState] = useState({
@@ -57,6 +63,9 @@ export default function SearchField({items}) {
 
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get(
+								state.query ? 'times' : 'search'
+							)}
 							displayType="unstyled"
 							small
 							symbol={state.query ? 'times' : 'search'}
@@ -65,7 +74,25 @@ export default function SearchField({items}) {
 					</ClayInput.GroupInsetItem>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
+
 			<hr className="separator" />
+
+			{state.filteredItems && (
+				<ul className="list-group">
+					{state.filteredItems.map((item) => {
+						return (
+							<li className="list-group-item" key={item.id}>
+								<ClayIcon
+									className='mr-2'
+									symbol={ITEM_TYPES_SYMBOL[item.type]}
+								/>
+
+								{item.name}
+							</li>
+						);
+					})}
+				</ul>
+			)}
 		</>
 	);
 }

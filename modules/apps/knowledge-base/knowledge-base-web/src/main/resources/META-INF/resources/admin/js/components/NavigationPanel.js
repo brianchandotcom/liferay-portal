@@ -74,7 +74,12 @@ const normalizeItems = (items) => {
 
 const getSearchItems = (items) => {
 	return items.reduce(function reducer(acc, item) {
-		acc.push({href: item.href, id: item.id, name: item.name, type: item.type});
+		acc.push({
+			href: item.href,
+			id: item.id,
+			name: item.name,
+			type: item.type,
+		});
 
 		if (item.children) {
 			item.children.reduce(reducer, acc);

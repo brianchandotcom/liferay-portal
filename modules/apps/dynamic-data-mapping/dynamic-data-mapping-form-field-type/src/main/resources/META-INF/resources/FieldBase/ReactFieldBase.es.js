@@ -22,7 +22,7 @@ import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	FieldFeedback,
 	Layout,
-	getRepeatedIndex,
+	PagesVisitor,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
@@ -196,7 +196,7 @@ export function FieldBase({
 	visible,
 	warningMessage,
 }) {
-	const {editingLanguageId} = useFormState();
+	const {editingLanguageId, pages} = useFormState();
 	const dispatch = useForm();
 
 	const hasError = displayErrors && errorMessage && !valid;
@@ -236,7 +236,6 @@ export function FieldBase({
 
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;
-	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 	const showLegend =
 		type === 'checkbox_multiple' ||
 		type === 'grid' ||
@@ -259,6 +258,24 @@ export function FieldBase({
 		columns: [{fields: [field], size: 12}],
 	}));
 
+	const checkRepetitions = () => {
+		let repetitionsCounter = 0;
+
+		const visitor = new PagesVisitor(pages);
+
+		visitor.mapFields(
+			(field) => {
+				if (fieldName === field.fieldName) {
+					repetitionsCounter++;
+				}
+			},
+			true,
+			true
+		);
+
+		return repetitionsCounter;
+	};
+
 	return (
 		<ClayForm.Group
 			aria-labelledby={!renderLabel ? fieldDetailsId : null}
@@ -275,7 +292,7 @@ export function FieldBase({
 		>
 			{repeatable && (
 				<div className="lfr-ddm-form-field-repeatable-toolbar">
-					{repeatedIndex > 0 && (
+					{checkRepetitions() > 1 && (
 						<ClayButton
 							aria-label={sub(
 								Liferay.Language.get('remove-duplicate-field'),

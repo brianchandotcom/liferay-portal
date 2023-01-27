@@ -49,8 +49,6 @@ public interface CustomFacetPortletPreferences {
 
 	public String getCustomHeadingString();
 
-	public Optional<String> getFederatedSearchKeyOptional();
-
 	public String getFederatedSearchKeyString();
 
 	public int getFrequencyThreshold();

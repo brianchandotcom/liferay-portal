@@ -57,8 +57,6 @@ public interface LowLevelSearchOptionsPortletPreferences {
 
 	public String getContributorsToIncludeString();
 
-	public Optional<String> getFederatedSearchKeyOptional();
-
 	public String getFederatedSearchKeyString();
 
 	public Optional<String> getFieldsToReturnOptional();

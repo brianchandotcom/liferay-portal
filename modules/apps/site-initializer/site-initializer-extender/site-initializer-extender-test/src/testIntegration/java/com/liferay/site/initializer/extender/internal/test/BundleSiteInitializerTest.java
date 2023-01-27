@@ -87,10 +87,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
@@ -916,17 +916,6 @@ public class BundleSiteInitializerTest {
 					"lfr-theme:regular:show-header")));
 	}
 
-	private void _assertLayoutUtilityPageEntries(Group group) {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByExternalReferenceCode(
-					"test-layout-utility-page-entry", group.getGroupId());
-
-		Assert.assertNotNull(layoutUtilityPageEntry);
-		Assert.assertEquals(
-			"Test Layout Utility Page Entry", layoutUtilityPageEntry.getName());
-	}
-
 	private void _assertLayoutStructureItems(
 		LayoutPageTemplateStructure layoutPageTemplateStructure,
 		int layoutStructureItemsCount, long segmentsExperienceId) {
@@ -940,6 +929,17 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			layoutStructureItems.toString(), layoutStructureItemsCount,
 			layoutStructureItems.size());
+	}
+
+	private void _assertLayoutUtilityPageEntries(Group group) {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByExternalReferenceCode(
+					"test-layout-utility-page-entry", group.getGroupId());
+
+		Assert.assertNotNull(layoutUtilityPageEntry);
+		Assert.assertEquals(
+			"Test Layout Utility Page Entry", layoutUtilityPageEntry.getName());
 	}
 
 	private void _assertListTypeDefinitions(ServiceContext serviceContext)

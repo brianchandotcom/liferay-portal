@@ -38,10 +38,9 @@ public interface PortletSharedSearchResponse {
 
 	public Facet getFacet(String name);
 
-	public SearchResponse getFederatedSearchResponse(
-		Optional<String> federatedSearchKeyOptional);
+	public SearchResponse getFederatedSearchResponse(String federatedSearchKey);
 
-	public Optional<String> getKeywordsOptional();
+	public String getKeywords();
 
 	public int getPaginationDelta();
 
@@ -67,7 +66,7 @@ public interface PortletSharedSearchResponse {
 
 	public SearchSettings getSearchSettings();
 
-	public Optional<String> getSpellCheckSuggestionOptional();
+	public String getSpellCheckSuggestion();
 
 	public ThemeDisplay getThemeDisplay(RenderRequest renderRequest);
 

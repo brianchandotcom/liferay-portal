@@ -14,18 +14,17 @@
 
 package com.liferay.portal.search.web.internal.search.request;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author André de Oliveira
@@ -64,35 +63,35 @@ public class SearchSettingsImpl implements SearchSettings {
 
 	@Override
 	public SearchRequestBuilder getFederatedSearchRequestBuilder(
-		Optional<String> federatedSearchKeyOptional) {
+		String federatedSearchKey) {
 
 		return _searchRequestBuilder.getFederatedSearchRequestBuilder(
-			federatedSearchKeyOptional.orElse(StringPool.BLANK));
+			GetterUtil.getString(federatedSearchKey));
 	}
 
 	@Override
-	public Optional<String> getKeywordsParameterName() {
-		return Optional.ofNullable(_keywordsParameterName);
+	public String getKeywordsParameterName() {
+		return _keywordsParameterName;
 	}
 
 	@Override
-	public Optional<Integer> getPaginationDelta() {
-		return Optional.ofNullable(_paginationDelta);
+	public Integer getPaginationDelta() {
+		return _paginationDelta;
 	}
 
 	@Override
-	public Optional<String> getPaginationDeltaParameterName() {
-		return Optional.ofNullable(_paginationDeltaParameterName);
+	public String getPaginationDeltaParameterName() {
+		return _paginationDeltaParameterName;
 	}
 
 	@Override
-	public Optional<Integer> getPaginationStart() {
-		return Optional.ofNullable(_paginationStart);
+	public Integer getPaginationStart() {
+		return _paginationStart;
 	}
 
 	@Override
-	public Optional<String> getPaginationStartParameterName() {
-		return Optional.ofNullable(_paginationStartParameterName);
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
 	}
 
 	@Override
@@ -101,13 +100,13 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
-	public Optional<String> getScope() {
-		return Optional.ofNullable(_scope);
+	public String getScope() {
+		return _scope;
 	}
 
 	@Override
-	public Optional<String> getScopeParameterName() {
-		return Optional.ofNullable(_scopeParameterName);
+	public String getScopeParameterName() {
+		return _scopeParameterName;
 	}
 
 	@Override

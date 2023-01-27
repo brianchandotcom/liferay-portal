@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
-import java.util.Optional;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -36,23 +34,23 @@ public interface SearchSettings {
 	public void addFacet(Facet facet);
 
 	public SearchRequestBuilder getFederatedSearchRequestBuilder(
-		Optional<String> federatedSearchKeyOptional);
+		String federatedSearchKey);
 
-	public Optional<String> getKeywordsParameterName();
+	public String getKeywordsParameterName();
 
-	public Optional<Integer> getPaginationDelta();
+	public Integer getPaginationDelta();
 
-	public Optional<String> getPaginationDeltaParameterName();
+	public String getPaginationDeltaParameterName();
 
-	public Optional<Integer> getPaginationStart();
+	public Integer getPaginationStart();
 
-	public Optional<String> getPaginationStartParameterName();
+	public String getPaginationStartParameterName();
 
 	public QueryConfig getQueryConfig();
 
-	public Optional<String> getScope();
+	public String getScope();
 
-	public Optional<String> getScopeParameterName();
+	public String getScopeParameterName();
 
 	public SearchContext getSearchContext();
 

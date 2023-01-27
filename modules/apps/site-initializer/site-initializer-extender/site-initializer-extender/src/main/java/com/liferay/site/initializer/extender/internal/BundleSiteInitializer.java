@@ -96,6 +96,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -2928,19 +2929,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			ResourceAction resourceAction =
-				_resourceActionLocalService.fetchResourceAction(
-					jsonObject.getString("resourceName"),
-					jsonObject.getString("actionId"));
+			String[] actionIds = ArrayUtil.toStringArray(
+				jsonObject.getJSONArray("actionIds"));
 
-			if (resourceAction == null) {
+			String[] resourceActionIds = TransformUtil.transformToArray(
+				_resourceActionLocalService.getResourceActions(
+					jsonObject.getString("resourceName")),
+				ResourceAction -> ResourceAction.getActionId(), String.class);
+
+			if (!ArrayUtil.containsAll(resourceActionIds, actionIds)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"No resource action found with resourceName ",
 							jsonObject.getString("resourceName"),
-							" with the actionId: ",
-							jsonObject.getString("actionId")));
+							" with the actionIds: ",
+							ArrayUtil.toString(actionIds, "")));
 				}
 
 				continue;
@@ -2972,11 +2976,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					String.valueOf(serviceContext.getScopeGroupId()));
 			}
 
-			_resourcePermissionLocalService.addResourcePermission(
+			_resourcePermissionLocalService.setResourcePermissions(
 				serviceContext.getCompanyId(),
 				jsonObject.getString("resourceName"), scope,
-				jsonObject.getString("primKey"), role.getRoleId(),
-				jsonObject.getString("actionId"));
+				jsonObject.getString("primKey"), role.getRoleId(), actionIds);
 		}
 	}
 

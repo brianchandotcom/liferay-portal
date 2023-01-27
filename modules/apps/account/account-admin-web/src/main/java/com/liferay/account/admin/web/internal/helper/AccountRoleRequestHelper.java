@@ -20,11 +20,10 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
-import com.liferay.roles.admin.panel.category.role.type.mapper.PanelCategoryRoleTypeMapper;
+import com.liferay.roles.admin.panel.category.role.type.mapper.PanelCategoryRoleTypeMapperRegistry;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.List;
@@ -62,7 +61,8 @@ public class AccountRoleRequestHelper {
 			RolesAdminWebKeys.CURRENT_ROLE_TYPE, _accountRoleTypeContributor);
 		httpServletRequest.setAttribute(
 			RolesAdminWebKeys.PANEL_CATEGORY_KEYS,
-			ArrayUtil.toStringArray(_panelCategoryKeys));
+			_panelCategoryRoleTypeMapperRegistry.getPanelCategoryKeys(
+				RoleConstants.TYPE_ACCOUNT));
 		httpServletRequest.setAttribute(
 			RolesAdminWebKeys.SHOW_NAV_TABS, Boolean.FALSE);
 	}
@@ -75,35 +75,10 @@ public class AccountRoleRequestHelper {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "_removePanelCategoryRoleTypeMapper"
-	)
-	private void _addPanelCategoryRoleTypeMapper(
-		PanelCategoryRoleTypeMapper panelCategoryRoleTypeMapper) {
-
-		if (ArrayUtil.contains(
-				panelCategoryRoleTypeMapper.getRoleTypes(),
-				RoleConstants.TYPE_ACCOUNT)) {
-
-			_panelCategoryKeys.add(
-				panelCategoryRoleTypeMapper.getPanelCategoryKey());
-		}
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		unbind = "_removePersonalMenuEntry"
 	)
 	private void _addPersonalMenuEntry(PersonalMenuEntry personalMenuEntry) {
 		_personalMenuEntries.add(personalMenuEntry);
-	}
-
-	private void _removePanelCategoryRoleTypeMapper(
-		PanelCategoryRoleTypeMapper panelCategoryRoleTypeMapper) {
-
-		_panelCategoryKeys.remove(
-			panelCategoryRoleTypeMapper.getPanelCategoryKey());
 	}
 
 	private void _removePersonalMenuEntry(PersonalMenuEntry personalMenuEntry) {
@@ -116,11 +91,12 @@ public class AccountRoleRequestHelper {
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
 
-	private final List<String> _panelCategoryKeys =
-		new CopyOnWriteArrayList<>();
-
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	@Reference
+	private PanelCategoryRoleTypeMapperRegistry
+		_panelCategoryRoleTypeMapperRegistry;
 
 	private final List<PersonalMenuEntry> _personalMenuEntries =
 		new CopyOnWriteArrayList<>();

@@ -501,6 +501,16 @@ upgrade.database.auto.run=false</echo>
 		</sequential>
 	</target>
 
+	<target name="check-upgrade-debug-options">
+		<get-database-upgrade-client-paths />
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			file.suffix.bat="${file.suffix.bat}"
+			expect.file="check-upgrade-debug-options.expect"
+		/>
+	</target>
+
 	<target name="check-upgrade-properties-app-db-set">
 		<get-database-upgrade-client-paths />
 

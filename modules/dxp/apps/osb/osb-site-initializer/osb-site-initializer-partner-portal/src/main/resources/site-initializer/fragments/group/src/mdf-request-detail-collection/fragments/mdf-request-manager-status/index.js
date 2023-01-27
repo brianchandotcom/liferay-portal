@@ -183,50 +183,98 @@ const updateButtons = (mdfRequestStatusKey) => {
 	}
 
 	if (mdfRequestStatusKey === 'pendingMarketingReview') {
-		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
-		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
-		updateStatusToReject.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
-		updateStatusToApproved.classList.toggle('d-flex');
+		if (updateStatusToMarketingDirectorReview) {
+			updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToRequestMoreInfo) {
+			updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		}
+		if (updateStatusToReject) {
+			updateStatusToReject.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfRequestStatusKey === 'approved') {
-		updateStatusToCanceled.classList.toggle('d-flex');
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfRequestStatusKey === 'marketingDirectorReview') {
-		updateStatusPendingMarketingReview.classList.toggle('d-flex');
-		updateStatusToApproved.classList.toggle('d-flex');
-		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
-		updateStatusToReject.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
+		if (updateStatusPendingMarketingReview) {
+			updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
+		if (updateStatusToRequestMoreInfo) {
+			updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		}
+		if (updateStatusToReject) {
+			updateStatusToReject.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfRequestStatusKey === 'moreInfoRequested') {
-		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
+		if (updateStatusToMarketingDirectorReview) {
+			updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfRequestStatusKey === 'expired') {
-		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
-		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		if (updateStatusToMarketingDirectorReview) {
+			updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
+		if (updateStatusToRequestMoreInfo) {
+			updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		}
 	}
 	if (mdfRequestStatusKey === 'rejected') {
-		updateStatusPendingMarketingReview.classList.toggle('d-flex');
-		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
-		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
+		if (updateStatusPendingMarketingReview) {
+			updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToMarketingDirectorReview) {
+			updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToRequestMoreInfo) {
+			updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfRequestStatusKey === 'canceled') {
-		updateStatusToApproved.classList.toggle('d-flex');
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfRequestStatusKey === 'draft') {
-		updateStatusPendingMarketingReview.classList.toggle('d-flex');
-		updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
+		if (updateStatusPendingMarketingReview) {
+			updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToMarketingDirectorReview) {
+			updateStatusToMarketingDirectorReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
 	}
 
 	if (editButton) {

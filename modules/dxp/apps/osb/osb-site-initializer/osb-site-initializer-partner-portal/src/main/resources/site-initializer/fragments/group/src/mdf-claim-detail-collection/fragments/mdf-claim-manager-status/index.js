@@ -194,46 +194,94 @@ const getMDFClaimStatus = async () => {
 
 const updateButtons = (mdfClaimStatusKey) => {
 	if (mdfClaimStatusKey === 'pendingMarketingReview') {
-		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
-		updateStatusToReject.classList.toggle('d-flex');
-		updateStatusToApproved.classList.toggle('d-flex');
-		updateInFinanceReview.classList.toggle('d-flex');
+		if (updateStatusToRequestMoreInfo) {
+			updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		}
+		if (updateStatusToReject) {
+			updateStatusToReject.classList.toggle('d-flex');
+		}
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
+		if (updateInFinanceReview) {
+			updateInFinanceReview.classList.toggle('d-flex');
+		}
 	}
 	if (mdfClaimStatusKey === 'approved') {
-		updateInFinanceReview.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
+		if (updateInFinanceReview) {
+			updateInFinanceReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfClaimStatusKey === 'inFinanceReview') {
-		updateStatusToApproved.classList.toggle('d-flex');
-		updateClaimPaid.classList.toggle('d-flex');
-		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
-		updateStatusToReject.classList.toggle('d-flex');
-		updateInDirectorReview.classList.toggle('d-flex');
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
+		if (updateClaimPaid) {
+			updateClaimPaid.classList.toggle('d-flex');
+		}
+		if (updateStatusToRequestMoreInfo) {
+			updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		}
+		if (updateStatusToReject) {
+			updateStatusToReject.classList.toggle('d-flex');
+		}
+		if (updateInDirectorReview) {
+			updateInDirectorReview.classList.toggle('d-flex');
+		}
 	}
 
 	if (mdfClaimStatusKey === 'moreInfoRequested') {
-		updateStatusPendingMarketingReview.classList.toggle('d-flex');
-		updateStatusToApproved.classList.toggle('d-flex');
-		updateClaimPaid.classList.toggle('d-flex');
-		updateInFinanceReview.classList.toggle('d-flex');
-		updateStatusToReject.classList.toggle('d-flex');
+		if (updateStatusPendingMarketingReview) {
+			updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
+		if (updateClaimPaid) {
+			updateClaimPaid.classList.toggle('d-flex');
+		}
+		if (updateInFinanceReview) {
+			updateInFinanceReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToReject) {
+			updateStatusToReject.classList.toggle('d-flex');
+		}
 	}
 	if (mdfClaimStatusKey === 'rejected') {
-		updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		if (updateStatusPendingMarketingReview) {
+			updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		}
 	}
 	if (mdfClaimStatusKey === 'draft') {
-		updateStatusPendingMarketingReview.classList.toggle('d-flex');
-		updateStatusToCanceled.classList.toggle('d-flex');
+		if (updateStatusPendingMarketingReview) {
+			updateStatusPendingMarketingReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToCanceled) {
+			updateStatusToCanceled.classList.toggle('d-flex');
+		}
 	}
 	if (mdfClaimStatusKey === 'inDirectorReview') {
-		updateStatusToApproved.classList.toggle('d-flex');
-		updateInFinanceReview.classList.toggle('d-flex');
-		updateStatusToReject.classList.toggle('d-flex');
-		updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
+		if (updateInFinanceReview) {
+			updateInFinanceReview.classList.toggle('d-flex');
+		}
+		if (updateStatusToReject) {
+			updateStatusToReject.classList.toggle('d-flex');
+		}
+		if (updateStatusToRequestMoreInfo) {
+			updateStatusToRequestMoreInfo.classList.toggle('d-flex');
+		}
 	}
 	if (mdfClaimStatusKey === 'canceled') {
-		updateStatusToApproved.classList.toggle('d-flex');
+		if (updateStatusToApproved) {
+			updateStatusToApproved.classList.toggle('d-flex');
+		}
 	}
 };
 

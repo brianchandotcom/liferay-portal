@@ -15,38 +15,56 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const ITEM_TYPES_SYMBOL = {
 	article: 'document-text',
 	folder: 'folder',
 };
 
-export default function SearchField({items}) {
-	const [state, setState] = useState({
+const SEARCH_DELTA = 2;
+
+export default function SearchField({handleSearchChange, items}) {
+	const initialState = {
 		filteredItems: [],
 		query: '',
-	});
+	};
+
+	const [state, setState] = useState(initialState);
+
+	const [searchActive, setSearchActive] = useState(false);
+
+	useEffect(() => {
+		handleSearchChange({isSearchActive: searchActive});
+	}, [handleSearchChange, searchActive]);
 
 	const handleChange = (event) => {
 		const newQuery = event.target.value;
+		let results = [];
 
-		let results;
-
-		if (newQuery === '') {
-			results = items;
-		}
-		else {
+		if (newQuery.length > SEARCH_DELTA) {
 			results = items.filter((item) =>
 				item.name.toLowerCase().includes(newQuery.toLowerCase())
 			);
 		}
 
+		setSearchActive(newQuery.length > SEARCH_DELTA);
 		setState({
 			filteredItems: results,
 			query: newQuery,
 		});
 	};
+
+	const handleClick = () => {
+		if (state.query) {
+			setState(initialState);
+			setSearchActive(false);
+		}
+	};
+
+	const iconTitle = state.query
+		? Liferay.Language.get('clear')
+		: Liferay.Language.get('search');
 
 	return (
 		<>
@@ -63,13 +81,12 @@ export default function SearchField({items}) {
 
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								state.query ? 'times' : 'search'
-							)}
+							aria-label={iconTitle}
 							displayType="unstyled"
+							onClick={handleClick}
 							small
 							symbol={state.query ? 'times' : 'search'}
-							title={Liferay.Language.get('clear')}
+							title={iconTitle}
 						/>
 					</ClayInput.GroupInsetItem>
 				</ClayInput.GroupItem>
@@ -77,13 +94,13 @@ export default function SearchField({items}) {
 
 			<hr className="separator" />
 
-			{state.filteredItems && (
+			{searchActive && state.filteredItems && (
 				<ul className="list-group">
 					{state.filteredItems.map((item) => {
 						return (
 							<li className="list-group-item" key={item.id}>
 								<ClayIcon
-									className='mr-2'
+									className="mr-2"
 									symbol={ITEM_TYPES_SYMBOL[item.type]}
 								/>
 

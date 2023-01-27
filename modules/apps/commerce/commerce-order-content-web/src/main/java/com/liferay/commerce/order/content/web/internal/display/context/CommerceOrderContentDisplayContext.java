@@ -1020,6 +1020,15 @@ public class CommerceOrderContentDisplayContext {
 			_cpRequestHelper.getPermissionChecker(), commerceOrderId, actionId);
 	}
 
+	public boolean hasPermission(
+			CommerceAccount commerceAccount, String actionId)
+		throws PortalException {
+
+		return _portletResourcePermission.contains(
+			_cpRequestHelper.getPermissionChecker(),
+			commerceAccount.getCommerceAccountGroupId(), actionId);
+	}
+
 	public boolean hasPermission(String actionId) {
 		return _portletResourcePermission.contains(
 			_cpRequestHelper.getPermissionChecker(),

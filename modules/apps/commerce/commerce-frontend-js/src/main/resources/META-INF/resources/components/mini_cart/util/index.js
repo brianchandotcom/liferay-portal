@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openToast, sub} from 'frontend-js-web';
+
 import {
 	DEFAULT_ORDER_DETAILS_PORTLET_ID,
 	ORDER_DETAILS_ENDPOINT,
@@ -116,4 +118,63 @@ export function summaryDataMapper({
 
 export function hasErrors(cartItems) {
 	return cartItems.some(({errorMessages}) => Boolean(errorMessages?.length));
+}
+
+export function getCorrectedQuantity(product, sku, cartItems) {
+	const {
+		allowedOrderQuantities,
+		maxOrderQuantity,
+		minOrderQuantity,
+	} = product.productConfiguration;
+
+	let quantity = minOrderQuantity;
+
+	const existingItem = cartItems.find(
+		(item) => item.productId === product.productId
+	);
+
+	const lastAllowedQuantity =
+		allowedOrderQuantities[allowedOrderQuantities.length - 1];
+
+	if (existingItem) {
+		const nextAllowedQuantity = allowedOrderQuantities.find(
+			(allowedQuantity) => allowedQuantity > existingItem.quantity
+		);
+
+		allowedOrderQuantities.forEach((allowedQuantity) => {
+			if (allowedQuantity > existingItem.quantity) {
+				quantity = nextAllowedQuantity - existingItem.quantity;
+			}
+		});
+
+		if (existingItem.quantity >= lastAllowedQuantity) {
+			quantity = 0;
+		}
+
+		if (existingItem.quantity + quantity > maxOrderQuantity) {
+			quantity = 0;
+		}
+	}
+	else {
+		quantity = allowedOrderQuantities.find(
+			(quantity) => quantity > minOrderQuantity
+		);
+
+		if (allowedOrderQuantities.includes(minOrderQuantity)) {
+			quantity = minOrderQuantity;
+		}
+	}
+
+	if (quantity === 0) {
+		openToast({
+			message: sub(
+				Liferay.Language.get('the-maximum-allowed-quantity-for-x-is-x'),
+				sku,
+				lastAllowedQuantity
+			),
+			type: 'danger',
+		});
+	}
+
+	return quantity;
 }

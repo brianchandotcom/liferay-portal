@@ -22,6 +22,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {addToCart} from '../add_to_cart/data';
 import MiniCartContext from './MiniCartContext';
+import {getCorrectedQuantity} from './util/index';
 
 const CHANNEL_RESOURCE_ENDPOINT =
 	'/o/headless-commerce-delivery-catalog/v1.0/channels';
@@ -113,14 +114,21 @@ export default function CartQuickAdd() {
 					item.skus.find((childSku) => childSku.sku === product.sku)
 				);
 
+				const {name, productConfiguration, urls} = parentProduct;
+
 				return {
 					...product,
-					name: parentProduct.name,
+					name,
 					price: product.price,
-					productURLs: parentProduct.urls,
-					quantity:
-						parentProduct.productConfiguration.minOrderQuantity,
-					settings: parentProduct.productConfiguration,
+					productURLs: urls,
+					quantity: productConfiguration.allowedOrderQuantities.length
+						? getCorrectedQuantity(
+								parentProduct,
+								product.sku,
+								cartItems
+						  )
+						: productConfiguration.minOrderQuantity,
+					settings: productConfiguration,
 					sku: product.sku,
 					skuId: product.id,
 				};
@@ -128,11 +136,20 @@ export default function CartQuickAdd() {
 			else {
 				const {productConfiguration, skus, urls} = product;
 
+				const {
+					allowedOrderQuantities,
+					minOrderQuantity,
+				} = productConfiguration;
+
+				const adjustedQuantity = allowedOrderQuantities.length
+					? getCorrectedQuantity(product, skus[0].sku, cartItems)
+					: minOrderQuantity;
+
 				return {
 					...product,
 					price: skus[0].price,
 					productURLs: urls,
-					quantity: productConfiguration.minOrderQuantity,
+					quantity: adjustedQuantity,
 					settings: productConfiguration,
 					sku: skus[0].sku,
 					skuId: skus[0].id,

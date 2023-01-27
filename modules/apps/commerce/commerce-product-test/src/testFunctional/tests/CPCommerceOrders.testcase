@@ -1476,6 +1476,405 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-10078. As a buyer user I can search an order using product name"
+	@priority = "3"
+	test CanSearchAnOrderUsingProductName {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		var orderIds = ListUtil.newList();
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a payment method is activated") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And there are 3 placed orders") {
+			for (var productSKU : list "MIN55858,MIN55855,MIN38795") {
+				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+					accountEntryName = "Commerce Account",
+					orderItems = "${productSKU}:1",
+					orderStatus = "1",
+					paymentMethod = "money-order",
+					paymentStatus = "2");
+
+				ListUtil.add("${orderIds}", "${orderId}");
+			}
+		}
+
+		task ("And there is an open order") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("When the buyer logs in and enters a product name in the Global Search") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+			Type(
+				key_text = "Search",
+				locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+				value1 = "U-Joint");
+		}
+
+		task ("Then the buyer can see the active order that contains the product name") {
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			AssertElementPresent(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+			Click(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+		}
+
+		task ("And the product as the order item of the open order") {
+			AssertTextEquals(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
+				value1 = "MIN55861");
+		}
+
+		task ("When the buyer enters a product name in the Placed Orders page Search Bar") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			CommerceNavigator.searchEntry(entryName = "Drive Shafts");
+		}
+
+		task ("Then only the order that contains this item should be listed") {
+			var firstPlacedOrderId = ListUtil.get("${orderIds}", "0");
+			var secondPlacedOrderId = ListUtil.get("${orderIds}", "1");
+			var thirdPlacedOrderId = ListUtil.get("${orderIds}", "2");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#PLACED_ORDERS_ID",
+				value1 = "${secondPlacedOrderId}");
+
+			for (var otherOrders : list "${firstPlacedOrderId},${thirdPlacedOrderId}") {
+				AssertTextNotEquals(
+					locator1 = "CommerceOrders#PLACED_ORDERS_ID",
+					value1 = "${otherOrders}");
+			}
+		}
+
+		task ("And the product should be listed as the order item of that placed order") {
+			Button.click(button = "View");
+
+			AssertTextEquals(
+				key_productName = "Drive Shafts",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
+				value1 = "MIN55855");
+		}
+	}
+
+	@description = "COMMERCE-10078. As a buyer user I can search an order using SKU"
+	@priority = "3"
+	test CanSearchAnOrderUsingSKU {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		var orderIds = ListUtil.newList();
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a payment method is activated") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And there are 3 placed orders") {
+			for (var productSKU : list "MIN55858,MIN55855,MIN38795") {
+				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+					accountEntryName = "Commerce Account",
+					orderItems = "${productSKU}:1",
+					orderStatus = "1",
+					paymentMethod = "money-order",
+					paymentStatus = "2");
+
+				ListUtil.add("${orderIds}", "${orderId}");
+			}
+		}
+
+		task ("And there is an open order") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("When the buyer logs in and enters a product SKU in the Global Search") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+			Type(
+				key_text = "Search",
+				locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+				value1 = "MIN55861");
+		}
+
+		task ("Then the buyer can see the active order that contains the SKU") {
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			AssertElementPresent(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+			Click(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+		}
+
+		task ("And the product as the order item of the open order") {
+			AssertTextEquals(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
+				value1 = "MIN55861");
+		}
+
+		task ("When the buyer enters a product SKU in the Placed Orders page Search Bar") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			CommerceNavigator.searchEntry(entryName = "MIN55855");
+		}
+
+		task ("Then only the order that contains this item should be listed") {
+			var firstPlacedOrderId = ListUtil.get("${orderIds}", "0");
+			var secondPlacedOrderId = ListUtil.get("${orderIds}", "1");
+			var thirdPlacedOrderId = ListUtil.get("${orderIds}", "2");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#PLACED_ORDERS_ID",
+				value1 = "${secondPlacedOrderId}");
+
+			for (var otherOrders : list "${firstPlacedOrderId},${thirdPlacedOrderId}") {
+				AssertTextNotEquals(
+					locator1 = "CommerceOrders#PLACED_ORDERS_ID",
+					value1 = "${otherOrders}");
+			}
+		}
+
+		task ("And the product should be listed as the order item of that placed order") {
+			Button.click(button = "View");
+
+			AssertTextEquals(
+				key_productName = "Drive Shafts",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
+				value1 = "MIN55855");
+		}
+	}
+
+	@description = "COMMERCE-10078. As a buyer user I can search an order using translated product name"
+	@priority = "3"
+	test CanSearchAnOrderUsingTranslatedProductName {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		var orderIds = ListUtil.newList();
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a payment method is activated") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And some product names are translated") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			for (var productName : list "U-Joint:Primero,Wheel Seal - Front:Segundo,Drive Shafts:Tercero,Bushings:Cuarto") {
+				var originalName = StringUtil.extractFirst("${productName}", ":");
+				var translatedName = StringUtil.extractLast("${productName}", ":");
+
+				CommerceNavigator.searchEntry(entryName = "${originalName}");
+
+				CommerceNavigator.gotoEntry(entryName = "${originalName}");
+
+				PortletEntry.changeLocale(
+					fieldName = "Name",
+					locale = "es-ES");
+
+				Type(
+					locator1 = "TextInput#NAME",
+					value1 = "${translatedName}");
+
+				Button.clickPublish();
+
+				Click(locator1 = "Icon#BACK");
+			}
+		}
+
+		task ("And there are 3 placed orders") {
+			for (var productSKU : list "MIN55858,MIN55855,MIN38795") {
+				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+					accountEntryName = "Commerce Account",
+					orderItems = "${productSKU}:1",
+					orderStatus = "1",
+					paymentMethod = "money-order",
+					paymentStatus = "2");
+
+				ListUtil.add("${orderIds}", "${orderId}");
+			}
+		}
+
+		task ("And there is an open order") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("When the buyer logs in and enters a translated product name in the Global Search") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+			Type(
+				key_text = "Search",
+				locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+				value1 = "Primero");
+		}
+
+		task ("Then the buyer can see the active order that contains this item") {
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			AssertElementPresent(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+			Click(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+		}
+
+		task ("And the product as the order item of the open order") {
+			AssertTextEquals(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
+				value1 = "MIN55861");
+		}
+
+		task ("When the buyer enters a translated product name in the Placed Orders page Search Bar") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			CommerceNavigator.searchEntry(entryName = "Tercero");
+		}
+
+		task ("Then only the order that contains this item should be listed") {
+			var firstPlacedOrderId = ListUtil.get("${orderIds}", "0");
+			var secondPlacedOrderId = ListUtil.get("${orderIds}", "1");
+			var thirdPlacedOrderId = ListUtil.get("${orderIds}", "2");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#PLACED_ORDERS_ID",
+				value1 = "${secondPlacedOrderId}");
+
+			for (var otherOrders : list "${firstPlacedOrderId},${thirdPlacedOrderId}") {
+				AssertTextNotEquals(
+					locator1 = "CommerceOrders#PLACED_ORDERS_ID",
+					value1 = "${otherOrders}");
+			}
+		}
+
+		task ("And the product should be listed as the order item of that placed order") {
+			Button.click(button = "View");
+
+			AssertTextEquals(
+				key_productName = "Drive Shafts",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
+				value1 = "MIN55855");
+		}
+	}
+
 	@description = "COMMERCE-7983. A system admin can set order quantity to decimal."
 	@priority = "3"
 	test CanSetOrderQuantityToDecimal {

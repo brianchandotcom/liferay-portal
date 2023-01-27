@@ -853,8 +853,6 @@ components:
                     items:
                         $ref: "#/components/schemas/Category"
                     type: array
-                configuration:
-                    $ref: "#/components/schemas/ProductConfiguration"
                 createDate:
                     example: 2017-07-21
                     format: date
@@ -1897,7 +1895,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.39'."
+        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.40'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

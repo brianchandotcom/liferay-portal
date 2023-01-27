@@ -855,7 +855,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		// Product configuration
 
-		ProductConfiguration productConfiguration = product.getConfiguration();
+		ProductConfiguration productConfiguration =
+			product.getProductConfiguration();
 
 		if (productConfiguration != null) {
 			ProductConfigurationUtil.updateCPDefinitionInventory(

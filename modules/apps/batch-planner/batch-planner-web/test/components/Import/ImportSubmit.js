@@ -32,6 +32,8 @@ import ImportSubmit from '../../../src/main/resources/META-INF/resources/js/impo
 
 const BASE_PROPS = {
 	evaluateForm: () => {},
+	fieldsSelections: {},
+	fileContent: [],
 	formDataQuerySelector: 'form',
 	formImportURL: 'https://formUrl.test',
 	formIsValid: true,

@@ -13,12 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 import ImportModal from './ImportModal';
-import ImportPreviewModalBody from './ImportPreviewModalBody';
+import ImportPreviewModal from './ImportPreviewModal';
 
 function ImportSubmit({
 	evaluateForm,
@@ -30,14 +29,6 @@ function ImportSubmit({
 }) {
 	const [modalVisibile, setModalVisibile] = useState(false);
 	const [stage, setStage] = useState('preview');
-
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			setStage('preview');
-
-			setModalVisibile(false);
-		},
-	});
 
 	const showPreviewModal = useCallback(() => {
 		evaluateForm();
@@ -58,19 +49,20 @@ function ImportSubmit({
 			</ClayButton>
 
 			{modalVisibile && stage === 'preview' && (
-				<ClayModal observer={observer} size="lg">
-					<ImportPreviewModalBody
-						closeModal={onClose}
-						fieldsSelections={fieldsSelections}
-						fileContent={fileContent}
-						startImport={() => setStage('import')}
-					/>
-				</ClayModal>
+				<ImportPreviewModal
+					closeModal={() => setModalVisibile(false)}
+					fieldsSelections={fieldsSelections}
+					fileContent={fileContent}
+					startImport={() => setStage('import')}
+				/>
 			)}
 
 			{modalVisibile && stage === 'import' && (
 				<ImportModal
-					closeModal={onClose}
+					closeModal={() => {
+						setModalVisibile(false);
+						setStage('preview');
+					}}
 					formDataQuerySelector={formDataQuerySelector}
 					formImportURL={formImportURL}
 				/>

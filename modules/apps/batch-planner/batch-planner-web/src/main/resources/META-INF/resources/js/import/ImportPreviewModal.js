@@ -13,11 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import React from 'react';
 
-const ImportPreviewModalBody = ({
+const ImportPreviewModal = ({
 	closeModal,
 	fieldsSelections,
 	fileContent,
@@ -25,8 +25,14 @@ const ImportPreviewModalBody = ({
 }) => {
 	const dbFieldsSelected = Object.keys(fieldsSelections).sort();
 
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			closeModal();
+		},
+	});
+
 	return (
-		<>
+		<ClayModal observer={observer} size="lg">
 			<ClayModal.Header>
 				{Liferay.Language.get('preview')}
 			</ClayModal.Header>
@@ -69,10 +75,7 @@ const ImportPreviewModalBody = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={closeModal}
-						>
+						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
@@ -87,8 +90,8 @@ const ImportPreviewModalBody = ({
 					</ClayButton.Group>
 				}
 			/>
-		</>
+		</ClayModal>
 	);
 };
 
-export default ImportPreviewModalBody;
+export default ImportPreviewModal;

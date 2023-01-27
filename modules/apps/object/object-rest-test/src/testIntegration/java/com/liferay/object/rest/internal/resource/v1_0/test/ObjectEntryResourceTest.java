@@ -354,8 +354,6 @@ public class ObjectEntryResourceTest {
 				StringUtil.replaceLast(
 					_objectDefinition1.getPKObjectFieldName(), "Id", "")));
 
-		Assert.assertNotNull(nestedObjectEntryJSONObject);
-
 		_assertObjectEntryField(
 			nestedObjectEntryJSONObject, _OBJECT_FIELD_NAME_1,
 			_NEW_OBJECT_FIELD_VALUE_1);
@@ -491,8 +489,6 @@ public class ObjectEntryResourceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			objectEntryId);
-
-		Assert.assertNotNull(objectEntry);
 
 		Assert.assertEquals(
 			MapUtil.getString(objectEntry.getValues(), objectFieldName),

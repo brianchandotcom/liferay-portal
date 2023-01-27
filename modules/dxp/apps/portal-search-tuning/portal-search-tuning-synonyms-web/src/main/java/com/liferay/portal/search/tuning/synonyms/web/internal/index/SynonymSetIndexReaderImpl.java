@@ -27,7 +27,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,14 +38,16 @@ import org.osgi.service.component.annotations.Reference;
 public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 
 	@Override
-	public Optional<SynonymSet> fetchOptional(
+	public SynonymSet fetch(
 		SynonymSetIndexName synonymSetIndexName, String id) {
 
-		return _getDocumentOptional(
-			synonymSetIndexName, id
-		).map(
-			document -> translate(document, id)
-		);
+		Document document = _getDocument(synonymSetIndexName, id);
+
+		if (document == null) {
+			return null;
+		}
+
+		return translate(document, id);
 	}
 
 	@Override
@@ -81,11 +82,11 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 		return _documentToSynonymSetTranslator.translate(document, id);
 	}
 
-	private Optional<Document> _getDocumentOptional(
+	private Document _getDocument(
 		SynonymSetIndexName synonymSetIndexName, String id) {
 
 		if (Validator.isNull(id)) {
-			return Optional.empty();
+			return null;
 		}
 
 		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
@@ -99,10 +100,10 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 			getDocumentRequest);
 
 		if (getDocumentResponse.isExists()) {
-			return Optional.of(getDocumentResponse.getDocument());
+			return getDocumentResponse.getDocument();
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private static final int _SIZE = 10000;

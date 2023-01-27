@@ -17,7 +17,7 @@ package com.liferay.object.internal.action.util;
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectDDMExpressionParameterAccessor;
+import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -214,7 +214,7 @@ public class ObjectEntryVariablesUtil {
 						CreateExpressionRequest.Builder.newBuilder(
 							value.toString()
 						).withDDMExpressionParameterAccessor(
-							new ObjectDDMExpressionParameterAccessor(
+							new ObjectEntryDDMExpressionParameterAccessor(
 								(Map<String, Object>)variables.get(
 									"originalObjectEntry"))
 						).build());

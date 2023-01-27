@@ -23,7 +23,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
-import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectDDMExpressionParameterAccessor;
+import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
 import com.liferay.object.internal.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -161,7 +161,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				CreateExpressionRequest.Builder.newBuilder(
 					conditionExpression
 				).withDDMExpressionParameterAccessor(
-					new ObjectDDMExpressionParameterAccessor(
+					new ObjectEntryDDMExpressionParameterAccessor(
 						(Map<String, Object>)variables.get(
 							"originalObjectEntry"))
 				).build());

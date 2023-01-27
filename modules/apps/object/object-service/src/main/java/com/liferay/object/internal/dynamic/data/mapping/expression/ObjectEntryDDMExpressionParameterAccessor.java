@@ -25,10 +25,12 @@ import java.util.Map;
 /**
  * @author Paulo Albuquerque
  */
-public class ObjectDDMExpressionParameterAccessor
+public class ObjectEntryDDMExpressionParameterAccessor
 	implements DDMExpressionParameterAccessor {
 
-	public ObjectDDMExpressionParameterAccessor(Map<String, Object> oldValues) {
+	public ObjectEntryDDMExpressionParameterAccessor(
+		Map<String, Object> oldValues) {
+
 		_oldValues = oldValues;
 	}
 

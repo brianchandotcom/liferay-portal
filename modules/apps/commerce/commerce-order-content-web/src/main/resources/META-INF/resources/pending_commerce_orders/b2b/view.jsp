@@ -43,7 +43,7 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 	<portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderURL" />
 
 	<div class="commerce-cta is-visible">
-		<c:if test="<%= commerceOrderContentDisplayContext.hasPermission(CommerceOrderActionKeys.ADD_COMMERCE_ORDER) %>">
+		<c:if test="<%= commerceOrderContentDisplayContext.hasPermission(commerceAccount, CommerceOrderActionKeys.ADD_COMMERCE_ORDER) %>">
 			<aui:form action="<%= editCommerceOrderURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

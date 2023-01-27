@@ -3360,18 +3360,14 @@ definition {
 
 		Blueprints.addElement(element = "Boost Proximity");
 
-		Click(
-			ariaLabel = "Collapse",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		Click(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_COLLAPSE_BUTTON");
 
 		AssertElementNotPresent(
 			elementName = "Boost Proximity",
 			fieldName = "Field",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
 
-		Click(
-			ariaLabel = "Expand",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		Click(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_EXPAND_BUTTON");
 
 		AssertElementPresent(
 			elementName = "Boost Proximity",
@@ -3391,9 +3387,7 @@ definition {
 			fieldName = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
 
-		AssertElementNotPresent(
-			ariaLabel = "Collapse",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_COLLAPSE_BUTTON");
 
 		Click(
 			key_text = "Expand All",
@@ -3404,9 +3398,7 @@ definition {
 			fieldName = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
 
-		AssertElementNotPresent(
-			ariaLabel = "Expand",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_EXPAND_BUTTON");
 	}
 
 	test ViewCopiedBlueprintContent {

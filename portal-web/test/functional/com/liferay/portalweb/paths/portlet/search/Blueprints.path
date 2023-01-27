@@ -41,8 +41,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADDED_ELEMENT_COLLAPSE_BUTTON</td>
+	<td>//div[contains(@id,'querySXPElement')]//button[@aria-label='Collapse']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE</td>
 	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//input[contains(@class,"toggle-switch-check")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ADDED_ELEMENT_EXPAND_BUTTON</td>
+	<td>//div[contains(@id,'querySXPElement')]//button[@aria-label='Expand']</td>
 	<td></td>
 </tr>
 <tr>

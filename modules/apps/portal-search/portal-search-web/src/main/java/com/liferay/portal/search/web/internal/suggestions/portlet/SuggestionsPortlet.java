@@ -128,9 +128,13 @@ public class SuggestionsPortlet extends MVCPortlet {
 		SearchSettings searchSettings =
 			portletSharedSearchResponse.getSearchSettings();
 
-		_copy(
-			searchSettings::getKeywordsParameterName,
-			suggestionsPortletDisplayContextBuilder::setKeywordsParameterName);
+		String keywordsParameterName =
+			searchSettings.getKeywordsParameterName();
+
+		if (keywordsParameterName != null) {
+			suggestionsPortletDisplayContextBuilder.setKeywordsParameterName(
+				keywordsParameterName);
+		}
 
 		suggestionsPortletDisplayContextBuilder.setRelatedQueriesSuggestions(
 			portletSharedSearchResponse.getRelatedQueriesSuggestions());

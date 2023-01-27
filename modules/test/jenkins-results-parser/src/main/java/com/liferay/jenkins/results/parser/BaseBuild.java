@@ -1897,7 +1897,8 @@ public abstract class BaseBuild implements Build {
 
 		List<TestResult> testResults = new ArrayList<>();
 
-		testResults.addAll(getTestResults());
+		testResults.addAll(getTestResults("FAILED"));
+		testResults.addAll(getTestResults("REGRESSION"));
 
 		if (testResults.isEmpty()) {
 			return true;

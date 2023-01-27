@@ -176,15 +176,15 @@ definition {
 	macro viewCP {
 		var key_virtualHost = "${virtualHost}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertText(
 			locator1 = "PortalInstances#INSTANCE_TABLE_WEB_ID",
 			value1 = "${virtualHost}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertText(
 			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
 			value1 = "${virtualHost}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertText(
 			locator1 = "PortalInstances#INSTANCE_TABLE_MAIL_DOMAIN",
 			value1 = "${virtualHost}");
 	}

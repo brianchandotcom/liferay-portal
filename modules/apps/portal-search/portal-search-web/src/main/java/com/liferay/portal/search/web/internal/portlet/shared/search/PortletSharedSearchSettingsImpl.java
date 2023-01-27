@@ -65,34 +65,34 @@ public class PortletSharedSearchSettingsImpl
 
 	@Override
 	public SearchRequestBuilder getFederatedSearchRequestBuilder(
-		Optional<String> federatedSearchKeyOptional) {
+		String federatedSearchKey) {
 
 		return _searchSettings.getFederatedSearchRequestBuilder(
-			federatedSearchKeyOptional);
+			federatedSearchKey);
 	}
 
 	@Override
-	public Optional<String> getKeywordsParameterName() {
+	public String getKeywordsParameterName() {
 		return _searchSettings.getKeywordsParameterName();
 	}
 
 	@Override
-	public Optional<Integer> getPaginationDelta() {
+	public Integer getPaginationDelta() {
 		return _searchSettings.getPaginationDelta();
 	}
 
 	@Override
-	public Optional<String> getPaginationDeltaParameterName() {
+	public String getPaginationDeltaParameterName() {
 		return _searchSettings.getPaginationDeltaParameterName();
 	}
 
 	@Override
-	public Optional<Integer> getPaginationStart() {
+	public Integer getPaginationStart() {
 		return _searchSettings.getPaginationStart();
 	}
 
 	@Override
-	public Optional<String> getPaginationStartParameterName() {
+	public String getPaginationStartParameterName() {
 		return _searchSettings.getPaginationStartParameterName();
 	}
 
@@ -147,12 +147,12 @@ public class PortletSharedSearchSettingsImpl
 	}
 
 	@Override
-	public Optional<String> getScope() {
+	public String getScope() {
 		return _searchSettings.getScope();
 	}
 
 	@Override
-	public Optional<String> getScopeParameterName() {
+	public String getScopeParameterName() {
 		return _searchSettings.getScopeParameterName();
 	}
 

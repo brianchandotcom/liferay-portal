@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.segments.context.contributor,\
 	com.liferay.segments.criteria,\
 	com.liferay.segments.criteria.contributor,\
+	com.liferay.segments.criteria.mapper,\
 	com.liferay.segments.exception,\
 	com.liferay.segments.field,\
 	com.liferay.segments.field.customizer,\

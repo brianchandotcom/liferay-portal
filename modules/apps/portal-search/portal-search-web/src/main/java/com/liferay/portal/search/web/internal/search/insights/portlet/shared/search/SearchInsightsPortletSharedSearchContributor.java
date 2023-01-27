@@ -43,8 +43,7 @@ public class SearchInsightsPortletSharedSearchContributor
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				searchInsightsPortletPreferences.
-					getFederatedSearchKeyOptional());
+				searchInsightsPortletPreferences.getFederatedSearchKeyString());
 
 		searchRequestBuilder.explain(
 			searchInsightsPortletPreferences.isExplain()

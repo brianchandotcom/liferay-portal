@@ -4296,11 +4296,9 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category");
 
-		KeyPress(
-			elementName = "Boost Contents in a Category",
-			fieldLabel = "Asset Category IDs",
-			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "\RETURN");
+		Click(
+			assetCategory = "Test Category (ID: ${categoryId})",
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM");
 
 		AssertTextEquals.assertPartialText(
 			element = "Boost Contents in a Category",

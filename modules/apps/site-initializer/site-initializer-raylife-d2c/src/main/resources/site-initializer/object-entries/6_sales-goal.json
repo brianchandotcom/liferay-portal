@@ -2,423 +2,3531 @@
 	"object-entries": [
 		{
 			"finalReferenceDate": "2022-01-30T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 20000,
 			"initialReferenceDate": "2022-01-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-01-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-01-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-02-28T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-02-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-02-28T00:00:00Z",
 			"goalValue": "30000",
 			"initialReferenceDate": "2022-02-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-03-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-03-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-03-30T00:00:00Z",
-			"goalValue": "10000",
+			"goalValue": 10000,
 			"initialReferenceDate": "2022-03-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-04-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-04-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-04-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-04-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-05-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-05-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-05-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-05-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-06-30T00:00:00Z",
-			"goalValue": "10000",
+			"goalValue": 10000,
 			"initialReferenceDate": "2022-06-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-06-30T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-06-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-07-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-07-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-07-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-07-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-08-31T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-08-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-08-31T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-08-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-09-30T00:00:00Z",
 			"goalValue": "16000",
 			"initialReferenceDate": "2022-09-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-09-30T00:00:00Z",
 			"goalValue": "16000",
 			"initialReferenceDate": "2022-09-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-10-31T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-10-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-10-31T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-10-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-11-30T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 20000,
 			"initialReferenceDate": "2022-11-01T00:00:00",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-11-30T00:00:00Z",
 			"goalValue": "16000",
 			"initialReferenceDate": "2022-11-01T00:00:00",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-12-31T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 20000,
 			"initialReferenceDate": "2022-12-01T00:00:00",
 			"productExternalReferenceCode": "RAY002",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-12-31T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-12-01T00:00:00",
 			"productExternalReferenceCode": "RAY001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-01-30T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 20000,
 			"initialReferenceDate": "2022-01-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-01-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-01-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-02-28T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-02-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-02-28T00:00:00Z",
 			"goalValue": "30000",
 			"initialReferenceDate": "2022-02-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-03-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-03-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-03-30T00:00:00Z",
-			"goalValue": "10000",
+			"goalValue": 10000,
 			"initialReferenceDate": "2022-03-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-04-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-04-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-04-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-04-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-05-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-05-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-05-30T00:00:00Z",
 			"goalValue": "24000",
 			"initialReferenceDate": "2022-05-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-06-30T00:00:00Z",
-			"goalValue": "10000",
+			"goalValue": 10000,
 			"initialReferenceDate": "2022-06-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-06-30T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-06-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-07-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-07-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-07-30T00:00:00Z",
-			"goalValue": "10000",
+			"goalValue": 10000,
 			"initialReferenceDate": "2022-07-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-08-31T00:00:00Z",
-			"goalValue": "8000",
+			"goalValue": 8000,
 			"initialReferenceDate": "2022-08-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-08-31T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-08-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-09-30T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 20000,
 			"initialReferenceDate": "2022-09-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-09-30T00:00:00Z",
 			"goalValue": "16000",
 			"initialReferenceDate": "2022-09-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-10-31T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-10-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-10-31T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-10-01T00:00:00Z",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-11-30T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 20000,
 			"initialReferenceDate": "2022-11-01T00:00:00",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-11-30T00:00:00Z",
 			"goalValue": "18000",
 			"initialReferenceDate": "2022-11-01T00:00:00",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-12-31T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-12-01T00:00:00",
 			"productExternalReferenceCode": "RAY004",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-12-31T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-12-01T00:00:00",
 			"productExternalReferenceCode": "RAY003",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-01-30T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 20000,
 			"initialReferenceDate": "2022-01-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-02-28T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-02-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-03-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-03-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-04-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-04-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-05-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-05-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-06-30T00:00:00Z",
-			"goalValue": "10000",
+			"goalValue": 10000,
 			"initialReferenceDate": "2022-06-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-07-30T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-07-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-08-31T00:00:00Z",
-			"goalValue": "12000",
+			"goalValue": 12000,
 			"initialReferenceDate": "2022-08-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-09-30T00:00:00Z",
 			"goalValue": "16000",
 			"initialReferenceDate": "2022-09-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-10-31T00:00:00Z",
-			"goalValue": "15000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-10-01T00:00:00Z",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-11-30T00:00:00Z",
 			"goalValue": "16000",
 			"initialReferenceDate": "2022-11-01T00:00:00",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
 		},
 		{
 			"finalReferenceDate": "2022-12-31T00:00:00Z",
-			"goalValue": "20000",
+			"goalValue": 15000,
 			"initialReferenceDate": "2022-12-01T00:00:00",
 			"productExternalReferenceCode": "RAYAP-001",
-			"r_userToSalesGoals_userId": "20125"
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20000,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15000,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10000,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5000,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23000,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8000,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9000,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6000,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13000,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12000,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11000,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19000,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-30T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-01-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-28T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-02-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-30T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-03-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-30T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-04-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-30T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-05-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-30T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-06-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-30T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-07-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-08-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-30T00:00:00Z",
+			"goalValue": "16500",
+			"initialReferenceDate": "2022-09-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-10-01T00:00:00Z",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-30T00:00:00Z",
+			"goalValue": "16500",
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAY004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-001",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-002",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-003",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-004",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2022-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2022-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2022-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2022-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2022-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2022-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2022-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2022-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2022-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2022-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2022-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2022-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2022-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-12-31T00:00:00Z",
+			"goalValue": 20500,
+			"initialReferenceDate": "2021-12-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-11-31T00:00:00Z",
+			"goalValue": 15500,
+			"initialReferenceDate": "2021-11-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-10-31T00:00:00Z",
+			"goalValue": 10500,
+			"initialReferenceDate": "2021-10-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-09-31T00:00:00Z",
+			"goalValue": 5500,
+			"initialReferenceDate": "2021-09-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-08-31T00:00:00Z",
+			"goalValue": 23500,
+			"initialReferenceDate": "2021-08-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-07-31T00:00:00Z",
+			"goalValue": 8500,
+			"initialReferenceDate": "2021-07-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-06-31T00:00:00Z",
+			"goalValue": 9500,
+			"initialReferenceDate": "2021-06-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-05-31T00:00:00Z",
+			"goalValue": 6500,
+			"initialReferenceDate": "2021-05-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-04-31T00:00:00Z",
+			"goalValue": 13500,
+			"initialReferenceDate": "2021-04-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-03-31T00:00:00Z",
+			"goalValue": 12500,
+			"initialReferenceDate": "2021-03-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-02-31T00:00:00Z",
+			"goalValue": 11500,
+			"initialReferenceDate": "2021-02-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
+		},
+		{
+			"finalReferenceDate": "2021-01-31T00:00:00Z",
+			"goalValue": 19500,
+			"initialReferenceDate": "2021-01-01T00:00:00",
+			"productExternalReferenceCode": "RAYAP-005",
+			"r_userToSalesGoals_userId": 20125
 		}
 	],
 	"objectDefinitionName": "RaylifeSalesGoal"

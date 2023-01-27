@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.list.type.api
 Bundle-Version: 9.0.1
 Export-Package:\
 	com.liferay.list.type.constants,\
+	com.liferay.list.type.entry.util,\
 	com.liferay.list.type.exception,\
 	com.liferay.list.type.model,\
 	com.liferay.list.type.service,\

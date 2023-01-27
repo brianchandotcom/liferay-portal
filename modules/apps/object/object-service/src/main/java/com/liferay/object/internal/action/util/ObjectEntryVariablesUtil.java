@@ -94,42 +94,56 @@ public class ObjectEntryVariablesUtil {
 				return payloadJSONObject.toMap();
 			}
 
-			return HashMapBuilder.<String, Object>putAll(
-				(Map<String, Object>)object
-			).putAll(
-				(Map<String, Object>)payloadJSONObject.get("extendedProperties")
+			return HashMapBuilder.<String, Object>put(
+				"objectEntry",
+				() -> HashMapBuilder.<String, Object>putAll(
+					(Map<String, Object>)object
+				).putAll(
+					(Map<String, Object>)payloadJSONObject.get(
+						"extendedProperties")
+				).put(
+					"companyId", payloadJSONObject.getLong("companyId")
+				).put(
+					"creator", payloadJSONObject.get("userName")
+				).put(
+					"currentUserId", payloadJSONObject.getLong("userId")
+				).put(
+					"id", payloadJSONObject.getLong("classPK")
+				).put(
+					"objectDefinitionId",
+					payloadJSONObject.getLong("objectDefinitionId")
+				).put(
+					"status", payloadJSONObject.get("status")
+				).build()
 			).put(
-				"companyId", payloadJSONObject.getLong("companyId")
-			).put(
-				"creator", payloadJSONObject.get("userName")
-			).put(
-				"currentUserId", payloadJSONObject.getLong("userId")
-			).put(
-				"id", payloadJSONObject.getLong("classPK")
-			).put(
-				"objectDefinitionId",
-				payloadJSONObject.getLong("objectDefinitionId")
-			).put(
-				"status", payloadJSONObject.get("status")
+				"originalObjectEntry", Collections.emptyMap()
 			).build();
 		}
 
-		Map<String, Object> variables = new HashMap<>(
-			(Map)payloadJSONObject.get("objectEntry"));
+		return HashMapBuilder.<String, Object>put(
+			"objectEntry",
+			() -> {
+				Map<String, Object> variables = new HashMap<>(
+					(Map)payloadJSONObject.get("objectEntry"));
 
-		Object values = variables.get("values");
+				Object values = variables.get("values");
 
-		if (values != null) {
-			variables.putAll((Map<String, Object>)values);
+				if (values != null) {
+					variables.putAll((Map<String, Object>)values);
 
-			variables.remove("values");
-		}
+					variables.remove("values");
+				}
 
-		variables.put("creator", variables.get("userName"));
-		variables.put("currentUserId", payloadJSONObject.getLong("userId"));
-		variables.put("id", payloadJSONObject.getLong("classPK"));
+				variables.put("creator", variables.get("userName"));
+				variables.put(
+					"currentUserId", payloadJSONObject.getLong("userId"));
+				variables.put("id", payloadJSONObject.getLong("classPK"));
 
-		return variables;
+				return variables;
+			}
+		).put(
+			"originalObjectEntry", Collections.emptyMap()
+		).build();
 	}
 
 	public static Map<String, Object> getValidationRuleVariables(
@@ -185,7 +199,11 @@ public class ObjectEntryVariablesUtil {
 					objectDefinition,
 					GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
 
-		return variables;
+		return HashMapBuilder.<String, Object>put(
+			"objectEntry", variables
+		).put(
+			"originalObjectEntry", Collections.emptyMap()
+		).build();
 	}
 
 	public static Map<String, Object> getValues(

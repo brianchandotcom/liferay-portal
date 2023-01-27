@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -162,72 +161,49 @@ public class LayoutActionProvider {
 				));
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119382"))) {
-			itemsJSONArray.put(
-				JSONUtil.put("type", "divider")
-			).put(
+		itemsJSONArray.put(
+			JSONUtil.put("type", "divider")
+		).put(
+			JSONUtil.put(
+				"data",
 				JSONUtil.put(
-					"data",
-					JSONUtil.put(
-						"id", "copy-page"
-					).put(
-						"modalTitle",
-						_language.get(_themeDisplay.getLocale(), "copy-page")
-					).put(
-						"url", _getCopyLayoutRenderURL(layout)
-					)
-				).put(
-					"href", StringPool.POUND
-				).put(
 					"id", "copy-page"
 				).put(
-					"label",
+					"modalTitle",
 					_language.get(_themeDisplay.getLocale(), "copy-page")
 				).put(
-					"symbolLeft", "copy"
-				).put(
-					"type", "item"
+					"url", _getCopyLayoutRenderURL(layout)
 				)
 			).put(
-				JSONUtil.put("type", "divider")
+				"href", StringPool.POUND
 			).put(
-				JSONUtil.put(
-					"href",
-					StringUtil.replace(
-						_getConfigureLayoutURLTemplate(),
-						StringPool.OPEN_CURLY_BRACE,
-						StringPool.CLOSE_CURLY_BRACE, valuesMap)
-				).put(
-					"id", "configure"
-				).put(
-					"label",
-					_language.get(_themeDisplay.getLocale(), "configure")
-				).put(
-					"symbolLeft", "cog"
-				).put(
-					"type", "item"
-				)
-			);
-		}
-		else {
-			itemsJSONArray.put(
-				JSONUtil.put(
-					"href",
-					StringUtil.replace(
-						_getConfigureLayoutURLTemplate(),
-						StringPool.OPEN_CURLY_BRACE,
-						StringPool.CLOSE_CURLY_BRACE, valuesMap)
-				).put(
-					"id", "configure"
-				).put(
-					"label",
-					_language.get(_themeDisplay.getLocale(), "configure")
-				).put(
-					"symbolLeft", "cog"
-				).put(
-					"type", "item"
-				));
-		}
+				"id", "copy-page"
+			).put(
+				"label", _language.get(_themeDisplay.getLocale(), "copy-page")
+			).put(
+				"symbolLeft", "copy"
+			).put(
+				"type", "item"
+			)
+		).put(
+			JSONUtil.put("type", "divider")
+		).put(
+			JSONUtil.put(
+				"href",
+				StringUtil.replace(
+					_getConfigureLayoutURLTemplate(),
+					StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE,
+					valuesMap)
+			).put(
+				"id", "configure"
+			).put(
+				"label", _language.get(_themeDisplay.getLocale(), "configure")
+			).put(
+				"symbolLeft", "cog"
+			).put(
+				"type", "item"
+			)
+		);
 
 		if (layout.isTypeCollection() &&
 			Validator.isNotNull(_getViewCollectionItemsURL())) {
@@ -262,86 +238,80 @@ public class LayoutActionProvider {
 				));
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119382"))) {
-			itemsJSONArray.put(
+		itemsJSONArray.put(
+			JSONUtil.put(
+				"data",
 				JSONUtil.put(
-					"data",
-					JSONUtil.put(
-						"id", "permissions"
-					).put(
-						"modalTitle",
-						_language.get(_themeDisplay.getLocale(), "permissions")
-					).put(
-						"url", _getPermissionsURL(layout)
-					)
-				).put(
-					"href", StringPool.POUND
-				).put(
 					"id", "permissions"
 				).put(
-					"label",
+					"modalTitle",
 					_language.get(_themeDisplay.getLocale(), "permissions")
 				).put(
-					"symbolLeft", "password-policies"
-				).put(
-					"type", "item"
+					"url", _getPermissionsURL(layout)
 				)
 			).put(
-				JSONUtil.put("type", "divider")
+				"href", StringPool.POUND
 			).put(
-				JSONUtil.put(
-					"data",
-					HashMapBuilder.put(
-						"message",
-						() -> {
-							String messageKey =
-								"are-you-sure-you-want-to-delete-the-page-x.-" +
-									"it-will-be-removed-immediately";
+				"id", "permissions"
+			).put(
+				"label", _language.get(_themeDisplay.getLocale(), "permissions")
+			).put(
+				"symbolLeft", "password-policies"
+			).put(
+				"type", "item"
+			)
+		).put(
+			JSONUtil.put("type", "divider")
+		).put(
+			JSONUtil.put(
+				"data",
+				HashMapBuilder.put(
+					"message",
+					() -> {
+						String messageKey =
+							"are-you-sure-you-want-to-delete-the-page-x.-it-" +
+								"will-be-removed-immediately";
 
-							if (layout.hasChildren() &&
-								_hasScopeGroup(layout)) {
-
-								messageKey = StringBundler.concat(
-									"are-you-sure-you-want-to-delete-the-page-",
-									"x.-this-page-serves-as-a-scope-for-",
-									"content-and-also-contains-child-pages");
-							}
-							else if (layout.hasChildren()) {
-								messageKey = StringBundler.concat(
-									"are-you-sure-you-want-to-delete-the-page-",
-									"x.-this-page-contains-child-pages-that-",
-									"will-also-be-removed");
-							}
-							else if (_hasScopeGroup(layout)) {
-								messageKey = StringBundler.concat(
-									"are-you-sure-you-want-to-delete-the-page-",
-									"x.-this-page-serves-as-a-scope-for-",
-									"content");
-							}
-
-							return _language.format(
-								_httpServletRequest, messageKey,
-								HtmlUtil.escape(
-									layout.getName(_themeDisplay.getLocale())));
+						if (layout.hasChildren() && _hasScopeGroup(layout)) {
+							messageKey = StringBundler.concat(
+								"are-you-sure-you-want-to-delete-the-page-x.-",
+								"this-page-serves-as-a-scope-for-content-and-",
+								"also-contains-child-pages");
 						}
-					).put(
-						"modalTitle",
-						_language.get(_themeDisplay.getLocale(), "delete-page")
-					).put(
-						"url",
-						_getDeleteLayoutURL(layout, afterDeleteSelectedLayout)
-					).build()
+						else if (layout.hasChildren()) {
+							messageKey = StringBundler.concat(
+								"are-you-sure-you-want-to-delete-the-page-x.-",
+								"this-page-contains-child-pages-that-will-",
+								"also-be-removed");
+						}
+						else if (_hasScopeGroup(layout)) {
+							messageKey =
+								"are-you-sure-you-want-to-delete-the-page-x.-" +
+									"this-page-serves-as-a-scope-for-content";
+						}
+
+						return _language.format(
+							_httpServletRequest, messageKey,
+							HtmlUtil.escape(
+								layout.getName(_themeDisplay.getLocale())));
+					}
 				).put(
-					"id", "delete"
+					"modalTitle",
+					_language.get(_themeDisplay.getLocale(), "delete-page")
 				).put(
-					"label", _language.get(_themeDisplay.getLocale(), "delete")
-				).put(
-					"symbolLeft", "trash"
-				).put(
-					"type", "item"
-				)
-			);
-		}
+					"url",
+					_getDeleteLayoutURL(layout, afterDeleteSelectedLayout)
+				).build()
+			).put(
+				"id", "delete"
+			).put(
+				"label", _language.get(_themeDisplay.getLocale(), "delete")
+			).put(
+				"symbolLeft", "trash"
+			).put(
+				"type", "item"
+			)
+		);
 
 		return JSONUtil.putAll(
 			JSONUtil.put(

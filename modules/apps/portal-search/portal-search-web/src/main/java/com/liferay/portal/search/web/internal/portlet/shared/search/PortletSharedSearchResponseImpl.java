@@ -62,15 +62,15 @@ public class PortletSharedSearchResponseImpl
 
 	@Override
 	public SearchResponse getFederatedSearchResponse(
-		Optional<String> federatedSearchKeyOptional) {
+		String federatedSearchKey) {
 
 		return _searchResponseImpl.getFederatedSearchResponse(
-			federatedSearchKeyOptional);
+			federatedSearchKey);
 	}
 
 	@Override
-	public Optional<String> getKeywordsOptional() {
-		return _searchResponseImpl.getKeywordsOptional();
+	public String getKeywords() {
+		return _searchResponseImpl.getKeywords();
 	}
 
 	@Override
@@ -121,8 +121,8 @@ public class PortletSharedSearchResponseImpl
 	}
 
 	@Override
-	public Optional<String> getSpellCheckSuggestionOptional() {
-		return _searchResponseImpl.getSpellCheckSuggestionOptional();
+	public String getSpellCheckSuggestion() {
+		return _searchResponseImpl.getSpellCheckSuggestion();
 	}
 
 	@Override

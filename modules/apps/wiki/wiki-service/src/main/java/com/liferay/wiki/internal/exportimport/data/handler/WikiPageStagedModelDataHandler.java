@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -361,20 +362,35 @@ public class WikiPageStagedModelDataHandler
 			PortletDataContext portletDataContext, WikiPage page)
 		throws Exception {
 
-		WikiPage existingPage = fetchStagedModelByUuidAndGroupId(
+		WikiPage existingPage1 = fetchStagedModelByUuidAndGroupId(
 			page.getUuid(), portletDataContext.getScopeGroupId());
 
-		if ((existingPage == null) || !existingPage.isInTrash()) {
+		if ((existingPage1 == null) || !existingPage1.isInTrash()) {
+			return;
+		}
+
+		WikiPage existingPage2 = _wikiPageLocalService.fetchPage(
+			existingPage1.getNodeId(), page.getTitle());
+
+		if (existingPage2 != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Can not restore wiki page from recycle bin.  A page ",
+						"with the same title '", page.getTitle(),
+						"' already exists."));
+			}
+
 			return;
 		}
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			WikiPage.class.getName());
 
-		if (trashHandler.isRestorable(existingPage.getResourcePrimKey())) {
+		if (trashHandler.isRestorable(existingPage1.getResourcePrimKey())) {
 			trashHandler.restoreTrashEntry(
 				portletDataContext.getUserId(page.getUserUuid()),
-				existingPage.getResourcePrimKey());
+				existingPage1.getResourcePrimKey());
 		}
 	}
 

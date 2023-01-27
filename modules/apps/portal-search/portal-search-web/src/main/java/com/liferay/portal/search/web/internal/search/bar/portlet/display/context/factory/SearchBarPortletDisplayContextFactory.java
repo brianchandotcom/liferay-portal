@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -311,11 +312,11 @@ public class SearchBarPortletDisplayContextFactory {
 				SearchBarPortletDestinationUtil.isSameDestination(
 					headerPortletPreferencesOptional.get(), themeDisplay)) {
 
-				Optional<String> optional = searchSettings.getScope();
+				String scope = searchSettings.getScope();
 
-				if (optional.isPresent()) {
+				if (scope != null) {
 					return SearchScopePreference.getSearchScopePreference(
-						optional.get());
+						scope);
 				}
 			}
 		}
@@ -371,10 +372,8 @@ public class SearchBarPortletDisplayContextFactory {
 				SearchBarPortletDestinationUtil.isSameDestination(
 					headerPortletPreferencesOptional.get(), themeDisplay)) {
 
-				Optional<String> optional =
-					searchSettings.getKeywordsParameterName();
-
-				return optional.orElse(
+				return GetterUtil.getString(
+					searchSettings.getKeywordsParameterName(),
 					searchBarPortletPreferences.getKeywordsParameterName());
 			}
 		}
@@ -401,11 +400,15 @@ public class SearchBarPortletDisplayContextFactory {
 				SearchBarPortletDestinationUtil.isSameDestination(
 					headerPortletPreferencesOptional.get(), themeDisplay)) {
 
-				Optional<String> optional =
+				String scopeParameterName =
 					searchSettings.getScopeParameterName();
 
-				return optional.orElse(
-					searchBarPortletPreferences.getScopeParameterName());
+				if (scopeParameterName == null) {
+					scopeParameterName =
+						searchBarPortletPreferences.getScopeParameterName();
+				}
+
+				return scopeParameterName;
 			}
 		}
 

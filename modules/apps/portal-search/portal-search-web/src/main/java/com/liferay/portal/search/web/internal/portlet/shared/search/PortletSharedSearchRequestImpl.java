@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -120,27 +121,19 @@ public class PortletSharedSearchRequestImpl
 	private SearchContainer<Document> _buildSearchContainer(
 		SearchSettings searchSettings, RenderRequest renderRequest) {
 
-		Optional<String> paginationStartParameterNameOptional =
-			searchSettings.getPaginationStartParameterName();
-
-		Optional<Integer> paginationStartOptional =
-			searchSettings.getPaginationStart();
-
-		Optional<Integer> paginationDeltaOptional =
-			searchSettings.getPaginationDelta();
-
 		PortletRequest portletRequest = renderRequest;
 
 		DisplayTerms displayTerms = null;
 		DisplayTerms searchTerms = null;
 
-		String curParam = paginationStartParameterNameOptional.orElse(
+		String curParam = GetterUtil.getString(
+			searchSettings.getPaginationStartParameterName(),
 			SearchContainer.DEFAULT_CUR_PARAM);
 
-		int cur = paginationStartOptional.orElse(0);
+		int cur = GetterUtil.getInteger(searchSettings.getPaginationStart());
 
-		int delta = paginationDeltaOptional.orElse(
-			SearchContainer.DEFAULT_DELTA);
+		int delta = GetterUtil.getInteger(
+			searchSettings.getPaginationDelta(), SearchContainer.DEFAULT_DELTA);
 
 		PortletURL portletURL = new NullPortletURL();
 

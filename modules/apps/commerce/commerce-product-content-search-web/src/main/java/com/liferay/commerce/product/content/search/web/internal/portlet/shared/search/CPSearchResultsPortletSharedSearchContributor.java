@@ -42,6 +42,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
@@ -70,11 +71,14 @@ public class CPSearchResultsPortletSharedSearchContributor
 			SearchRequestBuilder searchRequestBuilder =
 				portletSharedSearchSettings.getSearchRequestBuilder();
 
-			Optional<String> paginationStartParameterNameOptional =
-				portletSharedSearchSettings.getPaginationStartParameterName();
+			if (searchRequestBuilder == null) {
+				throw new NoSuchElementException(
+					"Unable to locate search request builder in portlet id: " +
+						portletSharedSearchSettings.getPortletId());
+			}
 
 			searchRequestBuilder.paginationStartParameterName(
-				paginationStartParameterNameOptional.get());
+				portletSharedSearchSettings.getPaginationStartParameterName());
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);

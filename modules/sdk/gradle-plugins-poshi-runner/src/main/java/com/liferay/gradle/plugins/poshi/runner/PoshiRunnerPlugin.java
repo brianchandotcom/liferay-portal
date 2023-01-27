@@ -270,8 +270,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Task task = GradleUtil.addTask(
 			project, DOWNLOAD_WEB_DRIVER_BROWSER_BINARY_TASK_NAME, Task.class);
 
-		task.dependsOn(STOP_WEB_DRIVER_PROCESS_TASK_NAME);
-
 		task.doLast(
 			new Action<Task>() {
 

@@ -17,14 +17,14 @@ package com.liferay.portal.search.internal.indexer;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
 import java.util.Collection;
-import java.util.stream.Stream;
+import java.util.List;
 
 /**
  * @author André de Oliveira
  */
 public interface QueryPreFilterContributorsRegistry {
 
-	public Stream<QueryPreFilterContributor> stream(
+	public List<QueryPreFilterContributor> filterQueryPreFilterContributor(
 		Collection<String> excludes, Collection<String> includes);
 
 }

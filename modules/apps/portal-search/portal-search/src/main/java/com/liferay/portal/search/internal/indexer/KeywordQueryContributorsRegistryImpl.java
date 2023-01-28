@@ -18,9 +18,10 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.List;
+import java.util.Spliterator;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -35,14 +36,19 @@ public class KeywordQueryContributorsRegistryImpl
 	implements KeywordQueryContributorsRegistry {
 
 	@Override
-	public Stream<KeywordQueryContributor> stream(
+	public List<KeywordQueryContributor> filterKeywordQueryContributor(
 		Collection<String> excludes, Collection<String> includes) {
 
-		Stream<KeywordQueryContributor> stream = StreamSupport.stream(
-			_serviceTrackerList.spliterator(), false);
+		List<KeywordQueryContributor> keywordQueryContributors =
+			new ArrayList<>();
 
-		return IncludeExcludeUtil.stream(
-			stream, includes, excludes,
+		Spliterator<KeywordQueryContributor> spliterator =
+			_serviceTrackerList.spliterator();
+
+		spliterator.forEachRemaining(keywordQueryContributors::add);
+
+		return IncludeExcludeUtil.filterIncludeExclude(
+			keywordQueryContributors, includes, excludes,
 			keywordQueryContributor -> getClassName(keywordQueryContributor));
 	}
 

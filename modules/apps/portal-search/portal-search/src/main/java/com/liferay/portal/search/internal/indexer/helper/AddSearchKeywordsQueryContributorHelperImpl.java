@@ -30,8 +30,8 @@ import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQuery
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,8 +81,8 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 			return;
 		}
 
-		Stream<KeywordQueryContributor> stream =
-			keywordQueryContributorsRegistry.stream(
+		List<KeywordQueryContributor> filteredKeywordQueryContributors =
+			keywordQueryContributorsRegistry.filterKeywordQueryContributor(
 				getStrings(
 					"search.full.query.clause.contributors.excludes",
 					searchContext),
@@ -90,8 +90,10 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 					"search.full.query.clause.contributors.includes",
 					searchContext));
 
-		stream.forEach(
-			keywordQueryContributor -> keywordQueryContributor.contribute(
+		for (KeywordQueryContributor keywordQueryContributor :
+				filteredKeywordQueryContributors) {
+
+			keywordQueryContributor.contribute(
 				keywords, booleanQuery,
 				new KeywordQueryContributorHelper() {
 
@@ -110,7 +112,8 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 						return searchContext;
 					}
 
-				}));
+				});
+		}
 	}
 
 	private void _addStringQuery(BooleanQuery booleanQuery, String keywords) {

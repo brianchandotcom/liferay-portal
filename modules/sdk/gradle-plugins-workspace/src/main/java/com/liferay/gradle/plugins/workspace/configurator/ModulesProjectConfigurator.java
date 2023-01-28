@@ -29,6 +29,7 @@ import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtension;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.plugins.workspace.FrontendPlugin;
@@ -315,6 +316,24 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 	protected static final String NAME = "modules";
 
+	private void _configureExtensionTestIntegrationTomcat(
+		TestIntegrationTomcatExtension testIntegrationTomcatExtension,
+		final WorkspaceExtension workspaceExtension) {
+
+		testIntegrationTomcatExtension.setDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						workspaceExtension.getHomeDir(),
+						"tomcat-" +
+							workspaceExtension.getAppServerTomcatVersion());
+				}
+
+			});
+	}
+
 	private void _configureLiferayOSGi(Project project) {
 		LiferayOSGiExtension liferayOSGiExtension = GradleUtil.getExtension(
 			project, LiferayOSGiExtension.class);
@@ -447,6 +466,15 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			copyTestModulesTask.dependsOn(initBundleTask);
 
 			setUpTestableTomcatTask.dependsOn(copyTestModulesTask);
+
+			ExtensionContainer extensionContainer = project.getExtensions();
+
+			TestIntegrationTomcatExtension testIntegrationTomcatExtension =
+				extensionContainer.getByType(
+					TestIntegrationTomcatExtension.class);
+
+			_configureExtensionTestIntegrationTomcat(
+				testIntegrationTomcatExtension, workspaceExtension);
 		}
 	}
 

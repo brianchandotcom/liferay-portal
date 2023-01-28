@@ -17,14 +17,14 @@ package com.liferay.portal.search.internal.indexer;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 
 import java.util.Collection;
-import java.util.stream.Stream;
+import java.util.List;
 
 /**
  * @author André de Oliveira
  */
 public interface KeywordQueryContributorsRegistry {
 
-	public Stream<KeywordQueryContributor> stream(
+	public List<KeywordQueryContributor> filterKeywordQueryContributor(
 		Collection<String> excludes, Collection<String> includes);
 
 }

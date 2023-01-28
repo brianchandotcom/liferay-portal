@@ -49,7 +49,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Michael C. Han
@@ -136,22 +135,25 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		}
 
 		contribute(
-			_modelKeywordQueryContributorsRegistry.stream(
-				_getStrings(
-					"search.full.query.clause.contributors.excludes",
-					searchContext),
-				_getStrings(
-					"search.full.query.clause.contributors.includes",
-					searchContext)),
+			_modelKeywordQueryContributorsRegistry.
+				filterKeywordQueryContributor(
+					_getStrings(
+						"search.full.query.clause.contributors.excludes",
+						searchContext),
+					_getStrings(
+						"search.full.query.clause.contributors.includes",
+						searchContext)),
 			booleanQuery, searchContext);
 	}
 
 	protected void contribute(
-		Stream<KeywordQueryContributor> stream, BooleanQuery booleanQuery,
-		SearchContext searchContext) {
+		List<KeywordQueryContributor> keywordQueryContributors,
+		BooleanQuery booleanQuery, SearchContext searchContext) {
 
-		stream.forEach(
-			keywordQueryContributor -> keywordQueryContributor.contribute(
+		for (KeywordQueryContributor keywordQueryContributor :
+				keywordQueryContributors) {
+
+			keywordQueryContributor.contribute(
 				searchContext.getKeywords(), booleanQuery,
 				new KeywordQueryContributorHelper() {
 
@@ -170,7 +172,8 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 						return searchContext;
 					}
 
-				}));
+				});
+		}
 	}
 
 	private void _add(

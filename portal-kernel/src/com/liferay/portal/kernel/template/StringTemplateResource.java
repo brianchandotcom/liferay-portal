@@ -94,9 +94,11 @@ public class StringTemplateResource implements TemplateResource {
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		_lastModified = objectInput.readLong();
-		_templateContent = objectInput.readUTF();
+		_templateContent = (String)objectInput.readObject();
 		_templateId = objectInput.readUTF();
 	}
 

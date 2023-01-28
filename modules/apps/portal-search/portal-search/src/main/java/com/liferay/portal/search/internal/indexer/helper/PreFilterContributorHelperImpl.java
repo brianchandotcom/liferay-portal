@@ -40,7 +40,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -189,8 +188,8 @@ public class PreFilterContributorHelperImpl
 	private void _addPreFilters(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		Stream<QueryPreFilterContributor> stream =
-			queryPreFilterContributorsRegistry.stream(
+		List<QueryPreFilterContributor> queryPreFilterContributors =
+			queryPreFilterContributorsRegistry.filterQueryPreFilterContributor(
 				getStrings(
 					"search.full.query.clause.contributors.excludes",
 					searchContext),
@@ -198,9 +197,11 @@ public class PreFilterContributorHelperImpl
 					"search.full.query.clause.contributors.includes",
 					searchContext));
 
-		stream.forEach(
-			queryPreFilterContributor -> queryPreFilterContributor.contribute(
-				booleanFilter, searchContext));
+		for (QueryPreFilterContributor queryPreFilterContributor :
+				queryPreFilterContributors) {
+
+			queryPreFilterContributor.contribute(booleanFilter, searchContext);
+		}
 	}
 
 	private Filter _createPreFilterForEntryClassName(

@@ -382,6 +382,12 @@ public abstract class BaseBuild implements Build {
 		return gitRepositoryGitDetailsTempMap.get("github.upstream.branch.sha");
 	}
 
+	public String getBatchName(String jobVariant) {
+		jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+
+		return jobVariant.replaceAll("_stable$", "");
+	}
+
 	@Override
 	public String getBranchName() {
 		return branchName;

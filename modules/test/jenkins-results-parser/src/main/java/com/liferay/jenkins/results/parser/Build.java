@@ -60,6 +60,8 @@ public interface Build {
 
 	public String getBaseGitRepositorySHA(String gitRepositoryName);
 
+	public String getBatchName(String jobVariant);
+
 	public String getBranchName();
 
 	public String getBuildDescription();

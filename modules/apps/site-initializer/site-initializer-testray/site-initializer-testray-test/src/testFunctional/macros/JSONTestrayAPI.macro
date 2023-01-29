@@ -172,4 +172,29 @@ definition {
 		return "${response}";
 	}
 
+	@summary = "create a Component via API"
+	macro createComponentAPI {
+		Variables.assertDefined(parameterList = "${componentName},${projectId},${teamId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/components \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+                -d '{
+					"name": "${componentName}",
+					"r_projectToComponents_c_projectId": "${projectId}",
+					"r_teamToComponents_c_teamId": "${teamId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
+
 }

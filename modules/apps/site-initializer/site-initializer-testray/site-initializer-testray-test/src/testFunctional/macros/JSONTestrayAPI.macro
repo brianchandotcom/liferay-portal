@@ -317,4 +317,40 @@ definition {
 		return "${response}";
 	}
 
+	@summary = "create a Requirements via API"
+	macro createRequirementAPI {
+		Variables.assertDefined(parameterList = "${requirementName},${linkTitle},${componentId},${projectId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (!(isSet(linkURL))) {
+			var linkURL = "https://www.google.com/";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/requirements \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+                -d '{
+					"summary": "${requirementName}",
+					"description": "${description}",
+					"linkTitle": "${linkTitle}",
+					"linkURL": "${linkURL}",
+					"r_componentToRequirements_c_componentId": "${componentId}",
+					"r_projectToRequirements_c_projectId": "${projectId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
+
 }

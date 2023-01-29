@@ -40,12 +40,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"after-filter=Virtual Host Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",
-		"servlet-filter-name=SSO SAML IdP Filter",
+		"servlet-filter-name=Idp Sso Saml Portal Filter",
 		"url-pattern=/c/portal/logout"
 	},
 	service = Filter.class
 )
-public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
+public class IdpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -124,7 +124,7 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SamlIdpSsoFilter.class);
+		IdpSsoSamlPortalFilter.class);
 
 	@Reference
 	private Portal _portal;

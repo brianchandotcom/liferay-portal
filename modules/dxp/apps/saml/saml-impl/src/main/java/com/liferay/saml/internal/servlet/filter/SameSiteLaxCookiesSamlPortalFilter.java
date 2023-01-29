@@ -46,13 +46,13 @@ import org.osgi.service.component.annotations.Reference;
 		"before-filter=Session Id Filter", "dispatcher=REQUEST", "enabled=true",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
-		"servlet-filter-name=SAML SameSite Lax Support Filter",
+		"servlet-filter-name=Same Site Lax Cookies Saml Portal Filter",
 		"url-pattern=/c/portal/saml/acs", "url-pattern=/c/portal/saml/slo",
 		"url-pattern=/c/portal/saml/sso"
 	},
 	service = Filter.class
 )
-public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
+public class SameSiteLaxCookiesSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -150,7 +150,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSameSiteLaxCookiesFilter.class);
+		SameSiteLaxCookiesSamlPortalFilter.class);
 
 	private boolean _enabled = true;
 

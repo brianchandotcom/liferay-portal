@@ -55,12 +55,12 @@ import org.osgi.service.component.annotations.Reference;
 		"after-filter=Virtual Host Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
-		"servlet-context-name=", "servlet-filter-name=SSO SAML SP Filter",
-		"url-pattern=/*"
+		"servlet-context-name=",
+		"servlet-filter-name=Sp Sso Saml Portal Filter", "url-pattern=/*"
 	},
 	service = Filter.class
 )
-public class SamlSpSsoFilter extends BaseSamlPortalFilter {
+public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
@@ -235,7 +235,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSpSsoFilter.class);
+		SpSsoSamlPortalFilter.class);
 
 	@Reference
 	private Portal _portal;

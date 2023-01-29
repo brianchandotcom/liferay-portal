@@ -49,4 +49,32 @@ definition {
 
 		return "${response}";
 	}
+
+	@summary = "create a Case Result via API"
+	macro createCaseResultAPI {
+		Variables.assertDefined(parameterList = "${buildId},${casesId},${componentId},${runId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/caseresults \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"r_buildToCaseResult_c_buildId": "${buildId}",
+					"r_caseToCaseResult_c_caseId": "${casesId}",
+					"r_componentToCaseResult_c_componentId": "${componentId}",
+					"r_runToCaseResult_c_runId": "${runId}"
+				}'
+
+				
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
 }

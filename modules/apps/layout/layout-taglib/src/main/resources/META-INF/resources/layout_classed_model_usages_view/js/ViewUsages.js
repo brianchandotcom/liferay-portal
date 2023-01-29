@@ -19,7 +19,7 @@ import ClayTable from '@clayui/table';
 import {fetch, openModal, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-export default function ViewUsages({getUsagesURL, portletNamespace}) {
+export default function ViewUsages({getUsagesURL}) {
 	const [activePage, setActivePage] = useState(1);
 	const [totalPages, setTotalPages] = useState(0);
 
@@ -31,7 +31,7 @@ export default function ViewUsages({getUsagesURL, portletNamespace}) {
 
 		const url = new URL(getUsagesURL);
 
-		url.searchParams.set(`${portletNamespace}pageIndex`, pageIndex);
+		url.searchParams.set('pageIndex', pageIndex);
 
 		fetch(url)
 			.then((response) => response.json())

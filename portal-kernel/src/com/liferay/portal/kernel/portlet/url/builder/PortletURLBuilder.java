@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -180,12 +181,13 @@ public class PortletURLBuilder {
 
 	public static class PortletURLStep
 		implements ActionNameStep, AfterActionNameStep, AfterBackURLStep,
-				   AfterCMDStep, AfterKeywordsStep, AfterMVCPathStep,
-				   AfterMVCRenderCommandNameStep, AfterNavigationStep,
-				   AfterParameterStep, AfterPortletModeStep,
-				   AfterPortletResourceStep, AfterRedirectStep, AfterSecureStep,
-				   AfterTabs1Step, AfterTabs2Step, AfterWindowStateStep,
-				   BackURLStep, BuildStep, CMDStep, KeywordsStep, MVCPathStep,
+				   AfterCMDStep, AfterGlobalParameterStep, AfterKeywordsStep,
+				   AfterMVCPathStep, AfterMVCRenderCommandNameStep,
+				   AfterNavigationStep, AfterParameterStep,
+				   AfterPortletModeStep, AfterPortletResourceStep,
+				   AfterRedirectStep, AfterSecureStep, AfterTabs1Step,
+				   AfterTabs2Step, AfterWindowStateStep, BackURLStep, BuildStep,
+				   CMDStep, GlobalParameterStep, KeywordsStep, MVCPathStep,
 				   MVCRenderCommandNameStep, NavigationStep, ParameterStep,
 				   PortletModeStep, PortletResourceStep, RedirectStep,
 				   SecureStep, Tabs1Step, Tabs2Step, WindowStateStep {
@@ -269,6 +271,60 @@ public class PortletURLBuilder {
 			UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
 
 			_setParameter(Constants.CMD, valueUnsafeSupplier, false);
+
+			return this;
+		}
+
+		@Override
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, boolean value) {
+
+			setGlobalParameter(key, String.valueOf(value));
+
+			return this;
+		}
+
+		@Override
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, double value) {
+
+			setGlobalParameter(key, String.valueOf(value));
+
+			return this;
+		}
+
+		@Override
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, int value) {
+
+			setGlobalParameter(key, String.valueOf(value));
+
+			return this;
+		}
+
+		@Override
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, long value) {
+
+			setGlobalParameter(key, String.valueOf(value));
+
+			return this;
+		}
+
+		@Override
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, short value) {
+
+			setGlobalParameter(key, String.valueOf(value));
+
+			return this;
+		}
+
+		@Override
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, String value) {
+
+			_setParameter(key, URLCodec.encodeURL(value), true);
 
 			return this;
 		}
@@ -596,53 +652,61 @@ public class PortletURLBuilder {
 	}
 
 	public interface AfterActionNameStep
-		extends BackURLStep, BuildStep, CMDStep, KeywordsStep, MVCPathStep,
-				MVCRenderCommandNameStep, NavigationStep, ParameterStep,
-				PortletModeStep, PortletResourceStep, RedirectStep, SecureStep,
-				Tabs1Step, Tabs2Step, WindowStateStep {
+		extends BackURLStep, BuildStep, CMDStep, GlobalParameterStep,
+				KeywordsStep, MVCPathStep, MVCRenderCommandNameStep,
+				NavigationStep, ParameterStep, PortletModeStep,
+				PortletResourceStep, RedirectStep, SecureStep, Tabs1Step,
+				Tabs2Step, WindowStateStep {
 	}
 
 	public interface AfterBackURLStep
-		extends BuildStep, KeywordsStep, NavigationStep, ParameterStep,
+		extends BuildStep, GlobalParameterStep, KeywordsStep, NavigationStep,
+				ParameterStep, PortletModeStep, PortletResourceStep, SecureStep,
+				Tabs1Step, Tabs2Step, WindowStateStep {
+	}
+
+	public interface AfterCMDStep
+		extends BackURLStep, BuildStep, GlobalParameterStep, KeywordsStep,
+				NavigationStep, ParameterStep, PortletModeStep,
+				PortletResourceStep, RedirectStep, SecureStep, Tabs1Step,
+				Tabs2Step, WindowStateStep {
+	}
+
+	public interface AfterGlobalParameterStep
+		extends BuildStep, GlobalParameterStep, ParameterStep, PortletModeStep,
+				SecureStep, WindowStateStep {
+	}
+
+	public interface AfterKeywordsStep
+		extends BuildStep, GlobalParameterStep, NavigationStep, ParameterStep,
 				PortletModeStep, PortletResourceStep, SecureStep, Tabs1Step,
 				Tabs2Step, WindowStateStep {
 	}
 
-	public interface AfterCMDStep
-		extends BackURLStep, BuildStep, KeywordsStep, NavigationStep,
+	public interface AfterMVCPathStep
+		extends BackURLStep, BuildStep, CMDStep, GlobalParameterStep,
+				KeywordsStep, MVCRenderCommandNameStep, NavigationStep,
 				ParameterStep, PortletModeStep, PortletResourceStep,
 				RedirectStep, SecureStep, Tabs1Step, Tabs2Step,
 				WindowStateStep {
 	}
 
-	public interface AfterKeywordsStep
-		extends BuildStep, NavigationStep, ParameterStep, PortletModeStep,
+	public interface AfterMVCRenderCommandNameStep
+		extends BackURLStep, BuildStep, CMDStep, GlobalParameterStep,
+				KeywordsStep, NavigationStep, ParameterStep, PortletModeStep,
+				PortletResourceStep, RedirectStep, SecureStep, Tabs1Step,
+				Tabs2Step, WindowStateStep {
+	}
+
+	public interface AfterNavigationStep
+		extends BuildStep, GlobalParameterStep, ParameterStep, PortletModeStep,
 				PortletResourceStep, SecureStep, Tabs1Step, Tabs2Step,
 				WindowStateStep {
 	}
 
-	public interface AfterMVCPathStep
-		extends BackURLStep, BuildStep, CMDStep, KeywordsStep,
-				MVCRenderCommandNameStep, NavigationStep, ParameterStep,
-				PortletModeStep, PortletResourceStep, RedirectStep, SecureStep,
-				Tabs1Step, Tabs2Step, WindowStateStep {
-	}
-
-	public interface AfterMVCRenderCommandNameStep
-		extends BackURLStep, BuildStep, CMDStep, KeywordsStep, NavigationStep,
-				ParameterStep, PortletModeStep, PortletResourceStep,
-				RedirectStep, SecureStep, Tabs1Step, Tabs2Step,
-				WindowStateStep {
-	}
-
-	public interface AfterNavigationStep
-		extends BuildStep, ParameterStep, PortletModeStep, PortletResourceStep,
-				SecureStep, Tabs1Step, Tabs2Step, WindowStateStep {
-	}
-
 	public interface AfterParameterStep
-		extends BuildStep, ParameterStep, PortletModeStep, SecureStep,
-				WindowStateStep {
+		extends BuildStep, GlobalParameterStep, ParameterStep, PortletModeStep,
+				SecureStep, WindowStateStep {
 	}
 
 	public interface AfterPortletModeStep
@@ -650,27 +714,28 @@ public class PortletURLBuilder {
 	}
 
 	public interface AfterPortletResourceStep
-		extends BuildStep, ParameterStep, PortletModeStep, SecureStep,
-				Tabs1Step, Tabs2Step, WindowStateStep {
+		extends BuildStep, GlobalParameterStep, ParameterStep, PortletModeStep,
+				SecureStep, Tabs1Step, Tabs2Step, WindowStateStep {
 	}
 
 	public interface AfterRedirectStep
-		extends BackURLStep, BuildStep, KeywordsStep, NavigationStep,
-				ParameterStep, PortletModeStep, PortletResourceStep, SecureStep,
-				Tabs1Step, Tabs2Step, WindowStateStep {
+		extends BackURLStep, BuildStep, GlobalParameterStep, KeywordsStep,
+				NavigationStep, ParameterStep, PortletModeStep,
+				PortletResourceStep, SecureStep, Tabs1Step, Tabs2Step,
+				WindowStateStep {
 	}
 
 	public interface AfterSecureStep extends BuildStep, WindowStateStep {
 	}
 
 	public interface AfterTabs1Step
-		extends BuildStep, ParameterStep, PortletModeStep, SecureStep,
-				Tabs2Step, WindowStateStep {
+		extends BuildStep, GlobalParameterStep, ParameterStep, PortletModeStep,
+				SecureStep, Tabs2Step, WindowStateStep {
 	}
 
 	public interface AfterTabs2Step
-		extends BuildStep, ParameterStep, PortletModeStep, SecureStep,
-				WindowStateStep {
+		extends BuildStep, GlobalParameterStep, ParameterStep, PortletModeStep,
+				SecureStep, WindowStateStep {
 	}
 
 	public interface AfterWindowStateStep extends BuildStep {
@@ -710,6 +775,28 @@ public class PortletURLBuilder {
 
 		public AfterCMDStep setCMD(
 			UnsafeSupplier<Object, Exception> valueUnsafeSupplier);
+
+	}
+
+	public interface GlobalParameterStep {
+
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, boolean value);
+
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, double value);
+
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, int value);
+
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, long value);
+
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, short value);
+
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, String value);
 
 	}
 

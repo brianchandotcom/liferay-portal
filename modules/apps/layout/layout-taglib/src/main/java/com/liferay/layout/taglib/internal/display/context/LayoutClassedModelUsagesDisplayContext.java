@@ -14,36 +14,27 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.model.LayoutClassedModelUsage;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
+import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributor;
 import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributorRegistryUtil;
 import com.liferay.layout.util.comparator.LayoutClassedModelUsageModifiedDateComparator;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,7 +45,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -119,66 +109,21 @@ public class LayoutClassedModelUsagesDisplayContext {
 	public String getLayoutClassedModelUsageName(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
-		if (layoutClassedModelUsage.getType() ==
-				LayoutClassedModelUsageConstants.TYPE_LAYOUT) {
+		LayoutClassedModelUsagesHelper layoutClassedModelUsagesHelper =
+			ServletContextUtil.getLayoutClassedModelUsagesHelper();
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				layoutClassedModelUsage.getPlid());
-
-			if (layout == null) {
-				return StringPool.BLANK;
-			}
-
-			if (!layout.isDraftLayout()) {
-				return layout.getName(_themeDisplay.getLocale());
-			}
-
-			return StringBundler.concat(
-				layout.getName(_themeDisplay.getLocale()), " (",
-				LanguageUtil.get(_themeDisplay.getLocale(), "draft"), ")");
-		}
-
-		long plid = layoutClassedModelUsage.getPlid();
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
-		if (layout.isDraftLayout()) {
-			plid = layout.getClassPK();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(plid);
-
-		if (layoutPageTemplateEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		if (!layout.isDraftLayout()) {
-			return layoutPageTemplateEntry.getName();
-		}
-
-		return StringBundler.concat(
-			layoutPageTemplateEntry.getName(), " (",
-			LanguageUtil.get(_themeDisplay.getLocale(), "draft"), ")");
+		return layoutClassedModelUsagesHelper.getName(
+			layoutClassedModelUsage, _themeDisplay.getLocale());
 	}
 
 	public String getLayoutClassedModelUsageTypeLabel(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
-		if (layoutClassedModelUsage.getType() ==
-				LayoutClassedModelUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
+		LayoutClassedModelUsagesHelper layoutClassedModelUsagesHelper =
+			ServletContextUtil.getLayoutClassedModelUsagesHelper();
 
-			return "display-page-template";
-		}
-
-		if (layoutClassedModelUsage.getType() ==
-				LayoutClassedModelUsageConstants.TYPE_LAYOUT) {
-
-			return "page";
-		}
-
-		return "page-template";
+		return layoutClassedModelUsagesHelper.getTypeLabel(
+			layoutClassedModelUsage);
 	}
 
 	public String getLayoutClassedModelUsageWhereLabel(
@@ -262,52 +207,14 @@ public class LayoutClassedModelUsagesDisplayContext {
 	}
 
 	public String getPreviewURL(LayoutClassedModelUsage layoutClassedModelUsage)
-		throws PortalException {
+		throws Exception {
 
-		String layoutURL = null;
+		LayoutClassedModelUsagesHelper layoutClassedModelUsagesHelper =
+			ServletContextUtil.getLayoutClassedModelUsagesHelper();
 
-		if (layoutClassedModelUsage.getContainerType() ==
-				PortalUtil.getClassNameId(FragmentEntryLink.class)) {
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_renderRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			layoutURL = PortalUtil.getLayoutFriendlyURL(
-				LayoutLocalServiceUtil.fetchLayout(
-					layoutClassedModelUsage.getPlid()),
-				themeDisplay);
-
-			layoutURL = HttpComponentsUtil.setParameter(
-				layoutURL, "previewClassNameId",
-				String.valueOf(layoutClassedModelUsage.getClassNameId()));
-			layoutURL = HttpComponentsUtil.setParameter(
-				layoutURL, "previewClassPK",
-				String.valueOf(layoutClassedModelUsage.getClassPK()));
-			layoutURL = HttpComponentsUtil.setParameter(
-				layoutURL, "previewType",
-				String.valueOf(AssetRendererFactory.TYPE_LATEST));
-		}
-		else {
-			layoutURL = PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					_renderRequest, layoutClassedModelUsage.getContainerKey(),
-					layoutClassedModelUsage.getPlid(),
-					PortletRequest.RENDER_PHASE)
-			).setParameter(
-				"previewClassNameId", layoutClassedModelUsage.getClassNameId()
-			).setParameter(
-				"previewClassPK", layoutClassedModelUsage.getClassPK()
-			).setParameter(
-				"previewType", AssetRendererFactory.TYPE_LATEST
-			).buildString();
-		}
-
-		String portletURLString = HttpComponentsUtil.addParameter(
-			layoutURL, "p_l_mode", Constants.PREVIEW);
-
-		return portletURLString + "#portlet_" +
-			layoutClassedModelUsage.getContainerKey();
+		return layoutClassedModelUsagesHelper.getPreviewURL(
+			layoutClassedModelUsage,
+			PortalUtil.getHttpServletRequest(_renderRequest));
 	}
 
 	public String getRedirect() {
@@ -407,40 +314,11 @@ public class LayoutClassedModelUsagesDisplayContext {
 	public boolean isShowPreview(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
-		if (layoutClassedModelUsage.getType() ==
-				LayoutClassedModelUsageConstants.TYPE_LAYOUT) {
+		LayoutClassedModelUsagesHelper layoutClassedModelUsagesHelper =
+			ServletContextUtil.getLayoutClassedModelUsagesHelper();
 
-			return true;
-		}
-
-		if ((layoutClassedModelUsage.getType() ==
-				LayoutClassedModelUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) ||
-			(layoutClassedModelUsage.getType() !=
-				LayoutClassedModelUsageConstants.TYPE_PAGE_TEMPLATE)) {
-
-			return false;
-		}
-
-		long plid = layoutClassedModelUsage.getPlid();
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
-		if (layout.isDraftLayout()) {
-			plid = layout.getClassPK();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(plid);
-
-		if ((layoutPageTemplateEntry == null) ||
-			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
-
-			return false;
-		}
-
-		return true;
+		return layoutClassedModelUsagesHelper.isShowPreview(
+			layoutClassedModelUsage);
 	}
 
 	private String _getOrderByCol() {

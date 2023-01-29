@@ -26,6 +26,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -34,6 +35,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
  */
 @Component(
 	configurationPid = "org.apache.aries.jax.rs.jackson",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = {
 		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
 		JaxrsWhiteboardConstants.JAX_RS_MEDIA_TYPE + "=" + MediaType.APPLICATION_JSON,

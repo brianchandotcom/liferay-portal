@@ -27,6 +27,7 @@ import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributor;
 import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributorRegistryUtil;
 import com.liferay.layout.util.comparator.LayoutClassedModelUsageModifiedDateComparator;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
@@ -311,6 +314,13 @@ public class LayoutClassedModelUsagesDisplayContext {
 		return _searchContainer;
 	}
 
+	public Map<String, Object> getUsagesData() {
+		return HashMapBuilder.<String, Object>put(
+			"getUsagesURL",
+			_getLayoutClassedModelUsagesURL(_className, _classPK)
+		).build();
+	}
+
 	public boolean isShowPreview(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
@@ -319,6 +329,23 @@ public class LayoutClassedModelUsagesDisplayContext {
 
 		return layoutClassedModelUsagesHelper.isShowPreview(
 			layoutClassedModelUsage);
+	}
+
+	private String _getLayoutClassedModelUsagesURL(
+		String className, long classPK) {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(
+			PortalUtil.getPortalURL(
+				PortalUtil.getHttpServletRequest(_renderRequest)));
+		sb.append(_themeDisplay.getPathMain());
+		sb.append("/portal/get_layout_classed_model_usages?className=");
+		sb.append(className);
+		sb.append("&classPK=");
+		sb.append(String.valueOf(classPK));
+
+		return sb.toString();
 	}
 
 	private String _getOrderByCol() {

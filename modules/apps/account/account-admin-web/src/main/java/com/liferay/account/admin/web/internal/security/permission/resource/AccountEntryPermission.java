@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -66,14 +67,18 @@ public class AccountEntryPermission {
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.account.model.AccountEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
 	)
 	protected void setModelResourcePermission(
 		ModelResourcePermission<AccountEntry> modelResourcePermission) {
 
 		_accountEntryModelResourcePermission = modelResourcePermission;
+	}
+
+	protected void unsetModelResourcePermission(
+		ModelResourcePermission<AccountEntry> modelResourcePermission) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

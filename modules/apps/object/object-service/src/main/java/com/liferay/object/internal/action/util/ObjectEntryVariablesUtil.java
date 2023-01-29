@@ -48,6 +48,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Carolina Barbosa
@@ -63,11 +64,12 @@ public class ObjectEntryVariablesUtil {
 		// TODO Remove all references to version 1 after March 2023
 
 		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
+			Map<String, Object> currentVariables = _getVariables(
+				dtoConverterRegistry, objectDefinition, false,
+				payloadJSONObject, systemObjectDefinitionMetadataRegistry);
+
 			return HashMapBuilder.<String, Object>put(
-				"objectEntry",
-				_getVariables(
-					dtoConverterRegistry, objectDefinition, false,
-					payloadJSONObject, systemObjectDefinitionMetadataRegistry)
+				"objectEntry", currentVariables
 			).put(
 				"originalObjectEntry",
 				() -> {
@@ -82,7 +84,9 @@ public class ObjectEntryVariablesUtil {
 							systemObjectDefinitionMetadataRegistry);
 					}
 
-					return Collections.emptyMap();
+					return _getDefaultVariables(
+						objectDefinition,
+						Collections.unmodifiableSet(currentVariables.keySet()));
 				}
 			).build();
 		}
@@ -160,11 +164,12 @@ public class ObjectEntryVariablesUtil {
 		throws PortalException {
 
 		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
+			Map<String, Object> currentVariables = _getVariables(
+				dtoConverterRegistry, objectDefinition, false,
+				payloadJSONObject, systemObjectDefinitionMetadataRegistry);
+
 			return HashMapBuilder.<String, Object>put(
-				"objectEntry",
-				_getVariables(
-					dtoConverterRegistry, objectDefinition, false,
-					payloadJSONObject, systemObjectDefinitionMetadataRegistry)
+				"objectEntry", currentVariables
 			).put(
 				"originalObjectEntry",
 				() -> {
@@ -179,7 +184,9 @@ public class ObjectEntryVariablesUtil {
 							systemObjectDefinitionMetadataRegistry);
 					}
 
-					return Collections.emptyMap();
+					return _getDefaultVariables(
+						objectDefinition,
+						Collections.unmodifiableSet(currentVariables.keySet()));
 				}
 			).build();
 		}
@@ -283,6 +290,27 @@ public class ObjectEntryVariablesUtil {
 		}
 
 		return dtoConverter.getContentType();
+	}
+
+	private static Map<String, Object> _getDefaultVariables(
+		ObjectDefinition objectDefinition, Set<String> keys) {
+
+		Map<String, Object> defaultVariables = new HashMap<>();
+
+		for (ObjectField objectField :
+				ObjectFieldLocalServiceUtil.getObjectFields(
+					objectDefinition.getObjectDefinitionId())) {
+
+			String defaultValue = objectField.getDefaultValue();
+
+			if (Validator.isNotNull(defaultValue) &&
+				keys.contains(objectField.getName())) {
+
+				defaultVariables.put(objectField.getName(), defaultValue);
+			}
+		}
+
+		return defaultVariables;
 	}
 
 	private static String _getSuffix(

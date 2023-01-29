@@ -34,12 +34,13 @@ import org.osgi.service.component.annotations.Component;
 		"enabled=true",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
-		"servlet-filter-name=Assertion Consumer Service Filter",
+		"servlet-filter-name=Assertion Consumer Service Saml Portal Filter",
 		"url-pattern=/c/portal/saml/acs"
 	},
 	service = Filter.class
 )
-public class AssertionConsumerServiceFilter extends BaseSamlPortalFilter {
+public class AssertionConsumerServiceSamlPortalFilter
+	extends BaseSamlPortalFilter {
 
 	@Override
 	protected void doProcessFilter(
@@ -58,6 +59,6 @@ public class AssertionConsumerServiceFilter extends BaseSamlPortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssertionConsumerServiceFilter.class);
+		AssertionConsumerServiceSamlPortalFilter.class);
 
 }

@@ -222,4 +222,27 @@ definition {
 		return "${response}";
 	}
 
+	@summary = "create a Factor Categories via API"
+	macro createFactorCategoriesAPI {
+		Variables.assertDefined(parameterList = "${categoryName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/factorcategories \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+                -d '{
+					"name": "${categoryName}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
+
 }

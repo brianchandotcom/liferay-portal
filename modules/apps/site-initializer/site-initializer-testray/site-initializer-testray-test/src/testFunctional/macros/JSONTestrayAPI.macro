@@ -435,4 +435,36 @@ definition {
 		return "${response}";
 	}
 
+	@summary = "create a Suite via API"
+	macro createSuiteAPI {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (!(isSet(typeSuite))) {
+			var typeSuite = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/suites \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+                -d '{
+					"caseParameters": "{\"0\":${casesId},\"testrayTeams\":[{\"label\":\"Team 1\",\"value\":\"${teamId}\"}],\"testrayCaseTypes\":[{\"label\":\"Case 1\",\"value\":\"${caseTypeId}\"}],\"testrayComponents\":[{\"label\":\"Component 1\",\"value\":\"${componentId}\"}],\"testrayRequirements\":[{\"label\":\"Requirements Summary\",\"value\":\"${requirementId}\"}]}",
+					"name": "${suiteName}",
+					"description": "${description}",
+					"type": "${typeSuite}",
+					"r_projectToSuites_c_projectId": "${projectId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
 }

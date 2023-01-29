@@ -376,4 +376,28 @@ definition {
 
 		return "${response}";
 	}
+
+	@summary = "create a Run via API"
+	macro createRunAPI {
+		Variables.assertDefined(parameterList = "${runName},${buildId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/runs \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name": "${runName}",
+					"r_buildToRuns_c_buildId": "${buildId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
 }

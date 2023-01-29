@@ -102,4 +102,50 @@ definition {
 
 		return "${response}";
 	}
+
+	@summary = "create a Case via API"
+	macro createCasesAPI {
+		Variables.assertDefined(parameterList = "${caseName},${caseTypeId},${componentId},${projectId}");
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (!(isSet(estimatedDuration))) {
+			var estimatedDuration = "";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = "";
+		}
+
+		if (!(isSet(steps))) {
+			var steps = "";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/cases \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+                -d '{
+					"name": "${caseName}",
+					"description": "${description}",
+					"estimatedDuration": "${estimatedDuration}",
+					"priority": "${priority}",
+					"steps": "${steps}",
+					"r_caseTypeToCases_c_caseTypeId": "${caseTypeId}",
+					"r_componentToCases_c_componentId": "${componentId}",
+					"r_projectToCases_c_projectId": "${projectId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
 }

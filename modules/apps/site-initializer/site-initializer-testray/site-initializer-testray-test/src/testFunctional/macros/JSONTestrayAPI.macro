@@ -400,4 +400,39 @@ definition {
 
 		return "${response}";
 	}
+
+	@summary = "create a Subtask via API"
+	macro createSubtaskAPI {
+		Variables.assertDefined(parameterList = "${subtaskName},${taskId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(subtaskNumber))) {
+			var subtaskNumber = "";
+		}
+
+		if (!(isSet(score))) {
+			var score = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/subtasks \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name": "${subtaskName}",
+					"number": "${subtaskNumber}",
+					"score": "${score}",
+					"r_taskToSubtasks_c_taskId": "${taskId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
+
 }

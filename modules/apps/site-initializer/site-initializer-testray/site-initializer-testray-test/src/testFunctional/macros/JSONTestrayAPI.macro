@@ -197,4 +197,29 @@ definition {
 		return "${response}";
 	}
 
+	@summary = "create a Environment Factors via API"
+	macro createEnvironmentFactorsAPI {
+		Variables.assertDefined(parameterList = "${environmentFactorsName},${factorCategoryId},${factorOptionsId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/factors \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+                -d '{
+					"name": "${environmentFactorsName}",
+  					"r_factorCategoryToFactors_c_factorCategoryId": "${factorCategoryId}",
+  					"r_factorOptionToFactors_c_factorOptionId": "${factorOptionsId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
+
 }

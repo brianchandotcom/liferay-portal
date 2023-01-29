@@ -1,0 +1,52 @@
+definition {
+    @summary = "create a build via API"
+	macro createBuildAPI {
+		Variables.assertDefined(parameterList = "${buildName},${projectId},${routineId},${productVersionId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (!(isSet(template))) {
+			var template = "";
+		}
+
+		if (!(isSet(statusTemplate))) {
+			var statusTemplate = "";
+		}
+
+		if (!(isSet(gitHash))) {
+			var gitHash = "";
+		}
+
+		if (!(isSet(buildPromoted))) {
+			var buildPromoted = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/builds \
+				-u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"description": "${description}",
+					"template": "${template}",
+					"active": "${statusTemplate}",
+					"name": "${buildName}",
+					"gitHash": "${gitHash}",
+					"promoted": "${buildPromoted}",
+					"r_projectToBuilds_c_projectId": "${projectId}",
+					"r_routineToBuilds_c_routineId": "${routineId}",
+					"r_productVersionToBuilds_c_productVersionId": "${productVersionId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post("${curl}", "$.id");
+
+		echo("${response}");
+
+		return "${response}";
+	}
+}

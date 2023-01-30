@@ -12,7 +12,7 @@
  * details.
  */
 
-import uuidv1 from 'uuid/v1';
+import {v4 as uuidv4} from 'uuid';
 
 import fetch from './../util/fetch.es';
 import isObject from './../util/is_object';
@@ -655,7 +655,7 @@ class PortletInit {
 			}
 		}
 
-		const handle = uuidv1();
+		const handle = uuidv4();
 
 		const listener = {
 			handle,

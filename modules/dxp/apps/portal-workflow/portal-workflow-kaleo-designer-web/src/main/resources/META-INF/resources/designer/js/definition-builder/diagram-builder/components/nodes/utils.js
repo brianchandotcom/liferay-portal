@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import uuidv4 from 'uuid/v4';
+import {v4 as uuidv4} from 'uuid';
 
 import {defaultLanguageId} from '../../../constants';
 import ConditionNode from './ConditionNode';

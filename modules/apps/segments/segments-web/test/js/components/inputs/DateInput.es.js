@@ -13,7 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import dateFns from 'date-fns';
+import {format} from 'date-fns';
 import React from 'react';
 
 import DateInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/DateInput.es';
@@ -68,7 +68,7 @@ describe('DateInput', () => {
 
 		const element = getByTestId(DATE_INPUT_TESTID);
 
-		const date = dateFns.format(new Date(), 'YYYY-MM-DD');
+		const date = format(new Date(), 'yyyy-MM-dd');
 
 		testControlledDateInput({
 			element,

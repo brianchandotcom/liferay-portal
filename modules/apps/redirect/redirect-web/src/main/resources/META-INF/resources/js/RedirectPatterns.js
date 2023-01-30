@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import uuidv4 from 'uuid/v4';
+import {v4 as uuidv4} from 'uuid';
 
 import '../css/redirect_pattern.scss';
 

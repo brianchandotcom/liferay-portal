@@ -32,6 +32,9 @@ module.exports = {
 					'@liferay/address-web': {
 						'/': '*',
 					},
+					'@liferay/amd-loader': {
+						'/': '*',
+					},
 					'@liferay/content-dashboard-web': {
 						'/': '*',
 					},
@@ -59,6 +62,27 @@ module.exports = {
 					'@liferay/frontend-js-a11y-web': {
 						'/': '*',
 					},
+
+					'@liferay/frontend-js-dependencies-web': {
+						'/': '*',
+
+						'clipboard': '*',
+
+						'dagre': '*',
+						'date-fns': '*',
+						'dom-align': '*',
+						'fuzzy': '*',
+						'image-promise': '*',
+						'liferay-ckeditor': '*',
+						'qrcode': '*',
+						'qs': '*',
+						'react-text-mask': '*',
+						'react-transition-group': '*',
+						'text-mask-addons': '*',
+						'text-mask-core': '*',
+						'uuid': '*',
+					},
+
 					'@liferay/frontend-js-react-web': {
 						'/': '*',
 						'classnames': '*',
@@ -90,7 +114,14 @@ module.exports = {
 					'@liferay/map-openstreetmap': {
 						'/': '*',
 					},
+					'@liferay/multi-factor-authentication-fido2-web': {
+						'/': '*',
+						'base64-js': '*',
+					},
 					'@liferay/object-js-components-web': {
+						'/': '*',
+					},
+					'@liferay/template-web': {
 						'/': '*',
 					},
 					'asset-taglib': {
@@ -117,8 +148,13 @@ module.exports = {
 					'dynamic-data-mapping-form-web': {
 						'/': '*',
 					},
+					'frontend-editor-alloyeditor-web': {
+						'/': '*',
+						'alloyeditor': '*',
+					},
 					'frontend-editor-ckeditor-web': {
 						'/': '*',
+						'ckeditor4-react': '*',
 					},
 					'frontend-js-components-web': {
 						'/': '*',
@@ -163,17 +199,18 @@ module.exports = {
 						'xss-filters': '*',
 					},
 					'frontend-js-node-shims': {
-						assert: '*',
-						buffer: '*',
-						domain: '*',
-						events: '*',
-						os: '*',
-						path: '*',
-						process: '*',
-						string_decoder: '*',
-						timers: '*',
-						url: '*',
-						util: '*',
+						'assert': '*',
+						'buffer': '*',
+						'domain': '*',
+						'domain-browser': '*',
+						'events': '*',
+						'os': '*',
+						'path': '*',
+						'process': '*',
+						'string_decoder': '*',
+						'timers': '*',
+						'url': '*',
+						'util': '*',
 					},
 					'frontend-js-recharts': {
 						recharts: '*',
@@ -380,7 +417,9 @@ module.exports = {
 				'chalk': true,
 				'commander': true,
 				'electron-to-chromium': true,
+				'html-webpack-plugin': true,
 				'lodash': true,
+				'mini-css-extract-plugin': true,
 				'regenerate-unicode-properties': true,
 				'regenerator-transform': true,
 				'regexp-tree': true,
@@ -399,6 +438,22 @@ module.exports = {
 			'dynamic-data-mapping-form-renderer',
 		],
 		imports: {
+			'@liferay/frontend-js-dependencies-web': [
+				'clipboard',
+				'dagre',
+				'date-fns',
+				'dom-align',
+				'fuzzy',
+				'image-promise',
+				'liferay-ckeditor',
+				'qrcode',
+				'qs',
+				'react-text-mask',
+				'react-transition-group',
+				'text-mask-addons',
+				'text-mask-core',
+				'uuid',
+			],
 			'@liferay/frontend-js-react-web': [
 				'classnames',
 				'formik',

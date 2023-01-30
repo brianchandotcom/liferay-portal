@@ -15,7 +15,7 @@
 import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import dateFns from 'date-fns';
+import {parse} from 'date-fns';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -23,8 +23,6 @@ import {PROPERTY_TYPES} from '../../utils/constants.es';
 import {propertyGroupShape} from '../../utils/types.es';
 import {jsDatetoYYYYMMDD} from '../../utils/utils.es';
 import CriteriaSidebarItem from './CriteriaSidebarItem.es';
-
-const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
 
 /**
  * Returns a default value for a property provided.
@@ -45,9 +43,11 @@ function getDefaultValue(property) {
 	else if (type === PROPERTY_TYPES.DATE_TIME) {
 		const simpleDate = jsDatetoYYYYMMDD(new Date());
 
-		defaultValue = dateFns
-			.parse(simpleDate, INPUT_DATE_FORMAT)
-			.toISOString();
+		defaultValue = parse(
+			simpleDate,
+			'yyyy-MM-dd',
+			new Date()
+		).toISOString();
 	}
 	else if (type === PROPERTY_TYPES.BOOLEAN) {
 		defaultValue = 'true';

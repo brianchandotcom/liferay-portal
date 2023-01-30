@@ -9,9 +9,6 @@
  * distribution rights of the Software.
  */
 
-import 'custom-event-polyfill';
-
-import 'dom4';
 import React from 'react';
 
 import App from './components/App.es';

@@ -12,13 +12,13 @@
  * details.
  */
 
-import dateFns from 'date-fns';
+import {format, isValid, parse, parseISO} from 'date-fns';
 import propTypes from 'prop-types';
 import React from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 
-const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
+const INPUT_DATE_FORMAT = 'yyyy-MM-dd';
 
 class DateTimeInput extends React.Component {
 	static propTypes = {
@@ -36,7 +36,7 @@ class DateTimeInput extends React.Component {
 		if (props.value !== state.initialValue) {
 			returnVal = {
 				initialValue: props.value,
-				value: dateFns.format(new Date(props.value), INPUT_DATE_FORMAT),
+				value: format(new Date(props.value), INPUT_DATE_FORMAT),
 			};
 		}
 
@@ -50,9 +50,11 @@ class DateTimeInput extends React.Component {
 	};
 
 	_handleDateBlur = (event) => {
-		const date = dateFns.format(event.target.value, INPUT_DATE_FORMAT);
+		const dateObj = parseISO(event.target.value);
 
-		if (date !== 'Invalid Date') {
+		if (isValid(dateObj)) {
+			const date = format(dateObj, INPUT_DATE_FORMAT);
+
 			this.setState(
 				{
 					value: date,
@@ -60,15 +62,17 @@ class DateTimeInput extends React.Component {
 				() => {
 					this.props.onChange({
 						type: PROPERTY_TYPES.DATE_TIME,
-						value: dateFns
-							.parse(date, INPUT_DATE_FORMAT)
-							.toISOString(),
+						value: parse(
+							date,
+							INPUT_DATE_FORMAT,
+							new Date()
+						).toISOString(),
 					});
 				}
 			);
 		}
 		else {
-			const resetDate = dateFns.format(new Date(), INPUT_DATE_FORMAT);
+			const resetDate = format(new Date(), INPUT_DATE_FORMAT);
 
 			this.setState(
 				{
@@ -77,9 +81,11 @@ class DateTimeInput extends React.Component {
 				() => {
 					this.props.onChange({
 						type: PROPERTY_TYPES.DATE_TIME,
-						value: dateFns
-							.parse(resetDate, INPUT_DATE_FORMAT)
-							.toISOString(),
+						value: parse(
+							resetDate,
+							INPUT_DATE_FORMAT,
+							new Date()
+						).toISOString(),
 					});
 				}
 			);

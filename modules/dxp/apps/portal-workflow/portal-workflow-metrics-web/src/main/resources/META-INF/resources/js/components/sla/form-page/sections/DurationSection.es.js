@@ -13,7 +13,7 @@ import {ClaySelect} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React, {useCallback, useContext} from 'react';
 import MaskedInput from 'react-text-mask';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import {createNumberMask} from 'text-mask-addons';
 
 import FieldLabel from '../../../../shared/components/form/FieldLabel.es';
 import FormGroupWithStatus from '../../../../shared/components/form/FormGroupWithStatus.es';

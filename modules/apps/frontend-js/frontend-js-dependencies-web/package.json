@@ -1,0 +1,25 @@
+{
+	"dependencies": {
+		"clipboard": "2.0.4",
+		"dagre": "0.8.2",
+		"date-fns": "2.14.0",
+		"dom-align": "1.12.2",
+		"fuzzy": "0.1.3",
+		"image-promise": "5.0.1",
+		"qrcode": "1.4.4",
+		"qs": "6.9.6",
+		"react-text-mask": "5.4.3",
+		"react-transition-group": "4.4.1",
+		"text-mask-addons": "3.8.0",
+		"text-mask-core": "5.1.2",
+		"uuid": "9.0.0"
+	},
+	"name": "@liferay/frontend-js-dependencies-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

@@ -13,7 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import dateFns from 'date-fns';
+import {format, parse} from 'date-fns';
 import React from 'react';
 
 import DateTimeInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/DateTimeInput.es';
@@ -70,14 +70,18 @@ describe('DateTimeInput', () => {
 
 		const element = getByTestId(DATE_INPUT_TESTID);
 
-		const date = dateFns.format(new Date(), 'YYYY-MM-DD');
+		const date = format(new Date(), 'yyyy-MM-dd');
 
 		testControlledDateInput({
 			element,
 			mockOnChangeFunc: mockOnChange,
 			newValue: '2019-01-XX',
 			newValueExpected: date,
-			newValueOnChange: dateFns.parse(date, 'YYYY-MM-DD').toISOString(),
+			newValueOnChange: parse(
+				date,
+				'yyyy-MM-dd',
+				new Date()
+			).toISOString(),
 			value: defaultValue,
 		});
 	});

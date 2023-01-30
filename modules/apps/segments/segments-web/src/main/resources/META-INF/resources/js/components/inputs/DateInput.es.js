@@ -12,6 +12,7 @@
  * details.
  */
 
+import {isValid, parseISO} from 'date-fns';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -48,9 +49,11 @@ class DateInput extends React.Component {
 	};
 
 	_handleDateBlur = (event) => {
-		const date = jsDatetoYYYYMMDD(event.target.value);
+		const dateObj = parseISO(event.target.value);
 
-		if (date !== 'Invalid Date') {
+		if (isValid(dateObj)) {
+			const date = jsDatetoYYYYMMDD(dateObj);
+
 			this.setState({value: date}, () => {
 				this.props.onChange({
 					type: PROPERTY_TYPES.DATE,

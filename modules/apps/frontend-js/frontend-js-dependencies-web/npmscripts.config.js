@@ -13,18 +13,25 @@
  */
 
 module.exports = {
-	bridges: [
-		'lodash.escape',
-		'lodash.groupby',
-		'lodash.isequal',
-		'lodash.unescape',
-		'svg4everybody',
-	],
 	build: {
-		customBridges: {
-			'bridge/frontend-js-web/index':
-				'../../../../../frontend-js-web/__liferay__/index.js',
-		},
-		main: 'src/main/resources/META-INF/resources/index.es.js',
+		exports: [
+			'date-fns',
+			'qrcode',
+			'react-transition-group',
+			'uuid',
+			{name: 'clipboard', symbols: 'auto'},
+			{name: 'dagre', symbols: 'auto'},
+			{
+				format: 'esm',
+				name: 'dom-align',
+				symbols: ['alignElement', 'alignPoint'],
+			},
+			{name: 'fuzzy', symbols: 'auto'},
+			{name: 'image-promise', symbols: 'auto'},
+			{name: 'qs', symbols: 'auto'},
+			{name: 'react-text-mask', symbols: 'auto'},
+			{name: 'text-mask-addons', symbols: 'auto'},
+			{name: 'text-mask-core', symbols: 'auto'},
+		],
 	},
 };

@@ -11,7 +11,6 @@
 
 import ClayChart from '@clayui/charts';
 import React, {useCallback, useRef} from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
 
 export default function ChartWrapper({data, loading}) {
 	const chartRef = useRef();

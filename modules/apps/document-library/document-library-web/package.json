@@ -4,7 +4,7 @@
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",
-		"uuid": "^3.3.2"
+		"uuid": "9.0.0"
 	},
 	"main": "document_library/js/index.js",
 	"name": "@liferay/document-library-web",

@@ -1425,7 +1425,7 @@ definition {
 
 			Click(locator1 = "ACSegments#SELECT_BUTTON");
 
-			ACSegments.searchSegment(findSegment = "Blogs AC Title - Site Name - Liferay DXP");
+			ACSegments.searchSegment(findSegment = "Blogs AC Title - Site Name - ${dataSourceName}");
 
 			ACUtils.viewGenericText(textValueList = "${dataSourceName}");
 		}

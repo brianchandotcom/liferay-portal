@@ -88,7 +88,7 @@ public class CompanyFeatureFlagsFactory {
 			for (Map.Entry<String, FeatureFlag> entry :
 					featureFlagsMap.entrySet()) {
 
-				List<FeatureFlag> dependencies = new ArrayList<>();
+				List<FeatureFlag> dependencyFeatureFlags = new ArrayList<>();
 
 				FeatureFlag featureFlag = entry.getValue();
 
@@ -109,7 +109,7 @@ public class CompanyFeatureFlagsFactory {
 								dependencyFeatureFlag.getDependencies(),
 								featureFlag.getKey())) {
 
-							dependencies.add(dependencyFeatureFlag);
+							dependencyFeatureFlags.add(dependencyFeatureFlag);
 						}
 						else {
 							_log.error(
@@ -121,11 +121,12 @@ public class CompanyFeatureFlagsFactory {
 					}
 				}
 
-				if (ListUtil.isNotEmpty(dependencies)) {
+				if (ListUtil.isNotEmpty(dependencyFeatureFlags)) {
 					entry.setValue(
 						new DependencyAwareFeatureFlag(
 							featureFlag,
-							dependencies.toArray(new FeatureFlag[0])));
+							dependencyFeatureFlags.toArray(
+								new FeatureFlag[0])));
 				}
 			}
 

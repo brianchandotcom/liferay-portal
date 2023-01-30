@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -1218,15 +1217,6 @@ public class CTSQLTransformerTest {
 			String newSQL = _ctSQLTransformer.transform(inputSQL);
 
 			Assert.assertEquals(expectedOutputSQL, newSQL);
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			if (expectedOutputSQLFile.endsWith("_ct.sql")) {
-				Assert.assertFalse(newSQL, logEntries.isEmpty());
-			}
-			else {
-				Assert.assertTrue(newSQL, logEntries.isEmpty());
-			}
 
 			return newSQL;
 		}

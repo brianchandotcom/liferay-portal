@@ -55,11 +55,12 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 				<portlet:param name="scopeId" value="<%= assetPublisherHelper.getScopeId(group, scopeGroupId) %>" />
 			</liferay-portlet:actionURL>
 
-			<liferay-ui:icon
+			<clay:link
+				aria-label='<%= LanguageUtil.get(request, "delete") %>'
+				cssClass="lfr-portal-tooltip"
+				href="<%= deleteURL %>"
 				icon="times-circle"
-				markupView="lexicon"
-				message="delete"
-				url="<%= deleteURL %>"
+				title='<%= LanguageUtil.get(request, "delete") %>'
 			/>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

@@ -144,10 +144,6 @@ public class GroupSelectorDisplayContext {
 	}
 
 	private String _getEmptyResultsMessage() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		GroupItemSelectorProvider groupItemSelectorProvider =
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
 				_getGroupType());
@@ -155,6 +151,10 @@ public class GroupSelectorDisplayContext {
 		if (groupItemSelectorProvider == null) {
 			return GroupSearch.EMPTY_RESULTS_MESSAGE;
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String emptyResultsMessage =
 			groupItemSelectorProvider.getEmptyResultsMessage(

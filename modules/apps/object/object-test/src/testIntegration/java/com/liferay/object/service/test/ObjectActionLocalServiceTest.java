@@ -699,8 +699,6 @@ public class ObjectActionLocalServiceTest {
 
 		Map<String, Object> inputObjects = (Map<String, Object>)arguments[0];
 
-		inputObjects = (Map<String, Object>)inputObjects.get("objectEntry");
-
 		Assert.assertEquals(
 			objectEntry.getExternalReferenceCode(),
 			inputObjects.get("externalReferenceCode"));

@@ -831,12 +831,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		long companyId = user.getCompanyId();
+
 		name = _getName(name, system);
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
 		dbTableName = _getDBTableName(
-			dbTableName, name, system, user.getCompanyId(), shortName);
+			dbTableName, name, system, companyId, shortName);
 
 		pkObjectFieldName = _getPKObjectFieldName(
 			pkObjectFieldName, system, shortName);
@@ -850,7 +852,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateEnableComments(enableComments, storageType, system);
 
 		_validateLabel(labelMap);
-		_validateName(0, user.getCompanyId(), name, system);
+		_validateName(0, companyId, name, system);
 		_validatePluralLabel(pluralLabelMap);
 		_validateScope(scope);
 		_validateVersion(system, version);
@@ -858,14 +860,15 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
 			counterLocalService.increment());
 
-		objectDefinition.setCompanyId(user.getCompanyId());
+		objectDefinition.setCompanyId(companyId);
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setActive(system);
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(
-				objectDefinition.getObjectDefinitionId(), className, system));
+				objectDefinition.getObjectDefinitionId(), companyId, className,
+				system));
 		objectDefinition.setEnableCategorization(
 			!system &&
 			StringUtil.equals(
@@ -1035,13 +1038,15 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private String _getClassName(
-		long objectDefinitionId, String className, boolean system) {
+		long objectDefinitionId, long companyId, String className,
+		boolean system) {
 
 		if (system) {
-			return className;
+			return className + StringPool.POUND + companyId;
 		}
 
-		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
+		return ObjectDefinition.class.getName() + StringPool.POUND +
+			objectDefinitionId;
 	}
 
 	private String _getDBTableName(
@@ -1221,6 +1226,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setClassName(
 			_getClassName(
 				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getCompanyId(),
 				objectDefinition.getClassName(), objectDefinition.isSystem()));
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);

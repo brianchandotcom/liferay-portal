@@ -26,8 +26,8 @@ public interface LayoutsTree {
 	public JSONArray getLayoutsJSONArray(
 			long[] expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
-			boolean incomplete, long parentLayoutId, boolean privateLayout,
-			String treeId)
+			boolean incomplete, boolean loadMore, long parentLayoutId,
+			boolean privateLayout, String treeId)
 		throws Exception;
 
 }

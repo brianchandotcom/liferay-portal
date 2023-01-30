@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.ArrayList;
@@ -75,13 +74,13 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	public JSONArray getLayoutsJSONArray(
 			long[] expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
-			boolean incomplete, long parentLayoutId, boolean privateLayout,
-			String treeId)
+			boolean incomplete, boolean loadMore, long parentLayoutId,
+			boolean privateLayout, String treeId)
 		throws Exception {
 
 		LayoutTreeNodes layoutTreeNodes = _getLayoutTreeNodes(
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
-			incomplete, expandedLayoutIds, treeId, false);
+			incomplete, loadMore, expandedLayoutIds, treeId, false);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -151,7 +150,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private LayoutTreeNodes _getLayoutTreeNodes(
 			HttpServletRequest httpServletRequest, long groupId,
 			boolean privateLayout, long parentLayoutId, boolean incomplete,
-			long[] expandedLayoutIds, String treeId, boolean childLayout)
+			boolean loadMore, long[] expandedLayoutIds, String treeId,
+			boolean childLayout)
 		throws Exception {
 
 		int count = _layoutService.getLayoutsCount(
@@ -167,7 +167,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		List<Layout> layouts = _getPaginatedLayouts(
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
-			incomplete, treeId, childLayout, count,
+			loadMore, incomplete, treeId, childLayout, count,
 			_layoutLocalService.getLayoutsCount(
 				_groupLocalService.getGroup(groupId), privateLayout,
 				parentLayoutId));
@@ -186,14 +186,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					childLayoutTreeNodes = _getLayoutTreeNodes(
 						httpServletRequest, virtualLayout.getSourceGroupId(),
 						virtualLayout.isPrivateLayout(),
-						virtualLayout.getLayoutId(), incomplete,
+						virtualLayout.getLayoutId(), incomplete, loadMore,
 						expandedLayoutIds, treeId, true);
 				}
 				else {
 					childLayoutTreeNodes = _getLayoutTreeNodes(
 						httpServletRequest, groupId, layout.isPrivateLayout(),
-						layout.getLayoutId(), incomplete, expandedLayoutIds,
-						treeId, true);
+						layout.getLayoutId(), incomplete, loadMore,
+						expandedLayoutIds, treeId, true);
 				}
 			}
 			else {
@@ -232,8 +232,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private List<Layout> _getPaginatedLayouts(
 			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId, boolean incomplete,
-			String treeId, boolean childLayout, int count, int totalCount)
+			boolean privateLayout, long parentLayoutId, boolean loadMore,
+			boolean incomplete, String treeId, boolean childLayout, int count,
+			int totalCount)
 		throws Exception {
 
 		if (!_isPaginationEnabled(httpServletRequest)) {
@@ -258,12 +259,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			end = loadedLayoutsCount;
 		}
 
-		long loadMoreParentLayoutId = GetterUtil.getLong(
-			httpServletRequest.getAttribute(
-				ProductNavigationProductMenuWebKeys.LOAD_MORE_PARENT_LAYOUT_ID),
-			-1);
-
-		if (loadMoreParentLayoutId == parentLayoutId) {
+		if (loadMore) {
 			String key = StringBundler.concat(
 				treeId, StringPool.COLON, groupId, StringPool.COLON,
 				privateLayout, ":Pagination");

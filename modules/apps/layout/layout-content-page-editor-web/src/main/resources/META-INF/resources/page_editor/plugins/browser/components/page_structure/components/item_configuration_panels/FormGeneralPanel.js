@@ -32,7 +32,6 @@ import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditable
 import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
-import {PermissionRestrictionMessage} from '../../../../../../common/components/PermissionRestrictionMessage';
 import useControlledState from '../../../../../../common/hooks/useControlledState';
 import {useId} from '../../../../../../common/hooks/useId';
 import {CommonStyles} from './CommonStyles';
@@ -67,7 +66,13 @@ export function FormGeneralPanel({item}) {
 			);
 		}
 		else if (formIsRestricted(item)) {
-			return <PermissionRestrictionMessage />;
+			return (
+				<ClayAlert displayType="secondary">
+					{Liferay.Language.get(
+						'this-content-cannot-be-displayed-due-to-permission-restrictions'
+					)}
+				</ClayAlert>
+			);
 		}
 	}
 

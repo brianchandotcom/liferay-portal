@@ -17,7 +17,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback} from 'react';
 
-import {PermissionRestrictionMessage} from '../../../common/components/PermissionRestrictionMessage';
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
 import {
 	useDispatch,
@@ -78,7 +77,13 @@ function Form({children, item}) {
 			);
 		}
 		else if (formIsRestricted(item)) {
-			return <PermissionRestrictionMessage />;
+			return (
+				<ClayAlert displayType="secondary">
+					{Liferay.Language.get(
+						'this-content-cannot-be-displayed-due-to-permission-restrictions'
+					)}
+				</ClayAlert>
+			);
 		}
 	}
 

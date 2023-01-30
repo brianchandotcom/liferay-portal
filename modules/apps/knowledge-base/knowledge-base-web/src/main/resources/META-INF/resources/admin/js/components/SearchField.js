@@ -16,6 +16,8 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
+import ClayList from '@clayui/list';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -28,20 +30,26 @@ const SEARCH_DELTA = 2;
 
 const SearchResult = ({filteredItems, keyword}) => {
 	return filteredItems.length ? (
-		<ul className="list-group">
+		<ClayList role="list">
 			{filteredItems.map((item) => {
 				return (
-					<li className="list-group-item" key={item.id}>
-						<ClayIcon
-							className="mr-2"
-							symbol={ITEM_TYPES_SYMBOL[item.type]}
-						/>
+					<ClayList.ItemField expand key={item.id}>
+						<ClayLink
+							className="p-1"
+							displayType="secondary"
+							href={item.href}
+						>
+							<ClayIcon
+								className="mr-2"
+								symbol={ITEM_TYPES_SYMBOL[item.type]}
+							/>
 
-						{item.name}
-					</li>
+							{item.name}
+						</ClayLink>
+					</ClayList.ItemField>
 				);
 			})}
-		</ul>
+		</ClayList>
 	) : (
 		<ClayEmptyState
 			description={sub(

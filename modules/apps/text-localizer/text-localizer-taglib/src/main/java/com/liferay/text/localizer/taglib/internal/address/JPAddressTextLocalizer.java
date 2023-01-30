@@ -48,8 +48,6 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 
 		boolean hasCity = Validator.isNotNull(city);
 
-		String regionName = AddressUtil.getRegionName(address);
-
 		String zip = escapedAddress.getZip();
 
 		boolean hasZip = Validator.isNotNull(zip);
@@ -57,6 +55,8 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 		if (hasZip) {
 			sb.append(zip);
 		}
+
+		String regionName = AddressUtil.getRegionName(address);
 
 		if (regionName != null) {
 			if (hasZip) {

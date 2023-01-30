@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.verify.VerifyException;
@@ -35,6 +36,7 @@ import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +47,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -62,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=help", "osgi.command.function=list",
 		"osgi.command.function=show", "osgi.command.scope=verify"
 	},
-	service = VerifyProcessTrackerOSGiCommands.class
+	service = {}
 )
 public class VerifyProcessTrackerOSGiCommands {
 
@@ -207,10 +210,27 @@ public class VerifyProcessTrackerOSGiCommands {
 				}
 
 			});
+
+		Dictionary<String, Object> osgiCommandProperties =
+			new HashMapDictionary<>();
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.startsWith("osgi.command.")) {
+				osgiCommandProperties.put(key, entry.getValue());
+			}
+		}
+
+		_serviceRegistration = _bundleContext.registerService(
+			VerifyProcessTrackerOSGiCommands.class, this,
+			osgiCommandProperties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceRegistration.unregister();
+
 		_serviceTrackerMap.close();
 	}
 
@@ -337,6 +357,7 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Reference
 	private ReleaseLocalService _releaseLocalService;
 
+	private ServiceRegistration<?> _serviceRegistration;
 	private ServiceTrackerMap<String, List<VerifyProcess>> _serviceTrackerMap;
 
 }

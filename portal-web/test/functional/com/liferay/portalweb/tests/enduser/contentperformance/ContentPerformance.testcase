@@ -338,7 +338,9 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
 				value1 = "pt/web/test-site-name");
 
-			ContentPerformance.viewTotalViews(numberViews = "0");
+			AssertTextEquals(
+				locator1 = "ContentPerformance#LOCALE_BUTTON",
+				value1 = "pt-BR");
 		}
 	}
 

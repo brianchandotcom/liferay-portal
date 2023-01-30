@@ -15,9 +15,12 @@
 package com.liferay.osgi.util.configuration;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +36,20 @@ import org.osgi.framework.Constants;
  * @author Raymond Augé
  */
 public class ConfigurationFactoryUtil {
+
+	public static <E extends Throwable> void doTaskAsCompany(
+			CompanyLocalService companyLocalService,
+			Map<String, Object> properties, UnsafeConsumer<Long, E> task)
+		throws E {
+
+		long companyId = getCompanyId(companyLocalService, properties);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			task.accept(companyId);
+		}
+	}
 
 	public static long getCompanyId(
 			CompanyLocalService companyLocalService,

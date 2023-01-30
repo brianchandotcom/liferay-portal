@@ -12,13 +12,14 @@
  * details.
  */
 
-import {format, isValid, parse, parseISO} from 'date-fns';
+import ClayDatePicker from '@clayui/date-picker';
+import dateFns from 'date-fns';
 import propTypes from 'prop-types';
 import React from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 
-const INPUT_DATE_FORMAT = 'yyyy-MM-dd';
+const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
 
 class DateTimeInput extends React.Component {
 	static propTypes = {
@@ -35,80 +36,93 @@ class DateTimeInput extends React.Component {
 
 		if (props.value !== state.initialValue) {
 			returnVal = {
+				expanded: false,
 				initialValue: props.value,
-				value: format(new Date(props.value), INPUT_DATE_FORMAT),
+				value: dateFns.format(new Date(props.value), INPUT_DATE_FORMAT),
 			};
 		}
 
 		return returnVal;
 	}
 
-	_handleDateChange = (event) => {
-		const value = event.target.value;
-
+	_handleDateChange = (value) => {
 		this.setState({value});
 	};
 
-	_handleDateBlur = (event) => {
-		const dateObj = parseISO(event.target.value);
+	_handleExpandedChange = (expandedState) => {
+		this.setState({expanded: expandedState});
 
-		if (isValid(dateObj)) {
-			const date = format(dateObj, INPUT_DATE_FORMAT);
+		if (expandedState === false) {
+			const date = dateFns.format(this.state.value, INPUT_DATE_FORMAT);
 
-			this.setState(
-				{
-					value: event.target.value,
-				},
-				() => {
-					this.props.onChange({
-						type: PROPERTY_TYPES.DATE_TIME,
-						value: parse(
-							date,
-							INPUT_DATE_FORMAT,
-							new Date()
-						).toISOString(),
-					});
-				}
-			);
-		}
-		else {
-			const resetDate = format(new Date(), INPUT_DATE_FORMAT);
+			if (date !== 'Invalid Date') {
+				this.setState(
+					{
+						value: date,
+					},
+					() => {
+						this.props.onChange({
+							type: PROPERTY_TYPES.DATE_TIME,
+							value: dateFns
+								.parse(date, INPUT_DATE_FORMAT)
+								.toISOString(),
+						});
+					}
+				);
+			}
+			else {
+				const resetDate = dateFns.format(new Date(), INPUT_DATE_FORMAT);
 
-			this.setState(
-				{
-					value: resetDate,
-				},
-				() => {
-					this.props.onChange({
-						type: PROPERTY_TYPES.DATE_TIME,
-						value: parse(
-							resetDate,
-							INPUT_DATE_FORMAT,
-							new Date()
-						).toISOString(),
-					});
-				}
-			);
+				this.setState(
+					{
+						value: resetDate,
+					},
+					() => {
+						this.props.onChange({
+							type: PROPERTY_TYPES.DATE_TIME,
+							value: dateFns
+								.parse(resetDate, INPUT_DATE_FORMAT)
+								.toISOString(),
+						});
+					}
+				);
+			}
 		}
 	};
 
 	render() {
-		const {value} = this.state;
+		const {expanded, value} = this.state;
 		const {disabled, propertyLabel} = this.props;
 
 		return (
 			<div className="criterion-input date-input">
-				<input
+				<ClayDatePicker
 					aria-label={`${propertyLabel}: ${Liferay.Language.get(
 						'select-date'
 					)}`}
-					className="form-control"
-					data-testid="date-input"
 					disabled={disabled}
-					onBlur={this._handleDateBlur}
+					expanded={expanded}
+					months={[
+						`${Liferay.Language.get('january')}`,
+						`${Liferay.Language.get('february')}`,
+						`${Liferay.Language.get('march')}`,
+						`${Liferay.Language.get('april')}`,
+						`${Liferay.Language.get('may')}`,
+						`${Liferay.Language.get('june')}`,
+						`${Liferay.Language.get('july')}`,
+						`${Liferay.Language.get('august')}`,
+						`${Liferay.Language.get('september')}`,
+						`${Liferay.Language.get('october')}`,
+						`${Liferay.Language.get('november')}`,
+						`${Liferay.Language.get('december')}`,
+					]}
 					onChange={this._handleDateChange}
-					type="date"
+					onExpandedChange={this._handleExpandedChange}
 					value={value}
+					years={{
+						end: new Date().getFullYear(),
+						start: 1900
+					}}
 				/>
 			</div>
 		);

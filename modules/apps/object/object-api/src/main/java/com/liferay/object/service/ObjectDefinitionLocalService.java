@@ -254,6 +254,9 @@ public interface ObjectDefinitionLocalService
 		long companyId, String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinition fetchObjectDefinitionByClassName(String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectDefinition fetchObjectDefinitionByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
 

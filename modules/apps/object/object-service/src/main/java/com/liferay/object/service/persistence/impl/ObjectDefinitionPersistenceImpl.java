@@ -2981,6 +2981,248 @@ public class ObjectDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"objectDefinition.companyId = ?";
 
+	private FinderPath _finderPathFetchByClassName;
+	private FinderPath _finderPathCountByClassName;
+
+	/**
+	 * Returns the object definition where className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
+	 *
+	 * @param className the class name
+	 * @return the matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition findByClassName(String className)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition = fetchByClassName(className);
+
+		if (objectDefinition == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("className=");
+			sb.append(className);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectDefinitionException(sb.toString());
+		}
+
+		return objectDefinition;
+	}
+
+	/**
+	 * Returns the object definition where className = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param className the class name
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition fetchByClassName(String className) {
+		return fetchByClassName(className, true);
+	}
+
+	/**
+	 * Returns the object definition where className = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param className the class name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition fetchByClassName(
+		String className, boolean useFinderCache) {
+
+		className = Objects.toString(className, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {className};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByClassName, finderArgs, this);
+		}
+
+		if (result instanceof ObjectDefinition) {
+			ObjectDefinition objectDefinition = (ObjectDefinition)result;
+
+			if (!Objects.equals(className, objectDefinition.getClassName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
+
+			boolean bindClassName = false;
+
+			if (className.isEmpty()) {
+				sb.append(_FINDER_COLUMN_CLASSNAME_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				sb.append(_FINDER_COLUMN_CLASSNAME_CLASSNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindClassName) {
+					queryPos.add(className);
+				}
+
+				List<ObjectDefinition> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByClassName, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {className};
+							}
+
+							_log.warn(
+								"ObjectDefinitionPersistenceImpl.fetchByClassName(String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectDefinition objectDefinition = list.get(0);
+
+					result = objectDefinition;
+
+					cacheResult(objectDefinition);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectDefinition)result;
+		}
+	}
+
+	/**
+	 * Removes the object definition where className = &#63; from the database.
+	 *
+	 * @param className the class name
+	 * @return the object definition that was removed
+	 */
+	@Override
+	public ObjectDefinition removeByClassName(String className)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition = findByClassName(className);
+
+		return remove(objectDefinition);
+	}
+
+	/**
+	 * Returns the number of object definitions where className = &#63;.
+	 *
+	 * @param className the class name
+	 * @return the number of matching object definitions
+	 */
+	@Override
+	public int countByClassName(String className) {
+		className = Objects.toString(className, "");
+
+		FinderPath finderPath = _finderPathCountByClassName;
+
+		Object[] finderArgs = new Object[] {className};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
+
+			boolean bindClassName = false;
+
+			if (className.isEmpty()) {
+				sb.append(_FINDER_COLUMN_CLASSNAME_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				sb.append(_FINDER_COLUMN_CLASSNAME_CLASSNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindClassName) {
+					queryPos.add(className);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CLASSNAME_CLASSNAME_2 =
+		"objectDefinition.className = ?";
+
+	private static final String _FINDER_COLUMN_CLASSNAME_CLASSNAME_3 =
+		"(objectDefinition.className IS NULL OR objectDefinition.className = '')";
+
 	private FinderPath _finderPathWithPaginationFindBySystem;
 	private FinderPath _finderPathWithoutPaginationFindBySystem;
 	private FinderPath _finderPathCountBySystem;
@@ -7705,6 +7947,10 @@ public class ObjectDefinitionPersistenceImpl
 			objectDefinition);
 
 		finderCache.putResult(
+			_finderPathFetchByClassName,
+			new Object[] {objectDefinition.getClassName()}, objectDefinition);
+
+		finderCache.putResult(
 			_finderPathFetchByC_C,
 			new Object[] {
 				objectDefinition.getCompanyId(), objectDefinition.getClassName()
@@ -7800,7 +8046,14 @@ public class ObjectDefinitionPersistenceImpl
 	protected void cacheUniqueFindersCache(
 		ObjectDefinitionModelImpl objectDefinitionModelImpl) {
 
-		Object[] args = new Object[] {
+		Object[] args = new Object[] {objectDefinitionModelImpl.getClassName()};
+
+		finderCache.putResult(
+			_finderPathCountByClassName, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByClassName, args, objectDefinitionModelImpl);
+
+		args = new Object[] {
 			objectDefinitionModelImpl.getCompanyId(),
 			objectDefinitionModelImpl.getClassName()
 		};
@@ -8386,6 +8639,16 @@ public class ObjectDefinitionPersistenceImpl
 		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
+
+		_finderPathFetchByClassName = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByClassName",
+			new String[] {String.class.getName()}, new String[] {"className"},
+			true);
+
+		_finderPathCountByClassName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassName",
+			new String[] {String.class.getName()}, new String[] {"className"},
 			false);
 
 		_finderPathWithPaginationFindBySystem = new FinderPath(

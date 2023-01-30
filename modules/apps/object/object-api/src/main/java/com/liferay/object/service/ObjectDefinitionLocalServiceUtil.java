@@ -291,6 +291,12 @@ public class ObjectDefinitionLocalServiceUtil {
 			companyId, className);
 	}
 
+	public static ObjectDefinition fetchObjectDefinitionByClassName(
+		String className) {
+
+		return getService().fetchObjectDefinitionByClassName(className);
+	}
+
 	public static ObjectDefinition fetchObjectDefinitionByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

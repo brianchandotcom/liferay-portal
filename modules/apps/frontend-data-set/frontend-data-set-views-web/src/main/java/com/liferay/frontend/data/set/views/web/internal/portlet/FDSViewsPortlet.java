@@ -15,9 +15,16 @@
 package com.liferay.frontend.data.set.views.web.internal.portlet;
 
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
+import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys;
+import com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,4 +45,17 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class FDSViewsPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT,
+			new FDSViewsDisplayContext());
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 }

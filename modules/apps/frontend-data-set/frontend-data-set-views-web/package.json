@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"@liferay/frontend-data-set-web": "*",
+		"frontend-js-web": "*"
+	},
 	"name": "@liferay/frontend-data-set-views-web",
 	"private": true,
 	"scripts": {

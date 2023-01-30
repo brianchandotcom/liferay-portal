@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+/// <reference types="react" />
 
-<react:component
-	module="js/FDSViews"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"headlessResources", fdsViewsDisplayContext.getHeadlessResourcesJSONArray()
-		).put(
-			"namespace", liferayPortletResponse.getNamespace()
-		).build()
-	%>'
-/>
+declare type HeadlessResource = {
+	internalClassName: string;
+	label: string;
+};
+interface IFDSViewsProps {
+	headlessResources: Array<HeadlessResource>;
+	namespace: string;
+}
+declare const FDSViews: ({
+	headlessResources,
+	namespace,
+}: IFDSViewsProps) => JSX.Element;
+export default FDSViews;

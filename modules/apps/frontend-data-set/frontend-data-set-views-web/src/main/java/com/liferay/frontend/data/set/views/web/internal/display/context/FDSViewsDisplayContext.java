@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.frontend.data.set.views.web.internal.display.context;
 
-<react:component
-	module="js/FDSViews"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"headlessResources", fdsViewsDisplayContext.getHeadlessResourcesJSONArray()
-		).put(
-			"namespace", liferayPortletResponse.getNamespace()
-		).build()
-	%>'
-/>
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
+
+/**
+ * @author Marko Cikos
+ */
+public class FDSViewsDisplayContext {
+
+	public JSONArray getHeadlessResourcesJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"internalClassName", "sampleInternalClassName1"
+			).put(
+				"label", "Sample Provider 1"
+			),
+			JSONUtil.put(
+				"internalClassName", "sampleInternalClassName2"
+			).put(
+				"label", "Sample Provider 2"
+			));
+	}
+
+}

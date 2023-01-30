@@ -28,6 +28,22 @@ const ITEM_TYPES_SYMBOL = {
 
 const SEARCH_DELTA = 2;
 
+const highlithKeywordInText = (text, keyword) => {
+	const parts = text.split(new RegExp(`(${keyword})`, 'gi'));
+
+	return (
+		<span>
+			{parts.map((part) =>
+				part.toLowerCase() === keyword.toLowerCase() ? (
+					<b>{part}</b>
+				) : (
+					part
+				)
+			)}
+		</span>
+	);
+};
+
 const SearchResult = ({filteredItems, keyword}) => {
 	return filteredItems.length ? (
 		<ClayList role="list">
@@ -44,7 +60,7 @@ const SearchResult = ({filteredItems, keyword}) => {
 								symbol={ITEM_TYPES_SYMBOL[item.type]}
 							/>
 
-							{item.name}
+							{highlithKeywordInText(item.name, keyword)}
 						</ClayLink>
 					</ClayList.ItemField>
 				);

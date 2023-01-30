@@ -330,6 +330,149 @@ public interface CSDiagramEntryPersistence
 	public int countByCPInstanceId(long CPInstanceId);
 
 	/**
+	 * Returns all the cs diagram entries where CProductId = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @return the matching cs diagram entries
+	 */
+	public java.util.List<CSDiagramEntry> findByCProductId(long CProductId);
+
+	/**
+	 * Returns a range of all the cs diagram entries where CProductId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CProductId the c product ID
+	 * @param start the lower bound of the range of cs diagram entries
+	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
+	 * @return the range of matching cs diagram entries
+	 */
+	public java.util.List<CSDiagramEntry> findByCProductId(
+		long CProductId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cs diagram entries where CProductId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CProductId the c product ID
+	 * @param start the lower bound of the range of cs diagram entries
+	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cs diagram entries
+	 */
+	public java.util.List<CSDiagramEntry> findByCProductId(
+		long CProductId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cs diagram entries where CProductId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CProductId the c product ID
+	 * @param start the lower bound of the range of cs diagram entries
+	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cs diagram entries
+	 */
+	public java.util.List<CSDiagramEntry> findByCProductId(
+		long CProductId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cs diagram entry in the ordered set where CProductId = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cs diagram entry
+	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
+	 */
+	public CSDiagramEntry findByCProductId_First(
+			long CProductId,
+			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+				orderByComparator)
+		throws NoSuchCSDiagramEntryException;
+
+	/**
+	 * Returns the first cs diagram entry in the ordered set where CProductId = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
+	 */
+	public CSDiagramEntry fetchByCProductId_First(
+		long CProductId,
+		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cs diagram entry
+	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
+	 */
+	public CSDiagramEntry findByCProductId_Last(
+			long CProductId,
+			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+				orderByComparator)
+		throws NoSuchCSDiagramEntryException;
+
+	/**
+	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
+	 */
+	public CSDiagramEntry fetchByCProductId_Last(
+		long CProductId,
+		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CProductId = &#63;.
+	 *
+	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
+	 * @param CProductId the c product ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cs diagram entry
+	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
+	 */
+	public CSDiagramEntry[] findByCProductId_PrevAndNext(
+			long CSDiagramEntryId, long CProductId,
+			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+				orderByComparator)
+		throws NoSuchCSDiagramEntryException;
+
+	/**
+	 * Removes all the cs diagram entries where CProductId = &#63; from the database.
+	 *
+	 * @param CProductId the c product ID
+	 */
+	public void removeByCProductId(long CProductId);
+
+	/**
+	 * Returns the number of cs diagram entries where CProductId = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @return the number of matching cs diagram entries
+	 */
+	public int countByCProductId(long CProductId);
+
+	/**
 	 * Returns the cs diagram entry where CPDefinitionId = &#63; and sequence = &#63; or throws a <code>NoSuchCSDiagramEntryException</code> if it could not be found.
 	 *
 	 * @param CPDefinitionId the cp definition ID

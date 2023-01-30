@@ -135,7 +135,13 @@ public class CSDiagramEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SEQUENCE_COLUMN_BITMASK = 4L;
+	public static final long CPRODUCTID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long SEQUENCE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -534,6 +540,16 @@ public class CSDiagramEntryModelImpl
 		}
 
 		_CProductId = CProductId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCProductId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON

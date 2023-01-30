@@ -73,6 +73,25 @@ public class CSDiagramEntryServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CSDiagramEntry> getCProductCSDiagramEntries(
+			long cProductId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _csDiagramEntryService.getCProductCSDiagramEntries(
+			cProductId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCProductCSDiagramEntriesCount(long cProductId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _csDiagramEntryService.getCProductCSDiagramEntriesCount(
+			cProductId);
+	}
+
+	@Override
 	public java.util.List<CSDiagramEntry> getCSDiagramEntries(
 			long cpDefinitionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

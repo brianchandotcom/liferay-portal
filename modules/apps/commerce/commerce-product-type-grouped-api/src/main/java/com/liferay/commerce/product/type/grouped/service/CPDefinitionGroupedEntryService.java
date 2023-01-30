@@ -82,6 +82,18 @@ public interface CPDefinitionGroupedEntryService extends BaseService {
 			long cpDefinitionGroupedEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionGroupedEntry>
+			getEntryCProductCPDefinitionGroupedEntries(
+				long entryCProductId, int start, int end,
+				OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntryCProductCPDefinitionGroupedEntriesCount(
+			long entryCProductId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

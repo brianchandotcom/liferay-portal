@@ -244,6 +244,13 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByEntryCProductId() throws Exception {
+		_persistence.countByEntryCProductId(RandomTestUtil.nextLong());
+
+		_persistence.countByEntryCProductId(0L);
+	}
+
+	@Test
 	public void testCountByC_E() throws Exception {
 		_persistence.countByC_E(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

@@ -217,6 +217,13 @@ public class CSDiagramEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCProductId() throws Exception {
+		_persistence.countByCProductId(RandomTestUtil.nextLong());
+
+		_persistence.countByCProductId(0L);
+	}
+
+	@Test
 	public void testCountByCPDI_S() throws Exception {
 		_persistence.countByCPDI_S(RandomTestUtil.nextLong(), "");
 

@@ -215,6 +215,95 @@ public class CSDiagramEntryServiceHttp {
 
 	public static java.util.List
 		<com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry>
+				getCProductCSDiagramEntries(
+					HttpPrincipal httpPrincipal, long cProductId, int start,
+					int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.shop.by.diagram.model.
+							CSDiagramEntry> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CSDiagramEntryServiceUtil.class, "getCProductCSDiagramEntries",
+				_getCProductCSDiagramEntriesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cProductId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCProductCSDiagramEntriesCount(
+			HttpPrincipal httpPrincipal, long cProductId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CSDiagramEntryServiceUtil.class,
+				"getCProductCSDiagramEntriesCount",
+				_getCProductCSDiagramEntriesCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cProductId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry>
 				getCSDiagramEntries(
 					HttpPrincipal httpPrincipal, long cpDefinitionId, int start,
 					int end)
@@ -223,7 +312,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntries",
-				_getCSDiagramEntriesParameterTypes4);
+				_getCSDiagramEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, start, end);
@@ -265,7 +354,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntriesCount",
-				_getCSDiagramEntriesCountParameterTypes5);
+				_getCSDiagramEntriesCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId);
@@ -306,7 +395,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntry",
-				_getCSDiagramEntryParameterTypes6);
+				_getCSDiagramEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramEntryId);
@@ -349,7 +438,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntry",
-				_getCSDiagramEntryParameterTypes7);
+				_getCSDiagramEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, sequence);
@@ -394,7 +483,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "updateCSDiagramEntry",
-				_updateCSDiagramEntryParameterTypes8);
+				_updateCSDiagramEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramEntryId, cpInstanceId, cProductId, diagram,
@@ -446,15 +535,24 @@ public class CSDiagramEntryServiceHttp {
 		};
 	private static final Class<?>[] _fetchCSDiagramEntryParameterTypes3 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getCSDiagramEntriesParameterTypes4 =
+	private static final Class<?>[]
+		_getCProductCSDiagramEntriesParameterTypes4 = new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[]
+		_getCProductCSDiagramEntriesCountParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCSDiagramEntriesParameterTypes6 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCSDiagramEntriesCountParameterTypes5 =
+	private static final Class<?>[] _getCSDiagramEntriesCountParameterTypes7 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCSDiagramEntryParameterTypes6 =
+	private static final Class<?>[] _getCSDiagramEntryParameterTypes8 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCSDiagramEntryParameterTypes7 =
+	private static final Class<?>[] _getCSDiagramEntryParameterTypes9 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateCSDiagramEntryParameterTypes8 =
+	private static final Class<?>[] _updateCSDiagramEntryParameterTypes10 =
 		new Class[] {
 			long.class, long.class, long.class, boolean.class, int.class,
 			String.class, String.class,

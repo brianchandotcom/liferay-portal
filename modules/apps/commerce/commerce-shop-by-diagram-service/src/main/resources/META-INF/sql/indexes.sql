@@ -1,6 +1,7 @@
 create index IX_C8B33DE2 on CSDiagramEntry (CPDefinitionId, ctCollectionId);
 create unique index IX_4748C557 on CSDiagramEntry (CPDefinitionId, sequence[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_9D8C9924 on CSDiagramEntry (CPInstanceId, ctCollectionId);
+create index IX_6DCBA0EE on CSDiagramEntry (CProductId, ctCollectionId);
 
 create index IX_1BC6C985 on CSDiagramPin (CPDefinitionId, ctCollectionId);
 

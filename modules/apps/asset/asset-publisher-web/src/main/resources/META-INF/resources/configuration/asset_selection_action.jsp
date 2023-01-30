@@ -32,9 +32,10 @@ int assetEntryOrder = searchContainer.getStart() + row.getPos();
 	<portlet:param name="assetEntryOrder" value="<%= String.valueOf(assetEntryOrder) %>" />
 </liferay-portlet:actionURL>
 
-<liferay-ui:icon
+<clay:link
+	aria-label='<%= LanguageUtil.get(request, "delete") %>'
+	cssClass="lfr-portal-tooltip"
+	href="<%= deleteURL %>"
 	icon="times-circle"
-	markupView="lexicon"
-	message="delete"
-	url="<%= deleteURL %>"
+	title='<%= LanguageUtil.get(request, "delete") %>'
 />

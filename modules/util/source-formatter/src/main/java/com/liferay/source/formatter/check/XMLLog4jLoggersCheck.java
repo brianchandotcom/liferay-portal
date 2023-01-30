@@ -105,9 +105,7 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 			new String[] {"**/com/liferay/**/*.java"});
 
 		for (String fileName : fileNames) {
-			int x = fileName.indexOf("com/liferay/");
-
-			_srcPaths.add(fileName.substring(x));
+			_srcPaths.add(fileName.substring(fileName.indexOf("com/liferay/")));
 		}
 
 		return _srcPaths;

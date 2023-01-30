@@ -396,6 +396,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								_bundleContext, _dtoConverterRegistry,
 								_objectActionLocalService, objectDefinition,
 								_objectDefinitionLocalService,
+								_objectEntryOpenAPIResourceProvider,
 								_objectFieldLocalService,
 								_objectRelationshipLocalService,
 								_openAPIResource,

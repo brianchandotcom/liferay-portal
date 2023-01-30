@@ -15,11 +15,13 @@
 package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -38,8 +40,10 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
@@ -65,6 +69,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource,
+		ObjectEntryOpenAPIResourceProvider objectEntryOpenAPIResourceProvider,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		OpenAPIResource openAPIResource,
 		SystemObjectDefinitionMetadataRegistry
@@ -76,6 +81,8 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryOpenAPIResource = objectEntryOpenAPIResource;
+		_objectEntryOpenAPIResourceProvider =
+			objectEntryOpenAPIResourceProvider;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_openAPIResource = openAPIResource;
 
@@ -115,12 +122,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					ObjectRelationship objectRelationship = entry.getKey();
 
 					ObjectDefinition relatedObjectDefinition = entry.getValue();
+					String relatedSchemaName = null;
 
 					if (!relatedObjectDefinition.isSystem() ||
 						GetterUtil.getBoolean(
 							PropsUtil.get("feature.flag.LPS-162966"))) {
 
-						String relatedSchemaName = getSchemaName(
+						relatedSchemaName = getSchemaName(
 							relatedObjectDefinition);
 
 						if (_addRelatedSchemas) {
@@ -129,28 +137,47 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 								relatedSchemaName);
 						}
 
-						_addObjectRelationshipPathItem(
-							key, objectRelationship, paths, relatedSchemaName);
+						if (Objects.equals(
+								objectRelationship.getType(),
+								ObjectRelationshipConstants.
+									TYPE_MANY_TO_MANY) ||
+							(Objects.equals(
+								objectRelationship.getType(),
+								ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+							 (objectRelationship.getObjectDefinitionId1() ==
+								 _objectDefinition.getObjectDefinitionId()))) {
+
+							_addObjectRelationshipPathItem(
+								key, objectRelationship, paths,
+								relatedSchemaName);
+						}
 					}
 
-					openAPI.getComponents(
-					).getSchemas(
-					).get(
-						_objectDefinition.getShortName()
-					).getProperties(
-					).put(
-						objectRelationship.getName(),
-						new Schema<Object>() {
-							{
-								setDescription(
-									StringBundler.concat(
-										"Information about the relationship ",
-										objectRelationship.getName(),
-										" can be embedded with ",
-										"\"nestedFields\"."));
-							}
-						}
-					);
+					if (_addRelatedSchemas) {
+						_setSchemaDescription(
+							objectRelationship, openAPI, relatedSchemaName);
+
+						openAPI.getComponents(
+						).getSchemas(
+						).get(
+							_objectDefinition.getShortName()
+						).getProperties(
+						).put(
+							objectRelationship.getName(),
+							_getSchema(objectRelationship, relatedSchemaName)
+						);
+					}
+					else {
+						openAPI.getComponents(
+						).getSchemas(
+						).get(
+							_objectDefinition.getShortName()
+						).getProperties(
+						).put(
+							objectRelationship.getName(),
+							_getSchema(objectRelationship, null)
+						);
+					}
 				}
 			}
 
@@ -214,7 +241,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				_openAPIResource);
 		}
 		else {
-			sourceSchemas = _objectEntryOpenAPIResource.getSchemas();
+			ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
+				_objectEntryOpenAPIResourceProvider.
+					getObjectEntryOpenAPIResource(objectDefinition);
+
+			sourceSchemas = objectEntryOpenAPIResource.getSchemas();
 		}
 
 		OpenAPIContributorUtil.copySchemas(
@@ -438,26 +469,94 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return parameters;
 	}
 
+	private ObjectDefinition _getRelatedObjectDefinition(
+		ObjectRelationship objectRelationship) {
+
+		if (_objectDefinition.getObjectDefinitionId() ==
+				objectRelationship.getObjectDefinitionId2()) {
+
+			return _objectDefinitionLocalService.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+		}
+
+		return _objectDefinitionLocalService.fetchObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
+	}
+
 	private Map<ObjectRelationship, ObjectDefinition>
-		_getRelatedObjectDefinitionsMap() {
+			_getRelatedObjectDefinitionsMap()
+		throws Exception {
 
 		Map<ObjectRelationship, ObjectDefinition> relatedObjectDefinitionsMap =
 			new HashMap<>();
 
 		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getObjectRelationships(
+			_objectRelationshipLocalService.getAllObjectRelationships(
 				_objectDefinition.getObjectDefinitionId());
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-
 			relatedObjectDefinitionsMap.put(
-				objectRelationship, objectDefinition);
+				objectRelationship,
+				_getRelatedObjectDefinition(objectRelationship));
 		}
 
 		return relatedObjectDefinitionsMap;
+	}
+
+	private Schema _getSchema(
+		ObjectRelationship objectRelationship, String schemaName) {
+
+		ObjectSchema schema = new ObjectSchema();
+
+		String description = StringBundler.concat(
+			"Information about the relationship ", objectRelationship.getName(),
+			" can be embedded with \"nestedFields\".");
+
+		schema.setDescription(description);
+
+		schema.set$ref(schemaName);
+
+		if (((objectRelationship.getObjectDefinitionId1() ==
+				_objectDefinition.getObjectDefinitionId()) ||
+			 Objects.equals(
+				 objectRelationship.getType(),
+				 ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) &&
+			(schemaName != null)) {
+
+			ArraySchema arraySchema = new ArraySchema();
+
+			arraySchema.setItems(schema);
+
+			arraySchema.setDescription(description);
+
+			return arraySchema;
+		}
+
+		return schema;
+	}
+
+	private void _setSchemaDescription(
+		ObjectRelationship objectRelationship, OpenAPI openAPI,
+		String relatedSchemaName) {
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+			(objectRelationship.getObjectDefinitionId2() ==
+				_objectDefinition.getObjectDefinitionId())) {
+
+			Components components = openAPI.getComponents();
+
+			Map<String, Schema> schemaMap = components.getSchemas();
+
+			Schema schema = schemaMap.get(relatedSchemaName);
+
+			schema.setDescription(
+				StringBundler.concat(
+					"Information about the relationship ",
+					objectRelationship.getName(),
+					" can be embedded with \"nestedFields\"."));
+		}
 	}
 
 	private final boolean _addRelatedSchemas;
@@ -466,6 +565,8 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
+	private final ObjectEntryOpenAPIResourceProvider
+		_objectEntryOpenAPIResourceProvider;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final OpenAPIResource _openAPIResource;

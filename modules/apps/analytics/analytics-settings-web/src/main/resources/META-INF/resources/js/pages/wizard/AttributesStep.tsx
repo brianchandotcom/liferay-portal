@@ -18,6 +18,7 @@ import React from 'react';
 import {EPageView, Events, useDispatch} from '../../App';
 import BasePage from '../../components/BasePage';
 import Attributes from '../../components/attributes/Attributes';
+import {sync} from '../../utils/api';
 import {IGenericStepProps} from './WizardPage';
 
 interface IStepProps extends IGenericStepProps {}
@@ -35,6 +36,8 @@ const Step: React.FC<IStepProps> = () => {
 			<BasePage.Footer>
 				<ClayButton
 					onClick={() => {
+						sync();
+
 						dispatch({
 							payload: EPageView.Default,
 							type: Events.ChangePageView,

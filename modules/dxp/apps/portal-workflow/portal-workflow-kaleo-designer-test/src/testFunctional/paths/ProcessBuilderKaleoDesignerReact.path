@@ -169,7 +169,7 @@
 </tr>
 <tr>
 	<td>DIAGRAM_NODE_LABEL</td>
-	<td>//span[contains(@class, 'node-label') and contains(text(), '${key_nodeLabel}')]</td>
+	<td>//span[contains(@class, 'node-label') and contains(text(), '${key_nodeLabel}')] | //button[contains(@class, 'btn btn-primary') and contains(text(), '${key_nodeLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

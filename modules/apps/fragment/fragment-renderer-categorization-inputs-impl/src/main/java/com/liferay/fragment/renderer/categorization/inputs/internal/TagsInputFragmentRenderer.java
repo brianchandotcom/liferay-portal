@@ -249,10 +249,10 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 
 		alertTag.setMessage(
 			_language.get(
-				httpServletRequest.getLocale(),
+				fragmentRendererContext.getLocale(),
 				"categorization-is-disabled-for-the-selected-content"));
 		alertTag.setTitle(
-			_language.get(httpServletRequest.getLocale(), "info"));
+			_language.get(fragmentRendererContext.getLocale(), "info"));
 
 		printWriter.write(
 			alertTag.doTagAsString(httpServletRequest, httpServletResponse));

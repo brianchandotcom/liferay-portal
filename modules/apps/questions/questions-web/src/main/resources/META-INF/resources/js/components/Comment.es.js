@@ -67,11 +67,7 @@ export default withRouter(
 							'd-flex flex-column': styledItems,
 						})}
 					>
-						<span
-							className={classnames('text-secondary', {
-								'd-flex': styledItems,
-							})}
-						>
+						<span className="d-flex text-secondary">
 							<EditedTimestamp
 								creator={comment.creator.name}
 								dateCreated={comment.dateCreated}
@@ -79,6 +75,12 @@ export default withRouter(
 								operationText={Liferay.Language.get('replied')}
 								showSignature={showSignature}
 							/>
+
+							{comment.modified && (
+								<span className="question-edited">
+									({Liferay.Language.get('edited')})
+								</span>
+							)}
 						</span>
 
 						{comment.status && comment.status !== 'approved' && (

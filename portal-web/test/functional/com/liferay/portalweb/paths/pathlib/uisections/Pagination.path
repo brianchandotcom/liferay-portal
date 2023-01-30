@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_ITEMS_PER_PAGE</td>
-	<td>//div[@class='dropdown pagination-items-per-page']</td>
+	<td>//div[@class='pagination-items-per-page']</td>
 	<td></td>
 </tr>
 <tr>

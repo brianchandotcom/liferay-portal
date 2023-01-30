@@ -222,6 +222,14 @@ public class ObjectCodeEditorUtil {
 			List<HashMap<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
+				if (StringUtil.equals(
+						ddmExpressionFunction._key, "old-value") &&
+					!GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-171440"))) {
+
+					continue;
+				}
+
 				if (StringUtil.equals(ddmExpressionFunction._key, "power") &&
 					!GetterUtil.getBoolean(
 						PropsUtil.get("feature.flag.LPS-164948"))) {

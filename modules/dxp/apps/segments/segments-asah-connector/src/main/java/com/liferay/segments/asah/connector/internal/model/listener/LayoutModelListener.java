@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
-import com.liferay.segments.asah.connector.internal.client.JSONWebServiceClient;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
 import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -85,8 +85,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	protected void activate() {
 		_asahSegmentsExperimentProcessor = new AsahSegmentsExperimentProcessor(
 			_analyticsSettingsManager,
-			new AsahFaroBackendClientImpl(
-				_analyticsSettingsManager, _jsonWebServiceClient),
+			new AsahFaroBackendClientImpl(_analyticsSettingsManager, _http),
 			_companyLocalService, _groupLocalService, _layoutLocalService,
 			_portal, _segmentsEntryLocalService,
 			_segmentsExperienceLocalService);
@@ -135,7 +134,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private JSONWebServiceClient _jsonWebServiceClient;
+	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

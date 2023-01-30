@@ -19,6 +19,7 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentSettings;
 
@@ -55,7 +56,7 @@ public class AsahFaroBackendClientImplTest {
 		);
 
 		_asahFaroBackendClient = new AsahFaroBackendClientImpl(
-			analyticsSettingsManager, _jsonWebServiceClient);
+			analyticsSettingsManager, _http);
 	}
 
 	@Test
@@ -113,6 +114,6 @@ public class AsahFaroBackendClientImplTest {
 	}
 
 	private AsahFaroBackendClient _asahFaroBackendClient;
-	private JSONWebServiceClient _jsonWebServiceClient;
+	private Http _http;
 
 }

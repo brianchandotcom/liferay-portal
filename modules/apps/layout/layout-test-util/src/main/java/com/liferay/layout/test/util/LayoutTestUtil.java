@@ -185,6 +185,21 @@ public class LayoutTestUtil {
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
+	public static Layout addTypeContentLayout(
+			Group group, Map<Locale, String> nameMap)
+		throws Exception {
+
+		return LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0, nameMap,
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
+			Collections.emptyMap(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	public static Layout addTypeContentLayout(Group group, String name)
 		throws Exception {
 

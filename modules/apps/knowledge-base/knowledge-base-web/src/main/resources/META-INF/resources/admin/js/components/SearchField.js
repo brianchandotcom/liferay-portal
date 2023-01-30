@@ -24,6 +24,27 @@ const ITEM_TYPES_SYMBOL = {
 
 const SEARCH_DELTA = 2;
 
+const SearchResult = ({filteredItems}) => {
+	return filteredItems.length ? (
+		<ul className="list-group">
+			{filteredItems.map((item) => {
+				return (
+					<li className="list-group-item" key={item.id}>
+						<ClayIcon
+							className="mr-2"
+							symbol={ITEM_TYPES_SYMBOL[item.type]}
+						/>
+
+						{item.name}
+					</li>
+				);
+			})}
+		</ul>
+	) : (
+		<p>No results</p>
+	);
+};
+
 export default function SearchField({handleSearchChange, items}) {
 	const initialSearchInfo = {
 		filteredItems: [],
@@ -94,21 +115,8 @@ export default function SearchField({handleSearchChange, items}) {
 
 			<hr className="separator" />
 
-			{searchActive && searchInfo.filteredItems && (
-				<ul className="list-group">
-					{searchInfo.filteredItems.map((item) => {
-						return (
-							<li className="list-group-item" key={item.id}>
-								<ClayIcon
-									className="mr-2"
-									symbol={ITEM_TYPES_SYMBOL[item.type]}
-								/>
-
-								{item.name}
-							</li>
-						);
-					})}
-				</ul>
+			{searchActive && (
+				<SearchResult filteredItems={searchInfo.filteredItems} />
 			)}
 		</>
 	);

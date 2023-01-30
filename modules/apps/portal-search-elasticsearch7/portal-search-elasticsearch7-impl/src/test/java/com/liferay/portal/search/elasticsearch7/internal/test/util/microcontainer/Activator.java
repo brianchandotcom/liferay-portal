@@ -43,9 +43,7 @@ public class Activator {
 	}
 
 	private Method _findMethodActivate() {
-		Method[] methods = _class.getMethods();
-
-		for (Method method : methods) {
+		for (Method method : _class.getMethods()) {
 			if (Objects.equals(method.getName(), "activate")) {
 				return method;
 			}

@@ -476,6 +476,11 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinitionPersistence.fetchByC_C(companyId, className);
 	}
 
+	@Override
+	public ObjectDefinition fetchObjectDefinitionByClassName(String className) {
+		return objectDefinitionPersistence.fetchByClassName(className);
+	}
+
 	public ObjectDefinition fetchSystemObjectDefinition(String name) {
 		for (ObjectDefinition systemObjectDefinition :
 				getSystemObjectDefinitions()) {

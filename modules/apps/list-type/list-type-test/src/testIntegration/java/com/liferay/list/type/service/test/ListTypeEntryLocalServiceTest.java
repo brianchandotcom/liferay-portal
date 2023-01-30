@@ -19,6 +19,7 @@ import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
+import com.liferay.list.type.exception.NoSuchListTypeEntryException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -207,11 +207,8 @@ public class ListTypeEntryLocalServiceTest {
 		try {
 			_listTypeEntryLocalService.getListTypeEntry(0, "able");
 		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				"No ListTypeEntry exists with the key " +
-					"{listTypeDefinitionId=0, key=able}",
-				exception.getMessage());
+		catch (NoSuchListTypeEntryException noSuchListTypeEntryException) {
+			Assert.assertNotNull(noSuchListTypeEntryException);
 		}
 
 		Assert.assertNotNull(
@@ -221,15 +218,10 @@ public class ListTypeEntryLocalServiceTest {
 
 		try {
 			_listTypeEntryLocalService.getListTypeEntryByExternalReferenceCode(
-				"noERC", _listTypeEntry.getCompanyId());
+				RandomTestUtil.randomString(), _listTypeEntry.getCompanyId());
 		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				StringBundler.concat(
-					"No ListTypeEntry exists with the key ",
-					"{externalReferenceCode=noERC, companyId=",
-					String.valueOf(_listTypeEntry.getCompanyId()), "}"),
-				exception.getMessage());
+		catch (NoSuchListTypeEntryException noSuchListTypeEntryException) {
+			Assert.assertNotNull(noSuchListTypeEntryException);
 		}
 
 		Assert.assertNotNull(

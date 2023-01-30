@@ -18,7 +18,9 @@ import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
+import com.liferay.portal.scripting.ScriptingExecutorRegistry;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -40,6 +42,13 @@ public class GroovyObjectScriptingExecutor implements ObjectScriptingExecutor {
 		Map<String, Object> inputObjects, Set<String> outputNames,
 		String script) {
 
+		ScriptingExecutor scriptingExecutor =
+			_scriptingExecutorRegistry.getScriptingExecutor("groovy");
+
+		if (scriptingExecutor == null) {
+			return Collections.emptyMap();
+		}
+
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -51,7 +60,7 @@ public class GroovyObjectScriptingExecutor implements ObjectScriptingExecutor {
 		currentThread.setContextClassLoader(clazz.getClassLoader());
 
 		try {
-			results = _scriptingExecutor.eval(
+			results = scriptingExecutor.eval(
 				null, inputObjects, outputNames, script);
 
 			results.put("invalidScript", false);
@@ -71,7 +80,7 @@ public class GroovyObjectScriptingExecutor implements ObjectScriptingExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroovyObjectScriptingExecutor.class);
 
-	@Reference(target = "(scripting.language=groovy)")
-	private ScriptingExecutor _scriptingExecutor;
+	@Reference
+	private ScriptingExecutorRegistry _scriptingExecutorRegistry;
 
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.exception.DuplicateSXPBlueprintExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
@@ -211,6 +212,10 @@ public class SXPBlueprintLocalServiceImpl
 	private void _validateExternalReferenceCode(
 			long companyId, String externalReferenceCode)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		SXPBlueprint sxpBlueprint = fetchSXPBlueprintByExternalReferenceCode(
 			externalReferenceCode, companyId);

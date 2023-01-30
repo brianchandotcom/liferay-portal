@@ -597,6 +597,23 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
+		/*ObjectDefinition accountEntryObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				objectDefinition.getCompanyId(), "AccountEntry");
+
+		String objectRelationshipName =
+			StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
+				objectDefinition.getShortName();*/
+
+		/*ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				userId, accountEntryObjectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(objectRelationshipName),
+				objectRelationshipName,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);*/
+
 
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(
 			objectRelationship.getObjectFieldId2());

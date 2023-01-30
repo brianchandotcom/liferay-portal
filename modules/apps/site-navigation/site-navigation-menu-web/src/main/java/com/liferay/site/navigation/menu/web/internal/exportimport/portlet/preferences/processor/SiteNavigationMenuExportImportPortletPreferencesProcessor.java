@@ -16,10 +16,14 @@ package com.liferay.site.navigation.menu.web.internal.exportimport.portlet.prefe
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -62,6 +66,14 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
+
+		if (!MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.PORTLET_DATA) &&
+			MergeLayoutPrototypesThreadLocal.isInProgress()) {
+
+			return portletPreferences;
+		}
 
 		try {
 			portletDataContext.addPortletPermissions(
@@ -115,6 +127,45 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 				"Unable to import portlet permissions", portalException);
 		}
 
+		if (!MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.PORTLET_DATA) &&
+			MergeLayoutPrototypesThreadLocal.isInProgress()) {
+
+			List<com.liferay.portal.kernel.model.PortletPreferences>
+				originalPreferencesList =
+					_portletPreferencesLocalService.getPortletPreferences(
+						portletDataContext.getPlid(),
+						portletDataContext.getPortletId());
+
+			if (!originalPreferencesList.isEmpty()) {
+				com.liferay.portal.kernel.model.PortletPreferences
+					originalPreferences = originalPreferencesList.get(0);
+
+				PortletPreferences originalPreferencesWithValue =
+					_portletPreferenceValueLocalService.getPreferences(
+						originalPreferences);
+
+				long originalNavigationMenuId = GetterUtil.getLong(
+					originalPreferencesWithValue.getValue(
+						"siteNavigationMenuId", "0"));
+
+				try {
+					portletPreferences.setValue(
+						"siteNavigationMenuId",
+						String.valueOf(originalNavigationMenuId));
+				}
+				catch (ReadOnlyException readOnlyException) {
+					PortletDataException portletDataException =
+						new PortletDataException(readOnlyException);
+
+					throw portletDataException;
+				}
+			}
+
+			return portletPreferences;
+		}
+
 		long importedSiteNavigationMenuId = GetterUtil.getLong(
 			portletPreferences.getValue("siteNavigationMenuId", null));
 
@@ -154,6 +205,13 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	private Capability _importCapability;
+
+	@Reference(unbind = "-")
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference(unbind = "-")
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 	@Reference(unbind = "-")
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

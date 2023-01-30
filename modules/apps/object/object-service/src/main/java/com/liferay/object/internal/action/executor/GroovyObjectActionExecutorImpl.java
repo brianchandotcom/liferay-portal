@@ -49,10 +49,13 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		Map<String, Object> results = _objectScriptingExecutor.execute(
+		Map<String, Object> inputObjects =
 			ObjectEntryVariablesUtil.getActionVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataRegistry),
+				_systemObjectDefinitionMetadataRegistry);
+
+		Map<String, Object> results = _objectScriptingExecutor.execute(
+			(Map<String, Object>)inputObjects.get("objectEntry"),
 			new HashSet<>(), parametersUnicodeProperties.get("script"));
 
 		if (GetterUtil.getBoolean(results.get("invalidScript"))) {

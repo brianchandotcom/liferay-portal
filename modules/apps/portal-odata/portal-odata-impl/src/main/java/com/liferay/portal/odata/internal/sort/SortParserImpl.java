@@ -75,7 +75,7 @@ public class SortParserImpl implements SortParser {
 		}
 
 		return TransformUtil.transform(
-			StringUtil.split(sortString), s -> getSortField(s));
+			StringUtil.split(sortString), string -> getSortField(string));
 	}
 
 	protected EntityField getEntityField(

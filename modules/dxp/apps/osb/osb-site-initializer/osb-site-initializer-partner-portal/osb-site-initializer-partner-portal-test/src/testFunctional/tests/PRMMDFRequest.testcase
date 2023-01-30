@@ -118,6 +118,7 @@ definition {
 			FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Choose your target audience");
 		}
 	}
+
 	@description = "This is a test for LPS-172479. Verify that the difference between the start date and end date cannot be higher than six months."
 	@priority = "5"
 	test DifferenceBetweenStartAndEndDateCannotExceedSixMonths {
@@ -158,11 +159,9 @@ definition {
 				dateRange = "+185",
 				fieldName = "endDate");
 		}
-		
+
 		task ("Then a feedback message will appear") {
-		AssertElementPresent(
-			key_feedbackMessage = "End date must be less than six month after start date",
-			locator1 = "Form#FEEDBACK_MESSAGE");
+			PRMMDFRequest.viewErrorMessage(errorMessage = "End date must be less than six month after start date");
 		}
 	}
 

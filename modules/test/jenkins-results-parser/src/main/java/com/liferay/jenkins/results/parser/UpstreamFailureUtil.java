@@ -234,41 +234,6 @@ public class UpstreamFailureUtil {
 		return null;
 	}
 
-	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
-		Build build = testResult.getBuild();
-
-		if (!_upstreamComparisonAvailable || !build.isCompareToUpstream()) {
-			return false;
-		}
-
-		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
-
-		try {
-			String batchName = _getBatchName(build.getJobVariant());
-
-			for (String failure :
-					getUpstreamJobFailures("test", topLevelBuild)) {
-
-				if (failure.equals(
-						_formatUpstreamTestFailure(
-							batchName, testResult.getDisplayName()))) {
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-		catch (Exception exception) {
-			System.out.println(
-				"Unable to get upstream acceptance failure data.");
-
-			exception.printStackTrace();
-
-			return false;
-		}
-	}
-
 	public static boolean isUpstreamComparisonAvailable(
 		TopLevelBuild topLevelBuild) {
 

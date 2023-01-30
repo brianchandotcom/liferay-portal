@@ -93,7 +93,33 @@ public abstract class BaseTestResult implements TestResult {
 
 	@Override
 	public boolean isUniqueFailure() {
-		return !UpstreamFailureUtil.isTestFailingInUpstreamJob(this);
+		if (!isFailing()) {
+			return false;
+		}
+
+		Build build = getBuild();
+
+		if (!build.isCompareToUpstream()) {
+			return true;
+		}
+
+		String batchName = build.getBatchName(build.getJobVariant());
+
+		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
+
+		for (String upstreamFailure :
+				UpstreamFailureUtil.getUpstreamJobFailures(
+					"test", topLevelBuild)) {
+
+			String testFailure = JenkinsResultsParserUtil.combine(
+				getDisplayName(), ",", batchName);
+
+			if (upstreamFailure.equals(testFailure)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected BaseTestResult(Build build) {

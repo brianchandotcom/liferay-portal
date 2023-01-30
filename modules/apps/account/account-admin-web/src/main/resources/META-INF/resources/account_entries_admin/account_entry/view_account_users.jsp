@@ -70,7 +70,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="name"
-					property="name"
+					value="<%= HtmlUtil.escape(accountUser.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -84,14 +84,14 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="job-title"
-					property="jobTitle"
+					value="<%= HtmlUtil.escape(accountUser.getJobTitle()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="account-roles"
-					value="<%= accountUser.getAccountRoleNamesString(accountEntryDisplay.getAccountEntryId(), locale) %>"
+					value="<%= HtmlUtil.escape(accountUser.getAccountRoleNamesString(accountEntryDisplay.getAccountEntryId(), locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text>

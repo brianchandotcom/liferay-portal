@@ -59,7 +59,7 @@ SearchContainer<AccountUserDisplay> accountRoleUserDisplaySearchContainer = Acco
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="name"
-					property="name"
+					value="<%= HtmlUtil.escape(accountUser.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -71,7 +71,7 @@ SearchContainer<AccountUserDisplay> accountRoleUserDisplaySearchContainer = Acco
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="job-title"
-					property="jobTitle"
+					value="<%= HtmlUtil.escape(accountUser.getJobTitle()) %>"
 				/>
 			</liferay-ui:search-container-row>
 

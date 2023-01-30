@@ -603,9 +603,18 @@ public class AnalyticsConfigurationRegistryImpl
 						companyId,
 						refreshDispatchTriggerNames.toArray(new String[0]));
 
-					_analyticsDXPEntityBatchExporter.export(
-						companyId,
-						refreshDispatchTriggerNames.toArray(new String[0]));
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LRAC-10632")) &&
+						!GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LRAC-10757"))) {
+
+						_analyticsDXPEntityBatchExporter.export(
+							companyId,
+							new String[] {
+								AnalyticsDXPEntityBatchExporterConstants.
+									DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
+							});
+					}
 				}
 
 				if (!unscheduleDispatchTriggerNames.isEmpty()) {

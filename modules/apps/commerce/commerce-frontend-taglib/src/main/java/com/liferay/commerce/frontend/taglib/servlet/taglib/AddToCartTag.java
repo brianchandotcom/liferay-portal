@@ -101,23 +101,6 @@ public class AddToCartTag extends IncludeTag {
 				_disabled = !cpSku.isPurchasable() || (_commerceAccountId == 0);
 				sku = cpSku.getSku();
 
-				CommerceAccount commerceAccount =
-					commerceContext.getCommerceAccount();
-
-				if ((commerceAccount != null) &&
-					commerceAccount.isBusinessAccount()) {
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					_disabled =
-						!_commerceOrderPortletResourcePermission.contains(
-							themeDisplay.getPermissionChecker(),
-							commerceAccount.getCommerceAccountGroupId(),
-							CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
-				}
-
 				if (commerceOrder != null) {
 					List<CommerceOrderItem> commerceOrderItems =
 						_commerceOrderItemLocalService.getCommerceOrderItems(
@@ -142,6 +125,24 @@ public class AddToCartTag extends IncludeTag {
 						 (_stockQuantity <= 0)) ||
 						!cpSku.isPublished() || !cpSku.isPurchasable();
 				}
+			}
+
+			CommerceAccount commerceAccount =
+				commerceContext.getCommerceAccount();
+
+			if ((commerceAccount != null) &&
+				commerceAccount.isBusinessAccount()) {
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				_disabled =
+					_disabled ||
+					!_commerceOrderPortletResourcePermission.contains(
+						themeDisplay.getPermissionChecker(),
+						commerceAccount.getCommerceAccountGroupId(),
+						CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
 			}
 		}
 		catch (Exception exception) {

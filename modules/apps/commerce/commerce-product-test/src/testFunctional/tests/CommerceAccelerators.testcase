@@ -244,6 +244,140 @@ definition {
 			value1 = "$ 18.90");
 	}
 
+	@description = "This is for COMMERCE-10054. Account users without roles should not be able to add products to cart"
+	@priority = "3"
+	test CannotAddToCartAsAccountUserWithoutRoles {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a user without any roles") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "testuser@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "testuser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("Then the user is not able to add to cart") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			CommerceWishList.addProductToWishList(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			Click.clickAtNotVisible(
+				checkboxName = "Compare",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+		}
+
+		task ("And is not able to add new orders") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			AssertElementNotPresent(
+				key_text = "Add Order",
+				locator1 = "Button#ANY");
+		}
+	}
+
+	@description = "This is for COMMERCE-10054. Account users without roles should not be able to add products to cart if the accounts has pending orders"
+	@priority = "3"
+	test CannotAddToCartWithExistingOrdersAsAccountUserWithoutRoles {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a user without any roles") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "testuser@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "testuser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an order is created for the account") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("Then the user is not able to add to cart") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			CommerceWishList.addProductToWishList(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			Click.clickAtNotVisible(
+				checkboxName = "Compare",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+		}
+
+		task ("And is not able to add new orders") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			AssertElementNotPresent(
+				key_text = "Add Order",
+				locator1 = "Button#ANY");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+		}
+	}
+
 	@description = "This is for COMMERCE-10315. It's not possible to save the Root Category for the Commerce Categories Navigation widget"
 	@priority = 4
 	test CanSaveCommerceCategoriesNavigationRootCategory {

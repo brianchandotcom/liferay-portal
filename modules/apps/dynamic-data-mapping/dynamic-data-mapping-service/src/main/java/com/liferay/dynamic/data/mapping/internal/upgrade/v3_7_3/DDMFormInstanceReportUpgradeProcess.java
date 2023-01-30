@@ -128,6 +128,10 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 						"totalItems", dataJSONObject.getInt("totalItems") + 1);
 				}
 
+				if (dataJSONObject.length() == 0) {
+					continue;
+				}
+
 				long groupId = resultSet1.getLong("groupId");
 
 				long companyId = resultSet1.getLong("companyId");

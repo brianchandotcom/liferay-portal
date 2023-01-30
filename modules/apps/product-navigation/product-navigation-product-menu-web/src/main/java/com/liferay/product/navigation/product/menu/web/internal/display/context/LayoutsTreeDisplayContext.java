@@ -396,7 +396,7 @@ public class LayoutsTreeDisplayContext {
 			0L);
 
 		JSONArray layoutsJSONArray = _layoutsTree.getLayoutsJSONArray(
-			openNodes, _getGroupId(), _httpServletRequest, true, true,
+			openNodes, _getGroupId(), _httpServletRequest, true, true, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _isPrivateLayout(),
 			"productMenuPagesTree");
 

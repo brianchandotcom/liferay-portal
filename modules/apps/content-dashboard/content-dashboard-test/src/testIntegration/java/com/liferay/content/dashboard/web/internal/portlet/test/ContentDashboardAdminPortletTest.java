@@ -544,13 +544,13 @@ public class ContentDashboardAdminPortletTest {
 
 		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, "title1",
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, "0title1",
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.getSiteDefault(), false, false, serviceContext);
 
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, "title2",
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, "0title2",
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.getSiteDefault(), false, false, serviceContext);
 

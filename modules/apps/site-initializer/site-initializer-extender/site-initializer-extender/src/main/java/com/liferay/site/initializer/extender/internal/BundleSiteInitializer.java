@@ -2982,87 +2982,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addOrUpdateRole(
-			JSONObject jsonObject, ServiceContext serviceContext)
-		throws Exception {
-
-		Role role = _roleLocalService.fetchRole(
-			serviceContext.getCompanyId(), jsonObject.getString("name"));
-
-		if (role == null) {
-			if (jsonObject.getInt("type") == RoleConstants.TYPE_ACCOUNT) {
-				com.liferay.account.model.AccountRole accountRole =
-					_accountRoleLocalService.addAccountRole(
-						serviceContext.getUserId(),
-						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-						jsonObject.getString("name"),
-						SiteInitializerUtil.toMap(
-							jsonObject.getString("name_i18n")),
-						SiteInitializerUtil.toMap(
-							jsonObject.getString("description")));
-
-				role = accountRole.getRole();
-			}
-			else {
-				role = _roleLocalService.addRole(
-					serviceContext.getUserId(), null, 0,
-					jsonObject.getString("name"),
-					SiteInitializerUtil.toMap(
-						jsonObject.getString("name_i18n")),
-					SiteInitializerUtil.toMap(
-						jsonObject.getString("description")),
-					jsonObject.getInt("type"), jsonObject.getString("subtype"),
-					serviceContext);
-			}
-		}
-		else {
-			role = _roleLocalService.updateRole(
-				role.getRoleId(), jsonObject.getString("name"),
-				SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
-				SiteInitializerUtil.toMap(jsonObject.getString("description")),
-				jsonObject.getString("subtype"), serviceContext);
-		}
-
-		JSONArray jsonArray = jsonObject.getJSONArray("actions");
-
-		if (JSONUtil.isEmpty(jsonArray) || (role == null)) {
-			return;
-		}
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject actionsJSONObject = jsonArray.getJSONObject(i);
-
-			String resource = actionsJSONObject.getString("resource");
-			int scope = actionsJSONObject.getInt("scope");
-			String actionId = actionsJSONObject.getString("actionId");
-
-			if (scope == ResourceConstants.SCOPE_COMPANY) {
-				_resourcePermissionLocalService.addResourcePermission(
-					serviceContext.getCompanyId(), resource, scope,
-					String.valueOf(role.getCompanyId()), role.getRoleId(),
-					actionId);
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP) {
-				_resourcePermissionLocalService.removeResourcePermissions(
-					serviceContext.getCompanyId(), resource,
-					ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
-
-				_resourcePermissionLocalService.addResourcePermission(
-					serviceContext.getCompanyId(), resource,
-					ResourceConstants.SCOPE_GROUP,
-					String.valueOf(serviceContext.getScopeGroupId()),
-					role.getRoleId(), actionId);
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-				_resourcePermissionLocalService.addResourcePermission(
-					serviceContext.getCompanyId(), resource,
-					ResourceConstants.SCOPE_GROUP_TEMPLATE,
-					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-					role.getRoleId(), actionId);
-			}
-		}
-	}
-
 	private void _addOrUpdateSAPEntries(ServiceContext serviceContext)
 		throws Exception {
 
@@ -3429,9 +3348,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_classLoader, serviceContext, _servletContext);
 	}
 
-	private void _addRoles(
-			Map<String, String>
-				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+	private void _addOrUpdateRoles(
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -3445,12 +3362,84 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			_addOrUpdateRole(jsonArray.getJSONObject(i), serviceContext);
-		}
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-		_addOrUpdateResourcePermissions(
-			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-			"/site-initializer/resource-permissions.json", serviceContext);
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(), jsonObject.getString("name"));
+
+			if (role == null) {
+				if (jsonObject.getInt("type") == RoleConstants.TYPE_ACCOUNT) {
+					com.liferay.account.model.AccountRole accountRole =
+						_accountRoleLocalService.addAccountRole(
+							serviceContext.getUserId(),
+							AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+							jsonObject.getString("name"),
+							SiteInitializerUtil.toMap(
+								jsonObject.getString("name_i18n")),
+							SiteInitializerUtil.toMap(
+								jsonObject.getString("description")));
+
+					role = accountRole.getRole();
+				}
+				else {
+					role = _roleLocalService.addRole(
+						serviceContext.getUserId(), null, 0,
+						jsonObject.getString("name"),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("name_i18n")),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("description")),
+						jsonObject.getInt("type"), jsonObject.getString("subtype"),
+						serviceContext);
+				}
+			}
+			else {
+				role = _roleLocalService.updateRole(
+					role.getRoleId(), jsonObject.getString("name"),
+					SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
+					SiteInitializerUtil.toMap(jsonObject.getString("description")),
+					jsonObject.getString("subtype"), serviceContext);
+			}
+
+			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+			if (JSONUtil.isEmpty(actionsJSONArray) || (role == null)) {
+				continue;
+			}
+
+			for (int j = 0; j < actionsJSONArray.length(); j++) {
+				JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(j);
+
+				String resource = actionsJSONObject.getString("resource");
+				int scope = actionsJSONObject.getInt("scope");
+				String actionId = actionsJSONObject.getString("actionId");
+
+				if (scope == ResourceConstants.SCOPE_COMPANY) {
+					_resourcePermissionLocalService.addResourcePermission(
+						serviceContext.getCompanyId(), resource, scope,
+						String.valueOf(role.getCompanyId()), role.getRoleId(),
+						actionId);
+				}
+				else if (scope == ResourceConstants.SCOPE_GROUP) {
+					_resourcePermissionLocalService.removeResourcePermissions(
+						serviceContext.getCompanyId(), resource,
+						ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
+
+					_resourcePermissionLocalService.addResourcePermission(
+						serviceContext.getCompanyId(), resource,
+						ResourceConstants.SCOPE_GROUP,
+						String.valueOf(serviceContext.getScopeGroupId()),
+						role.getRoleId(), actionId);
+				}
+				else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+					_resourcePermissionLocalService.addResourcePermission(
+						serviceContext.getCompanyId(), resource,
+						ResourceConstants.SCOPE_GROUP_TEMPLATE,
+						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+						role.getRoleId(), actionId);
+				}
+			}
+		}
 	}
 
 	private void _addRolesAssignments(ServiceContext serviceContext)

@@ -332,8 +332,8 @@ public class DataDefinitionDDMFormUtil {
 
 		Set<Locale> locales = new HashSet<>();
 
-		for (String id : languageIds) {
-			locales.add(LocaleUtil.fromLanguageId(id));
+		for (String languageId : languageIds) {
+			locales.add(LocaleUtil.fromLanguageId(languageId));
 		}
 
 		return locales;

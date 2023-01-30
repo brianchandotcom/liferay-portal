@@ -749,6 +749,14 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("linkedProducts", additionalAssertFieldName)) {
+				if (product.getLinkedProducts() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("metaDescription", additionalAssertFieldName)) {
 				if (product.getMetaDescription() == null) {
 					valid = false;
@@ -1065,6 +1073,17 @@ public abstract class BaseProductResourceTestCase {
 			if (Objects.equals("images", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getImages(), product2.getImages())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("linkedProducts", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getLinkedProducts(),
+						product2.getLinkedProducts())) {
 
 					return false;
 				}
@@ -1429,6 +1448,11 @@ public abstract class BaseProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("images")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("linkedProducts")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

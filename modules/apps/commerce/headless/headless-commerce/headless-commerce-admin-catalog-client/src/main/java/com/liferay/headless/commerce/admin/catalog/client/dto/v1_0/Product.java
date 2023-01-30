@@ -415,6 +415,28 @@ public class Product implements Cloneable, Serializable {
 
 	protected Attachment[] images;
 
+	public LinkedProduct[] getLinkedProducts() {
+		return linkedProducts;
+	}
+
+	public void setLinkedProducts(LinkedProduct[] linkedProducts) {
+		this.linkedProducts = linkedProducts;
+	}
+
+	public void setLinkedProducts(
+		UnsafeSupplier<LinkedProduct[], Exception>
+			linkedProductsUnsafeSupplier) {
+
+		try {
+			linkedProducts = linkedProductsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected LinkedProduct[] linkedProducts;
+
 	public MappedProduct[] getMappedProducts() {
 		return mappedProducts;
 	}

@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.LinkedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Pin;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
@@ -305,6 +306,26 @@ public class ProductSerDes {
 				sb.append(String.valueOf(product.getImages()[i]));
 
 				if ((i + 1) < product.getImages().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (product.getLinkedProducts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"linkedProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < product.getLinkedProducts().length; i++) {
+				sb.append(String.valueOf(product.getLinkedProducts()[i]));
+
+				if ((i + 1) < product.getLinkedProducts().length) {
 					sb.append(", ");
 				}
 			}
@@ -896,6 +917,14 @@ public class ProductSerDes {
 			map.put("images", String.valueOf(product.getImages()));
 		}
 
+		if (product.getLinkedProducts() == null) {
+			map.put("linkedProducts", null);
+		}
+		else {
+			map.put(
+				"linkedProducts", String.valueOf(product.getLinkedProducts()));
+		}
+
 		if (product.getMappedProducts() == null) {
 			map.put("mappedProducts", null);
 		}
@@ -1294,6 +1323,18 @@ public class ProductSerDes {
 							object -> AttachmentSerDes.toDTO((String)object)
 						).toArray(
 							size -> new Attachment[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "linkedProducts")) {
+				if (jsonParserFieldValue != null) {
+					product.setLinkedProducts(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> LinkedProductSerDes.toDTO((String)object)
+						).toArray(
+							size -> new LinkedProduct[size]
 						));
 				}
 			}

@@ -589,6 +589,36 @@ public class Product implements Serializable {
 
 	@Schema
 	@Valid
+	public LinkedProduct[] getLinkedProducts() {
+		return linkedProducts;
+	}
+
+	public void setLinkedProducts(LinkedProduct[] linkedProducts) {
+		this.linkedProducts = linkedProducts;
+	}
+
+	@JsonIgnore
+	public void setLinkedProducts(
+		UnsafeSupplier<LinkedProduct[], Exception>
+			linkedProductsUnsafeSupplier) {
+
+		try {
+			linkedProducts = linkedProductsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected LinkedProduct[] linkedProducts;
+
+	@Schema
+	@Valid
 	public MappedProduct[] getMappedProducts() {
 		return mappedProducts;
 	}
@@ -1776,6 +1806,26 @@ public class Product implements Serializable {
 				sb.append(String.valueOf(images[i]));
 
 				if ((i + 1) < images.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (linkedProducts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"linkedProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < linkedProducts.length; i++) {
+				sb.append(String.valueOf(linkedProducts[i]));
+
+				if ((i + 1) < linkedProducts.length) {
 					sb.append(", ");
 				}
 			}

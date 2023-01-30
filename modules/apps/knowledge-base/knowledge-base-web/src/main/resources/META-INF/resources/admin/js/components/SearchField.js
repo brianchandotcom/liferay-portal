@@ -13,8 +13,10 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const ITEM_TYPES_SYMBOL = {
@@ -24,7 +26,7 @@ const ITEM_TYPES_SYMBOL = {
 
 const SEARCH_DELTA = 2;
 
-const SearchResult = ({filteredItems}) => {
+const SearchResult = ({filteredItems, keyword}) => {
 	return filteredItems.length ? (
 		<ul className="list-group">
 			{filteredItems.map((item) => {
@@ -41,7 +43,15 @@ const SearchResult = ({filteredItems}) => {
 			})}
 		</ul>
 	) : (
-		<p>No results</p>
+		<ClayEmptyState
+			description={sub(
+				Liferay.Language.get('no-content-found-that-matched-keyword-x'),
+				[keyword]
+			)}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			small
+			title={Liferay.Language.get('no-results-found')}
+		/>
 	);
 };
 
@@ -116,7 +126,10 @@ export default function SearchField({handleSearchChange, items}) {
 			<hr className="separator" />
 
 			{searchActive && (
-				<SearchResult filteredItems={searchInfo.filteredItems} />
+				<SearchResult
+					filteredItems={searchInfo.filteredItems}
+					keyword={searchInfo.query}
+				/>
 			)}
 		</>
 	);

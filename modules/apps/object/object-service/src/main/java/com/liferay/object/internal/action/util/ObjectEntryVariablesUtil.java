@@ -331,6 +331,10 @@ public class ObjectEntryVariablesUtil {
 			if (map != null) {
 				variables.putAll(map);
 			}
+
+			variables.putAll(
+				(Map<String, Object>)payloadJSONObject.get(
+					"extendedProperties"));
 		}
 		else {
 			if (oldValues) {

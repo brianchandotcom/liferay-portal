@@ -94,6 +94,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AnalyticsDXPEntityBatchExporterResourceImpl.class);
+
 			add(ChannelResourceImpl.class);
 
 			add(CommerceChannelResourceImpl.class);

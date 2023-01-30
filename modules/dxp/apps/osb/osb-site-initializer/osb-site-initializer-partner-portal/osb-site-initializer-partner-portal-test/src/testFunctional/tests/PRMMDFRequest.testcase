@@ -57,6 +57,13 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+	}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
+	}
+	
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -66,6 +73,90 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172917. Verify that If there are multiple activities, the review page will display them as dropdown items that can be expandable"
+	@priority = "5"
+	test CanExpandAndSeeMultipleActivities {
+		task ("Given I go to add a MDF Request") {
+			PRMMarketing.gotoAddNewMDF();
+		}
+		task ("And I fill all Goals form with my informations") {
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Company Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
+			Button.click(button = "Continue");
+		}
+		task ("And I add two activities and fill it with my information") {
+			PRMMDFRequest.newActivity(
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				followUpStrategy = "test",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetOfLeads = "test",
+				typeOfActivity = "Miscellaneous Marketing");
+			Button.click(button = "Continue");
+			PRMMDFRequest.newActivity(
+				activityDescription = "Activity Description",
+				activityIndex = "1",
+				activityName = "Activity Name 2",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				followUpStrategy = "test",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetOfLeads = "test",
+				typeOfActivity = "Miscellaneous Marketing");
+			Button.click(button = "Continue");
+		}
+		task ("When I go to the MDF Review Page") {
+			Button.click(button = "Continue");
+		}
+		task ("And when I click on the first acitivity") {
+			PRMMDFRequest.activityCollapseButton(button = "Activity Name 1");
+		}
+		task ("Then I can see the information about the first activity") {
+			AssertVisible(
+				key_fieldName = "Activity name",
+				key_fieldValue = "Activity Name 1",
+				locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+		}
+		task ("And when I click again on the first activity") {
+			PRMMDFRequest.activityCollapseButton(button = "Activity Name 1");
+		}
+		task ("Then the information about the first activity will no longer be visible") {
+			AssertNotVisible(
+				key_fieldName = "Activity name",
+				key_fieldValue = "Activity Name 1",
+				locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+		}
+		task ("And when I click on the second acitivity") {
+			PRMMDFRequest.activityCollapseButton(button = "Activity Name 2");
+		}
+		task ("Then I can see the information about the second activity") {
+			AssertVisible(
+				key_fieldName = "Activity name",
+				key_fieldValue = "Activity Name 2",
+				locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+		}
+		task ("And when I click again on the second activity") {
+			PRMMDFRequest.activityCollapseButton(button = "Activity Name 2");
+		}
+		task ("Then the information about the second activity will no longer be visible") {
+			AssertNotVisible(
+				key_fieldName = "Activity name",
+				key_fieldValue = "Activity Name 2",
+				locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+		}
+	}
+	
 	@description = "This is a test for LPS-171637. Verify that an alert will appear when user don't fill a mandatory* field and that “Continue” button only will be clickable after fill all mandatory fields"
 	@priority = "5"
 	test CannotContinueWithoutFillRequiredField {

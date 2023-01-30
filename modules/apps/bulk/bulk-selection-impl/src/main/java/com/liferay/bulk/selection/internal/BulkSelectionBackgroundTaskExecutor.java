@@ -79,11 +79,6 @@ public class BulkSelectionBackgroundTaskExecutor
 			return BackgroundTaskResult.SUCCESS;
 		}
 
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)taskContextMap.get(
-				BulkSelectionBackgroundTaskConstants.
-					BULK_SELECTION_PARAMETER_MAP);
-
 		String bulkSelectionFactoryClassName = (String)taskContextMap.get(
 			BulkSelectionBackgroundTaskConstants.
 				BULK_SELECTION_FACTORY_CLASS_NAME);
@@ -98,9 +93,6 @@ public class BulkSelectionBackgroundTaskExecutor
 		}
 
 		try {
-			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
-				parameterMap);
-
 			Map<String, Serializable> inputMap =
 				(Map<String, Serializable>)taskContextMap.get(
 					BulkSelectionBackgroundTaskConstants.
@@ -108,6 +100,14 @@ public class BulkSelectionBackgroundTaskExecutor
 
 			boolean assetEntryBulkSelection = (boolean)inputMap.getOrDefault(
 				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, false);
+
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)taskContextMap.get(
+					BulkSelectionBackgroundTaskConstants.
+						BULK_SELECTION_PARAMETER_MAP);
+
+			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
+				parameterMap);
 
 			if (assetEntryBulkSelection) {
 				bulkSelection = bulkSelection.toAssetEntryBulkSelection();

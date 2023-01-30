@@ -90,6 +90,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -170,6 +171,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -1335,14 +1337,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_objectDefinitionLocalService.fetchObjectDefinition(
 						serviceContext.getCompanyId(), "C_" + entry.getKey());
 
+			com.liferay.object.model.ObjectDefinition
+				accountEntryObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "AccountEntry");
+
 			String objectRelationshipName =
-				"accountEntryTo" +
+				StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
 				serviceBuilderObjectDefinition.getShortName();
 
 			com.liferay.object.model.ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationshipByObjectDefinitionId(
+				_objectRelationshipLocalService.addObjectRelationship(
+					serviceBuilderObjectDefinition.getUserId(),
+					accountEntryObjectDefinition.getObjectDefinitionId(),
 					serviceBuilderObjectDefinition.getObjectDefinitionId(),
-					objectRelationshipName);
+					0, ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					LocalizedMapUtil.getLocalizedMap(objectRelationshipName),
+					objectRelationshipName,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 				_objectDefinitionLocalService.
 					restrictObjectDefinitionByAccountEntry(

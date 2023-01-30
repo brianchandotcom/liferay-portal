@@ -669,7 +669,9 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "Test Widget Page Name");
 
-			ContentPerformance.viewTotalViews(numberViews = "0");
+			AssertVisible(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
+				value1 = "Traffic Channels");
 		}
 	}
 

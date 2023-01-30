@@ -132,7 +132,8 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 
 			if (!infoItemCreator.supportsCategorization()) {
 				_writeDisabledCategorizationAlert(
-					httpServletRequest, httpServletResponse, printWriter);
+					fragmentRendererContext, httpServletRequest,
+					httpServletResponse, printWriter);
 
 				return;
 			}
@@ -232,9 +233,17 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _writeDisabledCategorizationAlert(
+			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, PrintWriter printWriter)
 		throws Exception {
+
+		if (!Objects.equals(
+				fragmentRendererContext.getMode(),
+				FragmentEntryLinkConstants.EDIT)) {
+
+			return;
+		}
 
 		AlertTag alertTag = new AlertTag();
 

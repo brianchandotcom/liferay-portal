@@ -1162,7 +1162,6 @@ AUI.add(
 			'aui-modal',
 			'aui-parse-content',
 			'aui-toggler',
-			'aui-tree-view',
 			'liferay-portlet-base',
 			'liferay-util-window',
 		],

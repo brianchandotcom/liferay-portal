@@ -217,6 +217,15 @@ export default function CartQuickAdd() {
 
 							setSelectedProducts(newItems);
 						}}
+						onPaste={(event) => {
+							const pastedText = event.clipboardData.getData(
+								'Text'
+							);
+
+							event.preventDefault();
+
+							setProductsQuery(productsQuery.concat(pastedText));
+						}}
 						placeholder={Liferay.Language.get('search-products')}
 						size="sm"
 						sourceItems={formattedProducts.filter((product) => {

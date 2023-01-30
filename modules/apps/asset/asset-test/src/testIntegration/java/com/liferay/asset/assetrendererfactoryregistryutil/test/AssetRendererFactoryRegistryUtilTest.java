@@ -63,6 +63,39 @@ public class AssetRendererFactoryRegistryUtilTest {
 	}
 
 	@Test
+	public void testGetAssetRendererFactoriesObjectDefinitionByCompanyId() {
+		String className = "com.liferay.object.model.ObjectDefinition#12345";
+
+		List<AssetRendererFactory<?>> assetRendererFactories1 =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(1);
+
+		Stream<AssetRendererFactory<?>> assetRendererFactories1Stream1 =
+			assetRendererFactories1.stream();
+
+		Assert.assertEquals(
+			1,
+			assetRendererFactories1Stream1.map(
+				AssetRendererFactory::getClassName
+			).filter(
+				className::equals
+			).count());
+
+		List<AssetRendererFactory<?>> assetRendererFactories2 =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(2);
+
+		Stream<AssetRendererFactory<?>> assetRendererFactories2Stream2 =
+			assetRendererFactories2.stream();
+
+		Assert.assertEquals(
+			0,
+			assetRendererFactories2Stream2.map(
+				AssetRendererFactory::getClassName
+			).filter(
+				className::equals
+			).count());
+	}
+
+	@Test
 	public void testGetAssetRendererFactoryByClassName() {
 		String className = TestAssetRendererFactory.class.getName();
 

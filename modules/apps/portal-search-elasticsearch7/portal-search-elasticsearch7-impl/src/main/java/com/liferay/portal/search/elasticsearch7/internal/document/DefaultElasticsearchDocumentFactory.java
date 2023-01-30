@@ -298,9 +298,7 @@ public class DefaultElasticsearchDocumentFactory
 		Object[] elasticsearchValues = new Object[values.size()];
 
 		for (int i = 0; i < values.size(); i++) {
-			Object value = values.get(i);
-
-			elasticsearchValues[i] = _toElasticsearchValue(value);
+			elasticsearchValues[i] = _toElasticsearchValue(values.get(i));
 		}
 
 		xContentBuilder.array(field.getName(), elasticsearchValues);

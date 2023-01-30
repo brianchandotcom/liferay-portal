@@ -3,6 +3,7 @@ dependencies {
 	testIntegrationCompile project(":apps:analytics:analytics-settings-api")
 	testIntegrationCompile project(":apps:analytics:analytics-settings-rest-api")
 	testIntegrationCompile project(":apps:asset:asset-list-api")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:segments:segments-test-util")

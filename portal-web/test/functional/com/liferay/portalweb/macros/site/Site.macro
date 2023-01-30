@@ -1253,7 +1253,7 @@ definition {
 
 		PortletEntry.inputName(name = "${siteName}");
 
-		Button.clickAdd();
+		Button.click(button = "Add");
 
 		if ("${siteNameInvalid}" == "Duplicate") {
 			Alert.viewErrorMessage(errorMessage = "Please enter a unique name.");

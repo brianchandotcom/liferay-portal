@@ -167,7 +167,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public String getClassName() {
-		return _systemObjectDefinitionMetadata.getModelClassName();
+		return _objectDefinition.getClassName();
 	}
 
 	@Override

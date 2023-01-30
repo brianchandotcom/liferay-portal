@@ -4,10 +4,10 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
 					},
 					"indexed": true,
 					"layout": {
+						"opacity": 100,
 						"widthType": "Fluid"
 					},
 					"name": "MyEVP Container"
@@ -16,7 +16,6 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
 								"marginBottom": "4"
 							},
 							"indexed": true,
@@ -142,9 +141,6 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0"
-							},
 							"indexed": true,
 							"layout": {
 								"opacity": 100,
@@ -161,7 +157,6 @@
 									"fragmentStyle": {
 										"backgroundColor": "colorNeutral0",
 										"borderColor": "colorNeutral4",
-										"borderWidth": "0",
 										"height": "65px"
 									},
 									"indexed": true,
@@ -179,7 +174,6 @@
 										"definition": {
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
-												"borderWidth": "0",
 												"height": "65px",
 												"maxWidth": "12%",
 												"paddingLeft": "2",
@@ -284,7 +278,6 @@
 										"definition": {
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
-												"borderWidth": "0",
 												"height": "65px",
 												"maxWidth": "18%",
 												"width": "15%"
@@ -336,7 +329,6 @@
 										"definition": {
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
-												"borderWidth": "0",
 												"height": "65px",
 												"maxWidth": "16%",
 												"width": "14%"
@@ -388,7 +380,6 @@
 										"definition": {
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
-												"borderWidth": "0",
 												"height": "65px",
 												"maxWidth": "12%",
 												"width": "11%"
@@ -440,7 +431,6 @@
 										"definition": {
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
-												"borderWidth": "0",
 												"height": "65px",
 												"maxWidth": "16%",
 												"width": "12%"
@@ -492,7 +482,6 @@
 										"definition": {
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
-												"borderWidth": "0",
 												"height": "65px",
 												"maxWidth": "18%",
 												"width": "16%"
@@ -593,7 +582,6 @@
 													"customCSS": ".evp-table-border {\nborder-bottom: 1px solid var(--color-neutral-4) !important;\n}",
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
-														"borderWidth": "0",
 														"height": "65px"
 													},
 													"indexed": true,
@@ -610,7 +598,6 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "12%",
 																"paddingLeft": "2",
@@ -711,7 +698,6 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "18%",
 																"width": "15%"
@@ -761,7 +747,6 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "16%",
 																"width": "14%"
@@ -811,7 +796,6 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "12%",
 																"width": "11%"
@@ -861,7 +845,6 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "16%",
 																"width": "12%"
@@ -911,7 +894,6 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "18%",
 																"paddingRight": "2",
@@ -963,7 +945,6 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "8%",
 																"width": "8%"
@@ -981,38 +962,12 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "DIALECT-dialect-button"
+																		"key": "evp-kebab-button",
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
-																		"buttonSize": "btn-sm",
-																		"inverted": false,
-																		"style": "primary",
-																		"type": "ghost",
-																		"uppercase": false
 																	},
 																	"fragmentFields": [
-																		{
-																			"id": "link",
-																			"value": {
-																				"fragmentLink": {
-																					"value": {
-																						"href": {
-																							"mapping": {
-																								"fieldKey": "ObjectEntry_displayPageURL",
-																								"itemReference": {
-																									"contextSource": "CollectionItem"
-																								}
-																							}
-																						}
-																					}
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Details"
-																					}
-																				}
-																			}
-																		}
 																	],
 																	"indexed": true
 																},

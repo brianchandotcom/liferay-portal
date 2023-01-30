@@ -1,0 +1,7 @@
+#evp-kebab-button svg {
+ fill: #0B5FFF !important;
+}
+
+#evp-kebab-button svg:hover {
+ fill-opacity: 0.25;
+}

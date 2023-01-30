@@ -75,50 +75,50 @@ public class BulkSelectionBackgroundTaskExecutor
 				(Class<?>)BulkSelectionAction.class,
 			bulkSelectionActionClassName);
 
-		if (bulkSelectionAction != null) {
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)taskContextMap.get(
-					BulkSelectionBackgroundTaskConstants.
-						BULK_SELECTION_PARAMETER_MAP);
+		if (bulkSelectionAction == null) {
+			return BackgroundTaskResult.SUCCESS;
+		}
 
-			String bulkSelectionFactoryClassName = (String)taskContextMap.get(
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)taskContextMap.get(
 				BulkSelectionBackgroundTaskConstants.
-					BULK_SELECTION_FACTORY_CLASS_NAME);
+					BULK_SELECTION_PARAMETER_MAP);
 
-			BulkSelectionFactory<?> bulkSelectionFactory = _getService(
-				(Class<BulkSelectionFactory<?>>)
-					(Class<?>)BulkSelectionFactory.class,
-				bulkSelectionFactoryClassName);
+		String bulkSelectionFactoryClassName = (String)taskContextMap.get(
+			BulkSelectionBackgroundTaskConstants.
+				BULK_SELECTION_FACTORY_CLASS_NAME);
 
-			if (bulkSelectionFactory != null) {
-				try {
-					BulkSelection<?> bulkSelection =
-						bulkSelectionFactory.create(parameterMap);
+		BulkSelectionFactory<?> bulkSelectionFactory = _getService(
+			(Class<BulkSelectionFactory<?>>)
+				(Class<?>)BulkSelectionFactory.class,
+			bulkSelectionFactoryClassName);
 
-					Map<String, Serializable> inputMap =
-						(Map<String, Serializable>)taskContextMap.get(
-							BulkSelectionBackgroundTaskConstants.
-								BULK_SELECTION_ACTION_INPUT_MAP);
+		if (bulkSelectionFactory == null) {
+			return BackgroundTaskResult.SUCCESS;
+		}
 
-					boolean assetEntryBulkSelection =
-						(boolean)inputMap.getOrDefault(
-							BulkSelectionInputParameters.
-								ASSET_ENTRY_BULK_SELECTION,
-							false);
+		try {
+			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
+				parameterMap);
 
-					if (assetEntryBulkSelection) {
-						bulkSelection =
-							bulkSelection.toAssetEntryBulkSelection();
-					}
+			Map<String, Serializable> inputMap =
+				(Map<String, Serializable>)taskContextMap.get(
+					BulkSelectionBackgroundTaskConstants.
+						BULK_SELECTION_ACTION_INPUT_MAP);
 
-					bulkSelectionAction.execute(
-						_userLocalService.getUser(backgroundTask.getUserId()),
-						(BulkSelection<Object>)bulkSelection, inputMap);
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
+			boolean assetEntryBulkSelection = (boolean)inputMap.getOrDefault(
+				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, false);
+
+			if (assetEntryBulkSelection) {
+				bulkSelection = bulkSelection.toAssetEntryBulkSelection();
 			}
+
+			bulkSelectionAction.execute(
+				_userLocalService.getUser(backgroundTask.getUserId()),
+				(BulkSelection<Object>)bulkSelection, inputMap);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return BackgroundTaskResult.SUCCESS;

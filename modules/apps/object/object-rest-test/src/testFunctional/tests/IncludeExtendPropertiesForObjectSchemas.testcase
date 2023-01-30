@@ -22,6 +22,7 @@ definition {
 
 		task ("Given a custom object definition is created with post request") {
 			ObjectUtils.staticObjectDefinitionIdUniversity();
+
 			ObjectUtils.staticObjectDefinitionIdSubject();
 		}
 	}

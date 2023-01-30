@@ -12,6 +12,7 @@ definition {
 
 		task ("Given University and Subject object definitions created") {
 			ObjectUtils.staticObjectDefinitionIdUniversity();
+
 			ObjectUtils.staticObjectDefinitionIdSubject();
 		}
 
@@ -38,7 +39,7 @@ definition {
 		}
 
 		task ("And Given University entry created") {
-			ObjectDefinitionAPI.setUpGlobalUniversityId();
+			ObjectUtils.staticUniversityEntry();
 		}
 
 		task ("And Given Account entry created") {
@@ -79,7 +80,7 @@ definition {
 		task ("When I request PUT to relate University entry to the Account entry with /o/c/universities/{universityId}/accountsUniversities/{accountId}") {
 			ObjectDefinitionAPI.relateObjectEntries(
 				en_US_plural_label = "universities",
-				objectEntry1 = "${staticUniversityId}",
+				objectEntry1 = "${staticUniversityEntryId}",
 				objectEntry2 = "${staticAccountId}",
 				relationshipName = "accountsUniversities");
 		}
@@ -141,7 +142,7 @@ definition {
 		task ("And Given I request PUT to relate University entry to the Account entry with /o/c/universities/{universityId}/universitiesAccounts/{accountId}") {
 			ObjectDefinitionAPI.relateObjectEntries(
 				en_US_plural_label = "universities",
-				objectEntry1 = "${staticUniversityId}",
+				objectEntry1 = "${staticUniversityEntryId}",
 				objectEntry2 = "${staticAccountId}",
 				relationshipName = "universitiesAccounts");
 		}
@@ -153,7 +154,7 @@ definition {
 		task ("Then GET /o/c/universities/{universityId}/universitiesAccounts returns an empty Page") {
 			var response = ObjectDefinitionAPI.getObjectEntryRelation(
 				en_US_plural_label = "universities",
-				objectId = "${staticUniversityId}",
+				objectId = "${staticUniversityEntryId}",
 				relationshipName = "universitiesAccounts");
 
 			ObjectDefinitionAPI.assertNoItemsInResponse(responseToParse = "${response}");

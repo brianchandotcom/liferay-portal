@@ -10,6 +10,7 @@ definition {
 		TestCase.setUpPortalInstanceNoSelenium();
 
 		ObjectUtils.staticObjectDefinitionIdUniversity();
+
 		ObjectUtils.staticObjectDefinitionIdSubject();
 	}
 

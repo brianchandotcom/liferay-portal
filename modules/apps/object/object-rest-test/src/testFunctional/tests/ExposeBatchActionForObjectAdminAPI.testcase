@@ -10,6 +10,7 @@ definition {
 
 		task ("Given an object definition is created") {
 			ObjectUtils.staticObjectDefinitionIdUniversity();
+
 			ObjectUtils.staticObjectDefinitionIdSubject();
 		}
 	}

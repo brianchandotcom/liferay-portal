@@ -14,23 +14,22 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.calendar;
 
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarRegistry;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -45,8 +44,14 @@ public class WorkflowMetricsSLACalendarRegistryImpl
 	public WorkflowMetricsSLACalendar getWorkflowMetricsSLACalendar(
 		String key) {
 
-		return _workflowMetricsSLACalendars.getOrDefault(
-			key, _defaultWorkflowMetricsSLACalendar);
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			_serviceTrackerMap.getService(key);
+
+		if (workflowMetricsSLACalendar != null) {
+			return workflowMetricsSLACalendar;
+		}
+
+		return _serviceTrackerMap.getService("default");
 	}
 
 	@Override
@@ -54,53 +59,34 @@ public class WorkflowMetricsSLACalendarRegistryImpl
 		Locale locale) {
 
 		return Stream.of(
-			_workflowMetricsSLACalendars.entrySet()
+			_serviceTrackerMap.keySet()
 		).flatMap(
 			Set::stream
 		).collect(
 			Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> {
+				Function.identity(),
+				key -> {
 					WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
-						entry.getValue();
+						_serviceTrackerMap.getService(key);
 
 					return workflowMetricsSLACalendar.getTitle(locale);
 				})
 		);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addWorkflowMetricsSLACalendar(
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
-		Map<String, Object> properties) {
-
-		String key = MapUtil.getString(properties, "sla.calendar.key");
-
-		_workflowMetricsSLACalendars.put(key, workflowMetricsSLACalendar);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, WorkflowMetricsSLACalendar.class,
+			"sla.calendar.key");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_workflowMetricsSLACalendars.clear();
+		_serviceTrackerMap.close();
 	}
 
-	protected void removeWorkflowMetricsSLACalendar(
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
-		Map<String, Object> properties) {
-
-		String key = MapUtil.getString(properties, "sla.calendar.key");
-
-		_workflowMetricsSLACalendars.remove(key);
-	}
-
-	@Reference(target = "(sla.calendar.key=default)")
-	private WorkflowMetricsSLACalendar _defaultWorkflowMetricsSLACalendar;
-
-	private final Map<String, WorkflowMetricsSLACalendar>
-		_workflowMetricsSLACalendars = new HashMap<>();
+	private ServiceTrackerMap<String, WorkflowMetricsSLACalendar>
+		_serviceTrackerMap;
 
 }

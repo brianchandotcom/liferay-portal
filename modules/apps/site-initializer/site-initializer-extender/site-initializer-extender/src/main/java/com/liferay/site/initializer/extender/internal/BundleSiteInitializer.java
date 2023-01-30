@@ -102,6 +102,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1345,10 +1346,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_objectDefinitionLocalService.fetchObjectDefinition(
 						serviceContext.getCompanyId(), "C_" + entry.getKey());
 
-			_objectDefinitionLocalService.
-				restrictObjectDefinitionByAccountEntry(
-					serviceBuilderObjectDefinition, serviceContext.getUserId());
-		}
+			String objectRelationshipName =
+				"accountEntryTo" +
+				serviceBuilderObjectDefinition.getShortName();
+
+			com.liferay.object.model.ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationshipByObjectDefinitionId(
+					serviceBuilderObjectDefinition.getObjectDefinitionId(),
+					objectRelationshipName);
+
+				_objectDefinitionLocalService.
+					restrictObjectDefinitionByAccountEntry(
+						serviceBuilderObjectDefinition, serviceContext.getUserId(), objectRelationship);
+			}
 
 		_invoke(
 			() -> _addOrUpdateObjectFields(

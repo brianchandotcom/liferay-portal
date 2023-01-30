@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Jeyvison Nascimento
@@ -281,21 +282,19 @@ public class DataStorageUtil {
 	private static Map<String, Object> _toLocalizedMap(
 		String fieldType, LocalizedValue localizedValue) {
 
+		Function<Locale, Object> mapFunction = localizedValue::getString;
+
+		if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
+			fieldType.equals(DDMFormFieldType.SELECT)) {
+
+			mapFunction = locale -> _toStringList(locale, localizedValue);
+		}
+
 		Map<String, Object> localizedMap = new HashMap<>();
 
 		for (Locale locale : localizedValue.getAvailableLocales()) {
-			if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
-				fieldType.equals(DDMFormFieldType.SELECT)) {
-
-				localizedMap.put(
-					LanguageUtil.getLanguageId(locale),
-					_toStringList(locale, localizedValue));
-			}
-			else {
-				localizedMap.put(
-					LanguageUtil.getLanguageId(locale),
-					localizedValue.getString(locale));
-			}
+			localizedMap.put(
+				LanguageUtil.getLanguageId(locale), mapFunction.apply(locale));
 		}
 
 		return localizedMap;

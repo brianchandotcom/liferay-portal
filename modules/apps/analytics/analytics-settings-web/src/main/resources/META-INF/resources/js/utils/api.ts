@@ -29,6 +29,12 @@ export function deleteConnection() {
 	return request('/data-sources', {method: 'DELETE'});
 }
 
+export function sync() {
+	return request('/analytics-dxp-entity-batch-exporter', {
+		method: 'POST',
+	});
+}
+
 export function fetchAccountGroups(params: TTableRequestParams) {
 	const queryString = serializeTableRequestParams(params);
 

@@ -537,7 +537,8 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetPriority(journalArticle, structuredContent),
-					journalArticle.getGroupId(), structuredContent)));
+					journalArticle.getGroupId(), structuredContent,
+					journalArticle)));
 	}
 
 	@Override
@@ -750,22 +751,40 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				_createServiceContext(priority, groupId, structuredContent)));
+				_createServiceContext(
+					priority, groupId, structuredContent, null)));
 	}
 
 	private ServiceContext _createServiceContext(
-		double assetPriority, long groupId,
-		StructuredContent structuredContent) {
+			double assetPriority, long groupId,
+			StructuredContent structuredContent, JournalArticle journalArticle)
+		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
+		ServiceContext serviceContext = null;
+
+		if ((journalArticle != null) &&
+			(structuredContent.getTaxonomyCategoryIds() == null)) {
+
+			serviceContext = ServiceContextRequestUtil.createServiceContext(
 				structuredContent.getTaxonomyCategoryIds(),
 				structuredContent.getKeywords(),
 				_getExpandoBridgeAttributes(structuredContent), groupId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
 
-		serviceContext.setAssetPriority(assetPriority);
+			serviceContext.setAssetCategoryIds(_getCategoryId(journalArticle));
+			serviceContext.setAssetPriority(assetPriority);
+		}
+		else {
+			serviceContext = ServiceContextRequestUtil.createServiceContext(
+				structuredContent.getTaxonomyCategoryIds(),
+				structuredContent.getKeywords(),
+				_getExpandoBridgeAttributes(structuredContent), groupId,
+				contextHttpServletRequest,
+				structuredContent.getViewableByAsString());
+
+			serviceContext.setAssetPriority(assetPriority);
+		}
 
 		return serviceContext;
 	}
@@ -808,6 +827,20 @@ public class StructuredContentResourceImpl
 			journalArticle.getResourcePrimKey());
 
 		return assetEntry.getPriority();
+	}
+
+	private long[] _getCategoryId(JournalArticle journalArticle)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return assetEntry.getCategoryIds();
 	}
 
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
@@ -1208,7 +1241,8 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetPriority(journalArticle, structuredContent),
-					journalArticle.getGroupId(), structuredContent)));
+					journalArticle.getGroupId(), structuredContent,
+					journalArticle)));
 	}
 
 	private void _validateContentFields(

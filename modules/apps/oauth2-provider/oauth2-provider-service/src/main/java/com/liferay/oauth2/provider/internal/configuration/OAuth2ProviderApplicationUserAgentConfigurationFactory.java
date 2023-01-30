@@ -60,64 +60,70 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 			_log.debug("Activate " + properties);
 		}
 
-		long companyId = ConfigurationFactoryUtil.getCompanyId(
-			companyLocalService, properties);
-		String externalReferenceCode =
-			ConfigurationFactoryUtil.getExternalReferenceCode(properties);
+		ConfigurationFactoryUtil.doTaskAsCompany(
+			companyLocalService, properties,
+			companyId -> {
+				String externalReferenceCode =
+					ConfigurationFactoryUtil.getExternalReferenceCode(
+						properties);
 
-		OAuth2ProviderApplicationUserAgentConfiguration
-			oAuth2ProviderApplicationUserAgentConfiguration =
-				ConfigurableUtil.createConfigurable(
-					OAuth2ProviderApplicationUserAgentConfiguration.class,
+				OAuth2ProviderApplicationUserAgentConfiguration
+					oAuth2ProviderApplicationUserAgentConfiguration =
+						ConfigurableUtil.createConfigurable(
+							OAuth2ProviderApplicationUserAgentConfiguration.
+								class,
+							properties);
+
+				Company company = companyLocalService.getCompanyById(companyId);
+
+				List<String> redirectURIsList = Collections.singletonList(
+					StringBundler.concat(
+						OAuth2RedirectURIInterpolator.TOKEN_PROTOCOL,
+						Http.PROTOCOL_DELIMITER, company.getVirtualHostname(),
+						OAuth2RedirectURIInterpolator.TOKEN_PORT_WITH_COLON,
+						"/o/oauth2/redirect"));
+
+				List<String> scopeAliasesList = ListUtil.fromArray(
+					oAuth2ProviderApplicationUserAgentConfiguration.scopes());
+
+				oAuth2Application = _addOrUpdateOAuth2Application(
+					companyId, externalReferenceCode,
+					oAuth2ProviderApplicationUserAgentConfiguration,
+					redirectURIsList, scopeAliasesList);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("OAuth 2 application " + oAuth2Application);
+				}
+
+				modifyConfigMap(
+					company,
+					HashMapBuilder.put(
+						externalReferenceCode + ".oauth2.authorization.uri",
+						"/o/oauth2/authorize"
+					).put(
+						externalReferenceCode + ".oauth2.introspection.uri",
+						"/o/oauth2/introspect"
+					).put(
+						externalReferenceCode + ".oauth2.jwks.uri",
+						"/o/oauth2/jwks"
+					).put(
+						externalReferenceCode + ".oauth2.redirect.uris",
+						"/o/oauth2/redirect"
+					).put(
+						externalReferenceCode + ".oauth2.token.uri",
+						"/o/oauth2/token"
+					).put(
+						externalReferenceCode + ".oauth2.user.agent.audience",
+						oAuth2Application.getHomePageURL()
+					).put(
+						externalReferenceCode + ".oauth2.user.agent.client.id",
+						oAuth2Application.getClientId()
+					).put(
+						externalReferenceCode + ".oauth2.user.agent.scopes",
+						StringUtil.merge(scopeAliasesList, StringPool.NEW_LINE)
+					).build(),
 					properties);
-
-		Company company = companyLocalService.getCompanyById(companyId);
-
-		List<String> redirectURIsList = Collections.singletonList(
-			StringBundler.concat(
-				OAuth2RedirectURIInterpolator.TOKEN_PROTOCOL,
-				Http.PROTOCOL_DELIMITER, company.getVirtualHostname(),
-				OAuth2RedirectURIInterpolator.TOKEN_PORT_WITH_COLON,
-				"/o/oauth2/redirect"));
-
-		List<String> scopeAliasesList = ListUtil.fromArray(
-			oAuth2ProviderApplicationUserAgentConfiguration.scopes());
-
-		oAuth2Application = _addOrUpdateOAuth2Application(
-			companyId, externalReferenceCode,
-			oAuth2ProviderApplicationUserAgentConfiguration, redirectURIsList,
-			scopeAliasesList);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("OAuth 2 application " + oAuth2Application);
-		}
-
-		modifyConfigMap(
-			company,
-			HashMapBuilder.put(
-				externalReferenceCode + ".oauth2.authorization.uri",
-				"/o/oauth2/authorize"
-			).put(
-				externalReferenceCode + ".oauth2.introspection.uri",
-				"/o/oauth2/introspect"
-			).put(
-				externalReferenceCode + ".oauth2.jwks.uri", "/o/oauth2/jwks"
-			).put(
-				externalReferenceCode + ".oauth2.redirect.uris",
-				"/o/oauth2/redirect"
-			).put(
-				externalReferenceCode + ".oauth2.token.uri", "/o/oauth2/token"
-			).put(
-				externalReferenceCode + ".oauth2.user.agent.audience",
-				oAuth2Application.getHomePageURL()
-			).put(
-				externalReferenceCode + ".oauth2.user.agent.client.id",
-				oAuth2Application.getClientId()
-			).put(
-				externalReferenceCode + ".oauth2.user.agent.scopes",
-				StringUtil.merge(scopeAliasesList, StringPool.NEW_LINE)
-			).build(),
-			properties);
+			});
 	}
 
 	@Override

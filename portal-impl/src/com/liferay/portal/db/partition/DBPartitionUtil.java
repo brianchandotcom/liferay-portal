@@ -215,8 +215,10 @@ public class DBPartitionUtil {
 			DBManagerUtil.getDBType(DialectDetector.getDialect(dataSource)),
 			dataSource);
 
-		if (db.getDBType() != DBType.MYSQL) {
-			throw new Error("Database partition requires MySQL");
+		if ((db.getDBType() != DBType.MYSQL) &&
+			(db.getDBType() != DBType.MARIADB)) {
+
+			throw new Error("Database partition requires MySQL or MariaDB");
 		}
 
 		try (Connection connection = dataSource.getConnection()) {

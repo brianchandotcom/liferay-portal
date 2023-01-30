@@ -161,7 +161,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_PAGINATION_NEXT_BUTTON_NUMERIC</td>
-	<td>//a[contains(@class, 'page-link') and contains(@aria-label,'next')]</td>
+	<td>//div[contains(@class, 'page-link')]//*[name()='svg'][contains(@class,'right')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -171,7 +171,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_PAGINATION_PREVIOUS_BUTTON_NUMERIC</td>
-	<td>//a[contains(@class, 'page-link') and contains(@aria-label,'previous')]</td>
+	<td>//div[contains(@class, 'page-link')]//*[name()='svg'][contains(@class,'left')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -91,7 +91,6 @@ definition {
 
 		task ("Then nodes subjectStudents,universityStudents contain related student entry data") {
 			var universityEntryErc = JSONUtil.getWithJSONPath("${response}", "$..universityStudents[?(@.id==${staticUniversityEntryId})].externalReferenceCode");
-
 			var subjectEntryErc = JSONUtil.getWithJSONPath("${response}", "$..subjectStudents[?(@.id==${staticSubjectEntryId})].externalReferenceCode");
 
 			TestUtils.assertEquals(
@@ -141,9 +140,7 @@ definition {
 
 		task ("Then the response contains r_universityStudents_c_universityId,r_universityStudents_c_universityERC,universityStudentsERC values") {
 			var r_universityStudents_c_universityErc = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_universityERC");
-
 			var r_universityStudents_c_universityId = JSONUtil.getWithJSONPath("${response}", "$..r_universityStudents_c_universityId");
-			
 			var universityStudentsErcValue = JSONUtil.getWithJSONPath("${response}", "$..universityStudentsERC");
 
 			TestUtils.assertEquals(
@@ -152,7 +149,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = "${r_universityStudents_c_universityId}",
-				expected = "${staticUniversityEntryId}");	
+				expected = "${staticUniversityEntryId}");
 		}
 	}
 

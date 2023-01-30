@@ -92,12 +92,24 @@ public class BlogsEntryServiceUtil {
 		getService().deleteEntry(entryId);
 	}
 
+	public static BlogsEntry fetchBlogsEntry(long entryId)
+		throws PortalException {
+
+		return getService().fetchBlogsEntry(entryId);
+	}
+
 	public static BlogsEntry fetchBlogsEntryByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		return getService().fetchBlogsEntryByExternalReferenceCode(
 			groupId, externalReferenceCode);
+	}
+
+	public static BlogsEntry fetchEntry(long groupId, String urlTitle)
+		throws PortalException {
+
+		return getService().fetchEntry(groupId, urlTitle);
 	}
 
 	public static BlogsEntry getBlogsEntryByExternalReferenceCode(

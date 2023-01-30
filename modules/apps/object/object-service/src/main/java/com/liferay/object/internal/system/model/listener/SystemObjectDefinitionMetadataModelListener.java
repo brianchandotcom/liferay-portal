@@ -114,6 +114,16 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				return;
 			}
 
+			EntityExtensionThreadLocal.setExtendedProperties(
+				HashMapBuilder.putAll(
+					_objectEntryLocalService.
+						getExtensionDynamicObjectDefinitionTableValues(
+							objectDefinition,
+							GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
+				).putAll(
+					EntityExtensionThreadLocal.getExtendedProperties()
+				).build());
+
 			_objectEntryLocalService.
 				deleteExtensionDynamicObjectDefinitionTableValues(
 					objectDefinition,

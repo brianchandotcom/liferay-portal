@@ -1,0 +1,38 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "placeholder",
+					"localizable": true,
+					"name": "placeholder",
+					"type": "text"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "5",
+					"label": "number-of-lines",
+					"name": "numberOfLines",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 0,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "show-characters-count",
+					"name": "showCharactersCount",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

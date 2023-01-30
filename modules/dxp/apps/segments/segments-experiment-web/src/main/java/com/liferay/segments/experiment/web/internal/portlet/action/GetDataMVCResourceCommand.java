@@ -169,31 +169,24 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					httpServletRequest)
 			).put(
 				"createSegmentsVariantURL",
-				() -> {
-					String url = PortletURLBuilder.create(
-						_portal.getControlPanelPortletURL(
-							httpServletRequest, group,
-							ContentPageEditorPortletKeys.
-								CONTENT_PAGE_EDITOR_PORTLET,
-							0, 0, PortletRequest.ACTION_PHASE)
-					).setActionName(
-						"/layout_content_page_editor/add_segments_experience"
-					).buildString();
-
-					url = HttpComponentsUtil.addParameter(
-						url,
-						_getContentPageEditorPortletNamespace() + "p_l_mode",
-						Constants.EDIT);
-					url = HttpComponentsUtil.addParameter(
-						url, _getContentPageEditorPortletNamespace() + "plid",
-						layout.getPlid());
-					url = HttpComponentsUtil.addParameter(
-						url,
-						_getContentPageEditorPortletNamespace() + "groupId",
-						group.getGroupId());
-
-					return url;
-				}
+				() -> PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						httpServletRequest, group,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						0, 0, PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/layout_content_page_editor/add_segments_experience"
+				).setGlobalParameter(
+					_getContentPageEditorPortletNamespace() + "p_l_mode",
+					Constants.EDIT
+				).setGlobalParameter(
+					_getContentPageEditorPortletNamespace() + "plid",
+					layout.getPlid()
+				).setGlobalParameter(
+					_getContentPageEditorPortletNamespace() + "groupId",
+					group.getGroupId()
+				).buildString()
 			).put(
 				"deleteSegmentsExperimentURL",
 				_getSegmentsExperimentActionURL(

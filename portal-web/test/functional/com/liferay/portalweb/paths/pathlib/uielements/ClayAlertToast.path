@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>ALERT_TOAST_CLOSE_BUTTON</td>
-	<td>//*[@id='ToastAlertContainer']//button[@class='close']</td>
+	<td>//*[@id='ToastAlertContainer']//*[contains(@class, 'alert-${key_type}')]//button[@class='close']</td>
 	<td></td>
 </tr>
 <tr>

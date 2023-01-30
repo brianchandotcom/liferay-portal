@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -199,6 +200,11 @@ public class ObjectCodeEditorUtil {
 			"check-if-a-text-field-matches-a-specific-string-value-or-regex-" +
 				"expression-and-return-a-boolean",
 			"match"),
+		OLD_VALUE(
+			"oldValue(\"field_name\")",
+			"use-the-previous-value-of-a-field-before-its-update-to-create-" +
+				"more-accurate-conditions",
+			"old-value"),
 		PAST_DATES(
 			"pastDates(field_name, parameter)",
 			"check-if-a-date-fields-value-is-in-the-past-and-return-a-boolean",
@@ -224,8 +230,10 @@ public class ObjectCodeEditorUtil {
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
 				if (StringUtil.equals(
 						ddmExpressionFunction._key, "old-value") &&
-					!GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-171440"))) {
+					(!GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-171440")) ||
+					 (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION !=
+						 2))) {
 
 					continue;
 				}

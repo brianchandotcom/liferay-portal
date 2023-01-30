@@ -25,7 +25,6 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -266,13 +265,11 @@ public class ListTypeEntryLocalServiceTest {
 		}
 	}
 
-	@DeleteAfterTestRun
 	private ListTypeDefinition _listTypeDefinition;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
-	@DeleteAfterTestRun
 	private ListTypeEntry _listTypeEntry;
 
 	@Inject

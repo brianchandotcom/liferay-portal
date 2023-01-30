@@ -1343,6 +1343,85 @@ main();
 		}
 	}
 
+	@description = "This is a test for LPS-147897. The page designer could customize date format on date fragment."
+	@priority = "4"
+	test CustomizeDateFormatToMappedDate {
+		task ("Given a page designer has a fragment with mapped date") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+	<div data-lfr-editable-type="date-time" data-lfr-editable-id="date-time">
+	</div>
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Fragment Name",
+				id = "date-time");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Publish Date");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("When the page designer customizes the date format") {
+			Select(
+				key_fieldLabel = "Date Format",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Custom");
+
+			Type(
+				key_fieldLabel = "Custom Format",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "dd-MM-YYYY HH:mm:ss");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page designer sees the customized date format applied to mapped date") {
+			var modifiedDate = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'fragment-name')]]//*[contains(@data-lfr-editable-id,'date-time')]");
+
+			var match = StringUtil.matches("${modifiedDate}", "^(\d\d-\d\d-\d\d\d\d\s\d\d:\d\d:\d\d)$");
+
+			if ("${match}" == "true") {
+				echo("PASSED");
+			}
+			else {
+				fail("The ${modifiedDate} doesn't follow the expected format dd-MM-YYYY HH:mm:ss");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-147897. The page designer could map the date field in specific date format to date fragment."
 	@priority = "5"
 	test MapDateFieldToFragmentWithDateEditableField {

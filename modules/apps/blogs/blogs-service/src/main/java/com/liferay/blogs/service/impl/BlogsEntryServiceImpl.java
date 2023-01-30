@@ -143,12 +143,39 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public BlogsEntry fetchBlogsEntry(long entryId) throws PortalException {
+		BlogsEntry blogsEntry = blogsEntryLocalService.fetchBlogsEntry(entryId);
+
+		if (blogsEntry != null) {
+			_blogsEntryModelResourcePermission.check(
+				getPermissionChecker(), blogsEntry, ActionKeys.VIEW);
+		}
+
+		return blogsEntry;
+	}
+
+	@Override
 	public BlogsEntry fetchBlogsEntryByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		BlogsEntry blogsEntry = blogsEntryPersistence.fetchByERC_G(
 			externalReferenceCode, groupId);
+
+		if (blogsEntry != null) {
+			_blogsEntryModelResourcePermission.check(
+				getPermissionChecker(), blogsEntry, ActionKeys.VIEW);
+		}
+
+		return blogsEntry;
+	}
+
+	@Override
+	public BlogsEntry fetchEntry(long groupId, String urlTitle)
+		throws PortalException {
+
+		BlogsEntry blogsEntry = blogsEntryLocalService.fetchEntry(
+			groupId, urlTitle);
 
 		if (blogsEntry != null) {
 			_blogsEntryModelResourcePermission.check(

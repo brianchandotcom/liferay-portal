@@ -20,16 +20,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.debug.SystemChecker;
 
 import java.util.Collection;
+import java.util.Dictionary;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -41,7 +44,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Component(
 	property = {"osgi.command.function=check", "osgi.command.scope=system"},
-	service = SystemCheckOSGiCommands.class
+	service = {}
 )
 public class SystemCheckOSGiCommands {
 
@@ -50,7 +53,9 @@ public class SystemCheckOSGiCommands {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, SystemChecker.class, null);
 
@@ -74,10 +79,26 @@ public class SystemCheckOSGiCommands {
 
 			_check(false);
 		}
+
+		Dictionary<String, Object> osgiCommandProperties =
+			new HashMapDictionary<>();
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.startsWith("osgi.command.")) {
+				osgiCommandProperties.put(key, entry.getValue());
+			}
+		}
+
+		_serviceRegistration = bundleContext.registerService(
+			SystemCheckOSGiCommands.class, this, osgiCommandProperties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceRegistration.unregister();
+
 		_serviceTracker.close();
 	}
 
@@ -146,6 +167,7 @@ public class SystemCheckOSGiCommands {
 	@Reference
 	private Props _props;
 
+	private ServiceRegistration<?> _serviceRegistration;
 	private ServiceTracker<SystemChecker, SystemChecker> _serviceTracker;
 
 }

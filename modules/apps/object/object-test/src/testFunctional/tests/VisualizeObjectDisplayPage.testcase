@@ -24,13 +24,12 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Boolean type for table view on the Display Page"
 	@priority = "4"
 	test CanDefineFixedFilterForBooleanType {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 314",
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 314",
+			objectName = "CustomObject314",
 			pluralLabelName = "Custom Objects 314");
 
-		CreateObject.saveObject();
+		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 314");
 
@@ -39,14 +38,6 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Field",
 			fieldType = "Boolean");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 314");
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-		CreateObject.saveObject();
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject314");
 

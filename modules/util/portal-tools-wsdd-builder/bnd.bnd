@@ -38,8 +38,4 @@ Main-Class: com.liferay.portal.tools.wsdd.builder.WSDDBuilder
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/ant/AntUtil*,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/ant/DeleteTask.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/ant/Java2WsddTask.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLSafeReader.class,\
 	@xercesImpl-[0-9.]*.jar!/org/apache/xerces/xni/XNIException.class

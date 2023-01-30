@@ -13,7 +13,7 @@
  */
 
 import {act, fireEvent, render} from '@testing-library/react';
-import {PageProvider} from 'data-engine-js-components-web';
+import {FormProvider, PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -23,9 +23,11 @@ import {FieldBase} from '../../../src/main/resources/META-INF/resources/FieldBas
 const spritemap = 'icons.svg';
 
 const FieldBaseWithProvider = (props) => (
-	<PageProvider value={{editingLanguageId: 'en_US'}}>
-		<FieldBase {...props} />
-	</PageProvider>
+	<FormProvider initialState={{pages: []}}>
+		<PageProvider value={{editingLanguageId: 'en_US'}}>
+			<FieldBase {...props} />
+		</PageProvider>
+	</FormProvider>
 );
 
 describe('ReactFieldBase', () => {

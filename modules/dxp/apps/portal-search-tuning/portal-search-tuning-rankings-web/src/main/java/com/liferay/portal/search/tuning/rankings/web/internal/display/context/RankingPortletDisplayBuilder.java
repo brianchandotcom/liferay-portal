@@ -345,12 +345,6 @@ public class RankingPortletDisplayBuilder {
 		).buildPortletURL();
 	}
 
-	private List<RankingEntryDisplayContext> _getRankingEntryDisplayContexts(
-		List<SearchHit> searchHits) {
-
-		return TransformUtil.transform(searchHits, this::_buildDisplayContext);
-	}
-
 	private boolean _hasResults(
 		SearchContainer<RankingEntryDisplayContext> searchContainer) {
 
@@ -383,7 +377,8 @@ public class RankingPortletDisplayBuilder {
 		SearchHits searchHits = searchRankingResponse.getSearchHits();
 
 		searchContainer.setResultsAndTotal(
-			() -> _getRankingEntryDisplayContexts(searchHits.getSearchHits()),
+			() -> TransformUtil.transform(
+				searchHits.getSearchHits(), this::_buildDisplayContext),
 			searchRankingResponse.getTotalHits());
 
 		searchContainer.setSearch(true);

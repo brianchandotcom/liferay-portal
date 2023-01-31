@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
@@ -51,7 +52,8 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-			long groupId, Class<?> clazz, long classPK, String layoutUuid)
+			long groupId, Class<?> clazz, long classPK, String entryUuid,
+			int type)
 		throws PortalException {
 
 		_groupPermission.check(
@@ -60,7 +62,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		_checkCPDisplayLayout(clazz.getName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.addCPDisplayLayout(
-			getUserId(), groupId, clazz, classPK, layoutUuid);
+			getUserId(), groupId, clazz, classPK, entryUuid, type);
 	}
 
 	@Override
@@ -89,9 +91,13 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			cpDisplayLayoutLocalService.fetchCPDisplayLayout(cpDisplayLayoutId);
 
 		if (cpDisplayLayout != null) {
-			LayoutPermissionUtil.check(
-				getPermissionChecker(), _getLayout(cpDisplayLayout),
-				ActionKeys.VIEW);
+			if (cpDisplayLayout.getType() ==
+					CPDisplayLayoutConstants.TYPE_LAYOUT) {
+
+				LayoutPermissionUtil.check(
+					getPermissionChecker(), _getLayout(cpDisplayLayout),
+					ActionKeys.VIEW);
+			}
 
 			_checkCPDisplayLayout(
 				cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
@@ -103,34 +109,36 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
-			long companyId, long groupId, String className, String keywords,
-			int start, int end, Sort sort)
+			long companyId, long groupId, String className, Integer type,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		_groupPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return cpDisplayLayoutLocalService.searchCPDisplayLayout(
-			companyId, groupId, className, keywords, start, end, sort);
+			companyId, groupId, className, type, keywords, start, end, sort);
 	}
 
 	@Override
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String entryUuid)
 		throws PortalException {
 
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutLocalService.getCPDisplayLayout(cpDisplayLayoutId);
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), _getLayout(cpDisplayLayout),
-			ActionKeys.UPDATE);
+		if (cpDisplayLayout.getType() == CPDisplayLayoutConstants.TYPE_LAYOUT) {
+			LayoutPermissionUtil.check(
+				getPermissionChecker(), _getLayout(cpDisplayLayout),
+				ActionKeys.VIEW);
+		}
 
 		_checkCPDisplayLayout(
 			cpDisplayLayout.getClassName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.updateCPDisplayLayout(
-			cpDisplayLayout.getCPDisplayLayoutId(), classPK, layoutUuid);
+			cpDisplayLayout.getCPDisplayLayoutId(), classPK, entryUuid);
 	}
 
 	private void _checkCPDisplayLayout(
@@ -160,7 +168,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	private Layout _getLayout(CPDisplayLayout cpDisplayLayout) {
 		Layout layout = _layoutLocalService.fetchLayout(
-			cpDisplayLayout.getLayoutUuid(), cpDisplayLayout.getGroupId(),
+			cpDisplayLayout.getEntryUuid(), cpDisplayLayout.getGroupId(),
 			false);
 
 		if (layout != null) {
@@ -168,8 +176,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		}
 
 		return _layoutLocalService.fetchLayout(
-			cpDisplayLayout.getLayoutUuid(), cpDisplayLayout.getGroupId(),
-			true);
+			cpDisplayLayout.getEntryUuid(), cpDisplayLayout.getGroupId(), true);
 	}
 
 	@Reference

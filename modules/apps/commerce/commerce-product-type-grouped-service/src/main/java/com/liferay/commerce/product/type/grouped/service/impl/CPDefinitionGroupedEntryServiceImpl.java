@@ -147,6 +147,36 @@ public class CPDefinitionGroupedEntryServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionGroupedEntry>
+			getEntryCProductCPDefinitionGroupedEntries(
+				long entryCProductId, int start, int end,
+				OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
+		throws PortalException {
+
+		CProduct cProduct = cProductLocalService.getCProduct(entryCProductId);
+
+		_checkCommerceCatalog(
+			cProduct.getPublishedCPDefinitionId(), ActionKeys.VIEW);
+
+		return cpDefinitionGroupedEntryPersistence.findByEntryCProductId(
+			entryCProductId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getEntryCProductCPDefinitionGroupedEntriesCount(
+			long entryCProductId)
+		throws PortalException {
+
+		CProduct cProduct = cProductLocalService.getCProduct(entryCProductId);
+
+		_checkCommerceCatalog(
+			cProduct.getPublishedCPDefinitionId(), ActionKeys.VIEW);
+
+		return cpDefinitionGroupedEntryPersistence.countByEntryCProductId(
+			entryCProductId);
+	}
+
+	@Override
 	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
 			long cpDefinitionGroupedEntryId, double priority, int quantity)
 		throws PortalException {

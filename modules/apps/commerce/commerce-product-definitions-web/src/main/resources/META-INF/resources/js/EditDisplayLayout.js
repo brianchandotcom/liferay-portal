@@ -15,7 +15,8 @@
 import {delegate, getOpener, sub} from 'frontend-js-web';
 
 export default function ({
-	displayPageItemSelectorUrl,
+	layoutItemSelectorUrl,
+	layoutPageTemplateEntryItemSelectorUrl,
 	portletNamespace,
 	productItemSelectorUrl,
 	removeIcon,
@@ -114,8 +115,11 @@ export default function ({
 	);
 
 	const initDisplayPageSelection = () => {
-		const chooseDisplayPageButton = document.getElementById(
-			`${portletNamespace}chooseDisplayPage`
+		const chooseLayoutButton = document.getElementById(
+			`${portletNamespace}chooseLayout`
+		);
+		const chooseLayoutPageTemplateEntryButton = document.getElementById(
+			`${portletNamespace}chooseLayoutPageTemplateEntry`
 		);
 		const displayPageItemRemoveIcon = document.getElementById(
 			`${portletNamespace}displayPageItemRemove`
@@ -128,7 +132,7 @@ export default function ({
 		);
 
 		if (
-			!chooseDisplayPageButton ||
+			(!chooseLayoutButton && !chooseLayoutPageTemplateEntryButton) ||
 			!displayPageItemRemoveIcon ||
 			!pagesContainerInput ||
 			!displayPageNameInput
@@ -136,26 +140,55 @@ export default function ({
 			return;
 		}
 
-		chooseDisplayPageButton.addEventListener('click', () => {
-			openerWindow.Liferay.Util.openSelectionModal({
-				buttonAddLabel: Liferay.Language.get('done'),
-				multiple: true,
-				onSelect: (selectedItem) => {
-					if (!selectedItem) {
-						return;
-					}
+		if (chooseLayoutButton) {
+			chooseLayoutButton.addEventListener('click', () => {
+				openerWindow.Liferay.Util.openSelectionModal({
+					buttonAddLabel: Liferay.Language.get('done'),
+					multiple: true,
+					onSelect: (selectedItem) => {
+						if (!selectedItem) {
+							return;
+						}
 
-					pagesContainerInput.value = selectedItem.id;
+						pagesContainerInput.value = selectedItem.id;
 
-					displayPageNameInput.innerHTML = selectedItem.name;
+						displayPageNameInput.innerHTML = selectedItem.name;
 
-					displayPageItemRemoveIcon.classList.remove('hide');
-				},
-				selectEventName: 'selectDisplayPage',
-				title: Liferay.Language.get('select-product-display-page'),
-				url: displayPageItemSelectorUrl,
+						displayPageItemRemoveIcon.classList.remove('hide');
+					},
+					selectEventName: 'selectLayout',
+					title: Liferay.Language.get('select-product-display-page'),
+					url: layoutItemSelectorUrl,
+				});
 			});
-		});
+		}
+
+		if (chooseLayoutPageTemplateEntryButton) {
+			chooseLayoutPageTemplateEntryButton.addEventListener(
+				'click',
+				() => {
+					openerWindow.Liferay.Util.openSelectionModal({
+						buttonAddLabel: Liferay.Language.get('done'),
+						onSelect: (selectedItem) => {
+							if (!selectedItem) {
+								return;
+							}
+
+							pagesContainerInput.value = selectedItem.id;
+
+							displayPageNameInput.innerHTML = selectedItem.name;
+
+							displayPageItemRemoveIcon.classList.remove('hide');
+						},
+						selectEventName: 'selectLayoutPageTemplateEntry',
+						title: Liferay.Language.get(
+							'select-product-display-page'
+						),
+						url: layoutPageTemplateEntryItemSelectorUrl,
+					});
+				}
+			);
+		}
 
 		displayPageItemRemoveIcon.addEventListener('click', () => {
 			displayPageNameInput.innerHTML = Liferay.Language.get('none');

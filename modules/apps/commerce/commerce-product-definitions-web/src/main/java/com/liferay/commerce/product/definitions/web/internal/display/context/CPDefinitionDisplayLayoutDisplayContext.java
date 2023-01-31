@@ -16,9 +16,11 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
+import com.liferay.commerce.product.item.selector.criterion.LayoutPageTemplateEntryItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
@@ -31,6 +33,8 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,6 +52,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -159,7 +165,7 @@ public class CPDefinitionDisplayLayoutDisplayContext
 		return layout;
 	}
 
-	public String getDisplayPageItemSelectorUrl() throws PortalException {
+	public String getLayoutItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());
@@ -180,8 +186,63 @@ public class CPDefinitionDisplayLayoutDisplayContext
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory,
 				_groupLocalService.getGroup(commerceChannel.getSiteGroupId()),
-				commerceChannel.getSiteGroupId(), "selectDisplayPage",
+				commerceChannel.getSiteGroupId(), "selectLayout",
 				layoutItemSelectorCriterion));
+	}
+
+	public String getLayoutPageTemplateEntryItemSelectorUrl()
+		throws PortalException {
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest());
+
+		LayoutPageTemplateEntryItemSelectorCriterion
+			layoutPageTemplateEntryItemSelectorCriterion =
+				new LayoutPageTemplateEntryItemSelectorCriterion();
+
+		layoutPageTemplateEntryItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				Collections.<ItemSelectorReturnType>singletonList(
+					new UUIDItemSelectorReturnType()));
+
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_groupLocalService.getGroup(commerceChannel.getSiteGroupId()),
+				commerceChannel.getSiteGroupId(),
+				"selectLayoutPageTemplateEntry",
+				layoutPageTemplateEntryItemSelectorCriterion)
+		).setParameter(
+			"commerceChannelId", commerceChannel.getCommerceChannelId()
+		).setParameter(
+			"commerceChannelSiteGroupId", commerceChannel.getSiteGroupId()
+		).buildPortletURL();
+
+		CPDisplayLayout cpDisplayLayout = getCPDisplayLayout();
+
+		if ((cpDisplayLayout != null) &&
+			(cpDisplayLayout.getType() ==
+				CPDisplayLayoutConstants.TYPE_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByUuidAndGroupId(
+						cpDisplayLayout.getEntryUuid(),
+						commerceChannel.getSiteGroupId());
+
+			if (layoutPageTemplateEntry != null) {
+				itemSelectorURL.setParameter(
+					"layoutPageTemplateEntryId",
+					String.valueOf(
+						layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryId()));
+			}
+		}
+
+		return String.valueOf(itemSelectorURL);
 	}
 
 	public String getProductItemSelectorUrl() {

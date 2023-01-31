@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -29,14 +31,14 @@ import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,17 +78,14 @@ public class DuplicateQueryStringsDetectorImpl
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+		List<String> duplicateQueryStrings = new ArrayList<>();
 
-		Stream<SearchHit> stream = searchHitsList.stream();
+		TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> duplicateQueryStrings.addAll(
+				_getDuplicateQueryStrings(searchHit, queryStrings)));
 
-		return stream.map(
-			searchHit -> _getDuplicateQueryStrings(searchHit, queryStrings)
-		).flatMap(
-			Collection::stream
-		).collect(
-			Collectors.toList()
-		);
+		return duplicateQueryStrings;
 	}
 
 	@Reference
@@ -186,13 +185,12 @@ public class DuplicateQueryStringsDetectorImpl
 	}
 
 	private void _addQueryClauses(Consumer<Query> consumer, Query... queries) {
-		Stream.of(
-			queries
-		).filter(
-			Objects::nonNull
-		).forEach(
-			consumer
-		);
+		List<Query> queriesList = new ArrayList<>(Arrays.asList(queries));
+
+		List<Query> isNotNullQueriesList = ListUtil.filter(
+			queriesList, Objects::nonNull);
+
+		isNotNullQueriesList.forEach(consumer);
 	}
 
 	private BooleanQuery _getCriteriaQuery(Criteria criteria) {

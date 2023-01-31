@@ -218,7 +218,11 @@ public class CookiesManagerImpl implements CookiesManager {
 			return false;
 		}
 
-		Map<String, Cookie> cookiesMap = _getCookiesMap(httpServletRequest);
+		Map<String, Cookie> cookiesMap = new HashMap<>();
+
+		if (httpServletRequest != null) {
+			cookiesMap = _getCookiesMap(httpServletRequest);
+		}
 
 		for (String cookieName : cookieNames) {
 			Cookie cookie = cookiesMap.remove(

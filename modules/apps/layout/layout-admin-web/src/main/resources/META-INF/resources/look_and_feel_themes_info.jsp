@@ -95,7 +95,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 		>
 			<div class="card image-card img-thumbnail">
 				<div class="aspect-ratio aspect-ratio-16-to-9">
-					<img alt="" class="aspect-ratio-item-flush img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selColorScheme.getName()) %>" />
+					<img alt="" class="aspect-ratio-item-flush theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selColorScheme.getName()) %>" />
 				</div>
 
 				<div class="card-body p-2">

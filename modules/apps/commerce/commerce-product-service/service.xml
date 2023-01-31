@@ -651,7 +651,8 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="layoutUuid" type="String" />
+		<column name="entryUuid" type="String" />
+		<column name="type" type="int" />
 
 		<!-- Finder methods -->
 
@@ -662,18 +663,24 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 		</finder>
-		<finder name="G_L" return-type="Collection">
+		<finder name="G_E" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="layoutUuid" />
+			<finder-column name="entryUuid" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_C_C" return-type="CPDisplayLayout" unique="true">
+		<finder name="C_C_T" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="G_C_C_T" return-type="CPDisplayLayout" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+			<finder-column name="type" />
 		</finder>
 	</entity>
 	<entity external-reference-code="company" local-service="true" name="CPInstance" remote-service="true" uuid="true">
@@ -1140,7 +1147,7 @@
 		<exception>CPDefinitionOptionValueRelQuantity</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPDisplayLayoutEntry</exception>
-		<exception>CPDisplayLayoutLayoutUuid</exception>
+		<exception>CPDisplayLayoutEntryUuid</exception>
 		<exception>CPInstanceDiscontinuedDate</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>

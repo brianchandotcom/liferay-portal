@@ -43,9 +43,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -146,15 +143,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		List<String> strings = new ArrayList<>(
 			validateRankingMVCResourceRequest.getAliases());
 
-		Stream<String> stream = strings.stream();
-
-		Predicate<String> predicate = this::_isUpdateSpecial;
-
-		return stream.filter(
-			predicate.negate()
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(strings, string -> !_isUpdateSpecial(string));
 	}
 
 	private long _getCompanyId(ResourceRequest resourceRequest) {
@@ -165,18 +154,17 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		ResourceRequest resourceRequest,
 		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest) {
 
-		List<String> aliases = _getAliases(validateRankingMVCResourceRequest);
+		List<String> strings = ListUtil.concat(
+			ListUtil.fromString(
+				validateRankingMVCResourceRequest.getQueryString()),
+			_getAliases(validateRankingMVCResourceRequest));
 
-		Collection<String> queryStrings = Stream.concat(
-			Stream.of(validateRankingMVCResourceRequest.getQueryString()),
-			aliases.stream()
-		).filter(
-			string -> !Validator.isBlank(string)
-		).distinct(
-		).sorted(
-		).collect(
-			Collectors.toList()
-		);
+		strings = ListUtil.filter(
+			strings, string -> !Validator.isBlank(string));
+
+		ListUtil.distinct(strings);
+
+		Collection<String> queryStrings = ListUtil.sort(strings);
 
 		return duplicateQueryStringsDetector.detect(
 			duplicateQueryStringsDetector.builder(

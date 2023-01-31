@@ -19,6 +19,7 @@ import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.MultipleSelectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -69,10 +70,13 @@ public class ObjectFieldDBTypeUtil {
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
-				 Objects.equals(
-					 objectField.getBusinessType(),
-					 ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			return MultipleSelectInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return SelectInfoFieldType.INSTANCE;
 		}

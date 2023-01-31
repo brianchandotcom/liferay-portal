@@ -116,6 +116,8 @@ public class SearchHitsTranslator {
 			elasticsearchSearchHit.getMatchedQueries()
 		).score(
 			elasticsearchSearchHit.getScore()
+		).sortValues(
+			elasticsearchSearchHit.getSortValues()
 		).version(
 			elasticsearchSearchHit.getVersion()
 		).build();

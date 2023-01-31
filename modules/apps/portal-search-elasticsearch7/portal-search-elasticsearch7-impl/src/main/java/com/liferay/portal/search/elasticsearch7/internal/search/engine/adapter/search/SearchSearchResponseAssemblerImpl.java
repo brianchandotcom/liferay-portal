@@ -34,7 +34,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
-import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.searcher.SearchTimeValue;
 
@@ -45,6 +44,7 @@ import org.apache.lucene.search.TotalHits;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.core.TimeValue;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
@@ -110,8 +110,7 @@ public class SearchSearchResponseAssemblerImpl
 		SearchResponse searchResponse,
 		SearchSearchResponse searchSearchResponse) {
 
-		org.elasticsearch.search.SearchHits searchHits =
-			searchResponse.getHits();
+		SearchHits searchHits = searchResponse.getHits();
 
 		TotalHits totalHits = searchHits.getTotalHits();
 
@@ -170,8 +169,7 @@ public class SearchSearchResponseAssemblerImpl
 			_documentBuilderFactory, _highlightFieldBuilderFactory,
 			_geoBuilders);
 
-		org.elasticsearch.search.SearchHits elasticsearchSearchHits =
-			searchResponse.getHits();
+		SearchHits elasticsearchSearchHits = searchResponse.getHits();
 
 		searchSearchResponse.setSearchHits(
 			searchHitsTranslator.translate(

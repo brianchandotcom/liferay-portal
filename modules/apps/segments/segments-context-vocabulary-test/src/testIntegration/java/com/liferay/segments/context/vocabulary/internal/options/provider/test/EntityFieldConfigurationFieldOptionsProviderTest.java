@@ -20,9 +20,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.context.Context;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -43,30 +41,41 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 
 	@Test
 	public void testGetOptionsWithDoubleEntityField() {
-		List<ConfigurationFieldOptionsProvider.Option> options =
-			_configurationFieldOptionsProvider.getOptions();
+		ConfigurationFieldOptionsProvider.Option option = null;
 
-		Stream<ConfigurationFieldOptionsProvider.Option> stream =
-			options.stream();
+		for (ConfigurationFieldOptionsProvider.Option curOption :
+				_configurationFieldOptionsProvider.getOptions()) {
 
-		Assert.assertFalse(
-			stream.anyMatch(
-				option -> Objects.equals(
-					option.getValue(),
-					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)));
+			if (Objects.equals(
+					curOption.getValue(),
+					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)) {
+
+				option = curOption;
+
+				break;
+			}
+		}
+
+		Assert.assertNull(option);
 	}
 
 	@Test
 	public void testGetOptionsWithStringEntityField() {
-		List<ConfigurationFieldOptionsProvider.Option> options =
-			_configurationFieldOptionsProvider.getOptions();
+		ConfigurationFieldOptionsProvider.Option option = null;
 
-		Stream<ConfigurationFieldOptionsProvider.Option> stream =
-			options.stream();
+		for (ConfigurationFieldOptionsProvider.Option curOption :
+				_configurationFieldOptionsProvider.getOptions()) {
 
-		Assert.assertTrue(
-			stream.anyMatch(
-				option -> Objects.equals(option.getValue(), Context.BROWSER)));
+			if (!Objects.equals(curOption.getValue(), Context.BROWSER)) {
+				continue;
+			}
+
+			option = curOption;
+
+			break;
+		}
+
+		Assert.assertNotNull(option);
 	}
 
 	@Inject(

@@ -62,6 +62,7 @@
 		<Logger level="ERROR" name="com.liferay.portal.dao.orm.common.SQLTransformer" />
 		<Logger level="ERROR" name="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" />
 		<Logger level="FATAL" name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" />
+		<Logger level="WARN" name="com.liferay.portal.db.index.IndexUpdaterUtil" />
 		<Logger level="INFO" name="com.liferay.portal.deploy" />
 		<Logger level="INFO" name="com.liferay.portal.deploy.hot.HookHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener" />

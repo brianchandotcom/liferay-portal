@@ -1259,11 +1259,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			if (objectDefinition.getAccountEntryRestricted()) {
-				accountEntryRestrictedObjectDefinitionMap.put(
-					objectDefinition.getName(), objectDefinition);
-			}
-
 			Page<ObjectDefinition> objectDefinitionsPage =
 				objectDefinitionResource.getObjectDefinitionsPage(
 					null, null,
@@ -1276,6 +1271,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionsPage.fetchFirstItem();
 
 			if (existingObjectDefinition == null) {
+				if (objectDefinition.getAccountEntryRestricted()) {
+					accountEntryRestrictedObjectDefinitionMap.put(
+						objectDefinition.getName(), objectDefinition);
+				}
+
 				objectDefinition =
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);

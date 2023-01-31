@@ -328,5 +328,8 @@
 		<exception>CommerceDiscountTitle</exception>
 		<exception>CommerceDiscountValidator</exception>
 		<exception>DuplicateCommerceDiscount</exception>
+		<exception>DuplicateCommerceDiscountAccountRel</exception>
+		<exception>DuplicateCommerceDiscountCommerceAccountGroupRel</exception>
+		<exception>DuplicateCommerceDiscountOrderTypeRel</exception>
 	</exceptions>
 </service-builder>

@@ -23,6 +23,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -41,8 +42,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -144,16 +143,14 @@ public class RoleModelListenerTest {
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		List<Long> requiredRoleIds = Stream.of(
-			AccountRoleConstants.REQUIRED_ROLE_NAMES
-		).map(
-			requiredRoleName -> _roleLocalService.fetchRole(
-				company.getCompanyId(), requiredRoleName)
-		).map(
-			Role::getRoleId
-		).collect(
-			Collectors.toList()
-		);
+		List<Long> requiredRoleIds = TransformUtil.transformToList(
+			AccountRoleConstants.REQUIRED_ROLE_NAMES,
+			requiredRoleName -> {
+				Role role = _roleLocalService.fetchRole(
+					company.getCompanyId(), requiredRoleName);
+
+				return role.getRoleId();
+			});
 
 		_companyLocalService.deleteCompany(company);
 

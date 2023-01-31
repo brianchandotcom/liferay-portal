@@ -38,6 +38,7 @@
 <tr>
 	<td>ERROR_MESSAGE</td>
 	<td>//div[contains(@class, 'error')]//div[(text()='${key_errorMessage}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TEXT_BUTTON</td>

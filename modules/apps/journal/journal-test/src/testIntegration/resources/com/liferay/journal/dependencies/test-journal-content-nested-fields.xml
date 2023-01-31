@@ -1,91 +1,99 @@
 <?xml version="1.0"?>
 
-<root available-locales="en_US,pt_BR" default-locale="en_US">
-	<dynamic-element index-type="text" instance-id="YELSrniM" name="boolean" type="checkbox">
+<root available-locales="en_US,pt_BR" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="boolean" index-type="none" instance-id="YELSrniM" name="boolean" type="checkbox">
 		<dynamic-content language-id="en_US"><![CDATA[false]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[false]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="HzKJrSts" name="document_library" type="document_library">
+	<dynamic-element field-reference="document_library" index-type="none" instance-id="HzKJrSts" name="document_library" type="document_library">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="eHQALxHa" name="link_to_layout" type="link_to_layout">
+	<dynamic-element field-reference="link_to_layout" index-type="none" instance-id="eHQALxHa" name="link_to_layout" type="link_to_layout">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="ucizquBv" name="text_area" type="rich_text">
+	<dynamic-element field-reference="text_area" index-type="none" instance-id="ucizquBv" name="text_area" type="rich_text">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="oOUZHUcy" name="multi_list" type="select">
+	<dynamic-element field-reference="multi_list" index-type="none" instance-id="oOUZHUcy" name="multi_list" type="select">
+		<dynamic-content language-id="en_US">
+			<option><![CDATA[]]></option>
+		</dynamic-content>
+		<dynamic-content language-id="pt_BR">
+			<option><![CDATA[]]></option>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="list" index-type="none" instance-id="RMYIbORN" name="list" type="select">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="RMYIbORN" name="list" type="select">
-		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
-		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
-	</dynamic-element>
-	<dynamic-element instance-id="RJSkjdfi" name="contactFieldSet">
-		<dynamic-element index-type="text" instance-id="RF3do1m5" name="contact" type="text">
+	<dynamic-element field-reference="contactFieldSet" index-type="" instance-id="RJSkjdfi" name="contactFieldSet" type="fieldset">
+		<dynamic-element field-reference="contact" index-type="text" instance-id="RF3do1m5" name="contact" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[joe]]></dynamic-content>
 			<dynamic-content language-id="pt_BR"><![CDATA[joao]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-element instance-id="zhglwgmk" name="phoneFieldSet">
-			<dynamic-element index-type="text" instance-id="QK6B0wK9" name="phone" type="text">
+		<dynamic-element field-reference="phoneFieldSet" index-type="" instance-id="zhglwgmk" name="phoneFieldSet" type="fieldset">
+			<dynamic-element field-reference="phone" index-type="text" instance-id="QK6B0wK9" name="phone" type="text">
 				<dynamic-content language-id="en_US"><![CDATA[123]]></dynamic-content>
 				<dynamic-content language-id="pt_BR"><![CDATA[123]]></dynamic-content>
 			</dynamic-element>
-			<dynamic-element index-type="text" instance-id="L67MPqQf" name="ext" type="text">
-				<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
-				<dynamic-content language-id="pt_BR"><![CDATA[1]]></dynamic-content>
-			</dynamic-element>
-			<dynamic-element index-type="text" instance-id="8uxzZl41" name="ext" type="text">
-				<dynamic-content language-id="en_US"><![CDATA[2]]></dynamic-content>
-				<dynamic-content language-id="pt_BR"><![CDATA[2]]></dynamic-content>
-			</dynamic-element>
-			<dynamic-element index-type="text" instance-id="S58K861T" name="ext" type="text">
-				<dynamic-content language-id="en_US"><![CDATA[3]]></dynamic-content>
-				<dynamic-content language-id="pt_BR"><![CDATA[3]]></dynamic-content>
+			<dynamic-element field-reference="phoneFieldSetFieldSet" index-type="" instance-id="42904" name="phoneFieldSetFieldSet" type="fieldset">
+				<dynamic-element field-reference="ext" index-type="text" instance-id="L67MPqQf" name="ext" type="text">
+					<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
+					<dynamic-content language-id="pt_BR"><![CDATA[1]]></dynamic-content>
+				</dynamic-element>
+				<dynamic-element field-reference="ext" index-type="text" instance-id="8uxzZl41" name="ext" type="text">
+					<dynamic-content language-id="en_US"><![CDATA[2]]></dynamic-content>
+					<dynamic-content language-id="pt_BR"><![CDATA[2]]></dynamic-content>
+				</dynamic-element>
+				<dynamic-element field-reference="ext" index-type="text" instance-id="S58K861T" name="ext" type="text">
+					<dynamic-content language-id="en_US"><![CDATA[3]]></dynamic-content>
+					<dynamic-content language-id="pt_BR"><![CDATA[3]]></dynamic-content>
+				</dynamic-element>
 			</dynamic-element>
 		</dynamic-element>
 	</dynamic-element>
-	<dynamic-element instance-id="3hACzXcE" name="contactFieldSet">
-		<dynamic-element index-type="text" instance-id="CUeFxcrA" name="contact" type="text">
+	<dynamic-element field-reference="contactFieldSet" index-type="" instance-id="3hACzXcE" name="contactFieldSet" type="fieldset">
+		<dynamic-element field-reference="contact" index-type="text" instance-id="CUeFxcrA" name="contact" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[richard]]></dynamic-content>
 			<dynamic-content language-id="pt_BR"><![CDATA[ricardo]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-element instance-id="UgCyiQd3" name="phoneFieldSet">
-			<dynamic-element index-type="text" instance-id="lVTcTviF" name="phone" type="text">
+		<dynamic-element field-reference="phoneFieldSet" index-type="" instance-id="UgCyiQd3" name="phoneFieldSet" type="fieldset">
+			<dynamic-element field-reference="phone" index-type="text" instance-id="lVTcTviF" name="phone" type="text">
 				<dynamic-content language-id="en_US"><![CDATA[456]]></dynamic-content>
 				<dynamic-content language-id="pt_BR"><![CDATA[456]]></dynamic-content>
 			</dynamic-element>
-			<dynamic-element index-type="text" instance-id="cZalDSll" name="ext" type="text">
-				<dynamic-content language-id="en_US"><![CDATA[4]]></dynamic-content>
-				<dynamic-content language-id="pt_BR"><![CDATA[4]]></dynamic-content>
-			</dynamic-element>
-			<dynamic-element index-type="text" instance-id="HDrK2Um5" name="ext" type="text">
-				<dynamic-content language-id="en_US"><![CDATA[5]]></dynamic-content>
-				<dynamic-content language-id="pt_BR"><![CDATA[5]]></dynamic-content>
+			<dynamic-element field-reference="phoneFieldSetFieldSet" index-type="" instance-id="42904" name="phoneFieldSetFieldSet" type="fieldset">
+				<dynamic-element field-reference="ext" index-type="text" instance-id="cZalDSll" name="ext" type="text">
+					<dynamic-content language-id="en_US"><![CDATA[4]]></dynamic-content>
+					<dynamic-content language-id="pt_BR"><![CDATA[4]]></dynamic-content>
+				</dynamic-element>
+				<dynamic-element field-reference="ext" index-type="text" instance-id="HDrK2Um5" name="ext" type="text">
+					<dynamic-content language-id="en_US"><![CDATA[5]]></dynamic-content>
+					<dynamic-content language-id="pt_BR"><![CDATA[5]]></dynamic-content>
+				</dynamic-element>
 			</dynamic-element>
 		</dynamic-element>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="zWlZDoLc" name="text" type="text">
+	<dynamic-element field-reference="text" index-type="text" instance-id="zWlZDoLc" name="text" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="fmyemVKH" name="text_box" type="text">
+	<dynamic-element field-reference="text_box" index-type="none" instance-id="fmyemVKH" name="text_box" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="xhdykzYh" name="image_1" type="image">
+	<dynamic-element field-reference="image_1" index-type="none" instance-id="xhdykzYh" name="image_1" type="image">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="FViKyTea" name="image_2" type="image">
+	<dynamic-element field-reference="image_2" index-type="none" instance-id="FViKyTea" name="image_2" type="image">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="JVBHdcGZ" name="image_3" type="image">
+	<dynamic-element field-reference="image_3" index-type="none" instance-id="JVBHdcGZ" name="image_3" type="image">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>

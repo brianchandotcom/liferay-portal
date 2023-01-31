@@ -89,14 +89,14 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 		_layout1 = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false, 0,
 			"name", "title", "description", LayoutConstants.TYPE_PORTLET, false,
-			"/friendlyURL1",
+			_FRIENDLY_URL_1,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));
 
 		_layout2 = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false, 0,
 			"name", "title", "description", LayoutConstants.TYPE_PORTLET, false,
-			"/friendlyURL2",
+			_FRIENDLY_URL_2,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));
 	}
@@ -117,9 +117,9 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 	public void tearDown() throws Exception {
 		_errorMessages = new ArrayList<>();
 
-		_updateFriendlyURL(_layout1.getPlid(), "/friendlyURL1");
+		_updateFriendlyURL(_layout1.getPlid(), _FRIENDLY_URL_1);
 
-		_updateFriendlyURL(_layout2.getPlid(), "/friendlyURL2");
+		_updateFriendlyURL(_layout2.getPlid(), _FRIENDLY_URL_2);
 	}
 
 	@Test
@@ -252,6 +252,10 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 			preparedStatement.executeUpdate();
 		}
 	}
+
+	private static final String _FRIENDLY_URL_1 = "/friendlyURL1";
+
+	private static final String _FRIENDLY_URL_2 = "/friendlyURL2";
 
 	private static Connection _connection;
 	private static List<String> _errorMessages;

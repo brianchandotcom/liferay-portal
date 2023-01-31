@@ -32,6 +32,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -231,6 +232,36 @@ public class CategoryCPDisplayLayoutDisplayContext
 				_groupLocalService.getGroup(commerceChannel.getSiteGroupId()),
 				commerceChannel.getSiteGroupId(), "selectDisplayPage",
 				layoutItemSelectorCriterion));
+	}
+
+	public String getLayoutBreadcrumb(CPDisplayLayout cpDisplayLayout)
+		throws PortalException {
+
+		if (cpDisplayLayout == null) {
+			return StringPool.BLANK;
+		}
+
+		String layoutUuid = cpDisplayLayout.getLayoutUuid();
+
+		if (Validator.isNull(layoutUuid)) {
+			return StringPool.BLANK;
+		}
+
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		Layout selLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			layoutUuid, commerceChannel.getSiteGroupId(), false);
+
+		if (selLayout == null) {
+			selLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+				layoutUuid, commerceChannel.getSiteGroupId(), true);
+		}
+
+		if (selLayout != null) {
+			return selLayout.getBreadcrumb(cpRequestHelper.getLocale());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Marco Leo
@@ -52,6 +53,10 @@ public class CPDisplayLayoutImpl extends CPDisplayLayoutBaseImpl {
 
 	@Override
 	public Layout fetchLayout() {
+		if (Validator.isNull(getLayoutUuid())) {
+			return null;
+		}
+
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			getLayoutUuid(), getGroupId(), false);
 

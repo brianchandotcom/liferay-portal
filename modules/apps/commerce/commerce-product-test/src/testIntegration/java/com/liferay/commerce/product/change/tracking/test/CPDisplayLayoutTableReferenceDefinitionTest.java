@@ -72,7 +72,8 @@ public class CPDisplayLayoutTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _cpDisplayLayoutLocalService.addCPDisplayLayout(
 			TestPropsValues.getUserId(), group.getGroupId(), CPDefinition.class,
-			_cpDefinition.getCPDefinitionId(), RandomTestUtil.randomString());
+			_cpDefinition.getCPDefinitionId(), null,
+			RandomTestUtil.randomString());
 	}
 
 	@Inject

@@ -34,14 +34,18 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "Custom Attachment",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = "CustomObject151577");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151577");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
 
 		Navigator.openURL();
 
@@ -105,14 +109,18 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "Custom Attachment",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = "CustomObject151581");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151581");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
 
 		Navigator.openURL();
 
@@ -176,13 +184,17 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Text",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject146889");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 146889");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Text",
-			fieldType = "Text");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Text");
 
@@ -219,14 +231,18 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "Custom Attachment",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = "CustomObject151578");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151578");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
 
 		Navigator.openURL();
 
@@ -259,14 +275,18 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "Custom Attachment",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = "CustomObject151574");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151574");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
 
 		Navigator.openURL();
 
@@ -293,14 +313,18 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "Custom Attachment",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = "CustomObject151575");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151575");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
 
@@ -365,14 +389,18 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "Custom Attachment",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = "CustomObject151576");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151576");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
 
 		Navigator.openURL();
 
@@ -405,14 +433,18 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "Custom Attachment",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = "CustomObject151576");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151576");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
 
 		Navigator.openURL();
 
@@ -480,13 +512,17 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Text",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151583");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151583");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Text",
-			fieldType = "Text");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Text");
 

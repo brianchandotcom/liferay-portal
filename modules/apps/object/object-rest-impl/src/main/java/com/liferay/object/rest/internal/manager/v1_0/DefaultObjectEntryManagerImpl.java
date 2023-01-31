@@ -791,10 +791,11 @@ public class DefaultObjectEntryManagerImpl
 					objectRelationship, relatedObjectDefinition, true,
 					serviceBuilderObjectEntry);
 			}
-
-			throw new BadRequestException(
-				"Unable to create nested object entries for object entry " +
-					serviceBuilderObjectEntry.getObjectEntryId());
+			else {
+				throw new BadRequestException(
+					"Unable to create nested object entries for object entry " +
+						serviceBuilderObjectEntry.getObjectEntryId());
+			}
 		}
 	}
 

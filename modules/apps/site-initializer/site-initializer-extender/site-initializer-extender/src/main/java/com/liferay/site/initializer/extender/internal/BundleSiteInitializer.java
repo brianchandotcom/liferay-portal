@@ -448,7 +448,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
-			_invoke(() -> _addOrUpdateRoles(serviceContext));
+
+			Map<String, String> roleIdsStringUtilReplaceValues =
+				_invoke(() -> _addOrUpdateRoles(serviceContext));
+			
 			_invoke(() -> _addOrUpdateSAPEntries(serviceContext));
 
 			Map<String, String> segmentsEntriesIdsStringUtilReplaceValues =
@@ -560,7 +563,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					taxonomyCategoryIdsStringUtilReplaceValues));
 			_invoke(() -> _addUserRoles(serviceContext));
 
-			_invoke(() -> _addWorkflowDefinitions(serviceContext));
+			_invoke(() -> _addWorkflowDefinitions(roleIdsStringUtilReplaceValues,
+				serviceContext));
 
 			_invoke(() -> _updateGroupSiteInitializerKey(groupId));
 		}
@@ -3338,15 +3342,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_classLoader, serviceContext, _servletContext);
 	}
 
-	private void _addOrUpdateRoles(
+	private Map<String, String> _addOrUpdateRoles(
 			ServiceContext serviceContext)
 		throws Exception {
 
+		Map<String, String> roleIdsStringUtilReplaceValues =
+			new HashMap<>();
+		
+		List<Role> roles = _roleLocalService.getRoles(
+			serviceContext.getCompanyId());
+
+		for(Role role:roles){
+			roleIdsStringUtilReplaceValues.put("ROLE_ID:"+role.getName(),
+				String.valueOf(role.getRoleId()));
+		}
+		
 		String json = SiteInitializerUtil.read(
 			"/site-initializer/roles.json", _servletContext);
 
 		if (json == null) {
-			return;
+			return roleIdsStringUtilReplaceValues;
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
@@ -3391,6 +3406,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("subtype"), serviceContext);
 			}
 
+			roleIdsStringUtilReplaceValues.put("ROLE_ID:"+role.getName(),
+				String.valueOf(role.getRoleId()));
+
 			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
 			if (JSONUtil.isEmpty(actionsJSONArray) || (role == null)) {
@@ -3430,6 +3448,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 		}
+		
+		return roleIdsStringUtilReplaceValues;
 	}
 
 	private void _addRolesAssignments(ServiceContext serviceContext)
@@ -4092,7 +4112,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addWorkflowDefinitions(ServiceContext serviceContext)
+	private void _addWorkflowDefinitions(
+		Map<String, String> roleIdsStringUtilReplaceValues,
+		ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -4119,8 +4141,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			workflowDefinitionJSONObject.put(
 				"content",
-				SiteInitializerUtil.read(
-					resourcePath + "workflow-definition.xml", _servletContext));
+				_replace(SiteInitializerUtil.read(
+					resourcePath + "workflow-definition.xml", _servletContext),
+					roleIdsStringUtilReplaceValues)
+				);
 
 			WorkflowDefinition workflowDefinition =
 				workflowDefinitionResource.postWorkflowDefinitionDeploy(

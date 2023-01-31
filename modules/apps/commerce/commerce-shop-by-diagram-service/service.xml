@@ -42,6 +42,9 @@
 		<finder name="CPInstanceId" return-type="Collection">
 			<finder-column name="CPInstanceId" />
 		</finder>
+		<finder name="CProductId" return-type="Collection">
+			<finder-column name="CProductId" />
+		</finder>
 		<finder name="CPDI_S" return-type="CSDiagramEntry" unique="true">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="sequence" />

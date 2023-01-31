@@ -51,9 +51,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -491,17 +488,16 @@ public class SearchResponseResourceImplTest {
 	private void _assertEquals(
 		Map<String, String> expectedMap, Map<String, String> actualMap) {
 
-		Set<Map.Entry<String, String>> entries = actualMap.entrySet();
+		Map<String, String> map = new HashMap<>();
 
-		Stream<Map.Entry<String, String>> stream = entries.stream();
+		for (Map.Entry<String, String> entry : actualMap.entrySet()) {
+			if (expectedMap.containsKey(entry.getKey())) {
+				map.put(entry.getKey(), entry.getValue());
+			}
+		}
 
 		AssertUtils.assertEquals(
-			() -> String.valueOf(actualMap), expectedMap,
-			stream.filter(
-				entry -> expectedMap.containsKey(entry.getKey())
-			).collect(
-				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-			));
+			() -> String.valueOf(actualMap), expectedMap, map);
 	}
 
 	private SearchHit _createSearchHit(

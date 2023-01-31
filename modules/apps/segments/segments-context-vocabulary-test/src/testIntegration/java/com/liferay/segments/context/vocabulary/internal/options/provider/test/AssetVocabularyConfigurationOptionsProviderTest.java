@@ -29,9 +29,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -64,17 +62,22 @@ public class AssetVocabularyConfigurationOptionsProviderTest {
 				null, null, ServiceContextTestUtil.getServiceContext());
 
 		try {
-			List<ConfigurationFieldOptionsProvider.Option> options =
-				_configurationFieldOptionsProvider.getOptions();
+			ConfigurationFieldOptionsProvider.Option option = null;
 
-			Stream<ConfigurationFieldOptionsProvider.Option> stream =
-				options.stream();
+			for (ConfigurationFieldOptionsProvider.Option curOption :
+					_configurationFieldOptionsProvider.getOptions()) {
 
-			Assert.assertTrue(
-				stream.anyMatch(
-					option -> Objects.equals(
-						option.getLabel(LocaleUtil.getDefault()),
-						assetVocabulary.getTitle(LocaleUtil.getDefault()))));
+				if (Objects.equals(
+						curOption.getLabel(LocaleUtil.getDefault()),
+						assetVocabulary.getTitle(LocaleUtil.getDefault()))) {
+
+					option = curOption;
+
+					break;
+				}
+			}
+
+			Assert.assertNotNull(option);
 		}
 		finally {
 			_assetVocabularyLocalService.deleteVocabulary(

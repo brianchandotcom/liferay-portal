@@ -536,9 +536,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
+					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
-					journalArticle.getGroupId(), structuredContent,
-					journalArticle)));
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	@Override
@@ -752,30 +752,22 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					priority, groupId, structuredContent, null)));
+					structuredContent.getTaxonomyCategoryIds(), priority,
+					groupId, structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
-			double assetPriority, long groupId,
-			StructuredContent structuredContent, JournalArticle journalArticle)
-		throws Exception {
+		Long[] assetCategoryIds, double assetPriority, long groupId,
+		StructuredContent structuredContent) {
 
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
-				structuredContent.getTaxonomyCategoryIds(),
-				structuredContent.getKeywords(),
+				assetCategoryIds, structuredContent.getKeywords(),
 				_getExpandoBridgeAttributes(structuredContent), groupId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
 
 		serviceContext.setAssetPriority(assetPriority);
-
-		if ((journalArticle != null) &&
-			(structuredContent.getTaxonomyCategoryIds() == null)) {
-
-			serviceContext.setAssetCategoryIds(
-				_getAssetCategoryIds(journalArticle));
-		}
 
 		return serviceContext;
 	}
@@ -799,8 +791,15 @@ public class StructuredContentResourceImpl
 		};
 	}
 
-	private long[] _getAssetCategoryIds(JournalArticle journalArticle)
+	private Long[] _getAssetCategoryIds(
+			JournalArticle journalArticle, StructuredContent structuredContent)
 		throws Exception {
+
+		if ((journalArticle == null) ||
+			(structuredContent.getTaxonomyCategoryIds() != null)) {
+
+			return structuredContent.getTaxonomyCategoryIds();
+		}
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
@@ -810,7 +809,7 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
-		return assetEntry.getCategoryIds();
+		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
 	}
 
 	private double _getAssetPriority(
@@ -1231,9 +1230,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
+					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
-					journalArticle.getGroupId(), structuredContent,
-					journalArticle)));
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	private void _validateContentFields(

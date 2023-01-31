@@ -391,6 +391,8 @@ definition {
 		for (var siteName : list "${siteList}") {
 			Button.clickAdd();
 
+			IFrame.selectConfigurationFrame();
+
 			Navigator.gotoNavItem(navItem = "All Sites");
 
 			if (isSet(parentSiteName)) {

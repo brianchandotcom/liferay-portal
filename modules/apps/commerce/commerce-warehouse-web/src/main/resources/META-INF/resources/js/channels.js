@@ -46,7 +46,7 @@ export default function ({
 			})
 			.catch((error) => {
 				openToast({
-					message: error.title,
+					message: error.message || error.title,
 					type: 'danger',
 				});
 			});

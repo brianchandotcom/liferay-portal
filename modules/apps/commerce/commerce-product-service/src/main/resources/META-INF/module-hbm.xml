@@ -296,7 +296,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="layoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="entryUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPInstanceImpl" table="CPInstance">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="CPInstanceId" type="long">

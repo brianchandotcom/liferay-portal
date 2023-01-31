@@ -284,19 +284,33 @@ public interface CPDisplayLayoutModel
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the layout uuid of this cp display layout.
+	 * Returns the entry uuid of this cp display layout.
 	 *
-	 * @return the layout uuid of this cp display layout
+	 * @return the entry uuid of this cp display layout
 	 */
 	@AutoEscape
-	public String getLayoutUuid();
+	public String getEntryUuid();
 
 	/**
-	 * Sets the layout uuid of this cp display layout.
+	 * Sets the entry uuid of this cp display layout.
 	 *
-	 * @param layoutUuid the layout uuid of this cp display layout
+	 * @param entryUuid the entry uuid of this cp display layout
 	 */
-	public void setLayoutUuid(String layoutUuid);
+	public void setEntryUuid(String entryUuid);
+
+	/**
+	 * Returns the type of this cp display layout.
+	 *
+	 * @return the type of this cp display layout
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this cp display layout.
+	 *
+	 * @param type the type of this cp display layout
+	 */
+	public void setType(int type);
 
 	@Override
 	public CPDisplayLayout cloneWithOriginalValues();

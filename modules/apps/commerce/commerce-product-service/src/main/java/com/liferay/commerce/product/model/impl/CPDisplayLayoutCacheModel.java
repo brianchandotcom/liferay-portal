@@ -78,7 +78,7 @@ public class CPDisplayLayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,8 +104,10 @@ public class CPDisplayLayoutCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", layoutUuid=");
-		sb.append(layoutUuid);
+		sb.append(", entryUuid=");
+		sb.append(entryUuid);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -154,12 +156,14 @@ public class CPDisplayLayoutCacheModel
 		cpDisplayLayoutImpl.setClassNameId(classNameId);
 		cpDisplayLayoutImpl.setClassPK(classPK);
 
-		if (layoutUuid == null) {
-			cpDisplayLayoutImpl.setLayoutUuid("");
+		if (entryUuid == null) {
+			cpDisplayLayoutImpl.setEntryUuid("");
 		}
 		else {
-			cpDisplayLayoutImpl.setLayoutUuid(layoutUuid);
+			cpDisplayLayoutImpl.setEntryUuid(entryUuid);
 		}
+
+		cpDisplayLayoutImpl.setType(type);
 
 		cpDisplayLayoutImpl.resetOriginalValues();
 
@@ -187,7 +191,9 @@ public class CPDisplayLayoutCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		layoutUuid = objectInput.readUTF();
+		entryUuid = objectInput.readUTF();
+
+		type = objectInput.readInt();
 	}
 
 	@Override
@@ -225,12 +231,14 @@ public class CPDisplayLayoutCacheModel
 
 		objectOutput.writeLong(classPK);
 
-		if (layoutUuid == null) {
+		if (entryUuid == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(layoutUuid);
+			objectOutput.writeUTF(entryUuid);
 		}
+
+		objectOutput.writeInt(type);
 	}
 
 	public long mvccVersion;
@@ -245,6 +253,7 @@ public class CPDisplayLayoutCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public String layoutUuid;
+	public String entryUuid;
+	public int type;
 
 }

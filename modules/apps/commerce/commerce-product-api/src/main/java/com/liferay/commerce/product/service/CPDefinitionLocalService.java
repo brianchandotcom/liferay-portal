@@ -546,6 +546,10 @@ public interface CPDefinitionLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getLayoutPageTemplateEntryUuid(
+		long groupId, long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getLayoutUuid(long groupId, long cpDefinitionId);
 
 	/**

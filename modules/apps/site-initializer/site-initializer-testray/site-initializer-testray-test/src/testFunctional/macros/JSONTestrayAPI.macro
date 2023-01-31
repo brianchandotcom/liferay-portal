@@ -515,4 +515,18 @@ definition {
 
 		return "${response}";
 	}
+	@summary = "This calls the JSON WS API to get object id"
+	macro getObjectId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${object} \
+				-u test@liferay.com:test
+		''';
+
+		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@.name=='${objectName}')].id");
+
+		return "${objectId}";
+	}
+
 }

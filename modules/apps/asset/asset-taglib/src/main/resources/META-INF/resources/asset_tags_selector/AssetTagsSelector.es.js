@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
+import {useId} from '@liferay/layout-content-page-editor-web';
 import {fetch, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
@@ -40,6 +41,7 @@ function AssetTagsSelector({
 	showSelectButton,
 }) {
 	const selectButtonRef = useRef();
+	const tagsId = useId();
 
 	const [resource, setResource] = useState([]);
 
@@ -213,7 +215,18 @@ function AssetTagsSelector({
 
 	return (
 		<div id={id}>
-			<ClayForm.Group className={formGroupClassName}>
+			<ClayForm.Group
+				aria-labelledby={tagsId}
+				className={formGroupClassName}
+				role="group"
+			>
+				<div
+					className="border-0 mb-0 sheet-subtitle text-uppercase"
+					id={tagsId}
+				>
+					{Liferay.Language.get('other-metadata')}
+				</div>
+
 				<label
 					className={showLabel ? '' : 'sr-only'}
 					htmlFor={inputName + '_MultiSelect'}

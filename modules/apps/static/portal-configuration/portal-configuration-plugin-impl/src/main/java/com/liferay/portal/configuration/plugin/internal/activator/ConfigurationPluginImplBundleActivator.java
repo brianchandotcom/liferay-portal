@@ -31,7 +31,7 @@ public class ConfigurationPluginImplBundleActivator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		_serviceRegistration = bundleContext.registerService(
 			ConfigurationPlugin.class,
-			new WebIdToCompanyConfigurationPluginImpl(),
+			new WebIdToCompanyConfigurationPluginImpl(bundleContext),
 			HashMapDictionaryBuilder.<String, Object>put(
 				ConfigurationPlugin.CM_RANKING, 400
 			).put(

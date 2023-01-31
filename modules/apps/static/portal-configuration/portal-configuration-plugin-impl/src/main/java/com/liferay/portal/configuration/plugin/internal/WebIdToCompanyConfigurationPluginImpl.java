@@ -19,13 +19,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
 import java.util.Objects;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationPlugin;
 
@@ -34,6 +35,10 @@ import org.osgi.service.cm.ConfigurationPlugin;
  */
 public class WebIdToCompanyConfigurationPluginImpl
 	implements ConfigurationPlugin {
+
+	public WebIdToCompanyConfigurationPluginImpl(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
 
 	@Override
 	public void modifyConfiguration(
@@ -54,12 +59,15 @@ public class WebIdToCompanyConfigurationPluginImpl
 		Company company = null;
 
 		try {
+			ServiceReference<CompanyLocalService> companyLocalServiceReference =
+				_bundleContext.getServiceReference(CompanyLocalService.class);
 
-			// Use CompanyLocalServiceUtil because this executes early in the
-			// portal initialization when Spring has been wired but the OSGi
-			// service is not yet published
+			if (companyLocalServiceReference != null) {
+				CompanyLocalService companyLocalService =
+					_bundleContext.getService(companyLocalServiceReference);
 
-			company = CompanyLocalServiceUtil.getCompanyByWebId(webId);
+				company = companyLocalService.getCompanyByWebId(webId);
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -73,17 +81,21 @@ public class WebIdToCompanyConfigurationPluginImpl
 			return;
 		}
 
-		properties.put("companyId", company.getCompanyId());
+		if (company != null) {
+			properties.put("companyId", company.getCompanyId());
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Injected company ID ", company.getCompanyId(),
-					" for web ID ", webId));
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Injected company ID ", company.getCompanyId(),
+						" for web ID ", webId));
+			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WebIdToCompanyConfigurationPluginImpl.class);
+
+	private final BundleContext _bundleContext;
 
 }

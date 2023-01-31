@@ -71,7 +71,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
@@ -418,13 +417,15 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 				try {
 					List<Group> groups = user.getSiteGroups();
 
-					Stream<Group> stream = groups.stream();
+					if (!groups.isEmpty()) {
+						long[] membershipIds = new long[groups.size()];
 
-					long[] membershipIds = stream.mapToLong(
-						Group::getGroupId
-					).toArray();
+						for (int i = 0; i < groups.size(); i++) {
+							Group group = groups.get(i);
 
-					if (membershipIds.length != 0) {
+							membershipIds[i] = group.getGroupId();
+						}
+
 						memberships.put(Group.class.getName(), membershipIds);
 					}
 				}

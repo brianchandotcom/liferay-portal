@@ -28,6 +28,10 @@ import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryCreateDateComparator;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryModifiedDateComparator;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -229,6 +233,34 @@ public class CPItemSelectorViewUtil {
 		}
 
 		return sort;
+	}
+
+	public static OrderByComparator<LayoutPageTemplateEntry>
+		getLayoutPageTemplateEntryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new LayoutPageTemplateEntryCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator =
+				new LayoutPageTemplateEntryModifiedDateComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new LayoutPageTemplateEntryNameComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 }

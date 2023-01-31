@@ -164,7 +164,7 @@ definition {
 			AssertVisible(locator1 = "Portlet#ICON_PLUS_SIGN");
 		}
 		else {
-			MouseOver.mouseOverNotVisible(
+			MouseOver.javaScriptMouseOver(
 				key_portletName = "${portletName}",
 				locator1 = "Portlet#ICON_PLUS_SIGN");
 

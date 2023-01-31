@@ -60,10 +60,10 @@ public abstract class BaseAnalyticsConfigurationScreen
 	@Override
 	public boolean isVisible() {
 		if (FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

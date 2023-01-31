@@ -235,6 +235,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					role.getDescriptionMap());
 				id = role.getRoleId();
+				key = role.getName();
 				name = role.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getI18nMap(

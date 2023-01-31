@@ -115,7 +115,9 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public EmbeddingProviderStatus[] getEmbeddingProviderStatuses() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
+			!_semanticSearchConfiguration.textEmbeddingsEnabled()) {
+
 			return new EmbeddingProviderStatus[0];
 		}
 

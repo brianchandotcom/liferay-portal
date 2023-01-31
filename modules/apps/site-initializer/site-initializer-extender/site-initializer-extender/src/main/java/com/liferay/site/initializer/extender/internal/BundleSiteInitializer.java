@@ -1346,20 +1346,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 				StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
 				serviceBuilderObjectDefinition.getShortName();
 
-			com.liferay.object.model.ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.addObjectRelationship(
-					serviceBuilderObjectDefinition.getUserId(),
-					accountEntryObjectDefinition.getObjectDefinitionId(),
-					serviceBuilderObjectDefinition.getObjectDefinitionId(),
-					0, ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-					LocalizedMapUtil.getLocalizedMap(objectRelationshipName),
-					objectRelationshipName,
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			com.liferay.object.model.ObjectRelationship
+				objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectDefinitionId(
+						accountEntryObjectDefinition.getObjectDefinitionId(),
+						objectRelationshipName);
 
-				_objectDefinitionLocalService.
-					restrictObjectDefinitionByAccountEntry(
-						serviceBuilderObjectDefinition, serviceContext.getUserId(), objectRelationship);
+			if(objectRelationship == null) {
+				objectRelationship =
+					_objectRelationshipLocalService.addObjectRelationship(
+						serviceBuilderObjectDefinition.getUserId(),
+						accountEntryObjectDefinition.getObjectDefinitionId(),
+						serviceBuilderObjectDefinition.getObjectDefinitionId(),
+						0, ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+						LocalizedMapUtil.getLocalizedMap(
+							objectRelationshipName),
+						objectRelationshipName,
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 			}
+			_objectDefinitionLocalService.
+				restrictObjectDefinitionByAccountEntry(
+					serviceBuilderObjectDefinition,
+					serviceContext.getUserId(), objectRelationship);
+		}
 
 		_invoke(
 			() -> _addOrUpdateObjectFields(

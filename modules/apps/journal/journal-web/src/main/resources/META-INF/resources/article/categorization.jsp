@@ -68,10 +68,6 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 />
 
-<div class="border-0 mb-0 sheet-subtitle text-uppercase">
-	<liferay-ui:message key="other-metadata" />
-</div>
-
 <liferay-asset:asset-tags-selector
 	className="<%= JournalArticle.class.getName() %>"
 	classPK="<%= classPK %>"

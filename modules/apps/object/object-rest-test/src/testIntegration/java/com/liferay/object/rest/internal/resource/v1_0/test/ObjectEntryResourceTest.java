@@ -24,6 +24,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
@@ -49,6 +49,7 @@ import java.util.Collections;
 
 import org.hamcrest.CoreMatchers;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,6 +117,17 @@ public class ObjectEntryResourceTest {
 
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition2);
 	}
 
 	@Test
@@ -589,22 +601,18 @@ public class ObjectEntryResourceTest {
 	private static final String _OBJECT_FIELD_VALUE_2 =
 		RandomTestUtil.randomString();
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
 
-	@DeleteAfterTestRun
-	private ObjectEntry _objectEntry1;
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@DeleteAfterTestRun
+	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
-	@DeleteAfterTestRun
 	private ObjectRelationship _objectRelationship;
 
 	@Inject

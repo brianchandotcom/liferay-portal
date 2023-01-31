@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext;
+import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
 
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,13 +44,14 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexActionsDisplayContextBuilder {
 
 	public IndexActionsDisplayContextBuilder(
-		Language language, Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		EmbeddingProviderInformation embeddingProviderInformation,
+		Language language, Portal portal, RenderRequest renderRequest) {
 
 		_language = language;
 		_portal = portal;
 		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+
+		_embeddingEmbeddingProviderInformation = embeddingProviderInformation;
 
 		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
 	}
@@ -58,6 +59,10 @@ public class IndexActionsDisplayContextBuilder {
 	public IndexActionsDisplayContext build() {
 		IndexActionsDisplayContext indexActionsDisplayContext =
 			new IndexActionsDisplayContext();
+
+		indexActionsDisplayContext.setEmbeddingProviderStatuses(
+			_embeddingEmbeddingProviderInformation.
+				getEmbeddingProviderStatuses());
 
 		indexActionsDisplayContext.setData(getData());
 
@@ -123,10 +128,11 @@ public class IndexActionsDisplayContextBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexActionsDisplayContextBuilder.class);
 
+	private final EmbeddingProviderInformation
+		_embeddingEmbeddingProviderInformation;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 
 }

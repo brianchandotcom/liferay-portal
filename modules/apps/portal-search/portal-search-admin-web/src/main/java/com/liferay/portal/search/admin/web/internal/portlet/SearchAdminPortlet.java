@@ -28,6 +28,7 @@ import com.liferay.portal.search.admin.web.internal.display.context.builder.Sear
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchEngineDisplayContextBuilder;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 
 import java.io.IOException;
@@ -135,7 +136,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 			IndexActionsDisplayContextBuilder
 				indexActionsDisplayContextBuilder =
 					new IndexActionsDisplayContextBuilder(
-						_language, _portal, renderRequest, renderResponse);
+						_embeddingProviderInformation, _language, _portal,
+						renderRequest);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,
@@ -175,6 +177,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected volatile SearchEngineInformation searchEngineInformation;
+
+	@Reference
+	private EmbeddingProviderInformation _embeddingProviderInformation;
 
 	private final List<String> _indexReindexerClassNames =
 		new CopyOnWriteArrayList<>();

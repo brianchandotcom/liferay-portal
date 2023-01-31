@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.admin.web.internal.display.context;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus;
 
 import java.util.Map;
 
@@ -27,21 +27,21 @@ public class IndexActionsDisplayContext {
 		return _data;
 	}
 
-	public String getTextEmbeddingServiceStatus() {
-		return _textEmbeddingServiceStatus;
+	public EmbeddingProviderStatus[] getEmbeddingProviderStatuses() {
+		return _embeddingProviderStatuses;
 	}
 
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}
 
-	public void setTextEmbeddingServiceStatus(
-		String textEmbeddingServiceStatus) {
+	public void setEmbeddingProviderStatuses(
+		EmbeddingProviderStatus[] embeddingProviderStatuses) {
 
-		_textEmbeddingServiceStatus = textEmbeddingServiceStatus;
+		_embeddingProviderStatuses = embeddingProviderStatuses;
 	}
 
 	private Map<String, Object> _data;
-	private String _textEmbeddingServiceStatus = StringPool.BLANK;
+	private EmbeddingProviderStatus[] _embeddingProviderStatuses;
 
 }

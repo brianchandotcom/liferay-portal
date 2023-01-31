@@ -1112,17 +1112,16 @@ public class ObjectEntryLocalServiceImpl
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		List<ObjectEntry> objectEntries = TransformUtil.transform(
-			searchHits.getSearchHits(),
-			searchHit -> {
-				Document document = searchHit.getDocument();
-
-				return objectEntryPersistence.fetchByPrimaryKey(
-					document.getLong(Field.ENTRY_CLASS_PK));
-			});
-
 		return new BaseModelSearchResult<>(
-			objectEntries, searchResponse.getTotalHits());
+			(List<ObjectEntry>)TransformUtil.transform(
+				searchHits.getSearchHits(),
+				searchHit -> {
+					Document document = searchHit.getDocument();
+
+					return objectEntryPersistence.fetchByPrimaryKey(
+						document.getLong(Field.ENTRY_CLASS_PK));
+				}),
+			searchResponse.getTotalHits());
 	}
 
 	@Override

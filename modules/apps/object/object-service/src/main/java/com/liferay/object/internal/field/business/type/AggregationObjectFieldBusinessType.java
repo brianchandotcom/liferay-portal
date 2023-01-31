@@ -133,16 +133,17 @@ public class AggregationObjectFieldBusinessType
 		Map<String, Object> objectFieldSettingsValuesMap = new HashMap<>();
 
 		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			if (Objects.equals(objectFieldSetting.getName(), "filters")) {
+			String name = objectFieldSetting.getName();
+
+			if (Objects.equals("filters", name)) {
 				objectFieldSettingsValuesMap.put(
-					objectFieldSetting.getName(),
-					objectFieldSetting.getObjectFilters());
+					name, objectFieldSetting.getObjectFilters());
 
 				continue;
 			}
 
 			objectFieldSettingsValuesMap.put(
-				objectFieldSetting.getName(), objectFieldSetting.getValue());
+				name, objectFieldSetting.getValue());
 		}
 
 		String function = GetterUtil.getString(

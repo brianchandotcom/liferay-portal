@@ -751,8 +751,8 @@ public class ObjectFieldLocalServiceImpl
 					objectFieldSettings) {
 
 				if (Objects.equals(
-						newObjectFieldSetting.getName(),
-						oldObjectFieldSetting.getName())) {
+						oldObjectFieldSetting.getName(),
+						newObjectFieldSetting.getName())) {
 
 					objectFieldSetting = newObjectFieldSetting;
 

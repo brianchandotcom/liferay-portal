@@ -17,7 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDisplayLayoutEntryException;
-import com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException;
+import com.liferay.commerce.product.exception.CPDisplayLayoutEntryUuidException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -86,7 +86,7 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (exception instanceof CPDisplayLayoutEntryException ||
-					 exception instanceof CPDisplayLayoutLayoutUuidException ||
+					 exception instanceof CPDisplayLayoutEntryUuidException ||
 					 exception instanceof NoSuchCPDefinitionException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -159,12 +159,14 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 			actionRequest, "cpDisplayLayoutId");
 
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
+		String layoutPageTemplateEntryUuid = ParamUtil.getString(
+			actionRequest, "layoutPageTemplateEntryUuid");
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
 
 		if (cpDisplayLayoutId > 0) {
 			_cpDisplayLayoutService.updateCPDisplayLayout(
-				cpDisplayLayoutId, classPK, layoutUuid);
+				cpDisplayLayoutId, classPK, layoutPageTemplateEntryUuid,
+				layoutUuid);
 		}
 		else {
 			long commerceChannelId = ParamUtil.getLong(
@@ -175,7 +177,7 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 
 			_cpDisplayLayoutService.addCPDisplayLayout(
 				commerceChannel.getSiteGroupId(), CPDefinition.class, classPK,
-				layoutUuid);
+				layoutPageTemplateEntryUuid, layoutUuid);
 		}
 	}
 

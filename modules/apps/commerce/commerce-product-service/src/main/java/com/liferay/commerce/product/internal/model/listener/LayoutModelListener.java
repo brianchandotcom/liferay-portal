@@ -40,7 +40,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		List<CPDisplayLayout> cpDisplayLayouts =
 			_cpDisplayLayoutLocalService.
-				fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
+				getCPDisplayLayoutsByGroupIdAndLayoutUuid(
 					layout.getGroupId(), layout.getUuid());
 
 		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {

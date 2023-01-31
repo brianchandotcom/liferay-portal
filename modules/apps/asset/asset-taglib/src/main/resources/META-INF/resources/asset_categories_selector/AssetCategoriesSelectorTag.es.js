@@ -13,6 +13,7 @@
  */
 
 import ClayLink from '@clayui/link';
+import {useId} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -56,6 +57,9 @@ AssetCategoriesSelectorTag.propTypes = {
 };
 
 export default function (props) {
+	const internalVocabulariesId = useId();
+	const publicVocabulariesId = useId();
+
 	const initialPublicVocabularies = props.vocabularies.filter(
 		(vocabulary) =>
 			vocabulary.visibilityType ===
@@ -76,10 +80,13 @@ export default function (props) {
 			)}
 
 			{initialPublicVocabularies && !!initialPublicVocabularies.length && (
-				<>
+				<div aria-labelledby={publicVocabulariesId} role="group">
 					{props.showLabel && (
 						<>
-							<div className="border-0 mb-0 sheet-subtitle text-uppercase">
+							<div
+								className="border-0 mb-0 sheet-subtitle text-uppercase"
+								id={publicVocabulariesId}
+							>
 								{Liferay.Language.get('public-categories')}
 							</div>
 
@@ -95,15 +102,18 @@ export default function (props) {
 						{...props}
 						initialVocabularies={initialPublicVocabularies}
 					/>
-				</>
+				</div>
 			)}
 
 			{initialInternalVocabularies &&
 				!!initialInternalVocabularies.length && (
-					<>
+					<div aria-labelledby={internalVocabulariesId} role="group">
 						{props.showLabel && (
 							<>
-								<div className="border-0 mb-0 sheet-subtitle text-uppercase">
+								<div
+									className="border-0 mb-0 sheet-subtitle text-uppercase"
+									id={internalVocabulariesId}
+								>
 									{Liferay.Language.get(
 										'internal-categories'
 									)}
@@ -120,7 +130,7 @@ export default function (props) {
 							{...props}
 							initialVocabularies={initialInternalVocabularies}
 						/>
-					</>
+					</div>
 				)}
 		</>
 	);

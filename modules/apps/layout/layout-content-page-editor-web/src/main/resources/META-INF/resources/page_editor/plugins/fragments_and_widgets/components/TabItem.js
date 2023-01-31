@@ -105,16 +105,16 @@ export default function TabItem({displayStyle, item}) {
 	return displayStyle === FRAGMENTS_DISPLAY_STYLES.CARDS ? (
 		<CardItem
 			disabled={item.disabled || isDraggingSource}
+			handlerRef={item.disabled ? null : sourceRef}
 			item={item}
 			onToggleHighlighted={onToggleHighlighted}
-			ref={sourceRef}
 		/>
 	) : (
 		<ListItem
 			disabled={item.disabled || isDraggingSource}
+			handlerRef={item.disabled ? null : sourceRef}
 			item={item}
 			onToggleHighlighted={onToggleHighlighted}
-			ref={item.disabled ? null : sourceRef}
 		/>
 	);
 }
@@ -124,19 +124,21 @@ TabItem.propTypes = {
 	item: ITEM_PROPTYPES_SHAPE.isRequired,
 };
 
-const ListItem = React.forwardRef(
-	({disabled, item, onToggleHighlighted}, ref) => {
-		return (
-			<li
-				className={classNames(
-					'align-items-center d-flex justify-content-between mb-1 page-editor__fragments-widgets__tab-list-item rounded',
-					{
-						disabled,
-						'ml-3 page-editor__fragments-widgets__tab-portlet-item':
-							item.data.portletItemId,
-					}
-				)}
-				ref={ref}
+const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
+	return (
+		<li
+			className={classNames(
+				'mb-1 page-editor__fragments-widgets__tab-list-item rounded',
+				{
+					disabled,
+					'ml-3 page-editor__fragments-widgets__tab-portlet-item':
+						item.data.portletItemId,
+				}
+			)}
+		>
+			<div
+				className="align-items-center d-flex h-100 justify-content-between w-100"
+				ref={handlerRef}
 			>
 				<div className="align-items-center d-flex page-editor__fragments-widgets__tab-list-item-body">
 					<ClayIcon className="mr-3" symbol={item.icon} />
@@ -150,27 +152,27 @@ const ListItem = React.forwardRef(
 					item={item}
 					onToggleHighlighted={onToggleHighlighted}
 				/>
-			</li>
-		);
-	}
-);
+			</div>
+		</li>
+	);
+};
 
 ListItem.propTypes = {
 	disabled: PropTypes.bool.isRequired,
+	handlerRef: PropTypes.func.isRequired,
 	item: ITEM_PROPTYPES_SHAPE.isRequired,
 	onToggleHighlighted: PropTypes.func.isRequired,
 };
 
-const CardItem = React.forwardRef(
-	({disabled, item, onToggleHighlighted}, ref) => {
-		return (
-			<li
-				className={classNames(
-					'page-editor__fragments-widgets__tab-card-item',
-					{disabled}
-				)}
-				ref={ref}
-			>
+const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
+	return (
+		<li
+			className={classNames(
+				'page-editor__fragments-widgets__tab-card-item',
+				{disabled}
+			)}
+		>
+			<div ref={handlerRef}>
 				<ClayCard
 					aria-label={item.label}
 					className="mb-0"
@@ -225,13 +227,14 @@ const CardItem = React.forwardRef(
 						</ClayCard.Row>
 					</ClayCard.Body>
 				</ClayCard>
-			</li>
-		);
-	}
-);
+			</div>
+		</li>
+	);
+};
 
 CardItem.propTypes = {
 	disabled: PropTypes.bool.isRequired,
+	handlerRef: PropTypes.func.isRequired,
 	item: ITEM_PROPTYPES_SHAPE.isRequired,
 	onToggleHighlighted: PropTypes.func.isRequired,
 };

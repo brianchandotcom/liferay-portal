@@ -21,7 +21,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 %>
 
 <clay:row
-	id="ordering"
+	id='<%= liferayPortletResponse.getNamespace() + "ordering" %>'
 >
 	<clay:col
 		size="6"

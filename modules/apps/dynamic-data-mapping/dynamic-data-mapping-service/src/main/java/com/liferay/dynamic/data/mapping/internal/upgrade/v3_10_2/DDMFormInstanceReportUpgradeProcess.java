@@ -127,10 +127,12 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 
 		JSONObject normalizedValuesJSONObject = _jsonFactory.createJSONObject();
 
-		for (String key : valuesJSONObject.keySet()) {
-			normalizedValuesJSONObject.put(
-				DDMFormFieldUpgradeProcessUtil.getNormalizedName(key),
-				valuesJSONObject.getInt(key));
+		if (valuesJSONObject.length() > 0) {
+			for (String key : valuesJSONObject.keySet()) {
+				normalizedValuesJSONObject.put(
+					DDMFormFieldUpgradeProcessUtil.getNormalizedName(key),
+					valuesJSONObject.getInt(key));
+			}
 		}
 
 		return normalizedValuesJSONObject;

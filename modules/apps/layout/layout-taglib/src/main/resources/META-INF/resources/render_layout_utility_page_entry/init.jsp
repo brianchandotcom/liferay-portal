@@ -19,6 +19,8 @@
 <%@ taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %>
 
 <%@ page import="com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor" %><%@
+page import="com.liferay.layout.taglib.internal.display.context.RenderLayoutUtilityPageEntryDisplayContext" %><%@
 page import="com.liferay.layout.taglib.internal.servlet.ServletContextUtil" %><%@
 page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
+page import="com.liferay.layout.utility.page.model.LayoutUtilityPageEntry" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>

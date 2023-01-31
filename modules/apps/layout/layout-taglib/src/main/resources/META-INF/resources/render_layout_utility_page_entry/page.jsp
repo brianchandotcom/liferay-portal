@@ -18,9 +18,14 @@
 
 <%
 LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay-layout:render-layout-utility-page-entry:layoutStructure");
+
+LayoutUtilityPageEntry layoutUtilityPageEntry = (LayoutUtilityPageEntry)request.getAttribute("liferay-layout:render-layout-utility-page-entry:layoutUtilityPageEntry");
+
+RenderLayoutUtilityPageEntryDisplayContext renderLayoutUtilityPageEntryDisplayContext = new RenderLayoutUtilityPageEntryDisplayContext(layoutUtilityPageEntry);
 %>
 
 <c:if test="<%= layoutStructure != null %>">
+	<link data-senna-track="temporary" href="<%= renderLayoutUtilityPageEntryDisplayContext.getHref() %>" rel="stylesheet" type="text/css" />
 
 	<%
 	try {

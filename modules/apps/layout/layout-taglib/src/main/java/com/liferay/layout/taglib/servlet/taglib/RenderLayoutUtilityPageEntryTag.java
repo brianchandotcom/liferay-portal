@@ -76,14 +76,20 @@ public class RenderLayoutUtilityPageEntryTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		super.setAttributes(httpServletRequest);
 
-		httpServletRequest.setAttribute(
-			"liferay-layout:render-layout-utility-page-entry:layoutStructure",
-			_getLayoutStructure());
-	}
-
-	private LayoutStructure _getLayoutStructure() {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_getLayoutUtilityPageEntry();
+
+		httpServletRequest.setAttribute(
+			"liferay-layout:render-layout-utility-page-entry:layoutStructure",
+			_getLayoutStructure(layoutUtilityPageEntry));
+		httpServletRequest.setAttribute(
+			"liferay-layout:render-layout-utility-page-entry:" +
+				"layoutUtilityPageEntry",
+			layoutUtilityPageEntry);
+	}
+
+	private LayoutStructure _getLayoutStructure(
+		LayoutUtilityPageEntry layoutUtilityPageEntry) {
 
 		if (layoutUtilityPageEntry == null) {
 			return null;

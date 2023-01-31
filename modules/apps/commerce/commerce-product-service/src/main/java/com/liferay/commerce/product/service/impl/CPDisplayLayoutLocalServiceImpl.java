@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPDisplayLayoutEntryException;
-import com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException;
+import com.liferay.commerce.product.exception.CPDisplayLayoutEntryUuidException;
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
@@ -66,16 +66,16 @@ public class CPDisplayLayoutLocalServiceImpl
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
 			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			String entryUuid, int type)
 		throws PortalException {
 
-		_validate(classPK, layoutUuid);
+		_validate(classPK, entryUuid);
 
 		long classNameId = _classNameLocalService.getClassNameId(clazz);
 
 		CPDisplayLayout oldCPDisplayLayout =
-			cpDisplayLayoutPersistence.fetchByG_C_C(
-				groupId, classNameId, classPK);
+			cpDisplayLayoutPersistence.fetchByG_C_C_T(
+				groupId, classNameId, classPK, type);
 
 		if ((clazz == CPDefinition.class) &&
 			CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
@@ -92,12 +92,12 @@ public class CPDisplayLayoutLocalServiceImpl
 				throw new SystemException(portalException);
 			}
 
-			oldCPDisplayLayout = cpDisplayLayoutPersistence.fetchByG_C_C(
-				groupId, classNameId, classPK);
+			oldCPDisplayLayout = cpDisplayLayoutPersistence.fetchByG_C_C_T(
+				groupId, classNameId, classPK, type);
 		}
 
 		if (oldCPDisplayLayout != null) {
-			oldCPDisplayLayout.setLayoutUuid(layoutUuid);
+			oldCPDisplayLayout.setEntryUuid(entryUuid);
 
 			return cpDisplayLayoutPersistence.update(oldCPDisplayLayout);
 		}
@@ -115,7 +115,8 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		cpDisplayLayout.setClassNameId(classNameId);
 		cpDisplayLayout.setClassPK(classPK);
-		cpDisplayLayout.setLayoutUuid(layoutUuid);
+		cpDisplayLayout.setEntryUuid(entryUuid);
+		cpDisplayLayout.setType(type);
 
 		return cpDisplayLayoutPersistence.update(cpDisplayLayout);
 	}
@@ -154,35 +155,36 @@ public class CPDisplayLayoutLocalServiceImpl
 
 	@Override
 	public CPDisplayLayout fetchCPDisplayLayout(
-		long groupId, Class<?> clazz, long classPK) {
+		long groupId, Class<?> clazz, long classPK, int type) {
 
-		return cpDisplayLayoutPersistence.fetchByG_C_C(
-			groupId, _classNameLocalService.getClassNameId(clazz), classPK);
+		return cpDisplayLayoutPersistence.fetchByG_C_C_T(
+			groupId, _classNameLocalService.getClassNameId(clazz), classPK,
+			type);
 	}
 
 	@Override
-	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid) {
+	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+		long groupId, String entryUuid) {
 
-		return cpDisplayLayoutPersistence.findByG_L(groupId, layoutUuid);
+		return cpDisplayLayoutPersistence.findByG_E(groupId, entryUuid);
 	}
 
 	@Override
-	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid, int start, int end) {
+	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+		long groupId, String entryUuid, int start, int end) {
 
-		return cpDisplayLayoutPersistence.findByG_L(
-			groupId, layoutUuid, start, end);
+		return cpDisplayLayoutPersistence.findByG_E(
+			groupId, entryUuid, start, end);
 	}
 
 	@Override
 	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
-			long companyId, long groupId, String className, String keywords,
-			int start, int end, Sort sort)
+			long companyId, long groupId, String className, Integer type,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = _buildSearchContext(
-			companyId, groupId, className, keywords, start, end, sort);
+			companyId, groupId, className, type, keywords, start, end, sort);
 
 		return _searchCPDisplayLayout(searchContext);
 	}
@@ -190,23 +192,23 @@ public class CPDisplayLayoutLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String entryUuid)
 		throws PortalException {
 
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutPersistence.findByPrimaryKey(cpDisplayLayoutId);
 
-		_validate(cpDisplayLayout.getClassPK(), layoutUuid);
+		_validate(cpDisplayLayout.getClassPK(), entryUuid);
 
 		cpDisplayLayout.setClassPK(classPK);
-		cpDisplayLayout.setLayoutUuid(layoutUuid);
+		cpDisplayLayout.setEntryUuid(entryUuid);
 
 		return cpDisplayLayoutPersistence.update(cpDisplayLayout);
 	}
 
 	private SearchContext _buildSearchContext(
-		long companyId, long groupId, String className, String keywords,
-		int start, int end, Sort sort) {
+		long companyId, long groupId, String className, Integer type,
+		String keywords, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -220,6 +222,8 @@ public class CPDisplayLayoutLocalServiceImpl
 				).build()
 			).put(
 				"searchFilterEnabled", true
+			).put(
+				"type", type
 			).build());
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
@@ -297,15 +301,15 @@ public class CPDisplayLayoutLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	private void _validate(long classPK, String layoutUuid)
+	private void _validate(long classPK, String entryUuid)
 		throws PortalException {
 
 		if (classPK <= 0) {
 			throw new CPDisplayLayoutEntryException();
 		}
 
-		if (Validator.isNull(layoutUuid)) {
-			throw new CPDisplayLayoutLayoutUuidException();
+		if (Validator.isNull(entryUuid)) {
+			throw new CPDisplayLayoutEntryUuidException();
 		}
 	}
 

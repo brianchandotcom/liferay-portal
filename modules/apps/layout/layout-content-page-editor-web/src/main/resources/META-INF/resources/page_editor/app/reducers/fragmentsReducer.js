@@ -14,6 +14,7 @@
 
 import {
 	ADD_FRAGMENT_COMPOSITION,
+	INIT,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 	UPDATE_FRAGMENTS,
 } from '../actions/types';
@@ -59,6 +60,22 @@ export default function fragmentsReducer(fragments = [], action) {
 				newCollection,
 			];
 		}
+
+		case INIT:
+			return Liferay.FeatureFlags['LPS-161631']
+				? fragments
+				: fragments.map((collection) =>
+						collection.fragmentCollectionId === 'INPUTS'
+							? {
+									...collection,
+									fragmentEntries: collection.fragmentEntries.filter(
+										(fragment) =>
+											fragment.fragmentEntryKey !==
+											'INPUTS-rich-text-input'
+									),
+							  }
+							: collection
+				  );
 
 		case TOGGLE_FRAGMENT_HIGHLIGHTED: {
 			const {

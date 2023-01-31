@@ -15,13 +15,11 @@
 package com.liferay.object.rest.internal.vulcan.extension.v1_0;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
-import com.liferay.object.field.util.ObjectFieldFormulaEvaluatorUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
@@ -29,8 +27,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -68,31 +64,13 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 					getExtensionDynamicObjectDefinitionTableValues(
 						objectDefinition, getPrimaryKey(entity));
 
-			JSONObject jsonObject = jsonFactory.createJSONObject(
-				jsonFactory.looseSerializeDeep(entity));
-
-			Map<String, Serializable> variables =
-				ObjectFieldFormulaEvaluatorUtil.evaluate(
-					_ddmExpressionFactory,
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId()),
-					_objectFieldSettingLocalService, _userLocalService,
-					new HashMap<>(JSONUtil.toStringMap(jsonObject)));
-
 			for (ObjectField objectField :
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId(), false)) {
 
-				if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
-
-					values.put(
-						objectField.getName(),
-						variables.get(objectField.getName()));
-				}
-				else if (Objects.equals(
-							objectField.getRelationshipType(),
-							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+				if (Objects.equals(
+						objectField.getRelationshipType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 					values.remove(objectField.getName());
 				}

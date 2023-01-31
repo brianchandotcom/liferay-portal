@@ -275,6 +275,11 @@
 		<td>//div[contains(@id,'clay-dropdown-menu')]//input[contains(@class,'toggle-switch-check')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>FIELD_VIEW_FILTER_DROPDOWN_OPTION</td>
+		<td>//div[(@id='clay-dropdown-menu-4')]/../..//button[contains(., '${key_picklistOption}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

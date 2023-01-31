@@ -20,15 +20,17 @@ package com.liferay.commerce.product.definitions.web.internal.model;
 public class ProductDisplayPage {
 
 	public ProductDisplayPage(
-		String layout, long productDisplayPageId, String productName) {
+		String name, long productDisplayPageId, String productName,
+		String type) {
 
-		_layout = layout;
+		_name = name;
 		_productDisplayPageId = productDisplayPageId;
 		_productName = productName;
+		_type = type;
 	}
 
-	public String getLayout() {
-		return _layout;
+	public String getName() {
+		return _name;
 	}
 
 	public long getProductDisplayPageId() {
@@ -39,8 +41,13 @@ public class ProductDisplayPage {
 		return _productName;
 	}
 
-	private final String _layout;
+	public String getType() {
+		return _type;
+	}
+
+	private final String _name;
 	private final long _productDisplayPageId;
 	private final String _productName;
+	private final String _type;
 
 }

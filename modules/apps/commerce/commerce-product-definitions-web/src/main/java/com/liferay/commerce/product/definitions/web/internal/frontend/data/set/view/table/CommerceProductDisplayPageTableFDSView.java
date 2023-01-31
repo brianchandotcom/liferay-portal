@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.view.table;
 
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductDisplayPage;
@@ -33,6 +34,8 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -114,7 +117,9 @@ public class CommerceProductDisplayPageTableFDSView
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
-			"layout", "layout"
+			"name", "name"
+		).add(
+			"type", "type"
 		).build();
 	}
 
@@ -141,8 +146,8 @@ public class CommerceProductDisplayPageTableFDSView
 				_cpDisplayLayoutService.searchCPDisplayLayout(
 					commerceChannel.getCompanyId(),
 					commerceChannel.getSiteGroupId(),
-					CPDefinition.class.getName(), fdsKeywords.getKeywords(),
-					fdsPagination.getStartPosition(),
+					CPDefinition.class.getName(), null,
+					fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition(), sort);
 
 		for (CPDisplayLayout cpDisplayLayout :
@@ -150,10 +155,13 @@ public class CommerceProductDisplayPageTableFDSView
 
 			productDisplayPages.add(
 				new ProductDisplayPage(
-					_getLayout(cpDisplayLayout, themeDisplay.getLanguageId()),
+					_getName(
+						commerceChannel, cpDisplayLayout,
+						themeDisplay.getLanguageId()),
 					cpDisplayLayout.getCPDisplayLayoutId(),
 					_getProductName(
-						cpDisplayLayout, themeDisplay.getLanguageId())));
+						cpDisplayLayout, themeDisplay.getLanguageId()),
+					_getType(cpDisplayLayout, themeDisplay.getLocale())));
 		}
 
 		return productDisplayPages;
@@ -175,22 +183,42 @@ public class CommerceProductDisplayPageTableFDSView
 				_cpDisplayLayoutService.searchCPDisplayLayout(
 					commerceChannel.getCompanyId(),
 					commerceChannel.getSiteGroupId(),
-					CPDefinition.class.getName(), fdsKeywords.getKeywords(), 0,
-					0, null);
+					CPDefinition.class.getName(), null,
+					fdsKeywords.getKeywords(), 0, 0, null);
 
 		return cpDisplayLayoutBaseModelSearchResult.getLength();
 	}
 
-	private String _getLayout(
-		CPDisplayLayout cpDisplayLayout, String languageId) {
+	private String _getName(
+		CommerceChannel commerceChannel, CPDisplayLayout cpDisplayLayout,
+		String languageId) {
 
-		Layout layout = cpDisplayLayout.fetchLayout();
+		if (cpDisplayLayout.getType() == CPDisplayLayoutConstants.TYPE_LAYOUT) {
+			Layout layout = cpDisplayLayout.fetchLayout();
 
-		if (layout == null) {
-			return StringPool.BLANK;
+			if (layout == null) {
+				return StringPool.BLANK;
+			}
+
+			return layout.getName(languageId);
+		}
+		else if (cpDisplayLayout.getType() ==
+					CPDisplayLayoutConstants.TYPE_LAYOUT_PAGE_TEMPLATE_ENTRY) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.
+					fetchLayoutPageTemplateEntryByUuidAndGroupId(
+						cpDisplayLayout.getEntryUuid(),
+						commerceChannel.getSiteGroupId());
+
+			if (layoutPageTemplateEntry == null) {
+				return StringPool.BLANK;
+			}
+
+			return layoutPageTemplateEntry.getName();
 		}
 
-		return layout.getName(languageId);
+		return StringPool.BLANK;
 	}
 
 	private String _getProductDisplayPageDeleteURL(
@@ -250,6 +278,19 @@ public class CommerceProductDisplayPageTableFDSView
 		return cpDefinition.getName(languageId);
 	}
 
+	private String _getType(CPDisplayLayout cpDisplayLayout, Locale locale) {
+		if (cpDisplayLayout.getType() == CPDisplayLayoutConstants.TYPE_LAYOUT) {
+			return _language.get(locale, "layout");
+		}
+		else if (cpDisplayLayout.getType() ==
+					CPDisplayLayoutConstants.TYPE_LAYOUT_PAGE_TEMPLATE_ENTRY) {
+
+			return _language.get(locale, "display-page-template");
+		}
+
+		return StringPool.BLANK;
+	}
+
 	@Reference
 	private CommerceChannelService _commerceChannelService;
 
@@ -261,6 +302,9 @@ public class CommerceProductDisplayPageTableFDSView
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

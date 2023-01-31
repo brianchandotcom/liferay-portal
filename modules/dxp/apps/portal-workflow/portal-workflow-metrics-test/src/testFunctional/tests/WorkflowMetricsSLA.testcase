@@ -68,7 +68,7 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "Update");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");
 
@@ -339,7 +339,7 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "Update");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");
 
@@ -406,7 +406,7 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "Update");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");
 
@@ -865,7 +865,7 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "Update");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");
 

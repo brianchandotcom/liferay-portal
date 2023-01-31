@@ -1738,7 +1738,7 @@ definition {
 			infoOption = "Label",
 			infoValue = "Review");
 
-		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "Update");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");
 

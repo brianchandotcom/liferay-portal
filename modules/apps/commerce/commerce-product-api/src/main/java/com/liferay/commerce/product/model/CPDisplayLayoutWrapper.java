@@ -57,7 +57,8 @@ public class CPDisplayLayoutWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("layoutUuid", getLayoutUuid());
+		attributes.put("entryUuid", getEntryUuid());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -136,10 +137,16 @@ public class CPDisplayLayoutWrapper
 			setClassPK(classPK);
 		}
 
-		String layoutUuid = (String)attributes.get("layoutUuid");
+		String entryUuid = (String)attributes.get("entryUuid");
 
-		if (layoutUuid != null) {
-			setLayoutUuid(layoutUuid);
+		if (entryUuid != null) {
+			setEntryUuid(entryUuid);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -234,6 +241,16 @@ public class CPDisplayLayoutWrapper
 	}
 
 	/**
+	 * Returns the entry uuid of this cp display layout.
+	 *
+	 * @return the entry uuid of this cp display layout
+	 */
+	@Override
+	public String getEntryUuid() {
+		return model.getEntryUuid();
+	}
+
+	/**
 	 * Returns the group ID of this cp display layout.
 	 *
 	 * @return the group ID of this cp display layout
@@ -241,16 +258,6 @@ public class CPDisplayLayoutWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
-	}
-
-	/**
-	 * Returns the layout uuid of this cp display layout.
-	 *
-	 * @return the layout uuid of this cp display layout
-	 */
-	@Override
-	public String getLayoutUuid() {
-		return model.getLayoutUuid();
 	}
 
 	/**
@@ -281,6 +288,16 @@ public class CPDisplayLayoutWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type of this cp display layout.
+	 *
+	 * @return the type of this cp display layout
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
 	}
 
 	/**
@@ -394,6 +411,16 @@ public class CPDisplayLayoutWrapper
 	}
 
 	/**
+	 * Sets the entry uuid of this cp display layout.
+	 *
+	 * @param entryUuid the entry uuid of this cp display layout
+	 */
+	@Override
+	public void setEntryUuid(String entryUuid) {
+		model.setEntryUuid(entryUuid);
+	}
+
+	/**
 	 * Sets the group ID of this cp display layout.
 	 *
 	 * @param groupId the group ID of this cp display layout
@@ -401,16 +428,6 @@ public class CPDisplayLayoutWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
-	}
-
-	/**
-	 * Sets the layout uuid of this cp display layout.
-	 *
-	 * @param layoutUuid the layout uuid of this cp display layout
-	 */
-	@Override
-	public void setLayoutUuid(String layoutUuid) {
-		model.setLayoutUuid(layoutUuid);
 	}
 
 	/**
@@ -441,6 +458,16 @@ public class CPDisplayLayoutWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this cp display layout.
+	 *
+	 * @param type the type of this cp display layout
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

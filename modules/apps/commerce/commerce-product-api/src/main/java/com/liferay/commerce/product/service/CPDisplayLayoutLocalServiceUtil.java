@@ -63,11 +63,11 @@ public class CPDisplayLayoutLocalServiceUtil {
 
 	public static CPDisplayLayout addCPDisplayLayout(
 			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			String entryUuid, int type)
 		throws PortalException {
 
 		return getService().addCPDisplayLayout(
-			userId, groupId, clazz, classPK, layoutUuid);
+			userId, groupId, clazz, classPK, entryUuid, type);
 	}
 
 	/**
@@ -235,25 +235,25 @@ public class CPDisplayLayoutLocalServiceUtil {
 	}
 
 	public static CPDisplayLayout fetchCPDisplayLayout(
-		long groupId, Class<?> clazz, long classPK) {
+		long groupId, Class<?> clazz, long classPK, int type) {
 
-		return getService().fetchCPDisplayLayout(groupId, clazz, classPK);
+		return getService().fetchCPDisplayLayout(groupId, clazz, classPK, type);
 	}
 
 	public static List<CPDisplayLayout>
-		fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-			long groupId, String layoutUuid) {
+		fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+			long groupId, String entryUuid) {
 
-		return getService().fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-			groupId, layoutUuid);
+		return getService().fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+			groupId, entryUuid);
 	}
 
 	public static List<CPDisplayLayout>
-		fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-			long groupId, String layoutUuid, int start, int end) {
+		fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+			long groupId, String entryUuid, int start, int end) {
 
-		return getService().fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-			groupId, layoutUuid, start, end);
+		return getService().fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+			groupId, entryUuid, start, end);
 	}
 
 	/**
@@ -396,12 +396,13 @@ public class CPDisplayLayoutLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDisplayLayout> searchCPDisplayLayout(
-				long companyId, long groupId, String className, String keywords,
-				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+				long companyId, long groupId, String className, Integer type,
+				String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
 			throws PortalException {
 
 		return getService().searchCPDisplayLayout(
-			companyId, groupId, className, keywords, start, end, sort);
+			companyId, groupId, className, type, keywords, start, end, sort);
 	}
 
 	/**
@@ -421,11 +422,11 @@ public class CPDisplayLayoutLocalServiceUtil {
 	}
 
 	public static CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String entryUuid)
 		throws PortalException {
 
 		return getService().updateCPDisplayLayout(
-			cpDisplayLayoutId, classPK, layoutUuid);
+			cpDisplayLayoutId, classPK, entryUuid);
 	}
 
 	public static CPDisplayLayoutLocalService getService() {

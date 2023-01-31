@@ -309,9 +309,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="layoutUuid" type="String">
-			<validator name="required" />
-		</field>
+		<field name="entryUuid" type="String" />
+		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPInstance">
 		<field name="mvccVersion" type="long" />

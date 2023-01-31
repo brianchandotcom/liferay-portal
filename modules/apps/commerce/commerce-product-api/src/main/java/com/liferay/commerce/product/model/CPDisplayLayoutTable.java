@@ -59,8 +59,10 @@ public class CPDisplayLayoutTable extends BaseTable<CPDisplayLayoutTable> {
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CPDisplayLayoutTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDisplayLayoutTable, String> layoutUuid = createColumn(
-		"layoutUuid", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDisplayLayoutTable, String> entryUuid = createColumn(
+		"entryUuid", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDisplayLayoutTable, Integer> type = createColumn(
+		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private CPDisplayLayoutTable() {
 		super("CPDisplayLayout", CPDisplayLayoutTable::new);

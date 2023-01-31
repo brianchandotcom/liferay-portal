@@ -146,7 +146,9 @@ public class CPDisplayLayoutPersistenceTest {
 
 		newCPDisplayLayout.setClassPK(RandomTestUtil.nextLong());
 
-		newCPDisplayLayout.setLayoutUuid(RandomTestUtil.randomString());
+		newCPDisplayLayout.setEntryUuid(RandomTestUtil.randomString());
+
+		newCPDisplayLayout.setType(RandomTestUtil.nextInt());
 
 		_cpDisplayLayouts.add(_persistence.update(newCPDisplayLayout));
 
@@ -189,8 +191,10 @@ public class CPDisplayLayoutPersistenceTest {
 			existingCPDisplayLayout.getClassPK(),
 			newCPDisplayLayout.getClassPK());
 		Assert.assertEquals(
-			existingCPDisplayLayout.getLayoutUuid(),
-			newCPDisplayLayout.getLayoutUuid());
+			existingCPDisplayLayout.getEntryUuid(),
+			newCPDisplayLayout.getEntryUuid());
+		Assert.assertEquals(
+			existingCPDisplayLayout.getType(), newCPDisplayLayout.getType());
 	}
 
 	@Test
@@ -236,12 +240,12 @@ public class CPDisplayLayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_L() throws Exception {
-		_persistence.countByG_L(RandomTestUtil.nextLong(), "");
+	public void testCountByG_E() throws Exception {
+		_persistence.countByG_E(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_L(0L, "null");
+		_persistence.countByG_E(0L, "null");
 
-		_persistence.countByG_L(0L, (String)null);
+		_persistence.countByG_E(0L, (String)null);
 	}
 
 	@Test
@@ -253,12 +257,21 @@ public class CPDisplayLayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_C() throws Exception {
-		_persistence.countByG_C_C(
+	public void testCountByC_C_T() throws Exception {
+		_persistence.countByC_C_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+			RandomTestUtil.nextInt());
 
-		_persistence.countByG_C_C(0L, 0L, 0L);
+		_persistence.countByC_C_T(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_C_C_T() throws Exception {
+		_persistence.countByG_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_T(0L, 0L, 0L, 0);
 	}
 
 	@Test
@@ -290,7 +303,7 @@ public class CPDisplayLayoutPersistenceTest {
 			"uuid", true, "CPDisplayLayoutId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"layoutUuid", true);
+			"entryUuid", true, "type", true);
 	}
 
 	@Test
@@ -586,6 +599,11 @@ public class CPDisplayLayoutPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				cpDisplayLayout, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "classPK"));
+		Assert.assertEquals(
+			Integer.valueOf(cpDisplayLayout.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				cpDisplayLayout, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected CPDisplayLayout addCPDisplayLayout() throws Exception {
@@ -615,7 +633,9 @@ public class CPDisplayLayoutPersistenceTest {
 
 		cpDisplayLayout.setClassPK(RandomTestUtil.nextLong());
 
-		cpDisplayLayout.setLayoutUuid(RandomTestUtil.randomString());
+		cpDisplayLayout.setEntryUuid(RandomTestUtil.randomString());
+
+		cpDisplayLayout.setType(RandomTestUtil.nextInt());
 
 		_cpDisplayLayouts.add(_persistence.update(cpDisplayLayout));
 

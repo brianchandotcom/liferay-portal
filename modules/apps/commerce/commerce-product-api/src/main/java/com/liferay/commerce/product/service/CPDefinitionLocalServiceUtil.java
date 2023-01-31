@@ -717,6 +717,13 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static String getLayoutPageTemplateEntryUuid(
+		long groupId, long cpDefinitionId) {
+
+		return getService().getLayoutPageTemplateEntryUuid(
+			groupId, cpDefinitionId);
+	}
+
 	public static String getLayoutUuid(long groupId, long cpDefinitionId) {
 		return getService().getLayoutUuid(groupId, cpDefinitionId);
 	}

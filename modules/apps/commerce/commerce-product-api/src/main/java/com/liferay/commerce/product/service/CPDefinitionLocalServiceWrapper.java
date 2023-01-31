@@ -804,6 +804,14 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public String getLayoutPageTemplateEntryUuid(
+		long groupId, long cpDefinitionId) {
+
+		return _cpDefinitionLocalService.getLayoutPageTemplateEntryUuid(
+			groupId, cpDefinitionId);
+	}
+
+	@Override
 	public String getLayoutUuid(long groupId, long cpDefinitionId) {
 		return _cpDefinitionLocalService.getLayoutUuid(groupId, cpDefinitionId);
 	}

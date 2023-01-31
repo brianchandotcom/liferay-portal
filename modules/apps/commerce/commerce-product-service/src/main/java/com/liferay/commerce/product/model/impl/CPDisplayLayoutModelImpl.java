@@ -80,7 +80,7 @@ public class CPDisplayLayoutModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"layoutUuid", Types.VARCHAR}
+		{"entryUuid", Types.VARCHAR}, {"type_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,11 +99,12 @@ public class CPDisplayLayoutModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("layoutUuid", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("entryUuid", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDisplayLayout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null,primary key (CPDisplayLayoutId, ctCollectionId))";
+		"create table CPDisplayLayout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,entryUuid VARCHAR(75) null,type_ INTEGER,primary key (CPDisplayLayoutId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CPDisplayLayout";
 
@@ -141,26 +142,32 @@ public class CPDisplayLayoutModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long ENTRYUUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CPDISPLAYLAYOUTID_COLUMN_BITMASK = 64L;
+	public static final long CPDISPLAYLAYOUTID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -332,11 +339,14 @@ public class CPDisplayLayoutModelImpl
 			"classPK",
 			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setClassPK);
 		attributeGetterFunctions.put(
-			"layoutUuid", CPDisplayLayout::getLayoutUuid);
+			"entryUuid", CPDisplayLayout::getEntryUuid);
 		attributeSetterBiConsumers.put(
-			"layoutUuid",
-			(BiConsumer<CPDisplayLayout, String>)
-				CPDisplayLayout::setLayoutUuid);
+			"entryUuid",
+			(BiConsumer<CPDisplayLayout, String>)CPDisplayLayout::setEntryUuid);
+		attributeGetterFunctions.put("type", CPDisplayLayout::getType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<CPDisplayLayout, Integer>)CPDisplayLayout::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -625,22 +635,22 @@ public class CPDisplayLayoutModelImpl
 
 	@JSON
 	@Override
-	public String getLayoutUuid() {
-		if (_layoutUuid == null) {
+	public String getEntryUuid() {
+		if (_entryUuid == null) {
 			return "";
 		}
 		else {
-			return _layoutUuid;
+			return _entryUuid;
 		}
 	}
 
 	@Override
-	public void setLayoutUuid(String layoutUuid) {
+	public void setEntryUuid(String entryUuid) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_layoutUuid = layoutUuid;
+		_entryUuid = entryUuid;
 	}
 
 	/**
@@ -648,8 +658,33 @@ public class CPDisplayLayoutModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalLayoutUuid() {
-		return getColumnOriginalValue("layoutUuid");
+	public String getOriginalEntryUuid() {
+		return getColumnOriginalValue("entryUuid");
+	}
+
+	@JSON
+	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalType() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@Override
@@ -727,7 +762,8 @@ public class CPDisplayLayoutModelImpl
 		cpDisplayLayoutImpl.setModifiedDate(getModifiedDate());
 		cpDisplayLayoutImpl.setClassNameId(getClassNameId());
 		cpDisplayLayoutImpl.setClassPK(getClassPK());
-		cpDisplayLayoutImpl.setLayoutUuid(getLayoutUuid());
+		cpDisplayLayoutImpl.setEntryUuid(getEntryUuid());
+		cpDisplayLayoutImpl.setType(getType());
 
 		cpDisplayLayoutImpl.resetOriginalValues();
 
@@ -762,8 +798,10 @@ public class CPDisplayLayoutModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		cpDisplayLayoutImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
-		cpDisplayLayoutImpl.setLayoutUuid(
-			this.<String>getColumnOriginalValue("layoutUuid"));
+		cpDisplayLayoutImpl.setEntryUuid(
+			this.<String>getColumnOriginalValue("entryUuid"));
+		cpDisplayLayoutImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
 
 		return cpDisplayLayoutImpl;
 	}
@@ -892,13 +930,15 @@ public class CPDisplayLayoutModelImpl
 
 		cpDisplayLayoutCacheModel.classPK = getClassPK();
 
-		cpDisplayLayoutCacheModel.layoutUuid = getLayoutUuid();
+		cpDisplayLayoutCacheModel.entryUuid = getEntryUuid();
 
-		String layoutUuid = cpDisplayLayoutCacheModel.layoutUuid;
+		String entryUuid = cpDisplayLayoutCacheModel.entryUuid;
 
-		if ((layoutUuid != null) && (layoutUuid.length() == 0)) {
-			cpDisplayLayoutCacheModel.layoutUuid = null;
+		if ((entryUuid != null) && (entryUuid.length() == 0)) {
+			cpDisplayLayoutCacheModel.entryUuid = null;
 		}
+
+		cpDisplayLayoutCacheModel.type = getType();
 
 		return cpDisplayLayoutCacheModel;
 	}
@@ -974,7 +1014,8 @@ public class CPDisplayLayoutModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private String _layoutUuid;
+	private String _entryUuid;
+	private int _type;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1017,7 +1058,8 @@ public class CPDisplayLayoutModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
-		_columnOriginalValues.put("layoutUuid", _layoutUuid);
+		_columnOriginalValues.put("entryUuid", _entryUuid);
+		_columnOriginalValues.put("type_", _type);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1026,6 +1068,7 @@ public class CPDisplayLayoutModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1065,7 +1108,9 @@ public class CPDisplayLayoutModelImpl
 
 		columnBitmasks.put("classPK", 2048L);
 
-		columnBitmasks.put("layoutUuid", 4096L);
+		columnBitmasks.put("entryUuid", 4096L);
+
+		columnBitmasks.put("type_", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

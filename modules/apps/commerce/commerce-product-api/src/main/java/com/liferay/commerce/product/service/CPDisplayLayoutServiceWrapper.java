@@ -39,11 +39,12 @@ public class CPDisplayLayoutServiceWrapper
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-			long groupId, Class<?> clazz, long classPK, String layoutUuid)
+			long groupId, Class<?> clazz, long classPK, String entryUuid,
+			int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDisplayLayoutService.addCPDisplayLayout(
-			groupId, clazz, classPK, layoutUuid);
+			groupId, clazz, classPK, entryUuid, type);
 	}
 
 	@Override
@@ -73,21 +74,22 @@ public class CPDisplayLayoutServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDisplayLayout> searchCPDisplayLayout(
-				long companyId, long groupId, String className, String keywords,
-				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+				long companyId, long groupId, String className, Integer type,
+				String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDisplayLayoutService.searchCPDisplayLayout(
-			companyId, groupId, className, keywords, start, end, sort);
+			companyId, groupId, className, type, keywords, start, end, sort);
 	}
 
 	@Override
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String entryUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDisplayLayoutService.updateCPDisplayLayout(
-			cpDisplayLayoutId, classPK, layoutUuid);
+			cpDisplayLayoutId, classPK, entryUuid);
 	}
 
 	@Override

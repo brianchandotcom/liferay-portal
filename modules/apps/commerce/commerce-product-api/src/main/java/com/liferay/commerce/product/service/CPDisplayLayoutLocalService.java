@@ -88,7 +88,7 @@ public interface CPDisplayLayoutLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDisplayLayout addCPDisplayLayout(
 			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			String entryUuid, int type)
 		throws PortalException;
 
 	/**
@@ -224,15 +224,15 @@ public interface CPDisplayLayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDisplayLayout fetchCPDisplayLayout(
-		long groupId, Class<?> clazz, long classPK);
+		long groupId, Class<?> clazz, long classPK, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid);
+	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+		long groupId, String entryUuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid, int start, int end);
+	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndEntryUuid(
+		long groupId, String entryUuid, int start, int end);
 
 	/**
 	 * Returns the cp display layout matching the UUID and group.
@@ -344,8 +344,8 @@ public interface CPDisplayLayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
-			long companyId, long groupId, String className, String keywords,
-			int start, int end, Sort sort)
+			long companyId, long groupId, String className, Integer type,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	/**
@@ -364,7 +364,7 @@ public interface CPDisplayLayoutLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String entryUuid)
 		throws PortalException;
 
 	@Override

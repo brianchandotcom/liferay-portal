@@ -8,6 +8,8 @@ definition {
 	@description = "Check the temp folder after portal shutdown."
 	@priority = "4"
 	test TempDirShouldBeEmptyAfterPortalShutdown {
+		property test.name.skip.portal.instance = "PortalTempDir#TempDirShouldBeEmptyAfterPortalShutdown";
+
 		var tempDir = PropsUtil.get("app.server.temp.dir");
 
 		var filesInTempDir = FileUtil.listFiles("${tempDir}");

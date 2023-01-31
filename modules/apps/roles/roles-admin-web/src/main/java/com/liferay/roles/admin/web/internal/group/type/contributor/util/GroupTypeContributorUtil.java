@@ -20,8 +20,6 @@ import com.liferay.roles.admin.group.type.contributor.GroupTypeContributor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,19 +34,20 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class GroupTypeContributorUtil {
 
 	public static long[] getClassNameIds() {
-		Stream<GroupTypeContributor> stream = _groupTypeContributors.stream();
+		List<Long> classNameIds = new ArrayList<>();
 
-		return ListUtil.toLongArray(
-			stream.filter(
-				GroupTypeContributor::isEnabled
-			).map(
-				GroupTypeContributor::getClassName
-			).map(
-				PortalUtil::getClassNameId
-			).collect(
-				Collectors.toList()
-			),
-			Long::valueOf);
+		for (GroupTypeContributor groupTypeContributor :
+				_groupTypeContributors) {
+
+			if (!groupTypeContributor.isEnabled()) {
+				continue;
+			}
+
+			classNameIds.add(
+				PortalUtil.getClassNameId(groupTypeContributor.getClassName()));
+		}
+
+		return ListUtil.toLongArray(classNameIds, Long::valueOf);
 	}
 
 	@Reference(

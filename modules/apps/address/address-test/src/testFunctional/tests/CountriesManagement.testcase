@@ -25,6 +25,7 @@ definition {
 	@priority = "5"
 	test CanActivateAnInactiveCountry {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CountriesManagement#CanActivateAnInactiveCountry";
 
 		task ("Given that Brazil is set to inactive") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -66,6 +67,7 @@ definition {
 	@priority = "5"
 	test CanActivateAnInactiveRegion {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CountriesManagement#CanActivateAnInactiveRegion";
 
 		task ("Given that an inactive region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -121,6 +123,8 @@ definition {
 	@description = "Test activating multiple countries at once via management toolbar"
 	@priority = "3"
 	test CanActivateCountriesInBulk {
+		property test.name.skip.portal.instance = "CountriesManagement#CanActivateCountriesInBulk";
+
 		task ("Given multiple inactive countries exist") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -145,6 +149,8 @@ definition {
 	@description = "This test asserts that a user can add a new country and by default this country will have the Active status, will not allow Billing and Shipping, and will not be subject to VAT."
 	@priority = "5"
 	test CanAddCountry {
+		property test.name.skip.portal.instance = "CountriesManagement#CanAddCountry";
+
 		task ("Given that a user is in the Countries Management portlet") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -180,6 +186,8 @@ definition {
 	@description = "Test adding a region to existing country"
 	@priority = "5"
 	test CanAddRegion {
+		property test.name.skip.portal.instance = "CountriesManagement#CanAddRegion";
+
 		task ("Given a country exists") {
 			CountriesManagement.openCountriesManagementPortlet();
 		}
@@ -208,6 +216,8 @@ definition {
 	@description = "This test asserts that a user can deactivate an active country"
 	@priority = "5"
 	test CanDeactivateAnActiveCountry {
+		property test.name.skip.portal.instance = "CountriesManagement#CanDeactivateAnActiveCountry";
+
 		task ("Given that China is set to Active") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -244,6 +254,8 @@ definition {
 	@description = "Test deactivating multiple countries at once via management toolbar"
 	@priority = "3"
 	test CanDectivateCountriesInBulk {
+		property test.name.skip.portal.instance = "CountriesManagement#CanDectivateCountriesInBulk";
+
 		task ("Given multiple countries exist") {
 			CountriesManagement.openCountriesManagementPortlet();
 		}
@@ -272,6 +284,7 @@ definition {
 	@priority = "5"
 	test CanDeleteCountry {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CountriesManagement#CanDeleteCountry";
 
 		task ("Given that a country named Angola exists in Countries Management portlet") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -306,6 +319,7 @@ definition {
 	@priority = "5"
 	test CanDeleteRegion {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CountriesManagement#CanDeleteRegion";
 
 		task ("Given a region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -338,6 +352,8 @@ definition {
 	@description = "Selecting multiple regions and deleting it via management toolbar will successfully delete them"
 	@priority = "3"
 	test CanDeleteRegionsInBulk {
+		property test.name.skip.portal.instance = "CountriesManagement#CanDeleteRegionsInBulk";
+
 		task ("Given a country with regions") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -376,6 +392,8 @@ definition {
 	@description = "Test editing region fields"
 	@priority = "5"
 	test CanEditRegion {
+		property test.name.skip.portal.instance = "CountriesManagement#CanEditRegion";
+
 		task ("Given a region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -416,6 +434,7 @@ definition {
 	@priority = "5"
 	test CannotAddExistingRegionCode {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CountriesManagement#CannotAddExistingRegionCode";
 
 		task ("Given a country with existing regions") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -443,6 +462,8 @@ definition {
 	@description = "Test that key and region code are required fields"
 	@priority = "3"
 	test CannotAddRegionWithoutKeyAndRegionCode {
+		property test.name.skip.portal.instance = "CountriesManagement#CannotAddRegionWithoutKeyAndRegionCode";
+
 		task ("Given a user adding a region to country") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -469,6 +490,8 @@ definition {
 	@description = "Can order countries by name in descending and ascending order"
 	@priority = "3"
 	test CanOrderCountryByName {
+		property test.name.skip.portal.instance = "CountriesManagement#CanOrderCountryByName";
+
 		task ("Given countries display in the Countries Management") {
 			CountriesManagement.openCountriesManagementPortlet();
 		}
@@ -499,6 +522,8 @@ definition {
 	@description = "Can order countries by priority in descending and ascending order"
 	@priority = "3"
 	test CanOrderCountryByPriority {
+		property test.name.skip.portal.instance = "CountriesManagement#CanOrderCountryByPriority";
+
 		task ("Given a country is added with a priority higher than 0.0") {
 			JSONCountry.addCountry(
 				billingAllowed = "false",
@@ -538,6 +563,8 @@ definition {
 	@description = "Can order regions by name in descending and ascending order"
 	@priority = "3"
 	test CanOrderRegionByName {
+		property test.name.skip.portal.instance = "CountriesManagement#CanOrderRegionByName";
+
 		task ("Given there are regions existing for a country") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -570,6 +597,8 @@ definition {
 	@description = "Can order regions by priority in descending and ascending order"
 	@priority = "3"
 	test CanOrderRegionByPriority {
+		property test.name.skip.portal.instance = "CountriesManagement#CanOrderRegionByPriority";
+
 		task ("Given there is a region with higher priority added to a country") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -617,6 +646,8 @@ definition {
 	@description = "Canceling region creation will not save it"
 	@priority = "3"
 	test ClickingCancelOrBackWillNotSaveRegion {
+		property test.name.skip.portal.instance = "CountriesManagement#ClickingCancelOrBackWillNotSaveRegion";
+
 		task ("Given a user adding a region") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -677,6 +708,8 @@ definition {
 	@description = "This test asserts that country name is a localizable field"
 	@priority = "4"
 	test CountryNameCanBeLocalized {
+		property test.name.skip.portal.instance = "CountriesManagement#CountryNameCanBeLocalized";
+
 		task ("Given other languages are not translated by default") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -720,6 +753,8 @@ definition {
 	@description = "Changing the filter to Active will not display countries in Inactive status"
 	@priority = "3"
 	test FilterByActiveWillNotDisplayInactiveCountries {
+		property test.name.skip.portal.instance = "CountriesManagement#FilterByActiveWillNotDisplayInactiveCountries";
+
 		task ("Given an inactive country") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -755,6 +790,8 @@ definition {
 	@description = "This test asserts that the country key will be used if country name is not provided when adding."
 	@priority = "4"
 	test KeyValueIsUsedWhenCountryNameIsBlank {
+		property test.name.skip.portal.instance = "CountriesManagement#KeyValueIsUsedWhenCountryNameIsBlank";
+
 		task ("Given that a user is in the Countries Management portlet") {
 			CountriesManagement.openCountriesManagementPortlet();
 		}
@@ -781,6 +818,8 @@ definition {
 	@description = "This test changes pagination and assert countries display properly."
 	@priority = "3"
 	test PaginationWorksInCountries {
+		property test.name.skip.portal.instance = "CountriesManagement#PaginationWorksInCountries";
+
 		task ("Given 20 is the default pagination set") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -819,6 +858,8 @@ definition {
 	@description = "This test changes pagination and assert regions display properly."
 	@priority = "3"
 	test PaginationWorksInRegions {
+		property test.name.skip.portal.instance = "CountriesManagement#PaginationWorksInRegions";
+
 		task ("Given 20 is the default pagination set") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -859,6 +900,8 @@ definition {
 	@description = "This test asserts that region name is a localizable field"
 	@priority = "4"
 	test RegionNameCanBeLocalized {
+		property test.name.skip.portal.instance = "CountriesManagement#RegionNameCanBeLocalized";
+
 		task ("Given other languages are not translated by default") {
 			CountriesManagement.openCountriesManagementPortlet();
 

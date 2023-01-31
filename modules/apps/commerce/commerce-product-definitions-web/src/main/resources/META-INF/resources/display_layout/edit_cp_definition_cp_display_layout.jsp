@@ -19,27 +19,12 @@
 <%
 CPDefinitionDisplayLayoutDisplayContext cpDefinitionDisplayLayoutDisplayContext = (CPDefinitionDisplayLayoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceChannel commerceChannel = cpDefinitionDisplayLayoutDisplayContext.getCommerceChannel();
 CPDisplayLayout cpDisplayLayout = cpDefinitionDisplayLayoutDisplayContext.getCPDisplayLayout();
 
 List<CPDefinition> cpDefinitionAsList = new ArrayList<>();
 
 if (cpDisplayLayout != null) {
 	cpDefinitionAsList = Arrays.asList(cpDisplayLayout.fetchCPDefinition());
-}
-
-String layoutBreadcrumb = StringPool.BLANK;
-
-if (cpDisplayLayout != null) {
-	Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getLayoutUuid(), commerceChannel.getSiteGroupId(), false);
-
-	if (selLayout == null) {
-		selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getLayoutUuid(), commerceChannel.getSiteGroupId(), true);
-	}
-
-	if (selLayout != null) {
-		layoutBreadcrumb = selLayout.getBreadcrumb(locale);
-	}
 }
 
 String searchContainerId = "CPDefinitionsSearchContainer";
@@ -68,7 +53,7 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 		<aui:input name="commerceChannelId" type="hidden" value="<%= cpDefinitionDisplayLayoutDisplayContext.getCommerceChannelId() %>" />
 
 		<liferay-ui:error exception="<%= CPDisplayLayoutEntryException.class %>" message="please-select-a-valid-product" />
-		<liferay-ui:error exception="<%= CPDisplayLayoutLayoutUuidException.class %>" message="please-select-a-valid-layout" />
+		<liferay-ui:error exception="<%= CPDisplayLayoutEntryUuidException.class %>" message="please-select-a-valid-layout" />
 		<liferay-ui:error exception="<%= NoSuchCPDefinitionException.class %>" message="please-select-a-valid-product" />
 
 		<aui:model-context bean="<%= cpDisplayLayout %>" model="<%= CPDisplayLayout.class %>" />
@@ -109,27 +94,12 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 
 					<aui:button cssClass="mb-4" name="selectProduct" value='<%= LanguageUtil.format(locale, "select-x", "product") %>' />
 
-					<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= (cpDisplayLayout == null) ? StringPool.BLANK : cpDisplayLayout.getLayoutUuid() %>" />
-
-					<aui:field-wrapper helpMessage="product-display-page-help" label="product-display-page">
-						<p class="text-default">
-							<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-								<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-							</span>
-							<span id="<portlet:namespace />displayPageNameInput">
-								<c:choose>
-									<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
-										<span class="text-muted"><liferay-ui:message key="none" /></span>
-									</c:when>
-									<c:otherwise>
-										<%= layoutBreadcrumb %>
-									</c:otherwise>
-								</c:choose>
-							</span>
-						</p>
-					</aui:field-wrapper>
-
-					<aui:button name="chooseDisplayPage" value="choose" />
+					<liferay-frontend:screen-navigation
+						containerWrapperCssClass="container"
+						key="<%= CPDefinitionScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_DEFINITION_DISPLAY_LAYOUT_GENERAL %>"
+						modelBean="<%= cpDisplayLayout %>"
+						portletURL="<%= currentURLObj %>"
+					/>
 				</aui:fieldset>
 			</div>
 		</div>
@@ -143,7 +113,9 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"displayPageItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getDisplayPageItemSelectorUrl()
+			"layoutItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getLayoutItemSelectorUrl()
+		).put(
+			"layoutPageTemplateEntryItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getLayoutPageTemplateEntryItemSelectorUrl()
 		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).put(

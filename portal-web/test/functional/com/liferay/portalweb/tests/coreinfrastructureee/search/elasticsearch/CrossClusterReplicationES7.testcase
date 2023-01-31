@@ -406,15 +406,18 @@ definition {
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "CCR Single Approver");
 
-		Navigator.openURL();
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow");
+		Navigator.gotoNavItem(navItem = "Configuration");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "CCR Single Approver",
 			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

@@ -72,7 +72,9 @@ definition {
 		Button.clickSave();
 
 		AssertTextEquals(
-			locator1 = "PortalInstances#INSTANCE_TABLE_ACTIVE",
+			key_columnName = "active",
+			key_tableEntry = "${virtualHost}",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
 			value1 = "No");
 	}
 

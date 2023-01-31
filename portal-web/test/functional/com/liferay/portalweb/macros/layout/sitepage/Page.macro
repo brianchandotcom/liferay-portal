@@ -268,7 +268,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
 
-		MouseOver(locator1 = "Home#PAGE_2");
+		MouseOver.javaScriptMouseOver(locator1 = "Home#PAGE_2");
 
 		var key_childPageName = "${childPageName}";
 

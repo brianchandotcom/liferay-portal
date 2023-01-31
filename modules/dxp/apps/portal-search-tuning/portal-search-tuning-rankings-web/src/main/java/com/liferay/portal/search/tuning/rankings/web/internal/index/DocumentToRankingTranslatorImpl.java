@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,8 +23,6 @@ import com.liferay.portal.search.document.Document;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -92,13 +91,8 @@ public class DocumentToRankingTranslatorImpl
 			return Collections.emptyList();
 		}
 
-		List<Map<String, String>> maps = (List<Map<String, String>>)values;
-
-		Stream<Map<String, String>> stream = maps.stream();
-
-		Stream<Ranking.Pin> pinStream = stream.map(this::_toPin);
-
-		return pinStream.collect(Collectors.toList());
+		return TransformUtil.transform(
+			(List<Map<String, String>>)values, this::_toPin);
 	}
 
 	private String _getQueryString(Document document) {

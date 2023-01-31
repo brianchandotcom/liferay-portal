@@ -651,6 +651,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="layoutPageTemplateEntryUuid" type="String" />
 		<column name="layoutUuid" type="String" />
 
 		<!-- Finder methods -->
@@ -662,11 +663,23 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="G_LPTEU" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateEntryUuid" />
+		</finder>
 		<finder name="G_L" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="layoutUuid" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_LPTEU" return-type="Collection" where="layoutPageTemplateEntryUuid IS NOT NULL">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_L" return-type="Collection" where="layoutUuid IS NOT NULL">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
@@ -1140,7 +1153,7 @@
 		<exception>CPDefinitionOptionValueRelQuantity</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPDisplayLayoutEntry</exception>
-		<exception>CPDisplayLayoutLayoutUuid</exception>
+		<exception>CPDisplayLayoutEntryUuid</exception>
 		<exception>CPInstanceDiscontinuedDate</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>

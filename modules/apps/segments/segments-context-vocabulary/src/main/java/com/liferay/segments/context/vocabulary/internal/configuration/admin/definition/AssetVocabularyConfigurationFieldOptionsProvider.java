@@ -17,18 +17,18 @@ package com.liferay.segments.context.vocabulary.internal.configuration.admin.def
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,15 +62,11 @@ public class AssetVocabularyConfigurationFieldOptionsProvider
 				_assetVocabularyLocalService.getGroupsVocabularies(
 					new long[] {company.getGroupId()});
 
-			Stream<AssetVocabulary> stream = assetVocabularies.stream();
-
-			return stream.map(
-				this::_toOption
-			).sorted(
-				Comparator.comparing(Option::getValue)
-			).collect(
-				Collectors.toList()
-			);
+			return ListUtil.sort(
+				TransformUtil.transform(
+					assetVocabularies,
+					assetVocabularie -> _toOption(assetVocabularie)),
+				Comparator.comparing(Option::getValue));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

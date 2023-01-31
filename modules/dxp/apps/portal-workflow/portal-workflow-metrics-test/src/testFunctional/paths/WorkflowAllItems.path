@@ -352,7 +352,7 @@
 </tr>
 <tr>
 	<td>METRICS_INSTANCE_ITEMS_POSITION</td>
-	<td>//tr[${key_rowNumber}]//td[${key_itemPosition}]</td>
+	<td>//tbody[${key_rowNumber}]//td[${key_itemPosition}]</td>
 	<td></td>
 </tr>
 <tr>

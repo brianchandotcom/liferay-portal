@@ -2163,7 +2163,6 @@ definition {
 	@description = "LPS-130166 - Verify that popover for Due Date will display up to 2 SLAs and the order should be from the most to the least critical SLA"
 	@priority = "3"
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -2228,7 +2227,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		while ((IsElementNotPresent(key_itemPosition = "1", key_rowNumber = "3", locator1 = "WorkflowAllItems#METRICS_INSTANCE_ITEMS_POSITION")) && (maxIterations = "20")) {
+		while ((IsElementNotPresent(key_itemPosition = "1", key_rowNumber = "3", locator1 = "WorkflowAllItems#METRICS_INSTANCE_ITEMS_POSITION")) && (maxIterations = "35")) {
 			Refresh();
 		}
 

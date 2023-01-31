@@ -1817,6 +1817,21 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public String getLayoutPageTemplateEntryUuid(
+		long groupId, long cpDefinitionId) {
+
+		CPDisplayLayout cpDisplayLayout =
+			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
+				groupId, CPDefinition.class, cpDefinitionId);
+
+		if (cpDisplayLayout == null) {
+			return null;
+		}
+
+		return cpDisplayLayout.getLayoutPageTemplateEntryUuid();
+	}
+
+	@Override
 	public String getLayoutUuid(long groupId, long cpDefinitionId) {
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(

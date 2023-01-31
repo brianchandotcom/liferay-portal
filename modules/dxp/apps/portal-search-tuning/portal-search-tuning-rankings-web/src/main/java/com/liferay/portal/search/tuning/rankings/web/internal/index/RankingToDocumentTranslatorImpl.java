@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.search.document.Document;
@@ -21,8 +22,6 @@ import com.liferay.portal.search.document.DocumentBuilderFactory;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,17 +60,13 @@ public class RankingToDocumentTranslatorImpl
 	}
 
 	private Collection<Object> _toMaps(List<Ranking.Pin> pins) {
-		Stream<Ranking.Pin> stream = pins.stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			pins,
 			pin -> LinkedHashMapBuilder.put(
 				RankingFields.POSITION, String.valueOf(pin.getPosition())
 			).put(
 				RankingFields.UID, pin.getDocumentId()
-			).build()
-		).collect(
-			Collectors.toList()
-		);
+			).build());
 	}
 
 	@Reference

@@ -50,11 +50,10 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 			options.stream();
 
 		Assert.assertFalse(
-			stream.filter(
+			stream.anyMatch(
 				option -> Objects.equals(
-					option.getValue(), Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)
-			).findAny(
-			).isPresent());
+					option.getValue(),
+					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)));
 	}
 
 	@Test
@@ -66,10 +65,8 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 			options.stream();
 
 		Assert.assertTrue(
-			stream.filter(
-				option -> Objects.equals(option.getValue(), Context.BROWSER)
-			).findAny(
-			).isPresent());
+			stream.anyMatch(
+				option -> Objects.equals(option.getValue(), Context.BROWSER)));
 	}
 
 	@Inject(

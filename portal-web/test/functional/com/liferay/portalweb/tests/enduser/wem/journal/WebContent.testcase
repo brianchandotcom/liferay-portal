@@ -1699,9 +1699,9 @@ definition {
 		task ("Assert no public pages displayed in ckeditor link > Broswer Server") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-			Click(locator1 = "CKEditor#BODY");
-
-			RobotType.robotTypeShortcut(locator1 = "Ctrl + k");
+			Type.sendKeys(
+				locator1 = "CKEditor#BODY",
+				value1 = "keys=CONTROL,k");
 
 			SelectFrameTop();
 

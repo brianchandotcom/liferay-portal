@@ -493,8 +493,6 @@ definition {
 	@description = "Verify that the user is able to see the label of the transitions of a specific node while hovering it"
 	@priority = "4"
 	test CanSeeTransitionsLabelOnHoverNode {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");

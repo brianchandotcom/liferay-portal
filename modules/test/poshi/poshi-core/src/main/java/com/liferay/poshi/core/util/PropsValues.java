@@ -81,6 +81,9 @@ public class PropsValues {
 	public static final Boolean PROXY_SERVER_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get("proxy.server.enabled"));
 
+	public static final int PROXY_SERVER_PORT = GetterUtil.getInteger(
+		PropsUtil.get("proxy.server.port"));
+
 	public static final boolean SAVE_SCREENSHOT = GetterUtil.getBoolean(
 		PropsUtil.get("save.screenshot"));
 

@@ -30,6 +30,7 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductS
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductSpecificationSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -196,6 +197,181 @@ public abstract class BaseProductSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProductSpecification() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductSpecification productSpecification =
+			testDeleteProductSpecification_addProductSpecification();
+
+		assertHttpResponseStatusCode(
+			204,
+			productSpecificationResource.deleteProductSpecificationHttpResponse(
+				productSpecification.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productSpecificationResource.getProductSpecificationHttpResponse(
+				productSpecification.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productSpecificationResource.getProductSpecificationHttpResponse(
+				productSpecification.getId()));
+	}
+
+	protected ProductSpecification
+			testDeleteProductSpecification_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProductSpecification() throws Exception {
+		ProductSpecification productSpecification =
+			testGraphQLDeleteProductSpecification_addProductSpecification();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductSpecification",
+						new HashMap<String, Object>() {
+							{
+								put("id", productSpecification.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductSpecification"));
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productSpecification",
+					new HashMap<String, Object>() {
+						{
+							put("id", productSpecification.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ProductSpecification
+			testGraphQLDeleteProductSpecification_addProductSpecification()
+		throws Exception {
+
+		return testGraphQLProductSpecification_addProductSpecification();
+	}
+
+	@Test
+	public void testGetProductSpecification() throws Exception {
+		ProductSpecification postProductSpecification =
+			testGetProductSpecification_addProductSpecification();
+
+		ProductSpecification getProductSpecification =
+			productSpecificationResource.getProductSpecification(
+				postProductSpecification.getId());
+
+		assertEquals(postProductSpecification, getProductSpecification);
+		assertValid(getProductSpecification);
+	}
+
+	protected ProductSpecification
+			testGetProductSpecification_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductSpecification() throws Exception {
+		ProductSpecification productSpecification =
+			testGraphQLGetProductSpecification_addProductSpecification();
+
+		Assert.assertTrue(
+			equals(
+				productSpecification,
+				ProductSpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productSpecification",
+								new HashMap<String, Object>() {
+									{
+										put("id", productSpecification.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productSpecification"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductSpecificationNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productSpecification",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductSpecification
+			testGraphQLGetProductSpecification_addProductSpecification()
+		throws Exception {
+
+		return testGraphQLProductSpecification_addProductSpecification();
+	}
+
+	@Test
+	public void testPatchProductSpecification() throws Exception {
+		ProductSpecification postProductSpecification =
+			testPatchProductSpecification_addProductSpecification();
+
+		ProductSpecification randomPatchProductSpecification =
+			randomPatchProductSpecification();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductSpecification patchProductSpecification =
+			productSpecificationResource.patchProductSpecification(
+				postProductSpecification.getId(),
+				randomPatchProductSpecification);
+
+		ProductSpecification expectedPatchProductSpecification =
+			postProductSpecification.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchProductSpecification, expectedPatchProductSpecification);
+
+		ProductSpecification getProductSpecification =
+			productSpecificationResource.getProductSpecification(
+				patchProductSpecification.getId());
+
+		assertEquals(
+			expectedPatchProductSpecification, getProductSpecification);
+		assertValid(getProductSpecification);
+	}
+
+	protected ProductSpecification
+			testPatchProductSpecification_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetProductIdProductSpecificationsPage() throws Exception {
 		Long id = testGetProductIdProductSpecificationsPage_getId();
 		Long irrelevantId =
@@ -243,6 +419,12 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			Arrays.asList(productSpecification1, productSpecification2),
 			(List<ProductSpecification>)page.getItems());
 		assertValid(page);
+
+		productSpecificationResource.deleteProductSpecification(
+			productSpecification1.getId());
+
+		productSpecificationResource.deleteProductSpecification(
+			productSpecification2.getId());
 	}
 
 	@Test

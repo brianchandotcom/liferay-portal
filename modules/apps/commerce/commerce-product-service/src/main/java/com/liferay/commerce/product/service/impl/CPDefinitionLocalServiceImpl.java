@@ -27,6 +27,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
@@ -1858,16 +1859,33 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public String getLayoutUuid(long groupId, long cpDefinitionId) {
+	public String getLayoutPageTemplateEntryUuid(
+		long groupId, long cpDefinitionId) {
+
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class, cpDefinitionId);
+				groupId, CPDefinition.class, cpDefinitionId,
+				CPDisplayLayoutConstants.TYPE_LAYOUT_PAGE_TEMPLATE_ENTRY);
 
 		if (cpDisplayLayout == null) {
 			return null;
 		}
 
-		return cpDisplayLayout.getLayoutUuid();
+		return cpDisplayLayout.getEntryUuid();
+	}
+
+	@Override
+	public String getLayoutUuid(long groupId, long cpDefinitionId) {
+		CPDisplayLayout cpDisplayLayout =
+			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
+				groupId, CPDefinition.class, cpDefinitionId,
+				CPDisplayLayoutConstants.TYPE_LAYOUT);
+
+		if (cpDisplayLayout == null) {
+			return null;
+		}
+
+		return cpDisplayLayout.getEntryUuid();
 	}
 
 	@Override

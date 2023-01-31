@@ -337,6 +337,12 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			"4.0.1", "4.0.2",
 			new CommerceRepositoryUpgradeProcess(_companyLocalService));
 
+		registry.register(
+			"4.0.2", "4.1.0",
+			UpgradeProcessFactory.addColumns(
+				"CPDisplayLayout",
+				"layoutPageTemplateEntryUuid VARCHAR(75) null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

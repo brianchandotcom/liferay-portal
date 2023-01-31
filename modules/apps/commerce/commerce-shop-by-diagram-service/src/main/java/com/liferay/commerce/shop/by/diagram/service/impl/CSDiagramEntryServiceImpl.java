@@ -15,6 +15,8 @@
 package com.liferay.commerce.shop.by.diagram.service.impl;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.base.CSDiagramEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -86,6 +89,35 @@ public class CSDiagramEntryServiceImpl extends CSDiagramEntryServiceBaseImpl {
 
 		return csDiagramEntryLocalService.fetchCSDiagramEntry(
 			cpDefinitionId, sequence);
+	}
+
+	@Override
+	public List<CSDiagramEntry> getCProductCSDiagramEntries(
+			long cProductId, int start, int end,
+			OrderByComparator<CSDiagramEntry> orderByComparator)
+		throws PortalException {
+
+		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cProduct.getPublishedCPDefinitionId(),
+			ActionKeys.VIEW);
+
+		return csDiagramEntryPersistence.findByCProductId(
+			cProductId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCProductCSDiagramEntriesCount(long cProductId)
+		throws PortalException {
+
+		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cProduct.getPublishedCPDefinitionId(),
+			ActionKeys.VIEW);
+
+		return csDiagramEntryPersistence.countByCProductId(cProductId);
 	}
 
 	@Override
@@ -155,6 +187,9 @@ public class CSDiagramEntryServiceImpl extends CSDiagramEntryServiceBaseImpl {
 			csDiagramEntryId, cpInstanceId, cProductId, diagram, quantity,
 			sequence, sku, serviceContext);
 	}
+
+	@Reference
+	protected CProductLocalService cProductLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"

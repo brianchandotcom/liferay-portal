@@ -290,46 +290,43 @@ definition {
 	test CanAddEntryWithoutSelectingPicklist {
 		property portal.acceptance = "true";
 
-		Picklist.gotoPicklists();
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
-		Picklist.addPicklistViaUI(picklistName = "Custom Picklist");
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "0",
+			itemName = "Item Test 1",
+			picklistName = "Custom Picklist");
 
-		Picklist.gotoPicklists();
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "1",
+			itemName = "Item Test 2",
+			picklistName = "Custom Picklist");
 
-		Picklist.gotoPicklistView(picklistName = "Custom Picklist");
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 235",
+			objectName = "CustomObject235",
+			pluralLabelName = "Custom Objects 235");
 
-		Picklist.addPicklistItemViaUI(picklistItemName = "Item Test 1");
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Picklist",
+			fieldLabelName = "Field Picklist",
+			fieldName = "fieldPicklist",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject235",
+			picklistName = "Custom Picklist");
 
-		Picklist.clickSaveButton();
-
-		Picklist.gotoPicklists();
-
-		Picklist.gotoPicklistView(picklistName = "Custom Picklist");
-
-		Picklist.addPicklistItemViaUI(picklistItemName = "Item Test 2");
-
-		Picklist.clickSaveButton();
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Field String",
+			fieldName = "fieldString",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject235");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 235",
-			pluralLabelName = "Custom Objects 235");
-
-		CreateObject.saveObject();
-
 		ObjectPortlet.selectCustomObject(label = "Custom Object 235");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Field Picklist",
-			fieldPicklist = "Custom Picklist",
-			fieldType = "Picklist");
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Field String",
-			fieldType = "Text");
 
 		ObjectAdmin.goToDetailsTab();
 

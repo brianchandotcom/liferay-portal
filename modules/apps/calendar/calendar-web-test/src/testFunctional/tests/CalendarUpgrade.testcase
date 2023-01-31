@@ -16,6 +16,7 @@ definition {
 	test ViewCalendarArchive625 {
 		property data.archive.type = "data-archive-calendar";
 		property database.types = "mariadb,mysql,postgresql";
+		property portal.upstream = "quarantine";
 		property portal.upstream = "true";
 		property portal.version = "6.2.5";
 
@@ -25,6 +26,7 @@ definition {
 	@priority = "5"
 	test ViewCalendarArchive621015 {
 		property data.archive.type = "data-archive-calendar";
+		property portal.upstream = "quarantine";
 		property portal.upstream = "true";
 		property portal.version = "6.2.10.15";
 
@@ -34,6 +36,7 @@ definition {
 	@priority = "5"
 	test ViewCalendarArchive621021 {
 		property data.archive.type = "data-archive-calendar";
+		property portal.upstream = "quarantine";
 		property portal.upstream = "true";
 		property portal.version = "6.2.10.21";
 

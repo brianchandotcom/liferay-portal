@@ -28,6 +28,7 @@ import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.rescore.Rescore;
@@ -48,6 +49,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
+import org.elasticsearch.search.builder.PointInTimeBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.rescore.QueryRescoreMode;
 import org.elasticsearch.search.rescore.QueryRescorerBuilder;
@@ -74,6 +76,7 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		_setIndices(searchRequest, baseSearchRequest);
 		_setMinScore(searchSourceBuilder, baseSearchRequest);
 		_setPipelineAggregations(searchSourceBuilder, baseSearchRequest);
+		_setPointInTime(searchSourceBuilder, baseSearchRequest);
 		_setPostFilter(searchSourceBuilder, baseSearchRequest);
 		setQuery(searchSourceBuilder, baseSearchRequest);
 		_setRequestCache(searchRequest, baseSearchRequest);
@@ -337,7 +340,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	private void _setIndices(
 		SearchRequest searchRequest, BaseSearchRequest baseSearchRequest) {
 
-		searchRequest.indices(baseSearchRequest.getIndexNames());
+		if (baseSearchRequest.getPointInTime() == null) {
+			searchRequest.indices(baseSearchRequest.getIndexNames());
+		}
 	}
 
 	private void _setMinScore(
@@ -368,6 +373,24 @@ public class CommonSearchSourceBuilderAssemblerImpl
 
 					searchSourceBuilder.aggregation(pipelineAggregationBuilder);
 				});
+		}
+	}
+
+	private void _setPointInTime(
+		SearchSourceBuilder searchSourceBuilder,
+		BaseSearchRequest baseSearchRequest) {
+
+		PointInTime pointInTime = baseSearchRequest.getPointInTime();
+
+		if (pointInTime != null) {
+			PointInTimeBuilder pointInTimeBuilder = new PointInTimeBuilder(
+				pointInTime.getPitId());
+
+			if (pointInTime.getKeepAlive() != null) {
+				pointInTimeBuilder.setKeepAlive(pointInTime.getKeepAlive());
+			}
+
+			searchSourceBuilder.pointInTimeBuilder(pointInTimeBuilder);
 		}
 	}
 

@@ -44,8 +44,11 @@ public class SearchSearchRequestExecutorImpl
 	public SearchSearchResponse execute(
 		SearchSearchRequest searchSearchRequest) {
 
-		SearchRequest searchRequest = new SearchRequest(
-			searchSearchRequest.getIndexNames());
+		SearchRequest searchRequest = new SearchRequest();
+
+		if (searchSearchRequest.getPointInTime() == null) {
+			searchRequest.indices(searchSearchRequest.getIndexNames());
+		}
 
 		if (searchSearchRequest.isRequestCache()) {
 			searchRequest.requestCache(searchSearchRequest.isRequestCache());

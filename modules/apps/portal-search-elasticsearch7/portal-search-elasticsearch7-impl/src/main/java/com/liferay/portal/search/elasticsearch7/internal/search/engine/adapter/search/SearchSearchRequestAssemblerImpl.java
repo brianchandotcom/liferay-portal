@@ -67,6 +67,7 @@ public class SearchSearchRequestAssemblerImpl
 		_setHighlighter(searchSourceBuilder, searchSearchRequest);
 		_setPagination(searchSourceBuilder, searchSearchRequest);
 		_setPreference(searchRequest, searchSearchRequest);
+		_setSearchAfter(searchSourceBuilder, searchSearchRequest);
 		_setSorts(searchSourceBuilder, searchSearchRequest);
 		_setStats(searchSourceBuilder, searchSearchRequest);
 		_setStoredFields(searchSourceBuilder, searchSearchRequest);
@@ -189,6 +190,16 @@ public class SearchSearchRequestAssemblerImpl
 
 		if (!Validator.isBlank(preference)) {
 			searchRequest.preference(preference);
+		}
+	}
+
+	private void _setSearchAfter(
+		SearchSourceBuilder searchSourceBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		if (searchSearchRequest.getSearchAfter() != null) {
+			searchSourceBuilder.searchAfter(
+				searchSearchRequest.getSearchAfter());
 		}
 	}
 

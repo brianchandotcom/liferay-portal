@@ -24,6 +24,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryTypesConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -107,7 +108,8 @@ public class ExportImportLayoutUtilityPageTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				externalReferenceCode, _serviceContext.getUserId(),
 				_serviceContext.getScopeGroupId(), 0, 0, false,
-				StringUtil.randomString(), "LAYOUT", 0);
+				StringUtil.randomString(),
+				LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND, 0);
 
 		_addItemsToLayout(
 			layoutUtilityPageEntry1.getGroupId(),
@@ -202,7 +204,8 @@ public class ExportImportLayoutUtilityPageTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				externalReferenceCode, _serviceContext.getUserId(),
 				_serviceContext.getScopeGroupId(), 0, 0, false,
-				StringUtil.randomString(), "LAYOUT", 0);
+				StringUtil.randomString(),
+				LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND, 0);
 
 		_addItemsToLayout(
 			layoutUtilityPageEntry1.getGroupId(),

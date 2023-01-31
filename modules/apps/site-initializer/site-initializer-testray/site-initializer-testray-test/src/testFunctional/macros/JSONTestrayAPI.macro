@@ -529,4 +529,18 @@ definition {
 		return "${objectId}";
 	}
 
+	@summary = "This calls the JSON WS API to delete an object"
+	macro deleteObjectViaAPI {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONTestrayAPI.getObjectId(
+			object = "${object}",
+			objectName = "${objectName}");
+
+		var curl = '''
+			${portalURL}/o/c/${object}/${objectId} \
+				-u test@liferay.com:test
+		''';
+
+		JSONCurlUtil.delete("${curl}");
+	}
 }

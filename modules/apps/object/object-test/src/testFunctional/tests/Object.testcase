@@ -48,11 +48,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		Click(
-			key_objectLabel = "Custom Object 290",
-			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
-
-		MenuItem.clickNoError(menuItem = "Delete");
+		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 290");
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
@@ -214,11 +210,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		Click(
-			key_objectLabel = "Custom Object 290",
-			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
-
-		MenuItem.clickNoError(menuItem = "Delete");
+		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 290");
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
@@ -283,11 +275,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		Click(
-			key_objectLabel = "Custom Object 290 Test",
-			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
-
-		MenuItem.clickNoError(menuItem = "Delete");
+		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 290 Test");
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
@@ -391,11 +379,7 @@ definition {
 		task ("When the user enters an incorrect value in the confirmation field while deleting the object") {
 			ObjectAdmin.openObjectAdmin();
 
-			Click(
-				key_objectLabel = "Custom Object 162024",
-				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
-
-			MenuItem.clickNoError(menuItem = "Delete");
+			CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 162024");
 
 			SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
@@ -513,11 +497,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		Click(
-			key_objectLabel = "Custom Object 290",
-			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
-
-		MenuItem.clickNoError(menuItem = "Delete");
+		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 290");
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 

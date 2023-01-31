@@ -562,6 +562,23 @@ components:
                     minimum: 0
                     type: integer
             type: object
+        LinkedProduct:
+            properties:
+                productExternalReferenceCode:
+                    example: exampleERC
+                    readOnly: true
+                    type: string
+                productId:
+                    example: 33131
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                type:
+                    example: exampleERC
+                    readOnly: true
+                    type: string
+            type: object
         MappedProduct:
             properties:
                 actions:
@@ -865,6 +882,10 @@ components:
                 images:
                     items:
                         $ref: "#/components/schemas/Attachment"
+                    type: array
+                linkedProducts:
+                    items:
+                        $ref: "#/components/schemas/LinkedProduct"
                     type: array
                 mappedProducts:
                     items:
@@ -11692,6 +11713,92 @@ paths:
             summary: Creates a grouped product related to a product.
             tags:
                 - GroupedProduct
+    /products/{productId}/linked-products:
+        get:
+            operationId: getProductIdLinkedProductsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/LinkedProduct"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/LinkedProduct"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a list of grouped product.
+            tags:
+                - LinkedProduct
     /products/{productId}/mapped-products:
         get:
             operationId: getProductIdMappedProductsPage

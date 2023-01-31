@@ -32,9 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,30 +124,32 @@ public class AddressModelPreFilterContributor
 			return new long[0];
 		}
 
-		Stream<String> typeNamesStream = Arrays.stream(typeNames);
+		long[] typeIds = new long[typeNames.length];
 
-		return typeNamesStream.mapToLong(
-			typeName -> {
-				String listTypeType =
-					className.getClassName() + ListTypeConstants.ADDRESS;
+		for (int i = 0; i < typeNames.length; i++) {
+			String classNameAddress =
+				className.getClassName() + ListTypeConstants.ADDRESS;
 
-				ListType listType = _listTypeLocalService.getListType(
-					typeName, listTypeType);
+			ListType listType = _listTypeLocalService.getListType(
+				typeNames[i], classNameAddress);
 
-				if (listType == null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"No list type found for ", listTypeType,
-								" with the name: ", typeName));
-					}
-
-					return -1;
+			if (listType == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"No list type found for ", classNameAddress,
+							" with the name: ", typeNames[i]));
 				}
 
-				return listType.getListTypeId();
+				typeIds[i] = -1;
+
+				continue;
 			}
-		).toArray();
+
+			typeIds[i] = listType.getListTypeId();
+		}
+
+		return typeIds;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

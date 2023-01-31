@@ -349,6 +349,12 @@ definition {
 
 	macro saveObject {
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+
+		WaitForPageLoad();
 	}
 
 	macro selectAccountRestrictedField {

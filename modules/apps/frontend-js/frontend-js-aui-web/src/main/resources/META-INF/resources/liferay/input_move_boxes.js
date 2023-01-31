@@ -278,6 +278,22 @@ AUI.add(
 					}
 
 					instance._toggleReorderToolbars();
+					instance._toggleBtnState(
+						contentBox.one('.reorder-down'),
+						true
+					);
+					instance._toggleBtnState(
+						contentBox.one('.reorder-up'),
+						true
+					);
+					instance._toggleBtnState(
+						contentBox.one('.move-right'),
+						true
+					);
+					instance._toggleBtnState(
+						contentBox.one('.move-left'),
+						true
+					);
 				},
 
 				_toggleBtnMove(event) {
@@ -320,22 +336,35 @@ AUI.add(
 
 					if (changedBox && sortBtnDown && sortBtnUp) {
 						const length = changedBox.get('length');
-						const selectedIndex = changedBox.get('selectedIndex');
+
+						const selectedIndexes = changedBox
+							.get('options')
+							.getDOMNodes()
+							.filter((option) => option.selected)
+
+							.map((option) => option.index);
 
 						let btnDisabledDown = false;
 						let btnDisabledUp = false;
 
 						if (changedBox === leftBox) {
-							if (selectedIndex === length - 1) {
-								btnDisabledDown = true;
-							}
-							else if (selectedIndex === 0) {
-								btnDisabledUp = true;
-							}
-							else if (selectedIndex === -1) {
-								btnDisabledDown = true;
-								btnDisabledUp = true;
-							}
+							const noItems = !length;
+
+							const noItemsSelected = !selectedIndexes.length;
+
+							const firstItemSelected = selectedIndexes.includes(
+								0
+							);
+
+							const lastItemSelected = selectedIndexes.includes(
+								length - 1
+							);
+
+							btnDisabledUp =
+								firstItemSelected || noItemsSelected || noItems;
+
+							btnDisabledDown =
+								lastItemSelected || noItemsSelected || noItems;
 						}
 						else if (changedBox === rightBox) {
 							btnDisabledDown = true;

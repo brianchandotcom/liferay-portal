@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Journal Content Search Web
-Bundle-SymbolicName: com.liferay.journal.content.search.web
-Bundle-Version: 5.0.20
-Web-ContextPath: /journal-content-search-web

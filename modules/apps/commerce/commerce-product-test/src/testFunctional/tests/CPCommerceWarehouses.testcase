@@ -225,6 +225,59 @@ definition {
 			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
+	@description = "This is a test for COMMERCE-10308. It's not possible to use the Geolocate option for the Warehouses"
+	@priority = "5"
+	test CanGeolocateWarehouse {
+		property portal.acceptance = "true";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
+
+		CommerceNavigator.gotoEntry(entryName = "Italy");
+
+		AssertElementPresent(
+			key_text = "Geolocate",
+			locator1 = "Button#ANY");
+
+		AssertTextEquals(
+			key_text = "Latitude",
+			locator1 = "TextInput#ANY",
+			value1 = "42.214601");
+
+		AssertTextEquals(
+			key_text = "Longitude",
+			locator1 = "TextInput#ANY",
+			value1 = "12.796434");
+
+		AssertTextEquals(
+			key_text = "Street 1",
+			locator1 = "TextInput#ANY",
+			value1 = "Via delle Coste 24");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Country",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Italy");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Region",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Rieti");
+
+		AssertTextEquals(
+			key_text = "Postal Code",
+			locator1 = "TextInput#ANY",
+			value1 = "2021");
+
+		AssertTextEquals(
+			key_text = "City",
+			locator1 = "TextInput#ANY",
+			value1 = "Borgorose");
+	}
+
 	@description = "COMMERCE-5979. As a user of the storefront, I should be able to see the stock quantity value of the Warehouses based on the View permission of my role"
 	@priority = "4"
 	test CanSFUsersSeeStockQuantityBasedOnViewPermissionForWarehouse {

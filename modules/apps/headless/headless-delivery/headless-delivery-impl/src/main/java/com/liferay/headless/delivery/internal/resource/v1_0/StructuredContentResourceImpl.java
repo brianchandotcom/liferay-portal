@@ -760,30 +760,20 @@ public class StructuredContentResourceImpl
 			StructuredContent structuredContent, JournalArticle journalArticle)
 		throws Exception {
 
-		ServiceContext serviceContext = null;
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				structuredContent.getTaxonomyCategoryIds(),
+				structuredContent.getKeywords(),
+				_getExpandoBridgeAttributes(structuredContent), groupId,
+				contextHttpServletRequest,
+				structuredContent.getViewableByAsString());
+
+		serviceContext.setAssetPriority(assetPriority);
 
 		if ((journalArticle != null) &&
 			(structuredContent.getTaxonomyCategoryIds() == null)) {
 
-			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				structuredContent.getTaxonomyCategoryIds(),
-				structuredContent.getKeywords(),
-				_getExpandoBridgeAttributes(structuredContent), groupId,
-				contextHttpServletRequest,
-				structuredContent.getViewableByAsString());
-
 			serviceContext.setAssetCategoryIds(_getCategoryId(journalArticle));
-			serviceContext.setAssetPriority(assetPriority);
-		}
-		else {
-			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				structuredContent.getTaxonomyCategoryIds(),
-				structuredContent.getKeywords(),
-				_getExpandoBridgeAttributes(structuredContent), groupId,
-				contextHttpServletRequest,
-				structuredContent.getViewableByAsString());
-
-			serviceContext.setAssetPriority(assetPriority);
 		}
 
 		return serviceContext;

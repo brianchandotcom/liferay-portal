@@ -141,15 +141,27 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 		User serviceUser = _getServiceUser(
 			companyId, oAuth2ProviderApplicationHeadlessServerConfiguration);
 
+		String clientId = OAuth2SecureRandomGenerator.generateClientId();
+		String clientSecret =
+			OAuth2SecureRandomGenerator.generateClientSecret();
+
 		OAuth2Application oAuth2Application =
+			oAuth2ApplicationLocalService.
+				fetchOAuth2ApplicationByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (oAuth2Application != null) {
+			clientId = oAuth2Application.getClientId();
+			clientSecret = oAuth2Application.getClientSecret();
+		}
+
+		oAuth2Application =
 			oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
 				externalReferenceCode, user.getUserId(), user.getScreenName(),
 				ListUtil.fromArray(
 					GrantType.CLIENT_CREDENTIALS, GrantType.JWT_BEARER),
-				"client_secret_post", serviceUser.getUserId(),
-				OAuth2SecureRandomGenerator.generateClientId(),
-				ClientProfile.HEADLESS_SERVER.id(),
-				OAuth2SecureRandomGenerator.generateClientSecret(),
+				"client_secret_post", serviceUser.getUserId(), clientId,
+				ClientProfile.HEADLESS_SERVER.id(), clientSecret,
 				oAuth2ProviderApplicationHeadlessServerConfiguration.
 					description(),
 				Arrays.asList("token.introspection"),

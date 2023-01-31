@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_VARIANT_BUTTON</td>
+	<td>//p[contains(.,'${key_variantName}')]/../..//button[contains(@class,'btn-outline-secondary') and *[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ELEMENT_ID_INPUT</td>
 	<td>//input[@id='clickableElement']</td>
 	<td></td>

@@ -117,7 +117,9 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 	public void tearDown() throws Exception {
 		_errorMessages = new ArrayList<>();
 
-		_updateFriendlyURL(_layout1.getPlid(), _layout1.getFriendlyURL());
+		_updateFriendlyURL(_layout1.getPlid(), "/friendlyURL1");
+
+		_updateFriendlyURL(_layout2.getPlid(), "/friendlyURL2");
 	}
 
 	@Test
@@ -150,16 +152,6 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 	@Test
 	public void testVerifyLayoutsWithMultipleReservedLayoutFriendlyURL()
 		throws Exception {
-
-		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
-			if (keyword.contains(StringPool.STAR) &&
-				keyword.contains(StringPool.UNDERLINE)) {
-
-				_keyword1 = StringUtil.replace(keyword, '*', "12345");
-
-				break;
-			}
-		}
 
 		_updateFriendlyURL(
 			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
@@ -197,8 +189,6 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 
 		_updateFriendlyURL(
 			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
-
-		_updateFriendlyURL(_layout2.getPlid(), "/friendlyURL2");
 
 		super.testVerify();
 

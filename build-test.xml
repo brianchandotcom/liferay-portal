@@ -6898,6 +6898,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<docker-execute container="${browser.host}">
 				ssh -fN -4 -L 8080:${ip.address}:8080 ${browser.host}
+				ssh -fN -4 -L 8082:${ip.address}:8082 ${browser.host}
 				ssh -fN -4 -L 8282:${ip.address}:8282 ${browser.host}
 				ssh -fN -4 -L 8443:${ip.address}:8443 ${browser.host}
 				ssh -fN -4 -L 9080:${ip.address}:9080 ${browser.host}

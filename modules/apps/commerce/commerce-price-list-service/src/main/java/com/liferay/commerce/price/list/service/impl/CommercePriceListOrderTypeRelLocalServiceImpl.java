@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.service.impl;
 
 import com.liferay.commerce.model.CommerceOrderTypeTable;
+import com.liferay.commerce.price.list.exception.DuplicateCommercePriceListOrderTypeRelException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRelTable;
@@ -59,6 +60,14 @@ public class CommercePriceListOrderTypeRelLocalServiceImpl
 			long userId, long commercePriceListId, long commerceOrderTypeId,
 			int priority, ServiceContext serviceContext)
 		throws PortalException {
+
+		CommercePriceListOrderTypeRel existingCommercePriceListOrderTypeRel =
+			commercePriceListOrderTypeRelPersistence.fetchByCPI_COTI(
+				commercePriceListId, commerceOrderTypeId);
+
+		if (existingCommercePriceListOrderTypeRel != null) {
+			throw new DuplicateCommercePriceListOrderTypeRelException();
+		}
 
 		User user = _userLocalService.getUser(userId);
 

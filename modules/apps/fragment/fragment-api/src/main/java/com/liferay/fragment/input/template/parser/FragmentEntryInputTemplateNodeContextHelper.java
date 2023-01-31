@@ -23,6 +23,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.MultipleSelectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -302,6 +303,31 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 								fileItemSelectorCriterion)));
 				}
 			}
+		}
+		else if (infoField.getInfoFieldType() instanceof
+					MultipleSelectInfoFieldType) {
+
+			List<InputTemplateNode.Option> options = new ArrayList<>();
+
+			List<MultipleSelectInfoFieldType.Option>
+				multipleSelectInfoFieldTypeOptions =
+					(List<MultipleSelectInfoFieldType.Option>)
+						infoField.getAttribute(
+							MultipleSelectInfoFieldType.OPTIONS);
+
+			if (multipleSelectInfoFieldTypeOptions == null) {
+				multipleSelectInfoFieldTypeOptions = Collections.emptyList();
+			}
+
+			for (MultipleSelectInfoFieldType.Option option :
+					multipleSelectInfoFieldTypeOptions) {
+
+				options.add(
+					new InputTemplateNode.Option(
+						option.getLabel(locale), option.getValue()));
+			}
+
+			inputTemplateNode.addAttribute("options", options);
 		}
 		else if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
 			String dataType = "integer";

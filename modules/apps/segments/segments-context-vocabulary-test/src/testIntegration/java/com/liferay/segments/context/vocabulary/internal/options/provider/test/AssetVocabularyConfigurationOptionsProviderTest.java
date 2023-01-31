@@ -71,12 +71,10 @@ public class AssetVocabularyConfigurationOptionsProviderTest {
 				options.stream();
 
 			Assert.assertTrue(
-				stream.filter(
+				stream.anyMatch(
 					option -> Objects.equals(
 						option.getLabel(LocaleUtil.getDefault()),
-						assetVocabulary.getTitle(LocaleUtil.getDefault()))
-				).findFirst(
-				).isPresent());
+						assetVocabulary.getTitle(LocaleUtil.getDefault()))));
 		}
 		finally {
 			_assetVocabularyLocalService.deleteVocabulary(

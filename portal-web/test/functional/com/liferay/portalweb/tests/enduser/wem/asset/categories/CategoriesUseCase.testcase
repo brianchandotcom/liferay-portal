@@ -310,7 +310,7 @@ definition {
 
 			PortletEntry.inputName(name = "Second Site Name");
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		task ("Then the site creator should see an error message") {

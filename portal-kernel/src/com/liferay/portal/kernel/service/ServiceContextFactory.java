@@ -42,8 +42,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -317,7 +319,7 @@ public class ServiceContextFactory {
 		Map<String, String[]> parameterMap =
 			httpServletRequest.getParameterMap();
 
-		List<Long> assetCategoryIdsList = new ArrayList<>();
+		Set<Long> assetCategoryIdsSet = new HashSet<>();
 
 		boolean updateAssetCategoryIds = false;
 
@@ -334,13 +336,13 @@ public class ServiceContextFactory {
 				httpServletRequest, name);
 
 			for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
-				assetCategoryIdsList.add(assetCategoryId);
+				assetCategoryIdsSet.add(assetCategoryId);
 			}
 		}
 
 		if (updateAssetCategoryIds) {
 			assetCategoryIds = ArrayUtil.toArray(
-				assetCategoryIdsList.toArray(new Long[0]));
+				assetCategoryIdsSet.toArray(new Long[0]));
 		}
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);

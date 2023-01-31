@@ -197,7 +197,7 @@ public interface DocumentRepository extends CapabilityProvider {
 		}
 		catch (NumberFormatException numberFormatException) {
 			throw new NoSuchFolderException(
-				"No file exists with external reference code " +
+				"No folder exists with external reference code " +
 					externalReferenceCode,
 				numberFormatException);
 		}

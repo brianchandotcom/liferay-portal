@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.discount.service.impl;
 
+import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountCommerceAccountGroupRelException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.discount.service.base.CommerceDiscountCommerceAccountGroupRelLocalServiceBaseImpl;
@@ -50,6 +51,15 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 				long userId, long commerceDiscountId,
 				long commerceAccountGroupId, ServiceContext serviceContext)
 		throws PortalException {
+
+		CommerceDiscountCommerceAccountGroupRel
+			existingCommerceDiscountCommerceAccountGroupRel =
+				commerceDiscountCommerceAccountGroupRelPersistence.
+					fetchByCDI_CAGI(commerceDiscountId, commerceAccountGroupId);
+
+		if (existingCommerceDiscountCommerceAccountGroupRel != null) {
+			throw new DuplicateCommerceDiscountCommerceAccountGroupRelException();
+		}
 
 		User user = _userLocalService.getUser(userId);
 

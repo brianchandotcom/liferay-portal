@@ -92,12 +92,10 @@ definition {
 				value1 = ${campaignName});
 		}
 
-		if (isSet(campaignDescription)) {
-			Type(
-				key_fieldName = "overallCampaignDescription",
-				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = ${campaignDescription});
-		}
+		Type(
+			key_fieldName = "overallCampaignDescription",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${campaignDescription}");
 
 		if (isSet(goalsOptions)) {
 			for (var goalsList : list ${goalsOptions}) {
@@ -118,9 +116,9 @@ definition {
 		}
 
 		if (isSet(additionalOptions)) {
-			for (var optionsList : list ${additionalOptions}) {
-				Click.clickAtNotVisible(
-					key_buttonText = ${optionsList},
+			for (var optionsList : list "${additionalOptions}") {
+				Click.pauseClickAt(
+					key_buttonText = "${optionsList}",
 					key_fieldName = "additionalOption",
 					locator1 = "PRMMDFRequest#INPUT_BUTTON");
 			}

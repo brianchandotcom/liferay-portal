@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,7 +52,8 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-			long groupId, Class<?> clazz, long classPK, String layoutUuid)
+			long groupId, Class<?> clazz, long classPK,
+			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws PortalException {
 
 		_groupPermission.check(
@@ -60,7 +62,8 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		_checkCPDisplayLayout(clazz.getName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.addCPDisplayLayout(
-			getUserId(), groupId, clazz, classPK, layoutUuid);
+			getUserId(), groupId, clazz, classPK, layoutPageTemplateEntryUuid,
+			layoutUuid);
 	}
 
 	@Override
@@ -89,9 +92,11 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			cpDisplayLayoutLocalService.fetchCPDisplayLayout(cpDisplayLayoutId);
 
 		if (cpDisplayLayout != null) {
-			LayoutPermissionUtil.check(
-				getPermissionChecker(), _getLayout(cpDisplayLayout),
-				ActionKeys.VIEW);
+			if (Validator.isNotNull(cpDisplayLayout.getLayoutUuid())) {
+				LayoutPermissionUtil.check(
+					getPermissionChecker(), _getLayout(cpDisplayLayout),
+					ActionKeys.VIEW);
+			}
 
 			_checkCPDisplayLayout(
 				cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
@@ -103,34 +108,38 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
-			long companyId, long groupId, String className, String keywords,
-			int start, int end, Sort sort)
+			long companyId, long groupId, String className, Integer type,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		_groupPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return cpDisplayLayoutLocalService.searchCPDisplayLayout(
-			companyId, groupId, className, keywords, start, end, sort);
+			companyId, groupId, className, type, keywords, start, end, sort);
 	}
 
 	@Override
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK,
+			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws PortalException {
 
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutLocalService.getCPDisplayLayout(cpDisplayLayoutId);
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), _getLayout(cpDisplayLayout),
-			ActionKeys.UPDATE);
+		if (Validator.isNotNull(layoutUuid)) {
+			LayoutPermissionUtil.check(
+				getPermissionChecker(), _getLayout(cpDisplayLayout),
+				ActionKeys.VIEW);
+		}
 
 		_checkCPDisplayLayout(
 			cpDisplayLayout.getClassName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.updateCPDisplayLayout(
-			cpDisplayLayout.getCPDisplayLayoutId(), classPK, layoutUuid);
+			cpDisplayLayout.getCPDisplayLayoutId(), classPK,
+			layoutPageTemplateEntryUuid, layoutUuid);
 	}
 
 	private void _checkCPDisplayLayout(

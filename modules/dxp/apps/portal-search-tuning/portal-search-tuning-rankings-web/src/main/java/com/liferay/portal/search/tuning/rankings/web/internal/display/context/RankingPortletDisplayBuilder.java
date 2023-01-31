@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -48,8 +49,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.request.SearchRank
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -349,13 +348,7 @@ public class RankingPortletDisplayBuilder {
 	private List<RankingEntryDisplayContext> _getRankingEntryDisplayContexts(
 		List<SearchHit> searchHits) {
 
-		Stream<SearchHit> stream = searchHits.stream();
-
-		return stream.map(
-			this::_buildDisplayContext
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(searchHits, this::_buildDisplayContext);
 	}
 
 	private boolean _hasResults(

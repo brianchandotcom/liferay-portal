@@ -32,6 +32,9 @@ public interface OAuth2ProviderApplicationUserAgentConfiguration {
 	public String homePageURL();
 
 	@Meta.AD(deflt = "", required = false, type = Meta.Type.String)
+	public String name();
+
+	@Meta.AD(deflt = "", required = false, type = Meta.Type.String)
 	public String privacyPolicyURL();
 
 	@Meta.AD(required = false, type = Meta.Type.String)

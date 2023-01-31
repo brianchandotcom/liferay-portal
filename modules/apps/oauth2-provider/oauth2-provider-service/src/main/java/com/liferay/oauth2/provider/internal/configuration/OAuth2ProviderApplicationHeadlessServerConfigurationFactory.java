@@ -167,7 +167,10 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				Arrays.asList("token.introspection"),
 				oAuth2ProviderApplicationHeadlessServerConfiguration.
 					homePageURL(),
-				0, null, externalReferenceCode,
+				0, null,
+				getName(
+					oAuth2ProviderApplicationHeadlessServerConfiguration.name(),
+					externalReferenceCode),
 				oAuth2ProviderApplicationHeadlessServerConfiguration.
 					privacyPolicyURL(),
 				Collections.emptyList(), false, true, null,

@@ -72,6 +72,14 @@ public abstract class BaseConfigurationFactory {
 
 	protected abstract Log getLog();
 
+	protected String getName(String name, String defaultValue) {
+		if (Validator.isNotNull(name)) {
+			return name;
+		}
+
+		return defaultValue;
+	}
+
 	protected String getServiceAddress(Company company) {
 		return Http.HTTPS_WITH_SLASH.concat(company.getVirtualHostname());
 	}

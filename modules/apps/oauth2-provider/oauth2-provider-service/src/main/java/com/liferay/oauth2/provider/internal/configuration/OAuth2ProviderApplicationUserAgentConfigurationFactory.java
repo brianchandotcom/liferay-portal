@@ -161,7 +161,10 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 				oAuth2ProviderApplicationUserAgentConfiguration.description(),
 				Arrays.asList("token.introspection"),
 				oAuth2ProviderApplicationUserAgentConfiguration.homePageURL(),
-				0, null, externalReferenceCode,
+				0, null,
+				getName(
+					oAuth2ProviderApplicationUserAgentConfiguration.name(),
+					externalReferenceCode),
 				oAuth2ProviderApplicationUserAgentConfiguration.
 					privacyPolicyURL(),
 				redirectURIsList, false, true, null, new ServiceContext());

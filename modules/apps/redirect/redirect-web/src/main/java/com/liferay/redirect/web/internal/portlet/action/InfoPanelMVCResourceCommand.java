@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 import com.liferay.redirect.web.internal.display.context.RedirectEntryInfoPanelDisplayContext;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -49,18 +49,20 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		LongStream longStream = Arrays.stream(
-			ParamUtil.getLongValues(resourceRequest, "rowIds"));
+		List<RedirectEntry> redirectEntries = new ArrayList<>();
+
+		for (long longValue :
+				ParamUtil.getLongValues(resourceRequest, "rowIds")) {
+
+			redirectEntries.add(
+				_redirectEntryLocalService.fetchRedirectEntry(longValue));
+		}
 
 		resourceRequest.setAttribute(
 			RedirectEntryInfoPanelDisplayContext.class.getName(),
 			new RedirectEntryInfoPanelDisplayContext(
 				_portal.getLiferayPortletRequest(resourceRequest),
-				longStream.mapToObj(
-					_redirectEntryLocalService::fetchRedirectEntry
-				).collect(
-					Collectors.toList()
-				)));
+				redirectEntries));
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}

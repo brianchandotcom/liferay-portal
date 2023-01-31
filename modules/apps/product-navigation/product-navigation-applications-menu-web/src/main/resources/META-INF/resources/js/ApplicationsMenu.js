@@ -48,7 +48,7 @@ const getOpenMenuTooltip = (keyLabel) => (
 const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 	return (
 		<div className="applications-menu-sites c-p-3 c-px-md-4">
-			<h2 className="applications-menu-sites-label c-mt-2 c-mt-md-0 text-uppercase">
+			<h2 className="applications-menu-sites-label c-mt-2 c-mt-md-0 mb-0 text-uppercase">
 				{Liferay.Language.get('sites')}
 			</h2>
 
@@ -490,7 +490,7 @@ const ApplicationsMenu = ({
 						{Liferay.Language.get('applications-menu')}
 					</ClayModal.Header>
 
-					<ClayModal.Body>
+					<ClayModal.Body className="p-0">
 						<AppsPanel
 							handleCloseButtonClick={onClose}
 							liferayLogoURL={liferayLogoURL}

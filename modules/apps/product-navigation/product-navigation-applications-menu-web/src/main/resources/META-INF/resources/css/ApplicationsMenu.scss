@@ -18,10 +18,6 @@ html#{$cadmin-selector} {
 				box-shadow: none;
 			}
 
-			.modal-body {
-				padding: 0;
-			}
-
 			.tab-pane {
 				$footerHeight: 65px;
 				$headerHeight: 60px;
@@ -34,7 +30,6 @@ html#{$cadmin-selector} {
 		}
 
 		.applications-menu-header .nav-link {
-			color: $cadmin-secondary;
 			padding-bottom: 16px;
 			padding-top: 16px;
 
@@ -103,7 +98,6 @@ html#{$cadmin-selector} {
 		.applications-menu-nav-header {
 			color: $cadmin-secondary;
 			font-size: 14px;
-			font-weight: 700;
 			text-transform: uppercase;
 		}
 
@@ -130,7 +124,6 @@ html#{$cadmin-selector} {
 			color: $cadmin-secondary;
 			font-size: 14px;
 			font-weight: 600;
-			margin-bottom: 0;
 
 			@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
 				bottom: 100%;
@@ -160,7 +153,6 @@ html#{$cadmin-selector} {
 		.applications-menu-btn {
 			font-size: 14px;
 			font-weight: 600;
-			text-decoration: none;
 		}
 
 		.applications-menu-nav-divider {
@@ -169,22 +161,7 @@ html#{$cadmin-selector} {
 		}
 
 		.applications-menu-company {
-			font-size: 16px;
 			font-weight: 600;
-		}
-
-		.applications-menu-powered {
-			color: $cadmin-secondary;
-			font-size: 10px;
-			text-align: right;
-			text-transform: uppercase;
-		}
-
-		.applications-menu-copyright {
-			color: $cadmin-secondary;
-			font-size: 14px;
-			font-weight: 600;
-			text-align: right;
 		}
 	}
 }

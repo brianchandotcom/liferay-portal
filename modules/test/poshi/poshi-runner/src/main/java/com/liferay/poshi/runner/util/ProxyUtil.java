@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.PropsValues;
+
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -107,7 +109,7 @@ public class ProxyUtil {
 	private void _startBrowserMobProxy() {
 		_browserMobProxy = new BrowserMobProxyServer();
 
-		_browserMobProxy.start(0);
+		_browserMobProxy.start(PropsValues.PROXY_SERVER_PORT);
 
 		System.out.println("Started BrowserMob Proxy.");
 

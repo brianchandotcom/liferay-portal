@@ -101,7 +101,7 @@ $toolbarZIndex: 971;
 	.knowledge-base-admin-content {
 		margin-left: 40px;
 
-		transition: margin-left 0.5s ease;
+		transition: margin-left 0.25s ease-in-out;
 	}
 
 	.knowledge-base-vertical-bar.expanded + .knowledge-base-admin-content {

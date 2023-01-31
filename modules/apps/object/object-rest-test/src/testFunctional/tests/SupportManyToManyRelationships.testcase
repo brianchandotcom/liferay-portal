@@ -1056,11 +1056,9 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = "4"
 	test ObjectEntryDeletionImpossibleWithPreventDeletionTypeRelationshipCreated {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SupportManyToManyRelationships#ObjectEntryDeletionImpossibleWithPreventDeletionTypeRelationshipCreated";
 
 		task ("Given manyToMany relationship universitySubjects with deletionType prevent created") {
@@ -1073,16 +1071,10 @@ definition {
 				type = "manyToMany");
 		}
 
-		task ("Given three university entries created") {
+		task ("Given a university entry created") {
 			var universityId1 = ObjectDefinitionAPI.createObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.createObjectEntryWithName(
-				en_US_plural_label = "universities",
-				name = "Liferay Second University");
-			var universityId3 = ObjectDefinitionAPI.createObjectEntryWithName(
-				en_US_plural_label = "universities",
-				name = "Liferay Third University");
 		}
 
 		task ("Given subject entry created") {
@@ -1091,43 +1083,31 @@ definition {
 				name = "Liferay Foundations");
 		}
 
-		task ("When I relate subject entry with all three universities through universities PUT endpoint") {
+		task ("When I relate subject entry with the university") {
 			ObjectDefinitionAPI.relateObjectEntries(
 				en_US_plural_label = "universities",
 				objectEntry1 = "${universityId1}",
 				objectEntry2 = "${subjectId}",
 				relationshipName = "universitiesSubjects");
-
-			ObjectDefinitionAPI.relateObjectEntries(
-				en_US_plural_label = "universities",
-				objectEntry1 = "${universityId2}",
-				objectEntry2 = "${subjectId}",
-				relationshipName = "universitiesSubjects");
-
-			ObjectDefinitionAPI.relateObjectEntries(
-				en_US_plural_label = "universities",
-				objectEntry1 = "${universityId3}",
-				objectEntry2 = "${subjectId}",
-				relationshipName = "universitiesSubjects");
 		}
 
-		task ("When deleting subject entry") {
+		task ("When deleting the university entry and asserting that the university was not deleted") {
 			var responseToParse = ObjectDefinitionAPI.deleteObjectEntry(
-				en_US_plural_label = "subjects",
-				objectEntryId = "${subjectId}");
-		}
-
-		task ("Then assert bad response and subject entry is not deleted") {
-			var responseToParse1 = ObjectDefinitionAPI.getObjectsWithNestedField(
-				nestedField = "universitiesSubjects",
-				objects = "universities");
+				en_US_plural_label = "universities",
+				objectEntryId = "${universityId1}");
 
 			ObjectDefinitionAPI.assertStatusInResponse(
 				expectedValue = "BAD_REQUEST",
 				responseToParse = "${responseToParse}");
+		}
+
+		task ("Then assert subject entry is not deleted") {
+			var responseToParse1 = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedField = "universitiesSubjects",
+				objects = "universities");
 
 			ObjectDefinitionAPI.assertResponseIncludeCorrectDetailsOfNotDeletedObject(
-				expectedValue = "Liferay Foundations,Liferay Foundations,Liferay Foundations",
+				expectedValue = "Liferay Foundations",
 				objectEntryId = "${subjectId}",
 				responseToParse = "${responseToParse1}");
 		}

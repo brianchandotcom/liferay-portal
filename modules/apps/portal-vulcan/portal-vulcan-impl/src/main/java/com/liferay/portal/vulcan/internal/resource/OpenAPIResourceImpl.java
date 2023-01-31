@@ -34,7 +34,6 @@ import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.internal.extension.util.ExtensionUtil;
-import com.liferay.portal.vulcan.jaxrs.JaxRsResourceRegistry;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
@@ -98,11 +97,17 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Javier Gamarra
@@ -145,6 +150,19 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		throws Exception {
 
 		return getOpenAPI(null, null, resourceClasses, type, uriInfo);
+	}
+
+	public Object getPropertyValue(String className, String propertyName) {
+		Object object = null;
+
+		Map<String, Object> properties = _jaxRsResourceProperties.get(
+			className);
+
+		if (properties != null) {
+			object = properties.get(propertyName);
+		}
+
+		return object;
 	}
 
 	@Override
@@ -359,13 +377,25 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		Filter filter = bundleContext.createFilter(
+			"(" + JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true)");
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, filter,
+			new JaxRsResourceTrackerCustomizer(bundleContext));
+
+		_serviceTracker.open();
+
 		_trackedOpenAPIContributors = ServiceTrackerListFactory.open(
 			bundleContext, OpenAPIContributor.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTracker.close();
 		_trackedOpenAPIContributors.close();
 	}
 
@@ -523,7 +553,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		for (Class<?> resourceClass : resourceClasses) {
 			String className = resourceClass.getName();
 
-			Object propertyValue = _jaxRsResourceRegistry.getPropertyValue(
+			Object propertyValue = getPropertyValue(
 				className, "entity.class.name");
 
 			if (propertyValue != null) {
@@ -1390,12 +1420,58 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
 
-	@Reference
-	private JaxRsResourceRegistry _jaxRsResourceRegistry;
+	private final Map<String, Map<String, Object>> _jaxRsResourceProperties =
+		new HashMap<>();
 
 	@Reference
 	private Portal _portal;
 
+	private ServiceTracker<?, ?> _serviceTracker;
 	private ServiceTrackerList<OpenAPIContributor> _trackedOpenAPIContributors;
+
+	private class JaxRsResourceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, Object> {
+
+		@Override
+		public Object addingService(ServiceReference<Object> serviceReference) {
+			Object object = _bundleContext.getService(serviceReference);
+
+			Map<String, Object> properties = new HashMap<>();
+
+			for (String propertyKey : serviceReference.getPropertyKeys()) {
+				properties.put(
+					propertyKey, serviceReference.getProperty(propertyKey));
+			}
+
+			_jaxRsResourceProperties.put(_getClassName(object), properties);
+
+			return object;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference, Object object) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference, Object object) {
+
+			_jaxRsResourceProperties.remove(_getClassName(object));
+		}
+
+		private JaxRsResourceTrackerCustomizer(BundleContext bundleContext) {
+			_bundleContext = bundleContext;
+		}
+
+		private String _getClassName(Object object) {
+			Class<?> clazz = object.getClass();
+
+			return clazz.getName();
+		}
+
+		private final BundleContext _bundleContext;
+
+	}
 
 }

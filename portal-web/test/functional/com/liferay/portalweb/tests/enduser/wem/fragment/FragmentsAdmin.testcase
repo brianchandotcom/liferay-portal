@@ -298,7 +298,7 @@ definition {
 
 			Modal.save();
 
-			Alert.viewSuccessMessageText(successMessage = "The fragment has been copied successfully.");
+			Alert.viewSuccessMessageText(successMessage = "The fragment was copied successfully.");
 
 			MenuBar.viewActive(menuBar = "Untitled Set");
 

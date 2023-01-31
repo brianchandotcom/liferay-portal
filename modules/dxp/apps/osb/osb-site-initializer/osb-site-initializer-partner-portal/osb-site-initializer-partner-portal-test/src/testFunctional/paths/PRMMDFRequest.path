@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_BUTTON</td>
+	<td>//div[@role='tablist']//h5[contains(text(),'${key_textButton}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKBOX</td>
 	<td>//input[contains(@name,'${key_fieldName}')][@value='${key_optionValue}']</td>
 	<td></td>
@@ -38,11 +43,6 @@
 <tr>
 	<td>ERROR_MESSAGE</td>
 	<td>//div[contains(@class, 'error')]//div[(text()='${key_errorMessage}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_BUTTON</td>
-	<td>//div[@role='tablist']//h5[contains(text(),'${key_textButton}')]</td>
 	<td></td>
 </tr>
 <tr>

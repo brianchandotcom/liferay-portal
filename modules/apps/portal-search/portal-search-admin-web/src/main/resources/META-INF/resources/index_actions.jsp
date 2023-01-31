@@ -23,8 +23,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
+<%@ page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay" %><%@
@@ -37,10 +36,12 @@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys" %><%@
 page import="com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext" %><%@
 page import="com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext" %><%@
+page import="com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus" %><%@
 page import="com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys" %>
 
 <%@ page import="java.io.Serializable" %>
@@ -160,16 +161,57 @@ page import="java.util.Map" %>
 							</div>
 						</li>
 
+						<%
+						EmbeddingProviderStatus[] embeddingProviderStatuses = indexActionsDisplayContext.getEmbeddingProviderStatuses();
+
+						boolean embeddingProviderAvailable = false;
+						%>
+
 						<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) %>'>
 							<li class="list-group-item list-group-item-flex">
 								<div class="autofit-col autofit-col-expand">
 									<p class="list-group-title">
-										<liferay-ui:message arguments="<%= indexActionsDisplayContext.getTextEmbeddingServiceStatus() %>" key="reindex-text-embeddings-x" />
+										<liferay-ui:message key="reindex-text-embeddings" />
+
+										<c:choose>
+											<c:when test="<%= embeddingProviderStatuses.length == 0 %>">
+												<liferay-ui:message key="no-embedding-providers-available" />
+											</c:when>
+											<c:otherwise>
+
+												<%
+												for (EmbeddingProviderStatus embeddingProviderStatus : embeddingProviderStatuses) {
+													String errorMessage = embeddingProviderStatus.getErrorMessage();
+
+													if (Validator.isBlank(errorMessage)) {
+														embeddingProviderAvailable = true;
+													}
+												%>
+
+													<span>
+														<b><%= embeddingProviderStatus.getProviderName() %>:</b>
+
+														<c:choose>
+															<c:when test="<%= Validator.isBlank(errorMessage) %>">
+																<liferay-ui:message key="ok" />
+															</c:when>
+															<c:otherwise>
+																<liferay-ui:message key="error" />
+															</c:otherwise>
+														</c:choose>
+													</span>
+
+												<%
+												}
+												%>
+
+											</c:otherwise>
+										</c:choose>
 									</p>
 								</div>
 
 								<div class="autofit-col">
-									<aui:button cssClass="save-server-button" data-cmd="reindexTextEmbeddings" value="execute" />
+									<aui:button cssClass="save-server-button" data-cmd="reindexEmbeddings" disabled="<%= !embeddingProviderAvailable %>" value="execute" />
 								</div>
 							</li>
 						</c:if>

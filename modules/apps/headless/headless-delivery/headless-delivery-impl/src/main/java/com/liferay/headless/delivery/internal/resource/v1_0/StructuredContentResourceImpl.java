@@ -773,7 +773,8 @@ public class StructuredContentResourceImpl
 		if ((journalArticle != null) &&
 			(structuredContent.getTaxonomyCategoryIds() == null)) {
 
-			serviceContext.setAssetCategoryIds(_getCategoryId(journalArticle));
+			serviceContext.setAssetCategoryIds(
+				_getAssetCategoryIds(journalArticle));
 		}
 
 		return serviceContext;
@@ -798,6 +799,20 @@ public class StructuredContentResourceImpl
 		};
 	}
 
+	private long[] _getAssetCategoryIds(JournalArticle journalArticle)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return assetEntry.getCategoryIds();
+	}
+
 	private double _getAssetPriority(
 			JournalArticle journalArticle, StructuredContent structuredContent)
 		throws Exception {
@@ -817,20 +832,6 @@ public class StructuredContentResourceImpl
 			journalArticle.getResourcePrimKey());
 
 		return assetEntry.getPriority();
-	}
-
-	private long[] _getCategoryId(JournalArticle journalArticle)
-		throws Exception {
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		return assetEntry.getCategoryIds();
 	}
 
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {

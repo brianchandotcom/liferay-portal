@@ -16,6 +16,7 @@ package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -54,8 +55,6 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -284,16 +283,12 @@ public class RedirectNotFoundEntriesDisplayContext {
 		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
 			hits, LocaleUtil.getDefault());
 
-		Stream<SearchResult> stream = searchResults.stream();
-
 		redirectNotFoundEntrySearch.setResultsAndTotal(
-			() -> stream.map(
-				SearchResult::getClassPK
-			).map(
-				_redirectNotFoundEntryLocalService::fetchRedirectNotFoundEntry
-			).collect(
-				Collectors.toList()
-			),
+			() -> TransformUtil.transform(
+				searchResults,
+				searchResult ->
+					_redirectNotFoundEntryLocalService.
+						fetchRedirectNotFoundEntry(searchResult.getClassPK())),
 			hits.getLength());
 	}
 

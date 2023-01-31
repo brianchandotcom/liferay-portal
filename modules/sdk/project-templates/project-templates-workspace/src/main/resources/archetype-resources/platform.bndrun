@@ -20,6 +20,7 @@ $h1 Check GETTING_STARTED.markdown#platform.bndrun for more information.
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Http',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.MimeTypes',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Portal',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.uuid.PortalUUID',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.PrefsProps',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Props',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.xml.SAXReader',\

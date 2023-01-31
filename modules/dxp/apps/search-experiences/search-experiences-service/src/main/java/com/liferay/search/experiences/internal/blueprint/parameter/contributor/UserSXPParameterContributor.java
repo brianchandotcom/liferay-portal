@@ -25,6 +25,7 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -87,7 +88,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -534,16 +534,11 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 			userId);
 
 		if (!userGroups.isEmpty()) {
-			Stream<UserGroup> stream = userGroups.stream();
-
 			sxpParameters.add(
 				new LongArraySXPParameter(
 					"user.user_group_ids", true,
-					stream.map(
-						UserGroup::getUserGroupId
-					).toArray(
-						Long[]::new
-					)));
+					TransformUtil.transformToArray(
+						userGroups, UserGroup::getUserGroupId, Long.class)));
 		}
 
 		_addAssetCategories(sxpParameters, user);

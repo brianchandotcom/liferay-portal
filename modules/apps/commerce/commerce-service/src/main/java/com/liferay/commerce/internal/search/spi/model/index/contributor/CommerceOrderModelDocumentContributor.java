@@ -20,13 +20,21 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,6 +79,8 @@ public class CommerceOrderModelDocumentContributor
 				commerceOrder.getExternalReferenceCode());
 			document.addNumber(
 				"itemsQuantity", _getItemsQuantity(commerceOrder));
+			document.addKeyword(
+				"name", _getCommerceOrderItemNames(commerceOrder));
 
 			User user = _userLocalService.getUser(commerceOrder.getUserId());
 
@@ -82,6 +92,8 @@ public class CommerceOrderModelDocumentContributor
 			document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 			document.addKeyword(
 				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
+			document.addKeyword(
+				"sku", _getCommerceOrderItemSKUs(commerceOrder));
 			document.addNumber("total", commerceOrder.getTotal());
 		}
 		catch (Exception exception) {
@@ -92,6 +104,43 @@ public class CommerceOrderModelDocumentContributor
 					exception);
 			}
 		}
+	}
+
+	private String[] _getCommerceOrderItemNames(CommerceOrder commerceOrder) {
+		List<String> commerceOrderItemNamesList = new ArrayList<>();
+
+		Set<Locale> availableLocales = _language.getAvailableLocales(
+			commerceOrder.getGroupId());
+
+		for (Locale locale : availableLocales) {
+			for (CommerceOrderItem commerceOrderItem :
+					commerceOrder.getCommerceOrderItems()) {
+
+				String orderItemName = commerceOrderItem.getName(locale);
+
+				if (Validator.isNull(orderItemName)) {
+					orderItemName = _localization.getDefaultLanguageId(
+						commerceOrderItem.getName());
+				}
+
+				commerceOrderItemNamesList.add(orderItemName);
+			}
+		}
+
+		return commerceOrderItemNamesList.toArray(new String[0]);
+	}
+
+	private String[] _getCommerceOrderItemSKUs(CommerceOrder commerceOrder) {
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		List<String> commerceOrderItemSKUsList = new ArrayList<>();
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			commerceOrderItemSKUsList.add(commerceOrderItem.getSku());
+		}
+
+		return commerceOrderItemSKUsList.toArray(new String[0]);
 	}
 
 	private int _getItemsQuantity(CommerceOrder commerceOrder) {
@@ -114,6 +163,12 @@ public class CommerceOrderModelDocumentContributor
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private UserLocalService _userLocalService;

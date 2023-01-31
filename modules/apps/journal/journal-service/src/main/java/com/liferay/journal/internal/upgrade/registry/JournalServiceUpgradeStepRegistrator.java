@@ -64,8 +64,10 @@ import com.liferay.journal.internal.upgrade.v4_0_0.JournalArticleDDMFieldsUpgrad
 import com.liferay.journal.internal.upgrade.v4_1_0.JournalArticleExternalReferenceCodeUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_3_1.BasicWebContentAssetEntryClassTypeIdUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_4_0.GlobalJournalArticleUrlTitleUpgradeProcess;
+import com.liferay.journal.internal.upgrade.v4_4_3.JournalArticleLayoutClassedModelUsageUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -341,6 +343,14 @@ public class JournalServiceUpgradeStepRegistrator
 			"4.4.0", "4.4.1",
 			UpgradeProcessFactory.alterColumnType(
 				"JournalArticleLocalization", "title", "VARCHAR(800) null"));
+
+		registry.register(
+			"4.4.1", "4.4.3",
+			new JournalArticleLayoutClassedModelUsageUpgradeProcess(
+				_assetEntryLocalService, _classNameLocalService,
+				_layoutLocalService, _layoutClassedModelUsageLocalService,
+				_portletPreferencesLocalService,
+				_portletPreferenceValueLocalService));
 	}
 
 	private void _deleteTempImages() throws Exception {
@@ -425,6 +435,10 @@ public class JournalServiceUpgradeStepRegistrator
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

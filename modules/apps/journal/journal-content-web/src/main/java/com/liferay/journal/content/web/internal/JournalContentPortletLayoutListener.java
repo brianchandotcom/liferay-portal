@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -85,10 +84,6 @@ public class JournalContentPortletLayoutListener
 			}
 
 			_addLayoutClassedModelUsage(layout, portletId, article);
-
-			_journalContentSearchLocalService.updateContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, article.getArticleId(), true);
 		}
 		catch (Exception exception) {
 			throw new PortletLayoutListenerException(exception);
@@ -127,10 +122,6 @@ public class JournalContentPortletLayoutListener
 			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 				portletId, _portal.getClassNameId(Portlet.class), plid);
 
-			_journalContentSearchLocalService.deleteArticleContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, article.getArticleId());
-
 			String[] runtimePortletIds = _getRuntimePortletIds(
 				layout.getCompanyId(), layout.getGroupId(),
 				article.getArticleId());
@@ -161,19 +152,10 @@ public class JournalContentPortletLayoutListener
 			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 				portletId, _portal.getClassNameId(Portlet.class), plid);
 
-			_journalContentSearchLocalService.deleteArticleContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId);
-
 			JournalArticle article = _getArticle(layout, portletId);
 
 			if (article != null) {
 				_addLayoutClassedModelUsage(layout, portletId, article);
-
-				_journalContentSearchLocalService.updateContentSearch(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), portletId, article.getArticleId(),
-					true);
 			}
 		}
 		catch (Exception exception) {
@@ -335,9 +317,6 @@ public class JournalContentPortletLayoutListener
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

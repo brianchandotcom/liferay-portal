@@ -168,11 +168,9 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
-import com.liferay.journal.model.JournalContentSearchModel;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
-import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.layout.model.LayoutClassedModelUsageModel;
 import com.liferay.layout.model.impl.LayoutClassedModelUsageModelImpl;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
@@ -4394,35 +4392,6 @@ public class DataFactory {
 		return newPortletPreferenceValueModel(
 			portletPreferencesModel, "articleId", 0,
 			journalArticleModel.getArticleId());
-	}
-
-	public JournalContentSearchModel newJournalContentSearchModel(
-		JournalArticleModel journalArticleModel, long layoutId) {
-
-		JournalContentSearchModel journalContentSearchModel =
-			new JournalContentSearchModelImpl();
-
-		// PK fields
-
-		journalContentSearchModel.setContentSearchId(_counter.get());
-
-		// Group instance
-
-		journalContentSearchModel.setGroupId(journalArticleModel.getGroupId());
-
-		// Audit fields
-
-		journalContentSearchModel.setCompanyId(_companyId);
-
-		// Other fields
-
-		journalContentSearchModel.setLayoutId(layoutId);
-		journalContentSearchModel.setPortletId(
-			JournalContentPortletKeys.JOURNAL_CONTENT);
-		journalContentSearchModel.setArticleId(
-			journalArticleModel.getArticleId());
-
-		return journalContentSearchModel;
 	}
 
 	public LayoutClassedModelUsageModel newLayoutClassedModelUsageModel(

@@ -49,7 +49,5 @@
 		<#list dataFactory.newJournalArticleResourcePortletPreferenceValueModels(journalArticleResourcePortletPreferencesModel, journalArticleResourceModel) as journalArticleResourcePortletPreferenceValueModel>
 			${dataFactory.toInsertSQL(journalArticleResourcePortletPreferenceValueModel)}
 		</#list>
-
-		${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.layoutId))}
 	</#list>
 </#list>

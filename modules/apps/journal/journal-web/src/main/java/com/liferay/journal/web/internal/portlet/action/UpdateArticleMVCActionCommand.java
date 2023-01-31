@@ -28,7 +28,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ArticleContentSizeException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
@@ -384,9 +383,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				portletPreferences.store();
-
-				_updateContentSearch(
-					refererPlid, portletResource, article.getArticleId());
 			}
 
 			if (assetEntry != null) {
@@ -606,17 +602,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	private void _updateContentSearch(
-			long plid, String portletResource, String articleId)
-		throws Exception {
-
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
-		_journalContentSearchLocalService.updateContentSearch(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			portletResource, articleId, true);
-	}
-
 	private void _updateLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK, String portletResource,
 		long plid, ServiceContext serviceContext) {
@@ -662,9 +647,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JournalArticleService _journalArticleService;
-
-	@Reference
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
 
 	@Reference
 	private JournalConverter _journalConverter;

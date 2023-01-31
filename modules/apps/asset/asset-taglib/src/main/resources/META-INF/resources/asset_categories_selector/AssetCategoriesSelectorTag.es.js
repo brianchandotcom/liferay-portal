@@ -74,7 +74,11 @@ export default function (props) {
 	return (
 		<>
 			{props.showLabel && props.learnHowLink && (
-				<ClayLink href={props.learnHowLink.url} target="_blank">
+				<ClayLink
+					className="d-block mb-2 text-underline"
+					href={props.learnHowLink.url}
+					target="_blank"
+				>
 					{props.learnHowLink.message}
 				</ClayLink>
 			)}
@@ -118,7 +122,7 @@ export default function (props) {
 										'internal-categories'
 									)}
 								</div>
-								<p className="text-secondary">
+								<p className="small text-secondary">
 									{Liferay.Language.get(
 										'they-are-displayed-inside-the-administration-only'
 									)}

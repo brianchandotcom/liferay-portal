@@ -104,9 +104,9 @@ public class ServiceLatch {
 
 	private final BundleContext _bundleContext;
 	private Runnable _openRunnable;
-	private final AtomicInteger _serviceTrackersCount = new AtomicInteger();
 	private final Queue<ServiceTracker<?, ?>> _serviceTrackers =
 		new ConcurrentLinkedQueue<>();
+	private final AtomicInteger _serviceTrackersCount = new AtomicInteger();
 
 	private class CapturingServiceTrackerCustomizer<S>
 		implements ServiceTrackerCustomizer<S, S> {

@@ -449,9 +449,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
 
-			Map<String, String> roleIdsStringUtilReplaceValues =
-				_invoke(() -> _addOrUpdateRoles(serviceContext));
-			
+			Map<String, String> roleIdsStringUtilReplaceValues = _invoke(
+				() -> _addOrUpdateRoles(serviceContext));
+
 			_invoke(() -> _addOrUpdateSAPEntries(serviceContext));
 
 			Map<String, String> segmentsEntriesIdsStringUtilReplaceValues =
@@ -509,9 +509,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
-			_invoke(() -> _addOrUpdateResourcePermissions(
-				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-				serviceContext));
+			_invoke(
+				() -> _addOrUpdateResourcePermissions(
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					serviceContext));
 
 			// LPS-172108 Layouts have to be created first so that links in
 			// layout page templates work
@@ -563,8 +564,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					taxonomyCategoryIdsStringUtilReplaceValues));
 			_invoke(() -> _addUserRoles(serviceContext));
 
-			_invoke(() -> _addWorkflowDefinitions(roleIdsStringUtilReplaceValues,
-				serviceContext));
+			_invoke(
+				() -> _addWorkflowDefinitions(
+					roleIdsStringUtilReplaceValues, serviceContext));
 
 			_invoke(() -> _updateGroupSiteInitializerKey(groupId));
 		}
@@ -2924,7 +2926,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read("/site-initializer/resource-permissions.json", _servletContext);
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/resource-permissions.json", _servletContext);
 
 		if (json == null) {
 			return;
@@ -2989,6 +2992,118 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString("resourceName"), scope,
 				jsonObject.getString("primKey"), role.getRoleId(), actionIds);
 		}
+	}
+
+	private Map<String, String> _addOrUpdateRoles(ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, String> roleIdsStringUtilReplaceValues = new HashMap<>();
+
+		List<Role> roles = _roleLocalService.getRoles(
+			serviceContext.getCompanyId());
+
+		for (Role role : roles) {
+			roleIdsStringUtilReplaceValues.put(
+				"ROLE_ID:" + role.getName(), String.valueOf(role.getRoleId()));
+		}
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/roles.json", _servletContext);
+
+		if (json == null) {
+			return roleIdsStringUtilReplaceValues;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(), jsonObject.getString("name"));
+
+			if (role == null) {
+				if (jsonObject.getInt("type") == RoleConstants.TYPE_ACCOUNT) {
+					com.liferay.account.model.AccountRole accountRole =
+						_accountRoleLocalService.addAccountRole(
+							serviceContext.getUserId(),
+							AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+							jsonObject.getString("name"),
+							SiteInitializerUtil.toMap(
+								jsonObject.getString("name_i18n")),
+							SiteInitializerUtil.toMap(
+								jsonObject.getString("description")));
+
+					role = accountRole.getRole();
+				}
+				else {
+					role = _roleLocalService.addRole(
+						serviceContext.getUserId(), null, 0,
+						jsonObject.getString("name"),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("name_i18n")),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("description")),
+						jsonObject.getInt("type"),
+						jsonObject.getString("subtype"), serviceContext);
+				}
+			}
+			else {
+				role = _roleLocalService.updateRole(
+					role.getRoleId(), jsonObject.getString("name"),
+					SiteInitializerUtil.toMap(
+						jsonObject.getString("name_i18n")),
+					SiteInitializerUtil.toMap(
+						jsonObject.getString("description")),
+					jsonObject.getString("subtype"), serviceContext);
+			}
+
+			roleIdsStringUtilReplaceValues.put(
+				"ROLE_ID:" + role.getName(), String.valueOf(role.getRoleId()));
+
+			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+			if (JSONUtil.isEmpty(actionsJSONArray) || (role == null)) {
+				continue;
+			}
+
+			for (int j = 0; j < actionsJSONArray.length(); j++) {
+				JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(
+					j);
+
+				String resource = actionsJSONObject.getString("resource");
+				int scope = actionsJSONObject.getInt("scope");
+				String actionId = actionsJSONObject.getString("actionId");
+
+				if (scope == ResourceConstants.SCOPE_COMPANY) {
+					_resourcePermissionLocalService.addResourcePermission(
+						serviceContext.getCompanyId(), resource, scope,
+						String.valueOf(role.getCompanyId()), role.getRoleId(),
+						actionId);
+				}
+				else if (scope == ResourceConstants.SCOPE_GROUP) {
+					_resourcePermissionLocalService.removeResourcePermissions(
+						serviceContext.getCompanyId(), resource,
+						ResourceConstants.SCOPE_GROUP, role.getRoleId(),
+						actionId);
+
+					_resourcePermissionLocalService.addResourcePermission(
+						serviceContext.getCompanyId(), resource,
+						ResourceConstants.SCOPE_GROUP,
+						String.valueOf(serviceContext.getScopeGroupId()),
+						role.getRoleId(), actionId);
+				}
+				else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+					_resourcePermissionLocalService.addResourcePermission(
+						serviceContext.getCompanyId(), resource,
+						ResourceConstants.SCOPE_GROUP_TEMPLATE,
+						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+						role.getRoleId(), actionId);
+				}
+			}
+		}
+
+		return roleIdsStringUtilReplaceValues;
 	}
 
 	private void _addOrUpdateSAPEntries(ServiceContext serviceContext)
@@ -3340,116 +3455,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_commerceSiteInitializer.addPortletSettings(
 			_classLoader, serviceContext, _servletContext);
-	}
-
-	private Map<String, String> _addOrUpdateRoles(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Map<String, String> roleIdsStringUtilReplaceValues =
-			new HashMap<>();
-		
-		List<Role> roles = _roleLocalService.getRoles(
-			serviceContext.getCompanyId());
-
-		for(Role role:roles){
-			roleIdsStringUtilReplaceValues.put("ROLE_ID:"+role.getName(),
-				String.valueOf(role.getRoleId()));
-		}
-		
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/roles.json", _servletContext);
-
-		if (json == null) {
-			return roleIdsStringUtilReplaceValues;
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			Role role = _roleLocalService.fetchRole(
-				serviceContext.getCompanyId(), jsonObject.getString("name"));
-
-			if (role == null) {
-				if (jsonObject.getInt("type") == RoleConstants.TYPE_ACCOUNT) {
-					com.liferay.account.model.AccountRole accountRole =
-						_accountRoleLocalService.addAccountRole(
-							serviceContext.getUserId(),
-							AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-							jsonObject.getString("name"),
-							SiteInitializerUtil.toMap(
-								jsonObject.getString("name_i18n")),
-							SiteInitializerUtil.toMap(
-								jsonObject.getString("description")));
-
-					role = accountRole.getRole();
-				}
-				else {
-					role = _roleLocalService.addRole(
-						serviceContext.getUserId(), null, 0,
-						jsonObject.getString("name"),
-						SiteInitializerUtil.toMap(
-							jsonObject.getString("name_i18n")),
-						SiteInitializerUtil.toMap(
-							jsonObject.getString("description")),
-						jsonObject.getInt("type"), jsonObject.getString("subtype"),
-						serviceContext);
-				}
-			}
-			else {
-				role = _roleLocalService.updateRole(
-					role.getRoleId(), jsonObject.getString("name"),
-					SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
-					SiteInitializerUtil.toMap(jsonObject.getString("description")),
-					jsonObject.getString("subtype"), serviceContext);
-			}
-
-			roleIdsStringUtilReplaceValues.put("ROLE_ID:"+role.getName(),
-				String.valueOf(role.getRoleId()));
-
-			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
-
-			if (JSONUtil.isEmpty(actionsJSONArray) || (role == null)) {
-				continue;
-			}
-
-			for (int j = 0; j < actionsJSONArray.length(); j++) {
-				JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(j);
-
-				String resource = actionsJSONObject.getString("resource");
-				int scope = actionsJSONObject.getInt("scope");
-				String actionId = actionsJSONObject.getString("actionId");
-
-				if (scope == ResourceConstants.SCOPE_COMPANY) {
-					_resourcePermissionLocalService.addResourcePermission(
-						serviceContext.getCompanyId(), resource, scope,
-						String.valueOf(role.getCompanyId()), role.getRoleId(),
-						actionId);
-				}
-				else if (scope == ResourceConstants.SCOPE_GROUP) {
-					_resourcePermissionLocalService.removeResourcePermissions(
-						serviceContext.getCompanyId(), resource,
-						ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
-
-					_resourcePermissionLocalService.addResourcePermission(
-						serviceContext.getCompanyId(), resource,
-						ResourceConstants.SCOPE_GROUP,
-						String.valueOf(serviceContext.getScopeGroupId()),
-						role.getRoleId(), actionId);
-				}
-				else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-					_resourcePermissionLocalService.addResourcePermission(
-						serviceContext.getCompanyId(), resource,
-						ResourceConstants.SCOPE_GROUP_TEMPLATE,
-						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-						role.getRoleId(), actionId);
-				}
-			}
-		}
-		
-		return roleIdsStringUtilReplaceValues;
 	}
 
 	private void _addRolesAssignments(ServiceContext serviceContext)
@@ -4113,8 +4118,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addWorkflowDefinitions(
-		Map<String, String> roleIdsStringUtilReplaceValues,
-		ServiceContext serviceContext)
+			Map<String, String> roleIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -4141,10 +4146,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			workflowDefinitionJSONObject.put(
 				"content",
-				_replace(SiteInitializerUtil.read(
-					resourcePath + "workflow-definition.xml", _servletContext),
-					roleIdsStringUtilReplaceValues)
-				);
+				_replace(
+					SiteInitializerUtil.read(
+						resourcePath + "workflow-definition.xml",
+						_servletContext),
+					roleIdsStringUtilReplaceValues));
 
 			WorkflowDefinition workflowDefinition =
 				workflowDefinitionResource.postWorkflowDefinitionDeploy(

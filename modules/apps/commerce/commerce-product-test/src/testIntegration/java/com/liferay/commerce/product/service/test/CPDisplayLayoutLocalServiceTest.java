@@ -127,20 +127,20 @@ public class CPDisplayLayoutLocalServiceTest {
 
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
-			AssetCategory.class, assetCategory.getCategoryId(),
+			AssetCategory.class, assetCategory.getCategoryId(), null,
 			RandomTestUtil.randomString());
 
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
-			CPDefinition.class, _cpDefinition.getCPDefinitionId(),
+			CPDefinition.class, _cpDefinition.getCPDefinitionId(), null,
 			RandomTestUtil.randomString());
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel2.getSiteGroupId(),
-			AssetCategory.class, assetCategory.getCategoryId(),
+			AssetCategory.class, assetCategory.getCategoryId(), null,
 			RandomTestUtil.randomString());
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel2.getSiteGroupId(),
-			CPDefinition.class, _cpDefinition.getCPDefinitionId(),
+			CPDefinition.class, _cpDefinition.getCPDefinitionId(), null,
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(

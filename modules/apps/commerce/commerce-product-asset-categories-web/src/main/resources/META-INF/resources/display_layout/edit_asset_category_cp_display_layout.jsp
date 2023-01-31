@@ -19,7 +19,6 @@
 <%
 CategoryCPDisplayLayoutDisplayContext categoryCPDisplayLayoutDisplayContext = (CategoryCPDisplayLayoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceChannel commerceChannel = categoryCPDisplayLayoutDisplayContext.getCommerceChannel();
 CPDisplayLayout cpDisplayLayout = categoryCPDisplayLayoutDisplayContext.getCPDisplayLayout();
 
 AssetCategory assetCategory = null;
@@ -28,19 +27,7 @@ if (cpDisplayLayout != null) {
 	assetCategory = categoryCPDisplayLayoutDisplayContext.getAssetCategory(cpDisplayLayout.getClassPK());
 }
 
-String layoutBreadcrumb = StringPool.BLANK;
-
-if (cpDisplayLayout != null) {
-	Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getLayoutUuid(), commerceChannel.getSiteGroupId(), false);
-
-	if (selLayout == null) {
-		selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getLayoutUuid(), commerceChannel.getSiteGroupId(), true);
-	}
-
-	if (selLayout != null) {
-		layoutBreadcrumb = selLayout.getBreadcrumb(locale);
-	}
-}
+String layoutBreadcrumb = categoryCPDisplayLayoutDisplayContext.getLayoutBreadcrumb(cpDisplayLayout);
 %>
 
 <liferay-frontend:side-panel-content
@@ -56,7 +43,7 @@ if (cpDisplayLayout != null) {
 		<aui:input name="commerceChannelId" type="hidden" value="<%= categoryCPDisplayLayoutDisplayContext.getCommerceChannelId() %>" />
 
 		<liferay-ui:error exception="<%= CPDisplayLayoutEntryException.class %>" message="please-select-a-valid-category" />
-		<liferay-ui:error exception="<%= CPDisplayLayoutLayoutUuidException.class %>" message="please-select-a-valid-layout" />
+		<liferay-ui:error exception="<%= CPDisplayLayoutEntryUuidException.class %>" message="please-select-a-valid-layout" />
 
 		<aui:model-context bean="<%= cpDisplayLayout %>" model="<%= CPDisplayLayout.class %>" />
 

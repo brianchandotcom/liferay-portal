@@ -68,14 +68,14 @@ if (selLayout != null) {
 			</p>
 		</aui:field-wrapper>
 
-		<aui:button name="chooseDisplayPage" value="choose" />
+		<aui:button name="chooseLayout" value="choose" />
 	</aui:form>
 </commerce-ui:panel>
 
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"displayPageItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getDisplayPageItemSelectorUrl()
+			"layoutItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getLayoutItemSelectorUrl()
 		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).put(

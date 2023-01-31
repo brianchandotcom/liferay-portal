@@ -69,12 +69,12 @@ public class AssetRendererFactoryRegistryUtilTest {
 		List<AssetRendererFactory<?>> assetRendererFactories1 =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(1);
 
-		Stream<AssetRendererFactory<?>> assetRendererFactories1Stream1 =
+		Stream<AssetRendererFactory<?>> assetRendererFactories1Stream =
 			assetRendererFactories1.stream();
 
 		Assert.assertEquals(
 			1,
-			assetRendererFactories1Stream1.map(
+			assetRendererFactories1Stream.map(
 				AssetRendererFactory::getClassName
 			).filter(
 				className::equals
@@ -83,12 +83,12 @@ public class AssetRendererFactoryRegistryUtilTest {
 		List<AssetRendererFactory<?>> assetRendererFactories2 =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(2);
 
-		Stream<AssetRendererFactory<?>> assetRendererFactories2Stream2 =
+		Stream<AssetRendererFactory<?>> assetRendererFactories2Stream =
 			assetRendererFactories2.stream();
 
 		Assert.assertEquals(
 			0,
-			assetRendererFactories2Stream2.map(
+			assetRendererFactories2Stream.map(
 				AssetRendererFactory::getClassName
 			).filter(
 				className::equals

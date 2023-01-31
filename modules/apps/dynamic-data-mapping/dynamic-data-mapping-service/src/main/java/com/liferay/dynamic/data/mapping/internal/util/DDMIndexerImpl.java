@@ -810,7 +810,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 	private String _getSortableValue(
 		DDMFormField ddmFormField, Locale locale, Serializable value) {
 
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			return null;
 		}
 

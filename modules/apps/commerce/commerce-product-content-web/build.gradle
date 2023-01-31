@@ -17,6 +17,7 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-taglib")
+	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:asset:asset-info-api")
 	compileOnly project(":apps:asset:asset-service")

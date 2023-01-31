@@ -183,6 +183,7 @@ public abstract class BaseRoleResourceTestCase {
 		Role role = randomRole();
 
 		role.setDescription(regex);
+		role.setKey(regex);
 		role.setName(regex);
 		role.setRoleType(regex);
 
@@ -193,6 +194,7 @@ public abstract class BaseRoleResourceTestCase {
 		role = RoleSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, role.getDescription());
+		Assert.assertEquals(regex, role.getKey());
 		Assert.assertEquals(regex, role.getName());
 		Assert.assertEquals(regex, role.getRoleType());
 	}
@@ -653,6 +655,14 @@ public abstract class BaseRoleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (role.getKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (role.getName() == null) {
 					valid = false;
@@ -841,6 +851,14 @@ public abstract class BaseRoleResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(role1.getId(), role2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(role1.getKey(), role2.getKey())) {
 					return false;
 				}
 
@@ -1067,6 +1085,14 @@ public abstract class BaseRoleResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(role.getKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(role.getName()));
@@ -1137,6 +1163,7 @@ public abstract class BaseRoleResourceTestCase {
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				roleType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

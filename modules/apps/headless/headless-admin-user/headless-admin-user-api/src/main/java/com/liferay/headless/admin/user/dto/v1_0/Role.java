@@ -278,7 +278,7 @@ public class Role implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> description_i18n;
 
-	@Schema(description = "The role's ID.")
+	@Schema(description = "The role's internal ID.")
 	public Long getId() {
 		return id;
 	}
@@ -300,9 +300,35 @@ public class Role implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The role's ID.")
+	@GraphQLField(description = "The role's internal ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
+
+	@Schema(description = "The role's unique portable ID.")
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	@JsonIgnore
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+		try {
+			key = keyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The role's unique portable ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String key;
 
 	@Schema(description = "The role's name.")
 	public String getName() {
@@ -522,6 +548,20 @@ public class Role implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (key != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
 		if (name != null) {

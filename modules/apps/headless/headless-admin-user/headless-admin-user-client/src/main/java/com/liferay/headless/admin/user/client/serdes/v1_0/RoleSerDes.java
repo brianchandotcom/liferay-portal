@@ -165,6 +165,20 @@ public class RoleSerDes {
 			sb.append(role.getId());
 		}
 
+		if (role.getKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(role.getKey()));
+
+			sb.append("\"");
+		}
+
 		if (role.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -287,6 +301,13 @@ public class RoleSerDes {
 			map.put("id", String.valueOf(role.getId()));
 		}
 
+		if (role.getKey() == null) {
+			map.put("key", null);
+		}
+		else {
+			map.put("key", String.valueOf(role.getKey()));
+		}
+
 		if (role.getName() == null) {
 			map.put("name", null);
 		}
@@ -372,6 +393,11 @@ public class RoleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					role.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "key")) {
+				if (jsonParserFieldValue != null) {
+					role.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

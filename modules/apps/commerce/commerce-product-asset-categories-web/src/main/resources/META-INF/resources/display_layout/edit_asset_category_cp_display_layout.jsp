@@ -30,11 +30,11 @@ if (cpDisplayLayout != null) {
 
 String layoutBreadcrumb = StringPool.BLANK;
 
-if (cpDisplayLayout != null) {
-	Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getLayoutUuid(), commerceChannel.getSiteGroupId(), false);
+if ((cpDisplayLayout != null) && (cpDisplayLayout.getType() == CPDisplayLayoutConstants.TYPE_LAYOUT)) {
+	Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getEntryUuid(), commerceChannel.getSiteGroupId(), false);
 
 	if (selLayout == null) {
-		selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getLayoutUuid(), commerceChannel.getSiteGroupId(), true);
+		selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(cpDisplayLayout.getEntryUuid(), commerceChannel.getSiteGroupId(), true);
 	}
 
 	if (selLayout != null) {
@@ -56,7 +56,7 @@ if (cpDisplayLayout != null) {
 		<aui:input name="commerceChannelId" type="hidden" value="<%= categoryCPDisplayLayoutDisplayContext.getCommerceChannelId() %>" />
 
 		<liferay-ui:error exception="<%= CPDisplayLayoutEntryException.class %>" message="please-select-a-valid-category" />
-		<liferay-ui:error exception="<%= CPDisplayLayoutLayoutUuidException.class %>" message="please-select-a-valid-layout" />
+		<liferay-ui:error exception="<%= CPDisplayLayoutEntryUuidException.class %>" message="please-select-a-valid-layout" />
 
 		<aui:model-context bean="<%= cpDisplayLayout %>" model="<%= CPDisplayLayout.class %>" />
 
@@ -71,7 +71,7 @@ if (cpDisplayLayout != null) {
 
 					<aui:button name="selectCategories" value="select" />
 
-					<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= (cpDisplayLayout == null) ? StringPool.BLANK : cpDisplayLayout.getLayoutUuid() %>" />
+					<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="entryUuid" type="hidden" value="<%= (cpDisplayLayout == null) ? StringPool.BLANK : cpDisplayLayout.getEntryUuid() %>" />
 
 					<aui:field-wrapper helpMessage="category-display-page-help" label="category-display-page">
 						<p class="text-default">

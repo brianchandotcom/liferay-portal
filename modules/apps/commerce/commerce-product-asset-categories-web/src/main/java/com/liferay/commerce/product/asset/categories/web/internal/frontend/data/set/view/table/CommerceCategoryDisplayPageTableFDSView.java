@@ -17,6 +17,7 @@ package com.liferay.commerce.product.asset.categories.web.internal.frontend.data
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.asset.categories.web.internal.constants.CommerceProductAssetCategoriesFDSNames;
 import com.liferay.commerce.product.asset.categories.web.internal.model.CategoryDisplayPage;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -143,8 +144,9 @@ public class CommerceCategoryDisplayPageTableFDSView
 				_cpDisplayLayoutService.searchCPDisplayLayout(
 					commerceChannel.getCompanyId(),
 					commerceChannel.getSiteGroupId(),
-					AssetCategory.class.getName(), fdsKeywords.getKeywords(),
-					fdsPagination.getStartPosition(),
+					AssetCategory.class.getName(),
+					CPDisplayLayoutConstants.TYPE_LAYOUT,
+					fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition(), sort);
 
 		for (CPDisplayLayout cpDisplayLayout :
@@ -176,8 +178,9 @@ public class CommerceCategoryDisplayPageTableFDSView
 				_cpDisplayLayoutService.searchCPDisplayLayout(
 					commerceChannel.getCompanyId(),
 					commerceChannel.getSiteGroupId(),
-					AssetCategory.class.getName(), fdsKeywords.getKeywords(), 0,
-					0, null);
+					AssetCategory.class.getName(),
+					CPDisplayLayoutConstants.TYPE_LAYOUT,
+					fdsKeywords.getKeywords(), 0, 0, null);
 
 		return cpDisplayLayoutBaseModelSearchResult.getLength();
 	}

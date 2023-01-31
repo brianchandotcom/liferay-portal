@@ -17,7 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDisplayLayoutEntryException;
-import com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException;
+import com.liferay.commerce.product.exception.CPDisplayLayoutEntryUuidException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -86,7 +86,7 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (exception instanceof CPDisplayLayoutEntryException ||
-					 exception instanceof CPDisplayLayoutLayoutUuidException ||
+					 exception instanceof CPDisplayLayoutEntryUuidException ||
 					 exception instanceof NoSuchCPDefinitionException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -145,9 +145,9 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
+		String entryUuid = ParamUtil.getString(actionRequest, "entryUuid");
 
-		modifiableSettings.setValue("productLayoutUuid", layoutUuid);
+		modifiableSettings.setValue("productLayoutUuid", entryUuid);
 
 		modifiableSettings.store();
 	}
@@ -159,23 +159,24 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 			actionRequest, "cpDisplayLayoutId");
 
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
+		String entryUuid = ParamUtil.getString(actionRequest, "entryUuid");
 
 		if (cpDisplayLayoutId > 0) {
 			_cpDisplayLayoutService.updateCPDisplayLayout(
-				cpDisplayLayoutId, classPK, layoutUuid);
+				cpDisplayLayoutId, classPK, entryUuid);
 		}
 		else {
 			long commerceChannelId = ParamUtil.getLong(
 				actionRequest, "commerceChannelId");
+
+			int type = ParamUtil.getInteger(actionRequest, "type");
 
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 			_cpDisplayLayoutService.addCPDisplayLayout(
 				commerceChannel.getSiteGroupId(), CPDefinition.class, classPK,
-				layoutUuid);
+				entryUuid, type);
 		}
 	}
 

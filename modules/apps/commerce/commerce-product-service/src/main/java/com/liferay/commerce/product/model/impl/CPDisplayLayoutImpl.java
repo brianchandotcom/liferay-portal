@@ -16,6 +16,7 @@ package com.liferay.commerce.product.model.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -52,12 +53,16 @@ public class CPDisplayLayoutImpl extends CPDisplayLayoutBaseImpl {
 
 	@Override
 	public Layout fetchLayout() {
+		if (getType() != CPDisplayLayoutConstants.TYPE_LAYOUT) {
+			return null;
+		}
+
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			getLayoutUuid(), getGroupId(), false);
+			getEntryUuid(), getGroupId(), false);
 
 		if (layout == null) {
 			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				getLayoutUuid(), getGroupId(), true);
+				getEntryUuid(), getGroupId(), true);
 		}
 
 		return layout;

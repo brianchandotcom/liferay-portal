@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -105,7 +106,8 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, AssetCategory.class, assetCategory.getCategoryId());
+				groupId, AssetCategory.class, assetCategory.getCategoryId(),
+				CPDisplayLayoutConstants.TYPE_LAYOUT);
 
 		if ((cpDisplayLayout == null) &&
 			(layoutDisplayPageObjectProvider != null) &&
@@ -177,7 +179,8 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, AssetCategory.class, assetCategory.getCategoryId());
+				groupId, AssetCategory.class, assetCategory.getCategoryId(),
+				CPDisplayLayoutConstants.TYPE_LAYOUT);
 
 		if ((cpDisplayLayout == null) &&
 			(layoutDisplayPageObjectProvider != null) &&
@@ -212,10 +215,11 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, AssetCategory.class, categoryId);
+				groupId, AssetCategory.class, categoryId,
+				CPDisplayLayoutConstants.TYPE_LAYOUT);
 
 		if ((cpDisplayLayout == null) ||
-			Validator.isNull(cpDisplayLayout.getLayoutUuid())) {
+			Validator.isNull(cpDisplayLayout.getEntryUuid())) {
 
 			CommerceChannel commerceChannel =
 				_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
@@ -252,11 +256,11 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			cpDisplayLayout.getLayoutUuid(), groupId, privateLayout);
+			cpDisplayLayout.getEntryUuid(), groupId, privateLayout);
 
 		if (layout == null) {
 			layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				cpDisplayLayout.getLayoutUuid(), groupId, !privateLayout);
+				cpDisplayLayout.getEntryUuid(), groupId, !privateLayout);
 		}
 
 		return layout;

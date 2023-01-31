@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -128,20 +129,24 @@ public class CPDisplayLayoutLocalServiceTest {
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
 			AssetCategory.class, assetCategory.getCategoryId(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			CPDisplayLayoutConstants.TYPE_LAYOUT);
 
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
 			CPDefinition.class, _cpDefinition.getCPDefinitionId(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			CPDisplayLayoutConstants.TYPE_LAYOUT);
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel2.getSiteGroupId(),
 			AssetCategory.class, assetCategory.getCategoryId(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			CPDisplayLayoutConstants.TYPE_LAYOUT);
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel2.getSiteGroupId(),
 			CPDefinition.class, _cpDefinition.getCPDefinitionId(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			CPDisplayLayoutConstants.TYPE_LAYOUT);
 
 		Assert.assertEquals(
 			4, _cpDisplayLayoutLocalService.getCPDisplayLayoutsCount());

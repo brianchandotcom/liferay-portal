@@ -114,6 +114,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editVariant {
+		Click(
+			key_variantName = "${variantName}",
+			locator1 = "ABTest#EDIT_VARIANT_BUTTON");
+	}
+
 	macro editVariantName {
 		if (!(isSet(key_index))) {
 			var key_index = "1";

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
@@ -72,7 +73,8 @@ public class CPDisplayLayoutTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _cpDisplayLayoutLocalService.addCPDisplayLayout(
 			TestPropsValues.getUserId(), group.getGroupId(), CPDefinition.class,
-			_cpDefinition.getCPDefinitionId(), RandomTestUtil.randomString());
+			_cpDefinition.getCPDefinitionId(), RandomTestUtil.randomString(),
+			CPDisplayLayoutConstants.TYPE_LAYOUT);
 	}
 
 	@Inject

@@ -38,7 +38,7 @@ if (selLayout != null) {
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="setDefaultLayout" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceChannelId" type="hidden" value="<%= categoryCPDisplayLayoutDisplayContext.getCommerceChannelId() %>" />
-		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= (selLayout == null) ? StringPool.BLANK : selLayout.getUuid() %>" />
+		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="entryUuid" type="hidden" value="<%= (selLayout == null) ? StringPool.BLANK : selLayout.getUuid() %>" />
 
 		<aui:field-wrapper helpMessage="category-display-page-help" label="category-display-page">
 			<p class="text-default">

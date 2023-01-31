@@ -19,6 +19,7 @@ import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
@@ -84,9 +86,13 @@ public class OpenIdConnectProviderManagedServiceFactory
 				_getPropertyAsString("providerName", properties), properties);
 		}
 		else {
-			_deleteOAuthClientEntry(
-				companyId, _getPropertyAsString("providerName", properties),
-				properties);
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+				_deleteOAuthClientEntry(
+					companyId, _getPropertyAsString("providerName", properties),
+					properties);
+			}
 		}
 	}
 
@@ -154,7 +160,11 @@ public class OpenIdConnectProviderManagedServiceFactory
 			return;
 		}
 
-		_updateOAuthClientEntry(companyId, oldProviderName, properties);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			_updateOAuthClientEntry(companyId, oldProviderName, properties);
+		}
 	}
 
 	private String _deleteOAuthClientASLocalMetadata(

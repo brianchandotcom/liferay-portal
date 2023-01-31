@@ -37,7 +37,7 @@
 	</tr>
 	<tr>
 		<td>DELETE_ATTACHMENT_ICON</td>
-		<td>//*[contains(@class,'lexicon-icon-times-circle-full')]</td>
+		<td>//*[contains(@class,'lexicon-icon lexicon-icon-times-circle-full')]</td>
 		<td></td>
 	</tr>
 	<tr>

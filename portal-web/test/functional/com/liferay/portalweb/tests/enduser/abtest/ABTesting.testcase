@@ -635,6 +635,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-109991 Bug: When a variant is edited, other variants lose modifications"
+	@priority = "4"
+	test CheckContentPersistAfterEditVariant {
+		property portal.acceptance = "false";
+
+		task ("Create AB test and create first variant") {
+			ABTest.openABTestPanel();
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant Name 1");
+		}
+
+		task ("Edit variant page and add some fragment to the page") {
+			ABTest.editVariant(variantName = "Variant Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			ABTest.saveVariant();
+		}
+
+		task ("Create second variant and add some fragment to the page") {
+			ABTest.createVariant(variantName = "Variant Name 2");
+
+			ABTest.editVariant(variantName = "Variant Name 2");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			ABTest.saveVariant();
+		}
+
+		task ("Select to edit first variant") {
+			ABTest.editVariant(variantName = "Variant Name 1");
+		}
+
+		task ("Remove fragment to the page and assert that the fragment has been removed") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			PageEditor.removeFragment(fragmentName = "Button");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
+
+			ABTest.saveVariant();
+		}
+
+		task ("Select to edit second variant and and assert that the fragment persists after editing the first variant") {
+			ABTest.editVariant(variantName = "Variant Name 2");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+	}
+
 	@description = "LPS-152323 Bug: Element ID field gets empty after changing from variant"
 	@priority = "3"
 	test CheckElementIdWithVariant {

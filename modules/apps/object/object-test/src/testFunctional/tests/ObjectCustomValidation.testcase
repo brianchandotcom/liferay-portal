@@ -2565,9 +2565,15 @@ definition {
 
 			User.openUsersAdmin();
 
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
 			AssertElementPresent(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-				value1 = "Userfn Userln");
+				value1 = "Userfn");
+
+			AssertElementPresent(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "Userln");
 		}
 	}
 

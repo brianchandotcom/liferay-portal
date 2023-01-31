@@ -1,0 +1,12 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "rich-text-input",
+	"icon": "custom-field",
+	"name": "rich-text-input",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"text"
+		]
+	}
+}

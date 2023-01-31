@@ -1,0 +1,5 @@
+.rich-text-input--hidden-label label {
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+}

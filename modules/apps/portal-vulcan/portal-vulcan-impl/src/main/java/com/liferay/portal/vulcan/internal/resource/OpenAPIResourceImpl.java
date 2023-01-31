@@ -152,19 +152,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		return getOpenAPI(null, null, resourceClasses, type, uriInfo);
 	}
 
-	public Object getPropertyValue(String className, String propertyName) {
-		Object object = null;
-
-		Map<String, Object> properties = _jaxRsResourceProperties.get(
-			className);
-
-		if (properties != null) {
-			object = properties.get(propertyName);
-		}
-
-		return object;
-	}
-
 	@Override
 	public Map<String, Schema> getSchemas(Set<Class<?>> resourceClasses)
 		throws Exception {
@@ -384,8 +371,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			"(" + JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true)");
 
 		_serviceTracker = new ServiceTracker<>(
-			bundleContext, filter,
-			new JaxRsResourceTrackerCustomizer(bundleContext));
+			bundleContext, filter, new JaxRsResourceTrackerCustomizer());
 
 		_serviceTracker.open();
 
@@ -551,13 +537,11 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		Set<String> classNames = new HashSet<>();
 
 		for (Class<?> resourceClass : resourceClasses) {
-			String className = resourceClass.getName();
+			String entryClassName = _jaxRsResourceEntryClassNameMap.get(
+				resourceClass.getName());
 
-			Object propertyValue = getPropertyValue(
-				className, "entity.class.name");
-
-			if (propertyValue != null) {
-				classNames.add((String)propertyValue);
+			if (entryClassName != null) {
+				classNames.add(entryClassName);
 			}
 		}
 
@@ -1420,7 +1404,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
 
-	private final Map<String, Map<String, Object>> _jaxRsResourceProperties =
+	private final Map<String, String> _jaxRsResourceEntryClassNameMap =
 		new HashMap<>();
 
 	@Reference
@@ -1430,47 +1414,32 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	private ServiceTrackerList<OpenAPIContributor> _trackedOpenAPIContributors;
 
 	private class JaxRsResourceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Object> {
+		implements ServiceTrackerCustomizer<Object, String> {
 
 		@Override
-		public Object addingService(ServiceReference<Object> serviceReference) {
-			Object object = _bundleContext.getService(serviceReference);
+		public String addingService(ServiceReference<Object> serviceReference) {
+			String entryClassName = (String)serviceReference.getProperty(
+				"entity.class.name");
 
-			Map<String, Object> properties = new HashMap<>();
+			_jaxRsResourceEntryClassNameMap.put(
+				(String)serviceReference.getProperty("component.name"),
+				entryClassName);
 
-			for (String propertyKey : serviceReference.getPropertyKeys()) {
-				properties.put(
-					propertyKey, serviceReference.getProperty(propertyKey));
-			}
-
-			_jaxRsResourceProperties.put(_getClassName(object), properties);
-
-			return object;
+			return entryClassName;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, Object object) {
+			ServiceReference<Object> serviceReference, String entryClassName) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, Object object) {
+			ServiceReference<Object> serviceReference, String entryClassName) {
 
-			_jaxRsResourceProperties.remove(_getClassName(object));
+			_jaxRsResourceEntryClassNameMap.remove(
+				(String)serviceReference.getProperty("component.name"));
 		}
-
-		private JaxRsResourceTrackerCustomizer(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
-		private String _getClassName(Object object) {
-			Class<?> clazz = object.getClass();
-
-			return clazz.getName();
-		}
-
-		private final BundleContext _bundleContext;
 
 	}
 

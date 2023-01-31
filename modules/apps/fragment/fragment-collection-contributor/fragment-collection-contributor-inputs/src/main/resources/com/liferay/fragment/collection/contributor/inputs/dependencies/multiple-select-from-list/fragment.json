@@ -1,0 +1,12 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "multi-select-list",
+	"icon": "select-from-list",
+	"name": "multi-select-list",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"multiple-select"
+		]
+	}
+}

@@ -263,9 +263,11 @@ export function FieldBase({
 
 		const visitor = new PagesVisitor(pages);
 
+		const newFieldName = fieldName ?? fieldReference;
+
 		visitor.mapFields(
 			(field) => {
-				if (fieldName === field.fieldName) {
+				if (newFieldName === field.fieldName) {
 					repetitionsCounter++;
 				}
 			},

@@ -14,16 +14,22 @@
 
 package com.liferay.commerce.product.content.web.internal.asset.display.page.portlet;
 
+import com.liferay.asset.display.page.configuration.AssetDisplayPageConfiguration;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -38,10 +44,20 @@ import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -50,16 +66,19 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -124,7 +143,49 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class, cpDefinition.getCPDefinitionId());
+				groupId, CPDefinition.class, cpDefinition.getCPDefinitionId(),
+				CPDisplayLayoutConstants.TYPE_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		if (cpDisplayLayout == null) {
+			cpDisplayLayout = _cpDisplayLayoutLocalService.fetchCPDisplayLayout(
+				groupId, CPDefinition.class, cpDefinition.getCPDefinitionId(),
+				CPDisplayLayoutConstants.TYPE_LAYOUT);
+		}
+		else {
+			Object infoItem = _getInfoItem(
+				layoutDisplayPageObjectProvider, params);
+
+			httpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_ITEM, infoItem);
+
+			InfoItemDetailsProvider infoItemDetailsProvider =
+				infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemDetailsProvider.class,
+					layoutDisplayPageObjectProvider.getClassName());
+
+			httpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+				infoItemDetailsProvider.getInfoItemDetails(infoItem));
+
+			httpServletRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				layoutDisplayPageObjectProvider);
+
+			httpServletRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+				_getLayoutDisplayPageProvider(friendlyURL));
+
+			AssetEntry assetEntry = _getAssetEntry(
+				layoutDisplayPageObjectProvider);
+
+			httpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+			if (assetEntry != null) {
+				LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+					httpServletRequest, assetEntry.getEntryId());
+			}
+		}
 
 		if ((cpDisplayLayout == null) &&
 			(layoutDisplayPageObjectProvider != null) &&
@@ -182,7 +243,8 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class, cpDefinition.getCPDefinitionId());
+				groupId, CPDefinition.class, cpDefinition.getCPDefinitionId(),
+				CPDisplayLayoutConstants.TYPE_LAYOUT);
 
 		if ((cpDisplayLayout == null) &&
 			(layoutDisplayPageObjectProvider != null) &&
@@ -196,8 +258,9 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 				requestContext);
 		}
 
-		Layout layout = _getProductLayout(
-			groupId, privateLayout, cpDefinition.getCPDefinitionId());
+		Layout layout =
+			layout = _getProductLayout(
+				groupId, privateLayout, cpDefinition.getCPDefinitionId());
 
 		return new LayoutFriendlyURLComposite(
 			layout,
@@ -209,6 +272,47 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 	public String getURLSeparator() {
 		return _cpFriendlyURL.getProductURLSeparator(
 			CompanyThreadLocal.getCompanyId());
+	}
+
+	private AssetEntry _getAssetEntry(
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
+
+		String className = infoSearchClassMapperRegistry.getSearchClassName(
+			layoutDisplayPageObjectProvider.getClassName());
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		long classPK = layoutDisplayPageObjectProvider.getClassPK();
+
+		try {
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				className, classPK);
+
+			AssetDisplayPageConfiguration assetDisplayPageConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					AssetDisplayPageConfiguration.class);
+
+			if ((assetEntry != null) &&
+				assetDisplayPageConfiguration.enableViewCountIncrement()) {
+
+				assetEntryLocalService.incrementViewCounter(assetEntry);
+			}
+
+			return assetEntry;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	private String _getBasicLayoutURL(
@@ -310,6 +414,32 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 		return commerceAccountId;
 	}
 
+	private Object _getInfoItem(
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+			Map<String, String[]> params)
+		throws NoSuchInfoItemException {
+
+		String version = _getVersion(params);
+
+		if (Validator.isNull(version)) {
+			return layoutDisplayPageObjectProvider.getDisplayObject();
+		}
+
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			layoutDisplayPageObjectProvider.getClassPK());
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			(InfoItemObjectProvider<Object>)
+				infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					layoutDisplayPageObjectProvider.getClassName(),
+					infoItemIdentifier.getInfoItemServiceFilter());
+
+		infoItemIdentifier.setVersion(version);
+
+		return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+	}
+
 	private LayoutDisplayPageObjectProvider<?>
 		_getLayoutDisplayPageObjectProvider(CPDefinition cpDefinition) {
 
@@ -325,9 +455,40 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 			infoItemReference);
 	}
 
+	private LayoutDisplayPageProvider<?> _getLayoutDisplayPageProvider(
+			String friendlyURL)
+		throws PortalException {
+
+		String urlSeparator = _getURLSeparator(friendlyURL);
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByURLSeparator(urlSeparator);
+
+		if (layoutDisplayPageProvider == null) {
+			throw new PortalException(
+				"Info display contributor is not available for " +
+					urlSeparator);
+		}
+
+		return layoutDisplayPageProvider;
+	}
+
 	private Layout _getProductLayout(
 			long groupId, boolean privateLayout, long cpDefinitionId)
 		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryService.
+				fetchLayoutPageTemplateEntryByUuidAndGroupId(
+					_cpDefinitionLocalService.getLayoutPageTemplateEntryUuid(
+						groupId, cpDefinitionId),
+					groupId);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
+		}
 
 		String layoutUuid = _cpDefinitionLocalService.getLayoutUuid(
 			groupId, cpDefinitionId);
@@ -377,6 +538,22 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 			throw portalException;
 		}
+	}
+
+	private String _getURLSeparator(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		return CharPool.SLASH + paths.get(0) + CharPool.SLASH;
+	}
+
+	private String _getVersion(Map<String, String[]> params) {
+		String[] versions = params.get("version");
+
+		if (ArrayUtil.isEmpty(versions)) {
+			return StringPool.BLANK;
+		}
+
+		return versions[0];
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

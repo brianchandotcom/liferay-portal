@@ -25,6 +25,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -124,7 +125,7 @@ public class CommerceChannelProductDisplayLayoutsScreenNavigationCategory
 					_actionHelper, httpServletRequest,
 					_commerceChannelLocalService, _cpDefinitionService,
 					_cpDisplayLayoutService, _groupLocalService, _itemSelector,
-					_layoutLocalService);
+					_layoutLocalService, _layoutPageTemplateEntryLocalService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -167,6 +168,10 @@ public class CommerceChannelProductDisplayLayoutsScreenNavigationCategory
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"

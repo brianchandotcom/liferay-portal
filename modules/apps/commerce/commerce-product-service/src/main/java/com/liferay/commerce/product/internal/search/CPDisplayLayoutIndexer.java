@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.search;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
@@ -91,6 +92,12 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 			contextBooleanFilter.addTerm(
 				FIELD_ENTRY_MODEL_CLASS_NAME, entryModelClassName,
 				BooleanClauseOccur.MUST);
+		}
+
+		Integer type = (Integer)attributes.get(Field.TYPE);
+
+		if (type != null) {
+			contextBooleanFilter.addRequiredTerm(Field.TYPE, type);
 		}
 	}
 
@@ -180,6 +187,18 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 		}
 
 		document.addKeyword(Field.GROUP_ID, cpDisplayLayout.getGroupId());
+
+		if (Validator.isNotNull(
+				cpDisplayLayout.getLayoutPageTemplateEntryUuid())) {
+
+			document.addKeyword(
+				Field.TYPE,
+				CPDisplayLayoutConstants.TYPE_LAYOUT_PAGE_TEMPLATE_ENTRY);
+		}
+		else if (Validator.isNotNull(cpDisplayLayout.getLayoutUuid())) {
+			document.addKeyword(
+				Field.TYPE, CPDisplayLayoutConstants.TYPE_LAYOUT);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpDisplayLayout + " indexed successfully");

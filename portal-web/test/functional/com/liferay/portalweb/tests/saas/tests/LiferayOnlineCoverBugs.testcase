@@ -144,10 +144,14 @@ definition {
 				locator1 = "TextInput#MAIL_DOMAIN",
 				value1 = "www.baker.com");
 
+			SelectFrameTop();
+
 			Button.clickAdd();
 		}
 
 		task ("Assert the error message") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 			Alert.viewErrorMessage(errorMessage = "Please enter a valid virtual host.");
 		}
 	}

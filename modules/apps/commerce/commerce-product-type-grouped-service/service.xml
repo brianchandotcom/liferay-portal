@@ -40,6 +40,9 @@
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 		</finder>
+		<finder name="EntryCProductId" return-type="Collection">
+			<finder-column name="entryCProductId" />
+		</finder>
 		<finder name="C_E" return-type="CPDefinitionGroupedEntry" unique="true">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="entryCProductId" />

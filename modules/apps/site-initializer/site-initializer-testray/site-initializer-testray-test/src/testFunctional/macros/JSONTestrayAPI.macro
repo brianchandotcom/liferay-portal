@@ -1,5 +1,6 @@
 definition {
-    @summary = "create a build via API"
+
+	@summary = "create a build via API"
 	macro createBuildAPI {
 		Variables.assertDefined(parameterList = "${buildName},${projectId},${routineId},${productVersionId}");
 
@@ -28,7 +29,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/builds \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"description": "${description}",
@@ -59,7 +60,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/caseresults \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"r_buildToCaseResult_c_buildId": "${buildId}",
@@ -67,8 +68,6 @@ definition {
 					"r_componentToCaseResult_c_componentId": "${componentId}",
 					"r_runToCaseResult_c_runId": "${runId}"
 				}'
-
-				
 		''';
 
 		var response = JSONCurlUtil.post("${curl}", "$.id");
@@ -87,7 +86,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/subtaskscasesresultses \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${name}",
@@ -128,9 +127,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/cases \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${caseName}",
 					"description": "${description}",
 					"estimatedDuration": "${estimatedDuration}",
@@ -158,9 +157,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/casetypes \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${caseType}"
 				}'
 		''';
@@ -181,9 +180,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/components \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${componentName}",
 					"r_projectToComponents_c_projectId": "${projectId}",
 					"r_teamToComponents_c_teamId": "${teamId}"
@@ -206,12 +205,12 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/factors \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${environmentFactorsName}",
-  					"r_factorCategoryToFactors_c_factorCategoryId": "${factorCategoryId}",
-  					"r_factorOptionToFactors_c_factorOptionId": "${factorOptionsId}"
+					"r_factorCategoryToFactors_c_factorCategoryId": "${factorCategoryId}",
+					"r_factorOptionToFactors_c_factorOptionId": "${factorOptionsId}"
 				}'
 		''';
 
@@ -231,9 +230,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/factorcategories \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${categoryName}"
 				}'
 		''';
@@ -254,9 +253,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/factoroptions \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${optionsName}",
 					"r_factorCategoryToOptions_c_factorCategoryId": "${factorCategoryId}"
 				}'
@@ -278,9 +277,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/productversions \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${productVersion}",
 					"r_projectToProductVersions_c_projectId": "${projectId}"
 				}'
@@ -300,15 +299,15 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-            ${portalURL}/o/c/projects \
-                -u test@liferay.com:test \
-                -H 'accept: application/json' \
-                -H 'Content-Type: application/json' \
-                -d '{
-                    "name": "${projectName}",
-                    "description": "${projectDescription}"
-                }'
-        ''';
+			${portalURL}/o/c/projects \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name": "${projectName}",
+					"description": "${projectDescription}"
+				}'
+		''';
 
 		var response = JSONCurlUtil.post("${curl}", "$.id");
 
@@ -334,9 +333,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/requirements \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"summary": "${requirementName}",
 					"description": "${description}",
 					"linkTitle": "${linkTitle}",
@@ -362,9 +361,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/routines \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
-                -H 'Content-Type: application/json' \
-                -d '{
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
 					"name": "${routineName}",
 					"r_routineToProjects_c_projectId": "${projectId}"
 				}'
@@ -386,7 +385,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/runs \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${runName}",
@@ -418,7 +417,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/subtasks \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${subtaskName}",
@@ -450,9 +449,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/suites \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"caseParameters": "{\"0\":${casesId},\"testrayTeams\":[{\"label\":\"Team 1\",\"value\":\"${teamId}\"}],\"testrayCaseTypes\":[{\"label\":\"Case 1\",\"value\":\"${caseTypeId}\"}],\"testrayComponents\":[{\"label\":\"Component 1\",\"value\":\"${componentId}\"}],\"testrayRequirements\":[{\"label\":\"Requirements Summary\",\"value\":\"${requirementId}\"}]}",
 					"name": "${suiteName}",
 					"description": "${description}",
@@ -477,7 +476,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/tasks \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${taskName}",
@@ -501,9 +500,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/teams \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${teamName}",
 					"r_projectToTeams_c_projectId": "${projectId}"
 				}'
@@ -514,19 +513,6 @@ definition {
 		echo("${response}");
 
 		return "${response}";
-	}
-	@summary = "This calls the JSON WS API to get object id"
-	macro getObjectId {
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/${object} \
-				-u test@liferay.com:test
-		''';
-
-		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@.name=='${objectName}')].id");
-
-		return "${objectId}";
 	}
 
 	@summary = "This calls the JSON WS API to delete an object"
@@ -543,4 +529,19 @@ definition {
 
 		JSONCurlUtil.delete("${curl}");
 	}
+
+	@summary = "This calls the JSON WS API to get object id"
+	macro getObjectId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${object} \
+				-u test@liferay.com:test
+		''';
+
+		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@.name=='${objectName}')].id");
+
+		return "${objectId}";
+	}
+
 }

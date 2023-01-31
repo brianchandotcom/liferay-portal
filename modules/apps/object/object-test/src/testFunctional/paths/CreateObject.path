@@ -52,7 +52,12 @@
 	</tr>
 	<tr>
 		<td>TITLE_FIELD</td>
-		<td>//label[contains(.,'Title Field')]/following-sibling::div//input</td>
+		<td>//label[contains(.,'Title Field')]/../select[@class='form-control']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TITLE_FIELD_NAME_OPTIONS</td>
+		<td>//select[@class='form-control']//option[contains(text(),'${key_titleField}')]</td>
 		<td></td>
 	</tr>
 	<tr>

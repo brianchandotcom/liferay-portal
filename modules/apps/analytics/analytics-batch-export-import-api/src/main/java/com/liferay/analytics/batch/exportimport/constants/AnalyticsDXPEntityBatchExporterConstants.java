@@ -21,10 +21,29 @@ import com.liferay.portal.kernel.util.ArrayUtil;
  */
 public class AnalyticsDXPEntityBatchExporterConstants {
 
-	public static final String ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME =
-		"export-account-entry-analytics-dxp-entities";
+	public static final String
+		DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES =
+			"export-account-entry-analytics-dxp-entities";
 
-	public static final String[] BASE_DISPATCH_TRIGGER_NAMES = {
+	public static final String DISPATCH_TRIGGER_NAME_ORDER =
+		"analytics-upload-order";
+
+	public static final String DISPATCH_TRIGGER_NAME_PRODUCT =
+		"analytics-upload-product";
+
+	public static final String DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES =
+		"export-user-analytics-dxp-entities";
+
+	public static final String[] DISPATCH_TRIGGER_NAMES = ArrayUtil.append(
+		AnalyticsDXPEntityBatchExporterConstants.
+			DISPATCH_TRIGGER_NAMES_DXP_ENTITIES,
+		new String[] {
+			DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
+			DISPATCH_TRIGGER_NAME_ORDER, DISPATCH_TRIGGER_NAME_PRODUCT,
+			DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
+		});
+
+	public static final String[] DISPATCH_TRIGGER_NAMES_DXP_ENTITIES = {
 		"export-account-group-analytics-dxp-entities",
 		"export-analytics-association-analytics-dxp-entities",
 		"export-analytics-delete-message-analytics-dxp-entities",
@@ -35,25 +54,5 @@ public class AnalyticsDXPEntityBatchExporterConstants {
 		"export-team-analytics-dxp-entities",
 		"export-user-group-analytics-dxp-entities"
 	};
-
-	public static final String[] DISPATCH_TRIGGER_NAMES = ArrayUtil.append(
-		BASE_DISPATCH_TRIGGER_NAMES,
-		new String[] {
-			ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME,
-			AnalyticsDXPEntityBatchExporterConstants.
-				ORDER_DISPATCH_TRIGGER_NAME,
-			AnalyticsDXPEntityBatchExporterConstants.
-				PRODUCT_DISPATCH_TRIGGER_NAME,
-			AnalyticsDXPEntityBatchExporterConstants.USER_DISPATCH_TRIGGER_NAME
-		});
-
-	public static final String ORDER_DISPATCH_TRIGGER_NAME =
-		"analytics-upload-order";
-
-	public static final String PRODUCT_DISPATCH_TRIGGER_NAME =
-		"analytics-upload-product";
-
-	public static final String USER_DISPATCH_TRIGGER_NAME =
-		"export-user-analytics-dxp-entities";
 
 }

@@ -468,12 +468,12 @@ public class AnalyticsConfigurationRegistryImpl
 					_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
 						companyId,
 						AnalyticsDXPEntityBatchExporterConstants.
-							BASE_DISPATCH_TRIGGER_NAMES);
+							DISPATCH_TRIGGER_NAMES_DXP_ENTITIES);
 
 					_analyticsDXPEntityBatchExporter.export(
 						companyId,
 						AnalyticsDXPEntityBatchExporterConstants.
-							BASE_DISPATCH_TRIGGER_NAMES);
+							DISPATCH_TRIGGER_NAMES_DXP_ENTITIES);
 				}
 				else {
 					Collection<EntityModelListener<?>> entityModelListeners =
@@ -501,12 +501,12 @@ public class AnalyticsConfigurationRegistryImpl
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
 					}
 					else {
 						unscheduleDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
 					}
 				}
 
@@ -517,7 +517,7 @@ public class AnalyticsConfigurationRegistryImpl
 
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
-							ACCOUNT_ENTRY_DISPATCH_TRIGGER_NAME);
+							DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
 				}
 
 				if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
@@ -529,17 +529,17 @@ public class AnalyticsConfigurationRegistryImpl
 						Collections.addAll(
 							refreshDispatchTriggerNames,
 							AnalyticsDXPEntityBatchExporterConstants.
-								ORDER_DISPATCH_TRIGGER_NAME,
+								DISPATCH_TRIGGER_NAME_ORDER,
 							AnalyticsDXPEntityBatchExporterConstants.
-								PRODUCT_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_PRODUCT);
 					}
 					else {
 						Collections.addAll(
 							unscheduleDispatchTriggerNames,
 							AnalyticsDXPEntityBatchExporterConstants.
-								ORDER_DISPATCH_TRIGGER_NAME,
+								DISPATCH_TRIGGER_NAME_ORDER,
 							AnalyticsDXPEntityBatchExporterConstants.
-								PRODUCT_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_PRODUCT);
 					}
 				}
 
@@ -551,7 +551,7 @@ public class AnalyticsConfigurationRegistryImpl
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								ORDER_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_ORDER);
 					}
 
 					if (_analyticsSettingsManager.syncedProductFieldsChanged(
@@ -559,7 +559,7 @@ public class AnalyticsConfigurationRegistryImpl
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								PRODUCT_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_PRODUCT);
 					}
 				}
 
@@ -571,12 +571,12 @@ public class AnalyticsConfigurationRegistryImpl
 
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								USER_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
 					}
 					else {
 						unscheduleDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								USER_DISPATCH_TRIGGER_NAME);
+								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
 					}
 				}
 
@@ -587,7 +587,7 @@ public class AnalyticsConfigurationRegistryImpl
 
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
-							USER_DISPATCH_TRIGGER_NAME);
+							DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
 				}
 
 				if (!refreshDispatchTriggerNames.isEmpty()) {

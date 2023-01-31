@@ -92,6 +92,12 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 				FIELD_ENTRY_MODEL_CLASS_NAME, entryModelClassName,
 				BooleanClauseOccur.MUST);
 		}
+
+		Integer type = (Integer)attributes.get(Field.TYPE);
+
+		if (type != null) {
+			contextBooleanFilter.addRequiredTerm(Field.TYPE, type);
+		}
 	}
 
 	@Override
@@ -180,6 +186,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 		}
 
 		document.addKeyword(Field.GROUP_ID, cpDisplayLayout.getGroupId());
+		document.addKeyword(Field.TYPE, cpDisplayLayout.getType());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpDisplayLayout + " indexed successfully");

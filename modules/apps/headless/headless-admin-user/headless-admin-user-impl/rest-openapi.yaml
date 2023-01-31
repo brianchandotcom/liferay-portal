@@ -575,10 +575,15 @@ components:
                     type: object
                 id:
                     description:
-                        The role's ID.
+                        The role's internal ID.
                     format: int64
                     readOnly: true
                     type: integer
+                key:
+                    description:
+                        The role's unique portable ID.
+                    readOnly: true
+                    type: string
                 name:
                     description:
                         The role's name.

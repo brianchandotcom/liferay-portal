@@ -2283,15 +2283,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 			for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
-				JSONObject typeSettingsJSONObject =
+				JSONObject propertyJSONObject =
 					typeSettingsJSONArray.getJSONObject(i);
 
-				if (typeSettingsJSONObject != null) {
-					Map<String, String> map = JSONUtil.toStringMap(
-						typeSettingsJSONObject);
-
-					unicodeProperties.putAll(map);
-				}
+				unicodeProperties.put(
+					propertyJSONObject.getString("key"),
+					propertyJSONObject.getString("value"));
 			}
 
 			layout = _layoutLocalService.updateLayout(

@@ -71,7 +71,7 @@ $table-responsive-margin-left-md: 375px !default;
 		}
 	}
 
-	a:not(.component-action):not(.btn) {
+	a:not(.btn):not(.component-action):not(.page-link) {
 		color: $gray-700;
 		font-weight: 500;
 		text-decoration: underline;

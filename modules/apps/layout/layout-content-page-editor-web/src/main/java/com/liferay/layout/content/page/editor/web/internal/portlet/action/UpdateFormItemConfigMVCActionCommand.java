@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -201,7 +202,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 			FragmentEntry fragmentEntry =
 				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					_getFragmentEntryKey(infoFieldType));
+					_getFragmentEntryKey(infoField));
 
 			if ((fragmentEntry == null) ||
 				!_isAllowedFragmentEntryKey(
@@ -269,7 +270,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return addedFragmentEntryLinks;
 	}
 
-	private String _getFragmentEntryKey(InfoFieldType infoFieldType) {
+	private String _getFragmentEntryKey(InfoField infoField) {
+		InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
 		if (infoFieldType instanceof BooleanInfoFieldType) {
 			return "INPUTS-checkbox";
 		}
@@ -293,6 +296,12 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (infoFieldType instanceof TextInfoFieldType) {
+			if (GetterUtil.getBoolean(
+					infoField.getAttribute(TextInfoFieldType.MULTILINE))) {
+
+				return "INPUTS-textarea-input";
+			}
+
 			return "INPUTS-text-input";
 		}
 

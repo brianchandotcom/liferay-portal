@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
@@ -24,8 +25,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -156,14 +155,9 @@ public class RankingToDocumentTranslatorTest {
 	}
 
 	private String _toString(List<Ranking.Pin> pins) {
-		Stream<Ranking.Pin> stream = pins.stream();
-
 		return String.valueOf(
-			stream.map(
-				pin -> pin.getPosition() + "=" + pin.getDocumentId()
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transform(
+				pins, pin -> pin.getPosition() + "=" + pin.getDocumentId()));
 	}
 
 	private DocumentToRankingTranslator _documentToRankingTranslator;

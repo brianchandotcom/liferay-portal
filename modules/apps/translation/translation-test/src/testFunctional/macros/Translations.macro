@@ -595,6 +595,10 @@ definition {
 			var translationFileName = StringUtil.replace("${translationFileName}", " ", "*");
 		}
 
+		if (!(isSet(translationFileRename))) {
+			var translationFileRename = "false";
+		}
+
 		if ("${os}" == "true") {
 			AntCommand(
 				locator1 = "build-test-translation.xml",

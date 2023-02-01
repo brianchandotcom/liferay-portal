@@ -96,12 +96,12 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 		<div class="align-items-center d-flex mb-2">
 			<p class="component-title h4">
 				<c:if test="<%= showBackURL && Validator.isNotNull(redirect) %>">
-					<liferay-ui:icon
-						cssClass="header-back-to"
+					<clay:link
+						aria-label='<%= LanguageUtil.get(request, "back") %>'
+						cssClass="header-back-to lfr-portal-tooltip"
+						href="<%= redirect %>"
 						icon="angle-left"
-						markupView="lexicon"
-						message="back"
-						url="<%= redirect %>"
+						title='<%= LanguageUtil.get(request, "back") %>'
 					/>
 				</c:if>
 

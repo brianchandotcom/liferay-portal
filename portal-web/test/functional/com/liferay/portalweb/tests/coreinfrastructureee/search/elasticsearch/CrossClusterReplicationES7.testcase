@@ -404,7 +404,7 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.duplicateSingleApproverWorkflow(workflowName = "CCR Single Approver");
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -414,7 +414,7 @@ definition {
 		Navigator.gotoNavItem(navItem = "Configuration");
 
 		Workflow.configureWorkflow(
-			workflowDefinition = "CCR Single Approver",
+			workflowDefinition = "Copy of Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
 		Navigator.openURL();

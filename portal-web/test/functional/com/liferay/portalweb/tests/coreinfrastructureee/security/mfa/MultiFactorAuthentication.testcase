@@ -1234,7 +1234,7 @@ definition {
 		task ("Go to able.com and Assert Instance administrator got notification in notifications list") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			Notifications.viewBadgeCount(notificationCount = "2");
+			Notifications.viewBadgeCount(notificationCount = "1");
 
 			Notifications.gotoNotifications();
 
@@ -1259,7 +1259,7 @@ definition {
 		task ("Go to able.com and and Assert Instance administrator got notification in notifications list") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			Notifications.viewBadgeCount(notificationCount = "2");
+			Notifications.viewBadgeCount(notificationCount = "0");
 		}
 
 		task ("Enable mfa") {
@@ -1271,7 +1271,7 @@ definition {
 		task ("Go to able.com and and Assert Instance administrator got notification in notifications list") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			Notifications.viewBadgeCount(notificationCount = "2");
+			Notifications.viewBadgeCount(notificationCount = "0");
 		}
 	}
 

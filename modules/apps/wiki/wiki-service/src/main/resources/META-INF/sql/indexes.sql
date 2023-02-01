@@ -1,7 +1,7 @@
 create index IX_73F4DA4E on WikiNode (companyId, ctCollectionId);
 create index IX_99D34 on WikiNode (companyId, status, ctCollectionId);
+create unique index IX_597B15A3 on WikiNode (externalReferenceCode[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 create index IX_5B8458D0 on WikiNode (groupId, ctCollectionId);
-create unique index IX_7FF2268B on WikiNode (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_A83A2D0F on WikiNode (groupId, name[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_E1FB79B6 on WikiNode (groupId, status, ctCollectionId);
 create index IX_75C1CF8A on WikiNode (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);

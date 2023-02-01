@@ -85,7 +85,7 @@ if (ratingsType == null) {
 		<c:choose>
 			<c:when test="<%= kbCommentsCount == 1 %>">
 				<c:choose>
-					<c:when test="<%= !showAdminSuggestionView %>">
+					<c:when test="<%= showAdminSuggestionView %>">
 						<liferay-ui:message key="there-is-one-suggestion" />
 
 						<c:if test="<%= pendingKBCommentsCount > 0 %>">
@@ -99,7 +99,7 @@ if (ratingsType == null) {
 			</c:when>
 			<c:when test="<%= kbCommentsCount > 1 %>">
 				<c:choose>
-					<c:when test="<%= !showAdminSuggestionView %>">
+					<c:when test="<%= showAdminSuggestionView %>">
 						<liferay-ui:message arguments="<%= kbCommentsCount %>" key="there-are-x-suggestions" />
 
 						<c:if test="<%= pendingKBCommentsCount > 0 %>">

@@ -148,11 +148,14 @@ export default function TabsPanel({
 							key={index}
 						>
 							{tab.collections.length ? (
-								tab.collections.map((collection, index) => (
+								<ul className="list-unstyled">
+									{tab.collections.map(
+										(collection, index) => (
 									<TabCollection
 										collection={collection}
 										displayStyle={
-											tab.id === COLLECTION_IDS.widgets
+													tab.id ===
+													COLLECTION_IDS.widgets
 												? FRAGMENTS_DISPLAY_STYLES.LIST
 												: displayStyle
 										}
@@ -162,7 +165,9 @@ export default function TabsPanel({
 										}
 										key={index}
 									/>
-								))
+										)
+									)}
+								</ul>
 							) : (
 								<ClayLoadingIndicator size="sm" />
 							)}

@@ -12,12 +12,13 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {config} from '../../../app/config/index';
-import Collapse from '../../../common/components/Collapse';
 import {useSessionState} from '../../../common/hooks/useSessionState';
 import TabItem from './TabItem';
 
@@ -32,16 +33,11 @@ export default function TabCollection({
 		initialOpen
 	);
 
-	const handleOpen = (nextOpen) => {
-		setOpen(nextOpen);
-	};
-
 	return (
-		<Collapse
-			key={collection.collectionId}
-			label={collection.label}
-			onOpen={handleOpen}
-			open={isSearchResult || open}
+		<TabCollectionCollapse
+			open={open || isSearchResult}
+			setOpen={setOpen}
+			title={collection.label}
 		>
 			{collection.collections &&
 				collection.collections.map((collection, index) => (
@@ -71,7 +67,7 @@ export default function TabCollection({
 					</React.Fragment>
 				))}
 			</ul>
-		</Collapse>
+		</TabCollectionCollapse>
 	);
 }
 
@@ -108,4 +104,47 @@ TabPortletItems.proptypes = {
 	portletItems: PropTypes.array,
 	preview: PropTypes.string,
 	type: PropTypes.string,
+};
+
+function TabCollectionCollapse({children, open, setOpen, title}) {
+	return (
+		<li className="page-editor__collapse panel-group panel-group-flush">
+			<button
+				aria-expanded={open}
+				className={classNames(
+					'btn',
+					'btn-unstyled',
+					'collapse-icon',
+					'sheet-subtitle',
+					{
+						collapsed: !open,
+					}
+				)}
+				onClick={() => setOpen(!open)}
+				type="button"
+			>
+				<span className="c-inner text-truncate" tabIndex={-1}>
+					{title}
+
+					<span
+						className={`text-secondary collapse-icon-${
+							open ? 'open' : 'closed'
+						}`}
+					>
+						<ClayIcon
+							symbol={open ? 'angle-down' : 'angle-right'}
+						/>
+					</span>
+				</span>
+			</button>
+
+			{open && children}
+		</li>
+	);
+}
+
+TabCollectionCollapse.proptypes = {
+	open: PropTypes.bool.isRequired,
+	setOpen: PropTypes.func.isRequired,
+	title: PropTypes.string.isRequired,
 };

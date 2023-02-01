@@ -52,7 +52,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,8 +69,8 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		user = TestPropsValues.getUser();
 
 		_objectDefinition =
@@ -250,6 +250,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		}
 	}
 
+	@DeleteAfterTestRun
 	private static ObjectDefinition _objectDefinition;
 
 	@Inject

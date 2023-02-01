@@ -196,7 +196,7 @@ definition {
 		}
 
 		while (IsElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_USER")) {
-			Click(locator1 = "Pagination#NEXT_LINK");
+			Click(locator1 = "//*[contains(@class, 'page-link')]//*[contains(@class,'right')]");
 		}
 
 		AssertTextEquals.assertPartialText(

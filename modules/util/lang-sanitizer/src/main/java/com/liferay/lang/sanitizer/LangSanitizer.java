@@ -139,10 +139,9 @@ public class LangSanitizer {
 
 					String fileName = String.valueOf(file.getFileName());
 
-					if ((fileName.endsWith(".properties") &&
-						 fileName.startsWith("Language")) ||
-						(fileName.endsWith(".properties") &&
-						 fileName.startsWith("bundle"))) {
+					if (fileName.endsWith(".properties") &&
+						(fileName.startsWith("bundle") ||
+						 fileName.startsWith("Language"))) {
 
 						files.add(file.toFile());
 					}

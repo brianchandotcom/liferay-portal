@@ -1,4 +1,4 @@
-@component-name = "portal-headless"
+@component-name = "portal-wcm"
 @disable-webdriver = "true"
 definition {
 

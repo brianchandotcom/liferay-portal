@@ -14,7 +14,7 @@
 
 package com.liferay.portal.dao.jdbc.pool.metrics;
 
-import com.liferay.portal.dao.jdbc.aop.DefaultDynamicDataSourceTargetSource;
+import com.liferay.portal.dao.jdbc.util.DynamicDataSource;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.pool.metrics.ConnectionPoolMetrics;
 import com.liferay.portal.kernel.log.Log;
@@ -110,25 +110,19 @@ public class HikariConnectionPoolMetrics implements ConnectionPoolMetrics {
 
 			targetDataSource = advised.getTargetSource();
 
-			if (targetDataSource instanceof
-					DefaultDynamicDataSourceTargetSource) {
-
+			if (targetDataSource instanceof DynamicDataSource) {
 				try {
-					DefaultDynamicDataSourceTargetSource
-						defaultDynamicDataSourceTargetSource =
-							(DefaultDynamicDataSourceTargetSource)
-								targetDataSource;
+					DynamicDataSource dynamicDataSource =
+						(DynamicDataSource)targetDataSource;
 
 					if (_dataSource.equals(
-							defaultDynamicDataSourceTargetSource.
-								getReadDataSource())) {
+							dynamicDataSource.getReadDataSource())) {
 
 						return "readDataSource";
 					}
 
 					if (_dataSource.equals(
-							defaultDynamicDataSourceTargetSource.
-								getWriteDataSource())) {
+							dynamicDataSource.getWriteDataSource())) {
 
 						return "writeDataSource";
 					}

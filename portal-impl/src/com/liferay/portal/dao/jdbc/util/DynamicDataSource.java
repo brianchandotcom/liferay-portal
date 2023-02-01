@@ -67,6 +67,14 @@ public class DynamicDataSource implements DataSource {
 		return _getDataSource().getParentLogger();
 	}
 
+	public DataSource getReadDataSource() {
+		return _readDataSource;
+	}
+
+	public DataSource getWriteDataSource() {
+		return _writeDataSource;
+	}
+
 	@Override
 	public boolean isWrapperFor(Class<?> clazz) throws SQLException {
 		return _getDataSource().isWrapperFor(clazz);

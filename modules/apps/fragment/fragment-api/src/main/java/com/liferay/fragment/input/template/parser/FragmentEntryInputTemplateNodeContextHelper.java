@@ -469,7 +469,11 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			inputLabel = infoField.getLabel(locale);
 		}
 
-		return GetterUtil.getString(inputLabel, defaultInputLabel);
+		if (Validator.isNotNull(inputLabel)) {
+			return inputLabel;
+		}
+
+		return defaultInputLabel;
 	}
 
 	private String _getStep(Integer decimalPartMaxLength) {

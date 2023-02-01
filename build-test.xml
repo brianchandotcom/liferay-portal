@@ -11469,6 +11469,50 @@ portal.proxy.path=/${portal.proxy.path}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="rewrite.batch.statements" />
+
+		<if>
+			<equals arg1="${rewrite.batch.statements}" arg2="true" />
+			<then>
+				<if>
+					<or>
+						<equals arg1="${database.type}" arg2="mariadb" />
+						<equals arg1="${database.type}" arg2="mysql" />
+					</or>
+					<then>
+						<replace
+							file="portal-impl/src/portal-ext.properties"
+							token="${database.url}"
+							value="${database.url}&amp;rewriteBatchedStatements=true"
+						/>
+					</then>
+					<elseif>
+						<equals arg1="${database.type}" arg2="postgresql" />
+						<then>
+							<replace
+								file="portal-impl/src/portal-ext.properties"
+								token="${database.url}"
+								value="${database.url}?reWriteBatchedInserts=true"
+							/>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${database.type}" arg2="sqlserver" />
+						<then>
+							<replace
+								file="portal-impl/src/portal-ext.properties"
+								token="${database.url}"
+								value="${database.url};useBulkCopyForBatchInsert=true"
+							/>
+						</then>
+					</elseif>
+					<else>
+						<property name="database.url" value="${database.url}" />
+					</else>
+				</if>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="setup.wizard.enabled" />
 
 		<if>

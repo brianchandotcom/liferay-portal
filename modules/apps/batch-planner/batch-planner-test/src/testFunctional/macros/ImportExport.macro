@@ -226,6 +226,12 @@ definition {
 
 		ImportExport.selectEntity(entityType = ${entityType});
 
+		if (isSet(importStrategy)) {
+			Select(
+				locator1 = "ImportExport#IMPORT_STRATEGY",
+				value1 = ${importStrategy});
+		}
+
 		if (${stopImportOnError} == "false") {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Stop the Import on Error",

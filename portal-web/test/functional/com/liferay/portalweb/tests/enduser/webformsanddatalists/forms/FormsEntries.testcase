@@ -573,9 +573,9 @@ definition {
 			key_text = "1 Entry",
 			locator1 = "FormViewBuilder#ENTRIES_TITLE_CONTENT");
 
-		AssertElementPresent(
-			key_value = "There are no entries",
-			locator1 = "FormFields#VALIDATION_ERROR_ENTRIES");
+		AssertTextEquals(
+			locator1 = "FormFields#EMPTY_STATE_INFO",
+			value1 = "There are no entries.");
 	}
 
 	@description = "Verify that Entries for the Numeric Field display a Field List, Average, Maximum Value, Minimum Value, and Sum in the Summary Tab"

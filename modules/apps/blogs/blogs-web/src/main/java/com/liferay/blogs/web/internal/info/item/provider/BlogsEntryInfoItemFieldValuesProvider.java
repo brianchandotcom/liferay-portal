@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
@@ -191,22 +193,27 @@ public class BlogsEntryInfoItemFieldValuesProvider
 					BlogsEntryInfoItemFields.displayDateInfoField,
 					blogsEntry.getDisplayDate()));
 
-			blogsEntryFieldValues.add(
-				new InfoFieldValue<>(
-					BlogsEntryInfoItemFields.entryIdInfoField,
-					blogsEntry.getEntryId()));
-			blogsEntryFieldValues.add(
-				new InfoFieldValue<>(
-					BlogsEntryInfoItemFields.externalReferenceCodeInfoField,
-					blogsEntry.getExternalReferenceCode()));
-			blogsEntryFieldValues.add(
-				new InfoFieldValue<>(
-					BlogsEntryInfoItemFields.friendlyURLInfoField,
-					blogsEntry.getUrlTitle()));
-			blogsEntryFieldValues.add(
-				new InfoFieldValue<>(
-					BlogsEntryInfoItemFields.groupIdInfoField,
-					blogsEntry.getGroupId()));
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-171047"))) {
+
+				blogsEntryFieldValues.add(
+					new InfoFieldValue<>(
+						BlogsEntryInfoItemFields.entryIdInfoField,
+						blogsEntry.getEntryId()));
+				blogsEntryFieldValues.add(
+					new InfoFieldValue<>(
+						BlogsEntryInfoItemFields.externalReferenceCodeInfoField,
+						blogsEntry.getExternalReferenceCode()));
+				blogsEntryFieldValues.add(
+					new InfoFieldValue<>(
+						BlogsEntryInfoItemFields.friendlyURLInfoField,
+						blogsEntry.getUrlTitle()));
+				blogsEntryFieldValues.add(
+					new InfoFieldValue<>(
+						BlogsEntryInfoItemFields.groupIdInfoField,
+						blogsEntry.getGroupId()));
+			}
+
 			blogsEntryFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.publishDateInfoField,

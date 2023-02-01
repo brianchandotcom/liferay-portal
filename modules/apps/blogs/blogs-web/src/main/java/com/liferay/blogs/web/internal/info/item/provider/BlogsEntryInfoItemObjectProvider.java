@@ -15,12 +15,15 @@
 package com.liferay.blogs.web.internal.info.item.provider;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.GroupUrlTitleInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,8 +61,16 @@ public class BlogsEntryInfoItemObjectProvider
 				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 					(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-				blogsEntry = _blogsEntryService.fetchBlogsEntry(
-					classPKInfoItemIdentifier.getClassPK());
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-171047"))) {
+
+					blogsEntry = _blogsEntryService.fetchBlogsEntry(
+						classPKInfoItemIdentifier.getClassPK());
+				}
+				else {
+					blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
+						classPKInfoItemIdentifier.getClassPK());
+				}
 			}
 			else if (infoItemIdentifier instanceof
 						GroupUrlTitleInfoItemIdentifier) {
@@ -68,9 +79,18 @@ public class BlogsEntryInfoItemObjectProvider
 					groupURLTitleInfoItemIdentifier =
 						(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
 
-				blogsEntry = _blogsEntryService.fetchEntry(
-					groupURLTitleInfoItemIdentifier.getGroupId(),
-					groupURLTitleInfoItemIdentifier.getUrlTitle());
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-171047"))) {
+
+					blogsEntry = _blogsEntryService.fetchEntry(
+						groupURLTitleInfoItemIdentifier.getGroupId(),
+						groupURLTitleInfoItemIdentifier.getUrlTitle());
+				}
+				else {
+					blogsEntry = _blogsEntryLocalService.fetchEntry(
+						groupURLTitleInfoItemIdentifier.getGroupId(),
+						groupURLTitleInfoItemIdentifier.getUrlTitle());
+				}
 			}
 		}
 		catch (Exception exception2) {
@@ -96,6 +116,9 @@ public class BlogsEntryInfoItemObjectProvider
 
 		return getInfoItem(infoItemIdentifier);
 	}
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;

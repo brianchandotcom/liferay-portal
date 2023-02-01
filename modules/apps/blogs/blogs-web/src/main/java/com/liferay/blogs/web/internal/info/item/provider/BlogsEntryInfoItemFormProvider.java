@@ -27,6 +27,8 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Locale;
@@ -78,26 +80,32 @@ public class BlogsEntryInfoItemFormProvider
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
-		return InfoFieldSet.builder(
+		InfoFieldSet.Builder builder = InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.titleInfoField
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.authorNameInfoField
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.authorProfileImageInfoField
-		).infoFieldSetEntry(
-			BlogsEntryInfoItemFields.createDateInfoField
-		).infoFieldSetEntry(
-			BlogsEntryInfoItemFields.entryIdInfoField
-		).infoFieldSetEntry(
-			BlogsEntryInfoItemFields.externalReferenceCodeInfoField
-		).infoFieldSetEntry(
-			BlogsEntryInfoItemFields.groupIdInfoField
-		).infoFieldSetEntry(
-			BlogsEntryInfoItemFields.modifiedDateInfoField
-		).infoFieldSetEntry(
-			BlogsEntryInfoItemFields.publishDateInfoField
-		).labelInfoLocalizedValue(
+		);
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-171047"))) {
+			builder = builder.infoFieldSetEntry(
+				BlogsEntryInfoItemFields.createDateInfoField
+			).infoFieldSetEntry(
+				BlogsEntryInfoItemFields.entryIdInfoField
+			).infoFieldSetEntry(
+				BlogsEntryInfoItemFields.externalReferenceCodeInfoField
+			).infoFieldSetEntry(
+				BlogsEntryInfoItemFields.groupIdInfoField
+			).infoFieldSetEntry(
+				BlogsEntryInfoItemFields.modifiedDateInfoField
+			).infoFieldSetEntry(
+				BlogsEntryInfoItemFields.publishDateInfoField
+			);
+		}
+
+		return builder.labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				"com.liferay.journal.lang", "basic-information")
 		).name(
@@ -106,16 +114,21 @@ public class BlogsEntryInfoItemFormProvider
 	}
 
 	private InfoFieldSet _getConfigurationInfoFieldSet() {
-		return InfoFieldSet.builder(
+		InfoFieldSet.Builder builder = InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.descriptionInfoField
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.smallImageInfoField
 		).infoFieldSetEntry(
 			BlogsEntryInfoItemFields.displayDateInfoField
-		).infoFieldSetEntry(
-			BlogsEntryInfoItemFields.friendlyURLInfoField
-		).labelInfoLocalizedValue(
+		);
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-171047"))) {
+			builder = builder.infoFieldSetEntry(
+				BlogsEntryInfoItemFields.friendlyURLInfoField);
+		}
+
+		return builder.labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "configuration")
 		).name(
 			"configuration"

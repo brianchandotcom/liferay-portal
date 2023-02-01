@@ -64,10 +64,8 @@ renderResponse.setTitle(title);
 <liferay-util:buffer
 	var="removeDDMStructureIcon"
 >
-	<liferay-ui:icon
-		icon="times-circle"
-		markupView="lexicon"
-		message="remove"
+	<clay:icon
+		symbol="times-circle"
 	/>
 </liferay-util:buffer>
 
@@ -278,7 +276,16 @@ renderResponse.setTitle(title);
 								</c:if>
 
 								<liferay-ui:search-container-column-text>
-									<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:void(0);"><%= removeDDMStructureIcon %></a>
+									<clay:button
+										aria-label='<%= LanguageUtil.get(request, "remove") %>'
+										borderless="<%= true %>"
+										cssClass="lfr-portal-tooltip modify-link"
+										data-rowId="<%= ddmStructure.getStructureId() %>"
+										displayType="secondary"
+										icon="times-circle"
+										monospaced="<%= true %>"
+										title='<%= LanguageUtil.get(request, "remove") %>'
+									/>
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>
 
@@ -353,7 +360,7 @@ renderResponse.setTitle(title);
 	var="workflowDefinitionsBuffer"
 >
 	<c:if test="<%= workflowEnabled %>">
-		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE" title="workflow-definition">
+		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE" title="workflow-definition" wrapperCssClass="mb-0">
 			<aui:option label="no-workflow" value="" />
 
 			<%
@@ -385,10 +392,9 @@ renderResponse.setTitle(title);
 				onSelect: function (selectedItem) {
 					const itemValue = JSON.parse(selectedItem.value);
 
-					var ddmStructureLink =
-						'<a class="modify-link" data-rowId="' +
-						itemValue.ddmstructureid +
-						'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
+					var ddmStructureLink = `
+							<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary modify-link" data-rowId="${itemValue.ddmstructureid }" title="<%= LanguageUtil.get(request, "remove") %>">
+								<%= UnicodeFormatter.toString(removeDDMStructureIcon) %></button>`;
 
 					<c:choose>
 						<c:when test="<%= workflowEnabled %>">

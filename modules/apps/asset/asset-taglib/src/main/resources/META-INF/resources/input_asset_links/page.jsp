@@ -19,10 +19,8 @@
 <liferay-util:buffer
 	var="removeLinkIcon"
 >
-	<liferay-ui:icon
-		icon="times-circle"
-		markupView="lexicon"
-		message="remove"
+	<clay:icon
+		symbol="times-circle"
 	/>
 </liferay-util:buffer>
 
@@ -78,7 +76,17 @@
 		<liferay-ui:search-container-column-text
 			cssClass="text-right"
 		>
-			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:void(0);"><%= removeLinkIcon %></a>
+			<span class="lfr-portal-tooltip ml-1">
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "remove") %>'
+					cssClass="modify-link"
+					data-rowId="<%= assetLinkEntry.getEntryId() %>"
+					href="javascript:void(0);"
+					icon="times-circle"
+					title='<%= LanguageUtil.get(request, "remove") %>'
+					type="button"
+				/>
+			</span>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

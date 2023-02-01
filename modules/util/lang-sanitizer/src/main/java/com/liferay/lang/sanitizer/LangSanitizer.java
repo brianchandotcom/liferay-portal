@@ -211,8 +211,7 @@ public class LangSanitizer {
 	}
 
 	private static final String[] _SKIP_DIR_NAMES = {
-		".git", ".github", ".gradle", ".idea", ".m2", ".settings", "bin",
-		"build", "classes", "dependencies", "node_modules",
+		"bin", "build", "classes", "dependencies", "node_modules",
 		"node_modules_cache", "sql", "test-classes", "test-coverage",
 		"test-results", "tmp"
 	};

@@ -86,10 +86,7 @@ public class VerifyProcessTrackerOSGiCommands {
 			return;
 		}
 
-		Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
-
-		Release release = _releaseLocalService.fetchRelease(
-			bundle.getSymbolicName());
+		Release release = _fetchRelease(verifyProcess);
 
 		if ((release == null) ||
 			(!release.isVerified() &&
@@ -183,14 +180,9 @@ public class VerifyProcessTrackerOSGiCommands {
 					VerifyProcess verifyProcess = _bundleContext.getService(
 						serviceReference);
 
-					Bundle bundle = FrameworkUtil.getBundle(
-						verifyProcess.getClass());
+					Release release = _fetchRelease(verifyProcess);
 
-					Release release = _releaseLocalService.fetchRelease(
-						bundle.getSymbolicName());
-
-					boolean initialDeployment = _isInitialDeployment(
-						bundle, release);
+					boolean initialDeployment = _isInitialDeployment(release);
 
 					if ((!initialDeployment && !release.isVerified()) ||
 						(GetterUtil.getBoolean(
@@ -259,10 +251,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		WorkflowThreadLocal.setEnabled(false);
 
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
-
-			Release release = _releaseLocalService.fetchRelease(
-				bundle.getSymbolicName());
+			Release release = _fetchRelease(verifyProcess);
 
 			if (release == null) {
 
@@ -301,6 +290,12 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 	}
 
+	private Release _fetchRelease(VerifyProcess verifyProcess) {
+		Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
+
+		return _releaseLocalService.fetchRelease(bundle.getSymbolicName());
+	}
+
 	private VerifyProcess _getVerifyProcess(
 		ServiceTrackerMap<String, VerifyProcess> verifyProcessTrackerMap,
 		String verifyProcessName) {
@@ -316,7 +311,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		return verifyProcess;
 	}
 
-	private boolean _isInitialDeployment(Bundle bundle, Release release) {
+	private boolean _isInitialDeployment(Release release) {
 		if (release == null) {
 			return true;
 		}
@@ -326,7 +321,8 @@ public class VerifyProcessTrackerOSGiCommands {
 				_bundleContext.getServiceReferences(
 					Release.class,
 					"(&(release.bundle.symbolic.name=" +
-						bundle.getSymbolicName() + ")(release.initial=true))");
+						release.getServletContextName() +
+							")(release.initial=true))");
 
 			if (!releases.isEmpty()) {
 				return true;

@@ -146,16 +146,16 @@ public class ContentUtil {
 			LayoutStructureUtil.getLayoutStructure(
 				themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
 
-		List<String> restrictedItemIds = _getRestrictedItemIds(
+		List<String> hiddenItemIds = _getHiddenItemIds(
 			layoutStructure, themeDisplay);
 
 		return JSONUtil.concat(
 			_getLayoutClassedModelPageContentsJSONArray(
-				httpServletRequest, layoutStructure, plid, restrictedItemIds,
+				httpServletRequest, layoutStructure, plid, hiddenItemIds,
 				segmentsExperienceId),
 			AssetListEntryUsagesUtil.getPageContentsJSONArray(
 				httpServletRequest, httpServletResponse, layoutStructure, plid,
-				restrictedItemIds));
+				hiddenItemIds));
 	}
 
 	private static String _generateUniqueLayoutClassedModelUsageKey(
@@ -453,6 +453,49 @@ public class ContentUtil {
 		return layoutDisplayPageObjectProviders;
 	}
 
+	private static List<String> _getHiddenItemIds(
+		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
+
+		List<String> hiddenItemIds = new ArrayList<>();
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
+			return hiddenItemIds;
+		}
+
+		for (FormStyledLayoutStructureItem formStyledLayoutStructureItem :
+				layoutStructure.getFormStyledLayoutStructureItems()) {
+
+			if (layoutStructure.isItemMarkedForDeletion(
+					formStyledLayoutStructureItem.getItemId()) ||
+				(formStyledLayoutStructureItem.getClassNameId() <= 0)) {
+
+				continue;
+			}
+
+			InfoItemServiceRegistry infoItemServiceRegistry =
+				InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
+
+			InfoPermissionProvider infoPermissionProvider =
+				infoItemServiceRegistry.getFirstInfoItemService(
+					InfoPermissionProvider.class,
+					PortalUtil.getClassName(
+						formStyledLayoutStructureItem.getClassNameId()));
+
+			if ((infoPermissionProvider == null) ||
+				infoPermissionProvider.hasViewPermission(
+					themeDisplay.getPermissionChecker())) {
+
+				continue;
+			}
+
+			hiddenItemIds.addAll(
+				_getChildrenItemIds(
+					layoutStructure, formStyledLayoutStructureItem));
+		}
+
+		return hiddenItemIds;
+	}
+
 	private static String _getIcon(String className, long classPK)
 		throws Exception {
 
@@ -476,7 +519,7 @@ public class ContentUtil {
 	private static JSONArray _getLayoutClassedModelPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			LayoutStructure layoutStructure, long plid,
-			List<String> restrictedItemIds, long segmentsExperienceId)
+			List<String> hiddenItemIds, long segmentsExperienceId)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
@@ -484,7 +527,7 @@ public class ContentUtil {
 		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
 
 		List<String> restrictedPortletIds = _getRestrictedPortletIds(
-			layoutStructure, restrictedItemIds);
+			layoutStructure, hiddenItemIds);
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			LayoutClassedModelUsageLocalServiceUtil.
@@ -528,8 +571,7 @@ public class ContentUtil {
 
 				if ((layoutStructureItem == null) ||
 					fragmentEntryLink.isDeleted() ||
-					restrictedItemIds.contains(
-						layoutStructureItem.getItemId())) {
+					hiddenItemIds.contains(layoutStructureItem.getItemId())) {
 
 					continue;
 				}
@@ -796,53 +838,10 @@ public class ContentUtil {
 		return _portletClassNameId;
 	}
 
-	private static List<String> _getRestrictedItemIds(
-		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
-
-		List<String> restrictedItemIds = new ArrayList<>();
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
-			return restrictedItemIds;
-		}
-
-		for (FormStyledLayoutStructureItem formStyledLayoutStructureItem :
-				layoutStructure.getFormStyledLayoutStructureItems()) {
-
-			if (layoutStructure.isItemMarkedForDeletion(
-					formStyledLayoutStructureItem.getItemId()) ||
-				(formStyledLayoutStructureItem.getClassNameId() <= 0)) {
-
-				continue;
-			}
-
-			InfoItemServiceRegistry infoItemServiceRegistry =
-				InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
-
-			InfoPermissionProvider infoPermissionProvider =
-				infoItemServiceRegistry.getFirstInfoItemService(
-					InfoPermissionProvider.class,
-					PortalUtil.getClassName(
-						formStyledLayoutStructureItem.getClassNameId()));
-
-			if ((infoPermissionProvider == null) ||
-				infoPermissionProvider.hasViewPermission(
-					themeDisplay.getPermissionChecker())) {
-
-				continue;
-			}
-
-			restrictedItemIds.addAll(
-				_getChildrenItemIds(
-					layoutStructure, formStyledLayoutStructureItem));
-		}
-
-		return restrictedItemIds;
-	}
-
 	private static List<String> _getRestrictedPortletIds(
-		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
+		LayoutStructure layoutStructure, List<String> hiddenItemIds) {
 
-		if (restrictedItemIds.isEmpty()) {
+		if (hiddenItemIds.isEmpty()) {
 			return Collections.emptyList();
 		}
 
@@ -892,7 +891,7 @@ public class ContentUtil {
 			boolean restrictedPortletId = true;
 
 			for (String itemId : entry.getValue()) {
-				if (!restrictedItemIds.contains(itemId)) {
+				if (!hiddenItemIds.contains(itemId)) {
 					restrictedPortletId = false;
 
 					break;

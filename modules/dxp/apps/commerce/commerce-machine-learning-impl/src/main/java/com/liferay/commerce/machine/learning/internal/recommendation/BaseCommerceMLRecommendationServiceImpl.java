@@ -16,6 +16,7 @@ package com.liferay.commerce.machine.learning.internal.recommendation;
 
 import com.liferay.commerce.machine.learning.internal.recommendation.constants.CommerceMLRecommendationField;
 import com.liferay.commerce.machine.learning.recommendation.CommerceMLRecommendation;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,8 +46,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -178,13 +177,7 @@ public abstract class BaseCommerceMLRecommendationServiceImpl
 	}
 
 	protected List<T> toList(List<Document> documents) {
-		Stream<Document> stream = documents.stream();
-
-		return stream.map(
-			this::toModel
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(documents, this::toModel);
 	}
 
 	protected abstract T toModel(Document document);

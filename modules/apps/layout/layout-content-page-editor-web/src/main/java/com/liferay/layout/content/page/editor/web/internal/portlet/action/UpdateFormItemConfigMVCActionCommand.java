@@ -28,6 +28,7 @@ import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.MultipleSelectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -289,6 +290,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 		if (infoFieldType instanceof HTMLInfoFieldType) {
 			return "INPUTS-rich-text-input";
+		}
+
+		if (infoFieldType instanceof MultipleSelectInfoFieldType) {
+			return "INPUTS-multi-select-list";
 		}
 
 		if (infoFieldType instanceof NumberInfoFieldType) {

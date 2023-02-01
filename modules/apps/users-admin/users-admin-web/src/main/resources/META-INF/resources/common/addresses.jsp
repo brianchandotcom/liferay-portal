@@ -72,67 +72,67 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 <div
 	class="<%=
 		CSSClasses.builder(
-			"addresses-table-wrapper", "table-responsive"
+			"addresses-table-wrapper"
 		).add(
 			"hide", addresses.isEmpty()
 		).build()
 	%>"
 >
-	<table class="table table-autofit">
-		<tbody>
+	<ul class="list-group list-group-flush">
 
-			<%
-			for (Address address : addresses) {
-			%>
+		<%
+		for (Address address : addresses) {
+		%>
 
-				<tr>
-					<td>
-						<clay:sticker
-							cssClass="sticker-static"
-							displayType="secondary"
-							icon="picture"
+			<li class="list-group-item list-group-item-flex">
+				<clay:content-col>
+					<clay:sticker
+						cssClass="sticker-static"
+						displayType="secondary"
+						icon="picture"
+					/>
+				</clay:content-col>
+
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h3>
+
+						<%
+						ListType listType = address.getListType();
+						%>
+
+						<liferay-ui:message key="<%= listType.getName() %>" />
+					</h3>
+
+					<div class="address-display-wrapper list-group-text">
+						<liferay-text-localizer:address-display
+							address="<%= address %>"
 						/>
-					</td>
-					<td class="table-cell-expand">
-						<h4>
+					</div>
 
-							<%
-							ListType listType = address.getListType();
-							%>
-
-							<liferay-ui:message key="<%= listType.getName() %>" />
-						</h4>
-
-						<div class="address-display-wrapper">
-							<liferay-text-localizer:address-display
-								address="<%= address %>"
+					<c:if test="<%= address.isPrimary() %>">
+						<div class="address-primary-label-wrapper">
+							<clay:label
+								displayType="primary"
+								label="primary"
 							/>
 						</div>
+					</c:if>
+				</clay:content-col>
 
-						<c:if test="<%= address.isPrimary() %>">
-							<div class="address-primary-label-wrapper">
-								<clay:label
-									displayType="primary"
-									label="primary"
-								/>
-							</div>
-						</c:if>
-					</td>
-					<td>
-						<clay:content-col
-							cssClass="lfr-search-container-wrapper"
-						>
-							<liferay-util:include page="/common/address_action.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />
-							</liferay-util:include>
-						</clay:content-col>
-					</td>
-				</tr>
+				<clay:content-col
+					cssClass="lfr-search-container-wrapper"
+				>
+					<liferay-util:include page="/common/address_action.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />
+					</liferay-util:include>
+				</clay:content-col>
+			</li>
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</tbody>
-	</table>
+	</ul>
 </div>

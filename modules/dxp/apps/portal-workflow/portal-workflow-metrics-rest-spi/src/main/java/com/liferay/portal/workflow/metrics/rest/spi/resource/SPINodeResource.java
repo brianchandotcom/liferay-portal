@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.spi.resource;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.search.document.Document;
@@ -29,7 +30,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -71,22 +71,16 @@ public class SPINodeResource<T> {
 
 		searchSearchRequest.setSize(10000);
 
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
 		return Page.of(
-			Stream.of(
-				_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-			).map(
-				SearchSearchResponse::getSearchHits
-			).map(
-				SearchHits::getSearchHits
-			).flatMap(
-				List::stream
-			).map(
-				SearchHit::getDocument
-			).map(
-				_transformUnsafeFunction::apply
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transform(
+				searchHits.getSearchHits(),
+				searchHit -> _transformUnsafeFunction.apply(
+					searchHit.getDocument())));
 	}
 
 	private String _getLatestProcessVersion(long processId) {

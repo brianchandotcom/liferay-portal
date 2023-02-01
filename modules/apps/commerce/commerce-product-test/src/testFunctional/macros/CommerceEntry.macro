@@ -265,6 +265,14 @@ definition {
 	}
 
 	macro addNewDiscountsEntry {
+		if (!(isSet(active))) {
+			var active = "true";
+		}
+
+		if (!(isSet(publish))) {
+			var publish = "true";
+		}
+
 		WaitForElementPresent(locator1 = "IFrame#MODAL_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
@@ -291,9 +299,11 @@ definition {
 
 		Refresh();
 
-		Type(
-			locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
-			value1 = "${discountAmount}");
+		if (isSet(discountAmount)) {
+			Type(
+				locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
+				value1 = "${discountAmount}");
+		}
 
 		if (isSet(maximumDiscountAmount)) {
 			Type(
@@ -301,9 +311,13 @@ definition {
 				value1 = "${maximumDiscountAmount}");
 		}
 
-		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+		if ("${active}" == "true") {
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+		}
 
-		Button.clickPublish();
+		if ("${publish}" == "true") {
+			Button.clickPublish();
+		}
 	}
 
 	macro addNewFilters {

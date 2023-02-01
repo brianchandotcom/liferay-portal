@@ -610,7 +610,7 @@ definition {
 	@description = "LPS-101746 TC-2: End User cannot configure anything on their side regarding IP based verifier."
 	@priority = "5"
 	test EndUserPermissionCheck {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 

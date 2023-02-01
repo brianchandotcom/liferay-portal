@@ -893,6 +893,15 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					/>
 				</path>
 
+				<if>
+					<not>
+						<isset property="source.sanitizer.dir" />
+					</not>
+					<then>
+						<property name="source.sanitizer.dir" value="${project.dir}" />
+					</then>
+				</if>
+
 				<java
 					classname="com.liferay.lang.sanitizer.LangSanitizer"
 					classpathref="lang.sanitizer.classpath"
@@ -903,7 +912,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<jvmarg value="-Dfile.encoding=UTF-8" />
 					<jvmarg value="-Duser.country=US" />
 					<jvmarg value="-Duser.language=en" />
-					<arg value="source.base.dir=${project.dir}" />
+					<arg value="source.base.dir=${source.sanitizer.dir}" />
 				</java>
 			</then>
 		</if>

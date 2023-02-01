@@ -26,6 +26,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.item.selector.ItemSelector;
@@ -381,6 +382,11 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			}
 
 			inputTemplateNode.addAttribute("options", options);
+		}
+		else if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
+			inputTemplateNode.addAttribute(
+				"maxLength",
+				infoField.getAttribute(TextInfoFieldType.MAX_LENGTH));
 		}
 
 		return inputTemplateNode;

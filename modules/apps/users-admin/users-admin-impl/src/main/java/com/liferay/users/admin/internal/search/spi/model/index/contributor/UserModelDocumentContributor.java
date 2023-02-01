@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.internal.search.spi.model.index.contributor;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
@@ -50,7 +50,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -152,17 +151,16 @@ public class UserModelDocumentContributor
 	private long[] _getActiveTransitiveGroupIds(long userId)
 		throws PortalException {
 
-		List<Group> groups = groupLocalService.getUserGroups(userId, true);
+		return ArrayUtil.toLongArray(
+			TransformUtil.transform(
+				groupLocalService.getUserGroups(userId, true),
+				group -> {
+					if (group.isSite() && group.isActive()) {
+						return group.getGroupId();
+					}
 
-		Stream<Group> stream = groups.stream();
-
-		return stream.filter(
-			Group::isSite
-		).filter(
-			Group::isActive
-		).mapToLong(
-			Group::getGroupId
-		).toArray();
+					return null;
+				}));
 	}
 
 	private long[] _getAncestorOrganizationIds(long[] organizationIds)

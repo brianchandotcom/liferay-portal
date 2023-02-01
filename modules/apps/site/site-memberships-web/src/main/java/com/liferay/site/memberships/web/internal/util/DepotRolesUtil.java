@@ -21,12 +21,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Eudaldo Alonso
@@ -44,9 +43,8 @@ public class DepotRolesUtil {
 		if (permissionChecker.isCompanyAdmin() ||
 			permissionChecker.isGroupOwner(groupId)) {
 
-			Stream<Role> stream = roles.stream();
-
-			return stream.filter(
+			return ListUtil.filter(
+				roles,
 				role ->
 					!Objects.equals(
 						role.getName(),
@@ -54,10 +52,7 @@ public class DepotRolesUtil {
 							ASSET_LIBRARY_CONNECTED_SITE_MEMBER) &&
 					!Objects.equals(
 						role.getName(),
-						DepotRolesConstants.ASSET_LIBRARY_MEMBER)
-			).collect(
-				Collectors.toList()
-			);
+						DepotRolesConstants.ASSET_LIBRARY_MEMBER));
 		}
 
 		if (!GroupPermissionUtil.contains(
@@ -66,9 +61,8 @@ public class DepotRolesUtil {
 			return Collections.emptyList();
 		}
 
-		Stream<Role> stream = roles.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			roles,
 			role ->
 				!Objects.equals(
 					role.getName(),
@@ -82,10 +76,7 @@ public class DepotRolesUtil {
 					role.getName(), DepotRolesConstants.ASSET_LIBRARY_OWNER) &&
 				RolePermissionUtil.contains(
 					permissionChecker, groupId, role.getRoleId(),
-					ActionKeys.ASSIGN_MEMBERS)
-		).collect(
-			Collectors.toList()
-		);
+					ActionKeys.ASSIGN_MEMBERS));
 	}
 
 }

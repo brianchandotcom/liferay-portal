@@ -63,6 +63,8 @@ public class LayoutStructure {
 			JSONObject itemsJSONObject =
 				layoutStructureJSONObject.getJSONObject("items");
 
+			List<CollectionStyledLayoutStructureItem>
+				collectionStyledLayoutStructureItems = new ArrayList<>();
 			List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
 				new ArrayList<>();
 			Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
@@ -77,7 +79,8 @@ public class LayoutStructure {
 				layoutStructureItems.put(key, layoutStructureItem);
 
 				_updateLayoutStructureItemMaps(
-					layoutStructureItem, formStyledLayoutStructureItems,
+					layoutStructureItem, collectionStyledLayoutStructureItems,
+					formStyledLayoutStructureItems,
 					fragmentLayoutStructureItems);
 			}
 
@@ -112,7 +115,8 @@ public class LayoutStructure {
 				});
 
 			return new LayoutStructure(
-				deletedItemIds, deletedLayoutStructureItems, deletedPortletIds,
+				collectionStyledLayoutStructureItems, deletedItemIds,
+				deletedLayoutStructureItems, deletedPortletIds,
 				formStyledLayoutStructureItems, fragmentLayoutStructureItems,
 				layoutStructureItems, rootItemsJSONObject.getString("main"));
 		}
@@ -126,6 +130,7 @@ public class LayoutStructure {
 	}
 
 	public LayoutStructure() {
+		_collectionStyledLayoutStructureItems = new ArrayList<>();
 		_deletedItemIds = new HashSet<>();
 		_deletedLayoutStructureItems = new HashMap<>();
 		_deletedPortletIds = new HashSet<>();
@@ -240,8 +245,8 @@ public class LayoutStructure {
 			layoutStructureItem.getItemId(), layoutStructureItem);
 
 		_updateLayoutStructureItemMaps(
-			layoutStructureItem, _formStyledLayoutStructureItems,
-			_fragmentLayoutStructureItems);
+			layoutStructureItem, _collectionStyledLayoutStructureItems,
+			_formStyledLayoutStructureItems, _fragmentLayoutStructureItems);
 
 		return layoutStructureItem;
 	}
@@ -359,6 +364,12 @@ public class LayoutStructure {
 		}
 
 		return false;
+	}
+
+	public List<CollectionStyledLayoutStructureItem>
+		getCollectionStyledLayoutStructureItems() {
+
+		return _collectionStyledLayoutStructureItems;
 	}
 
 	public List<DeletedLayoutStructureItem> getDeletedLayoutStructureItems() {
@@ -702,10 +713,22 @@ public class LayoutStructure {
 
 	private static void _updateLayoutStructureItemMaps(
 		LayoutStructureItem layoutStructureItem,
+		List<CollectionStyledLayoutStructureItem>
+			collectionStyledLayoutStructureItems,
 		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems) {
 
-		if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
+		if (layoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem) {
+
+			CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem =
+					(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+			collectionStyledLayoutStructureItems.add(
+				collectionStyledLayoutStructureItem);
+		}
+		else if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 				(FormStyledLayoutStructureItem)layoutStructureItem;
 
@@ -725,6 +748,8 @@ public class LayoutStructure {
 	}
 
 	private LayoutStructure(
+		List<CollectionStyledLayoutStructureItem>
+			collectionStyledLayoutStructureItems,
 		Set<String> deletedItemIds,
 		Map<String, DeletedLayoutStructureItem> deletedLayoutStructureItems,
 		Set<String> deletedPortletIds,
@@ -733,6 +758,8 @@ public class LayoutStructure {
 		Map<String, LayoutStructureItem> layoutStructureItems,
 		String mainItemId) {
 
+		_collectionStyledLayoutStructureItems =
+			collectionStyledLayoutStructureItems;
 		_deletedItemIds = deletedItemIds;
 		_deletedLayoutStructureItems = deletedLayoutStructureItems;
 		_deletedPortletIds = deletedPortletIds;
@@ -992,6 +1019,8 @@ public class LayoutStructure {
 
 	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
+	private final List<CollectionStyledLayoutStructureItem>
+		_collectionStyledLayoutStructureItems;
 	private final Set<String> _deletedItemIds;
 	private final Map<String, DeletedLayoutStructureItem>
 		_deletedLayoutStructureItems;

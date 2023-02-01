@@ -2240,8 +2240,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			synchronized (_preregisterPendingCompanies) {
 				forEachCompany(
-					company -> portalInstanceLifecycleManager.registerCompany(
-						company),
+					company ->
+						portalInstanceLifecycleManager.preregisterCompany(
+							company),
 					new ArrayList<Company>(_preregisterPendingCompanies));
 
 				_preregisterPendingCompanies.clear();

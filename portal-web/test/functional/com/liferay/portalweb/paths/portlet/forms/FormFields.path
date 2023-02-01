@@ -977,11 +977,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VALIDATION_ERROR_ENTRIES</td>
-	<td>//div[contains(@class,'sheet')]/h1[contains(.,'${key_value}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VALIDATION_ERROR_MESSAGE</td>
 	<td>//input[contains(@class,'message-input')] | //input[contains(@name,'errorMessage')]</td>
 	<td></td>

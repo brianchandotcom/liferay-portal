@@ -23,7 +23,11 @@ import React, {Component} from 'react';
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 
 import ThemeContext from '../../ThemeContext.es';
-import {PROPERTY_TYPES} from '../../utils/constants.es';
+import {
+	PROPERTY_TYPES,
+	SUPPORTED_OPERATORS,
+	SUPPORTED_PROPERTY_TYPES,
+} from '../../utils/constants.es';
 import {DragTypes} from '../../utils/drag-types.es';
 import {unescapeSingleQuotes} from '../../utils/odata.es';
 import {
@@ -86,8 +90,6 @@ function drop(props, monitor) {
 		index: destIndex,
 		onChange,
 		onMove,
-		supportedOperators,
-		supportedPropertyTypes,
 	} = props;
 
 	const {
@@ -108,8 +110,8 @@ function drop(props, monitor) {
 	const droppedCriterionValue = value || defaultValue;
 
 	const operators = getSupportedOperatorsFromType(
-		supportedOperators,
-		supportedPropertyTypes,
+		SUPPORTED_OPERATORS,
+		SUPPORTED_PROPERTY_TYPES,
 		type
 	);
 
@@ -171,18 +173,14 @@ class CriteriaRow extends Component {
 		onMove: PropTypes.func.isRequired,
 		propertyKey: PropTypes.string.isRequired,
 		renderEmptyValuesErrors: PropTypes.bool,
-		supportedOperators: PropTypes.array,
 		supportedProperties: PropTypes.array,
-		supportedPropertyTypes: PropTypes.object,
 	};
 
 	static defaultProps = {
 		criterion: {},
 		editing: true,
 		renderEmptyValuesErrors: false,
-		supportedOperators: [],
 		supportedProperties: [],
-		supportedPropertyTypes: {},
 	};
 
 	componentDidMount() {
@@ -442,18 +440,13 @@ class CriteriaRow extends Component {
 		selectedProperty,
 		value,
 	}) {
-		const {
-			connectDragSource,
-			renderEmptyValuesErrors,
-			supportedOperators,
-			supportedPropertyTypes,
-		} = this.props;
+		const {connectDragSource, renderEmptyValuesErrors} = this.props;
 
 		const propertyType = selectedProperty ? selectedProperty.type : '';
 
 		const filteredSupportedOperators = getSupportedOperatorsFromType(
-			supportedOperators,
-			supportedPropertyTypes,
+			SUPPORTED_OPERATORS,
+			SUPPORTED_PROPERTY_TYPES,
 			propertyType
 		);
 
@@ -550,14 +543,13 @@ class CriteriaRow extends Component {
 			editing,
 			hover,
 			renderEmptyValuesErrors,
-			supportedOperators,
 			supportedProperties,
 		} = this.props;
 
 		const {unknownEntity} = criterion;
 
 		const selectedOperator = this._getSelectedItem(
-			supportedOperators,
+			SUPPORTED_OPERATORS,
 			criterion.operatorName
 		);
 

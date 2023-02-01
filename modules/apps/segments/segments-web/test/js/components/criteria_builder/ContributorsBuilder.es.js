@@ -19,12 +19,7 @@ import {openSelectionModal} from 'frontend-js-web';
 import React from 'react';
 
 import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
-import {
-	CONJUNCTIONS,
-	SUPPORTED_CONJUNCTIONS,
-	SUPPORTED_OPERATORS,
-	SUPPORTED_PROPERTY_TYPES,
-} from '../../../../src/main/resources/META-INF/resources/js/utils/constants.es';
+import {CONJUNCTIONS} from '../../../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 const initialContributors = [
 	{
@@ -201,9 +196,6 @@ describe('ContributorsBuilder', () => {
 				initialContributors={initialContributors}
 				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
-				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
-				supportedOperators={SUPPORTED_OPERATORS}
-				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		);
 
@@ -220,9 +212,6 @@ describe('ContributorsBuilder', () => {
 				initialContributors={initialContributors}
 				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
-				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
-				supportedOperators={SUPPORTED_OPERATORS}
-				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		);
 
@@ -245,9 +234,6 @@ describe('ContributorsBuilder', () => {
 				propertyGroups={propertyGroups}
 				scopeName={scopeName}
 				siteItemSelectorURL="http://example.org"
-				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
-				supportedOperators={SUPPORTED_OPERATORS}
-				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		);
 
@@ -269,9 +255,6 @@ describe('ContributorsBuilder', () => {
 				propertyGroups={propertyGroups}
 				scopeName="Liferray DXP"
 				siteItemSelectorURL="http://example.org"
-				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
-				supportedOperators={SUPPORTED_OPERATORS}
-				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		);
 
@@ -291,9 +274,6 @@ describe('ContributorsBuilder', () => {
 				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
 				scopeName="Liferray DXP"
-				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
-				supportedOperators={SUPPORTED_OPERATORS}
-				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		);
 
@@ -314,9 +294,6 @@ describe('ContributorsBuilder', () => {
 				propertyGroups={propertyGroups}
 				scopeName="Liferray DXP"
 				siteItemSelectorURL="http://example.org"
-				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
-				supportedOperators={SUPPORTED_OPERATORS}
-				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		);
 

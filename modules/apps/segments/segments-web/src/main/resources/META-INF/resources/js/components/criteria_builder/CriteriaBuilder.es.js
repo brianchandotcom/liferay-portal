@@ -15,12 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
-import {
-	conjunctionShape,
-	criteriaShape,
-	propertyShape,
-	propertyTypesShape,
-} from '../../utils/types.es';
+import {criteriaShape, propertyShape} from '../../utils/types.es';
 import {
 	insertAtIndex,
 	removeAtIndex,
@@ -53,10 +48,7 @@ class CriteriaBuilder extends Component {
 		onChange: PropTypes.func,
 		propertyKey: PropTypes.string.isRequired,
 		renderEmptyValuesErrors: PropTypes.bool,
-		supportedConjunctions: PropTypes.arrayOf(conjunctionShape),
-		supportedOperators: PropTypes.array,
 		supportedProperties: PropTypes.arrayOf(propertyShape).isRequired,
-		supportedPropertyTypes: propertyTypesShape,
 	};
 
 	/**
@@ -221,10 +213,7 @@ class CriteriaBuilder extends Component {
 			modelLabel,
 			propertyKey,
 			renderEmptyValuesErrors,
-			supportedConjunctions,
-			supportedOperators,
 			supportedProperties,
-			supportedPropertyTypes,
 		} = this.props;
 
 		return (
@@ -250,10 +239,7 @@ class CriteriaBuilder extends Component {
 						propertyKey={propertyKey}
 						renderEmptyValuesErrors={renderEmptyValuesErrors}
 						root
-						supportedConjunctions={supportedConjunctions}
-						supportedOperators={supportedOperators}
 						supportedProperties={supportedProperties}
-						supportedPropertyTypes={supportedPropertyTypes}
 					/>
 				)}
 			</div>

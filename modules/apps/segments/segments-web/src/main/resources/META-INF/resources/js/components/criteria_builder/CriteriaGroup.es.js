@@ -18,7 +18,11 @@ import {PropTypes} from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import {DragSource as dragSource} from 'react-dnd';
 
-import {CONJUNCTIONS} from '../../utils/constants.es';
+import {
+	CONJUNCTIONS,
+	SUPPORTED_OPERATORS,
+	SUPPORTED_PROPERTY_TYPES,
+} from '../../utils/constants.es';
 import {DragTypes} from '../../utils/drag-types.es';
 import {
 	generateGroupId,
@@ -85,10 +89,7 @@ class CriteriaGroup extends Component {
 		propertyKey: PropTypes.string.isRequired,
 		renderEmptyValuesErrors: PropTypes.bool,
 		root: PropTypes.bool,
-		supportedConjunctions: PropTypes.array,
-		supportedOperators: PropTypes.array,
 		supportedProperties: PropTypes.array,
-		supportedPropertyTypes: PropTypes.object,
 	};
 
 	static defaultProps = {
@@ -120,13 +121,7 @@ class CriteriaGroup extends Component {
 	 * @memberof CriteriaGroup
 	 */
 	_handleCriterionAdd = (index, criterion) => {
-		const {
-			criteria,
-			onChange,
-			root,
-			supportedOperators,
-			supportedPropertyTypes,
-		} = this.props;
+		const {criteria, onChange, root} = this.props;
 
 		const {
 			defaultValue = '',
@@ -139,8 +134,8 @@ class CriteriaGroup extends Component {
 		const criterionValue = value || defaultValue;
 
 		const operators = getSupportedOperatorsFromType(
-			supportedOperators,
-			supportedPropertyTypes,
+			SUPPORTED_OPERATORS,
+			SUPPORTED_PROPERTY_TYPES,
 			type
 		);
 
@@ -191,14 +186,7 @@ class CriteriaGroup extends Component {
 	};
 
 	_renderConjunction = (index) => {
-		const {
-			criteria,
-			editing,
-			groupId,
-			onMove,
-			propertyKey,
-			supportedConjunctions,
-		} = this.props;
+		const {criteria, editing, groupId, onMove, propertyKey} = this.props;
 
 		return (
 			<>
@@ -214,7 +202,6 @@ class CriteriaGroup extends Component {
 					conjunctionName={criteria.conjunctionName}
 					editing={editing}
 					onSelect={this._handleConjunctionSelect}
-					supportedConjunctions={supportedConjunctions}
 				/>
 
 				<DropZone
@@ -239,10 +226,7 @@ class CriteriaGroup extends Component {
 			propertyKey,
 			renderEmptyValuesErrors,
 			root,
-			supportedConjunctions,
-			supportedOperators,
 			supportedProperties,
-			supportedPropertyTypes,
 		} = this.props;
 
 		const classes = getCN('criterion', {
@@ -264,10 +248,7 @@ class CriteriaGroup extends Component {
 						parentGroupId={groupId}
 						propertyKey={propertyKey}
 						renderEmptyValuesErrors={renderEmptyValuesErrors}
-						supportedConjunctions={supportedConjunctions}
-						supportedOperators={supportedOperators}
 						supportedProperties={supportedProperties}
-						supportedPropertyTypes={supportedPropertyTypes}
 					/>
 				) : (
 					<CriteriaRow
@@ -284,9 +265,7 @@ class CriteriaGroup extends Component {
 						propertyKey={propertyKey}
 						renderEmptyValuesErrors={renderEmptyValuesErrors}
 						root={root}
-						supportedOperators={supportedOperators}
 						supportedProperties={supportedProperties}
-						supportedPropertyTypes={supportedPropertyTypes}
 					/>
 				)}
 

@@ -19,15 +19,9 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {conjunctionShape} from '../../utils/types.es';
+import {SUPPORTED_CONJUNCTIONS} from '../../utils/constants.es';
 
-function Conjunction({
-	className,
-	conjunctionName,
-	editing,
-	onSelect,
-	supportedConjunctions = [],
-}) {
+function Conjunction({className, conjunctionName, editing, onSelect}) {
 	const [active, setActive] = useState(false);
 
 	const classnames = getCN(
@@ -40,13 +34,13 @@ function Conjunction({
 
 	const [activeLabel, setActiveLabel] = useState(null);
 	useEffect(() => {
-		const selectedConjunction = supportedConjunctions.find(
+		const selectedConjunction = SUPPORTED_CONJUNCTIONS.find(
 			(conjunction) =>
 				conjunction.name.toLowerCase() === conjunctionName.toLowerCase()
 		);
 
 		setActiveLabel(selectedConjunction.label);
-	}, [conjunctionName, supportedConjunctions]);
+	}, [conjunctionName]);
 
 	function _handleItemClick(conjunctionName) {
 		setActive(false);
@@ -72,7 +66,7 @@ function Conjunction({
 			}
 		>
 			<ClayDropdown.ItemList>
-				{supportedConjunctions.map((conjunction) => {
+				{SUPPORTED_CONJUNCTIONS.map((conjunction) => {
 					return (
 						<ClayDropdown.Item
 							className="text-capitalize"
@@ -95,7 +89,6 @@ Conjunction.propTypes = {
 	conjunctionName: PropTypes.string.isRequired,
 	editing: PropTypes.bool.isRequired,
 	onSelect: PropTypes.func.isRequired,
-	supportedConjunctions: PropTypes.arrayOf(conjunctionShape),
 };
 
 export default Conjunction;

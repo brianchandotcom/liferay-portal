@@ -32,11 +32,6 @@ import React, {Component} from 'react';
 
 import ThemeContext from '../../ThemeContext.es';
 import {
-	SUPPORTED_CONJUNCTIONS,
-	SUPPORTED_OPERATORS,
-	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants.es';
-import {
 	applyConjunctionChangeToContributor,
 	applyCriteriaChangeToContributors,
 	initialContributorsToContributors,
@@ -301,9 +296,6 @@ class SegmentEdit extends Component {
 				scopeName={this.props.scopeName}
 				segmentName={segmentName}
 				siteItemSelectorURL={siteItemSelectorURL}
-				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
-				supportedOperators={SUPPORTED_OPERATORS}
-				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		) : null;
 	};

@@ -30,7 +30,28 @@ exports[`CriteriaRow renders 1`] = `
       <select
         aria-label="Test Property: select-property-operator-option"
         class="form-control criterion-input form-control operator-input"
-      />
+      >
+        <option
+          value="eq"
+        >
+          equals
+        </option>
+        <option
+          value="not-eq"
+        >
+          not-equals
+        </option>
+        <option
+          value="contains"
+        >
+          contains
+        </option>
+        <option
+          value="not-contains"
+        >
+          not-contains
+        </option>
+      </select>
       <input
         aria-label="Test Property: input-a-value"
         class="criterion-input form-control"
@@ -104,7 +125,28 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
         aria-label="unknown_prop: select-property-operator-option"
         class="form-control criterion-input form-control operator-input"
         disabled=""
-      />
+      >
+        <option
+          value="eq"
+        >
+          equals
+        </option>
+        <option
+          value="not-eq"
+        >
+          not-equals
+        </option>
+        <option
+          value="contains"
+        >
+          contains
+        </option>
+        <option
+          value="not-contains"
+        >
+          not-contains
+        </option>
+      </select>
       <input
         aria-label="unknown_prop: input-a-value"
         class="criterion-input form-control"

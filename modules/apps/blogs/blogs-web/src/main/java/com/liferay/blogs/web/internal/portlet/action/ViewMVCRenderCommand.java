@@ -65,7 +65,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			BlogImagesDisplayContext.class.getName(),
 			new BlogImagesDisplayContext(
-				_portal.getLiferayPortletRequest(renderRequest)));
+				_portal.getHttpServletRequest(renderRequest)));
 
 		return "/blogs_admin/view.jsp";
 	}

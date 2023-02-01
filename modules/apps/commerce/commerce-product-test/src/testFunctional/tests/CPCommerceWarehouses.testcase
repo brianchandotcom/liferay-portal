@@ -261,7 +261,7 @@ definition {
 					locator1 = "Radio#ANY",
 					radioLabel = "No Channel");
 
-				Button.clickSave();	
+				Button.clickSave();
 
 				Navigator.gotoBack();
 			}
@@ -275,7 +275,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");	
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 		}
 
 		task ("Then the product has Unavailable tag with 0 stock quantity") {
@@ -291,7 +291,7 @@ definition {
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
 
-			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");	
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 		}
 
 		task ("When a second Minium site is created and buyer user is associated with it") {
@@ -308,7 +308,7 @@ definition {
 
 			JSONUser.addUserToSite(
 				groupName = "Minium 2",
-				userEmailAddress = "buyer@liferay.com");		
+				userEmailAddress = "buyer@liferay.com");
 		}
 
 		task ("Then Minium 2 Portal Channel is eligible by default for the warehouses") {
@@ -324,13 +324,13 @@ definition {
 				AssertChecked(
 					locator1 = "Radio#ANY",
 					radioLabel = "Specific Channels");
-				
-				AssertElementPresent(
-						key_entryName = "Minium 2 Portal",
-						key_table = "Channels",
-						locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
 
-				Navigator.gotoBack();		
+				AssertElementPresent(
+					key_entryName = "Minium 2 Portal",
+					key_table = "Channels",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+
+				Navigator.gotoBack();
 			}
 		}
 

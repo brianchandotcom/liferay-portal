@@ -249,20 +249,6 @@ public class LangSanitizer {
 					sanitizedMessage.getLanguageKey());
 			}
 
-			if (!_originalContent.equals(
-					sanitizedMessage.getOriginalContent())) {
-
-				return _originalContent.compareTo(
-					sanitizedMessage.getOriginalContent());
-			}
-
-			if (!_santizedContent.equals(
-					sanitizedMessage.getSantizedContent())) {
-
-				return _santizedContent.compareTo(
-					sanitizedMessage.getSantizedContent());
-			}
-
 			return 0;
 		}
 

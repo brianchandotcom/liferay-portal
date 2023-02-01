@@ -2245,6 +2245,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (Objects.equals(type, "widget")) {
 			type = LayoutConstants.TYPE_PORTLET;
 		}
+		else if (Objects.equals(type, "url")) {
+			type = LayoutConstants.TYPE_URL;
+		}
 
 		Map<Locale, String> friendlyURLMap = new HashMap<>(
 			SiteInitializerUtil.toMap(
@@ -2272,6 +2275,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
 			type, null, jsonObject.getBoolean("hidden"),
 			jsonObject.getBoolean("system"), friendlyURLMap, serviceContext);
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		JSONArray typeSettingsJSONObject = jsonObject.getJSONArray(
+			"typeSettings");
+
+		for (int i = 0; i < typeSettingsJSONObject.length(); i++) {
+			JSONObject jsonObject1 = typeSettingsJSONObject.getJSONObject(i);
+
+			unicodeProperties.put(
+				jsonObject1.getString("key"), jsonObject1.getString("value"));
+		}
+
+		layout = _layoutLocalService.updateLayout(
+			serviceContext.getScopeGroupId(), false, layout.getLayoutId(),
+			unicodeProperties.toString());
 
 		_setResourcePermissions(
 			layout.getCompanyId(), layout.getModelClassName(),

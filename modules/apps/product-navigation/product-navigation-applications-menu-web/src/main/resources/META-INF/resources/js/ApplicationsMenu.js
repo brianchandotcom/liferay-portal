@@ -275,56 +275,15 @@ const AppsPanel = ({
 										<div className="applications-menu-nav-columns c-mt-md-3 c-my-2">
 											{childCategories.map(
 												({key, label, panelApps}) => (
-													<ClayLayout.Col
+													<NavigationSection
+														id={`nav_${key}`}
 														key={key}
-														md
-													>
-														<ul className="list-unstyled">
-															<li className="c-my-3">
-																<h2 className="applications-menu-nav-header">
-																	{label}
-																</h2>
-															</li>
-
-															{panelApps.map(
-																({
-																	label,
-																	portletId,
-																	url,
-																}) => (
-																	<li
-																		className="c-mt-2"
-																		key={
-																			portletId
-																		}
-																	>
-																		<a
-																			className={classNames(
-																				'component-link applications-menu-nav-link',
-																				{
-																					active:
-																						portletId ===
-																						selectedPortletId,
-																				}
-																			)}
-																			href={
-																				url
-																			}
-																		>
-																			<span
-																				className="c-inner"
-																				tabIndex="-1"
-																			>
-																				{
-																					label
-																				}
-																			</span>
-																		</a>
-																	</li>
-																)
-															)}
-														</ul>
-													</ClayLayout.Col>
+														label={label}
+														panelApps={panelApps}
+														selectedPortletId={
+															selectedPortletId
+														}
+													/>
 												)
 											)}
 										</div>
@@ -389,6 +348,38 @@ const AppsPanel = ({
 				</ClayLayout.ContainerFluid>
 			</div>
 		</div>
+	);
+};
+
+const NavigationSection = ({id, label, panelApps, selectedPortletId}) => {
+	return (
+		<ClayLayout.Col md>
+			<nav aria-labelledby={id}>
+				<h2 className="applications-menu-nav-header c-my-3" id={id}>
+					{label}
+				</h2>
+
+				<ul className="list-unstyled">
+					{panelApps.map(({label, portletId, url}) => (
+						<li className="c-mt-2" key={portletId}>
+							<a
+								className={classNames(
+									'component-link applications-menu-nav-link',
+									{
+										active: portletId === selectedPortletId,
+									}
+								)}
+								href={url}
+							>
+								<span className="c-inner" tabIndex="-1">
+									{label}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</nav>
+		</ClayLayout.Col>
 	);
 };
 

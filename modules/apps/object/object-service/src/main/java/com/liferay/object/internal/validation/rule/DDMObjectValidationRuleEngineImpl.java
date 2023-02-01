@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
 import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.log.Log;
@@ -52,6 +53,10 @@ public class DDMObjectValidationRuleEngineImpl
 				_ddmExpressionFactory.createExpression(
 					CreateExpressionRequest.Builder.newBuilder(
 						script
+					).withDDMExpressionFieldAccessor(
+						new ObjectEntryDDMExpressionFieldAccessor(
+							(Map<String, Object>)inputObjects.get(
+								"objectEntry"))
 					).withDDMExpressionParameterAccessor(
 						new ObjectEntryDDMExpressionParameterAccessor(
 							(Map<String, Object>)inputObjects.get(

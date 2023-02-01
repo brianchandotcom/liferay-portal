@@ -35,9 +35,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstant
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -117,15 +114,6 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 		catch (IOException ioException) {
 			throw new PortletException(ioException);
 		}
-	}
-
-	@Override
-	protected void checkPermissions(
-			PermissionChecker permissionChecker, Folder folder)
-		throws PortalException {
-
-		_folderModelResourcePermission.check(
-			permissionChecker, folder, ActionKeys.ACCESS);
 	}
 
 	@Override
@@ -213,12 +201,6 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 
 	@Reference
 	private DLTrashHelper _dlTrashHelper;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
-	)
-	private volatile ModelResourcePermission<Folder>
-		_folderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

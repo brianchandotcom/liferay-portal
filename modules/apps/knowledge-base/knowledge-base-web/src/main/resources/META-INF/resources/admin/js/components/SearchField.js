@@ -69,7 +69,9 @@ const SearchResult = ({filteredItems, keyword}) => {
 	) : (
 		<ClayEmptyState
 			description={sub(
-				Liferay.Language.get('no-content-was-found-that-matched-keyword-x'),
+				Liferay.Language.get(
+					'no-content-was-found-that-matched-keyword-x'
+				),
 				[keyword]
 			)}
 			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}

@@ -30,8 +30,9 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message='<%= LanguageUtil.get(resourceBundle, "show-actions-for-" + name.toLowerCase().replace(" ", "-")) %>'
 	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="lfr-portal-tooltip"
 >
 	<c:if test="<%= RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">

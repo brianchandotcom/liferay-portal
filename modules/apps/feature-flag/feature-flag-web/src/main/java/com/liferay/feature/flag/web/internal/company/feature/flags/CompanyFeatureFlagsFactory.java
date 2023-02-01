@@ -92,21 +92,21 @@ public class CompanyFeatureFlagsFactory {
 
 				FeatureFlag featureFlag = entry.getValue();
 
-				for (String dependency : featureFlag.getDependencies()) {
-					if (Objects.equals(featureFlag.getKey(), dependency)) {
+				for (String dependencyKey : featureFlag.getDependencyKeys()) {
+					if (Objects.equals(featureFlag.getKey(), dependencyKey)) {
 						_log.error(
 							"A feature flag cannot depend on itself: " +
-								dependency);
+								dependencyKey);
 
 						continue;
 					}
 
 					FeatureFlag dependencyFeatureFlag = featureFlagsMap.get(
-						dependency);
+						dependencyKey);
 
 					if (dependencyFeatureFlag != null) {
 						if (!ArrayUtil.contains(
-								dependencyFeatureFlag.getDependencies(),
+								dependencyFeatureFlag.getDependencyKeys(),
 								featureFlag.getKey())) {
 
 							dependencyFeatureFlags.add(dependencyFeatureFlag);
@@ -115,7 +115,7 @@ public class CompanyFeatureFlagsFactory {
 							_log.error(
 								StringBundler.concat(
 									"Skipping adding circular dependency ",
-									dependency, " for feature flag ",
+									dependencyKey, " for feature flag ",
 									featureFlag.getKey()));
 						}
 					}

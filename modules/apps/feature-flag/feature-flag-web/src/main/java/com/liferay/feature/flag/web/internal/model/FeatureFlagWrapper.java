@@ -26,8 +26,8 @@ public class FeatureFlagWrapper implements FeatureFlag {
 	}
 
 	@Override
-	public String[] getDependencies() {
-		return _featureFlag.getDependencies();
+	public String[] getDependencyKeys() {
+		return _featureFlag.getDependencyKeys();
 	}
 
 	@Override

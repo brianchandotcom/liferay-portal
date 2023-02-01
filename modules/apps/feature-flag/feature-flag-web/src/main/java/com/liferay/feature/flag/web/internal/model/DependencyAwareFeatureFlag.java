@@ -30,7 +30,7 @@ public class DependencyAwareFeatureFlag extends FeatureFlagWrapper {
 	}
 
 	@Override
-	public String[] getDependencies() {
+	public String[] getDependencyKeys() {
 		return TransformUtil.transform(
 			_dependencyFeatureFlags, FeatureFlag::getKey, String.class);
 	}

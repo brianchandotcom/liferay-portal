@@ -21,7 +21,7 @@ import java.util.Locale;
  */
 public interface FeatureFlag {
 
-	public String[] getDependencies();
+	public String[] getDependencyKeys();
 
 	public String getDescription(Locale locale);
 

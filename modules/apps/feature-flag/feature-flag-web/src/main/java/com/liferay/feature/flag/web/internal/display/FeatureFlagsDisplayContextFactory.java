@@ -137,7 +137,8 @@ public class FeatureFlagsDisplayContextFactory {
 			featureFlag -> new FeatureFlagDisplay(
 				companyFeatureFlags.getFeatureFlags(
 					featureFlag1 -> ArrayUtil.contains(
-						featureFlag.getDependencies(), featureFlag1.getKey())),
+						featureFlag.getDependencyKeys(),
+						featureFlag1.getKey())),
 				featureFlag, locale));
 
 		Comparator<FeatureFlagDisplay> comparator = Comparator.comparing(

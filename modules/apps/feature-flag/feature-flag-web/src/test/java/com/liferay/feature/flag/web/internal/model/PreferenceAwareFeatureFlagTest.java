@@ -56,8 +56,8 @@ public class PreferenceAwareFeatureFlagTest {
 			0L,
 			preferenceAwareFeatureFlag -> {
 				Assert.assertArrayEquals(
-					_featureFlag.getDependencies(),
-					preferenceAwareFeatureFlag.getDependencies());
+					_featureFlag.getDependencyKeys(),
+					preferenceAwareFeatureFlag.getDependencyKeys());
 				Assert.assertEquals(
 					_featureFlag.getDescription(locale),
 					preferenceAwareFeatureFlag.getDescription(locale));

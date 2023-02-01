@@ -74,9 +74,9 @@ String displayStyle = featureFlagsDisplayContext.getDisplayStyle();
 									<%= featureFlagDisplay.getDescription() %>
 								</h6>
 
-								<c:if test="<%= !ArrayUtil.isEmpty(featureFlagDisplay.getDependencies()) %>">
+								<c:if test="<%= !ArrayUtil.isEmpty(featureFlagDisplay.getDependencyKeys()) %>">
 									<h6>
-										<liferay-ui:message arguments="<%= StringUtil.merge(featureFlagDisplay.getDependencies(), StringPool.COMMA_AND_SPACE) %>" key="dependencies-x" />
+										<liferay-ui:message arguments="<%= StringUtil.merge(featureFlagDisplay.getDependencyKeys(), StringPool.COMMA_AND_SPACE) %>" key="dependencies-x" />
 									</h6>
 								</c:if>
 							</liferay-ui:search-container-column-text>

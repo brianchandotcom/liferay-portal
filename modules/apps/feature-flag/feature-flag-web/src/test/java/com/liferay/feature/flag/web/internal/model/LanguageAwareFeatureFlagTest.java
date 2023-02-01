@@ -73,8 +73,8 @@ public class LanguageAwareFeatureFlagTest {
 	@Test
 	public void testGetOtherValues() {
 		Assert.assertArrayEquals(
-			_featureFlag.getDependencies(),
-			_languageAwareFeatureFlag.getDependencies());
+			_featureFlag.getDependencyKeys(),
+			_languageAwareFeatureFlag.getDependencyKeys());
 		Assert.assertEquals(
 			_featureFlag.getKey(), _languageAwareFeatureFlag.getKey());
 		Assert.assertEquals(

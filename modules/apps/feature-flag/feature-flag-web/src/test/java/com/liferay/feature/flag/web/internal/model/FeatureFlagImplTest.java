@@ -58,20 +58,21 @@ public class FeatureFlagImplTest {
 	}
 
 	@Test
-	public void testGetDependencies() {
+	public void testGetDependencyKeys() {
 		String key = "ABC-123";
 		String value = "ABC-456,XYZ-789";
 
 		withFeatureFlag(
 			featureFlag -> Assert.assertArrayEquals(
-				new String[0], featureFlag.getDependencies()),
+				new String[0], featureFlag.getDependencyKeys()),
 			key);
 
-		PropsUtil.set(FeatureFlagConstants.getKey(key, "dependencies"), value);
+		PropsUtil.set(
+			FeatureFlagConstants.getKey(key, "dependencyKeys"), value);
 
 		withFeatureFlag(
 			featureFlag -> Assert.assertArrayEquals(
-				StringUtil.split(value), featureFlag.getDependencies()),
+				StringUtil.split(value), featureFlag.getDependencyKeys()),
 			key);
 	}
 

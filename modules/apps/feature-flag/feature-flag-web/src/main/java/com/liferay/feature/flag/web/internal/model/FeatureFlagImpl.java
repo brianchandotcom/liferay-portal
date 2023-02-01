@@ -29,7 +29,7 @@ public class FeatureFlagImpl implements FeatureFlag {
 		this(
 			GetterUtil.getStringValues(
 				PropsUtil.getArray(
-					FeatureFlagConstants.getKey(key, "dependencies"))),
+					FeatureFlagConstants.getKey(key, "dependencyKeys"))),
 			GetterUtil.getString(
 				PropsUtil.get(FeatureFlagConstants.getKey(key, "description"))),
 			GetterUtil.getBoolean(
@@ -42,10 +42,10 @@ public class FeatureFlagImpl implements FeatureFlag {
 	}
 
 	public FeatureFlagImpl(
-		String[] dependencies, String description, boolean enabled,
+		String[] dependencyKeys, String description, boolean enabled,
 		FeatureFlagStatus featureFlagStatus, String key, String title) {
 
-		_dependencies = dependencies;
+		_dependencyKeys = dependencyKeys;
 		_description = description;
 		_enabled = enabled;
 		_featureFlagStatus = featureFlagStatus;
@@ -54,8 +54,8 @@ public class FeatureFlagImpl implements FeatureFlag {
 	}
 
 	@Override
-	public String[] getDependencies() {
-		return _dependencies;
+	public String[] getDependencyKeys() {
+		return _dependencyKeys;
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class FeatureFlagImpl implements FeatureFlag {
 		return _enabled;
 	}
 
-	private final String[] _dependencies;
+	private final String[] _dependencyKeys;
 	private final String _description;
 	private final boolean _enabled;
 	private final FeatureFlagStatus _featureFlagStatus;

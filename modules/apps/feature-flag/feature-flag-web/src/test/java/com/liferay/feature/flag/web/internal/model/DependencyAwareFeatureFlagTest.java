@@ -50,7 +50,7 @@ public class DependencyAwareFeatureFlagTest {
 	}
 
 	@Test
-	public void testGetDependencies() {
+	public void testGetDependencyKeys() {
 		_assertArrayEquals();
 		_assertArrayEquals(_disabledFeatureFlag);
 		_assertArrayEquals(_disabledFeatureFlag, _enabledFeatureFlag);
@@ -78,7 +78,7 @@ public class DependencyAwareFeatureFlagTest {
 			featureFlag -> Assert.assertArrayEquals(
 				TransformUtil.transform(
 					featureFlags, FeatureFlag::getKey, String.class),
-				featureFlag.getDependencies()),
+				featureFlag.getDependencyKeys()),
 			featureFlags);
 	}
 

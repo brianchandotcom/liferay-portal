@@ -29,7 +29,7 @@ public class FeatureFlagImpl implements FeatureFlag {
 		this(
 			GetterUtil.getStringValues(
 				PropsUtil.getArray(
-					FeatureFlagConstants.getKey(key, "dependencyKeys"))),
+					FeatureFlagConstants.getKey(key, "dependencies"))),
 			GetterUtil.getString(
 				PropsUtil.get(FeatureFlagConstants.getKey(key, "description"))),
 			GetterUtil.getBoolean(

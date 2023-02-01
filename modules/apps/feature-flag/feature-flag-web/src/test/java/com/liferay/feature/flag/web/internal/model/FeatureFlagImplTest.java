@@ -67,8 +67,7 @@ public class FeatureFlagImplTest {
 				new String[0], featureFlag.getDependencyKeys()),
 			key);
 
-		PropsUtil.set(
-			FeatureFlagConstants.getKey(key, "dependencyKeys"), value);
+		PropsUtil.set(FeatureFlagConstants.getKey(key, "dependencies"), value);
 
 		withFeatureFlag(
 			featureFlag -> Assert.assertArrayEquals(

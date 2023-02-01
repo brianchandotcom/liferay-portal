@@ -53,12 +53,15 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -89,6 +92,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -405,6 +409,31 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_testGetUserAccountsPage("userGroupRoleNames/any(f:f eq 'Test Role')");
 	}
 
+	@Test
+	public void testGetUserAccountsPageWithInheritedRoles() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Group group = GroupTestUtil.addGroup();
+
+		_testGetUserAccountsPageWithInheritedRoles(
+			() -> _groupLocalService.addUserGroup(user.getUserId(), group),
+			group, user);
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_testGetUserAccountsPageWithInheritedRoles(
+			() -> _organizationLocalService.addUserOrganization(
+				user.getUserId(), organization),
+			organization.getGroup(), user);
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_testGetUserAccountsPageWithInheritedRoles(
+			() -> _userGroupLocalService.addUserUserGroup(
+				user.getUserId(), userGroup),
+			userGroup.getGroup(), user);
+	}
+
 	@Override
 	@Test
 	public void testGetUserAccountsPageWithPagination() throws Exception {
@@ -464,38 +493,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				Arrays.asList(userAccount2, userAccount1),
 				(List<UserAccount>)descPage.getItems());
 		}
-	}
-
-	@Test
-	public void testGetUserAccountWithInheritedRole() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		Group group = userGroup.getGroup();
-
-		_roleLocalService.addGroupRole(group.getGroupId(), role);
-
-		UserAccount userAccount = userAccountResource.getUserAccount(
-			user.getUserId());
-
-		RoleBrief[] roleBriefs = userAccount.getRoleBriefs();
-
-		boolean hasInheritedRole = false;
-
-		String roleName = role.getName();
-
-		for (RoleBrief roleBrief : roleBriefs) {
-			if (roleName.equals(roleBrief.getName())) {
-				hasInheritedRole = true;
-			}
-		}
-
-		Assert.assertTrue(hasInheritedRole);
 	}
 
 	@Override
@@ -1311,6 +1308,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return _accountEntry.getAccountEntryId();
 	}
 
+	private boolean _hasRole(User user, Role role) throws Exception {
+		UserAccount userAccount = userAccountResource.getUserAccount(
+			user.getUserId());
+
+		for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
+			if (Objects.equals(role.getRoleId(), roleBrief.getId())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private EmailAddress _randomEmailAddress() throws Exception {
 		return new EmailAddress() {
 			{
@@ -1427,6 +1437,22 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
+	private void _testGetUserAccountsPageWithInheritedRoles(
+			UnsafeRunnable<Exception> associateUserUnsafeRunnable, Group group,
+			User user)
+		throws Exception {
+
+		Role inheritedRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addGroupRole(group.getGroupId(), inheritedRole);
+
+		Assert.assertFalse(_hasRole(user, inheritedRole));
+
+		associateUserUnsafeRunnable.run();
+
+		Assert.assertTrue(_hasRole(user, inheritedRole));
+	}
+
 	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)
 		throws Exception {
 
@@ -1493,9 +1519,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private JSONFactory _jsonFactory;
 
 	private Organization _organization;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
 	private UserAccount _regularUserAccount;
 	private String _regularUserAccountCurrentPassword;
 	private UserAccountResource _regularUserAccountResource;

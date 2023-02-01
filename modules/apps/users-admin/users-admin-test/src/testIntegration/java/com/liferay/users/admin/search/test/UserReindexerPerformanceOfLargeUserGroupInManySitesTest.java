@@ -386,20 +386,20 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	@DeleteAfterTestRun
 	private List<Address> _addresses = new ArrayList<>();
 
-	private int _groupsCount;
-
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
+	private int _groupsCount;
+
 	@DeleteAfterTestRun
 	private List<Organization> _organizations;
-
-	private int _usersCount;
 
 	@DeleteAfterTestRun
 	private List<UserGroup> _userGroups;
 
 	@DeleteAfterTestRun
 	private List<User> _users;
+
+	private int _usersCount;
 
 }

@@ -1119,6 +1119,16 @@ public class BundleSiteInitializerTest {
 		_assertObjectActions(0, objectDefinition3);
 		_assertObjectEntries(0, objectDefinition3, 5);
 		_assertObjectFields(objectDefinition3, 7);
+
+		ObjectDefinition objectDefinition4 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				group.getCompanyId(), "C_TestObjectDefinition4");
+
+		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
+		Assert.assertTrue(objectDefinition4.getAccountEntryRestrictedObjectFieldId() != 0);
+		Assert.assertFalse(objectDefinition4.isSystem());
+		Assert.assertEquals(
+			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private void _assertObjectEntries(

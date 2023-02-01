@@ -52,7 +52,7 @@
 	</tr>
 	<tr>
 		<td>TITLE_FIELD</td>
-		<td>//label[contains(.,'Title Field')]/../select[@class='form-control']</td>
+		<td>//label[contains(.,'Title Field')]/..//input[@class='form-control']</td>
 		<td></td>
 	</tr>
 	<tr>

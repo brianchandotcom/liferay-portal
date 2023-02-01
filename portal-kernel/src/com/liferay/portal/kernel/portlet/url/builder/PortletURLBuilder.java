@@ -324,7 +324,7 @@ public class PortletURLBuilder {
 		public AfterGlobalParameterStep setGlobalParameter(
 			String key, String value) {
 
-			_setParameter(key, URLCodec.encodeURL(value), true);
+			_setParameter(key, URLCodec.encodeURL(value), false);
 
 			return this;
 		}

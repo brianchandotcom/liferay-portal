@@ -35,9 +35,7 @@ import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.felix.service.command.Descriptor;
@@ -72,7 +70,7 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Descriptor("List latest execution result for a specific verify process")
 	public void check(String verifyProcessName) {
 		try {
-			_getVerifyProcesses(_serviceTrackerMap, verifyProcessName);
+			_getVerifyProcess(_serviceTrackerMap, verifyProcessName);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
@@ -118,8 +116,8 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Descriptor("Execute a specific verify process")
 	public void execute(String verifyProcessName) {
 		TeeLoggingUtil.runWithTeeLogging(
-			() -> _executeVerifyProcesses(
-				_getVerifyProcesses(_serviceTrackerMap, verifyProcessName),
+			() -> _executeVerifyProcess(
+				_getVerifyProcess(_serviceTrackerMap, verifyProcessName),
 				verifyProcessName));
 	}
 
@@ -128,8 +126,8 @@ public class VerifyProcessTrackerOSGiCommands {
 		TeeLoggingUtil.runWithTeeLogging(
 			() -> {
 				for (String verifyProcessName : _serviceTrackerMap.keySet()) {
-					_executeVerifyProcesses(
-						_getVerifyProcesses(
+					_executeVerifyProcess(
+						_getVerifyProcess(
 							_serviceTrackerMap, verifyProcessName),
 						verifyProcessName);
 				}
@@ -143,10 +141,10 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 	}
 
-	@Descriptor("Show all verify processes for a specific verify process name")
+	@Descriptor("Show the verify process name if the verify process exists")
 	public void show(String verifyProcessName) {
 		try {
-			_getVerifyProcesses(_serviceTrackerMap, verifyProcessName);
+			_getVerifyProcess(_serviceTrackerMap, verifyProcessName);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
@@ -168,7 +166,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		_bundleContext = bundleContext;
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, VerifyProcess.class, "verify.process.name",
 			new EagerServiceTrackerCustomizer<VerifyProcess, VerifyProcess>() {
 
@@ -199,9 +197,7 @@ public class VerifyProcessTrackerOSGiCommands {
 							 serviceReference.getProperty(
 								 "run.on.portal.upgrade")))) {
 
-						_executeVerifyProcesses(
-							Collections.singletonList(verifyProcess),
-							verifyProcessName);
+						_executeVerifyProcess(verifyProcess, verifyProcessName);
 					}
 
 					return verifyProcess;
@@ -246,8 +242,8 @@ public class VerifyProcessTrackerOSGiCommands {
 		_serviceTrackerMap.close();
 	}
 
-	private void _executeVerifyProcesses(
-		List<VerifyProcess> verifyProcesses, String verifyProcessName) {
+	private void _executeVerifyProcess(
+		VerifyProcess verifyProcess, String verifyProcessName) {
 
 		NotificationThreadLocal.setEnabled(false);
 		StagingAdvicesThreadLocal.setEnabled(false);
@@ -270,33 +266,22 @@ public class VerifyProcessTrackerOSGiCommands {
 			}
 
 			System.out.println(
-				"Executing verifiers registered for " + verifyProcessName);
+				"Executing verify process registered for " + verifyProcessName);
 
-			VerifyException verifyException1 = null;
+			try {
+				verifyProcess.verify();
 
-			for (VerifyProcess verifyProcess : verifyProcesses) {
-				try {
-					verifyProcess.verify();
-				}
-				catch (VerifyException verifyException2) {
-					_log.error(verifyException2);
-
-					verifyException1 = verifyException2;
-				}
-			}
-
-			if (verifyException1 == null) {
 				release.setVerified(true);
 				release.setState(ReleaseConstants.STATE_GOOD);
-
-				_releaseLocalService.updateRelease(release);
 			}
-			else {
+			catch (VerifyException verifyException) {
+				_log.error(verifyException);
+
 				release.setVerified(false);
 				release.setState(ReleaseConstants.STATE_VERIFY_FAILURE);
-
-				_releaseLocalService.updateRelease(release);
 			}
+
+			_releaseLocalService.updateRelease(release);
 		}
 		finally {
 			NotificationThreadLocal.setEnabled(true);
@@ -305,19 +290,19 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 	}
 
-	private List<VerifyProcess> _getVerifyProcesses(
-		ServiceTrackerMap<String, List<VerifyProcess>> verifyProcessTrackerMap,
+	private VerifyProcess _getVerifyProcess(
+		ServiceTrackerMap<String, VerifyProcess> verifyProcessTrackerMap,
 		String verifyProcessName) {
 
-		List<VerifyProcess> verifyProcesses =
-			verifyProcessTrackerMap.getService(verifyProcessName);
+		VerifyProcess verifyProcess = verifyProcessTrackerMap.getService(
+			verifyProcessName);
 
-		if (verifyProcesses == null) {
+		if (verifyProcess == null) {
 			throw new IllegalArgumentException(
 				"No verify processes with name " + verifyProcessName);
 		}
 
-		return verifyProcesses;
+		return verifyProcess;
 	}
 
 	private boolean _isInitialDeployment(VerifyProcess verifyProcess) {
@@ -362,6 +347,6 @@ public class VerifyProcessTrackerOSGiCommands {
 	private ReleaseLocalService _releaseLocalService;
 
 	private ServiceRegistration<?> _serviceRegistration;
-	private ServiceTrackerMap<String, List<VerifyProcess>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, VerifyProcess> _serviceTrackerMap;
 
 }

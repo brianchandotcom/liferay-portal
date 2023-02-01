@@ -44,6 +44,8 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.helper.CollectionPaginationHelper;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -53,6 +55,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -65,6 +68,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -313,6 +317,9 @@ public class GetCollectionFieldMVCResourceCommand
 			_getCustomCollectionSelectorURL(
 				httpServletRequest, itemType, namespace)
 		).put(
+			"isRestricted",
+			!_hasViewPermission(httpServletRequest, listObjectReference)
+		).put(
 			"items", jsonArray
 		).put(
 			"itemSubtype",
@@ -486,6 +493,37 @@ public class GetCollectionFieldMVCResourceCommand
 		return null;
 	}
 
+	private boolean _hasViewPermission(
+		HttpServletRequest httpServletRequest,
+		ListObjectReference listObjectReference) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
+			return true;
+		}
+
+		Class<? extends ListObjectReference> listObjectReferenceClass =
+			listObjectReference.getClass();
+
+		LayoutListPermissionProvider<ListObjectReference>
+			layoutListPermissionProvider =
+				(LayoutListPermissionProvider<ListObjectReference>)
+					_layoutListPermissionProviderRegistry.
+						getLayoutListPermissionProvider(
+							listObjectReferenceClass.getName());
+
+		if (layoutListPermissionProvider == null) {
+			return true;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return layoutListPermissionProvider.hasPermission(
+			themeDisplay.getPermissionChecker(), listObjectReference,
+			ActionKeys.VIEW);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetCollectionFieldMVCResourceCommand.class);
 
@@ -515,6 +553,10 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutListPermissionProviderRegistry
+		_layoutListPermissionProviderRegistry;
 
 	@Reference
 	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;

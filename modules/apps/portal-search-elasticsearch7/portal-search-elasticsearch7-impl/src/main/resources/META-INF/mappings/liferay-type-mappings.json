@@ -1675,6 +1675,10 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"viewCount": {
+				"store": true,
+				"type": "long"
+			},
 			"visible": {
 				"store": true,
 				"type": "keyword"

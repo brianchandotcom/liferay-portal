@@ -266,9 +266,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Audit");
 
+		var browserIPAddress = PropsUtil.get("browser.ip.address");
+
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "ADD",
 			key_resourceName = "UserGroup",
 			resourceAction = "ADD",
@@ -291,7 +293,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "This is only for test",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "UPDATE",
 			key_resourceName = "UserGroup",
 			resourceAction = "UPDATE",
@@ -312,7 +314,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "DELETE",
 			key_resourceName = "UserGroup",
 			resourceAction = "DELETE",
@@ -333,7 +335,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "ADD",
 			key_resourceName = "Role",
 			resourceAction = "ADD",
@@ -366,7 +368,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Role2 Name",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "UPDATE",
 			key_resourceName = "Role",
 			resourceAction = "UPDATE",
@@ -387,7 +389,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "DELETE",
 			key_resourceName = "Role",
 			resourceAction = "DELETE",
@@ -406,9 +408,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Audit");
 
+		var browserIPAddress = PropsUtil.get("browser.ip.address");
+
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "LOGIN",
 			key_resourceName = "User",
 			resourceAction = "LOGIN",
@@ -424,7 +428,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "VIEW",
 			key_resourceName = "Layout",
 			resourceAction = "VIEW",
@@ -444,7 +448,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "LOGOUT",
 			key_resourceName = "User",
 			resourceAction = "LOGOUT",
@@ -468,7 +472,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Failed to authenticate by email address",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "LOGIN_FAILURE",
 			key_resourceName = "User",
 			resourceAction = "LOGIN_FAILURE",

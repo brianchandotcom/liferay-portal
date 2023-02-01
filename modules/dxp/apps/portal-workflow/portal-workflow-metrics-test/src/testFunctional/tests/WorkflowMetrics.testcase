@@ -434,14 +434,14 @@ definition {
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Update");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
 		WorkflowMetrics.searchForAssigneeName(assigneeName = "something else");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
 		WorkflowMetrics.clearAllFilter();
@@ -1109,8 +1109,8 @@ definition {
 			allItemsFilterName = "Process Step",
 			assigneeName = "Update");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
 		WorkflowMetrics.allItemPageFilterCheck(
@@ -1479,14 +1479,14 @@ definition {
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "2Role");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
 		WorkflowMetrics.searchForAssigneeName(assigneeName = "something else");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
 		WorkflowMetrics.clearAllFilter();
@@ -1632,8 +1632,8 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
@@ -1789,8 +1789,8 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver Edited");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(

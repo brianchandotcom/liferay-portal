@@ -450,7 +450,7 @@ definition {
 
 	macro viewNoRules {
 		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "There are no rules yet. Click on plus icon below to add the first.");
 	}
 

@@ -652,8 +652,8 @@ definition {
 
 		WorkflowMetrics.searchForAssigneeName(assigneeName = "ç, é, コン");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 	}
 

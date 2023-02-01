@@ -45,8 +45,9 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 	cssClass="container-view"
 >
 	<c:if test="<%= configurationCategorySectionDisplays.isEmpty() %>">
-		<liferay-ui:empty-result-message
-			message="no-configurations-were-found"
+		<liferay-frontend:empty-result-message
+			animationType="<%= EmptyResultMessageKeys.AnimationType.SEARCH %>"
+			title='<%= LanguageUtil.get(resourceBundle, "no-configurations-were-found") %>'
 		/>
 	</c:if>
 

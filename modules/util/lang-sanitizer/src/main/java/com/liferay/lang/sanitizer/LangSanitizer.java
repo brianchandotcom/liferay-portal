@@ -260,14 +260,6 @@ public class LangSanitizer {
 			return _languageKey;
 		}
 
-		public String getOriginalContent() {
-			return _originalContent;
-		}
-
-		public String getSantizedContent() {
-			return _santizedContent;
-		}
-
 		@Override
 		public String toString() {
 			StringBundler sb = new StringBundler(11);
@@ -275,13 +267,13 @@ public class LangSanitizer {
 			sb.append("File: ");
 			sb.append(_fileName);
 			sb.append(System.lineSeparator());
-			sb.append("Key: ");
+			sb.append("\tKey: ");
 			sb.append(_languageKey);
 			sb.append(System.lineSeparator());
-			sb.append("Original Content: ");
+			sb.append("\tOriginal Content: ");
 			sb.append(_originalContent);
 			sb.append(System.lineSeparator());
-			sb.append("Santized Content: ");
+			sb.append("\tSantized Content: ");
 			sb.append(_santizedContent);
 
 			return sb.toString();

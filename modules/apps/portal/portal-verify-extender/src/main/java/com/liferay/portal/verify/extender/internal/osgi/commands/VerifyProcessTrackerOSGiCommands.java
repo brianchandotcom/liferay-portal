@@ -69,8 +69,11 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	@Descriptor("List latest execution result for a specific verify process")
 	public void check(String verifyProcessName) {
+		VerifyProcess verifyProcess;
+
 		try {
-			_getVerifyProcess(_serviceTrackerMap, verifyProcessName);
+			verifyProcess = _getVerifyProcess(
+				_serviceTrackerMap, verifyProcessName);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
@@ -83,7 +86,10 @@ public class VerifyProcessTrackerOSGiCommands {
 			return;
 		}
 
-		Release release = _releaseLocalService.fetchRelease(verifyProcessName);
+		Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
+
+		Release release = _releaseLocalService.fetchRelease(
+			bundle.getSymbolicName());
 
 		if ((release == null) ||
 			(!release.isVerified() &&
@@ -177,17 +183,16 @@ public class VerifyProcessTrackerOSGiCommands {
 					VerifyProcess verifyProcess = _bundleContext.getService(
 						serviceReference);
 
-					String verifyProcessName = String.valueOf(
-						serviceReference.getProperty("verify.process.name"));
+					Bundle bundle = FrameworkUtil.getBundle(
+						verifyProcess.getClass());
 
 					Release release = _releaseLocalService.fetchRelease(
-						verifyProcessName);
+						bundle.getSymbolicName());
 
 					boolean initialDeployment = _isInitialDeployment(
-						verifyProcess);
+						bundle, release);
 
-					if ((!initialDeployment && (release != null) &&
-						 !release.isVerified()) ||
+					if ((!initialDeployment && !release.isVerified()) ||
 						(GetterUtil.getBoolean(
 							serviceReference.getProperty(
 								"initial.deployment")) &&
@@ -197,7 +202,11 @@ public class VerifyProcessTrackerOSGiCommands {
 							 serviceReference.getProperty(
 								 "run.on.portal.upgrade")))) {
 
-						_executeVerifyProcess(verifyProcess, verifyProcessName);
+						_executeVerifyProcess(
+							verifyProcess,
+							String.valueOf(
+								serviceReference.getProperty(
+									"verify.process.name")));
 					}
 
 					return verifyProcess;
@@ -250,8 +259,10 @@ public class VerifyProcessTrackerOSGiCommands {
 		WorkflowThreadLocal.setEnabled(false);
 
 		try {
+			Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
+
 			Release release = _releaseLocalService.fetchRelease(
-				verifyProcessName);
+				bundle.getSymbolicName());
 
 			if (release == null) {
 
@@ -305,12 +316,8 @@ public class VerifyProcessTrackerOSGiCommands {
 		return verifyProcess;
 	}
 
-	private boolean _isInitialDeployment(VerifyProcess verifyProcess) {
-		Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
-
-		if (_releaseLocalService.fetchRelease(bundle.getSymbolicName()) ==
-				null) {
-
+	private boolean _isInitialDeployment(Bundle bundle, Release release) {
+		if (release == null) {
 			return true;
 		}
 

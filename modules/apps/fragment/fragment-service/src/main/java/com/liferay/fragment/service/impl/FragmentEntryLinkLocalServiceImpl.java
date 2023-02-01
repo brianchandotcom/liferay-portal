@@ -28,8 +28,11 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -53,6 +56,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -576,6 +581,56 @@ public class FragmentEntryLinkLocalServiceImpl
 		}
 
 		return fragmentEntryLinkPersistence.update(fragmentEntryLink);
+	}
+
+	@Override
+	public void updateFragmentEntryLinksByRendererKey(
+		String rendererKey, String configuration, String css, String html,
+		String js, int type) {
+
+		if (Validator.isNull(rendererKey)) {
+			throw new UnsupportedOperationException();
+		}
+
+		Session session = fragmentEntryLinkPersistence.getCurrentSession();
+
+		session.apply(
+			connection -> {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("update FragmentEntryLink SET configuration = ?, ");
+				sb.append("css = ?, html = ?, js = ?, type_ = ?, ");
+				sb.append("lastPropagationDate = ? WHERE rendererKey = ? AND ");
+				sb.append("(configuration != ? OR css != ? OR html != ? OR ");
+				sb.append("js != ? OR type_ != ?)");
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(sb.toString())) {
+
+					preparedStatement.setString(1, configuration);
+					preparedStatement.setString(2, css);
+					preparedStatement.setString(3, html);
+					preparedStatement.setString(4, js);
+					preparedStatement.setInt(5, type);
+					preparedStatement.setDate(6, null);
+					preparedStatement.setString(7, rendererKey);
+					preparedStatement.setString(8, configuration);
+					preparedStatement.setString(9, css);
+					preparedStatement.setString(10, html);
+					preparedStatement.setString(11, js);
+					preparedStatement.setInt(12, type);
+
+					preparedStatement.execute();
+				}
+			});
+
+		session.flush();
+
+		session.clear();
+
+		fragmentEntryLinkPersistence.clearCache();
+
+		EntityCacheUtil.removeCache(FragmentEntryLink.class.getName());
 	}
 
 	@Override

@@ -120,17 +120,30 @@ export function hasErrors(cartItems) {
 	return cartItems.some(({errorMessages}) => Boolean(errorMessages?.length));
 }
 
-export function getCorrectedQuantity(product, sku, cartItems) {
+export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 	const {
 		allowedOrderQuantities,
 		maxOrderQuantity,
 		minOrderQuantity,
-	} = product.productConfiguration;
+		multipleOrderQuantity,
+	} = parentProduct
+		? parentProduct.productConfiguration
+		: product.productConfiguration;
 
-	let quantity = minOrderQuantity;
+	let quantity;
+
+	if (parentProduct) {
+		quantity = minOrderQuantity;
+	}
+
+	if (!allowedOrderQuantities.length) {
+		quantity = minOrderQuantity;
+	}
 
 	const existingItem = cartItems.find(
-		(item) => item.productId === product.productId
+		(item) =>
+			item.productId === product.productId ||
+			item.productId === parentProduct.productId
 	);
 
 	const lastAllowedQuantity =
@@ -157,12 +170,14 @@ export function getCorrectedQuantity(product, sku, cartItems) {
 	}
 	else {
 		quantity = allowedOrderQuantities.find(
-			(quantity) => quantity > minOrderQuantity
+			(quantity) =>
+				quantity > minOrderQuantity &&
+				quantity % multipleOrderQuantity === 0
 		);
+	}
 
-		if (allowedOrderQuantities.includes(minOrderQuantity)) {
-			quantity = minOrderQuantity;
-		}
+	if (multipleOrderQuantity > 1 && quantity % multipleOrderQuantity !== 0) {
+		quantity = 0;
 	}
 
 	if (quantity === 0) {

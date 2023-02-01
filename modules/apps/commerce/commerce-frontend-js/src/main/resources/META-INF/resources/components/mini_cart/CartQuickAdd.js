@@ -116,18 +116,19 @@ export default function CartQuickAdd() {
 
 				const {name, productConfiguration, urls} = parentProduct;
 
+				const adjustedQuantity = getCorrectedQuantity(
+					product,
+					product.sku,
+					cartItems,
+					parentProduct
+				);
+
 				return {
 					...product,
 					name,
 					price: product.price,
 					productURLs: urls,
-					quantity: productConfiguration.allowedOrderQuantities.length
-						? getCorrectedQuantity(
-								parentProduct,
-								product.sku,
-								cartItems
-						  )
-						: productConfiguration.minOrderQuantity,
+					quantity: adjustedQuantity,
 					settings: productConfiguration,
 					sku: product.sku,
 					skuId: product.id,
@@ -136,14 +137,12 @@ export default function CartQuickAdd() {
 			else {
 				const {productConfiguration, skus, urls} = product;
 
-				const {
-					allowedOrderQuantities,
-					minOrderQuantity,
-				} = productConfiguration;
-
-				const adjustedQuantity = allowedOrderQuantities.length
-					? getCorrectedQuantity(product, skus[0].sku, cartItems)
-					: minOrderQuantity;
+				const adjustedQuantity = getCorrectedQuantity(
+					product,
+					skus[0].sku,
+					cartItems,
+					false
+				);
 
 				return {
 					...product,

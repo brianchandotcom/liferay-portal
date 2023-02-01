@@ -103,7 +103,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				user.getCompanyId(), className);
+				className);
 
 		if (objectDefinition == null) {
 			return;

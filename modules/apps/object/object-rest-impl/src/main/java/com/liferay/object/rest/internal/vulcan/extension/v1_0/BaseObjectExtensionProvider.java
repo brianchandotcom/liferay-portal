@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.vulcan.extension.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -62,7 +63,7 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 		}
 
 		return objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-			companyId, internalDTOClassName);
+			internalDTOClassName + StringPool.POUND + companyId);
 	}
 
 	protected long getPrimaryKey(Object entity) throws PortalException {

@@ -360,6 +360,7 @@ export default class SidePanel extends React.Component {
 						<ul className="navbar-nav">
 							<li className="nav-item">
 								<button
+									aria-label={Liferay.Language.get('back')}
 									className="btn btn-unstyled nav-link"
 									onClick={() => this.close()}
 									title={Liferay.Language.get('back')}
@@ -389,6 +390,7 @@ export default class SidePanel extends React.Component {
 					)}
 
 					<ClayButton
+						aria-label={Liferay.Language.get('close')}
 						className={classNames(
 							'fds-side-panel-close',
 							this.state.closeButtonStyle === 'simple' &&

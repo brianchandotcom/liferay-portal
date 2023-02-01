@@ -57,6 +57,7 @@ function NavBar({creationMenu, showSearch}) {
 				{showSearch && (
 					<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 						<ClayButton
+							aria-label={Liferay.Language.get('search')}
 							className="nav-link nav-link-monospaced"
 							displayType="unstyled"
 							onClick={() => setShowMobile(true)}

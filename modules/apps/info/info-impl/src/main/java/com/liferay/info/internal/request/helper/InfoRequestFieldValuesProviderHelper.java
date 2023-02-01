@@ -22,6 +22,7 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
+import com.liferay.info.field.type.MultipleSelectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -122,6 +123,15 @@ public class InfoRequestFieldValuesProviderHelper {
 						infoFieldValues.add(infoFieldValue);
 					}
 				}
+			}
+
+			if (infoField.getInfoFieldType() instanceof
+					MultipleSelectInfoFieldType) {
+
+				infoFieldValues.add(
+					_getInfoFieldValue(
+						infoField, themeDisplay.getLocale(),
+						regularParameterMap.get(infoField.getName())));
 			}
 
 			List<String> regularParameters = regularParameterMap.get(

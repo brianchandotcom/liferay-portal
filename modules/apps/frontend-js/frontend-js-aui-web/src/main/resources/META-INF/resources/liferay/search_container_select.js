@@ -445,6 +445,10 @@ AUI.add(
 					if (!Liferay.SPA) {
 						instance._restoreFromSessionStorage(host);
 
+						host.on('clearFilter', () =>
+							instance._updateSessionWithSelections()
+						);
+
 						window.addEventListener('beforeunload', () => {
 							if (
 								document

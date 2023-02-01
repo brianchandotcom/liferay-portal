@@ -283,6 +283,7 @@ function ManagementToolbar({
 					clearResultsURL={clearResultsURL}
 					filterLabelItems={filterLabelItems}
 					itemsTotal={itemsTotal}
+					searchContainerId={searchContainerId}
 					searchValue={searchValue}
 				/>
 			)}

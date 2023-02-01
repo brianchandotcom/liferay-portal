@@ -62,10 +62,10 @@ public class LangSanitizer {
 
 		long endTime = System.currentTimeMillis();
 
-		Collections.sort(_messages, new SanitizedMessageComparator());
+		Collections.sort(_sanitizedMessage, new SanitizedMessageComparator());
 
-		for (int i = 0; i < _messages.size(); i++) {
-			System.out.println((i + 1) + ": " + _messages.get(i));
+		for (int i = 0; i < _sanitizedMessage.size(); i++) {
+			System.out.println((i + 1) + ": " + _sanitizedMessage.get(i));
 		}
 
 		System.out.println(
@@ -100,7 +100,7 @@ public class LangSanitizer {
 		}
 
 		for (Future<List<SanitizedMessage>> future : futures) {
-			_messages.addAll(future.get());
+			_sanitizedMessage.addAll(future.get());
 		}
 
 		executorService.shutdown();
@@ -220,7 +220,7 @@ public class LangSanitizer {
 		"test-results", "tmp"
 	};
 
-	private static final List<SanitizedMessage> _messages =
+	private static final List<SanitizedMessage> _sanitizedMessage =
 		new CopyOnWriteArrayList<>();
 
 	private final Policy _policy;

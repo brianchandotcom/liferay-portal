@@ -101,7 +101,7 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 					}
 
 					@Override
-					public Stream<String> getSearchClassNamesStream() {
+					public String[] getSearchClassNames() {
 						throw new UnsupportedOperationException();
 					}
 

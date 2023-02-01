@@ -58,7 +58,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -140,7 +139,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				}
 
 				@Override
-				public Stream<String> getSearchClassNamesStream() {
+				public String[] getSearchClassNames() {
 					return null;
 				}
 

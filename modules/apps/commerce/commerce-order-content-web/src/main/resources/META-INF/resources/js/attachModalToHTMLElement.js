@@ -22,12 +22,10 @@ export default function ({HTMLElementId, modalContent, modalTitle}) {
 
 			openModal({
 				bodyHTML: modalContent,
-				center: true,
 				containerProps: {
 					center: true,
-					className: 'modal-height-full',
 				},
-				size: 'xl',
+				size: 'lg',
 				title: modalTitle,
 			});
 		});

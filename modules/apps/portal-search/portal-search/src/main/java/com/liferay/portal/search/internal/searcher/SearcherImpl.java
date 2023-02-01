@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.searcher;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -160,14 +161,9 @@ public class SearcherImpl implements Searcher {
 			collection.addAll(_serviceTrackerMap.getService(contributor));
 		}
 
-		Collection<Function<SearchRequest, SearchRequest>> finalContributors =
-			new ArrayList<>();
-
-		for (SearchRequestContributor searchRequestContributor : collection) {
-			finalContributors.add(searchRequestContributor::contribute);
-		}
-
-		return finalContributors;
+		return TransformUtil.transform(
+			collection,
+			searchRequestContributor -> searchRequestContributor::contribute);
 	}
 
 	private String _getSingleIndexerClassName(

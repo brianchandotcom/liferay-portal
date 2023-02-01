@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.legacy.searcher;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
@@ -387,15 +388,10 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 	@Override
 	public SearchRequestBuilder modelIndexerClasses(Class<?>... classes) {
-		String[] classNames = new String[classes.length];
-
-		for (int i = 0; i < classNames.length; i++) {
-			classNames[i] = classes[i].getCanonicalName();
-		}
-
 		_withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setModelIndexerClassNames(
-				classNames));
+				TransformUtil.transform(
+					classes, Class::getCanonicalName, String.class)));
 
 		return this;
 	}

@@ -16,8 +16,6 @@ package com.liferay.portal.search.spi.model.query.contributor.helper;
 
 import com.liferay.portal.kernel.search.SearchContext;
 
-import java.util.stream.Stream;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -28,7 +26,7 @@ public interface KeywordQueryContributorHelper {
 
 	public String getClassName();
 
-	public Stream<String> getSearchClassNamesStream();
+	public String[] getSearchClassNames();
 
 	public SearchContext getSearchContext();
 

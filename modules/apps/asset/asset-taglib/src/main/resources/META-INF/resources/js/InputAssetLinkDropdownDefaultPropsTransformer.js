@@ -76,7 +76,15 @@ export default function propsTransformer({
 											</p>`);
 
 										rowColumns.push(
-											`<a class="float-right modify-link" data-rowId="${entityId}" href="javascript:void(0);">${additionalProps.removeIcon}</a>`
+											`<span class="float-right lfr-portal-tooltip ml-1">
+												<a 
+													aria-label=${Liferay.Language.get('remove')}
+													class="btn modify-link" data-rowId="${entityId}" href="javascript:void(0);" 
+													title=${Liferay.Language.get('remove')}
+												>
+													${additionalProps.removeIcon}
+												</a>
+											</span>`
 										);
 
 										searchContainer.addRow(

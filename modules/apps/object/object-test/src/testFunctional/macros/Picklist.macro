@@ -219,14 +219,6 @@ definition {
 			value1 = "${nameItem}");
 	}
 
-	macro assertPicklistItemDetails {
-		IFrame.selectTopFrame();
-
-		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
-
-		AssertElementPresent(locator1 = "Picklist#PICKLIST_ITEM_DETAILS");
-	}
-
 	macro assertPicklistItemInTable {
 		Picklist.assertPicklistDetails(title = "Items");
 

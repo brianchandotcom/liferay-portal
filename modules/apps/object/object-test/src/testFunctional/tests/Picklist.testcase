@@ -653,7 +653,15 @@ definition {
 			itemKey = "PicklistItemKeyTest",
 			picklistItemOption = "View");
 
-		Picklist.assertPicklistItemDetails();
+		IFrame.selectTopFrame();
+
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
+
+		AssertValue(
+			key_itemKey = "PicklistItemKeyTest",
+			key_itemName = "Picklist Item Name Test",
+			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
+			value1 = "PicklistItemKeyTest");
 	}
 
 	@description = "LPS-136595 - Verify the empty state message when there is no Picklist"

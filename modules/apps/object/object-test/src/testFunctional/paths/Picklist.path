@@ -67,7 +67,7 @@
 	</tr>
 	<tr>
 		<td>ADD_PICKLIST_ITEM_NAME</td>
-		<td>//input[@id='locale']</td>
+		<td>//input[@id='locale' and @value='${key_itemName}']/ancestor::div[@class='modal-body']//input[@class='form-control' and @value='${key_itemKey}']</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -142,6 +142,7 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 				}
 			)}
 			ref={setElement}
+			role="menuitem"
 			tabIndex={isActive ? 0 : -1}
 		>
 			<div
@@ -185,6 +186,7 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 				{disabled}
 			)}
 			ref={setElement}
+			role="menuitem"
 			tabIndex={isActive ? 0 : -1}
 		>
 			<div ref={handlerRef}>
@@ -312,7 +314,6 @@ const AddButton = ({item, itemIsActive}) => {
 				})
 			}
 			ref={buttonRef}
-			role="application"
 			symbol="plus"
 			tabIndex={itemIsActive ? 0 : -1}
 			title={sub(Liferay.Language.get('add-x'), item.label)}

@@ -148,23 +148,27 @@ export default function TabsPanel({
 							key={index}
 						>
 							{tab.collections.length ? (
-								<ul className="list-unstyled">
+								<ul
+									aria-orientation="vertical"
+									className="list-unstyled"
+									role="menubar"
+								>
 									{tab.collections.map(
 										(collection, index) => (
-									<TabCollection
-										collection={collection}
-										displayStyle={
+											<TabCollection
+												collection={collection}
+												displayStyle={
 													tab.id ===
 													COLLECTION_IDS.widgets
-												? FRAGMENTS_DISPLAY_STYLES.LIST
-												: displayStyle
-										}
-										initialOpen={
-											index <
-											INITIAL_EXPANDED_ITEM_COLLECTIONS
-										}
-										key={index}
-									/>
+														? FRAGMENTS_DISPLAY_STYLES.LIST
+														: displayStyle
+												}
+												initialOpen={
+													index <
+													INITIAL_EXPANDED_ITEM_COLLECTIONS
+												}
+												key={index}
+											/>
 										)
 									)}
 								</ul>

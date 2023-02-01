@@ -53,7 +53,9 @@ export default function TabCollection({
 				))}
 
 			<ul
+				aria-orientation="vertical"
 				className={`list-unstyled page-editor__fragments-widgets__tab-collection-${displayStyle} pb-2 w-100`}
+				role="menu"
 			>
 				{collection.children.map((item) => (
 					<React.Fragment key={item.itemId}>
@@ -119,9 +121,13 @@ function TabCollectionCollapse({children, open, setOpen, title}) {
 	});
 
 	return (
-		<li className="page-editor__collapse panel-group panel-group-flush">
+		<li
+			className="page-editor__collapse panel-group panel-group-flush"
+			role="none"
+		>
 			<button
 				aria-expanded={open}
+				aria-haspopup="menu"
 				className={classNames(
 					'btn',
 					'btn-unstyled',
@@ -133,6 +139,7 @@ function TabCollectionCollapse({children, open, setOpen, title}) {
 				)}
 				onClick={() => setOpen(!open)}
 				ref={setElement}
+				role="menuitem"
 				tabIndex={isActive ? 0 : -1}
 				type="button"
 			>

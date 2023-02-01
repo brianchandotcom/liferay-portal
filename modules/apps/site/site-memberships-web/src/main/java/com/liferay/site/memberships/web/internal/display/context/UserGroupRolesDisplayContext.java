@@ -14,13 +14,13 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,8 +42,6 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -238,21 +237,11 @@ public class UserGroupRolesDisplayContext {
 
 		List<Role> selectedRoles = _getSelectedRoles();
 
-		Stream<Role> stream = roles.stream();
-
-		roles = stream.filter(
-			role -> {
-				if ((_isAssignRoles() && !selectedRoles.contains(role)) ||
-					(!_isAssignRoles() && selectedRoles.contains(role))) {
-
-					return true;
-				}
-
-				return false;
-			}
-		).collect(
-			Collectors.toList()
-		);
+		roles = ListUtil.filter(
+			roles,
+			role ->
+				(_isAssignRoles() && !selectedRoles.contains(role)) ||
+				(!_isAssignRoles() && selectedRoles.contains(role)));
 
 		if (group.isDepot()) {
 			roles = DepotRolesUtil.filterGroupRoles(
@@ -282,18 +271,11 @@ public class UserGroupRolesDisplayContext {
 	}
 
 	private List<Role> _getSelectedRoles() {
-		List<UserGroupGroupRole> userGroupGroupRoles =
+		return TransformUtil.transform(
 			UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(
-				getUserGroupId(), getGroupId());
-
-		Stream<UserGroupGroupRole> stream = userGroupGroupRoles.stream();
-
-		return stream.map(
+				getUserGroupId(), getGroupId()),
 			userGroupGroupRole -> RoleLocalServiceUtil.fetchRole(
-				userGroupGroupRole.getRoleId())
-		).collect(
-			Collectors.toList()
-		);
+				userGroupGroupRole.getRoleId()));
 	}
 
 	private boolean _isAssignRoles() {

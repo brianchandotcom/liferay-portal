@@ -451,6 +451,22 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public String getProcessedEditableValues(
+			FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		String defaultEditableValues = String.valueOf(
+			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+				_getProcessedHTML(
+					fragmentEntryLink,
+					ServiceContextThreadLocal.getServiceContext()),
+				fragmentEntryLink.getConfiguration()));
+
+		return _mergeEditableValues(
+			defaultEditableValues, fragmentEntryLink.getEditableValues());
+	}
+
+	@Override
 	public void updateClassedModel(long plid) {
 		try {
 			_layoutLocalService.updateStatus(

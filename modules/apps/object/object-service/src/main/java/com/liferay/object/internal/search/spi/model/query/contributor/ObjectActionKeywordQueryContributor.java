@@ -46,6 +46,8 @@ public class ObjectActionKeywordQueryContributor
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.NAME, false);
+		_queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, "label", false);
 	}
 
 	@Reference

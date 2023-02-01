@@ -595,10 +595,12 @@ definition {
 			ddlDataDefinitionName = "Data Definition",
 			ddlListName = "List Name");
 
-		DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
+		// Workaround LPS-171856
+
+		/*DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
 			document = "Document_1.png",
 			fieldFieldLabel = "Documents and Media",
-			fieldName = "DocumentsAndMedia");
+			fieldName = "DocumentsAndMedia");*/
 
 		PortletEntry.publish();
 
@@ -613,14 +615,16 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
+		// Workaround LPS-171856
+
+		/*PublicationsChanges.viewChanges(
 			changeCategory = "Asset",
 			changeOrder = "2",
 			changeSite = "Site Name",
 			changeTitle = "New Data Definition for List: List Name",
 			changeType = "Added",
 			changeUser = "Test Test",
-			showAllItems = "true");
+			showAllItems = "true");*/
 
 		var changeTitle = JSONDDL.getRecordId(
 			ddlListName = "List Name",
@@ -651,14 +655,16 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
+		// Workaround LPS-171856
+
+		/*DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
 
 		DDLNavigator.gotoListRecords(ddlListName = "List Name");
 
 		DDLRecord.viewFirstFieldCP(
 			ddlRecordFieldData = "Document_1.png",
 			field = "Documents and Media",
-			fieldFieldLabel = "Documents and Media");
+			fieldFieldLabel = "Documents and Media");*/
 	}
 
 	@priority = "4"

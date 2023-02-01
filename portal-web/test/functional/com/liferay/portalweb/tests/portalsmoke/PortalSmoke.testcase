@@ -162,6 +162,19 @@ definition {
 	}
 
 	@priority = "5"
+	test SmokeWithRewriteBatchedStatements {
+		property database.types = "mariadb,mysql,postgresql,sqlserver";
+		property portal.smoke = "false";
+		property rewrite.batch.statements = "true";
+
+		SignIn.signInTestSetup();
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "5"
 	test SmokeWithRuntimeJSPCompile {
 		property delete.precompiled.jsps = "true";
 		property portal.smoke = "false";

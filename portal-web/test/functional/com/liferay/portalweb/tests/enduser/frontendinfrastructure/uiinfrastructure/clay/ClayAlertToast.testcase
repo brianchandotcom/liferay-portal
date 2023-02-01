@@ -106,7 +106,7 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
-		task ("And there is an action button on it") {
+		task ("And When there is an action button on it") {
 			VerifyElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[contains(@class, 'alert-info')]//a");
 		}
 
@@ -116,9 +116,12 @@ definition {
 
 			Pause(locator1 = "10000");
 
-			AssertElementNotPresent.assertElementNotPresent(
-				key_type = "info",
-				locator1 = "ClayAlertToast#ALERT_TOAST");
+			if (!(IsElementPresent.isElementPresentNoSPARefresh(key_type = "info", locator1 = "ClayAlertToast#ALERT_TOAST"))) {
+				TestUtils.pass(message = "Test passed: Alert toast with action disappeared after 10 seconds");
+			}
+			else {
+				fail("Test failed: Clay Toast alert with action is still present after 10 seconds.");
+			}
 		}
 	}
 

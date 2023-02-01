@@ -344,8 +344,10 @@ public class JournalServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"JournalArticleLocalization", "title", "VARCHAR(800) null"));
 
+		registry.register("4.4.1", "4.4.2", new DummyUpgradeStep());
+
 		registry.register(
-			"4.4.1", "4.4.3",
+			"4.4.2", "4.4.3",
 			new JournalArticleLayoutClassedModelUsageUpgradeProcess(
 				_assetEntryLocalService, _classNameLocalService,
 				_layoutLocalService, _layoutClassedModelUsageLocalService,

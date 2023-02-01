@@ -621,9 +621,7 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/restore_collection_display_config")
 			).put(
-				"restrictedItemIds",
-				ContentUtil.getRestrictedItemIds(
-					_getLayoutStructure(), themeDisplay)
+				"restrictedItemIds", _getRestrictedItemIds()
 			).put(
 				"saveVariantSegmentsExperienceURL",
 				getSaveVariantSegmentsExperienceURL()
@@ -758,7 +756,8 @@ public class ContentPageEditorDisplayContext {
 				ContentUtil.getPageContentsJSONArray(
 					httpServletRequest,
 					portal.getHttpServletResponse(renderResponse),
-					themeDisplay.getPlid(), getSegmentsExperienceId())
+					themeDisplay.getPlid(), _getRestrictedItemIds(),
+					getSegmentsExperienceId())
 			).put(
 				"permissions",
 				() -> {
@@ -1722,6 +1721,17 @@ public class ContentPageEditorDisplayContext {
 			resourceURL.toString(), "p_l_mode", Constants.EDIT);
 	}
 
+	private List<String> _getRestrictedItemIds() throws Exception {
+		if (_restrictedItemIds != null) {
+			return _restrictedItemIds;
+		}
+
+		_restrictedItemIds = ContentUtil.getRestrictedItemIds(
+			_getLayoutStructure(), themeDisplay);
+
+		return _restrictedItemIds;
+	}
+
 	private String _getSegmentsCompanyConfigurationURL() {
 		try {
 			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
@@ -1933,6 +1943,7 @@ public class ContentPageEditorDisplayContext {
 	private final PortletURLFactory _portletURLFactory;
 	private Layout _publishedLayout;
 	private String _redirect;
+	private List<String> _restrictedItemIds;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private Long _segmentsExperienceId;
 	private final SegmentsExperienceManager _segmentsExperienceManager;

@@ -146,6 +146,25 @@ public class ContentUtil {
 	public static JSONArray getPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long plid,
+			List<String> restrictedItemIds, long segmentsExperienceId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
+
+		return _getPageContentsJSONArray(
+			httpServletRequest, httpServletResponse, plid, segmentsExperienceId,
+			layoutStructure, restrictedItemIds);
+	}
+
+	public static JSONArray getPageContentsJSONArray(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long plid,
 			long segmentsExperienceId)
 		throws PortalException {
 
@@ -160,16 +179,9 @@ public class ContentUtil {
 		List<String> restrictedItemIds = getRestrictedItemIds(
 			layoutStructure, themeDisplay);
 
-		List<String> hiddenItemIds = _getHiddenItemIds(
+		return _getPageContentsJSONArray(
+			httpServletRequest, httpServletResponse, plid, segmentsExperienceId,
 			layoutStructure, restrictedItemIds);
-
-		return JSONUtil.concat(
-			_getLayoutClassedModelPageContentsJSONArray(
-				httpServletRequest, layoutStructure, plid, hiddenItemIds,
-				segmentsExperienceId),
-			AssetListEntryUsagesUtil.getPageContentsJSONArray(
-				hiddenItemIds, httpServletRequest, httpServletResponse,
-				layoutStructure, plid, restrictedItemIds));
 	}
 
 	public static List<String> getRestrictedItemIds(
@@ -1024,6 +1036,25 @@ public class ContentUtil {
 					layoutClassedModelUsage.getClassNameId(),
 					layoutClassedModelUsage.getClassPK())
 		);
+	}
+
+	private static JSONArray _getPageContentsJSONArray(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long plid,
+			long segmentsExperienceId, LayoutStructure layoutStructure,
+			List<String> restrictedItemIds)
+		throws PortalException {
+
+		List<String> hiddenItemIds = _getHiddenItemIds(
+			layoutStructure, restrictedItemIds);
+
+		return JSONUtil.concat(
+			_getLayoutClassedModelPageContentsJSONArray(
+				httpServletRequest, layoutStructure, plid, hiddenItemIds,
+				segmentsExperienceId),
+			AssetListEntryUsagesUtil.getPageContentsJSONArray(
+				hiddenItemIds, httpServletRequest, httpServletResponse,
+				layoutStructure, plid, restrictedItemIds));
 	}
 
 	private static long _getPortletClassNameId() {

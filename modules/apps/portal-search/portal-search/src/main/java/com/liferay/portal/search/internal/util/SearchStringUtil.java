@@ -55,19 +55,13 @@ public class SearchStringUtil {
 	}
 
 	public static String[] splitAndUnquote(String s) {
-		List<String> finalStringsList = new ArrayList<>();
+		List<String> finalStrings = new ArrayList<>();
 
 		for (String splitString : StringUtil.split(s.trim(), CharPool.COMMA)) {
-			finalStringsList.add(StringUtil.unquote(splitString.trim()));
+			finalStrings.add(StringUtil.unquote(splitString.trim()));
 		}
 
-		String[] finalStringsArray = new String[finalStringsList.size()];
-
-		for (int i = 0; i < finalStringsArray.length; i++) {
-			finalStringsArray[i] = finalStringsList.get(i);
-		}
-
-		return finalStringsArray;
+		return finalStrings.toArray(new String[0]);
 	}
 
 }

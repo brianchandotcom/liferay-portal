@@ -84,21 +84,15 @@ public class FacetDiscounter {
 
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		for (TermCollector termCollector : termCollectors) {
+		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
 			String term = termCollector.getTerm();
 
 			if (FacetBucketUtil.isFieldInBucket(field, term, _facet)) {
-				_exclude(term);
+				int exclusions = _getExclusions(term);
+
+				_excludedTermsMap.put(term, exclusions + 1);
 			}
 		}
-	}
-
-	private void _exclude(String term) {
-		int exclusions = _getExclusions(term);
-
-		_excludedTermsMap.put(term, exclusions + 1);
 	}
 
 	private int _getExclusions(String term) {

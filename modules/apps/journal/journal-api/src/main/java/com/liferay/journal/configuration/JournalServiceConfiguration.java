@@ -104,12 +104,6 @@ public interface JournalServiceConfiguration {
 	public boolean versionHistoryByDefaultEnabled();
 
 	@Meta.AD(
-		deflt = "false", description = "sync-content-search-on-startup-help",
-		name = "sync-content-search-on-startup", required = false
-	)
-	public boolean syncContentSearchOnStartup();
-
-	@Meta.AD(
 		deflt = "true",
 		description = "journal-article-export-import-processor-cache-enabled-help",
 		name = "journal-article-export-import-processor-cache-enabled",

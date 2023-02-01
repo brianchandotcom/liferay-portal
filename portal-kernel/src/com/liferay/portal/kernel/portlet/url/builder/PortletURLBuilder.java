@@ -330,6 +330,15 @@ public class PortletURLBuilder {
 		}
 
 		@Override
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
+
+			_setParameter(key, valueUnsafeSupplier, false);
+
+			return this;
+		}
+
+		@Override
 		public AfterKeywordsStep setKeywords(String value) {
 			_setParameter("keywords", value, false);
 
@@ -797,6 +806,9 @@ public class PortletURLBuilder {
 
 		public AfterGlobalParameterStep setGlobalParameter(
 			String key, String value);
+
+		public AfterGlobalParameterStep setGlobalParameter(
+			String key, UnsafeSupplier<Object, Exception> valueUnsafeSupplier);
 
 	}
 

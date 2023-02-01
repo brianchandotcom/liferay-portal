@@ -101,6 +101,20 @@ public class UpgradeProcessFactory {
 		};
 	}
 
+	public static UpgradeProcess dropTables(String... tableNames) {
+		return new UpgradeProcess(
+			"drop tables " + Arrays.toString(tableNames)) {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				for (String tableName : tableNames) {
+					dropTable(tableName);
+				}
+			}
+
+		};
+	}
+
 	private static String _getUpgradeInfo(String tableName, String message) {
 		Thread thread = Thread.currentThread();
 

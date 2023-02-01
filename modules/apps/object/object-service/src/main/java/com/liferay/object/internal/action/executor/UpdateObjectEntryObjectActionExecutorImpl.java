@@ -17,8 +17,8 @@ package com.liferay.object.internal.action.executor;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocalUtil;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
-import com.liferay.object.internal.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -109,10 +109,11 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 		}
 
 		boolean skipObjectEntryResourcePermission =
-			ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
+			ObjectEntryThreadLocalUtil.isSkipObjectEntryResourcePermission();
 
 		try {
-			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+			ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
+				true);
 
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
@@ -130,7 +131,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 				});
 		}
 		finally {
-			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+			ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
 				skipObjectEntryResourcePermission);
 		}
 	}

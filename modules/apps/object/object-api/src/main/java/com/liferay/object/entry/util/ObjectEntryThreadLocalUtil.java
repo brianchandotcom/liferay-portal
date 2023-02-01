@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.object.internal.entry.util;
+package com.liferay.object.entry.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Marcela Cunha
  */
-public class ObjectEntryThreadLocal {
+public class ObjectEntryThreadLocalUtil {
 
 	public static boolean isSkipObjectEntryResourcePermission() {
 		return _skipObjectEntryResourcePermissionThreadLocal.get();
@@ -35,7 +35,7 @@ public class ObjectEntryThreadLocal {
 	private static final ThreadLocal<Boolean>
 		_skipObjectEntryResourcePermissionThreadLocal =
 			new CentralizedThreadLocal<>(
-				ObjectEntryThreadLocal.class +
+				ObjectEntryThreadLocalUtil.class +
 					"._skipObjectEntryResourcePermissionThreadLocal",
 				() -> false);
 

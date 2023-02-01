@@ -28,6 +28,15 @@ definition {
 		}
 	}
 
+	@description = "This test checks that an article can be searched for in the admin search bar."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchForArticleInAdmin {
+
+		// TODO LPS-166644
+
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test SearchChildArticleViaSearchPortletPG {

@@ -26,6 +26,42 @@ definition {
 		}
 	}
 
+	@description = "This test checks that articles can be sorted by alphabetical order."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AssetsCanBeSortedByAlphabeticalOrder {
+
+		// TODO LPS-166644
+
+	}
+
+	@description = "This test checks that articles can be sorted by the modified date."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AssetsCanBeSortedByModifiedDate {
+
+		// TODO LPS-166644
+
+	}
+
+	@description = "This test checks that articles can be sorted by priority."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AssetsCanBeSortedByPriority {
+
+		// TODO LPS-166644
+
+	}
+
+	@description = "This test checks that articles can be sorted by view count."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AssetsCanBeSortedByViewCount {
+
+		// TODO LPS-166644
+
+	}
+
 	@e2etest
 	@priority = "5"
 	@refactordone
@@ -264,6 +300,15 @@ definition {
 			kbAddDuplicate = "true",
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
+	}
+
+	@description = "This test checks that the management toolbar displays the checkbox, Filter & Order button, Order By button, search bar, and the info icon"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CorrectActionsAppearInToolbarAfterSelectingFolder {
+
+		// TODO LPS-166644
+
 	}
 
 	@priority = "3"

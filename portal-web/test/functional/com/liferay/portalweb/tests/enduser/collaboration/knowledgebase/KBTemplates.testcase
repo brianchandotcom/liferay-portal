@@ -268,6 +268,15 @@ definition {
 		KBTemplate.viewTemplatesThroughPageTreePanel(kbTemplatesList = "Knowledge Base Template Title Edit");
 	}
 
+	@description = "This test checks checks that the correct actions appear in the management toolbar for a KB template and that it is editable."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanEditTemplateViaToolbar {
+
+		// TODO LPS-166644
+
+	}
+
 	@description = "This test ensures that users can preview the kb template from the center pane."
 	@priority = "5"
 	test CanPreviewTemplateViaCenterPane {
@@ -325,6 +334,15 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Template Title2");
 
 		KBTemplate.viewTemplatesThroughPageTreePanel(kbTemplatesList = "Knowledge Base Template Title1,Knowledge Base Template Title2");
+	}
+
+	@description = "This test checks that the checkbox, Filter & Order button, Order By button, and the search bar options appear in KB templates management toolbar."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CorrectActionsAppearInToolbar {
+
+		// TODO LPS-166644
+
 	}
 
 	@description = "This test covers LPS-120917. It checks that XSS cannot be executed from the KB template name."

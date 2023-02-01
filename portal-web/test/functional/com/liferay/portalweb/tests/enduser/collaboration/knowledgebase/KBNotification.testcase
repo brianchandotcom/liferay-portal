@@ -31,6 +31,15 @@ definition {
 		}
 	}
 
+	@description = "This test checks that a user can subscribe and unsubscribe from an article."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSubscribeToArticleViaToolbar {
+
+		// TODO LPS-166644
+
+	}
+
 	@description = "This test ensures that users can subscribe to the KB home folder from the navigation pane."
 	@priority = "5"
 	test CanSubscribeToHomeFolderViaNavigationPane {

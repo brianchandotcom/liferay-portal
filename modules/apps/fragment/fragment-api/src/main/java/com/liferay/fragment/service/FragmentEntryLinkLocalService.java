@@ -488,6 +488,10 @@ public interface FragmentEntryLinkLocalService
 			boolean updateClassedModel)
 		throws PortalException;
 
+	public void updateFragmentEntryLinksByRendererKey(
+		String rendererKey, String configuration, String css, String html,
+		String js, int type);
+
 	public void updateLatestChanges(
 			FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink)
 		throws PortalException;

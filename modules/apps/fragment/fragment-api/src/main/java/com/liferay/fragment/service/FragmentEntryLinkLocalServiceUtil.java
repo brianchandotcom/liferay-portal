@@ -642,6 +642,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 			fragmentEntryLinkId, editableValues, updateClassedModel);
 	}
 
+	public static void updateFragmentEntryLinksByRendererKey(
+		String rendererKey, String configuration, String css, String html,
+		String js, int type) {
+
+		getService().updateFragmentEntryLinksByRendererKey(
+			rendererKey, configuration, css, html, js, type);
+	}
+
 	public static void updateLatestChanges(
 			com.liferay.fragment.model.FragmentEntry fragmentEntry,
 			FragmentEntryLink fragmentEntryLink)

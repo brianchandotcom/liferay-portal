@@ -46,6 +46,8 @@ definition {
 		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
 			Navigator.openURL();
 
+			ListUtil.add(${orderID}, ${orderIDs});
+
 			var camelCase = StringUtil.replace("${camelCase}", " ", "");
 
 			var payload = StringUtil.replace("${payload}", "${payload}", "${payload}}");

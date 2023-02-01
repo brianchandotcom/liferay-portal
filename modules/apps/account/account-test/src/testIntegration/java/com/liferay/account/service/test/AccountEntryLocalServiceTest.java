@@ -179,7 +179,8 @@ public class AccountEntryLocalServiceTest {
 	public void testAccountEntryObjectValidationRule() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), AccountEntry.class.getName());
+				AccountEntry.class.getName() + StringPool.POUND +
+					TestPropsValues.getCompanyId());
 
 		Class<?> clazz = getClass();
 

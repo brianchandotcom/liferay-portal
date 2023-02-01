@@ -23,6 +23,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -70,7 +71,8 @@ public class ObjectEntryExtensionProviderTest {
 	public static void setUpClass() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), User.class.getName());
+				User.class.getName() + StringPool.POUND +
+					TestPropsValues.getCompanyId());
 
 		_addCustomObjectField(
 			objectDefinition.getObjectDefinitionId(),

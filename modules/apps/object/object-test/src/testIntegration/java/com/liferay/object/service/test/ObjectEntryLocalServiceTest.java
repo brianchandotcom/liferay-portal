@@ -1236,7 +1236,8 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), User.class.getName());
+				User.class.getName() + StringPool.POUND +
+					TestPropsValues.getCompanyId());
 
 		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,

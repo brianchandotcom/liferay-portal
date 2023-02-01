@@ -29,6 +29,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -132,24 +133,20 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_runUpgrade();
 
-		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			_assertLayoutClassedModelUsageCount(
-				publicLayoutExpectedPortletIds.size() +
-					privateLayoutExpectedPortletIds.size());
+		_assertLayoutClassedModelUsageCount(4);
 
-		for (LayoutClassedModelUsage layoutClassedModelUsage :
-				layoutClassedModelUsages) {
+		long portletClassNameId = _classNameLocalService.getClassNameId(
+			Portlet.class.getName());
 
-			if (layoutClassedModelUsage.getPlid() == _publicLayout.getPlid()) {
-				Assert.assertTrue(
-					publicLayoutExpectedPortletIds.contains(
-						layoutClassedModelUsage.getContainerKey()));
-			}
-			else {
-				Assert.assertTrue(
-					privateLayoutExpectedPortletIds.contains(
-						layoutClassedModelUsage.getContainerKey()));
-			}
+		for (String expectedPortletId : publicLayoutExpectedPortletIds) {
+			_assertLayoutClassedModelUsage(
+				expectedPortletId, portletClassNameId, _publicLayout.getPlid());
+		}
+
+		for (String expectedPortletId : privateLayoutExpectedPortletIds) {
+			_assertLayoutClassedModelUsage(
+				expectedPortletId, portletClassNameId,
+				_privateLayout.getPlid());
 		}
 	}
 
@@ -264,9 +261,17 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			articleContentSearches.size());
 	}
 
-	private List<LayoutClassedModelUsage> _assertLayoutClassedModelUsageCount(
-		int expected) {
+	private void _assertLayoutClassedModelUsage(
+		String containerKey, long containerType, long plid) {
 
+		Assert.assertNotNull(
+			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
+				_journalArticleClassNameId,
+				_journalArticle.getResourcePrimKey(), containerKey,
+				containerType, plid));
+	}
+
+	private void _assertLayoutClassedModelUsageCount(int expected) {
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
 				_journalArticleClassNameId,
@@ -275,8 +280,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		Assert.assertEquals(
 			layoutClassedModelUsages.toString(), expected,
 			layoutClassedModelUsages.size());
-
-		return layoutClassedModelUsages;
 	}
 
 	private UpgradeProcess _getUpgradeProcess() {

@@ -55,14 +55,6 @@ public class DBInitUtil {
 		return _dataSource;
 	}
 
-	public static DataSource getReadDataSource() {
-		return _readDataSource;
-	}
-
-	public static DataSource getWriteDataSource() {
-		return _writeDataSource;
-	}
-
 	public static void init() throws Exception {
 		_readDataSource = _initDataSource("jdbc.read.");
 

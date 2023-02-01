@@ -127,7 +127,7 @@ definition {
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "ALL",
-			categoryName = "com.liferay.portal.dao.jdbc.aop.DefaultDynamicDataSourceTargetSource");
+			categoryName = "com.liferay.portal.dao.jdbc.util.DynamicDataSource");
 
 		Smoke.runSmoke();
 
@@ -152,7 +152,7 @@ definition {
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "ALL",
-			categoryName = "com.liferay.portal.dao.jdbc.aop.DefaultDynamicDataSourceTargetSource");
+			categoryName = "com.liferay.portal.dao.jdbc.util.DynamicDataSource");
 
 		Smoke.runSmoke();
 

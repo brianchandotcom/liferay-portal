@@ -53,7 +53,7 @@ function CreationMenu({primaryItems}) {
 
 											item.onClick?.();
 
-											if (item.target) {
+											if (item.href || item.target) {
 												triggerAction(
 													item,
 													frontendDataSetContext
@@ -79,7 +79,7 @@ function CreationMenu({primaryItems}) {
 
 								item.onClick?.();
 
-								if (item.target) {
+								if (item.href || item.target) {
 									triggerAction(item, frontendDataSetContext);
 								}
 							}}

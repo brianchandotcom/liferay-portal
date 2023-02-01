@@ -82,8 +82,11 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.text.Format;
 
@@ -100,7 +103,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -886,13 +888,18 @@ public class WabProcessor {
 	}
 
 	private void _processOSGiConfigurator(Jar jar, Builder analyzer) {
-		Stream<Resource> resources = jar.getResources(
-			resourceName -> resourceName.startsWith("OSGI-INF/configurator/"));
+		Map<String, Resource> resources = jar.getResources();
 
-		if (resources.count() != 0) {
+		for (String resourceName : resources.keySet()) {
+			if (!resourceName.startsWith("OSGI-INF/configurator/")) {
+				continue;
+			}
+
 			_appendProperty(
 				analyzer, Constants.REQUIRE_CAPABILITY,
 				_REQUIRE_CAPABILITY_OSGI_CONFIGURATOR);
+
+			break;
 		}
 	}
 
@@ -1015,18 +1022,25 @@ public class WabProcessor {
 			return;
 		}
 
-		Stream<Path> pathStream = Files.walk(path);
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
 
-		Stream<File> fileStream = pathStream.map(Path::toFile);
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-		fileStream.forEach(
-			entry -> {
-				String pathString = entry.getPath();
+					String pathString = filePath.toString();
 
-				if (pathString.endsWith(suffix)) {
-					_processPropertiesDependencies(
-						analyzer, entry, knownPropertyKeys);
+					if (pathString.endsWith(suffix)) {
+						_processPropertiesDependencies(
+							analyzer, filePath.toFile(), knownPropertyKeys);
+					}
+
+					return FileVisitResult.CONTINUE;
 				}
+
 			});
 	}
 
@@ -1316,17 +1330,25 @@ public class WabProcessor {
 			return;
 		}
 
-		Stream<Path> pathStream = Files.walk(path);
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
 
-		Stream<File> fileStream = pathStream.map(Path::toFile);
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-		fileStream.forEach(
-			entry -> {
-				String pathString = entry.getPath();
+					String pathString = filePath.toString();
 
-				if (pathString.endsWith(suffix)) {
-					_processXMLDependencies(analyzer, entry, _XPATHS_SPRING);
+					if (pathString.endsWith(suffix)) {
+						_processXMLDependencies(
+							analyzer, filePath.toFile(), _XPATHS_SPRING);
+					}
+
+					return FileVisitResult.CONTINUE;
 				}
+
 			});
 	}
 

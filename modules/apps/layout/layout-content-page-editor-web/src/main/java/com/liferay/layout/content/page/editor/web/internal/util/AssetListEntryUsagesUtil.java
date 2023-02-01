@@ -34,13 +34,6 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
-import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
-import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
-import com.liferay.layout.list.retriever.ListObjectReference;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -60,7 +53,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -96,7 +88,7 @@ public class AssetListEntryUsagesUtil {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			LayoutStructure layoutStructure, long plid,
-			List<String> hiddenItemIds)
+			List<String> hiddenItemIds, List<String> restrictedItemIds)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = _jsonFactory.createJSONArray();
@@ -125,7 +117,7 @@ public class AssetListEntryUsagesUtil {
 			mappedContentsJSONArray.put(
 				_getPageContentJSONObject(
 					assetListEntryUsage, httpServletRequest,
-					httpServletResponse, layoutStructure, redirect));
+					httpServletResponse, redirect, restrictedItemIds));
 
 			uniqueAssetListEntryUsagesKeys.add(uniqueKey);
 		}
@@ -185,30 +177,6 @@ public class AssetListEntryUsagesUtil {
 
 		_layoutContentModelResourcePermission =
 			layoutContentModelResourcePermission;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutListPermissionProviderRegistry(
-		LayoutListPermissionProviderRegistry
-			layoutListPermissionProviderRegistry) {
-
-		_layoutListPermissionProviderRegistry =
-			layoutListPermissionProviderRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutListRetrieverRegistry(
-		LayoutListRetrieverRegistry layoutListRetrieverRegistry) {
-
-		_layoutListRetrieverRegistry = layoutListRetrieverRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setListObjectReferenceFactoryRegistry(
-		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry) {
-
-		_listObjectReferenceFactoryRegistry =
-			listObjectReferenceFactoryRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -546,8 +514,8 @@ public class AssetListEntryUsagesUtil {
 	private static JSONObject _getPageContentJSONObject(
 		AssetListEntryUsage assetListEntryUsage,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		LayoutStructure layoutStructure, String redirect) {
+		HttpServletResponse httpServletResponse, String redirect,
+		List<String> restrictedItemIds) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -563,9 +531,17 @@ public class AssetListEntryUsagesUtil {
 			"icon", "list-ul"
 		).put(
 			"isRestricted",
-			!_hasViewPermission(
-				assetListEntryUsage, layoutStructure,
-				themeDisplay.getPermissionChecker())
+			() -> {
+				if ((assetListEntryUsage.getContainerType() ==
+						_getCollectionStyledLayoutStructureItemClassNameId()) &&
+					restrictedItemIds.contains(
+						assetListEntryUsage.getContainerKey())) {
+
+					return true;
+				}
+
+				return false;
+			}
 		).put(
 			"type", _language.get(httpServletRequest, "collection")
 		);
@@ -693,77 +669,6 @@ public class AssetListEntryUsagesUtil {
 		}
 	}
 
-	private static boolean _hasViewPermission(
-		AssetListEntryUsage assetListEntryUsage,
-		LayoutStructure layoutStructure, PermissionChecker permissionChecker) {
-
-		if (assetListEntryUsage.getContainerType() !=
-				_getCollectionStyledLayoutStructureItemClassNameId()) {
-
-			return true;
-		}
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				assetListEntryUsage.getContainerKey());
-
-		if (!(layoutStructureItem instanceof
-				CollectionStyledLayoutStructureItem)) {
-
-			return true;
-		}
-
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				(CollectionStyledLayoutStructureItem)layoutStructureItem;
-
-		JSONObject collectionJSONObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
-		if ((collectionJSONObject == null) ||
-			(collectionJSONObject.length() <= 0)) {
-
-			return true;
-		}
-
-		String type = collectionJSONObject.getString("type");
-
-		LayoutListRetriever<?, ?> layoutListRetriever =
-			_layoutListRetrieverRegistry.getLayoutListRetriever(type);
-
-		if (layoutListRetriever == null) {
-			return true;
-		}
-
-		ListObjectReferenceFactory<?> listObjectReferenceFactory =
-			_listObjectReferenceFactoryRegistry.getListObjectReference(type);
-
-		if (listObjectReferenceFactory == null) {
-			return true;
-		}
-
-		ListObjectReference listObjectReference =
-			listObjectReferenceFactory.getListObjectReference(
-				collectionJSONObject);
-
-		Class<? extends ListObjectReference> listObjectReferenceClass =
-			listObjectReference.getClass();
-
-		LayoutListPermissionProvider<ListObjectReference>
-			layoutListPermissionProvider =
-				(LayoutListPermissionProvider<ListObjectReference>)
-					_layoutListPermissionProviderRegistry.
-						getLayoutListPermissionProvider(
-							listObjectReferenceClass.getName());
-
-		if (layoutListPermissionProvider == null) {
-			return true;
-		}
-
-		return layoutListPermissionProvider.hasPermission(
-			permissionChecker, listObjectReference, ActionKeys.VIEW);
-	}
-
 	private static boolean
 		_isCollectionStyledLayoutStructureItemDeletedOrHidden(
 			AssetListEntryUsage assetListEntryUsage,
@@ -851,11 +756,6 @@ public class AssetListEntryUsagesUtil {
 	private static Language _language;
 	private static LayoutContentModelResourcePermission
 		_layoutContentModelResourcePermission;
-	private static LayoutListPermissionProviderRegistry
-		_layoutListPermissionProviderRegistry;
-	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
-	private static ListObjectReferenceFactoryRegistry
-		_listObjectReferenceFactoryRegistry;
 	private static Portal _portal;
 	private static ResourceActions _resourceActions;
 

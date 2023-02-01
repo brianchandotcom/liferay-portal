@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.term.configuration.CommerceTermEntryConfiguration",
-	service = CheckCommerceTermEntryMessageListener.class
+	service = {}
 )
 public class CheckCommerceTermEntryMessageListener extends BaseMessageListener {
 

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	factory = "com.liferay.notification.internal.messaging.CheckNotificationQueueEntryMessageListener",
-	service = CheckNotificationQueueEntryMessageListener.class
+	service = {}
 )
 public class CheckNotificationQueueEntryMessageListener
 	extends BaseMessageListener {

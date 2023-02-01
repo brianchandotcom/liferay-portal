@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.notification.internal.configuration.CommerceNotificationQueueConfiguration",
-	service = CheckCommerceNotificationQueueEntryMessageListener.class
+	service = {}
 )
 public class CheckCommerceNotificationQueueEntryMessageListener
 	extends BaseMessageListener {

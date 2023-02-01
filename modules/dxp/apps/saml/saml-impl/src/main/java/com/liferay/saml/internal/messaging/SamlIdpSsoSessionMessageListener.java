@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = SamlIdpSsoSessionMessageListener.class
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
 )
 public class SamlIdpSsoSessionMessageListener extends SamlMessageListener {
 

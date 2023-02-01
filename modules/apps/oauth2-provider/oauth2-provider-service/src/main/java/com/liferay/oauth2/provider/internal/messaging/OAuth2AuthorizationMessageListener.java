@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
-	service = OAuth2AuthorizationMessageListener.class
+	service = {}
 )
 public class OAuth2AuthorizationMessageListener extends BaseMessageListener {
 

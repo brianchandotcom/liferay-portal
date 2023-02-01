@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.message.boards.configuration.MBConfiguration",
-	service = ExpireBanMessageListener.class
+	service = {}
 )
 public class ExpireBanMessageListener extends BaseMessageListener {
 

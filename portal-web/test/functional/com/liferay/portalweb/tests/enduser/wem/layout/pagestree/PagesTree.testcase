@@ -983,6 +983,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172548. The user could see load more results in Page Tree when sign in once more."
+	@priority = "4"
+	test ViewLoadMoreResultsWhenSignInOnceMore {
+		task ("Given a user navigates to a site with more than 20 pages") {
+			var i = "1";
+
+			while (("${i}" != "22") && (maxIterations = "30")) {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+
+				var i = ${i} + 1;
+			}
+
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("When the user loads more results on Page Tree") {
+			PagesFinder.goToPagesFinder();
+
+			Click.javaScriptClick(
+				key_text = "Load More Results",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then the user cannot see the Load More Results button") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name 21");
+
+			AssertElementNotPresent(
+				key_text = "Load More Results",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When the user signs in once more") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
+
+		task ("Then the user can see the Load More Results button on Page Tree") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			PagesFinder.goToPagesFinder();
+
+			AssertVisible(
+				key_text = "Load More Results",
+				locator1 = "Button#ANY");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page Name 21",
+				locator1 = "PagesFinder#PAGE_NAME");
+		}
+	}
+
 	@description = "This is a test for LPS-172548. The user could see page from expanded tree in Page Tree after accessing to that page."
 	@priority = "5"
 	test ViewPageFromExpandedTreeAfterNavigateToIt {

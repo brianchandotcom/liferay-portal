@@ -12,6 +12,8 @@
  * details.
  */
 
+import sortedByDate from '../../../../../common/utils/sortedByDate';
+
 const activities = [
 	{
 		activity: 'Requested driving history',
@@ -48,6 +50,6 @@ const activities = [
 		message:
 			'I contacted the insured with the request from the underwriter for a full driving history. Waiting for reply.	',
 	},
-];
+].sort(sortedByDate);
 
 export default activities;

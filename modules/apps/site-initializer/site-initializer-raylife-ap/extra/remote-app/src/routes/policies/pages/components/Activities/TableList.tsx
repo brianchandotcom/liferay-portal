@@ -41,10 +41,10 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 	};
 
 	return (
-		<div>
+		<div className="table-list-container">
 			<div className="bg-neutral-0 d-flex w-100">
 				<div className="align-items-center box-activites col d-flex">
-					<h2 className="border-link-active font ml-1">Activies</h2>
+					<h2 className="border-link-active font mt-2">Activies</h2>
 				</div>
 
 				<div className="align-items-center blue-line-activites border border-bottom box-activites col d-flex position-relative">
@@ -62,7 +62,7 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 								{headers.map(
 									(header: TableHeaders, index: number) => (
 										<Cell
-											className="p-3 text-paragraph-sm"
+											className="pb-5 pt-3 px-3 text-paragraph-sm"
 											headingCell
 											key={index}
 										>
@@ -96,9 +96,9 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 												<div className="p-3">
 													<span
 														className={classnames(
-															'd-flex  w-100',
+															'd-flex w-100',
 															{
-																'font-table': !header.bold,
+																'font-table text-nowrap': !header.bold,
 																'font-table-bold align-items-start':
 																	header.bold,
 															}

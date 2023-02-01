@@ -13,9 +13,6 @@
  */
 
 import './index.scss';
-
-import {useEffect, useState} from 'react';
-
 import useWindowDimensions from '../../../../../hooks/useWindowDimensions';
 import dataActivities from './DataActivities';
 import TableList, {TableHeaders} from './TableList';
@@ -50,27 +47,15 @@ const HEADERSMOBILE: TableHeaders[] = [
 ];
 
 const Activities = () => {
-	const [isMobileSize, setIsMobileSize] = useState(false);
 	const {width} = useWindowDimensions();
 
-	const desktopBreakPoint = 1000;
+	const desktopBreakPoint = 1030;
 
-	useEffect(() => {
-		width > desktopBreakPoint
-			? setIsMobileSize(false)
-			: setIsMobileSize(true);
-	}, [width, isMobileSize]);
+	const isMobile = width < desktopBreakPoint;
 
 	return (
-		<>
-			{isMobileSize ? (
-				<div className="d-flex p-6 policy-detail-content rounded-top w-100">
-					<TableListMobile
-						headers={HEADERSMOBILE}
-						rows={dataActivities}
-					></TableListMobile>
-				</div>
-			) : (
+		<div>
+			{!isMobile ? (
 				<div className="d-flex p-6 policy-detail-content rounded-top">
 					<div className="bg-neutral-0 w-100">
 						<TableList
@@ -79,8 +64,15 @@ const Activities = () => {
 						></TableList>
 					</div>
 				</div>
+			) : (
+				<div className="d-flex p-6 policy-detail-content rounded-top w-100">
+					<TableListMobile
+						headers={HEADERSMOBILE}
+						rows={dataActivities}
+					></TableListMobile>
+				</div>
 			)}
-		</>
+		</div>
 	);
 };
 

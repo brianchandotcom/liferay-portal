@@ -45,7 +45,7 @@ const Panel: React.FC<Props> = ({
 				className={classNames(
 					'align-items-center d-flex justify-content-between layout-panel ml-auto',
 					{
-						'gsdc position-relative box-shadow ':
+						'blue-line-activites position-relative box-shadow ':
 							isPanelExpanded && !hasExpandedButton,
 					}
 				)}

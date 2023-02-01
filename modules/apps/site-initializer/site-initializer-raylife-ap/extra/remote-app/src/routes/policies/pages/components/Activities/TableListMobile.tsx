@@ -47,10 +47,12 @@ const TableListMobile: React.FC<Props> = ({headers, rows}) => {
 		columnOne: string;
 		columnTwo: string;
 	}) => (
-		<div className="d-flex justify-content-between ml-3 my-3">
-			<div className="d-flex font-table ml-2 mr-9">{columnOne}</div>
+		<div className="d-flex ml-3 my-3 w-100">
+			<div className="d-flex font-table ml-2 text-nowrap w-50">
+				{columnOne}
+			</div>
 
-			<div>{columnTwo}</div>
+			<div className="font-table-bold text-nowrap">{columnTwo}</div>
 		</div>
 	);
 
@@ -84,15 +86,17 @@ const TableListMobile: React.FC<Props> = ({headers, rows}) => {
 	}, []);
 
 	return (
-		<div>
-			<div className="bg-neutral-0 w-100">
-				<div className="box-activites col d-flex">
-					<h2 className="border-link-active font ml-1">Activies</h2>
+		<div className="table-list-container">
+			<div className="w-100">
+				<div className="bg-neutral-0 box-activites col d-flex">
+					<h2 className="border-link-active font ml-1 mt-2">
+						Activies
+					</h2>
 				</div>
 
 				<table className="border-right box-table-mobile w-100">
 					<Head>
-						<Row className="border border-header">
+						<Row className="bg-neutral-0 border border-header">
 							{headers.map(
 								(header: TableHeaders, index: number) => (
 									<Cell
@@ -108,7 +112,7 @@ const TableListMobile: React.FC<Props> = ({headers, rows}) => {
 					</Head>
 
 					<Body>
-						<div className="d-block h-100 w-100">
+						<div className="h-100 w-100">
 							{rows.map((row, index: number) => {
 								return (
 									<Row key={index}>
@@ -144,7 +148,7 @@ const TableListMobile: React.FC<Props> = ({headers, rows}) => {
 													displayHistoryPanel(index)
 												}
 											>
-												<div className="bg-message d-flex font-table m-2 mr-3 p-2 rounded">
+												<div className="bg-message bg-neutral-0 d-flex font-table m-2 mr-3 p-2 rounded">
 													{row.message}
 												</div>
 											</Panel>

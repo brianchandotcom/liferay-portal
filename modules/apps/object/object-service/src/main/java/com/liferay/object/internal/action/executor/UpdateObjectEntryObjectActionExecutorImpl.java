@@ -124,7 +124,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 				objectDefinition.getObjectDefinitionId(), false);
 
 		Map<String, Object> objectEntry = (Map<String, Object>)variables.get(
-			"objectEntry");
+			"baseModel");
 
 		objectFields.forEach(
 			objectField -> {

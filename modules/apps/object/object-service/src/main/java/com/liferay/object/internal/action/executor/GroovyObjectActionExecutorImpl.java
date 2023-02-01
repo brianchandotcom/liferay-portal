@@ -55,8 +55,8 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 				_systemObjectDefinitionMetadataRegistry);
 
 		Map<String, Object> results = _objectScriptingExecutor.execute(
-			(Map<String, Object>)inputObjects.get("objectEntry"),
-			new HashSet<>(), parametersUnicodeProperties.get("script"));
+			(Map<String, Object>)inputObjects.get("baseModel"), new HashSet<>(),
+			parametersUnicodeProperties.get("script"));
 
 		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
 			throw new ScriptingException();

@@ -67,7 +67,7 @@ public class NotificationTemplateObjectActionExecutorImpl
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				_systemObjectDefinitionMetadataRegistry);
 
-		termValues = (Map<String, Object>)termValues.get("objectEntry");
+		termValues = (Map<String, Object>)termValues.get("baseModel");
 
 		notificationType.sendNotification(
 			new NotificationContextBuilder(

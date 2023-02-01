@@ -234,7 +234,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			}
 			else {
 				results = objectValidationRuleEngine.execute(
-					(Map<String, Object>)variables.get("objectEntry"),
+					(Map<String, Object>)variables.get("baseModel"),
 					objectValidationRule.getScript());
 			}
 

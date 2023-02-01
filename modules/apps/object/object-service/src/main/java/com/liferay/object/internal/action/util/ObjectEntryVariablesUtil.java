@@ -69,9 +69,9 @@ public class ObjectEntryVariablesUtil {
 				payloadJSONObject, systemObjectDefinitionMetadataRegistry);
 
 			return HashMapBuilder.<String, Object>put(
-				"objectEntry", currentVariables
+				"baseModel", currentVariables
 			).put(
-				"originalObjectEntry",
+				"originalBaseModel",
 				() -> {
 					String suffix = _getSuffix(
 						objectDefinition,
@@ -103,7 +103,7 @@ public class ObjectEntryVariablesUtil {
 			}
 
 			return HashMapBuilder.<String, Object>put(
-				"objectEntry",
+				"baseModel",
 				() -> HashMapBuilder.<String, Object>putAll(
 					(Map<String, Object>)object
 				).putAll(
@@ -124,12 +124,12 @@ public class ObjectEntryVariablesUtil {
 					"status", payloadJSONObject.get("status")
 				).build()
 			).put(
-				"originalObjectEntry", Collections.emptyMap()
+				"originalBaseModel", Collections.emptyMap()
 			).build();
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"objectEntry",
+			"baseModel",
 			() -> {
 				Map<String, Object> variables = new HashMap<>(
 					(Map)payloadJSONObject.get("objectEntry"));
@@ -150,7 +150,7 @@ public class ObjectEntryVariablesUtil {
 				return variables;
 			}
 		).put(
-			"originalObjectEntry", Collections.emptyMap()
+			"originalBaseModel", Collections.emptyMap()
 		).build();
 	}
 
@@ -169,9 +169,9 @@ public class ObjectEntryVariablesUtil {
 				payloadJSONObject, systemObjectDefinitionMetadataRegistry);
 
 			return HashMapBuilder.<String, Object>put(
-				"objectEntry", currentVariables
+				"baseModel", currentVariables
 			).put(
-				"originalObjectEntry",
+				"originalBaseModel",
 				() -> {
 					String suffix = _getSuffix(
 						objectDefinition,
@@ -215,9 +215,9 @@ public class ObjectEntryVariablesUtil {
 					GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
 
 		return HashMapBuilder.<String, Object>put(
-			"objectEntry", variables
+			"baseModel", variables
 		).put(
-			"originalObjectEntry", Collections.emptyMap()
+			"originalBaseModel", Collections.emptyMap()
 		).build();
 	}
 
@@ -249,11 +249,11 @@ public class ObjectEntryVariablesUtil {
 						).withDDMExpressionParameterAccessor(
 							new ObjectEntryDDMExpressionParameterAccessor(
 								(Map<String, Object>)variables.get(
-									"originalObjectEntry"))
+									"originalBaseModel"))
 						).build());
 
 				ddmExpression.setVariables(
-					(Map<String, Object>)variables.get("objectEntry"));
+					(Map<String, Object>)variables.get("baseModel"));
 
 				value = ddmExpression.evaluate();
 			}

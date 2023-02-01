@@ -162,12 +162,11 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 					conditionExpression
 				).withDDMExpressionParameterAccessor(
 					new ObjectEntryDDMExpressionParameterAccessor(
-						(Map<String, Object>)variables.get(
-							"originalObjectEntry"))
+						(Map<String, Object>)variables.get("originalBaseModel"))
 				).build());
 
 		ddmExpression.setVariables(
-			(Map<String, Object>)variables.get("objectEntry"));
+			(Map<String, Object>)variables.get("baseModel"));
 
 		return ddmExpression.evaluate();
 	}

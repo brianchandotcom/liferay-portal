@@ -55,16 +55,15 @@ public class DDMObjectValidationRuleEngineImpl
 						script
 					).withDDMExpressionFieldAccessor(
 						new ObjectEntryDDMExpressionFieldAccessor(
-							(Map<String, Object>)inputObjects.get(
-								"objectEntry"))
+							(Map<String, Object>)inputObjects.get("baseModel"))
 					).withDDMExpressionParameterAccessor(
 						new ObjectEntryDDMExpressionParameterAccessor(
 							(Map<String, Object>)inputObjects.get(
-								"originalObjectEntry"))
+								"originalBaseModel"))
 					).build());
 
 			ddmExpression.setVariables(
-				(Map<String, Object>)inputObjects.get("objectEntry"));
+				(Map<String, Object>)inputObjects.get("baseModel"));
 
 			results.put("invalidFields", !ddmExpression.evaluate());
 		}

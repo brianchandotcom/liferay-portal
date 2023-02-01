@@ -49,6 +49,7 @@ page import="com.liferay.change.tracking.web.internal.display.context.ViewSchedu
 page import="com.liferay.change.tracking.web.internal.display.context.ViewTemplatesDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewTemplatesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission" %><%@
+page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

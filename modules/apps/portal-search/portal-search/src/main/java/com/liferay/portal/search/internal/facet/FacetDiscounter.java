@@ -82,10 +82,16 @@ public class FacetDiscounter {
 			return;
 		}
 
-		List<String> terms = _findTermsOfField(field);
+		FacetCollector facetCollector = _facet.getFacetCollector();
 
-		for (String term : terms) {
-			_exclude(term);
+		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+
+		for (TermCollector termCollector : termCollectors) {
+			String term = termCollector.getTerm();
+
+			if (FacetBucketUtil.isFieldInBucket(field, term, _facet)) {
+				_exclude(term);
+			}
 		}
 	}
 
@@ -93,24 +99,6 @@ public class FacetDiscounter {
 		int exclusions = _getExclusions(term);
 
 		_excludedTermsMap.put(term, exclusions + 1);
-	}
-
-	private List<String> _findTermsOfField(Field field) {
-		FacetCollector facetCollector = _facet.getFacetCollector();
-
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		List<String> termsOfField = new ArrayList<>();
-
-		for (TermCollector termCollector : termCollectors) {
-			String term = termCollector.getTerm();
-
-			if (FacetBucketUtil.isFieldInBucket(field, term, _facet)) {
-				termsOfField.add(term);
-			}
-		}
-
-		return termsOfField;
 	}
 
 	private int _getExclusions(String term) {

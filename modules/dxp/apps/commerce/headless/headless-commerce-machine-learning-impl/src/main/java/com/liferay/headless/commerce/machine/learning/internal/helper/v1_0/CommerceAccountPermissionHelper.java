@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,13 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceAccountPermissionHelper {
 
 	public List<Long> filterCommerceAccountIds(List<Long> accountIds) {
-		Stream<Long> accountIdsStream = accountIds.stream();
-
-		return accountIdsStream.filter(
-			this::_contains
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(accountIds, this::_contains);
 	}
 
 	private boolean _contains(long commerceAccountId) {

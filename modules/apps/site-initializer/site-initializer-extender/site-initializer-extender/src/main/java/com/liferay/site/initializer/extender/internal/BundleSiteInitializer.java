@@ -2242,11 +2242,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
 
-		if (Objects.equals(type, "widget")) {
-			type = LayoutConstants.TYPE_PORTLET;
-		}
-		else if (Objects.equals(type, "url")) {
+		if (Objects.equals(type, "url")) {
 			type = LayoutConstants.TYPE_URL;
+		}
+		else if (Objects.equals(type, "widget")) {
+			type = LayoutConstants.TYPE_PORTLET;
 		}
 
 		Map<Locale, String> friendlyURLMap = new HashMap<>(
@@ -2276,21 +2276,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 			type, null, jsonObject.getBoolean("hidden"),
 			jsonObject.getBoolean("system"), friendlyURLMap, serviceContext);
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		JSONArray typeSettingsJSONObject = jsonObject.getJSONArray(
+		JSONArray typeSettingsJSONArray = jsonObject.getJSONArray(
 			"typeSettings");
 
-		for (int i = 0; i < typeSettingsJSONObject.length(); i++) {
-			JSONObject jsonObject1 = typeSettingsJSONObject.getJSONObject(i);
+		if (typeSettingsJSONArray != null) {
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-			unicodeProperties.put(
-				jsonObject1.getString("key"), jsonObject1.getString("value"));
+			for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
+				JSONObject propertiesJSONObject =
+					typeSettingsJSONArray.getJSONObject(i);
+
+				unicodeProperties.put(
+					propertiesJSONObject.getString("key"),
+					propertiesJSONObject.getString("value"));
+			}
+
+			layout = _layoutLocalService.updateLayout(
+				serviceContext.getScopeGroupId(), false, layout.getLayoutId(),
+				unicodeProperties.toString());
 		}
-
-		layout = _layoutLocalService.updateLayout(
-			serviceContext.getScopeGroupId(), false, layout.getLayoutId(),
-			unicodeProperties.toString());
 
 		_setResourcePermissions(
 			layout.getCompanyId(), layout.getModelClassName(),

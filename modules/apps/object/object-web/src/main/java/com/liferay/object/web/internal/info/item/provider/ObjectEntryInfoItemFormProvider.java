@@ -208,8 +208,10 @@ public class ObjectEntryInfoItemFormProvider
 					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
 
 			finalStep.attribute(
-				TextInfoFieldType.MAX_LENGTH,
-				_getMaxLength(objectField, 65000));
+				TextInfoFieldType.MAX_LENGTH, _getMaxLength(objectField, 65000)
+			).attribute(
+				TextInfoFieldType.MULTILINE, true
+			);
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

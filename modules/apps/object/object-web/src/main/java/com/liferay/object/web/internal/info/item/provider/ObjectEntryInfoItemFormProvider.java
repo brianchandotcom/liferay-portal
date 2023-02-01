@@ -21,6 +21,7 @@ import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -204,6 +205,14 @@ public class ObjectEntryInfoItemFormProvider
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
+
+			finalStep.attribute(
+				TextInfoFieldType.MAX_LENGTH,
+				_getMaxLength(objectField, 65000));
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
 				 Objects.equals(
 					 objectField.getBusinessType(),
@@ -249,6 +258,13 @@ public class ObjectEntryInfoItemFormProvider
 			).attribute(
 				RelationshipInfoFieldType.VALUE_FIELD_NAME, "id"
 			);
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+			finalStep.attribute(
+				TextInfoFieldType.MAX_LENGTH, _getMaxLength(objectField, 280));
 		}
 
 		return finalStep.build();
@@ -401,6 +417,19 @@ public class ObjectEntryInfoItemFormProvider
 		}
 
 		return maximumFileSize;
+	}
+
+	private long _getMaxLength(ObjectField objectField, long defaultMaxLength) {
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "maxLength");
+
+		if (objectFieldSetting == null) {
+			return defaultMaxLength;
+		}
+
+		return GetterUtil.getLong(
+			objectFieldSetting.getValue(), defaultMaxLength);
 	}
 
 	private InfoFieldSet _getObjectDefinitionInfoFieldSet(

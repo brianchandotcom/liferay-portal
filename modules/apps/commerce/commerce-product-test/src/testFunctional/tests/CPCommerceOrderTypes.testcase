@@ -220,6 +220,40 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
+	@priority = 3
+	test CannotSelectOrderTypeEligibilitiesTwice {
+		property portal.acceptance = "false";
+
+		task ("Given an order type is created") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeName = "Order Type Test");
+		}
+
+		task ("When the admin navigates to the order type entry") {
+			CommerceOrders.openOrderTypesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Order Type Test");
+		}
+
+		task ("And sets the channel eligibility for the order type") {
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+		}
+
+		task ("And selects again the same channel eligibility") {
+			CommerceEntry.setEntryEligibility(
+				channelsEligibility = "Minium Portal",
+				unpublish = "true");
+		}
+
+		task ("Then an error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "Duplicate order type relation");
+		}
+	}
+
 	@description = "Verify users can create a new order type."
 	@priority = 3
 	test CreateOrderType {

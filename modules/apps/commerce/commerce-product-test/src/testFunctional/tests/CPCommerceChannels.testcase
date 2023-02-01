@@ -710,6 +710,117 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
+	@priority = 3
+	test CannotSelectPaymentMethodEligibilitiesTwice {
+		property portal.acceptance = "false";
+
+		task ("Given an active payment term is created") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(termsType = "Payment");
+		}
+
+		task ("And an order type is created") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeName = "Order Type Test");
+		}
+
+		task ("And Money Order payment method is set as active") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And Money Order's eligibility is set specifically to Payment Term 1 and Order Type Test") {
+			CommerceEntry.setEntryEligibility(
+				orderTypesEligibility = "Order Type Test",
+				paymentMethod = "Money Order",
+				paymentTermsEligibility = "Payment Term 1");
+		}
+
+		task ("When the admin selects the same order type eligibility once again") {
+			CommerceEntry.setEntryEligibility(
+				orderTypesEligibility = "Order Type Test",
+				unpublish = "true");
+		}
+
+		task ("Then an error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+		}
+
+		task ("When the admin selects the same term eligibility once again") {
+			CommerceEntry.setEntryEligibility(
+				paymentTermsEligibility = "Payment Term 1",
+				unpublish = "true");
+		}
+
+		task ("Then an error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
+	@priority = 3
+	test CannotSelectShippingMethodEligibilitiesTwice {
+		property portal.acceptance = "false";
+
+		task ("Given an active delivery term is created") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(termsType = "Delivery");
+		}
+
+		task ("And an order type is created") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeName = "Order Type Test");
+		}
+
+		task ("And the admin navigates to Minium Portal channel entry") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		}
+
+		task ("And Flat Rate's eligibility is set specifically to Delivery Term 1 and Order Type Test") {
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 1",
+				orderTypesEligibility = "Order Type Test",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("When the admin selects the same order type eligibility once again") {
+			CommerceNavigator.gotoEntry(entryName = "Standard Delivery");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_panel = "Details",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(
+				orderTypesEligibility = "Order Type Test",
+				unpublish = "true");
+		}
+
+		task ("Then an error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+		}
+
+		task ("When the admin selects the same term eligibility once again") {
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 1",
+				unpublish = "true");
+		}
+
+		task ("Then an error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+		}
+	}
+
 	@description = "Test for COMMERCE-9432 | Can paginate Payment and Shipping Restrictions pages"
 	@priority = 3
 	test CanPaginatePaymentAndShippingRestrictions {

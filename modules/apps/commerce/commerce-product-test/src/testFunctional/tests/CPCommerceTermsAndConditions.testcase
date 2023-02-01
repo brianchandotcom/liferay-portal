@@ -347,6 +347,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
+	@priority = 3
+	test CannotSelectTermEligibilityTwice {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an order type is created") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeName = "Order Type Test");
+		}
+
+		task ("And a term is created") {
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "Payment Term",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = 1);
+		}
+
+		task ("When the admin sets the order type eligibility for the term") {
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(orderTypesEligibility = "Order Type Test");
+		}
+
+		task ("And selects the same order type eligibility once again") {
+			CommerceEntry.setEntryEligibility(
+				orderTypesEligibility = "Order Type Test",
+				unpublish = "true");
+		}
+
+		task ("Then an error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "The qualifier is already linked.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-8333. Deleting an account default delivery term will revert to Use Priority Settings"
 	@priority = 4
 	test RemoveADeliveryTermLinkedToAnAccountAsDefaultOne {

@@ -146,4 +146,78 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
+	@priority = 3
+	test CannotSelectPromotionEligibilitiesTwice {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And an order type is created") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeName = "Order Type Test");
+		}
+
+		task ("And a promotion is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
+		}
+
+		task ("When the admin navigates to the promotion's entry") {
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Promotion");
+		}
+
+		task ("And sets the eligibilities for the promotion") {
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(
+				accountsEligibility = "Commerce Account",
+				channelsEligibility = "Minium Portal",
+				orderTypesEligibility = "Order Type Test");
+		}
+
+		task ("And sets again the same eligibility for channel") {
+			CommerceEntry.setEntryEligibility(
+				channelsEligibility = "Minium Portal",
+				unpublish = "true");
+		}
+
+		task ("Then an error message shows up") {
+			Alert.viewErrorMessage(errorMessage = "Duplicate channel relation");
+		}
+
+		task ("When the admin sets again the same eligibility for account") {
+			CommerceEntry.setEntryEligibility(
+				accountsEligibility = "Commerce Account",
+				unpublish = "true");
+		}
+
+		task ("Then an error message shows up") {
+			Alert.viewErrorMessage(errorMessage = "Duplicate account relation");
+		}
+
+		task ("When the admin sets again the same eligibility for order type") {
+			CommerceEntry.setEntryEligibility(
+				orderTypesEligibility = "Order Type Test",
+				unpublish = "true");
+		}
+
+		task ("Then an error message shows up") {
+			Alert.viewErrorMessage(errorMessage = "Duplicate order type relation");
+		}
+	}
+
 }

@@ -57,33 +57,7 @@ public class JournalContentPortletConfigurationListener
 		}
 
 		try {
-			long groupId = GetterUtil.getLong(
-				portletPreferences.getValue("groupId", "0"));
-
-			if (groupId == 0) {
-				return;
-			}
-
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if (group == null) {
-				return;
-			}
-
-			String lfrScopeType = portletPreferences.getValue(
-				"lfrScopeType", StringPool.BLANK);
-
-			if (group.isCompany() && Objects.equals("company", lfrScopeType)) {
-				return;
-			}
-
-			if (group.isLayout() && Objects.equals("layout", lfrScopeType)) {
-				return;
-			}
-
-			if (!group.isCompany() && !group.isLayout() &&
-				Validator.isNull(lfrScopeType)) {
-
+			if (!_resetValues(portletPreferences)) {
 				return;
 			}
 
@@ -101,6 +75,40 @@ public class JournalContentPortletConfigurationListener
 
 			throw new PortletConfigurationListenerException(exception);
 		}
+	}
+
+	private boolean _resetValues(PortletPreferences portletPreferences) {
+		long groupId = GetterUtil.getLong(
+			portletPreferences.getValue("groupId", "0"));
+
+		if (groupId == 0) {
+			return false;
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return false;
+		}
+
+		String lfrScopeType = portletPreferences.getValue(
+			"lfrScopeType", StringPool.BLANK);
+
+		if (group.isCompany() && Objects.equals("company", lfrScopeType)) {
+			return false;
+		}
+
+		if (group.isLayout() && Objects.equals("layout", lfrScopeType)) {
+			return false;
+		}
+
+		if (!group.isCompany() && !group.isLayout() &&
+			Validator.isNull(lfrScopeType)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

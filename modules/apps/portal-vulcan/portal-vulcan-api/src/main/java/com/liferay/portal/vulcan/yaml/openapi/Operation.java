@@ -27,6 +27,10 @@ public class Operation {
 		return _description;
 	}
 
+	public OperationDefinition getOperationDefinition() {
+		return _operationDefinition;
+	}
+
 	public String getOperationId() {
 		return _operationId;
 	}
@@ -51,6 +55,12 @@ public class Operation {
 		_description = description;
 	}
 
+	public void setOperationDefinition(
+		OperationDefinition operationDefinition) {
+
+		_operationDefinition = operationDefinition;
+	}
+
 	public void setOperationId(String operationId) {
 		_operationId = operationId;
 	}
@@ -72,6 +82,7 @@ public class Operation {
 	}
 
 	private String _description;
+	private OperationDefinition _operationDefinition;
 	private String _operationId;
 	private List<Parameter> _parameters = new ArrayList<>();
 	private RequestBody _requestBody;

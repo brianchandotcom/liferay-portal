@@ -389,6 +389,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172548. The user could expand parent node by single click when there are more than 20 child pages."
+	@priority = "4"
+	test ExpandParentNodeBySingleClickWhenMoreThan20ChildPages {
+		task ("Given a user navigates to a site with a parent page and more than 20 child pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page Name");
+
+			var i = "1";
+
+			while (("${i}" != "22") && (maxIterations = "30")) {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Child Page Name ${i}",
+					parentLayoutName = "Test Parent Page Name");
+
+				var i = ${i} + 1;
+			}
+
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("When the user navigates to the Page Tree") {
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then the user can expand the parent node by single click") {
+			Click(
+				key_nodeName = "Test Parent Page Name",
+				locator1 = "Treeview#NODE_EXPANDED");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page Name 20",
+				locator1 = "PagesFinder#PAGE_NAME");
+
+			Click(locator1 = "Treeview#NODE_COLLAPSED");
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Child Page Name 20");
+		}
+	}
+
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
 	@priority = "5"
 	test NavigateToBothPageTypes {

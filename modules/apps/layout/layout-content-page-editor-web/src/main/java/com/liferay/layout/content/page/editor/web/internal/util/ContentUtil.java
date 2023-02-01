@@ -169,8 +169,8 @@ public class ContentUtil {
 				httpServletRequest, layoutStructure, plid, hiddenItemIds,
 				segmentsExperienceId),
 			AssetListEntryUsagesUtil.getPageContentsJSONArray(
-				httpServletRequest, httpServletResponse, layoutStructure, plid,
-				hiddenItemIds,
+				hiddenItemIds, httpServletRequest, httpServletResponse,
+				layoutStructure, plid,
 				ListUtil.toList(
 					restrictedLayoutStructureItems,
 					layoutStructureItem -> layoutStructureItem.getItemId())));

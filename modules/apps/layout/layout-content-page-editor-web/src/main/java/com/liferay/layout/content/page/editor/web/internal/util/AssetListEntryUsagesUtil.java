@@ -85,10 +85,10 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetListEntryUsagesUtil {
 
 	public static JSONArray getPageContentsJSONArray(
-			HttpServletRequest httpServletRequest,
+			List<String> hiddenItemIds, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			LayoutStructure layoutStructure, long plid,
-			List<String> hiddenItemIds, List<String> restrictedItemIds)
+			List<String> restrictedItemIds)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = _jsonFactory.createJSONArray();
@@ -107,9 +107,9 @@ public class AssetListEntryUsagesUtil {
 
 			if (uniqueAssetListEntryUsagesKeys.contains(uniqueKey) ||
 				_isCollectionStyledLayoutStructureItemDeletedOrHidden(
-					assetListEntryUsage, layoutStructure, hiddenItemIds) ||
+					assetListEntryUsage, hiddenItemIds, layoutStructure) ||
 				_isFragmentEntryLinkDeletedOrHidden(
-					assetListEntryUsage, layoutStructure, hiddenItemIds)) {
+					assetListEntryUsage, hiddenItemIds, layoutStructure)) {
 
 				continue;
 			}
@@ -671,8 +671,8 @@ public class AssetListEntryUsagesUtil {
 
 	private static boolean
 		_isCollectionStyledLayoutStructureItemDeletedOrHidden(
-			AssetListEntryUsage assetListEntryUsage,
-			LayoutStructure layoutStructure, List<String> hiddenItemIds) {
+			AssetListEntryUsage assetListEntryUsage, List<String> hiddenItemIds,
+			LayoutStructure layoutStructure) {
 
 		if (assetListEntryUsage.getContainerType() !=
 				_getCollectionStyledLayoutStructureItemClassNameId()) {
@@ -702,8 +702,8 @@ public class AssetListEntryUsagesUtil {
 	}
 
 	private static boolean _isFragmentEntryLinkDeletedOrHidden(
-		AssetListEntryUsage assetListEntryUsage,
-		LayoutStructure layoutStructure, List<String> hiddenItemIds) {
+		AssetListEntryUsage assetListEntryUsage, List<String> hiddenItemIds,
+		LayoutStructure layoutStructure) {
 
 		if (assetListEntryUsage.getContainerType() !=
 				_getFragmentEntryLinkClassNameId()) {

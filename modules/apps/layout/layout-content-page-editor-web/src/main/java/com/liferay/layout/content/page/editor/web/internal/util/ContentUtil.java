@@ -1014,6 +1014,8 @@ public class ContentUtil {
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK())
 		).put(
+			"isRestricted", false
+		).put(
 			"status", _getStatusJSONObject(layoutClassedModelUsage)
 		).put(
 			"subtype",

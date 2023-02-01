@@ -51,6 +51,12 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -62,6 +68,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -157,10 +166,7 @@ public class UserResourceDTOConverter
 					organization -> _toOrganizationBrief(
 						dtoConverterContext, organization, user),
 					OrganizationBrief.class);
-				roleBriefs = TransformUtil.transformToArray(
-					_roleLocalService.getUserRoles(user.getUserId()),
-					role -> _toRoleBrief(dtoConverterContext, role),
-					RoleBrief.class);
+				roleBriefs = _getRoleBriefs(dtoConverterContext, user);
 				siteBriefs = TransformUtil.transformToArray(
 					_groupLocalService.getGroups(
 						user.getCompanyId(),
@@ -236,6 +242,27 @@ public class UserResourceDTOConverter
 					});
 			}
 		};
+	}
+
+	private RoleBrief[] _getRoleBriefs(
+			DTOConverterContext dtoConverterContext, User user)
+		throws Exception {
+
+		List<RoleBrief> roleBriefs = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		UserBag userBag = UserBagFactoryUtil.create(user.getUserId());
+
+		for (Role role : userBag.getRoles()) {
+			if (_roleModelResourcePermission.contains(
+					permissionChecker, role, ActionKeys.VIEW)) {
+
+				roleBriefs.add(_toRoleBrief(dtoConverterContext, role));
+			}
+		}
+
+		return roleBriefs.toArray(new RoleBrief[0]);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group) {
@@ -380,6 +407,11 @@ public class UserResourceDTOConverter
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Role)"
+	)
+	private ModelResourcePermission<Role> _roleModelResourcePermission;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

@@ -25,10 +25,10 @@ public class EmptyResultMessageKeys {
 		if (animationType == AnimationType.EMPTY) {
 			return "taglib-empty-state";
 		}
-		else if (animationType == AnimationType.SEARCH) {
+		else if (animationType == AnimationType.SUCCESS) {
 			return "taglib-success-state";
 		}
-		else if (animationType == AnimationType.SUCCESS) {
+		else if (animationType == AnimationType.SEARCH) {
 			return "taglib-search-state";
 		}
 

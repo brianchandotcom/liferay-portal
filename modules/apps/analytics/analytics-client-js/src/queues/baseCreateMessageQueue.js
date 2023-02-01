@@ -56,13 +56,12 @@ class BaseCreateMessageQueue extends BaseQueue {
 		const filteredResults = results.filter(
 			(message) => message && message.value && message.value.events
 		);
-
 		const updatedItems = removeDups(filteredResults, items);
+
 		setItem(this.name, updatedItems);
 
-		if (filteredResults.length === results.length) {
-			this.analyticsInstance.resetContext();
-		}
+		this.analyticsInstance.resetContext();
+		this.reset();
 	}
 
 	/**

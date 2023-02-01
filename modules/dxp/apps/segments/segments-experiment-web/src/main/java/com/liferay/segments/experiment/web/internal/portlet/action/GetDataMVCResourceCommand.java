@@ -178,14 +178,14 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				).setActionName(
 					"/layout_content_page_editor/add_segments_experience"
 				).setGlobalParameter(
+					_getContentPageEditorPortletNamespace() + "groupId",
+					group.getGroupId()
+				).setGlobalParameter(
 					_getContentPageEditorPortletNamespace() + "p_l_mode",
 					Constants.EDIT
 				).setGlobalParameter(
 					_getContentPageEditorPortletNamespace() + "plid",
 					layout.getPlid()
-				).setGlobalParameter(
-					_getContentPageEditorPortletNamespace() + "groupId",
-					group.getGroupId()
 				).buildString()
 			).put(
 				"deleteSegmentsExperimentURL",

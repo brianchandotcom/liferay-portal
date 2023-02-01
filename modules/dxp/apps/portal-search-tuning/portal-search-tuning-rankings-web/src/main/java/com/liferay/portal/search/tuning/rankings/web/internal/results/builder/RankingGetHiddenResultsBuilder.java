@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
@@ -109,21 +111,14 @@ public class RankingGetHiddenResultsBuilder {
 	}
 
 	protected JSONArray buildDocuments(List<String> ids, Ranking ranking) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		List<Document> documents = ListUtil.filter(
+			TransformUtil.transform(
+				ids,
+				id -> _getDocument(
+					ranking.getIndexName(), id, LIFERAY_DOCUMENT_TYPE)),
+			Objects::nonNull);
 
-		List<Document> documents = TransformUtil.transform(
-			ids,
-			id -> _getDocument(
-				ranking.getIndexName(), id, LIFERAY_DOCUMENT_TYPE));
-
-		List<Document> isNotNullDocuments = ListUtil.filter(
-			documents, Objects::nonNull);
-
-		for (Document document : isNotNullDocuments) {
-			jsonArray.put(translate(document));
-		}
-
-		return jsonArray;
+		return JSONUtil.toJSONArray(documents, this::translate, _log);
 	}
 
 	protected Query getIdsQuery(List<String> ids) {
@@ -184,6 +179,9 @@ public class RankingGetHiddenResultsBuilder {
 
 		return ListUtil.subList(ids, _from, end);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RankingGetHiddenResultsBuilder.class.getName());
 
 	private final DLAppLocalService _dlAppLocalService;
 	private final FastDateFormatFactory _fastDateFormatFactory;

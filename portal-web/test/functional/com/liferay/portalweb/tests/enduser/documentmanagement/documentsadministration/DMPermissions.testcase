@@ -1861,12 +1861,6 @@ definition {
 			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS",
-			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
-			roleTitle = "Site Member",
-			roleType = "site");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -2028,12 +2022,6 @@ definition {
 			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS",
-			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
-			roleTitle = "Site Member",
-			roleType = "site");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -2087,12 +2075,6 @@ definition {
 		JSONUser.addUserToSite(
 			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS",
-			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
-			roleTitle = "Site Member",
-			roleType = "site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

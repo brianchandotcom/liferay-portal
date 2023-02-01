@@ -59,13 +59,15 @@ const useQuestionsSections = ({
 					setSection(data.messageBoardSectionByFriendlyUrlPath);
 					setSectionQuery(getSectionBySectionTitleQuery);
 					setSectionQueryVariables(variables);
-				} else {
+				}
+				else {
 					setSection(null);
 					setError({message: 'Loading Topics', title: 'Error'});
 					setLoading(false);
 				}
 			});
-		} else if (ALL_SECTIONS_ENABLED) {
+		}
+		else if (ALL_SECTIONS_ENABLED) {
 			const variables = {siteKey: context.siteKey};
 			getSections({
 				variables,

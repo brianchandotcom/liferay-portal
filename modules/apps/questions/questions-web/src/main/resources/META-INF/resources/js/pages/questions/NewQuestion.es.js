@@ -92,7 +92,8 @@ export default withRouter(
 							.messageBoardSections.items,
 						...section.messageBoardSections.items,
 					]);
-				} else {
+				}
+				else {
 					setSections([
 						{
 							id: section.id,
@@ -147,7 +148,8 @@ export default withRouter(
 				})
 					.then(({error}) => processResponse(error))
 					.catch(processError);
-			} else {
+			}
+			else {
 				createQuestionInASection({
 					fetchOptionsOverrides: getContextLink(sectionTitle),
 					variables: {

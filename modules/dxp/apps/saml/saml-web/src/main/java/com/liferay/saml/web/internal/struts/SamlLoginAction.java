@@ -91,11 +91,8 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			return null;
 		}
 
-		List<SamlSpIdpConnection> samlSpIdpConnections =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId);
-
-		samlSpIdpConnections = ListUtil.filter(
-			samlSpIdpConnections,
+		List<SamlSpIdpConnection> samlSpIdpConnections = ListUtil.filter(
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId),
 			samlSpIdpConnection -> isEnabled(
 				samlSpIdpConnection, httpServletRequest));
 

@@ -17,7 +17,6 @@ package com.liferay.portal.security.ldap.internal.verify.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -69,6 +68,7 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
+import org.osgi.util.promise.Promise;
 
 /**
  * @author Michael C. Han
@@ -82,7 +82,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws PortalException {
+	public static void setUpClass() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			LDAPPropertiesVerifyProcessTest.class);
 
@@ -108,14 +108,20 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 			_componentDescriptionDTO);
 
 		if (_enabled) {
-			_serviceComponentRuntime.disableComponent(_componentDescriptionDTO);
+			Promise<?> promise = _serviceComponentRuntime.disableComponent(
+				_componentDescriptionDTO);
+
+			promise.getValue();
 		}
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws Exception {
 		if (_enabled) {
-			_serviceComponentRuntime.enableComponent(_componentDescriptionDTO);
+			Promise<?> promise = _serviceComponentRuntime.enableComponent(
+				_componentDescriptionDTO);
+
+			promise.getValue();
 		}
 	}
 

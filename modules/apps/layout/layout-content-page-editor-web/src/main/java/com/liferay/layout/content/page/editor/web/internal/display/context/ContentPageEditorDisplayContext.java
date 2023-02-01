@@ -621,6 +621,10 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/restore_collection_display_config")
 			).put(
+				"restrictedItemIds",
+				ContentUtil.getRestrictedItemIds(
+					_getLayoutStructure(), themeDisplay)
+			).put(
 				"saveVariantSegmentsExperienceURL",
 				getSaveVariantSegmentsExperienceURL()
 			).put(

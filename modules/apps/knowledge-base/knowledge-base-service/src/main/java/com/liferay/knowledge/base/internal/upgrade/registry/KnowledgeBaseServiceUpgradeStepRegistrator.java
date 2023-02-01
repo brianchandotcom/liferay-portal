@@ -76,8 +76,7 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 		registry.register(
 			"1.1.0", "1.2.0",
 			UpgradeProcessFactory.dropColumns("KBArticle", "kbTemplateId"),
-			new com.liferay.knowledge.base.internal.upgrade.v1_2_0.
-				KBStructureUpgradeProcess(),
+			UpgradeProcessFactory.dropTables("KBStructure"),
 			UpgradeProcessFactory.dropColumns(
 				"KBTemplate", "engineType", "cacheable"));
 

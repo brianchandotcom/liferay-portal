@@ -206,8 +206,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.6.1", "3.0.0",
-			new com.liferay.commerce.product.internal.upgrade.v3_0_0.
-				CPFriendlyURLEntryUpgradeProcess());
+			UpgradeProcessFactory.dropTables("CPFriendlyURLEntry"));
 
 		registry.register(
 			"3.0.0", "3.1.0",

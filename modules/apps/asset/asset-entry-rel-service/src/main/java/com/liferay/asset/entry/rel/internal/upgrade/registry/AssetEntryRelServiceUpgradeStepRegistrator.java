@@ -16,9 +16,9 @@ package com.liferay.asset.entry.rel.internal.upgrade.registry;
 
 import com.liferay.asset.entry.rel.internal.upgrade.v1_0_0.AssetEntryAssetCategoryRelUpgradeProcess;
 import com.liferay.asset.entry.rel.internal.upgrade.v2_0_0.UpgradeCompanyId;
-import com.liferay.asset.entry.rel.internal.upgrade.v3_0_0.AssetEntriesAssetCategoriesUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,7 +53,8 @@ public class AssetEntryRelServiceUpgradeStepRegistrator
 			new CTModelUpgradeProcess("AssetEntryAssetCategoryRel"));
 
 		registry.register(
-			"2.1.0", "3.0.0", new AssetEntriesAssetCategoriesUpgradeProcess());
+			"2.1.0", "3.0.0",
+			UpgradeProcessFactory.dropTables("AssetEntries_AssetCategories"));
 	}
 
 }

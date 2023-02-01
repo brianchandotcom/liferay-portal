@@ -108,7 +108,7 @@ definition {
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "ActionName");
+			actionLabel = "Action Label");
 	}
 
 	@description = "LPS-151765 - Verify if is possible to create Relationship one to many on System Object Account and to relate with the Custom Object"

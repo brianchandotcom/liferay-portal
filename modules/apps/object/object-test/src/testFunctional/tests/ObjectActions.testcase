@@ -61,7 +61,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "CustomAction");
+				actionLabel = "Custom Action");
 		}
 
 		task ("Add an Entry and check if the action is works") {
@@ -91,7 +91,7 @@ definition {
 
 			ObjectAdmin.activateOrDeactivateAction(
 				active = "false",
-				viewEntry = "CustomAction");
+				viewEntry = "Custom Action");
 
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
@@ -148,7 +148,7 @@ definition {
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
 
-		ObjectAdmin.goToActionDetails(viewEntry = "ActionName");
+		ObjectAdmin.goToActionDetails(viewEntry = "Action Label");
 
 		ObjectAdmin.viewDetails();
 
@@ -161,7 +161,7 @@ definition {
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "ActionName");
+			actionLabel = "Action Label");
 	}
 
 	@description = "LPS-139008 - Verify it is possible to create an Action"
@@ -187,7 +187,7 @@ definition {
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "ActionName");
+			actionLabel = "Action Label");
 	}
 
 	@description = "LPS-145665 - Verify it's possible to add an object entry with the trigger On Order Status Update"
@@ -480,7 +480,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "CustomAction",
+				actionLabel = "Custom Action",
 				status = "Success");
 
 			ApplicationsMenu.gotoPortlet(
@@ -567,7 +567,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "ActionName",
+				actionLabel = "Action Label",
 				status = "Success");
 		}
 	}
@@ -787,11 +787,11 @@ definition {
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "ActionName");
+			actionLabel = "Action Label");
 
-		ObjectAdmin.deleteActionViaUI(actionName = "ActionName");
+		ObjectAdmin.deleteActionViaUI(actionLabel = "Action Label");
 
-		ObjectAdmin.assertObjectActionsNotPresent(actionName = "ActionName");
+		ObjectAdmin.assertObjectActionsNotPresent(actionLabel = "Action Label");
 	}
 
 	@description = "LPS-145665 - Verify that you can edit the Action name"
@@ -818,16 +818,17 @@ definition {
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "CustomAction");
+			actionLabel = "Custom Action");
 
 		ObjectAdmin.editObjectAction(
+			actionLabel = "New Action Update",
 			actionName = "NewActionUpdate",
 			active = "false",
-			viewEntry = "CustomAction");
+			viewEntry = "Custom Action");
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "No",
-			actionName = "NewActionUpdate");
+			actionLabel = "New Action Update");
 	}
 
 	@description = "LPS-156560 - Verify that it's possible to edit an Action with Groovy Script"
@@ -908,7 +909,7 @@ definition {
 			ObjectAdmin.editObjectAction(
 				click = "save",
 				inputExpression = "customObjectField == 'Entry Update'",
-				viewEntry = "CustomAction");
+				viewEntry = "Custom Action");
 		}
 
 		task ("Then the object entry name is updated when the condition is met") {
@@ -984,7 +985,7 @@ definition {
 
 			ObjectAdmin.editObjectAction(
 				inputExpression = "customObjectField == 'Entry Test Updated'",
-				viewEntry = "CustomAction");
+				viewEntry = "Custom Action");
 
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
@@ -1042,7 +1043,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "CustomAction");
+				actionLabel = "Custom Action");
 		}
 
 		task ("Add entry and assert that condition it's works") {
@@ -1065,13 +1066,13 @@ definition {
 
 			ObjectAdmin.goToActionsTab();
 
-			ObjectAdmin.goToActionDetails(viewEntry = "CustomAction");
+			ObjectAdmin.goToActionDetails(viewEntry = "Custom Action");
 
 			ObjectAdmin.disableCondition();
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "CustomAction");
+				actionLabel = "Custom Action");
 		}
 	}
 
@@ -1098,11 +1099,11 @@ definition {
 
 		ObjectAdmin.editObjectAction(
 			active = "false",
-			viewEntry = "ActionName");
+			viewEntry = "Action Label");
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "No",
-			actionName = "ActionName");
+			actionLabel = "Action Label");
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Name field blank"
@@ -1292,11 +1293,11 @@ definition {
 
 		ObjectAdmin.editObjectAction(
 			active = "true",
-			viewEntry = "ActionName");
+			viewEntry = "Action Label");
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "ActionName");
+			actionLabel = "Action Label");
 	}
 
 	@description = "LPS-139008 - Verify it is possible to search for an Action"
@@ -1322,11 +1323,11 @@ definition {
 				whenAction = "On After Add");
 		}
 
-		Search.searchCP(searchTerm = "ActionName1");
+		Search.searchCP(searchTerm = "1");
 
-		ObjectAdmin.assertObjectActions(actionName = "ActionName1");
+		ObjectAdmin.assertObjectActions(actionLabel = "Action Label 1");
 
-		ObjectAdmin.assertObjectActionsNotPresent(actionName = "ActionName2");
+		ObjectAdmin.assertObjectActionsNotPresent(actionLabel = "Action Label 2");
 	}
 
 	@description = "LPS-156343 - Verify that Action can be triggered after disabling the expression"
@@ -1389,7 +1390,7 @@ definition {
 
 			ObjectAdmin.goToActionsTab();
 
-			ObjectAdmin.goToActionDetails(viewEntry = "CustomActionName");
+			ObjectAdmin.goToActionDetails(viewEntry = "Custom Action Label");
 
 			ObjectAdmin.disableCondition();
 
@@ -1462,7 +1463,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "ActionName",
+				actionLabel = "Action Label",
 				status = "Success");
 
 			AssertConsoleTextPresent(value1 = "Hello world");
@@ -1492,15 +1493,15 @@ definition {
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "ActionName");
+			actionLabel = "Action Label");
 
 		ObjectAdmin.editObjectAction(
-			actionName = "UpdateActionName",
-			viewEntry = "ActionName");
+			actionLabel = "Update Action Label",
+			viewEntry = "Action Label");
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
-			actionName = "UpdateActionName");
+			actionLabel = "Update Action Label");
 	}
 
 	@description = "LPS-156346 - Verify that the expression works with Groovy Script."
@@ -1552,7 +1553,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "ActionName",
+				actionLabel = "Action Label",
 				status = "Success");
 		}
 	}
@@ -1606,7 +1607,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "ActionName",
+				actionLabel = "Action Label",
 				status = "Success");
 		}
 	}

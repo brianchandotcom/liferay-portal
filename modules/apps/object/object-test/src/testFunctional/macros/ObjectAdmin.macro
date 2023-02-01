@@ -537,7 +537,7 @@ definition {
 
 	macro assertObjectActions {
 		AssertElementPresent(
-			key_actionName = "${actionName}",
+			key_actionLabel = "${actionLabel}",
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 
 		if (isSet(status)) {
@@ -549,7 +549,7 @@ definition {
 
 	macro assertObjectActionsNotPresent {
 		AssertElementNotPresent(
-			key_actionName = "${actionName}",
+			key_actionLabel = "${actionLabel}",
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 	}
 
@@ -777,7 +777,7 @@ definition {
 
 	macro deleteActionViaUI {
 		Click(
-			key_objectLabel = "${actionName}",
+			key_objectLabel = "${actionLabel}",
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
 		MenuItem.clickNoError(menuItem = "Delete");

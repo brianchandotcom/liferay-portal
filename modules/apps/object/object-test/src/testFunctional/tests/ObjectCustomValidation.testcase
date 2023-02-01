@@ -2427,7 +2427,7 @@ definition {
 		task ("Assert that there is Custom Action") {
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "CustomAction",
+				actionLabel = "Custom Action",
 				status = "Never Ran");
 		}
 
@@ -2452,7 +2452,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "CustomAction",
+				actionLabel = "Custom Action",
 				status = "Success");
 		}
 	}

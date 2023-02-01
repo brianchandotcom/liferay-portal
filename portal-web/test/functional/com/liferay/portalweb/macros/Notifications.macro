@@ -321,7 +321,7 @@ definition {
 	macro viewReviewContent {
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${user} needs to review the document.");
+			value1 = "A Document needs review.");
 
 		AssertTextEquals(
 			key_contentBody = "${contentBody}",

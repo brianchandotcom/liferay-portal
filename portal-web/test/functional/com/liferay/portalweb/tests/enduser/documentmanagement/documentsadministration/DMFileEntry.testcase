@@ -2165,9 +2165,7 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewReviewContent(
-			contentBody = "Document_5.txt",
-			user = "Test Test");
+		Notifications.viewReviewContent(contentBody = "Document_5.txt");
 
 		Notifications.navigateToContent(contentBody = "Document_5.txt");
 
@@ -2216,9 +2214,7 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewReviewContent(
-			contentBody = "Document_5.txt",
-			user = "Test Test");
+		Notifications.viewReviewContent(contentBody = "Document_5.txt");
 
 		Notifications.navigateToContent(contentBody = "Document_5.txt");
 
@@ -2266,9 +2262,7 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewReviewContent(
-			contentBody = "Document_2.txt",
-			user = "Test Test");
+		Notifications.viewReviewContent(contentBody = "Document_2.txt");
 
 		Notifications.navigateToContent(contentBody = "Document_2.txt");
 

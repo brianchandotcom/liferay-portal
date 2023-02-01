@@ -103,7 +103,6 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1339,21 +1338,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			com.liferay.object.model.ObjectDefinition
 				accountEntryObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "AccountEntry");
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						serviceContext.getCompanyId(), "AccountEntry");
 
 			String objectRelationshipName =
 				StringUtil.toLowerCase(accountEntryObjectDefinition.getName()) +
-				serviceBuilderObjectDefinition.getShortName();
+					serviceBuilderObjectDefinition.getShortName();
 
-			com.liferay.object.model.ObjectRelationship
-				objectRelationship =
+			com.liferay.object.model.ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
 					fetchObjectRelationshipByObjectDefinitionId(
 						accountEntryObjectDefinition.getObjectDefinitionId(),
 						objectRelationshipName);
 
-			if(objectRelationship == null) {
+			if (objectRelationship == null) {
 				objectRelationship =
 					_objectRelationshipLocalService.addObjectRelationship(
 						serviceBuilderObjectDefinition.getUserId(),
@@ -1365,10 +1363,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 						objectRelationshipName,
 						ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 			}
+
 			_objectDefinitionLocalService.
 				restrictObjectDefinitionByAccountEntry(
-					serviceBuilderObjectDefinition,
-					serviceContext.getUserId(), objectRelationship);
+					serviceBuilderObjectDefinition, serviceContext.getUserId(),
+					objectRelationship);
 		}
 
 		_invoke(

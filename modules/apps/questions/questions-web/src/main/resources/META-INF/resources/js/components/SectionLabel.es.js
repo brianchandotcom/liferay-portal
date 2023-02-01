@@ -6,18 +6,34 @@
 import ClayLabel from '@clayui/label';
 import React from 'react';
 
+import {slugToText, stringToSlug} from '../utils/utils.es';
+
+const getSectionTitle = (section) => {
+	if (section.friendlyUrlPath === undefined) {
+		return section.title;
+	}
+
+	if (stringToSlug(section.title) === section.friendlyUrlPath) {
+		return section.title;
+	}
+
+	return `${section.title} (${slugToText(section.friendlyUrlPath)})`;
+};
+
 export default function SectionLabel({section}) {
+	if (!section) {
+		return null;
+	}
+
 	return (
-		<>
-			{section && (
-				<ClayLabel
-					className="bg-light border-0 stretched-link-layer text-uppercase"
-					displayType="secondary"
-					large
-				>
-					{section.title}
-				</ClayLabel>
-			)}
-		</>
+		<ClayLabel
+			className="bg-light border-0 stretched-link-layer text-uppercase"
+			displayType="secondary"
+			large
+		>
+			{getSectionTitle(section)}
+		</ClayLabel>
 	);
 }
+
+export {getSectionTitle};

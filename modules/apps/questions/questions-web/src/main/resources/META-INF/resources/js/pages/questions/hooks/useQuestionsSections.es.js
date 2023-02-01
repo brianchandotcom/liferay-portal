@@ -8,11 +8,11 @@ import {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../../AppContext.es';
 import {
+	getMessageBoardSectionByFriendlyUrlPathQuery,
 	getSectionBySectionTitleQuery,
 	getSectionsQuery,
 } from '../../../utils/client.es';
 import {ALL_SECTIONS_ID} from '../../../utils/contants.es';
-import {slugToText} from '../../../utils/utils.es';
 
 const useQuestionsSections = ({
 	location,
@@ -37,12 +37,10 @@ const useQuestionsSections = ({
 	});
 
 	const [getSectionBySectionTitle] = useManualQuery(
-		getSectionBySectionTitleQuery,
+		getMessageBoardSectionByFriendlyUrlPathQuery,
 		{
 			variables: {
-				filter: `title eq '${slugToText(
-					sectionTitle
-				)}' or id eq '${slugToText(sectionTitle)}'`,
+				filter: sectionTitle,
 				siteKey: context.siteKey,
 			},
 		}
@@ -51,27 +49,23 @@ const useQuestionsSections = ({
 	useEffect(() => {
 		if (sectionTitle && sectionTitle !== ALL_SECTIONS_ID) {
 			const variables = {
-				filter: `title eq '${slugToText(
-					sectionTitle
-				)}' or id eq '${slugToText(sectionTitle)}'`,
-				siteKey: context.siteKey,
+				friendlyUrlPath: sectionTitle,
+				siteKey: Number(context.siteKey),
 			};
 			getSectionBySectionTitle({
 				variables,
 			}).then(({data}) => {
-				if (data.messageBoardSections?.items[0]) {
-					setSection(data.messageBoardSections.items[0]);
+				if (data.messageBoardSectionByFriendlyUrlPath) {
+					setSection(data.messageBoardSectionByFriendlyUrlPath);
 					setSectionQuery(getSectionBySectionTitleQuery);
 					setSectionQueryVariables(variables);
-				}
-				else {
+				} else {
 					setSection(null);
 					setError({message: 'Loading Topics', title: 'Error'});
 					setLoading(false);
 				}
 			});
-		}
-		else if (ALL_SECTIONS_ENABLED) {
+		} else if (ALL_SECTIONS_ENABLED) {
 			const variables = {siteKey: context.siteKey};
 			getSections({
 				variables,

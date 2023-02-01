@@ -16,7 +16,7 @@ const getSectionURL = (context, section) => {
 		return section.href;
 	}
 
-	return context.useTopicNamesInURL ? section.title : section.id;
+	return context.useTopicNamesInURL ? section.friendlyUrlPath : section.id;
 };
 
 export default function BreadcrumbNode({

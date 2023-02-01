@@ -40,9 +40,11 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocalUtil;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -485,9 +487,22 @@ public class ObjectEntryLocalServiceImpl
 						objectDefinition2.getCompanyId(),
 						objectRelationship.getType());
 
-			objectRelatedModelsProvider.deleteRelatedModel(
-				PrincipalThreadLocal.getUserId(), groupId,
-				objectRelationship.getObjectRelationshipId(), primaryKey);
+			try {
+				ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
+					true);
+
+				objectRelatedModelsProvider.deleteRelatedModel(
+					PrincipalThreadLocal.getUserId(), groupId,
+					objectRelationship.getObjectRelationshipId(), primaryKey);
+			}
+			catch (PrincipalException principalException) {
+				throw new ObjectRelationshipDeletionTypeException(
+					principalException.getMessage());
+			}
+			finally {
+				ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
+					false);
+			}
 		}
 	}
 
@@ -1982,7 +1997,11 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinitionId2)
 			).and(
 				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
+					if (ObjectEntryThreadLocalUtil.
+							isSkipObjectEntryResourcePermission() ||
+						(PermissionThreadLocal.getPermissionChecker() ==
+							null)) {
+
 						return null;
 					}
 
@@ -2159,7 +2178,11 @@ public class ObjectEntryLocalServiceImpl
 						primaryKeyColumn.neq(primaryKey) : null
 			).and(
 				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
+					if (ObjectEntryThreadLocalUtil.
+							isSkipObjectEntryResourcePermission() ||
+						(PermissionThreadLocal.getPermissionChecker() ==
+							null)) {
+
 						return null;
 					}
 

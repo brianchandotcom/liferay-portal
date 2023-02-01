@@ -18,6 +18,7 @@ import fetch from 'jest-fetch-mock';
 import React, {useEffect} from 'react';
 
 import {AppContextProvider, TData, initialState, useData} from '../../../App';
+import {mockResponse} from '../../../utils/__tests__/helpers';
 import AttributesStep from '../AttributesStep';
 
 const response = {
@@ -48,7 +49,9 @@ describe('Attributes Step', () => {
 	});
 
 	it('render AttributesStep without crashing', async () => {
-		fetch.mockResponseOnce(JSON.stringify(response));
+		fetch
+			.mockReturnValueOnce(mockResponse(JSON.stringify(response)))
+			.mockReturnValueOnce(mockResponse(JSON.stringify({})));
 
 		let data: TData = initialState;
 
@@ -83,6 +86,7 @@ describe('Attributes Step', () => {
 
 		expect(data.pageView).toEqual('VIEW_DEFAULT_MODE');
 		expect(onDataChange).toBeCalledTimes(2);
+
 		expect(attributesStepTitle).toBeInTheDocument();
 		expect(attributesStepDescription).toBeInTheDocument();
 		expect(container.firstChild).toHaveClass('sheet');

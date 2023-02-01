@@ -597,12 +597,11 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		if (!objectDefinition.getAccountEntryRestricted()) {
+		if (!objectDefinition.isAccountEntryRestricted()) {
 			objectDefinition.setAccountEntryRestrictedObjectFieldId(
 				objectRelationship.getObjectFieldId2());
 
 			objectDefinition.setAccountEntryRestricted(true);
-
 		}
 
 		return objectDefinitionPersistence.update(objectDefinition);

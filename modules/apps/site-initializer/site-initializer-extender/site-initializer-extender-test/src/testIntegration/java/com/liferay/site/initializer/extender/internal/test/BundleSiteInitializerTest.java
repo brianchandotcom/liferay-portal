@@ -1127,7 +1127,8 @@ public class BundleSiteInitializerTest {
 				group.getCompanyId(), "C_TestObjectDefinition4");
 
 		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
-		Assert.assertTrue(objectDefinition4.getAccountEntryRestrictedObjectFieldId() != 0);
+		Assert.assertTrue(
+			objectDefinition4.getAccountEntryRestrictedObjectFieldId() != 0);
 		Assert.assertFalse(objectDefinition4.isSystem());
 		Assert.assertEquals(
 			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);

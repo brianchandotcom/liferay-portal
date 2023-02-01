@@ -14,20 +14,20 @@
 
 package com.liferay.users.admin.internal.user.initials.generator;
 
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.kernel.util.UserInitialsGenerator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,21 +44,22 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 
 		String[] userNames = {firstName, middleName, lastName};
 
-		return Stream.of(
-			_getUserInitialsFieldNames(locale)
-		).map(
-			key -> userNames[_userNameIndexes.get(key)]
-		).filter(
-			name -> Validator.isNotNull(name)
-		).limit(
-			2
-		).map(
-			name -> StringUtil.shorten(name, 1)
-		).map(
-			initial -> StringUtil.toUpperCase(initial)
-		).collect(
-			Collectors.joining()
-		);
+		List<String> userNameList = TransformUtil.transformToList(
+			_getUserInitialsFieldNames(locale),
+			userInitialsFieldName ->
+				userNames[_userNameIndexes.get(userInitialsFieldName)]);
+
+		if (userNameList.size() > 2) {
+			userNameList = userNameList.subList(0, 2);
+		}
+
+		StringBundler sb = new StringBundler(userNameList.size());
+
+		for (String userName : userNameList) {
+			sb.append(StringUtil.toUpperCase(StringUtil.shorten(userName, 1)));
+		}
+
+		return sb.toString();
 	}
 
 	@Override

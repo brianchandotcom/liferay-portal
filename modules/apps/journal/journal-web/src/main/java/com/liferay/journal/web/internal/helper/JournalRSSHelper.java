@@ -14,6 +14,9 @@
 
 package com.liferay.journal.web.internal.helper;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
@@ -29,7 +32,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.comparator.ArticleDisplayDateComparator;
@@ -43,16 +45,13 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -377,32 +376,16 @@ public class JournalRSSHelper {
 			feed = _journalFeedLocalService.getFeed(groupId, feedId);
 		}
 
-		String languageId = _language.getLanguageId(resourceRequest);
-
-		long plid = _portal.getPlidFromFriendlyURL(
-			themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
-
-		Layout layout = null;
-
-		if (plid > 0) {
-			layout = _layoutLocalService.fetchLayout(plid);
-		}
-
-		if (layout == null) {
-			layout = themeDisplay.getLayout();
-		}
-
 		String rss = _exportToRSS(
-			resourceRequest, resourceResponse, feed, languageId, layout,
-			themeDisplay);
+			resourceRequest, resourceResponse, feed,
+			_language.getLanguageId(resourceRequest), themeDisplay);
 
 		return rss.getBytes(StringPool.UTF8);
 	}
 
 	private String _exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			JournalFeed feed, String languageId, Layout layout,
-			ThemeDisplay themeDisplay)
+			JournalFeed feed, String languageId, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
@@ -446,7 +429,7 @@ public class JournalRSSHelper {
 			syndEntry.setDescription(syndContent);
 
 			String link = _getEntryURL(
-				resourceRequest, feed, article, layout, themeDisplay);
+				resourceRequest, feed, article, themeDisplay);
 
 			syndEntry.setLink(link);
 
@@ -485,22 +468,21 @@ public class JournalRSSHelper {
 
 	private String _getEntryURL(
 			ResourceRequest resourceRequest, JournalFeed feed,
-			JournalArticle article, Layout layout, ThemeDisplay themeDisplay)
+			JournalArticle article, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<Long> hitLayoutIds =
-			_journalContentSearchLocalService.getLayoutIds(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				article.getArticleId());
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
 
-		if (!hitLayoutIds.isEmpty()) {
-			Long hitLayoutId = hitLayoutIds.get(0);
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
 
-			Layout hitLayout = _layoutLocalService.getLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				hitLayoutId.longValue());
+		String viewInContextURL = assetRenderer.getURLViewInContext(
+			themeDisplay, StringPool.BLANK);
 
-			return _portal.getLayoutFriendlyURL(hitLayout, themeDisplay);
+		if (Validator.isNotNull(viewInContextURL)) {
+			return viewInContextURL;
 		}
 
 		String portletId = feed.getTargetPortletId();
@@ -696,9 +678,6 @@ public class JournalRSSHelper {
 	private DLURLHelper _dlURLHelper;
 
 	@Reference
-	private Html _html;
-
-	@Reference
 	private ImageLocalService _imageLocalService;
 
 	@Reference
@@ -708,9 +687,6 @@ public class JournalRSSHelper {
 	private JournalContent _journalContent;
 
 	@Reference
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
-
-	@Reference
 	private JournalFeedLocalService _journalFeedLocalService;
 
 	@Reference
@@ -718,9 +694,6 @@ public class JournalRSSHelper {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

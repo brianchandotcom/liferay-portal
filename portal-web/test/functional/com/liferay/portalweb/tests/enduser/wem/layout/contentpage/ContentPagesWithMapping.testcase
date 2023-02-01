@@ -1577,6 +1577,78 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-171383. View documentation link in date field."
+	@priority = "4"
+	test ViewDocumentationLinkInDateField {
+		task ("Given a page has a fragment with mapped date") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+	<div data-lfr-editable-type="date-time" data-lfr-editable-id="date-time">
+	</div>
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Fragment Name",
+				id = "date-time");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Display Date");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("When selecting Custom Date Format") {
+			Select(
+				key_fieldLabel = "Date Format",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Custom");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then assert there's a documentation link in date field") {
+			AssertVisible(
+				key_href = "https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html",
+				key_text = "Learn more about date formats.",
+				locator1 = "Link#ANY_HREF");
+		}
+	}
+
 	@description = "This is a test for LPS-110462. The value of editable field should be reset when the mapped content is missing"
 	@priority = "3"
 	test ViewEditableFieldValueWhenMappedContentMissing {

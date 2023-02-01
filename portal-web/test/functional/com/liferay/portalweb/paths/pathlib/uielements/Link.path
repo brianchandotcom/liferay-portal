@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_HREF</td>
+	<td>//a[contains(.,'${key_text}')][@href='${key_href}']</td>
+	<td>Page</td>
+</tr>
+<tr>
 	<td>BACK</td>
 	<td>//a[contains(.,'Back')]</td>
 	<td></td>

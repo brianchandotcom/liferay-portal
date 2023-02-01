@@ -983,4 +983,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172548. The user could see page from expanded tree in Page Tree after accessing to that page."
+	@priority = "5"
+	test ViewPageFromExpandedTreeAfterNavigateToIt {
+		task ("Given a user navigates to a site with more than 20 pages") {
+			var i = "1";
+
+			while (("${i}" != "22") && (maxIterations = "30")) {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+
+				var i = ${i} + 1;
+			}
+
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("When the user navigates to the Page Tree") {
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then the user only can see 20 pages on Page Tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name 20");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page Name 21",
+				locator1 = "PagesFinder#PAGE_NAME");
+		}
+
+		task ("When the user loads more results") {
+			Click.javaScriptClick(
+				key_text = "Load More Results",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then the user sees the 21st page on Page Tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name 21");
+		}
+
+		task ("When the user navigates to the 21st page via Page Tree") {
+			PagesFinder.navigateToPage(pageName = "Test Page Name 21");
+		}
+
+		task ("Then the user still sees the 21st page on Page Tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name 21");
+		}
+	}
+
 }

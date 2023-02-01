@@ -27,17 +27,17 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h5>
+			<div class="list-group-title">
 				<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= HtmlUtil.escape(role.getTitle(locale)) %></aui:a>
-			</h5>
+			</div>
 
-			<h6 class="text-default">
+			<div class="list-group-text">
 				<span><%= HtmlUtil.escape(role.getDescription(locale)) %></span>
-			</h6>
+			</div>
 
-			<h6 class="text-default">
+			<div class="list-group-subtext">
 				<span><%= roleDisplayContext.getAssigneesMessage(role) %></span>
-			</h6>
+			</div>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp

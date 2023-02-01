@@ -212,18 +212,12 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 								</section>
 							</div>
 
-							{!disabled && (
-								<div className="autofit-col">
-									<AddButton item={item} />
-								</div>
-							)}
+							{!disabled && <AddButton item={item} />}
 
-							<div className="autofit-col">
-								<HighlightButton
-									item={item}
-									onToggleHighlighted={onToggleHighlighted}
-								/>
-							</div>
+							<HighlightButton
+								item={item}
+								onToggleHighlighted={onToggleHighlighted}
+							/>
 						</ClayCard.Row>
 					</ClayCard.Body>
 				</ClayCard>

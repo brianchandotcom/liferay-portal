@@ -14,11 +14,13 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.importer;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -34,11 +36,9 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndex
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -114,19 +114,18 @@ public class SingleIndexToMultipleIndexImporterImpl
 	}
 
 	private void _createRankingIndices() {
-		List<Company> companies = _companyService.getCompanies();
+		List<Long> companyIds = TransformUtil.transform(
+			_companyService.getCompanies(), Company::getCompanyId);
 
-		Stream<Company> stream = companies.stream();
+		List<RankingIndexName> rankingIndexNames = TransformUtil.transform(
+			companyIds, _rankingIndexNameBuilder::getRankingIndexName);
 
-		stream.map(
-			Company::getCompanyId
-		).map(
-			_rankingIndexNameBuilder::getRankingIndexName
-		).filter(
-			rankingIndexName -> !_rankingIndexReader.isExists(rankingIndexName)
-		).forEach(
-			_rankingIndexCreator::create
-		);
+		List<RankingIndexName> existsRankingIndexNames = ListUtil.filter(
+			rankingIndexNames,
+			rankingIndexName -> !_rankingIndexReader.isExists(
+				rankingIndexName));
+
+		existsRankingIndexNames.forEach(_rankingIndexCreator::create);
 	}
 
 	private List<Document> _getDocuments(RankingIndexName singleIndexName) {
@@ -141,15 +140,8 @@ public class SingleIndexToMultipleIndexImporterImpl
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		List<SearchHit> searchHitsList = searchHits.getSearchHits();
-
-		Stream<SearchHit> documentStream = searchHitsList.stream();
-
-		return documentStream.map(
-			SearchHit::getDocument
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			searchHits.getSearchHits(), SearchHit::getDocument);
 	}
 
 	private String _getRankingIndexName(String indexName) {
@@ -159,10 +151,13 @@ public class SingleIndexToMultipleIndexImporterImpl
 	private Map<String, List<Document>> _groupDocumentByIndex(
 		List<Document> documents) {
 
-		Stream<Document> stream = documents.stream();
+		Map<String, List<Document>> documentsMap = new HashMap<>();
 
-		return stream.collect(
-			Collectors.groupingBy(document -> document.getString("index")));
+		for (Document document : documents) {
+			documentsMap.put(document.getString("index"), documents);
+		}
+
+		return documentsMap;
 	}
 
 	private void _importDocuments() {
@@ -179,17 +174,17 @@ public class SingleIndexToMultipleIndexImporterImpl
 		Map<String, List<Document>> documentsMap = _groupDocumentByIndex(
 			documents);
 
-		Set<Map.Entry<String, List<Document>>> entrySet =
-			documentsMap.entrySet();
+		List<Boolean> entrySetList = TransformUtil.transform(
+			documentsMap.entrySet(),
+			entry -> _addDocuments(entry.getKey(), entry.getValue()));
 
-		Stream<Map.Entry<String, List<Document>>> stream = entrySet.stream();
+		boolean result = true;
 
-		if (stream.map(
-				entry -> _addDocuments(entry.getKey(), entry.getValue())
-			).reduce(
-				true, Boolean::logicalAnd
-			)) {
+		for (boolean entry : entrySetList) {
+			result = result && entry;
+		}
 
+		if (result) {
 			_rankingIndexCreator.delete(SINGLE_INDEX_NAME);
 		}
 	}

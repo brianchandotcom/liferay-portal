@@ -57,14 +57,14 @@ public class JournalContentPortletConfigurationListener
 		}
 
 		try {
-			if (!_resetValues(portletPreferences)) {
-				return;
-			}
+			portletPreferences.reset("portletSetupUseCustomTitle");
 
-			portletPreferences.reset("assetEntryId");
-			portletPreferences.reset("articleId");
-			portletPreferences.reset("ddmTemplateKey");
-			portletPreferences.reset("groupId");
+			if (_resetValues(portletPreferences)) {
+				portletPreferences.reset("assetEntryId");
+				portletPreferences.reset("articleId");
+				portletPreferences.reset("ddmTemplateKey");
+				portletPreferences.reset("groupId");
+			}
 
 			portletPreferences.store();
 		}

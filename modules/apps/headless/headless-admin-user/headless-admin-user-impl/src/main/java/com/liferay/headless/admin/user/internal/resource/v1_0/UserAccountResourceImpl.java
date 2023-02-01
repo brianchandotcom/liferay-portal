@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.Authenticator;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
@@ -355,13 +354,6 @@ public class UserAccountResourceImpl
 	public Page<UserAccount> getUserAccountsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin(contextCompany.getCompanyId())) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
-		}
 
 		return _getUserAccountsPage(
 			HashMapBuilder.<String, Map<String, String>>putAll(

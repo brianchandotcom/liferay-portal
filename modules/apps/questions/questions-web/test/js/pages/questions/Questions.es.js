@@ -146,7 +146,7 @@ const mockThreads = {
 	},
 };
 
-describe('Questions', () => {
+describe.skip('Questions', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
 	});

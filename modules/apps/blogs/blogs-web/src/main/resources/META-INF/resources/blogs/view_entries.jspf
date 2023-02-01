@@ -22,8 +22,8 @@
 </c:if>
 
 <c:if test="<%= ListUtil.isEmpty(searchContainer.getResults()) %>">
-	<liferay-ui:empty-result-message
-		message="no-entries-were-found"
+	<liferay-frontend:empty-result-message
+		title='<%= LanguageUtil.get(resourceBundle, "no-entries-were-found") %>'
 	/>
 </c:if>
 

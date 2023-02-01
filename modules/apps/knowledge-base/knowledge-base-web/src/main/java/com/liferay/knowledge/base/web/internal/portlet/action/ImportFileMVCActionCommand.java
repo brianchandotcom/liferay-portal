@@ -113,6 +113,8 @@ public class ImportFileMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (KBArticleImportException kbArticleImportException) {
+			hideDefaultErrorMessage(actionRequest);
+
 			SessionErrors.add(
 				actionRequest, kbArticleImportException.getClass(),
 				kbArticleImportException);

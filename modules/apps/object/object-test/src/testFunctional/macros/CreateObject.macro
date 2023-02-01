@@ -384,9 +384,7 @@ definition {
 	macro selectTitleField {
 		Click(locator1 = "CreateObject#TITLE_FIELD");
 
-		Click(
-			key_titleField = "${fieldLabel}",
-			locator1 = "CreateObject#TITLE_FIELD_NAME_OPTIONS");
+		MenuItem.click(menuItem = "${fieldLabel}");
 	}
 
 	macro viewAccountRestrictedFieldIsRequiredOnEntries {

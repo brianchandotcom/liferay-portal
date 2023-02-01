@@ -701,6 +701,12 @@
 			<property name="description" value="Finds cases of unnecessary semicolon." />
 			<message key="semi.colon.unnecessary" value="Unnecessary semi colon" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ServiceComponentRuntimeCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks `ServiceComponentRuntime` usage in test classes." />
+			<property name="enabled" value="false" />
+			<message key="promise.get.value" value="Must wait for ''Promise'' from ''{0}'' to complete. Assign the promise to a variable and call its ''getValue()'' method" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ServiceProxyFactoryCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds incorrect parameter in method call." />

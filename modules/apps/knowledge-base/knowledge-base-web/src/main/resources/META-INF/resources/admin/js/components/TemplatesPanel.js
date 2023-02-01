@@ -18,8 +18,9 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 
+import normalizeDropdownItems from '../utils/normalizeDropdownItems';
 import ActionsDropdown from './ActionsDropdown';
 
 const ITEM_TYPES_SYMBOL = {
@@ -27,7 +28,21 @@ const ITEM_TYPES_SYMBOL = {
 	template: 'document-text',
 };
 
-export default function TemplatesPanel({items, selectedItemId}) {
+const normalizeItems = (items) => {
+	if (items) {
+		return items.map((item) => {
+			return {
+				...item,
+				actions: normalizeDropdownItems(item.actions),
+				children: normalizeItems(item.children),
+			};
+		});
+	}
+};
+
+export default function TemplatesPanel({items: initialItems, selectedItemId}) {
+	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
+
 	return items?.length ? (
 		<ClayTreeView
 			defaultItems={items}

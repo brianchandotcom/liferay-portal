@@ -30,7 +30,12 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 	<label class="control-label" for="<portlet:namespace />ddmStructure">
 		<liferay-ui:message key="structure" />
 
-		<liferay-ui:icon-help message="structure-help" />
+		<clay:icon
+			aria-label='<%= LanguageUtil.get(request, "structure-help") %>'
+			cssClass="lfr-portal-tooltip"
+			symbol="question-circle-full"
+			title='<%= LanguageUtil.get(request, "structure-help") %>'
+		/>
 	</label>
 
 	<div class="input-group">

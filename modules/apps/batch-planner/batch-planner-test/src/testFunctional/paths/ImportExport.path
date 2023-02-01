@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPORT_STRATEGY</td>
+	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'Import Strategy')]]/select[not(@disabled)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXECUTION_COLUMN</td>
 	<td>//table[contains(@class,'table-list')]//td[contains(@class,'lfr-name-column')]/a[contains(text(),'${key_executionName}')]/following::td[contains(@class,'${key_column}-column')]</td>
 	<td></td>

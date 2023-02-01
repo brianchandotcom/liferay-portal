@@ -44,7 +44,8 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
-				fileName = "saml-idp.json");
+				fileName = "saml-idp.json",
+				importStrategy = "Only Add New Records");
 
 			Button.click(button = "Next");
 
@@ -96,7 +97,8 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
-				fileName = "saml-idp.json");
+				fileName = "saml-idp.json",
+				importStrategy = "Only Add New Records");
 
 			Button.click(button = "Next");
 
@@ -148,7 +150,8 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
-				fileName = "saml-idp.json");
+				fileName = "saml-idp.json",
+				importStrategy = "Only Add New Records");
 
 			Button.click(button = "Next");
 
@@ -200,7 +203,8 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
-				fileName = "saml-idp.json");
+				fileName = "saml-idp.json",
+				importStrategy = "Only Add New Records");
 
 			Button.click(button = "Next");
 

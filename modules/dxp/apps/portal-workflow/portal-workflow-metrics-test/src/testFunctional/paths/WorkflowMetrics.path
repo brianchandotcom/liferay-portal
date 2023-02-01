@@ -322,7 +322,7 @@
 </tr>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_EMPTY_STATE</td>
-	<td>//span[contains(text(),'Performance by Assignee')]/ancestor::div[contains(@class, 'panel-header')]/following-sibling::div//p[contains(.,'There is no data at the moment')]</td>
+	<td>//span[contains(text(),'Performance by Assignee')]/ancestor::div[contains(@class, 'panel-header')]/following-sibling::div//div[contains(@class,'c-empty-state-text')][normalize-space(text())='There is no data at the moment.']</td>
 	<td></td>
 </tr>
 <tr>

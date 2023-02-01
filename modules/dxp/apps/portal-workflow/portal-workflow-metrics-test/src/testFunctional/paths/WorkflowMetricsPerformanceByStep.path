@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_PAGE_NO_RESULTS_FOUND</td>
-	<td>//p[contains(text(),'No results were found.')]</td>
+	<td>//div[contains(@class,'c-empty-state-text')][normalize-space(text())='No results were found.']</td>
 	<td></td>
 </tr>
 <tr>

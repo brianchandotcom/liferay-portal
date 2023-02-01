@@ -176,7 +176,10 @@ const TestflowForm = () => {
 			}
 
 			onSuccess();
-		} catch (error) {
+
+			navigate(`/testflow/${response.id}`);
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

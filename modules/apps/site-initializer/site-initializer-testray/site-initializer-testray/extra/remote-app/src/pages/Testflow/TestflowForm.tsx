@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {useOutletContext, useParams} from 'react-router-dom';
+import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import Form from '../../components/Form';
@@ -61,8 +61,9 @@ type OutletContext = {
 
 const TestflowForm = () => {
 	const {
-		form: {onClose, onError, onSave, onSubmit},
+		form: {onClose, onError, onSubmit, onSuccess},
 	} = useFormActions();
+
 	const [modalType, setModalType] = useState<TestflowAssigUserType>(
 		'select-users'
 	);
@@ -72,6 +73,7 @@ const TestflowForm = () => {
 	});
 	const {buildId, taskId} = useParams();
 	const {actions} = useTestFlowAssign({setUserIds});
+	const navigate = useNavigate();
 
 	const outletContext = useOutletContext<OutletContext>();
 
@@ -173,9 +175,8 @@ const TestflowForm = () => {
 				revalidateTaskUser();
 			}
 
-			onSave();
-		}
-		catch (error) {
+			onSuccess();
+		} catch (error) {
 			onError(error);
 		}
 	};

@@ -35,12 +35,17 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
+import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
+import com.liferay.layout.list.retriever.ListObjectReference;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -608,6 +613,63 @@ public class ContentUtil {
 			hiddenItemIds.addAll(
 				_getChildrenItemIds(
 					layoutStructure, formStyledLayoutStructureItem));
+		}
+
+		for (CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem :
+					layoutStructure.getCollectionStyledLayoutStructureItems()) {
+
+			JSONObject collectionJSONObject =
+				collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+			if ((collectionJSONObject == null) ||
+				(collectionJSONObject.length() <= 0)) {
+
+				continue;
+			}
+
+			String type = collectionJSONObject.getString("type");
+
+			LayoutListRetriever<?, ?> layoutListRetriever =
+				_layoutListRetrieverRegistry.getLayoutListRetriever(type);
+
+			if (layoutListRetriever == null) {
+				continue;
+			}
+
+			ListObjectReferenceFactory<?> listObjectReferenceFactory =
+				_listObjectReferenceFactoryRegistry.getListObjectReference(
+					type);
+
+			if (listObjectReferenceFactory == null) {
+				continue;
+			}
+
+			ListObjectReference listObjectReference =
+				listObjectReferenceFactory.getListObjectReference(
+					collectionJSONObject);
+
+			Class<? extends ListObjectReference> listObjectReferenceClass =
+				listObjectReference.getClass();
+
+			LayoutListPermissionProvider<ListObjectReference>
+				layoutListPermissionProvider =
+					(LayoutListPermissionProvider<ListObjectReference>)
+						_layoutListPermissionProviderRegistry.
+							getLayoutListPermissionProvider(
+								listObjectReferenceClass.getName());
+
+			if ((layoutListPermissionProvider == null) ||
+				layoutListPermissionProvider.hasPermission(
+					themeDisplay.getPermissionChecker(), listObjectReference,
+					ActionKeys.VIEW)) {
+
+				continue;
+			}
+
+			hiddenItemIds.addAll(
+				_getChildrenItemIds(
+					layoutStructure, collectionStyledLayoutStructureItem));
 		}
 
 		return hiddenItemIds;

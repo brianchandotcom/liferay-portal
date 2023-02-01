@@ -79,32 +79,26 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 
 		runSQL("delete from ServiceComponent where buildNamespace like 'CT%'");
 
-		_dropTable("CT_AU_AnonymousUser");
-		_dropTable("CT_Analytics_AnalyticsEvent");
-		_dropTable("CT_Analytics_AnalyticsReferrer");
-		_dropTable("CT_AnonymousUserUserSegment");
-		_dropTable("CT_CCR_CampaignContent");
-		_dropTable("CT_CTA_CTAction");
-		_dropTable("CT_CTA_CTActionTotal");
-		_dropTable("CT_Campaign");
-		_dropTable("CT_Campaigns_UserSegments");
-		_dropTable("CT_ChannelInstance");
-		_dropTable("CT_ReportInstance");
-		_dropTable("CT_RuleInstance");
-		_dropTable("CT_ScorePoints_ScorePoint");
-		_dropTable("CT_Tactic");
-		_dropTable("CT_Tactics_UserSegments");
-		_dropTable("CT_TrackingActionInstance");
-		_dropTable("CT_USCR_UserSegmentContent");
-		_dropTable("CT_UserSegment");
-		_dropTable("CT_Visited_ContentVisited");
-		_dropTable("CT_Visited_PageVisited");
-	}
-
-	private void _dropTable(String tableName) throws Exception {
-		if (hasTable(tableName)) {
-			runSQL("drop table " + tableName);
-		}
+		dropTable("CT_AU_AnonymousUser");
+		dropTable("CT_Analytics_AnalyticsEvent");
+		dropTable("CT_Analytics_AnalyticsReferrer");
+		dropTable("CT_AnonymousUserUserSegment");
+		dropTable("CT_CCR_CampaignContent");
+		dropTable("CT_CTA_CTAction");
+		dropTable("CT_CTA_CTActionTotal");
+		dropTable("CT_Campaign");
+		dropTable("CT_Campaigns_UserSegments");
+		dropTable("CT_ChannelInstance");
+		dropTable("CT_ReportInstance");
+		dropTable("CT_RuleInstance");
+		dropTable("CT_ScorePoints_ScorePoint");
+		dropTable("CT_Tactic");
+		dropTable("CT_Tactics_UserSegments");
+		dropTable("CT_TrackingActionInstance");
+		dropTable("CT_USCR_UserSegmentContent");
+		dropTable("CT_UserSegment");
+		dropTable("CT_Visited_ContentVisited");
+		dropTable("CT_Visited_PageVisited");
 	}
 
 	private String _getCriteria(long userSegmentId) throws Exception {

@@ -30,9 +30,7 @@ public class AccountGroupAccountEntryRelUpgradeProcess extends UpgradeProcess {
 
 		runSQLTemplateString(template, false);
 
-		if (hasTable("AccountGroupAccountEntryRel")) {
-			runSQL("drop table AccountGroupAccountEntryRel");
-		}
+		dropTable("AccountGroupAccountEntryRel");
 	}
 
 }

@@ -83,7 +83,7 @@ public class CommerceAccountGroupUpgradeProcess extends UpgradeProcess {
 					accountGroupId, false, false, false);
 			}
 
-			runSQL("drop table CommerceAccountGroup");
+			dropTable("CommerceAccountGroup");
 		}
 	}
 

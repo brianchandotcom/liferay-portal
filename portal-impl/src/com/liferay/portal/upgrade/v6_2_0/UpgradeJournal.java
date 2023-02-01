@@ -1071,7 +1071,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				updateStructure(resultSet);
 			}
 
-			runSQL("drop table JournalStructure");
+			dropTable("JournalStructure");
 		}
 	}
 
@@ -1122,7 +1122,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					id_, ddmTemplateId);
 			}
 
-			runSQL("drop table JournalTemplate");
+			dropTable("JournalTemplate");
 		}
 	}
 

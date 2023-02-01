@@ -40,7 +40,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			"update Layout set parentPlid = (select coalesce(parentPlid, 0) " +
 				"from TEMP_TABLE where Layout.plid = TEMP_TABLE.plid)");
 
-		runSQL("drop table TEMP_TABLE");
+		dropTable("TEMP_TABLE");
 	}
 
 }

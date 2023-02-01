@@ -23,9 +23,7 @@ public class KBStructureUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable("KBStructure")) {
-			runSQL("drop table KBStructure");
-		}
+		dropTable("KBStructure");
 	}
 
 }

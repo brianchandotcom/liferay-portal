@@ -270,9 +270,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	}
 
 	private void _upgradeSchema() throws Exception {
-		if (hasTable("JournalArticleLocalization")) {
-			runSQL("drop table JournalArticleLocalization");
-		}
+		dropTable("JournalArticleLocalization");
 
 		String template = StringUtil.read(
 			JournalArticleLocalizedValuesUpgradeProcess.class.

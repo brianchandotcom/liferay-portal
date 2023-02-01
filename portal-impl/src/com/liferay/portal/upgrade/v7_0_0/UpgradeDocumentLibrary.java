@@ -188,7 +188,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					increment(), classNameId, fileEntryTypeId, structureId);
 			}
 
-			runSQL("drop table DLFileEntryTypes_DDMStructures");
+			dropTable("DLFileEntryTypes_DDMStructures");
 		}
 	}
 

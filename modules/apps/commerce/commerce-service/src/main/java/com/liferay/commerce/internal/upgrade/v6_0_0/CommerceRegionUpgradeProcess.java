@@ -75,7 +75,7 @@ public class CommerceRegionUpgradeProcess extends UpgradeProcess {
 				}
 			}
 
-			runSQL("drop table CommerceRegion");
+			dropTable("CommerceRegion");
 		}
 	}
 

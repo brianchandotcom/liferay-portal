@@ -216,7 +216,7 @@ public class UpgradeSocial extends UpgradeProcess {
 				}
 			}
 
-			runSQL("drop table SO_SocialActivity");
+			dropTable("SO_SocialActivity");
 		}
 	}
 

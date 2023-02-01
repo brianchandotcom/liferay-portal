@@ -43,8 +43,8 @@ public class MVCCVersionUpgradeProcessTest extends MVCCVersionUpgradeProcess {
 
 	@After
 	public void tearDown() throws Exception {
-		_dropTable(_HIBERNATE_MAPPING_TABLE_NAME);
-		_dropTable(_TABLE_NAME);
+		dropTable(_HIBERNATE_MAPPING_TABLE_NAME);
+		dropTable(_TABLE_NAME);
 
 		connection.close();
 	}
@@ -74,10 +74,6 @@ public class MVCCVersionUpgradeProcessTest extends MVCCVersionUpgradeProcess {
 			StringBundler.concat(
 				"create table ", tableName, "(id LONG not null primary key, ",
 				"userId LONG)"));
-	}
-
-	private void _dropTable(String tableName) throws Exception {
-		runSQL("drop table " + tableName);
 	}
 
 	private static final String _HIBERNATE_MAPPING_TABLE_NAME =

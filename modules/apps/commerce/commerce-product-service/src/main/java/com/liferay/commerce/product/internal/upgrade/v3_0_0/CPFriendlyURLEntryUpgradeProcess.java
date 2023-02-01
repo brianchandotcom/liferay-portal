@@ -23,11 +23,7 @@ public class CPFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasTable("CPFriendlyURLEntry")) {
-			return;
-		}
-
-		runSQL("drop table CPFriendlyURLEntry");
+		dropTable("CPFriendlyURLEntry");
 	}
 
 }

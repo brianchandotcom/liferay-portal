@@ -104,7 +104,7 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 				}
 			}
 
-			runSQL("drop table CommerceCountry");
+			dropTable("CommerceCountry");
 		}
 	}
 

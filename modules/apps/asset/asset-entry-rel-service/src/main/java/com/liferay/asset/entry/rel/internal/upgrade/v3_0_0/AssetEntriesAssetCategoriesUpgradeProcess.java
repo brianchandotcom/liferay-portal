@@ -23,9 +23,7 @@ public class AssetEntriesAssetCategoriesUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable("AssetEntries_AssetCategories")) {
-			runSQL("drop table AssetEntries_AssetCategories");
-		}
+		dropTable("AssetEntries_AssetCategories");
 	}
 
 }

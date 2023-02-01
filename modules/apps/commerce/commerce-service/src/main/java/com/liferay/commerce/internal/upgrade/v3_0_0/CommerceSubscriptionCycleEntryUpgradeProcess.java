@@ -36,9 +36,7 @@ public class CommerceSubscriptionCycleEntryUpgradeProcess
 					"currentCycle IS NULL");
 		}
 
-		if (hasTable("CSubscriptionCycleEntry")) {
-			runSQL("drop table CSubscriptionCycleEntry");
-		}
+		dropTable("CSubscriptionCycleEntry");
 	}
 
 	@Override

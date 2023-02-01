@@ -71,7 +71,7 @@ public class CommerceAccountGroupCommerceAccountRelUpgradeProcess
 					accountGroupRel);
 			}
 
-			runSQL("drop table CAccountGroupCAccountRel");
+			dropTable("CAccountGroupCAccountRel");
 		}
 	}
 

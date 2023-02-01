@@ -23,7 +23,7 @@ public class MBStatsUserUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("drop table MBStatsUser");
+		dropTable("MBStatsUser");
 	}
 
 }

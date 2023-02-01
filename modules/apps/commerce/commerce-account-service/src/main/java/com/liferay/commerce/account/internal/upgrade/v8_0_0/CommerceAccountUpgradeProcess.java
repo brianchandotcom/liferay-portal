@@ -23,9 +23,9 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("drop table CommerceAccount");
-		runSQL("drop table CommerceAccountOrganizationRel");
-		runSQL("drop table CommerceAccountUserRel");
+		dropTable("CommerceAccount");
+		dropTable("CommerceAccountOrganizationRel");
+		dropTable("CommerceAccountUserRel");
 	}
 
 }

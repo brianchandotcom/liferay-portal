@@ -52,7 +52,7 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		runSQL(connection, "drop table JournalArticleImage");
+		dropTable("JournalArticleImage");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Deleted table JournalArticleImage");

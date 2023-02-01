@@ -39,7 +39,6 @@ import com.liferay.portal.upgrade.v7_0_0.util.VirtualHostTable;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.IOException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -202,7 +201,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	protected void dropTable(Connection connection, String tableName)
 		throws IOException, SQLException {
 
-		runSQL(connection, "drop table " + tableName);
+		runSQL(connection, "DROP_TABLE_IF_EXISTS(" + tableName + ")");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Deleted table " + tableName);

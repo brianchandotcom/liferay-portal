@@ -67,7 +67,7 @@ public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
 					accountGroupRel);
 			}
 
-			runSQL("drop table CommerceAccountGroupRel");
+			dropTable("CommerceAccountGroupRel");
 		}
 	}
 

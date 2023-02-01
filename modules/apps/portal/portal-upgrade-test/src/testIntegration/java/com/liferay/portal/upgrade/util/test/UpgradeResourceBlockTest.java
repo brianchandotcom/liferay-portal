@@ -144,17 +144,17 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 
 	@After
 	public void tearDown() throws Exception {
-		runSQL("drop table ResourceBlock");
+		dropTable("ResourceBlock");
 
-		runSQL("drop table ResourceBlockPermission");
+		dropTable("ResourceBlockPermission");
 
-		runSQL("drop table ResourceTypePermission");
+		dropTable("ResourceTypePermission");
 
 		runSQL(
 			"delete from ResourcePermission where name = '" +
 				UpgradeResourceBlockTest.class.getName() + "'");
 
-		runSQL("drop table " + getTableName());
+		dropTable(getTableName());
 
 		_connection.close();
 	}

@@ -144,7 +144,7 @@ public class UpgradeAccount extends UpgradeProcess {
 			"delete from ClassName_ where value = '" + _CLASS_NAME_ACCOUNT +
 				"'");
 
-		runSQL("drop table Account_");
+		dropTable("Account_");
 	}
 
 	@Override

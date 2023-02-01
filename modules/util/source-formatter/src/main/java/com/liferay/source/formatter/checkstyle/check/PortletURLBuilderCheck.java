@@ -41,11 +41,11 @@ public class PortletURLBuilderCheck extends BaseBuilderCheck {
 		return ListUtil.fromArray(
 			new BaseBuilderCheck.BuilderInformation(
 				"PortletURL", "PortletURLBuilder", "setActionName",
-				"setBackURL", "setCMD", "setKeywords", "setMVCPath",
-				"setMVCRenderCommandName", "setNavigation", "setParameter",
-				"setParameters", "setPortletMode", "setPortletResource",
-				"setProperty", "setRedirect", "setSecure", "setTabs1",
-				"setTabs2", "setWindowState"));
+				"setBackURL", "setCMD", "setGlobalParameter", "setKeywords",
+				"setMVCPath", "setMVCRenderCommandName", "setNavigation",
+				"setParameter", "setParameters", "setPortletMode",
+				"setPortletResource", "setProperty", "setRedirect", "setSecure",
+				"setTabs1", "setTabs2", "setWindowState"));
 	}
 
 	@Override
@@ -79,7 +79,8 @@ public class PortletURLBuilderCheck extends BaseBuilderCheck {
 
 	@Override
 	protected List<String> getAvoidCastStringMethodNames() {
-		return ListUtil.fromArray("setParameter", "setRedirect");
+		return ListUtil.fromArray(
+			"setGlobalParameter", "setParameter", "setRedirect");
 	}
 
 	@Override
@@ -92,9 +93,10 @@ public class PortletURLBuilderCheck extends BaseBuilderCheck {
 	@Override
 	protected List<String> getSupportsFunctionMethodNames() {
 		return ListUtil.fromArray(
-			"setActionName", "setCMD", "setKeywords", "setMVCPath",
-			"setMVCRenderCommandName", "setNavigation", "setParameter",
-			"setPortletResource", "setRedirect", "setTabs1", "setTabs2");
+			"setActionName", "setCMD", "setGlobalParameter", "setKeywords",
+			"setMVCPath", "setMVCRenderCommandName", "setNavigation",
+			"setParameter", "setPortletResource", "setRedirect", "setTabs1",
+			"setTabs2");
 	}
 
 	@Override

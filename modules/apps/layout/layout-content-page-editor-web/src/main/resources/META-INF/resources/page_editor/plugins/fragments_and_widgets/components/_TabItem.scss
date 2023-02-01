@@ -14,8 +14,10 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 			}
 		}
 
-		&:hover:not(.disabled) {
+		&:hover:not(.disabled),
+		&:focus {
 			box-shadow: 0 4px 8px fade_out($cadmin-gray-900, 0.9);
+			outline: none;
 			transform: translateY(-4px);
 
 			.card {
@@ -115,9 +117,11 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 			}
 		}
 
-		&:hover:not(.disabled) {
+		&:hover:not(.disabled),
+		&:focus {
 			box-shadow: 0 0 0 2px $cadmin-primary-l1,
 				0 4px 8px fade_out($cadmin-gray-900, 0.9);
+			outline: 0;
 			transform: translateX(-4px);
 
 			.page-editor__fragments-widgets__tab__highlight-button {

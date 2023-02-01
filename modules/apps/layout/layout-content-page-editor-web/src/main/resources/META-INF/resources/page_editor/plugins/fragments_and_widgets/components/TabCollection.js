@@ -18,8 +18,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
+import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {config} from '../../../app/config/index';
 import {useSessionState} from '../../../common/hooks/useSessionState';
+import useKeyboardNavigation from '../hooks/useKeyboardNavigation';
 import TabItem from './TabItem';
 
 export default function TabCollection({
@@ -107,6 +109,15 @@ TabPortletItems.proptypes = {
 };
 
 function TabCollectionCollapse({children, open, setOpen, title}) {
+	const handleOpen = (nextOpen) => {
+		setOpen(!nextOpen);
+	};
+
+	const {isActive, setElement} = useKeyboardNavigation({
+		handleOpen,
+		type: LIST_ITEM_TYPES.header,
+	});
+
 	return (
 		<li className="page-editor__collapse panel-group panel-group-flush">
 			<button
@@ -121,6 +132,8 @@ function TabCollectionCollapse({children, open, setOpen, title}) {
 					}
 				)}
 				onClick={() => setOpen(!open)}
+				ref={setElement}
+				tabIndex={isActive ? 0 : -1}
 				type="button"
 			>
 				<span className="c-inner text-truncate" tabIndex={-1}>

@@ -136,15 +136,36 @@ definition {
 	}
 
 	macro uncheckAllPages {
-		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX")) {
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+		}
+		else {
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+		}
 	}
 
 	macro uncheckAllPrivatePages {
-		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX")) {
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
+
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
+		}
+		else {
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
+		}
 	}
 
 	macro uncheckAllPublicPages {
-		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX")) {
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+		}
+		else {
+			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+		}
 	}
 
 	macro uncheckChildPagesNameList {

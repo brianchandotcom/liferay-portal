@@ -222,7 +222,7 @@ describe('The instance list item should', () => {
 		expect(slaNamePopoverText).toBeTruthy();
 
 		const slaDateTimeRemaingTime = queryByText(
-			'Apr 16, 2021, 12:44 PM (1d 03h 46min left)'
+			'Apr 16, 2021, 12:44 PM (1d 3h 46min left)'
 		);
 
 		expect(slaDateTimeRemaingTime).toBeTruthy();
@@ -286,7 +286,7 @@ describe('The instance list item should', () => {
 		expect(slaNamePopoverText).toBeTruthy();
 
 		const slaDateTimeRemaingTime = queryByText(
-			'Apr 16, 2021, 12:44 PM (1d 03h 46min overdue)'
+			'Apr 16, 2021, 12:44 PM (1d 3h 46min overdue)'
 		);
 
 		expect(slaDateTimeRemaingTime).toBeTruthy();

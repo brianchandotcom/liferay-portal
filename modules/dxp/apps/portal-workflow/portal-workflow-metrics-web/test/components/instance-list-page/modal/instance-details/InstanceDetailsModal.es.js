@@ -118,7 +118,7 @@ describe('The InstanceDetailsModal component should', () => {
 
 			expect(getByText('OPEN (1)')).toBeTruthy();
 			expect(resultStatus[0]).toHaveTextContent(
-				'Jan 24, 2020, 10:08 AM (0d 03h 43min overdue)'
+				'Jan 24, 2020, 10:08 AM (0d 3h 43min overdue)'
 			);
 			expect(resultIcons[1].children[0].classList).toContain(
 				'lexicon-icon-exclamation-circle'

@@ -247,7 +247,7 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And warehouse eligibility is set to No Channel") {
+		task ("And warehouse eligibility is set to No Channel for Minium Portal Channel") {
 			CommerceNavigator.gotoPortlet(
 				category = "Inventory Management",
 				portlet = "Warehouses");
@@ -267,7 +267,45 @@ definition {
 			}
 		}
 
-		task ("When buyer user logs in and navigates to a product details page") {
+		task ("And a second Minium site is created and buyer user is associated with it") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium 2",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And Minium 2 Portal Channel is eligible by default for the warehouses while Minium Portal Channel is not listed as eligible") {
+			CommerceNavigator.gotoPortlet(
+				category = "Inventory Management",
+				portlet = "Warehouses");
+
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceNavigator.gotoEntry(entryName = "${warehouseName}");
+
+				Navigator.gotoNavTab(navTab = "Eligibility");
+
+				AssertChecked(
+					locator1 = "Radio#ANY",
+					radioLabel = "Specific Channels");
+
+				AssertElementPresent(
+					key_entryName = "Minium 2 Portal",
+					key_table = "Channels",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+
+				AssertElementNotPresent(
+					key_entryName = "Minium Portal",
+					key_table = "Channels",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("When buyer user logs in to Minium and navigates to a product details page") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -294,53 +332,8 @@ definition {
 			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 		}
 
-		task ("When a second Minium site is created and buyer user is associated with it") {
-			CommerceLogin.miniumLogoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
-
-			CommerceAccelerators.initializeNewSiteViaAccelerator(
-				siteName = "Minium 2",
-				siteTemplateName = "Minium");
-
-			JSONUser.addUserToSite(
-				groupName = "Minium 2",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("Then Minium 2 Portal Channel is eligible by default for the warehouses") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Warehouses");
-
-			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
-				CommerceNavigator.gotoEntry(entryName = "${warehouseName}");
-
-				Navigator.gotoNavTab(navTab = "Eligibility");
-
-				AssertChecked(
-					locator1 = "Radio#ANY",
-					radioLabel = "Specific Channels");
-
-				AssertElementPresent(
-					key_entryName = "Minium 2 Portal",
-					key_table = "Channels",
-					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
-
-				Navigator.gotoBack();
-			}
-		}
-
 		task ("And the product(U-Joint) has Available tag with 120 stock quantity in Minium 2") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium-2",
-				userEmailAddress = "buyer@liferay.com");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/catalog");
 
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 

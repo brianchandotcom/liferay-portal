@@ -53,12 +53,12 @@ public class ObjectFieldUtil {
 			ObjectField objectField, long userId)
 		throws Exception {
 
-		if (StringUtil.equals(
+		if (!(StringUtil.equals(
 				objectField.getBusinessTypeAsString(),
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
-			StringUtil.equals(
-				objectField.getBusinessTypeAsString(),
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+			  StringUtil.equals(
+				  objectField.getBusinessTypeAsString(),
+				  ObjectFieldConstants.BUSINESS_TYPE_PICKLIST))) {
 
 			return 0;
 		}

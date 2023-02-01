@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
@@ -35,8 +36,6 @@ import com.liferay.saml.runtime.servlet.profile.SamlSpIdpConnectionsProfile;
 import com.liferay.saml.util.JspUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,14 +94,10 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		List<SamlSpIdpConnection> samlSpIdpConnections =
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId);
 
-		Stream<SamlSpIdpConnection> stream = samlSpIdpConnections.stream();
-
-		samlSpIdpConnections = stream.filter(
+		samlSpIdpConnections = ListUtil.filter(
+			samlSpIdpConnections,
 			samlSpIdpConnection -> isEnabled(
-				samlSpIdpConnection, httpServletRequest)
-		).collect(
-			Collectors.toList()
-		);
+				samlSpIdpConnection, httpServletRequest));
 
 		if (samlSpIdpConnections.isEmpty()) {
 			SamlProviderConfiguration samlProviderConfiguration =

@@ -1291,14 +1291,12 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertFalse(layout.isHidden());
 		Assert.assertEquals(
-			"Test Public Layout",
-			layout.getName(LocaleUtil.getSiteDefault()));
+			"Test Public Layout", layout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", layout.getType());
 
 		List<Layout> layouts = layout.getAllChildren();
 
-		Assert.assertEquals(
-			layouts.toString(), 1, layouts.size());
+		Assert.assertEquals(layouts.toString(), 1, layouts.size());
 
 		layout = layouts.get(0);
 
@@ -1306,20 +1304,18 @@ public class BundleSiteInitializerTest {
 			"Test Public Child Layout",
 			layout.getName(LocaleUtil.getSiteDefault()));
 
-		layout =
-			_layoutLocalService.getLayoutByFriendlyURL(
-				group.getGroupId(), false, "/test-public-permissions-layout");
+		layout = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/test-public-permissions-layout");
 
 		Role role = _roleLocalService.getRole(
 			layout.getCompanyId(), RoleConstants.GUEST);
 
 		boolean hasGuestViewPermission =
 			_resourcePermissionLocalService.hasResourcePermission(
-				layout.getCompanyId(),
-				layout.getModelClassName(),
+				layout.getCompanyId(), layout.getModelClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()),
-				role.getRoleId(), ActionKeys.VIEW);
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.VIEW);
 
 		Assert.assertFalse(hasGuestViewPermission);
 
@@ -1328,34 +1324,30 @@ public class BundleSiteInitializerTest {
 
 		boolean hasSiteMemberViewPermission =
 			_resourcePermissionLocalService.hasResourcePermission(
-				layout.getCompanyId(),
-				layout.getModelClassName(),
+				layout.getCompanyId(), layout.getModelClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()),
-				role.getRoleId(), ActionKeys.VIEW);
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.VIEW);
 
 		Assert.assertTrue(hasSiteMemberViewPermission);
 
 		boolean hasSiteMemberUpdateLayoutContentPermission =
 			_resourcePermissionLocalService.hasResourcePermission(
-				layout.getCompanyId(),
-				layout.getModelClassName(),
+				layout.getCompanyId(), layout.getModelClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()),
-				role.getRoleId(), ActionKeys.UPDATE_LAYOUT_CONTENT);
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.UPDATE_LAYOUT_CONTENT);
 
 		Assert.assertTrue(hasSiteMemberUpdateLayoutContentPermission);
 
-		role = _roleLocalService.getRole(
-			layout.getCompanyId(), "Test Role 4");
+		role = _roleLocalService.getRole(layout.getCompanyId(), "Test Role 4");
 
 		boolean hasTestRole4ViewPermission =
 			_resourcePermissionLocalService.hasResourcePermission(
-				layout.getCompanyId(),
-				layout.getModelClassName(),
+				layout.getCompanyId(), layout.getModelClassName(),
 				ResourceConstants.SCOPE_GROUP_TEMPLATE,
-				String.valueOf(layout.getPlid()),
-				role.getRoleId(), ActionKeys.VIEW);
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.VIEW);
 
 		Assert.assertTrue(hasTestRole4ViewPermission);
 
@@ -1403,10 +1395,10 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertFalse(layout.isHidden());
 		Assert.assertEquals(
-			"Test URL Layout",
-			layout.getName(LocaleUtil.getSiteDefault()));
+			"Test URL Layout", layout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("url", layout.getType());
-		Assert.assertEquals("url=/test-public-layout\n", layout.getTypeSettings());
+		Assert.assertEquals(
+			"url=/test-public-layout\n", layout.getTypeSettings());
 	}
 
 	private void _assertResourceAction(

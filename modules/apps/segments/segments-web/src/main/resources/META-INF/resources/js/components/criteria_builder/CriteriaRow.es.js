@@ -449,6 +449,10 @@ class CriteriaRow extends Component {
 	}) {
 		const {connectDragSource, renderEmptyValuesErrors} = this.props;
 
+		if (selectedProperty.type === PROPERTY_TYPES.EVENT) {
+			return <div className="edit-container"></div>;
+		}
+
 		const propertyType = selectedProperty ? selectedProperty.type : '';
 
 		const filteredSupportedOperators = getSupportedOperatorsFromType(

@@ -231,6 +231,64 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162765. The page designer could edit a 404 error type of utility page."
+	@priority = "5"
+	test Edit404ErrorUtilityPage {
+		task ("Given a page designer has a 404 error utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer makes some changes on the 404 error utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Then the page designer sees the changes persisted") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			LexiconCard.viewCardLabel(
+				card = "404 Error Utility Page",
+				cardLabel = "Draft");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error Utility Page");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Resource Not Found",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Go Somewhere",
+				fragmentName = "Button",
+				id = "link");
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
 	@priority = "5"
 	test Mark404ErrorUtilityPageAsDefault {

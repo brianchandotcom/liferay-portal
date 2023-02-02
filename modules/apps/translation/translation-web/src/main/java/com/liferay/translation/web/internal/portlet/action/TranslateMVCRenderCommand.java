@@ -24,6 +24,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -52,14 +53,9 @@ import com.liferay.translation.web.internal.display.context.TranslateDisplayCont
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -201,21 +197,20 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		boolean hasUpdatePermission = infoItemPermissionProvider.hasPermission(
 			themeDisplay.getPermissionChecker(), object, ActionKeys.UPDATE);
 
-		Set<Locale> availableLocales = _language.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
+		return TransformUtil.transform(
+			_language.getAvailableLocales(themeDisplay.getSiteGroupId()),
+			locale -> {
+				String languageId = LocaleUtil.toLanguageId(locale);
 
-		Stream<Locale> stream = availableLocales.stream();
+				if (!Objects.equals(languageId, sourceLanguageId) &&
+					(hasUpdatePermission ||
+					 _hasTranslatePermission(languageId, themeDisplay))) {
 
-		return stream.map(
-			LocaleUtil::toLanguageId
-		).filter(
-			languageId ->
-				!Objects.equals(languageId, sourceLanguageId) &&
-				(hasUpdatePermission ||
-				 _hasTranslatePermission(languageId, themeDisplay))
-		).collect(
-			Collectors.toList()
-		);
+					return languageId;
+				}
+
+				return null;
+			});
 	}
 
 	private String _getDefaultTargetLanguageId(
@@ -302,26 +297,19 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				translationEntry.getGroupId(), translationEntry.getClassName(),
 				translationEntry.getClassPK(), translationEntry.getContent());
 
-		Collection<InfoFieldValue<Object>> infoFieldValues =
-			infoItemFieldValues.getInfoFieldValues();
-
-		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
-
 		return InfoItemFieldValues.builder(
 		).infoItemReference(
 			infoItemFieldValues.getInfoItemReference()
 		).infoFieldValues(
-			stream.map(
+			TransformUtil.transform(
+				infoItemFieldValues.getInfoFieldValues(),
 				infoFieldValue -> new InfoFieldValue<>(
 					infoFieldValue.getInfoField(),
 					GetterUtil.getObject(
 						_getValue(
 							translationEntryInfoItemFieldValues,
 							infoFieldValue.getInfoField()),
-						infoFieldValue.getValue()))
-			).collect(
-				Collectors.toList()
-			)
+						infoFieldValue.getValue())))
 		).build();
 	}
 

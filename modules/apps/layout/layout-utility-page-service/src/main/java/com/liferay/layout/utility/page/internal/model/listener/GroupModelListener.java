@@ -14,6 +14,7 @@
 
 package com.liferay.layout.utility.page.internal.model.listener;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +50,14 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onAfterCreate(Group group) throws ModelListenerException {
+		if (ExportImportThreadLocal.isStagingInProcess() || (group == null) ||
+			(group.getClassNameId() != _portal.getClassNameId(
+				Group.class.getName())) ||
+			!group.isSite()) {
+
+			return;
+		}
+
 		try {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
@@ -137,5 +147,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Reference
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -35,6 +35,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryModifiedDateComparator;
 import com.liferay.layout.util.comparator.LayoutModifiedDateComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -74,7 +75,6 @@ import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -247,12 +247,9 @@ public class EditStyleBookEntryDisplayContext {
 								fragmentCollectionContributors, 0,
 								4 - fragmentCollections.size());
 
-					Stream<FragmentCollectionContributor>
-						fragmentCollectionContributorsStream =
-							filteredFragmentCollectionContributors.stream();
-
 					fragmentCollectionContributorJSONObjects =
-						fragmentCollectionContributorsStream.map(
+						TransformUtil.transformToArray(
+							filteredFragmentCollectionContributors,
 							fragmentCollectionContributor -> JSONUtil.put(
 								"name", fragmentCollectionContributor.getName()
 							).put(
@@ -261,31 +258,25 @@ public class EditStyleBookEntryDisplayContext {
 									fragmentCollectionContributor.
 										getFragmentCollectionKey(),
 									CompanyConstants.SYSTEM)
-							)
-						).toArray(
-							JSONObject[]::new
-						);
+							),
+							JSONObject.class);
 				}
 
-				Stream<FragmentCollection> fragmentCollectionsStream =
-					fragmentCollections.stream();
+				JSONObject[] jsonObjects = TransformUtil.transformToArray(
+					fragmentCollections,
+					fragmentCollection -> JSONUtil.put(
+						"name", fragmentCollection.getName()
+					).put(
+						"url",
+						_getPreviewFragmentCollectionURL(
+							fragmentCollection.getFragmentCollectionKey(),
+							fragmentCollection.getGroupId())
+					),
+					JSONObject.class);
 
 				return JSONUtil.putAll(
 					ArrayUtil.append(
-						fragmentCollectionsStream.map(
-							fragmentCollection -> JSONUtil.put(
-								"name", fragmentCollection.getName()
-							).put(
-								"url",
-								_getPreviewFragmentCollectionURL(
-									fragmentCollection.
-										getFragmentCollectionKey(),
-									fragmentCollection.getGroupId())
-							)
-						).toArray(
-							JSONObject[]::new
-						),
-						fragmentCollectionContributorJSONObjects));
+						jsonObjects, fragmentCollectionContributorJSONObjects));
 			}
 		).put(
 			"totalLayouts", fragmentCollectionsCount
@@ -366,31 +357,24 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"recentLayouts",
 			() -> {
-				List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+				JSONObject[] jsonObjects = TransformUtil.transformToArray(
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntries(
 							_getPreviewItemsGroupId(), layoutTypes,
 							WorkflowConstants.STATUS_APPROVED, 0,
 							Math.min(total, 4),
 							new LayoutPageTemplateEntryModifiedDateComparator(
-								false));
+								false)),
+					layoutPageTemplateEntry -> JSONUtil.put(
+						"name", layoutPageTemplateEntry.getName()
+					).put(
+						"private", false
+					).put(
+						"url", _getPreviewURL(layoutPageTemplateEntry)
+					),
+					JSONObject.class);
 
-				Stream<LayoutPageTemplateEntry>
-					layoutPageTemplateEntriesStream =
-						layoutPageTemplateEntries.stream();
-
-				return JSONUtil.putAll(
-					layoutPageTemplateEntriesStream.map(
-						layoutPageTemplateEntry -> JSONUtil.put(
-							"name", layoutPageTemplateEntry.getName()
-						).put(
-							"private", false
-						).put(
-							"url", _getPreviewURL(layoutPageTemplateEntry)
-						)
-					).toArray(
-						JSONObject[]::new
-					));
+				return JSONUtil.putAll(jsonObjects);
 			}
 		).put(
 			"totalLayouts", total
@@ -431,20 +415,18 @@ public class EditStyleBookEntryDisplayContext {
 						_getPreviewItemsGroupId(), 0, Math.min(total, 4),
 						new LayoutModifiedDateComparator(false));
 
-				Stream<Layout> layoutsStream = layouts.stream();
+				JSONObject[] jsonObjects = TransformUtil.transformToArray(
+					layouts,
+					layout -> JSONUtil.put(
+						"name", layout.getName(_themeDisplay.getLocale())
+					).put(
+						"private", layout.isPrivateLayout()
+					).put(
+						"url", _getPreviewURL(layout)
+					),
+					JSONObject.class);
 
-				return JSONUtil.putAll(
-					layoutsStream.map(
-						layout -> JSONUtil.put(
-							"name", layout.getName(_themeDisplay.getLocale())
-						).put(
-							"private", layout.isPrivateLayout()
-						).put(
-							"url", _getPreviewURL(layout)
-						)
-					).toArray(
-						JSONObject[]::new
-					));
+				return JSONUtil.putAll(jsonObjects);
 			}
 		).put(
 			"totalLayouts", total

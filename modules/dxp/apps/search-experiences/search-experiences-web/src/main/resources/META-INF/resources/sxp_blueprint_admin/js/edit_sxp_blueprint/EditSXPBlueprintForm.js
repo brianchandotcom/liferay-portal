@@ -77,9 +77,11 @@ const TABS = {
 function EditSXPBlueprintForm({
 	entityJSON,
 	initialConfiguration = {},
-	initialDescription = {},
+	initialDescription = '',
+	initialDescriptionI18n = {},
 	initialSXPElementInstances = [],
-	initialTitle = {},
+	initialTitle = '',
+	initialTitleI18n = {},
 	sxpBlueprintId,
 }) {
 	const {
@@ -186,11 +188,11 @@ function EditSXPBlueprintForm({
 						body: JSON.stringify({
 							configuration,
 							description_i18n: renameKeys(
-								formik.values.description,
+								formik.values.description_i18n,
 								formatLocaleWithUnderscores
 							),
 							elementInstances,
-							title_i18n: renameKeys(formik.values.title,
+							title_i18n: renameKeys(formik.values.title_i18n,
 								formatLocaleWithUnderscores),
 						}),
 						headers: DEFAULT_HEADERS,
@@ -213,12 +215,12 @@ function EditSXPBlueprintForm({
 					body: JSON.stringify({
 						configuration,
 						description_i18n: renameKeys(
-							formik.values.description,
+							formik.values.description_i18n,
 							formatLocaleWithUnderscores
 						),
 						elementInstances,
 						title_i18n: renameKeys(
-							formik.values.title,
+							formik.values.title_i18n,
 							formatLocaleWithUnderscores
 						),
 					}),
@@ -380,7 +382,7 @@ function EditSXPBlueprintForm({
 			),
 			applyIndexerClauses:
 				initialConfiguration.queryConfiguration?.applyIndexerClauses,
-			description: initialDescription,
+			description_i18n: initialDescriptionI18n,
 			elementInstances: initialSXPElementInstances.map(
 				(elementInstance, index) => ({
 					...elementInstance,
@@ -409,7 +411,7 @@ function EditSXPBlueprintForm({
 				null,
 				'\t'
 			),
-			title: initialTitle,
+			title_i18n: initialTitleI18n,
 		},
 		onSubmit: _handleFormikSubmit,
 		validate: _handleFormikValidate,
@@ -593,8 +595,8 @@ function EditSXPBlueprintForm({
 	};
 
 	const _handleChangeTitleAndDescription = ({description, title}) => {
-		formik.setFieldValue('description', description);
-		formik.setFieldValue('title', title);
+		formik.setFieldValue('description_i18n', description);
+		formik.setFieldValue('title_i18n', title);
 	};
 
 	const _handleCloseSidebar = () => {
@@ -1017,7 +1019,8 @@ function EditSXPBlueprintForm({
 			/>
 
 			<PageToolbar
-				description={formik.values.description}
+				description={initialDescription}
+				descriptionI18n={formik.values.description_i18n}
 				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
 				onChangeTab={_handleChangeTab}
@@ -1025,7 +1028,8 @@ function EditSXPBlueprintForm({
 				onTitleAndDescriptionChange={_handleChangeTitleAndDescription}
 				tab={tab}
 				tabs={TABS}
-				title={formik.values.title}
+				title={initialTitle}
+				titleI18n={formik.values.title_i18n}
 			>
 				<ClayToolbar.Item>
 					<ClayButton
@@ -1071,9 +1075,11 @@ function EditSXPBlueprintForm({
 EditSXPBlueprintForm.propTypes = {
 	entityJSON: PropTypes.object,
 	initialConfiguration: PropTypes.object,
-	initialDescription: PropTypes.object,
+	initialDescription: PropTypes.string,
+	initialDescriptionI18n: PropTypes.object,
 	initialSXPElementInstances: PropTypes.arrayOf(PropTypes.object),
-	initialTitle: PropTypes.object,
+	initialTitle: PropTypes.string,
+	initialTitleI18n: PropTypes.object,
 	sxpBlueprintId: PropTypes.string,
 };
 

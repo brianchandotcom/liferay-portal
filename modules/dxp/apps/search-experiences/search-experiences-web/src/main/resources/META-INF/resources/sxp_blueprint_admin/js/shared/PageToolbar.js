@@ -31,28 +31,33 @@ import ThemeContext from './ThemeContext';
  * from being displayed in two different languages. Preference is given to
  * the locale language, then the defaultLanguage. If neither are available,
  * it chooses the first available language.
- * @param {Object} title Titles in all available locales
+ * @param {Object} titleI18n Titles in all available locales
  * @param {string} locale
  * @param {string} defaultLocale
  * @param {Object} availableLanguages
  * @returns {string}
  */
-const getDisplayLocale = (title, locale, defaultLocale, availableLanguages) => {
-	if (title[formatLocaleWithDashes(locale)]) {
+const getDisplayLocale = (
+	titleI18n,
+	locale,
+	defaultLocale,
+	availableLanguages
+) => {
+	if (titleI18n[formatLocaleWithDashes(locale)]) {
 		return formatLocaleWithDashes(locale);
 	}
 
-	if (title[formatLocaleWithDashes(defaultLocale)]) {
+	if (titleI18n[formatLocaleWithDashes(defaultLocale)]) {
 		return formatLocaleWithDashes(defaultLocale);
 	}
 
 	if (
-		Object.keys(title).length &&
+		Object.keys(titleI18n).length &&
 		Object.keys(availableLanguages).includes(
-			formatLocaleWithUnderscores(Object.keys(title)[0])
+			formatLocaleWithUnderscores(Object.keys(titleI18n)[0])
 		)
 	) {
-		return Object.keys(title)[0];
+		return Object.keys(titleI18n)[0];
 	}
 
 	return formatLocaleWithDashes(defaultLocale);
@@ -61,6 +66,7 @@ const getDisplayLocale = (title, locale, defaultLocale, availableLanguages) => {
 export default function PageToolbar({
 	children,
 	description,
+	descriptionI18n,
 	disableTitleAndDescriptionModal = false,
 	isSubmitting,
 	onCancel,
@@ -71,11 +77,13 @@ export default function PageToolbar({
 	tab,
 	tabs,
 	title,
+	titleI18n,
 }) {
 	const {availableLanguages, defaultLocale, locale} = useContext(
 		ThemeContext
 	);
 
+	const [edited, setEdited] = useState(false);
 	const [modalFieldFocus, setModalFieldFocus] = useState('title');
 	const [modalVisible, setModalVisible] = useState(false);
 
@@ -84,7 +92,7 @@ export default function PageToolbar({
 	});
 
 	const displayLocale = getDisplayLocale(
-		title,
+		titleI18n,
 		locale,
 		defaultLocale,
 		availableLanguages
@@ -94,6 +102,12 @@ export default function PageToolbar({
 		setModalFieldFocus(fieldFocus);
 
 		setModalVisible(true);
+	};
+
+	const _handleSubmit = (value) => {
+		setEdited(true);
+
+		onTitleAndDescriptionChange(value);
 	};
 
 	return (
@@ -110,18 +124,18 @@ export default function PageToolbar({
 									disabled={disableTitleAndDescriptionModal}
 									displayLocale={displayLocale}
 									fieldFocus={modalFieldFocus}
-									initialDescription={description}
-									initialTitle={title}
+									initialDescription={descriptionI18n}
+									initialTitle={titleI18n}
 									observer={observer}
 									onClose={onClose}
-									onSubmit={onTitleAndDescriptionChange}
+									onSubmit={_handleSubmit}
 								/>
 							)}
 
 							{readOnly ? (
 								<div>
 									<div className="entry-title text-truncate">
-										{title[displayLocale] || (
+										{title || (
 											<span className="entry-title-blank">
 												{Liferay.Language.get(
 													'untitled'
@@ -134,9 +148,9 @@ export default function PageToolbar({
 										<div
 											className="entry-description text-truncate"
 											data-tooltip-align="bottom"
-											title={description[displayLocale]}
+											title={description}
 										>
-											{description[displayLocale] || (
+											{description || (
 												<span className="entry-description-blank">
 													{Liferay.Language.get(
 														'no-description'
@@ -158,7 +172,9 @@ export default function PageToolbar({
 										onClick={_handleClickEdit('title')}
 									>
 										<div className="entry-title text-truncate">
-											{title[displayLocale] || (
+											{(!edited
+												? title
+												: titleI18n[displayLocale]) || (
 												<span className="entry-title-blank">
 													{Liferay.Language.get(
 														'untitled'
@@ -189,10 +205,18 @@ export default function PageToolbar({
 												className="entry-description text-truncate"
 												data-tooltip-align="bottom"
 												title={
-													description[displayLocale]
+													!edited
+														? description
+														: descriptionI18n[
+																displayLocale
+														  ]
 												}
 											>
-												{description[displayLocale] || (
+												{(!edited
+													? description
+													: descriptionI18n[
+															displayLocale
+													  ]) || (
 													<span className="entry-description-blank">
 														{Liferay.Language.get(
 															'no-description'
@@ -279,7 +303,8 @@ export default function PageToolbar({
 }
 
 PageToolbar.propTypes = {
-	description: PropTypes.object,
+	description: PropTypes.string,
+	descriptionI18n: PropTypes.object,
 	disableTitleAndDescriptionModal: PropTypes.bool,
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
@@ -289,5 +314,6 @@ PageToolbar.propTypes = {
 	readOnly: PropTypes.bool,
 	tab: PropTypes.string,
 	tabs: PropTypes.object,
-	title: PropTypes.object,
+	title: PropTypes.string,
+	titleI18n: PropTypes.object,
 };

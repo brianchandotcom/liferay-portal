@@ -156,7 +156,9 @@ const validateConfigKeys = (
 };
 
 function EditSXPElementForm({
+	initialDescription = '',
 	initialElementJSONEditorValue = {},
+	initialTitle = '',
 	predefinedVariables = [],
 	readOnly,
 	type,
@@ -545,7 +547,8 @@ function EditSXPElementForm({
 				/>
 
 				<PageToolbar
-					description={renameKeys(
+					description={initialDescription}
+					descriptionI18n={renameKeys(
 						sxpElementJSONObject.description_i18n,
 						formatLocaleWithDashes
 					)}
@@ -557,7 +560,8 @@ function EditSXPElementForm({
 						_handleTitleAndDescriptionChange
 					}
 					readOnly={readOnly}
-					title={renameKeys(
+					title={initialTitle}
+					titleI18n={renameKeys(
 						sxpElementJSONObject.title_i18n,
 						formatLocaleWithDashes
 					)}
@@ -793,7 +797,9 @@ function EditSXPElementForm({
 }
 
 EditSXPElementForm.propTypes = {
+	initialDescription: PropTypes.string,
 	initialElementJSONEditorValue: PropTypes.object,
+	initialTitle: PropTypes.string,
 	predefinedVariables: PropTypes.arrayOf(PropTypes.object),
 	readOnly: PropTypes.bool,
 	sxpElementId: PropTypes.string,

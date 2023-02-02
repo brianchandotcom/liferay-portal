@@ -70,12 +70,14 @@ export default function ({
 					<EditSXPBlueprintForm
 						entityJSON={resource.entityJSON}
 						initialConfiguration={resource.configuration}
-						initialDescription={renameKeys(
+						initialDescription={resource.description}
+						initialDescriptionI18n={renameKeys(
 							resource.description_i18n,
 							transformLocale
 						)}
 						initialSXPElementInstances={resource.elementInstances}
-						initialTitle={renameKeys(
+						initialTitle={resource.title}
+						initialTitleI18n={renameKeys(
 							resource.title_i18n,
 							transformLocale
 						)}

@@ -129,10 +129,12 @@ export default function ({
 			<div className="edit-sxp-element-root">
 				<ErrorBoundary>
 					<EditSXPElementForm
+						initialDescription={sxpElementResponse.description}
 						initialElementJSONEditorValue={transformToSXPElementExportFormat(
 							sxpElementResponse,
 							defaultLocale
 						)}
+						initialTitle={sxpElementResponse.title}
 						predefinedVariables={predefinedVariables}
 						readOnly={sxpElementResponse.readOnly}
 						sxpElementId={sxpElementId}

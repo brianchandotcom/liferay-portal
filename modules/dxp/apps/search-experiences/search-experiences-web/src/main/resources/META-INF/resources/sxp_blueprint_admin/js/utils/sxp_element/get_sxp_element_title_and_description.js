@@ -34,14 +34,14 @@ export default function getSXPElementTitleAndDescription(sxpElement, locale) {
 		title_i18n = {},
 	} = sxpElement;
 
-	// If the `title_i18n` is an empty object, display `title` and
-	// `description`.
+	// Display `title` and `description` whenever available.
 
-	if (isEmpty(title_i18n)) {
+	if (title || isEmpty(title_i18n)) {
 		return [title, description];
 	}
 
-	// Convert any 'zh-Hans-CN' or 'zh-Hans-TW' keys.
+	// In the case of custom elements when no `title` is available, check `_i18n`
+	// objects. First, convert any 'zh-Hans-CN' or 'zh-Hans-TW' keys.
 
 	const descriptionObject = renameKeys(description_i18n, transformLocale);
 	const titleObject = renameKeys(title_i18n, transformLocale);
@@ -70,26 +70,11 @@ export default function getSXPElementTitleAndDescription(sxpElement, locale) {
 			Liferay.ThemeDisplay.getDefaultLanguageId()
 		);
 	}
+	else if (Object.keys(titleObject).length) {
+		displayLocale = Object.keys(titleObject)[0];
+	}
 
 	if (displayLocale) {
-		return [
-			titleObject[displayLocale],
-			descriptionObject[displayLocale] || '',
-		];
-	}
-
-	// Display `title` and `description` if the preferred language / default
-	// language are unavailable.
-
-	if (title) {
-		return [title, description];
-	}
-
-	// If `title` is empty, display first available locale within `titleObject`.
-
-	if (Object.keys(titleObject).length) {
-		displayLocale = Object.keys(titleObject)[0];
-
 		return [
 			titleObject[displayLocale],
 			descriptionObject[displayLocale] || '',

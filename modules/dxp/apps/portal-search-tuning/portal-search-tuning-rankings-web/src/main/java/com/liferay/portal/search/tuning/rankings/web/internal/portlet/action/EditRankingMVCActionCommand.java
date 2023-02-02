@@ -335,7 +335,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		for (String string : stripUpdateSpecialStrings) {
 			if (string != null) {
-				return _stripUpdateSpecial(string);
+				return string;
 			}
 		}
 

@@ -49,7 +49,6 @@ import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -127,28 +126,30 @@ public class CopyTemplateEntryMVCActionCommandTest {
 
 		Assert.assertTrue(templateEntries.size() > 1);
 
+		TemplateEntry templateEntry = null;
+
 		DDMTemplate originalDDMTemplate =
 			_ddmTemplateLocalService.getDDMTemplate(
 				_templateEntry.getDDMTemplateId());
 
-		Stream<TemplateEntry> templateEntriesStream = templateEntries.stream();
+		for (TemplateEntry curTemplateEntry : templateEntries) {
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
+				curTemplateEntry.getDDMTemplateId());
 
-		Assert.assertTrue(
-			templateEntriesStream.map(
-				templateEntry -> _ddmTemplateLocalService.fetchDDMTemplate(
-					templateEntry.getDDMTemplateId())
-			).filter(
-				Objects::nonNull
-			).filter(
-				ddmTemplate -> Objects.equals(
-					name, ddmTemplate.getName(languageId))
-			).filter(
-				ddmTemplate -> Objects.equals(
-					description, ddmTemplate.getDescription(languageId))
-			).anyMatch(
-				ddmTemplate -> Objects.equals(
-					originalDDMTemplate.getScript(), ddmTemplate.getScript())
-			));
+			if ((ddmTemplate != null) &&
+				Objects.equals(name, ddmTemplate.getName(languageId)) &&
+				Objects.equals(
+					description, ddmTemplate.getDescription(languageId)) &&
+				Objects.equals(
+					originalDDMTemplate.getScript(), ddmTemplate.getScript())) {
+
+				templateEntry = curTemplateEntry;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(templateEntry);
 	}
 
 	private MockLiferayPortletActionRequest

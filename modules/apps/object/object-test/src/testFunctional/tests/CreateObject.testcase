@@ -1996,7 +1996,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 53");
 
-		CreateObject.assertDisabledPublishObjectButton();
+		AssertElementPresent(locator1 = "CreateObject#DISABLED_PUBLISH_OBJECT_BUTTON");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"

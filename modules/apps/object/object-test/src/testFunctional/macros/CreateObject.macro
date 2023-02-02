@@ -107,12 +107,6 @@ definition {
 			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
-	macro assertFieldNotPresentInBlock {
-		AssertElementNotPresent(
-			key_fieldLabelName = "${fieldLabelName}",
-			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
-	}
-
 	macro assertLabelBasicInfo {
 		var key_fieldType = "value";
 

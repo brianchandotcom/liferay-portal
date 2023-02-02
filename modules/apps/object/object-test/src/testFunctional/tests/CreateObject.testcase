@@ -1261,7 +1261,9 @@ definition {
 
 		CreateObject.deleteFieldOnBlock();
 
-		CreateObject.assertFieldNotPresentInBlock(fieldLabelName = "Custom Field");
+		AssertElementNotPresent(
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to delete a Layout for an Object"

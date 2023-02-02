@@ -1621,7 +1621,9 @@ definition {
 
 		ObjectAdmin.goToLayoutTabOnLayouts();
 
-		CreateObject.assertCannotAddRelationshipTabFirst();
+		LexiconEntry.gotoAddNoSelectFrame();
+
+		AssertElementPresent(locator1 = "CreateObject#DISABLED_TAB_TYPE_RELATIONSHIPS");
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"

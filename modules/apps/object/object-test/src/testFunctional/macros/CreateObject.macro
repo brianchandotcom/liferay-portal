@@ -46,12 +46,6 @@ definition {
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 	}
 
-	macro assertCannotAddRelationshipTabFirst {
-		LexiconEntry.gotoAddNoSelectFrame();
-
-		AssertElementPresent(locator1 = "CreateObject#DISABLED_TAB_TYPE_RELATIONSHIPS");
-	}
-
 	macro assertCustomObject {
 		AssertElementPresent(
 			key_labelName = "${labelName}",

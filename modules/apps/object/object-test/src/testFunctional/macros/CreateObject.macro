@@ -242,10 +242,6 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
-	macro assertToggleCollapsibleChecked {
-		AssertChecked.assertCheckedNotVisible(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
-	}
-
 	macro assertValuesOnObjectData {
 		var key_fieldType = "form-control";
 

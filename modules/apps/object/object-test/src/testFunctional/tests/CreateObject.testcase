@@ -3194,7 +3194,7 @@ definition {
 
 		CreateObject.checkToggleCollapsible();
 
-		CreateObject.assertToggleCollapsibleChecked();
+		AssertChecked.assertCheckedNotVisible(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"

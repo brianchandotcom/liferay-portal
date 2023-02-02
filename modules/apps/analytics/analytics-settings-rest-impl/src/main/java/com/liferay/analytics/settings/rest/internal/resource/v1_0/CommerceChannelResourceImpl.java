@@ -28,11 +28,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -59,14 +57,14 @@ public class CommerceChannelResourceImpl
 				_analyticsCloudClient.getAnalyticsChannelsPage(
 					contextCompany.getCompanyId(), null, 0, 100, null);
 
-		Collection<AnalyticsChannel> analyticsChannels =
-			analyticsChannelsPage.getItems();
+		Map<Long, String> analyticsChannelsMap = new HashMap<>();
 
-		Stream<AnalyticsChannel> stream = analyticsChannels.stream();
+		for (AnalyticsChannel analyticsChannel :
+				analyticsChannelsPage.getItems()) {
 
-		Map<Long, String> analyticsChannelsMap = stream.collect(
-			Collectors.toMap(
-				AnalyticsChannel::getId, AnalyticsChannel::getName));
+			analyticsChannelsMap.put(
+				analyticsChannel.getId(), analyticsChannel.getName());
+		}
 
 		return Page.of(
 			transform(

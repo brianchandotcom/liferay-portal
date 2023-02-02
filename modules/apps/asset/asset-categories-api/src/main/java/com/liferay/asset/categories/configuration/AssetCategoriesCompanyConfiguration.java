@@ -36,8 +36,8 @@ public interface AssetCategoriesCompanyConfiguration {
 
 	@Meta.AD(
 		deflt = "true",
-		description = "find-also-for-children-categories-when-searching-for-parent-categories-description",
-		name = "find-also-for-children-categories-when-searching-for-parent-categories",
+		description = "include-children-categories-when-searching-parent-categories-description",
+		name = "include-children-categories-when-searching-parent-categories",
 		required = false
 	)
 	public boolean

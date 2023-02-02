@@ -1517,7 +1517,9 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 156824");
 
-			CreateObject.assertAccountRestrictedFieldDisabled(valueName = "Choose an Option");
+			AssertElementPresent(
+				key_valueName = "Choose an Option",
+				locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD_DISABLED");
 
 			AssertElementPresent(locator1 = "CreateObject#TOGGLE_ACCOUNT_RESTRICTION_DISABLED");
 		}

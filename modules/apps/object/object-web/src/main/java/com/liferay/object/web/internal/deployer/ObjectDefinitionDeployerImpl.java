@@ -150,8 +150,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				AssetRendererFactory.class,
 				new ObjectEntryAssetRendererFactory(
-					objectDefinition, _objectEntryDisplayContextFactory,
-					_objectEntryService, _servletContext),
+					_assetDisplayPageFriendlyURLProvider, objectDefinition,
+					_objectEntryDisplayContextFactory, _objectEntryService,
+					_servletContext),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

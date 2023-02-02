@@ -676,7 +676,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				GetterUtil.getBoolean(
 					infoField.getAttribute(TextInfoFieldType.MULTILINE))) {
 
-				return "INPUTS-textarea-input";
+				return "INPUTS-textarea";
 			}
 
 			return "INPUTS-text-input";

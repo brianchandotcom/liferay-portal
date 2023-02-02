@@ -35,6 +35,7 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndex
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,7 +151,10 @@ public class SingleIndexToMultipleIndexImporterImpl
 		Map<String, List<Document>> documentsMap = new HashMap<>();
 
 		for (Document document : documents) {
-			documentsMap.put(document.getString("index"), documents);
+			List<Document> documentList = documentsMap.computeIfAbsent(
+				document.getString("index"), key -> new ArrayList<>());
+
+			documentList.add(document);
 		}
 
 		return documentsMap;

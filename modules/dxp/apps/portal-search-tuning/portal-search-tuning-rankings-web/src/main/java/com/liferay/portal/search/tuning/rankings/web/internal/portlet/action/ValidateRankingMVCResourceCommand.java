@@ -28,18 +28,17 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingUtil;
 
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -152,24 +151,14 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		ResourceRequest resourceRequest,
 		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest) {
 
-		List<String> strings = ListUtil.concat(
-			Collections.singletonList(
-				validateRankingMVCResourceRequest.getQueryString()),
-			_getAliases(validateRankingMVCResourceRequest));
-
-		strings = ListUtil.filter(
-			strings, string -> !Validator.isBlank(string));
-
-		ListUtil.distinct(strings);
-
-		Collection<String> queryStrings = ListUtil.sort(strings);
-
 		return duplicateQueryStringsDetector.detect(
 			duplicateQueryStringsDetector.builder(
 			).index(
 				_getIndexName(resourceRequest)
 			).queryStrings(
-				queryStrings
+				RankingUtil.getQueryStrings(
+					validateRankingMVCResourceRequest.getQueryString(),
+					_getAliases(validateRankingMVCResourceRequest))
 			).rankingIndexName(
 				_getRankingIndexName(resourceRequest)
 			).unlessRankingDocumentId(

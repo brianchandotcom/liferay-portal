@@ -44,6 +44,7 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndex
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.storage.RankingStorageAdapter;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingUtil;
 
 import java.io.IOException;
 
@@ -439,16 +440,9 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		Collection<String> queryStrings = ranking.getQueryStrings();
 
 		if (editRankingMVCActionRequest.isCmd(Constants.UPDATE)) {
-			List<String> strings = ListUtil.concat(
-				Collections.singletonList(ranking.getQueryString()),
+			queryStrings = RankingUtil.getQueryStrings(
+				ranking.getQueryString(),
 				_getAliases(editRankingMVCActionRequest));
-
-			strings = ListUtil.filter(
-				strings, concatString -> !Validator.isBlank(concatString));
-
-			ListUtil.distinct(strings);
-
-			queryStrings = ListUtil.sort(strings);
 		}
 
 		if (_detectedDuplicateQueryStrings(ranking, queryStrings)) {

@@ -16,8 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -84,15 +83,7 @@ public class Ranking {
 	}
 
 	public Collection<String> getQueryStrings() {
-		List<String> querySrtings = ListUtil.concat(
-			Collections.singletonList(_queryString), _aliases);
-
-		querySrtings = ListUtil.filter(
-			querySrtings, querySring -> !Validator.isBlank(querySring));
-
-		ListUtil.distinct(querySrtings);
-
-		return ListUtil.sort(querySrtings);
+		return RankingUtil.getQueryStrings(_queryString, _aliases);
 	}
 
 	public String getRankingDocumentId() {

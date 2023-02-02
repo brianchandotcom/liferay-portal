@@ -1,17 +1,17 @@
 definition {
 
-	macro addTermsAndCondition {
+	macro addTermsAndConditions {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = ${termsAndConditionName});
+			value1 = ${termsAndConditionsName});
 
 		Select(
 			locator1 = "Select#TYPE",
-			value1 = ${termsAndConditionType});
+			value1 = ${termsAndConditionsType});
 
 		Type(
 			locator1 = "CommerceEntry#PRIORITY_FIELD",
@@ -28,17 +28,17 @@ definition {
 		}
 	}
 
-	macro assertTermsAndConditionEntry {
+	macro assertTermsAndConditionsEntry {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",
-			value1 = ${termsAndConditionName});
+			value1 = ${termsAndConditionsName});
 
-		if (isSet(termsAndConditionDescription)) {
+		if (isSet(termsAndConditionsDescription)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			AssertTextEquals(
 				locator1 = "CKEditor#BODY",
-				value1 = ${termsAndConditionDescription});
+				value1 = ${termsAndConditionsDescription});
 		}
 
 		if (isSet(valuePosition)) {
@@ -48,18 +48,18 @@ definition {
 		}
 	}
 
-	macro cancelAddTermsAndCondition {
+	macro cancelAddTermsAndConditions {
 		LexiconEntry.gotoAddNoSelectFrame();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = ${termsAndConditionName});
+			value1 = ${termsAndConditionsName});
 
 		Select(
 			locator1 = "Select#TYPE",
-			value1 = ${termsAndConditionType});
+			value1 = ${termsAndConditionsType});
 
 		Type(
 			locator1 = "CommerceEntry#PRIORITY_FIELD",
@@ -76,11 +76,11 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
-	macro deleteTermsAndCondition {
-		CommerceNavigator.searchEntry(entryName = ${termsAndConditionName});
+	macro deleteTermsAndConditions {
+		CommerceNavigator.searchEntry(entryName = ${termsAndConditionsName});
 
 		Click(
-			key_value = ${termsAndConditionName},
+			key_value = ${termsAndConditionsName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -88,23 +88,23 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editTermsAndCondition {
+	macro editTermsAndConditions {
 		if (isSet(deactivate)) {
 			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
 		}
 
-		if (isSet(termsAndConditionName)) {
+		if (isSet(termsAndConditionsName)) {
 			Type(
 				locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",
-				value1 = ${termsAndConditionName});
+				value1 = ${termsAndConditionsName});
 		}
 
-		if (isSet(termsAndConditionDescription)) {
+		if (isSet(termsAndConditionsDescription)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(
 				locator1 = "CKEditor#BODY",
-				value1 = ${termsAndConditionDescription});
+				value1 = ${termsAndConditionsDescription});
 
 			SelectFrame(value1 = "relative=top");
 		}
@@ -122,23 +122,23 @@ definition {
 
 	macro gotoEntryMenuItem {
 		Click(
-			key_value = ${termsAndConditionName},
+			key_value = ${termsAndConditionsName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro openTermsAndConditionAdmin {
+	macro openTermsAndConditionsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_term_web_internal_portlet_CommerceTermEntryPortlet");
 	}
 
-	macro viewDeleteTermsAndConditionEntry {
+	macro viewDeleteTermsAndConditionsEntry {
 		AssertElementNotPresent(
-			key_termsAndConditionName = ${termsAndConditionName},
+			key_termsAndConditionsName = ${termsAndConditionsName},
 			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
-			value1 = ${termsAndConditionName});
+			value1 = ${termsAndConditionsName});
 	}
 
 	macro viewNoPG {
@@ -147,16 +147,16 @@ definition {
 			value1 = "Sorry, no results were found.");
 	}
 
-	macro viewTermsAndConditionEntry {
+	macro viewTermsAndConditionsEntry {
 		AssertTextEquals.assertPartialText(
-			key_termsAndConditionName = ${termsAndConditionName},
+			key_termsAndConditionsName = ${termsAndConditionsName},
 			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
-			value1 = ${termsAndConditionName});
+			value1 = ${termsAndConditionsName});
 
 		AssertTextEquals.assertPartialText(
-			key_termsAndConditionType = ${termsAndConditionType},
+			key_termsAndConditionsType = ${termsAndConditionsType},
 			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_TYPE",
-			value1 = ${termsAndConditionType});
+			value1 = ${termsAndConditionsType});
 
 		AssertTextEquals.assertPartialText(
 			key_valuePosition = ${valuePosition},
@@ -164,15 +164,15 @@ definition {
 			value1 = ${valuePosition});
 
 		AssertTextEquals.assertPartialText(
-			key_termsAndConditionActiveStatus = ${termsAndConditionActiveStatus},
+			key_termsAndConditionsActiveStatus = ${termsAndConditionsActiveStatus},
 			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_ACTIVE_STATUS",
-			value1 = ${termsAndConditionActiveStatus});
+			value1 = ${termsAndConditionsActiveStatus});
 	}
 
-	macro viewTermsAndConditionEntrySortByPriority {
+	macro viewTermsAndConditionsEntrySortByPriority {
 		AssertTextPresent(
 			key_rowNumber = ${rowNumber},
-			key_termsAndConditionName = ${termsAndConditionName},
+			key_termsAndConditionsName = ${termsAndConditionsName},
 			key_valuePosition = ${valuePosition},
 			locator1 = "CommercePaymentTerms#ENTRY_LIST_BY_SORT",
 			value1 = ${valuePosition});

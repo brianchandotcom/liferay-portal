@@ -32,18 +32,18 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "AA Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+				termsAndConditionsName = "AA Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "ZZ Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+				termsAndConditionsName = "ZZ Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 2);
 		}
 
@@ -130,18 +130,18 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "BB Terms and Condition Entry",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "BB Terms and Condition Entry",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "AA Terms and Condition Entry",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "AA Terms and Condition Entry",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 2);
 		}
 
@@ -234,12 +234,12 @@ definition {
 		}
 
 		task ("Given one Payment Term description containing 'Bulleted List', 'Bold', 'Italic', 'Underline' text into the description") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Payment Term",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Payment Term",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			CommerceUtilities.addFullDescriptionUsingSource(sourceFullDescription = "<ul><li><u><em><strong>Payment Term Description</strong></em></u></li></ul>");
@@ -261,10 +261,10 @@ definition {
 		task ("Given one Delivery Term description containing 'Numbered List' text and an 'Image' into the description") {
 			Click(locator1 = "Icon#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Delivery Term",
-				termsAndConditionType = "Delivery Terms",
+				termsAndConditionsName = "Delivery Term",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 1);
 
 			FormFields.toggleCKEditorContentStyle(optionTool = "Image");
@@ -363,12 +363,12 @@ definition {
 		}
 
 		task ("And a term is created") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Payment Term",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Payment Term",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 		}
 
@@ -399,18 +399,18 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Delivery Terms",
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Terms and Condition Entry 2",
-				termsAndConditionType = "Delivery Terms",
+				termsAndConditionsName = "Terms and Condition Entry 2",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 2);
 		}
 
@@ -443,9 +443,9 @@ definition {
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Delete",
-				termsAndConditionName = "Terms and Condition Entry 1");
+				termsAndConditionsName = "Terms and Condition Entry 1");
 
-			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry 1");
+			CommercePaymentTerms.viewDeleteTermsAndConditionsEntry(termsAndConditionsName = "Terms and Condition Entry 1");
 		}
 
 		task ("And I edit the account") {
@@ -477,18 +477,18 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Terms and Condition Entry 2",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Terms and Condition Entry 2",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 2);
 		}
 
@@ -521,9 +521,9 @@ definition {
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Delete",
-				termsAndConditionName = "Terms and Condition Entry 1");
+				termsAndConditionsName = "Terms and Condition Entry 1");
 
-			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry 1");
+			CommercePaymentTerms.viewDeleteTermsAndConditionsEntry(termsAndConditionsName = "Terms and Condition Entry 1");
 		}
 
 		task ("And when I edit the account") {
@@ -555,10 +555,10 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Delivery Terms",
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
@@ -587,7 +587,7 @@ definition {
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Terms and Condition Entry 1");
+				termsAndConditionsName = "Terms and Condition Entry 1");
 
 			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
 
@@ -623,10 +623,10 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
@@ -655,7 +655,7 @@ definition {
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Terms and Condition Entry 1");
+				termsAndConditionsName = "Terms and Condition Entry 1");
 
 			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
 

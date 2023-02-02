@@ -24,19 +24,19 @@ definition {
 		}
 
 		task ("When the Sales Manager creates a new entry with 'Delivery Term' Type") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = "0.0");
 
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 		}
 
 		task ("Then a new Term is successfully created") {
-			CommercePaymentTerms.viewTermsAndConditionEntry(
-				termsAndConditionActiveStatus = "No",
-				termsAndConditionName = "Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.viewTermsAndConditionsEntry(
+				termsAndConditionsActiveStatus = "No",
+				termsAndConditionsName = "Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 0);
 		}
 	}
@@ -49,24 +49,24 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = "0.0");
 
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 		}
 
 		task ("When the Sales Manager tries to delete a Delivery Terms entry") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Delete",
-				termsAndConditionName = "Terms and Condition Entry");
+				termsAndConditionsName = "Terms and Condition Entry");
 		}
 
 		task ("Then the entry is successfully removed") {
-			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry");
+			CommercePaymentTerms.viewDeleteTermsAndConditionsEntry(termsAndConditionsName = "Terms and Condition Entry");
 		}
 	}
 
@@ -80,12 +80,12 @@ definition {
 		}
 
 		task ("When the Sales Manager navigates to that entry details page") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = "0.0");
 
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 		}
 
 		task ("And the Sales Manager edit the fields on the page") {
@@ -95,8 +95,8 @@ definition {
 				entryName = "Terms and Condition Entry",
 				menuItem = "Edit");
 
-			CommercePaymentTerms.editTermsAndCondition(
-				termsAndConditionName = "Edited Terms and Condition Entry",
+			CommercePaymentTerms.editTermsAndConditions(
+				termsAndConditionsName = "Edited Terms and Condition Entry",
 				valuePosition = "1.0");
 		}
 
@@ -109,12 +109,12 @@ definition {
 		task ("Then the fields are successfully updated") {
 			WaitForPageLoad();
 
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
-			CommercePaymentTerms.viewTermsAndConditionEntry(
-				termsAndConditionActiveStatus = "No",
-				termsAndConditionName = "Edited Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.viewTermsAndConditionsEntry(
+				termsAndConditionsActiveStatus = "No",
+				termsAndConditionsName = "Edited Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = 1);
 		}
 	}
@@ -129,18 +129,18 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = "1.0");
 
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 		}
 
 		task ("When the Sales Manager adds a new 'Delivery Terms' entry with priority set as '1.0'") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 2",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 2",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = "1.0");
 		}
 

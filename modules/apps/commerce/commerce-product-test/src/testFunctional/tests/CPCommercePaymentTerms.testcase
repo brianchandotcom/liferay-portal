@@ -24,9 +24,9 @@ definition {
 		}
 
 		task ("When the sales manager creates a payment term entry") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 0);
 		}
 
@@ -35,10 +35,10 @@ definition {
 		}
 
 		task ("Then the new entry is present") {
-			CommercePaymentTerms.viewTermsAndConditionEntry(
-				termsAndConditionActiveStatus = "No",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.viewTermsAndConditionsEntry(
+				termsAndConditionsActiveStatus = "No",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 0);
 		}
 
@@ -47,8 +47,8 @@ definition {
 		}
 
 		task ("Then the correct payment term data is shown") {
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "Test Terms and Condition",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "Test Terms and Condition",
 				valuePosition = "0.0");
 		}
 	}
@@ -63,27 +63,27 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 2);
 
 			Click(locator1 = "Button#BACK");
 		}
 
 		task ("When the Sales Manager create a new entry with "Priority" set to 1.") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 2",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 2",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
 		}
 
 		task ("Then after the redirect if the Sales Manager return on the dashboard the second entry that we created it's the first.") {
-			CommercePaymentTerms.viewTermsAndConditionEntrySortByPriority(
+			CommercePaymentTerms.viewTermsAndConditionsEntrySortByPriority(
 				rowNumber = 1,
-				termsAndConditionName = "Terms and Condition Entry 2",
+				termsAndConditionsName = "Terms and Condition Entry 2",
 				valuePosition = 1);
 		}
 	}
@@ -98,18 +98,18 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "");
 
 			Click(locator1 = "Button#BACK");
 		}
 
 		task ("When the Sales Manager tries to create another new entry with the same name, and the Type is set as "Delivery Terms".") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Delivery Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Delivery Terms",
 				valuePosition = "");
 		}
 
@@ -132,60 +132,60 @@ definition {
 		}
 
 		task ("When I add a new entry with the priority field as a number") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 		}
 
 		task ("Then I am redirected to the details page, and the number value of the priority field is correctly shown") {
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "Terms and Condition Entry 1",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "Terms and Condition Entry 1",
 				valuePosition = "1.0");
 		}
 
 		task ("When I add a new entry with the priority field as a decimal number") {
 			Click(locator1 = "Button#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 2",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 2",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "1.2");
 		}
 
 		task ("Then I am redirected to the details page, and the decimal value of the priority field is correctly shown") {
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "Terms and Condition Entry 2",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "Terms and Condition Entry 2",
 				valuePosition = "1.2");
 		}
 
 		task ("When I add a new entry with the priority field as a negative number") {
 			Click(locator1 = "Button#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 3",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 3",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "-1");
 		}
 
 		task ("Then I am redirected to the details page, and the negative value of the priority field is correctly shown") {
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "Terms and Condition Entry 3",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "Terms and Condition Entry 3",
 				valuePosition = "-1.0");
 		}
 
 		task ("When I add a new entry with the priority field as empty ") {
 			Click(locator1 = "Button#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 4",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 4",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "");
 		}
 
 		task ("Then I am redirected to the details page, and the value of the priority field defaults to 0") {
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "Terms and Condition Entry 4",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "Terms and Condition Entry 4",
 				valuePosition = "0.0");
 		}
 	}
@@ -200,18 +200,18 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Test",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Test",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
 		}
 
 		task ("When the Sales Manager create a new entry with a different name from "Test".") {
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry 1",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms and Condition Entry 1",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 		}
 
@@ -234,9 +234,9 @@ definition {
 		}
 
 		task ("When I cancel creating the entry") {
-			CommercePaymentTerms.cancelAddTermsAndCondition(
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.cancelAddTermsAndConditions(
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "");
 
 			SelectFrameTop();
@@ -261,25 +261,25 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "");
 
 			Click(locator1 = "Icon#BACK");
 
-			CommercePaymentTerms.viewTermsAndConditionEntry(
-				termsAndConditionActiveStatus = "Yes",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.viewTermsAndConditionsEntry(
+				termsAndConditionsActiveStatus = "Yes",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 0);
 		}
 
 		task ("When I delete the terms and conditions") {
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Delete",
-				termsAndConditionName = "Test Terms and Condition");
+				termsAndConditionsName = "Test Terms and Condition");
 		}
 
 		task ("Then the entry is deleted") {
@@ -297,21 +297,21 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "");
 		}
 
 		task ("When I edit the name and description of the payment term and publish it") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition");
 
-			CommercePaymentTerms.editTermsAndCondition(
-				termsAndConditionDescription = "Test Terms and Condition Description Edit",
-				termsAndConditionName = "Test Terms and Condition Edit");
+			CommercePaymentTerms.editTermsAndConditions(
+				termsAndConditionsDescription = "Test Terms and Condition Description Edit",
+				termsAndConditionsName = "Test Terms and Condition Edit");
 		}
 
 		task ("Then the payment term name and description should be updated") {
@@ -319,9 +319,9 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition Edit");
 
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionDescription = "Test Terms and Condition Description Edit",
-				termsAndConditionName = "Test Terms and Condition Edit");
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsDescription = "Test Terms and Condition Description Edit",
+				termsAndConditionsName = "Test Terms and Condition Edit");
 		}
 	}
 
@@ -335,16 +335,16 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms1",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms1",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = "");
 
 			Click(locator1 = "Icon#BACK");
 
-			CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms2",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.addTermsAndConditions(
+				termsAndConditionsName = "Terms2",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
@@ -375,10 +375,10 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
@@ -387,8 +387,8 @@ definition {
 		task ("When I open the new entry, presented on the details page of the entry") {
 			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition");
 
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "Test Terms and Condition",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "Test Terms and Condition",
 				valuePosition = "1.0");
 		}
 
@@ -401,16 +401,16 @@ definition {
 
 			CommercePaymentTerms.changeLocale(locale = "en-US");
 
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "Test Terms and Condition",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "Test Terms and Condition",
 				valuePosition = "1.0");
 
 			CommercePaymentTerms.changeLocale(locale = "zh-CN");
 		}
 
 		task ("Then the entry name should be localized") {
-			CommercePaymentTerms.assertTermsAndConditionEntry(
-				termsAndConditionName = "测试条款和条件",
+			CommercePaymentTerms.assertTermsAndConditionsEntry(
+				termsAndConditionsName = "测试条款和条件",
 				valuePosition = "1.0");
 		}
 	}
@@ -423,10 +423,10 @@ definition {
 		task ("Given an active payment term") {
 			CommerceOrders.openTermsAndConditionsAdmin();
 
-			CommercePaymentTerms.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndConditions(
 				active = "true",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 0);
 
 			CommerceOrders.openTermsAndConditionsAdmin();
@@ -443,10 +443,10 @@ definition {
 		task ("Then the entry appears as inactive in the Terms and Conditions dashboard") {
 			CommerceOrders.openTermsAndConditionsAdmin();
 
-			CommercePaymentTerms.viewTermsAndConditionEntry(
-				termsAndConditionActiveStatus = "No",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.viewTermsAndConditionsEntry(
+				termsAndConditionsActiveStatus = "No",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 0);
 		}
 
@@ -461,10 +461,10 @@ definition {
 		task ("Then the entry appears as active in the Terms and Conditions dashboard") {
 			CommerceOrders.openTermsAndConditionsAdmin();
 
-			CommercePaymentTerms.viewTermsAndConditionEntry(
-				termsAndConditionActiveStatus = "Yes",
-				termsAndConditionName = "Test Terms and Condition",
-				termsAndConditionType = "Payment Terms",
+			CommercePaymentTerms.viewTermsAndConditionsEntry(
+				termsAndConditionsActiveStatus = "Yes",
+				termsAndConditionsName = "Test Terms and Condition",
+				termsAndConditionsType = "Payment Terms",
 				valuePosition = 0);
 		}
 	}

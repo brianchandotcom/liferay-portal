@@ -26,12 +26,11 @@ class DateTimeInput extends React.Component {
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		propertyLabel: propTypes.string.isRequired,
+		propertyType: propTypes.string.isRequired,
 		value: propTypes.string,
 	};
 
 	state = {};
-
-	previousValue = {};
 
 	static getDerivedStateFromProps(props, state) {
 		let returnVal = null;
@@ -40,6 +39,10 @@ class DateTimeInput extends React.Component {
 			returnVal = {
 				expanded: false,
 				initialValue: props.value,
+				previousValue: dateFns.format(
+					new Date(props.value),
+					INPUT_DATE_FORMAT
+				),
 				value: dateFns.format(new Date(props.value), INPUT_DATE_FORMAT),
 			};
 		}
@@ -60,36 +63,34 @@ class DateTimeInput extends React.Component {
 	};
 
 	_saveDateTimeValue = () => {
-		const date = dateFns.format(this.state.value, INPUT_DATE_FORMAT);
+		const dateInput = dateFns.format(this.state.value, INPUT_DATE_FORMAT);
 
-		if (date !== 'Invalid Date') {
-			this.setState(
-				{
-					value: date,
-				},
-				() => {
-					this.props.onChange({
-						type: PROPERTY_TYPES.DATE_TIME,
-						value: dateFns
-							.parse(date, INPUT_DATE_FORMAT)
-							.toISOString(),
-					});
-				}
-			);
-		}
-		else {
-			const resetDate = dateFns.format(new Date(), INPUT_DATE_FORMAT);
+		if (this.state.previousValue !== dateInput) {
+			const newDateInput =
+				dateInput !== 'Invalid Date'
+					? dateInput
+					: dateFns.format(new Date(), INPUT_DATE_FORMAT);
 
 			this.setState(
 				{
-					value: resetDate,
+					previousValue: newDateInput,
+					value: newDateInput,
 				},
 				() => {
 					this.props.onChange({
-						type: PROPERTY_TYPES.DATE_TIME,
-						value: dateFns
-							.parse(resetDate, INPUT_DATE_FORMAT)
-							.toISOString(),
+						type: this.props.propertyType,
+						value:
+							this.props.propertyType === PROPERTY_TYPES.DATE_TIME
+								? dateFns
+										.parse(
+											this.state.value,
+											INPUT_DATE_FORMAT
+										)
+										.toISOString()
+								: dateFns.format(
+										this.state.value,
+										INPUT_DATE_FORMAT
+								  ),
 					});
 				}
 			);
@@ -106,6 +107,7 @@ class DateTimeInput extends React.Component {
 					aria-label={`${propertyLabel}: ${Liferay.Language.get(
 						'select-date'
 					)}`}
+					data-testid="date-input"
 					disabled={disabled}
 					expanded={expanded}
 					months={[
@@ -128,7 +130,7 @@ class DateTimeInput extends React.Component {
 					value={value}
 					years={{
 						end: new Date().getFullYear(),
-						start: 1900
+						start: 1900,
 					}}
 				/>
 			</div>

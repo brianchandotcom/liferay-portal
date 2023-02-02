@@ -32,6 +32,7 @@ import {
 } from '../../../../../app/config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../../app/config/index';
 import {
 	useActivationOrigin,
 	useActiveItemId,
@@ -200,6 +201,7 @@ function StructureTreeNodeContent({
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const nodeRef = useRef();
+	const restrictedItemIds = new Set(config.restrictedItemIds);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -439,8 +441,10 @@ function StructureTreeNodeContent({
 				ref={nodeRef}
 				showPermissionRestriction={
 					Liferay.FeatureFlags['LPS-169923'] &&
-					node.type === LAYOUT_DATA_ITEM_TYPES.form &&
-					formIsRestricted(item)
+					((node.type === LAYOUT_DATA_ITEM_TYPES.form &&
+						formIsRestricted(item)) ||
+						(node.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+							restrictedItemIds.has(item.itemId)))
 				}
 				showUnavailableWarning={
 					Liferay.FeatureFlags['LPS-169923'] &&

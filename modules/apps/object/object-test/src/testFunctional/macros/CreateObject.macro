@@ -407,10 +407,6 @@ definition {
 		Alert.viewRequiredField();
 	}
 
-	macro viewEmptyFieldTable {
-		AssertElementPresent(locator1 = "ClientExtension#EMPTY_REMOTE_TABLE_MESSAGE");
-	}
-
 	macro viewErrorValueInvalid {
 		AssertElementPresent(
 			key_className = "${className}",

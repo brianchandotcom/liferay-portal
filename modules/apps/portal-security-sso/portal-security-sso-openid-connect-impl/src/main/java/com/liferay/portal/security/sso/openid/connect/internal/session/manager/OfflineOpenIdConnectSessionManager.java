@@ -162,8 +162,7 @@ public class OfflineOpenIdConnectSessionManager {
 
 	@Activate
 	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
+		BundleContext bundleContext, Map<String, Object> properties) {
 
 		OpenIdConnectConfiguration openIdConnectConfiguration =
 			ConfigurableUtil.createConfigurable(
@@ -181,17 +180,12 @@ public class OfflineOpenIdConnectSessionManager {
 			openIdConnectConfiguration.tokenRefreshScheduledInterval();
 
 		if (!openIdConnectConfiguration.enabled()) {
-			deactivate();
-
 			return;
 		}
 
 		_registerServices(bundleContext);
 
-		if (_tokenRefreshScheduledInterval < 30) {
-			_unscheduleJob();
-		}
-		else {
+		if (_tokenRefreshScheduledInterval >= 30) {
 			_scheduleJob();
 		}
 	}

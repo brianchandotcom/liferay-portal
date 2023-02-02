@@ -26,6 +26,7 @@ import {testrayTaskUsersImpl} from './TestrayTaskUsers';
 import {APIResponse, TestrayTask} from './types';
 
 type TaskForm = typeof yupSchema.task.__outputType & {
+	assignedUsers: string;
 	dispatchTriggerId: number;
 	projectId: number;
 };
@@ -39,12 +40,14 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	constructor() {
 		super({
 			adapter: ({
+				assignedUsers,
 				dispatchTriggerId,
 				buildId: r_buildToTasks_c_buildId,
 				caseTypes: taskToTasksCaseTypes,
 				dueStatus = TaskStatuses.OPEN,
 				name,
 			}) => ({
+				assignedUsers,
 				dispatchTriggerId,
 				dueStatus,
 				name,
@@ -127,6 +130,8 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			overlapAllowed: false,
 		});
 
+		delete (data as any).caseTypes;
+
 		const dispatchTriggerId = dispatchTrigger.liferayDispatchTrigger.id;
 
 		await Promise.allSettled([
@@ -146,8 +151,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			await liferayDispatchTriggerImpl.run(
 				dispatchTrigger.liferayDispatchTrigger.id
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			body.dueStatus = DispatchTriggerStatuses.FAILED;
 			body.output = (error as TestrayError)?.message;
 		}

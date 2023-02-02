@@ -58,7 +58,6 @@ type OutletContext = {
 	};
 	revalidate: {revalidateSubtask: () => void};
 };
-
 const ShortcutIcon = () => (
 	<ClayIcon className="ml-2" fontSize={12} symbol="shortcut" />
 );
@@ -68,6 +67,7 @@ const TestFlowTasks = () => {
 		data: {testrayTask, testrayTaskUser},
 		revalidate: {revalidateSubtask},
 	} = useOutletContext<OutletContext>();
+
 	const {actions, completeModal, forceRefetch} = useSubtasksActions();
 	const {taskId} = useParams();
 	const {updateItemFromList} = useMutate();

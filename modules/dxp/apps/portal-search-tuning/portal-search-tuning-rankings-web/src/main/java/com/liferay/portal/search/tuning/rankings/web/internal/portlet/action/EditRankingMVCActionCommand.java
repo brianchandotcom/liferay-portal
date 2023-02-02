@@ -328,18 +328,20 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
 		List<String> stripUpdateSpecialStrings = TransformUtil.transform(
-			ListUtil.filter(
-				editRankingMVCActionRequest.getAliases(),
-				this::_isUpdateSpecial),
-			this::_stripUpdateSpecial);
+			editRankingMVCActionRequest.getAliases(),
+			alias -> {
+				if (_isUpdateSpecial(alias)) {
+					return _stripUpdateSpecial(alias);
+				}
 
-		for (String string : stripUpdateSpecialStrings) {
-			if (string != null) {
-				return string;
-			}
+				return null;
+			});
+
+		if (stripUpdateSpecialStrings.isEmpty()) {
+			return oldName;
 		}
 
-		return oldName;
+		return stripUpdateSpecialStrings.get(0);
 	}
 
 	private String[] _getRankingDocumentIds(

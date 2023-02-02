@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents having a default language matching the current session language.",
-		"ja_JP": "現在のセッション言語と同じデフォルト言語を持つコンテンツをブーストする"
+		"en_US": "boost-contents-for-the-current-language-description"
 	},
 	"elementDefinition": {
 		"category": "boost",
@@ -62,7 +61,6 @@
 	},
 	"externalReferenceCode": "BOOST_CONTENTS_FOR_THE_CURRENT_LANGUAGE",
 	"title_i18n": {
-		"en_US": "Boost Contents for the Current Language",
-		"ja_JP": "現在の言語でブースト"
+		"en_US": "Boost Contents for the Current Language"
 	}
 }

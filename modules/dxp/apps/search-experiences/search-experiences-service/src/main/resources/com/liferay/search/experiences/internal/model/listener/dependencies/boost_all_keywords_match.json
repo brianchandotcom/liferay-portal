@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents if the search keywords match in the given fields.",
-		"ja_JP": "検索キーワードが指定されたフィールドに一致する場合、コンテンツをブーストする"
+		"en_US": "boost-all-keywords-match-description"
 	},
 	"elementDefinition": {
 		"category": "boost",
@@ -112,7 +111,6 @@
 	},
 	"externalReferenceCode": "BOOST_ALL_KEYWORDS_MATCH",
 	"title_i18n": {
-		"en_US": "Boost All Keywords Match",
-		"ja_JP": "全マッチキーワードのブースト"
+		"en_US": "boost-all-keywords-match"
 	}
 }

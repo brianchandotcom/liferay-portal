@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Hide contents in a category if the user is not logged in.",
-		"ja_JP": "ユーザーがログインしていない場合、カテゴリ内のコンテンツを非表示にします。"
+		"en_US": "hide-contents-in-a-category-for-guest-users-description"
 	},
 	"elementDefinition": {
 		"category": "conditional",
@@ -55,7 +54,6 @@
 	},
 	"externalReferenceCode": "HIDE_CONTENTS_IN_A_CATEGORY_FOR_GUEST_USERS",
 	"title_i18n": {
-		"en_US": "Hide Contents in a Category for Guest Users",
-		"ja_JP": "ゲストユーザーに対して、カテゴリのコンテンツを隠す"
+		"en_US": "hide-contents-in-a-category-for-guest-users"
 	}
 }

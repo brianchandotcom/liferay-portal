@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Filter results by one or multiple terms. At least one must match.",
-		"ja_JP": "1つまたは複数の用語で結果をフィルタリングします。少なくとも1つは一致する必要があります。"
+		"en_US": "filter-by-exact-terms-match-description"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -46,7 +45,6 @@
 	},
 	"externalReferenceCode": "FILTER_BY_EXACT_TERMS_MATCH",
 	"title_i18n": {
-		"en_US": "Filter by Exact Terms Match",
-		"ja_JP": "完全一致によるフィルタ"
+		"en_US": "filter-by-exact-terms-match"
 	}
 }

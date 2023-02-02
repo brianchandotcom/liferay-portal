@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Rescore the results of the original query using the text embedding value. This element is effective only if the text embeddings are enabled and configured to operate on specific content types and languages. See the Search Experiences entry in System Settings."
+		"en_US": "rescore-by-text-embedding-description"
 	},
 	"elementDefinition": {
 		"category": "semantic search",
@@ -169,7 +169,7 @@
 	},
 	"externalReferenceCode": "RESCORE_BY_TEXT_EMBEDDING",
 	"title_i18n": {
-		"en_US": "Rescore by Text Embedding"
+		"en_US": "rescore-by-text-embedding"
 	},
 	"type": 0
 }

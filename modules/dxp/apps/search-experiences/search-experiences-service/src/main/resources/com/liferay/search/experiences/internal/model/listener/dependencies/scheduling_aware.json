@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Show only contents with a display date that's not in the future. This Element duplicates the functionality of a Liferay Search Framework query clause.",
-		"ja_JP": "表示日が未来でないコンテンツのみを表示します。この要素は Liferay Search Framework のクエリ句の機能を複製したものです。"
+		"en_US": "scheduling-aware-description"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -91,7 +90,6 @@
 	},
 	"externalReferenceCode": "SCHEDULING_AWARE",
 	"title_i18n": {
-		"en_US": "Scheduling Aware",
-		"ja_JP": "表示日が未来でないコンテンツのみを表示"
+		"en_US": "scheduling-aware"
 	}
 }

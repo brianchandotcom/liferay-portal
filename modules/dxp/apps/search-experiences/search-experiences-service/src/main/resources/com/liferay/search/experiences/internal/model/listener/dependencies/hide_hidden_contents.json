@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Hide assets which are marked not searchable. This Element duplicates the functionality of a Liferay Search Framework query clause.",
-		"ja_JP": "検索不可能とマークされたアセットを隠します。この要素は Liferay Search Framework のクエリ句の機能を複製したものです。"
+		"en_US": "hide-hidden-contents-description"
 	},
 	"elementDefinition": {
 		"category": "hide",
@@ -53,7 +52,6 @@
 	},
 	"externalReferenceCode": "HIDE_HIDDEN_CONTENTS",
 	"title_i18n": {
-		"en_US": "Hide Hidden Contents",
-		"ja_JP": "検索不可能とマークされたアセットを隠します"
+		"en_US": "hide-hidden-contents"
 	}
 }

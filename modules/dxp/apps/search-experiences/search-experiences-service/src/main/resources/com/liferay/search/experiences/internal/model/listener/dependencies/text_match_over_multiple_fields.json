@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Search for a text match over multiple text fields.",
-		"ja_JP": "複数のテキストフィールドを対象に一致するテキストを検索します。"
+		"en_US": "text-match-over-multiple-fields-description"
 	},
 	"elementDefinition": {
 		"category": "match",
@@ -182,7 +181,6 @@
 	},
 	"externalReferenceCode": "TEXT_MATCH_OVER_MULTIPLE_FIELDS",
 	"title_i18n": {
-		"en_US": "Text Match Over Multiple Fields",
-		"ja_JP": "複数のテキストフィールドを対象に一致するテキストを検索"
+		"en_US": "text-match-over-multiple-fields"
 	}
 }

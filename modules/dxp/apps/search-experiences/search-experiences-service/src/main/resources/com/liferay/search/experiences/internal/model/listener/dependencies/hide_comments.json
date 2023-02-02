@@ -1,7 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Do not search for comments.",
-		"ja_JP": "コメントを検索しない"
+		"en_US": "hide-comments-description"
 	},
 	"elementDefinition": {
 		"category": "hide",
@@ -53,7 +52,6 @@
 	},
 	"externalReferenceCode": "HIDE_COMMENTS",
 	"title_i18n": {
-		"en_US": "Hide Comments",
-		"ja_JP": "コメントを検索しない"
+		"en_US": "hide-comments"
 	}
 }

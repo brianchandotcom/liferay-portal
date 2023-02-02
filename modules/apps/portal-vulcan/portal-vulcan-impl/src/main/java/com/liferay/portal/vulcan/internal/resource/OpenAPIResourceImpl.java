@@ -1419,27 +1419,26 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 		@Override
 		public String addingService(ServiceReference<Object> serviceReference) {
-			String entryClassName = (String)serviceReference.getProperty(
-				"entity.class.name");
+			String componentName = (String)serviceReference.getProperty(
+				"component.name");
 
 			_jaxRsResourceEntryClassNameMap.put(
-				(String)serviceReference.getProperty("component.name"),
-				entryClassName);
+				componentName,
+				(String)serviceReference.getProperty("entity.class.name"));
 
-			return entryClassName;
+			return componentName;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, String entryClassName) {
+			ServiceReference<Object> serviceReference, String componentName) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, String entryClassName) {
+			ServiceReference<Object> serviceReference, String componentName) {
 
-			_jaxRsResourceEntryClassNameMap.remove(
-				(String)serviceReference.getProperty("component.name"));
+			_jaxRsResourceEntryClassNameMap.remove(componentName);
 		}
 
 	}

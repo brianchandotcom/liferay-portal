@@ -40,8 +40,7 @@ public interface AssetCategoriesCompanyConfiguration {
 		name = "include-children-categories-when-searching-parent-categories",
 		required = false
 	)
-	public boolean
-		findAlsoForChildrenCategoriesWhenSearchingForParentCategories();
+	public boolean includeChildrenCategoriesWhenSearchingParentCategories();
 
 	@Meta.AD(
 		deflt = "150",

@@ -39,7 +39,7 @@ public class AssetCategoryConfigurationProviderImpl
 					AssetCategoriesCompanyConfiguration.class, companyId);
 
 		return assetCategoriesCompanyConfiguration.
-			findAlsoForChildrenCategoriesWhenSearchingForParentCategories();
+			includeChildrenCategoriesWhenSearchingParentCategories();
 	}
 
 	@Reference

@@ -1260,7 +1260,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (existingObjectDefinition == null) {
 				if (Validator.isNotNull(
-						objectDefinition.getAccountEntryRestricted())) {
+						objectDefinition.getAccountEntryRestricted()) &&
+					objectDefinition.getAccountEntryRestricted()) {
 
 					accountEntryRestrictedObjectDefinitionMap.put(
 						objectDefinition.getName(), objectDefinition);

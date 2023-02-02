@@ -286,7 +286,7 @@ function createOptionElement(option) {
 	// eslint-disable-next-line no-undef
 	optionElement.id = `${fragmentEntryLinkNamespace}-option-${option.value}`;
 
-	if(typeof option.textContent === 'object'){
+	if (typeof option.textContent === 'object') {
 		optionElement.textContent = option.textContent.name;
 	}
 	else {

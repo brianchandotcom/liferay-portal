@@ -823,7 +823,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
+		JSONObject pageJSONObject = _jsonFactory.createJSONObject(
 			SiteInitializerUtil.read(
 				resourcePath + "page.json", _servletContext));
 
@@ -857,7 +857,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
 
-		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
+		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
 
 		if (Objects.equals(type, "url")) {
 			return;
@@ -921,7 +921,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				draftLayout.getTypeSettingsProperties();
 
 			Object[] typeSettings = JSONUtil.toObjectArray(
-				jsonObject.getJSONArray("typeSettings"));
+				pageJSONObject.getJSONArray("typeSettings"));
 
 			for (Object typeSetting : typeSettings) {
 				JSONObject typeSettingJSONObject = (JSONObject)typeSetting;
@@ -2231,19 +2231,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String json = SiteInitializerUtil.read(
 			parentResourcePath + "page.json", _servletContext);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+		JSONObject pageJSONObject = _jsonFactory.createJSONObject(json);
 
 		Map<Locale, String> nameMap = new HashMap<>(
-			SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")));
+			SiteInitializerUtil.toMap(pageJSONObject.getString("name_i18n")));
 
 		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
 			serviceContext.getScopeGroupId());
 
 		if (!nameMap.containsKey(siteDefaultLocale)) {
-			nameMap.put(siteDefaultLocale, jsonObject.getString("name"));
+			nameMap.put(siteDefaultLocale, pageJSONObject.getString("name"));
 		}
 
-		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
+		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
 
 		if (Objects.equals(type, "url")) {
 			type = LayoutConstants.TYPE_URL;
@@ -2254,16 +2254,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Map<Locale, String> friendlyURLMap = new HashMap<>(
 			SiteInitializerUtil.toMap(
-				jsonObject.getString("friendlyURL_i18n")));
+				pageJSONObject.getString("friendlyURL_i18n")));
 
 		if (!friendlyURLMap.containsKey(siteDefaultLocale)) {
 			friendlyURLMap.put(
-				siteDefaultLocale, jsonObject.getString("friendlyURL"));
+				siteDefaultLocale, pageJSONObject.getString("friendlyURL"));
 		}
 
 		String typeSettings = null;
 
-		JSONArray typeSettingsJSONArray = jsonObject.getJSONArray(
+		JSONArray typeSettingsJSONArray = pageJSONObject.getJSONArray(
 			"typeSettings");
 
 		if (typeSettingsJSONArray != null) {
@@ -2282,8 +2282,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			serviceContext.getScopeGroupId(), jsonObject.getBoolean("private"),
-			jsonObject.getString("friendlyURL"));
+			serviceContext.getScopeGroupId(),
+			pageJSONObject.getBoolean("private"),
+			pageJSONObject.getString("friendlyURL"));
 
 		if (layout != null) {
 			_layoutLocalService.deleteLayout(layout);
@@ -2291,22 +2292,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		layout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			jsonObject.getBoolean("private"), parentLayoutId, nameMap,
-			SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("description_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("keywords_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
-			type, typeSettings, jsonObject.getBoolean("hidden"),
-			jsonObject.getBoolean("system"), friendlyURLMap, serviceContext);
+			pageJSONObject.getBoolean("private"), parentLayoutId, nameMap,
+			SiteInitializerUtil.toMap(pageJSONObject.getString("title_i18n")),
+			SiteInitializerUtil.toMap(
+				pageJSONObject.getString("description_i18n")),
+			SiteInitializerUtil.toMap(
+				pageJSONObject.getString("keywords_i18n")),
+			SiteInitializerUtil.toMap(pageJSONObject.getString("robots_i18n")),
+			type, typeSettings, pageJSONObject.getBoolean("hidden"),
+			pageJSONObject.getBoolean("system"), friendlyURLMap,
+			serviceContext);
 
 		_setResourcePermissions(
 			layout.getCompanyId(), layout.getModelClassName(),
-			jsonObject.getJSONArray("permissions"),
+			pageJSONObject.getJSONArray("permissions"),
 			String.valueOf(layout.getPlid()));
 
-		if (jsonObject.has("priority")) {
+		if (pageJSONObject.has("priority")) {
 			layout = _layoutLocalService.updatePriority(
-				layout.getPlid(), jsonObject.getInt("priority"));
+				layout.getPlid(), pageJSONObject.getInt("priority"));
 		}
 
 		Map<String, Layout> layouts = HashMapBuilder.put(
@@ -2314,7 +2318,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		String layoutTemplateId = StringUtil.toLowerCase(
-			jsonObject.getString("layoutTemplateId"));
+			pageJSONObject.getString("layoutTemplateId"));
 
 		if (Validator.isNotNull(layoutTemplateId)) {
 			LayoutTypePortlet layoutTypePortlet =

@@ -160,6 +160,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceB
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -245,7 +246,9 @@ public class DLFileEntryLocalServiceImpl
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
 			fileEntryTypeId);
 
-		_validateFile(groupId, folderId, 0, fileName, extension, title);
+		_validateFile(
+			groupId, folderId, 0, fileEntryTypeId, fileName, extension, title,
+			inputStream);
 
 		long fileEntryId = counterLocalService.increment();
 
@@ -3323,7 +3326,8 @@ public class DLFileEntryLocalServiceImpl
 
 			_validateFile(
 				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getFileEntryId(), fileName, extension, title);
+				dlFileEntry.getFileEntryId(), fileEntryTypeId, fileName,
+				extension, title, inputStream);
 
 			// File version
 
@@ -3469,13 +3473,34 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _validateFile(
-			long groupId, long folderId, long fileEntryId, String fileName,
-			String extension, String title)
+			long groupId, long folderId, long fileEntryId, long fileEntryTypeId,
+			String fileName, String extension, String title,
+			InputStream inputStream)
 		throws PortalException {
 
 		DLValidatorUtil.validateFileName(fileName);
 
-		_validateFileExtension(fileName, extension);
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
+
+		boolean skipExtensionValidation = false;
+
+		try {
+			skipExtensionValidation =
+				(dlFileEntryType.getScope() ==
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM) &&
+				((inputStream == null) || (inputStream.available() == 0)) &&
+				Validator.isNull(extension);
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+		}
+
+		if (!skipExtensionValidation) {
+			_validateFileExtension(fileName, extension);
+		}
 
 		validateFile(groupId, folderId, fileEntryId, fileName, title);
 	}

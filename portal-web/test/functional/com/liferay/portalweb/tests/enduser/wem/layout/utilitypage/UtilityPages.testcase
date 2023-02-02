@@ -181,6 +181,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162765. The page designer could change thumbnail of a 404 error type of utility page."
+	@priority = "4"
+	test ChangeThumbnailOf404ErrorUtilityPage {
+		task ("Given a page designer has a 404 error utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer changes the thumbnail of utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Change Thumbnail",
+				pageName = "404 Error Utility Page");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
+
+			Button.clickAdd();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page designer sees the new thumbnail of utility page") {
+			LexiconCard.viewCardThumbnail(card = "404 Error Utility Page");
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could make a copy of a 404 error type of utility page."
 	@priority = "4"
 	test Copy404ErrorUtilityPage {

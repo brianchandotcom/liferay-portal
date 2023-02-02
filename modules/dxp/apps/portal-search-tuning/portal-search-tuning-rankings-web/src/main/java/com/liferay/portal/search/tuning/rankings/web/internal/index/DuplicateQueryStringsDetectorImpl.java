@@ -185,7 +185,7 @@ public class DuplicateQueryStringsDetectorImpl
 	}
 
 	private void _addQueryClauses(Consumer<Query> consumer, Query... queries) {
-		List<Query> queriesList = new ArrayList<>(Arrays.asList(queries));
+		List<Query> queriesList = Arrays.asList(queries);
 
 		List<Query> isNotNullQueriesList = ListUtil.filter(
 			queriesList, Objects::nonNull);

@@ -38,8 +38,6 @@ import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -275,13 +273,10 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 						List<?> values = document.getValues("ddmFieldArray");
 
-						Optional<Object> optional =
-							NestedDDMFieldArrayUtil.getFieldValue(
-								fieldName,
-								(Stream<Map<String, Object>>)values.stream());
-
 						Assert.assertEquals(
-							expectedValue, optional.orElse(null));
+							expectedValue,
+							NestedDDMFieldArrayUtil.getFieldValue(
+								fieldName, (List<Map<String, Object>>)values));
 					});
 			});
 	}

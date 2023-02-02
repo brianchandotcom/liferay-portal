@@ -25,7 +25,6 @@ import com.liferay.portal.search.test.util.mappings.NestedDDMFieldArrayUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -101,10 +100,8 @@ public abstract class BaseNestedFieldsSortTestCase
 	protected Object getDDMFieldValue(String fieldName, Document document) {
 		List<?> values = document.getValues("ddmFieldArray");
 
-		Optional<Object> optional = NestedDDMFieldArrayUtil.getFieldValue(
-			fieldName, (Stream<Map<String, Object>>)values.stream());
-
-		return optional.get();
+		return NestedDDMFieldArrayUtil.getFieldValue(
+			fieldName, (List<Map<String, Object>>)values);
 	}
 
 	protected List<?> getDDMFieldValues(

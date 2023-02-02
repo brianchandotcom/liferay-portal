@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.template;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -187,7 +188,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 			if (Objects.equals(
 					ddmStructure.getFieldType(fieldName),
-					"checkbox_multiple")) {
+					DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
 
 				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
 					fieldName);

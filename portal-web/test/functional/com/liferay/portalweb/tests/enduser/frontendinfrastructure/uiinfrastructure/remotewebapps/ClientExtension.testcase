@@ -257,11 +257,11 @@ definition {
 		task ("Delete Vanilla Counter") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "${customElementName}");
+			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Vanilla Counter");
 		}
 
 		task ("Assert that Vanilla Counter has been deleted") {
-			ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = "${customElementName}");
+			ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = "Vanilla Counter");
 		}
 	}
 

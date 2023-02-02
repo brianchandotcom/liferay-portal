@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -114,18 +113,15 @@ public class SingleIndexToMultipleIndexImporterImpl
 	}
 
 	private void _createRankingIndices() {
-		List<Long> companyIds = TransformUtil.transform(
-			_companyService.getCompanies(), Company::getCompanyId);
+		for (Company company : _companyService.getCompanies()) {
+			RankingIndexName rankingIndexName =
+				_rankingIndexNameBuilder.getRankingIndexName(
+					company.getCompanyId());
 
-		List<RankingIndexName> rankingIndexNames = TransformUtil.transform(
-			companyIds, _rankingIndexNameBuilder::getRankingIndexName);
-
-		List<RankingIndexName> existsRankingIndexNames = ListUtil.filter(
-			rankingIndexNames,
-			rankingIndexName -> !_rankingIndexReader.isExists(
-				rankingIndexName));
-
-		existsRankingIndexNames.forEach(_rankingIndexCreator::create);
+			if (!_rankingIndexReader.isExists(rankingIndexName)) {
+				_rankingIndexCreator.create(rankingIndexName);
+			}
+		}
 	}
 
 	private List<Document> _getDocuments(RankingIndexName singleIndexName) {
@@ -174,14 +170,12 @@ public class SingleIndexToMultipleIndexImporterImpl
 		Map<String, List<Document>> documentsMap = _groupDocumentByIndex(
 			documents);
 
-		List<Boolean> entrySetList = TransformUtil.transform(
-			documentsMap.entrySet(),
-			entry -> _addDocuments(entry.getKey(), entry.getValue()));
-
 		boolean result = true;
 
-		for (boolean entry : entrySetList) {
-			result = result && entry;
+		for (Map.Entry<String, List<Document>> entry :
+				documentsMap.entrySet()) {
+
+			result = result && _addDocuments(entry.getKey(), entry.getValue());
 		}
 
 		if (result) {

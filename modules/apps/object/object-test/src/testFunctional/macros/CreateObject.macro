@@ -193,12 +193,6 @@ definition {
 		AssertElementNotPresent(locator1 = "CreateObject#ASSERT_TWO_COLUMN_FIELD_ENTRY");
 	}
 
-	macro assertPanelCategoryKey {
-		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
-			value1 = "${panelCategoryKey}");
-	}
-
 	macro assertRelatedObject {
 		AssertElementPresent(
 			key_relatedObject = "${relatedObject}",

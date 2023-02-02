@@ -33,17 +33,15 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.test.util.SearchStreamUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 /**
  * @author Igor Fabiano Nazar
@@ -118,15 +116,13 @@ public class OrganizationFixture {
 		Country country = _countryService.fetchCountry(
 			organization.getCountryId());
 
-		Stream<Locale> stream = SearchStreamUtil.stream(
-			_language.getAvailableLocales());
+		Set<String> countryNames = new HashSet<>();
 
-		return stream.map(
-			locale -> StringUtil.toLowerCase(country.getName(locale))
-		).distinct(
-		).collect(
-			Collectors.toList()
-		);
+		for (Locale locale : _language.getAvailableLocales()) {
+			countryNames.add(StringUtil.toLowerCase(country.getName(locale)));
+		}
+
+		return new ArrayList<>(countryNames);
 	}
 
 	public List<Organization> getOrganizations() {
@@ -155,16 +151,15 @@ public class OrganizationFixture {
 	}
 
 	private Region _getRegion(String regionName, Country country) {
-		List<Region> regions = _regionService.getRegions(
-			country.getCountryId());
+		for (Region region :
+				_regionService.getRegions(country.getCountryId())) {
 
-		Stream<Region> stream = regions.stream();
+			if (StringUtil.equalsIgnoreCase(regionName, region.getName())) {
+				return region;
+			}
+		}
 
-		Optional<Region> regionOptional = stream.filter(
-			line -> StringUtil.equalsIgnoreCase(regionName, line.getName())
-		).findFirst();
-
-		return regionOptional.get();
+		return null;
 	}
 
 	private final CountryService _countryService;

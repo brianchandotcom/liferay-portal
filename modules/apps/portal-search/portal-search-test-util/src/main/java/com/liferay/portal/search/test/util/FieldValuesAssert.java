@@ -32,8 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
@@ -160,20 +158,21 @@ public class FieldValuesAssert {
 	}
 
 	private static Map<String, String> _filterOnKey(
-		Map<String, String> map, Predicate<String> predicate) {
+		Map<String, String> map1, Predicate<String> predicate) {
 
 		if (predicate == null) {
-			return map;
+			return map1;
 		}
 
-		Stream<Map.Entry<String, String>> stream = SearchStreamUtil.stream(
-			map.entrySet());
+		Map<String, String> map2 = new HashMap<>();
 
-		return stream.filter(
-			entry -> predicate.test(entry.getKey())
-		).collect(
-			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-		);
+		for (Map.Entry<String, String> entry : map1.entrySet()) {
+			if (predicate.test(entry.getKey())) {
+				map2.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return map2;
 	}
 
 	private static Map<String, Object> _getSourcesMap(
@@ -265,13 +264,14 @@ public class FieldValuesAssert {
 	private static <T> Map<String, String> _toStringValuesMap(
 		Map<String, T> map, Function<T, String> function) {
 
-		Stream<Map.Entry<String, T>> stream = SearchStreamUtil.stream(
-			map.entrySet());
+		Map<String, String> stringValuesMap = new HashMap<>();
 
-		return stream.collect(
-			Collectors.toMap(
-				entry -> entry.getKey(),
-				entry -> function.apply(entry.getValue())));
+		for (Map.Entry<String, T> entry : map.entrySet()) {
+			stringValuesMap.put(
+				entry.getKey(), function.apply(entry.getValue()));
+		}
+
+		return stringValuesMap;
 	}
 
 }

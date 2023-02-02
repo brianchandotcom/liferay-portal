@@ -76,6 +76,48 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addOverrideDefaultProductDisplayPageTemplate {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			key_menuTab = "Display Page Template",
+			locator1 = "CommerceEntry#MENU_TAB");
+
+		SelectFrame.selectFrameTop();
+
+		CommerceChannels.addProduct(
+			edit = "true",
+			product = ${product});
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			key_tabName = "Display Page Template",
+			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE_SIDE_PANEL_CHOOSE_BUTTON");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame(
+			key_title = "Select Product Display Page",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Click(
+			key_siteName = ${displayPageTemplateName},
+			locator1 = "CommerceNavigation#CHOOSE_SITE_BUTTON");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
 	macro addProduct {
 		if (${edit} != "true") {
 			Click(locator1 = "Button#PLUS");

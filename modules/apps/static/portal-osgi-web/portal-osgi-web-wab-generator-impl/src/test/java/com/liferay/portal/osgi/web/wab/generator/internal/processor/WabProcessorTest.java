@@ -43,19 +43,20 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -555,15 +556,32 @@ public class WabProcessorTest {
 
 				File parent = deployDir.getParentFile();
 
-				Stream<Path> pathsStream = Files.walk(parent.toPath());
+				Files.walkFileTree(
+					parent.toPath(),
+					new SimpleFileVisitor<Path>() {
 
-				pathsStream.sorted(
-					Comparator.reverseOrder()
-				).map(
-					Path::toFile
-				).forEach(
-					File::delete
-				);
+						@Override
+						public FileVisitResult postVisitDirectory(
+								Path dirPath, IOException ioException)
+							throws IOException {
+
+							Files.delete(dirPath);
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFile(
+								Path filePath,
+								BasicFileAttributes basicFileAttributes)
+							throws IOException {
+
+							Files.delete(filePath);
+
+							return FileVisitResult.CONTINUE;
+						}
+
+					});
 
 				parent.mkdirs();
 

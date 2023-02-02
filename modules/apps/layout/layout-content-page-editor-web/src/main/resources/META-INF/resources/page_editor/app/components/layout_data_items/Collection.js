@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
@@ -430,7 +431,16 @@ const Collection = React.memo(
 
 		let CollectionContent = null;
 
-		if (loading) {
+		if (Liferay.FeatureFlags['LPS-169923'] && collection.isRestricted) {
+			CollectionContent = (
+				<ClayAlert displayType="secondary" role={null}>
+					{Liferay.Language.get(
+						'this-content-cannot-be-displayed-due-to-permission-restrictions'
+					)}
+				</ClayAlert>
+			);
+		}
+		else if (loading) {
 			CollectionContent = <ClayLoadingIndicator />;
 		}
 		else if (!collectionIsMapped(collectionConfig)) {
@@ -483,7 +493,8 @@ const Collection = React.memo(
 			>
 				{CollectionContent}
 
-				{collectionIsMapped(collectionConfig) &&
+				{!collection.isRestricted &&
+					collectionIsMapped(collectionConfig) &&
 					paginationIsEnabled(collectionConfig) && (
 						<CollectionPagination
 							activePage={activePage}

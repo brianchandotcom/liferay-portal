@@ -2764,10 +2764,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/object-fields", _servletContext);
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-fields");
 
-		if (json == null) {
+		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
 		}
 
@@ -2779,32 +2779,51 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		json = _replace(
-			json, listTypeDefinitionIdsStringUtilReplaceValues,
-			objectDefinitionIdsStringUtilReplaceValues);
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+			json = _replace(
+				json, listTypeDefinitionIdsStringUtilReplaceValues,
+				objectDefinitionIdsStringUtilReplaceValues);
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 			long objectDefinitionId = GetterUtil.getLong(
-				(String)jsonObject.remove("objectDefinitionId"));
+				(String) jsonObject.remove("objectDefinitionId"));
 
-			ObjectField objectField = ObjectField.toDTO(
-				JSONUtil.toString(jsonObject));
+			JSONArray jsonArray = jsonObject.getJSONArray("object-field");
 
-			com.liferay.object.model.ObjectField existingObjectField =
-				_objectFieldLocalService.fetchObjectField(
-					objectDefinitionId, objectField.getName());
-
-			if (existingObjectField == null) {
-				objectFieldResource.postObjectDefinitionObjectField(
-					objectDefinitionId, objectField);
+			if (JSONUtil.isEmpty(jsonArray)) {
+				continue;
 			}
-			else {
-				objectFieldResource.putObjectField(
-					existingObjectField.getObjectFieldId(), objectField);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject objectFieldJSONObject = jsonArray.getJSONObject(i);
+
+				ObjectField objectField = ObjectField.toDTO(
+					JSONUtil.toString(objectFieldJSONObject));
+
+				if (objectField == null) {
+					_log.error(
+						"Unable to transform object field from JSON: " +
+						json);
+
+					continue;
+				}
+
+				com.liferay.object.model.ObjectField existingObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinitionId, objectField.getName());
+
+				if (existingObjectField == null) {
+					objectFieldResource.postObjectDefinitionObjectField(
+						objectDefinitionId, objectField);
+				}
+				else {
+					objectFieldResource.putObjectField(
+						existingObjectField.getObjectFieldId(), objectField);
+				}
 			}
 		}
 	}

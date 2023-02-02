@@ -14,14 +14,13 @@
 
 package com.liferay.portal.search.test.util.aggregation;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.BucketAggregationResult;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 
@@ -43,19 +42,12 @@ public class AggregationAssert {
 		String expected, Function<Bucket, Double> function,
 		BucketAggregationResult bucketAggregationResult) {
 
-		Collection<Bucket> buckets = bucketAggregationResult.getBuckets();
-
-		Stream<Bucket> stream = buckets.stream();
-
 		Assert.assertEquals(
 			expected,
-			stream.map(
-				function
-			).map(
-				String::valueOf
-			).collect(
-				Collectors.joining(", ")
-			));
+			StringUtil.merge(
+				bucketAggregationResult.getBuckets(),
+				bucket -> String.valueOf(function.apply(bucket)),
+				StringPool.COMMA_AND_SPACE));
 	}
 
 }

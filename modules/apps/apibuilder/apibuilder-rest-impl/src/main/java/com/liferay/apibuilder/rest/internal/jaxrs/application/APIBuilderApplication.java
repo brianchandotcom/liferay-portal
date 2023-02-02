@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"osgi.jaxrs.application.base=" + APIBuilderConstants.BASE_PATH,
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.APIBuilder.Feature)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
 		"osgi.jaxrs.name=Liferay.APIBuilder.Application"
 	},

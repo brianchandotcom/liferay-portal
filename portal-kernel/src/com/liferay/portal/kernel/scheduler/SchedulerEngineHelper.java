@@ -94,7 +94,4 @@ public interface SchedulerEngineHelper {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public void update(Trigger trigger, StorageType storageType)
-		throws SchedulerException;
-
 }

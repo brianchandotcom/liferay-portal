@@ -143,12 +143,6 @@ public class SchedulerEngineHelperUtil {
 		_schedulerEngineHelper.unschedule(jobName, groupName, storageType);
 	}
 
-	public static void update(Trigger trigger, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.update(trigger, storageType);
-	}
-
 	private static volatile SchedulerEngineHelper _schedulerEngineHelper =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			SchedulerEngineHelper.class, SchedulerEngineHelperUtil.class,

@@ -346,13 +346,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngine.unschedule(jobName, groupName, storageType);
 	}
 
-	@Override
-	public void update(Trigger trigger, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngine.update(trigger, storageType);
-	}
-
 	@Activate
 	protected void activate(ComponentContext componentContext)
 		throws Exception {

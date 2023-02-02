@@ -426,20 +426,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	}
 
 	@Override
-	public void update(
-			com.liferay.portal.kernel.scheduler.Trigger trigger,
-			StorageType storageType)
-		throws SchedulerException {
-
-		try {
-			update(_getScheduler(storageType), trigger, storageType);
-		}
-		catch (Exception exception) {
-			throw new SchedulerException("Unable to update trigger", exception);
-		}
-	}
-
-	@Override
 	public void validateTrigger(
 			com.liferay.portal.kernel.scheduler.Trigger trigger,
 			StorageType storageType)

@@ -407,56 +407,6 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(storageType);
 	}
 
-	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
-	@Override
-	public void update(Trigger trigger, StorageType storageType)
-		throws SchedulerException {
-
-		String jobName = trigger.getJobName();
-		String groupName = trigger.getGroupName();
-
-		boolean memoryClusteredSlaveJob = _isMemoryClusteredSlaveJob(
-			storageType);
-
-		_readLock.lock();
-
-		try {
-			if (memoryClusteredSlaveJob) {
-				boolean updated = false;
-
-				for (ObjectValuePair<SchedulerResponse, TriggerState>
-						memoryClusteredJob : _memoryClusteredJobs.values()) {
-
-					SchedulerResponse schedulerResponse =
-						memoryClusteredJob.getKey();
-
-					if (jobName.equals(schedulerResponse.getJobName()) &&
-						groupName.equals(schedulerResponse.getGroupName())) {
-
-						schedulerResponse.setTrigger(trigger);
-
-						updated = true;
-
-						break;
-					}
-				}
-
-				if (!updated) {
-					throw new SchedulerException(
-						"Unable to update trigger for memory clustered job");
-				}
-			}
-			else {
-				_schedulerEngine.update(trigger, storageType);
-			}
-		}
-		finally {
-			_readLock.unlock();
-		}
-
-		setClusterableThreadLocal(storageType);
-	}
-
 	@Override
 	public void validateTrigger(Trigger trigger, StorageType storageType)
 		throws SchedulerException {

@@ -48,8 +48,13 @@ public class CheckKBArticleMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_kbServiceConfiguration = ConfigurableUtil.createConfigurable(
-			KBServiceConfiguration.class, properties);
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165476"))) {
+			return;
+		}
+
+		KBServiceConfiguration kbServiceConfiguration =
+			ConfigurableUtil.createConfigurable(
+				KBServiceConfiguration.class, properties);
 
 		Class<?> clazz = getClass();
 
@@ -57,7 +62,7 @@ public class CheckKBArticleMessageListener extends BaseMessageListener {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_kbServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
+			kbServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -73,15 +78,11 @@ public class CheckKBArticleMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165476"))) {
-			_kbArticleLocalService.checkKBArticles();
-		}
+		_kbArticleLocalService.checkKBArticles();
 	}
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
-
-	private volatile KBServiceConfiguration _kbServiceConfiguration;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

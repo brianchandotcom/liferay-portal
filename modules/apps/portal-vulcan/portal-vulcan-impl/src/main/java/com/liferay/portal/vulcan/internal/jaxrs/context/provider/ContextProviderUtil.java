@@ -22,8 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
@@ -57,11 +55,6 @@ public class ContextProviderUtil {
 		}
 
 		return null;
-	}
-
-	public static HttpServletRequest getHttpServletRequest(Message message) {
-		return (HttpServletRequest)message.getContextualProperty(
-			"HTTP.REQUEST");
 	}
 
 	public static Object getMatchedResource(Message message) {

@@ -24,6 +24,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
+import com.liferay.portal.vulcan.util.MessageUtil;
 
 import java.util.Map;
 
@@ -106,7 +107,7 @@ public class AggregationContextProvider
 	public Aggregation createContext(Message message) {
 		try {
 			HttpServletRequest httpServletRequest =
-				ContextProviderUtil.getHttpServletRequest(message);
+				MessageUtil.getHttpServletRequest(message);
 
 			return createContext(
 				new AcceptLanguageImpl(httpServletRequest, _language, _portal),

@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.util.MessageUtil;
 
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.ext.Provider;
@@ -39,7 +40,7 @@ public class CompanyContextProvider implements ContextProvider<Company> {
 	public Company createContext(Message message) {
 		try {
 			return _portal.getCompany(
-				ContextProviderUtil.getHttpServletRequest(message));
+				MessageUtil.getHttpServletRequest(message));
 		}
 		catch (PortalException portalException) {
 			throw new ServerErrorException(500, portalException);

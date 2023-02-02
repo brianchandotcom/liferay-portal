@@ -108,7 +108,10 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 						const percentTitle = `${percentLabel} (${value})`;
 
 						return (
-							<div className="d-flex flex-column" key={index}>
+							<div
+								className="d-flex flex-column mr-3"
+								key={index}
+							>
 								<div className="align-items-center d-flex mr-5">
 									<div
 										className={classNames(

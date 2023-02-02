@@ -267,6 +267,7 @@ export type TestraySubTask = {
 	r_splitFromTestraySubtask_c_subtask: TestraySubTask;
 	r_taskToSubtasks_c_task: TestrayTask;
 	r_userToSubtasks_user: UserAccount;
+	r_userToSubtasks_userId: number;
 	score: number;
 	splitFromSubtask: TestraySubTask;
 	statusUpdateDate: string;
@@ -324,7 +325,7 @@ export type TestrayTask = {
 	r_buildToTasks_c_build?: TestrayBuild;
 	subtaskScore: string;
 	subtaskScoreCompleted: string;
-	subtaskScoreIncomplete: string;
+	subtaskScoreSelfIncomplete: string;
 };
 
 export type TestrayTaskCaseTypes = {

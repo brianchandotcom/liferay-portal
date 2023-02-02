@@ -13,7 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {Dispatch} from 'react';
+import {Dispatch, useContext} from 'react';
 import {Link, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
@@ -29,7 +29,9 @@ import StatusBadge from '../../components/StatusBadge';
 import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import {ListViewTypes} from '../../context/ListViewContext';
+import {TestrayContext} from '../../context/TestrayContext';
 import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
+import useSubtaskScore from '../../data/useSubtaskScore';
 import useHeader from '../../hooks/useHeader';
 import useMutate from '../../hooks/useMutate';
 import i18n from '../../i18n';
@@ -72,6 +74,8 @@ const TestFlowTasks = () => {
 	const {taskId} = useParams();
 	const {updateItemFromList} = useMutate();
 
+	const [{myUserAccount}] = useContext(TestrayContext);
+
 	useHeader({
 		heading: [
 			{
@@ -85,6 +89,11 @@ const TestFlowTasks = () => {
 	const {
 		donut: {columns},
 	} = useCaseResultGroupBy(testrayTask?.build?.id);
+
+	const {progressScore} = useSubtaskScore(
+		testrayTask,
+		myUserAccount?.id as number
+	);
 
 	if (!testrayTask) {
 		return <Loading />;
@@ -262,21 +271,22 @@ const TestFlowTasks = () => {
 					<TaskbarProgress
 						displayTotalCompleted
 						items={[
-							[StatusesProgressScore.SELF, 0],
+							[
+								StatusesProgressScore.SELF,
+								Number(progressScore.selfCompleted ?? 0),
+							],
 							[
 								StatusesProgressScore.OTHER,
-								Number(testrayTask.subtaskScoreCompleted ?? 0),
+								Number(progressScore.othersCompleted ?? 0),
 							],
 							[
 								StatusesProgressScore.INCOMPLETE,
-								Number(testrayTask.subtaskScoreIncomplete ?? 0),
+								Number(progressScore.incomplete ?? 0),
 							],
 						]}
 						legend
 						taskbarClassNames={chartClassNames}
-						totalCompleted={Number(
-							testrayTask.subtaskScoreCompleted ?? 0
-						)}
+						totalCompleted={Number(progressScore.completed ?? 0)}
 					/>
 				</div>
 			</Container>
@@ -291,6 +301,7 @@ const TestFlowTasks = () => {
 					resource={testraySubTaskImpl.resource}
 					tableProps={{
 						actions,
+						bodyVerticalAlignment: 'top',
 						columns: [
 							{
 								clickable: true,

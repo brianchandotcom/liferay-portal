@@ -205,8 +205,6 @@ public class OfflineOpenIdConnectSessionManager {
 	protected void deactivate() {
 		if (_tokensRefreshMessageListener != null) {
 			_schedulerEngineHelper.unregister(_tokensRefreshMessageListener);
-
-			_tokensRefreshMessageListener = null;
 		}
 
 		_unregisterServices();

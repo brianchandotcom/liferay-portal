@@ -215,12 +215,6 @@ definition {
 			value1 = "No entries were found.");
 	}
 
-	macro assertScopeFieldSelected {
-		AssertTextEquals(
-			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
-			value1 = "${fieldScope}");
-	}
-
 	macro assertSearchableSectionOptionsAppears {
 		AssertElementPresent(
 			key_radioOption = "${radioOption}",

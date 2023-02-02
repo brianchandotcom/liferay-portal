@@ -263,7 +263,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Scope");
 
-		CreateObject.assertScopeFieldSelected(fieldScope = "Company");
+		AssertTextEquals(
+			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
+			value1 = "Company");
 
 		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
 	}

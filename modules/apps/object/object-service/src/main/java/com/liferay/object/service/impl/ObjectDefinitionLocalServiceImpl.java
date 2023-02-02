@@ -594,13 +594,18 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition restrictObjectDefinitionByAccountEntry(
-			ObjectDefinition objectDefinition, long userId,
-			ObjectRelationship objectRelationship)
+			long objectDefinitionId, ObjectField objectField)
 		throws PortalException {
 
-		if (!objectDefinition.isAccountEntryRestricted()) {
+		ObjectDefinition objectDefinition = fetchObjectDefinition(
+			objectDefinitionId);
+
+		if ((objectDefinition != null) &&
+			!objectDefinition.isAccountEntryRestricted() &&
+			(objectField != null)) {
+
 			objectDefinition.setAccountEntryRestrictedObjectFieldId(
-				objectRelationship.getObjectFieldId2());
+				objectField.getObjectFieldId());
 
 			objectDefinition.setAccountEntryRestricted(true);
 		}

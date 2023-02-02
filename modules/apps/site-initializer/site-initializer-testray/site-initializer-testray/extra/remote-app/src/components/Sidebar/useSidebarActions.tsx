@@ -29,7 +29,7 @@ const useSidebarActions = () => {
 	const [{testrayDispatchTriggers}] = useContext(TestrayContext);
 
 	const jobsInProgress =
-		testrayDispatchTriggers?.facets[0].facetValues
+		testrayDispatchTriggers?.facets[0]?.facetValues
 			.filter((facetValue) =>
 				([
 					DispatchTriggerStatuses.INPROGRESS,

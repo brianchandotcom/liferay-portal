@@ -7,7 +7,7 @@
 	"label": {
 		"en_US": "Subtask Score Self Incomplete"
 	},
-	"name": "subTaskScoreSelfIncomplete",
+	"name": "subtaskScoreSelfIncomplete",
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Task$]",
 	"objectFieldSettings": [
 		{

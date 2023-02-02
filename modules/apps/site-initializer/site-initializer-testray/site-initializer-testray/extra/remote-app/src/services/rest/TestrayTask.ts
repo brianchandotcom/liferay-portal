@@ -127,6 +127,8 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			overlapAllowed: false,
 		});
 
+		delete (data as any).taskToTasksCaseTypes;
+
 		const dispatchTriggerId = dispatchTrigger.liferayDispatchTrigger.id;
 
 		await Promise.allSettled([

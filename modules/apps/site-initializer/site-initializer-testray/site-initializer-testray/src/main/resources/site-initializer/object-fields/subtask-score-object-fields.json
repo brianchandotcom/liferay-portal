@@ -7,7 +7,7 @@
 	"label": {
 		"en_US": "Subtask Score"
 	},
-	"name": "subTaskScore",
+	"name": "subtaskScore",
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Task$]",
 	"objectFieldSettings": [
 		{

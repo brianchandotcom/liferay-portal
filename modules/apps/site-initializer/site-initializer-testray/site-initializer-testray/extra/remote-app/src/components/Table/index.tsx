@@ -44,6 +44,7 @@ type Column<T = any> = {
 export type TableProps<T = any> = {
 	actions?: Action[];
 	allRowsChecked?: boolean;
+	bodyVerticalAlignment?: 'bottom' | 'middle' | 'top';
 	columns: Column<T>[];
 	highlight?: (item: T) => boolean;
 	items: T[];
@@ -77,6 +78,7 @@ const Table: React.FC<TableProps> = ({
 	rowWrap = false,
 	selectedRows = [],
 	sort,
+	bodyVerticalAlignment = 'middle',
 }) => {
 	const [firstRowAction] = items;
 
@@ -124,6 +126,7 @@ const Table: React.FC<TableProps> = ({
 				className="testray-table"
 				hover
 				responsive={responsive}
+				tableVerticalAlignment={bodyVerticalAlignment}
 			>
 				<ClayTable.Head>
 					<ClayTable.Row>

@@ -145,11 +145,10 @@ public class CopyTemplateEntryMVCActionCommandTest {
 			).filter(
 				ddmTemplate -> Objects.equals(
 					description, ddmTemplate.getDescription(languageId))
-			).filter(
+			).anyMatch(
 				ddmTemplate -> Objects.equals(
 					originalDDMTemplate.getScript(), ddmTemplate.getScript())
-			).findAny(
-			).isPresent());
+			));
 	}
 
 	private MockLiferayPortletActionRequest

@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.internal.messaging;
 import com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
-import java.util.Dictionary;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -44,33 +42,28 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration",
-	immediate = true,
-	property = "model.class.name=com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration",
-	service = {
-		CheckKBArticleMessageListener.class, ConfigurationModelListener.class
-	}
+	immediate = true, service = {}
 )
-public class CheckKBArticleMessageListener
-	extends BaseMessageListener implements ConfigurationModelListener {
-
-	@Override
-	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
-		_schedulerEngineHelper.unregister(this);
-
-		KBServiceConfiguration kbServiceConfiguration =
-			ConfigurableUtil.createConfigurable(
-				KBServiceConfiguration.class, properties);
-
-		_registerSchedulerEntry(kbServiceConfiguration.checkInterval());
-	}
+public class CheckKBArticleMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		KBServiceConfiguration kbServiceConfiguration =
-			ConfigurableUtil.createConfigurable(
-				KBServiceConfiguration.class, properties);
+		_kbServiceConfiguration = ConfigurableUtil.createConfigurable(
+			KBServiceConfiguration.class, properties);
 
-		_registerSchedulerEntry(kbServiceConfiguration.checkInterval());
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			_kbServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -85,23 +78,10 @@ public class CheckKBArticleMessageListener
 		}
 	}
 
-	private void _registerSchedulerEntry(int checkInterval) {
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, checkInterval, TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	private volatile KBServiceConfiguration _kbServiceConfiguration;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

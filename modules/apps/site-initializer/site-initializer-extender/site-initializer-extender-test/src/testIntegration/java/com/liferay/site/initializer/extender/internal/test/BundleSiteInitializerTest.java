@@ -1284,7 +1284,7 @@ public class BundleSiteInitializerTest {
 		int publicLayoutsCount = _layoutLocalService.getLayoutsCount(
 			group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertEquals(4, publicLayoutsCount);
+		Assert.assertEquals(5, publicLayoutsCount);
 
 		Layout publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
 			group.getGroupId(), false, "/test-public-layout");
@@ -1397,6 +1397,16 @@ public class BundleSiteInitializerTest {
 		Assert.assertFalse(
 			pageDefinitionString.contains(
 				"[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"));
+
+		Layout urlLayout = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/test-url-layout");
+
+		Assert.assertFalse(urlLayout.isHidden());
+		Assert.assertEquals(
+			"Test URL Layout",
+			urlLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("url", urlLayout.getType());
+		Assert.assertEquals("url=/test-public-layout\n", urlLayout.getTypeSettings());
 	}
 
 	private void _assertResourceAction(

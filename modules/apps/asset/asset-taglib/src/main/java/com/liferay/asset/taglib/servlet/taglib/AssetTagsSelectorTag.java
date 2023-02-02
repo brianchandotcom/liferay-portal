@@ -36,8 +36,11 @@ import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -236,10 +239,13 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	}
 
 	protected List<String> getTagNames() {
+		Set<String> tagNames = new HashSet<>();
+
 		if (Validator.isNotNull(_className) && (_classPK > 0)) {
-			return ListUtil.toList(
-				AssetTagServiceUtil.getTags(_className, _classPK),
-				AssetTag.NAME_ACCESSOR);
+			tagNames.addAll(
+				ListUtil.toList(
+					AssetTagServiceUtil.getTags(_className, _classPK),
+					AssetTag.NAME_ACCESSOR));
 		}
 
 		if (!_ignoreRequestValue) {
@@ -249,11 +255,23 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				_hiddenInput);
 
 			if (curTagsParam != null) {
-				return ListUtil.fromArray(curTagsParam);
+				List<String> curTags = new ArrayList<>();
+
+				for (String tags : curTagsParam) {
+					Collections.addAll(curTags, tags.split(StringPool.COMMA));
+				}
+
+				tagNames.addAll(curTags);
 			}
 		}
 
-		return StringUtil.split(_tagNames);
+		if (!(Validator.isNotNull(_className) && (_classPK > 0)) &&
+			_ignoreRequestValue) {
+
+			tagNames.addAll(StringUtil.split(_tagNames));
+		}
+
+		return new ArrayList<>(tagNames);
 	}
 
 	@Override

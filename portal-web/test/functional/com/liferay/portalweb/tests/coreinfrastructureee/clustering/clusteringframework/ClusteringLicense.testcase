@@ -47,6 +47,10 @@ definition {
 
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 
+		// Pausing 30 seconds due to LRQA-75909
+
+		Pause(locator1 = "30000");
+
 		for (var nodeNumber : list "8,9") {
 			User.firstLoginUI(
 				password = "test",
@@ -364,6 +368,10 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
 		Clustering.waitForNodeShutdown(nodePort = "10080");
+
+		// Pausing 30 seconds due to LRQA-75909
+
+		Pause(locator1 = "30000");
 
 		for (var nodeNumber : list "8,9") {
 			User.firstLoginUI(

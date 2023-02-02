@@ -264,6 +264,7 @@ UnwrappedVariableInfoCheck | [Bug Prevention](bug_prevention_checks.markdown#bug
 UpgradeDeprecatedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Finds calls to deprecated classes, constructors, fields or methods after an upgrade |
 [UpgradeProcessCheck](check/upgrade_process_check.markdown#upgradeprocesscheck) | [Performance](performance_checks.markdown#performance-checks) | Performs several checks on `*UpgradeProcess` classes. |
 UpgradeRemovedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Finds cases where calls are made to removed API after an upgrade. |
+UsePassedInVarCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where use passed in var to avoid any possible errors. |
 [ValidatorEqualsCheck](check/validator_equals_check.markdown#validatorequalscheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that there are no calls to `Validator.equals(Object, Object)`. |
 ValidatorIsNullCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`. |
 VariableDeclarationAsUsedCheck | [Performance](performance_checks.markdown#performance-checks) | Finds cases where a variable declaration can be inlined or moved closer to where it is used. |

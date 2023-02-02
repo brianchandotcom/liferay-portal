@@ -92,6 +92,35 @@ definition {
 	}
 
 	@priority = "3"
+	test CanDeletePublicationTemplate {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		PublicationsTemplate.gotoPublicationTemplate();
+
+		PublicationsTemplate.addPublicationTemplate(
+			publicationDescription = "Publications Description",
+			publicationName = "Publication Name",
+			publicationRole1 = "Editor",
+			publicationRole2 = "Viewer",
+			templateDescription = "Template Description",
+			templateName = "Template Name",
+			titleRole1 = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
+			userInvite = "userea@liferay.com",
+			userInvite1 = "userea@liferay.com",
+			userMissingPublicationsRole = "true");
+
+		PublicationsTemplate.viewPublicationTemplate(templateName = "Template Name");
+
+		PublicationsTemplate.deletePublicationTemplate(templateName = "Template Name");
+
+		PublicationsTemplate.viewPublicationTemplateNotPresent(templateName = "Template Name");
+	}
+
+	@priority = "3"
 	test CanEditPublicationTemplate {
 		task ("Add Publication Template") {
 			PublicationsTemplate.gotoPublicationTemplate();

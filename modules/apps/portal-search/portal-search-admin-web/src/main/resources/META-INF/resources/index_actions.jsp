@@ -23,11 +23,13 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.CompanyConstants" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
@@ -167,46 +169,32 @@ page import="java.util.Map" %>
 						boolean embeddingProviderAvailable = false;
 						%>
 
-						<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) %>'>
+						<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) && (embeddingProviderStatuses.length != 0) %>'>
 							<li class="list-group-item list-group-item-flex">
 								<div class="autofit-col autofit-col-expand">
 									<p class="list-group-title">
-										<liferay-ui:message key="reindex-text-embeddings" />
+										<span>
+											<liferay-ui:message key="reindex-text-embeddings" />
 
-										<c:choose>
-											<c:when test="<%= embeddingProviderStatuses.length == 0 %>">
-												<liferay-ui:message key="no-embedding-providers-available" />
-											</c:when>
-											<c:otherwise>
+											<%
+											for (EmbeddingProviderStatus embeddingProviderStatus : embeddingProviderStatuses) {
+												String errorMessage = embeddingProviderStatus.getErrorMessage();
 
-												<%
-												for (EmbeddingProviderStatus embeddingProviderStatus : embeddingProviderStatuses) {
-													String errorMessage = embeddingProviderStatus.getErrorMessage();
-
-													if (Validator.isBlank(errorMessage)) {
-														embeddingProviderAvailable = true;
-													}
-												%>
-
-													<span>
-														<b><%= embeddingProviderStatus.getProviderName() %>:</b>
-
-														<c:choose>
-															<c:when test="<%= Validator.isBlank(errorMessage) %>">
-																<liferay-ui:message key="ok" />
-															</c:when>
-															<c:otherwise>
-																<liferay-ui:message key="error" />
-															</c:otherwise>
-														</c:choose>
-													</span>
-
-												<%
+												if (Validator.isBlank(errorMessage)) {
+													embeddingProviderAvailable = true;
 												}
-												%>
+											%>
 
-											</c:otherwise>
-										</c:choose>
+												<clay:label
+													displayType='<%= Validator.isBlank(errorMessage) ? "success" : "warning" %>'
+													label='<%= LanguageUtil.format(request, "x-colon-y", new Object[] {embeddingProviderStatus.getProviderName(), Validator.isBlank(errorMessage) ? LanguageUtil.get(request, "ok") : LanguageUtil.get(request, "error")}) %>'
+												/>
+
+											<%
+											}
+											%>
+
+										</span>
 									</p>
 								</div>
 

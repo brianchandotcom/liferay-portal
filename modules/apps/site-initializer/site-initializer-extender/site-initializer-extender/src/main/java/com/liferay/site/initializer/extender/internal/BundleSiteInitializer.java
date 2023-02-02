@@ -2764,10 +2764,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/object-fields");
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/object-fields", _servletContext);
 
-		if (SetUtil.isEmpty(resourcePaths)) {
+		if (json == null) {
 			return;
 		}
 
@@ -2779,15 +2779,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		for (String resourcePath : resourcePaths) {
-			String json = SiteInitializerUtil.read(
-				resourcePath, _servletContext);
+		json = _replace(
+			json, listTypeDefinitionIdsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues);
 
-			json = _replace(
-				json, listTypeDefinitionIdsStringUtilReplaceValues,
-				objectDefinitionIdsStringUtilReplaceValues);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			long objectDefinitionId = GetterUtil.getLong(
 				(String)jsonObject.remove("objectDefinitionId"));

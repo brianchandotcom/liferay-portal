@@ -35,6 +35,7 @@ page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %>
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerClassNameComparator" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
+page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
@@ -187,7 +188,7 @@ page import="java.util.Map" %>
 
 												<clay:label
 													displayType='<%= Validator.isBlank(errorMessage) ? "success" : "warning" %>'
-													label='<%= LanguageUtil.format(request, "x-colon-y", new Object[] {embeddingProviderStatus.getProviderName(), Validator.isBlank(errorMessage) ? LanguageUtil.get(request, "ok") : LanguageUtil.get(request, "error")}) %>'
+													label='<%= LanguageUtil.format(request, "x-colon-y", new Object[] {LanguageUtil.get(request, CamelCaseUtil.fromCamelCase(embeddingProviderStatus.getProviderName())), Validator.isBlank(errorMessage) ? LanguageUtil.get(request, "ok") : LanguageUtil.get(request, "error")}) %>'
 												/>
 
 											<%

@@ -6649,11 +6649,15 @@ definition {
 
 		ObjectAdmin.openMySubmissions();
 
-		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object 141635");
+		AssertElementNotPresent(
+			key_submissionName = "Custom Object 141635",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 
 		ObjectAdmin.openSubmissions();
 
-		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object 141635");
+		AssertElementNotPresent(
+			key_submissionName = "Custom Object 141635",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when inactivated"

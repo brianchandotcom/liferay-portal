@@ -90,7 +90,11 @@ const nodeByName = (items, name) => {
 			acc.push(item);
 		}
 		else if (item.children) {
-			acc.concat(item.children.reduce(reducer, acc));
+			const matchingChildren = item.children.reduce(reducer, []);
+
+			if (matchingChildren.length) {
+				acc.push({...item, children: matchingChildren, readOnly: true});
+			}
 		}
 
 		return acc;
@@ -168,12 +172,20 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 	]);
 
 	const onClick = (event, item, selection) => {
+		if (item.readOnly) {
+			return;
+		}
+
 		event.preventDefault();
 
 		selection.toggle(item.id);
 	};
 
 	const onKeyDown = (event, item, selection) => {
+		if (item.readOnly) {
+			return;
+		}
+
 		if (event.key === ' ' || event.key === 'Enter') {
 			event.preventDefault();
 
@@ -214,10 +226,14 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 											onKeyDown(event, item, selection)
 										}
 									>
-										<ClayCheckbox
-											label={item.name}
-											tabIndex={-1}
-										/>
+										{item.readOnly ? (
+											<span>{item.name}</span>
+										) : (
+											<ClayCheckbox
+												label={item.name}
+												tabIndex={-1}
+											/>
+										)}
 									</ClayTreeView.ItemStack>
 
 									<ClayTreeView.Group items={item.children}>
@@ -238,10 +254,14 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 													)
 												}
 											>
-												<ClayCheckbox
-													label={item.name}
-													tabIndex={-1}
-												/>
+												{item.readOnly ? (
+													<span>{item.name}</span>
+												) : (
+													<ClayCheckbox
+														label={item.name}
+														tabIndex={-1}
+													/>
+												)}
 											</ClayTreeView.Item>
 										)}
 									</ClayTreeView.Group>

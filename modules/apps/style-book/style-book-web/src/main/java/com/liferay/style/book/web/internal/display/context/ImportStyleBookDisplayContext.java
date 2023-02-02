@@ -46,14 +46,13 @@ public class ImportStyleBookDisplayContext {
 		return TransformUtil.transform(
 			styleBookEntryZipProcessorImportResultEntries,
 			styleBookEntryZipProcessorImportResultEntry -> {
-				if (styleBookEntryZipProcessorImportResultEntry.getStatus() ==
+				if (styleBookEntryZipProcessorImportResultEntry.getStatus() !=
 						status) {
 
-					return styleBookEntryZipProcessorImportResultEntry.
-						getName();
+					return null;
 				}
 
-				return null;
+				return styleBookEntryZipProcessorImportResultEntry.getName();
 			});
 	}
 

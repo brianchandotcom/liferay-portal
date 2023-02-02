@@ -86,7 +86,7 @@ public class Ranking {
 
 	public Collection<String> getQueryStrings() {
 		List<String> querySrtings = ListUtil.concat(
-			ListUtil.fromString(_queryString), _aliases);
+			Collections.singletonList(_queryString), _aliases);
 
 		querySrtings = ListUtil.filter(
 			querySrtings, querySring -> !Validator.isBlank(querySring));

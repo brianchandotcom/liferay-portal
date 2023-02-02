@@ -440,7 +440,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		if (editRankingMVCActionRequest.isCmd(Constants.UPDATE)) {
 			List<String> strings = ListUtil.concat(
-				ListUtil.fromString(ranking.getQueryString()),
+				Collections.singletonList(ranking.getQueryString()),
 				_getAliases(editRankingMVCActionRequest));
 
 			strings = ListUtil.filter(

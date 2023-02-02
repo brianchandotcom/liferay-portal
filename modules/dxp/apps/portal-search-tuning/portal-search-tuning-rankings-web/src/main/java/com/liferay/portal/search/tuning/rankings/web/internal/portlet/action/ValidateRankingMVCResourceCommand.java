@@ -153,7 +153,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest) {
 
 		List<String> strings = ListUtil.concat(
-			ListUtil.fromString(
+			Collections.singletonList(
 				validateRankingMVCResourceRequest.getQueryString()),
 			_getAliases(validateRankingMVCResourceRequest));
 

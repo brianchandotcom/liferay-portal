@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.test.util.WikiTestUtil;
 
 import org.junit.Before;
@@ -52,8 +53,10 @@ public class WikiPageTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return WikiTestUtil.addPage(
+		WikiPage wikiPage = WikiTestUtil.addPage(
 			group.getGroupId(), _wikiNode.getNodeId(), true);
+
+		return wikiPage.getNode();
 	}
 
 	private WikiNode _wikiNode;

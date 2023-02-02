@@ -38,7 +38,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.name.Ranking
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -140,10 +139,9 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 	private List<String> _getAliases(
 		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest) {
 
-		List<String> strings = new ArrayList<>(
-			validateRankingMVCResourceRequest.getAliases());
-
-		return ListUtil.filter(strings, string -> !_isUpdateSpecial(string));
+		return ListUtil.filter(
+			validateRankingMVCResourceRequest.getAliases(),
+			alias -> !_isUpdateSpecial(alias));
 	}
 
 	private long _getCompanyId(ResourceRequest resourceRequest) {

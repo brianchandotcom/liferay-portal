@@ -91,4 +91,53 @@ definition {
 			userInvite = "userea2@liferay.com");
 	}
 
+	@priority = "3"
+	test CanEditPublicationTemplate {
+		task("Add Publication Template") {
+			PublicationsTemplate.gotoPublicationTemplate();
+
+			PublicationsTemplate.addPublicationTemplate(
+				publicationDescription = "Publications Description ${CURRENT_USERNAME}",
+				publicationName = "Publication Name ${CURRENT_USERNAME}",
+				templateDescription = "Template Description",
+				templateName = "Template Name");
+		}
+
+		task("Edit Publication Template") {
+			PublicationsTemplate.editPublicationTemplate(
+				templateName = "Template Name",
+				templateNameEdit = "Template Name Edited",
+				templateDescriptionEdit = "Template Description Edited",
+				publicationNameEdit = "Publication Name ${CURRENT_USERNAME} Edited",
+				publicationDescriptionEdit = "Publications Description ${CURRENT_USERNAME} Edited");
+		}
+
+		task("Assert the publication template is edited") {
+			Click(
+				key_templateName = "Template Name Edited",
+				locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
+
+			MenuItem.click(menuItem = "Edit");
+
+			AssertElementPresent(
+				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
+				value1 = "Template Name Edited");
+
+			AssertElementPresent(
+				locator1 = "PublicationsTemplate#TEMPLATE_DESCRIPTION",
+				value1 = "Template Description Edited");
+
+			PublicationsTemplate.expandPublicationInformation();
+
+			AssertElementPresent(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "Publication Name ${CURRENT_USERNAME} Edited");
+
+			AssertElementPresent(
+				locator1 = "Publications#PUBLICATION_DESCRIPTION",
+				value1 = "Publications Description ${CURRENT_USERNAME} Edited");
+
+			Button.clickCancel();
+		}
+	}
 }

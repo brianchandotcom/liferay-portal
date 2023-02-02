@@ -629,6 +629,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUnnecessaryConfigurationPolicy() throws Exception {
+		test(
+			"UnnecessaryConfigurationPolicy.testjava",
+			"Remove 'configurationPolicy = ConfigurationPolicy.OPTIONAL' " +
+			"as it is unnecessary",
+			23);
+	}
+
+	@Test
 	public void testUnnecessaryMethodCalls() throws Exception {
 		test(
 			"UnnecessaryMethodCalls.testjava",

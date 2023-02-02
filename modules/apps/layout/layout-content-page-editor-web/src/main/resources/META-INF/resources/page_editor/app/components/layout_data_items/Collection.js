@@ -428,6 +428,50 @@ const Collection = React.memo(
 			collectionConfig.listStyle === CONTENT_DISPLAY_OPTIONS.flexColumn ||
 			collectionConfig.listStyle === CONTENT_DISPLAY_OPTIONS.flexRow;
 
+		let CollectionContent = null;
+
+		if (loading) {
+			CollectionContent = <ClayLoadingIndicator />;
+		}
+		else if (!collectionIsMapped(collectionConfig)) {
+			CollectionContent = <NotCollectionSelectedMessage />;
+		}
+		else if (showEmptyMessage) {
+			CollectionContent = <EmptyCollectionMessage />;
+		}
+		else if (collection.content) {
+			CollectionContent = <UnsafeHTML markup={collection.content} />;
+		}
+		else {
+			CollectionContent = (
+				<>
+					{collection.fakeCollection && (
+						<EmptyCollectionGridMessage />
+					)}
+					{flexEnabled ? (
+						<FlexContainer
+							child={child}
+							collection={collection}
+							collectionConfig={responsiveConfig}
+							collectionId={item.itemId}
+							collectionLength={collection.items.length}
+						/>
+					) : (
+						<Grid
+							child={child}
+							collection={collection}
+							collectionConfig={responsiveConfig}
+							collectionId={item.itemId}
+							collectionLength={collection.items.length}
+							customCollectionSelectorURL={
+								collection.customCollectionSelectorURL
+							}
+						/>
+					)}
+				</>
+			);
+		}
+
 		return (
 			<div
 				className={classNames(
@@ -437,41 +481,7 @@ const Collection = React.memo(
 				)}
 				ref={ref}
 			>
-				{loading ? (
-					<ClayLoadingIndicator />
-				) : !collectionIsMapped(collectionConfig) ? (
-					<NotCollectionSelectedMessage />
-				) : showEmptyMessage ? (
-					<EmptyCollectionMessage />
-				) : collection.content ? (
-					<UnsafeHTML markup={collection.content} />
-				) : (
-					<>
-						{collection.fakeCollection && (
-							<EmptyCollectionGridMessage />
-						)}
-						{flexEnabled ? (
-							<FlexContainer
-								child={child}
-								collection={collection}
-								collectionConfig={responsiveConfig}
-								collectionId={item.itemId}
-								collectionLength={collection.items.length}
-							/>
-						) : (
-							<Grid
-								child={child}
-								collection={collection}
-								collectionConfig={responsiveConfig}
-								collectionId={item.itemId}
-								collectionLength={collection.items.length}
-								customCollectionSelectorURL={
-									collection.customCollectionSelectorURL
-								}
-							/>
-						)}
-					</>
-				)}
+				{CollectionContent}
 
 				{collectionIsMapped(collectionConfig) &&
 					paginationIsEnabled(collectionConfig) && (

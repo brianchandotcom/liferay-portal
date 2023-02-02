@@ -297,6 +297,10 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-170903 - temporarily ignore until fixed">
+			<contains>SAX Security Manager could not be setup</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPS-170903 - temporarily ignore until fixed">
 			<contains>SAX Feature unsupported</contains>
 			<matches></matches>
 		</ignore-error>

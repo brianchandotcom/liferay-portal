@@ -379,8 +379,8 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 		MenuItem.viewOrder(menuItemList = "${experienceNameList}");
 
 		Click(
-			key_text = "caret-double",
-			locator1 = "Icon#ANY");
+			ariaLabel = "Experience Selector",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
 	macro viewFragmentBackgroundImage {

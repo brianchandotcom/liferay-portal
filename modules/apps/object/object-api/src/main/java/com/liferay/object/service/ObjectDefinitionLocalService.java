@@ -373,8 +373,7 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	public ObjectDefinition restrictObjectDefinitionByAccountEntry(
-			ObjectDefinition objectDefinition, long userId,
-			ObjectRelationship objectRelationship)
+			long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws PortalException;
 
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition);

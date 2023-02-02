@@ -62,53 +62,61 @@ public class ComponentAnnotationCheck extends BaseCheck {
 	private void _checkConfigurationPolicy(
 		DetailAST detailAST, DetailAST annotationDetailAST) {
 
+		String extendsClassName = null;
+
 		DetailAST extendsClauseDetailAST = detailAST.findFirstToken(
 			TokenTypes.EXTENDS_CLAUSE);
 
-		if (extendsClauseDetailAST == null) {
-			return;
-		}
+		if (extendsClauseDetailAST != null) {
+			DetailAST firstChildDetailAST =
+				extendsClauseDetailAST.getFirstChild();
 
-		DetailAST firstChildDetailAST = extendsClauseDetailAST.getFirstChild();
+			if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+				FullIdent fullIdent = FullIdent.createFullIdent(
+					firstChildDetailAST);
 
-		String extendsClassName = null;
+				String[] parts = StringUtil.split(fullIdent.getText(), "\\.");
 
-		if (firstChildDetailAST.getType() == TokenTypes.DOT) {
-			FullIdent fullIdent = FullIdent.createFullIdent(
-				firstChildDetailAST);
-
-			String[] parts = StringUtil.split(fullIdent.getText(), "\\.");
-
-			extendsClassName = parts[parts.length - 1];
-		}
-		else if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-			extendsClassName = getName(extendsClauseDetailAST);
-		}
-
-		if (!extendsClassName.equals("BaseAuthVerifierPipelineConfigurator")) {
-			return;
+				extendsClassName = parts[parts.length - 1];
+			}
+			else if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+				extendsClassName = getName(extendsClauseDetailAST);
+			}
 		}
 
 		DetailAST annotationMemberValuePairDetailAST =
 			getAnnotationMemberValuePairDetailAST(
 				annotationDetailAST, "configurationPolicy");
 
-		if (annotationMemberValuePairDetailAST != null) {
-			DetailAST expressionDetailAST =
-				annotationMemberValuePairDetailAST.findFirstToken(
-					TokenTypes.EXPR);
+		if (annotationMemberValuePairDetailAST == null) {
+			if (Objects.equals(
+					extendsClassName, "BaseAuthVerifierPipelineConfigurator")) {
 
-			FullIdent expressionFullIdent = FullIdent.createFullIdentBelow(
-				expressionDetailAST);
-
-			String annotationMemberValue = expressionFullIdent.getText();
-
-			if (annotationMemberValue.equals("ConfigurationPolicy.REQUIRE")) {
-				return;
+				log(annotationDetailAST, _MSG_INCORRECT_CONFIGURATION_POLICY);
 			}
+
+			return;
 		}
 
-		log(annotationDetailAST, _MSG_INCORRECT_CONFIGURATION_POLICY);
+		DetailAST expressionDetailAST =
+			annotationMemberValuePairDetailAST.findFirstToken(TokenTypes.EXPR);
+
+		FullIdent expressionFullIdent = FullIdent.createFullIdentBelow(
+			expressionDetailAST);
+
+		String annotationMemberValue = expressionFullIdent.getText();
+
+		if (Objects.equals(
+				extendsClassName, "BaseAuthVerifierPipelineConfigurator") &&
+			!annotationMemberValue.equals("ConfigurationPolicy.REQUIRE")) {
+
+			log(annotationDetailAST, _MSG_INCORRECT_CONFIGURATION_POLICY);
+		}
+		else if (annotationMemberValue.equals("ConfigurationPolicy.OPTIONAL")) {
+			log(
+				annotationDetailAST, _MSG_UNNECESSARY_CONFIGURATION_POLICY,
+				annotationMemberValue);
+		}
 	}
 
 	private void _checkOSGiJaxrsName(
@@ -211,6 +219,9 @@ public class ComponentAnnotationCheck extends BaseCheck {
 
 	private static final String _MSG_INCORRECT_OSGI_JAXRS_MAME =
 		"osgi.jaxrs.name.incorrect";
+
+	private static final String _MSG_UNNECESSARY_CONFIGURATION_POLICY =
+		"configuration.policy.unnecessary";
 
 	private static final String _OSGI_SERVICE_NAME = "ExceptionMapper";
 

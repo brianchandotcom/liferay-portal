@@ -61,6 +61,17 @@ public class StyleBookServiceUpgradeStepRegistrator
 		registry.register(
 			"1.3.0", "1.4.0",
 			new CTModelUpgradeProcess("StyleBookEntryVersion"));
+
+		registry.register(
+			"1.4.0", "1.4.1",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getTableNames() {
+					return new String[] {"StyleBookEntryVersion"};
+				}
+
+			});
 	}
 
 }

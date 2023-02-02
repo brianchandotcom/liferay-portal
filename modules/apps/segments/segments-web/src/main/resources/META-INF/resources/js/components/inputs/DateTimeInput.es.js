@@ -31,6 +31,8 @@ class DateTimeInput extends React.Component {
 
 	state = {};
 
+	previousValue = {};
+
 	static getDerivedStateFromProps(props, state) {
 		let returnVal = null;
 
@@ -53,40 +55,44 @@ class DateTimeInput extends React.Component {
 		this.setState({expanded: expandedState});
 
 		if (expandedState === false) {
-			const date = dateFns.format(this.state.value, INPUT_DATE_FORMAT);
+			this._saveDateTimeValue();
+		}
+	};
 
-			if (date !== 'Invalid Date') {
-				this.setState(
-					{
-						value: date,
-					},
-					() => {
-						this.props.onChange({
-							type: PROPERTY_TYPES.DATE_TIME,
-							value: dateFns
-								.parse(date, INPUT_DATE_FORMAT)
-								.toISOString(),
-						});
-					}
-				);
-			}
-			else {
-				const resetDate = dateFns.format(new Date(), INPUT_DATE_FORMAT);
+	_saveDateTimeValue = () => {
+		const date = dateFns.format(this.state.value, INPUT_DATE_FORMAT);
 
-				this.setState(
-					{
-						value: resetDate,
-					},
-					() => {
-						this.props.onChange({
-							type: PROPERTY_TYPES.DATE_TIME,
-							value: dateFns
-								.parse(resetDate, INPUT_DATE_FORMAT)
-								.toISOString(),
-						});
-					}
-				);
-			}
+		if (date !== 'Invalid Date') {
+			this.setState(
+				{
+					value: date,
+				},
+				() => {
+					this.props.onChange({
+						type: PROPERTY_TYPES.DATE_TIME,
+						value: dateFns
+							.parse(date, INPUT_DATE_FORMAT)
+							.toISOString(),
+					});
+				}
+			);
+		}
+		else {
+			const resetDate = dateFns.format(new Date(), INPUT_DATE_FORMAT);
+
+			this.setState(
+				{
+					value: resetDate,
+				},
+				() => {
+					this.props.onChange({
+						type: PROPERTY_TYPES.DATE_TIME,
+						value: dateFns
+							.parse(resetDate, INPUT_DATE_FORMAT)
+							.toISOString(),
+					});
+				}
+			);
 		}
 	};
 
@@ -116,6 +122,7 @@ class DateTimeInput extends React.Component {
 						`${Liferay.Language.get('november')}`,
 						`${Liferay.Language.get('december')}`,
 					]}
+					onBlur={this._saveDateTimeValue}
 					onChange={this._handleDateChange}
 					onExpandedChange={this._handleExpandedChange}
 					value={value}

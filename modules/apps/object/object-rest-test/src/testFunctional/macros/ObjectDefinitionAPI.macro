@@ -748,7 +748,7 @@ definition {
 		ObjectDefinitionAPI._deleteRelationship(relationshipId = "${relationshipId}");
 	}
 
-	macro getIdCreatedObjectEntryWithName {
+	macro getIdOfCreatedObjectEntryWithName {
 		var response = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = "${en_US_plural_label}",
 			name = "${name}",
@@ -904,16 +904,16 @@ definition {
 	}
 
 	macro setUpGlobalObjectEntryId {
-		var objectEntryId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+		var objectEntryId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 			en_US_plural_label = "foundations",
 			name = "Foundation First");
-		var objectEntryId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+		var objectEntryId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 			en_US_plural_label = "foundations",
 			name = "Foundation Second");
-		var objectEntryId3 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+		var objectEntryId3 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 			en_US_plural_label = "secondFoundations",
 			name = "Foundation First-1");
-		var objectEntryId4 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+		var objectEntryId4 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 			en_US_plural_label = "secondFoundations",
 			name = "Foundation Second-1");
 		static var staticObjectEntryId1 = "${objectEntryId1}";
@@ -928,44 +928,6 @@ definition {
 		return "${staticObjectEntryId3}";
 
 		return "${staticObjectEntryId4}";
-	}
-
-	macro setUpGlobalStudentId {
-		var studentId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
-			en_US_plural_label = "students",
-			name = "Student Name");
-
-		var response = ObjectDefinitionAPI.getObjectEntryById(
-			en_US_plural_label = "students",
-			objectEntryId = "${studentId}");
-
-		var studentErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
-
-		static var staticStudentErc = "${studentErc}";
-		static var staticStudentId = "${studentId}";
-
-		return "${staticStudentErc}";
-
-		return "${staticStudentId}";
-	}
-
-	macro setUpGlobalSubjectId {
-		var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
-			en_US_plural_label = "subjects",
-			name = "Subject Name");
-
-		var response = ObjectDefinitionAPI.getObjectEntryById(
-			en_US_plural_label = "subjects",
-			objectEntryId = "${subjectId}");
-
-		var subjectErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
-
-		static var staticSubjectErc = "${subjectErc}";
-		static var staticSubjectId = "${subjectId}";
-
-		return "${staticSubjectErc}";
-
-		return "${staticSubjectId}";
 	}
 
 	macro updateEmployee {

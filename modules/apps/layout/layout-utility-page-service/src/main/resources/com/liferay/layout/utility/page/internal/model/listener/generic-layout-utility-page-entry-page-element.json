@@ -39,9 +39,7 @@
 							"fragmentLink": {
 							},
 							"text": {
-								"value_i18n": {
-									"en_US": "Page not found"
-								}
+								"value_i18n": "[$LAYOUT_UTILITY_PAGE_ENTRY_TITLE_I18N_JSON_VALUE$]"
 							}
 						}
 					}
@@ -71,9 +69,7 @@
 							"fragmentLink": {
 							},
 							"text": {
-								"value_i18n": {
-									"en_US": "Error code: 404"
-								}
+								"value_i18n": "[$ERROR_CODE_I18N_JSON_VALUE$]"
 							}
 						}
 					}
@@ -104,9 +100,7 @@
 							"fragmentLink": {
 							},
 							"text": {
-								"value_i18n": {
-									"en_US": "The requested address was not found on the system"
-								}
+								"value_i18n": "[$LAYOUT_UTILITY_PAGE_ENTRY_DESCRIPTION_I18N_JSON_VALUE$]"
 							}
 						}
 					}
@@ -166,9 +160,7 @@
 									"fragmentLink": {
 									},
 									"text": {
-										"value_i18n": {
-											"en_US": "Instructions"
-										}
+										"value_i18n": "[$INSTRUCTIONS_I18N_JSON_VALUE$]"
 									}
 								}
 							}
@@ -196,9 +188,7 @@
 									"fragmentLink": {
 									},
 									"text": {
-										"value_i18n": {
-											"en_US": "Review the typed URL address and try to refresh the page. The problem may be temporary. If the problem persists, contact customer support."
-										}
+										"value_i18n": "[$LAYOUT_UTILITY_PAGE_ENTRY_INSTRUCTIONS_I18N_JSON_VALUE$]"
 									}
 								}
 							}

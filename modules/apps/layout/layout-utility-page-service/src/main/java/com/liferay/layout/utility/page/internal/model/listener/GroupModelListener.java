@@ -24,6 +24,9 @@ import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryCo
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -31,13 +34,17 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,23 +72,78 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					true, "404 Error",
 					LayoutUtilityPageEntryConstants.SC_NOT_FOUND, 0);
 
-			String pageElementJSON = StringUtil.read(
-				GroupModelListener.class,
-				"generic-layout-utility-page-entry-page-element.json");
+			JSONObject errorCodeI18nJSONObject =
+				_jsonFactory.createJSONObject();
+			JSONObject instructionsI18nJSONObject =
+				_jsonFactory.createJSONObject();
+			JSONObject layoutUtilityPageEntryDescriptionI18nJSONObject =
+				_jsonFactory.createJSONObject();
+			JSONObject layoutUtilityPageEntryInstructionsI18nJSONObject =
+				_jsonFactory.createJSONObject();
+			JSONObject layoutUtilityPageEntryTitleI18nJSONObject =
+				_jsonFactory.createJSONObject();
 
-			if (Validator.isNotNull(pageElementJSON)) {
-				Layout layout = _layoutLocalService.getLayout(
-					layoutUtilityPageEntry.getPlid());
+			Set<Locale> locales = new HashSet<>(
+				_language.getAvailableLocales());
 
-				Layout draftLayout = layout.fetchDraftLayout();
-
-				_importPageElement(draftLayout, pageElementJSON);
-
-				_importPageElement(layout, pageElementJSON);
-
-				_updateLayoutUtilityPageEntryLayouts(
-					draftLayout.getPlid(), layout.getPlid());
+			for (Locale locale : locales) {
+				errorCodeI18nJSONObject.put(
+					LocaleUtil.toLanguageId(locale),
+					_language.format(locale, "error-code-x", "404"));
+				instructionsI18nJSONObject.put(
+					LocaleUtil.toLanguageId(locale),
+					_language.get(locale, "instructions"));
+				layoutUtilityPageEntryDescriptionI18nJSONObject.put(
+					LocaleUtil.toLanguageId(locale),
+					_language.get(
+						locale,
+						"layout-utility-page-entry-description[SC_NOT_FOUND]"));
+				layoutUtilityPageEntryInstructionsI18nJSONObject.put(
+					LocaleUtil.toLanguageId(locale),
+					_language.get(
+						locale,
+						"layout-utility-page-entry-instructions" +
+							"[SC_NOT_FOUND]"));
+				layoutUtilityPageEntryTitleI18nJSONObject.put(
+					LocaleUtil.toLanguageId(locale),
+					_language.get(
+						locale,
+						"layout-utility-page-entry-title[SC_NOT_FOUND]"));
 			}
+
+			String pageElementJSON = StringUtil.replace(
+				StringUtil.read(
+					GroupModelListener.class,
+					"generic-layout-utility-page-entry-page-element.json"),
+				"\"[$", "$]\"",
+				HashMapBuilder.put(
+					"ERROR_CODE_I18N_JSON_VALUE",
+					errorCodeI18nJSONObject.toString()
+				).put(
+					"INSTRUCTIONS_I18N_JSON_VALUE",
+					instructionsI18nJSONObject.toString()
+				).put(
+					"LAYOUT_UTILITY_PAGE_ENTRY_DESCRIPTION_I18N_JSON_VALUE",
+					layoutUtilityPageEntryDescriptionI18nJSONObject.toString()
+				).put(
+					"LAYOUT_UTILITY_PAGE_ENTRY_INSTRUCTIONS_I18N_JSON_VALUE",
+					layoutUtilityPageEntryInstructionsI18nJSONObject.toString()
+				).put(
+					"LAYOUT_UTILITY_PAGE_ENTRY_TITLE_I18N_JSON_VALUE",
+					layoutUtilityPageEntryTitleI18nJSONObject.toString()
+				).build());
+
+			Layout layout = _layoutLocalService.getLayout(
+				layoutUtilityPageEntry.getPlid());
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			_importPageElement(draftLayout, pageElementJSON);
+
+			_importPageElement(layout, pageElementJSON);
+
+			_updateLayoutUtilityPageEntryLayouts(
+				draftLayout.getPlid(), layout.getPlid());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -130,6 +192,12 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupModelListener.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

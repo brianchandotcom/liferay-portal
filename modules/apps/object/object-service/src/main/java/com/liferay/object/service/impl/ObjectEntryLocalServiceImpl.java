@@ -2126,11 +2126,16 @@ public class ObjectEntryLocalServiceImpl
 				primaryKeyColumn
 			)
 		).where(
-			ObjectEntryTable.INSTANCE.groupId.eq(
-				groupId
+			ObjectEntryTable.INSTANCE.companyId.eq(
+				objectRelationship.getCompanyId()
 			).and(
-				ObjectEntryTable.INSTANCE.companyId.eq(
-					objectRelationship.getCompanyId())
+				() -> {
+					if (!related) {
+						return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
+					}
+
+					return null;
+				}
 			).and(
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectRelationship.getObjectDefinitionId2())

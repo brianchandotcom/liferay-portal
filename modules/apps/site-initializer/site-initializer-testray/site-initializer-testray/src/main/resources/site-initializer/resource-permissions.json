@@ -250,8 +250,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
@@ -434,8 +434,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
@@ -453,8 +453,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
@@ -552,8 +552,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
@@ -631,8 +631,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
@@ -661,8 +661,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",

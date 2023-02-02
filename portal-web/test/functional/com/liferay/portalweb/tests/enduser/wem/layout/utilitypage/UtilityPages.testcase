@@ -181,6 +181,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162765. The page designer could make a copy of a 404 error type of utility page."
+	@priority = "4"
+	test Copy404ErrorUtilityPage {
+		task ("Given a page designer has a 404 error utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer copies the 404 error utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Make a Copy",
+				pageName = "404 Error Utility Page");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page designer sees the copy of utility page") {
+			LexiconCard.viewCardPresent(card = "404 Error Utility Page");
+
+			LexiconCard.viewCardPresent(card = "404 Error Utility Page (Copy)");
+
+			LexiconCard.viewCardLabel(
+				card = "404 Error Utility Page (Copy)",
+				cardLabel = "Draft");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error Utility Page (Copy)");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Resource Not Found",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
 	@priority = "5"
 	test Mark404ErrorUtilityPageAsDefault {

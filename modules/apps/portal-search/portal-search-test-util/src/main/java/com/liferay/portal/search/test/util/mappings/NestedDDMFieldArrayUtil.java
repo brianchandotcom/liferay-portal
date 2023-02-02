@@ -16,9 +16,8 @@ package com.liferay.portal.search.test.util.mappings;
 
 import com.liferay.portal.kernel.search.Field;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
@@ -43,14 +42,20 @@ public class NestedDDMFieldArrayUtil {
 		return field;
 	}
 
-	public static Optional<Object> getFieldValue(
-		String name, Stream<Map<String, Object>> stream) {
+	public static Object getFieldValue(
+		String name, List<Map<String, Object>> maps) {
 
-		return stream.filter(
-			map -> name.equals(map.get("ddmFieldName"))
-		).map(
-			map -> map.get(map.get("ddmValueFieldName"))
-		).findAny();
+		for (Map<String, Object> map : maps) {
+			if (name.equals(map.get("ddmFieldName"))) {
+				Object fieldValue = map.get(map.get("ddmValueFieldName"));
+
+				if (fieldValue != null) {
+					return fieldValue;
+				}
+			}
+		}
+
+		return null;
 	}
 
 }

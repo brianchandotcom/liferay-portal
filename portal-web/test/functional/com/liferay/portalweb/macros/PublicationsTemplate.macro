@@ -116,4 +116,39 @@ definition {
 			value1 = "${templateName}");
 	}
 
+	macro editPublicationTemplate {
+		Click(
+			key_templateName = "${templateName}",
+			locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
+
+		MenuItem.click(menuItem = "Edit");
+
+		if (isSet(templateNameEdit)) {
+			Type(
+				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
+				value1 = "${templateNameEdit}");
+		}
+
+		if (isSet(templateDescriptionEdit)) {
+			Type(
+				locator1 = "PublicationsTemplate#TEMPLATE_DESCRIPTION",
+				value1 = "${templateDescriptionEdit}");
+		}
+
+		PublicationsTemplate.expandPublicationInformation();
+
+		if (isSet(publicationNameEdit)) {
+			Type(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "${publicationNameEdit}");
+		}
+
+		if (isSet(publicationDescriptionEdit)) {
+			Type(
+				locator1 = "Publications#PUBLICATION_DESCRIPTION",
+				value1 = "${publicationDescriptionEdit}");
+		}
+
+		Button.clickSave();
+	}
 }

@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_DELETE</td>
-	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]//span/a</td>
+	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON</td>
-	<td>//div[contains(@class,'order-by-type')]//a[contains(.,'${key_sortOrder}')][span//*[name()='svg'][contains(@class,'icon-order')]]</td>
+	<td>//div[normalize-space(text())='Order By']//following-sibling::div//button[@*='${key_sortOrder}'][..//*[name()='svg'][contains(@class,'icon-order')]]</td>
 	<td></td>
 </tr>
 <tr>

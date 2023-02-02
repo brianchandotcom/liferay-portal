@@ -51,11 +51,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TYPE</td>
-	<td>//*[@data-qa-id='controlMenu']//h1[contains(@class,'text-truncate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO</td>
 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='info']</td>
 	<td></td>

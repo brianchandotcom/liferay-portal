@@ -483,6 +483,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162765. The page designer could rename a 404 error type of utility page."
+	@priority = "4"
+	test Rename404ErrorUtilityPage {
+		task ("Given a page designer has a 404 error utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer renames the 404 error utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Rename",
+				pageName = "404 Error Utility Page");
+
+			PortletEntry.inputName(name = "New 404 Error Utility Page");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the page designer sees the new name of utility page") {
+			LexiconCard.viewCardPresent(card = "New 404 Error Utility Page");
+		}
+	}
+
 	@description = "This is a test for LPS-162767. The page designer could unmark a 404 error type of utility page as default."
 	@priority = "4"
 	test Unmark404ErrorUtilityPageAsDefault {

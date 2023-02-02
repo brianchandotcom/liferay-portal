@@ -87,10 +87,6 @@ definition {
 		AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
 	}
 
-	macro assertDisabledObjectName {
-		AssertElementPresent(locator1 = "CreateObject#DISABLED_OBJECT_NAME");
-	}
-
 	macro assertEntrySelectedOnRelationshipField {
 		AssertElementPresent(
 			key_entry = "${entry}",

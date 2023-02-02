@@ -2367,7 +2367,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 65");
 
-		CreateObject.assertDisabledObjectName();
+		AssertElementPresent(locator1 = "CreateObject#DISABLED_OBJECT_NAME");
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Object scope after it is published"

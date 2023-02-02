@@ -20,6 +20,10 @@ if (numberOfOptions < options.length) {
 			const input = node.querySelector('input');
 			input.value = option.value;
 
+			if (layoutMode === 'edit') {
+				input.setAttribute('disabled', true);
+			}
+
 			const text = node.querySelector('.custom-control-label-text');
 			text.textContent = option.label;
 
@@ -27,5 +31,13 @@ if (numberOfOptions < options.length) {
 		});
 
 		fieldSet.removeChild(button);
+	});
+}
+
+if (layoutMode === 'edit') {
+	const inputs = fragmentElement.querySelectorAll('.custom-control-input');
+
+	inputs.forEach((input) => {
+		input.setAttribute('disabled', true);
 	});
 }

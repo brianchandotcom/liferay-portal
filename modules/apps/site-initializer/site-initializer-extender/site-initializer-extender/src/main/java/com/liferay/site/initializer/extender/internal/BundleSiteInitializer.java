@@ -2261,14 +2261,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				siteDefaultLocale, pageJSONObject.getString("friendlyURL"));
 		}
 
-		String typeSettings = null;
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 		JSONArray typeSettingsJSONArray = pageJSONObject.getJSONArray(
 			"typeSettings");
 
 		if (typeSettingsJSONArray != null) {
-			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
 			for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
 				JSONObject propertyJSONObject =
 					typeSettingsJSONArray.getJSONObject(i);
@@ -2277,8 +2275,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					propertyJSONObject.getString("key"),
 					propertyJSONObject.getString("value"));
 			}
-
-			typeSettings = unicodeProperties.toString();
 		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
@@ -2299,7 +2295,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SiteInitializerUtil.toMap(
 				pageJSONObject.getString("keywords_i18n")),
 			SiteInitializerUtil.toMap(pageJSONObject.getString("robots_i18n")),
-			type, typeSettings, pageJSONObject.getBoolean("hidden"),
+			type, unicodeProperties.toString(),
+			pageJSONObject.getBoolean("hidden"),
 			pageJSONObject.getBoolean("system"), friendlyURLMap,
 			serviceContext);
 

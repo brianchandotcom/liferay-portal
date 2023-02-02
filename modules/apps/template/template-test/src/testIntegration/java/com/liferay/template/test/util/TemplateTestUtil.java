@@ -34,7 +34,6 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalServiceUtil;
 
 import java.util.Collection;
-import java.util.stream.Stream;
 
 /**
  * @author Lourdes Fernández Besada
@@ -140,13 +139,15 @@ public class TemplateTestUtil {
 				infoItemFormVariationsProvider.getInfoItemFormVariations(
 					groupId);
 
-			Stream<InfoItemFormVariation> infoItemFormVariationsStream =
-				infoItemFormVariations.stream();
+			for (InfoItemFormVariation infoItemFormVariation :
+					infoItemFormVariations) {
 
-			return infoItemFormVariationsStream.findFirst(
-			).orElse(
-				null
-			);
+				if (infoItemFormVariation == null) {
+					continue;
+				}
+
+				return infoItemFormVariation;
+			}
 		}
 
 		return null;
@@ -169,14 +170,19 @@ public class TemplateTestUtil {
 					infoItemFormVariationsProvider.getInfoItemFormVariations(
 						groupId);
 
-				Stream<InfoItemFormVariation> infoItemFormVariationsStream =
-					infoItemFormVariations.stream();
+				InfoItemFormVariation infoItemFormVariation = null;
 
-				InfoItemFormVariation infoItemFormVariation =
-					infoItemFormVariationsStream.findFirst(
-					).orElse(
-						null
-					);
+				for (InfoItemFormVariation curInfoItemFormVariation :
+						infoItemFormVariations) {
+
+					if (curInfoItemFormVariation == null) {
+						continue;
+					}
+
+					infoItemFormVariation = curInfoItemFormVariation;
+
+					break;
+				}
 
 				if (infoItemFormVariation == null) {
 					continue;

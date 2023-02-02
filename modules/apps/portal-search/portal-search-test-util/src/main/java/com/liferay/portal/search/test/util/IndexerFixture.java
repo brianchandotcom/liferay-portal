@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -27,11 +28,8 @@ import com.liferay.portal.search.searcher.SearchResponse;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Lucas Marques de Paula
@@ -63,16 +61,9 @@ public class IndexerFixture<T> {
 
 	public void deleteDocuments(Document[] docs) {
 		try {
-			Stream<Document> stream = Arrays.stream(docs);
-
 			IndexWriterHelperUtil.deleteDocuments(
 				TestPropsValues.getCompanyId(),
-				stream.map(
-					document -> document.getUID()
-				).collect(
-					Collectors.toList()
-				),
-				true);
+				TransformUtil.transformToList(docs, Document::getUID), true);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

@@ -15,6 +15,9 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
@@ -25,19 +28,23 @@ import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
+import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -446,6 +453,8 @@ public class ObjectActionLocalServiceTest {
 			_assertWebhookObjectAction(
 				"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 				"Peter", WorkflowConstants.STATUS_APPROVED);
+
+			_testObjectActionWithOldValueFunction();
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);
@@ -505,6 +514,8 @@ public class ObjectActionLocalServiceTest {
 		objectEntry = _objectEntryLocalService.deleteObjectEntry(objectEntry);
 
 		_assertGroovyObjectActionExecutorArguments("João", objectEntry);
+
+		_testOldValueInConditionExpression();
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 	}
@@ -801,6 +812,29 @@ public class ObjectActionLocalServiceTest {
 		}
 	}
 
+	private boolean _checkAddObjectEntryObjectActionExecutor(
+			long objectDefinitionId)
+		throws Exception {
+
+		for (ObjectEntry objectEntry :
+				_objectEntryLocalService.getObjectEntries(
+					0, objectDefinitionId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS)) {
+
+			if (StringUtil.equals(
+					MapUtil.getString(objectEntry.getValues(), "delta"),
+					"successful")) {
+
+				_objectEntryLocalService.deleteObjectEntry(
+					objectEntry.getObjectEntryId());
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private Object _getAndSetFieldValue(
 		Class<?> clazz, String fieldName, String objectActionExecutorKey) {
 
@@ -885,6 +919,278 @@ public class ObjectActionLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId());
 	}
 
+	private void _testObjectActionWithOldValueFunction() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.emptyList());
+
+		String listTypeEntryKey1 = RandomTestUtil.randomString();
+
+		_listTypeEntryLocalService.addListTypeEntry(
+			null, TestPropsValues.getUserId(),
+			listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey1,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+
+		String listTypeEntryKey2 = RandomTestUtil.randomString();
+
+		_listTypeEntryLocalService.addListTypeEntry(
+			null, TestPropsValues.getUserId(),
+			listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey2,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"Alfa", "alfa", false),
+					new ObjectFieldBuilder(
+					).businessType(
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST
+					).defaultValue(
+						listTypeEntryKey1
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Bravo")
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).name(
+						"bravo"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).required(
+						true
+					).state(
+						true
+					).build()));
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", false
+					).put(
+						"name", "alfa"
+					).put(
+						"value", "oldValue(\"alfa\")"
+					),
+					JSONUtil.put(
+						"inputAsValue", false
+					).put(
+						"name", "bravo"
+					).put(
+						"value", "oldValue(\"bravo\")"
+					)
+				).toString()
+			).build());
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"alfa", RandomTestUtil.randomString()
+			).put(
+				"bravo", listTypeEntryKey2
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		ObjectEntry objectEntry = objectEntries.get(1);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			MapUtil.getString(objectEntry.getValues(), "alfa"));
+		Assert.assertEquals(
+			listTypeEntryKey1,
+			MapUtil.getString(objectEntry.getValues(), "bravo"));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			listTypeDefinition.getListTypeDefinitionId());
+	}
+
+	private void _testOldValueInConditionExpression() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, true, null,
+						"Alfa", "alfa", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_INTEGER, true, true, null,
+						"Bravo", "bravo", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+						ObjectFieldConstants.DB_TYPE_DATE, true, true, null,
+						"Charlie", "charlie", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"Delta", "delta", false)));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true,
+			"(oldValue(\"alfa\") == true)", RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "delta"
+					).put(
+						"value", "successful"
+					)
+				).toString()
+			).build());
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"charlie", RandomTestUtil.randomInt()
+			).put(
+				"delta", "Echo"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertFalse(
+			_checkAddObjectEntryObjectActionExecutor(
+				objectDefinition.getObjectDefinitionId()));
+
+		_updateConditionExpression(
+			objectAction, "futureDates(oldValue(\"bravo\"), createDate)");
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"charlie", RandomTestUtil.randomInt()
+			).put(
+				"delta", "Echo"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertFalse(
+			_checkAddObjectEntryObjectActionExecutor(
+				objectDefinition.getObjectDefinitionId()));
+
+		_updateConditionExpression(
+			objectAction, "(oldValue(\"charlie\") == 0)");
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"charlie", RandomTestUtil.randomInt()
+			).put(
+				"delta", "Echo"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertFalse(
+			_checkAddObjectEntryObjectActionExecutor(
+				objectDefinition.getObjectDefinitionId()));
+
+		_updateConditionExpression(
+			objectAction, "contains(oldValue(\"delta\"), \"\")");
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"charlie", RandomTestUtil.randomInt()
+			).put(
+				"delta", "Echo"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertFalse(
+			_checkAddObjectEntryObjectActionExecutor(
+				objectDefinition.getObjectDefinitionId()));
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId())) {
+
+			_updateConditionExpression(
+				objectAction,
+				StringBundler.concat(
+					"isEmpty(oldValue(\"", objectField.getName(), "\"))"));
+
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				objectField.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"charlie", RandomTestUtil.randomInt()
+				).put(
+					"delta", "Echo"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertTrue(
+				_checkAddObjectEntryObjectActionExecutor(
+					objectField.getObjectDefinitionId()));
+		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	private ObjectAction _updateConditionExpression(
+			ObjectAction objectAction, String conditionExpression)
+		throws Exception {
+
+		return _objectActionLocalService.updateObjectAction(
+			objectAction.getExternalReferenceCode(),
+			objectAction.getObjectActionId(), true, conditionExpression,
+			objectAction.getDescription(), objectAction.getErrorMessageMap(),
+			objectAction.getLabelMap(), objectAction.getName(),
+			objectAction.getObjectActionExecutorKey(),
+			objectAction.getObjectActionTriggerKey(),
+			objectAction.getParametersUnicodeProperties());
+	}
+
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
 
 	@Inject
@@ -892,6 +1198,12 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private ObjectActionEngine _objectActionEngine;
@@ -910,6 +1222,9 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private Http _originalHttp;
 	private ObjectScriptingExecutor _originalObjectScriptingExecutor;

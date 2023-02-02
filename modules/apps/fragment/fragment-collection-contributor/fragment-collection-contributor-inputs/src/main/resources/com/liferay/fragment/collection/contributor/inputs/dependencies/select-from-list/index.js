@@ -285,8 +285,13 @@ function createOptionElement(option) {
 	optionElement.dataset.optionValue = option.value;
 	// eslint-disable-next-line no-undef
 	optionElement.id = `${fragmentEntryLinkNamespace}-option-${option.value}`;
-	optionElement.textContent = option.textContent;
 
+	if(typeof option.textContent === 'object'){
+		optionElement.textContent = option.textContent.name;
+	}
+	else {
+		optionElement.textContent = option.textContent;
+	}
 	optionElement.classList.add('dropdown-item');
 	optionElement.setAttribute('role', 'option');
 

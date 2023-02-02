@@ -1,6 +1,29 @@
 const options = input.attributes.options || [];
 const numberOfOptions = configuration.numberOfOptions;
 
+const fieldSet = fragmentElement.querySelector('.multi-select-list-fieldset');
+
+const allInputs = Array.from(
+	fragmentElement.querySelectorAll('.custom-control-input')
+);
+
+if (layoutMode === 'edit') {
+	allInputs.forEach((input) => {
+		input.setAttribute('disabled', true);
+	});
+}
+
+fieldSet.addEventListener('change', () => {
+	const someInputIsChecked = allInputs.some((input) => input.checked);
+
+	if (someInputIsChecked) {
+		allInputs.forEach((input) => input.removeAttribute('required'));
+	}
+	else {
+		allInputs.forEach((input) => input.setAttribute('required', true));
+	}
+});
+
 if (numberOfOptions < options.length) {
 	const button = fragmentElement.querySelector('.multi-select-list-button');
 
@@ -8,9 +31,6 @@ if (numberOfOptions < options.length) {
 
 	const template = fragmentElement.querySelector(
 		'.multi-select-list-option-template'
-	);
-	const fieldSet = fragmentElement.querySelector(
-		'.multi-select-list-fieldset'
 	);
 
 	button.addEventListener('click', () => {
@@ -28,16 +48,9 @@ if (numberOfOptions < options.length) {
 			text.textContent = option.label;
 
 			fieldSet.appendChild(node);
+			allInputs.push(node);
 		});
 
 		fieldSet.removeChild(button);
-	});
-}
-
-if (layoutMode === 'edit') {
-	const inputs = fragmentElement.querySelectorAll('.custom-control-input');
-
-	inputs.forEach((input) => {
-		input.setAttribute('disabled', true);
 	});
 }

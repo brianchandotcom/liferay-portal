@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -32,12 +30,10 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.name.Ranking
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
@@ -185,12 +181,11 @@ public class DuplicateQueryStringsDetectorImpl
 	}
 
 	private void _addQueryClauses(Consumer<Query> consumer, Query... queries) {
-		List<Query> queriesList = Arrays.asList(queries);
-
-		List<Query> isNotNullQueriesList = ListUtil.filter(
-			queriesList, Objects::nonNull);
-
-		isNotNullQueriesList.forEach(consumer);
+		for (Query query : queries) {
+			if (query != null) {
+				consumer.accept(query);
+			}
+		}
 	}
 
 	private BooleanQuery _getCriteriaQuery(Criteria criteria) {

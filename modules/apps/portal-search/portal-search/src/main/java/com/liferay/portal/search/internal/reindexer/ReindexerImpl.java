@@ -28,7 +28,6 @@ import java.util.concurrent.ThreadFactory;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -38,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.ReindexerConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = Reindexer.class
 )
 public class ReindexerImpl implements Reindexer {

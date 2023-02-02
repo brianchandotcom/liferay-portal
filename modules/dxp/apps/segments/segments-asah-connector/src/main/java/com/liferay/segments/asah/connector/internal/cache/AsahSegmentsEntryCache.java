@@ -24,17 +24,13 @@ import com.liferay.segments.asah.connector.internal.configuration.provider.Segme
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
  */
-@Component(
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = AsahSegmentsEntryCache.class
-)
+@Component(service = AsahSegmentsEntryCache.class)
 public class AsahSegmentsEntryCache {
 
 	public long[] getSegmentsEntryIds(String userId) {

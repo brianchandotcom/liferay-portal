@@ -31,7 +31,6 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=rss",
 		"com.liferay.portlet.add-default-resource=true",

@@ -39,7 +39,6 @@ import java.io.InputStream;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,10 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Igor Beslic
  */
-@Component(
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = DispatchFileRepository.class
-)
+@Component(service = DispatchFileRepository.class)
 public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 
 	@Override

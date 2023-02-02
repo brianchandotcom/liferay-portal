@@ -24,17 +24,13 @@ import com.liferay.segments.asah.connector.internal.configuration.provider.Segme
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sarai Díaz
  */
-@Component(
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = AsahInterestTermCache.class
-)
+@Component(service = AsahInterestTermCache.class)
 public class AsahInterestTermCache {
 
 	public String[] getInterestTerms(String userId) {

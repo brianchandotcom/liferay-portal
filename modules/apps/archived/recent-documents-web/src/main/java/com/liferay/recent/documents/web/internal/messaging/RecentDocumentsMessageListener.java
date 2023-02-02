@@ -33,7 +33,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.recent.documents.web.internal.configuration.RecentDocumentsConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = RecentDocumentsMessageListener.class
+	immediate = true, service = RecentDocumentsMessageListener.class
 )
 public class RecentDocumentsMessageListener extends BaseMessageListener {
 

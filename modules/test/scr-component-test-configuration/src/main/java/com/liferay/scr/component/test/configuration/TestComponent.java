@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -30,8 +29,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 		"com.liferay.scr.component.test.configuration.FirstConfiguration",
 		"com.liferay.scr.component.test.configuration.SecondConfiguration"
 	},
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
-	service = TestComponent.class
+	enabled = false, service = TestComponent.class
 )
 public class TestComponent {
 

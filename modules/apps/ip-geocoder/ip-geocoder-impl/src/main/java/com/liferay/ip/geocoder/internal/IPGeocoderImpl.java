@@ -41,7 +41,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -51,8 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.ip.geocoder.internal.configuration.IPGeocoderConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, name = "IPGeocoder",
-	service = IPGeocoder.class
+	name = "IPGeocoder", service = IPGeocoder.class
 )
 public class IPGeocoderImpl implements IPGeocoder {
 

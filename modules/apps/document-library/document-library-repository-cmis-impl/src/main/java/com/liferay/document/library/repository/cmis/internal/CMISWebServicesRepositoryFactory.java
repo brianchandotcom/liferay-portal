@@ -23,14 +23,12 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Adolfo Pérez
  */
 @Component(
 	configurationPid = "com.liferay.document.library.repository.cmis.configuration.CMISRepositoryConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = "repository.target.class.name=" + CMISRepositoryConstants.CMIS_WEB_SERVICES_REPOSITORY_CLASS_NAME,
 	service = RepositoryFactory.class
 )

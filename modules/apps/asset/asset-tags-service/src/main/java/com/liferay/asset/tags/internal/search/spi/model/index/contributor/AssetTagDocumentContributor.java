@@ -16,6 +16,7 @@ package com.liferay.asset.tags.internal.search.spi.model.index.contributor;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,13 +122,8 @@ public class AssetTagDocumentContributor
 	}
 
 	private String[] _getNames(List<AssetTag> assetTags) {
-		Stream<AssetTag> stream = assetTags.stream();
-
-		return stream.map(
-			AssetTag::getName
-		).toArray(
-			String[]::new
-		);
+		return TransformUtil.transformToArray(
+			assetTags, assetTag -> assetTag.getName(), String.class);
 	}
 
 	private Locale _getSiteDefaultLocale(long groupId) {
@@ -141,13 +136,8 @@ public class AssetTagDocumentContributor
 	}
 
 	private Long[] _getTagIds(List<AssetTag> assetTags) {
-		Stream<AssetTag> stream = assetTags.stream();
-
-		return stream.map(
-			AssetTag::getTagId
-		).toArray(
-			Long[]::new
-		);
+		return TransformUtil.transformToArray(
+			assetTags, assetTag -> assetTag.getTagId(), Long.class);
 	}
 
 	@Reference

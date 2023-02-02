@@ -54,9 +54,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -237,14 +234,10 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			analyticsChannelId, _commerceChannelClassNameId, companyId,
 			removeCommerceChannelIds, true);
 
-		Stream<String> commerceChannelIdsStream = commerceChannelIds.stream();
-
-		return commerceChannelIdsStream.filter(
+		return ArrayUtil.filter(
+			commerceChannelIds.toArray(new String[0]),
 			commerceChannelId -> !ArrayUtil.contains(
-				removeCommerceChannelIds, String.valueOf(commerceChannelId))
-		).toArray(
-			String[]::new
-		);
+				removeCommerceChannelIds, String.valueOf(commerceChannelId)));
 	}
 
 	public void updateCompanyConfiguration(
@@ -309,13 +302,10 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			analyticsChannelId, _groupClassNameId, companyId, removeSiteIds,
 			true);
 
-		Stream<String> siteIdsStream = siteIds.stream();
-
-		return siteIdsStream.filter(
-			siteId -> !ArrayUtil.contains(removeSiteIds, String.valueOf(siteId))
-		).toArray(
-			String[]::new
-		);
+		return ArrayUtil.filter(
+			siteIds.toArray(new String[0]),
+			siteId -> !ArrayUtil.contains(
+				removeSiteIds, String.valueOf(siteId)));
 	}
 
 	@Activate
@@ -371,12 +361,13 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			return Collections.emptyMap();
 		}
 
-		List<String> keys = Collections.list(dictionary.keys());
+		Map<String, Object> map = new HashMap<>();
 
-		Stream<String> stream = keys.stream();
+		for (String key : Collections.list(dictionary.keys())) {
+			map.put(key, dictionary.get(key));
+		}
 
-		return stream.collect(
-			Collectors.toMap(Function.identity(), dictionary::get));
+		return map;
 	}
 
 	private <T> void _updateTypeSetting(

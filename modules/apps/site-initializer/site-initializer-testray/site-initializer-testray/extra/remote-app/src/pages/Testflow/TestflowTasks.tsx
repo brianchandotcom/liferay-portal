@@ -67,7 +67,6 @@ const TestFlowTasks = () => {
 		data: {testrayTask, testrayTaskUser},
 		revalidate: {revalidateSubtask},
 	} = useOutletContext<OutletContext>();
-
 	const {actions, completeModal, forceRefetch} = useSubtasksActions();
 	const {taskId} = useParams();
 	const {updateItemFromList} = useMutate();

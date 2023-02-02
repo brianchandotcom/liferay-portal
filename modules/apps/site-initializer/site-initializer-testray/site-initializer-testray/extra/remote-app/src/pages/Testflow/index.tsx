@@ -156,7 +156,8 @@ const TestFlow = () => {
 											groupSize={3}
 										/>
 									);
-								} catch {
+								}
+								catch {
 									return '';
 								}
 							},
@@ -166,9 +167,9 @@ const TestFlow = () => {
 					navigateTo: (item) => `/testflow/${item.id}`,
 					rowWrap: true,
 				}}
-				transformData={(response) => {
-					return testrayTaskImpl.transformDataFromList(response);
-				}}
+				transformData={(response) =>
+					testrayTaskImpl.transformDataFromList(response)
+				}
 			/>
 
 			<TestflowModal modal={modal} />

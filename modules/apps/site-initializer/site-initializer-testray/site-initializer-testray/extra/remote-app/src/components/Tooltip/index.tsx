@@ -14,9 +14,19 @@
 
 import {ReactNode, forwardRef} from 'react';
 
+export type ALIGN_POSITIONS =
+	| 'bottom-left'
+	| 'bottom-right'
+	| 'bottom'
+	| 'left'
+	| 'right'
+	| 'top-left'
+	| 'top-right'
+	| 'top';
+
 type TooltipProps = {
 	children: ReactNode;
-	position?: string;
+	position?: ALIGN_POSITIONS;
 	ref?: React.ForwardedRef<HTMLDivElement>;
 	title?: string;
 };

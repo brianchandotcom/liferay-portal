@@ -17,6 +17,8 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import React from 'react';
 
+import {ALIGN_POSITIONS} from '../Tooltip';
+
 type AvatarProps = {
 	className?: string;
 	displayName?: boolean;
@@ -24,7 +26,7 @@ type AvatarProps = {
 	expanded?: boolean;
 	name?: string;
 	size?: 'lg' | 'sm' | 'xl';
-	tooltipPosition?: string;
+	tooltipPosition?: ALIGN_POSITIONS;
 	url?: string;
 };
 

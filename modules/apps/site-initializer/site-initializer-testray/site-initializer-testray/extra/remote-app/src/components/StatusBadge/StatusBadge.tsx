@@ -22,6 +22,7 @@ const statusBarClassNames = {
 	inanalysis: 'in-analysis',
 	incomplete: 'light',
 	inprogress: 'inprogress',
+	open: 'open',
 	other: 'primary',
 	passed: 'passed',
 	scheduled: 'untested',

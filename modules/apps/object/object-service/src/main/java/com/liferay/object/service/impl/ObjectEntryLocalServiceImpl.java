@@ -747,7 +747,8 @@ public class ObjectEntryLocalServiceImpl
 
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				objectDefinition.getClassName());
+				_getSystemObjectDefinitionModelClassName(
+					objectDefinition.getName()));
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(
@@ -862,7 +863,8 @@ public class ObjectEntryLocalServiceImpl
 
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				objectDefinition.getClassName());
+				_getSystemObjectDefinitionModelClassName(
+					objectDefinition.getName()));
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			String.valueOf(
@@ -2541,6 +2543,16 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return storageDLFolderId;
+	}
+
+	private String _getSystemObjectDefinitionModelClassName(
+		String objectDefinitionName) {
+
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+			_systemObjectDefinitionMetadataRegistry.
+				getSystemObjectDefinitionMetadata(objectDefinitionName);
+
+		return systemObjectDefinitionMetadata.getModelClassName();
 	}
 
 	/**

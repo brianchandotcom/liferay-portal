@@ -205,7 +205,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				objectDefinition.getClassName());
+				_systemObjectDefinitionMetadata.getModelClassName());
 
 		return persistedModelLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(

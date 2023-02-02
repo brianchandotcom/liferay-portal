@@ -82,7 +82,8 @@ public class RelatedObjectEntryResourceImpl
 		_checkRelatedObjectEntry(
 			objectRelationship, relatedObjectEntryId, systemObjectDefinition);
 
-		_checkSystemObjectEntry(objectEntryId, systemObjectDefinition);
+		_checkSystemObjectEntry(
+			objectEntryId, _getSystemObjectDefinitionMetadata(previousPath));
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -183,12 +184,13 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private void _checkSystemObjectEntry(
-			long objectEntryId, ObjectDefinition systemObjectDefinition)
+			long objectEntryId,
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
 		throws Exception {
 
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				systemObjectDefinition.getClassName());
+				systemObjectDefinitionMetadata.getModelClassName());
 
 		persistedModelLocalService.getPersistedModel(objectEntryId);
 	}

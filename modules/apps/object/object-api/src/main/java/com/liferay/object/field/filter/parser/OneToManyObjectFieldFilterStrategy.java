@@ -179,10 +179,15 @@ public class OneToManyObjectFieldFilterStrategy
 		JSONArray jsonArray = getJSONArray();
 
 		if (_objectDefinition1.isSystem()) {
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataRegistry.
+					getSystemObjectDefinitionMetadata(
+						_objectDefinition1.getName());
+
 			PersistedModelLocalService persistedModelLocalService =
 				_persistedModelLocalServiceRegistry.
 					getPersistedModelLocalService(
-						_objectDefinition1.getClassName());
+						systemObjectDefinitionMetadata.getModelClassName());
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				try {

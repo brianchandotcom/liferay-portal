@@ -520,7 +520,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								_objectEntryManagerRegistry,
 								_objectRelatedModelsProviderRegistry,
 								_objectRelationshipService,
-								_persistedModelLocalServiceRegistry);
+								_persistedModelLocalServiceRegistry,
+								_systemObjectDefinitionMetadataRegistry);
 						}
 
 						@Override

@@ -77,11 +77,19 @@ const TestflowForm = () => {
 
 	const outletContext = useOutletContext<OutletContext>();
 
+	const {setHeading} = useHeader({timeout: 210});
+
 	const {
-		data: {testrayTaskCaseTypes = [], testrayTaskUser, testrayTask},
-		mutate: {mutateTask},
-		revalidate: {revalidateTaskUser},
-	} = outletContext ?? {data: {}, mutate: {}, revalidate: {}};
+		data: {
+			testrayTaskCaseTypes = [],
+			testrayTaskUser = undefined,
+			testrayTask = undefined,
+		} = {},
+		mutate: {mutateTask = () => null} = {mutateTask: undefined},
+		revalidate: {revalidateTaskUser = () => null} = {
+			revalidateTaskUser: undefined,
+		},
+	} = outletContext;
 
 	const {data} = useFetch('/casetypes', {
 		params: {
@@ -113,17 +121,7 @@ const TestflowForm = () => {
 			name: testrayTask?.name,
 			userIds: [],
 		},
-
 		resolver: yupResolver(yupSchema.task),
-	});
-
-	useHeader({
-		heading: [
-			{
-				category: i18n.translate('task'),
-				title: i18n.translate('testflow'),
-			},
-		],
 	});
 
 	const onOpenModal = (option: 'select-users' | 'select-user-groups') => {
@@ -200,6 +198,18 @@ const TestflowForm = () => {
 
 		setValue('caseTypes', caseTypesFiltered);
 	};
+
+	useEffect(() => {
+		setHeading(
+			[
+				{
+					category: i18n.translate('task'),
+					title: i18n.translate('testflow'),
+				},
+			],
+			true
+		);
+	}, [setHeading]);
 
 	useEffect(() => {
 		if (testrayTaskUser) {

@@ -35,13 +35,15 @@ const TestflowModal: React.FC<TestflowModalProps> = ({
 	const navigate = useNavigate();
 	const [breadCrumb, setBreadCrumb] = useState([]);
 
-	const [, , buildBreadcrumb] = breadCrumb as {
+	const [project, routine, build] = breadCrumb as {
 		label: string;
 		value: number;
 	}[];
 
 	const onSubmit = async () => {
-		const buildId = buildBreadcrumb.value;
+		const buildId = build.value;
+		const projectId = project.value;
+		const routineId = routine.value;
 
 		const taskResponse = await testrayTaskImpl.getTasksByBuildId(buildId);
 
@@ -52,7 +54,9 @@ const TestflowModal: React.FC<TestflowModalProps> = ({
 			});
 		}
 
-		navigate(`/testflow/${buildId}/create`);
+		navigate(
+			`/project/${projectId}/routines/${routineId}/build/${buildId}/testflow/create`
+		);
 	};
 
 	return (

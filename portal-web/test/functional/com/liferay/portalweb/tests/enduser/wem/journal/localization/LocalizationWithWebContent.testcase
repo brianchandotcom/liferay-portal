@@ -671,6 +671,90 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-162398. View friendlyURL in global web contents with translations."
+	@priority = "4"
+	test ViewFriendlyURLInGlobalWebContentsWithTranslations {
+		task ("Given a global web content with translations") {
+			task ("Add a Web Content Structure in Global with a text field") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+				NavItem.gotoStructures();
+
+				WebContentStructures.addCP(
+					structureDescription = "WC Structure Description",
+					structureName = "WC Structure Name");
+
+				DataEngine.addField(
+					fieldFieldLabel = "Text",
+					fieldName = "Text");
+
+				WebContentStructures.saveCP(structureName = "WC Structure Name");
+			}
+
+			task ("Add a web content using this structure") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+				WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+				PortletEntry.inputTitle(title = "WC Title");
+
+				PortletEntry.inputText(
+					fieldLabel = "Text",
+					text = "This is a Text");
+			}
+
+			task ("Provide a translation for that web content title and text in any non-default language") {
+				PortletEntry.changeLocale(locale = "zh-CN");
+
+				PortletEntry.inputTitle(title = "WC 标题");
+
+				PortletEntry.inputText(
+					fieldLabel = "Text",
+					text = "这是一个文本");
+
+				PortletEntry.publish();
+			}
+
+			task ("On any site, create a Display Page Template for that Web Content Structure and mark it as default") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					globalStructure = "true",
+					groupName = "Test Site Name",
+					statusKey = "APPROVED",
+					subType = "WC Structure Name");
+
+				JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+					groupName = "Test Site Name",
+					layoutPageTemplateEntryName = "Display Page Name",
+					type = "Display Page Template");
+			}
+
+			task ("On any page on that site, drop an Asset Publisher that lists that global Web Content") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "Asset Publisher");
+
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				AssetPublisherPortlet.configureScope(globalSite = "Global");
+			}
+		}
+
+		task ("When change the locale") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "zh/web/test-site-name/test-page-name");
+		}
+
+		task ("Then user is able to click and view web content on the Display Page Template") {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC 标题");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "WC 标题");
+		}
+	}
+
 	@description = "This is a use case for LPS-110938. The localized Friendly URL of WC is shown in WCD when select template with Friendly URL field and it is displayed in DPT."
 	@priority = "3"
 	test ViewLocalizedFriendlyURLInWCD {

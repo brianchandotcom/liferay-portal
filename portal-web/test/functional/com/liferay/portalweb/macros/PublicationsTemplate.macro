@@ -62,6 +62,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deletePublicationTemplate {
+		Click(
+			key_templateName = "${templateName}",
+			locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
+
+		MenuItem.click(menuItem = "Delete");
+	}
+
 	macro expandPublicationCollaborators {
 		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED")) {
 			Click(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED");
@@ -114,6 +122,14 @@ definition {
 			key_templateName = "${templateName}",
 			locator1 = "PublicationsTemplate#TEMPLATE_NAME_IN_PUBLICATION_TEMPLATE",
 			value1 = "${templateName}");
+	}
+
+	macro viewPublicationTemplateNotPresent {
+		PublicationsTemplate.gotoPublicationTemplate();
+
+		AssertElementNotPresent(
+			key_templateName = "${templateName}",
+			locator1 = "PublicationsTemplate#TEMPLATE_NAME_IN_PUBLICATION_TEMPLATE");
 	}
 
 }

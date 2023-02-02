@@ -187,6 +187,12 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
+	macro saveVariant {
+		Click(
+			key_text = "Save Variant",
+			locator1 = "Button#ANY");
+	}
+
 	macro selectElementID {
 		if (!(isSet(key_index))) {
 			var key_index = "1";

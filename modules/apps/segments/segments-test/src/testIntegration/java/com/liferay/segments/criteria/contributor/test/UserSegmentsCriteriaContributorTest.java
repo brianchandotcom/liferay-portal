@@ -21,6 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -46,6 +48,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
+import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.field.Field;
 
@@ -130,6 +133,42 @@ public class UserSegmentsCriteriaContributorTest {
 			PortalUtil.getClassNameId(User.class), "CUSTOM_FIELDS");
 
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetCriteriaJSONObject() throws Exception {
+		SegmentsCriteriaContributor segmentsCriteriaContributor =
+			_getSegmentsCriteriaContributor();
+
+		Criteria criteria = new Criteria();
+
+		segmentsCriteriaContributor.contribute(
+			criteria, "(lastName eq 'Xing')", Criteria.Conjunction.AND);
+
+		JSONObject jsonObject =
+			segmentsCriteriaContributor.getCriteriaJSONObject(criteria);
+
+		Assert.assertEquals(
+			String.valueOf(Criteria.Conjunction.AND),
+			jsonObject.getString("conjunctionName"));
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"conjunctionName", String.valueOf(Criteria.Conjunction.AND)
+			).put(
+				"groupId", "group_0"
+			).put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"operatorName", "eq"
+					).put(
+						"propertyName", "lastName"
+					).put(
+						"value", "Xing"
+					))
+			).toString(),
+			String.valueOf(jsonObject.getString("query")));
 	}
 
 	@Test

@@ -14,13 +14,12 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessorImportResultEntry;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
@@ -44,18 +43,18 @@ public class ImportStyleBookDisplayContext {
 			return null;
 		}
 
-		Stream<StyleBookEntryZipProcessorImportResultEntry> stream =
-			styleBookEntryZipProcessorImportResultEntries.stream();
+		return TransformUtil.transform(
+			styleBookEntryZipProcessorImportResultEntries,
+			styleBookEntryZipProcessorImportResultEntry -> {
+				if (styleBookEntryZipProcessorImportResultEntry.getStatus() ==
+						status) {
 
-		return stream.filter(
-			styleBookEntryZipProcessorImportResultEntry ->
-				styleBookEntryZipProcessorImportResultEntry.getStatus() ==
-					status
-		).map(
-			StyleBookEntryZipProcessorImportResultEntry::getName
-		).collect(
-			Collectors.toList()
-		);
+					return styleBookEntryZipProcessorImportResultEntry.
+						getName();
+				}
+
+				return null;
+			});
 	}
 
 	private List<StyleBookEntryZipProcessorImportResultEntry>

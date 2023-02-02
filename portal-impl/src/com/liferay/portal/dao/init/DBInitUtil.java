@@ -122,7 +122,7 @@ public class DBInitUtil {
 			if (!resultSet.next()) {
 				_addReleaseInfo(connection);
 
-				StartupHelperUtil.setDbNew(true);
+				_setDbNew();
 			}
 
 			return true;
@@ -153,22 +153,7 @@ public class DBInitUtil {
 
 		_addReleaseInfo(connection);
 
-		StartupHelperUtil.setDbNew(true);
-
-		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
-
-		serviceLatch.waitFor(
-			DependencyManagerSync.class,
-			dependencyManagerSync -> dependencyManagerSync.registerSyncCallable(
-				() -> {
-					StartupHelperUtil.setDbNew(false);
-
-					return null;
-				}));
-
-		serviceLatch.openOn(
-			() -> {
-			});
+		_setDbNew();
 	}
 
 	private static boolean _hasDefaultReleaseWithTestString(
@@ -272,6 +257,25 @@ public class DBInitUtil {
 				classLoader.getResourceAsStream(
 					"com/liferay/portal/tools/sql/dependencies/".concat(path))),
 			false);
+	}
+
+	private static void _setDbNew() {
+		StartupHelperUtil.setDbNew(true);
+
+		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
+
+		serviceLatch.waitFor(
+			DependencyManagerSync.class,
+			dependencyManagerSync -> dependencyManagerSync.registerSyncCallable(
+				() -> {
+					StartupHelperUtil.setDbNew(false);
+
+					return null;
+				}));
+
+		serviceLatch.openOn(
+			() -> {
+			});
 	}
 
 	private static void _setSupportsStringCaseSensitiveQuery(

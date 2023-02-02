@@ -387,6 +387,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162765. The page designer could preview a 404 error type of utility page."
+	@priority = "5"
+	test Preview404ErrorUtilityPage {
+		task ("Given a page designer has a draft 404 error utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+
+		task ("When the page designer navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the page designer could preview the draft utility page") {
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Preview",
+				pageName = "404 Error Utility Page");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+
+		task ("When the page designer publishes the utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error Utility Page");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer could preview the published utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Preview",
+				pageName = "404 Error Utility Page");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+		}
+
+		task ("When the page designer makes some changes on the utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Then the page designer could preview the latest draft of utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Preview",
+				pageName = "404 Error Utility Page");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+		}
+	}
+
 	@description = "This is a test for LPS-162767. The page designer could unmark a 404 error type of utility page as default."
 	@priority = "4"
 	test Unmark404ErrorUtilityPageAsDefault {

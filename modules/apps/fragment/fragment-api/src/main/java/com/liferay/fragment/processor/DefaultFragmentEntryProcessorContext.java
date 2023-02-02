@@ -15,11 +15,13 @@
 package com.liferay.fragment.processor;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -98,6 +100,33 @@ public class DefaultFragmentEntryProcessorContext
 	@Override
 	public long[] getSegmentsEntryIds() {
 		return _segmentsEntryIds;
+	}
+
+	@Override
+	public boolean isEditMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.EDIT)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isIndexMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.INDEX)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isViewMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.VIEW)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void setContextInfoItemReference(

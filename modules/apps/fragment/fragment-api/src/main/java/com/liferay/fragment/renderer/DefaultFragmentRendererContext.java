@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Jorge Ferrer
@@ -90,8 +91,35 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	}
 
 	@Override
+	public boolean isEditMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.EDIT)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isIndexMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.INDEX)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isUseCachedContent() {
 		return _useCachedContent;
+	}
+
+	@Override
+	public boolean isViewMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.VIEW)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void setContextInfoItemReference(

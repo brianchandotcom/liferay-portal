@@ -50,6 +50,12 @@ public interface FragmentRendererContext {
 
 	public long[] getSegmentsEntryIds();
 
+	public boolean isEditMode();
+
+	public boolean isIndexMode();
+
 	public boolean isUseCachedContent();
+
+	public boolean isViewMode();
 
 }

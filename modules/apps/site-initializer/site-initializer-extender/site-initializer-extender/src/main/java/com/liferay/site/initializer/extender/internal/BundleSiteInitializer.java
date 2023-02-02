@@ -827,6 +827,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SiteInitializerUtil.read(
 				resourcePath + "page.json", _servletContext));
 
+		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
+
+		if (Objects.equals(type, "url")) {
+			return;
+		}
+		else if (Objects.equals(type, "widget")) {
+			type = LayoutConstants.TYPE_PORTLET;
+		}
+
 		String json = SiteInitializerUtil.read(
 			resourcePath + "page-definition.json", _servletContext);
 
@@ -856,15 +865,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
-
-		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
-
-		if (Objects.equals(type, "url")) {
-			return;
-		}
-		else if (Objects.equals(type, "widget")) {
-			type = LayoutConstants.TYPE_PORTLET;
-		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

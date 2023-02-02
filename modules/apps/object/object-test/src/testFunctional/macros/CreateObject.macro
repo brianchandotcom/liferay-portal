@@ -145,12 +145,6 @@ definition {
 			locator1 = "CreateObject#FIELD_VALUE");
 	}
 
-	macro assertObjectDefinitionName {
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_DEFINITION_NAME",
-			value1 = "${objectName}");
-	}
-
 	macro assertObjectFieldNameIsAutofilled {
 		LexiconEntry.gotoAdd();
 

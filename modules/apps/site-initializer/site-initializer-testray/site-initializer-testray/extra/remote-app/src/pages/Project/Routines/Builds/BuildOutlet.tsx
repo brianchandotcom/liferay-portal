@@ -109,7 +109,7 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 				},
 			]);
 		}
-	}, [setHeading, testrayProject, testrayRoutine, testrayBuild]);
+	}, [setHeading, testrayProject, testrayRoutine, testrayBuild, pathname]);
 
 	useEffect(() => {
 		if (!isCurrentPathIgnored) {

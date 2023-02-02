@@ -201,6 +201,7 @@ const TestrayRoute = () => (
 											<BuildOutlet
 												ignorePaths={[
 													'case-result',
+													'testflow/create',
 													'update',
 												]}
 											/>
@@ -208,6 +209,11 @@ const TestrayRoute = () => (
 										path="build/:buildId"
 									>
 										<Route element={<Build />} index />
+
+										<Route
+											element={<TestflowForm />}
+											path="testflow/create"
+										/>
 
 										<Route
 											element={<BuildForm />}

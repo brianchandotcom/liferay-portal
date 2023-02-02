@@ -21,6 +21,7 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.highlight.Highlight;
+import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.rescore.Rescore;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -101,6 +102,10 @@ public abstract class BaseSearchRequest extends CrossClusterRequest {
 
 	public Map<String, PipelineAggregation> getPipelineAggregationsMap() {
 		return Collections.unmodifiableMap(_pipelineAggregationsMap);
+	}
+
+	public PointInTime getPointInTime() {
+		return _pointInTime;
 	}
 
 	public Filter getPostFilter() {
@@ -219,6 +224,10 @@ public abstract class BaseSearchRequest extends CrossClusterRequest {
 		_minimumScore = minimumScore;
 	}
 
+	public void setPointInTime(PointInTime pointInTime) {
+		_pointInTime = pointInTime;
+	}
+
 	public void setPostFilter(Filter postFilter) {
 		_postFilter = postFilter;
 	}
@@ -282,6 +291,7 @@ public abstract class BaseSearchRequest extends CrossClusterRequest {
 	private Float _minimumScore;
 	private final Map<String, PipelineAggregation> _pipelineAggregationsMap =
 		new LinkedHashMap<>();
+	private PointInTime _pointInTime;
 	private Filter _postFilter;
 	private final List<ComplexQueryPart> _postFilterComplexQueryParts =
 		new ArrayList<>();

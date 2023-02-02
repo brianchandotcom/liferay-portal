@@ -106,6 +106,10 @@ public class SearchSearchRequest
 		return _scoreEnabled;
 	}
 
+	public Object[] getSearchAfter() {
+		return _searchAfter;
+	}
+
 	public String[] getSelectedFieldNames() {
 		return _selectedFieldNames;
 	}
@@ -250,6 +254,10 @@ public class SearchSearchRequest
 		_scoreEnabled = scoreEnabled;
 	}
 
+	public void setSearchAfter(Object[] searchAfter) {
+		_searchAfter = searchAfter;
+	}
+
 	public void setSelectedFieldNames(String... selectedFieldNames) {
 		_selectedFieldNames = selectedFieldNames;
 	}
@@ -305,6 +313,7 @@ public class SearchSearchRequest
 	private boolean _luceneSyntax;
 	private String _preference;
 	private Boolean _scoreEnabled;
+	private Object[] _searchAfter;
 	private String[] _selectedFieldNames;
 	private Integer _size;
 	private List<Sort> _sorts = new ArrayList<>();

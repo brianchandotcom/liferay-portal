@@ -30,7 +30,7 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message='<%= LanguageUtil.get(resourceBundle, "show-actions-for-" + name.toLowerCase().replace(" ", "-")) %>'
+	message='<%= LanguageUtil.format(request, "show-actions-for-x", role.getTitle(locale)) %>'
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass="lfr-portal-tooltip"
 >

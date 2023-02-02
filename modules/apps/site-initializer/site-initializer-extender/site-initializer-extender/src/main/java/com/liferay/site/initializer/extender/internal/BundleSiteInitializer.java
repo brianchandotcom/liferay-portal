@@ -857,13 +857,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
 
-		if (Objects.equals(type, "widget")) {
+		if (Objects.equals(type, "url")) {
+			return;
+		}
+		else if (Objects.equals(type, "widget")) {
 			type = LayoutConstants.TYPE_PORTLET;
 		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
 			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
@@ -2258,23 +2261,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				siteDefaultLocale, jsonObject.getString("friendlyURL"));
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			serviceContext.getScopeGroupId(), jsonObject.getBoolean("private"),
-			jsonObject.getString("friendlyURL"));
-
-		if (layout != null) {
-			_layoutLocalService.deleteLayout(layout);
-		}
-
-		layout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			jsonObject.getBoolean("private"), parentLayoutId, nameMap,
-			SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("description_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("keywords_i18n")),
-			SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
-			type, null, jsonObject.getBoolean("hidden"),
-			jsonObject.getBoolean("system"), friendlyURLMap, serviceContext);
+		String typeSettings = null;
 
 		JSONArray typeSettingsJSONArray = jsonObject.getJSONArray(
 			"typeSettings");
@@ -2291,10 +2278,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 					propertyJSONObject.getString("value"));
 			}
 
-			layout = _layoutLocalService.updateLayout(
-				serviceContext.getScopeGroupId(), false, layout.getLayoutId(),
-				unicodeProperties.toString());
+			typeSettings = unicodeProperties.toString();
 		}
+
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			serviceContext.getScopeGroupId(), jsonObject.getBoolean("private"),
+			jsonObject.getString("friendlyURL"));
+
+		if (layout != null) {
+			_layoutLocalService.deleteLayout(layout);
+		}
+
+		layout = _layoutLocalService.addLayout(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			jsonObject.getBoolean("private"), parentLayoutId, nameMap,
+			SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("description_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("keywords_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
+			type, typeSettings, jsonObject.getBoolean("hidden"),
+			jsonObject.getBoolean("system"), friendlyURLMap, serviceContext);
 
 		_setResourcePermissions(
 			layout.getCompanyId(), layout.getModelClassName(),

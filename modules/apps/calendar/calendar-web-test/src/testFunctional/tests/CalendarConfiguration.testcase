@@ -292,7 +292,7 @@ definition {
 
 		CalendarEvent.viewTimesViaDetails(
 			endDateTime = "11:00 PM",
-			startDateTime = "January 4, 2023, 09:00 PM");
+			startDateTime = "9:00 PM");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

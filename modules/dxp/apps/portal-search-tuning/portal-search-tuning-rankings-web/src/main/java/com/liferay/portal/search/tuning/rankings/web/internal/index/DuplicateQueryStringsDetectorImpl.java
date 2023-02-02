@@ -80,10 +80,10 @@ public class DuplicateQueryStringsDetectorImpl
 
 		List<String> duplicateQueryStrings = new ArrayList<>();
 
-		TransformUtil.transform(
-			searchHits.getSearchHits(),
-			searchHit -> duplicateQueryStrings.addAll(
-				_getDuplicateQueryStrings(searchHit, queryStrings)));
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			duplicateQueryStrings.addAll(
+				_getDuplicateQueryStrings(searchHit, queryStrings));
+		}
 
 		return duplicateQueryStrings;
 	}

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -179,10 +178,9 @@ public class Ranking {
 			if (pins != null) {
 				Set<String> documentIds = new LinkedHashSet<>();
 
-				TransformUtil.transform(
-					pins, pin -> documentIds.add(pin.getDocumentId()));
+				pins.forEach(pin -> documentIds.add(pin.getDocumentId()));
 
-				_ranking._pinnedDocumentIds = new LinkedHashSet<>(documentIds);
+				_ranking._pinnedDocumentIds = documentIds;
 
 				_ranking._pins = pins;
 			}

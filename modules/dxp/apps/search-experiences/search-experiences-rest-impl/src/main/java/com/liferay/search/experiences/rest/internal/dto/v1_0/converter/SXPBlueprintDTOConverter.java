@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -68,8 +69,10 @@ public class SXPBlueprintDTOConverter
 				configuration = _toConfiguration(
 					sxpBlueprint.getConfigurationJSON());
 				createDate = sxpBlueprint.getCreateDate();
-				description = sxpBlueprint.getDescription(
-					dtoConverterContext.getLocale());
+				description = _language.get(
+					dtoConverterContext.getLocale(),
+					sxpBlueprint.getDescription(
+						dtoConverterContext.getLocale()));
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpBlueprint.getDescriptionMap());
@@ -79,7 +82,9 @@ public class SXPBlueprintDTOConverter
 				id = sxpBlueprint.getSXPBlueprintId();
 				modifiedDate = sxpBlueprint.getModifiedDate();
 				schemaVersion = sxpBlueprint.getSchemaVersion();
-				title = sxpBlueprint.getTitle(dtoConverterContext.getLocale());
+				title = _language.get(
+					dtoConverterContext.getLocale(),
+					sxpBlueprint.getTitle(dtoConverterContext.getLocale()));
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpBlueprint.getTitleMap());
@@ -144,6 +149,9 @@ public class SXPBlueprintDTOConverter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintDTOConverter.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

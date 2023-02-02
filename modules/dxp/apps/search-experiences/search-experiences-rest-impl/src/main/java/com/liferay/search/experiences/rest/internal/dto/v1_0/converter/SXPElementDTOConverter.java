@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -64,8 +65,9 @@ public class SXPElementDTOConverter
 		return new SXPElement() {
 			{
 				createDate = sxpElement.getCreateDate();
-				description = sxpElement.getDescription(
-					dtoConverterContext.getLocale());
+				description = _language.get(
+					dtoConverterContext.getLocale(),
+					sxpElement.getDescription(dtoConverterContext.getLocale()));
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpElement.getDescriptionMap());
 				elementDefinition = _toElementDefinition(
@@ -75,7 +77,9 @@ public class SXPElementDTOConverter
 				modifiedDate = sxpElement.getModifiedDate();
 				readOnly = sxpElement.getReadOnly();
 				schemaVersion = sxpElement.getSchemaVersion();
-				title = sxpElement.getTitle(dtoConverterContext.getLocale());
+				title = _language.get(
+					dtoConverterContext.getLocale(),
+					sxpElement.getTitle(dtoConverterContext.getLocale()));
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpElement.getTitleMap());
 				type = sxpElement.getType();
@@ -100,6 +104,9 @@ public class SXPElementDTOConverter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPElementDTOConverter.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;

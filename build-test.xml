@@ -2285,6 +2285,47 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-app-server-configuration">
+		<sequential>
+			<get-browser-property property.name="browser.docker.image" />
+
+			<if>
+				<and>
+					<isset property="browser.docker.image" />
+					<isset property="env.JENKINS_HOME" />
+					<or>
+						<equals arg1="${app.server.type}" arg2="jboss" />
+						<equals arg1="${app.server.type}" arg2="wildfly" />
+					</or>
+				</and>
+				<then>
+					<replace
+						file="${app.server.dir}/standalone/configuration/standalone.xml"
+					>
+						<replacefilter>
+							<replacetoken><![CDATA[<inet-address value="${jboss.bind.address:127.0.0.1}"/>]]></replacetoken>
+							<replacevalue><![CDATA[<any-address />]]></replacevalue>
+						</replacefilter>
+					</replace>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="testcase.url" />
+
+			<if>
+				<contains string="${testcase.url}" substring=":1]" />
+				<then>
+					<replace
+						file="${app.server.bin.dir}/setenv${file.suffix.bat}"
+					>
+						<replacetoken><![CDATA[-Djava.net.preferIPv4Stack=true]]></replacetoken>
+						<replacevalue><![CDATA[-Djava.net.preferIPv4Stack=false]]></replacevalue>
+					</replace>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-aws-s3-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config">
@@ -8609,36 +8650,6 @@ go</echo>
 		</if>
 	</target>
 
-	<target name="check-inet-address">
-		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
-			<then>
-				<exec executable="/bin/bash" outputproperty="inet.address">
-					<arg value="-c" />
-					<arg value="ifconfig eth0:0 | grep 'inet ' | sed -e 's/^[[:space:]]* inet \(addr:\)\?\([0-9\.]\+\).*/\2/'" />
-				</exec>
-
-				<if>
-					<equals arg1="${inet.address}" arg2="127.0.0.1" />
-					<then>
-						<replace
-							file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
-						>
-							<replacefilter>
-								<replacetoken><![CDATA[<inet-address value="${jboss.bind.address:127.0.0.1}"/>]]></replacetoken>
-								<replacevalue><![CDATA[<nic name="eth0:0" />]]></replacevalue>
-							</replacefilter>
-							<replacefilter>
-								<replacetoken><![CDATA[<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>]]></replacetoken>
-								<replacevalue><![CDATA[<nic name="eth0:0" />]]></replacevalue>
-							</replacefilter>
-						</replace>
-					</then>
-				</if>
-			</then>
-		</if>
-	</target>
-
 	<target name="clean-app-server-deploy-dir">
 		<delete failonerror="false" includeemptydirs="true">
 			<fileset
@@ -10793,22 +10804,6 @@ ${update.properties}</echo>
 			<else>
 				<echo>Please convert encryption certificate manually.</echo>
 			</else>
-		</if>
-	</target>
-
-	<target name="prepare-ip-address-update">
-		<get-testcase-property property.name="testcase.url" />
-
-		<if>
-			<contains string="${testcase.url}" substring=":1]" />
-			<then>
-				<replace
-					file="${app.server.bin.dir}/setenv${file.suffix.bat}"
-				>
-					<replacetoken><![CDATA[-Djava.net.preferIPv4Stack=true]]></replacetoken>
-					<replacevalue><![CDATA[-Djava.net.preferIPv4Stack=false]]></replacevalue>
-				</replace>
-			</then>
 		</if>
 	</target>
 
@@ -14524,9 +14519,7 @@ mail.send.blacklist=</echo>
 			</else>
 		</if>
 
-		<antcall target="prepare-ip-address-update" />
-
-		<antcall target="check-inet-address" />
+		<prepare-app-server-configuration />
 
 		<antcall target="create-hidden-osgi-file" />
 

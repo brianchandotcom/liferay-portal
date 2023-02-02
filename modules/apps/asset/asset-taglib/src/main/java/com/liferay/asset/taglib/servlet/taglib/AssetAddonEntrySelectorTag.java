@@ -17,14 +17,13 @@ package com.liferay.asset.taglib.servlet.taglib;
 import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -126,11 +125,10 @@ public class AssetAddonEntrySelectorTag extends IncludeTag {
 	}
 
 	private List<AssetAddonEntry> _getFilteredSelectedAssetAddonEntries() {
-		Stream<AssetAddonEntry> stream = _selectedAssetAddonEntries.stream();
-
-		stream = stream.filter(_assetAddonEntries::contains);
-
-		return stream.collect(Collectors.toList());
+		return ListUtil.filter(
+			_selectedAssetAddonEntries,
+			selectedAssetAddonEntry -> _assetAddonEntries.contains(
+				(AssetAddonEntry)selectedAssetAddonEntry));
 	}
 
 	private static final String _PAGE = "/asset_addon_entry_selector/page.jsp";

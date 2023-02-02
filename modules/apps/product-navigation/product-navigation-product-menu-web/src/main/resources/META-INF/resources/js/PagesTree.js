@@ -18,7 +18,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 const ACTION_COPY_PAGE = 'copy-page';
 const ACTION_DELETE = 'delete';
@@ -131,7 +131,7 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 	const itemAnchorRef = useRef(null);
 
 	return (
-		<TreeItemChild
+		<ClayTreeView.Item
 			actions={
 				!config.stagingEnabled &&
 				item.actions && (
@@ -149,8 +149,6 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 					/>
 				)
 			}
-			item={item}
-			selectedLayoutId={selectedLayoutId}
 		>
 			<ClayTreeView.ItemStack
 				active={selectedLayoutId === item.id ? 'true' : null}
@@ -184,7 +182,7 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 
 			<ClayTreeView.Group items={item.children}>
 				{(item) => (
-					<TreeItemChild
+					<ClayTreeView.Item
 						actions={
 							!config.stagingEnabled && (
 								<ClayDropDownWithItems
@@ -206,7 +204,6 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 						}
 						active={selectedLayoutId === item.id ? 'true' : null}
 						expandable={item.hasChildren}
-						item={item}
 						onKeyDown={(event) => {
 							if (
 								event.keyCode === ENTER_KEYCODE &&
@@ -215,7 +212,6 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 								itemAnchorRef.current.click();
 							}
 						}}
-						selectedLayoutId={selectedLayoutId}
 					>
 						{item.icon && <ClayIcon symbol={item.icon} />}
 
@@ -236,7 +232,7 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 								<span>{item.name}</span>
 							)}
 						</div>
-					</TreeItemChild>
+					</ClayTreeView.Item>
 				)}
 			</ClayTreeView.Group>
 
@@ -252,7 +248,7 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 						{Liferay.Language.get('load-more-results')}
 					</ClayButton>
 				)}
-		</TreeItemChild>
+		</ClayTreeView.Item>
 	);
 }
 
@@ -263,22 +259,6 @@ TreeItem.propTypes = {
 	namespace: PropTypes.string.isRequired,
 	selectedLayoutId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
-
-function TreeItemChild({item, selectedLayoutId, ...props}) {
-	const itemRef = useRef(null);
-
-	useEffect(() => {
-		if (item.id === selectedLayoutId && itemRef.current) {
-			itemRef.current.scrollIntoView({
-				behavior: 'auto',
-				block: 'center',
-				inline: 'center',
-			});
-		}
-	}, [item.id, selectedLayoutId]);
-
-	return <ClayTreeView.Item {...props} ref={itemRef} />;
-}
 
 function normalizeActions(actions, namespace) {
 	return actions.map((group) => ({

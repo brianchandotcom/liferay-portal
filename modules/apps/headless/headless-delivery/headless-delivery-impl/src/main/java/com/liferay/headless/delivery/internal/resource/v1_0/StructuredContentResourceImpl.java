@@ -536,9 +536,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					_getAssetTags(journalArticle, structuredContent),
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
+					_getAssetTags(journalArticle, structuredContent),
 					journalArticle.getGroupId(), structuredContent)));
 	}
 
@@ -753,13 +753,13 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					structuredContent.getKeywords(),
 					structuredContent.getTaxonomyCategoryIds(), priority,
-					groupId, structuredContent)));
+					structuredContent.getKeywords(), groupId,
+					structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
-		String[] assetTags, Long[] assetCategoryIds, double assetPriority,
+		Long[] assetCategoryIds, double assetPriority, String[] assetTags,
 		long groupId, StructuredContent structuredContent) {
 
 		ServiceContext serviceContext =
@@ -1253,9 +1253,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					_getAssetTags(journalArticle, structuredContent),
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
+					_getAssetTags(journalArticle, structuredContent),
 					journalArticle.getGroupId(), structuredContent)));
 	}
 

@@ -163,9 +163,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (!_hasPermission(httpServletRequest, className, displayObject)) {
-			FragmentRendererUtil.printPortletMessageInfo(
-				httpServletRequest, httpServletResponse,
-				"you-do-not-have-permission-to-access-the-requested-resource");
+			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+				FragmentRendererUtil.printRestrictedContentMessage(
+					httpServletRequest, httpServletResponse);
+			}
 
 			return;
 		}

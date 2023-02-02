@@ -49,6 +49,8 @@ public interface SearchHitBuilder {
 
 	public SearchHitBuilder score(float score);
 
+	public SearchHitBuilder sortValues(Object[] sortValues);
+
 	public SearchHitBuilder version(long version);
 
 }

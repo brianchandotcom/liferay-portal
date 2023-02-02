@@ -279,4 +279,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162767. The page designer could unmark a 404 error type of utility page as default."
+	@priority = "4"
+	test Unmark404ErrorUtilityPageAsDefault {
+		task ("Given a page designer has a default 404 error utility page and a static page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Mark as Default",
+				pageName = "404 Error Utility Page");
+
+			Alert.viewSuccessMessage();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the page designer unmarks the 404 error utility page as default") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Unmark as Default",
+				pageName = "404 Error Utility Page");
+
+			Confirm();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page designer can see the default 404 page") {
+			Navigator.openSitePage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+		}
+	}
+
 }

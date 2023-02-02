@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -163,6 +165,17 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (!_hasPermission(httpServletRequest, className, displayObject)) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-169923"))) {
+
+				FragmentRendererUtil.printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"you-do-not-have-permission-to-access-the-requested-" +
+						"resource");
+
+				return;
+			}
+
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
 				FragmentRendererUtil.printRestrictedContentMessage(
 					httpServletRequest, httpServletResponse);

@@ -242,12 +242,18 @@ definition {
 		}
 
 		task ("View the type of collection page") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "ControlMenu#PAGE_TYPE",
-				value1 = "Collection Page");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			PagesAdmin.viewPageType(
+				pageName = "Collection Page Name 1",
+				pageType = "Collection Page");
 		}
 
 		task ("View the dynamic collection name shown in Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Collection Page Name 1",
+				siteName = "Test Site Name Staging");
+
 			PageEditor.viewFragmentEditableText(
 				editableText = "Dynamic Collection",
 				fragmentName = "Heading",
@@ -280,12 +286,18 @@ definition {
 		}
 
 		task ("View the type of collection page") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "ControlMenu#PAGE_TYPE",
-				value1 = "Collection Page");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			PagesAdmin.viewPageType(
+				pageName = "Collection Page Name 2",
+				pageType = "Collection Page");
 		}
 
 		task ("View the Most Viewed Assets shown in Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Collection Page Name 2",
+				siteName = "Test Site Name Staging");
+
 			PageEditor.viewFragmentEditableText(
 				editableText = "Most Viewed Assets",
 				fragmentName = "Heading",

@@ -64,9 +64,15 @@ definition {
 				pageName = "Test Collection Page Name 1",
 				tabName = "Collections");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "ControlMenu#PAGE_TYPE",
-				value1 = "Collection Page");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			PagesAdmin.viewPageType(
+				pageName = "Test Collection Page Name 1",
+				pageType = "Collection Page");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Collection Page Name 1",
+				siteName = "Test Site Name Staging");
 
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'Dynamic Collection') and contains(@id,'fragment-')]",
@@ -86,6 +92,8 @@ definition {
 				var n = ${n} + 1;
 			}
 
+			PagesFinder.goToPagesFinder();
+
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 
@@ -97,9 +105,15 @@ definition {
 				pageName = "Test Collection Page Name 2",
 				tabName = "Collection Providers");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "ControlMenu#PAGE_TYPE",
-				value1 = "Collection Page");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			PagesAdmin.viewPageType(
+				pageName = "Test Collection Page Name 2",
+				pageType = "Collection Page");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Collection Page Name 2",
+				siteName = "Test Site Name Staging");
 
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'Most Viewed Assets') and contains(@id,'fragment-')]",
@@ -118,6 +132,8 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			PagesFinder.goToPagesFinder();
 
 			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 2*");
 		}

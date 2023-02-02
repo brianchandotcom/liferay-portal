@@ -50,10 +50,9 @@ definition {
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.addRegularInCustomSite(
-			eventTitle = "Publication Calendar Event Title",
-			pageName = "Calendar Page",
-			siteName = "Site Name");
+		CalendarEvent.editTitle(eventTitle = "Publication Calendar Event Title");
+
+		CalendarEvent.publish();
 
 		Navigator.openSitePage(
 			pageName = "Calendar Page",
@@ -117,14 +116,17 @@ definition {
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.addRegularInCustomSite(
-			eventTitle = "Publication Calendar Event Title",
-			pageName = "Calendar Page",
-			siteName = "Site Name");
+		CalendarEvent.editTitle(eventTitle = "Publication Calendar Event Title");
+
+		CalendarEvent.publish();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Calendar Page",
+			siteName = "Site Name");
 
 		CalendarNavigator.gotoEditEvent(eventTitle = "Publication Calendar Event Title");
 

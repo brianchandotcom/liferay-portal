@@ -16,7 +16,6 @@ package com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.IdsQuery;
@@ -40,9 +39,10 @@ public class RankingSearchRequestHelper {
 	public void contribute(
 		SearchRequestBuilder searchRequestBuilder, Ranking ranking) {
 
-		List<ComplexQueryPart> complexQueryParts = ListUtil.concat(
-			_getPinnedDocumentIdsQueryParts(ranking),
-			ListUtil.fromArray(_getHiddenDocumentIdsQueryPart(ranking)));
+		List<ComplexQueryPart> complexQueryParts =
+			_getPinnedDocumentIdsQueryParts(ranking);
+
+		complexQueryParts.add(_getHiddenDocumentIdsQueryPart(ranking));
 
 		complexQueryParts.forEach(searchRequestBuilder::addComplexQueryPart);
 	}

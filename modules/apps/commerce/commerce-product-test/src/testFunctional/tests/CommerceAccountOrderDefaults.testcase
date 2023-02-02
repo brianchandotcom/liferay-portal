@@ -974,13 +974,13 @@ definition {
 		}
 
 		task ("and the default delivery term is deactivated") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Delivery Term 2");
+				termsAndConditionsName = "Delivery Term 2");
 
-			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+			CommercePaymentTerms.editTermsAndConditions(deactivate = "true");
 		}
 
 		task ("When a buyer checks out an order and view order details") {
@@ -1074,13 +1074,13 @@ definition {
 		}
 
 		task ("and the default payment term is deactivated") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Payment Term 2");
+				termsAndConditionsName = "Payment Term 2");
 
-			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+			CommercePaymentTerms.editTermsAndConditions(deactivate = "true");
 		}
 
 		task ("When a buyer checks out an order and view order details") {
@@ -2580,13 +2580,13 @@ definition {
 		}
 
 		task ("and a fourth delivery term set to inactive") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Delivery Term 4");
+				termsAndConditionsName = "Delivery Term 4");
 
-			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+			CommercePaymentTerms.editTermsAndConditions(deactivate = "true");
 		}
 
 		task ("and the delivery term is set as the default for the Account") {
@@ -3063,13 +3063,13 @@ definition {
 		}
 
 		task ("and a fourth payment term set to inactive") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Payment Term 4");
+				termsAndConditionsName = "Payment Term 4");
 
-			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+			CommercePaymentTerms.editTermsAndConditions(deactivate = "true");
 		}
 
 		task ("and the payment term is set as the default for the Account") {
@@ -3372,13 +3372,13 @@ definition {
 		}
 
 		task ("and a fourth delivery term set to inactive") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Delivery Term 4");
+				termsAndConditionsName = "Delivery Term 4");
 
-			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+			CommercePaymentTerms.editTermsAndConditions(deactivate = "true");
 		}
 
 		task ("and the delivery term is set as the default for the Account") {
@@ -3491,13 +3491,13 @@ definition {
 		}
 
 		task ("and a fourth payment term set to inactive") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
+			CommercePaymentTerms.openTermsAndConditionsAdmin();
 
 			CommercePaymentTerms.gotoEntryMenuItem(
 				menuItem = "Edit",
-				termsAndConditionName = "Payment Term 4");
+				termsAndConditionsName = "Payment Term 4");
 
-			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+			CommercePaymentTerms.editTermsAndConditions(deactivate = "true");
 		}
 
 		task ("and the payment term is set as the default for the Account") {

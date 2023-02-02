@@ -1517,7 +1517,7 @@ definition {
 
 			CreateObject.assertAccountRestrictedFieldDisabled(valueName = "Choose an Option");
 
-			CreateObject.viewToogleAccountRestrictionDisabled();
+			AssertElementPresent(locator1 = "CreateObject#TOGGLE_ACCOUNT_RESTRICTION_DISABLED");
 		}
 	}
 

@@ -420,10 +420,6 @@ definition {
 			locator1 = "CreateObject#VIEW_OBJECT");
 	}
 
-	macro viewToogleAccountRestrictionDisabled {
-		AssertElementPresent(locator1 = "CreateObject#TOGGLE_ACCOUNT_RESTRICTION_DISABLED");
-	}
-
 	macro withdrawObjectTask {
 		Click(
 			key_taskName = "${objectName}",

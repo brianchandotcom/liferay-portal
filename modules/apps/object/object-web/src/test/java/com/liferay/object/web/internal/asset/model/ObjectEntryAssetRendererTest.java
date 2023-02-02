@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.asset.model;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -49,7 +50,8 @@ public class ObjectEntryAssetRendererTest {
 		);
 
 		AssetRenderer<ObjectEntry> assetRenderer = new ObjectEntryAssetRenderer(
-			_objectDefinition, _objectEntry, _objectEntryDisplayContextFactory,
+			_assetDisplayPageFriendlyURLProvider, _objectDefinition,
+			_objectEntry, _objectEntryDisplayContextFactory,
 			_objectEntryService);
 
 		Assert.assertFalse(assetRenderer.hasViewPermission(_permissionChecker));
@@ -67,7 +69,8 @@ public class ObjectEntryAssetRendererTest {
 		);
 
 		AssetRenderer<ObjectEntry> assetRenderer = new ObjectEntryAssetRenderer(
-			_objectDefinition, _objectEntry, _objectEntryDisplayContextFactory,
+			_assetDisplayPageFriendlyURLProvider, _objectDefinition,
+			_objectEntry, _objectEntryDisplayContextFactory,
 			_objectEntryService);
 
 		Assert.assertFalse(assetRenderer.hasViewPermission(_permissionChecker));
@@ -85,12 +88,16 @@ public class ObjectEntryAssetRendererTest {
 		);
 
 		AssetRenderer<ObjectEntry> assetRenderer = new ObjectEntryAssetRenderer(
-			_objectDefinition, _objectEntry, _objectEntryDisplayContextFactory,
+			_assetDisplayPageFriendlyURLProvider, _objectDefinition,
+			_objectEntry, _objectEntryDisplayContextFactory,
 			_objectEntryService);
 
 		Assert.assertTrue(assetRenderer.hasViewPermission(_permissionChecker));
 	}
 
+	private final AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider = Mockito.mock(
+			AssetDisplayPageFriendlyURLProvider.class);
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
 	private final ObjectEntry _objectEntry = Mockito.mock(ObjectEntry.class);

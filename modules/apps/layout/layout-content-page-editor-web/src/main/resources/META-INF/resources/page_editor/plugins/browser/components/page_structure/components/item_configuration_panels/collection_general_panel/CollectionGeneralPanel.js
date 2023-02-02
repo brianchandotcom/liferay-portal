@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
@@ -83,6 +84,7 @@ export function CollectionGeneralPanel({item}) {
 		listStyle === LIST_STYLES.flexColumn ||
 		listStyle === LIST_STYLES.flexRow;
 
+	const restrictedItemIds = new Set(config.restrictedItemIds);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
@@ -295,6 +297,19 @@ export function CollectionGeneralPanel({item}) {
 			setCollectionConfiguration(null);
 		}
 	}, [collection]);
+
+	if (
+		Liferay.FeatureFlags['LPS-169923'] &&
+		restrictedItemIds.has(item.itemId)
+	) {
+		return (
+			<ClayAlert displayType="secondary" role={null}>
+				{Liferay.Language.get(
+					'this-content-cannot-be-displayed-due-to-permission-restrictions'
+				)}
+			</ClayAlert>
+		);
+	}
 
 	return (
 		<>

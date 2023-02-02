@@ -719,7 +719,7 @@ public class JenkinsResultsParserUtil {
 			command, baseDir, environments, maxLogSize, true);
 	}
 
-	public static void executeJenkinsScript(
+	public static String executeJenkinsScript(
 		String jenkinsMasterName, String script) {
 
 		try {
@@ -779,13 +779,26 @@ public class JenkinsResultsParserUtil {
 
 			if (responseCode >= 400) {
 				System.out.println(script);
+
+				return null;
 			}
+
+			String responseText = readInputStream(
+				httpURLConnection.getInputStream());
+
+			return combine(
+				jenkinsMasterName, ":\n",
+				responseText.substring(
+					responseText.lastIndexOf("<pre>") + 5,
+					responseText.lastIndexOf("</pre>")));
 		}
 		catch (IOException ioException) {
 			System.out.println("Unable to execute Jenkins script");
 
 			ioException.printStackTrace();
 		}
+
+		return null;
 	}
 
 	public static boolean exists(URL url) {

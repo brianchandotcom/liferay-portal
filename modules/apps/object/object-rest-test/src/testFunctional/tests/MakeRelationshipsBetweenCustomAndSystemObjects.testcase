@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("And Given Subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Math");
 		}

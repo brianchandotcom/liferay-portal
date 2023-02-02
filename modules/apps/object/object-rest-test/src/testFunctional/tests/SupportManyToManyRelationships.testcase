@@ -48,19 +48,19 @@ definition {
 		}
 
 		task ("Given three university entries created") {
-			var universityId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Second University");
-			var universityId3 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId3 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Third University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -119,19 +119,19 @@ definition {
 		}
 
 		task ("Given three university entries created") {
-			var universityId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Second University");
-			var universityId3 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId3 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Third University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -193,13 +193,13 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -244,13 +244,13 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -301,13 +301,13 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -358,13 +358,13 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -415,13 +415,13 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -472,19 +472,19 @@ definition {
 		}
 
 		task ("Given two university entries created") {
-			var universityId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Second University");
 		}
 
 		task ("Given two subject entries created") {
-			var subjectId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay First Foundations");
-			var subjectId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Second Foundations");
 		}
@@ -541,19 +541,19 @@ definition {
 		}
 
 		task ("Given two university entries created") {
-			var universityId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Second University");
 		}
 
 		task ("Given two subject entries created") {
-			var subjectId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay First Foundations");
-			var subjectId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Second Foundations");
 		}
@@ -630,19 +630,19 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
 
 		task ("Given student entry created") {
-			var studentId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var studentId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "students",
 				name = "Liferay Employee");
 		}
@@ -723,19 +723,19 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
 
 		task ("Given student entry created") {
-			var studentId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var studentId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "students",
 				name = "Liferay Employee");
 		}
@@ -808,19 +808,19 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
 
 		task ("Given student entry created") {
-			var studentId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var studentId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "students",
 				name = "Liferay Employee");
 		}
@@ -873,13 +873,13 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -924,19 +924,19 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Second University");
-			var universityId3 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId3 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Third University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -995,19 +995,19 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Second University");
-			var universityId3 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId3 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Third University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -1076,19 +1076,19 @@ definition {
 		}
 
 		task ("Given three university entries created") {
-			var universityId1 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId1 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay First University");
-			var universityId2 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId2 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Second University");
-			var universityId3 = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId3 = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay Third University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -1152,13 +1152,13 @@ definition {
 		}
 
 		task ("Given university entry created") {
-			var universityId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var universityId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay University");
 		}
 
 		task ("Given subject entry created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}

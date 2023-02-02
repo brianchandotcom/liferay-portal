@@ -48,7 +48,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given subject entry is created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}
@@ -104,7 +104,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given subject entry is created") {
-			var subjectId = ObjectDefinitionAPI.getIdCreatedObjectEntryWithName(
+			var subjectId = ObjectDefinitionAPI.getIdOfCreatedObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Liferay Foundations");
 		}

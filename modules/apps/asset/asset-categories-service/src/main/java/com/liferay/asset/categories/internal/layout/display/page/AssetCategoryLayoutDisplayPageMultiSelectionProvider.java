@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -42,9 +41,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,27 +66,30 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 	public List<InfoItemReference> process(
 		List<InfoItemReference> infoItemReferences) {
 
-		Stream<InfoItemReference> stream = infoItemReferences.stream();
-
 		Map<Long, Map<Long, InfoItemReference>>
-			vocabularyIdInfoItemReferencesMap = stream.filter(
-				infoItemReference ->
-					Objects.equals(
-						getClassName(), infoItemReference.getClassName()) &&
-					(_getClassPK(infoItemReference) > 0)
-			).collect(
-				Collectors.groupingBy(
-					infoItemReference -> {
-						AssetCategory assetCategory =
-							_assetCategoryLocalService.fetchAssetCategory(
-								_getClassPK(infoItemReference));
+			vocabularyIdInfoItemReferencesMap = new HashMap<>();
 
-						return assetCategory.getVocabularyId();
-					},
-					Collectors.toMap(
-						infoItemReference -> _getClassPK(infoItemReference),
-						Function.identity()))
-			);
+		for (InfoItemReference infoItemReference : infoItemReferences) {
+			if (Objects.equals(
+					getClassName(), infoItemReference.getClassName()) &&
+				(_getClassPK(infoItemReference) > 0)) {
+
+				AssetCategory assetCategory =
+					_assetCategoryLocalService.fetchAssetCategory(
+						_getClassPK(infoItemReference));
+
+				long vocabularyId = assetCategory.getVocabularyId();
+
+				vocabularyIdInfoItemReferencesMap.putIfAbsent(
+					vocabularyId, new HashMap<>());
+
+				Map<Long, InfoItemReference> categoryIdInfoItemReferencesMap =
+					vocabularyIdInfoItemReferencesMap.get(vocabularyId);
+
+				categoryIdInfoItemReferencesMap.put(
+					_getClassPK(infoItemReference), infoItemReference);
+			}
+		}
 
 		List<InfoItemReference> hierarchicalInfoItemReferences =
 			new ArrayList<>();
@@ -205,24 +204,28 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 
 		String treePath = assetCategory.getTreePath();
 
-		Stream<String> stream = Arrays.stream(treePath.split("/"));
+		List<Long> categoryIds = new ArrayList<>();
 
-		return stream.filter(
-			s -> Validator.isNotNull(s)
-		).mapToLong(
-			Long::valueOf
-		).filter(
-			categoryId -> !Objects.equals(
-				categoryId, assetCategory.getCategoryId())
-		).boxed(
-		).sorted(
-			Collections.reverseOrder()
-		).filter(
-			parentCategoryId -> availableCategoryIds.contains(parentCategoryId)
-		).findFirst(
-		).orElse(
-			0L
-		);
+		for (String treePathPart : treePath.split("/")) {
+			if (Validator.isNotNull(treePathPart)) {
+				Long categoryId = Long.valueOf(treePathPart);
+
+				if (!Objects.equals(
+						categoryId, assetCategory.getCategoryId()) &&
+					availableCategoryIds.contains(categoryId)) {
+
+					categoryIds.add(categoryId);
+				}
+			}
+		}
+
+		if (categoryIds.isEmpty()) {
+			return 0L;
+		}
+
+		categoryIds.sort(Collections.reverseOrder());
+
+		return categoryIds.get(0);
 	}
 
 	private List<Long> _getOrderedVocabularyIds(ThemeDisplay themeDisplay) {

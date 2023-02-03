@@ -210,7 +210,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			submitForm(document.<portlet:namespace />exportPagesFm);
 		}
 		else {
-			exportImport.showNotification();
+			exportImport.showNotification(dateChecker);
 		}
 	}
 

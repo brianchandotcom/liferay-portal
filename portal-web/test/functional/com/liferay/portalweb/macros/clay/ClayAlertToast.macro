@@ -1,5 +1,6 @@
 definition {
-    macro getElementRectanglePositionX {
+
+	macro getElementRectanglePositionX {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -34,4 +35,5 @@ definition {
 
 		return "${position_y}";
 	}
+
 }

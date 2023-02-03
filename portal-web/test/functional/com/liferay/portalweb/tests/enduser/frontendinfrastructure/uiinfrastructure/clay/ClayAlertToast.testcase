@@ -73,6 +73,49 @@ definition {
 		}
 	}
 
+	@description = "LPS-170580 - Verify alert in the middle of stack is closed, the others fill the stack"
+	@priority = "4"
+	test CanTransitionToFillGapOfDeletedToast {
+		task ("And multiple toast alerts") {
+			Click(
+				key_text = "Success Submit",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Fail Submit",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Success Submit",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When an alert in the middle of the stack is closed") {
+			Click(
+				key_type = "danger",
+				locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON");
+		}
+
+		task ("Then the alerts transition to fill the stack") {
+			var position_x = "20";
+			var position_y = "710";
+			var positionAlertX = ClayAlertToast.getElementRectanglePositionX(
+				code = "#ToastAlertContainer .alert-success",
+				index = "0");
+			var positionAlertY = ClayAlertToast.getElementRectanglePositionY(
+				code = "#ToastAlertContainer .alert-success",
+				index = "0");
+
+			if ("${positionAlertX}" != "${position_x}") {
+				fail("FAIL. X coordinate positions do not match.");
+			}
+
+			if ("${positionAlertY}" != "${position_y}") {
+				fail("FAIL. Y coordinate positions do not match.");
+			}
+		}
+	}
+
 	@description = "LPS-170575 - Verify toast alert with no actions disappears after 5 seconds"
 	@priority = "5"
 	test DisappearsAfter5SecsWithoutActions {

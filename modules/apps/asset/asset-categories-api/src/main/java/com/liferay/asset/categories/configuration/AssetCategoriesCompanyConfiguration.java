@@ -35,6 +35,14 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AssetCategoriesCompanyConfiguration {
 
 	@Meta.AD(
+		deflt = "true",
+		description = "include-children-categories-when-searching-parent-categories-description",
+		name = "include-children-categories-when-searching-parent-categories",
+		required = false
+	)
+	public boolean includeChildrenCategoriesWhenSearchingParentCategories();
+
+	@Meta.AD(
 		deflt = "150",
 		description = "maximum-number-of-categories-per-vocabulary-description",
 		name = "maximum-number-of-categories-per-vocabulary", required = false

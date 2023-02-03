@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.util;
 
+import com.liferay.asset.kernel.configuration.provider.AssetCategoryConfigurationProviderUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
@@ -33,12 +34,12 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.StringQuery;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -518,7 +519,9 @@ public class AssetSearcher extends BaseSearcher {
 		for (long categoryId : filteredCategoryIds) {
 			List<Long> categoryIds = new ArrayList<>();
 
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+			if (AssetCategoryConfigurationProviderUtil.isSearchHierarchical(
+					CompanyThreadLocal.getCompanyId())) {
+
 				categoryIds.addAll(
 					AssetCategoryLocalServiceUtil.getSubcategoryIds(
 						categoryId));
@@ -548,7 +551,9 @@ public class AssetSearcher extends BaseSearcher {
 		for (long categoryId : filteredCategoryIds) {
 			List<Long> categoryIds = new ArrayList<>();
 
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+			if (AssetCategoryConfigurationProviderUtil.isSearchHierarchical(
+					CompanyThreadLocal.getCompanyId())) {
+
 				categoryIds.addAll(
 					AssetCategoryLocalServiceUtil.getSubcategoryIds(
 						categoryId));

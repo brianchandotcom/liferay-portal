@@ -281,7 +281,7 @@ public class ObjectEntryDisplayContext {
 				objectLayoutTab.getObjectLayoutTabId() == objectLayoutTabId
 		).findFirst();
 
-		return optional.get();
+		return optional.orElseGet(() -> objectLayoutTabs.get(0));
 	}
 
 	public String getObjectRelationshipERCObjectFieldName() {

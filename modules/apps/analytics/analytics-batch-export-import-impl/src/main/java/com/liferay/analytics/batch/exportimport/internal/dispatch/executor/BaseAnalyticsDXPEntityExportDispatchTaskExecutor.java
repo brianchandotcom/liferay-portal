@@ -67,7 +67,8 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			getBatchEngineExportTaskItemDelegateName(),
-			dispatchTrigger.getCompanyId(), null, null,
+			dispatchTrigger.getCompanyId(), null,
+			getFilterString(dispatchTrigger.getCompanyId()),
 			message -> _updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -76,6 +77,10 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 	}
 
 	protected abstract String getBatchEngineExportTaskItemDelegateName();
+
+	protected String getFilterString(long companyId) throws PortalException {
+		return null;
+	}
 
 	protected boolean shouldExport(long companyId) {
 		return true;

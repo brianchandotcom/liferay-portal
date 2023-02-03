@@ -1398,7 +1398,7 @@ definition {
 
 		User.viewIsPrimary(primaryValue = "4000 Westchase Blvd");
 
-		User.makePrimary(rowEntry = "205 West Wacker Dr");
+		User.makeAddressPrimary(listEntry = "205 West Wacker Dr");
 
 		User.viewNotPrimary(primaryValue = "1400 Montefino Ave");
 
@@ -1406,11 +1406,11 @@ definition {
 
 		User.viewNotPrimary(primaryValue = "4000 Westchase Blvd");
 
-		User.removeContactInformation(rowEntry = "4000 Westchase Blvd");
+		User.removeAddress(listEntry = "4000 Westchase Blvd");
 
 		User.viewIsPrimary(primaryValue = "205 West Wacker Dr");
 
-		User.removeContactInformation(rowEntry = "205 West Wacker Dr");
+		User.removeAddress(listEntry = "205 West Wacker Dr");
 
 		User.viewIsPrimary(primaryValue = "1400 Montefino Ave");
 	}

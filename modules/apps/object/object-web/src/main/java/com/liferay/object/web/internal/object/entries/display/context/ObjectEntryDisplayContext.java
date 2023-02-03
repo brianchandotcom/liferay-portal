@@ -32,9 +32,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -85,7 +82,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -158,57 +154,6 @@ public class ObjectEntryDisplayContext {
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public List<NavigationItem> getNavigationItems() throws PortalException {
-		ObjectLayout objectLayout = getObjectLayout();
-
-		if (objectLayout == null) {
-			return Collections.emptyList();
-		}
-
-		NavigationItemList navigationItemList = new NavigationItemList();
-
-		ObjectEntry objectEntry = getObjectEntry();
-
-		if (objectEntry == null) {
-			return navigationItemList;
-		}
-
-		ObjectLayoutTab currentObjectLayoutTab = getObjectLayoutTab();
-		LiferayPortletResponse liferayPortletResponse =
-			_objectRequestHelper.getLiferayPortletResponse();
-
-		for (ObjectLayoutTab objectLayoutTab :
-				objectLayout.getObjectLayoutTabs()) {
-
-			if (objectLayoutTab.getObjectRelationshipId() > 0) {
-				ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.getObjectRelationship(
-						objectLayoutTab.getObjectRelationshipId());
-
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId2());
-
-				if (!objectDefinition.isActive()) {
-					continue;
-				}
-			}
-
-			navigationItemList.add(
-				NavigationItemBuilder.setActive(
-					objectLayoutTab.getObjectLayoutTabId() ==
-						currentObjectLayoutTab.getObjectLayoutTabId()
-				).setHref(
-					_getNavigationItemHref(
-						liferayPortletResponse, objectEntry, objectLayoutTab)
-				).setLabel(
-					objectLayoutTab.getName(_objectRequestHelper.getLocale())
-				).build());
-		}
-
-		return navigationItemList;
 	}
 
 	public ObjectDefinition getObjectDefinition() {
@@ -323,7 +268,7 @@ public class ObjectEntryDisplayContext {
 			objectLayout.getObjectLayoutTabs();
 
 		long objectLayoutTabId = ParamUtil.getLong(
-			_objectRequestHelper.getRequest(), "objectLayoutTabId");
+			_objectRequestHelper.getRequest(), "screenNavigationCategoryKey");
 
 		if (objectLayoutTabId == 0) {
 			return objectLayoutTabs.get(0);
@@ -1004,43 +949,6 @@ public class ObjectEntryDisplayContext {
 
 			return 0L;
 		}
-	}
-
-	private String _getNavigationItemHref(
-		LiferayPortletResponse liferayPortletResponse, ObjectEntry objectEntry,
-		ObjectLayoutTab objectLayoutTab) {
-
-		HttpServletRequest httpServletRequest =
-			_objectRequestHelper.getRequest();
-
-		if (_readOnly) {
-			LiferayPortletURL liferayPortletURL =
-				(LiferayPortletURL)liferayPortletResponse.createResourceURL();
-
-			liferayPortletURL.setLifecycle(PortletRequest.RENDER_PHASE);
-
-			return PortletURLBuilder.create(
-				liferayPortletURL
-			).setBackURL(
-				httpServletRequest.getParameter("backURL")
-			).setParameter(
-				"externalReferenceCode", objectEntry.getExternalReferenceCode()
-			).setParameter(
-				"objectLayoutTabId", objectLayoutTab.getObjectLayoutTabId()
-			).buildString();
-		}
-
-		return PortletURLBuilder.create(
-			liferayPortletResponse.createRenderURL()
-		).setMVCRenderCommandName(
-			"/object_entries/edit_object_entry"
-		).setBackURL(
-			httpServletRequest.getParameter("backURL")
-		).setParameter(
-			"externalReferenceCode", objectEntry.getExternalReferenceCode()
-		).setParameter(
-			"objectLayoutTabId", objectLayoutTab.getObjectLayoutTabId()
-		).buildString();
 	}
 
 	private List<DDMFormField> _getNestedDDMFormFields(

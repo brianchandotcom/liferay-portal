@@ -568,11 +568,11 @@ public class TaxonomyCategoryResourceImpl
 		if ((taxonomyCategory.getTaxonomyVocabularyId() != null) &&
 			(taxonomyCategory.getTaxonomyVocabularyId() > 0)) {
 
-			AssetVocabulary newAssetVocabulary =
+			AssetVocabulary existingAssetVocabulary =
 				_assetVocabularyService.getVocabulary(
 					taxonomyCategory.getTaxonomyVocabularyId());
 
-			return newAssetVocabulary.getVocabularyId();
+			return existingAssetVocabulary.getVocabularyId();
 		}
 
 		return assetCategory.getVocabularyId();

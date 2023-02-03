@@ -18,10 +18,21 @@ import com.liferay.object.model.ObjectState;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Marco Leo
  */
 public class ObjectEntryValuesException extends PortalException {
+
+	public List<Object> getArguments() {
+		return _arguments;
+	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
 
 	public static class ExceedsIntegerSize extends ObjectEntryValuesException {
 
@@ -198,14 +209,17 @@ public class ObjectEntryValuesException extends PortalException {
 		extends ObjectEntryValuesException {
 
 		public InvalidObjectStateTransition(
-			ObjectState sourceObjectState, ObjectState targetObjectState) {
+			ObjectState sourceObjectState, ObjectState targetObjectState,
+			String sourceObjectName, String targetObjectName) {
 
 			super(
 				String.format(
 					"Object state ID %d cannot be transitioned to object " +
 						"state ID %d",
 					sourceObjectState.getObjectStateId(),
-					targetObjectState.getObjectStateId()));
+					targetObjectState.getObjectStateId()),
+				"object-state-x-cannot-be-transitioned-to-object-state-x",
+				Arrays.asList(sourceObjectName, targetObjectName));
 
 			_sourceObjectState = sourceObjectState;
 			_targetObjectState = targetObjectState;
@@ -301,5 +315,17 @@ public class ObjectEntryValuesException extends PortalException {
 	private ObjectEntryValuesException(String message) {
 		super(message);
 	}
+
+	private ObjectEntryValuesException(
+		String message, String messageKey, List<Object> arguments) {
+
+		super(message);
+
+		_messageKey = messageKey;
+		_arguments = arguments;
+	}
+
+	private List<Object> _arguments;
+	private String _messageKey;
 
 }

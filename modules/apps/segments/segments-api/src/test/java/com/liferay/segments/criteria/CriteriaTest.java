@@ -119,6 +119,39 @@ public class CriteriaTest {
 			typeFilterString);
 	}
 
+	@Test
+	public void testMergeCriteriaWithEqualsKey() {
+		Criteria criteria1 = new Criteria();
+
+		String key = randomString();
+		String filterString1 = randomString();
+
+		criteria1.addCriterion(
+			key, Criteria.Type.CONTEXT, filterString1,
+			Criteria.Conjunction.AND);
+
+		Criteria criteria2 = new Criteria();
+
+		String filterString2 = randomString();
+
+		criteria2.addCriterion(
+			key, Criteria.Type.CONTEXT, filterString2,
+			Criteria.Conjunction.AND);
+
+		criteria1.mergeCriteria(criteria2, Criteria.Conjunction.OR);
+
+		Criteria.Criterion criterion = criteria1.getCriterion(key);
+
+		Assert.assertEquals(
+			String.valueOf(Criteria.Conjunction.AND),
+			criterion.getConjunction());
+		Assert.assertEquals(
+			StringBundler.concat(
+				"(", filterString1, ") ", Criteria.Conjunction.OR, " (",
+				filterString2, ")"),
+			criterion.getFilterString());
+	}
+
 	protected String randomString() {
 		return RandomStringUtils.random(5);
 	}

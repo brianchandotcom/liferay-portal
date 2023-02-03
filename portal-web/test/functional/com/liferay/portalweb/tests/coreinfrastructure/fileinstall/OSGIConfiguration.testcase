@@ -369,7 +369,7 @@ definition {
 			configurationScope = "System Scope");
 
 		SystemSettings.editTextAreaSetting(
-			settingName = "Tika configuration xml",
+			settingName = "Tika Configuration XML",
 			settingValue = "tika.xml");
 
 		SystemSettings.saveConfiguration();

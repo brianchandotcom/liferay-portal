@@ -114,6 +114,45 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10865 | Automation ID: LRAC-12843 | Test Summary: Check that it is possible to make pagination in the Attribute for Account list"
+	@priority = "3"
+	test CanPaginationAttributeForAccountList {
+		var firstPageList = "accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description";
+		var secondPageList = "domains,emailAddress,externalReferenceCode,logoId,modifiedDate";
+
+		task ("Click to select attribute for Account") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
+		}
+
+		task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 18 entries.");
+		}
+
+		task ("Check that 5 attributes for Account appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+		task ("Check that the attributes for Account on the second page does not appear on the first") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${secondPageList}");
+		}
+
+		task ("Click to navigate for the second page") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 10 of 18 entries.");
+		}
+
+		task ("Check that 2 attributes for Account appear on the second page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
+		}
+
+		task ("Check that the attributes for Account on the first page does not appear on the second page") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+	}
+
 	@description = "Story: LRAC-10860 | Automation ID: LRAC-12782 | Test Summary: Check that it is possible to make pagination in the Attribute for People list"
 	@priority = "3"
 	test CanPaginationAttributeForPeopleList {
@@ -150,6 +189,39 @@ definition {
 
 		task ("Check that the attributes for people on the first page does not appear on the last") {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+	}
+
+	@description = "Story: LRAC-10865 | Automation ID: LRAC-12842 | Test Summary: Check that it is possible to search the Attribute for Account list"
+	@priority = "4"
+	test CanSearchAttributeForAccountList {
+		var searchedAccountAttribute = "companyId";
+		var unsearchedAccountAttribute = "createDate,firstName";
+
+		task ("Click to select attribute for account") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
+		}
+
+		task ("Search for account attributes") {
+			ACUtils.searchBar(searchItem = "${searchedAccountAttribute}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${searchedAccountAttribute}");
+		}
+
+		task ("Check that unsearched account attributes do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${unsearchedAccountAttribute}");
+		}
+
+		task ("Search by name of a account attributes that does not exist") {
+			ACUtils.searchBar(searchItem = "gold");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
 	}
 
@@ -219,6 +291,69 @@ definition {
 				attributeCategory = "People",
 				currentAttributeNumber = "${syncPeopleNumberStart}",
 				increaseAttributeNumber = "2");
+		}
+	}
+
+	@description = "Story: LRAC-10865 | Automation ID: LRAC-12844 | Test Summary: Check that it is possible to sort the Attribute for Account list by attribute and data type"
+	@priority = "3"
+	test CanSortAttributeForAccountList {
+		var attributesAscendingOrder = '''
+			accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description,domains,
+			emailAddress,externalReferenceCode,logoId,modifiedDate,name,parentAccountEntryId,
+			restrictMembership,status,taxExemptionCode,taxIdNumber,type_,uuid_
+		''';
+		var attributesDescendingOrder = '''
+			uuid_,type_,taxIdNumber,taxExemptionCode,status,restrictMembership,parentAccountEntryId,name,
+			modifiedDate,logoId,externalReferenceCode,emailAddress,domains,description,defaultCPaymentMethodKey,
+			createDate,companyId,accountEntryId
+		''';
+		var attributesDataTypeAscending = '''
+			restrictMembership,status,accountEntryId,companyId,logoId,parentAccountEntryId,defaultCPaymentMethodKey,
+			description,domains,emailAddress,externalReferenceCode,name,taxExemptionCode,taxIdNumber,type_,
+			uuid_,createDate,modifiedDate
+		''';
+		var attributesDataTypeDescending = '''
+			createDate,modifiedDate,defaultCPaymentMethodKey,description,domains,emailAddress,externalReferenceCode,name,
+			taxExemptionCode,taxIdNumber,type_,uuid_,accountEntryId,companyId,logoId,parentAccountEntryId,
+			status,restrictMembership
+		''';
+		var attributesAscendingOrderList = ListUtil.newListFromString("${attributesAscendingOrder}");
+		var attributesDescendingOrderList = ListUtil.newListFromString("${attributesDescendingOrder}");
+		var attributesDataTypeAscendingList = ListUtil.newListFromString("${attributesDataTypeAscending}");
+		var attributesDataTypeDescendingList = ListUtil.newListFromString("${attributesDataTypeDescending}");
+
+		task ("Click to configure Account attributes") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
+		}
+
+		task ("See that the list is sorted by attributes in the ascending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesAscendingOrderList}");
+		}
+
+		task ("See that the list is sorted by attributes in the descending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDescendingOrderList}");
+		}
+
+		task ("See that the list is sorted by the data type of the attributes in ascending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDataTypeAscendingList}");
+		}
+
+		task ("See that the list is sorted by the data type of the attributes in descending order") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDataTypeDescendingList}");
 		}
 	}
 
@@ -350,141 +485,6 @@ definition {
 					key_requiredAttribute = "${attribute}",
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
 			}
-		}
-	}
-
-	@description = "Story: LRAC-10865 | Automation ID: LRAC-12843 | Test Summary: Check that it is possible to make pagination in the Attribute for Account list"
-	@priority = "3"
-	test CanPaginationAttributeForAccountList {
-		var firstPageList = "accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description";
-		var secondPageList = "domains,emailAddress,externalReferenceCode,logoId,modifiedDate";
-
-		task ("Click to select attribute for Account") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
-		}
-
-		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = "5");
-
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 18 entries.");
-		}
-
-		task ("Check that 5 attributes for people appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
-		}
-
-		task ("Check that the attributes for people on the second page does not appear on the first") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${secondPageList}");
-		}
-
-		task ("Click to navigate for the second page") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-
-			ACUtils.viewResultsMessage(results = "Showing 6 to 10 of 18 entries.");
-		}
-
-		task ("Check that 2 attributes for people appear on the second page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
-		}
-
-		task ("Check that the attributes for people on the first page does not appear on the second page") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
-		}
-	}
-
-	@description = "Story: LRAC-10865 | Automation ID: LRAC-12842 | Test Summary: Check that it is possible to search the Attribute for Account list"
-	@priority = "4"
-	test CanSearchAttributeForAccountList {
-		var searchedAccountAttribute = "companyId";
-		var unsearchedAccountAttribute = "createDate,firstName";
-
-		task ("Click to select attribute for account") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
-		}
-
-		task ("Search for account attributes") {
-			ACUtils.searchBar(searchItem = "${searchedAccountAttribute}");
-
-			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
-		}
-
-		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${searchedAccountAttribute}");
-		}
-
-		task ("Check that unsearched account attributes do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${unsearchedAccountAttribute}");
-		}
-
-		task ("Search by name of a account attributes that does not exist") {
-			ACUtils.searchBar(searchItem = "gold");
-		}
-
-		task ("Check that no result is found for the search") {
-			ACUtils.viewGenericText(textValueList = "No attributes were found.");
-		}
-	}
-
-	@description = "Story: LRAC-10865 | Automation ID: LRAC-12844 | Test Summary: Check that it is possible to sort the Attribute for Account list by attribute and data type"
-	@priority = "3"
-	test CanSortAttributeForAccountList {
-		var attributesAscendingOrder = '''
-			accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description,domains,
-			emailAddress,externalReferenceCode,logoId,modifiedDate,name,parentAccountEntryId,
-			restrictMembership,status,taxExemptionCode,taxIdNumber,type_,uuid_
-		''';
-		var attributesDescendingOrder = '''
-			uuid_,type_,taxIdNumber,taxExemptionCode,status,restrictMembership,parentAccountEntryId,name,
-			modifiedDate,logoId,externalReferenceCode,emailAddress,domains,description,defaultCPaymentMethodKey,
-			createDate,companyId,accountEntryId
-		''';
-		var attributesDataTypeAscending = '''
-			restrictMembership,status,accountEntryId,companyId,logoId,parentAccountEntryId,defaultCPaymentMethodKey,
-			description,domains,emailAddress,externalReferenceCode,name,taxExemptionCode,taxIdNumber,type_,
-			uuid_,createDate,modifiedDate
-		''';
-		var attributesDataTypeDescending = '''
-			createDate,modifiedDate,defaultCPaymentMethodKey,description,domains,emailAddress,externalReferenceCode,name,
-			taxExemptionCode,taxIdNumber,type_,uuid_,accountEntryId,companyId,logoId,parentAccountEntryId,
-			status,restrictMembership
-		''';
-		var attributesAscendingOrderList = ListUtil.newListFromString("${attributesAscendingOrder}");
-		var attributesDescendingOrderList = ListUtil.newListFromString("${attributesDescendingOrder}");
-		var attributesDataTypeAscendingList = ListUtil.newListFromString("${attributesDataTypeAscending}");
-		var attributesDataTypeDescendingList = ListUtil.newListFromString("${attributesDataTypeDescending}");
-
-		task ("Click to configure Account attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
-		}
-
-		task ("See that the list is sorted by attributes in the ascending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-
-			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesAscendingOrderList}");
-		}
-
-		task ("See that the list is sorted by attributes in the descending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
-
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-
-			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDescendingOrderList}");
-		}
-
-		task ("See that the list is sorted by the data type of the attributes in ascending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-
-			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDataTypeAscendingList}");
-		}
-
-		task ("See that the list is sorted by the data type of the attributes in descending order") {
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-
-			ACDXPSettings.viewGenericListItem(itemValueList = "${attributesDataTypeDescendingList}");
 		}
 	}
 

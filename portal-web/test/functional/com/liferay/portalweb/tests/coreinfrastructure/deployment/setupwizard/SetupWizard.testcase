@@ -113,8 +113,8 @@ definition {
 			var key_fieldName = "${fieldName}";
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "TextInput#REQUIRED_ALERT",
-				value1 = "This field is required.");
+				locator1 = "TextInput#SPECIFIC_REQUIRED_ALERT",
+				value1 = "field is required.");
 		}
 
 		AssertTextEquals(

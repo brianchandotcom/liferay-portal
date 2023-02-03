@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -81,14 +80,11 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 		String payload = _buildPayload(payloadJSONObject);
 
-		Stream<String> tokensStream = tokens.stream();
-
-		tokensStream.map(
-			token -> new SimpleApnsPushNotification(token, _topic, payload)
-		).forEach(
-			simpleApnsPushNotification -> _handleNotificationResponse(
-				_apnsClient.sendNotification(simpleApnsPushNotification))
-		);
+		for (String token : tokens) {
+			_handleNotificationResponse(
+				_apnsClient.sendNotification(
+					new SimpleApnsPushNotification(token, _topic, payload)));
+		}
 	}
 
 	@Activate

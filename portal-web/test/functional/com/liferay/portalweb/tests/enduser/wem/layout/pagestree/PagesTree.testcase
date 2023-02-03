@@ -983,4 +983,87 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-152360. There are Copy Page, Permissions, Delete options in page tree and no Permission ellipsis button and Permissions option in configuration view."
+	@priority = "4"
+	test ViewEllipsisOptionsInPageTreeAndNoPermissionEllipsisInConfigurationView {
+		task ("Given a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When user goes to the page tree") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then there are Copy Page, Permissions, Delete options") {
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Copy Page",
+				pageName = "Test Page Name*");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Copy Test Page Name");
+
+			Button.clickAdd();
+
+			SelectFrameTop();
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Copy Test Page Name*");
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Permissions",
+				pageName = "Test Page Name*");
+
+			IFrame.selectPermissionsFrame();
+
+			Check.checkNotVisible(
+				key_roleTitle = "publications-user",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Permissions",
+				pageName = "Test Page Name*");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked.assertCheckedNotVisible(
+				key_roleTitle = "publications-user",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			IFrame.closeFrame();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Delete",
+				pageName = "Copy Test Page Name*");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Are you sure you want to delete the page \"Copy Test Page Name\"? It will be removed immediately.");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And Then assert no Permission ellipsis button on the top right with permission option") {
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Configure",
+				pageName = "Test Page Name*");
+
+			AssertElementNotPresent(locator1 = "Icon#CONTROL_MENU_VERTICAL_ELLIPSIS");
+		}
+	}
+
 }

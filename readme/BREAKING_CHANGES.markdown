@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `62dc43e1cc4c4b81ef5bcae459dbc0cbeff9f1fe`.*
+*This document has been reviewed through the breaking change entry at commit `77571f7e7b385a1b497136da53c8be0cee284c63`.*
 
 Each change must have a brief descriptive title and contain the following information:
 
@@ -1115,9 +1115,9 @@ This change was made to address vulnerabilities in outdated libraries that are n
 
 ### What changed?
 
-The Elasticsearch type mapping of localized sortable `*_<languageId>_sortable` and nested `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`
+The Elasticsearch type mapping of localized sortable `*_<languageId>_sortable` and nested `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`.
 
-These fields' indexed information is now stored in an encoded format. For example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`
+These fields' indexed information is now stored in an encoded format. For example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`.
 
 This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language. For more information see <https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html>.
 
@@ -1258,26 +1258,27 @@ The tag `<aui:container>` was deprecated in a previous version.
 
 ---------------------------------------
 
-## Tika configuration removed from System Properties and Text Extraction configuration removed from Portal Properties
+## Removed Properties for Tika Configuration and Text Extraction
 
 - **Date:** 2022-Dec-13
 - **JIRA Ticket:** [LPS-147938](https://issues.liferay.com/browse/LPS-147938) and [LPS-169760](https://issues.liferay.com/browse/LPS-169760)
 
 ### What changed?
 
-The Tika library is no longer configurable via `tika.config` in system properties.
-Text Extraction in a separate Java process is no longer configurable via `text.extraction.fork.process.enabled` and `text.extraction.fork.process.mime.types` in portal properties.
+The Tika library was extracted from Liferay's core to the `com.liferay.portal.tika` module, changing the way it must be configured. The system property `tika.config` was removed, as were the portal properties `text.extraction.fork.process.enabled` and `text.extraction.fork.process.mime.types`. The Tika library and text extraction are no longer configurable through properties files.
+
+As part of the extraction to a module, the removed properties are added to the module's configuration interface and are configurable using System Settings or a `.config` configuration file.
 
 ### Who is affected?
 
-This affects anyone using `tika.config` in system properties to configure the tika library or enabling the Text Extraction in a separate Java process in portal properties.
+This affects anyone using the removed system or portal properties.
 
 ### How should I update my code?
 
 No code changes are necessary.
 
-Administrators will have to move the configuration of system properties and portal properties to System Settings => Infrastructure => Tika configuration
+Configure the same properties in System Settings &rarr; Infrastructure &rarr; Tika Configuration.
 
 ### Why was this change made?
 
-This change was made because the Tika library was extracted to the com.liferay.portal.tika module.
+These configuration changes were made because the Tika library was extracted to the `com.liferay.portal.tika` module.

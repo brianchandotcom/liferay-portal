@@ -1087,7 +1087,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(3, objectDefinition1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
-		_assertObjectFields(objectDefinition1, 9);
+		_assertObjectFields(objectDefinition1, 10);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
 		ObjectDefinition objectDefinition2 =
@@ -1100,7 +1100,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(2, objectDefinition2);
 		_assertObjectEntries(group.getGroupId(), objectDefinition2, 0);
-		_assertObjectFields(objectDefinition2, 8);
+		_assertObjectFields(objectDefinition2, 9);
 
 		ObjectDefinition objectDefinition3 =
 			_objectDefinitionLocalService.fetchObjectDefinition(

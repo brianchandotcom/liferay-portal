@@ -574,7 +574,7 @@ definition {
 			locator1 = "FormViewBuilder#ENTRIES_TITLE_CONTENT");
 
 		AssertTextEquals(
-			locator1 = "FormFields#EMPTY_STATE_INFO",
+			locator1 = "Message#EMPTY_STATE_INFO",
 			value1 = "There are no entries.");
 	}
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/render_max_state_layout_structure/init.jsp" %>
+<%@ include file="/render_state_max_layout_structure/init.jsp" %>
 
 <style type="text/css">
 	.master-layout-fragment .portlet-header {

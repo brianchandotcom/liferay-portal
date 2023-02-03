@@ -23,31 +23,21 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 <liferay-ui:success key="displayPagePublished" message="the-display-page-template-was-published-successfully" />
 
 <c:choose>
-	<c:when test="<%= (themeDisplay.isStatePopUp() || themeDisplay.isWidget() || layoutTypePortlet.hasStateMax()) && Validator.isNotNull(ppid) %>">
+	<c:when test="<%= (themeDisplay.isStatePopUp() || themeDisplay.isWidget()) && Validator.isNotNull(ppid) %>">
 
 		<%
-		String templateId = null;
-		String templateContent = null;
-		String langType = null;
-
-		if (themeDisplay.isStatePopUp() || themeDisplay.isWidget()) {
-			templateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
-			templateContent = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
-			langType = LayoutTemplateLocalServiceUtil.getLangType("pop_up", true, theme.getThemeId());
-		}
-		else {
-			ppid = StringUtil.split(layoutTypePortlet.getStateMax())[0];
-
-			templateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
-			templateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
-			langType = LayoutTemplateLocalServiceUtil.getLangType("max", true, theme.getThemeId());
-		}
+		String templateContent = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
 
 		if (Validator.isNotNull(templateContent)) {
-			RuntimePageUtil.processTemplate(request, response, ppid, templateId, templateContent, langType);
+			String templateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
+
+			RuntimePageUtil.processTemplate(request, response, ppid, templateId, templateContent, LayoutTemplateLocalServiceUtil.getLangType("pop_up", true, theme.getThemeId()));
 		}
 		%>
 
+	</c:when>
+	<c:when test="<%= layoutTypePortlet.hasStateMax() && Validator.isNotNull(ppid) %>">
+		<liferay-layout:render-state-max-layout-structure />
 	</c:when>
 	<c:otherwise>
 

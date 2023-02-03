@@ -16,36 +16,28 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String ppid = ParamUtil.getString(request, "p_p_id");
+%>
+
 <c:choose>
-	<c:when test="<%= themeDisplay.isStatePopUp() || themeDisplay.isWidget() || layoutTypePortlet.hasStateMax() %>">
+	<c:when test="<%= themeDisplay.isStatePopUp() || themeDisplay.isWidget() %>">
 
 		<%
-		String ppid = ParamUtil.getString(request, "p_p_id");
-
-		String templateId = null;
-		String templateContent = null;
-		String langType = null;
-
-		if (themeDisplay.isStatePopUp() || themeDisplay.isWidget()) {
-			templateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
-			templateContent = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
-			langType = LayoutTemplateLocalServiceUtil.getLangType("pop_up", true, theme.getThemeId());
-		}
-		else {
-			ppid = StringUtil.split(layoutTypePortlet.getStateMax())[0];
-
-			templateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
-			templateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
-			langType = LayoutTemplateLocalServiceUtil.getLangType("max", true, theme.getThemeId());
-		}
+		String templateContent = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
 
 		if (Validator.isNotNull(templateContent)) {
 			HttpServletRequest originalHttpServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
 
-			RuntimePageUtil.processTemplate(originalHttpServletRequest, response, ppid, templateId, templateContent, langType);
+			String templateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
+
+			RuntimePageUtil.processTemplate(originalHttpServletRequest, response, ppid, templateId, templateContent, LayoutTemplateLocalServiceUtil.getLangType("pop_up", true, theme.getThemeId()));
 		}
 		%>
 
+	</c:when>
+	<c:when test="<%= layoutTypePortlet.hasStateMax() && Validator.isNotNull(ppid) %>">
+		<liferay-layout:render-state-max-layout-structure />
 	</c:when>
 	<c:otherwise>
 		<style type="text/css">

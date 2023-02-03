@@ -30,6 +30,27 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = ${subject});
 
+		if (isSet(description)) {
+			Type(
+				key_text = "description",
+				locator1 = "TextArea#ANY",
+				value1 = ${description});
+		}
+
+		if (isSet(cc)) {
+			Type(
+				key_text = "CC",
+				locator1 = "TextInput#ANY",
+				value1 = ${cc});
+		}
+
+		if (isSet(bcc)) {
+			Type(
+				key_text = "BCC",
+				locator1 = "TextInput#ANY",
+				value1 = ${bcc});
+		}
+
 		Type(
 			locator1 = "CKEditor#BODY_FIELD_IFRAME",
 			value1 = ${emailBody});
@@ -82,6 +103,27 @@ definition {
 				key_text = "Name",
 				locator1 = "TextInput#ANY",
 				value1 = ${name});
+		}
+
+		if (isSet(description)) {
+			Type(
+				key_text = "description",
+				locator1 = "TextArea#ANY",
+				value1 = ${description});
+		}
+
+		if (isSet(cc)) {
+			Type(
+				key_text = "CC",
+				locator1 = "TextInput#ANY",
+				value1 = ${cc});
+		}
+
+		if (isSet(bcc)) {
+			Type(
+				key_text = "BCC",
+				locator1 = "TextInput#ANY",
+				value1 = ${bcc});
 		}
 
 		if (isSet(entryTo)) {
@@ -198,6 +240,8 @@ definition {
 			AssertElementPresent(
 				key_text = ${emailBody},
 				locator1 = "CKEditor#BODY_TEXT");
+
+			SelectFrameTop();
 		}
 	}
 

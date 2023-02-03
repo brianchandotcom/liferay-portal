@@ -2511,6 +2511,54 @@
 	</tag>
 	<tag>
 		<description></description>
+		<name>tabs</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.TabsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description></description>
+			<name>activation</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>additionalProps</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>displayType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>fade</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>justified</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>tabsItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description></description>
+		<name>tabs-panel</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.TabsPanelTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<description></description>
 		<name>user-card</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.UserCardTag</tag-class>
 		<body-content>empty</body-content>

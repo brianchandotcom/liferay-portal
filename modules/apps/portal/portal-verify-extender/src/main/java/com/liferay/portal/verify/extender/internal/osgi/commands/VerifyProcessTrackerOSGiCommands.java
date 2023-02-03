@@ -322,7 +322,7 @@ public class VerifyProcessTrackerOSGiCommands {
 				bundleContext.getServiceReferences(
 					Release.class,
 					"(&(release.bundle.symbolic.name=" +
-						release.getServletContextName() +
+						release.getBundleSymbolicName() +
 							")(release.initial=true))");
 
 			if (!releases.isEmpty()) {

@@ -1,5 +1,34 @@
 {
-	"object-field": [
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "TESTOBJECTFIELD1",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "aggregationTestField"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "aggregationTestField",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "testOR1"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "id"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				}
+			],
+			"required": false,
+			"state": false
+		},
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
@@ -27,36 +56,7 @@
 			],
 			"required": false,
 			"state": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Aggregation",
-			"externalReferenceCode": "TESTOBJECTFIELD1",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "aggregationTestField"
-			},
-			"listTypeDefinitionId": 0,
-			"name": "aggregationTestField",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "testOR2"
-				},
-				{
-					"name": "objectFieldName",
-					"value": "id"
-				},
-				{
-					"name": "function",
-					"value": "SUM"
-				}
-			],
-			"required": false,
-			"state": false
 		}
 	],
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]"
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"
 }

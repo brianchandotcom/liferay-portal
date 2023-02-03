@@ -651,6 +651,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_REQUIRED_ALERT</td>
+	<td>//div[contains(@class,'has-error')][contains(.,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPECIFIC_LABEL_TEXT_INPUT</td>
 	<td>//label[contains(text(),'${key_labelName}')]//following::input[contains(@type,'text')]</td>
 	<td></td>

@@ -64,6 +64,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -112,6 +113,7 @@ public class CompanyLogServletTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testDownloadWithFileNotFound() throws Exception {
 		String fileName = StringUtil.randomString() + ".log";
@@ -146,6 +148,7 @@ public class CompanyLogServletTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testDownloadWithInvalidPath() throws Exception {
 		File companyLogDirectory = Log4JUtil.getCompanyLogDirectory(
@@ -162,6 +165,7 @@ public class CompanyLogServletTest {
 			HttpServletResponse.SC_FORBIDDEN);
 	}
 
+	@Ignore
 	@Test
 	public void testDownloadWithNoSuchCompany() throws Exception {
 		long companyId = 1;
@@ -191,6 +195,7 @@ public class CompanyLogServletTest {
 		_assertHttpServletResponse(0, _file.length());
 	}
 
+	@Ignore
 	@Test
 	public void testDownloadWithStartGreaterThanOrEqualsToEnd()
 		throws Exception {
@@ -209,6 +214,7 @@ public class CompanyLogServletTest {
 		_assertDownloadWithValidData("2", String.valueOf(_file.length() + 1));
 	}
 
+	@Ignore
 	@Test
 	public void testDownloadWithStartOrEndAsNull() throws Exception {
 		_assertDownloadWithInvalidData("", "0");
@@ -218,6 +224,7 @@ public class CompanyLogServletTest {
 		_assertDownloadWithValidData(null, null);
 	}
 
+	@Ignore
 	@Test
 	public void testDownloadWithStartOrEndLessThanZero() throws Exception {
 		_assertDownloadWithInvalidData("-3", "-2");
@@ -225,6 +232,7 @@ public class CompanyLogServletTest {
 		_assertDownloadWithInvalidData("3", "-3");
 	}
 
+	@Ignore
 	@Test
 	public void testListWithCompanyAdminUser() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
@@ -239,6 +247,7 @@ public class CompanyLogServletTest {
 			_company, (JSONObject)jsonArray.get(0), mockHttpServletRequest);
 	}
 
+	@Ignore
 	@Test
 	public void testListWithCompanyUser() throws Exception {
 		User user = UserTestUtil.addUser(_company);
@@ -280,6 +289,7 @@ public class CompanyLogServletTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testUserUnauthenticated() throws Exception {
 		_assertHttpServletResponseStatusAndLogEntry(

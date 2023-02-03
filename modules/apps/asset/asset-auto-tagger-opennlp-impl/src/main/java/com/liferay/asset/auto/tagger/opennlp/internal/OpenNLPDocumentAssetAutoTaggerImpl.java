@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,8 +32,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
@@ -104,20 +103,20 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 					OpenNLPDocumentAssetAutoTaggerCompanyConfiguration.class,
 					companyId);
 
-		return Stream.of(
-			sentenceDetectorME.sentDetect(textSupplier.get())
-		).map(
-			tokenizerME::tokenize
-		).map(
-			tokens -> _getTagNames(
-				tokenNameFinderModels, tokens,
-				openNLPDocumentAssetAutoTaggerCompanyConfiguration.
-					confidenceThreshold())
-		).flatMap(
-			Arrays::stream
-		).collect(
-			Collectors.toSet()
-		);
+		Set<String> tagNames = new HashSet<>();
+
+		for (String sentence :
+				sentenceDetectorME.sentDetect(textSupplier.get())) {
+
+			Collections.addAll(
+				tagNames,
+				_getTagNames(
+					tokenNameFinderModels, tokenizerME.tokenize(sentence),
+					openNLPDocumentAssetAutoTaggerCompanyConfiguration.
+						confidenceThreshold()));
+		}
+
+		return tagNames;
 	}
 
 	@Activate
@@ -133,23 +132,23 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		List<TokenNameFinderModel> tokenNameFinderModels, String[] tokens,
 		double confidenceThreshold) {
 
-		Stream<TokenNameFinderModel> stream = tokenNameFinderModels.stream();
+		List<Span> spans = new ArrayList<>();
 
-		return Span.spansToStrings(
-			stream.map(
-				NameFinderME::new
-			).map(
-				nameFinderME -> nameFinderME.find(tokens)
-			).flatMap(
-				Arrays::stream
-			).filter(
-				span -> span.getProb() > confidenceThreshold
-			).collect(
-				Collectors.toList()
-			).toArray(
-				new Span[0]
-			),
-			tokens);
+		for (TokenNameFinderModel tokenNameFinderModel :
+				tokenNameFinderModels) {
+
+			NameFinderME nameFinderME = new NameFinderME(tokenNameFinderModel);
+
+			Span[] nameSpans = nameFinderME.find(tokens);
+
+			for (Span nameSpan : nameSpans) {
+				if (nameSpan.getProb() > confidenceThreshold) {
+					spans.add(nameSpan);
+				}
+			}
+		}
+
+		return Span.spansToStrings(spans.toArray(new Span[0]), tokens);
 	}
 
 	private static final Set<String> _supportedContentTypes = new HashSet<>(

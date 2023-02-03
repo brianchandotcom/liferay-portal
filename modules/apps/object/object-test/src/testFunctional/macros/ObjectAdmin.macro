@@ -1238,6 +1238,12 @@ definition {
 	macro publishObjectViaUI {
 		Button.clickPublish();
 
+		Alert.viewSuccessMessage();
+
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+
+		WaitForPageLoad();
+
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 

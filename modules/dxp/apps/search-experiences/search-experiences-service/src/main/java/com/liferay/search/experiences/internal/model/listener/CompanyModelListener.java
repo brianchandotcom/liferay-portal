@@ -73,7 +73,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			titles.add(sxpPElement.getTitle(LocaleUtil.US));
 		}
 
-		for (SXPElement sxpElement : _sxpElements) {
+		for (SXPElement sxpElement : _getSXPElements()) {
 			if ((!GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-163688")) &&
 				 Objects.equals(
@@ -163,6 +163,14 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		return sxpElements;
 	}
 
+	private List<SXPElement> _getSXPElements() {
+		if (_sxpElements == null) {
+			_sxpElements = _createSXPElements();
+		}
+
+		return _sxpElements;
+	}
+
 	private static final String _SCHEMA_VERSION = StringUtil.replace(
 		StringUtil.extractFirst(
 			StringUtil.extractLast(SXPElement.class.getName(), ".v"),
@@ -178,6 +186,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
 
-	private final List<SXPElement> _sxpElements = _createSXPElements();
+	private List<SXPElement> _sxpElements;
 
 }

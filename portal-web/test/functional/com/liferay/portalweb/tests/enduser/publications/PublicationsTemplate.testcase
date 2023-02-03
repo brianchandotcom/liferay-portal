@@ -93,7 +93,7 @@ definition {
 
 	@priority = "3"
 	test CanEditPublicationTemplate {
-		task("Add Publication Template") {
+		task ("Add Publication Template") {
 			PublicationsTemplate.gotoPublicationTemplate();
 
 			PublicationsTemplate.addPublicationTemplate(
@@ -103,16 +103,16 @@ definition {
 				templateName = "Template Name");
 		}
 
-		task("Edit Publication Template") {
+		task ("Edit Publication Template") {
 			PublicationsTemplate.editPublicationTemplate(
-				templateName = "Template Name",
-				templateNameEdit = "Template Name Edited",
-				templateDescriptionEdit = "Template Description Edited",
+				publicationDescriptionEdit = "Publications Description ${CURRENT_USERNAME} Edited",
 				publicationNameEdit = "Publication Name ${CURRENT_USERNAME} Edited",
-				publicationDescriptionEdit = "Publications Description ${CURRENT_USERNAME} Edited");
+				templateDescriptionEdit = "Template Description Edited",
+				templateName = "Template Name",
+				templateNameEdit = "Template Name Edited");
 		}
 
-		task("Assert the publication template is edited") {
+		task ("Assert the publication template is edited") {
 			Click(
 				key_templateName = "Template Name Edited",
 				locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
@@ -140,4 +140,5 @@ definition {
 			Button.clickCancel();
 		}
 	}
+
 }

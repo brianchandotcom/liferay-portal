@@ -85,16 +85,18 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			SearchRequest searchRequest = _getSearchRequest(searchContext);
 
-			Integer from = searchRequest.getFrom();
-			Integer size = searchRequest.getSize();
+			if (!_permissionedSearch(searchContext)) {
+				Integer from = searchRequest.getFrom();
+				Integer size = searchRequest.getSize();
 
-			if ((from == null) && (size != null)) {
-				end = size;
-				start = 0;
-			}
-			else if ((from != null) && (size != null)) {
-				end = from + size;
-				start = from;
+				if ((from == null) && (size != null)) {
+					end = size;
+					start = 0;
+				}
+				else if ((from != null) && (size != null)) {
+					end = from + size;
+					start = from;
+				}
 			}
 
 			if (start == QueryUtil.ALL_POS) {
@@ -399,6 +401,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchContext searchContext) {
 
 		return _searchResponseBuilderFactory.builder(searchContext);
+	}
+
+	private boolean _permissionedSearch(SearchContext searchContext) {
+		return GetterUtil.getBoolean(
+			searchContext.getAttribute("permissionedSearch"));
 	}
 
 	private void _populateResponse(

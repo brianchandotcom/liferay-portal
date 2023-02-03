@@ -236,12 +236,7 @@ public class UpgradeExecutor {
 					release.setBuildNumber(buildNumber);
 				}
 
-				if (_isInitialRelease(upgradeInfos)) {
-					release.setVerified(true);
-				}
-				else {
-					release.setVerified(false);
-				}
+				release.setVerified(_isInitialRelease(upgradeInfos));
 
 				release.setState(state);
 

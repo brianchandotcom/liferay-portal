@@ -1,5 +1,5 @@
 {
-	"object-field": [
+	"object-fields": [
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",

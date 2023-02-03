@@ -31,12 +31,12 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 			<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
+		<clay:link
+			aria-label='<%= LanguageUtil.get(request, "remove-favorite") %>'
+			cssClass="icon-monospaced lfr-portal-tooltip text-default"
+			href="<%= removeAddMenuFavItemURL %>"
 			icon="star"
-			linkCssClass="icon-monospaced text-default"
-			markupView="lexicon"
-			message="remove-favorite"
-			url="<%= removeAddMenuFavItemURL %>"
+			title='<%= LanguageUtil.get(request, "remove-favorite") %>'
 		/>
 	</c:when>
 	<c:otherwise>
@@ -49,20 +49,20 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 					<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "add-favorite") %>'
+					cssClass="icon-monospaced lfr-portal-tooltip text-default"
+					href="<%= addAddMenuFavItemURL %>"
 					icon="star-o"
-					linkCssClass="icon-monospaced text-default"
-					markupView="lexicon"
-					message="add-favorite"
-					url="<%= addAddMenuFavItemURL %>"
+					title='<%= LanguageUtil.get(request, "add-favorite") %>'
 				/>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:icon
-					cssClass="icon-monospaced text-muted"
-					icon="star-o"
-					markupView="lexicon"
-					message="add-favorite"
+				<clay:icon
+					aria-label='<%= LanguageUtil.get(request, "add-favorite") %>'
+					cssClass="icon-monospaced lfr-portal-tooltip text-muted"
+					symbol="star-o"
+					title='<%= LanguageUtil.get(request, "add-favorite") %>'
 				/>
 			</c:otherwise>
 		</c:choose>

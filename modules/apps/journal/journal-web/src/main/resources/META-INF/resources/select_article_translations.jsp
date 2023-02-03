@@ -34,21 +34,25 @@
 				name="language"
 				truncate="<%= true %>"
 			>
-				<liferay-ui:icon
-					icon="<%= articleTranslation.getLanguageTag() %>"
-					label="<%= true %>"
-					markupView="lexicon"
-					message="<%= HtmlUtil.escape(LocaleUtil.getLongDisplayName(articleTranslation.getLocale(), Collections.emptySet())) %>"
-				/>
+				<span class="align-items-center d-flex">
+					<clay:icon
+						aria-label="<%= HtmlUtil.escape(LocaleUtil.getLongDisplayName(articleTranslation.getLocale(), Collections.emptySet())) %>"
+						cssClass="mt-0"
+						symbol="<%= articleTranslation.getLanguageTag() %>"
+						title="<%= HtmlUtil.escape(LocaleUtil.getLongDisplayName(articleTranslation.getLocale(), Collections.emptySet())) %>"
+					/>
+
+					<span class="ml-1"><%= HtmlUtil.escape(LocaleUtil.getLongDisplayName(articleTranslation.getLocale(), Collections.emptySet())) %></span>
+				</span>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-center"
 				name="default"
 			>
 				<c:if test="<%= articleTranslation.isDefault() %>">
-					<liferay-ui:icon
-						icon="check-circle"
-						markupView="lexicon"
+					<clay:icon
+						symbol="check-circle"
 					/>
 				</c:if>
 			</liferay-ui:search-container-column-text>

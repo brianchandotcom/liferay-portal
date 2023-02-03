@@ -119,6 +119,29 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Okta.config");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			while (IsElementNotPresent(key_rowEntry = "Okta", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+				// Pausing due to LRQA-78807, waiting for the config file deploy.
+
+				Pause(locator1 = "1000");
+
+				Refresh();
+
+				echo("Refreshed Page");
+			}
+
+			LexiconEntry.viewEntryName(rowEntry = "Okta");
 		}
 
 		task ("When: Logout and login with OpenID Connect") {
@@ -491,6 +514,29 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Okta.config");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			while (IsElementNotPresent(key_rowEntry = "Okta", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+				// Pausing due to LRQA-78807, waiting for the config file deploy.
+
+				Pause(locator1 = "1000");
+
+				Refresh();
+
+				echo("Refreshed Page");
+			}
+
+			LexiconEntry.viewEntryName(rowEntry = "Okta");
 		}
 
 		task ("And: Add a regular role which contains multiple spaces") {
@@ -635,6 +681,29 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Auth0.config");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			while (IsElementNotPresent(key_rowEntry = "Auth0", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+				// Pausing due to LRQA-78807, waiting for the config file deploy.
+
+				Pause(locator1 = "1000");
+
+				Refresh();
+
+				echo("Refreshed Page");
+			}
+
+			LexiconEntry.viewEntryName(rowEntry = "Auth0");
 		}
 
 		task ("Logout and login with OpenID Connect") {
@@ -665,6 +734,29 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~Azure.config");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			while (IsElementNotPresent(key_rowEntry = "Azure", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+				// Pausing due to LRQA-78807, waiting for the config file deploy.
+
+				Pause(locator1 = "1000");
+
+				Refresh();
+
+				echo("Refreshed Page");
+			}
+
+			LexiconEntry.viewEntryName(rowEntry = "Azure");
 		}
 
 		task ("Logout and login with OpenID Connect") {
@@ -730,6 +822,29 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~PingOne.config");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			while (IsElementNotPresent(key_rowEntry = "PingOne", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+				// Pausing due to LRQA-78807, waiting for the config file deploy.
+
+				Pause(locator1 = "1000");
+
+				Refresh();
+
+				echo("Refreshed Page");
+			}
+
+			LexiconEntry.viewEntryName(rowEntry = "PingOne");
 		}
 
 		task ("Logout and login with OpenID Connect") {
@@ -1166,6 +1281,29 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~KeycloakPKCE.config");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			while (IsElementNotPresent(key_rowEntry = "liferay-pkce", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+				// Pausing due to LRQA-78807, waiting for the config file deploy.
+
+				Pause(locator1 = "1000");
+
+				Refresh();
+
+				echo("Refreshed Page");
+			}
+
+			LexiconEntry.viewEntryName(rowEntry = "liferay-pkce");
 		}
 
 		User.logoutPG();
@@ -1198,6 +1336,29 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			while (IsElementNotPresent(key_rowEntry = "liferay-system-level", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+				// Pausing due to LRQA-78807, waiting for the config file deploy.
+
+				Pause(locator1 = "1000");
+
+				Refresh();
+
+				echo("Refreshed Page");
+			}
+
+			LexiconEntry.viewEntryName(rowEntry = "liferay-system-level");
 		}
 
 		User.logoutPG();

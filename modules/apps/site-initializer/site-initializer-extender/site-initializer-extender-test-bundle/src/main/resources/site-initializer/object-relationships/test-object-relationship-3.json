@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Test Object Relationship 3"
+	},
+	"name": "accountEntryToTestObjectDefinition4",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestObjectDefinition4$]",
+	"objectDefinitionName2": "TestObjectDefinition4",
+	"type": "oneToMany"
+}

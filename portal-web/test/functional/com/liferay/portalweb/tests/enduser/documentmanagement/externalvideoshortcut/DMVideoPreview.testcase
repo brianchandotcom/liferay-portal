@@ -43,7 +43,7 @@ definition {
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating Blog."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test AddBlogEntryWithEmbeddedVideo {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMVideoPreview#AddBlogEntryWithEmbeddedVideo";
@@ -59,9 +59,10 @@ definition {
 			videoShortcutTitle = "DM Video Title In Site",
 			viewInternalVideoPreview = "true");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryCP(
 			embedVideo = "true",
@@ -101,7 +102,7 @@ definition {
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test AddWCWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DMVideoPreview#AddWCWithEmbeddedVideo";
 
@@ -120,9 +121,9 @@ definition {
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Site Name");
-
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		WebContent.addCP(
 			depotName = "Test Depot Name",
@@ -182,7 +183,7 @@ definition {
 
 	@description = "This test ensures that no internal video is not listed via item selector after disabling FFMPEG."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
 		property test.name.skip.portal.instance = "DMVideoPreview#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
 
@@ -192,9 +193,7 @@ definition {
 
 		PortletEntry.update();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 

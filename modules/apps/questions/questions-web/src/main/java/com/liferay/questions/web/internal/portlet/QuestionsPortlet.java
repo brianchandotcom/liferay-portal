@@ -137,9 +137,7 @@ public class QuestionsPortlet extends MVCPortlet {
 			Comparator.comparing(rank -> rank.split("=")[1])
 		).map(
 			rank -> rank.split("=")[0]
-		).orElse(
-			"Youngling"
-		);
+		).get();
 
 		Company company = themeDisplay.getCompany();
 

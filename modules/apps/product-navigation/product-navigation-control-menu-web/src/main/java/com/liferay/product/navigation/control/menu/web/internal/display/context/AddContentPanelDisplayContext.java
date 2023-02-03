@@ -56,12 +56,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceURL;
 
@@ -316,35 +314,37 @@ public class AddContentPanelDisplayContext {
 				_themeDisplay.getScopeGroupId(), _getClassNameIds(),
 				new long[0], null, null, _getRedirectURL());
 
-		Stream<AssetPublisherAddItemHolder> stream =
-			assetPublisherAddItemHolders.stream();
+		List<Map<String, Object>> list = new ArrayList<>();
 
-		return stream.map(
-			assetPublisherAddItemHolder -> HashMapBuilder.<String, Object>put(
-				"label", assetPublisherAddItemHolder.getModelResource()
-			).put(
-				"url",
-				() -> {
-					long curGroupId = _themeDisplay.getScopeGroupId();
+		for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
+				assetPublisherAddItemHolders) {
 
-					Group group = _themeDisplay.getScopeGroup();
+			list.add(
+				HashMapBuilder.<String, Object>put(
+					"label", assetPublisherAddItemHolder.getModelResource()
+				).put(
+					"url",
+					() -> {
+						long curGroupId = _themeDisplay.getScopeGroupId();
 
-					if (!group.isStagedPortlet(
-							assetPublisherAddItemHolder.getPortletId()) &&
-						!group.isStagedRemotely()) {
+						Group group = _themeDisplay.getScopeGroup();
 
-						curGroupId = group.getLiveGroupId();
+						if (!group.isStagedPortlet(
+								assetPublisherAddItemHolder.getPortletId()) &&
+							!group.isStagedRemotely()) {
+
+							curGroupId = group.getLiveGroupId();
+						}
+
+						return _assetHelper.getAddURLPopUp(
+							curGroupId, _themeDisplay.getPlid(),
+							assetPublisherAddItemHolder.getPortletURL(), false,
+							_themeDisplay.getLayout());
 					}
+				).build());
+		}
 
-					return _assetHelper.getAddURLPopUp(
-						curGroupId, _themeDisplay.getPlid(),
-						assetPublisherAddItemHolder.getPortletURL(), false,
-						_themeDisplay.getLayout());
-				}
-			).build()
-		).collect(
-			Collectors.toList()
-		);
+		return list;
 	}
 
 	private String _getAssetEntryTypeLabel(String className, long classTypeId) {
@@ -426,15 +426,18 @@ public class AddContentPanelDisplayContext {
 	}
 
 	private Map<String, String> _getLanguageDirection() {
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(
-			_themeDisplay.getScopeGroupId());
+		Map<String, String> map = new HashMap<>();
 
-		Stream<Locale> stream = locales.stream();
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(
+					_themeDisplay.getScopeGroupId())) {
 
-		return stream.collect(
-			Collectors.toMap(
-				LocaleUtil::toLanguageId,
-				locale -> LanguageUtil.get(locale, "lang.dir")));
+			map.put(
+				LocaleUtil.toLanguageId(locale),
+				LanguageUtil.get(locale, "lang.dir"));
+		}
+
+		return map;
 	}
 
 	private String _getRedirectURL() throws Exception {

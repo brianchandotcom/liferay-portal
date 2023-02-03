@@ -367,7 +367,7 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Reference
 	private CounterLocalService _counterLocalService;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference

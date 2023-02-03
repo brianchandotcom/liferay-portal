@@ -41,7 +41,7 @@ if (commerceShippingFixedOption != null) {
 	<liferay-ui:error exception="<%= CommerceShippingFixedOptionKeyException.class %>" message="please-enter-a-valid-key" />
 
 	<commerce-ui:panel>
-		<aui:input autoFocus="<%= true %>" bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
+		<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
 
 		<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="description" />
 

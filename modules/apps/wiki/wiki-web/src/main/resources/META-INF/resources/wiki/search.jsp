@@ -48,7 +48,6 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 
 	<div class="form-search">
 		<liferay-ui:input-search
-			autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 			placeholder='<%= LanguageUtil.get(request, "keywords") %>'
 			title='<%= LanguageUtil.get(request, "search-pages") %>'
 		/>

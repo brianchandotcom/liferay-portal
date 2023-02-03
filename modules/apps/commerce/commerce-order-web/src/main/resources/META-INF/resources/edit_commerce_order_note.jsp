@@ -45,7 +45,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-note"));
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autoFocus="<%= true %>" name="content" />
+					<aui:input name="content" />
 
 					<aui:input helpMessage="restricted-help" label="private" name="restricted" />
 				</aui:fieldset>

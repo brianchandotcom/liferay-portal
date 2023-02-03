@@ -57,7 +57,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			<liferay-ui:error exception="<%= DNSLookup.class %>" message="please-enter-a-valid-host-name-or-ip" />
 
 			<liferay-ui:input-search
-				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 				name="domain"
 			/>
 
@@ -91,7 +90,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			<liferay-ui:error exception="<%= Whois.class %>" message="an-unexpected-error-occurred" />
 
 			<liferay-ui:input-search
-				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 				name="domain"
 			/>
 

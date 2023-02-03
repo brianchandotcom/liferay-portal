@@ -24,7 +24,7 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 	title='<%= LanguageUtil.get(request, "create-new-option") %>'
 >
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
-		<aui:input autoFocus="<%= true %>" name="name" required="<%= true %>" type="text" />
+		<aui:input name="name" required="<%= true %>" type="text" />
 
 		<aui:select label="option-field-type" name="DDMFormFieldTypeName" required="<%= true %>" showEmptyOption="<%= true %>">
 

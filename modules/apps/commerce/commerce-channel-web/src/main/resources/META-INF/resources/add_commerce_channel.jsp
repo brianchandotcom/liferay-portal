@@ -47,7 +47,7 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 		<div class="lfr-form-content">
 			<aui:model-context bean="<%= commerceChannel %>" model="<%= CommerceChannel.class %>" />
 
-			<aui:input autoFocus="<%= true %>" disabled="<%= viewOnly %>" name="name" value="<%= name %>" />
+			<aui:input disabled="<%= viewOnly %>" name="name" value="<%= name %>" />
 
 			<aui:select label="currency" name="currencyCode" required="<%= true %>" title="currency">
 

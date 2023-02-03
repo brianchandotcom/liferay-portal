@@ -59,7 +59,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 					<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
 				</c:when>
 				<c:otherwise>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
+					<aui:input bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-frontend:fieldset>

@@ -82,7 +82,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 							<aui:input name="parentFolder" type="resource" value="<%= dlEditFolderDisplayContext.getParentFolderName() %>" />
 						</c:if>
 
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+						<aui:input name="name" />
 
 						<c:if test="<%= dlEditFolderDisplayContext.isShowDescription() %>">
 							<aui:input name="description" />

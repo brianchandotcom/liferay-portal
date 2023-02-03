@@ -52,7 +52,7 @@ String type = BeanParamUtil.getString(corEntry, renderRequest, "type", COREntryC
 			>
 				<div class="row">
 					<div class="col">
-						<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />
+						<aui:input label="name" name="name" required="<%= true %>" />
 					</div>
 
 					<div class="col-auto">

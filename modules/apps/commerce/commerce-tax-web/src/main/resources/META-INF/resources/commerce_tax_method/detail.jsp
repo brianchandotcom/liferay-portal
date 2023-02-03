@@ -40,7 +40,7 @@ if (commerceTaxMethod != null) {
 	<liferay-ui:error exception="<%= CommerceTaxMethodNameException.class %>" message="please-enter-a-valid-name" />
 
 	<commerce-ui:panel>
-		<aui:input autoFocus="<%= true %>" label="name" localized="<%= true %>" name="nameMapAsXML" type="text" value='<%= BeanParamUtil.getString(commerceTaxMethod, request, "name", commerceTaxMethodsDisplayContext.getCommerceTaxMethodEngineName(locale)) %>'>
+		<aui:input label="name" localized="<%= true %>" name="nameMapAsXML" type="text" value='<%= BeanParamUtil.getString(commerceTaxMethod, request, "name", commerceTaxMethodsDisplayContext.getCommerceTaxMethodEngineName(locale)) %>'>
 			<aui:validator name="required" />
 		</aui:input>
 

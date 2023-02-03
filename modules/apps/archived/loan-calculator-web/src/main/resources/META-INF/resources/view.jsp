@@ -60,7 +60,7 @@ double interestPaid = totalPaid - loanAmount;
 		>
 			<aui:fieldset>
 				<aui:field-wrapper>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="loanAmount" value="<%= integerFormat.format(loanAmount) %>" />
+					<aui:input name="loanAmount" value="<%= integerFormat.format(loanAmount) %>" />
 
 					<aui:input name="interestRate" value="<%= doubleFormat.format(interestRate) %>" />
 

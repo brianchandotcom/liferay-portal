@@ -77,7 +77,7 @@ renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
+			<aui:input name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 

@@ -50,7 +50,7 @@ if ((commerceOrderType != null) && (commerceOrderType.getExpirationDate() != nul
 			>
 				<div class="row">
 					<div class="col">
-						<aui:input autoFocus="<%= true %>" label="name" localized="<%= true %>" name="name" required="<%= true %>" />
+						<aui:input label="name" localized="<%= true %>" name="name" required="<%= true %>" />
 					</div>
 
 					<div class="col-auto">

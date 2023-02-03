@@ -83,7 +83,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 
 				<aui:input name="userComments" readonly="<%= true %>" type="textarea" value="<%= membershipRequest.getComments() %>" />
 
-				<aui:select autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="status" name="statusId">
+				<aui:select label="status" name="statusId">
 					<aui:option label="approve" value="<%= MembershipRequestConstants.STATUS_APPROVED %>" />
 					<aui:option label="deny" value="<%= MembershipRequestConstants.STATUS_DENIED %>" />
 				</aui:select>

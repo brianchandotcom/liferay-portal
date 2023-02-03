@@ -29,7 +29,7 @@
 		validateOnBlur="<%= false %>"
 	>
 		<liferay-frontend:edit-form-body>
-			<aui:input autoFocus="<%= true %>" label="please-provide-the-reason-for-your-request" name="justification" required="<%= true %>" />
+			<aui:input label="please-provide-the-reason-for-your-request" name="justification" required="<%= true %>" />
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>

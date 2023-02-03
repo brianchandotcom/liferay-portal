@@ -44,7 +44,6 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 			<aui:fieldset>
 				<aui:fieldset>
 					<liferay-ui:input-localized
-						autoFocus="<%= true %>"
 						cssClass="form-group"
 						name="name"
 						xml="<%= (country == null) ? StringPool.BLANK : country.getTitleMapAsXML() %>"

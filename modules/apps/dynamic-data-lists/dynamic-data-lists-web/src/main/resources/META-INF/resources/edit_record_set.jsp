@@ -98,7 +98,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 						</div>
 					</c:if>
 
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+					<aui:input name="name" />
 
 					<aui:input name="description" />
 

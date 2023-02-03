@@ -53,7 +53,6 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 			</label>
 
 			<liferay-ui:input-localized
-				autoFocus="<%= true %>"
 				cssClass="form-group"
 				name="title"
 				xml="<%= (region == null) ? StringPool.BLANK : region.getTitleMapAsXML() %>"

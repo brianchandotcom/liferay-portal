@@ -60,7 +60,6 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 						>
 							<div class="form-search input-append">
 								<liferay-ui:input-search
-									autoFocus="<%= true %>"
 									placeholder='<%= LanguageUtil.get(request, "keywords") %>'
 								/>
 							</div>

@@ -111,8 +111,7 @@ page import="java.util.Objects" %><%@
 page import="java.util.Set" %><%@
 page import="java.util.TreeSet" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

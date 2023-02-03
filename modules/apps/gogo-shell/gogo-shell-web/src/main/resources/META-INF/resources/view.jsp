@@ -43,7 +43,7 @@ String commandOutput = (String)SessionMessages.get(renderRequest, "commandOutput
 						message='<%= LanguageUtil.get(request, "command-will-only-be-executed-on-this-node") %>'
 					/>
 
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="command" prefix='<%= (String)SessionMessages.get(renderRequest, "prompt") %>' value='<%= (String)SessionMessages.get(renderRequest, "command") %>' />
+					<aui:input name="command" prefix='<%= (String)SessionMessages.get(renderRequest, "prompt") %>' value='<%= (String)SessionMessages.get(renderRequest, "command") %>' />
 				</aui:fieldset>
 			</div>
 		</div>

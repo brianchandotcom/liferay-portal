@@ -65,7 +65,7 @@ else {
 			<aui:model-context bean="<%= cpTaxCategory %>" model="<%= CPTaxCategory.class %>" />
 
 			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="name" />
+				<aui:input name="name" />
 
 				<aui:input name="description" />
 			</aui:fieldset>

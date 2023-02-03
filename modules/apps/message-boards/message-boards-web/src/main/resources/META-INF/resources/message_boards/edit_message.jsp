@@ -212,7 +212,7 @@ if (portletTitleBasedNavigation) {
 
 					<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="subject" value="<%= subject %>" />
+					<aui:input name="subject" value="<%= subject %>" />
 
 					<aui:field-wrapper cssClass="message-content">
 						<c:choose>

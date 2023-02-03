@@ -77,7 +77,7 @@ else {
 			<liferay-ui:error exception="<%= CPOptionKeyException.class %>" message="that-key-is-already-being-used" />
 
 			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="name" wrapperCssClass="commerce-product-option-title" />
+				<aui:input name="name" wrapperCssClass="commerce-product-option-title" />
 
 				<aui:input name="description" wrapperCssClass="commerce-product-option-description" />
 

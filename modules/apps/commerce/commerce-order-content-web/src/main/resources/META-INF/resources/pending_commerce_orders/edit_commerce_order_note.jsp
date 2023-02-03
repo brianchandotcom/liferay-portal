@@ -48,7 +48,7 @@ CommerceOrderNote commerceOrderNote = commerceOrderContentDisplayContext.getComm
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autoFocus="<%= true %>" name="content" />
+					<aui:input name="content" />
 
 					<c:if test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrderNote.getCommerceOrderId(), CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES) %>">
 						<aui:input helpMessage="restricted-help" label="private" name="restricted" />

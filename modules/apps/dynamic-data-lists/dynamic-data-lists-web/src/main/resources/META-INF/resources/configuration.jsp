@@ -82,7 +82,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 								>
 									<div class="form-search input-append">
 										<liferay-ui:input-search
-											autoFocus="<%= true %>"
 											placeholder='<%= LanguageUtil.get(request, "keywords") %>'
 										/>
 									</div>

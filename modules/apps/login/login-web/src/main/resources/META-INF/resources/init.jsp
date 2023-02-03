@@ -102,8 +102,6 @@ page import="com.liferay.portal.util.PropsValues" %>
 page import="java.util.Date" %><%@
 page import="java.util.TimeZone" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

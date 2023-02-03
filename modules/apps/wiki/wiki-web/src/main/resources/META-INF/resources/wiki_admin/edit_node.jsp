@@ -47,7 +47,7 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name">
+					<aui:input name="name">
 						<aui:validator errorMessage="please-enter-a-nonnumeric-name" name="custom">
 							function(val) {
 								return !/^\d+$/.test(val);

@@ -348,9 +348,12 @@ public class OracleDB extends BaseDB {
 
 	private static final int _SQL_STRING_SIZE = 4000;
 
+	private static final int _SQL_TYPE_BINARY_DOUBLE = 101;
+
 	private static final int[] _SQL_TYPES = {
-		Types.BLOB, Types.BLOB, Types.NUMERIC, Types.TIMESTAMP, Types.NUMERIC,
-		Types.NUMERIC, Types.NUMERIC, Types.VARCHAR, Types.CLOB, Types.VARCHAR
+		Types.BLOB, Types.BLOB, Types.NUMERIC, Types.TIMESTAMP,
+		_SQL_TYPE_BINARY_DOUBLE, Types.NUMERIC, Types.NUMERIC, Types.VARCHAR,
+		Types.CLOB, Types.VARCHAR
 	};
 
 	private static final int[] _SQL_VARCHAR_SIZES = {

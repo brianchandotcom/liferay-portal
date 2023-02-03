@@ -165,6 +165,53 @@ definition {
 				value1 = "Publications Description ${CURRENT_USERNAME} Edited");
 
 			Button.clickCancel();
+
+	@priority = "3"
+	test CannotCreatePublicationTemplateWithoutTemplateNameAndPublicationName {
+		task ("Go to Publications Template and click in the new template button") {
+			PublicationsTemplate.gotoPublicationTemplate();
+
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("Assert that the template name field is indeed blank and then assert that the create button is disabled") {
+			AssertTextEquals(
+				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
+				value1 = "");
+
+			AssertElementPresent(
+				locator1 = "Button#DISABLED_BUTTON",
+				value1 = "Create");
+		}
+
+		task ("Fill the template name field and assert that the create button is still disabled") {
+			Type(
+				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
+				value1 = "Template Name");
+
+			AssertElementPresent(
+				locator1 = "Button#DISABLED_BUTTON",
+				value1 = "Create");
+		}
+
+		task ("Clean the template field name and fill the Publication name field") {
+			PublicationsTemplate.expandPublicationInformation();
+
+			Type(
+				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
+				value1 = "");
+
+			AssertTextEquals(
+				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
+				value1 = "");
+
+			Type(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "Publication Name");
+
+			AssertElementPresent(
+				locator1 = "Button#DISABLED_BUTTON",
+				value1 = "Create");
 		}
 	}
 

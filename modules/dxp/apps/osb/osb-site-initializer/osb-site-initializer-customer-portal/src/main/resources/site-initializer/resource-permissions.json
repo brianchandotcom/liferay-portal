@@ -1,6 +1,15 @@
 [
 	{
 		"actionIds": [
+			"VIEW",
+			"VIEW_USERS"
+		],
+		"resourceName": "com.liferay.account.model.AccountEntry",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"VIEW_COMMERCE_ORDERS",
 			"VIEW_OPEN_COMMERCE_ORDERS"
 		],
@@ -22,15 +31,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.journal.model.JournalFolder",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.portal.kernel.model.User",
 		"roleName": "User",
 		"scope": "1"
 	},
@@ -305,5 +305,13 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TeamMembersInvitation$]",
 		"roleName": "Provisioning Admin",
 		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"MANAGE_ACCOUNTS"
+		],
+		"resourceName": "com.liferay.portal.kernel.model.Organization",
+		"roleName": "Organization User",
+		"scope": "3"
 	}
 ]

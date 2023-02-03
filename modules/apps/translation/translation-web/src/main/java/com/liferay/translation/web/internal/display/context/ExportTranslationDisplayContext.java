@@ -141,9 +141,7 @@ public class ExportTranslationDisplayContext {
 			() -> TransformUtil.transform(
 				_translationInfoItemFieldValuesExporterRegistry.
 					getTranslationInfoItemFieldValuesExporters(),
-				translationInfoItemFieldValuesExporter ->
-					_getExportFileFormatJSONObject(
-						translationInfoItemFieldValuesExporter))
+				this::_getExportFileFormatJSONObject)
 		).put(
 			"availableSourceLocales",
 			_getLocalesJSONArray(

@@ -36,14 +36,11 @@ page import="com.liferay.weather.web.internal.util.WeatherUtil" %>
 
 <%@ page import="java.util.Enumeration" %>
 
-<%@ page import="javax.portlet.ValidatorException" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.ValidatorException" %>
 
 <portlet:defineObjects />
 
 <%
-WindowState windowState = renderRequest.getWindowState();
-
 String apiKey = portletPreferences.getValue("apiKey", StringPool.BLANK);
 boolean fahrenheit = GetterUtil.getBoolean(portletPreferences.getValue("fahrenheit", StringPool.BLANK));
 String[] zips = portletPreferences.getValues("zips", new String[0]);

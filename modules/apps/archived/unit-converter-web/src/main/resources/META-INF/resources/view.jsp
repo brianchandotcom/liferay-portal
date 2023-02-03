@@ -314,12 +314,4 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 			}
 		);
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		var fromValue = Liferay.Util.getFormElement(form, 'fromValue');
-
-		if (fromValue) {
-			Liferay.Util.focusFormField(fromValue);
-		}
-	</c:if>
 </aui:script>

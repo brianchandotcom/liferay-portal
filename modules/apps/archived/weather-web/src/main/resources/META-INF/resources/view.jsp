@@ -72,12 +72,6 @@
 		</liferay-util:buffer>
 
 		<liferay-ui:message arguments="<%= messageArgument %>" key="powered-by-x" />
-
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm.q);
-			</aui:script>
-		</c:if>
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/html/portal/portlet_not_setup.jsp" />

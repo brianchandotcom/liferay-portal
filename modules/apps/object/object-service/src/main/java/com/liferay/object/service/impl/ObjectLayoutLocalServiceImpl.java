@@ -117,8 +117,7 @@ public class ObjectLayoutLocalServiceImpl
 
 		objectLayout.setObjectLayoutTabs(
 			_addObjectLayoutTabs(
-				user, objectDefinitionId, objectLayout.getObjectLayoutId(),
-				objectLayoutTabs));
+				user, objectDefinitionId, objectLayout, objectLayoutTabs));
 
 		return objectLayout;
 	}
@@ -266,8 +265,8 @@ public class ObjectLayoutLocalServiceImpl
 
 		objectLayout.setObjectLayoutTabs(
 			_addObjectLayoutTabs(
-				user, objectLayout.getObjectDefinitionId(),
-				objectLayout.getObjectLayoutId(), objectLayoutTabs));
+				user, objectLayout.getObjectDefinitionId(), objectLayout,
+				objectLayoutTabs));
 
 		return objectLayout;
 	}
@@ -430,21 +429,24 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	private List<ObjectLayoutTab> _addObjectLayoutTabs(
-			User user, long objectDefinitionId, long objectLayoutId,
+			User user, long objectDefinitionId, ObjectLayout objectLayout,
 			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
 		objectLayoutTabs = TransformUtil.unsafeTransform(
 			objectLayoutTabs,
 			objectLayoutTab -> _addObjectLayoutTab(
-				user, objectDefinitionId, objectLayoutId,
+				user, objectDefinitionId, objectLayout.getObjectLayoutId(),
 				objectLayoutTab.getObjectRelationshipId(),
 				objectLayoutTab.getNameMap(), objectLayoutTab.getPriority(),
 				objectLayoutTab.getObjectLayoutBoxes()));
 
-		registryObjectLayoutTabScreenNavigationCategory(
-			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId),
-			objectLayoutTabs);
+		if (objectLayout.isDefaultObjectLayout()) {
+			registryObjectLayoutTabScreenNavigationCategory(
+				_objectDefinitionPersistence.fetchByPrimaryKey(
+					objectDefinitionId),
+				objectLayoutTabs);
+		}
 
 		return objectLayoutTabs;
 	}

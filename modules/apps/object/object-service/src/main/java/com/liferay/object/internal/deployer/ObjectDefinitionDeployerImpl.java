@@ -373,17 +373,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return ReflectionUtil.throwException(portalException);
 		}
 
-		List<ObjectLayout> objectLayouts =
-			_objectLayoutLocalService.getObjectLayouts(
-				objectDefinition.getObjectDefinitionId());
+		try {
+			ObjectLayout objectLayout =
+				_objectLayoutLocalService.getDefaultObjectLayout(
+					objectDefinition.getObjectDefinitionId());
 
-		for (ObjectLayout objectLayout : objectLayouts) {
 			_objectLayoutLocalService.
 				registryObjectLayoutTabScreenNavigationCategory(
 					objectDefinition,
 					_objectLayoutTabLocalService.
 						getObjectLayoutObjectLayoutTabs(
 							objectLayout.getObjectLayoutId()));
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 
 		return serviceRegistrations;

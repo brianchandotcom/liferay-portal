@@ -17,7 +17,6 @@ package com.liferay.fragment.renderer.collection.filter.internal;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterRegistry;
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -70,9 +68,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				_getInfoFilterKey(fragmentRendererContext));
 
 		if ((fragmentCollectionFilter == null) &&
-			!Objects.equals(
-				fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)) {
+			!fragmentRendererContext.isEditMode()) {
 
 			return;
 		}

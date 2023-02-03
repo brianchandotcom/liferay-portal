@@ -187,28 +187,18 @@
 
 		<!-- Other fields -->
 
-		<column name="assetListEntryId" type="long" />
 		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
 		<column name="containerKey" type="String" />
 		<column name="containerType" type="long" />
 		<column name="key" type="String" />
 		<column name="plid" type="long" />
-		<column name="portletId" type="String" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
-		<finder name="AssetListEntryId" return-type="Collection">
-			<finder-column name="assetListEntryId" />
-		</finder>
 		<finder name="Plid" return-type="Collection">
 			<finder-column name="plid" />
-		</finder>
-		<finder name="A_C" return-type="Collection">
-			<finder-column name="assetListEntryId" />
-			<finder-column name="classNameId" />
 		</finder>
 		<finder name="CT_P" return-type="Collection">
 			<finder-column name="containerType" />

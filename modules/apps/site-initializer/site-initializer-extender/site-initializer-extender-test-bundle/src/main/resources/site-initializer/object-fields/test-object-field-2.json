@@ -1,15 +1,62 @@
 {
-	"DBType": "Integer",
-	"businessType": "Integer",
-	"externalReferenceCode": "TESTOBJECTFIELD2",
-	"indexed": false,
-	"indexedAsKeyword": false,
-	"label": {
-		"en_US": "integerTestField"
-	},
-	"listTypeDefinitionId": 0,
-	"name": "integerTestField",
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]",
-	"required": false,
-	"state": false
+	"object-field": [
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "TESTOBJECTFIELD2",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "integerTestField"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "integerTestField",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "testOR2"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "id"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				}
+			],
+			"required": false,
+			"state": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "TESTOBJECTFIELD1",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "aggregationTestField"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "aggregationTestField",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "testOR2"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "id"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				}
+			],
+			"required": false,
+			"state": false
+		}
+	]
 }

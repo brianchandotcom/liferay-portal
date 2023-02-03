@@ -12,7 +12,7 @@
  * details.
  */
 
-import {hasRestrictedFormParent} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/hasRestrictedFormParent';
+import {hasRestrictedParent} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/hasRestrictedParent';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -63,24 +63,24 @@ const DEFAULT_LAYOUT_DATA = {
 	},
 };
 
-describe('hasRestrictedFormParent', () => {
+describe('hasRestrictedParent', () => {
 	it('checks if the item has a form parent mapped to a item with permissions', () => {
 		expect(
-			hasRestrictedFormParent(
+			hasRestrictedParent(
 				DEFAULT_LAYOUT_DATA.items.fragment1,
 				DEFAULT_LAYOUT_DATA
 			)
 		).toBe(true);
 
 		expect(
-			hasRestrictedFormParent(
+			hasRestrictedParent(
 				DEFAULT_LAYOUT_DATA.items.fragment2,
 				DEFAULT_LAYOUT_DATA
 			)
 		).toBe(true);
 
 		expect(
-			hasRestrictedFormParent(DEFAULT_LAYOUT_DATA.items.fragment1, {
+			hasRestrictedParent(DEFAULT_LAYOUT_DATA.items.fragment1, {
 				items: {
 					...DEFAULT_LAYOUT_DATA.items,
 					form: {

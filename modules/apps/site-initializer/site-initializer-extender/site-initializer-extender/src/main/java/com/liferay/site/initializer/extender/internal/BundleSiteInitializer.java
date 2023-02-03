@@ -102,6 +102,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1332,17 +1333,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (Map.Entry<String, ObjectDefinition> entry :
 				accountEntryRestrictedObjectDefinitionMap.entrySet()) {
 
-			ObjectDefinition objectDefinition = entry.getValue();
+			com.liferay.object.model.ObjectDefinition
+				objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_" + entry.getKey());
 
-			com.liferay.object.model.ObjectField localServiceObjectField =
-				_objectFieldLocalService.fetchObjectField(
-					objectDefinition.getId(),
-					objectDefinition.
-						getAccountEntryRestrictedObjectFieldName());
+			com.liferay.object.model.ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					getObjectRelationshipByObjectDefinitionId(
+				objectDefinition.getObjectDefinitionId(),
+						"accountEntryTo" + objectDefinition.getShortName());
 
 			_objectDefinitionLocalService.
-				restrictObjectDefinitionByAccountEntry(
-					objectDefinition.getId(), localServiceObjectField);
+					restrictObjectDefinitionByAccountEntry(
+						objectDefinition.getObjectDefinitionId(),
+						objectRelationship);
 		}
 
 		_invoke(

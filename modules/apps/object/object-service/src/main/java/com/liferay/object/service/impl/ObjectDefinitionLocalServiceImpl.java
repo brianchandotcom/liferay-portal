@@ -593,11 +593,15 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition restrictObjectDefinitionByAccountEntry(
-			long objectDefinitionId, ObjectField objectField)
+			long objectDefinitionId, com.liferay.object.model.ObjectRelationship
+		objectRelationship)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			objectDefinitionId);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
 
 		if ((objectDefinition != null) &&
 			!objectDefinition.isAccountEntryRestricted() &&

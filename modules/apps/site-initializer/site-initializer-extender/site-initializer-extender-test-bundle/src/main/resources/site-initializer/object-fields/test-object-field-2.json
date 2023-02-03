@@ -1,5 +1,4 @@
 {
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]",
 	"object-field": [
 		{
 			"DBType": "String",
@@ -58,5 +57,6 @@
 			"required": false,
 			"state": false
 		}
-	]
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]"
 }

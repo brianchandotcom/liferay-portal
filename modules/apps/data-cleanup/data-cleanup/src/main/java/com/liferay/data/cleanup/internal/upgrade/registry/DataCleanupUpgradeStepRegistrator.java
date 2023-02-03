@@ -56,6 +56,7 @@ import java.util.function.Supplier;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -66,6 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration",
 		"com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration"
 	},
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = UpgradeStepRegistrator.class
 )
 public class DataCleanupUpgradeStepRegistrator

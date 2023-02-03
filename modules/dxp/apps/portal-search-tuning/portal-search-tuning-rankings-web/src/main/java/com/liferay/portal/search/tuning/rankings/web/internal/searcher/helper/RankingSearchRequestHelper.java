@@ -42,7 +42,12 @@ public class RankingSearchRequestHelper {
 		List<ComplexQueryPart> complexQueryParts =
 			_getPinnedDocumentIdsQueryParts(ranking);
 
-		complexQueryParts.add(_getHiddenDocumentIdsQueryPart(ranking));
+		ComplexQueryPart complexQueryPart = _getHiddenDocumentIdsQueryPart(
+			ranking);
+
+		if (complexQueryPart != null) {
+			complexQueryParts.add(complexQueryPart);
+		}
 
 		complexQueryParts.forEach(searchRequestBuilder::addComplexQueryPart);
 	}

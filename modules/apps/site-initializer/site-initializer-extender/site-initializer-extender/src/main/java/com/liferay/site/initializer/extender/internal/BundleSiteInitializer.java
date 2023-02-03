@@ -2790,7 +2790,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 			long objectDefinitionId = GetterUtil.getLong(
-				(String) jsonObject.remove("objectDefinitionId"));
+				(String)jsonObject.remove("objectDefinitionId"));
 
 			JSONArray jsonArray = jsonObject.getJSONArray("object-field");
 
@@ -2806,8 +2806,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				if (objectField == null) {
 					_log.error(
-						"Unable to transform object field from JSON: " +
-						json);
+						"Unable to transform object field from JSON: " + json);
 
 					continue;
 				}

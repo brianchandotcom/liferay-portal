@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -61,19 +62,43 @@ public class TaxonomyCategoryResourceTest
 
 		AssetVocabulary assetVocabulary = _createAssetVocabulary();
 
+		taxonomyCategoryResource.patchTaxonomyCategory(
+			taxonomyCategory.getId(),
+			new TaxonomyCategory() {
+				{
+					taxonomyVocabularyId = assetVocabulary.getVocabularyId();
+				}
+			});
+
+		final TaxonomyCategory patchParentTaxonomyCategory =
+			taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+				assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+
 		TaxonomyCategory patchTaxonomyCategory =
 			taxonomyCategoryResource.patchTaxonomyCategory(
 				taxonomyCategory.getId(),
 				new TaxonomyCategory() {
 					{
-						taxonomyVocabularyId =
-							assetVocabulary.getVocabularyId();
+						parentTaxonomyCategory = new ParentTaxonomyCategory() {
+							{
+								setId(
+									Long.valueOf(
+										patchParentTaxonomyCategory.getId()));
+							}
+						};
 					}
 				});
 
 		Assert.assertEquals(
 			patchTaxonomyCategory.getTaxonomyVocabularyId(),
 			Long.valueOf(assetVocabulary.getVocabularyId()));
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			patchTaxonomyCategory.getParentTaxonomyCategory();
+
+		Assert.assertEquals(
+			parentTaxonomyCategory.getId(),
+			Long.valueOf(patchParentTaxonomyCategory.getId()));
 	}
 
 	@Override

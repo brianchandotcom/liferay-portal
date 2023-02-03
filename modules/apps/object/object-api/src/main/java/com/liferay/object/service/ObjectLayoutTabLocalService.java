@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -37,6 +38,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -77,6 +80,10 @@ public interface ObjectLayoutTabLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectLayoutTab addObjectLayoutTab(ObjectLayoutTab objectLayoutTab);
 
+	public ObjectLayoutTab addObjectLayoutTab(
+		User user, long objectLayoutId, long objectRelationshipId,
+		Map<Locale, String> nameMap, int priority);
+
 	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
 	 *
@@ -91,6 +98,8 @@ public interface ObjectLayoutTabLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId);
 
 	/**
 	 * Deletes the object layout tab with the primary key from the database. Also notifies the appropriate model listeners.
@@ -223,6 +232,10 @@ public interface ObjectLayoutTabLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectLayoutTab> getObjectLayoutObjectLayoutTabs(
+		long objectLayoutId);
 
 	/**
 	 * Returns the object layout tab with the primary key.

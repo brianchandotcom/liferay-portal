@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectLayoutTab. This utility wraps
@@ -61,6 +62,15 @@ public class ObjectLayoutTabLocalServiceUtil {
 		return getService().addObjectLayoutTab(objectLayoutTab);
 	}
 
+	public static ObjectLayoutTab addObjectLayoutTab(
+		com.liferay.portal.kernel.model.User user, long objectLayoutId,
+		long objectRelationshipId, Map<java.util.Locale, String> nameMap,
+		int priority) {
+
+		return getService().addObjectLayoutTab(
+			user, objectLayoutId, objectRelationshipId, nameMap, priority);
+	}
+
 	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
 	 *
@@ -81,6 +91,10 @@ public class ObjectLayoutTabLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId) {
+		getService().deleteObjectLayoutObjectLayoutTabs(objectLayoutId);
 	}
 
 	/**
@@ -248,6 +262,12 @@ public class ObjectLayoutTabLocalServiceUtil {
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static List<ObjectLayoutTab> getObjectLayoutObjectLayoutTabs(
+		long objectLayoutId) {
+
+		return getService().getObjectLayoutObjectLayoutTabs(objectLayoutId);
 	}
 
 	/**

@@ -54,6 +54,16 @@ public class ObjectLayoutTabLocalServiceWrapper
 		return _objectLayoutTabLocalService.addObjectLayoutTab(objectLayoutTab);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayoutTab addObjectLayoutTab(
+		com.liferay.portal.kernel.model.User user, long objectLayoutId,
+		long objectRelationshipId,
+		java.util.Map<java.util.Locale, String> nameMap, int priority) {
+
+		return _objectLayoutTabLocalService.addObjectLayoutTab(
+			user, objectLayoutId, objectRelationshipId, nameMap, priority);
+	}
+
 	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
 	 *
@@ -77,6 +87,12 @@ public class ObjectLayoutTabLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectLayoutTabLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId) {
+		_objectLayoutTabLocalService.deleteObjectLayoutObjectLayoutTabs(
+			objectLayoutId);
 	}
 
 	/**
@@ -278,6 +294,14 @@ public class ObjectLayoutTabLocalServiceWrapper
 
 		return _objectLayoutTabLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayoutTab>
+		getObjectLayoutObjectLayoutTabs(long objectLayoutId) {
+
+		return _objectLayoutTabLocalService.getObjectLayoutObjectLayoutTabs(
+			objectLayoutId);
 	}
 
 	/**

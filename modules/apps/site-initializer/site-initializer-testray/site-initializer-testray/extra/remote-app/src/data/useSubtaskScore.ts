@@ -21,44 +21,44 @@ import {
 } from '../services/rest';
 import {TaskStatuses} from '../util/statuses';
 
-const useSubtaskScore = (task: TestrayTask, userId: number) => {
-	const {data: testraySubtasksToUsers} = useFetch<
-		APIResponse<TestraySubTask>
-	>(testraySubTaskImpl.resource, {
-		params: {
-			fields: 'r_userToSubtasks_userId,dueStatus,score',
-			pageSize: 9999,
-		},
-	});
-
-	const subtaskAssignedToMe = testraySubtasksToUsers?.items
-		.filter(
-			(subtask: TestraySubTask) =>
-				subtask.r_userToSubtasks_userId === userId &&
-				subtask.dueStatus.key === TaskStatuses.COMPLETE
-		)
-		.map((subtask) => subtask.score)
-		.reduce((prevValue, nextValue) => prevValue + nextValue, 0);
-
-	const subtaskAssignedToOthers = testraySubtasksToUsers?.items
-		.filter(
-			(subtask: TestraySubTask) =>
-				subtask.r_userToSubtasks_userId !== userId &&
-				subtask.dueStatus.key === TaskStatuses.COMPLETE
-		)
-		.map((subtask) => subtask.score)
-		.reduce((prevValue, nextValue) => prevValue + nextValue, 0);
-
+const useSubtaskScore = ({
+	testrayTask,
+	userId,
+}: {
+	testrayTask: TestrayTask;
+	userId: number;
+}) => {
 	const progressScore = {
-		completed: task.subtaskScoreCompleted,
-		incomplete: task.subtaskScoreSelfIncomplete,
-		othersCompleted: subtaskAssignedToOthers,
-		selfCompleted: subtaskAssignedToMe,
+		completed: testrayTask.subtaskScoreCompleted,
+		incomplete: testrayTask.subtaskScoreSelfIncomplete,
+		othersCompleted: 0,
+		selfCompleted: 0,
 	};
 
-	return {
-		progressScore,
-	};
+	const {data: testraySubtasks} = useFetch<APIResponse<TestraySubTask>>(
+		testraySubTaskImpl.resource,
+		{
+			params: {
+				fields: 'r_userToSubtasks_userId,dueStatus,score',
+				pageSize: 999,
+			},
+		}
+	);
+
+	for (const subtask of testraySubtasks?.items ?? []) {
+		if (subtask.dueStatus.key !== TaskStatuses.COMPLETE) {
+			continue;
+		}
+
+		const property =
+			subtask.r_userToSubtasks_userId === userId
+				? 'selfCompleted'
+				: 'othersCompleted';
+
+		progressScore[property] += subtask.score;
+	}
+
+	return progressScore;
 };
 
 export default useSubtaskScore;

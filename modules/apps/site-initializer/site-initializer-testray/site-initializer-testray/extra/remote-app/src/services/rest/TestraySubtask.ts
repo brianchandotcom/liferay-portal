@@ -15,7 +15,7 @@
 import yupSchema from '../../schema/yup';
 import {waitTimeout} from '../../util';
 import {searchUtil} from '../../util/search';
-import {SubTaskStatuses} from '../../util/statuses';
+import {CaseResultStatuses, SubTaskStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import {liferayMessageBoardImpl} from './LiferayMessageBoard';
 import Rest from './Rest';
@@ -104,6 +104,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		await testrayCaseResultImpl.updateBatch(
 			caseResultIds,
 			caseResultIds.map(() => ({
+				dueStatus: CaseResultStatuses.IN_PROGRESS,
 				userId,
 			}))
 		);

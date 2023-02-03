@@ -90,10 +90,10 @@ const TestFlowTasks = () => {
 		donut: {columns},
 	} = useCaseResultGroupBy(testrayTask?.build?.id);
 
-	const {progressScore} = useSubtaskScore(
+	const subtaskScore = useSubtaskScore({
 		testrayTask,
-		myUserAccount?.id as number
-	);
+		userId: myUserAccount?.id as number,
+	});
 
 	if (!testrayTask) {
 		return <Loading />;
@@ -273,20 +273,20 @@ const TestFlowTasks = () => {
 						items={[
 							[
 								StatusesProgressScore.SELF,
-								Number(progressScore.selfCompleted ?? 0),
+								Number(subtaskScore.selfCompleted ?? 0),
 							],
 							[
 								StatusesProgressScore.OTHER,
-								Number(progressScore.othersCompleted ?? 0),
+								Number(subtaskScore.othersCompleted ?? 0),
 							],
 							[
 								StatusesProgressScore.INCOMPLETE,
-								Number(progressScore.incomplete ?? 0),
+								Number(subtaskScore.incomplete ?? 0),
 							],
 						]}
 						legend
 						taskbarClassNames={chartClassNames}
-						totalCompleted={Number(progressScore.completed ?? 0)}
+						totalCompleted={Number(subtaskScore.completed ?? 0)}
 					/>
 				</div>
 			</Container>

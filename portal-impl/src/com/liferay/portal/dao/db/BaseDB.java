@@ -267,21 +267,29 @@ public abstract class BaseDB implements DB {
 		String normalizedTableName = dbInspector.normalizeName(
 			tableName, databaseMetaData);
 
-		String[] columnNames = new String[0];
+		ArrayList<PrimaryKey> primaryKeys = new ArrayList<>();
 
 		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
 				dbInspector.getCatalog(), dbInspector.getSchema(),
 				normalizedTableName)) {
 
 			while (resultSet.next()) {
-				columnNames = ArrayUtil.append(
-					columnNames,
-					dbInspector.normalizeName(
-						resultSet.getString("COLUMN_NAME"), databaseMetaData));
+				primaryKeys.add(
+					new PrimaryKey(
+						dbInspector.normalizeName(
+							resultSet.getString("COLUMN_NAME"),
+							databaseMetaData),
+						resultSet.getInt("KEY_SEQ")));
 			}
 		}
 
-		return columnNames;
+		String[] columnNamesStrings = new String[primaryKeys.size()];
+
+		for (PrimaryKey primaryKey : primaryKeys) {
+			columnNamesStrings[primaryKey._keySeq - 1] = primaryKey._columnName;
+		}
+
+		return columnNamesStrings;
 	}
 
 	@Override
@@ -1117,5 +1125,17 @@ public abstract class BaseDB implements DB {
 	private final Map<String, Integer> _sqlVarcharSizes = new HashMap<>();
 	private boolean _supportsStringCaseSensitiveQuery = true;
 	private final Map<String, String> _templates = new HashMap<>();
+
+	private static class PrimaryKey {
+
+		private PrimaryKey(String columnName, int keySeq) {
+			_columnName = columnName;
+			_keySeq = keySeq;
+		}
+
+		private final String _columnName;
+		private final int _keySeq;
+
+	}
 
 }

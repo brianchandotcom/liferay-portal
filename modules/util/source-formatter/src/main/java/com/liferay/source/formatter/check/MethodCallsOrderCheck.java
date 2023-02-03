@@ -470,7 +470,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _typeNamePattern = Pattern.compile(
-		"(\\A|\\W)(\\w+)\\.(<[<>\\[\\],\\s\\.\\w\\?]+>)?\\w+\\(");
+		"(\\A|\\W)(\\w+)\\.(<[\\w\\[\\]\\?<>, ]*>)?\\w+\\(");
 
 	private class MethodCallComparator extends ParameterNameComparator {
 

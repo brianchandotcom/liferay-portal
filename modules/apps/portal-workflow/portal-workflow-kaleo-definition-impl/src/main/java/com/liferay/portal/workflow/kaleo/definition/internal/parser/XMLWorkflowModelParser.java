@@ -116,7 +116,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		Element rootElement = document.getRootElement();
 
 		String name = rootElement.elementTextTrim("name");
-		String description = rootElement.elementTextTrim("description");
+		String description = rootElement.elementText("description");
 		int version = GetterUtil.getInteger(
 			rootElement.elementTextTrim("version"));
 
@@ -190,7 +190,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		for (Element actionElement : actionElements) {
 			String name = actionElement.elementTextTrim("name");
-			String description = actionElement.elementTextTrim("description");
+			String description = actionElement.elementText("description");
 			String executionType = actionElement.elementTextTrim(
 				"execution-type");
 			String script = actionElement.elementText("script");
@@ -330,7 +330,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		throws Exception {
 
 		String name = conditionElement.elementTextTrim("name");
-		String description = conditionElement.elementTextTrim("description");
+		String description = conditionElement.elementText("description");
 		String script = conditionElement.elementText("script");
 		String scriptLanguage = conditionElement.elementTextTrim(
 			"script-language");
@@ -370,7 +370,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	private Fork _parseFork(Element forkElement) throws Exception {
 		String name = forkElement.elementTextTrim("name");
-		String description = forkElement.elementTextTrim("description");
+		String description = forkElement.elementText("description");
 
 		Fork fork = new Fork(name, description);
 
@@ -391,7 +391,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	private Join _parseJoin(Element joinElement) throws Exception {
 		String name = joinElement.elementTextTrim("name");
-		String description = joinElement.elementTextTrim("description");
+		String description = joinElement.elementText("description");
 
 		Join join = new Join(name, description);
 
@@ -412,7 +412,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	private JoinXor _parseJoinXor(Element joinXorElement) throws Exception {
 		String name = joinXorElement.elementTextTrim("name");
-		String description = joinXorElement.elementTextTrim("description");
+		String description = joinXorElement.elementText("description");
 
 		JoinXor joinXor = new JoinXor(name, description);
 
@@ -461,11 +461,10 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		for (Element notificationElement : notificationElements) {
 			String name = notificationElement.elementTextTrim("name");
-			String description = notificationElement.elementTextTrim(
-				"description");
+			String description = notificationElement.elementText("description");
 			String executionType = notificationElement.elementTextTrim(
 				"execution-type");
-			String template = notificationElement.elementTextTrim("template");
+			String template = notificationElement.elementText("template");
 			String templateLanguage = notificationElement.elementTextTrim(
 				"template-language");
 
@@ -610,7 +609,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	private State _parseState(Element stateElement) throws Exception {
 		String name = stateElement.elementTextTrim("name");
-		String description = stateElement.elementTextTrim("description");
+		String description = stateElement.elementText("description");
 		boolean initial = GetterUtil.getBoolean(
 			stateElement.elementTextTrim("initial"));
 
@@ -633,7 +632,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	private Task _parseTask(Element taskElement) throws Exception {
 		String name = taskElement.elementTextTrim("name");
-		String description = taskElement.elementTextTrim("description");
+		String description = taskElement.elementText("description");
 
 		Task task = new Task(name, description);
 
@@ -681,7 +680,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 			TaskForm taskForm = new TaskForm(name, priority);
 
-			String description = taskFormElement.elementTextTrim("description");
+			String description = taskFormElement.elementText("description");
 
 			if (Validator.isNotNull(description)) {
 				taskForm.setDescription(description);
@@ -780,7 +779,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		throws Exception {
 
 		String name = timerElement.elementTextTrim("name");
-		String description = timerElement.elementTextTrim("description");
+		String description = timerElement.elementText("description");
 		boolean blocking = GetterUtil.getBoolean(
 			timerElement.elementTextTrim("blocking"), !taskTimer);
 

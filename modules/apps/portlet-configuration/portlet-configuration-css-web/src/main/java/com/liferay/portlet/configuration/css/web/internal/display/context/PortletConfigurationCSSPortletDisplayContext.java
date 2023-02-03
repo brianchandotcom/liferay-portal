@@ -42,8 +42,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -317,17 +315,9 @@ public class PortletConfigurationCSSPortletDisplayContext {
 
 		Theme theme = themeDisplay.getTheme();
 
-		List<PortletDecorator> portletDecorators = theme.getPortletDecorators();
-
-		Stream<PortletDecorator> portletDecoratorsStream =
-			portletDecorators.stream();
-
-		List<PortletDecorator> filteredPortletDecorators =
-			portletDecoratorsStream.filter(
-				portletDecorator -> portletDecorator.isDefaultPortletDecorator()
-			).collect(
-				Collectors.toList()
-			);
+		List<PortletDecorator> filteredPortletDecorators = ListUtil.filter(
+			theme.getPortletDecorators(),
+			PortletDecorator::isDefaultPortletDecorator);
 
 		if (ListUtil.isEmpty(filteredPortletDecorators)) {
 			return StringPool.BLANK;

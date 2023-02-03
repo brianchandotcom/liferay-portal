@@ -17,14 +17,32 @@
 			"value": "testOR2"
 		},
 		{
-			"name": "objectFieldName",
-			"value": "id"
-		},
-		{
-			"name": "function",
-			"value": "SUM"
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "TESTOBJECTFIELD2",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "integerTestField"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "integerTestField",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "testOR2"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "id"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				}
+			],
+			"required": false,
+			"state": false
 		}
-	],
-	"required": false,
-	"state": false
+	]
 }

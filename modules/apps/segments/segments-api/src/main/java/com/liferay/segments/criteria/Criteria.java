@@ -167,10 +167,14 @@ public final class Criteria implements Serializable {
 
 	public enum Type {
 
-		CONTEXT("context"), MODEL("model"), REFERRED("referred");
+		ANALYTICS("analytics"), CONTEXT("context"), MODEL("model"),
+		REFERRED("referred");
 
 		public static Type parse(String value) {
-			if (Objects.equals(CONTEXT.getValue(), value)) {
+			if (Objects.equals(ANALYTICS.getValue(), value)) {
+				return ANALYTICS;
+			}
+			else if (Objects.equals(CONTEXT.getValue(), value)) {
 				return CONTEXT;
 			}
 			else if (Objects.equals(MODEL.getValue(), value)) {

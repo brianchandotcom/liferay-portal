@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.types = "tomcat";
+	property ci.retries.disabled = "true";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";

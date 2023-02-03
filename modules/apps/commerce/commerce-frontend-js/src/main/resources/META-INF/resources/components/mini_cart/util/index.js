@@ -132,11 +132,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 
 	let quantity;
 
-	if (parentProduct) {
-		quantity = minOrderQuantity;
-	}
-
-	if (!allowedOrderQuantities.length) {
+	if (parentProduct || !allowedOrderQuantities.length) {
 		quantity = minOrderQuantity;
 	}
 
@@ -168,7 +164,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 			quantity = 0;
 		}
 	}
-	else {
+	else if (allowedOrderQuantities.length) {
 		quantity = allowedOrderQuantities.find(
 			(quantity) =>
 				quantity > minOrderQuantity &&

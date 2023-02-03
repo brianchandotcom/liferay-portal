@@ -362,6 +362,10 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			"HashMapDictionaryBuilder", "JSONObject", "JSONUtil", "SoyContext",
 			"TreeMapBuilder", "UnicodePropertiesBuilder");
 		content = _sortChainedMethodCalls(
+			content, "putAll", 1, "ConcurrentHashMapBuilder", "HashMapBuilder",
+			"HashMapDictionaryBuilder", "JSONUtil", "SoyContext",
+			"TreeMapBuilder", "UnicodePropertiesBuilder");
+		content = _sortChainedMethodCalls(
 			content, "setParameter", 2, "PortletURLBuilder");
 
 		content = _sortMethodCallsByMethodName(

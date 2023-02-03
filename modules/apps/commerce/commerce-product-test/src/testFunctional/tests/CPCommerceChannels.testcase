@@ -154,7 +154,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test AddANewDefaultPaymentMethod {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8534 AddANewDefaultPaymentMethod pending implementation
 
@@ -396,9 +395,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6120. AddTaxRateSettingsByAddressTaxCalculation"
-	@priority = 3
+	@priority = "5"
 	test AddTaxRateSettingsByAddressTaxCalculation {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -472,9 +471,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6123. AddTaxRateSettingsFixedTaxRateTaxCalculation"
-	@priority = 3
+	@priority = "5"
 	test AddTaxRateSettingsFixedTaxRateTaxCalculation {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -663,7 +662,7 @@ definition {
 	}
 
 	@description = "Verify users without edit permission cannot change the currency of a channel."
-	@priority = 3
+	@priority = "5"
 	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -824,6 +823,7 @@ definition {
 	@description = "Test for COMMERCE-9432 | Can paginate Payment and Shipping Restrictions pages"
 	@priority = 3
 	test CanPaginatePaymentAndShippingRestrictions {
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#CanPaginatePaymentAndShippingRestrictions";
 
 		task ("Given the admin navigates to 'Minium Portal' channel") {
@@ -892,7 +892,7 @@ definition {
 	}
 
 	@description = "Verify users can set and edit delivery term eligibility for shipping options."
-	@priority = 3
+	@priority = "5"
 	test CanSetAndEditDeliveryTermsEligibility {
 		property portal.acceptance = "true";
 
@@ -961,6 +961,7 @@ definition {
 	@priority = 3
 	test CanUserWithChannelViewPermissionSeeChannelEntries {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
 
 		task ("Given the User role has all the required permissions to see the product and channel") {
 			CommercePermissions.defineChannelPermissionsViaJSONAPI(
@@ -1102,7 +1103,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8539 CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel pending implementation
 
@@ -1112,7 +1112,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsNotPresentIntoOrderType {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8536 CompleteCheckoutWhereDefaultPaymentMethodIsNotPresentIntoOrderType pending implementation
 
@@ -1122,7 +1121,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderType {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8537 CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderType pending implementation
 
@@ -1132,7 +1130,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderTypeButDisabledIntoChannel {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8538 CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderTypeButDisabledIntoChannel pending implementation
 
@@ -1142,7 +1139,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CompleteCheckoutWithDefaultPaymentMethod {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8535 CompleteCheckoutWithDefaultPaymentMethod pending implementation
 
@@ -1178,7 +1174,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6102. CreateNewChannelCompileAll"
-	@priority = 3
+	@priority = "5"
 	test CreateNewChannelCompileAll {
 		property portal.acceptance = "true";
 
@@ -1299,7 +1295,7 @@ definition {
 	}
 
 	test CreateNewNotificationTemplate {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -1332,7 +1328,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test DeactivatePaymentMethodLinkedToAnAccount {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8545 DeactivatePaymentMethodLinkedToAnAccount pending implementation
 
@@ -1641,7 +1636,7 @@ definition {
 	}
 
 	@description = "Verify users can configure payment method eligibility to specific payment terms."
-	@priority = 3
+	@priority = "5"
 	test PaymentMethodEligibleForSpecificPaymentTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1738,7 +1733,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6270. RemoveNotificationQueue"
-	@priority = 3
+	@priority = "5"
 	test RemoveNotificationQueue {
 		property portal.acceptance = "true";
 
@@ -2240,9 +2235,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8386. SearchProductDisplayPage"
-	@priority = 3
+	@priority = "5"
 	test SearchProductDisplayPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -2304,7 +2299,7 @@ definition {
 	}
 
 	@description = "Verify users can set and edit payment term eligibility for payment methods."
-	@priority = 3
+	@priority = "5"
 	test SetAndEditPaymentMethodTermElgibility {
 		property portal.acceptance = "true";
 
@@ -2350,10 +2345,10 @@ definition {
 	}
 
 	@description = "Verify all shipping options are available when orders are made using different order types given shipping option eligibility is set to All Order Types."
-	@priority = 3
+	@priority = "5"
 	test ShippingOptionEligibleForAnyOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -2467,7 +2462,7 @@ definition {
 	}
 
 	@description = "Verify users can configure shipping option eligibility to specific delivery terms."
-	@priority = 3
+	@priority = "5"
 	test ShippingOptionEligibleForSpecificDeliveryTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2559,7 +2554,7 @@ definition {
 	}
 
 	@description = "Verify users can configure shipping option eligibility to specific order types."
-	@priority = 3
+	@priority = "5"
 	test ShippingOptionEligibleForSpecificOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2680,9 +2675,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8300. The store admin can upload a custom jasper print template"
-	@priority = 3
+	@priority = "5"
 	test UploadCustomJasperPrintTemplate {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("When the sales channel detail page is reached") {
 			CommerceNavigator.gotoPortlet(
@@ -2713,7 +2708,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test UsePunchOut {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6267 UsePunchOut
 
@@ -2754,7 +2748,7 @@ definition {
 	@description = "This is a test for COMMERCE-6266. VerifyNotificationQueue"
 	@priority = 3
 	test VerifyNotificationQueue {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "false";
 
 		// TODO Review
 
@@ -2933,7 +2927,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8300. The buyer can view the order preview with the uploaded template"
-	@priority = 3
+	@priority = "5"
 	test ViewOrderPreviewWithJasperTemplate {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";

@@ -15,7 +15,7 @@ definition {
 	}
 
 	test ViewStoreFrontSimpleProduct {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

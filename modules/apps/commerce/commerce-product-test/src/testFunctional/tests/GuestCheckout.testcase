@@ -15,6 +15,7 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@priority = "5"
 	test AssertGuestCartIsTransferredToAccount {
 		property portal.acceptance = "true";
 
@@ -111,6 +112,7 @@ definition {
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 	}
 
+	@priority = "5"
 	test AssertGuestCartItemIsNotTransferredIfSkuIsAlreadyPresent {
 		property portal.acceptance = "true";
 
@@ -235,6 +237,7 @@ definition {
 			cartSummaryTotal = ${cartSummarySubtotal});
 	}
 
+	@priority = "5"
 	test AssertGuestCartItemIsTransferredToExistingCart {
 		property portal.acceptance = "true";
 
@@ -359,6 +362,7 @@ definition {
 			cartSummaryTotal = ${cartSummarySubtotal});
 	}
 
+	@priority = "5"
 	test AssertGuestCheckoutAuthenticationPage {
 		property portal.acceptance = "true";
 
@@ -407,6 +411,7 @@ definition {
 		GuestCheckout.assertGuestCheckoutAuthenticationPage();
 	}
 
+	@priority = "5"
 	test AssertGuestsWithSameEmailHaveDifferentAccounts {
 		property portal.acceptance = "true";
 
@@ -528,6 +533,7 @@ definition {
 			accountType = "Guest");
 	}
 
+	@priority = "5"
 	test AssertNewAccountIsCreatedAfterGuestCheckout {
 		property portal.acceptance = "true";
 
@@ -606,6 +612,7 @@ definition {
 			expected = "buyer@liferay.com");
 	}
 
+	@priority = "5"
 	test GuestAccountIsNotCombinedWithExistingUserAccount {
 		property portal.acceptance = "true";
 
@@ -771,6 +778,7 @@ definition {
 			accountType = "Guest");
 	}
 
+	@priority = "5"
 	test GuestCheckoutDisabled {
 		property portal.acceptance = "true";
 
@@ -797,6 +805,7 @@ definition {
 		CommerceAcceleratorsInitializer.viewEnabledAddToCartButton(productName = "U-Joint");
 	}
 
+	@priority = "5"
 	test GuestCheckoutEnabled {
 		property portal.acceptance = "true";
 
@@ -862,6 +871,7 @@ definition {
 			value1 = "Your order has been processed but not completed yet.");
 	}
 
+	@priority = "5"
 	test GuestCheckoutEnabledWithoutAuthenticationPage {
 		property portal.acceptance = "true";
 
@@ -910,8 +920,9 @@ definition {
 			shippingMethod = "Standard");
 	}
 
+	@priority = "5"
 	test GuestCheckoutWithNoShippableProduct {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
@@ -986,6 +997,7 @@ definition {
 			productUnitPrice = 24);
 	}
 
+	@priority = "5"
 	test GuestCheckoutWithShippableProduct {
 		property portal.acceptance = "true";
 
@@ -1045,6 +1057,7 @@ definition {
 			shippingMethod = "Standard");
 	}
 
+	@priority = "5"
 	test UserAccountIsNotCombinedWithExistingGuestAccount {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "GuestCheckout#UserAccountIsNotCombinedWithExistingGuestAccount";

@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "Verify a default payment method linked to an account is applied when that account completes the checkout process"
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutWithDefaultPaymentMethod {
 		property portal.acceptance = "true";
 
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "Verify the active payment method with the highest priority is applied to an order if the default payment method is linked to the order type of the order but is not enabled in the channel"
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutWithDefaultPaymentMethodDisabledAndEligibleForOrderType {
 		property portal.acceptance = "true";
 
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "Verify the default payment method is applied to an order if the order type is linked to the default payment method"
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutWithDefaultPaymentMethodEligibleForOrderType {
 		property portal.acceptance = "true";
 
@@ -462,7 +462,7 @@ definition {
 	}
 
 	@description = "Verify users can see the status of a default payment method linked to an account"
-	@priority = 3
+	@priority = "5"
 	test CanDeactivatePaymentMethodLinkedToAnAccount {
 		property portal.acceptance = "true";
 
@@ -516,7 +516,7 @@ definition {
 	}
 
 	@description = "Verify users can edit default payment method linked to an account"
-	@priority = 3
+	@priority = "5"
 	test CanEditDefaultPaymentMethod {
 		property portal.acceptance = "true";
 

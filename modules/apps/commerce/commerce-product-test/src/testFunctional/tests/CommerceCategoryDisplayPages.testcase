@@ -17,6 +17,8 @@ definition {
 	@description = "This is a test for COMMERCE-7843. Verify when a default page for categories is not set, the old logic is still applied"
 	@priority = 3
 	test AssertOldLogicIsAppliedIfDefaultCategoryDisplayPageIsNotSet {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -65,9 +67,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10322. Create a new Content Page, deploy the widget Categories Navigation, configure it with Minium as Vocabulary, and then verify if when the page is reached by the guest no errors are present"
-	@priority = 4
+	@priority = "5"
 	test CanGuestUserViewTheCategoriesNavigationWidgetWithoutErrors {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -198,7 +200,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7953. Verify user can select, change, and remove a default category display page override"
-	@priority = 3
+	@priority = "5"
 	test CanSelectChangeAndRemoveOverrideDefaultCategoryDisplayPage {
 		property portal.acceptance = "true";
 
@@ -295,8 +297,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7853. Verify user can override a default category display page for different categories"
-	@priority = 4
+	@priority = "5"
 	test OverrideDefaultCategoryDisplayPageForDifferentCategories {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -494,8 +498,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7852. Verify user can override a private default category display page with another private page"
-	@priority = 3
+	@priority = "5"
 	test OverridePrivateDefaultCategoryDisplayPageWithAPrivatePage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -615,8 +621,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7851. Verify user can override a private default category display page with a public page"
-	@priority = 3
+	@priority = "5"
 	test OverridePrivateDefaultCategoryDisplayPageWithAPublicPage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -740,8 +748,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7850. Verify user can override a public default category display page with a private page"
-	@priority = 3
+	@priority = "5"
 	test OverridePublicDefaultCategoryDisplayPageWithAPrivatePage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -865,7 +875,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7849. Verify user can override a public default category display page with a public page"
-	@priority = 3
+	@priority = "5"
 	test OverridePublicDefaultCategoryDisplayPageWithAPublicPage {
 		property portal.acceptance = "true";
 
@@ -987,8 +997,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7846. Create a private widget page and a private content page with a Category Content widget and define it as the default category display page, and then try if it works on the front."
-	@priority = 3
+	@priority = "5"
 	test ViewDefaultCategoryDisplayPageWithPrivateWidgetAndContentPages {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -1111,9 +1123,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7844. Create a public widget page and a public content page with a Category Content widget and define it as the default category display page, and then try if it works on the front"
-	@priority = 3
+	@priority = "5"
 	test ViewDefaultCategoryDisplayPageWithPublicWidgetAndContentPages {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

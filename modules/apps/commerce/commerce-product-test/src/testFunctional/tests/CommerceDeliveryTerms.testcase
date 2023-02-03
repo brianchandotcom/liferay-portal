@@ -17,6 +17,8 @@ definition {
 	@description = "COMMERCE-9315. User can create a Delivery Term"
 	@priority = 3
 	test CanCreateDeliveryTerm {
+		property portal.acceptance = "false";
+
 		task ("Given the Sales Manager navigates to the Terms and Conditions page") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
@@ -42,8 +44,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9317. User can delete a Delivery Term"
-	@priority = 3
+	@priority = "5"
 	test CanDeleteDeliveryTerm {
+		property portal.acceptance = "true";
+
 		task ("Given an existing Delivery Terms entry") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
@@ -71,8 +75,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9316. User can edit a Delivery Term"
-	@priority = 3
+	@priority = "5"
 	test CanEditDeliveryTerm {
+		property portal.acceptance = "true";
+
 		task ("Given the Sales Manager navigates to the Terms and Conditions page") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
@@ -120,9 +126,9 @@ definition {
 	}
 
 	@description = "COMMERCE-9318. User can not add Delivery Terms with same priority"
-	@priority = 3
+	@priority = "5"
 	test DeliveryTermMustBeUnique {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an existing Delivery Terms entry with priority set as '1.0'") {
 			CommerceNavigator.gotoPortlet(

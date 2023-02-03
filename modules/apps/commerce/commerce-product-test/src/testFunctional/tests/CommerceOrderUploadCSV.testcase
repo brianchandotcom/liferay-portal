@@ -35,6 +35,8 @@ definition {
 	@description = "COMMERCE-7697 Verify user can download CSV template"
 	@priority = 3
 	test CanDownloadCSVTemplate {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -62,7 +64,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7706 Verify user can not upload a CSV with invalid quantity"
-	@priority = 3
+	@priority = "5"
 	test CannotUploadInvalidCSVOrderFile {
 		property portal.acceptance = "true";
 
@@ -115,6 +117,8 @@ definition {
 	@description = "COMMERCE-7704 Verify user cannot upload a CSV file with an invalid External Reference Code"
 	@priority = 3
 	test CannotUploadInvalidExternalReferenceCodeCSVFile {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -160,6 +164,8 @@ definition {
 	@description = "COMMERCE-7705 Verify user can not upload a CSV with invalid quantity"
 	@priority = 3
 	test CannotUploadInvalidQuantityCSVOrderFile {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -195,6 +201,8 @@ definition {
 	@description = "COMMERCE-7702 Verify user can not upload a CSV with invalid SkuID"
 	@priority = 3
 	test CannotUploadInvalidSkuIDCSVOrderFile {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -248,6 +256,8 @@ definition {
 	@description = "COMMERCE-7707 Verify user can not upload non CSV files"
 	@priority = 3
 	test CannotUploadNonCSVOrderFile {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -311,7 +321,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7699 Verify user can upload a valid CSV Order File"
-	@priority = 3
+	@priority = "5"
 	test CanUploadValidCSVOrderFile {
 		property portal.acceptance = "true";
 

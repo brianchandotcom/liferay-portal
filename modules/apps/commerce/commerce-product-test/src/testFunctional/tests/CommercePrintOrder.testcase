@@ -18,7 +18,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewBundledProductInOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7782 ViewBundledProductInOrderDetailsPrintPreview pending implementation
 
@@ -28,7 +27,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewDiscountedDeliveryInOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7788 ViewDiscountedDeliveryInOrderDetailsPrintPreview pending implementation
 
@@ -38,7 +36,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewDiscountedProductInOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7784 ViewDiscountedProductInOrderDetailsPrintPreview pending implementation
 
@@ -48,7 +45,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewDiscountedSubtotalInOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7785 ViewDiscountedSubtotalInOrderDetailsPrintPreview pending implementation
 
@@ -58,7 +54,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewDiscountedTotalInOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7786 ViewDiscountedTotalInOrderDetailsPrintPreview pending implementation
 
@@ -68,7 +63,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7780 ViewOrderDetailsPrintPreview pending implementation
 
@@ -78,7 +72,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewOrderDetailsPrintPreviewWithTaxApplied {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7781 ViewOrderDetailsPrintPreviewWithTaxApplied pending implementation
 
@@ -88,7 +81,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewProductWithPromotionInOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7787 ViewProductWithPromotionInOrderDetailsPrintPreview pending implementation
 
@@ -98,7 +90,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test ViewProductWithSubscriptionInOrderDetailsPrintPreview {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7783 ViewProductWithSubscriptionInOrderDetailsPrintPreview pending implementation
 

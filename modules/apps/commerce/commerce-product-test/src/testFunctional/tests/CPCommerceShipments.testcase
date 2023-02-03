@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6238. Add shipment items to a shipment"
-	@priority = 3
+	@priority = "5"
 	test AddItemsToShipment {
 		property portal.acceptance = "true";
 
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6248. It should not be possible to add non-shippable items to a shipment"
-	@priority = 3
+	@priority = "5"
 	test AssertAddingNonShippableItemToShipmentNotPossible {
 		property portal.acceptance = "true";
 
@@ -217,7 +217,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AssertProductShipmentInfoOverrideCPInstanceShipmentInfo {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6252 AssertProductShipmentInfoOverrideCPInstanceShipmentInfo Pending Implementation
 
@@ -227,14 +226,13 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AssertShipmentDimensionsIsCorrectlyCalculated {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6253 AssertShipmentDimensionsCorrectlyCalculated Pending Implementation
 
 	}
 
 	@description = "This is a test for COMMERCE-6249. Shipment items should be taken only from active warehouses"
-	@priority = 3
+	@priority = "5"
 	test AssertShipmentItemTakenFromActiveWarehouses {
 		property portal.acceptance = "true";
 
@@ -335,16 +333,15 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AssertShipmentWeightIsCorrectlyCalculated {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6254 AssertShipmentWeightIsCorrectlyCalculated Pending Implementation
 
 	}
 
 	@description = "This is a test for COMMERCE-6251. Delete shipment"
-	@priority = 3
+	@priority = "5"
 	test AssertShippedShipmentNotDeletable {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -897,9 +894,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9331 Shipments - Custom fields"
-	@priority = 3
+	@priority = "5"
 	test CanEditShipmentCustomFields {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1429,9 +1426,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8676 UI to show Shipment Item External Reference"
-	@priority = 3
+	@priority = "5"
 	test CanNotUseTheSameERCForDifferentShipmentItems {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1565,9 +1562,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8376 UI to show Shipment External Reference"
-	@priority = 3
+	@priority = "5"
 	test CanNotUseTheSameERCForDifferentShipments {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1748,7 +1745,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9917 | Add 2 items from different orders with different shipping methods selected to the same shipment and assert an info message is shown"
-	@priority = 3
+	@priority = "5"
 	test CanViewShipmentItemsDifferentShippingMethodsInfoMessage {
 		property portal.acceptance = "true";
 
@@ -1962,7 +1959,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"
-	@priority = 3
+	@priority = "5"
 	test CreateMultipleShipmentsForOneOrder {
 		property portal.acceptance = "true";
 
@@ -2069,9 +2066,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6237. Create a shipment from an order"
-	@priority = 3
+	@priority = "5"
 	test CreateOrderShipment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -2167,7 +2164,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6250. Delete shipment"
-	@priority = 3
+	@priority = "5"
 	test DeleteShipment {
 		property portal.acceptance = "true";
 
@@ -2241,7 +2238,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6241. Execute the shipment workflow"
-	@priority = 3
+	@priority = "5"
 	test ExecuteShipmentWorkflow {
 		property portal.acceptance = "true";
 
@@ -2394,14 +2391,13 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test FilterAndSortShipments {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6255 FilterAndSortShipments Pending Implementation
 
 	}
 
 	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"
-	@priority = 3
+	@priority = "5"
 	test RemoveItemFromShipment {
 		property portal.acceptance = "true";
 
@@ -2647,7 +2643,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6242. Update address"
-	@priority = 3
+	@priority = "5"
 	test UpdateShipmentAddress {
 		property portal.acceptance = "true";
 
@@ -2804,7 +2800,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"
-	@priority = 3
+	@priority = "5"
 	test UpdateShipmentItems {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceShipments#UpdateShipmentItems";
@@ -3079,7 +3075,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6245. Check that shipping amount is correctly calculated in the order"
-	@priority = 3
+	@priority = "5"
 	test ViewOrderShipmentAmountIsCorrect {
 		property portal.acceptance = "true";
 
@@ -3170,7 +3166,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6246. Check that shipping discount amount is correctly calculated in the order"
-	@priority = 3
+	@priority = "5"
 	test ViewOrderShipmentDiscountAmountIsCorrect {
 		property portal.acceptance = "true";
 

@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6226. Price Entry lifecycle"
-	@priority = 3
+	@priority = "5"
 	test AddEditAndDeletePriceEntry {
 		property portal.acceptance = "true";
 
@@ -599,16 +599,15 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AddEditAndDeleteTierPriceEntry {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6227 AddEditAndDeleteTierPriceEntry Pending Implementation
 
 	}
 
 	@description = "This is a test for COMMERCE-6234. Price List Qualifier Lifecycle"
-	@priority = 3
+	@priority = "5"
 	test AddEditAndRemovePLQualifier {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -740,9 +739,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6235. Product Group Lifecycle"
-	@priority = 3
+	@priority = "5"
 	test AddEditAndRemoveProductGroupFromPL {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1095,7 +1094,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8568. Verify multiple Price Entries can be set on the same Price List for the same SKU"
-	@priority = 3
+	@priority = "5"
 	test AllowMultiplePriceEntriesInTheSamePriceList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";
@@ -1320,8 +1319,9 @@ definition {
 			locator1 = "CommerceEntry#ITEM_FINDER_ENTRY_NAME");
 	}
 
+	@priority = "5"
 	test AssertPriceListCanBeAssociatedWithAccountAndAccountGroup {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		for (var entryNumber : list "1,2") {
@@ -1506,6 +1506,7 @@ definition {
 		Alert.viewSpecificRequiredField(fieldFieldLabel = "Currency");
 	}
 
+	@priority = "5"
 	test AssertPriceListIsAppliedToAllAssociatedAccounts {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -1867,7 +1868,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CheckOnlyPermittedCatalogIsSelectable {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6220 CheckOnlyPermittedCatalogIsSelectable Pending Implementation
 
@@ -1987,6 +1987,7 @@ definition {
 			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
+	@priority = "5"
 	test CreateNewPriceList {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -2404,7 +2405,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ViewExpiredPriceModifier {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6224 ViewExpiredPriceModifier Pending Implementation
 

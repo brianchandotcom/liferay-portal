@@ -56,7 +56,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AddASKU {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6021 AddASKU
 
@@ -124,7 +123,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
-	@priority = 3
+	@priority = "5"
 	test AddGroupedProduct {
 		property portal.acceptance = "true";
 
@@ -181,7 +180,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6020. AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic"
-	@priority = 3
+	@priority = "5"
 	test AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic {
 		property portal.acceptance = "true";
 
@@ -343,7 +342,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6912. Bulk delete Products"
-	@priority = 3
+	@priority = "5"
 	test BulkDeleteProducts {
 		property portal.acceptance = "true";
 
@@ -416,9 +415,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9189. CanCheckApprovedProductDuplication"
-	@priority = 3
+	@priority = "5"
 	test CanCheckApprovedProductDuplication {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -487,9 +486,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckApprovedProductStatusWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckApprovedProductWorkflowStatus {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
@@ -510,10 +509,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -610,9 +609,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckDeniedProductStatusWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckDeniedProductWorkflowStatus {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
@@ -694,7 +693,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9179. CanCheckDraftProductStatus"
-	@priority = 3
+	@priority = "5"
 	test CanCheckDraftProductStatus {
 		property portal.acceptance = "true";
 
@@ -760,10 +759,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
-	@priority = 3
+	@priority = "5"
 	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -881,10 +880,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -947,9 +946,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckExpiredProductStatusWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckExpiredProductWorkflowStatus {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
@@ -970,9 +969,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckInactiveProductStatusWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckInactiveProductWorkflowStatus {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
@@ -993,9 +992,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckIncompleteProductStatusWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckIncompleteProductWorkflowStatus {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
@@ -1062,10 +1061,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9292. CanCheckThePendingReviewStatusForSingleApproverWorkflow"
-	@priority = 3
+	@priority = "5"
 	test CanCheckPendingProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1485,9 +1484,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8850. Verify that the list of filters is reduced to only show matching results"
-	@priority = 3
+	@priority = "5"
 	test CanVerifyFiltersListShowsOnlyMatchingResults {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1530,14 +1529,13 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ConfigureGroupedProduct {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6747 ConfigureGroupedProduct
 
 	}
 
 	@description = "This is a test for COMMERCE-6751. ConfigureVirtualProduct"
-	@priority = 3
+	@priority = "5"
 	test ConfigureVirtualProduct {
 		property portal.acceptance = "true";
 
@@ -1633,8 +1631,9 @@ definition {
 			value1 = 10);
 	}
 
+	@priority = "5"
 	test CreateProductBundleWithPriceTypeDynamic {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -1719,9 +1718,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6018. CreateProductBundleWithPriceTypeStatic"
-	@priority = 3
+	@priority = "5"
 	test CreateProductBundleWithPriceTypeStatic {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -1873,9 +1872,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8425. DuplicateAProductAndVerifyIfSkuPriceIsUnique"
-	@priority = 3
+	@priority = "5"
 	test DuplicateAProductAndVerifyIfSkuPriceIsUnique {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1940,7 +1939,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5808. EditAProduct"
-	@priority = 3
+	@priority = "5"
 	test EditAProduct {
 		property portal.acceptance = "true";
 
@@ -1969,14 +1968,13 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test EditASKU {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6022 EditASKU
 
 	}
 
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
-	@priority = 3
+	@priority = "5"
 	test EditSkuAndDelete {
 		property portal.acceptance = "true";
 
@@ -2125,7 +2123,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
-	@priority = 3
+	@priority = "5"
 	test UseFilters {
 		property portal.acceptance = "true";
 
@@ -2229,9 +2227,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6304. UseFriendlyURL"
-	@priority = 3
+	@priority = "5"
 	test UseFriendlyURL {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -2268,9 +2266,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6303. UseSchedule"
-	@priority = 3
+	@priority = "5"
 	test UseSchedule {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -2395,7 +2393,6 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test VerifyIfCategorizationIsWorking {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-7075 VerifyIfCategorizationIsWorking
 

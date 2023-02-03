@@ -37,9 +37,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8646"
-	@priority = 4
+	@priority = "5"
 	test VerifyDisplayTemplate {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var packageQuantityTagNameList = "6,12,24,48,112";
 
@@ -111,6 +111,8 @@ definition {
 	@description = "This is a test for COMMERCE-8646."
 	@priority = 3
 	test VerifyMaxTermsFieldValue {
+		property portal.acceptance = "false";
+
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceWidget.updateFacetConfiguration(
@@ -124,6 +126,8 @@ definition {
 
 	@description = "This is for COMMERCE-8646."
 	test VerifyOptionFacetSetupTab {
+		property portal.acceptance = "false";
+
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		Portlet.gotoPortletOptions(
@@ -149,7 +153,10 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	@priority = "5"
 	test View100Terms {
+		property portal.acceptance = "true";
+
 		CommerceJSONOptionsAPI._addCommerceProductsWithOptionValues(
 			catalogName = "Minium",
 			optionKey = "package-quantity");

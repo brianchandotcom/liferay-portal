@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5866. Verify buyers can add products to their wish list from the product card."
-	@priority = 3
+	@priority = "5"
 	test AddProductToWishListFromProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5859. Verify the default channel currency is applied to product cards."
-	@priority = 3
+	@priority = "5"
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -115,10 +115,10 @@ definition {
 	}
 
 	@description = "COMMERCE-6657. The user is unable to add a bundled product(Price Type Dynamic) to cart directly as an admin and a buyer."
-	@priority = 3
+	@priority = "5"
 	test AssertDynamicPriceBundledProductCannotBeAddedToCartDirectly {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce Account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -250,7 +250,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5907. As a buyer, I want to be unable to add multiple SKU product to the cart directly, I want to be unable to select the quantity of the product directly and I want to be unable to check the availability of the product directly"
-	@priority = 3
+	@priority = "5"
 	test AssertMultipleSKUProductCannotBeDirectlyAddedToCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -444,7 +444,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6164. As a buyer I want to be able to add a product to the cart regardless of the availability, if back ordererabilty of that product is enabled"
-	@priority = 3
+	@priority = "5"
 	test AssertProductCanBeAddedToCartIfBackOrderIsEnabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -562,7 +562,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6163. As a buyer I don't want to be able to add a product to the cart if the product is not purchasable"
-	@priority = 3
+	@priority = "5"
 	test AssertProductCannotBeAddedToCartIfProductIsNotPurchasable {
 		property portal.acceptance = "true";
 
@@ -651,10 +651,10 @@ definition {
 	}
 
 	@description = "COMMERCE-5856. Verify buyers are redirected to the product details page when they click on a product card image."
-	@priority = 3
+	@priority = "5"
 	test AssertProductCardImageRedirectsToProductDetailsPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -757,10 +757,10 @@ definition {
 	}
 
 	@description = "COMMERCE-5857. Verify buyers can view the custom image that has been set for a product in the product card."
-	@priority = 3
+	@priority = "5"
 	test AssertProductCardShowsCustomImageIfSet {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -820,7 +820,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
-	@priority = 3
+	@priority = "5"
 	test AssertProductIsAvailable {
 		property portal.acceptance = "true";
 
@@ -851,9 +851,9 @@ definition {
 	}
 
 	@description = "COMMERCE-5861. As a buyer, I want to view the product name with the correct localization"
-	@priority = 3
+	@priority = "5"
 	test AssertProductNameIsTranslated {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -895,7 +895,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6318. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
-	@priority = 3
+	@priority = "5"
 	test AssertQuantityCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "true";
 
@@ -1046,10 +1046,10 @@ definition {
 	}
 
 	@description = "COMMERCE-6656. As a buyer, I want to be unable to add a bundled product(Price Type Static) to cart directly"
-	@priority = 3
+	@priority = "5"
 	test AssertStaticPriceBundledProductCannotBeAddedToCartDirectly {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce Account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -1186,7 +1186,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5873. As a buyer, I want to be able to navigate to the product detail page via primary CTA, to check its variants"
-	@priority = 3
+	@priority = "5"
 	test AssertViewAllVariantsButtonRedirectsToProductDetailsPage {
 		property portal.acceptance = "true";
 
@@ -1206,7 +1206,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5868. Verify buyers can compare products by selecting which products to compare from the catalog product cards."
-	@priority = 3
+	@priority = "5"
 	test CompareProductFromProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1379,7 +1379,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6193. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
-	@priority = 3
+	@priority = "5"
 	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
 		property portal.acceptance = "true";
 
@@ -1464,9 +1464,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6194. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
-	@priority = 3
+	@priority = "5"
 	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1556,7 +1556,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5864. Verify buyers can view a product's price on the product card."
-	@priority = 3
+	@priority = "5"
 	test ViewProductCardPrice {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1606,7 +1606,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6158. Verify buyers can see the barred list price and discount price of a product if a discount is set."
-	@priority = 3
+	@priority = "5"
 	test ViewProductCardPriceWithDiscount {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1682,7 +1682,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6157. Verify buyers can see the barred list price and a promo price of a product if a promotion is set."
-	@priority = 3
+	@priority = "5"
 	test ViewProductCardPriceWithPromotion {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1797,7 +1797,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5865. Verify buyers can view the starting price on a product card when the product has different SKUs with different prices"
-	@priority = 3
+	@priority = "5"
 	test ViewProductCardStartingPrice {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";

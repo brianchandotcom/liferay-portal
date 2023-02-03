@@ -17,6 +17,8 @@ definition {
 	@description = "This is a test for COMMERCE-10343. Can checkout a product with two discounts, lower discount will be apply"
 	@priority = 3
 	test CanCheckoutProductWithDiscountsLowerDiscountIsApplied {
+		property portal.acceptance = "false";
+
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -125,8 +127,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10344. Can checkout a product with two discounts, and one discount is applied to the discounted amount"
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutProductWithTwoDiscount {
+		property portal.acceptance = "true";
+
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",

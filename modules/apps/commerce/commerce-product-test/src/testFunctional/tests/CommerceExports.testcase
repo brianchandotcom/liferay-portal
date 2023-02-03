@@ -18,7 +18,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanExcludeFieldsFromExport {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8522 CanExcludeFieldsFromExport pending implementation
 
@@ -28,7 +27,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanExportFileWithHeaders {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8523 CanExportFileWithHeaders pending implementation
 
@@ -38,7 +36,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanExportFileWithoutHeaders {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8524 CanExportFileWithoutHeaders pending implementation
 
@@ -48,7 +45,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanSaveTemplateDuringExport {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8521 CanSaveTemplateDuringExport pending implementation
 

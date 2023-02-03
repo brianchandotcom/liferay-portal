@@ -18,7 +18,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanExportCSVFiles {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8513 CanExportCSVFiles pending implementation
 
@@ -28,7 +27,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanExportJSONFiles {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8514 CanExportJSONFiles pending implementation
 
@@ -38,7 +36,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanExportJSONLFiles {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8553 CanExportJSONLFiles pending implementation
 
@@ -48,7 +45,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanImportCSVFiles {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8554 CanImportCSVFiles pending implementation
 
@@ -58,7 +54,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanImportCSVFileWithoutHeaders {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8517 CanImportCSVFileWithoutHeaders pending implementation
 
@@ -68,7 +63,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanImportJSONFiles {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8555 CanImportJSONFiles pending implementation
 
@@ -78,7 +72,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanImportJSONLFiles {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8556 CanImportJSONLFiles pending implementation
 

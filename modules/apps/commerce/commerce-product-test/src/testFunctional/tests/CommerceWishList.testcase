@@ -35,6 +35,8 @@ definition {
 	@description = "COMMERCE-7791 | Verify if only non subscription product in wish list will be imported when subscription product is not the first in the wish list"
 	@priority = 3
 	test AssertOnlyNonSubscriptionProductsAreImportedWhenTheSubscriptionProductIsNotTheFirstOnTheListWhenImporting {
+		property portal.acceptance = "false";
+
 		task ("Given admin user enable subscription in one product") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -148,6 +150,8 @@ definition {
 	@description = "Verify only one wish list can be imported from list"
 	@priority = 3
 	test AssertOnlyOneWishlistCanBeChosenForTheImport {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -205,6 +209,8 @@ definition {
 	@description = "COMMERCE-7790 | Verify if only first subscription product in wish list will be imported"
 	@priority = 3
 	test AssertOnlyTheFirstSubscriptionProductInTheWishListIsImportedWhenTheOrderIsEmpty {
+		property portal.acceptance = "false";
+
 		task ("Given admin user enable subscription in two products") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -319,6 +325,8 @@ definition {
 	@description = "COMMERCE-7792 | Verify if when a subscription product is in the cart, nothing can be imported"
 	@priority = 3
 	test AssertProductsCannotBeImportedIfASubscriptionProductIsInTheOrder {
+		property portal.acceptance = "false";
+
 		task ("Given admin user enable subscription in two products") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -445,6 +453,8 @@ definition {
 	@description = "COMMERCE-7793 | Verify if subscription product can not be imported if the order already has another subscription product"
 	@priority = 3
 	test AssertSubscriptionProductCannotBeImportedIfThereAreNonSubscriptionProductsInTheOrder {
+		property portal.acceptance = "false";
+
 		task ("Given admin user enable subscription in one product") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -584,6 +594,8 @@ definition {
 	@description = "COMMERCE-7721 | Verify user can import wish discount and see price variations"
 	@priority = 3
 	test CanImportProductsFromWishlistWithPriceVariations {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -757,7 +769,7 @@ definition {
 	}
 
 	@description = "Verify user can import wish list order in another order and do checkout"
-	@priority = 3
+	@priority = "5"
 	test CheckoutAfterImportFromWishList {
 		property portal.acceptance = "true";
 
@@ -927,6 +939,8 @@ definition {
 	@description = "Verify user can import item from wish list"
 	@priority = 3
 	test ImportProductsFromWishlist {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -1032,6 +1046,8 @@ definition {
 	@description = "Verify user can import item from wish list and see imported items"
 	@priority = 3
 	test ViewImportedWishlistItemsPreview {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -1115,6 +1131,8 @@ definition {
 	@description = "Verify if the wish list pagination show the right items"
 	@priority = 3
 	test ViewPaginationOnImportFromWishlist {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 

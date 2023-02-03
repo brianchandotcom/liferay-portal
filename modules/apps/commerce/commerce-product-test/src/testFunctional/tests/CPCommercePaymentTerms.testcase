@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8281. Delete a new payment term to Terms and Conditions."
-	@priority = 3
+	@priority = "5"
 	test CanDeleteAPaymentTerm {
 		property portal.acceptance = "true";
 
@@ -288,7 +288,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8282. Verify can edit payment term"
-	@priority = 4
+	@priority = "5"
 	test CanEditAPaymentTerm {
 		property portal.acceptance = "true";
 
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "Verify the sales manager is able to change the status of payment terms."
-	@priority = 3
+	@priority = "5"
 	test ChangeTheStatus {
 		property portal.acceptance = "true";
 

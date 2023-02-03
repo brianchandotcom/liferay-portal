@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "Verify the shipping and billing addresses of an order are present in the placed order details."
-	@priority = 3
+	@priority = "5"
 	test AssertNameOfTheShippingAndBillingAddressInPlacedOrderDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@description = "Verify the status of an order is shown in the placed order details."
-	@priority = 3
+	@priority = "5"
 	test AssertOrderStatusInPlacedOrderDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "Verify the selected order type for an order is displayed in the Open Carts widget."
-	@priority = 3
+	@priority = "5"
 	test AssertOrderTypeInOpenCartsWidgetList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "Verify the selected order type for an order is displayed in the Placed Orders list."
-	@priority = 3
+	@priority = "5"
 	test AssertOrderTypeInPlacedOrdersList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -491,7 +491,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9877. A user can search orders by account name"
-	@priority = 3
+	@priority = "5"
 	test CanReturnOrdersBySearchForAccountName {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -586,10 +586,10 @@ definition {
 	}
 
 	@description = "This is a use case for COMMERCE-3111. Assert that user can see an open order after deleting the product, and the product is no longer in the order."
-	@priority = 3
+	@priority = "5"
 	test CanSeeAPlacedOrderWithDeletedProduct {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a minium site with a buyer user and creating an order with a product") {
 			CommerceEntry.addAccountEntryUser(
@@ -667,7 +667,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
-	@priority = 3
+	@priority = "5"
 	test CreateNewOrderFromPendingOrdersPage {
 		property portal.acceptance = "true";
 
@@ -691,7 +691,7 @@ definition {
 	@description = "COMMERCE-6380. As a buyer, I want to be able to delete an Order in Pending Order details page"
 	@priority = 3
 	test DeleteOrderFromPendingOrderDetailsPage {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "false";
 
 		// TODO Review
 
@@ -719,7 +719,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6379. As a buyer, I want to be able to edit the order in Pending Order details page and I want to view the changes I made applied to order"
-	@priority = 3
+	@priority = "5"
 	test EditOrderFromPendingOrderDetailsPage {
 		property portal.acceptance = "true";
 
@@ -1088,7 +1088,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
-	@priority = 3
+	@priority = "5"
 	test ReorderFromPlacedOrdersDetailsPage {
 		property portal.acceptance = "true";
 
@@ -1140,7 +1140,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6375. As a buyer, I want to be able to search for one pending order using the search bar"
-	@priority = 3
+	@priority = "5"
 	test SearchOrderInPendingOrdersPage {
 		property portal.acceptance = "true";
 
@@ -1182,7 +1182,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6381. As a buyer, I want to be able to search for one placed order using the search bar"
-	@priority = 3
+	@priority = "5"
 	test SearchOrderInPlacedOrdersPage {
 		property portal.acceptance = "true";
 
@@ -1256,9 +1256,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6665. I want to be able to select a Display Template in Pending Orders widget and see it applied to the widget"
-	@priority = 3
+	@priority = "5"
 	test UseADTInPendingOrdersWidget {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -1293,9 +1293,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6666. I want to be able to select a Display Template in Placed Orders widget and see it applied to the widget"
-	@priority = 3
+	@priority = "5"
 	test UseADTInPlacedOrdersWidget {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -1343,7 +1343,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"
-	@priority = 3
+	@priority = "5"
 	test ViewListOfShipmentsInPlacedOrdersDetailsPage {
 		property portal.acceptance = "true";
 

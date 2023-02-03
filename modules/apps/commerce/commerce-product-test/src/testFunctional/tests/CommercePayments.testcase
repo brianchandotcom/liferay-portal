@@ -15,9 +15,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6219. MoneyOrder Payment Method lifecycle"
-	@priority = 3
+	@priority = "5"
 	test CancelPayment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6218. MoneyOrder Payment Method lifecycle"
-	@priority = 3
+	@priority = "5"
 	test MoneyOrderCheckout {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommercePayments#MoneyOrderCheckout";

@@ -18,7 +18,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7025. AddANewPin"
-	@priority = 3
+	@priority = "5"
 	test AddANewPin {
 		property portal.acceptance = "true";
 
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7019. AddDiagramProduct"
-	@priority = 3
+	@priority = "5"
 	test AddDiagramProduct {
 		property portal.acceptance = "true";
 
@@ -96,6 +96,8 @@ definition {
 	@description = "This is a test for COMMERCE-8865. CanDragFunctionWorkAfterDoubleClickOnMappedProduct"
 	@priority = 4
 	test CanDragFunctionWorkAfterDoubleClickOnMappedProduct {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -154,6 +156,8 @@ definition {
 	@description = "COMMERCE-7022 This test asserts that a diagram product image can be expanded to fit the full screen"
 	@priority = 3
 	test CanExpandImageToFitFullScreen {
+		property portal.acceptance = "false";
+
 		task ("Given a diagram product with an image") {
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
@@ -185,7 +189,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7024 A diagram product cannot be published without an image."
-	@priority = 3
+	@priority = "5"
 	test CannotPublishADiagramProductWithoutAnImage {
 		property portal.acceptance = "true";
 
@@ -273,7 +277,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7100. Verify user can change a diagram product type to SVG."
-	@priority = 3
+	@priority = "5"
 	test ChangeDiagramType {
 		property portal.acceptance = "true";
 
@@ -333,6 +337,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test EditTheDefaultSettingForPinsCreation {
+		property portal.acceptance = "false";
 
 		// Test is ignored due to COMMERCE-9646
 
@@ -409,7 +414,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7126. RemoveDiagramProduct"
-	@priority = 3
+	@priority = "5"
 	test RemoveDiagramProduct {
 		property portal.acceptance = "true";
 
@@ -456,6 +461,8 @@ definition {
 	@description = "This test asserts that a pin can be removed from a diagram product image"
 	@priority = 3
 	test RemovePin {
+		property portal.acceptance = "false";
+
 		task ("Given a diagram product with an image") {
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
@@ -503,8 +510,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7021. Upload an already mapped new image"
-	@priority = 3
+	@priority = "5"
 	test UploadAlreadyMappedNewImage {
+		property portal.acceptance = "true";
+
 		task ("Given a diagram product with a svg diagram image.") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
@@ -548,6 +557,8 @@ definition {
 	@description = "This is a test for COMMERCE-7020. UploadANotMappedNewImage"
 	@priority = 3
 	test UploadANotMappedNewImage {
+		property portal.acceptance = "false";
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -581,6 +592,8 @@ definition {
 	@description = "This is a test for COMMERCE-7036. UseDragForPin"
 	@priority = 3
 	test UseDragForPin {
+		property portal.acceptance = "false";
+
 		CommerceJSONProductsAPI._addCommerceProduct(
 			catalogName = "Master",
 			productName = "Diagram T-Shirt",
@@ -618,6 +631,8 @@ definition {
 	@description = "Verify user can use the pin tooltip to edit the information of a diagram product image pin"
 	@priority = 3
 	test UseToolTip {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -678,7 +693,7 @@ definition {
 	@description = "This is a test for COMMERCE-7035. UseZoomAndDragBackground"
 	@priority = 3
 	test UseZoomAndDragBackground {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "false";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 
@@ -711,7 +726,7 @@ definition {
 	}
 
 	@description = "This test asserts that the Mapped Products Table saves all info from pins"
-	@priority = 3
+	@priority = "5"
 	test VerifyMappedProductsTableSavesAllPins {
 		property portal.acceptance = "true";
 

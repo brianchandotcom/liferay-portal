@@ -15,9 +15,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6343. As a buyer, I want to be able to select only the allowed quantities of a cart item, if set"
-	@priority = 3
+	@priority = "5"
 	test AssertOnlyAllowedQuantitiesAreSelectableInMiniCartItem {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -81,9 +81,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6346. As a buyer, I want to be able to select the quantity of a cart item by multiple value, if set"
-	@priority = 3
+	@priority = "5"
 	test AssertOnlyMultipleValuesAreSelectableQuantitiesInMiniCartItem {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6345. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
-	@priority = 3
+	@priority = "5"
 	test AssertQuantityInMiniCartItemCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "true";
 
@@ -257,9 +257,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6344. As a buyer, I want to be able to select the quantity of a cart item starting from a minimum quantity, if set"
-	@priority = 3
+	@priority = "5"
 	test AssertSelectableQuantitiesInMiniCartItemStartFromMinimumQuantitySet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -575,9 +575,9 @@ definition {
 	}
 
 	@description = "COMMERCE-10247 Verify that the admin can complete the checkout using the mini cart widget with the Buyer Order Approval Workflow"
-	@priority = 4
+	@priority = "5"
 	test CanUseMiniCartWidgetToCheckoutWithBuyerOrderApprovalWorkflow {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommerceMiniCart#CanUseMiniCartWidgetToCheckoutWithBuyerOrderApprovalWorkflow";
 
 		var approvedCount = 0;
@@ -668,7 +668,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7695. As a buyer, I want to verify if I will be redirected to the product details when I click on the item in the minicart"
-	@priority = 3
+	@priority = "5"
 	test ClickOnCartItemRedirectToProductDetails {
 		property portal.acceptance = "true";
 
@@ -772,10 +772,10 @@ definition {
 	}
 
 	@description = "COMMERCE-6335. As a buyer, I want to edit the quantity of an bundled product in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary and the bundled items to change their quantity"
-	@priority = 3
+	@priority = "5"
 	test EditBundledProductQuantityFromMiniCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce Account with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -936,7 +936,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6333. As a buyer, I want to edit the quantity of an item in the mini-cart using the quantity selector and I want to view the changes applied to the mini-cart summary"
-	@priority = 3
+	@priority = "5"
 	test EditCartItemQuantityFromMiniCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1295,9 +1295,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6348. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
-	@priority = 3
+	@priority = "5"
 	test ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1397,9 +1397,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6349. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
-	@priority = 3
+	@priority = "5"
 	test ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1652,7 +1652,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6332. As a buyer, I want to view cart item details in the mini-cart(Name, SKU, Quantity, Options(if present), List Price, Image) and I want to be able to view the number of different products I have in my cart"
-	@priority = 3
+	@priority = "5"
 	test ViewMiniCartItemDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1873,7 +1873,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6338. As a buyer, I want to see the barred list price, the discount percentage and the discounted price of an item in the mini-cart, if a discount is set"
-	@priority = 3
+	@priority = "5"
 	test ViewMiniCartItemWithDiscount {
 		property portal.acceptance = "true";
 
@@ -1924,9 +1924,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6339. As a buyer, I want to see the barred list price, the discount levels and the discounted price of an item in the mini-cart, if discount levels are set and visible"
-	@priority = 3
+	@priority = "5"
 	test ViewMiniCartItemWithDiscountLevels {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithDiscountLevels";
 
 		// TODO Review
@@ -2020,7 +2020,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6340. As a buyer, I want to be able to view subtotal and it's total price changed in the mini-cart summary when a discount with target 'Subtotal' is set"
-	@priority = 3
+	@priority = "5"
 	test ViewMiniCartItemWithDiscountToSubtotal {
 		property portal.acceptance = "true";
 
@@ -2082,9 +2082,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6341. As a buyer, I want to be able to view order discount and it's total price changed in the mini-cart summary when a discount with target 'Total' is set"
-	@priority = 3
+	@priority = "5"
 	test ViewMiniCartItemWithDiscountToTotal {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -2144,7 +2144,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6336. As a buyer, I want to see the barred list price and a promo price of an item in the mini-cart, if a promotion is set"
-	@priority = 3
+	@priority = "5"
 	test ViewMiniCartItemWithPromotion {
 		property portal.acceptance = "true";
 
@@ -2178,9 +2178,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the promo price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"
-	@priority = 3
+	@priority = "5"
 	test ViewMiniCartItemWithTierPrice {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

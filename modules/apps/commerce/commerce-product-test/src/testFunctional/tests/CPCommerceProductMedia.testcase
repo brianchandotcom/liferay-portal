@@ -37,7 +37,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AddAnAttachmentToAnOption {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6032 AddAnAttachmentToAnOption
 
@@ -64,7 +63,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
-	@priority = 3
+	@priority = "5"
 	test AddAnImageToAnOption {
 		property portal.acceptance = "true";
 
@@ -166,7 +165,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6027. EditAnImage"
-	@priority = 3
+	@priority = "5"
 	test EditAnImage {
 		property portal.acceptance = "true";
 

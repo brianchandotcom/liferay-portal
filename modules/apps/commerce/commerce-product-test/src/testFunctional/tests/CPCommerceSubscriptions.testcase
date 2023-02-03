@@ -18,7 +18,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CreateAndUpdateDeliverySubscription {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5841 CreateAndUpdateDeliverySubscription Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
@@ -29,7 +28,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test SubscriptionLifecycle {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6257 SubscriptionLifecycle Pending Implementation
 
@@ -39,7 +37,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test SubscriptionNotifications {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5841 SubscriptionNotifications Pending Implementation
 

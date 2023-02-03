@@ -198,9 +198,9 @@ definition {
 	}
 
 	@description = "Verify a csv file with a valid requested delivery date can be imported."
-	@priority = 3
+	@priority = "5"
 	test CanImportCSVWithValidRequestedDeliveryDate {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an empty order") {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
@@ -387,7 +387,7 @@ definition {
 	}
 
 	@description = "Verify users can import an existing order into a new order"
-	@priority = 4
+	@priority = "5"
 	test ImportFromOrder {
 		property portal.acceptance = "true";
 
@@ -434,7 +434,7 @@ definition {
 	}
 
 	@description = "Verify orders can be searched when importing an order"
-	@priority = 3
+	@priority = "5"
 	test ImportFromOrderUseSearchBar {
 		property portal.acceptance = "true";
 
@@ -531,9 +531,9 @@ definition {
 	}
 
 	@description = "Verify a csv file with an invalid requested delivery date can be imported and the date is shown as invalid in the import preview."
-	@priority = 3
+	@priority = "5"
 	test ValidateCSVWithInvalidRequestedDeliveryDate {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an empty order") {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
@@ -579,9 +579,9 @@ definition {
 	}
 
 	@description = "Verify existing orders are shown when importing an order."
-	@priority = 4
+	@priority = "5"
 	test VerifyIfAllOrdersArePresent {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given 3 completed orders") {
 			for (var product : list "U-Joint:24,Mount:3,Torque Converters:34") {

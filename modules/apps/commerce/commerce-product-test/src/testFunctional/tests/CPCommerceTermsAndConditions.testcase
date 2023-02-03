@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8332. Assert default delivery term can be added"
-	@priority = 4
+	@priority = "5"
 	test AddADefaultDeliveryTerm {
 		property portal.acceptance = "true";
 
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8319. Assert default payment term can be added"
-	@priority = 4
+	@priority = "5"
 	test CanAddADefaultPaymentTerm {
 		property portal.acceptance = "true";
 
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "This is a test for the bug COMMERCE-9088, with the ticket COMMERCE-10006 | When the user select a shipping/payment option which eligible term description contains bold, italic, etc... text the checkout portlet breaks"
-	@priority = 4
+	@priority = "5"
 	test CanCompleteCheckoutWithRichTextTermDescription {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -546,9 +546,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8334. If the delivery term set for the account is changed to inactive, the default term remains shown but inactive"
-	@priority = 4
+	@priority = "5"
 	test SetAnInactiveDeliveryTermLinkedToAnAccountAsDefaultOne {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new "Terms and Conditions" entry with the status to "Active".") {
 			CommerceNavigator.gotoPortlet(
@@ -614,9 +614,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8328. If the payment term set for the account is changed to inactive, the default term remains shown but inactive"
-	@priority = 4
+	@priority = "5"
 	test SetAnInactivePaymentTermLinkedToAnAccountAsDefaultOne {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new "Terms and Conditions" entry with status to "Active".") {
 			CommerceNavigator.gotoPortlet(

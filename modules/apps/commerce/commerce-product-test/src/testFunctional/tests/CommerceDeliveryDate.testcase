@@ -35,6 +35,8 @@ definition {
 	@description = "COMMERCE-9323. The 'Checkout Requested Delivery Date' toggle is present and disabled"
 	@priority = 3
 	test AssertCheckoutRequestDeliveryDateToggleIsPresentAndDisabled {
+		property portal.acceptance = "false";
+
 		task ("When a channel's configuration page is reached") {
 			CommerceChannels.openChannelsAdmin();
 
@@ -55,7 +57,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9324. A buyer user can set the requested delivery date during the checkout process"
-	@priority = 3
+	@priority = "5"
 	test CanSetDeliveryDate {
 		property portal.acceptance = "true";
 

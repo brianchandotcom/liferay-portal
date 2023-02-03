@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "Verify active order type is automatically assigned to an order created via the account selector."
-	@priority = 3
+	@priority = "5"
 	test AssertActiveOrderTypeAutomaticallyAssignedToOrderCreatedViaAccountSelector {
 		property portal.acceptance = "true";
 
@@ -66,9 +66,9 @@ definition {
 	}
 
 	@description = "Verify active order type is automatically assigned to an order created via pending orders."
-	@priority = 3
+	@priority = "5"
 	test AssertActiveOrderTypeAutomaticallyAssignedToOrderCreatedViaPendingOrders {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given active and inactive order types") {
 			CommerceJSONOrdersAPI._addOrderType(
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "Verify inactive order type is not assigned to an order created via the account selector."
-	@priority = 3
+	@priority = "5"
 	test AssertInactiveOrderTypeNotAssignedToOrderViaAccountSelector {
 		property portal.acceptance = "true";
 
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "Verify single active order type is automatically assigned to orders created via the account selector."
-	@priority = 3
+	@priority = "5"
 	test AssertSingleOrderTypeAutomaticallyAssignedToOrderCreatedViaAccountSelector {
 		property portal.acceptance = "true";
 
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "Verify a new order type can be deleted"
-	@priority = 3
+	@priority = "5"
 	test DeleteOrderType {
 		property portal.acceptance = "true";
 
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@description = "Verify users can edit an order type."
-	@priority = 3
+	@priority = "5"
 	test EditOrderType {
 		property portal.acceptance = "true";
 
@@ -392,9 +392,9 @@ definition {
 	}
 
 	@description = "Verify when creating an order with add to cart and there are more than 1 active order types for the channel, the order type with the highest priority (lower display order) is set in the order"
-	@priority = 4
+	@priority = "5"
 	test OrderTypeIsAutoAssignedByHighestPriorityToNewOrderWhenTheUserAddsToCart {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an active order type with display order 2") {
 			CommerceJSONOrdersAPI._addOrderType(
@@ -437,9 +437,9 @@ definition {
 	}
 
 	@description = "Verify when creating a new order with add to cart and there is only 1 order type active for the channel, that order type is set in the order"
-	@priority = 4
+	@priority = "5"
 	test OrderTypeIsAutomaticallySetForNewOrderWhenTheUserAddsToCart {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an active order type") {
 			CommerceJSONOrdersAPI._addOrderType(
@@ -473,7 +473,7 @@ definition {
 	}
 
 	@description = "Verify user can select order type when creating a new order via the account selector."
-	@priority = 3
+	@priority = "5"
 	test SelectOrderTypeWhenCreatingNewOrderViaAccountSelector {
 		property portal.acceptance = "true";
 
@@ -518,9 +518,9 @@ definition {
 	}
 
 	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
-	@priority = 3
+	@priority = "5"
 	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given two new order types") {
 			CommerceJSONOrdersAPI._addOrderType(

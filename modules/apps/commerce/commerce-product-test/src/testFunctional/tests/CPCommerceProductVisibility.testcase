@@ -18,7 +18,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AddAccountGroupFilter {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6088 AddAccountGroupFilter
 
@@ -98,7 +97,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6087. RemoveAChannelFilter"
-	@priority = 3
+	@priority = "5"
 	test RemoveAChannelFilter {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAChannelFilter";

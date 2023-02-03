@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8569. Verify multiple Price Entries can be set in the same Promotion for the same SKU"
-	@priority = 3
+	@priority = "5"
 	test AllowMultiplePriceEntriesInTheSamePromotion {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";

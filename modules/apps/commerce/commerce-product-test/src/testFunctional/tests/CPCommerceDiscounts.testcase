@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6231. Discount lifecycle"
-	@priority = 3
+	@priority = "5"
 	test AddEditAndDeleteDiscountEntry {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceDiscounts#AddEditAndDeleteDiscountEntry";
@@ -150,14 +150,14 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AddEditAndRemoveDiscountRule {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6232 AddEditAndRemoveDiscountRule Pending Implementation
 
 	}
 
+	@priority = "5"
 	test AssertDiscountIsAppliedToChannel {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9787 | Apply a discount with eligibility only to account groups that are eligible"
-	@priority = 4
+	@priority = "5"
 	test CanApplySpecificAccountGroupCouponCodeDiscount {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -412,7 +412,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9789 | Apply coupon code discount to not eligible account group and assert the coupon is not applicable"
-	@priority = 4
+	@priority = "5"
 	test CanAssertNotEligibleAccountGroupCouponCodeDiscountNotApplied {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -584,11 +584,11 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9592."
+<<<<<<< HEAD
 	@priority = 3
-	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+=======
+	@priority = "5"
 		property portal.acceptance = "true";
-
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1014,11 +1014,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6229. Discount coupon code validators"
+<<<<<<< HEAD
 	@priority = 3
-	test ViewCouponCodeNotAppliedToNotQualifiedAccount {
-		property portal.acceptance = "false";
-
-		// TODO Review
+=======
+	@priority = "5"
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

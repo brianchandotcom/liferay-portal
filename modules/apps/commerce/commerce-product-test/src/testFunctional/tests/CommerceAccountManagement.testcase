@@ -159,7 +159,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AssertUserThatIsPartOfTheAccountCannotBeAddedAgain {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6357 AssertUserThatIsPartOfTheAccountCannotBeAddedAgain pending implementation
 
@@ -518,7 +517,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test SearchAnAccountAddress {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6376 SearchAnAccountAddress pending implementation
 
@@ -528,7 +526,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test SearchAnAccountMember {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6365 SearchAnAccountMember pending implementation
 
@@ -538,7 +535,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test SearchAnAccountOrganization {
-		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6352 SearchAnAccountOrganization pending implementation
 

@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9723. The default Delivery Terms and Conditions should persist at checkout."
-	@priority = 4
+	@priority = "5"
 	test CanAddDefaultDeliveryTermWithCheckout {
 		property portal.acceptance = "true";
 
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9724. The default Payment Terms and Conditions should persist at checkout."
-	@priority = 4
+	@priority = "5"
 	test CanAddDefaultPaymentTermWithCheckout {
 		property portal.acceptance = "true";
 
@@ -249,6 +249,8 @@ definition {
 	@description = "COMMERCE-9931 and COMMERCE-9937. A default currency can be deleted and should not be visible in the Minium site."
 	@priority = 4
 	test CanDeleteDefaultCurrency {
+		property portal.acceptance = "false";
+
 		task ("Given an account with a default Currency") {
 			Account.openAccountsAdmin();
 
@@ -299,7 +301,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can edit and delete a default price list entry"
-	@priority = 3
+	@priority = "5"
 	test CanEditAndDeleteDefaultPriceList {
 		property portal.acceptance = "true";
 
@@ -357,6 +359,8 @@ definition {
 	@description = "COMMERCE-9934. Default currency can be edited."
 	@priority = 5
 	test CanEditDefaultCurrency {
+		property portal.acceptance = "true";
+
 		task ("Given an account with a default Currency") {
 			Account.openAccountsAdmin();
 
@@ -396,8 +400,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9729. As a sales manager, I want to set default account delivery terms per channel"
-	@priority = 3
+	@priority = "5"
 	test CanHaveAllChannelsLinkedToADeliveryTerm {
+		property portal.acceptance = "true";
+
 		task ("Given the admin creates two delivery terms entries with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = 2,
@@ -514,8 +520,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9730. As a sales manager, I want to set default account payment terms per channel"
-	@priority = 3
+	@priority = "5"
 	test CanHaveAllChannelsLinkedToAPaymentTerm {
+		property portal.acceptance = "true";
+
 		task ("Given the admin creates two payment terms entries with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = 2,
@@ -632,8 +640,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9923. All channels can be linked to a currency."
-	@priority = 4
+	@priority = "5"
 	test CanLinkAllChannelsToACurrency {
+		property portal.acceptance = "true";
+
 		task ("Given a second channel (the Minium site is the first channel)") {
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "Channel2",
@@ -680,6 +690,8 @@ definition {
 	@description = "COMMERCE-9885. Assert that can not assign default addresses to the same Channel."
 	@priority = 3
 	test CanNotAssignDefaultAddressesToTheSameChannel {
+		property portal.acceptance = "false";
+
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -764,6 +776,8 @@ definition {
 	@description = "COMMERCE-9734. As admin, I want to set a default billing and default shipping address for one account and channel, then buyer cannot use the default addresses in a different channel to make an order"
 	@priority = 3
 	test CanNotUseDefaultAddressesInADifferentChannel {
+		property portal.acceptance = "false";
+
 		task ("Given 2 minium sites, 2 accounts and 2 buyer users are created and associated with the respected accounts and sites") {
 			for (var num : list "1,2") {
 				CommerceAccelerators.initializeNewSiteViaAccelerator(
@@ -867,6 +881,8 @@ definition {
 	@description = "COMMERCE-9936. A disabled default currency should not be usable."
 	@priority = 4
 	test CannotUseDisabledCurrency {
+		property portal.acceptance = "false";
+
 		task ("Given an account with a default Currency") {
 			Account.openAccountsAdmin();
 
@@ -926,6 +942,8 @@ definition {
 	@description = "COMMERCE-9725. A default delivery term that has been disabled should not be displayed at checkout."
 	@priority = 4
 	test CannotUseDisabledDefaultDeliveryTerm {
+		property portal.acceptance = "false";
+
 		task ("Given three delivery term entries with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = 3,
@@ -1026,6 +1044,8 @@ definition {
 	@description = "COMMERCE-9726. A default payment term that has been disabled should not be displayed at checkout."
 	@priority = 4
 	test CannotUseDisabledDefaultPaymentTerms {
+		property portal.acceptance = "false";
+
 		task ("Given three payment term entries with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = 3,
@@ -1126,6 +1146,8 @@ definition {
 	@description = "COMMERCE-9876. As a Sales Manager, I want to remove default billing and shipping addresses from the account"
 	@priority = 3
 	test CanRemoveDefaultAddresses {
+		property portal.acceptance = "false";
+
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -1220,9 +1242,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can see the price list price that has the highest priority in hierarchy mode(default mode)."
-	@priority = 3
+	@priority = "5"
 	test CanSeeHighestPriorityPriceListPriceInHierarchyMode {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given Test Price List 1 with priority 1 and Test Price List 2 with priority 2") {
 			for (var priority : list "1,2") {
@@ -1313,11 +1335,11 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can see the lowest price list price in the Catalog when the lowest mode is set."
-	@priority = 3
+	@priority = "5"
 	test CanSeeLowestPriceListPriceInLowestMode {
 		property osgi.module.configuration.file.names = "com.liferay.commerce.pricing.configuration.CommercePricingConfiguration.config";
 		property osgi.module.configurations = "commercePriceListDiscovery=\"lowest\"";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given Test Price List 1 with priority 1") {
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
@@ -1383,8 +1405,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9857. All sites should display the product discount when the discount is set to All Channels."
-	@priority = 4
+	@priority = "5"
 	test CanSelectAllOtherChannelsForDefaultDiscount {
+		property portal.acceptance = "true";
+
 		task ("Given a second Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
 				siteName = "Minium 2",
@@ -1437,8 +1461,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account billing address for each channel"
-	@priority = 3
+	@priority = "5"
 	test CanSelectOnlyAllOtherChannelsForDefaultBillingAddress {
+		property portal.acceptance = "true";
+
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -1505,9 +1531,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can select only All Other Channels option after selecting default for each channel."
-	@priority = 3
+	@priority = "5"
 	test CanSelectOnlyAllOtherChannelsForDefaultPriceList {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given two more channels Test Channel 1 and Test Channel 2") {
 			for (var channelNames : list "Test Channel 1,Test Channel 2") {
@@ -1585,8 +1611,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account shipping address for each channel"
-	@priority = 3
+	@priority = "5"
 	test CanSelectOnlyAllOtherChannelsForDefaultShippingAddress {
+		property portal.acceptance = "true";
+
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -1653,8 +1681,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9873. As a sales manager, I want to set default billing and shipping addresses per channel from details tab"
-	@priority = 3
+	@priority = "5"
 	test CanSetDefaultAddressFromDetailsTab {
+		property portal.acceptance = "true";
+
 		task ("Given 2 Minium sites and a buyer user is associated with both sites, and 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -1854,8 +1884,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9733. As a sales manager, I want to set a default account billing address per channel when the buyer users are placing orders"
-	@priority = 3
+	@priority = "5"
 	test CanSetDefaultBillingAddressPerChannel {
+		property portal.acceptance = "true";
+
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -2029,6 +2061,8 @@ definition {
 	@description = "COMMERCE-9922. The default currency can be set for a channel."
 	@priority = 5
 	test CanSetDefaultCurrencyPerChannel {
+		property portal.acceptance = "true";
+
 		task ("Given an account with a default Currency") {
 			Account.openAccountsAdmin();
 
@@ -2056,9 +2090,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can set a default price list per channel and account."
-	@priority = 3
+	@priority = "5"
 	test CanSetDefaultPriceListPerChannel {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a second Minium site and a second account with a user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
@@ -2171,8 +2205,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9732. As a sales manager, I want to set a default account shipping address per channel when the buyer users are placing orders"
-	@priority = 3
+	@priority = "5"
 	test CanSetDefaultShippingAddressPerChannel {
+		property portal.acceptance = "true";
+
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -2331,8 +2367,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9858. The default discount can be updated."
-	@priority = 4
+	@priority = "5"
 	test CanUpdateDefaultDiscountsEntry {
+		property portal.acceptance = "true";
+
 		task ("Given two active discounts applied to the U-joint product") {
 			CommerceJSONDiscountsAPI._addDiscount(
 				active = "true",
@@ -2410,6 +2448,8 @@ definition {
 	@description = "COMMERCE-9938. Only active currencies can be viewed and disabled currency should not be available to be selected."
 	@priority = 4
 	test CanViewOnlyActiveCurrencies {
+		property portal.acceptance = "false";
+
 		task ("Given a disabled currency") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet");
 
@@ -2434,6 +2474,8 @@ definition {
 	@description = "COMMERCE-9925. Default currency rules works on the storefront"
 	@priority = 4
 	test DefaultCurrencyRulesCanWorkOnStoreFront {
+		property portal.acceptance = "false";
+
 		task ("Given a second account (first one is created at setup)") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account 2",
@@ -2525,8 +2567,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9782. Default delivery set to override should be default regardless of other eligibility criteria."
-	@priority = 4
+	@priority = "5"
 	test DefaultDeliveryTermCanOverrideOtherEligibilities {
+		property portal.acceptance = "true";
+
 		task ("Given a new Test Channel with an active Shipping method") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
 				siteName = "Test Channel",
@@ -2646,8 +2690,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9856. The default discount can override Account eligibility."
-	@priority = 4
+	@priority = "5"
 	test DefaultDiscountCanOverrideAccountEligibility {
+		property portal.acceptance = "true";
+
 		task ("Given a second Minium site and a second account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
 				siteName = "Minium 2",
@@ -2764,8 +2810,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9856. The default discount can override Channel eligibility."
-	@priority = 4
+	@priority = "5"
 	test DefaultDiscountCanOverrideChannelEligibility {
+		property portal.acceptance = "true";
+
 		task ("Given a second Minium site and a second account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
 				siteName = "Minium 2",
@@ -2886,6 +2934,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test DefaultDiscountCanOverrideOrderTypeEligibility {
+		property portal.acceptance = "false";
 
 		// Ignore until steps are verified. COMMERCE-9856.
 
@@ -3007,8 +3056,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9782. Default payment set to override should be default regardless of other eligibility criteria."
-	@priority = 4
+	@priority = "5"
 	test DefaultPaymentTermCanOverrideOtherEligibilities {
+		property portal.acceptance = "true";
+
 		task ("Given a new Test Channel with an active Shipping method") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
 				siteName = "Test Channel",
@@ -3129,9 +3180,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can use Override Eligibility option while selecting a default price list to override other eligibilities."
-	@priority = 3
+	@priority = "5"
 	test DefaultPriceListCanOverrideOtherEligibilities {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a second site and account with a user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
@@ -3317,8 +3368,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9785. Delivery eligibility rules scoped to channels should persist at checkout."
-	@priority = 4
+	@priority = "5"
 	test DeliveryEligibilityRulesCanPersistAtCheckout {
+		property portal.acceptance = "true";
+
 		task ("Given a new Test Channel with an active Shipping method") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
 				siteName = "Test Channel",
@@ -3435,8 +3488,10 @@ definition {
 	}
 
 	@description = "COMMERCE-9785. Payment eligibility rules scoped to channels should persist at checkout."
-	@priority = 4
+	@priority = "5"
 	test PaymentEligibilityRulesCanPersistAtCheckout {
+		property portal.acceptance = "true";
+
 		task ("Given a new Test Channel with an active Shipping method") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(
 				siteName = "Test Channel",

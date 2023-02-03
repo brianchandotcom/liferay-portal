@@ -17,6 +17,8 @@ definition {
 	@description = "This is a test for COMMERCE-10178. Select a product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
 	@priority = 3
 	test CanCheckoutAMiniumProduct {
+		property portal.acceptance = "false";
+
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -70,6 +72,8 @@ definition {
 	@description = "This is a test for COMMERCE-10258. Create a new product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
 	@priority = 3
 	test CanCheckoutNewProduct {
+		property portal.acceptance = "false";
+
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -133,8 +137,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10245. Select a product with bulk price, no promotion ,no discount, link and do a checkout"
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutProductWithBulkPrice {
+		property portal.acceptance = "true";
+
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -203,8 +209,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10277."
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutProductWithPromotionPriceHigherThenPricelist {
+		property portal.acceptance = "true";
+
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
@@ -276,8 +284,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10280. Set a promotion price lower then the price list and do the checkout"
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutProductWithPromotionPriceLowerThenPricelist {
+		property portal.acceptance = "true";
+
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",

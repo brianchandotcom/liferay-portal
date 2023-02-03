@@ -31,7 +31,11 @@ definition {
 	}
 
 	@description = "COMMERCE-9506. As a user of the storefront, I should have access only to payment methods that are assigned to my role"
+<<<<<<< HEAD
 	@priority = 4
+=======
+	@priority = "5"
+>>>>>>> a597decff42f (COMMERCE-10634 Add tests to Relevant and fix priorities)
 	test CanSFUsersSelectPaymentMethodsDuringCheckoutBasedOnViewPermissionForEachPaymentMethod {
 		property portal.acceptance = "true";
 
@@ -127,9 +131,9 @@ definition {
 	}
 
 	@description = "COMMERCE-9505. As a Channel Manager, I can configure an active payment method to be accessible by some roles"
-	@priority = 4
+	@priority = "5"
 	test CanUsersSelectPaymentMethodsBasedOnViewPermissionForEachPaymentMethod {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a user with the Operations Manager role") {
 			JSONUser.addUserWithRole(
@@ -242,7 +246,7 @@ definition {
 	}
 
 	@description = "Verify users with the 'Manage Commerce Order Payment Methods' permission can edit the payment method of an order"
-	@priority = 3
+	@priority = "5"
 	test UsersWithManagePaymentMethodsPermissionCanEditSelectedPaymentMethod {
 		property portal.acceptance = "true";
 
@@ -482,9 +486,9 @@ definition {
 	}
 
 	@description = "Verify the payment method selection step is skipped when a buyer without the 'Manage Commerce Order Payment Methods' permission checks out an order"
-	@priority = 3
+	@priority = "5"
 	test UsersWithoutManagePermissionSkipsPaymentMethodStepDuringCheckout {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given multiple active payment methods") {
 			CommerceChannels.openChannelsAdmin();

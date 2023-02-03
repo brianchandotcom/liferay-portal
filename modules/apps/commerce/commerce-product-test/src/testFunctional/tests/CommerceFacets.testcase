@@ -15,9 +15,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6169. As a buyer, I want to filter products using Category Facet widget and the results should be visible on the Search Results widget"
-	@priority = 3
+	@priority = "5"
 	test AssertProductsAreFilteredByCategoryFacet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6165. As a buyer, I want to filter products using Option Facet widget and the results should be visible on the Search Results widget"
-	@priority = 3
+	@priority = "5"
 	test AssertProductsAreFilteredByOptionFacet {
 		property portal.acceptance = "true";
 
@@ -67,9 +67,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6170. As a buyer, I want to filter products using Price Range Facet widget and the results should be visible on the Search Results widget"
-	@priority = 3
+	@priority = "5"
 	test AssertProductsAreFilteredByPriceRangeFacet {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -119,9 +119,9 @@ definition {
 	}
 
 	@description = "COMMERCE-6166. As a buyer, I want to filter products using Specification Facet widget and the results should be visible on the Search Results widget"
-	@priority = 3
+	@priority = "5"
 	test AssertProductsAreFilteredBySpecificationFacet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO
 

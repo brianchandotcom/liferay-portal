@@ -16,9 +16,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = 4
+	@priority = "5"
 	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a two buyer users") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

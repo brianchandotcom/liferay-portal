@@ -18,6 +18,8 @@ definition {
 	@description = "COMMERCE-5937. As a buyer, I want open Account Selector to close if I open the Global Search"
 	@priority = 3
 	test AssertAccountSelectorIsClosedAfterGlobalSearchIsOpened {
+		property portal.acceptance = "false";
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -64,9 +66,9 @@ definition {
 	}
 
 	@description = "COMMERCE-5925. As a buyer, I want the account I have currently selected to be highlighted in the account selector bar"
-	@priority = 3
+	@priority = "5"
 	test AssertActiveAccountIsVisibleOnAccountSelectorBar {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -86,7 +88,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5924. As a buyer, I want the account I have currently selected to be highlighted in the account selector dropdown"
-	@priority = 3
+	@priority = "5"
 	test AssertActiveAccountIsVisibleOnAccountSelectorDropdown {
 		property portal.acceptance = "true";
 
@@ -110,6 +112,8 @@ definition {
 	@description = "COMMERCE-9022. As a sales agent, I want to be able to cancel the in-flow account creation"
 	@priority = 3
 	test CanCancelInFlowAccountCreation {
+		property portal.acceptance = "false";
+
 		task ("GIVEN a Minium site is created and the Catalog page is reached") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -152,6 +156,8 @@ definition {
 	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to select an account from the list (which is not the selected one), and have the selected account change to the newly selected account"
 	@priority = 3
 	test CanChangeActiveInFlowAccountFromAccountsList {
+		property portal.acceptance = "false";
+
 		task ("WHEN a minium site is created and the catalog page is reached") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -198,7 +204,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to create a new Account from the account selector"
-	@priority = 3
+	@priority = "5"
 	test CanCheckoutAfterInFlowAccountCreation {
 		property portal.acceptance = "true";
 
@@ -275,7 +281,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to create a new Account from the account selector"
-	@priority = 3
+	@priority = "5"
 	test CanCreateNewAccountInFlow {
 		property portal.acceptance = "true";
 
@@ -334,7 +340,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Buyer (without manage account permissions), I am not able to create an account"
-	@priority = 3
+	@priority = "5"
 	test CannotCreateAccountInFlowWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -400,6 +406,8 @@ definition {
 	@description = "COMMERCE-9022. COMMERCE-9022. As a Sales Agent, I get an advice when I try to create an account without the required fields filled"
 	@priority = 3
 	test CannotSaveInFlowAccountWithoutRequiredField {
+		property portal.acceptance = "false";
+
 		task ("GIVEN a minium site is created and the Catalog page reached") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -430,7 +438,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Sales Agent, I want to search for an account in the accounts list, and select it as active account"
-	@priority = 3
+	@priority = "5"
 	test CanSearchForAnInFlowAccountAndSelectItAsActive {
 		property portal.acceptance = "true";
 
@@ -498,7 +506,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5927. As a buyer, I want to be able to select an account from the list (which is not the selected one), and have the selected account change to the newly selected account"
-	@priority = 3
+	@priority = "5"
 	test ChangeActiveAccountFromAccountsList {
 		property portal.acceptance = "true";
 
@@ -542,7 +550,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5929. As a buyer, I want to be able to select an order from the list (which is not the selected one), and have the selected order change to the newly selected order"
-	@priority = 3
+	@priority = "5"
 	test ChangeActiveOrderFromOrdersList {
 		property portal.acceptance = "true";
 
@@ -604,9 +612,9 @@ definition {
 	}
 
 	@description = "COMMERCE-5936. As a buyer, I want to be able to create a new order from the account selector dropdown's order list view, The created order should then be the selected order"
-	@priority = 3
+	@priority = "5"
 	test CreateNewOrderFromAccountSelectorDropdown {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -638,7 +646,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5956. As a buyer, I want to search for an account in the accounts list, and select it as active account"
-	@priority = 3
+	@priority = "5"
 	test SearchForAnAccountAndSelectItAsActive {
 		property portal.acceptance = "true";
 
@@ -772,7 +780,7 @@ definition {
 	@description = "COMMERCE-5928. As a buyer, I want to be able to switch the account selector dropdown's view from the account list to the order list and I want to be able to see all the orders for the account I have selected"
 	@priority = 3
 	test ViewAccountSelectorDropdownOrdersList {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

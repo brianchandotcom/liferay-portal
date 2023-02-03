@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9509 Verify that the Collection Display fragment with the product specifications can be deployed and that the buyer can see the specifications inside the Collection Display on the storefront"
-	@priority = 4
+	@priority = "5"
 	test CanAddProductSpecificationsCollectionDisplay {
 		property portal.acceptance = "true";
 
@@ -95,9 +95,9 @@ definition {
 	}
 
 	@description = "Verify a product's availability can be viewed via an availability fragment deployed on a default Commerce Product Display Page Template."
-	@priority = 3
+	@priority = "5"
 	test CanAssertProductAvailabilityUsingAvailabilityFragment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new default Commerce Product type display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -174,6 +174,8 @@ definition {
 	@description = "Verify an Override Default Product Display Page overrides a Commerce Product Display Page Template marked as default."
 	@priority = 4
 	test CanDefaultCommerceProductDPTBeOverriddenByOverrideDefaultProductDisplayPageSet {
+		property portal.acceptance = "false";
+
 		task ("Given a new Commerce Product type display page template marked as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
@@ -345,7 +347,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Basic Information fields to fragments are visible in Store Front"
-	@priority = 3
+	@priority = "5"
 	test CanMapBasicInformationFieldsToFragments {
 		property portal.acceptance = "true";
 
@@ -394,9 +396,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9696. Verify user can see DPT mapping categories of selected vocabularies fields into the product details"
-	@priority = 3
+	@priority = "5"
 	test CanMapCategoriesFromDifferentVocabularies {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new vocabulary is added with some categories added inside of it (from the Global site administration panel)") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
@@ -561,9 +563,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Detailed Information fields to fragments are visible in Store Fronts"
-	@priority = 3
+	@priority = "5"
 	test CanMapDetailedInformationFieldsToFragments {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new product created") {
 			CommerceJSONProductsAPI._addCommerceProduct(
@@ -609,9 +611,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Display Page and Schedule related fields to fragments are visible in Store Fronts"
-	@priority = 3
+	@priority = "5"
 	test CanMapDisplayPageAndScheduleFieldsToFragments {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new product created") {
 			CommerceJSONProductsAPI._addCommerceProduct(
@@ -657,9 +659,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Payment Subscription related fields to fragments are visible in Store Fronts"
-	@priority = 3
+	@priority = "5"
 	test CanMapPaymentSubscriptionFieldsToFragments {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var productName = "U-Joint";
 
@@ -713,9 +715,9 @@ definition {
 	}
 
 	@description = "COMMERCE-9434 Verify that Product Attachments are available for use with Collection Display Fragments"
-	@priority = 3
+	@priority = "5"
 	test CanMapProductAttachmentsToACollectionDisplayFragment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var fileName1 = "Document_1.pdf";
 		var fileName2 = "Commerce_Black.jpg";
@@ -792,8 +794,9 @@ definition {
 	}
 
 	@description = "COMMERCE-9461 Verify that the Product Custom fields are available in the list of fields that can be mapped to fragment and that the buyer can see the Product Custom field inside the fragment on the storefront."
-	@priority = 4
+	@priority = "5"
 	test CanMapProductCustomFieldsToFragments {
+		property portal.acceptance = "true";
 
 		// Important note, this test need to be updated after the COMMERCE-9692 is fixed
 
@@ -884,9 +887,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Shipping related fields to fragments are visible in Store Fronts"
-	@priority = 3
+	@priority = "5"
 	test CanMapShippingFieldsToFragments {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Shipping related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
@@ -1017,10 +1020,10 @@ definition {
 	}
 
 	@description = "Verify that order fields values are mapped to fragments."
-	@priority = 3
+	@priority = "5"
 	test CanUseCommerceOrderFieldsWithFragments {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-9410=true";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given buyer user logs in and completes an order with checkout") {
 			User.logoutPG();
@@ -1090,8 +1093,10 @@ definition {
 	}
 
 	@description = "Verify a product's images can be viewed via an Image Gallery fragment deployed on a default Commerce Product Display Page Template."
-	@priority = 3
+	@priority = "5"
 	test CanViewProductImagesUsingImageGalleryFragment {
+		property portal.acceptance = "true";
+
 		task ("Given a new default Commerce Product type display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",

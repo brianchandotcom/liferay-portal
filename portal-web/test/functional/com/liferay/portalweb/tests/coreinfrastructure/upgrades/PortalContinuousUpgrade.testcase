@@ -161,4 +161,81 @@ definition {
 			expectedCount = "1");
 	}
 
+	@priority = "4"
+	test AutoUpgradeFromLatest7413UpdateWithDBPartitionEnabledAndHeadlessAPI {
+		property database.bare.enabled = "true";
+		property database.partition.enabled = "true";
+		property database.types = "mysql";
+		property skip.start.app.server = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "PortalContinuousUpgrade#AutoUpgradeFromLatest7413UpdateWithDBPartitionEnabledAndHeadlessAPI";
+
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "wait-for-license-activation");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			virtualHostsURL = "http://localhost:8080");
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "prepare-upgrade-original-bundle-test-environment");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		SQL.assertDatabaseCount(
+			databaseFilter = "lpartition%",
+			databaseSubstring = "lpartition",
+			expectedCount = "1");
+	}
+
 }

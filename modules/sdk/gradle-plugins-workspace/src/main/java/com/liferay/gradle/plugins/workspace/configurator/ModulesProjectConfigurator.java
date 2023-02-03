@@ -53,10 +53,14 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -101,6 +105,15 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			settings,
 			WorkspacePlugin.PROPERTY_PREFIX + NAME + ".jsp.precompile.enabled",
 			_DEFAULT_JSP_PRECOMPILE_ENABLED);
+		_modulesExcludeDirs = GradleUtil.getProperty(
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "modules.excludes.dir",
+			null);
+		_moduleDirs = GradleUtil.getProperty(
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "modules.dir",
+			_DEFAULT_MODULES_DIR);
+
+		_moduleExcludeProjectPathMap = _getModuleExcludeProjectPathMap(
+			settings);
 	}
 
 	@Override
@@ -245,6 +258,17 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			});
 
 		addTaskDockerDeploy(project, jarSourcePath, workspaceExtension);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_disableModuleExcludeProjectTasks(
+						project, _moduleExcludeProjectPathMap);
+				}
+
+			});
 	}
 
 	@Override
@@ -538,10 +562,116 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		};
 	}
 
+	private void _disableModuleExcludeProjectTasks(
+		Project project, Map<String, Path> moduleExcludeProjectPathMap) {
+
+		File projectDir = project.getProjectDir();
+
+		Path projectDirPath = projectDir.toPath();
+
+		Collection<Path> moduleExcludeProjectPathList =
+			moduleExcludeProjectPathMap.values();
+
+		for (Path modulesExcludeDir : moduleExcludeProjectPathList) {
+			if (projectDirPath.startsWith(modulesExcludeDir)) {
+				Map<Project, Set<Task>> allTasks = project.getAllTasks(true);
+
+				Collection<Set<Task>> taskSetValues = allTasks.values();
+
+				for (Set<Task> taskSet : taskSetValues) {
+					for (Task task : taskSet) {
+						task.setEnabled(false);
+					}
+				}
+			}
+		}
+	}
+
 	private File _getJarFile(Project project) {
 		return project.file(
 			"dist/" + GradleUtil.getArchivesBaseName(project) + "-" +
 				project.getVersion() + ".jar");
+	}
+
+	private Map<String, Path> _getModuleExcludeProjectPathMap(
+		Settings settings) {
+
+		if (Objects.isNull(_modulesExcludeDirs)) {
+			return Collections.emptyMap();
+		}
+
+		List<String> modulesExcludeDirList = Arrays.asList(
+			_modulesExcludeDirs.split(","));
+
+		if (Objects.isNull(modulesExcludeDirList) ||
+			modulesExcludeDirList.isEmpty()) {
+
+			return Collections.emptyMap();
+		}
+
+		List<String> modulesDirList = Arrays.asList(_moduleDirs.split(","));
+
+		Map<String, Path> moduleExcludeProjectPathMap = new HashMap<>();
+
+		for (String moduleDirString : modulesDirList) {
+			File moduleDirFile = new File(
+				settings.getRootDir(), moduleDirString.trim());
+
+			if (moduleDirFile.isDirectory()) {
+				try {
+					for (String moduleExcludeDirString :
+							modulesExcludeDirList) {
+
+						ModuleProjectExcludeVisitor moduleExcludeVisitor =
+							new ModuleProjectExcludeVisitor(
+								moduleExcludeDirString.trim());
+
+						Files.walkFileTree(
+							moduleDirFile.toPath(), moduleExcludeVisitor);
+
+						Path moduleExcludePath =
+							moduleExcludeVisitor.getModuleExcludePath();
+
+						if (Objects.nonNull(moduleExcludePath)) {
+							moduleExcludeProjectPathMap.put(
+								moduleExcludeDirString, moduleExcludePath);
+						}
+					}
+				}
+				catch (Exception exception) {
+					return Collections.emptyMap();
+				}
+			}
+		}
+
+		Set<Map.Entry<String, Path>> moduleExcludeProjectPathEntrySet =
+			moduleExcludeProjectPathMap.entrySet();
+
+		for (Map.Entry<String, Path> modulesExcludeEntry :
+				moduleExcludeProjectPathEntrySet) {
+
+			String excludeMoudleName = modulesExcludeEntry.getKey();
+
+			Path excludeMoudlePath = modulesExcludeEntry.getValue();
+
+			for (String moduleDirString : modulesDirList) {
+				File moduleDirFile = new File(
+					settings.getRootDir(), moduleDirString);
+
+				Path excludeMoudleParentPath = excludeMoudlePath.getParent();
+
+				if (!Objects.equals(
+						excludeMoudleParentPath, moduleDirFile.toPath())) {
+
+					moduleExcludeProjectPathMap.put(
+						excludeMoudleName, excludeMoudleParentPath);
+
+					break;
+				}
+			}
+		}
+
+		return moduleExcludeProjectPathMap;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -587,9 +717,45 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 	private static final boolean _DEFAULT_JSP_PRECOMPILE_ENABLED = false;
 
+	private static final String _DEFAULT_MODULES_DIR = "modules";
+
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
 	private boolean _defaultRepositoryEnabled;
 	private boolean _jspPrecompileEnabled;
+	private final String _moduleDirs;
+	private final Map<String, Path> _moduleExcludeProjectPathMap;
+	private final String _modulesExcludeDirs;
+
+	private class ModuleProjectExcludeVisitor extends SimpleFileVisitor<Path> {
+
+		public ModuleProjectExcludeVisitor(String moduleExcludeName) {
+			_moduleExcludeName = moduleExcludeName;
+		}
+
+		public Path getModuleExcludePath() {
+			return _moduleExcludePath;
+		}
+
+		@Override
+		public FileVisitResult preVisitDirectory(
+				Path dir, BasicFileAttributes basicFileAttributes)
+			throws IOException {
+
+			super.preVisitDirectory(dir, basicFileAttributes);
+
+			if (Files.exists(dir.resolve(_moduleExcludeName))) {
+				_moduleExcludePath = dir.resolve(_moduleExcludeName);
+
+				return FileVisitResult.SKIP_SUBTREE;
+			}
+
+			return FileVisitResult.CONTINUE;
+		}
+
+		private final String _moduleExcludeName;
+		private Path _moduleExcludePath;
+
+	}
 
 }

@@ -26,7 +26,6 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 %>
 
 <clay:content-row
-	containerElement="h3"
 	cssClass="sheet-subtitle"
 >
 	<clay:content-col
@@ -37,11 +36,11 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 
 	<clay:content-col>
 		<span class="heading-end">
-			<liferay-ui:icon
-				label="<%= true %>"
-				linkCssClass="add-phone-number-link btn btn-secondary btn-sm"
-				message="add"
-				url='<%=
+			<clay:link
+				aria-label='<%= LanguageUtil.format(request, "add-x", "phone-numbers") %>'
+				cssClass="add-phone-number-link btn btn-secondary btn-sm"
+				displayType="null"
+				href='<%=
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
@@ -54,6 +53,8 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 						"classPK", classPK
 					).buildString()
 				%>'
+				label="add"
+				role="button"
 			/>
 		</span>
 	</clay:content-col>

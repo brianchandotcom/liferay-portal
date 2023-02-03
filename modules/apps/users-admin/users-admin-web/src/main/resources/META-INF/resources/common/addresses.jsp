@@ -27,7 +27,6 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 <clay:sheet-header>
 	<clay:content-row
-		containerElement="h2"
 		cssClass="sheet-title"
 	>
 		<clay:content-col
@@ -38,11 +37,11 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 		<clay:content-col>
 			<span class="heading-end">
-				<liferay-ui:icon
-					label="<%= true %>"
-					linkCssClass="add-address-link btn btn-secondary btn-sm"
-					message="add"
-					url='<%=
+				<clay:link
+					aria-label='<%= LanguageUtil.format(request, "add-x", "addresses") %>'
+					cssClass="add-address-link btn btn-secondary btn-sm"
+					displayType="null"
+					href='<%=
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse
 						).setMVCPath(
@@ -55,6 +54,8 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 							"classPK", classPK
 						).buildString()
 					%>'
+					label="add"
+					role="button"
 				/>
 			</span>
 		</clay:content-col>

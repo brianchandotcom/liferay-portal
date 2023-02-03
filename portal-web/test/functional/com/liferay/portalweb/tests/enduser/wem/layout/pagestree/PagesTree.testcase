@@ -983,6 +983,186 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-152360. View behaviors after deleting a page with and without siblings from page tree."
+	@priority = "4"
+	test ViewBehaviorsAfterDeletingAPageWithAndWithoutSiblings {
+		task ("Given adding some content pages") {
+			for (var i : list "1,2,3") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "P${i}",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "P${i}");
+			}
+		}
+
+		task ("When user goes to the fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then view behaviors after deleting a page with and without sibling from page tree") {
+			task ("Scenario 1") {
+				PagesFinder.goToPagesFinder();
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P1");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertElementPresent(
+					key_card = "Button",
+					locator1 = "Card#CARD_TITLE");
+
+				PagesFinder.navigateToPage(pageName = "P2");
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P3");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertTextEquals(
+					locator1 = "ControlMenu#HEADING",
+					value1 = "P2");
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P2");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertTextEquals(
+					locator1 = "ControlMenu#HEADING",
+					value1 = "Pages");
+			}
+
+			task ("Scenario 2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "P1",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "P1");
+
+				for (var i : list "1,2,3") {
+					JSONLayout.addPublicLayout(
+						groupName = "Test Site Name",
+						layoutName = "P1.${i}",
+						parentLayoutName = "P1",
+						type = "content");
+
+					JSONLayout.publishLayout(
+						groupName = "Test Site Name",
+						layoutName = "P1.${i}");
+				}
+
+				for (var i : list "1,2") {
+					JSONLayout.addPublicLayout(
+						groupName = "Test Site Name",
+						layoutName = "P1.1.${i}",
+						parentLayoutName = "P1.1",
+						type = "content");
+
+					JSONLayout.publishLayout(
+						groupName = "Test Site Name",
+						layoutName = "P1.1.${i}");
+				}
+
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "P1.1.2",
+					siteName = "Test Site Name");
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P1.1.2");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertTextEquals(
+					locator1 = "ControlMenu#HEADING",
+					value1 = "P1.1.1");
+
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "P1.1.2",
+					parentLayoutName = "P1",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "P1.1.2");
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P1.1.1");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertTextEquals(
+					locator1 = "ControlMenu#HEADING",
+					value1 = "P1.1");
+
+				PagesFinder.navigateToPage(pageName = "P1.3");
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P1.3");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertTextEquals(
+					locator1 = "ControlMenu#HEADING",
+					value1 = "P1.2");
+
+				PagesFinder.navigateToPage(pageName = "P1.1");
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P1.1");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertTextEquals(
+					locator1 = "ControlMenu#HEADING",
+					value1 = "P1");
+
+				PagesFinder.navigateToPage(pageName = "P1.2");
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "Delete",
+					pageName = "P1.2");
+
+				Click(
+					key_text = "Delete",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				AssertTextEquals(
+					locator1 = "ControlMenu#HEADING",
+					value1 = "P1");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-152360. There are Copy Page, Permissions, Delete options in page tree and no Permission ellipsis button and Permissions option in configuration view."
 	@priority = "4"
 	test ViewEllipsisOptionsInPageTreeAndNoPermissionEllipsisInConfigurationView {

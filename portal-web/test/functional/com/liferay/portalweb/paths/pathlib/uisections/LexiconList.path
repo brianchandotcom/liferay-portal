@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>LIST_ENTRY_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')] | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')] | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//a[contains(@class,'dropdown-toggle')] | //li[contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

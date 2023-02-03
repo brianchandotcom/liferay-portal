@@ -118,17 +118,17 @@
 
 <tr>
 	<td>USER_ADDRESS_TABLE</td>
-	<td>//tr[contains(.,'${key_primaryValue}')]/td[2]/div[1]</td>
+	<td>//div[contains(@class,'address-display-wrapper') and contains(.,'${key_primaryValue}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_ADDRESS_TABLE_ADDRESS_TYPE</td>
-	<td>//tr[contains(.,'${key_primaryValue}')]/td[2]</td>
+	<td>//div[contains(.,'${key_primaryValue}')]/h3</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_ADDRESS_PRIMARY_TABLE</td>
-	<td>//tr[contains(.,'${key_primaryValue}')]//span/span[normalize-space(text())='Primary']</td>
+	<td>//tr[contains(.,'${key_primaryValue}')]//span/span[normalize-space(text())='Primary'] | //div[contains(.,'${key_primaryValue}')]/div[contains(@class,'address-primary-label-wrapper')]/span[contains(.,'Primary')]</td>
 	<td></td>
 </tr>
 

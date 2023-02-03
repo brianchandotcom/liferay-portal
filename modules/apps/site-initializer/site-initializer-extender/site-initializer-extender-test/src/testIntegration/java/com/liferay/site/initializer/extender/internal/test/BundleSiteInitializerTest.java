@@ -1223,15 +1223,16 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals("manyToMany", objectRelationshipType2.toString());
 
-		ObjectDefinition objectDefinitionEntry = _objectDefinitionLocalService.
-			fetchSystemObjectDefinition("AccountEntry");
+		ObjectDefinition objectDefinitionEntry =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				"AccountEntry");
 
 		Page<ObjectRelationship> page3 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinitionEntry.getObjectDefinitionId(), null,
-					objectRelationshipResource.
-						toFilter("name eq 'accountEntryToTestObjectDefinition4'"),
+					objectRelationshipResource.toFilter(
+						"name eq 'accountEntryToTestObjectDefinition4'"),
 					null);
 
 		Assert.assertNotNull(page3);

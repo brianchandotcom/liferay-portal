@@ -119,9 +119,14 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Descriptor("Execute a specific verify process")
 	public void execute(String verifyProcessName) {
 		TeeLoggingUtil.runWithTeeLogging(
-			() -> _executeVerifyProcess(
-				_getVerifyProcess(_serviceTrackerMap, verifyProcessName),
-				verifyProcessName));
+			() -> {
+				VerifyProcess verifyProcess = _getVerifyProcess(
+					_serviceTrackerMap, verifyProcessName);
+
+				_executeVerifyProcess(
+					verifyProcess, verifyProcessName,
+					_fetchRelease(verifyProcess));
+			});
 	}
 
 	@Descriptor("Execute all verify processes")
@@ -129,10 +134,12 @@ public class VerifyProcessTrackerOSGiCommands {
 		TeeLoggingUtil.runWithTeeLogging(
 			() -> {
 				for (String verifyProcessName : _serviceTrackerMap.keySet()) {
+					VerifyProcess verifyProcess = _getVerifyProcess(
+						_serviceTrackerMap, verifyProcessName);
+
 					_executeVerifyProcess(
-						_getVerifyProcess(
-							_serviceTrackerMap, verifyProcessName),
-						verifyProcessName);
+						verifyProcess, verifyProcessName,
+						_fetchRelease(verifyProcess));
 				}
 			});
 	}
@@ -197,7 +204,8 @@ public class VerifyProcessTrackerOSGiCommands {
 							verifyProcess,
 							String.valueOf(
 								serviceReference.getProperty(
-									"verify.process.name")));
+									"verify.process.name")),
+							release);
 					}
 
 					return verifyProcess;
@@ -243,15 +251,14 @@ public class VerifyProcessTrackerOSGiCommands {
 	}
 
 	private void _executeVerifyProcess(
-		VerifyProcess verifyProcess, String verifyProcessName) {
+		VerifyProcess verifyProcess, String verifyProcessName,
+		Release release) {
 
 		NotificationThreadLocal.setEnabled(false);
 		StagingAdvicesThreadLocal.setEnabled(false);
 		WorkflowThreadLocal.setEnabled(false);
 
 		try {
-			Release release = _fetchRelease(verifyProcess);
-
 			if (release == null) {
 
 				// Verification state must be persisted even though not all

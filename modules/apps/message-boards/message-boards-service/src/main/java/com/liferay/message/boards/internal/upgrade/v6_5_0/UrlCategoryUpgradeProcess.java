@@ -70,15 +70,15 @@ public class UrlCategoryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _populateURLCategory() throws Exception {
+		String sql =
+			"update MBCategory set urlCategory = ? where categoryId = ?";
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select categoryId, name from MBCategory order by name, " +
 					"categoryId asc");
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection,
-					"update MBCategory set urlCategory = ? where categoryId = " +
-						"?")) {
+				AutoBatchPreparedStatementUtil.autoBatch(connection, sql)) {
 
 			int count = 0;
 			String curURLCategory = null;

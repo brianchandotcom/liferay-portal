@@ -2789,9 +2789,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-			long objectDefinitionId = GetterUtil.getLong(
-				(String)jsonObject.remove("objectDefinitionId"));
-
 			JSONArray jsonArray = jsonObject.getJSONArray("object-field");
 
 			if (JSONUtil.isEmpty(jsonArray)) {
@@ -2813,11 +2810,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				com.liferay.object.model.ObjectField existingObjectField =
 					_objectFieldLocalService.fetchObjectField(
-						objectDefinitionId, objectField.getName());
+						jsonObject.getLong("objectDefinitionId"),
+						objectField.getName());
 
 				if (existingObjectField == null) {
 					objectFieldResource.postObjectDefinitionObjectField(
-						objectDefinitionId, objectField);
+						jsonObject.getLong("objectDefinitionId"), objectField);
 				}
 				else {
 					objectFieldResource.putObjectField(

@@ -576,6 +576,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSortChainedMethodCalls() throws Exception {
+		test("SortChainedMethodCalls.testjava");
+	}
+
+	@Test
 	public void testSortExceptions() throws Exception {
 		test("SortExceptions.testjava");
 	}

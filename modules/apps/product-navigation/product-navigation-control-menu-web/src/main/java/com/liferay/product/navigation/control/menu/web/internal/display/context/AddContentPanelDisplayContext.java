@@ -23,8 +23,8 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.layout.portlet.category.PortletCategoryManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -308,43 +308,33 @@ public class AddContentPanelDisplayContext {
 	}
 
 	private List<Map<String, Object>> _getAddContentsURLs() throws Exception {
-		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
+		return TransformUtil.transform(
 			_assetHelper.getAssetPublisherAddItemHolders(
 				_liferayPortletRequest, _liferayPortletResponse,
 				_themeDisplay.getScopeGroupId(), _getClassNameIds(),
-				new long[0], null, null, _getRedirectURL());
+				new long[0], null, null, _getRedirectURL()),
+			assetPublisherAddItemHolder -> HashMapBuilder.<String, Object>put(
+				"label", assetPublisherAddItemHolder.getModelResource()
+			).put(
+				"url",
+				() -> {
+					long curGroupId = _themeDisplay.getScopeGroupId();
 
-		List<Map<String, Object>> list = new ArrayList<>();
+					Group group = _themeDisplay.getScopeGroup();
 
-		for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
-				assetPublisherAddItemHolders) {
+					if (!group.isStagedPortlet(
+							assetPublisherAddItemHolder.getPortletId()) &&
+						!group.isStagedRemotely()) {
 
-			list.add(
-				HashMapBuilder.<String, Object>put(
-					"label", assetPublisherAddItemHolder.getModelResource()
-				).put(
-					"url",
-					() -> {
-						long curGroupId = _themeDisplay.getScopeGroupId();
-
-						Group group = _themeDisplay.getScopeGroup();
-
-						if (!group.isStagedPortlet(
-								assetPublisherAddItemHolder.getPortletId()) &&
-							!group.isStagedRemotely()) {
-
-							curGroupId = group.getLiveGroupId();
-						}
-
-						return _assetHelper.getAddURLPopUp(
-							curGroupId, _themeDisplay.getPlid(),
-							assetPublisherAddItemHolder.getPortletURL(), false,
-							_themeDisplay.getLayout());
+						curGroupId = group.getLiveGroupId();
 					}
-				).build());
-		}
 
-		return list;
+					return _assetHelper.getAddURLPopUp(
+						curGroupId, _themeDisplay.getPlid(),
+						assetPublisherAddItemHolder.getPortletURL(), false,
+						_themeDisplay.getLayout());
+				}
+			).build());
 	}
 
 	private String _getAssetEntryTypeLabel(String className, long classTypeId) {

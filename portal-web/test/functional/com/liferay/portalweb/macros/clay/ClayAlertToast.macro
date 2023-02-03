@@ -1,0 +1,37 @@
+definition {
+    macro getElementRectanglePositionX {
+		WaitForSPARefresh();
+
+		var javascript = '''
+		let elem = document.querySelectorAll('${code}')[${index}];
+
+		let elementCoordinates = elem.getBoundingClientRect();
+
+		let positionX = Math.round(elementCoordinates.x).toString();
+
+		return positionX;
+		''';
+
+		var position_x = selenium.getEval("${javascript}");
+
+		return "${position_x}";
+	}
+
+	macro getElementRectanglePositionY {
+		WaitForSPARefresh();
+
+		var javascript = '''
+		let elem = document.querySelectorAll('${code}')[${index}];
+
+		let elementCoordinates = elem.getBoundingClientRect();
+
+		let positionY = Math.round(elementCoordinates.y).toString();
+
+		return positionY;
+		''';
+
+		var position_y = selenium.getEval("${javascript}");
+
+		return "${position_y}";
+	}
+}

@@ -268,8 +268,8 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
-				"(\\W(\\w+)\\.(<[\\w\\[\\]\\?<>, ]*>)?|[\n\t]\\)\\.)",
-				methodName, "\\("));
+				"(\\W(\\w+)\\.(", _GENERIC_TYPE_NAMES_PATTERN,
+				")?|[\n\t]\\)\\.)", methodName, "\\("));
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -469,8 +469,16 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final Pattern _typeNamePattern = Pattern.compile(
-		"(\\A|\\W)(\\w+)\\.(<[\\w\\[\\]\\?<>, ]*>)?\\w+\\(");
+	private static final String _GENERIC_TYPE_NAMES_PATTERN;
+
+	private static final Pattern _typeNamePattern;
+
+	static {
+		_GENERIC_TYPE_NAMES_PATTERN = "<[\\w\\[\\]\\?<>, ]*>";
+
+		_typeNamePattern = Pattern.compile(
+			"(\\A|\\W)(\\w+)\\.(" + _GENERIC_TYPE_NAMES_PATTERN + ")?\\w+\\(");
+	}
 
 	private class MethodCallComparator extends ParameterNameComparator {
 

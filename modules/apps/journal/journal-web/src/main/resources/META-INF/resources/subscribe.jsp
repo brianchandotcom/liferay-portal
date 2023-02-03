@@ -93,20 +93,20 @@ String unsubscribeActionName = StringPool.BLANK;
 							</c:choose>
 						</portlet:actionURL>
 
-						<liferay-ui:icon
+						<clay:link
+							aria-label='<%= LanguageUtil.get(request, "unsubscribe") %>'
+							cssClass="align-items-center d-flex icon-monospaced lfr-portal-tooltip"
+							href="<%= unsubscribeURL %>"
 							icon="bell-off"
-							linkCssClass="icon-monospaced"
-							markupView="lexicon"
-							message="unsubscribe"
-							url="<%= unsubscribeURL %>"
+							title='<%= LanguageUtil.get(request, "unsubscribe") %>'
 						/>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:icon
-							icon="bell-off"
-							linkCssClass="icon-monospaced"
-							markupView="lexicon"
-							message="subscribed-to-a-parent-folder"
+						<clay:icon
+							aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
+							cssClass="align-items-center d-flex icon-monospaced lfr-portal-tooltip"
+							symbol="bell-off"
+							title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
 						/>
 					</c:otherwise>
 				</c:choose>
@@ -128,12 +128,12 @@ String unsubscribeActionName = StringPool.BLANK;
 					</c:choose>
 				</portlet:actionURL>
 
-				<liferay-ui:icon
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "subscribe") %>'
+					cssClass="align-items-center d-flex icon-monospaced lfr-portal-tooltip mt-1"
+					href="<%= subscribeURL %>"
 					icon="bell-on"
-					linkCssClass="icon-monospaced"
-					markupView="lexicon"
-					message="subscribe"
-					url="<%= subscribeURL %>"
+					title='<%= LanguageUtil.get(request, "subscribe") %>'
 				/>
 			</c:otherwise>
 		</c:choose>

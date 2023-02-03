@@ -32,7 +32,7 @@ expect {
 }
 
 expect {
-	"show - Show all verify processes for a specific verify process name\r\r\n   scope: verify" {}
+	"show - Show the verify process name if the verify process exists\r\r\n   scope: verify" {}
 	timeout {send_user "No available command verify:show";exit 2}
 }
 
@@ -92,6 +92,6 @@ expect {
 }
 
 expect {
-	"show - Show all verify processes for a specific verify process name" {send_user "PASS"}
+	"show - Show the verify process name if the verify process exists" {send_user "PASS"}
 	timeout {send_user "No help output for command verify:show";exit 2}
 }

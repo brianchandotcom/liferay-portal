@@ -1145,8 +1145,8 @@ AUI.add(
 						toastProps: {
 							autoClose: 10000,
 							style: {left: 0, top: 0},
-							type: 'warning',
 						},
+						type: 'warning',
 					});
 				},
 			},

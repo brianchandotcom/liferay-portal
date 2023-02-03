@@ -373,7 +373,12 @@ message.
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<sequential>
 				<ant dir="sql" inheritAll="false" target="build-db" />
-				<ant dir="sql" inheritAll="false" target="rebuild-hypersonic" />
+				<if>
+					<contains string="${database.types}" substring="hypersonic" />
+					<then>
+						<ant dir="sql" inheritAll="false" target="rebuild-hypersonic" />
+					</then>
+				</if>
 			</sequential>
 		</parallel>
 

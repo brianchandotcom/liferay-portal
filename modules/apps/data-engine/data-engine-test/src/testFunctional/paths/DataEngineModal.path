@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>MODAL_TITLE</td>
-	<td>xpath=(//div[contains(@class,'modal-dialog')]//div[@class='modal-title'])[last()]</td>
+	<td>xpath=(//div[contains(@class,'modal-dialog')]//h1[@class='modal-title'])[last()]</td>
 	<td></td>
 </tr>
 </tbody>

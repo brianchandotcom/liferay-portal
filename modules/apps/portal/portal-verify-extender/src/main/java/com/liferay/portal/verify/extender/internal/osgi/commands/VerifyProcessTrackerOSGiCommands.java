@@ -167,22 +167,21 @@ public class VerifyProcessTrackerOSGiCommands {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_bundleContext = bundleContext;
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			_bundleContext, VerifyProcess.class, "verify.process.name",
+			bundleContext, VerifyProcess.class, "verify.process.name",
 			new EagerServiceTrackerCustomizer<VerifyProcess, VerifyProcess>() {
 
 				@Override
 				public VerifyProcess addingService(
 					ServiceReference<VerifyProcess> serviceReference) {
 
-					VerifyProcess verifyProcess = _bundleContext.getService(
+					VerifyProcess verifyProcess = bundleContext.getService(
 						serviceReference);
 
 					Release release = _fetchRelease(verifyProcess);
 
-					boolean initialDeployment = _isInitialDeployment(release);
+					boolean initialDeployment = _isInitialDeployment(
+						bundleContext, release);
 
 					if ((!initialDeployment && !release.isVerified()) ||
 						(GetterUtil.getBoolean(
@@ -215,7 +214,7 @@ public class VerifyProcessTrackerOSGiCommands {
 					ServiceReference<VerifyProcess> serviceReference,
 					VerifyProcess verifyProcess) {
 
-					_bundleContext.ungetService(serviceReference);
+					bundleContext.ungetService(serviceReference);
 				}
 
 			});
@@ -231,7 +230,7 @@ public class VerifyProcessTrackerOSGiCommands {
 			}
 		}
 
-		_serviceRegistration = _bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			VerifyProcessTrackerOSGiCommands.class, this,
 			osgiCommandProperties);
 	}
@@ -311,14 +310,16 @@ public class VerifyProcessTrackerOSGiCommands {
 		return verifyProcess;
 	}
 
-	private boolean _isInitialDeployment(Release release) {
+	private boolean _isInitialDeployment(
+		BundleContext bundleContext, Release release) {
+
 		if (release == null) {
 			return true;
 		}
 
 		try {
 			Collection<ServiceReference<Release>> releases =
-				_bundleContext.getServiceReferences(
+				bundleContext.getServiceReferences(
 					Release.class,
 					"(&(release.bundle.symbolic.name=" +
 						release.getServletContextName() +
@@ -337,8 +338,6 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyProcessTrackerOSGiCommands.class);
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.util.PropsValues;
@@ -273,14 +274,16 @@ public class DLFileEntryModelDocumentContributor
 		String text = FileUtil.extractText(
 			inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE);
 
-		DLStoreUtil.addFile(
-			DLStoreRequest.builder(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName()
-			).versionLabel(
-				_getIndexVersionLabel(dlFileEntry)
-			).build(),
-			text.getBytes(StandardCharsets.UTF_8));
+		if (Validator.isNotNull(text)) {
+			DLStoreUtil.addFile(
+				DLStoreRequest.builder(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName()
+				).versionLabel(
+					_getIndexVersionLabel(dlFileEntry)
+				).build(),
+				text.getBytes(StandardCharsets.UTF_8));
+		}
 
 		return text;
 	}

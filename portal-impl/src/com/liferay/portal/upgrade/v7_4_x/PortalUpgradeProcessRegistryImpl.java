@@ -269,6 +269,26 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(25, 3, 0),
 			UpgradeProcessFactory.addColumns(
 				"DLFileVersion", "storeUUID VARCHAR(255) null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(25, 3, 1),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupGroupRole", "groupId", "LONG null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupGroupRole", "roleId", "LONG null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupGroupRole", "userGroupGroupRoleId", "LONG not null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupGroupRole", "userGroupId", "LONG null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupRole", "groupId", "LONG null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupRole", "roleId", "LONG null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupRole", "userGroupRoleId", "LONG not null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupRole", "userId", "LONG null"),
+			new UpgradeUsersUserGroups());
 	}
 
 }

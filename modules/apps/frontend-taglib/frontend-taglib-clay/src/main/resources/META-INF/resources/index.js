@@ -21,6 +21,7 @@ export {default as Multiselect} from './Multiselect';
 export {default as NavigationBar} from './NavigationBar';
 export {default as PaginationBar} from './PaginationBar';
 export {default as Select} from './Select';
+export {default as Tabs} from './Tabs';
 export {default as HorizontalCard} from './cards/HorizontalCard';
 export {default as NavigationCard} from './cards/NavigationCard';
 export {default as UserCard} from './cards/UserCard';

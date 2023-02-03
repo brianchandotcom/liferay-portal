@@ -23,9 +23,13 @@ import java.util.Map;
  */
 public class SortChainedMethodCalls {
 
-	public Map<String, Object> method(Map<String, Object> params) {
+	public Map<String, Object> method(
+		Map<String, Object> params1, Map<String, Object> params2) {
+
 		return HashMapBuilder.<String, Object>putAll(
-			params
+			params1
+		).putAll(
+			params2
 		).put(
 			"a", "b"
 		).put(

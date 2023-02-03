@@ -2,7 +2,7 @@
 	<div class="custom-checkbox custom-control mb-0">
 		<fieldset aria-describedby="${fragmentEntryLinkNamespace}-multi-select-list-help-text" class="multi-select-list-fieldset">
 			<legend class="font-weight-semi-bold mb-1 text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]">
-				${htmlUtil.escape(input.label)}
+				${htmlUtil.escape(input.label)} [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 			</legend>
 
 			[#assign options=(input.attributes.options)![]]

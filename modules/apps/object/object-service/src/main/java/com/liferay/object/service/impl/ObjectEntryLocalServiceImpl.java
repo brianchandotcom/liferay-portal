@@ -3317,8 +3317,20 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (invalidObjectStateTransition) {
-			throw new ObjectEntryValuesException.InvalidObjectStateTransition(
-				sourceObjectState, targetObjectState);
+			ObjectState targetObjectState =
+				_objectStateLocalService.getObjectStateFlowObjectState(
+					listTypeEntry.getListTypeEntryId(),
+					objectStateFlow.getObjectStateFlowId());
+
+			if (sourceObjectState.getObjectStateId() !=
+					targetObjectState.getObjectStateId()) {
+
+				throw new ObjectEntryValuesException.
+					InvalidObjectStateTransition(
+						sourceObjectState, targetObjectState,
+						originalListTypeEntry.getName(LocaleUtil.getDefault()),
+						listTypeEntry.getName(LocaleUtil.getDefault()));
+			}
 		}
 	}
 

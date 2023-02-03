@@ -207,6 +207,20 @@ public class VerifyProcessTrackerOSGiCommands {
 									"verify.process.name")),
 							release);
 					}
+					else if (release == null) {
+						release = _releaseLocalService.createRelease(
+							_counterLocalService.increment());
+
+						Bundle bundle = FrameworkUtil.getBundle(
+							verifyProcess.getClass());
+
+						release.setServletContextName(bundle.getSymbolicName());
+
+						release.setVerified(true);
+						release.setState(ReleaseConstants.STATE_GOOD);
+
+						_releaseLocalService.updateRelease(release);
+					}
 
 					return verifyProcess;
 				}

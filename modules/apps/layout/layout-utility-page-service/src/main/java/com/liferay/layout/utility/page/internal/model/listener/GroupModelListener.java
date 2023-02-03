@@ -34,9 +34,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -57,7 +59,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onAfterCreate(Group group) throws ModelListenerException {
-		if (ExportImportThreadLocal.isStagingInProcess() || (group == null) ||
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-155184")) ||
+			ExportImportThreadLocal.isStagingInProcess() || (group == null) ||
 			(group.getClassNameId() != _portal.getClassNameId(
 				Group.class.getName())) ||
 			!group.isSite()) {

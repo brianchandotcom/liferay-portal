@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.portlet.action;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -29,9 +30,6 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSet
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.IndexToFilterSynchronizer;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -75,15 +73,9 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 	protected List<SynonymSet> getDeletedSynonymSets(
 		ActionRequest actionRequest, SynonymSetIndexName synonymSetIndexName) {
 
-		return Stream.of(
-			ParamUtil.getStringValues(actionRequest, "rowIds")
-		).map(
-			id -> _synonymSetIndexReader.fetch(synonymSetIndexName, id)
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transformToList(
+			ParamUtil.getStringValues(actionRequest, "rowIds"),
+			id -> _synonymSetIndexReader.fetch(synonymSetIndexName, id));
 	}
 
 	protected void removeSynonymSets(

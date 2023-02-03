@@ -262,21 +262,21 @@ public class EditStyleBookEntryDisplayContext {
 							JSONObject.class);
 				}
 
-				JSONObject[] jsonObjects = TransformUtil.transformToArray(
-					fragmentCollections,
-					fragmentCollection -> JSONUtil.put(
-						"name", fragmentCollection.getName()
-					).put(
-						"url",
-						_getPreviewFragmentCollectionURL(
-							fragmentCollection.getFragmentCollectionKey(),
-							fragmentCollection.getGroupId())
-					),
-					JSONObject.class);
-
 				return JSONUtil.putAll(
 					ArrayUtil.append(
-						jsonObjects, fragmentCollectionContributorJSONObjects));
+						(JSONObject[])TransformUtil.transformToArray(
+							fragmentCollections,
+							fragmentCollection -> JSONUtil.put(
+								"name", fragmentCollection.getName()
+							).put(
+								"url",
+								_getPreviewFragmentCollectionURL(
+									fragmentCollection.
+										getFragmentCollectionKey(),
+									fragmentCollection.getGroupId())
+							),
+							JSONObject.class),
+						fragmentCollectionContributorJSONObjects));
 			}
 		).put(
 			"totalLayouts", fragmentCollectionsCount
@@ -356,8 +356,8 @@ public class EditStyleBookEntryDisplayContext {
 			}
 		).put(
 			"recentLayouts",
-			() -> {
-				JSONObject[] jsonObjects = TransformUtil.transformToArray(
+			() -> JSONUtil.putAll(
+				(JSONObject[])TransformUtil.transformToArray(
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntries(
 							_getPreviewItemsGroupId(), layoutTypes,
@@ -372,10 +372,7 @@ public class EditStyleBookEntryDisplayContext {
 					).put(
 						"url", _getPreviewURL(layoutPageTemplateEntry)
 					),
-					JSONObject.class);
-
-				return JSONUtil.putAll(jsonObjects);
-			}
+					JSONObject.class))
 		).put(
 			"totalLayouts", total
 		);
@@ -415,18 +412,17 @@ public class EditStyleBookEntryDisplayContext {
 						_getPreviewItemsGroupId(), 0, Math.min(total, 4),
 						new LayoutModifiedDateComparator(false));
 
-				JSONObject[] jsonObjects = TransformUtil.transformToArray(
-					layouts,
-					layout -> JSONUtil.put(
-						"name", layout.getName(_themeDisplay.getLocale())
-					).put(
-						"private", layout.isPrivateLayout()
-					).put(
-						"url", _getPreviewURL(layout)
-					),
-					JSONObject.class);
-
-				return JSONUtil.putAll(jsonObjects);
+				return JSONUtil.putAll(
+					(JSONObject[])TransformUtil.transformToArray(
+						layouts,
+						layout -> JSONUtil.put(
+							"name", layout.getName(_themeDisplay.getLocale())
+						).put(
+							"private", layout.isPrivateLayout()
+						).put(
+							"url", _getPreviewURL(layout)
+						),
+						JSONObject.class));
 			}
 		).put(
 			"totalLayouts", total

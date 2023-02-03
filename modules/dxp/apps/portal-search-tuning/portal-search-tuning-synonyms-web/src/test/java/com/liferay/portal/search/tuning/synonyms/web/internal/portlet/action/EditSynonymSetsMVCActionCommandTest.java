@@ -23,8 +23,6 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.IndexToFilterSynchronizer;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -90,22 +88,18 @@ public class EditSynonymSetsMVCActionCommandTest
 	}
 
 	@Test
-	public void testGetSynonymSetOptional() {
-		Optional<SynonymSet> synonymSetOptional =
-			_editSynonymSetsMVCActionCommand.getSynonymSetOptional(
-				Mockito.mock(SynonymSetIndexName.class), _actionRequest);
+	public void testGetSynonymSet() {
+		SynonymSet synonymSet = _editSynonymSetsMVCActionCommand.getSynonymSet(
+			Mockito.mock(SynonymSetIndexName.class), _actionRequest);
 
-		Assert.assertFalse(synonymSetOptional.isPresent());
+		Assert.assertNull(synonymSet);
 
 		setUpPortletRequestParameterValue(
 			_actionRequest, "synonymSetId", "synonymSetIdValue");
 		setUpSynonymSetIndexReader("id", "car,automobile");
 
-		synonymSetOptional =
-			_editSynonymSetsMVCActionCommand.getSynonymSetOptional(
-				Mockito.mock(SynonymSetIndexName.class), _actionRequest);
-
-		SynonymSet synonymSet = synonymSetOptional.get();
+		synonymSet = _editSynonymSetsMVCActionCommand.getSynonymSet(
+			Mockito.mock(SynonymSetIndexName.class), _actionRequest);
 
 		Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
 		Assert.assertEquals("id", synonymSet.getSynonymSetDocumentId());
@@ -124,11 +118,11 @@ public class EditSynonymSetsMVCActionCommandTest
 
 	@Test
 	public void testUpdateSynonymSetIndex() throws PortalException {
-		Optional<SynonymSet> synonymSetOptional = Optional.empty();
+		SynonymSet synonymSet = null;
 
 		_editSynonymSetsMVCActionCommand.updateSynonymSetIndex(
 			Mockito.mock(SynonymSetIndexName.class), "car,automobile",
-			synonymSetOptional);
+			synonymSet);
 
 		Mockito.verify(
 			synonymSetStorageAdapter, Mockito.times(1)
@@ -139,16 +133,15 @@ public class EditSynonymSetsMVCActionCommandTest
 		SynonymSet.SynonymSetBuilder synonymSetBuilder =
 			new SynonymSet.SynonymSetBuilder();
 
-		synonymSetOptional = Optional.of(
-			synonymSetBuilder.synonyms(
-				"car,atumobile"
-			).synonymSetDocumentId(
-				"id-1"
-			).build());
+		synonymSet = synonymSetBuilder.synonyms(
+			"car,atumobile"
+		).synonymSetDocumentId(
+			"id-1"
+		).build();
 
 		_editSynonymSetsMVCActionCommand.updateSynonymSetIndex(
 			Mockito.mock(SynonymSetIndexName.class), "car,automobile",
-			synonymSetOptional);
+			synonymSet);
 
 		Mockito.verify(
 			synonymSetStorageAdapter, Mockito.times(1)

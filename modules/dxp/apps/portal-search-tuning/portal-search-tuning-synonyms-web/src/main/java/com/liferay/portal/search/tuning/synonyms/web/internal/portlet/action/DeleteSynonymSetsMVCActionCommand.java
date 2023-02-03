@@ -29,7 +29,7 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSet
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.IndexToFilterSynchronizer;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -78,11 +78,9 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 		return Stream.of(
 			ParamUtil.getStringValues(actionRequest, "rowIds")
 		).map(
-			id -> _synonymSetIndexReader.fetchOptional(synonymSetIndexName, id)
+			id -> _synonymSetIndexReader.fetch(synonymSetIndexName, id)
 		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
+			Objects::nonNull
 		).collect(
 			Collectors.toList()
 		);

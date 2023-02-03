@@ -356,7 +356,7 @@ public abstract class BaseSynonymsWebTestCase {
 				).build())
 		).when(
 			synonymSetIndexReader
-		).fetchOptional(
+		).fetch(
 			Mockito.any(), Mockito.anyString()
 		);
 

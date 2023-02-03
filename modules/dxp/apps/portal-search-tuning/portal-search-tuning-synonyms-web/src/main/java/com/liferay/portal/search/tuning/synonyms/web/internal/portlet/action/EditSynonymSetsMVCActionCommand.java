@@ -28,8 +28,6 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIn
 import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSetStorageAdapter;
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.IndexToFilterSynchronizer;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -58,14 +56,17 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected Optional<SynonymSet> getSynonymSetOptional(
+	protected SynonymSet getSynonymSet(
 		SynonymSetIndexName synonymSetIndexName, ActionRequest actionRequest) {
 
-		return Optional.ofNullable(
-			ParamUtil.getString(actionRequest, "synonymSetId", null)
-		).flatMap(
-			id -> _synonymSetIndexReader.fetchOptional(synonymSetIndexName, id)
-		);
+		String synonymSetId = ParamUtil.getString(
+			actionRequest, "synonymSetId", null);
+
+		if (synonymSetId == null) {
+			return null;
+		}
+
+		return _synonymSetIndexReader.fetch(synonymSetIndexName, synonymSetId);
 	}
 
 	protected void updateSynonymSet(ActionRequest actionRequest)
@@ -79,7 +80,7 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 		updateSynonymSetIndex(
 			synonymSetIndexName,
 			ParamUtil.getString(actionRequest, "synonymSet"),
-			getSynonymSetOptional(synonymSetIndexName, actionRequest));
+			getSynonymSet(synonymSetIndexName, actionRequest));
 
 		_indexToFilterSynchronizer.copyToFilter(
 			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId),
@@ -88,7 +89,7 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void updateSynonymSetIndex(
 			SynonymSetIndexName synonymSetIndexName, String synonyms,
-			Optional<SynonymSet> synonymSetOptional)
+			SynonymSet synonymSet)
 		throws PortalException {
 
 		SynonymSet.SynonymSetBuilder synonymSetBuilder =
@@ -96,11 +97,12 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 
 		synonymSetBuilder.synonyms(synonyms);
 
-		synonymSetOptional.ifPresent(
-			synonymSet -> synonymSetBuilder.synonymSetDocumentId(
-				synonymSet.getSynonymSetDocumentId()));
+		if (synonymSet != null) {
+			synonymSetBuilder.synonymSetDocumentId(
+				synonymSet.getSynonymSetDocumentId());
+		}
 
-		if (synonymSetOptional.isPresent()) {
+		if (synonymSet != null) {
 			_synonymSetStorageAdapter.update(
 				synonymSetIndexName, synonymSetBuilder.build());
 		}

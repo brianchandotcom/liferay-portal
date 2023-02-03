@@ -1,0 +1,43 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":modules:testApi:jar"
+	dependsOn ":modules:sample:sample-service:buildService"
+	dependsOn ":modules:sample:sample-service:jar"
+	dependsOn ":modules:sample:sample-api:jar"
+	dependsOn ":modules:sample2:sample2-service:buildService"
+	dependsOn ":modules:sample2:sample2-service:jar"
+	dependsOn ":modules:sample2:sample2-api:jar"
+
+	doLast {
+		Project sampleServiceProject = project(":modules:sample:sample-service")
+
+		File sampleServiceJarFile = sampleServiceProject.file("build/libs/sample.service-1.0.0.jar")
+
+		assert !sampleServiceJarFile.exists()
+
+		Project sampleApiProject = project(":modules:sample:sample-api")
+
+		File sampleApiJarFile = sampleApiProject.file("build/libs/sample.api-1.0.0.jar")
+
+		assert !sampleApiJarFile.exists()
+
+		Project testApiProject = project(":modules:testApi")
+
+		File testApiJarFile = testApiProject.file("build/libs/testapi-1.0.0.jar")
+
+		assert testApiJarFile.exists()
+
+		Project sample2ServiceProject = project(":modules:sample2:sample2-service")
+
+		File sample2ServiceJarFile = sample2ServiceProject.file("build/libs/sample2.service-1.0.0.jar")
+
+		assert !sample2ServiceJarFile.exists()
+
+		Project sample2ApiProject = project(":modules:sample2:sample2-api")
+
+		File sample2ApiJarFile = sample2ApiProject.file("build/libs/sample2.api-1.0.0.jar")
+
+		assert !sample2ApiJarFile.exists()
+	}
+}

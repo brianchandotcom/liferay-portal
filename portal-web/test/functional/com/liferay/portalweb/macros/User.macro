@@ -2235,6 +2235,16 @@ definition {
 		UserBar.signOut();
 	}
 
+	// This new macro is created after LPS-168612. Once Contact Information are fixed the same way as LPS-168612, then we can consolidate this macro and User.makePrimary
+
+	macro makeAddressPrimary {
+		Click.waitForMenuToggleJSClick(
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Make Primary");
+	}
+
 	macro makePrimary {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = "${rowEntry}",
@@ -2247,6 +2257,16 @@ definition {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+	}
+
+	// This new macro is created after LPS-168612. Once Contact Information are fixed the same way as LPS-168612, then we can consolidate this macro and User.removeContactInformation
+
+	macro removeAddress {
+		Click.waitForMenuToggleJSClick(
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Remove");
 	}
 
 	macro removeContactInformation {

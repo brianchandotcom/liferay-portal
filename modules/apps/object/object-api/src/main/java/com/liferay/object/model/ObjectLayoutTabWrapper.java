@@ -362,6 +362,11 @@ public class ObjectLayoutTabWrapper
 	}
 
 	@Override
+	public void persist() {
+		model.persist();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
 

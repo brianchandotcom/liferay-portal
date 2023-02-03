@@ -17,8 +17,10 @@ package com.liferay.object.service.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.NoSuchObjectLayoutTabException;
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.object.service.ObjectLayoutTabLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -356,6 +359,30 @@ public class ObjectLayoutTabPersistenceTest {
 		Assert.assertEquals(
 			newObjectLayoutTab,
 			objectLayoutTabs.get(newObjectLayoutTab.getPrimaryKey()));
+	}
+
+	@Test
+	public void testActionableDynamicQuery() throws Exception {
+		final IntegerWrapper count = new IntegerWrapper();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			ObjectLayoutTabLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ObjectLayoutTab>() {
+
+				@Override
+				public void performAction(ObjectLayoutTab objectLayoutTab) {
+					Assert.assertNotNull(objectLayoutTab);
+
+					count.increment();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		Assert.assertEquals(count.getValue(), _persistence.countAll());
 	}
 
 	@Test

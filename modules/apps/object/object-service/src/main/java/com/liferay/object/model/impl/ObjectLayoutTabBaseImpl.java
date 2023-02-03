@@ -15,6 +15,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.object.service.ObjectLayoutTabLocalServiceUtil;
 
 /**
  * The extended model base implementation for the ObjectLayoutTab service. Represents a row in the &quot;ObjectLayoutTab&quot; database table, with each column mapped to a property of this class.
@@ -36,5 +37,14 @@ public abstract class ObjectLayoutTabBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a object layout tab model instance should use the <code>ObjectLayoutTab</code> interface instead.
 	 */
+	@Override
+	public void persist() {
+		if (this.isNew()) {
+			ObjectLayoutTabLocalServiceUtil.addObjectLayoutTab(this);
+		}
+		else {
+			ObjectLayoutTabLocalServiceUtil.updateObjectLayoutTab(this);
+		}
+	}
 
 }

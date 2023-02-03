@@ -39,11 +39,13 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -367,16 +369,15 @@ public class EditSegmentsEntryDisplayContext {
 	private long _getInitialGroupId() throws PortalException {
 		long groupId = _themeDisplay.getScopeGroupId();
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group.isControlPanel()) {
-			Company company = _companyLocalService.getCompany(
-				group.getCompanyId());
-
-			return company.getGroupId();
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
+			return groupId;
 		}
 
-		return groupId;
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		return company.getGroupId();
 	}
 
 	private JSONObject _getInitialQueryJSONObject(

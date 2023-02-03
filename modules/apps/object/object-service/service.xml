@@ -462,7 +462,7 @@
 			<finder-column name="objectLayoutBoxId" />
 		</finder>
 	</entity>
-	<entity local-service="false" name="ObjectLayoutTab" remote-service="true" uuid="true">
+	<entity local-service="true" name="ObjectLayoutTab" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

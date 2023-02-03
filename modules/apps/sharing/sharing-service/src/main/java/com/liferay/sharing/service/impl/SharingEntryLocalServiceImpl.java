@@ -176,15 +176,8 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
 		sharingEntry.setShareable(shareable);
+		sharingEntry.setActionIds(_getActionIds(sharingEntryActions));
 		sharingEntry.setExpirationDate(expirationDate);
-
-		long actionIds = 0;
-
-		for (SharingEntryAction sharingEntryAction : sharingEntryActions) {
-			actionIds |= sharingEntryAction.getBitwiseValue();
-		}
-
-		sharingEntry.setActionIds(actionIds);
 
 		SharingEntry newSharingEntry = sharingEntryPersistence.update(
 			sharingEntry);
@@ -702,7 +695,14 @@ public class SharingEntryLocalServiceImpl
 
 		sharingEntry.setUserId(userId);
 		sharingEntry.setShareable(shareable);
+		sharingEntry.setActionIds(_getActionIds(sharingEntryActions));
 		sharingEntry.setExpirationDate(expirationDate);
+
+		return sharingEntryPersistence.update(sharingEntry);
+	}
+
+	private long _getActionIds(
+		Collection<SharingEntryAction> sharingEntryActions) {
 
 		long actionIds = 0;
 
@@ -710,9 +710,7 @@ public class SharingEntryLocalServiceImpl
 			actionIds |= sharingEntryAction.getBitwiseValue();
 		}
 
-		sharingEntry.setActionIds(actionIds);
-
-		return sharingEntryPersistence.update(sharingEntry);
+		return actionIds;
 	}
 
 	private void _validateExpirationDate(Date expirationDate)

@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,7 +35,6 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -67,16 +67,11 @@ public class SharingPermissionImpl implements SharingPermission {
 				resourceName = className.getClassName();
 			}
 
-			Stream<SharingEntryAction> sharingEntryActionsStream =
-				sharingEntryActions.stream();
-
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker.getUserId(), resourceName, classPK,
-				sharingEntryActionsStream.map(
-					SharingEntryAction::getActionId
-				).toArray(
-					String[]::new
-				));
+				TransformUtil.transformToArray(
+					sharingEntryActions, SharingEntryAction::getActionId,
+					String.class));
 		}
 	}
 
@@ -136,19 +131,16 @@ public class SharingPermissionImpl implements SharingPermission {
 			return true;
 		}
 
-		Stream<SharingEntryAction> sharingEntryActionsStream =
-			sharingEntryActions.stream();
+		for (SharingEntryAction sharingEntryAction : sharingEntryActions) {
+			if (!_sharingEntryLocalService.hasShareableSharingPermission(
+					permissionChecker.getUserId(), classNameId, classPK,
+					sharingEntryAction)) {
 
-		if (sharingEntryActionsStream.allMatch(
-				sharingEntryAction ->
-					_sharingEntryLocalService.hasShareableSharingPermission(
-						permissionChecker.getUserId(), classNameId, classPK,
-						sharingEntryAction))) {
-
-			return true;
+				return false;
+			}
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

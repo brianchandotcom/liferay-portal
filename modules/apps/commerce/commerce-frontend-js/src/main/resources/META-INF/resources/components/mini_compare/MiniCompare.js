@@ -18,7 +18,7 @@ import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
 import classnames from 'classnames';
 import {COOKIE_TYPES, checkConsent} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import CommerceCookie from '../../utilities/cookies';
 import {
@@ -91,9 +91,9 @@ function MiniCompare(props) {
 		checkConsent(COOKIE_TYPES.FUNCTIONAL)
 	);
 
-	const triggerCheckCookieConsent = () => {
+	const triggerCheckCookieConsent = useCallback(() => {
 		return !functionalCookiesConsent && items?.length > 0;
-	};
+	}, [functionalCookiesConsent, items?.length]);
 
 	useEffect(() => {
 		if (triggerCheckCookieConsent()) {
@@ -129,8 +129,12 @@ function MiniCompare(props) {
 					);
 				});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [functionalCookiesConsent, items, props.commerceChannelGroupId]);
+	}, [
+		functionalCookiesConsent,
+		items,
+		props.commerceChannelGroupId,
+		triggerCheckCookieConsent,
+	]);
 
 	useEffect(() => {
 		function toggleItem({id, thumbnail}) {

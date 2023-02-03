@@ -34,6 +34,7 @@ page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.contex
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.MultiselectDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.TabsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarDelta" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarLabels" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %>
@@ -53,4 +54,5 @@ CardsDisplayContext cardsDisplayContext = (CardsDisplayContext)request.getAttrib
 DropdownsDisplayContext dropdownsDisplayContext = (DropdownsDisplayContext)request.getAttribute(ClaySamplePortletKeys.DROPDOWNS_DISPLAY_CONTEXT);
 MultiselectDisplayContext multiselectDisplayContext = (MultiselectDisplayContext)request.getAttribute(ClaySamplePortletKeys.MULTISELECT_DISPLAY_CONTEXT);
 NavigationBarsDisplayContext navigationBarsDisplayContext = (NavigationBarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.NAVIGATION_BARS_DISPLAY_CONTEXT);
+TabsDisplayContext tabsDisplayContext = (TabsDisplayContext)request.getAttribute(ClaySamplePortletKeys.TABS_DISPLAY_CONTEXT);
 %>

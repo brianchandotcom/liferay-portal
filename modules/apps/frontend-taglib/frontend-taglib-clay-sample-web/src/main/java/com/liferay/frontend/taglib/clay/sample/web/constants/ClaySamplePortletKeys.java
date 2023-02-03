@@ -33,4 +33,6 @@ public class ClaySamplePortletKeys {
 	public static final String NAVIGATION_BARS_DISPLAY_CONTEXT =
 		"NAVIGATION_BARS_DISPLAY_CONTEXT";
 
+	public static final String TABS_DISPLAY_CONTEXT = "TABS_DISPLAY_CONTEXT";
+
 }

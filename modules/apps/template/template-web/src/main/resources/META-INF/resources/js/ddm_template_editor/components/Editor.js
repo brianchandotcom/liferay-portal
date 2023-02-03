@@ -92,6 +92,30 @@ export function Editor({autocompleteData, initialScript, mode}) {
 		};
 	}, [initialScript, portletNamespace]);
 
+	function base64Encode(input) {
+
+		// btoa can't be used directly if the input exceeds the ascii
+		// charset. The Liferay backend expectes the scriptContent to be the
+		// base64 encoded UTF-8 representation of the input. encodeURI
+		// is used to map high codepoints to their UTF-8 escape sequences
+		// in the form %AB%CD..., where each AB/CD/.. pair represents one
+		// octed of the UTF-8 representation. The ecapes are then mapped
+		// to their individual codepoints.
+		// The result is then run through btoa.
+
+		const utf8EncodedInput = encodeURI(input).replaceAll(
+			/%[A-Fa-f0-9]{2}/g,
+			(escapeSequence) => {
+				const escapeContent = escapeSequence.substring(1);
+				const escapeCode = parseInt(escapeContent, 16);
+
+				return String.fromCharCode(escapeCode);
+			}
+		);
+
+		return btoa(utf8EncodedInput);
+	}
+
 	return (
 		<>
 			<CodeMirrorEditor
@@ -106,7 +130,7 @@ export function Editor({autocompleteData, initialScript, mode}) {
 				id={`${portletNamespace}scriptContent`}
 				name={`${portletNamespace}scriptContent`}
 				type="hidden"
-				value={btoa(script)}
+				value={base64Encode(script)}
 			/>
 		</>
 	);

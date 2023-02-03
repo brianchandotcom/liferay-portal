@@ -1386,7 +1386,11 @@ definition {
 
 		User.viewNotPrimary(primaryValue = "4000 Westchase Blvd");
 
-		UserNavigator.gotoEdit(rowEntry = "205 West Wacker Dr");
+		Click.waitForMenuToggleJSClick(
+			key_listEntry = "205 West Wacker Dr",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
 
 		User.editPrimary(makePrimary = "false");
 

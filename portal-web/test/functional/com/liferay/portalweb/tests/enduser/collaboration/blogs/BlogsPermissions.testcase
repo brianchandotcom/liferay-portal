@@ -143,9 +143,17 @@ definition {
 			resourceName = "com.liferay.blogs",
 			roleTitle = "Test Regrole Name");
 
-		JSONBlog.uploadBlogImage(
-			groupName = "Guest",
-			sourceFileName = "Document_1.jpg");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

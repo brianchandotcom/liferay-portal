@@ -68,6 +68,10 @@ public class InfoFieldUtil {
 					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			if (fragmentEntryLink.isTypePortlet()) {
+				continue;
+			}
+
 			String defaultElementName =
 				"defaultElementName" + StringUtil.randomId();
 

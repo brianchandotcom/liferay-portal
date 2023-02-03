@@ -6,13 +6,13 @@ definition {
 			panel = "Commerce",
 			portlet = "Channels");
 
-		while (IsElementNotPresent(key_entryName = "Raylife Channel", locator1 = "CommerceNavigation#ENTRY_NAME")) {
+		while (IsElementNotPresent(key_entryName = "Raylife D2C Channel", locator1 = "CommerceNavigation#ENTRY_NAME")) {
 			Refresh();
 
 			WaitForPageLoad();
 		}
 
-		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
+		CommerceNavigator.gotoEntry(entryName = "Raylife D2C Channel");
 
 		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
 

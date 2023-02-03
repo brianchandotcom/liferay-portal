@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
@@ -1421,10 +1422,16 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		public String addingService(ServiceReference<Object> serviceReference) {
 			String componentName = (String)serviceReference.getProperty(
 				"component.name");
+			String entityClassName = (String)serviceReference.getProperty(
+				"entity.class.name");
 
-			_jaxRsResourceEntryClassNameMap.put(
-				componentName,
-				(String)serviceReference.getProperty("entity.class.name"));
+			if (Validator.isNull(componentName) ||
+				Validator.isNull(entityClassName)) {
+
+				return null;
+			}
+
+			_jaxRsResourceEntryClassNameMap.put(componentName, entityClassName);
 
 			return componentName;
 		}

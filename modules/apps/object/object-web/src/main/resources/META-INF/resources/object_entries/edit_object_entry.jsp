@@ -24,10 +24,17 @@ ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext
 ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= objectEntryDisplayContext.getNavigationItems() %>"
-/>
+<c:if test="<%= (objectEntryDisplayContext.getObjectEntry() != null) && (objectLayoutTab != null) %>">
+
+	<%
+	ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition();
+	%>
+
+	<liferay-frontend:screen-navigation
+		key="<%= objectDefinition.getExternalReferenceCode() %>"
+		portletURL="<%= currentURLObj %>"
+	/>
+</c:if>
 
 <c:choose>
 	<c:when test="<%= (objectLayoutTab != null) && (objectLayoutTab.getObjectRelationshipId() > 0) %>">

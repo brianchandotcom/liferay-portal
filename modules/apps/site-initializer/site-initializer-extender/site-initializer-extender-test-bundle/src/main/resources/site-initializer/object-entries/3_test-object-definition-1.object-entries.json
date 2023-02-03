@@ -1,0 +1,30 @@
+{
+	"object-entries": [
+		{
+			"externalReferenceCode": "OBJECTENTRY-1",
+			"field1": "Test Object Entry 1",
+			"r_testOR1_userERC": "USER-1"
+		},
+		{
+			"externalReferenceCode": "OBJECTENTRY-2",
+			"field1": "Test Object Entry 2",
+			"r_testOR1_userERC": "USER-1"
+		},
+		{
+			"externalReferenceCode": "OBJECTENTRY-3",
+			"field1": "Test Object Entry 3",
+			"r_testOR1_userERC": "USER-2"
+		},
+		{
+			"externalReferenceCode": "OBJECTENTRY-4",
+			"field1": "Test Object Entry 4",
+			"r_testOR1_userERC": "USER-2"
+		},
+		{
+			"externalReferenceCode": "OBJECTENTRY-5",
+			"field1": "Test Object Entry 5",
+			"r_testOR1_userERC": "USER-2"
+		}
+	],
+	"objectDefinitionName": "TestObjectDefinition1"
+}

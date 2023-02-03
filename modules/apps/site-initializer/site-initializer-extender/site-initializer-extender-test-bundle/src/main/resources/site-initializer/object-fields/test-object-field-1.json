@@ -10,11 +10,11 @@
 	},
 	"listTypeDefinitionId": 0,
 	"name": "aggregationTestField",
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]",
 	"objectFieldSettings": [
 		{
 			"name": "objectRelationshipName",
-			"value": "testOR1"
+			"value": "testOR2"
 		},
 		{
 			"name": "objectFieldName",

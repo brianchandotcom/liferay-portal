@@ -4,7 +4,7 @@
 		"en_US": "Test Object Relationship 1"
 	},
 	"name": "testOR1",
-	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
 	"objectDefinitionName2": "TestObjectDefinition1",
 	"type": "oneToMany"

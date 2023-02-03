@@ -1332,19 +1332,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (Map.Entry<String, ObjectDefinition> entry :
 				accountEntryRestrictedObjectDefinitionMap.entrySet()) {
 
-			com.liferay.object.model.ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_" + entry.getKey());
+			com.liferay.object.model.ObjectDefinition
+				localServiceObjectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						serviceContext.getCompanyId(), "C_" + entry.getKey());
 
 			com.liferay.object.model.ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
 					getObjectRelationshipByObjectDefinitionId(
-						objectDefinition.getObjectDefinitionId(),
-						"accountEntryTo" + objectDefinition.getShortName());
+						localServiceObjectDefinition.getObjectDefinitionId(),
+						"accountEntryTo" +
+							localServiceObjectDefinition.getShortName());
 
 			_objectDefinitionLocalService.
 				restrictObjectDefinitionByAccountEntry(
-					objectDefinition.getObjectDefinitionId(),
+					localServiceObjectDefinition.getObjectDefinitionId(),
 					objectRelationship);
 		}
 

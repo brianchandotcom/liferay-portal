@@ -357,6 +357,8 @@ public class DefaultSearchResultPermissionFilter
 			int offset = 0;
 			long startTime = 0;
 
+			searchContext.setAttribute("permissionedSearch", Boolean.TRUE);
+
 			while (true) {
 				int count = end - filteredDocsCount;
 

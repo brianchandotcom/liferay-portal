@@ -923,6 +923,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
+					_cpDefinitionOptionRelService,
+					_cpDefinitionOptionValueRelService, _cpOptionService,
 					_uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
@@ -947,6 +949,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
+					_cpDefinitionOptionRelService,
+					_cpDefinitionOptionValueRelService, _cpOptionService,
 					_uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
@@ -1092,8 +1096,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				DiagramUtil.addOrUpdateCSDiagramSetting(
 					contextCompany.getCompanyId(),
 					_cpAttachmentFileEntryService,
-					cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
-					diagram, cpDefinition.getGroupId(),
+					cpDefinition.getCPDefinitionId(),
+					_cpDefinitionOptionRelService,
+					_cpDefinitionOptionValueRelService, _cpOptionService,
+					_csDiagramSettingService, diagram,
+					cpDefinition.getGroupId(),
 					contextAcceptLanguage.getPreferredLocale(),
 					_serviceContextHelper, _uniqueFileNameProvider);
 			}

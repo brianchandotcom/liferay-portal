@@ -39,7 +39,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -314,16 +313,13 @@ public class AMBlogsEditorConfigContributorTest {
 		for (ItemSelectorCriterion itemSelectorCriterion :
 				itemSelectorCriteria) {
 
-			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-				itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+			for (ItemSelectorReturnType itemSelectorReturnType :
+					itemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
 
-			Stream<ItemSelectorReturnType> itemSelectorReturnTypeStream =
-				desiredItemSelectorReturnTypes.stream();
-
-			Assert.assertTrue(
-				itemSelectorReturnTypeStream.allMatch(
-					itemSelectorReturnType -> itemSelectorReturnType instanceof
-						AMImageFileEntryItemSelectorReturnType));
+				Assert.assertTrue(
+					itemSelectorReturnType instanceof
+						AMImageFileEntryItemSelectorReturnType);
+			}
 		}
 	}
 

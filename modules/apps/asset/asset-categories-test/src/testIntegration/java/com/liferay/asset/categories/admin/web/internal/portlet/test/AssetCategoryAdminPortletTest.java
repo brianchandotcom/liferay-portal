@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -52,8 +53,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -184,19 +183,12 @@ public class AssetCategoryAdminPortletTest {
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 
-		Stream<AssetCategory> stream = assetCategories.stream();
-
-		List<String> categoryIds = stream.map(
-			AssetCategory::getCategoryId
-		).map(
-			String::valueOf
-		).collect(
-			Collectors.toList()
-		);
-
 		actionRequest.addParameter(
 			"categoryIds",
-			categoryIds.toArray(categoryIds.toArray(new String[0])));
+			TransformUtil.transformToArray(
+				assetCategories,
+				assetCategory -> String.valueOf(assetCategory.getCategoryId()),
+				String.class));
 
 		actionRequest.addParameter(
 			"displayPageType",

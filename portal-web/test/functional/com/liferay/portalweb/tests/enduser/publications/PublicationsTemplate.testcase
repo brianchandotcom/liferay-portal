@@ -102,8 +102,8 @@ definition {
 		PublicationsTemplate.gotoPublicationTemplate();
 
 		PublicationsTemplate.addPublicationTemplate(
-			publicationDescription = "Publications Description",
-			publicationName = "Publication Name",
+			publicationDescription = "Publications Description ${CURRENT_USERNAME}",
+			publicationName = "Publication Name ${CURRENT_USERNAME}",
 			publicationRole1 = "Editor",
 			publicationRole2 = "Viewer",
 			templateDescription = "Template Description",

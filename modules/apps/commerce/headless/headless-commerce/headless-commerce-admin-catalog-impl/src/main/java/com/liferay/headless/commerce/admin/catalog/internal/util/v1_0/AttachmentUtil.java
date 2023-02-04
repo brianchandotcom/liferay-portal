@@ -150,6 +150,9 @@ public class AttachmentUtil {
 
 	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
+			CPOptionService cpOptionService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			AttachmentBase64 attachmentBase64, long classNameId, long classPK,
 			int type, ServiceContext serviceContext)
@@ -197,13 +200,19 @@ public class AttachmentUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachmentBase64.getNeverExpire(), false),
 			getTitleMap(null, attachmentBase64.getTitle()),
-			GetterUtil.getString(attachmentBase64.getOptions()),
+			_getOptions(
+				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
+				cpOptionService, attachmentBase64.getOptions(), classPK,
+				serviceContext.getCompanyId()),
 			GetterUtil.getDouble(attachmentBase64.getPriority()), type,
 			serviceContext);
 	}
 
 	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
+			CPOptionService cpOptionService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			AttachmentUrl attachmentUrl, long classNameId, long classPK,
 			int type, ServiceContext serviceContext)
@@ -251,7 +260,10 @@ public class AttachmentUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachmentUrl.getNeverExpire(), false),
 			getTitleMap(null, attachmentUrl.getTitle()),
-			GetterUtil.getString(attachmentUrl.getOptions()),
+			_getOptions(
+				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
+				cpOptionService, attachmentUrl.getOptions(), classPK,
+				serviceContext.getCompanyId()),
 			GetterUtil.getDouble(attachmentUrl.getPriority()), type,
 			serviceContext);
 	}
@@ -259,6 +271,9 @@ public class AttachmentUtil {
 	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			long groupId,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
+			CPOptionService cpOptionService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			Attachment attachment, long classNameId, long classPK, int type,
 			ServiceContext serviceContext)
@@ -312,7 +327,10 @@ public class AttachmentUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachment.getNeverExpire(), false),
 			getTitleMap(null, attachment.getTitle()),
-			GetterUtil.getString(attachment.getOptions()),
+			_getOptions(
+				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
+				cpOptionService, attachment.getOptions(), classPK,
+				serviceContext.getCompanyId()),
 			GetterUtil.getDouble(attachment.getPriority()), type,
 			cloneServiceContext);
 	}

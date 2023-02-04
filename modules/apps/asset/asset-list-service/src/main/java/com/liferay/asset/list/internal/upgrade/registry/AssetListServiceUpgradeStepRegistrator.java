@@ -88,6 +88,12 @@ public class AssetListServiceUpgradeStepRegistrator
 				AssetListEntryUsageUpgradeProcess(
 					_layoutLocalService, _layoutPageTemplateEntryLocalService,
 					_layoutPageTemplateStructureLocalService, _portal));
+
+		registry.register(
+			"1.9.0", "2.0.0",
+			UpgradeProcessFactory.dropColumns(
+				"AssetListEntryUsage", "assetListEntryId", "classPK",
+				"portletId"));
 	}
 
 	@Reference

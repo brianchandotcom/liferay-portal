@@ -165,9 +165,11 @@ definition {
 				value1 = "Publications Description ${CURRENT_USERNAME} Edited");
 
 			Button.clickCancel();
+		}
+	}
 
 	@priority = "3"
-	test CannotCreatePublicationTemplateWithoutTemplateNameAndPublicationName {
+	test CannotCreateEmptyPublicationTemplate {
 		task ("Go to Publications Template and click in the new template button") {
 			PublicationsTemplate.gotoPublicationTemplate();
 
@@ -198,10 +200,6 @@ definition {
 			PublicationsTemplate.expandPublicationInformation();
 
 			Type(
-				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
-				value1 = "");
-
-			AssertTextEquals(
 				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
 				value1 = "");
 

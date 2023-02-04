@@ -65,6 +65,15 @@ public class CTProcessLocalServiceUtil {
 		return getService().addCTProcess(userId, ctCollectionId);
 	}
 
+	public static CTProcess addCTProcess(
+			long userId, long fromCTCollectionId, long toCTCollectionId,
+			long[] ctEntryIds)
+		throws PortalException {
+
+		return getService().addCTProcess(
+			userId, fromCTCollectionId, toCTCollectionId, ctEntryIds);
+	}
+
 	/**
 	 * Creates a new ct process with the primary key. Does not add the ct process to the database.
 	 *

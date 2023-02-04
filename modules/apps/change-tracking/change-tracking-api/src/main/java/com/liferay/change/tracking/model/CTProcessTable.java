@@ -46,6 +46,8 @@ public class CTProcessTable extends BaseTable<CTProcessTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CTProcessTable, Long> backgroundTaskId = createColumn(
 		"backgroundTaskId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CTProcessTable, Integer> type = createColumn(
+		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private CTProcessTable() {
 		super("CTProcess", CTProcessTable::new);

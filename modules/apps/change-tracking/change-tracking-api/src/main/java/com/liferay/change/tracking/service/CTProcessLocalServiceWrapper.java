@@ -61,6 +61,16 @@ public class CTProcessLocalServiceWrapper
 		return _ctProcessLocalService.addCTProcess(userId, ctCollectionId);
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTProcess addCTProcess(
+			long userId, long fromCTCollectionId, long toCTCollectionId,
+			long[] ctEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctProcessLocalService.addCTProcess(
+			userId, fromCTCollectionId, toCTCollectionId, ctEntryIds);
+	}
+
 	/**
 	 * Creates a new ct process with the primary key. Does not add the ct process to the database.
 	 *

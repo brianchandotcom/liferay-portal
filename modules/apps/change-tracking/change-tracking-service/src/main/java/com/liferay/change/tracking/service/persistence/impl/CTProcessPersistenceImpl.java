@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
@@ -50,6 +51,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1084,7 +1086,551 @@ public class CTProcessPersistenceImpl
 	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
 		"ctProcess.ctCollectionId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_T;
+	private FinderPath _finderPathWithoutPaginationFindByC_T;
+	private FinderPath _finderPathCountByC_T;
+
+	/**
+	 * Returns all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @return the matching ct processes
+	 */
+	@Override
+	public List<CTProcess> findByC_T(long ctCollectionId, int type) {
+		return findByC_T(
+			ctCollectionId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @return the range of matching ct processes
+	 */
+	@Override
+	public List<CTProcess> findByC_T(
+		long ctCollectionId, int type, int start, int end) {
+
+		return findByC_T(ctCollectionId, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct processes
+	 */
+	@Override
+	public List<CTProcess> findByC_T(
+		long ctCollectionId, int type, int start, int end,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		return findByC_T(
+			ctCollectionId, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ct processes
+	 */
+	@Override
+	public List<CTProcess> findByC_T(
+		long ctCollectionId, int type, int start, int end,
+		OrderByComparator<CTProcess> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_T;
+				finderArgs = new Object[] {ctCollectionId, type};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_T;
+			finderArgs = new Object[] {
+				ctCollectionId, type, start, end, orderByComparator
+			};
+		}
+
+		List<CTProcess> list = null;
+
+		if (useFinderCache) {
+			list = (List<CTProcess>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CTProcess ctProcess : list) {
+					if ((ctCollectionId != ctProcess.getCtCollectionId()) ||
+						(type != ctProcess.getType())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_CTPROCESS_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_T_CTCOLLECTIONID_2);
+
+			sb.append(_FINDER_COLUMN_C_T_TYPE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CTProcessModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ctCollectionId);
+
+				queryPos.add(type);
+
+				list = (List<CTProcess>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ct process
+	 * @throws NoSuchProcessException if a matching ct process could not be found
+	 */
+	@Override
+	public CTProcess findByC_T_First(
+			long ctCollectionId, int type,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws NoSuchProcessException {
+
+		CTProcess ctProcess = fetchByC_T_First(
+			ctCollectionId, type, orderByComparator);
+
+		if (ctProcess != null) {
+			return ctProcess;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("ctCollectionId=");
+		sb.append(ctCollectionId);
+
+		sb.append(", type=");
+		sb.append(type);
+
+		sb.append("}");
+
+		throw new NoSuchProcessException(sb.toString());
+	}
+
+	/**
+	 * Returns the first ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ct process, or <code>null</code> if a matching ct process could not be found
+	 */
+	@Override
+	public CTProcess fetchByC_T_First(
+		long ctCollectionId, int type,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		List<CTProcess> list = findByC_T(
+			ctCollectionId, type, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ct process
+	 * @throws NoSuchProcessException if a matching ct process could not be found
+	 */
+	@Override
+	public CTProcess findByC_T_Last(
+			long ctCollectionId, int type,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws NoSuchProcessException {
+
+		CTProcess ctProcess = fetchByC_T_Last(
+			ctCollectionId, type, orderByComparator);
+
+		if (ctProcess != null) {
+			return ctProcess;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("ctCollectionId=");
+		sb.append(ctCollectionId);
+
+		sb.append(", type=");
+		sb.append(type);
+
+		sb.append("}");
+
+		throw new NoSuchProcessException(sb.toString());
+	}
+
+	/**
+	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
+	 */
+	@Override
+	public CTProcess fetchByC_T_Last(
+		long ctCollectionId, int type,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		int count = countByC_T(ctCollectionId, type);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CTProcess> list = findByC_T(
+			ctCollectionId, type, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ct processes before and after the current ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctProcessId the primary key of the current ct process
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct process
+	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
+	 */
+	@Override
+	public CTProcess[] findByC_T_PrevAndNext(
+			long ctProcessId, long ctCollectionId, int type,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws NoSuchProcessException {
+
+		CTProcess ctProcess = findByPrimaryKey(ctProcessId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CTProcess[] array = new CTProcessImpl[3];
+
+			array[0] = getByC_T_PrevAndNext(
+				session, ctProcess, ctCollectionId, type, orderByComparator,
+				true);
+
+			array[1] = ctProcess;
+
+			array[2] = getByC_T_PrevAndNext(
+				session, ctProcess, ctCollectionId, type, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CTProcess getByC_T_PrevAndNext(
+		Session session, CTProcess ctProcess, long ctCollectionId, int type,
+		OrderByComparator<CTProcess> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_CTPROCESS_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_T_CTCOLLECTIONID_2);
+
+		sb.append(_FINDER_COLUMN_C_T_TYPE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CTProcessModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(ctCollectionId);
+
+		queryPos.add(type);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(ctProcess)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CTProcess> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the ct processes where ctCollectionId = &#63; and type = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 */
+	@Override
+	public void removeByC_T(long ctCollectionId, int type) {
+		for (CTProcess ctProcess :
+				findByC_T(
+					ctCollectionId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(ctProcess);
+		}
+	}
+
+	/**
+	 * Returns the number of ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @return the number of matching ct processes
+	 */
+	@Override
+	public int countByC_T(long ctCollectionId, int type) {
+		FinderPath finderPath = _finderPathCountByC_T;
+
+		Object[] finderArgs = new Object[] {ctCollectionId, type};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CTPROCESS_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_T_CTCOLLECTIONID_2);
+
+			sb.append(_FINDER_COLUMN_C_T_TYPE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ctCollectionId);
+
+				queryPos.add(type);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_T_CTCOLLECTIONID_2 =
+		"ctProcess.ctCollectionId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_T_TYPE_2 =
+		"ctProcess.type = ?";
+
 	public CTProcessPersistenceImpl() {
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("type", "type_");
+
+		setDBColumnNames(dbColumnNames);
+
 		setModelClass(CTProcess.class);
 
 		setModelImplClass(CTProcessImpl.class);
@@ -1569,6 +2115,11 @@ public class CTProcessPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -1643,6 +2194,25 @@ public class CTProcessPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
+
+		_finderPathWithPaginationFindByC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"ctCollectionId", "type_"}, true);
+
+		_finderPathWithoutPaginationFindByC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"ctCollectionId", "type_"}, true);
+
+		_finderPathCountByC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"ctCollectionId", "type_"}, false);
 
 		_setCTProcessUtilPersistence(this);
 	}
@@ -1723,6 +2293,9 @@ public class CTProcessPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTProcessPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

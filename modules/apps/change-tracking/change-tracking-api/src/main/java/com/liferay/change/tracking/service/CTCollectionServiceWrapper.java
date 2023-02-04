@@ -119,6 +119,15 @@ public class CTCollectionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTProcess moveCTEntries(
+			long fromCTCollectionId, long toCTCollectionId, long[] ctEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionService.moveCTEntries(
+			fromCTCollectionId, toCTCollectionId, ctEntryIds);
+	}
+
+	@Override
 	public void publishCTCollection(long userId, long ctCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

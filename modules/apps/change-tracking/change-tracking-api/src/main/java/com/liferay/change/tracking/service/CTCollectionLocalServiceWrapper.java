@@ -74,6 +74,38 @@ public class CTCollectionLocalServiceWrapper
 		return _ctCollectionLocalService.checkConflicts(ctCollection);
 	}
 
+	@Override
+	public java.util.Map
+		<Long,
+		 java.util.List<com.liferay.change.tracking.conflict.ConflictInfo>>
+				checkConflicts(
+					long companyId,
+					java.util.List<com.liferay.change.tracking.model.CTEntry>
+						ctEntries,
+					long fromCTCollectionId, String fromCTCollectionName,
+					long toCTCollectionId, String toCTCollectionName)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.checkConflicts(
+			companyId, ctEntries, fromCTCollectionId, fromCTCollectionName,
+			toCTCollectionId, toCTCollectionName);
+	}
+
+	@Override
+	public java.util.Map
+		<Long,
+		 java.util.List<com.liferay.change.tracking.conflict.ConflictInfo>>
+				checkConflicts(
+					long companyId, long[] ctEntryIds, long fromCTCollectionId,
+					String fromCTCollectionName, long toCTCollectionId,
+					String toCTCollectionName)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.checkConflicts(
+			companyId, ctEntryIds, fromCTCollectionId, fromCTCollectionName,
+			toCTCollectionId, toCTCollectionName);
+	}
+
 	/**
 	 * Creates a new ct collection with the primary key. Does not add the ct collection to the database.
 	 *
@@ -404,6 +436,14 @@ public class CTCollectionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntry>
+		getRelatedCTEntries(long ctCollectionId, long[] ctEntryIds) {
+
+		return _ctCollectionLocalService.getRelatedCTEntries(
+			ctCollectionId, ctEntryIds);
 	}
 
 	@Override

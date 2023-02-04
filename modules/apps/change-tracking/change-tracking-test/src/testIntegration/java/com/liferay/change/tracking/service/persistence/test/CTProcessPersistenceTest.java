@@ -134,6 +134,8 @@ public class CTProcessPersistenceTest {
 
 		newCTProcess.setBackgroundTaskId(RandomTestUtil.nextLong());
 
+		newCTProcess.setType(RandomTestUtil.nextInt());
+
 		_ctProcesses.add(_persistence.update(newCTProcess));
 
 		CTProcess existingCTProcess = _persistence.findByPrimaryKey(
@@ -156,6 +158,8 @@ public class CTProcessPersistenceTest {
 		Assert.assertEquals(
 			existingCTProcess.getBackgroundTaskId(),
 			newCTProcess.getBackgroundTaskId());
+		Assert.assertEquals(
+			existingCTProcess.getType(), newCTProcess.getType());
 	}
 
 	@Test
@@ -170,6 +174,14 @@ public class CTProcessPersistenceTest {
 		_persistence.countByCtCollectionId(RandomTestUtil.nextLong());
 
 		_persistence.countByCtCollectionId(0L);
+	}
+
+	@Test
+	public void testCountByC_T() throws Exception {
+		_persistence.countByC_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_T(0L, 0);
 	}
 
 	@Test
@@ -199,7 +211,7 @@ public class CTProcessPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTProcess", "mvccVersion", true, "ctProcessId", true, "companyId",
 			true, "userId", true, "createDate", true, "ctCollectionId", true,
-			"backgroundTaskId", true);
+			"backgroundTaskId", true, "type", true);
 	}
 
 	@Test
@@ -427,6 +439,8 @@ public class CTProcessPersistenceTest {
 		ctProcess.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ctProcess.setBackgroundTaskId(RandomTestUtil.nextLong());
+
+		ctProcess.setType(RandomTestUtil.nextInt());
 
 		_ctProcesses.add(_persistence.update(ctProcess));
 

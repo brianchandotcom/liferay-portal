@@ -49,6 +49,7 @@ public class CTProcessWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("backgroundTaskId", getBackgroundTaskId());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -95,6 +96,12 @@ public class CTProcessWrapper
 
 		if (backgroundTaskId != null) {
 			setBackgroundTaskId(backgroundTaskId);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -171,6 +178,16 @@ public class CTProcessWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type of this ct process.
+	 *
+	 * @return the type of this ct process
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
 	}
 
 	/**
@@ -266,6 +283,16 @@ public class CTProcessWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this ct process.
+	 *
+	 * @param type the type of this ct process
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

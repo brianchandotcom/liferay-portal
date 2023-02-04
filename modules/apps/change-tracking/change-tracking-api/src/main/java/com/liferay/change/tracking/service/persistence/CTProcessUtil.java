@@ -459,6 +459,191 @@ public class CTProcessUtil {
 	}
 
 	/**
+	 * Returns all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @return the matching ct processes
+	 */
+	public static List<CTProcess> findByC_T(long ctCollectionId, int type) {
+		return getPersistence().findByC_T(ctCollectionId, type);
+	}
+
+	/**
+	 * Returns a range of all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @return the range of matching ct processes
+	 */
+	public static List<CTProcess> findByC_T(
+		long ctCollectionId, int type, int start, int end) {
+
+		return getPersistence().findByC_T(ctCollectionId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct processes
+	 */
+	public static List<CTProcess> findByC_T(
+		long ctCollectionId, int type, int start, int end,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		return getPersistence().findByC_T(
+			ctCollectionId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ct processes
+	 */
+	public static List<CTProcess> findByC_T(
+		long ctCollectionId, int type, int start, int end,
+		OrderByComparator<CTProcess> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_T(
+			ctCollectionId, type, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ct process
+	 * @throws NoSuchProcessException if a matching ct process could not be found
+	 */
+	public static CTProcess findByC_T_First(
+			long ctCollectionId, int type,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchProcessException {
+
+		return getPersistence().findByC_T_First(
+			ctCollectionId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the first ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ct process, or <code>null</code> if a matching ct process could not be found
+	 */
+	public static CTProcess fetchByC_T_First(
+		long ctCollectionId, int type,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		return getPersistence().fetchByC_T_First(
+			ctCollectionId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ct process
+	 * @throws NoSuchProcessException if a matching ct process could not be found
+	 */
+	public static CTProcess findByC_T_Last(
+			long ctCollectionId, int type,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchProcessException {
+
+		return getPersistence().findByC_T_Last(
+			ctCollectionId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
+	 */
+	public static CTProcess fetchByC_T_Last(
+		long ctCollectionId, int type,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		return getPersistence().fetchByC_T_Last(
+			ctCollectionId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the ct processes before and after the current ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctProcessId the primary key of the current ct process
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct process
+	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
+	 */
+	public static CTProcess[] findByC_T_PrevAndNext(
+			long ctProcessId, long ctCollectionId, int type,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchProcessException {
+
+		return getPersistence().findByC_T_PrevAndNext(
+			ctProcessId, ctCollectionId, type, orderByComparator);
+	}
+
+	/**
+	 * Removes all the ct processes where ctCollectionId = &#63; and type = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 */
+	public static void removeByC_T(long ctCollectionId, int type) {
+		getPersistence().removeByC_T(ctCollectionId, type);
+	}
+
+	/**
+	 * Returns the number of ct processes where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @return the number of matching ct processes
+	 */
+	public static int countByC_T(long ctCollectionId, int type) {
+		return getPersistence().countByC_T(ctCollectionId, type);
+	}
+
+	/**
 	 * Caches the ct process in the entity cache if it is enabled.
 	 *
 	 * @param ctProcess the ct process

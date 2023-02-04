@@ -17,7 +17,7 @@ create index IX_3FECC82B on CTPreferences (ctCollectionId);
 create index IX_D9EA7A42 on CTPreferences (previousCtCollectionId);
 
 create index IX_7523B0A4 on CTProcess (companyId);
-create index IX_B4859762 on CTProcess (ctCollectionId);
+create index IX_46BA2033 on CTProcess (ctCollectionId, type_);
 create index IX_5F9B5D3E on CTProcess (userId);
 
 create index IX_687AE35C on CTSchemaVersion (companyId);

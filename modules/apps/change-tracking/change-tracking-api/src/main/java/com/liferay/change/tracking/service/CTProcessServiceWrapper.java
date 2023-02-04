@@ -38,6 +38,21 @@ public class CTProcessServiceWrapper
 	public java.util.List<com.liferay.change.tracking.model.CTProcess>
 			getCTProcesses(
 				long companyId, long userId, String keywords, int status,
+				int type, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.change.tracking.model.CTProcess>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctProcessService.getCTProcesses(
+			companyId, userId, keywords, status, type, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTProcess>
+			getCTProcesses(
+				long companyId, long userId, String keywords, int status,
 				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.change.tracking.model.CTProcess>
@@ -54,6 +69,14 @@ public class CTProcessServiceWrapper
 
 		return _ctProcessService.getCTProcessesCount(
 			companyId, userId, keywords, status);
+	}
+
+	@Override
+	public int getCTProcessesCount(
+		long companyId, long userId, String keywords, int status, int type) {
+
+		return _ctProcessService.getCTProcessesCount(
+			companyId, userId, keywords, status, type);
 	}
 
 	/**

@@ -87,7 +87,8 @@ create table CTProcess (
 	userId LONG,
 	createDate DATE null,
 	ctCollectionId LONG,
-	backgroundTaskId LONG
+	backgroundTaskId LONG,
+	type_ INTEGER
 );
 
 create table CTSchemaVersion (

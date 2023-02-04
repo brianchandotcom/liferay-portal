@@ -354,6 +354,47 @@ public class CTCollectionServiceHttp {
 		}
 	}
 
+	public static com.liferay.change.tracking.model.CTProcess moveCTEntries(
+			HttpPrincipal httpPrincipal, long fromCTCollectionId,
+			long toCTCollectionId, long[] ctEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CTCollectionServiceUtil.class, "moveCTEntries",
+				_moveCTEntriesParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fromCTCollectionId, toCTCollectionId, ctEntryIds);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.change.tracking.model.CTProcess)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void publishCTCollection(
 			HttpPrincipal httpPrincipal, long userId, long ctCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -361,7 +402,7 @@ public class CTCollectionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CTCollectionServiceUtil.class, "publishCTCollection",
-				_publishCTCollectionParameterTypes8);
+				_publishCTCollectionParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, ctCollectionId);
@@ -399,7 +440,7 @@ public class CTCollectionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CTCollectionServiceUtil.class, "undoCTCollection",
-				_undoCTCollectionParameterTypes9);
+				_undoCTCollectionParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ctCollectionId, userId, name, description);
@@ -441,7 +482,7 @@ public class CTCollectionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CTCollectionServiceUtil.class, "updateCTCollection",
-				_updateCTCollectionParameterTypes10);
+				_updateCTCollectionParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, ctCollectionId, name, description);
@@ -499,11 +540,13 @@ public class CTCollectionServiceHttp {
 		};
 	private static final Class<?>[] _getCTCollectionsCountParameterTypes7 =
 		new Class[] {long.class, int[].class, String.class};
-	private static final Class<?>[] _publishCTCollectionParameterTypes8 =
+	private static final Class<?>[] _moveCTEntriesParameterTypes8 =
+		new Class[] {long.class, long.class, long[].class};
+	private static final Class<?>[] _publishCTCollectionParameterTypes9 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _undoCTCollectionParameterTypes9 =
+	private static final Class<?>[] _undoCTCollectionParameterTypes10 =
 		new Class[] {long.class, long.class, String.class, String.class};
-	private static final Class<?>[] _updateCTCollectionParameterTypes10 =
+	private static final Class<?>[] _updateCTCollectionParameterTypes11 =
 		new Class[] {long.class, long.class, String.class, String.class};
 
 }

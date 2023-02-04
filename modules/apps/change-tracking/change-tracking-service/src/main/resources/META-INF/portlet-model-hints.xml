@@ -93,6 +93,7 @@
 		<field name="createDate" type="Date" />
 		<field name="ctCollectionId" type="long" />
 		<field name="backgroundTaskId" type="long" />
+		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTSchemaVersion">
 		<field name="mvccVersion" type="long" />

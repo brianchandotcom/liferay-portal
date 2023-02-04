@@ -89,6 +89,18 @@ public interface CTCollectionLocalService
 			CTCollection ctCollection)
 		throws PortalException;
 
+	public Map<Long, List<ConflictInfo>> checkConflicts(
+			long companyId, List<CTEntry> ctEntries, long fromCTCollectionId,
+			String fromCTCollectionName, long toCTCollectionId,
+			String toCTCollectionName)
+		throws PortalException;
+
+	public Map<Long, List<ConflictInfo>> checkConflicts(
+			long companyId, long[] ctEntryIds, long fromCTCollectionId,
+			String fromCTCollectionName, long toCTCollectionId,
+			String toCTCollectionName)
+		throws PortalException;
+
 	/**
 	 * Creates a new ct collection with the primary key. Does not add the ct collection to the database.
 	 *
@@ -301,6 +313,10 @@ public interface CTCollectionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getRelatedCTEntries(
+		long ctCollectionId, long[] ctEntryIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUnapprovedChanges(long ctCollectionId)

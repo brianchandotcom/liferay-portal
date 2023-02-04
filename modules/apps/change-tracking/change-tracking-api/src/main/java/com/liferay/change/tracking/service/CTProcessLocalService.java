@@ -78,6 +78,11 @@ public interface CTProcessLocalService
 	public CTProcess addCTProcess(long userId, long ctCollectionId)
 		throws PortalException;
 
+	public CTProcess addCTProcess(
+			long userId, long fromCTCollectionId, long toCTCollectionId,
+			long[] ctEntryIds)
+		throws PortalException;
+
 	/**
 	 * Creates a new ct process with the primary key. Does not add the ct process to the database.
 	 *

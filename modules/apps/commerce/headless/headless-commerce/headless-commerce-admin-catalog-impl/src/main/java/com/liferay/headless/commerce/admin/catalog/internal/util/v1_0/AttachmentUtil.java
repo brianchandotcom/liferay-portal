@@ -15,8 +15,17 @@
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryProtocolException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
+import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
@@ -27,6 +36,9 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -388,6 +400,62 @@ public class AttachmentUtil {
 
 			return false;
 		}
+	}
+
+	private static String _getOptions(
+		CPDefinitionOptionRelService cpDefinitionOptionRelService,
+		CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
+		CPOptionService cpOptionService, Map<String, String> options,
+		long classPK, long companyId) {
+
+		if (options == null) {
+			return StringPool.BLANK;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Map.Entry<String, String> entry : options.entrySet()) {
+			jsonArray.put(
+				() -> {
+					CPOption cpOption = cpOptionService.fetchCPOption(
+						companyId, entry.getKey());
+
+					if (cpOption == null) {
+						throw new NoSuchCPOptionException();
+					}
+
+					CPDefinitionOptionRel cpDefinitionOptionRel =
+						cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
+							classPK, cpOption.getCPOptionId());
+
+					if ((cpDefinitionOptionRel != null) &&
+						(cpDefinitionOptionRel.getCPDefinitionId() ==
+							classPK)) {
+
+						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+							cpDefinitionOptionValueRelService.
+								fetchCPDefinitionOptionValueRel(
+									cpDefinitionOptionRel.
+										getCPDefinitionOptionRelId(),
+									entry.getValue());
+
+						if (cpDefinitionOptionValueRel == null) {
+							throw new NoSuchCPDefinitionOptionValueRelException();
+						}
+
+						return JSONUtil.put(
+							"key", cpDefinitionOptionRel.getKey()
+						).put(
+							"value",
+							JSONUtil.put(cpDefinitionOptionValueRel.getKey())
+						);
+					}
+
+					throw new NoSuchCPDefinitionOptionRelException();
+				});
+		}
+
+		return jsonArray.toString();
 	}
 
 	private static final String _TEMP_FILE_NAME =

@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -268,15 +266,13 @@ public class AMImageEntryLocalServiceImpl
 	 */
 	@Override
 	public int getExpectedAMImageEntriesCount(long companyId) {
-		Collection<AMImageCounter> amImageCounters =
-			_serviceTrackerMap.values();
+		int entryCount = 0;
 
-		Stream<AMImageCounter> amImageCountersStream = amImageCounters.stream();
+		for (AMImageCounter amImageCounter : _serviceTrackerMap.values()) {
+			entryCount += amImageCounter.countExpectedAMImageEntries(companyId);
+		}
 
-		return amImageCountersStream.mapToInt(
-			amImageCounter -> amImageCounter.countExpectedAMImageEntries(
-				companyId)
-		).sum();
+		return entryCount;
 	}
 
 	/**

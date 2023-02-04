@@ -45,7 +45,7 @@ definition {
 	@refactordone
 	test CanAddMultipleSubTopics {
 		property solutions.acceptance = "true";
-		
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "トピック記述",
 			categoryName = "質問トピック",

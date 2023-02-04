@@ -82,8 +82,8 @@ definition {
 	@description = "Validate if a question can be approved."
 	@priority = "4"
 	test CanApproveQuestion {
-		property test.name.skip.portal.instance = "QuestionsWorkflow#CanApproveQuestion";
 		property solutions.acceptance = "true";
+		property test.name.skip.portal.instance = "QuestionsWorkflow#CanApproveQuestion";
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Portal Content Reviewer",

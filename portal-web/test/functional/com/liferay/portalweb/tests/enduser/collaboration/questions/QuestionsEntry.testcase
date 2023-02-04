@@ -455,7 +455,7 @@ definition {
 	@refactordone
 	test CanDeleteComment {
 		property solutions.acceptance = "true";
-		
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category",

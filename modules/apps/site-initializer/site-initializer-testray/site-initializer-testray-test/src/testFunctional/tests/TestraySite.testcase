@@ -83,7 +83,7 @@ definition {
 	@priority = "5"
 	test StyleBooksAreCreatedForTestray {
 		property solutions.acceptance = "true";
-		
+
 		task ("Create and Go to Testray") {
 			Testray.addTestraySite();
 

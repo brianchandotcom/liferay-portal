@@ -82,6 +82,8 @@ definition {
 	@description = "This is a test for LPS-152970. Verify if when Testray is created, Style Books will be created for it as well"
 	@priority = "5"
 	test StyleBooksAreCreatedForTestray {
+		property solutions.acceptance = "true";
+		
 		task ("Create and Go to Testray") {
 			Testray.addTestraySite();
 

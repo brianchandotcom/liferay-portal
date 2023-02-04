@@ -454,6 +454,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteComment {
+		property solutions.acceptance = "true";
+		
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category",

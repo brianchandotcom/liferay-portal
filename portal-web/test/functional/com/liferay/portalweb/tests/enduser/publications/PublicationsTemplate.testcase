@@ -113,15 +113,13 @@ definition {
 		}
 
 		task ("Assert the publication template is edited") {
+			PublicationsTemplate.viewPublicationTemplate(templateName = "Template Name Edited");
+
 			Click(
 				key_templateName = "Template Name Edited",
 				locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
 
 			MenuItem.click(menuItem = "Edit");
-
-			AssertElementPresent(
-				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
-				value1 = "Template Name Edited");
 
 			AssertElementPresent(
 				locator1 = "PublicationsTemplate#TEMPLATE_DESCRIPTION",

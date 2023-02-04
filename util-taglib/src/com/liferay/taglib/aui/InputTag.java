@@ -88,9 +88,7 @@ public class InputTag extends BaseInputTag {
 
 				baseType = type;
 			}
-			else if (Objects.equals(type, "toggle-card") ||
-					 Objects.equals(type, "toggle-switch")) {
-
+			else if (Objects.equals(type, "toggle-switch")) {
 				baseType = "checkbox";
 			}
 		}

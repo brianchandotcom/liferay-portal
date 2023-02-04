@@ -127,64 +127,6 @@
 			<span class="hide-accessible sr-only">(<liferay-ui:message key="changing-the-value-of-this-field-reloads-the-page" />)</span>
 		</c:if>
 	</c:if>
-
-	<c:if test='<%= type.equals("toggle-card") %>'>
-
-		<%
-		String labelOff = (String)dynamicAttributes.get("labelOff");
-		String labelOn = (String)dynamicAttributes.get("labelOn");
-
-		if (localizeLabel) {
-			if (Validator.isNotNull(labelOff)) {
-				labelOff = LanguageUtil.get(resourceBundle, labelOff);
-			}
-
-			if (Validator.isNotNull(labelOn)) {
-				labelOn = LanguageUtil.get(resourceBundle, labelOn);
-			}
-		}
-		%>
-
-		<c:if test='<%= type.equals("toggle-card") %>'>
-
-			<%
-			if (Validator.isNull(iconOff)) {
-				iconOff = "icon-circle-blank";
-			}
-
-			if (Validator.isNull(iconOn)) {
-				iconOn = "icon-ok";
-			}
-
-			if (Validator.isNull(labelOff)) {
-				labelOff = label;
-			}
-
-			if (Validator.isNull(labelOn)) {
-				labelOn = label;
-			}
-			%>
-
-			<div class="toggle-card-container">
-				<div class="toggle-card-cell">
-					<div class="toggle-card-icon">
-						<span class="toggle-card-off <%= iconOff %>"></span>
-						<span class="toggle-card-on <%= iconOn %>"></span>
-					</div>
-
-					<div class="toggle-card-label">
-						<c:if test="<%= Validator.isNotNull(labelOff) %>">
-							<span class="toggle-card-off"><%= labelOff %></span>
-						</c:if>
-
-						<c:if test="<%= Validator.isNotNull(labelOn) %>">
-							<span class="toggle-card-on"><%= labelOn %></span>
-						</c:if>
-					</div>
-				</div>
-			</div>
-		</c:if>
-	</c:if>
 </liferay-util:buffer>
 
 <c:if test='<%= !type.equals("hidden") && !wrappedField && useInputWrapper %>'>

@@ -195,7 +195,7 @@
 boolean choiceField = checkboxField || radioField;
 %>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(labelContent) %>'>
+<c:if test='<%= !type.equals("hidden") && Validator.isNotNull(labelContent) %>'>
 	<label <%= labelTag %>>
 		<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
 				<%= labelContent %>
@@ -215,24 +215,6 @@ boolean choiceField = checkboxField || radioField;
 </c:if>
 
 <c:choose>
-	<c:when test='<%= (model != null) && type.equals("assetCategories") %>'>
-		<liferay-ui:asset-categories-selector
-			className="<%= model.getName() %>"
-			classPK="<%= _getClassPK(bean, classPK) %>"
-			classTypePK="<%= classTypePK %>"
-			ignoreRequestValue="<%= ignoreRequestValue %>"
-			showRequiredLabel="<%= showRequiredLabel %>"
-		/>
-	</c:when>
-	<c:when test='<%= (model != null) && type.equals("assetTags") %>'>
-		<liferay-ui:asset-tags-selector
-			autoFocus="<%= autoFocus %>"
-			className="<%= model.getName() %>"
-			classPK="<%= _getClassPK(bean, classPK) %>"
-			id="<%= namespace + id %>"
-			ignoreRequestValue="<%= ignoreRequestValue %>"
-		/>
-	</c:when>
 	<c:when test="<%= (model != null) && Validator.isNull(type) %>">
 		<liferay-ui:input-field
 			activeLanguageIds="<%= activeLanguageIds %>"
@@ -466,7 +448,7 @@ boolean choiceField = checkboxField || radioField;
 	</div>
 </c:if>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(labelContent) %>'>
+<c:if test='<%= !type.equals("hidden") && Validator.isNotNull(labelContent) %>'>
 	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
 		</label>
@@ -478,25 +460,6 @@ boolean choiceField = checkboxField || radioField;
 </c:if>
 
 <%!
-private long _getClassPK(Object bean, long classPK) {
-	if ((bean != null) && (classPK <= 0)) {
-		if (bean instanceof ClassedModel) {
-			ClassedModel classedModel = (ClassedModel)bean;
-
-			Serializable primaryKeyObj = classedModel.getPrimaryKeyObj();
-
-			if (primaryKeyObj instanceof Long) {
-				classPK = (Long)primaryKeyObj;
-			}
-			else {
-				classPK = GetterUtil.getLong(primaryKeyObj.toString());
-			}
-		}
-	}
-
-	return classPK;
-}
-
 private static final String _TEXTAREA_WIDTH_HEIGHT_PREFIX = "liferay_resize_";
 
 private static final Set<String> _TYPES = new HashSet<>(Arrays.asList("color", "email", "number", "range", "tel", "text", "textarea"));

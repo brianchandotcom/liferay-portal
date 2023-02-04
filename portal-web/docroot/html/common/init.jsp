@@ -26,9 +26,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetTag" %><%@
-page import="com.liferay.asset.kernel.service.AssetTagServiceUtil" %><%@
-page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
+<%@ page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.layout.seo.kernel.LayoutSEOLink" %><%@
 page import="com.liferay.layout.seo.kernel.LayoutSEOLinkManager" %><%@
@@ -97,7 +95,6 @@ page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %><%@
-page import="com.liferay.portal.kernel.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarUtil" %><%@
@@ -162,8 +159,6 @@ page import="com.liferay.taglib.search.TextSearchEntry" %><%@
 page import="com.liferay.taglib.util.OutputTag" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
-
-<%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.Format" %><%@

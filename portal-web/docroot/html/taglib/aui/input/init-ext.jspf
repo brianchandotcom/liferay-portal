@@ -34,7 +34,7 @@ boolean radioField = baseType.equals("radio");
 
 boolean showForLabel = true;
 
-if (type.equals("assetCategories") || baseType.equals(Date.class.getName())) {
+if (baseType.equals(Date.class.getName())) {
 	showForLabel = false;
 }
 

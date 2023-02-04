@@ -115,6 +115,18 @@ export default function propsTransformer({
 
 			if (action === 'inviteAccountUsers') {
 				openModal({
+					buttons: [
+						{
+							displayType: 'secondary',
+							label: Liferay.Language.get('cancel'),
+							type: 'cancel',
+						},
+						{
+							formId: `${portletNamespace}fm`,
+							label: Liferay.Language.get('invite'),
+							type: 'submit',
+						},
+					],
 					containerProps: {
 						className: 'modal-height-xl',
 					},

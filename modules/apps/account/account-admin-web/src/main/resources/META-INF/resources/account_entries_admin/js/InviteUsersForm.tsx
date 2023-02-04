@@ -210,16 +210,6 @@ function InviteUsersForm({
 					{Liferay.Language.get('add-entry')}
 				</ClayButton>
 			</ClayLayout.SheetFooter>
-
-			<ClayLayout.SheetFooter className="dialog-footer">
-				<ClayButton displayType="primary" onClick={submitForm}>
-					{Liferay.Language.get('invite')}
-				</ClayButton>
-
-				<ClayButton displayType="secondary" onClick={closeModal}>
-					{Liferay.Language.get('cancel')}
-				</ClayButton>
-			</ClayLayout.SheetFooter>
 		</ClayForm>
 	);
 }

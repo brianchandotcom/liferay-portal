@@ -78,11 +78,10 @@ public class AssetListEntryUsageModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetListEntryId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"containerKey", Types.VARCHAR},
+		{"classNameId", Types.BIGINT}, {"containerKey", Types.VARCHAR},
 		{"containerType", Types.BIGINT}, {"key_", Types.VARCHAR},
-		{"plid", Types.BIGINT}, {"portletId", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
+		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,20 +98,17 @@ public class AssetListEntryUsageModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("containerKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("containerType", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntryUsage (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,classNameId LONG,classPK LONG,containerKey VARCHAR(255) null,containerType LONG,key_ VARCHAR(255) null,plid LONG,portletId VARCHAR(200) null,type_ INTEGER,lastPublishDate DATE null,primary key (assetListEntryUsageId, ctCollectionId))";
+		"create table AssetListEntryUsage (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,containerKey VARCHAR(255) null,containerType LONG,key_ VARCHAR(255) null,plid LONG,type_ INTEGER,lastPublishDate DATE null,primary key (assetListEntryUsageId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntryUsage";
@@ -133,68 +129,62 @@ public class AssetListEntryUsageModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 1L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long CONTAINERKEY_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CONTAINERKEY_COLUMN_BITMASK = 8L;
+	public static final long CONTAINERTYPE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CONTAINERTYPE_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 32L;
+	public static final long KEY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KEY_COLUMN_BITMASK = 64L;
+	public static final long PLID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PLID_COLUMN_BITMASK = 128L;
+	public static final long TYPE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 256L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 512L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ASSETLISTENTRYUSAGEID_COLUMN_BITMASK = 1024L;
+	public static final long ASSETLISTENTRYUSAGEID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -369,23 +359,11 @@ public class AssetListEntryUsageModelImpl
 			(BiConsumer<AssetListEntryUsage, Date>)
 				AssetListEntryUsage::setModifiedDate);
 		attributeGetterFunctions.put(
-			"assetListEntryId", AssetListEntryUsage::getAssetListEntryId);
-		attributeSetterBiConsumers.put(
-			"assetListEntryId",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setAssetListEntryId);
-		attributeGetterFunctions.put(
 			"classNameId", AssetListEntryUsage::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
 			(BiConsumer<AssetListEntryUsage, Long>)
 				AssetListEntryUsage::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", AssetListEntryUsage::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setClassPK);
 		attributeGetterFunctions.put(
 			"containerKey", AssetListEntryUsage::getContainerKey);
 		attributeSetterBiConsumers.put(
@@ -408,12 +386,6 @@ public class AssetListEntryUsageModelImpl
 			"plid",
 			(BiConsumer<AssetListEntryUsage, Long>)
 				AssetListEntryUsage::setPlid);
-		attributeGetterFunctions.put(
-			"portletId", AssetListEntryUsage::getPortletId);
-		attributeSetterBiConsumers.put(
-			"portletId",
-			(BiConsumer<AssetListEntryUsage, String>)
-				AssetListEntryUsage::setPortletId);
 		attributeGetterFunctions.put("type", AssetListEntryUsage::getType);
 		attributeSetterBiConsumers.put(
 			"type",
@@ -633,30 +605,6 @@ public class AssetListEntryUsageModelImpl
 	}
 
 	@Override
-	public long getAssetListEntryId() {
-		return _assetListEntryId;
-	}
-
-	@Override
-	public void setAssetListEntryId(long assetListEntryId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_assetListEntryId = assetListEntryId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalAssetListEntryId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("assetListEntryId"));
-	}
-
-	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
 			return "";
@@ -698,20 +646,6 @@ public class AssetListEntryUsageModelImpl
 	public long getOriginalClassNameId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("classNameId"));
-	}
-
-	@Override
-	public long getClassPK() {
-		return _classPK;
-	}
-
-	@Override
-	public void setClassPK(long classPK) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_classPK = classPK;
 	}
 
 	@Override
@@ -815,25 +749,6 @@ public class AssetListEntryUsageModelImpl
 	@Deprecated
 	public long getOriginalPlid() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("plid"));
-	}
-
-	@Override
-	public String getPortletId() {
-		if (_portletId == null) {
-			return "";
-		}
-		else {
-			return _portletId;
-		}
-	}
-
-	@Override
-	public void setPortletId(String portletId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_portletId = portletId;
 	}
 
 	@Override
@@ -950,14 +865,11 @@ public class AssetListEntryUsageModelImpl
 		assetListEntryUsageImpl.setUserName(getUserName());
 		assetListEntryUsageImpl.setCreateDate(getCreateDate());
 		assetListEntryUsageImpl.setModifiedDate(getModifiedDate());
-		assetListEntryUsageImpl.setAssetListEntryId(getAssetListEntryId());
 		assetListEntryUsageImpl.setClassNameId(getClassNameId());
-		assetListEntryUsageImpl.setClassPK(getClassPK());
 		assetListEntryUsageImpl.setContainerKey(getContainerKey());
 		assetListEntryUsageImpl.setContainerType(getContainerType());
 		assetListEntryUsageImpl.setKey(getKey());
 		assetListEntryUsageImpl.setPlid(getPlid());
-		assetListEntryUsageImpl.setPortletId(getPortletId());
 		assetListEntryUsageImpl.setType(getType());
 		assetListEntryUsageImpl.setLastPublishDate(getLastPublishDate());
 
@@ -991,12 +903,8 @@ public class AssetListEntryUsageModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		assetListEntryUsageImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		assetListEntryUsageImpl.setAssetListEntryId(
-			this.<Long>getColumnOriginalValue("assetListEntryId"));
 		assetListEntryUsageImpl.setClassNameId(
 			this.<Long>getColumnOriginalValue("classNameId"));
-		assetListEntryUsageImpl.setClassPK(
-			this.<Long>getColumnOriginalValue("classPK"));
 		assetListEntryUsageImpl.setContainerKey(
 			this.<String>getColumnOriginalValue("containerKey"));
 		assetListEntryUsageImpl.setContainerType(
@@ -1005,8 +913,6 @@ public class AssetListEntryUsageModelImpl
 			this.<String>getColumnOriginalValue("key_"));
 		assetListEntryUsageImpl.setPlid(
 			this.<Long>getColumnOriginalValue("plid"));
-		assetListEntryUsageImpl.setPortletId(
-			this.<String>getColumnOriginalValue("portletId"));
 		assetListEntryUsageImpl.setType(
 			this.<Integer>getColumnOriginalValue("type_"));
 		assetListEntryUsageImpl.setLastPublishDate(
@@ -1136,11 +1042,7 @@ public class AssetListEntryUsageModelImpl
 			assetListEntryUsageCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		assetListEntryUsageCacheModel.assetListEntryId = getAssetListEntryId();
-
 		assetListEntryUsageCacheModel.classNameId = getClassNameId();
-
-		assetListEntryUsageCacheModel.classPK = getClassPK();
 
 		assetListEntryUsageCacheModel.containerKey = getContainerKey();
 
@@ -1161,14 +1063,6 @@ public class AssetListEntryUsageModelImpl
 		}
 
 		assetListEntryUsageCacheModel.plid = getPlid();
-
-		assetListEntryUsageCacheModel.portletId = getPortletId();
-
-		String portletId = assetListEntryUsageCacheModel.portletId;
-
-		if ((portletId != null) && (portletId.length() == 0)) {
-			assetListEntryUsageCacheModel.portletId = null;
-		}
 
 		assetListEntryUsageCacheModel.type = getType();
 
@@ -1255,14 +1149,11 @@ public class AssetListEntryUsageModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _assetListEntryId;
 	private long _classNameId;
-	private long _classPK;
 	private String _containerKey;
 	private long _containerType;
 	private String _key;
 	private long _plid;
-	private String _portletId;
 	private int _type;
 	private Date _lastPublishDate;
 
@@ -1306,14 +1197,11 @@ public class AssetListEntryUsageModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("assetListEntryId", _assetListEntryId);
 		_columnOriginalValues.put("classNameId", _classNameId);
-		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("containerKey", _containerKey);
 		_columnOriginalValues.put("containerType", _containerType);
 		_columnOriginalValues.put("key_", _key);
 		_columnOriginalValues.put("plid", _plid);
-		_columnOriginalValues.put("portletId", _portletId);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
@@ -1361,25 +1249,19 @@ public class AssetListEntryUsageModelImpl
 
 		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("assetListEntryId", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
 
-		columnBitmasks.put("classNameId", 2048L);
+		columnBitmasks.put("containerKey", 2048L);
 
-		columnBitmasks.put("classPK", 4096L);
+		columnBitmasks.put("containerType", 4096L);
 
-		columnBitmasks.put("containerKey", 8192L);
+		columnBitmasks.put("key_", 8192L);
 
-		columnBitmasks.put("containerType", 16384L);
+		columnBitmasks.put("plid", 16384L);
 
-		columnBitmasks.put("key_", 32768L);
+		columnBitmasks.put("type_", 32768L);
 
-		columnBitmasks.put("plid", 65536L);
-
-		columnBitmasks.put("portletId", 131072L);
-
-		columnBitmasks.put("type_", 262144L);
-
-		columnBitmasks.put("lastPublishDate", 524288L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

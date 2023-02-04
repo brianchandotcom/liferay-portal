@@ -15,11 +15,11 @@
 package com.liferay.asset.list.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
@@ -39,9 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetListEntryUsageModel
-	extends AttachedModel, BaseModel<AssetListEntryUsage>,
-			CTModel<AssetListEntryUsage>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<AssetListEntryUsage>, CTModel<AssetListEntryUsage>,
+			MVCCModel, ShardedModel, StagedGroupedModel, TypedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -242,20 +241,6 @@ public interface AssetListEntryUsageModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the asset list entry ID of this asset list entry usage.
-	 *
-	 * @return the asset list entry ID of this asset list entry usage
-	 */
-	public long getAssetListEntryId();
-
-	/**
-	 * Sets the asset list entry ID of this asset list entry usage.
-	 *
-	 * @param assetListEntryId the asset list entry ID of this asset list entry usage
-	 */
-	public void setAssetListEntryId(long assetListEntryId);
-
-	/**
 	 * Returns the fully qualified class name of this asset list entry usage.
 	 *
 	 * @return the fully qualified class name of this asset list entry usage
@@ -280,22 +265,6 @@ public interface AssetListEntryUsageModel
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
-
-	/**
-	 * Returns the class pk of this asset list entry usage.
-	 *
-	 * @return the class pk of this asset list entry usage
-	 */
-	@Override
-	public long getClassPK();
-
-	/**
-	 * Sets the class pk of this asset list entry usage.
-	 *
-	 * @param classPK the class pk of this asset list entry usage
-	 */
-	@Override
-	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the container key of this asset list entry usage.
@@ -354,21 +323,6 @@ public interface AssetListEntryUsageModel
 	 * @param plid the plid of this asset list entry usage
 	 */
 	public void setPlid(long plid);
-
-	/**
-	 * Returns the portlet ID of this asset list entry usage.
-	 *
-	 * @return the portlet ID of this asset list entry usage
-	 */
-	@AutoEscape
-	public String getPortletId();
-
-	/**
-	 * Sets the portlet ID of this asset list entry usage.
-	 *
-	 * @param portletId the portlet ID of this asset list entry usage
-	 */
-	public void setPortletId(String portletId);
 
 	/**
 	 * Returns the type of this asset list entry usage.

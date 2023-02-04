@@ -62,14 +62,9 @@ public class AssetListEntryUsageTable
 	public final Column<AssetListEntryUsageTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<AssetListEntryUsageTable, Long> assetListEntryId =
-		createColumn(
-			"assetListEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, Long> classNameId =
 		createColumn(
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<AssetListEntryUsageTable, Long> classPK = createColumn(
-		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, String> containerKey =
 		createColumn(
 			"containerKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -80,9 +75,6 @@ public class AssetListEntryUsageTable
 		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, Long> plid = createColumn(
 		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<AssetListEntryUsageTable, String> portletId =
-		createColumn(
-			"portletId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, Date> lastPublishDate =

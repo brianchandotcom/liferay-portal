@@ -217,14 +217,6 @@ public class FragmentCollectionContributorRegistryImpl
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
 
-	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinksByRendererKey(
-			fragmentEntry.getFragmentEntryKey(),
-			fragmentEntry.getConfiguration(), fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs(),
-			fragmentEntry.getType());
-	}
-
 	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
 		try {
 			fragmentEntryValidator.validateConfiguration(
@@ -311,7 +303,12 @@ public class FragmentCollectionContributorRegistryImpl
 					fragmentEntries.put(
 						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
 
-					_updateFragmentEntryLinks(fragmentEntry);
+					_fragmentEntryLinkLocalService.
+						updateFragmentEntryLinksByRendererKey(
+							fragmentEntry.getFragmentEntryKey(),
+							fragmentEntry.getConfiguration(),
+							fragmentEntry.getCss(), fragmentEntry.getHtml(),
+							fragmentEntry.getJs(), fragmentEntry.getType());
 				}
 			}
 

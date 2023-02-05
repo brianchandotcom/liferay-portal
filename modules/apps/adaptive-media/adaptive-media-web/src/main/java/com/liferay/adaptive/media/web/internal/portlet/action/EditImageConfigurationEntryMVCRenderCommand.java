@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
-
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -54,16 +52,13 @@ public class EditImageConfigurationEntryMVCRenderCommand
 
 		String entryUuid = ParamUtil.getString(renderRequest, "entryUuid");
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				themeDisplay.getCompanyId(), entryUuid);
 
 		boolean configurationEntryEditable = true;
 
-		if (amImageConfigurationEntryOptional.isPresent()) {
-			AMImageConfigurationEntry amImageConfigurationEntry =
-				amImageConfigurationEntryOptional.get();
-
+		if (amImageConfigurationEntry != null) {
 			int entriesCount = _amImageEntryLocalService.getAMImageEntriesCount(
 				themeDisplay.getCompanyId(),
 				amImageConfigurationEntry.getUUID());
@@ -74,8 +69,8 @@ public class EditImageConfigurationEntryMVCRenderCommand
 		}
 
 		renderRequest.setAttribute(
-			AMWebKeys.CONFIGURATION_ENTRY,
-			amImageConfigurationEntryOptional.orElse(null));
+			AMWebKeys.CONFIGURATION_ENTRY, amImageConfigurationEntry);
+
 		renderRequest.setAttribute(
 			AMWebKeys.CONFIGURATION_ENTRY_EDITABLE, configurationEntryEditable);
 

@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Date;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,16 +82,13 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 			return;
 		}
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				fileVersion.getCompanyId(), configurationEntryUuid);
 
-		if (!amImageConfigurationEntryOptional.isPresent()) {
+		if (amImageConfigurationEntry == null) {
 			return;
 		}
-
-		AMImageConfigurationEntry amImageConfigurationEntry =
-			amImageConfigurationEntryOptional.get();
 
 		AMImageEntry amImageEntry = _amImageEntryLocalService.fetchAMImageEntry(
 			amImageConfigurationEntry.getUUID(),

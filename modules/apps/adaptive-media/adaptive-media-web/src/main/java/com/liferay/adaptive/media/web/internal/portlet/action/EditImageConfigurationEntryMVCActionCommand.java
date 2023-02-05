@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -79,7 +78,7 @@ public class EditImageConfigurationEntryMVCActionCommand
 			"max-width", ParamUtil.getString(actionRequest, "maxWidth")
 		).build();
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				themeDisplay.getCompanyId(), uuid);
 
@@ -112,13 +111,10 @@ public class EditImageConfigurationEntryMVCActionCommand
 		try {
 			String message = "";
 
-			if (amImageConfigurationEntryOptional.isPresent()) {
-				AMImageConfigurationEntry amImageConfigurationEntry =
-					amImageConfigurationEntryOptional.get();
-
+			if (amImageConfigurationEntry != null) {
 				if (!_isConfigurationEntryEditable(
 						themeDisplay.getCompanyId(),
-						amImageConfigurationEntryOptional.get())) {
+						amImageConfigurationEntry)) {
 
 					newUuid = amImageConfigurationEntry.getUUID();
 
@@ -150,7 +146,7 @@ public class EditImageConfigurationEntryMVCActionCommand
 				}
 			}
 			else {
-				AMImageConfigurationEntry amImageConfigurationEntry =
+				amImageConfigurationEntry =
 					_amImageConfigurationHelper.addAMImageConfigurationEntry(
 						themeDisplay.getCompanyId(), name, description, newUuid,
 						properties);
@@ -253,12 +249,11 @@ public class EditImageConfigurationEntryMVCActionCommand
 				break;
 			}
 
-			Optional<AMImageConfigurationEntry>
-				amImageConfigurationEntryOptional =
-					_amImageConfigurationHelper.getAMImageConfigurationEntry(
-						companyId, curUuid);
+			AMImageConfigurationEntry nullableAMImageConfigurationEntry =
+				_amImageConfigurationHelper.getAMImageConfigurationEntry(
+					companyId, curUuid);
 
-			if (!amImageConfigurationEntryOptional.isPresent()) {
+			if (nullableAMImageConfigurationEntry == null) {
 				break;
 			}
 

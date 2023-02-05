@@ -38,7 +38,6 @@ import java.io.InputStream;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -162,10 +161,9 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(
-				new AMImageConfigurationEntryImpl(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), Collections.emptyMap()))
+			new AMImageConfigurationEntryImpl(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				Collections.emptyMap())
 		);
 
 		Mockito.when(
@@ -230,10 +228,9 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(
-				new AMImageConfigurationEntryImpl(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), Collections.emptyMap()))
+			new AMImageConfigurationEntryImpl(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				Collections.emptyMap())
 		);
 
 		Mockito.when(
@@ -319,10 +316,9 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(
-				new AMImageConfigurationEntryImpl(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), Collections.emptyMap()))
+			new AMImageConfigurationEntryImpl(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				Collections.emptyMap())
 		);
 
 		Mockito.when(
@@ -402,7 +398,7 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(amImageConfigurationEntry)
+			amImageConfigurationEntry
 		);
 
 		Mockito.when(
@@ -438,7 +434,7 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.empty()
+			null
 		);
 
 		_amImageProcessorImpl.process(
@@ -496,7 +492,7 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(amImageConfigurationEntry)
+			amImageConfigurationEntry
 		);
 
 		Mockito.when(
@@ -549,7 +545,7 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(amImageConfigurationEntry)
+			amImageConfigurationEntry
 		);
 
 		Mockito.when(
@@ -625,7 +621,7 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(amImageConfigurationEntry)
+			amImageConfigurationEntry
 		);
 
 		Mockito.when(
@@ -670,7 +666,7 @@ public class AMImageProcessorImplTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
-			Optional.of(amImageConfigurationEntry)
+			amImageConfigurationEntry
 		);
 
 		Mockito.when(

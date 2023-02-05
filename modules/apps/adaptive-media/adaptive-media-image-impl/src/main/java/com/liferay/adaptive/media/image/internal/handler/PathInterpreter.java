@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PathInterpreter.class)
 public class PathInterpreter {
 
-	public Optional<Tuple<FileVersion, Map<String, String>>> interpretPath(
+	public Tuple<FileVersion, Map<String, String>> interpretPath(
 		String pathInfo) {
 
 		try {
@@ -50,7 +49,7 @@ public class PathInterpreter {
 			Matcher matcher = _pattern.matcher(pathInfo);
 
 			if (!matcher.matches()) {
-				return Optional.empty();
+				return null;
 			}
 
 			long fileEntryId = Long.valueOf(matcher.group(1));
@@ -59,34 +58,26 @@ public class PathInterpreter {
 				_dlAppService.getFileEntry(fileEntryId),
 				_getFileVersionId(matcher));
 
-			Optional<AMImageConfigurationEntry>
-				amImageConfigurationEntryOptional =
-					_amImageConfigurationHelper.getAMImageConfigurationEntry(
-						fileVersion.getCompanyId(),
-						_getConfigurationEntryUUID(matcher));
+			AMImageConfigurationEntry amImageConfigurationEntry =
+				_amImageConfigurationHelper.getAMImageConfigurationEntry(
+					fileVersion.getCompanyId(),
+					_getConfigurationEntryUUID(matcher));
 
-			return Optional.of(
-				Tuple.of(
-					fileVersion,
-					amImageConfigurationEntryOptional.map(
-						amImageConfigurationEntry -> {
-							Map<String, String> curProperties =
-								amImageConfigurationEntry.getProperties();
+			if (amImageConfigurationEntry == null) {
+				return Tuple.of(fileVersion, new HashMap<>());
+			}
 
-							AMAttribute<?, String>
-								configurationUuidAMAttribute =
-									AMAttribute.
-										getConfigurationUuidAMAttribute();
+			Map<String, String> curProperties =
+				amImageConfigurationEntry.getProperties();
 
-							curProperties.put(
-								configurationUuidAMAttribute.getName(),
-								amImageConfigurationEntry.getUUID());
+			AMAttribute<?, String> configurationUuidAMAttribute =
+				AMAttribute.getConfigurationUuidAMAttribute();
 
-							return curProperties;
-						}
-					).orElse(
-						new HashMap<>()
-					)));
+			curProperties.put(
+				configurationUuidAMAttribute.getName(),
+				amImageConfigurationEntry.getUUID());
+
+			return Tuple.of(fileVersion, curProperties);
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);

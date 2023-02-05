@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -58,14 +56,15 @@ public class EnableImageConfigurationEntryMVCActionCommand
 		_amImageConfigurationHelper.enableAMImageConfigurationEntry(
 			themeDisplay.getCompanyId(), amImageConfigurationEntryUuid);
 
-		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+		AMImageConfigurationEntry amImageConfigurationEntry =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				themeDisplay.getCompanyId(), amImageConfigurationEntryUuid);
 
-		amImageConfigurationEntryOptional.ifPresent(
-			amImageConfigurationEntry -> SessionMessages.add(
+		if (amImageConfigurationEntry != null) {
+			SessionMessages.add(
 				actionRequest, "configurationEntryEnabled",
-				amImageConfigurationEntry));
+				amImageConfigurationEntry);
+		}
 	}
 
 	@Reference

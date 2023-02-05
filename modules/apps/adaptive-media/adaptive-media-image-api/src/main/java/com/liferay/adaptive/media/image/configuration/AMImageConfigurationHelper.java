@@ -21,7 +21,6 @@ import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -133,14 +132,14 @@ public interface AMImageConfigurationHelper {
 		long companyId, Predicate<? super AMImageConfigurationEntry> predicate);
 
 	/**
-	 * Returns an optional image configuration entry for the given company and
-	 * image configuration entry UUID.
+	 * Returns an image configuration entry for the given company and
+	 * image configuration entry UUID, return null if no one provided.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  configurationEntryUUID the image configuration entry's UUID
-	 * @return an optional image configuration entry
+	 * @return an image configuration entry
 	 */
-	public Optional<AMImageConfigurationEntry> getAMImageConfigurationEntry(
+	public AMImageConfigurationEntry getAMImageConfigurationEntry(
 		long companyId, String configurationEntryUUID);
 
 	/**

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -75,7 +74,7 @@ public class PathInterpreterTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.eq("x"))
 		).thenReturn(
-			Optional.of(_amImageConfigurationEntry)
+			_amImageConfigurationEntry
 		);
 
 		_pathInterpreter.interpretPath("/image/0/x/foo.jpg");
@@ -145,7 +144,7 @@ public class PathInterpreterTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.eq("x"))
 		).thenReturn(
-			Optional.of(_amImageConfigurationEntry)
+			_amImageConfigurationEntry
 		);
 
 		_pathInterpreter.interpretPath("/image/0/x/foo.jpg?t=12345");
@@ -181,7 +180,7 @@ public class PathInterpreterTest {
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
 				Mockito.anyLong(), Mockito.eq("x"))
 		).thenReturn(
-			Optional.of(_amImageConfigurationEntry)
+			_amImageConfigurationEntry
 		);
 
 		_pathInterpreter.interpretPath("/image/0/1/x/foo.jpg");
@@ -224,10 +223,10 @@ public class PathInterpreterTest {
 
 	@Test
 	public void testNonmatchingPathInfo() {
-		Optional<Tuple<FileVersion, Map<String, String>>> resultOptional =
+		Tuple<FileVersion, Map<String, String>> result =
 			_pathInterpreter.interpretPath("/" + RandomTestUtil.randomString());
 
-		Assert.assertFalse(resultOptional.isPresent());
+		Assert.assertNull(result);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

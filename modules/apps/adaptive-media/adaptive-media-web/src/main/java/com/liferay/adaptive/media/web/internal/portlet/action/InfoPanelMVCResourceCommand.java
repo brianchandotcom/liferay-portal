@@ -18,6 +18,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.web.internal.constants.AMPortletKeys;
 import com.liferay.adaptive.media.web.internal.constants.AMWebKeys;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -87,20 +87,11 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		String[] rowIdsAMImageConfigurationEntry = ParamUtil.getStringValues(
 			resourceRequest, "rowIdsAMImageConfigurationEntry");
 
-		List<AMImageConfigurationEntry> amImageConfigurationEntries =
-			new ArrayList<>();
-
-		for (String entryUuid : rowIdsAMImageConfigurationEntry) {
-			Optional<AMImageConfigurationEntry>
-				amImageConfigurationEntryOptional =
-					_amImageConfigurationHelper.getAMImageConfigurationEntry(
-						themeDisplay.getCompanyId(), entryUuid);
-
-			amImageConfigurationEntryOptional.ifPresent(
-				amImageConfigurationEntries::add);
-		}
-
-		return amImageConfigurationEntries;
+		return TransformUtil.transformToList(
+			rowIdsAMImageConfigurationEntry,
+			entryUuid ->
+				_amImageConfigurationHelper.getAMImageConfigurationEntry(
+					themeDisplay.getCompanyId(), entryUuid));
 	}
 
 	@Reference

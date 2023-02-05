@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.net.URI;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,18 +92,14 @@ public class LayoutAdaptiveMediaProcessorImpl
 					FileEntry fileEntry = _dlAppService.getFileEntry(
 						fileEntryId);
 
-					Optional<AMImageConfigurationEntry>
-						amImageConfigurationEntryOptional =
-							_amImageConfigurationHelper.
-								getAMImageConfigurationEntry(
-									fileEntry.getCompanyId(), configuration);
+					AMImageConfigurationEntry amImageConfigurationEntry =
+						_amImageConfigurationHelper.
+							getAMImageConfigurationEntry(
+								fileEntry.getCompanyId(), configuration);
 
-					if (!amImageConfigurationEntryOptional.isPresent()) {
+					if (amImageConfigurationEntry == null) {
 						continue;
 					}
-
-					AMImageConfigurationEntry amImageConfigurationEntry =
-						amImageConfigurationEntryOptional.get();
 
 					URI uri = _amImageURLFactory.createFileEntryURL(
 						fileEntry.getFileVersion(), amImageConfigurationEntry);

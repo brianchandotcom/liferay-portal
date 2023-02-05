@@ -378,8 +378,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		if (!analyticsConfiguration.syncAllContacts() &&
 			(!Arrays.equals(
 				previousSyncedOrganizationIds, syncedOrganizationIds) ||
-			 !Arrays.equals(
-				 previousSyncedUserGroupIds, syncedUserGroupIds))) {
+			 !Arrays.equals(previousSyncedUserGroupIds, syncedUserGroupIds))) {
 
 			return true;
 		}

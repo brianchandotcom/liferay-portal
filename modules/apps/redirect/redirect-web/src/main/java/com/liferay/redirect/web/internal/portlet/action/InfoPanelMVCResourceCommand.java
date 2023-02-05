@@ -55,8 +55,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 				ParamUtil.getLongValues(resourceRequest, "rowIds")) {
 
 			redirectEntries.add(
-				_redirectEntryLocalService.fetchRedirectEntry(
-					redirectEntryId));
+				_redirectEntryLocalService.fetchRedirectEntry(redirectEntryId));
 		}
 
 		resourceRequest.setAttribute(

@@ -33,7 +33,7 @@ export function parseActions(node) {
 export function parseAssignments(node) {
 	const assignments = {};
 	const autoCreateValues = [];
-	const roleNames = [];
+	const roleKeys = [];
 	const roleTypes = [];
 	const users = [];
 	const typeUser = Object.keys(node.assignments[0])[0];
@@ -52,7 +52,7 @@ export function parseAssignments(node) {
 		else if (itemKeys.includes('role-type')) {
 			assignments.assignmentType = ['roleType'];
 			autoCreateValues.push(item['auto-create']);
-			roleNames.push(item.name);
+			roleKeys.push(item.name);
 			roleTypes.push(item['role-type']);
 		}
 		else if (itemKeys.includes('script')) {
@@ -91,7 +91,7 @@ export function parseAssignments(node) {
 
 	if (assignments.assignmentType[0] === 'roleType') {
 		assignments.autoCreate = autoCreateValues[0];
-		assignments.roleName = roleNames[0];
+		assignments.roleKey = roleKeys[0];
 		assignments.roleType = roleTypes[0];
 	}
 
@@ -101,7 +101,7 @@ export function parseAssignments(node) {
 export function parseReassignments(node) {
 	const assignments = {};
 	const autoCreateValues = [];
-	const roleNames = [];
+	const roleKeys = [];
 	const roleTypes = [];
 	const users = [];
 	const typeUser = Object.keys(node.assignments[0])[0];
@@ -119,7 +119,7 @@ export function parseReassignments(node) {
 		else if (itemKeys.includes('role-type')) {
 			assignments.assignmentType = ['roleType'];
 			autoCreateValues.push(item['auto-create']);
-			roleNames.push(item.name);
+			roleKeys.push(item.name);
 			roleTypes.push(item['role-type']);
 		}
 		else if (itemKeys.includes('script')) {
@@ -158,7 +158,7 @@ export function parseReassignments(node) {
 
 	if (assignments.assignmentType[0] === 'roleType') {
 		assignments.autoCreate = autoCreateValues[0];
-		assignments.roleName = roleNames[0];
+		assignments.roleKey = roleKeys[0];
 		assignments.roleType = roleTypes[0];
 	}
 
@@ -262,7 +262,7 @@ export function parseNotifications(node) {
 			notifications.recipients[index] = {
 				assignmentType: ['roleType'],
 				autoCreate: item['auto-create'],
-				roleName: item['role-name'],
+				roleKey: item['role-name'],
 				roleType: item['role-type'],
 			};
 		}

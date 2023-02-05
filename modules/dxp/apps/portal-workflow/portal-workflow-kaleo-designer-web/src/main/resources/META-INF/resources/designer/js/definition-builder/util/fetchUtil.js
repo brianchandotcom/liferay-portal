@@ -11,6 +11,8 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {contextUrl} from '../constants';
+
 const userBaseURL = '/o/headless-admin-user/v1.0';
 const workflowBaseURL = '/o/headless-admin-workflow/v1.0';
 
@@ -49,16 +51,21 @@ function retrieveDefinitionRequest(definitionId, versionNumber) {
 	});
 }
 
-function retrieveRolesBy(filterType, keywords) {
-	if (filterType === 'roleId') {
-		return fetch(
-			`${window.location.origin}${userBaseURL}/roles/` + keywords,
-			{
-				headers,
-				method: 'GET',
-			}
-		);
-	}
+function retrieveRoleById(roleId) {
+	return fetch(`${window.location.origin}${userBaseURL}/roles/${roleId}`, {
+		headers,
+		method: 'GET',
+	});
+}
+
+function retrieveRoles() {
+	return fetch(
+		`${window.location.origin}${contextUrl}${userBaseURL}/roles?pageSize=-1`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
 }
 
 function retrieveUsersBy(filterType, keywords) {
@@ -99,7 +106,8 @@ export {
 	publishDefinitionRequest,
 	retrieveAccountRoles,
 	retrieveDefinitionRequest,
-	retrieveRolesBy,
+	retrieveRoleById,
+	retrieveRoles,
 	retrieveUsersBy,
 	saveDefinitionRequest,
 };

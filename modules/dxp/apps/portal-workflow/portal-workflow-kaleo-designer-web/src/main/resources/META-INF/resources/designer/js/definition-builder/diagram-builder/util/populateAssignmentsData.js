@@ -9,122 +9,171 @@
  * distribution rights of the Software.
  */
 
-import {isNode} from 'react-flow-renderer';
-
-import {retrieveRolesBy, retrieveUsersBy} from '../../util/fetchUtil';
+import {
+	retrieveRoleById,
+	retrieveRoles,
+	retrieveUsersBy,
+} from '../../util/fetchUtil';
 import {getAssignmentType} from '../components/sidebar/sections/assignments/utils';
+
+const verifySectionsData = (
+	initialElements,
+	sectionsData,
+	setBlockingErrors,
+	setElements,
+	taskNode
+) => {
+	if (sectionsData.length) {
+		taskNode.data.assignments.sectionsData = sectionsData;
+
+		const nodeIndex = initialElements.findIndex(
+			(element) => element.id === taskNode.id
+		);
+
+		initialElements[nodeIndex] = taskNode;
+
+		setElements([...initialElements]);
+	}
+	else {
+		delete taskNode.data.assignments.sectionsData;
+
+		if (taskNode.data.assignments.emailAddress) {
+			delete taskNode.data.assignments.emailAddress;
+
+			setBlockingErrors((prev) => {
+				return {
+					...prev,
+					errorMessage: Liferay.Language.get(
+						'please-enter-a-valid-email-address'
+					),
+					errorType: 'assignment',
+				};
+			});
+		}
+		else if (taskNode.data.assignments.screenName) {
+			delete taskNode.data.assignments.screenName;
+
+			setBlockingErrors((prev) => {
+				return {
+					...prev,
+					errorMessage: Liferay.Language.get(
+						'please-enter-a-valid-screen-name'
+					),
+					errorType: 'assignment',
+				};
+			});
+		}
+		else if (taskNode.data.assignments.userId) {
+			delete taskNode.data.assignments.userId;
+
+			setBlockingErrors((prev) => {
+				return {
+					...prev,
+					errorMessage: Liferay.Language.get(
+						'please-enter-a-valid-user-id'
+					),
+					errorType: 'assignment',
+				};
+			});
+		}
+	}
+};
 
 const populateAssignmentsData = (
 	initialElements,
 	setElements,
 	setBlockingErrors
 ) => {
-	for (let index = 0; index < initialElements.length; index++) {
-		const element = initialElements[index];
+	const taskNodes = initialElements.filter((item) => item.type === 'task');
 
-		if (
-			isNode(element) &&
-			element.type === 'task' &&
-			element.data.assignments
-		) {
-			const assignmentType = getAssignmentType(element.data.assignments);
+	for (let index = 0; index < taskNodes.length; index++) {
+		const taskNode = taskNodes[index];
 
-			if (assignmentType === 'user') {
-				const sectionsData = [];
+		const assignmentType = getAssignmentType(taskNode.data.assignments);
 
-				let filterTypeRetrieveUsersBy = Object.keys(
-					element.data.assignments
-				)[1];
-				const keywordRetrieveUsersBy = Object.values(
-					element.data.assignments
-				)[1];
+		if (assignmentType === 'roleId') {
+			retrieveRoleById(taskNode.data.assignments.roleId)
+				.then((response) => response.json())
+				.then((response) => {
+					taskNode.data.assignments.sectionsData = {
+						id: response.id,
+						name: response.name,
+						roleType: response.roleType,
+					};
 
-				const verifySectionsData = () => {
-					if (sectionsData.length) {
-						element.data.assignments.sectionsData = sectionsData;
-						setElements([...initialElements]);
-					}
-					else {
-						delete element.data.assignments.sectionsData;
+					const nodeIndex = initialElements.findIndex(
+						(element) => element.id === taskNode.id
+					);
 
-						if (element.data.assignments.emailAddress) {
-							delete element.data.assignments.emailAddress;
-							setBlockingErrors((prev) => {
-								return {
-									...prev,
-									errorMessage: Liferay.Language.get(
-										'please-enter-a-valid-email-address'
-									),
-									errorType: 'assignment',
-								};
-							});
+					initialElements[nodeIndex] = taskNode;
+
+					setElements([...initialElements]);
+				});
+		}
+		else if (assignmentType === 'roleType') {
+			retrieveRoles()
+				.then((response) => response.json())
+				.then(({items}) => {
+					taskNode.data.assignments.roleKey.forEach((key) => {
+						const role = items.find((item) => item.key === key);
+
+						if (!taskNode.data.assignments.roleName) {
+							taskNode.data.assignments.roleName = [];
 						}
-						else if (element.data.assignments.screenName) {
-							delete element.data.assignments.screenName;
-							setBlockingErrors((prev) => {
-								return {
-									...prev,
-									errorMessage: Liferay.Language.get(
-										'please-enter-a-valid-screen-name'
-									),
-									errorType: 'assignment',
-								};
-							});
-						}
-						else if (element.data.assignments.userId) {
-							delete element.data.assignments.userId;
-							setBlockingErrors((prev) => {
-								return {
-									...prev,
-									errorMessage: Liferay.Language.get(
-										'please-enter-a-valid-user-id'
-									),
-									errorType: 'assignment',
-								};
-							});
-						}
-					}
-				};
 
-				if (filterTypeRetrieveUsersBy === 'screenName') {
-					filterTypeRetrieveUsersBy = 'alternateName';
-				}
-				else if (filterTypeRetrieveUsersBy === 'userId') {
-					filterTypeRetrieveUsersBy = filterTypeRetrieveUsersBy
-						.toLocaleLowerCase()
-						.replace('user', '');
-				}
-
-				retrieveUsersBy(
-					filterTypeRetrieveUsersBy,
-					keywordRetrieveUsersBy
-				)
-					.then((response) => response.json())
-					.then(({items}) => {
-						items.forEach((item, index) => {
-							sectionsData.push({
-								emailAddress: item.emailAddress,
-								identifier: `${Date.now()}-${index}`,
-								name: item.name,
-								screenName: item.alternateName,
-								userId: item.id,
-							});
-						});
-					})
-					.then(() => verifySectionsData());
-			}
-			else if (assignmentType === 'roleId') {
-				retrieveRolesBy('roleId', element.data.assignments.roleId)
-					.then((response) => response.json())
-					.then((response) => {
-						initialElements[index].data.assignments.sectionsData = {
-							id: response.id,
-							name: response.name,
-							roleType: response.roleType,
-						};
-						setElements([...initialElements]);
+						taskNode.data.assignments.roleName.push(role?.name);
 					});
+
+					const nodeIndex = initialElements.findIndex(
+						(element) => element.id === taskNode.id
+					);
+
+					initialElements[nodeIndex] = taskNode;
+
+					setElements([...initialElements]);
+				});
+		}
+		else if (assignmentType === 'user') {
+			const sectionsData = [];
+
+			let filterTypeRetrieveUsersBy = Object.keys(
+				taskNode.data.assignments
+			)[1];
+			const keywordRetrieveUsersBy = Object.values(
+				taskNode.data.assignments
+			)[1];
+
+			if (filterTypeRetrieveUsersBy === 'screenName') {
+				filterTypeRetrieveUsersBy = 'alternateName';
 			}
+			else if (filterTypeRetrieveUsersBy === 'userId') {
+				filterTypeRetrieveUsersBy = filterTypeRetrieveUsersBy
+					.toLocaleLowerCase()
+					.replace('user', '');
+			}
+
+			retrieveUsersBy(filterTypeRetrieveUsersBy, keywordRetrieveUsersBy)
+				.then((response) => response.json())
+				.then(({items}) => {
+					items.forEach((item, index) => {
+						sectionsData.push({
+							emailAddress: item.emailAddress,
+							identifier: `${Date.now()}-${index}`,
+							name: item.name,
+							screenName: item.alternateName,
+							userId: item.id,
+						});
+					});
+				})
+				.then(() =>
+					verifySectionsData(
+						initialElements,
+						sectionsData,
+						setBlockingErrors,
+						setElements,
+						taskNode
+					)
+				);
 		}
 	}
 };

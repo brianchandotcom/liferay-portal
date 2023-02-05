@@ -11,7 +11,11 @@
 
 import {isNode} from 'react-flow-renderer';
 
-import {retrieveRolesBy, retrieveUsersBy} from '../../util/fetchUtil';
+import {
+	retrieveRoleById,
+	retrieveRoles,
+	retrieveUsersBy,
+} from '../../util/fetchUtil';
 
 const populateNotificationsData = (initialElements, setElements) => {
 	for (let i = 0; i < initialElements.length; i++) {
@@ -19,9 +23,10 @@ const populateNotificationsData = (initialElements, setElements) => {
 
 		if (isNode(element) && element.data.notifications) {
 			const recipients = element.data.notifications.recipients;
+
 			recipients.map((recipient, index) => {
 				if (recipient?.assignmentType?.[0] === 'roleId') {
-					retrieveRolesBy('roleId', recipient.roleId)
+					retrieveRoleById(recipient.roleId)
 						.then((response) => response.json())
 						.then((response) => {
 							initialElements[i].data.notifications.recipients[
@@ -31,6 +36,38 @@ const populateNotificationsData = (initialElements, setElements) => {
 								name: response.name,
 								roleType: response.roleType,
 							};
+
+							setElements([...initialElements]);
+						});
+				}
+				else if (recipient?.assignmentType?.[0] === 'roleType') {
+					retrieveRoles()
+						.then((response) => response.json())
+						.then(({items}) => {
+							initialElements[i].data.notifications.recipients[
+								index
+							].roleKey.forEach((key) => {
+								const role = items.find(
+									(item) => item.key === key
+								);
+
+								if (
+									!initialElements[i].data.notifications
+										.recipients[index].roleName
+								) {
+									initialElements[
+										i
+									].data.notifications.recipients[
+										index
+									].roleName = [];
+								}
+
+								initialElements[
+									i
+								].data.notifications.recipients[
+									index
+								].roleName.push(role?.name);
+							});
 
 							setElements([...initialElements]);
 						});

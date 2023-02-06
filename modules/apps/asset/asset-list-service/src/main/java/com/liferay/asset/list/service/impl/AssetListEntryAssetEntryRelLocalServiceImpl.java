@@ -31,11 +31,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -311,10 +310,8 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 	private List<AssetListEntryAssetEntryRel> _getAssetListEntryAssetEntryRels(
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
 
-		Stream<AssetListEntryAssetEntryRel> stream =
-			assetListEntryAssetEntryRels.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			assetListEntryAssetEntryRels,
 			assetListEntryAssetEntryRel -> {
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 					assetListEntryAssetEntryRel.getAssetEntryId());
@@ -339,10 +336,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 				}
 
 				return true;
-			}
-		).collect(
-			Collectors.toList()
-		);
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

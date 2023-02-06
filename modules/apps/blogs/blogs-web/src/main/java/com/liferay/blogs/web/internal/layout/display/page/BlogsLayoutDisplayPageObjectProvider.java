@@ -16,8 +16,10 @@ package com.liferay.blogs.web.internal.layout.display.page;
 
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -29,11 +31,15 @@ public class BlogsLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<BlogsEntry> {
 
 	public BlogsLayoutDisplayPageObjectProvider(
-			BlogsEntry blogsEntry, AssetHelper assetHelper)
+			AssetHelper assetHelper, BlogsEntry blogsEntry,
+			InfoItemFriendlyURLProvider<BlogsEntry> infoItemFriendlyURLProvider,
+			Language language)
 		throws PortalException {
 
-		_blogsEntry = blogsEntry;
 		_assetHelper = assetHelper;
+		_blogsEntry = blogsEntry;
+		_infoItemFriendlyURLProvider = infoItemFriendlyURLProvider;
+		_language = language;
 	}
 
 	@Override
@@ -84,10 +90,14 @@ public class BlogsLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		return _blogsEntry.getUrlTitle();
+		return _infoItemFriendlyURLProvider.getFriendlyURL(
+			_blogsEntry, _language.getLanguageId(locale));
 	}
 
 	private final AssetHelper _assetHelper;
 	private final BlogsEntry _blogsEntry;
+	private final InfoItemFriendlyURLProvider<BlogsEntry>
+		_infoItemFriendlyURLProvider;
+	private final Language _language;
 
 }

@@ -17,11 +17,17 @@ package com.liferay.blogs.web.internal.layout.display.page;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +60,8 @@ public class BlogsLayoutDisplayPageProvider
 			}
 
 			return new BlogsLayoutDisplayPageObjectProvider(
-				blogsEntry, _assetHelper);
+				_assetHelper, blogsEntry, _infoItemFriendlyURLProvider,
+				_language);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -66,6 +73,21 @@ public class BlogsLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
 		try {
+			if (urlTitle.contains(StringPool.SLASH)) {
+				String[] urlNames = urlTitle.split(StringPool.SLASH);
+
+				if (urlNames.length > 1) {
+					Group group = _groupLocalService.fetchFriendlyURLGroup(
+						CompanyThreadLocal.getCompanyId(),
+						StringPool.SLASH + urlNames[0]);
+
+					if (group != null) {
+						return getLayoutDisplayPageObjectProvider(
+							group.getGroupId(), urlNames[1]);
+					}
+				}
+			}
+
 			BlogsEntry blogsEntry = _blogsEntryLocalService.getEntry(
 				groupId, urlTitle);
 
@@ -74,7 +96,8 @@ public class BlogsLayoutDisplayPageProvider
 			}
 
 			return new BlogsLayoutDisplayPageObjectProvider(
-				blogsEntry, _assetHelper);
+				_assetHelper, blogsEntry, _infoItemFriendlyURLProvider,
+				_language);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -91,5 +114,15 @@ public class BlogsLayoutDisplayPageProvider
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(item.class.name=com.liferay.blogs.model.BlogsEntry)")
+	private InfoItemFriendlyURLProvider<BlogsEntry>
+		_infoItemFriendlyURLProvider;
+
+	@Reference
+	private Language _language;
 
 }

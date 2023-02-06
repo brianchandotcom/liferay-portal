@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
@@ -68,9 +67,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -241,23 +237,23 @@ public class UserResourceDTOConverter
 					});
 				setRoleBriefs(
 					() -> {
-						List<RoleBrief> roleBriefs = new ArrayList<>();
-
-						PermissionChecker permissionChecker =
-							PermissionThreadLocal.getPermissionChecker();
 						UserBag userBag = UserBagFactoryUtil.create(
 							user.getUserId());
 
-						for (Role role : userBag.getRoles()) {
-							if (_roleModelResourcePermission.contains(
-									permissionChecker, role, ActionKeys.VIEW)) {
+						return TransformUtil.transformToArray(
+							userBag.getRoles(),
+							role -> {
+								if (!_roleModelResourcePermission.contains(
+										PermissionThreadLocal.
+											getPermissionChecker(),
+										role, ActionKeys.VIEW)) {
 
-								roleBriefs.add(
-									_toRoleBrief(dtoConverterContext, role));
-							}
-						}
+									return null;
+								}
 
-						return roleBriefs.toArray(new RoleBrief[0]);
+								return _toRoleBrief(dtoConverterContext, role);
+							},
+							RoleBrief.class);
 					});
 			}
 		};

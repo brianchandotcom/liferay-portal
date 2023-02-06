@@ -1248,20 +1248,22 @@ public class BaseAutoDeployer implements AutoDeployer {
 			return webXmlContent.substring(0, x) + webXmlContent.substring(y);
 		}
 
-		String liferayWebXmlContent = FileUtil.read(
-			DeployUtil.getResourcePath(tempDirPaths, "web.xml"));
+		if (!webXmlFiltersContent.isEmpty()) {
+			String liferayWebXmlContent = FileUtil.read(
+				DeployUtil.getResourcePath(tempDirPaths, "web.xml"));
 
-		int z = liferayWebXmlContent.indexOf("</web-app>");
+			int z = liferayWebXmlContent.indexOf("</web-app>");
 
-		liferayWebXmlContent =
-			liferayWebXmlContent.substring(0, z) + webXmlFiltersContent +
-				liferayWebXmlContent.substring(z);
+			liferayWebXmlContent =
+				liferayWebXmlContent.substring(0, z) + webXmlFiltersContent +
+					liferayWebXmlContent.substring(z);
 
-		liferayWebXmlContent = WebXMLBuilder.organizeWebXML(
-			liferayWebXmlContent);
+			liferayWebXmlContent = WebXMLBuilder.organizeWebXML(
+				liferayWebXmlContent);
 
-		FileUtil.write(
-			srcFile + "/WEB-INF/liferay-web.xml", liferayWebXmlContent);
+			FileUtil.write(
+				srcFile + "/WEB-INF/liferay-web.xml", liferayWebXmlContent);
+		}
 
 		return webXmlContent.substring(0, x) + _getInvokerFilterContent() +
 			webXmlContent.substring(y);

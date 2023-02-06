@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>BACK</td>
-	<td>//li[contains(@class,'control-menu-nav-item')]//a[span//*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
+	<td>//a[span//*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -153,9 +154,13 @@ public class TrafficChannel {
 				Map<String, String[]> parameterMap =
 					(Map<String, String[]>)tuple.getObject(1);
 
-				MapUtil.merge(parameterMap, httpServletRequestParameterMap);
+				Map<String, String[]> mergedParameterMap = new HashMap<>();
 
-				resourceURL.setParameters(httpServletRequestParameterMap);
+				MapUtil.merge(
+					httpServletRequestParameterMap, mergedParameterMap);
+				MapUtil.merge(parameterMap, mergedParameterMap);
+
+				resourceURL.setParameters(mergedParameterMap);
 
 				return String.valueOf(resourceURL);
 			}

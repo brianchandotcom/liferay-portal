@@ -681,6 +681,32 @@ definition {
 		return ${objectId};
 	}
 
+	@summary = "Get the list of an Object Definition based of its ID"
+	macro getObjectRelationships {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(objectDefinitionId))) {
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectName});
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var relationshipIdList = JSONCurlUtil.get(${curl}, "$.items..id");
+
+		return ${relationshipIdList};
+	}
+
 	macro getPicklistId {
 		var portalURL = JSONCompany.getPortalURL();
 

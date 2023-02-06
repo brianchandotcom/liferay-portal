@@ -99,7 +99,9 @@ class ContributorBuilder extends React.Component {
 		openSelectionModal({
 			onSelect: (selectedItem) => {
 				this.setState({
-					scopeName: selectedItem.groupscopelabel,
+					scopeName: selectedItem.groupdescriptivename
+						? selectedItem.groupdescriptivename
+						: selectedItem.groupscopelabel,
 				});
 				const input = document.querySelector(
 					`[name="${this.props.portletNamespace}groupId"]`

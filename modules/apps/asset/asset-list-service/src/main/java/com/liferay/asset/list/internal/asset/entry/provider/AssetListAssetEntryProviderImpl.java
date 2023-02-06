@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -743,16 +742,15 @@ public class AssetListAssetEntryProviderImpl
 			assetRendererFactory.getClassTypeReader();
 
 		try {
-			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-				_portal.getSharedContentSiteGroupIds(
-					assetListEntry.getCompanyId(), assetListEntry.getGroupId(),
-					assetListEntry.getUserId()),
-				LocaleUtil.getDefault());
-
 			availableClassTypeIds = ArrayUtil.toArray(
 				(Long[])TransformUtil.transformToArray(
-					classTypes, classType -> classType.getClassTypeId(),
-					Long.class));
+					classTypeReader.getAvailableClassTypes(
+						_portal.getSharedContentSiteGroupIds(
+							assetListEntry.getCompanyId(),
+							assetListEntry.getGroupId(),
+							assetListEntry.getUserId()),
+						LocaleUtil.getDefault()),
+					classType -> classType.getClassTypeId(), Long.class));
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -796,6 +794,9 @@ public class AssetListAssetEntryProviderImpl
 	private long[] _getCombinedSegmentsEntryIds(
 		AssetListEntry assetListEntry, long[] segmentEntryIds) {
 
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			new ArrayList<>();
+
 		if ((segmentEntryIds.length > 1) &&
 			ArrayUtil.contains(
 				segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT)) {
@@ -803,9 +804,6 @@ public class AssetListAssetEntryProviderImpl
 			segmentEntryIds = ArrayUtil.remove(
 				segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT);
 		}
-
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			new ArrayList<>();
 
 		for (long segmentsEntryId : segmentEntryIds) {
 			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =

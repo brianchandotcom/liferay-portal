@@ -19,7 +19,8 @@ export function durationAsMilliseconds(days = 0, fullHours) {
 	const [hours, minutes] = fullHours.split(':');
 
 	return (
-		hoursToMilliseconds(days * 24 + hours) + minutesToMilliseconds(minutes)
+		hoursToMilliseconds(Number(days) * 24 + Number(hours)) +
+		minutesToMilliseconds(Number(minutes))
 	);
 }
 

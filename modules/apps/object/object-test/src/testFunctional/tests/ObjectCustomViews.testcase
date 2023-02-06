@@ -837,7 +837,9 @@ definition {
 
 		ObjectCustomViews.deleteObjectCustomViewViaUI(viewLabel = "Custom Views");
 
-		ObjectCustomViews.assertObjectViewNotPresent(viewLabel = "Custom Views");
+		AssertElementNotPresent(
+			locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL",
+			viewLabel = "Custom Views");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to drag the columns"
@@ -1736,7 +1738,9 @@ definition {
 
 		ObjectCustomViews.assertObjectView(viewLabel = "View A");
 
-		ObjectCustomViews.assertObjectViewNotPresent(viewLabel = "Custom B");
+		AssertElementNotPresent(
+			locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL",
+			viewLabel = "Custom B");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search when press enter key on Default Sort"

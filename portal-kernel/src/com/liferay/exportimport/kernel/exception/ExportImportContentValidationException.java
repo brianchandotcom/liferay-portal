@@ -31,6 +31,8 @@ public class ExportImportContentValidationException extends PortalException {
 
 	public static final int FILE_ENTRY_NOT_FOUND = 5;
 
+	public static final int JOURNAL_FEED_NOT_FOUND = 7;
+
 	public static final int LAYOUT_GROUP_NOT_FOUND = 2;
 
 	public static final int LAYOUT_NOT_FOUND = 3;
@@ -66,6 +68,10 @@ public class ExportImportContentValidationException extends PortalException {
 
 	public String getGroupFriendlyURL() {
 		return _groupFriendlyURL;
+	}
+
+	public String getJournalArticleFeedURL() {
+		return _journalArticleFeedURL;
 	}
 
 	public Map<String, String> getLayoutReferenceParameters() {
@@ -106,6 +112,10 @@ public class ExportImportContentValidationException extends PortalException {
 		_groupFriendlyURL = groupFriendlyURL;
 	}
 
+	public void setJournalArticleFeedURL(String journalArticleFeedURL) {
+		_journalArticleFeedURL = journalArticleFeedURL;
+	}
+
 	public void setLayoutReferenceParameters(
 		Map<String, String> layoutReferenceParameters) {
 
@@ -134,6 +144,7 @@ public class ExportImportContentValidationException extends PortalException {
 	private String _dlReference;
 	private Map<String, String[]> _dlReferenceParameters;
 	private String _groupFriendlyURL;
+	private String _journalArticleFeedURL;
 	private Map<String, String> _layoutReferenceParameters;
 	private String _layoutURL;
 	private String _stagedModelClassName;

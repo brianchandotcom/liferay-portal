@@ -717,6 +717,38 @@ public class StagingImpl implements Staging {
 			}
 			else if (exportImportContentValidationException.getType() ==
 						ExportImportContentValidationException.
+							JOURNAL_FEED_NOT_FOUND) {
+
+				if (Validator.isNotNull(
+						exportImportContentValidationException.
+							getStagedModelClassName())) {
+
+					errorMessage = _language.format(
+						resourceBundle,
+						"unable-to-validate-referenced-article-feed-because-" +
+							"it-cannot-be-found-with-url-x-within-the-" +
+								"content-of-x-with-primary-key-x",
+						new String[] {
+							exportImportContentValidationException.
+								getJournalArticleFeedURL(),
+							exportImportContentValidationException.
+								getStagedModelClassName(),
+							String.valueOf(
+								exportImportContentValidationException.
+									getStagedModelPrimaryKeyObj())
+						});
+				}
+				else {
+					errorMessage = _language.format(
+						resourceBundle,
+						"unable-to-validate-referenced-journal-feed-because-" +
+							"it-cannot-be-found-with-url-x",
+						exportImportContentValidationException.
+							getJournalArticleFeedURL());
+				}
+			}
+			else if (exportImportContentValidationException.getType() ==
+						ExportImportContentValidationException.
 							LAYOUT_GROUP_NOT_FOUND) {
 
 				if (Validator.isNotNull(

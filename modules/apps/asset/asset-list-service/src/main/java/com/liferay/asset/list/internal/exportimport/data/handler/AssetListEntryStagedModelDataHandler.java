@@ -37,6 +37,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -49,8 +50,6 @@ import com.liferay.staging.StagingGroupHelper;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -208,14 +207,11 @@ public class AssetListEntryStagedModelDataHandler
 			AssetListEntry assetListEntry)
 		throws Exception {
 
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRels(
-					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
-
 		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				assetListEntryAssetEntryRels) {
+				_assetListEntryAssetEntryRelLocalService.
+					getAssetListEntryAssetEntryRels(
+						assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS)) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, assetListEntry, assetListEntryAssetEntryRel,
@@ -261,17 +257,13 @@ public class AssetListEntryStagedModelDataHandler
 					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
-		Stream<AssetListEntryAssetEntryRel> stream =
-			assetListEntryAssetEntryRels.stream();
+		for (AssetEntry assetEntry :
+				TransformUtil.transform(
+					assetListEntryAssetEntryRels,
+					assetListEntryAssetEntryRel ->
+						_assetEntryLocalService.fetchEntry(
+							assetListEntryAssetEntryRel.getAssetEntryId()))) {
 
-		List<AssetEntry> assetEntries = stream.map(
-			assetListEntryAssetEntryRel -> _assetEntryLocalService.fetchEntry(
-				assetListEntryAssetEntryRel.getAssetEntryId())
-		).collect(
-			Collectors.toList()
-		);
-
-		for (AssetEntry assetEntry : assetEntries) {
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 			if ((assetRenderer == null) ||

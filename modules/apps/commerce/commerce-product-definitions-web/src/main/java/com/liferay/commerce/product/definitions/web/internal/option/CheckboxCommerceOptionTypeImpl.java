@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.internal.option;
+package com.liferay.commerce.product.definitions.web.internal.option;
 
 import com.liferay.commerce.product.option.CommerceOptionType;
 import com.liferay.portal.kernel.language.Language;
@@ -30,15 +30,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"commerce.option.type.display.order:Integer=300",
-		"commerce.option.type.key=" + RadioCommerceOptionTypeImpl.KEY
+		"commerce.option.type.display.order:Integer=700",
+		"commerce.option.type.key=" + CheckboxCommerceOptionTypeImpl.KEY
 	},
 	service = CommerceOptionType.class
 )
-public class RadioCommerceOptionTypeImpl
+public class CheckboxCommerceOptionTypeImpl
 	extends BaseCommerceOptionTypeImpl implements CommerceOptionType {
 
-	public static final String KEY = "radio";
+	public static final String KEY = "checkbox";
 
 	@Override
 	public String getKey() {
@@ -47,7 +47,7 @@ public class RadioCommerceOptionTypeImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "single-selection");
+		return _language.get(locale, "boolean");
 	}
 
 	@Override

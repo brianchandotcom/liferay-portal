@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.internal.option;
+package com.liferay.commerce.product.definitions.web.internal.option;
 
 import com.liferay.commerce.product.option.CommerceOptionType;
 import com.liferay.portal.kernel.language.Language;

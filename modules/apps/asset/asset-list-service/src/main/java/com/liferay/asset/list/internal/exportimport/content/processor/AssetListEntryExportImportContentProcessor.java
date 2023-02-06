@@ -211,15 +211,13 @@ public class AssetListEntryExportImportContentProcessor
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		String[] oldGroupIds = StringUtil.split(
-			unicodeProperties.getProperty("groupIds", null));
-
 		unicodeProperties.put(
 			"groupIds",
 			StringUtil.merge(
 				ArrayUtil.toArray(
 					(Long[])TransformUtil.transform(
-						oldGroupIds,
+						StringUtil.split(
+							unicodeProperties.getProperty("groupIds", null)),
 						oldGroupId -> {
 							long groupId = GetterUtil.getLong(oldGroupId);
 
@@ -234,16 +232,15 @@ public class AssetListEntryExportImportContentProcessor
 						},
 						Long.class))));
 
-		String[] classNames = StringUtil.split(
-			unicodeProperties.getProperty("classNames"));
-
-		long[] classNameIds = ArrayUtil.toArray(
-			(Long[])TransformUtil.transform(
-				classNames, className -> _portal.getClassNameId(className),
-				Long.class));
-
 		unicodeProperties.setProperty(
-			"classNameIds", StringUtil.merge(classNameIds));
+			"classNameIds",
+			StringUtil.merge(
+				ArrayUtil.toArray(
+					(Long[])TransformUtil.transform(
+						StringUtil.split(
+							unicodeProperties.getProperty("classNames")),
+						className -> _portal.getClassNameId(className),
+						Long.class))));
 
 		String anyAssetTypeClassName = unicodeProperties.getProperty(
 			"anyAssetTypeClassName");

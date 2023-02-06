@@ -15,6 +15,7 @@
 import {TTableRequestParams} from '../components/table/types';
 export declare function createProperty(name: string): Promise<any>;
 export declare function deleteConnection(): Promise<any>;
+export declare function sync(): Promise<any>;
 export declare function fetchAccountGroups(
 	params: TTableRequestParams
 ): Promise<any>;

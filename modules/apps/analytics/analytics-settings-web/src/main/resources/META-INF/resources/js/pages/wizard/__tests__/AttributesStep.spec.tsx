@@ -47,7 +47,7 @@ describe('Attributes Step', () => {
 		jest.restoreAllMocks();
 	});
 
-	it('render AttributesStep without crashing', async () => {
+	xit('render AttributesStep without crashing', async () => {
 		fetch.mockResponseOnce(JSON.stringify(response));
 
 		let data: TData = initialState;

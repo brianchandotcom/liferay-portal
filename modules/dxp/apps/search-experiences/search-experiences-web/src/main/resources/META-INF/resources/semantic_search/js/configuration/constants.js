@@ -11,5 +11,6 @@
 
 export const TEXT_EMBEDDING_PROVIDER_TYPES = {
 	HUGGING_FACE_INFERENCE_API: 'huggingFaceInferenceAPI',
+	HUGGING_FACE_INFERENCE_ENDPOINT: 'huggingFaceInferenceEndpoint',
 	TXTAI: 'txtai',
 };

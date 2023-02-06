@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -140,13 +138,9 @@ public class StagingAssetEntryHelperImpl implements StagingAssetEntryHelper {
 
 		// Try to fetch the existing staged model from the company
 
-		Stream<AssetEntry> assetEntryStream = assetEntries.stream();
-
-		List<AssetEntry> companyAssetEntries = assetEntryStream.filter(
-			entry -> entry.getCompanyId() == group.getCompanyId()
-		).collect(
-			Collectors.toList()
-		);
+		List<AssetEntry> companyAssetEntries = ListUtil.filter(
+			assetEntries,
+			entry -> entry.getCompanyId() == group.getCompanyId());
 
 		if (ListUtil.isEmpty(companyAssetEntries)) {
 			return null;

@@ -240,23 +240,25 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		for (Object object : jsonArray) {
 			JSONObject jsonObject = (JSONObject)object;
 
-			if (predicate.test(jsonObject)) {
-				String[] tagNameParts1 = StringUtil.split(
-					StringUtil.removeChars(
-						jsonObject.getString("name"), CharPool.APOSTROPHE,
-						CharPool.DASH),
-					CharPool.AMPERSAND);
+			if (!predicate.test(jsonObject)) {
+				continue;
+			}
 
-				for (String tagNamePart1 : tagNameParts1) {
-					String[] tagNameParts2 = StringUtil.split(
-						tagNamePart1, CharPool.FORWARD_SLASH);
+			String[] tagNameParts1 = StringUtil.split(
+				StringUtil.removeChars(
+					jsonObject.getString("name"), CharPool.APOSTROPHE,
+					CharPool.DASH),
+				CharPool.AMPERSAND);
 
-					for (String tagNamePart2 : tagNameParts2) {
-						tagNamePart2 = tagNamePart2.trim();
+			for (String tagNamePart1 : tagNameParts1) {
+				String[] tagNameParts2 = StringUtil.split(
+					tagNamePart1, CharPool.FORWARD_SLASH);
 
-						if (!tagNamePart2.isEmpty()) {
-							tagNames.add(tagNamePart2);
-						}
+				for (String tagNamePart2 : tagNameParts2) {
+					tagNamePart2 = tagNamePart2.trim();
+
+					if (!tagNamePart2.isEmpty()) {
+						tagNames.add(tagNamePart2);
 					}
 				}
 			}

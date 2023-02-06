@@ -24,7 +24,7 @@ import java.util.List;
  */
 public interface ModelPreFilterContributorsRegistry {
 
-	public List<ModelPreFilterContributor> filter(
+	public List<ModelPreFilterContributor> filterModelPreFilterContributor(
 		String entryClassName, Collection<String> excludes,
 		Collection<String> includes, boolean mandatoryOnly);
 

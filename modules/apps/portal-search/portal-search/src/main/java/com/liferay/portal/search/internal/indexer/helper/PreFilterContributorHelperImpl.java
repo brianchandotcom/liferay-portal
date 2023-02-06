@@ -153,7 +153,7 @@ public class PreFilterContributorHelperImpl
 		SearchContext searchContext) {
 
 		List<ModelPreFilterContributor> modelPreFilterContributors =
-			modelPreFilterContributorsRegistry.filter(
+			modelPreFilterContributorsRegistry.filterModelPreFilterContributor(
 				modelSearchSettings.getClassName(),
 				getStrings(
 					"search.full.query.clause.contributors.excludes",

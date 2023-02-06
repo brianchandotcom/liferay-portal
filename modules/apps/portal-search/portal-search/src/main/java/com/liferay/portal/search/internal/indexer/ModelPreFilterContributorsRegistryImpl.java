@@ -21,8 +21,6 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -37,24 +35,26 @@ public class ModelPreFilterContributorsRegistryImpl
 	implements ModelPreFilterContributorsRegistry {
 
 	@Override
-	public List<ModelPreFilterContributor> filter(
+	public List<ModelPreFilterContributor> filterModelPreFilterContributor(
 		String entryClassName, Collection<String> excludes,
 		Collection<String> includes, boolean mandatoryOnly) {
 
-		List<ModelPreFilterContributor> list = new ArrayList<>();
+		List<ModelPreFilterContributor> modelPreFilterContributors =
+			new ArrayList<>();
 
-		_addAll(list, _getAllClassesContributors());
-		_addAll(list, _getClassContributors(entryClassName));
+		_addAll(modelPreFilterContributors, _getAllClassesContributors());
+		_addAll(
+			modelPreFilterContributors, _getClassContributors(entryClassName));
 
 		if (mandatoryOnly) {
-			_retainAll(list, _getMandatoryContributors());
+			_retainAll(modelPreFilterContributors, _getMandatoryContributors());
 		}
 		else {
 			List<String> mandatoryContributorClassNames =
 				_getMandatoryContributorNames(_getMandatoryContributors());
 
 			if ((includes != null) && !includes.isEmpty()) {
-				list.removeIf(
+				modelPreFilterContributors.removeIf(
 					modelPreFilterContributor -> {
 						String className = _getClassName(
 							modelPreFilterContributor);
@@ -66,7 +66,7 @@ public class ModelPreFilterContributorsRegistryImpl
 			}
 
 			if ((excludes != null) && !excludes.isEmpty()) {
-				list.removeIf(
+				modelPreFilterContributors.removeIf(
 					modelPreFilterContributor -> {
 						String className = _getClassName(
 							modelPreFilterContributor);
@@ -78,7 +78,7 @@ public class ModelPreFilterContributorsRegistryImpl
 			}
 		}
 
-		return list;
+		return modelPreFilterContributors;
 	}
 
 	@Activate
@@ -130,15 +130,16 @@ public class ModelPreFilterContributorsRegistryImpl
 	private List<String> _getMandatoryContributorNames(
 		List<ModelPreFilterContributor> mandatoryContributors) {
 
-		Stream<ModelPreFilterContributor> stream =
-			mandatoryContributors.stream();
+		List<String> mandatoryContributorNames = new ArrayList<>();
 
-		return stream.map(
-			modelPreFilterContributor -> _getClassName(
-				modelPreFilterContributor)
-		).collect(
-			Collectors.toList()
-		);
+		for (ModelPreFilterContributor modelPreFilterContributor :
+				mandatoryContributors) {
+
+			mandatoryContributorNames.add(
+				_getClassName(modelPreFilterContributor));
+		}
+
+		return mandatoryContributorNames;
 	}
 
 	private List<ModelPreFilterContributor> _getMandatoryContributors() {

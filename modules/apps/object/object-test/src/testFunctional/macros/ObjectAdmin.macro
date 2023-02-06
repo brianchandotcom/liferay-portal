@@ -746,6 +746,20 @@ definition {
 			userPassword = ${userPassword});
 	}
 
+	macro deleteAllRelationships {
+		var objectDefinitionIdList = JSONObject.getAllObjectDefinitionsId();
+
+		for (var objectDefinitionId : list ${objectDefinitionIdList}) {
+			var relationshipIdList = JSONObject.getObjectRelationships(objectDefinitionId = ${objectDefinitionId});
+
+			if (${relationshipIdList} != "") {
+				for (var relationshipId : list ${relationshipIdList}) {
+					JSONObject.deleteRelationship(objectRelationshipId = ${relationshipId});
+				}
+			}
+		}
+	}
+
 	macro deleteCategorizationViaUI {
 		Click(locator1 = "ObjectAdmin#CATEGORIZATION_DROPDOWN");
 

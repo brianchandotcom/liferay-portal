@@ -1639,7 +1639,9 @@ definition {
 
 		ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "Author");
 
-		ObjectCustomViews.assertColumnNotPresentOnAddColumnModal(columnOption = "Create Date");
+		AssertElementNotPresent(
+			key_columnName = "Create Date",
+			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to a New Default Sort modal"

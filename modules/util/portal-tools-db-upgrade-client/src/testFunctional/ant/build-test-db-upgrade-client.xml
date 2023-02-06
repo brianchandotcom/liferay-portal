@@ -643,4 +643,11 @@ upgrade.database.auto.run=false</echo>
 
 		<clean-database-upgrade-client />
 	</target>
+
+	<target name="kill-java-upgrade-process">
+		<exec executable="/bin/bash" logError="true" output="true">
+			<arg value="-c" />
+			<arg value="pkill -f db_upgrade" />
+		</exec>
+	</target>
 </project>

@@ -499,12 +499,6 @@ definition {
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
-	macro assertNoItemsWereFound {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No items were found.");
-	}
-
 	macro assertNoResultsWereFound {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",

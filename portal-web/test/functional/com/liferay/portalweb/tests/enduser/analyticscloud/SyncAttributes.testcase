@@ -665,4 +665,39 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10860 | Automation ID: LRAC-12835 | Test Summary: Select Attributes for Account "
+    @priority = "5"
+    test CanSelectAccountAttributes {
+        task ("Get the number of attributes currently synced") {
+            var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
+        }
+
+        task ("Enable two attributes for Account") {
+            ACDXPSettings.syncAttributes(
+                attributeCategory = "Account",
+                attributeNameList = "externalReferenceCode,uuid_");
+        }
+
+        task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+            ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+                attributeCategory = "Account",
+                currentAttributeNumber = "${syncAccountNumberStart}",
+                increaseAttributeNumber = "2");
+        }
+
+        task ("Save and Finish the wizard") {
+            Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+        }
+
+        task ("Go to the attributes page in the sidebar") {
+            ACDXPSettings.navToSyncedAttributes();
+        }
+
+        task ("Check selecteded number of account attributes") {
+            ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+                attributeCategory = "Account",
+                currentAttributeNumber = "${syncAccountNumberStart}",
+                increaseAttributeNumber = "2");
+        }
+    }
 }

@@ -508,7 +508,7 @@ public class BatchEngineAutoDeployListenerTest {
 							filePath);
 
 						try (FileInputStream fileInputStream =
-								new FileInputStream(filePath.toFile())) {
+								new FileInputStream(zipEntryFile)) {
 
 							zipOutputStream.putNextEntry(
 								new ZipEntry(relativePath.toString()));

@@ -17,8 +17,16 @@
 				color: $cadmin-dark;
 			}
 
-			.collapse-icon-open {
-				color: $cadmin-dark;
+			.collapse-icon {
+				&-open {
+					color: $cadmin-dark;
+				}
+
+				&-closed {
+					@at-root #{selector-replace(&, 'html#{$cadmin-selector}', 'html#{$cadmin-selector}.rtl')} {
+						transform: rotate(-180deg);
+					}
+				}
 			}
 		}
 

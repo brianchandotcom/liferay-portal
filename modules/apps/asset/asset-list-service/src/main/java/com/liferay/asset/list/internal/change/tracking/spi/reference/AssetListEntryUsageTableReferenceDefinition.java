@@ -14,15 +14,11 @@
 
 package com.liferay.asset.list.internal.change.tracking.spi.reference;
 
-import com.liferay.asset.list.model.AssetListEntryTable;
 import com.liferay.asset.list.model.AssetListEntryUsageTable;
 import com.liferay.asset.list.service.persistence.AssetListEntryUsagePersistence;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,19 +41,6 @@ public class AssetListEntryUsageTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<AssetListEntryUsageTable>
 			parentTableReferenceInfoBuilder) {
-
-		parentTableReferenceInfoBuilder.groupedModel(
-			AssetListEntryUsageTable.INSTANCE
-		).singleColumnReference(
-			AssetListEntryUsageTable.INSTANCE.assetListEntryId,
-			AssetListEntryTable.INSTANCE.assetListEntryId
-		).classNameReference(
-			AssetListEntryUsageTable.INSTANCE.classPK,
-			LayoutTable.INSTANCE.plid, Layout.class
-		).singleColumnReference(
-			AssetListEntryUsageTable.INSTANCE.portletId,
-			PortletPreferencesTable.INSTANCE.portletId
-		);
 	}
 
 	@Override

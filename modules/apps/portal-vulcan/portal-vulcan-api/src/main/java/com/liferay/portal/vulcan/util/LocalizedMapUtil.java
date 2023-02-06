@@ -139,7 +139,28 @@ public class LocalizedMapUtil {
 		return Collections.singletonMap(LocaleUtil.getDefault(), label);
 	}
 
-	public static Map<Locale, String> merge(
+	public static Map<String, String> mergeI18nMap(
+		Map<String, String> i18nMap, String locale, String value) {
+
+		if (Validator.isNull(locale)) {
+			return i18nMap;
+		}
+
+		if (i18nMap == null) {
+			return Collections.singletonMap(locale, value);
+		}
+
+		if (Validator.isNotNull(value)) {
+			i18nMap.put(locale, value);
+		}
+		else {
+			i18nMap.remove(locale);
+		}
+
+		return i18nMap;
+	}
+
+	public static Map<Locale, String> mergeLocalizedMap(
 		Map<Locale, String> localizedMap, Locale locale, String value) {
 
 		if (locale == null) {
@@ -160,35 +181,15 @@ public class LocalizedMapUtil {
 		return localizedMap;
 	}
 
-	public static Map<Locale, String> merge(
+	public static Map<Locale, String> mergeLocalizedMap(
 		Map<Locale, String> localizedMap, Map.Entry<Locale, String> entry) {
 
 		if (entry == null) {
 			return localizedMap;
 		}
 
-		return merge(localizedMap, entry.getKey(), entry.getValue());
-	}
-
-	public static Map<String, String> mergeI18nMap(
-		Map<String, String> i18nMap, String locale, String value) {
-
-		if (Validator.isNull(locale)) {
-			return i18nMap;
-		}
-
-		if (i18nMap == null) {
-			return Collections.singletonMap(locale, value);
-		}
-
-		if (Validator.isNotNull(value)) {
-			i18nMap.put(locale, value);
-		}
-		else {
-			i18nMap.remove(locale);
-		}
-
-		return i18nMap;
+		return mergeLocalizedMap(
+			localizedMap, entry.getKey(), entry.getValue());
 	}
 
 	public static Map<Locale, String> patch(

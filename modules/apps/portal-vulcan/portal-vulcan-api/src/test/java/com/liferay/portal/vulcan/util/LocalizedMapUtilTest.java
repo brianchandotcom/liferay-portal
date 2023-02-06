@@ -45,11 +45,11 @@ public class LocalizedMapUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testMerge() {
+	public void testMergeLocalizedMap() {
 
 		// Null map
 
-		Map<Locale, String> map = LocalizedMapUtil.merge(
+		Map<Locale, String> map = LocalizedMapUtil.mergeLocalizedMap(
 			null, new AbstractMap.SimpleEntry<>(LocaleUtil.US, "hello"));
 
 		Assert.assertEquals(map.toString(), 1, map.size());
@@ -57,7 +57,7 @@ public class LocalizedMapUtilTest {
 
 		// Null entry
 
-		map = LocalizedMapUtil.merge(
+		map = LocalizedMapUtil.mergeLocalizedMap(
 			HashMapBuilder.put(
 				LocaleUtil.US, "hello"
 			).build(),
@@ -68,7 +68,7 @@ public class LocalizedMapUtilTest {
 
 		// Entry hello null
 
-		map = LocalizedMapUtil.merge(
+		map = LocalizedMapUtil.mergeLocalizedMap(
 			HashMapBuilder.put(
 				LocaleUtil.US, "hello"
 			).build(),
@@ -79,7 +79,7 @@ public class LocalizedMapUtilTest {
 
 		// Merge map
 
-		map = LocalizedMapUtil.merge(
+		map = LocalizedMapUtil.mergeLocalizedMap(
 			HashMapBuilder.put(
 				LocaleUtil.US, "hello"
 			).build(),

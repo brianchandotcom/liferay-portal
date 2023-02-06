@@ -41,12 +41,39 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that no internal video is not listed via item selector after disabling FFMPEG."
+	@priority = "3"
+	@refactordone
+	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
+		property test.name.skip.portal.instance = "DMVideoPreview#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		PortletEntry.update();
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
+
+		ItemSelector.configureFilterViaSelectFile(
+			filterBy = "Everywhere",
+			navTab = "Documents and Media");
+
+		AssertElementNotPresent(
+			key_card = "DM Video Title In Site",
+			locator1 = "Card#CARD_TITLE");
+	}
+
 	@description = "This test ensures that an internal video can be selected via item selector when creating Blog."
 	@priority = "5"
 	@refactordone
-	test AddBlogEntryWithEmbeddedVideo {
+	test CanAddBlogEntryWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#AddBlogEntryWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#CanAddBlogEntryWithEmbeddedVideo";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -74,10 +101,10 @@ definition {
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating KB article."
 	@priority = "5"
-	@refactorneeded
-	test AddKBArticleWithEmbeddedVideo {
+	@refactordone
+	test CanAddKBArticleWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#AddKBArticleWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#CanAddKBArticleWithEmbeddedVideo";
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 
@@ -103,8 +130,8 @@ definition {
 	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content."
 	@priority = "5"
 	@refactordone
-	test AddWCWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "DMVideoPreview#AddWCWithEmbeddedVideo";
+	test CanAddWCWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DMVideoPreview#CanAddWCWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -181,39 +208,12 @@ definition {
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
-	@description = "This test ensures that no internal video is not listed via item selector after disabling FFMPEG."
-	@priority = "3"
-	@refactordone
-	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
-		property test.name.skip.portal.instance = "DMVideoPreview#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		PortletEntry.update();
-
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
-
-		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
-
-		ItemSelector.configureFilterViaSelectFile(
-			filterBy = "Everywhere",
-			navTab = "Documents and Media");
-
-		AssertElementNotPresent(
-			key_card = "DM Video Title In Site",
-			locator1 = "Card#CARD_TITLE");
-	}
-
 	@priority = "3"
 	@refactorneeded
-	test ConfigureFFmpegVideoPreviewSizePG {
+	test CanConfigureFFmpegVideoPreviewSizePG {
 		property custom.properties = "dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DMVideoPreview#ConfigureFFmpegVideoPreviewSizePG";
+		property test.name.skip.portal.instance = "DMVideoPreview#CanConfigureFFmpegVideoPreviewSizePG";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -282,9 +282,9 @@ definition {
 
 	@description = "This test ensures that a blog entry created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
-	@refactorneeded
-	test ImportExportedBlogWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "DMVideoPreview#ImportExportedBlogWithEmbeddedVideo";
+	@refactordone
+	test CanImportExportedBlogWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DMVideoPreview#CanImportExportedBlogWithEmbeddedVideo";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -323,10 +323,10 @@ definition {
 
 	@description = "This test ensures that a kb article created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
-	@refactorneeded
-	test ImportExportedKBWithEmbeddedVideo {
+	@refactordone
+	test CanImportExportedKBWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#ImportExportedKBWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#CanImportExportedKBWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -379,10 +379,10 @@ definition {
 
 	@description = "This test ensures that a web content created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
-	@refactorneeded
-	test ImportExportedWebContentWithEmbeddedVideo {
+	@refactordone
+	test CanImportExportedWebContentWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#ImportExportedWebContentWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#CanImportExportedWebContentWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -439,43 +439,12 @@ definition {
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
-	@description = "This test ensures that the video preview generated for a document remains intact after FFmpeg is disabled."
-	@priority = "4"
-	test PreviewRemainsAfterDisablingFFmpeg {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#PreviewRemainsAfterDisablingFFmpeg";
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Video Title In Site",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewVideoPreviewGeneratingInfo();
-
-		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		PortletEntry.update();
-
-		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Video Title In Site",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
-	}
-
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."
 	@priority = "4"
-	@refactorneeded
-	test ViewFromDisconnectedSite {
+	@refactordone
+	test CanViewFromDisconnectedSite {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#ViewFromDisconnectedSite";
+		property test.name.skip.portal.instance = "DMVideoPreview#CanViewFromDisconnectedSite";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -525,6 +494,37 @@ definition {
 		AssertElementNotPresent(
 			key_card = "DM Video Title In Depot",
 			locator1 = "Card#CARD_TITLE");
+	}
+
+	@description = "This test ensures that the video preview generated for a document remains intact after FFmpeg is disabled."
+	@priority = "4"
+	test PreviewRemainsAfterDisablingFFmpeg {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "DMVideoPreview#PreviewRemainsAfterDisablingFFmpeg";
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Video Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewVideoPreviewGeneratingInfo();
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		PortletEntry.update();
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Video Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
 }

@@ -129,7 +129,7 @@ export function CollectionGeneralPanel({item}) {
 	const previewItem = useDisplayPagePreviewItem();
 
 	const optionsMenuItems = useMemo(() => {
-		if (Liferay.FeatureFlags['LPS-166275']) {
+		if (Liferay.FeatureFlags['LPS-166036']) {
 			if (!editConfigurationURL) {
 				return [];
 			}

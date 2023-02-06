@@ -252,7 +252,7 @@ public class HttpInvoker {
 			File file = (File)value;
 
 			printWriter.append(" filename=\"");
-			printWriter.append(file.getName());
+			printWriter.append(_filter(file.getName()));
 			printWriter.append("\"\r\nContent-Type: ");
 			printWriter.append(
 				URLConnection.guessContentTypeFromName(file.getName()));
@@ -278,6 +278,14 @@ public class HttpInvoker {
 		}
 
 		printWriter.append("\r\n");
+	}
+
+	private String _filter(String fileName) {
+		fileName = fileName.replaceAll("\"", "");
+		fileName = fileName.replaceAll("\n", "");
+		fileName = fileName.replaceAll("\r", "");
+
+		return fileName;
 	}
 
 	private String _getQueryString() throws IOException {

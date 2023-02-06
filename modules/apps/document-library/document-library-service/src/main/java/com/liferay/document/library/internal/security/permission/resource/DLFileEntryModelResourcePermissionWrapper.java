@@ -218,18 +218,10 @@ public class DLFileEntryModelResourcePermissionWrapper
 					fileVersion.getFileVersionId(), actionId);
 
 				if (hasPermission != null) {
-					return hasPermission.booleanValue();
+					return hasPermission;
 				}
 
-				boolean hasOwnerPermission =
-					permissionChecker.hasOwnerPermission(
-						dlFileEntry.getCompanyId(), name,
-						dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
-						actionId);
-
-				if (!hasOwnerPermission) {
-					return false;
-				}
+				return false;
 			}
 
 			return null;

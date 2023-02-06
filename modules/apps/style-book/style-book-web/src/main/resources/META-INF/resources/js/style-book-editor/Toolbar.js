@@ -42,7 +42,7 @@ export default React.memo(function Toolbar() {
 				<ul className="navbar-nav start">
 					{previewLayout?.url && (
 						<li className="nav-item">
-							<span className="style-book-editor__page-preview-text">
+							<span className="font-weight-bold">
 								{`${Liferay.Language.get('preview')}`}
 							</span>
 

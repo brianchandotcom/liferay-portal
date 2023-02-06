@@ -20,57 +20,14 @@ html#{$cadmin-selector} {
 		}
 
 		.style-book-editor {
-			&__color-frontend-token {
-				.clay-color-picker
-					.clay-color
-					.input-group-item
-					.input-group-text {
-					border-radius: 4px 0 0 4px;
-				}
-
-				.clay-color-btn {
-					background-color: var(
-						--style-book-color-picker-color
-					) !important;
-				}
-			}
-
 			&__page-preview {
 				flex-grow: 1;
 				position: relative;
-
-				&-empty-site-message {
-					.c-empty-state-title {
-						display: none;
-					}
-
-					.c-empty-state-text {
-						margin-top: 32px;
-					}
-				}
 
 				&-frame {
 					border: none;
 					height: 100%;
 					width: 100%;
-				}
-
-				&-text {
-					font-weight: 700;
-				}
-			}
-
-			&__page-type-selector {
-				border-bottom: 1px solid $cadmin-gray-300;
-				padding: 16px;
-			}
-
-			&__page-selector {
-				min-width: 320px;
-				padding: 0;
-
-				.dropdown-item:hover {
-					background-color: $cadmin-white;
 				}
 			}
 
@@ -150,16 +107,6 @@ html#{$cadmin-selector} {
 		@include media-breakpoint-up(sm) {
 			height: calc(100vh - #{$controlMenuDesktopHeight});
 			top: $controlMenuDesktopHeight;
-		}
-	}
-
-	&.rtl {
-		.cadmin {
-			.style-book-editor__sidebar-collapse {
-				.collapse-icon-closed {
-					transform: rotate(-180deg);
-				}
-			}
 		}
 	}
 }

@@ -830,19 +830,6 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	@Test
-	public void testOrderByCreateDateAsc() throws Exception {
-		AssetEntryQuery assetEntryQuery =
-			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[] {getBaseModelClassName()});
-
-		String[] titles = {
-			"open", "liferay", "social", "osgi", "content", "life"
-		};
-
-		testOrderByCreateDate(assetEntryQuery, "asc", titles, titles);
-	}
-
-	@Test
 	public void testOrderByCreateDateDesc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(

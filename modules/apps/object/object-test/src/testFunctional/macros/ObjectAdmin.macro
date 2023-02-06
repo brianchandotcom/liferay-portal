@@ -475,12 +475,6 @@ definition {
 			value1 = "You do not have permission to delete this relationship.");
 	}
 
-	macro assertFieldTabIsPresent {
-		AssertElementPresent(
-			key_fieldTabName = "${fieldTabName}",
-			locator1 = "ObjectAdmin#FIELD_TAB_NAME");
-	}
-
 	macro assertKeywordAndText {
 		AssertElementPresent(locator1 = "ObjectAdmin#SEARCHABLE_SECTION_TITLE");
 

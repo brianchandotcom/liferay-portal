@@ -20,7 +20,6 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -76,10 +75,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
-					StringBundler.concat(
-						"select JournalArticle.groupId, ",
-						"JournalArticle.resourcePrimKey, ",
-						"JournalArticle.articleId from JournalArticle"))) {
+					"select groupId, resourcePrimKey, articleId from " +
+						"JournalArticle")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {

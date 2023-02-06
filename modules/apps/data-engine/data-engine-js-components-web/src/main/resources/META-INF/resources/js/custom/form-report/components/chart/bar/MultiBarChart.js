@@ -180,6 +180,7 @@ export default function MultiBarChart({data, field, height, structure, width}) {
 								dataKey={row}
 								fill={colors(index)}
 								key={`bar-${index}`}
+								tabIndex={0}
 							>
 								{data.map((_, index) => (
 									<Cell

@@ -324,6 +324,16 @@ function normalizeActions(actions, namespace) {
 												if (response.redirected) {
 													navigate(response.url);
 												}
+
+												openToast({
+													message: Liferay.Language.get(
+														'your-request-processed-successfully'
+													),
+													toastProps: {
+														autoClose: 5000,
+													},
+													type: 'success',
+												});
 											})
 											.catch(() => openErrorToast());
 									},

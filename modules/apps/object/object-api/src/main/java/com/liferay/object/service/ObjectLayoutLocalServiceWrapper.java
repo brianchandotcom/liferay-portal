@@ -250,6 +250,14 @@ public class ObjectLayoutLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectLayout fetchDefaultObjectLayout(
+		long objectDefinitionId) {
+
+		return _objectLayoutLocalService.fetchDefaultObjectLayout(
+			objectDefinitionId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectLayout fetchObjectLayout(
 		long objectLayoutId) {
 

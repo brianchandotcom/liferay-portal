@@ -225,6 +225,12 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ObjectLayout fetchDefaultObjectLayout(
+		long objectDefinitionId) {
+
+		return getService().fetchDefaultObjectLayout(objectDefinitionId);
+	}
+
 	public static ObjectLayout fetchObjectLayout(long objectLayoutId) {
 		return getService().fetchObjectLayout(objectLayoutId);
 	}

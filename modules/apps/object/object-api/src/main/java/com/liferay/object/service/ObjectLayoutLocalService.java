@@ -217,6 +217,9 @@ public interface ObjectLayoutLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectLayout fetchDefaultObjectLayout(long objectDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectLayout fetchObjectLayout(long objectLayoutId);
 
 	/**

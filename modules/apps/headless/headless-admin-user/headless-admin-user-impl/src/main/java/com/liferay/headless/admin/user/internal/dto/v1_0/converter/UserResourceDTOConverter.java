@@ -166,7 +166,6 @@ public class UserResourceDTOConverter
 					organization -> _toOrganizationBrief(
 						dtoConverterContext, organization, user),
 					OrganizationBrief.class);
-				roleBriefs = _getRoleBriefs(dtoConverterContext, user);
 				siteBriefs = TransformUtil.transformToArray(
 					_groupLocalService.getGroups(
 						user.getCompanyId(),
@@ -240,29 +239,28 @@ public class UserResourceDTOConverter
 
 						return group.getDisplayURL(_getThemeDisplay(group));
 					});
+				setRoleBriefs(
+					() -> {
+						List<RoleBrief> roleBriefs = new ArrayList<>();
+
+						PermissionChecker permissionChecker =
+							PermissionThreadLocal.getPermissionChecker();
+						UserBag userBag = UserBagFactoryUtil.create(
+							user.getUserId());
+
+						for (Role role : userBag.getRoles()) {
+							if (_roleModelResourcePermission.contains(
+									permissionChecker, role, ActionKeys.VIEW)) {
+
+								roleBriefs.add(
+									_toRoleBrief(dtoConverterContext, role));
+							}
+						}
+
+						return roleBriefs.toArray(new RoleBrief[0]);
+					});
 			}
 		};
-	}
-
-	private RoleBrief[] _getRoleBriefs(
-			DTOConverterContext dtoConverterContext, User user)
-		throws Exception {
-
-		List<RoleBrief> roleBriefs = new ArrayList<>();
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		UserBag userBag = UserBagFactoryUtil.create(user.getUserId());
-
-		for (Role role : userBag.getRoles()) {
-			if (_roleModelResourcePermission.contains(
-					permissionChecker, role, ActionKeys.VIEW)) {
-
-				roleBriefs.add(_toRoleBrief(dtoConverterContext, role));
-			}
-		}
-
-		return roleBriefs.toArray(new RoleBrief[0]);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group) {

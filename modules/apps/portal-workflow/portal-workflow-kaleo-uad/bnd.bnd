@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Kaleo UAD
+Bundle-Name: Liferay Portal Workflow Kaleo UAD
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.uad
 Bundle-Version: 1.0.0
 -dsannotations-options: inherit

@@ -18,10 +18,12 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.item.selector.web.internal.display.context.AssetListEntryItemSelectorDisplayContext;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.item.selector.TableItemView;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.search.IconSearchEntry;
 import com.liferay.taglib.search.TextSearchEntry;
 
@@ -100,9 +102,15 @@ public class AssetListTableItemView implements TableItemView {
 		TextSearchEntry subtypeTextSearchEntry = new TextSearchEntry();
 
 		subtypeTextSearchEntry.setCssClass("table-cell-expand text-truncate");
-		subtypeTextSearchEntry.setName(
-			_assetListEntryItemSelectorDisplayContext.getSubtype(
-				_assetListEntry));
+
+		String subtype = _assetListEntryItemSelectorDisplayContext.getSubtype(
+			_assetListEntry);
+
+		if (Validator.isNull(subtype)) {
+			subtype = StringPool.DASH;
+		}
+
+		subtypeTextSearchEntry.setName(subtype);
 
 		searchEntries.add(subtypeTextSearchEntry);
 

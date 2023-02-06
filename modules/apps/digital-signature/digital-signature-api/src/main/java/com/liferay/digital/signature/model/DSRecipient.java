@@ -42,6 +42,10 @@ public class DSRecipient {
 		return status;
 	}
 
+	public JSONObject getTabsJSONObject() {
+		return tabsJSONObject;
+	}
+
 	public void setDSClientUserId(String dsClientUserId) {
 		this.dsClientUserId = dsClientUserId;
 	}
@@ -62,6 +66,10 @@ public class DSRecipient {
 		this.status = status;
 	}
 
+	public void setTabsJSONObject(JSONObject tabsJSONObject) {
+		this.tabsJSONObject = tabsJSONObject;
+	}
+
 	public JSONObject toJSONObject() {
 		return JSONUtil.put(
 			"clientUserId", dsClientUserId
@@ -73,6 +81,8 @@ public class DSRecipient {
 			"recipientId", dsRecipientId
 		).put(
 			"status", status
+		).put(
+			"tabs", tabsJSONObject
 		);
 	}
 
@@ -81,5 +91,6 @@ public class DSRecipient {
 	protected String emailAddress;
 	protected String name;
 	protected String status;
+	protected JSONObject tabsJSONObject;
 
 }

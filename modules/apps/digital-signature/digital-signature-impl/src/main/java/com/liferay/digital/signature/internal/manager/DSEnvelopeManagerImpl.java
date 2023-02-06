@@ -197,6 +197,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 					emailAddress = signerJSONObject.getString("email");
 					name = signerJSONObject.getString("name");
 					status = signerJSONObject.getString("status");
+					tabsJSONObject = signerJSONObject.getJSONObject("tabs");
 				}
 			},
 			_log);

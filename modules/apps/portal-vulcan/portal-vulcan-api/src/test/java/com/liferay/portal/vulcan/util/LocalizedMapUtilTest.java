@@ -45,6 +45,42 @@ public class LocalizedMapUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testMergeI18nMap() {
+		Map<String, String> map = LocalizedMapUtil.mergeI18nMap(
+			HashMapBuilder.put(
+				"en_US", "Brazil"
+			).build(),
+			null, "Brasil");
+
+		Assert.assertEquals(map.toString(), 1, map.size());
+		Assert.assertEquals("Brazil", map.get("en_US"));
+
+		map = LocalizedMapUtil.mergeI18nMap(null, "pt_BR", "Brasil");
+
+		Assert.assertEquals(map.toString(), 1, map.size());
+		Assert.assertEquals("Brasil", map.get("pt_BR"));
+
+		map = LocalizedMapUtil.mergeI18nMap(
+			HashMapBuilder.put(
+				"pt_BR", "Brasil"
+			).build(),
+			"en_US", "Brazil");
+
+		Assert.assertEquals(map.toString(), 2, map.size());
+		Assert.assertEquals("Brazil", map.get("en_US"));
+		Assert.assertEquals("Brasil", map.get("pt_BR"));
+
+		map = LocalizedMapUtil.mergeI18nMap(
+			HashMapBuilder.put(
+				"en_US", "Brazil"
+			).build(),
+			"en_US", null);
+
+		Assert.assertEquals(map.toString(), 0, map.size());
+		Assert.assertNull(map.get("en_US"));
+	}
+
+	@Test
 	public void testMergeLocalizedMap() {
 
 		// Null map

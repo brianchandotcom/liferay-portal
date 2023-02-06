@@ -225,6 +225,132 @@ definition {
 			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
+	@description = "COMMERCE-10640. As a buyer user I can verify that a product has unavailable tag and 0 stock once No Channel option is selected as Channel eligibility for warehouses."
+	@priority = "3"
+	test CanAssertProductIsUnavailableWithoutWarehouseChannelEligibility {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And warehouse eligibility is set to No Channel for Minium Portal Channel") {
+			CommerceNavigator.gotoPortlet(
+				category = "Inventory Management",
+				portlet = "Warehouses");
+
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceNavigator.gotoEntry(entryName = "${warehouseName}");
+
+				Navigator.gotoNavTab(navTab = "Eligibility");
+
+				Click(
+					locator1 = "Radio#ANY",
+					radioLabel = "No Channel");
+
+				Button.clickSave();
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("And a second Minium site is created and buyer user is associated with it") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium 2",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And Minium 2 Portal Channel is eligible by default for the warehouses while Minium Portal Channel is not listed as eligible") {
+			CommerceNavigator.gotoPortlet(
+				category = "Inventory Management",
+				portlet = "Warehouses");
+
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceNavigator.gotoEntry(entryName = "${warehouseName}");
+
+				Navigator.gotoNavTab(navTab = "Eligibility");
+
+				AssertChecked(
+					locator1 = "Radio#ANY",
+					radioLabel = "Specific Channels");
+
+				AssertElementPresent(
+					key_entryName = "Minium 2 Portal",
+					key_table = "Channels",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+
+				AssertElementNotPresent(
+					key_entryName = "Minium Portal",
+					key_table = "Channels",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("When buyer user logs in to Minium and navigates to a product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+		}
+
+		task ("Then the product has Unavailable tag with 0 stock quantity") {
+			AssertElementPresent(
+				key_availability = "Unavailable",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
+				value1 = "0");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
+
+		task ("And the product(U-Joint) has Available tag with 120 stock quantity in Minium 2") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			AssertElementPresent(
+				key_availability = "Available",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
+				value1 = "120");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10308. It's not possible to use the Geolocate option for the Warehouses"
 	@priority = "5"
 	test CanGeolocateWarehouse {

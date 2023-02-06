@@ -89,12 +89,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro assertColumnLabelPresent {
-		AssertElementPresent(
-			key_columnLabel = "${columnLabel}",
-			locator1 = "ObjectCustomViews#BUILDER_SEARCH_RESULT_COLUMN_LABEL");
-	}
-
 	macro assertColumnNotPresent {
 		AssertElementNotPresent(
 			key_columnName = "${columnName}",

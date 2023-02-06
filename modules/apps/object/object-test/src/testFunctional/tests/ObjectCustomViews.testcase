@@ -218,7 +218,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
-		ObjectCustomViews.assertColumnLabelPresent(columnLabel = "Author");
+		AssertElementPresent(
+			key_columnLabel = "Author",
+			locator1 = "ObjectCustomViews#BUILDER_SEARCH_RESULT_COLUMN_LABEL");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"
@@ -1085,7 +1087,9 @@ definition {
 
 			ObjectCustomViews.goToViewsBuilderTab();
 
-			ObjectCustomViews.assertColumnLabelPresent(columnLabel = "Relationship Edit");
+			AssertElementPresent(
+				key_columnLabel = "Relationship Edit",
+				locator1 = "ObjectCustomViews#BUILDER_SEARCH_RESULT_COLUMN_LABEL");
 		}
 	}
 
@@ -2027,7 +2031,9 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.assertColumnLabelPresent(columnLabel = "Publishing House");
+		AssertElementPresent(
+			key_columnLabel = "Publishing House",
+			locator1 = "ObjectCustomViews#BUILDER_SEARCH_RESULT_COLUMN_LABEL");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to sort the column entries as ascending or descending"

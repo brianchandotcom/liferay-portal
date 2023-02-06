@@ -107,9 +107,9 @@ public class ComboServletTest {
 			new String[] {".css", ".js"}
 		);
 
-		setUpComboServlet();
-
 		setUpPortalServletContext();
+
+		setUpComboServlet();
 
 		setUpPortalPortlet();
 

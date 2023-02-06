@@ -54,7 +54,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -329,9 +328,9 @@ public class UpgradeReport {
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);
 
-			Map<String, Integer> value = _sort(entry.getValue());
+			for (Map.Entry<String, Integer> valueEntry :
+					_sort(entry.getValue())) {
 
-			for (Map.Entry<String, Integer> valueEntry : value.entrySet()) {
 				sb.append(StringPool.TAB);
 				sb.append(valueEntry.getValue());
 				sb.append(" occurrences of the following ");
@@ -594,11 +593,9 @@ public class UpgradeReport {
 				GetterUtil.getInteger(message.substring(startIndex, endIndex)));
 		}
 
-		map = _sort(map);
-
 		int count = 0;
 
-		for (Map.Entry<String, Integer> entry : map.entrySet()) {
+		for (Map.Entry<String, Integer> entry : _sort(map)) {
 			sb.append(StringPool.TAB);
 			sb.append(entry.getKey());
 			sb.append(" took ");
@@ -621,7 +618,7 @@ public class UpgradeReport {
 			DBUpgrader.getUpgradeTime() / Time.SECOND);
 	}
 
-	private Map<String, Integer> _sort(Map<String, Integer> map) {
+	private List<Map.Entry<String, Integer>> _sort(Map<String, Integer> map) {
 		List<Map.Entry<String, Integer>> entries = new ArrayList<>(
 			map.entrySet());
 
@@ -638,14 +635,7 @@ public class UpgradeReport {
 
 					})));
 
-		Map<String, Integer> linkedHashMap = new LinkedHashMap<>(
-			entries.size());
-
-		for (Map.Entry<String, Integer> entry : entries) {
-			linkedHashMap.put(entry.getKey(), entry.getValue());
-		}
-
-		return linkedHashMap;
+		return entries;
 	}
 
 	private static final String _CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE =

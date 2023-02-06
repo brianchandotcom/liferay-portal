@@ -24,7 +24,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -108,9 +107,7 @@ public class DeleteSynonymSetsMVCActionCommandTest
 
 		Assert.assertEquals(1, synonymSets.size(), 0.0);
 
-		Stream<SynonymSet> synonymSetsStream = synonymSets.stream();
-
-		synonymSetsStream.forEach(
+		synonymSets.forEach(
 			synonymSet -> {
 				Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
 				Assert.assertEquals("id", synonymSet.getSynonymSetDocumentId());

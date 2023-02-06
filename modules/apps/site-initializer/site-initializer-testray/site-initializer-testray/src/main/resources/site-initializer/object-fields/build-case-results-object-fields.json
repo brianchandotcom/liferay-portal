@@ -1,42 +1,42 @@
 {
 	"object-fields": [
-	{
-	"DBType": "String",
-	"businessType": "Aggregation",
-	"externalReferenceCode": "CASE-RESULTS-BLOCKED",
-	"indexed": true,
-	"indexedAsKeyword": false,
-	"label": {
-		"en_US": "Case Results Blocked"
-	},
-	"name": "caseResultBlocked",
-	"objectFieldSettings": [
 		{
-			"name": "objectRelationshipName",
-			"value": "buildToCaseResult"
-		},
-		{
-			"name": "filters",
-			"value": [
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "CASE-RESULTS-BLOCKED",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Blocked"
+			},
+			"name": "caseResultBlocked",
+			"objectFieldSettings": [
 				{
-					"filterBy": "dueStatus",
-					"filterType": "includes",
-					"json": {
-						"in": [
-							"BLOCKED"
-						]
-					}
+					"name": "objectRelationshipName",
+					"value": "buildToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"BLOCKED"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
 				}
-			]
-		},
-		{
-			"name": "function",
-			"value": "COUNT"
-		}
-	],
-	"required": false,
-	"state": false,
-	"system": false
+			],
+			"required": false,
+			"state": false,
+			"system": false
 		},
 		{
 			"DBType": "String",

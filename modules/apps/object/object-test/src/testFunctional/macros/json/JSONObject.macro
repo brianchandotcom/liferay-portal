@@ -578,6 +578,28 @@ definition {
 		''';
 	}
 
+	@summary = "Get a list of all Object Definitions"
+	macro getAllObjectDefinitionsId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var objectDefinitionIdList = JSONCurlUtil.get(${curl}, "$.items[*].id");
+
+		return ${objectDefinitionIdList};
+	}
+
 	@summary = "Get a objectDefinitionId by name"
 	macro getObjectDefinitionId {
 		Variables.assertDefined(parameterList = ${name});

@@ -83,6 +83,14 @@ public class ListTypeEntryResourceImpl
 						getName(),
 					listTypeDefinitionId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE,
+					"postListTypeDefinitionListTypeEntryBatch",
+					com.liferay.list.type.model.ListTypeDefinition.class.
+						getName(),
+					listTypeDefinitionId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getListTypeDefinitionListTypeEntriesPage",

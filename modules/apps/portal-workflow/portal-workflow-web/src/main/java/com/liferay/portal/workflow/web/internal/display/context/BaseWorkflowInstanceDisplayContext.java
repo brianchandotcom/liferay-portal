@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -25,13 +26,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowNode;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.workflow.web.internal.display.context.helper.WorkflowInstanceRequestHelper;
 
 import java.text.Format;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,21 +65,29 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 	}
 
 	public String getStatus(WorkflowInstance workflowInstance) {
-		return Stream.of(
-			workflowInstance.getCurrentWorkflowNodes()
-		).flatMap(
-			List::stream
-		).map(
-			currentWorkflowNode -> {
-				DefaultWorkflowNode defaultWorkflowNode =
-					(DefaultWorkflowNode)currentWorkflowNode;
+		List<WorkflowNode> currentWorkflowNodes =
+			workflowInstance.getCurrentWorkflowNodes();
 
-				return defaultWorkflowNode.getLabel(
-					workflowInstanceRequestHelper.getLocale());
-			}
-		).collect(
-			Collectors.joining(StringPool.COMMA_AND_SPACE)
-		);
+		if (currentWorkflowNodes.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * currentWorkflowNodes.size());
+
+		for (WorkflowNode currentWorkflowNode : currentWorkflowNodes) {
+			DefaultWorkflowNode defaultWorkflowNode =
+				(DefaultWorkflowNode)currentWorkflowNode;
+
+			sb.append(
+				defaultWorkflowNode.getLabel(
+					workflowInstanceRequestHelper.getLocale()));
+
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	protected final Format dateFormatDateTime;

@@ -1789,6 +1789,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				).and(
 					KBArticleTable.INSTANCE.expirationDate.lte(expirationDate)
 				).and(
+					KBArticleTable.INSTANCE.latest.eq(Boolean.TRUE)
+				).and(
 					KBArticleTable.INSTANCE.status.neq(
 						WorkflowConstants.STATUS_EXPIRED)
 				)
@@ -1806,6 +1808,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			).where(
 				KBArticleTable.INSTANCE.companyId.eq(
 					companyId
+				).and(
+					KBArticleTable.INSTANCE.latest.eq(Boolean.TRUE)
 				).and(
 					KBArticleTable.INSTANCE.reviewDate.gt(reviewDateGT)
 				).and(

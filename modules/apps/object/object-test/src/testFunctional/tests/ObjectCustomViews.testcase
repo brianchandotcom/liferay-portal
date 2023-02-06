@@ -2736,7 +2736,9 @@ definition {
 
 		ObjectCustomViews.goToViewsDetails(label = "Custom View 152051 (Copy)");
 
-		ObjectCustomViews.assertObjectViewName(name = "Custom View 152051 (Copy)");
+		AssertElementPresent(
+			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
+			value1 = "Custom View 152051 (Copy)");
 	}
 
 	@description = "LPS-146028 - Verify that when the user duplicate a view, the Mark As Default option comes inactivated"

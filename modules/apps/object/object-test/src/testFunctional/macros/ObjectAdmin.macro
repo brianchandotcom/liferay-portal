@@ -475,12 +475,6 @@ definition {
 			value1 = "You do not have permission to delete this relationship.");
 	}
 
-	macro assertFieldsTableColumnsAreDisplayed {
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_LABEL_COLUMN");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
-	}
-
 	macro assertFieldTabIsPresent {
 		AssertElementPresent(
 			key_fieldTabName = "${fieldTabName}",

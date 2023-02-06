@@ -5668,7 +5668,9 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.assertFieldsTableColumnsAreDisplayed();
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_LABEL_COLUMN");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"

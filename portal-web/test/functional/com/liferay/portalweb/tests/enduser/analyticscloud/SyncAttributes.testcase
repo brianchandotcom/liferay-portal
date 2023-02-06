@@ -719,4 +719,45 @@ definition {
             }
         } 
     }
+    @description = "Story: LRAC-10860 | Automation ID: LRAC-12838 | Test Summary: Cannot deselect required Attributes for Account"
+    @priority = "5"
+    test CanDeselectNonRequiredAccountAttributes {
+        var nonRequiredAttributesName = '''companyId,createDate,defaultCPaymentMethodKey,description,
+        domains,logoId,modifiedDate,parentAccountEntryId,restrictMembership,status,taxExemptionCode,
+        taxIdNumber,type_''';
+
+        var nonRequiredAttributesList = ListUtil.newListFromString("${nonRequiredAttributesName}");
+
+        task ("Get the number of attributes currently synced") {
+            var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
+        }
+
+        task ("Deselect the non required attributes for Account") {
+            ACDXPSettings.desyncAttributes(
+                attributeCategory = "Account",
+                attributeNameList = "${nonRequiredAttributesList}");
+        }
+
+        task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+            ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+                attributeCategory = "Account",
+                currentAttributeNumber = "${syncAccountNumberStart}",
+                decreaseAttributeNumber = "13");
+        }
+
+        task ("Save and Finish the wizard") {
+            Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+        }
+
+        task ("Go to the attributes page in the sidebar") {
+            ACDXPSettings.navToSyncedAttributes();
+        }
+
+        task ("Check selected account group number") {
+            ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+                attributeCategory = "Account",
+                currentAttributeNumber = "${syncAccountNumberStart}",
+                decreaseAttributeNumber = "13");
+        } 
+    }
 }

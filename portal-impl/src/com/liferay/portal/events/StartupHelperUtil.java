@@ -16,42 +16,33 @@ package com.liferay.portal.events;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.db.BaseDB;
-import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogContextRegistryUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.upgrade.util.UpgradeLogContext;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.verify.VerifyProperties;
 
 import java.sql.Connection;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -114,11 +105,11 @@ public class StartupHelperUtil {
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			if (_upgrading) {
 				LogContextRegistryUtil.registerLogContext(
-					UpgradeLogContext._INSTANCE);
+					UpgradeLogContext.getInstance());
 			}
 			else {
 				LogContextRegistryUtil.unregisterLogContext(
-					UpgradeLogContext._INSTANCE);
+					UpgradeLogContext.getInstance());
 			}
 		}
 	}
@@ -194,66 +185,5 @@ public class StartupHelperUtil {
 	private static boolean _startupFinished;
 	private static boolean _upgraded;
 	private static boolean _upgrading;
-
-	private static class UpgradeLogContext implements LogContext {
-
-		@Override
-		public Map<String, String> getContext(String logName) {
-			if (_isUpgradeClass(logName)) {
-				return _context;
-			}
-
-			return Collections.emptyMap();
-		}
-
-		@Override
-		public String getName() {
-			return StringPool.BLANK;
-		}
-
-		private boolean _isUpgradeClass(String name) {
-			try {
-				if (_upgradeClassNames.contains(name)) {
-					return true;
-				}
-
-				Thread thread = Thread.currentThread();
-
-				Class<?> clazz = Class.forName(
-					name, true, thread.getContextClassLoader());
-
-				for (Class<?> baseClazz : _baseUpgradeClasses) {
-					if (baseClazz.isAssignableFrom(clazz)) {
-						return true;
-					}
-				}
-			}
-			catch (ClassNotFoundException classNotFoundException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException);
-				}
-			}
-
-			return false;
-		}
-
-		private static final UpgradeLogContext _INSTANCE =
-			new UpgradeLogContext();
-
-		private final Class<?>[] _baseUpgradeClasses = new Class<?>[] {
-			BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
-			UpgradeStep.class
-		};
-		private final Map<String, String> _context = Collections.singletonMap(
-			PropsValues.UPGRADE_LOG_CONTEXT_NAME,
-			PropsValues.UPGRADE_LOG_CONTEXT_NAME);
-		private final Set<String> _upgradeClassNames = SetUtil.fromArray(
-			DBUpgrader.class.getName(), LoggingTimer.class.getName(),
-			VerifyProperties.class.getName(),
-			"com.liferay.portal.upgrade.internal.registry." +
-				"UpgradeStepRegistratorTracker",
-			"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl");
-
-	}
 
 }

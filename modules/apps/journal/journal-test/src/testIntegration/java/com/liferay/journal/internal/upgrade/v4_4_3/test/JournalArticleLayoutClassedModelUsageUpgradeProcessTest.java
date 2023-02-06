@@ -18,11 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalContentSearch;
-import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -37,7 +34,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -97,19 +93,12 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	public void testUpgradeProcess() throws Exception {
 		_addAssetPublisherPortletToLayout(
 			_publicLayout, "dynamic", _assetEntry.getClassUuid());
-		_addJournalContentPortletToLayout(
-			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
-			_publicLayout);
 
 		List<String> privateLayoutExpectedPortletIds = new ArrayList<>();
 
 		privateLayoutExpectedPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_privateLayout, "manual", _assetEntry.getClassUuid()));
-		privateLayoutExpectedPortletIds.add(
-			_addJournalContentPortletToLayout(
-				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
-				_privateLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
 
@@ -118,20 +107,14 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		publicLayoutExpectedPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_publicLayout, "manual", _assetEntry.getClassUuid()));
-		publicLayoutExpectedPortletIds.add(
-			_addJournalContentPortletToLayout(
-				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
-				_publicLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(2, false);
-
-		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
 
 		_assertLayoutClassedModelUsagesCount(0);
 
 		_runUpgrade();
 
-		_assertLayoutClassedModelUsagesCount(4);
+		_assertLayoutClassedModelUsagesCount(2);
 
 		long portletClassNameId = _classNameLocalService.getClassNameId(
 			Portlet.class.getName());
@@ -154,19 +137,12 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_addAssetPublisherPortletToLayout(
 			_publicLayout, "dynamic", _assetEntry.getClassUuid());
-		_addJournalContentPortletToLayout(
-			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
-			_publicLayout);
 
 		List<String> privateLayoutExpectedPortletIds = new ArrayList<>();
 
 		privateLayoutExpectedPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_privateLayout, "manual", _assetEntry.getClassUuid()));
-		privateLayoutExpectedPortletIds.add(
-			_addJournalContentPortletToLayout(
-				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
-				_privateLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
 
@@ -175,14 +151,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		publicLayoutExpectedPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_publicLayout, "manual", _assetEntry.getClassUuid()));
-		publicLayoutExpectedPortletIds.add(
-			_addJournalContentPortletToLayout(
-				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
-				_publicLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(2, false);
-
-		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
 
 		_assertLayoutClassedModelUsagesCount(0);
 
@@ -214,25 +184,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			).build());
 	}
 
-	private String _addJournalContentPortletToLayout(
-			String articleId, long groupId, Layout layout)
-		throws Exception {
-
-		String portletId = LayoutTestUtil.addPortletToLayout(
-			layout, JournalContentPortletKeys.JOURNAL_CONTENT,
-			HashMapBuilder.put(
-				"articleId", new String[] {articleId}
-			).put(
-				"groupId", new String[] {String.valueOf(groupId)}
-			).build());
-
-		_journalContentSearchLocalService.updateContentSearch(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			portletId, articleId, true);
-
-		return portletId;
-	}
-
 	private void _assertAssetPublisherPortletPreferencesCount(
 		int count, boolean privateLayout) {
 
@@ -245,18 +196,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		Assert.assertEquals(
 			portletPreferences.toString(), count, portletPreferences.size());
-	}
-
-	private void _assertJournalContentSearchesCount(
-		String articleId, int count) {
-
-		List<JournalContentSearch> articleContentSearches =
-			_journalContentSearchLocalService.getArticleContentSearches(
-				articleId);
-
-		Assert.assertEquals(
-			articleContentSearches.toString(), count,
-			articleContentSearches.size());
 	}
 
 	private void _assertLayoutClassedModelUsage(
@@ -331,9 +270,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 	private JournalArticle _journalArticle;
 	private long _journalArticleClassNameId;
-
-	@Inject
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService

@@ -1243,8 +1243,6 @@ definition {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		WaitForPageLoad();
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro saveCustomObject {

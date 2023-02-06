@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.util.PropsUtil;
@@ -136,7 +136,7 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536")) &&
-			ListUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
+			ArrayUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -158,7 +158,7 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536")) &&
-			ListUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
+			ArrayUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
 
 			throw new UnsupportedOperationException();
 		}

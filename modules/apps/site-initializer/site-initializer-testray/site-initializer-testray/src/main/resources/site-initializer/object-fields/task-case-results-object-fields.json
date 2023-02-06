@@ -1,47 +1,47 @@
 {
 	"object-fields": [
-{
-	"DBType": "String",
-	"businessType": "Aggregation",
-	"externalReferenceCode": "SUBTASK-SCORE-COMPLETED",
-	"indexed": true,
-	"indexedAsKeyword": false,
-	"label": {
-		"en_US": "Subtask Score Completed"
-	},
-	"name": "subTaskScoreCompleted",
-	"objectFieldSettings": [
 		{
-			"name": "objectRelationshipName",
-			"value": "taskToSubtasks"
-		},
-		{
-			"name": "filters",
-			"value": [
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "SUBTASK-SCORE-COMPLETED",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Subtask Score Completed"
+			},
+			"name": "subTaskScoreCompleted",
+			"objectFieldSettings": [
 				{
-					"filterBy": "dueStatus",
-					"filterType": "includes",
-					"json": {
-						"in": [
-							"COMPLETE"
-						]
-					}
+					"name": "objectRelationshipName",
+					"value": "taskToSubtasks"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"COMPLETE"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "score"
 				}
-			]
+			],
+			"required": false,
+			"state": false,
+			"system": false
 		},
-		{
-			"name": "function",
-			"value": "SUM"
-		},
-		{
-			"name": "objectFieldName",
-			"value": "score"
-		}
-	],
-	"required": false,
-	"state": false,
-	"system": false
-},
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",

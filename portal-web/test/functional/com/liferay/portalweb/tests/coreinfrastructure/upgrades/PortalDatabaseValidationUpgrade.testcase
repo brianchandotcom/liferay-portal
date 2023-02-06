@@ -89,7 +89,6 @@ definition {
 		UpgradeSchema.validateSchemas();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test CompareUpgradedAndFreshDatabaseSchemas7413 {
 		property data.archive.type = "data-archive-portal";

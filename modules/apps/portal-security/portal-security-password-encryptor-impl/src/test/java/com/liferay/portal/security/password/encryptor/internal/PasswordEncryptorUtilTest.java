@@ -205,6 +205,14 @@ public class PasswordEncryptorUtilTest {
 	}
 
 	@Test
+	public void testEncryptPBKDF2With1300000RoundsAnd128Key() throws Exception {
+		runTests(
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/128/1300000",
+			"password", "AAAAoAAK/IAeIrZ3b+oVv6of6xGPeOIsIhRyCH+h/VX2qMgK",
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
+	}
+
+	@Test
 	public void testEncryptSHA() throws Exception {
 		runTests(
 			PasswordEncryptor.TYPE_SHA, "password",

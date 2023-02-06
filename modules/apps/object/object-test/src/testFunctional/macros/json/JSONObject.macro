@@ -531,6 +531,27 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
+	macro deleteRelationship {
+		Variables.assertDefined(parameterList = ${objectRelationshipId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-relationships/${objectRelationshipId} \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
 	@summary = "This calls the JSON WS API to filter an entry in an object"
 	macro filterObjectEntry {
 		var portalURL = JSONCompany.getPortalURL();

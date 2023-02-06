@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.util.UpgradeLogContext;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.OutputStream;
@@ -90,10 +91,15 @@ public class UpgradeStepRegistratorTracker {
 
 				for (UpgradeStep releaseUpgradeStep : releaseUpgradeSteps) {
 					try {
+						UpgradeLogContext.setContext(bundleSymbolicName);
+
 						releaseUpgradeStep.upgrade(dbProcessContext);
 					}
 					catch (UpgradeException upgradeException) {
 						_log.error(upgradeException);
+					}
+					finally {
+						UpgradeLogContext.clearContext();
 					}
 				}
 

@@ -34,6 +34,7 @@ import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorTracker;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
+import com.liferay.portal.upgrade.util.UpgradeLogContext;
 
 import java.io.OutputStream;
 
@@ -142,35 +143,43 @@ public class UpgradeExecutor {
 	public Release executeUpgradeInfos(
 		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
 
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+		try {
+			UpgradeLogContext.setContext(bundleSymbolicName);
 
-		ServiceRegistration<Release> oldServiceRegistration = null;
+			Release release = _releaseLocalService.fetchRelease(
+				bundleSymbolicName);
 
-		if (release != null) {
-			oldServiceRegistration = _releasePublisher.publishInProgress(
-				release);
+			ServiceRegistration<Release> oldServiceRegistration = null;
+
+			if (release != null) {
+				oldServiceRegistration = _releasePublisher.publishInProgress(
+					release);
+			}
+
+			_executeUpgradeInfos(bundleSymbolicName, upgradeInfos);
+
+			release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+
+			ServiceRegistration<Release> inProgressServiceRegistration = null;
+
+			if (release != null) {
+				inProgressServiceRegistration = _releasePublisher.publish(
+					release, _isInitialRelease(upgradeInfos));
+			}
+
+			if (inProgressServiceRegistration != null) {
+				inProgressServiceRegistration.unregister();
+			}
+
+			if (oldServiceRegistration != null) {
+				oldServiceRegistration.unregister();
+			}
+
+			return release;
 		}
-
-		_executeUpgradeInfos(bundleSymbolicName, upgradeInfos);
-
-		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-		ServiceRegistration<Release> inProgressServiceRegistration = null;
-
-		if (release != null) {
-			inProgressServiceRegistration = _releasePublisher.publish(
-				release, _isInitialRelease(upgradeInfos));
+		finally {
+			UpgradeLogContext.clearContext();
 		}
-
-		if (inProgressServiceRegistration != null) {
-			inProgressServiceRegistration.unregister();
-		}
-
-		if (oldServiceRegistration != null) {
-			oldServiceRegistration.unregister();
-		}
-
-		return release;
 	}
 
 	@Activate

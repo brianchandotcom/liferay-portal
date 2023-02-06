@@ -475,12 +475,6 @@ definition {
 			value1 = "You do not have permission to delete this relationship.");
 	}
 
-	macro assertClobTypeText {
-		AssertElementPresent(
-			key_clobType = "${clobType}",
-			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY");
-	}
-
 	macro assertEntryOnPageNotPresent {
 		AssertElementNotPresent(
 			key_entryName = "${entryName}",

@@ -350,7 +350,9 @@ definition {
 
 		ObjectPortlet.viewClobEntryDetails(clobEntry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 
-		ObjectAdmin.assertClobTypeText(clobType = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
+		AssertElementPresent(
+			key_clobType = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.",
+			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY");
 	}
 
 	@description = "LPS-143065 - Verify that when the user click on the file name, the file can be viewed"

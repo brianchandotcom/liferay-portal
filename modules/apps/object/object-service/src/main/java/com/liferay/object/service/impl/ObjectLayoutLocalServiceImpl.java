@@ -236,9 +236,9 @@ public class ObjectLayoutLocalServiceImpl
 		while (objectLayoutTabIterator.hasNext()) {
 			ObjectLayoutTab objectLayoutTab = objectLayoutTabIterator.next();
 
-			_serviceRegistrationMap.put(
+			_serviceRegistrationMap.computeIfAbsent(
 				_getServiceRegistrationMapKey(objectLayoutTab),
-				_bundleContext.registerService(
+				serviceRegistrationMapKey -> _bundleContext.registerService(
 					new String[] {
 						ScreenNavigationCategory.class.getName(),
 						ScreenNavigationEntry.class.getName()

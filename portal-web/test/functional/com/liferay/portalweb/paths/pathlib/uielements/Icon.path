@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ADD_FAVORITE</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'lexicon-icon-star-o')]]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//a[..//*[name()='svg'][contains(@class,'lexicon-icon-star-o')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -465,7 +465,7 @@
 </tr>
 <tr>
 	<td>REMOVE_FAVORITE</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'lexicon-icon-star')][not(contains(@class,'-o'))]]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//a[..//*[name()='svg'][contains(@class,'lexicon-icon-star')][not(contains(@class,'-o'))]]</td>
 	<td></td>
 </tr>
 <tr>

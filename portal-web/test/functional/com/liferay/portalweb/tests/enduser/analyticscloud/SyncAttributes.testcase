@@ -573,4 +573,86 @@ definition {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
 		}
 	}
+
+	@description = "Story: LRAC-10866 | Automation ID: LRAC-12905 | Test Summary: Check that it is possible to sort the Attribute for Product list by Attribute Name and Data Type"
+	@priority = "3"
+	test CanSortProductListByAttribute {
+		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34";
+		var attributesAscendingProduct = '''
+			catalogId,categoryIds,createDate,currencyCode,customFields,description,displayDate,expirationDate,
+			externalReferenceCode,externalReferenceCode,externalReferenceCode,id,id,id,metaDescription,
+			metaKeyword,metaTitle,modifiedDate,name,name,name,productChannelIds,productId,productOptions,
+			productSpecifications,productType,siteId,skus,status,subscriptionEnabled,tags,type,urls,vocabulary
+		''';
+		var attributesDescendingProduct = '''
+			vocabulary,urls,type,tags,subscriptionEnabled,status,skus,siteId,productType,productSpecifications,
+			productOptions,productId,productChannelIds,name,name,name,modifiedDate,metaTitle,metaKeyword,
+			metaDescription,id,id,id,externalReferenceCode,externalReferenceCode,externalReferenceCode,
+			expirationDate,displayDate,description,customFields,currencyCode,createDate,categoryIds,catalogId
+		''';
+		var attributesDataTypeAscending = '''
+			categoryIds,productChannelIds,productOptions,productSpecifications,skus,tags,id,siteId,catalogId,id,
+			productId,status,id,customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,
+			externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,externalReferenceCode,
+			modifiedDate,productType,currencyCode,externalReferenceCode,name,type,subscriptionEnabled
+		''';
+		var attributesDataTypeDescending = '''
+			subscriptionEnabled,externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,
+			externalReferenceCode,modifiedDate,productType,currencyCode,externalReferenceCode,name,type,
+			customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,id,siteId,catalogId,
+			id,productId,status,id,categoryIds,productChannelIds,productOptions,productSpecifications,
+			skus,tags
+		''';
+
+		task ("Click to configure products attributes") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");
+
+			ACUtils.changePagination(itemsPerPage = "50");
+		}
+
+		task ("Sort the list by the Attribute Name column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesAscendingProduct}");
+		}
+
+		task ("Sort the list by the Attribute Name column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesDescendingProduct}");
+		}
+
+		task ("Sort the list by the Data Type column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesDataTypeAscending}");
+		}
+
+		task ("Sort the list by the Data Type column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesDataTypeDescending}");
+		}
+	}
+
 }

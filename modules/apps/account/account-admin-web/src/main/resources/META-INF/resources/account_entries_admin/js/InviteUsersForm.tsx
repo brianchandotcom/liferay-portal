@@ -132,11 +132,11 @@ function InviteUsersForm({
 	const submitForm: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
 
-		const form = document.querySelector(`#${formId}`) as HTMLFormElement;
+		const form = event.currentTarget;
 
-		const error = form?.querySelector('.has-error');
+		const error = form.querySelector('.has-error');
 
-		if (!error && form) {
+		if (!error) {
 			const formData = new FormData(form);
 
 			formData.append(

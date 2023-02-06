@@ -192,7 +192,7 @@
 </tr>
 <tr>
 	<td>VIEW_LIST_ITEM_ORDER</td>
-	<td>xpath=(//td[@class='table-column-text-start'])[${index}]</td>
+	<td>xpath=(//tr[@data-testid]//td[@role][1])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

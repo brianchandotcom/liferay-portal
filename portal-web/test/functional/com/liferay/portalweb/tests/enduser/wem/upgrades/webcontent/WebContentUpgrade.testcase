@@ -101,13 +101,11 @@ definition {
 		}
 
 		task ("Duplicate fields and then remove duplicates") {
-			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar") {
+			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,CompanhiaOperadora") {
 				Click(
 					key_fieldName = "${fieldName}",
 					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 			}
-
-			Click(locator1 = "xpath=(//div[contains(@data-field-name,'CompanhiaOperadora')]/..//button[@*='Remove'])[3]");
 
 			for (var fieldName : list "Destino,DescricaoOpPar") {
 				Click(

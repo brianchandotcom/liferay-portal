@@ -25,7 +25,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
-page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@

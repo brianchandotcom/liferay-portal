@@ -1526,7 +1526,7 @@ definition {
 		}
 
 		task ("And given a succesful export") {
-			Click(locator1 = "Button#CLOSE");
+			Button.click(button = "Back to the List");
 
 			ImportExport.mapExport(exportFields = "name,type,description,externalReferenceCode");
 

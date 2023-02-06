@@ -139,13 +139,6 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Override
 	public InfoForm getConfigurationInfoForm() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166275"))) {
-			return InfoForm.builder(
-			).infoFieldSetEntry(
-				_getItemTypesInfoField()
-			).build();
-		}
-
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			InfoFieldSet.builder(

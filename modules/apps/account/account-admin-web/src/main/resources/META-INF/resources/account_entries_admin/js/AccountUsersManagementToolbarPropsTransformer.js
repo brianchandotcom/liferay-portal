@@ -122,7 +122,7 @@ export default function propsTransformer({
 							type: 'cancel',
 						},
 						{
-							formId: `${portletNamespace}fm`,
+							formId: `${portletNamespace}inviteUserForm`,
 							label: Liferay.Language.get('invite'),
 							type: 'submit',
 						},

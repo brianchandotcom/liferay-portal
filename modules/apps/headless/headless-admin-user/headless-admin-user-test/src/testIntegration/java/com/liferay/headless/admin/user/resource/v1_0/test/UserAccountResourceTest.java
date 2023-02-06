@@ -1308,7 +1308,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return _accountEntry.getAccountEntryId();
 	}
 
-	private boolean _hasRole(User user, Role role) throws Exception {
+	private boolean _hasRole(Role role, User user) throws Exception {
 		UserAccount userAccount = userAccountResource.getUserAccount(
 			user.getUserId());
 
@@ -1446,11 +1446,11 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_roleLocalService.addGroupRole(group.getGroupId(), inheritedRole);
 
-		Assert.assertFalse(_hasRole(user, inheritedRole));
+		Assert.assertFalse(_hasRole(inheritedRole, user));
 
 		associateUserUnsafeRunnable.run();
 
-		Assert.assertTrue(_hasRole(user, inheritedRole));
+		Assert.assertTrue(_hasRole(inheritedRole, user));
 	}
 
 	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)

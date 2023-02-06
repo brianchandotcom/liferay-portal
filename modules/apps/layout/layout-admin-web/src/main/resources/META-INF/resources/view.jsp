@@ -30,6 +30,8 @@ portletDisplay.setShowStagingIcon(false);
 		<liferay-util:include page="/view_layout_utility_page_entries.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
+		<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
+
 		<liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-successfully") %>' />
 
 		<liferay-ui:success key="layoutPublished" message="the-page-was-published-successfully" />

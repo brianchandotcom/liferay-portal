@@ -26,6 +26,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ThemeSpritemapCET extends CET {
 
+	@CETProperty(
+		defaultValue = "false", name = "enableSVG4Everybody",
+		type = CETProperty.Type.Boolean
+	)
+	public boolean getEnableSVG4Everybody();
+
 	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
 	public String getURL();
 

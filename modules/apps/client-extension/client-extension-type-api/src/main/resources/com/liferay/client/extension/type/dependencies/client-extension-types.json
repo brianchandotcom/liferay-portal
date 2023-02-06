@@ -267,6 +267,11 @@
 				"type": "CETProperty.Type.String"
 			},
 			{
+				"default": "false",
+				"name": "enableSVG4Everybody",
+				"type": "CETProperty.Type.Boolean"
+			},
+			{
 				"default": "",
 				"name": "url",
 				"type": "CETProperty.Type.URL"

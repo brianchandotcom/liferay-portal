@@ -23,3 +23,5 @@ ThemeSpritemapCET themeSpritemapCET = editClientExtensionEntryDisplayContext.get
 %>
 
 <aui:input label="url" name="url" required="<%= true %>" type="text" value="<%= themeSpritemapCET.getURL() %>" />
+
+<aui:input helpMessage="enable-this-for-resources-that-are-hosted-on-a-different-domain" label="enable-cross-domain-support" name="enableSVG4Everybody" type="checkbox" value="<%= themeSpritemapCET.getEnableSVG4Everybody() %>" />

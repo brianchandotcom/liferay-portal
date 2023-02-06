@@ -231,11 +231,24 @@ function filterRemoteOptions(query, abortController) {
 	})
 		.then((response) => response.json())
 		.then((result) => {
-			return result.items.map((entry) => ({
-				textContent: entry[input.attributes.relationshipLabelFieldName],
-				textValue: entry[input.attributes.relationshipLabelFieldName],
-				value: `${entry[input.attributes.relationshipValueFieldName]}`,
-			}));
+			return result.items.map((entry) => {
+				let label = entry[input.attributes.relationshipLabelFieldName];
+
+				if (Array.isArray(label)) {
+					label = label.map((label) => label.name).join(', ');
+				}
+				else if (typeof label === 'object') {
+					label = label.name;
+				}
+
+				return {
+					textContent: label,
+					textValue: label,
+					value: `${
+						entry[input.attributes.relationshipValueFieldName]
+					}`,
+				};
+			});
 		});
 }
 
@@ -285,13 +298,8 @@ function createOptionElement(option) {
 	optionElement.dataset.optionValue = option.value;
 	// eslint-disable-next-line no-undef
 	optionElement.id = `${fragmentEntryLinkNamespace}-option-${option.value}`;
+	optionElement.textContent = option.textContent;
 
-	if (typeof option.textContent === 'object') {
-		optionElement.textContent = option.textContent.name;
-	}
-	else {
-		optionElement.textContent = option.textContent;
-	}
 	optionElement.classList.add('dropdown-item');
 	optionElement.setAttribute('role', 'option');
 

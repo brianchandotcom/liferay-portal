@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.expression.internal;
+package com.liferay.dynamic.data.mapping.expression.internal.parser;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandler;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandlerAware;
@@ -26,8 +26,6 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccesso
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.AdditionExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.BooleanParenthesisContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.DivisionExpressionContext;
@@ -510,7 +508,7 @@ public class DDMExpressionEvaluatorVisitor
 		);
 	}
 
-	protected DDMExpressionEvaluatorVisitor(
+	public DDMExpressionEvaluatorVisitor(
 		Map<String, DDMExpressionFunctionFactory>
 			ddmExpressionFunctionFactories,
 		Map<String, Object> variables,

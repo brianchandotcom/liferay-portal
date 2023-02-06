@@ -123,10 +123,16 @@ public class ObjectEntryAssetRenderer
 			String noSuchEntryRedirect)
 		throws Exception {
 
-		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			_objectEntry.getModelClassName(), _objectEntry.getObjectEntryId(),
+		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY));
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				getClassName(), getClassPK(), themeDisplay);
+		}
+
+		return null;
 	}
 
 	@Override

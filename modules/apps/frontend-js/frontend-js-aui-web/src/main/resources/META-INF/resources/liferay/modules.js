@@ -89,25 +89,6 @@
 							'timers',
 						],
 					},
-					'liferay-asset-categories-selector': {
-						path: 'asset_categories_selector.js',
-						requires: ['aui-tree', 'liferay-asset-tags-selector'],
-					},
-					'liferay-asset-tags-selector': {
-						path: 'asset_tags_selector.js',
-						requires: [
-							'array-extras',
-							'async-queue',
-							'aui-autocomplete-deprecated',
-							'aui-io-plugin-deprecated',
-							'aui-live-search-deprecated',
-							'aui-modal',
-							'aui-template-deprecated',
-							'aui-textboxlist-deprecated',
-							'datasource-cache',
-							'liferay-service-datasource',
-						],
-					},
 					'liferay-auto-fields': {
 						path: 'auto_fields.js',
 						requires: [

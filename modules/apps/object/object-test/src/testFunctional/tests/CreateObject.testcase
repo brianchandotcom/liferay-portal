@@ -8413,7 +8413,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
-		ObjectAdmin.assertRelationshipTabNotPresent();
+		AssertElementNotPresent(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 
 		Navigator.openURL();
 
@@ -8433,7 +8435,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
-		ObjectAdmin.assertRelationshipTabNotPresent();
+		AssertElementNotPresent(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the child object is inactivated (One to Many)"

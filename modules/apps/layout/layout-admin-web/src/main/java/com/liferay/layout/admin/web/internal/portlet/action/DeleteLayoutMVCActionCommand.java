@@ -78,6 +78,10 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		for (long curSelPlid : selPlids) {
 			_deleteLayout(curSelPlid, actionRequest, actionResponse);
 		}
+
+		if (ParamUtil.getBoolean(actionRequest, "hideDefaultSuccessMessage")) {
+			hideDefaultSuccessMessage(actionRequest);
+		}
 	}
 
 	private void _deleteLayout(

@@ -514,6 +514,8 @@ public class LayoutActionProvider {
 			redirect
 		).setParameter(
 			"selPlid", String.valueOf(layout.getPlid())
+		).setParameter(
+			"hideDefaultSuccessMessage", true
 		).buildString();
 	}
 

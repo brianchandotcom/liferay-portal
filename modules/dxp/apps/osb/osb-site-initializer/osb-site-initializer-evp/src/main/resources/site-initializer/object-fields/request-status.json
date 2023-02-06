@@ -1,4 +1,6 @@
 {
+	"object-fields": [
+{
 	"DBType": "String",
 	"businessType": "Picklist",
 	"defaultValue": "pendingEVPApproval",
@@ -11,7 +13,6 @@
 	},
 	"listTypeDefinitionExternalReferenceCode": "OBJECT-EVP-REQUEST-STATUS",
 	"name": "requestStatus",
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPRequest$]",
 	"objectFieldSettings": [
 		{
 			"name": "stateFlow",
@@ -143,4 +144,7 @@
 	],
 	"required": true,
 	"state": true
+}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPRequest$]"
 }

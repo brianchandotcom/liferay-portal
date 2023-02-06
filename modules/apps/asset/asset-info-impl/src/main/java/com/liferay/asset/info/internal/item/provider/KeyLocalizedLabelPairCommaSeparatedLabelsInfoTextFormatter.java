@@ -16,13 +16,13 @@ package com.liferay.asset.info.internal.item.provider;
 
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.type.KeyLocalizedLabelPair;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,21 +38,19 @@ public class KeyLocalizedLabelPairCommaSeparatedLabelsInfoTextFormatter
 		Collection<KeyLocalizedLabelPair> keyLocalizedLabelPairs,
 		Locale locale) {
 
-		Stream<KeyLocalizedLabelPair> stream = keyLocalizedLabelPairs.stream();
+		return StringUtil.merge(
+			TransformUtil.transform(
+				keyLocalizedLabelPairs,
+				keyLocalizedLabelPair -> {
+					String title = keyLocalizedLabelPair.getLabel(locale);
 
-		return stream.map(
-			keyLocalizedLabelPair -> {
-				String title = keyLocalizedLabelPair.getLabel(locale);
+					if (Validator.isNotNull(title)) {
+						return title;
+					}
 
-				if (Validator.isNull(title)) {
 					return keyLocalizedLabelPair.getKey();
-				}
-
-				return title;
-			}
-		).collect(
-			Collectors.joining(StringPool.COMMA_AND_SPACE)
-		);
+				}),
+			StringPool.COMMA_AND_SPACE);
 	}
 
 }

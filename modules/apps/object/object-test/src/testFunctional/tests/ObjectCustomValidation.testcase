@@ -2245,7 +2245,9 @@ definition {
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.viewActiveTabOnCustomValidation(activeTab = "Basic Info");
+		AssertElementPresent(
+			key_activeTab = "Basic Info",
+			locator1 = "ObjectCustomValidation#VIEW_ACTIVE_TAB_ON_CUSTOM_VALIDATION");
 
 		for (var cardsName : list "Basic Info,Trigger Event") {
 			ObjectCustomValidation.viewCardsOnCustomValidation(cardName = "${cardsName}");
@@ -2276,7 +2278,9 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.viewActiveTabOnCustomValidation(activeTab = "Conditions");
+		AssertElementPresent(
+			key_activeTab = "Conditions",
+			locator1 = "ObjectCustomValidation#VIEW_ACTIVE_TAB_ON_CUSTOM_VALIDATION");
 
 		for (var cardsName : list "Groovy,Error Message") {
 			ObjectCustomValidation.viewCardsOnCustomValidation(cardName = "${cardsName}");

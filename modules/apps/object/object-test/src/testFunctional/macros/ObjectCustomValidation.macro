@@ -70,12 +70,6 @@ definition {
 			value1 = "${scriptValidation}");
 	}
 
-	macro viewActiveTabOnCustomValidation {
-		AssertElementPresent(
-			key_activeTab = "${activeTab}",
-			locator1 = "ObjectCustomValidation#VIEW_ACTIVE_TAB_ON_CUSTOM_VALIDATION");
-	}
-
 	macro viewCardsOnCustomValidation {
 		AssertElementPresent.assertVisible(
 			key_title = "${cardName}",

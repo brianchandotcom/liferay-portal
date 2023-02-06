@@ -362,7 +362,27 @@ definition {
 	@description = "LPS-154683: Upgrade Report shows warnings"
 	@priority = "3"
 	test WarningsLogged {
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
 		property test.name.skip.portal.instance = "UpgradeReport#WarningsLogged";
+
+		task ("Delete indexes.sql file from portal-impl.jar") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "delete-indexes-sql");
+		}
+
+		task ("Execute upgrade") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "upgrade-legacy-database");
+		}
+
+		task ("Wait for upgrade to complete") {
+			AntCommand(
+				locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+				value1 = "check-passed-upgrade-log");
+		}
 
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");

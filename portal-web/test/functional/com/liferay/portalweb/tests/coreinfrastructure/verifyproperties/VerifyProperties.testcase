@@ -8,7 +8,34 @@ definition {
 	property testray.main.component.name = "Verify Properties";
 
 	setUp {
-		User.firstLoginPG();
+		TestCase.setUpPortalInstance();
+	}
+
+	@description = "LRQA-78904: Upgrade will be stopped if Verify Properties fails when enable AutoUpgrade"
+	@priority = 3
+	test UpgradeStopsIfVerifyPropertiesFail {
+		property custom.properties = "module.framework.runtime.start.level=20${line.separator}upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.get.testcase.database.properties = "true";
+		property skip.start.app.server = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "false";
+		property test.name.skip.portal.instance = "VerifyProperties#UpgradeStopsIfVerifyPropertiesFail";
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "wait-for-server-shutdown -Dapp.server.port.number=8080");
+
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+
+		AssertConsoleTextNotPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
+
+		AssertConsoleTextPresent(value1 = "Stopping the server due to incorrect use of migrated portal properties");
 	}
 
 	@description = "LRQA-78467: Verify Properties is executed before the PortalUpgradeProcess starts to upgrade database when enable AutoUpgrade on startup"

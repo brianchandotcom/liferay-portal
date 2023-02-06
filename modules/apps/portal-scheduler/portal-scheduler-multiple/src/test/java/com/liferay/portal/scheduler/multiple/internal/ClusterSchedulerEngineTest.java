@@ -1615,7 +1615,8 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public void run(
-			String jobName, String groupName, StorageType storageType) {
+			long companyId, String jobName, String groupName,
+			StorageType storageType) {
 		}
 
 		@Override

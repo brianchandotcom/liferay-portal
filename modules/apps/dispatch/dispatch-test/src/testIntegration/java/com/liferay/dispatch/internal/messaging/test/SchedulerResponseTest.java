@@ -64,6 +64,7 @@ public class SchedulerResponseTest {
 					_company.getCompanyId())) {
 
 			_schedulerResponseManager.run(
+				CompanyThreadLocal.getCompanyId(),
 				TestMessageListener.class.getName(),
 				TestMessageListener.class.getName(),
 				StorageType.MEMORY_CLUSTERED);

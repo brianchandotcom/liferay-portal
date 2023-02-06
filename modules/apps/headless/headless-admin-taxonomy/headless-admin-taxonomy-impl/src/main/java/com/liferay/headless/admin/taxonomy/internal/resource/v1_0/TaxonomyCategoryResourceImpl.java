@@ -308,13 +308,13 @@ public class TaxonomyCategoryResourceImpl
 		}
 
 		assetCategory.setDescriptionMap(
-			LocalizedMapUtil.patch(
+			LocalizedMapUtil.patchLocalizedMap(
 				assetCategory.getDescriptionMap(),
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getDescription(),
 				taxonomyCategory.getDescription_i18n()));
 		assetCategory.setTitleMap(
-			LocalizedMapUtil.patch(
+			LocalizedMapUtil.patchLocalizedMap(
 				assetCategory.getTitleMap(),
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getName(), taxonomyCategory.getName_i18n()));

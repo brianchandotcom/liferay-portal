@@ -273,12 +273,12 @@ public class TaxonomyVocabularyResourceImpl
 		return _toTaxonomyVocabulary(
 			_assetVocabularyService.updateVocabulary(
 				assetVocabulary.getVocabularyId(), null,
-				LocalizedMapUtil.patch(
+				LocalizedMapUtil.patchLocalizedMap(
 					assetVocabulary.getTitleMap(),
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getName(),
 					taxonomyVocabulary.getName_i18n()),
-				LocalizedMapUtil.patch(
+				LocalizedMapUtil.patchLocalizedMap(
 					assetVocabulary.getDescriptionMap(),
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getDescription(),

@@ -192,7 +192,7 @@ public class LocalizedMapUtil {
 			localizedMap, entry.getKey(), entry.getValue());
 	}
 
-	public static Map<Locale, String> patch(
+	public static Map<Locale, String> patchLocalizedMap(
 		Map<Locale, String> localizedMap, Locale locale, String value) {
 
 		if (value != null) {
@@ -202,7 +202,7 @@ public class LocalizedMapUtil {
 		return localizedMap;
 	}
 
-	public static Map<Locale, String> patch(
+	public static Map<Locale, String> patchLocalizedMap(
 		Map<Locale, String> localizedMap, Locale defaultLocale,
 		String defaultValue, Map<String, String> i18nMap) {
 
@@ -212,7 +212,7 @@ public class LocalizedMapUtil {
 			resultLocalizedMap.putAll(localizedMap);
 		}
 
-		resultLocalizedMap = patch(
+		resultLocalizedMap = patchLocalizedMap(
 			resultLocalizedMap, defaultLocale, defaultValue);
 
 		if (i18nMap == null) {
@@ -223,7 +223,7 @@ public class LocalizedMapUtil {
 			Locale locale = _getLocale(entry.getKey());
 
 			if (locale != null) {
-				resultLocalizedMap = patch(
+				resultLocalizedMap = patchLocalizedMap(
 					resultLocalizedMap, locale, entry.getValue());
 			}
 		}

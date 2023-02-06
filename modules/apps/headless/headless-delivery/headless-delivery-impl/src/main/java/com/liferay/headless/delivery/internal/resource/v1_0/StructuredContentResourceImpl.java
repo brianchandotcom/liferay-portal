@@ -507,17 +507,17 @@ public class StructuredContentResourceImpl
 			_journalArticleService.updateArticle(
 				journalArticle.getGroupId(), journalArticle.getFolderId(),
 				journalArticle.getArticleId(), journalArticle.getVersion(),
-				LocalizedMapUtil.patch(
+				LocalizedMapUtil.patchLocalizedMap(
 					journalArticle.getTitleMap(),
 					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getTitle(),
 					structuredContent.getTitle_i18n()),
-				LocalizedMapUtil.patch(
+				LocalizedMapUtil.patchLocalizedMap(
 					journalArticle.getDescriptionMap(),
 					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getDescription(),
 					structuredContent.getDescription_i18n()),
-				LocalizedMapUtil.patch(
+				LocalizedMapUtil.patchLocalizedMap(
 					journalArticle.getFriendlyURLMap(),
 					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getFriendlyUrlPath(),

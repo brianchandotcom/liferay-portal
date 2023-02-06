@@ -31,26 +31,16 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 <div id="<%= portletNamespace %>customizationBar">
 	<div class="control-menu-level-2 py-2">
 		<clay:container-fluid>
-			<div class="control-menu-level-2-heading d-block d-md-none">
-				<liferay-ui:message key="customization-options" />
-
-				<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="<%= portletNamespace %>closeCustomizationOptions" type="button">
-					<aui:icon image="times" markupView="lexicon" />
-				</button>
-			</div>
-
 			<ul class="control-menu-level-2-nav control-menu-nav flex-column flex-md-row">
 				<li class="control-menu-nav-item flex-shrink-1 mb-0">
 					<span class="text-info">
-						<liferay-ui:icon
+						<clay:icon
 							data='<%=
 								HashMapBuilder.<String, Object>put(
 									"qa-id", "customizations"
 								).build()
 							%>'
-							icon="info-circle"
-							label="<%= false %>"
-							markupView="lexicon"
+							symbol="info-circle"
 						/>
 
 						<c:choose>

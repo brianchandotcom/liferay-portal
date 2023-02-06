@@ -14,57 +14,27 @@
 
 package com.liferay.data.cleanup.internal.upgrade.util;
 
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-
-import java.io.IOException;
-
-import java.lang.reflect.Method;
-
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Objects;
-
 import org.apache.felix.cm.PersistenceManager;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
 /**
- * @author Kevin Lee
+ * @author Shuyang Zhou
  */
 public class ConfigurationUtil {
 
-	public static <T> T getAndResetConfiguration(
-			PersistenceManager persistenceManager, Class<T> clazz)
-		throws IOException {
+	public static void deleteConfiguration(
+			ConfigurationAdmin configurationAdmin,
+			PersistenceManager persistenceManager, String pid)
+		throws Exception {
 
-		Dictionary<String, Object> properties = persistenceManager.load(
-			clazz.getName());
+		Configuration configuration = configurationAdmin.getConfiguration(
+			pid, "?");
 
-		if (properties == null) {
-			return ConfigurableUtil.createConfigurable(clazz, new HashMap<>());
-		}
+		configuration.delete();
 
-		Dictionary<String, Object> newProperties =
-			HashMapDictionaryBuilder.<String, Object>putAll(
-				properties
-			).build();
-
-		for (Method method : clazz.getMethods()) {
-			if (!method.isAnnotationPresent(Meta.AD.class) ||
-				!Objects.equals(method.getReturnType(), Boolean.TYPE)) {
-
-				continue;
-			}
-
-			if (properties.get(method.getName()) != null) {
-				newProperties.put(method.getName(), false);
-			}
-		}
-
-		persistenceManager.store(clazz.getName(), newProperties);
-
-		return ConfigurableUtil.createConfigurable(clazz, properties);
+		persistenceManager.delete(pid);
 	}
 
 }

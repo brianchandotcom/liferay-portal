@@ -145,7 +145,7 @@ export default function PieChart({data, height, totalEntries, width}) {
 
 			<Legend
 				activeIndex={activeIndex}
-				labels={data.map(({label}) => label)}
+				data={data}
 				onMouseOut={handleOnMouseOut}
 				onMouseOver={handleOnMouseOver}
 			/>

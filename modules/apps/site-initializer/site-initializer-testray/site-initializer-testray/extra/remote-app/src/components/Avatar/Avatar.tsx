@@ -13,15 +13,20 @@
  */
 
 import ClaySticker from '@clayui/sticker';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import React from 'react';
+
+import {ALIGN_POSITIONS} from '../Tooltip';
 
 type AvatarProps = {
 	className?: string;
 	displayName?: boolean;
+	displayTooltip?: boolean;
 	expanded?: boolean;
 	name?: string;
 	size?: 'lg' | 'sm' | 'xl';
+	tooltipPosition?: ALIGN_POSITIONS;
 	url?: string;
 };
 
@@ -59,43 +64,57 @@ function getRandomColor(name: string) {
 const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 	className,
 	displayName = false,
+	displayTooltip = true,
 	expanded,
 	name = '',
 	size = 'lg',
+	tooltipPosition = 'bottom',
 	url,
-}) => (
-	<div className="align-items-center d-flex">
-		<ClaySticker
-			className={classNames(
-				className,
-				'text-brand-secondary-lighten-6',
-				getRandomColor(getInitials(name))
-			)}
-			shape="circle"
-			size={size}
-		>
-			{url ? (
-				<ClaySticker.Image alt={name} src={url} title={name} />
-			) : (
-				getInitials(name)
-			)}
-		</ClaySticker>
+}) => {
+	const TooltipWrapper = displayTooltip
+		? ClayTooltipProvider
+		: React.Fragment;
 
-		{displayName && (
-			<span
-				className={classNames(
-					className,
-					'ml-3 testray-avatar-dropdown-text',
-					{
-						'testray-avatar-dropdown-text-expanded': expanded,
-					}
-				)}
-			>
-				{name}
-			</span>
-		)}
-	</div>
-);
+	return (
+		<div className="align-items-center d-flex">
+			<TooltipWrapper>
+				<ClaySticker
+					className={classNames(
+						className,
+						'text-brand-secondary-lighten-6',
+						getRandomColor(getInitials(name))
+					)}
+					shape="circle"
+					size={size}
+					{...(displayTooltip && {
+						'data-tooltip-align': tooltipPosition,
+						'title': name,
+					})}
+				>
+					{url ? (
+						<ClaySticker.Image alt={name} src={url} />
+					) : (
+						getInitials(name)
+					)}
+				</ClaySticker>
+			</TooltipWrapper>
+
+			{displayName && (
+				<span
+					className={classNames(
+						className,
+						'ml-3 testray-avatar-dropdown-text',
+						{
+							'testray-avatar-dropdown-text-expanded': expanded,
+						}
+					)}
+				>
+					{name}
+				</span>
+			)}
+		</div>
+	);
+};
 
 Avatar.Group = ({assignedUsers, groupSize}) => {
 	const totalAssignedUsers = assignedUsers.length;
@@ -116,15 +135,19 @@ Avatar.Group = ({assignedUsers, groupSize}) => {
 					))}
 			</div>
 
-			<div
-				className="align-items-center avatar-plus d-flex justify-content-center p-0 pl-4 text-nowrap"
-				title={assignedUsers.map(({name}) => name).toString()}
-			>
-				+
-				{totalAssignedUsers <= groupSize
-					? `${totalAssignedUsers}`
-					: `${totalAssignedUsers - groupSize}`}
-			</div>
+			<ClayTooltipProvider>
+				<div
+					className="align-items-center avatar-plus d-flex justify-content-center p-0 pl-4 pr-2 text-nowrap"
+					data-tooltip-align="bottom"
+					title={assignedUsers
+						.filter((_, index) => index >= groupSize)
+						.map(({name}) => name)
+						.toString()}
+				>
+					{totalAssignedUsers > groupSize &&
+						`+ ${totalAssignedUsers - groupSize}`}
+				</div>
+			</ClayTooltipProvider>
 		</div>
 	);
 };

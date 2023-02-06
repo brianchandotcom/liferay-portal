@@ -60,7 +60,6 @@ type OutletContext = {
 	};
 	revalidate: {revalidateSubtask: () => void};
 };
-
 const ShortcutIcon = () => (
 	<ClayIcon className="ml-2" fontSize={12} symbol="shortcut" />
 );

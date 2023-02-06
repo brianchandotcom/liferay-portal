@@ -307,6 +307,11 @@ $sidebar-divider-color: #8b8db2;
 		background-color: #2e5aac;
 		border-color: #2e5aac;
 	}
+
+	&.open {
+		background-color: #e3e9ee;
+		border-color: #e3e9ee;
+	}
 }
 
 .build-alert-bar {

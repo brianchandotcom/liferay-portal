@@ -126,6 +126,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							<div className="testray-avatar-dropdown testray-sidebar-item">
 								<Avatar
 									displayName
+									displayTooltip={false}
 									expanded={expanded}
 									name={loggedUserName}
 									url={myUserAccount?.image}

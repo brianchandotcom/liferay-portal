@@ -21,18 +21,16 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 %>
 
 <div class="active control-menu-link customization-link d-block d-md-none">
-	<liferay-ui:icon
+	<clay:icon
+		aria-label='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'
+		cssClass="lfr-portal-tooltip"
 		data='<%=
 			HashMapBuilder.<String, Object>put(
 				"qa-id", "customizations"
 			).build()
 		%>'
-		icon="pencil"
 		id='<%= portletNamespace + "customizationButton" %>'
-		label="<%= false %>"
-		linkCssClass="btn btn-monospaced btn-sm control-menu-icon"
-		markupView="lexicon"
-		message="this-page-can-be-customized"
-		url="javascript:void(0);"
+		symbol="pencil"
+		title='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'
 	/>
 </div>

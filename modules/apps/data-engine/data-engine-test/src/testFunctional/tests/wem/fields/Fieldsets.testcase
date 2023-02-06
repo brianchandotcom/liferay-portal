@@ -220,7 +220,7 @@ definition {
 				index = "${n}");
 		}
 
-		AssertElementNotPresent(
+		AssertVisible(
 			key_fieldName = "New Fieldset",
 			key_index = "1",
 			locator1 = "FormFields#FIELD_REMOVE");
@@ -240,7 +240,7 @@ definition {
 				index = "${n}");
 		}
 
-		AssertElementNotPresent(
+		AssertVisible(
 			key_fieldName = "New Fieldset",
 			key_index = "1",
 			locator1 = "FormFields#FIELD_REMOVE");

@@ -347,7 +347,7 @@ definition {
 			}
 		}
 
-		AssertElementNotPresent(
+		AssertVisible(
 			key_fieldName = "FieldsGroup",
 			key_index = "1",
 			locator1 = "FormFields#FIELD_REMOVE");
@@ -368,7 +368,7 @@ definition {
 			}
 		}
 
-		AssertElementNotPresent(
+		AssertVisible(
 			key_fieldName = "FieldsGroup",
 			key_index = "1",
 			locator1 = "FormFields#FIELD_REMOVE");

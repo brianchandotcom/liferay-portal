@@ -25,13 +25,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Marcela Cunha
@@ -92,11 +91,12 @@ public interface ObjectFieldBusinessType {
 
 		Set<String> missingRequiredObjectFieldSettingsNames = new HashSet<>();
 
-		Stream<ObjectFieldSetting> stream = objectFieldSettings.stream();
+		Map<String, String> objectFieldSettingsValuesMap = new HashMap<>();
 
-		Map<String, String> objectFieldSettingsValuesMap = stream.collect(
-			Collectors.toMap(
-				ObjectFieldSetting::getName, ObjectFieldSetting::getValue));
+		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+			objectFieldSettingsValuesMap.put(
+				objectFieldSetting.getName(), objectFieldSetting.getValue());
+		}
 
 		for (String requiredObjectFieldSettingName :
 				getRequiredObjectFieldSettingsNames()) {

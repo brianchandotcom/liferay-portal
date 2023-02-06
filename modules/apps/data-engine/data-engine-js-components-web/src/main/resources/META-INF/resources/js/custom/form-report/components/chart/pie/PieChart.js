@@ -22,11 +22,12 @@ import {
 	Tooltip,
 } from 'recharts';
 
-import colors from '../../../utils/colors';
+import colors, {NAMED_COLORS} from '../../../utils/colors';
 import {roundPercentage} from '../../../utils/data';
 import Legend from '../Legend';
 import TooltipContent from '../TooltipContent';
 
+const {black} = NAMED_COLORS;
 const RADIAN = Math.PI / 180;
 
 export default function PieChart({data, height, totalEntries, width}) {
@@ -75,7 +76,7 @@ export default function PieChart({data, height, totalEntries, width}) {
 		return (
 			<text
 				dominantBaseline="central"
-				fill="white"
+				fill={black}
 				textAnchor="middle"
 				x={x}
 				y={y}

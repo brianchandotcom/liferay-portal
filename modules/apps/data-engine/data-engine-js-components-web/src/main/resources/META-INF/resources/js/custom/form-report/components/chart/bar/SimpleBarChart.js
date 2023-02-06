@@ -28,7 +28,7 @@ import {NAMED_COLORS} from '../../../utils/colors';
 import ellipsize from '../../../utils/ellipsize';
 import TooltipContent from '../TooltipContent';
 
-const {blueDark, gray, lightBlue, white} = NAMED_COLORS;
+const {black, blueDark, gray, lightBlue} = NAMED_COLORS;
 
 export default function SimpleBarChart({data, height, totalEntries, width}) {
 	const [activeIndex, setActiveIndex] = useState(null);
@@ -142,7 +142,7 @@ export default function SimpleBarChart({data, height, totalEntries, width}) {
 
 						<LabelList
 							dataKey="count"
-							fill={white}
+							fill={black}
 							fontSize={14}
 							offset={16}
 							position="insideRight"

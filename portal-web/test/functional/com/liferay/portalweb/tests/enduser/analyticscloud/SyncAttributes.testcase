@@ -501,4 +501,37 @@ definition {
 			AssertElementNotPresent(locator1 = "ACDXPSettings#REQUIRED_ATTRIBUTES");
 		}
 	}
+
+	@description = "Story: LRAC-10866 | Automation ID: LRAC-12903 | Test Summary: Check that it is possible to search the Attribute for Product list"
+	@priority = "4"
+	test CanSearchAttributeInProductList {
+		var foundProductsAttribute = "currencyCode";
+		var notFoundProductsAttribute = "name,description";
+
+		task ("Click to select attribute for products") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");
+		}
+
+		task ("Search for products attributes") {
+			ACUtils.searchBar(searchItem = "${foundProductsAttribute}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundProductsAttribute}");
+		}
+
+		task ("Check that unsearched products attributes do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundProductsAttribute}");
+		}
+
+		task ("Search by name of a products attributes that does not exist") {
+			ACUtils.searchBar(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No attributes were found.");
+		}
+	}
 }

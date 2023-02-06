@@ -32,6 +32,7 @@ import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Objects;
 
@@ -67,13 +68,14 @@ public class ComboServletTest {
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
 
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(new PortalImpl());
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "COMBO_CHECK_TIMESTAMP", true);
 	}
 
 	@Before
 	public void setUp() throws ServletException {
+		_portalUtil.setPortal(_portalImpl);
+
 		ReflectionTestUtil.setFieldValue(
 			PortletLocalServiceUtil.class, "_service",
 			new PortletLocalServiceWrapper() {
@@ -221,6 +223,61 @@ public class ComboServletTest {
 	}
 
 	@Test
+	public void testServiceWithoutPortletIdButWithContext() throws Exception {
+		_testService(
+			_portalServletContext, "/portal/js/javascript.js",
+			"/js/javascript.js");
+	}
+
+	@Test
+	public void testServiceWithoutPortletIdButWithProxy() throws Exception {
+		setUpProxy();
+
+		_testService(
+			_portalServletContext, "/proxyPath/js/javascript.js",
+			"/js/javascript.js");
+	}
+
+	@Test
+	public void testServiceWithoutPortletIdButWithProxyAndContext()
+		throws Exception {
+
+		setUpProxy();
+
+		_testService(
+			_portalServletContext, "/proxyPath/portal/js/javascript.js",
+			"/js/javascript.js");
+	}
+
+	@Test
+	public void testServiceWithPortletIdAndContext() throws Exception {
+		_testService(
+			_pluginServletContext,
+			_TEST_PORTLET_ID + ":/portal/js/javascript.js",
+			"/portal/js/javascript.js");
+	}
+
+	@Test
+	public void testServiceWithPortletIdAndProxy() throws Exception {
+		setUpProxy();
+
+		_testService(
+			_pluginServletContext,
+			_TEST_PORTLET_ID + ":/proxyPath/js/javascript.js",
+			"/js/javascript.js");
+	}
+
+	@Test
+	public void testServiceWithPortletIdAndProxyAndContext() throws Exception {
+		setUpProxy();
+
+		_testService(
+			_pluginServletContext,
+			_TEST_PORTLET_ID + ":/proxyPath/portal/js/javascript.js",
+			"/portal/js/javascript.js");
+	}
+
+	@Test
 	public void testValidateInValidModuleExtension() throws Exception {
 		boolean valid = _comboServlet.validateModuleExtension(
 			_TEST_PORTLET_ID +
@@ -298,12 +355,24 @@ public class ComboServletTest {
 		_portalServletContext.setContextPath("/portal");
 	}
 
+	protected void setUpProxy() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "PORTAL_PROXY_PATH", "/proxyPath");
+
+		_portalUtil.setPortal(new PortalImpl());
+	}
+
 	protected void setUpTestPortlet() {
 		_testPortletApp = new PortletAppImpl(StringPool.BLANK);
 
 		_testPortletApp.setServletContext(_pluginServletContext);
 
 		_testPortlet = new PortletWrapper(null) {
+
+			@Override
+			public String getContextPath() {
+				return "/portal";
+			}
 
 			@Override
 			public PortletApp getPortletApp() {
@@ -323,9 +392,38 @@ public class ComboServletTest {
 		};
 	}
 
+	private void _testService(
+			MockServletContext mockServletContext, String queryString,
+			String expectedPath)
+		throws Exception {
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setQueryString(queryString);
+
+		_comboServlet.service(
+			mockHttpServletRequest, new MockHttpServletResponse());
+
+		Mockito.verify(
+			mockServletContext
+		).getRequestDispatcher(
+			expectedPath
+		);
+
+		Mockito.reset(mockServletContext);
+	}
+
 	private static final String _NONEXISTING_PORTLET_ID = "2345678";
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
+
+	private static final PortalImpl _portalImpl = new PortalImpl();
+	private static final PortalUtil _portalUtil = new PortalUtil();
 
 	private ComboServlet _comboServlet;
 	private MockHttpServletRequest _mockHttpServletRequest;

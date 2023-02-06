@@ -159,6 +159,21 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	@Override
+	public ObjectLayout fetchDefaultObjectLayout(long objectDefinitionId) {
+		ObjectLayout objectLayout =
+			objectLayoutPersistence.fetchByODI_DOL_First(
+				objectDefinitionId, true, null);
+
+		if (objectLayout == null) {
+			return null;
+		}
+
+		objectLayout.setObjectLayoutTabs(_getObjectLayoutTabs(objectLayout));
+
+		return objectLayout;
+	}
+
+	@Override
 	public ObjectLayout getDefaultObjectLayout(long objectDefinitionId)
 		throws PortalException {
 

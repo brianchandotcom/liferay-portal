@@ -1518,11 +1518,11 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 1");
 
-		Navigator.gotoBack();
+		Click(locator1 = "CommerceNavigation#BACK");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 2");
 
-		Navigator.gotoBack();
+		Click(locator1 = "CommerceNavigation#BACK");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 3");
 

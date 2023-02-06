@@ -23,15 +23,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Marco Leo
@@ -72,38 +69,7 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, CommerceMLIndexer.class, null,
-			new ServiceTrackerCustomizer
-				<CommerceMLIndexer, CommerceMLIndexer>() {
-
-				@Override
-				public CommerceMLIndexer addingService(
-					ServiceReference<CommerceMLIndexer> serviceReference) {
-
-					CommerceMLIndexer commerceMLIndexer =
-						bundleContext.getService(serviceReference);
-
-					_companyLocalService.forEachCompanyId(
-						companyId -> commerceMLIndexer.createIndex(companyId));
-
-					return commerceMLIndexer;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<CommerceMLIndexer> serviceReference,
-					CommerceMLIndexer commerceMLIndexer) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<CommerceMLIndexer> serviceReference,
-					CommerceMLIndexer commerceMLIndexer) {
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
+			bundleContext, CommerceMLIndexer.class);
 	}
 
 	@Deactivate
@@ -113,9 +79,6 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMLIndexerPortalInstanceLifecycleListener.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

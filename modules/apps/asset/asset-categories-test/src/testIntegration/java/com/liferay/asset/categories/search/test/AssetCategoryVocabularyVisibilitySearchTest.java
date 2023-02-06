@@ -232,7 +232,8 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
-			assetCategoryIdsFieldName, _asStringList(expectedAssetCategoryIds));
+			assetCategoryIdsFieldName,
+			TransformUtil.transform(expectedAssetCategoryIds, String::valueOf));
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
@@ -260,11 +261,6 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 			keyword, Field.ASSET_CATEGORY_IDS, assetCategoryIds,
 			Field.getLocalizedName(LocaleUtil.US, Field.ASSET_CATEGORY_TITLES),
 			assetCategoryTitles);
-	}
-
-	private List<String> _asStringList(List<Long> expectedAssetCategoryIds) {
-		return TransformUtil.transform(
-			expectedAssetCategoryIds, String::valueOf);
 	}
 
 	private List<Long> _getAssetCategoryIds(AssetCategory assetCategory) {

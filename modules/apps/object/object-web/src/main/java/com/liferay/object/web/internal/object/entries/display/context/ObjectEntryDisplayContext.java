@@ -573,6 +573,18 @@ public class ObjectEntryDisplayContext {
 			ddmFormRenderingContext);
 	}
 
+	public boolean showObjectEntryForm() throws PortalException {
+		if ((getObjectEntry() == null) || (getObjectLayoutTab() == null)) {
+			return true;
+		}
+
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return GetterUtil.getBoolean(
+			httpServletRequest.getAttribute("regularObjectLayoutTab"));
+	}
+
 	private void _addDDMFormFields(
 			DDMForm ddmForm, List<ObjectField> objectFields,
 			ObjectLayoutTab objectLayoutTab, boolean readOnly)

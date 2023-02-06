@@ -70,6 +70,8 @@ public class ObjectLayoutTabScreenNavigationCategory
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
+
+		httpServletRequest.setAttribute("regularObjectLayoutTab", Boolean.TRUE);
 	}
 
 	private final ObjectDefinition _objectDefinition;

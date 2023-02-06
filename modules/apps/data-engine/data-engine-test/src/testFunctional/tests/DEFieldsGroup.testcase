@@ -1606,7 +1606,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		DERenderer.removeRepeatableField(fieldLabel = "Text");
+		DERenderer.removeRepeatableField(
+			fieldLabel = "Text",
+			index = "2");
 
 		Button.clickPublish();
 

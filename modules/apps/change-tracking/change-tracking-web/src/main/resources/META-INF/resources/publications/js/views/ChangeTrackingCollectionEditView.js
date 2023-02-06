@@ -49,7 +49,9 @@ export default function ChangeTrackingCollectionEditView({
 	const templates = JSON.parse(ctCollectionTemplates);
 	const data = JSON.parse(ctCollectionTemplatesData);
 
-	const handleSubmit = () => {
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
 		const bodyContent = objectToFormData({
 			[`${namespace}ctCollectionId`]: ctCollectionId,
 			[`${namespace}name`]: nameField,
@@ -124,6 +126,12 @@ export default function ChangeTrackingCollectionEditView({
 		setDescriptionField(data[value].description);
 	};
 
+	const resetForm = () => {
+		setCtCollectionTemplateId(null);
+		setNameField(null);
+		setDescriptionField(null);
+	};
+
 	const sendInvite = (
 		ctCollectionId,
 		publicationsUserRoleUserIds,
@@ -160,198 +168,216 @@ export default function ChangeTrackingCollectionEditView({
 
 	return (
 		<div className="sheet sheet-lg">
-			{revertingPublication && (
-				<>
-					<ClayAlert
-						displayType="info"
-						title={Liferay.Language.get('info')}
-					>
-						{Liferay.Language.get(
-							'reverting-creates-a-new-publication-with-the-reverted-changes'
-						)}
-					</ClayAlert>
-
-					<h3 className="sheet-subtitle">
-						{Liferay.Language.get(
-							'publication-with-reverted-changes'
-						)}
-					</h3>
-				</>
-			)}
-
-			{showTemplates && (
-				<ClayForm.Group>
-					<label htmlFor="templateSelector">Template</label>
-
-					<ClaySelect
-						aria-label={sub(
-							Liferay.Language.get('select-x'),
-							Liferay.Language.get('template')
-						)}
-						defaultValue={0}
-						id="templateSelector"
-						onChange={(event) => {
-							onSelectValueChange(event.target.value);
-						}}
-					>
-						<ClaySelect.Option
-							disabled
-							hidden
-							label={Liferay.Language.get('no-template-selected')}
-							value={0}
-						/>
-
-						{templates.map((item) => (
-							<ClaySelect.Option
-								key={item.ctCollectionTemplateId}
-								label={item.name}
-								value={item.ctCollectionTemplateId}
-							/>
-						))}
-					</ClaySelect>
-				</ClayForm.Group>
-			)}
-
-			<TextField
-				ariaLabel={Liferay.Language.get('name')}
-				componentType="input"
-				fieldValue={nameField}
-				label={Liferay.Language.get('name')}
-				maxLength={nameFieldMaxLength}
-				onChange={(event) => {
-					setNameField(event.target.value);
-				}}
-				placeholderValue={Liferay.Language.get(
-					'publication-name-placeholder'
-				)}
-				required={true}
-				validateLength={true}
-			/>
-
-			<TextField
-				ariaLabel={Liferay.Language.get('description')}
-				componentType="textarea"
-				fieldValue={descriptionField}
-				label={Liferay.Language.get('description')}
-				maxLength={descriptionFieldMaxLength}
-				onChange={(event) => {
-					setDescriptionField(event.target.value);
-				}}
-				placeholderValue={Liferay.Language.get(
-					'publication-description-placeholder'
-				)}
-				required={false}
-				validateLength={true}
-			/>
-
-			{revertingPublication && (
-				<fieldset className="publications-fieldset">
-					<legend className="fieldset-legend">
-						<span className="legend">
+			<ClayForm onSubmit={handleSubmit}>
+				{revertingPublication && (
+					<>
+						<ClayAlert
+							displayType="info"
+							title={Liferay.Language.get('info')}
+						>
 							{Liferay.Language.get(
-								'when-do-you-want-to-publish'
+								'reverting-creates-a-new-publication-with-the-reverted-changes'
 							)}
-						</span>
-					</legend>
+						</ClayAlert>
 
-					<div className="panel-body">
-						<div className="col-10 row">
-							<div className="col-5">
-								<div className="autofit-row">
-									<div className="autofit-col">
-										<input
-											className="field"
-											id="publishTimeNow"
-											name="publishTime"
-											onChange={() => {
-												setSaveButtonDisabled(false);
-											}}
-											type="radio"
-											value="now"
-										/>
-									</div>
+						<h3 className="sheet-subtitle">
+							{Liferay.Language.get(
+								'publication-with-reverted-changes'
+							)}
+						</h3>
+					</>
+				)}
 
-									<div className="autofit-col autofit-col-expand">
-										<label
-											className="radio-inline"
-											htmlFor="publishTimeNow"
-										>
-											<div className="publications-radio-label">
-												{Liferay.Language.get('now')}
-											</div>
+				{showTemplates && (
+					<ClayForm.Group>
+						<label htmlFor="templateSelector">Template</label>
 
-											<div className="publications-radio-help">
-												{Liferay.Language.get(
-													'revert-your-changes-to-production-immediately'
-												)}
-											</div>
-										</label>
+						<ClaySelect
+							aria-label={sub(
+								Liferay.Language.get('select-x'),
+								Liferay.Language.get('template')
+							)}
+							defaultValue={0}
+							id="templateSelector"
+							onChange={(event) => {
+								onSelectValueChange(event.target.value);
+							}}
+						>
+							<ClaySelect.Option
+								disabled
+								hidden
+								label={Liferay.Language.get(
+									'no-template-selected'
+								)}
+								value={0}
+							/>
+
+							{templates.map((item) => (
+								<ClaySelect.Option
+									key={item.ctCollectionTemplateId}
+									label={item.name}
+									value={item.ctCollectionTemplateId}
+								/>
+							))}
+						</ClaySelect>
+					</ClayForm.Group>
+				)}
+
+				<TextField
+					ariaLabel={Liferay.Language.get('name')}
+					componentType="input"
+					fieldValue={nameField}
+					label={Liferay.Language.get('name')}
+					maxLength={nameFieldMaxLength}
+					onChange={(event) => {
+						setNameField(event.target.value);
+					}}
+					placeholderValue={Liferay.Language.get(
+						'publication-name-placeholder'
+					)}
+					required={true}
+					validateLength={true}
+				/>
+
+				<TextField
+					ariaLabel={Liferay.Language.get('description')}
+					componentType="textarea"
+					fieldValue={descriptionField}
+					label={Liferay.Language.get('description')}
+					maxLength={descriptionFieldMaxLength}
+					onChange={(event) => {
+						setDescriptionField(event.target.value);
+					}}
+					placeholderValue={Liferay.Language.get(
+						'publication-description-placeholder'
+					)}
+					required={false}
+					validateLength={true}
+				/>
+
+				{revertingPublication && (
+					<fieldset className="publications-fieldset">
+						<legend className="fieldset-legend">
+							<span className="legend">
+								{Liferay.Language.get(
+									'when-do-you-want-to-publish'
+								)}
+							</span>
+						</legend>
+
+						<div className="panel-body">
+							<div className="col-10 row">
+								<div className="col-5">
+									<div className="autofit-row">
+										<div className="autofit-col">
+											<input
+												className="field"
+												id="publishTimeNow"
+												name="publishTime"
+												onChange={() => {
+													setSaveButtonDisabled(
+														false
+													);
+												}}
+												type="radio"
+												value="now"
+											/>
+										</div>
+
+										<div className="autofit-col autofit-col-expand">
+											<label
+												className="radio-inline"
+												htmlFor="publishTimeNow"
+											>
+												<div className="publications-radio-label">
+													{Liferay.Language.get(
+														'now'
+													)}
+												</div>
+
+												<div className="publications-radio-help">
+													{Liferay.Language.get(
+														'revert-your-changes-to-production-immediately'
+													)}
+												</div>
+											</label>
+										</div>
 									</div>
 								</div>
-							</div>
 
-							<div className="col-6">
-								<div className="autofit-row">
-									<div className="autofit-col">
-										<input
-											className="field"
-											id="publishTimeLater"
-											name="publishTime"
-											onChange={() => {
-												setSaveButtonDisabled(false);
-											}}
-											type="radio"
-											value="later"
-										/>
-									</div>
+								<div className="col-6">
+									<div className="autofit-row">
+										<div className="autofit-col">
+											<input
+												className="field"
+												id="publishTimeLater"
+												name="publishTime"
+												onChange={() => {
+													setSaveButtonDisabled(
+														false
+													);
+												}}
+												type="radio"
+												value="later"
+											/>
+										</div>
 
-									<div className="autofit-col autofit-col-expand">
-										<label
-											className="radio-inline"
-											htmlFor="publishTimeLater"
-										>
-											<div className="publications-radio-label">
-												{Liferay.Language.get('later')}
-											</div>
+										<div className="autofit-col autofit-col-expand">
+											<label
+												className="radio-inline"
+												htmlFor="publishTimeLater"
+											>
+												<div className="publications-radio-label">
+													{Liferay.Language.get(
+														'later'
+													)}
+												</div>
 
-											<div className="publications-radio-help">
-												{Liferay.Language.get(
-													'make-additional-changes-and-publish-them-when-you-are-ready'
-												)}
-											</div>
-										</label>
+												<div className="publications-radio-help">
+													{Liferay.Language.get(
+														'make-additional-changes-and-publish-them-when-you-are-ready'
+													)}
+												</div>
+											</label>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</fieldset>
-			)}
+					</fieldset>
+				)}
 
-			<div className="button-group">
-				<ClayButton
-					disabled={
-						saveButtonDisabled ||
-						nameField.length > nameFieldMaxLength ||
-						nameField.length < 1 ||
-						descriptionField.length > descriptionFieldMaxLength
-					}
-					displayType="primary"
-					id="saveButton"
-					onClick={() => handleSubmit()}
-					type="submit"
-				>
-					{saveButtonLabel}
-				</ClayButton>
+				<ClayForm.Group>
+					<ClayButton.Group spaced>
+						<ClayButton
+							disabled={
+								saveButtonDisabled ||
+								nameField.length > nameFieldMaxLength ||
+								nameField.length < 1 ||
+								descriptionField.length >
+									descriptionFieldMaxLength
+							}
+							displayType="primary"
+							id="saveButton"
+							onClick={() => handleSubmit()}
+							type="submit"
+						>
+							{saveButtonLabel}
+						</ClayButton>
 
-				<ClayButton
-					displayType="secondary"
-					onClick={() => navigate(redirect)}
-					type="cancel"
-				>
-					{Liferay.Language.get('cancel')}
-				</ClayButton>
-			</div>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => {
+								resetForm();
+								navigate(redirect);
+							}}
+							type="cancel"
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				</ClayForm.Group>
+			</ClayForm>
 		</div>
 	);
 }

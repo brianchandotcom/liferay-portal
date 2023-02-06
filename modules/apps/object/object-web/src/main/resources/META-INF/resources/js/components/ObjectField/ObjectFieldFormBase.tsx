@@ -344,7 +344,9 @@ export default function ObjectFieldFormBase({
 
 			{values.businessType === 'Aggregation' && (
 				<AggregationFormBase
-					creationLanguageId2={creationLanguageId2 as Liferay.Language.Locale}
+					creationLanguageId2={
+						creationLanguageId2 as Liferay.Language.Locale
+					}
 					editingField={editingField}
 					errors={errors}
 					objectDefinitionExternalReferenceCode={

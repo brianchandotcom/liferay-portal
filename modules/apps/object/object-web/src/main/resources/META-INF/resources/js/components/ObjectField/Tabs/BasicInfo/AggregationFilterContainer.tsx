@@ -12,14 +12,14 @@
  * details.
  */
 
-import { useModal } from '@clayui/modal';
+import {useModal} from '@clayui/modal';
 import {
 	API,
 	BuilderScreen,
 	getLocalizableLabel,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {
 	FilterErrors,
@@ -78,7 +78,7 @@ export function AggregationFilterContainer({
 	const [objectFields, setObjectFields] = useState<ObjectField[]>();
 	const [visibleModal, setVisibleModal] = useState(false);
 
-	const { observer, onClose } = useModal({
+	const {observer, onClose} = useModal({
 		onClose: () => {
 			setEditingFilter(false);
 			setVisibleModal(false);
@@ -161,10 +161,10 @@ export function AggregationFilterContainer({
 						objectFieldName: objectField.name,
 						value:
 							objectField.businessType === 'Integer' ||
-								objectField.businessType === 'LongInteger'
+							objectField.businessType === 'LongInteger'
 								? (parsedFilter.json as {
-									[key: string]: string;
-								})[filterType]
+										[key: string]: string;
+								  })[filterType]
 								: undefined,
 					};
 
@@ -345,10 +345,10 @@ export function AggregationFilterContainer({
 				},
 			] as AggregationFilters[];
 
-			const { objectFieldSettings } = values;
+			const {objectFieldSettings} = values;
 
 			const filterSetting = objectFieldSettings?.filter(
-				({ name }) => name === 'filters'
+				({name}) => name === 'filters'
 			);
 
 			if (filterSetting) {
@@ -359,7 +359,7 @@ export function AggregationFilterContainer({
 				if (objectFieldBusinessType === 'Date') {
 					const dateJson: ObjectFieldDateRangeFilterSettings = {};
 
-					valueList?.forEach(({ label, value }) => {
+					valueList?.forEach(({label, value}) => {
 						dateJson[value] = label;
 					});
 
@@ -383,7 +383,7 @@ export function AggregationFilterContainer({
 					if (filterType === 'excludes') {
 						picklistJson = {
 							not: {
-								in: valueList?.map(({ value }) => value) as
+								in: valueList?.map(({value}) => value) as
 									| string[]
 									| number[],
 							},
@@ -391,7 +391,7 @@ export function AggregationFilterContainer({
 					}
 					else {
 						picklistJson = {
-							in: valueList?.map(({ value }) => value) as
+							in: valueList?.map(({value}) => value) as
 								| string[]
 								| number[],
 						};
@@ -425,7 +425,7 @@ export function AggregationFilterContainer({
 							json: {
 								[filterType as string]: value
 									? value
-									: valueList?.map(({ value }) => value),
+									: valueList?.map(({value}) => value),
 							},
 						},
 					];
@@ -439,11 +439,11 @@ export function AggregationFilterContainer({
 				const newObjectFieldSettings:
 					| ObjectFieldSetting[]
 					| undefined = [
-						...(objectFieldSettings?.filter(
-							(fieldSetting) => fieldSetting.name !== 'filters'
-						) as ObjectFieldSetting[]),
-						newFilter,
-					];
+					...(objectFieldSettings?.filter(
+						(fieldSetting) => fieldSetting.name !== 'filters'
+					) as ObjectFieldSetting[]),
+					newFilter,
+				];
 
 				setAggregationFilters(newAggregationFilters);
 				setValues({
@@ -462,7 +462,7 @@ export function AggregationFilterContainer({
 
 	const handleDeleteFilterColumn = useCallback(
 		(objectFieldName?: string) => {
-			const { objectFieldSettings } = values;
+			const {objectFieldSettings} = values;
 
 			const [filter] = objectFieldSettings?.filter(
 				(fieldSetting) => fieldSetting.name === 'filters'
@@ -508,7 +508,7 @@ export function AggregationFilterContainer({
 		objectFieldSettings,
 	}: ObjectField) => {
 		const userRelationship = !!objectFieldSettings?.find(
-			({ name, value }) =>
+			({name, value}) =>
 				name === 'objectDefinition1ShortName' && value === 'User'
 		);
 
@@ -528,7 +528,9 @@ export function AggregationFilterContainer({
 	return (
 		<>
 			<BuilderScreen
-				creationLanguageId={creationLanguageId2 as Liferay.Language.Locale}
+				creationLanguageId={
+					creationLanguageId2 as Liferay.Language.Locale
+				}
 				disableEdit
 				emptyState={{
 					buttonText: Liferay.Language.get('new-filter'),

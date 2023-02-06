@@ -12,19 +12,19 @@
  * details.
  */
 
-import ClayButton, { ClayButtonWithIcon } from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
-import { ManagementToolbar } from 'frontend-js-components-web';
-import React, { useMemo, useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import {ManagementToolbar} from 'frontend-js-components-web';
+import React, {useMemo, useState} from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import { filterArrayByQuery } from '../../utils/array';
-import { getLocalizableLabel } from '../../utils/string';
-import { Card } from '../Card';
-import { ManagementToolbarSearch } from '../ManagementToolbar/ManagementToolbarSearch';
+import {filterArrayByQuery} from '../../utils/array';
+import {getLocalizableLabel} from '../../utils/string';
+import {Card} from '../Card';
+import {ManagementToolbarSearch} from '../ManagementToolbar/ManagementToolbarSearch';
 import BuilderListItem from './BuilderListItem';
 
 import './BuilderScreen.scss';
@@ -90,7 +90,7 @@ export function BuilderScreen({
 										className={classNames(
 											'lfr-object__object-builder-screen-first-column',
 											!hasDragAndDrop &&
-											'lfr-object__object-builder-screen-first-column--not-draggable'
+												'lfr-object__object-builder-screen-first-column--not-draggable'
 										)}
 										expand
 									>
@@ -101,7 +101,7 @@ export function BuilderScreen({
 										className={classNames(
 											'lfr-object__object-builder-screen-second-column',
 											!hasDragAndDrop &&
-											'lfr-object__object-builder-screen-second-column--not-draggable'
+												'lfr-object__object-builder-screen-second-column--not-draggable'
 										)}
 										expand
 									>
@@ -115,7 +115,7 @@ export function BuilderScreen({
 											className={classNames(
 												'lfr-object__object-builder-screen-third-column',
 												!hasDragAndDrop &&
-												'lfr-object__object-builder-screen-third-column--not-draggable'
+													'lfr-object__object-builder-screen-third-column--not-draggable'
 											)}
 											expand
 										>
@@ -148,18 +148,18 @@ export function BuilderScreen({
 										defaultSort
 											? viewColumn.sortOrder === 'asc'
 												? Liferay.Language.get(
-													'ascending'
-												)
+														'ascending'
+												  )
 												: Liferay.Language.get(
-													'descending'
-												)
+														'descending'
+												  )
 											: filter
-												? viewColumn?.objectFieldBusinessType
-												: getLocalizableLabel(
+											? viewColumn?.objectFieldBusinessType
+											: getLocalizableLabel(
 													creationLanguageId as Liferay.Language.Locale,
 													viewColumn?.label,
 													viewColumn.objectFieldName
-												)
+											  )
 									}
 									thirdColumnValues={
 										viewColumn?.valueList ??

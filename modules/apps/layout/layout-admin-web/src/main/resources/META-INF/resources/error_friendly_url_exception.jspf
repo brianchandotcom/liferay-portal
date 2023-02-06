@@ -15,10 +15,10 @@
 --%>
 
 <c:if test="<%= exceptionLocale != null %>">
-	<liferay-ui:icon
-		image='<%= "../language/" + LocaleUtil.toLanguageId(exceptionLocale) %>'
-		lang="<%= LocaleUtil.toW3cLanguageId(exceptionLocale) %>"
-		message=""
+	<clay:icon
+		aria-label="<%= LocaleUtil.toLanguageId(exceptionLocale) %>"
+		symbol="<%= LocaleUtil.toW3cLanguageId(exceptionLocale).toLowerCase() %>"
+		title="<%= LocaleUtil.toLanguageId(exceptionLocale) %>"
 	/>
 </c:if>
 

@@ -14,6 +14,9 @@
 
 package com.liferay.digital.signature.model;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -57,6 +60,20 @@ public class DSRecipient {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public JSONObject toJSONObject() {
+		return JSONUtil.put(
+			"clientUserId", dsClientUserId
+		).put(
+			"email", emailAddress
+		).put(
+			"name", name
+		).put(
+			"recipientId", dsRecipientId
+		).put(
+			"status", status
+		);
 	}
 
 	protected String dsClientUserId;

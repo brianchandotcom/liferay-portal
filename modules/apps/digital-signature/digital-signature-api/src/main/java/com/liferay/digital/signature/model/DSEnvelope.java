@@ -132,18 +132,7 @@ public class DSEnvelope {
 				"signers",
 				JSONUtil.toJSONArray(
 					getDSRecipients(),
-					dsRecipient -> JSONUtil.put(
-						"clientUserId", dsRecipient.getDSClientUserId()
-					).put(
-						"email", dsRecipient.getEmailAddress()
-					).put(
-						"name", dsRecipient.getName()
-					).put(
-						"recipientId", dsRecipient.getDSRecipientId()
-					).put(
-						"status", dsRecipient.getStatus()
-					),
-					_log))
+					dsRecipient -> dsRecipient.toJSONObject(), _log))
 		).put(
 			"senderEmailAddress", getSenderEmailAddress()
 		).put(

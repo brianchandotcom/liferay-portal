@@ -279,15 +279,15 @@ definition {
 
 		CalendarEvent.setTimes(
 			endDateTime = "11:00 AM",
-			startDateTime = "08:00 AM");
+			startDateTime = " 8:00 AM");
 
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 
 		CalendarEvent.setEndDateTomorrow();
 
 		CalendarEvent.setTimes(
-			endDateTime = "07:00 AM",
-			startDateTime = "08:00 AM");
+			endDateTime = " 7:00 AM",
+			startDateTime = " 8:00 AM");
 
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 

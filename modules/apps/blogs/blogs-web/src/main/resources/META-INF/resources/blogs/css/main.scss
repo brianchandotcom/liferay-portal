@@ -3,20 +3,6 @@
 
 @import 'common_main';
 
-html#{$cadmin-selector} {
-	.portlet-blogs {
-		.cadmin {
-			.info-bar-container {
-				min-height: 35px;
-
-				.info-bar-center {
-					margin-top: 5px;
-				}
-			}
-		}
-	}
-}
-
 .portlet-blogs {
 	.taglib-custom-attributes-list {
 		margin-bottom: 1em;

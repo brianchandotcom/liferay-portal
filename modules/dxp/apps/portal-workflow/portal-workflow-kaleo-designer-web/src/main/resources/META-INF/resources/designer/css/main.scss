@@ -262,23 +262,8 @@
 	}
 }
 
-.portal-popup,
-.info-bar-container {
+.portal-popup {
 	background: #fff;
-}
-
-.info-bar-container .management-bar-header-right {
-	float: right;
-	margin-right: 0;
-	position: relative;
-
-	> a {
-		padding: 0;
-	}
-}
-
-.info-bar-container .info-bar-default .btn-secondary.sidenav-transition {
-	pointer-events: none;
 }
 
 .dialog-with-footer {
@@ -286,11 +271,6 @@
 		height: calc(100vh - 148px);
 		overflow: auto;
 	}
-}
-
-.info-bar-item {
-	margin-top: -3px;
-	position: absolute;
 }
 
 .info-content {

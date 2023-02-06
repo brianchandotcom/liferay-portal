@@ -40,9 +40,7 @@
 .management-bar .management-bar-nav > li > .btn,
 .management-bar .management-bar-nav > .dropdown > .btn,
 .management-bar-header > .btn,
-.management-bar-header-right > .btn,
-.management-bar-header > .dropdown,
-.management-bar-header-right > .dropdown {
+.management-bar-header > .dropdown {
 	margin: $management-bar-btn-padding-vertical 0
 		$management-bar-btn-padding-vertical
 		$management-bar-btn-padding-horizontal;
@@ -57,8 +55,7 @@
 	}
 }
 
-.management-bar-header > .dropdown,
-.management-bar-header-right > .dropdown {
+.management-bar-header > .dropdown {
 	float: left;
 
 	> a {
@@ -82,14 +79,8 @@
 	}
 }
 
-.container-fluid-1280 .management-bar-header-right {
-	margin-right: 0;
-}
-
 .management-bar-header > .checkbox,
-.management-bar-header > .radio,
-.management-bar-header-right > .checkbox,
-.management-bar-header-right > .radio,
+.management-bar-header > .radio
 .management-bar-nav > li > .checkbox,
 .management-bar-nav > li > .radio {
 	float: left;
@@ -134,26 +125,6 @@
 	@include clearfix;
 
 	float: left;
-}
-
-.management-bar-header-right {
-	float: right;
-	margin-right: $management-bar-padding-horizontal;
-
-	> a,
-	> span {
-		display: block;
-		float: left;
-		padding: $management-bar-padding-vertical
-			$management-bar-padding-horizontal;
-
-		@if (variable-exists(atlas-theme)) {
-			@media (min-width: $grid-float-breakpoint) {
-				padding-bottom: $management-bar-desktop-padding-vertical;
-				padding-top: $management-bar-desktop-padding-vertical;
-			}
-		}
-	}
 }
 
 .management-bar-header-item {

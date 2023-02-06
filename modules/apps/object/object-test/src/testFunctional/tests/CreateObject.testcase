@@ -8607,7 +8607,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
-		ObjectAdmin.assertRelationshipTabPresent();
+		AssertElementPresent(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -8623,7 +8625,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
-		ObjectAdmin.assertRelationshipTabPresent();
+		AssertElementPresent(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship tab is displayed again when the child object is reactivated (One to Many)"

@@ -610,12 +610,6 @@ definition {
 			value1 = "${description}");
 	}
 
-	macro assertRelationshipTabPresent {
-		AssertElementPresent(
-			key_tabName = "Relationship Tab",
-			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
-	}
-
 	macro assertRequiredErrorPresent {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",

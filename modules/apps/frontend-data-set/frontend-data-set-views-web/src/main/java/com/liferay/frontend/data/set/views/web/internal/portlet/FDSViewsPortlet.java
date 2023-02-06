@@ -15,9 +15,16 @@
 package com.liferay.frontend.data.set.views.web.internal.portlet;
 
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
+import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys;
+import com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.layout-cacheable=true",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/fds_views.jsp",
 		"javax.portlet.name=" + FDSViewsPortletKeys.FDS_VIEWS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,power-user,user",
@@ -38,4 +45,17 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class FDSViewsPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT,
+			new FDSViewsDisplayContext(renderRequest));
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 }

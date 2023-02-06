@@ -16,8 +16,18 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<%@ page import="com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys" %><%@
+page import="com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewsDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+FDSViewsDisplayContext fdsViewsDisplayContext = (FDSViewsDisplayContext)request.getAttribute(FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT);
+%>

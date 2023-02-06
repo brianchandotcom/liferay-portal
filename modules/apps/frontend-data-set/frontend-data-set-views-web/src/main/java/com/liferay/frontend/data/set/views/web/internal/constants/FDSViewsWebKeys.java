@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.frontend.data.set.views.web.internal.constants;
+
+/**
+ * @author Marko Cikos
+ */
+public class FDSViewsWebKeys {
+
+	public static final String FDS_VIEWS_DISPLAY_CONTEXT =
+		"FDS_VIEWS_DISPLAY_CONTEXT";
+
+}

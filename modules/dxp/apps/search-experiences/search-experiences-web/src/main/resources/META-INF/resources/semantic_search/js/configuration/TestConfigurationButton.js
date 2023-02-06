@@ -79,6 +79,16 @@ function TestConfigurationButton({
 			};
 		}
 
+		if (
+			textEmbeddingProvider ===
+			TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT
+		) {
+			return {
+				accessToken,
+				hostAddress,
+			};
+		}
+
 		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI) {
 			return {
 				basicAuthPassword,
@@ -256,6 +266,16 @@ function TestConfigurationButton({
 				errors?.attributes?.accessToken ||
 				errors?.attributes?.model ||
 				errors?.attributes?.modelTimeout
+			);
+		}
+
+		if (
+			textEmbeddingProvider ===
+			TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT
+		) {
+			return (
+				errors?.attributes?.accessToken ||
+				errors?.attributes?.hostAddress
 			);
 		}
 

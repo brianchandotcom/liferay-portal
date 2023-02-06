@@ -57,6 +57,14 @@ public abstract class BaseTextEmbeddingProvider {
 		return sentences;
 	}
 
+	protected boolean isJSONArray(String s) {
+		if (StringUtil.startsWith(s, "[") && StringUtil.endsWith(s, "]")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _extractSentencesFromBeginning(
 		int maxCharacters, String text) {
 

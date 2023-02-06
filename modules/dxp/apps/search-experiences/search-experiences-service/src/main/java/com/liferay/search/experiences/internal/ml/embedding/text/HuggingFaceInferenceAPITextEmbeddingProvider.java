@@ -112,7 +112,7 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 				responseJSON = _http.URLtoString(options);
 			}
 
-			if (!_isJSONArray(responseJSON)) {
+			if (!isJSONArray(responseJSON)) {
 				throw new IllegalArgumentException(responseJSON);
 			}
 			else if (!_isValidResponse(responseJSON)) {
@@ -143,14 +143,6 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 		}
 
 		return jsonArray1;
-	}
-
-	private boolean _isJSONArray(String s) {
-		if (StringUtil.startsWith(s, "[") && StringUtil.endsWith(s, "]")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isValidResponse(String s) {

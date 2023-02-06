@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
@@ -96,7 +95,7 @@ public class TXTAITextEmbeddingProvider
 
 			String responseJSON = _http.URLtoString(options);
 
-			if (_isJSONArray(responseJSON)) {
+			if (isJSONArray(responseJSON)) {
 				List<Double> list = JSONUtil.toDoubleList(
 					_jsonFactory.createJSONArray(responseJSON));
 
@@ -117,14 +116,6 @@ public class TXTAITextEmbeddingProvider
 
 		return StringBundler.concat(
 			hostAddress, "transform?text=", URLCodec.encodeURL(text, false));
-	}
-
-	private boolean _isJSONArray(String s) {
-		if (StringUtil.startsWith(s, "[") && StringUtil.endsWith(s, "]")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

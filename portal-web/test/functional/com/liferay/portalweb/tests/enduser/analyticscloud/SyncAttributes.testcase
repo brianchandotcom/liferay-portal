@@ -787,4 +787,18 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10867 | Automation ID: LRAC-12909 | Test Summary: Check that all attributes for Orders are marked as required"
+	@priority = "5"
+	test AllOrderAttributesRequired {
+		task ("Click to configure Orders attributes") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Orders");
+		}
+
+		task ("See that the all the attributes are checked") {
+			ACUtils.changePagination(itemsPerPage = "50");
+
+			AssertElementNotPresent(locator1 = "ACDXPSettings#REQUIRED_ATTRIBUTES");
+		}
+	}
+
 }

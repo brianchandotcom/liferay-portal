@@ -467,7 +467,7 @@ export default function ({
 									]?.attributes?.hostAddress
 								}
 								helpText={Liferay.Language.get(
-									'text-embedding-provider-txtai-host-address-help'
+									'text-embedding-provider-host-address-help'
 								)}
 								label={Liferay.Language.get('host-address')}
 								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.hostAddress`}
@@ -660,6 +660,75 @@ export default function ({
 										.textEmbeddingProviderConfigurationJSONs?.[
 										index
 									]?.attributes?.modelTimeout
+								}
+							/>
+						</>
+					)}
+
+					{formik.values.textEmbeddingProviderConfigurationJSONs?.[
+						index
+					]?.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT && (
+						<>
+							<Input
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.accessToken
+								}
+								label={Liferay.Language.get('access-token')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.accessToken`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.accessToken`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.accessToken`
+								)}
+								required
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.accessToken
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.accessToken
+								}
+							/>
+							<Input
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.hostAddress
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-host-address-help'
+								)}
+								label={Liferay.Language.get('host-address')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.hostAddress`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.hostAddress`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.hostAddress`
+								)}
+								required
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.hostAddress
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.hostAddress
 								}
 							/>
 						</>

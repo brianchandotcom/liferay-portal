@@ -548,12 +548,6 @@ definition {
 			value1 = "${status}");
 	}
 
-	macro assertObjectDetailsPage {
-		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
-	}
-
 	macro assertObjectEntryFieldValueViaAPI {
 		var actualValue = JSONObject.getObjectEntryFieldValue(
 			attribute = "${attribute}",

@@ -5074,7 +5074,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 118");
 
-		ObjectAdmin.assertObjectDetailsPage();
+		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"
@@ -5091,7 +5093,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 118");
 
-		ObjectAdmin.assertObjectDetailsPage();
+		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view an Object with the View permission"

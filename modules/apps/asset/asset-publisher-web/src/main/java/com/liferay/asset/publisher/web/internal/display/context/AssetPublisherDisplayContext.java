@@ -133,8 +133,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -665,10 +663,7 @@ public class AssetPublisherDisplayContext {
 					items.add(keyword);
 				}
 
-				Stream<String> stream = items.stream();
-
-				queryValues = stream.collect(
-					Collectors.joining(StringPool.SPACE));
+				queryValues = StringUtil.merge(items, StringPool.SPACE);
 
 				ruleJSONObject.put("selectedItems", queryValues);
 			}

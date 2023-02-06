@@ -25,7 +25,7 @@ export default function Summary({summary}) {
 	};
 
 	return (
-		<div className="summary">
+		<div className="summary" tabIndex={0}>
 			<div className="summary-item">
 				<div className="type">{Liferay.Language.get('sum')}</div>
 

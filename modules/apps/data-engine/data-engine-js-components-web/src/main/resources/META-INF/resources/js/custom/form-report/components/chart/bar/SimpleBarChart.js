@@ -126,6 +126,7 @@ export default function SimpleBarChart({data, height, totalEntries, width}) {
 						fill={lightBlue}
 						onMouseOut={handleOnMouseOut}
 						onMouseOver={(_, index) => handleOnMouseOver(index)}
+						tabIndex={0}
 					>
 						{data.map((_, index) => (
 							<Cell

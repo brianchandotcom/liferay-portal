@@ -38,7 +38,7 @@ export default function Report() {
 
 	return (
 		<>
-			<div className="lfr-ddm__form-report__header">
+			<div className="lfr-ddm__form-report__header" tabIndex={0}>
 				<div className="container-fluid container-fluid-max-xl">
 					<h2 className="lfr-ddm__form-report__title text-truncate">
 						{Liferay.Util.sub(

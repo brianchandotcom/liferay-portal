@@ -225,7 +225,14 @@ public class RestHighLevelClientFactory {
 					_proxyConfig.getHost(), _proxyConfig.getPort(), "http"));
 		}
 
+		httpClientBuilder.disableAuthCaching();
+		httpClientBuilder.disableAutomaticRetries();
+		httpClientBuilder.disableConnectionState();
 		httpClientBuilder.disableContentCompression();
+		httpClientBuilder.disableCookieManagement();
+		httpClientBuilder.disableDefaultUserAgent();
+		httpClientBuilder.disableRedirectHandling();
+
 		httpClientBuilder.setMaxConnPerRoute(
 			RestClientBuilder.DEFAULT_MAX_CONN_PER_ROUTE);
 		httpClientBuilder.setMaxConnTotal(

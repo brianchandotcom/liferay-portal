@@ -42,7 +42,7 @@ public class AssetListItemSelectorViewDescriptor
 
 	@Override
 	public String[] getDisplayViews() {
-		return new String[] {"icon", "list"};
+		return new String[] {"icon", "descriptive", "list"};
 	}
 
 	@Override

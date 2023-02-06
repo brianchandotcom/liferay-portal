@@ -475,12 +475,6 @@ definition {
 			value1 = "You do not have permission to delete this relationship.");
 	}
 
-	macro assertEntryOnPageNotPresent {
-		AssertElementNotPresent(
-			key_entryName = "${entryName}",
-			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
-	}
-
 	macro assertFieldsTableColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_LABEL_COLUMN");
 

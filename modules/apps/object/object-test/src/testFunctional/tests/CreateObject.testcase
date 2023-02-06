@@ -6569,7 +6569,9 @@ definition {
 			menuItem = "View",
 			pageName = "Blank Display Page");
 
-		ObjectAdmin.assertEntryOnPageNotPresent(entryName = "Entry Test");
+		AssertElementNotPresent(
+			key_entryName = "Entry Test",
+			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
 	}
 
 	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow Metrics page when they are deleted"
@@ -8081,7 +8083,9 @@ definition {
 			menuItem = "View",
 			pageName = "Blank Display Page");
 
-		ObjectAdmin.assertEntryOnPageNotPresent(entryName = "Entry A");
+		AssertElementNotPresent(
+			key_entryName = "Entry A",
+			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed to be selected for a Page fragment when the parent object is inactivated"

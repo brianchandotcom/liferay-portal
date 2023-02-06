@@ -65,6 +65,7 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 					%>
 
 					<aui:button
+						aria-label='<%= LanguageUtil.format(request, "choose-x", role.getTitle(locale)) %>'
 						cssClass="selector-button"
 						data='<%=
 							HashMapBuilder.<String, Object>put(

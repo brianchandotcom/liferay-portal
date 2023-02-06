@@ -124,7 +124,7 @@ const TestFlow = () => {
 								_,
 								{
 									subtaskScoreCompleted,
-									subtaskScoreIncomplete,
+									subtaskScoreSelfIncomplete,
 								}: TestrayTask
 							) => (
 								<TaskbarProgress
@@ -136,7 +136,7 @@ const TestFlow = () => {
 										],
 										[
 											StatusesProgressScore.INCOMPLETE,
-											Number(subtaskScoreIncomplete),
+											Number(subtaskScoreSelfIncomplete),
 										],
 									]}
 									taskbarClassNames={chartClassNames}

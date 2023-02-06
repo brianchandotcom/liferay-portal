@@ -171,7 +171,8 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 									[
 										StatusesProgressScore.INCOMPLETE,
 										Number(
-											task?.subtaskScoreIncomplete ?? 0
+											task?.subtaskScoreSelfIncomplete ??
+												0
 										),
 									],
 								]}

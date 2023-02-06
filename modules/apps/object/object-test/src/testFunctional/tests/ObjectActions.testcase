@@ -791,7 +791,9 @@ definition {
 
 		ObjectAdmin.deleteActionViaUI(actionLabel = "Action Label");
 
-		ObjectAdmin.assertObjectActionsNotPresent(actionLabel = "Action Label");
+		AssertElementNotPresent(
+			key_actionLabel = "Action Label",
+			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 	}
 
 	@description = "LPS-145665 - Verify that you can edit the Action name"
@@ -1327,7 +1329,9 @@ definition {
 
 		ObjectAdmin.assertObjectActions(actionLabel = "Action Label 1");
 
-		ObjectAdmin.assertObjectActionsNotPresent(actionLabel = "Action Label 2");
+		AssertElementNotPresent(
+			key_actionLabel = "Action Label 2",
+			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 	}
 
 	@description = "LPS-156343 - Verify that Action can be triggered after disabling the expression"

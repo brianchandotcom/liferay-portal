@@ -101,10 +101,15 @@ const getMaskedValue = ({
 		'g'
 	);
 
+	const splitNumbers = masked.split(symbols.decimalSymbol);
+
+	const decimalDigitsLength =
+		splitNumbers.length > 1 ? splitNumbers.pop().length : 0;
+
 	return {
 		masked:
-			dataType === 'double'
-				? Number(masked).toFixed(decimalPlaces)
+			dataType === 'double' && decimalDigitsLength
+				? masked + '0'.repeat(decimalPlaces - decimalDigitsLength)
 				: masked,
 		placeholder:
 			dataType === 'double'
@@ -112,6 +117,7 @@ const getMaskedValue = ({
 				: inputMaskFormat.replace(/\d/g, '_'),
 		raw: masked.replace(regex, ''),
 	};
+	
 };
 
 const getFormattedValue = ({

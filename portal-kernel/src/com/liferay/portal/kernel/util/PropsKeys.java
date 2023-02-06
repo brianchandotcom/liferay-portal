@@ -2719,9 +2719,6 @@ public interface PropsKeys {
 	public static final String UPGRADE_LOG_CONTEXT_ENABLED =
 		"upgrade.log.context.enabled";
 
-	public static final String UPGRADE_LOG_CONTEXT_NAME =
-		"upgrade.log.context.name";
-
 	public static final String UPGRADE_REPORT_ENABLED =
 		"upgrade.report.enabled";
 

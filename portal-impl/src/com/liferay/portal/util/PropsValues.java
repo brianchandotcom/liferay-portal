@@ -2393,9 +2393,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_LOG_CONTEXT_ENABLED));
 
-	public static final String UPGRADE_LOG_CONTEXT_NAME = PropsUtil.get(
-		PropsKeys.UPGRADE_LOG_CONTEXT_NAME);
-
 	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
 

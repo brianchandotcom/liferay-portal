@@ -291,7 +291,7 @@ definition {
 	@description = "This is a test for LPS-169924. The user without View permission for object cannot see Form Container at view and perview mode."
 	@priority = "5"
 	test CannotSeeFormContainerAtViewAndPreviewModeAsUserWithoutViewPermissionForObject {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169923=true";
 
 		task ("Given a user doesn't have view permission for custom object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -552,7 +552,7 @@ definition {
 	@description = "This is a test for LPS-169924. The user with Add Object Entry but without View permission for object should see Form Container at view and preview mode."
 	@priority = "4"
 	test ViewFormContainerAtViewAndPreviewModeAsUserWithAddObjectEntryPermissionWithoutViewPermissionForObject {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169923=true";
 
 		task ("Given a user doesn't have view permission for custom object") {
 			ObjectAdmin.addObjectViaAPI(

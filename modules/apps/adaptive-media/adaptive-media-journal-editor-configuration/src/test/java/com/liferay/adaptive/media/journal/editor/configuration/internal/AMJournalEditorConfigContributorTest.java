@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -521,9 +520,17 @@ public class AMJournalEditorConfigContributorTest {
 	private <T> void _assertContains(
 		Collection<T> collection, Predicate<T> predicate) {
 
-		Stream<T> stream = collection.stream();
+		boolean match = false;
 
-		Assert.assertTrue(stream.anyMatch(predicate));
+		for (T t : collection) {
+			if (predicate.test(t)) {
+				match = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(match);
 	}
 
 	private List<ItemSelectorCriterion>

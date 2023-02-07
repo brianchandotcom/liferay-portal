@@ -303,6 +303,83 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172957. Verify that the review page displays all the information the partner user entered to the activity"
+	@priority = 5
+	test ReviewPageDisplaysAllInputedInformation {
+		var accountName = "Company Name 1";
+		var campaignName = "Campaign Name";
+		var countryName = "Global";
+		var goalsOptions = "Lead generation";
+		var targetMarketOptions = "Education";
+		var targetRolesOptions = "Administrator";
+		var activityDescription = "Activity Description";
+		var activityName = "Activity Name 1";
+		var budgetList = "Sponsorship Fee-2000";
+		var expense = "Sponsorship Fee";
+		var budget = "$2,000.00";
+		var leadList = "No";
+		var tactic = "Other";
+		var typeOfActivity = "Miscellaneous Marketing";
+		var startDate = DateUtil.getFormattedDate("+1", "M/d/yyyy");
+		var endDate = DateUtil.getFormattedDate("+2", "M/d/yyyy");
+
+        task ("Given I go to add a new MDF Request") {
+            PRMMarketing.gotoAddNewMDF();
+        }
+
+        task ("When I fill all fields from MDF Request") {
+            PRMMDFRequest.fillGoalsPage(
+                accountName = "${accountName}",
+                additionalOptions = "${additionalOptions}",
+                campaignDescription = "Campaign Description",
+                campaignName = "${campaignName}",
+                countryName = "${countryName}",
+                goalsOptions = "${goalsOptions}",
+                targetMarketOptions = "${targetMarketOptions}",
+                targetRolesOptions = "${targetRolesOptions}");
+
+            Button.click(button = "Continue");
+
+            PRMMDFRequest.newActivity(
+                activityDescription = "${activityDescription}",
+                activityName = "${activityName}",
+                budgetList = "${budgetList}",
+                followUpStrategy = "${followUpStrategy}",
+                leadFollowUpList = "${leadFollowUpList}",
+                leadList = "${leadList}",
+                tactic = "${tactic}",
+                targetOfLeads = "${targetOfLeads}",
+                typeOfActivity = "${typeOfActivity}");
+
+            Button.click(button = "Continue");
+
+            Button.click(button = "Continue");
+        }
+
+        task ("Then all inputted information are displayed on Review Page") {
+            PRMMarketing.viewMDFGoals(
+                accountName = "${accountName}",
+                campaignDescription = "Campaign Description",
+                campaignName = "${campaignName}",
+                countryName = "${countryName}",
+                goalsOptions = "${goalsOptions}",
+                targetMarketOptions = "${targetMarketOptions}",
+                targetRolesOptions = "${targetRolesOptions}");
+
+            PRMMarketing.viewMDFActivity(
+                activityDescription = "${activityDescription}",
+                activityName = "${activityName}",
+                budget = "${budget}",
+                budgetList = "${budgetList}",
+                endDate = "${endDate}",
+                expense = "${expense}",
+                leadList = "${leadList}",
+                startDate = "${startDate}",
+                tactic = "${tactic}",
+                typeOfActivity = "${typeOfActivity}");
+        }
+	}
+
 	@description = "This is test is for LPS-173510. Verify that the start date cannot be before the current date"
 	@priority = 5
 	test StartDateCannotBeBeforeToCurrentDate {
